@@ -60,4 +60,7 @@
   --salt-color-black-fade-separatorOpacity-primary: rgba(0, 0, 0, var(--salt-palette-opacity-primary-border));
   --salt-color-black-fade-separatorOpacity-secondary: rgba(0, 0, 0, var(--salt-palette-opacity-secondary-border));
   --salt-color-black-fade-separatorOpacity-tertiary: rgba(0, 0, 0, var(--salt-palette-opacity-tertiary-border));
+
+  --salt-color-black-fade-background-hover: rgba(0, 0, 0, var(--salt-opacity-8));
+  --salt-color-white-fade-background-hover: rgba(255, 255, 255, var(--salt-opacity-8));
 }

@@ -33,7 +33,7 @@
   --button-background: var(--salt-actionable-cta-background);
   --button-background-active: var(--salt-actionable-cta-background-active);
   --button-background-hover: var(--salt-actionable-cta-background-hover);
-  --button-fontWeight: var(--salt-actionable-cta-fontWeight);
+  --button-fontWeight: var(--salt-text-action-fontWeight);
   --button-text-color: var(--salt-actionable-cta-foreground);
   --button-text-color-active: var(--salt-actionable-cta-foreground-active);
   --button-text-color-hover: var(--salt-actionable-cta-foreground-hover);
@@ -42,8 +42,8 @@
   background: var(--button-background);
   color: var(--button-text-color);
   display: inline-flex;
-  letter-spacing: var(--salt-actionable-letterSpacing);
-  text-transform: var(--salt-actionable-textTransform);
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  text-transform: var(--salt-text-action-textTransform);
   padding: 0 var(--salt-size-unit);
   height: var(--salt-size-base);
   text-decoration: none;

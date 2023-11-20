@@ -3,10 +3,6 @@
   --salt-actionable-cursor-active: pointer;
   --salt-actionable-cursor-disabled: not-allowed;
 
-  --salt-actionable-letterSpacing: 0.6px;
-  --salt-actionable-textAlign: center;
-  --salt-actionable-textTransform: uppercase;
-
   /* Primary variant */
   --salt-actionable-primary-foreground: var(--salt-palette-interact-primary-foreground);
   --salt-actionable-primary-foreground-hover: var(--salt-palette-interact-primary-foreground-hover);
@@ -16,7 +12,6 @@
   --salt-actionable-primary-background-hover: var(--salt-palette-interact-primary-background-hover);
   --salt-actionable-primary-background-active: var(--salt-palette-interact-primary-background-active);
   --salt-actionable-primary-background-disabled: var(--salt-palette-interact-primary-background-disabled);
-  --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
 
   /* CTA variant */
   --salt-actionable-cta-foreground: var(--salt-palette-interact-cta-foreground);
@@ -27,7 +22,6 @@
   --salt-actionable-cta-background-hover: var(--salt-palette-interact-cta-background-hover);
   --salt-actionable-cta-background-active: var(--salt-palette-interact-cta-background-active);
   --salt-actionable-cta-background-disabled: var(--salt-palette-interact-cta-background-disabled);
-  --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
 
   /* Secondary variant */
   --salt-actionable-secondary-foreground: var(--salt-palette-interact-secondary-foreground);
@@ -38,5 +32,4 @@
   --salt-actionable-secondary-background-hover: var(--salt-palette-interact-secondary-background-hover);
   --salt-actionable-secondary-background-active: var(--salt-palette-interact-secondary-background-active);
   --salt-actionable-secondary-background-disabled: var(--salt-palette-interact-secondary-background-disabled);
-  --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }

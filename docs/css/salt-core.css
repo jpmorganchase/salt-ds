@@ -1,0 +1,1975 @@
+/* src/accordion/Accordion.css */
+.saltAccordion {
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+.saltAccordion-error {
+  border-top-color: var(--salt-status-error-borderColor);
+}
+.saltAccordion-warning {
+  border-top-color: var(--salt-status-warning-borderColor);
+}
+.saltAccordion-success {
+  border-top-color: var(--salt-status-success-borderColor);
+}
+
+/* src/accordion/AccordionGroup.css */
+.saltAccordionGroup {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+/* src/accordion/AccordionHeader.css */
+.saltAccordionHeader {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  align-items: center;
+  border: 0;
+  width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  background: var(--salt-actionable-secondary-background);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  color: var(--salt-text-primary-foreground);
+  font-weight: var(--salt-text-fontWeight-strong);
+  --saltIcon-color: currentcolor;
+  text-align: left;
+  cursor: var(--salt-actionable-cursor-hover);
+}
+.saltAccordionHeader:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
+.saltAccordionHeader:disabled {
+  background: var(--salt-actionable-secondary-background);
+  color: var(--salt-text-primary-foreground-disabled);
+  --saltIcon-fill: var(--salt-text-primary-foreground-disabled);
+}
+.saltAccordionHeader-icon {
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
+}
+.saltAccordionHeader[aria-expanded=true] > .saltAccordionHeader-icon {
+  transform: rotate(90deg);
+}
+.saltAccordionHeader-error {
+  background: var(--salt-status-error-background);
+}
+.saltAccordionHeader-error:focus-visible {
+  outline-color: var(--salt-status-error-borderColor);
+}
+.saltAccordionHeader-warning {
+  background: var(--salt-status-warning-background);
+}
+.saltAccordionHeader-warning:focus-visible {
+  outline-color: var(--salt-status-warning-borderColor);
+}
+.saltAccordionHeader-success {
+  background: var(--salt-status-success-background);
+}
+.saltAccordionHeader-success:focus-visible {
+  outline-color: var(--salt-status-error-borderColor);
+}
+.saltAccordionHeader .saltAccordionHeader-statusIndicator {
+  margin-left: auto;
+}
+
+/* src/accordion/AccordionPanel.css */
+.saltAccordionPanel {
+  display: grid;
+  transition:
+    grid-template-rows var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out,
+    visibility var(--salt-duration-perceptible) ease-in-out;
+}
+.saltAccordionPanel[aria-hidden=true] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+.saltAccordionPanel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+.saltAccordionPanel-inner {
+  overflow: hidden;
+}
+.saltAccordionPanel-content {
+  padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
+  padding-right: var(--salt-spacing-100);
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
+}
+@media (prefers-reduced-motion: reduce) {
+  .saltAccordionPanel {
+    transition: none;
+  }
+}
+
+/* src/avatar/Avatar.css */
+.saltAvatar {
+  --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
+  --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
+  --avatar-base-size: var(--salt-size-base, 12px);
+  --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-accent-fontSize));
+  --avatar-container-size: calc(var(--avatar-base-size) * var(--avatar-size-multiplier));
+  --avatar-fontSize: calc(var(--avatar-base-fontSize) * var(--avatar-size-multiplier));
+  --saltIcon-color: var(--avatar-foreground);
+  --salt-icon-size-base: calc(var(--avatar-container-size) / 2);
+}
+.saltAvatar {
+  line-height: var(--saltAvatar-lineHeight, var(--salt-accent-lineHeight));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--saltAvatar-background, var(--salt-accent-background));
+  color: var(--avatar-foreground);
+  font-size: var(--avatar-fontSize);
+  width: var(--avatar-container-size);
+  min-width: var(--avatar-container-size);
+  height: var(--avatar-container-size);
+  min-height: var(--avatar-container-size);
+  overflow: hidden;
+  user-select: none;
+  border-radius: 50%;
+}
+.saltAvatar:has(img),
+.saltAvatar-withImage {
+  background: none;
+}
+.saltAvatar > img,
+.saltAvatar > svg:not(.saltIcon) {
+  width: 100%;
+  height: 100%;
+}
+
+/* src/badge/Badge.css */
+.saltBadge {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.saltBadge-badge {
+  padding-left: var(--salt-spacing-50);
+  padding-right: var(--salt-spacing-50);
+  line-height: var(--salt-accent-lineHeight);
+  height: var(--salt-accent-lineHeight);
+  min-width: var(--salt-accent-lineHeight);
+  border-radius: 9999px;
+  white-space: nowrap;
+  z-index: var(--salt-zIndex-notification);
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  margin: auto;
+  font-size: var(--salt-accent-fontSize);
+  font-weight: var(--salt-accent-fontWeight);
+  background: var(--salt-accent-background);
+  color: var(--salt-accent-foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.saltBadge-topRight {
+  position: absolute;
+  right: var(--salt-spacing-100);
+  transform: translateX(100%);
+}
+
+/* src/banner/Banner.css */
+.saltBanner {
+  --banner-background: var(--salt-container-primary-background);
+  background: var(--saltBanner-background, var(--banner-background));
+  border-color: var(--saltBanner-borderColor, var(--banner-borderColor));
+  border-width: var(--saltBanner-borderWidth, var(--salt-size-border));
+  border-style: var(--saltBanner-borderStyle, var(--salt-container-borderStyle));
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--salt-spacing-75);
+  padding: var(--saltBanner-padding, var(--salt-spacing-50) var(--salt-spacing-100));
+  width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+.saltBanner-icon.saltIcon {
+  min-height: var(--salt-size-base);
+}
+.saltBanner-info {
+  --banner-borderColor: var(--salt-status-info-borderColor);
+}
+.saltBanner-error {
+  --banner-borderColor: var(--salt-status-error-borderColor);
+}
+.saltBanner-warning {
+  --banner-borderColor: var(--salt-status-warning-borderColor);
+}
+.saltBanner-success {
+  --banner-borderColor: var(--salt-status-success-borderColor);
+}
+.saltBanner-secondary.saltBanner-info {
+  --banner-background: var(--salt-status-info-background);
+}
+.saltBanner-secondary.saltBanner-error {
+  --banner-background: var(--salt-status-error-background);
+}
+.saltBanner-secondary.saltBanner-warning {
+  --banner-background: var(--salt-status-warning-background);
+}
+.saltBanner-secondary.saltBanner-success {
+  --banner-background: var(--salt-status-success-background);
+}
+
+/* src/banner/BannerActions.css */
+.saltBannerActions {
+  margin-bottom: auto;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  min-height: var(--salt-size-base);
+}
+
+/* src/banner/BannerContent.css */
+.saltBannerContent {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+}
+
+/* src/border-item/BorderItem.css */
+.saltBorderItem-sticky {
+  position: sticky;
+  overflow: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* src/button/Button.css */
+.saltButton-cta {
+  --button-background: var(--salt-actionable-cta-background);
+  --button-background-active: var(--salt-actionable-cta-background-active);
+  --button-background-disabled: var(--salt-actionable-cta-background-disabled);
+  --button-background-hover: var(--salt-actionable-cta-background-hover);
+  --button-fontWeight: var(--salt-actionable-cta-fontWeight);
+  --button-text-color: var(--salt-actionable-cta-foreground);
+  --button-text-color-active: var(--salt-actionable-cta-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-cta-foreground-disabled);
+  --button-text-color-hover: var(--salt-actionable-cta-foreground-hover);
+}
+.saltButton-cta {
+  --saltIcon-color: var(--salt-actionable-cta-foreground);
+}
+.saltButton-cta:hover {
+  --saltIcon-color: var(--salt-actionable-cta-foreground-hover);
+}
+.saltButton-cta:active,
+.saltButton-cta.saltButton-active {
+  --saltIcon-color: var(--salt-actionable-cta-foreground-active);
+}
+.saltButton-cta.saltButton-disabled {
+  --saltIcon-color: var(--salt-actionable-cta-foreground-disabled);
+}
+.saltButton-primary {
+  --button-background: var(--salt-actionable-primary-background);
+  --button-background-active: var(--salt-actionable-primary-background-active);
+  --button-background-disabled: var(--salt-actionable-primary-background-disabled);
+  --button-background-hover: var(--salt-actionable-primary-background-hover);
+  --button-fontWeight: var(--salt-actionable-primary-fontWeight);
+  --button-text-color: var(--salt-actionable-primary-foreground);
+  --button-text-color-active: var(--salt-actionable-primary-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
+  --button-text-color-hover: var(--salt-actionable-primary-foreground-hover);
+}
+.saltButton-primary {
+  --saltIcon-color: var(--salt-actionable-primary-foreground);
+}
+.saltButton-primary:hover {
+  --saltIcon-color: var(--salt-actionable-primary-foreground-hover);
+}
+.saltButton-primary:active,
+.saltButton-primary.saltButton-active {
+  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
+}
+.saltButton-primary.saltButton-disabled {
+  --saltIcon-color: var(--salt-actionable-primary-foreground-disabled);
+}
+.saltButton-secondary {
+  --button-background: var(--salt-actionable-secondary-background);
+  --button-background-active: var(--salt-actionable-secondary-background-active);
+  --button-background-disabled: var(--salt-actionable-secondary-background-disabled);
+  --button-background-hover: var(--salt-actionable-secondary-background-hover);
+  --button-fontWeight: var(--salt-actionable-secondary-fontWeight);
+  --button-text-color: var(--salt-actionable-secondary-foreground);
+  --button-text-color-active: var(--salt-actionable-secondary-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-secondary-foreground-disabled);
+  --button-text-color-hover: var(--salt-actionable-secondary-foreground-hover);
+}
+.saltButton-secondary {
+  --saltIcon-color: var(--salt-actionable-secondary-foreground);
+}
+.saltButton-secondary:hover {
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
+}
+.saltButton-secondary:active,
+.saltButton-secondary.saltButton-active {
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
+}
+.saltButton-secondary.saltButton-disabled {
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-disabled);
+}
+.saltButton {
+  align-items: var(--saltButton-alignItems, center);
+  appearance: none;
+  background: var(--saltButton-background, var(--button-background));
+  border-color: var(--saltButton-borderColor, transparent);
+  border-style: var(--saltButton-borderStyle, solid);
+  border-width: var(--saltButton-borderWidth, 0);
+  border-radius: var(--saltButton-borderRadius, 0);
+  color: var(--saltButton-text-color, var(--button-text-color));
+  cursor: var(--saltButton-cursor, pointer);
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  justify-content: var(--saltButton-justifyContent, center);
+  font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
+  font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
+  line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--saltButton-letterSpacing, var(--salt-actionable-letterSpacing));
+  text-transform: var(--saltButton-textTransform, var(--salt-actionable-textTransform));
+  padding: 0 var(--saltButton-padding, var(--salt-size-unit));
+  margin: var(--saltButton-margin, 0);
+  height: var(--saltButton-height, var(--salt-size-base));
+  min-width: var(--saltButton-minWidth, unset);
+  position: relative;
+  text-align: var(--saltButton-textAlign, var(--salt-actionable-textAlign));
+  text-decoration: none;
+  transition: none;
+  width: var(--saltButton-width, auto);
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font-weight: var(--saltButton-fontWeight, var(--button-fontWeight));
+}
+.saltButton:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  background: var(--saltButton-background-hover, var(--button-background-hover));
+  color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
+}
+.saltButton.saltButton-active:focus-visible,
+.saltButton:focus-visible(:active) {
+  background: var(--saltButton-background-active-hover, var(--button-background));
+  color: var(--saltButton-text-color-active-hover, var(--button-text-color));
+}
+.saltButton:hover {
+  background: var(--saltButton-background-hover, var(--button-background-hover));
+  color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
+}
+.saltButton:active,
+.saltButton.saltButton-active {
+  background: var(--saltButton-background-active, var(--button-background-active));
+  color: var(--saltButton-text-color-active, var(--button-text-color-active));
+}
+.saltButton:disabled,
+.saltButton-disabled,
+.saltButton-disabled:active,
+.saltButton-disabled:focus-visible,
+.saltButton-disabled:hover {
+  background: var(--saltButton-background-disabled, var(--button-background-disabled));
+  color: var(--saltButton-text-color-disabled, var(--button-text-color-disabled));
+  cursor: var(--saltButton-cursor-disabled, var(--salt-actionable-cursor-disabled));
+}
+.saltButton[href] {
+  display: inline-flex;
+}
+
+/* src/card/Card.css */
+.saltCard {
+  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
+  border-width: var(--salt-size-border);
+  border-style: var(--salt-container-borderStyle);
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
+}
+.saltCard-primary {
+  background: var(--saltCard-background, var(--salt-container-primary-background));
+  border-color: var(--salt-container-primary-borderColor);
+}
+.saltCard-secondary {
+  background: var(--saltCard-background, var(--salt-container-secondary-background));
+  border-color: var(--salt-container-secondary-borderColor);
+}
+.saltCard-interactable {
+  display: block;
+  transition: none;
+}
+a:focus .saltCard-interactable,
+.saltCard-interactable:hover {
+  box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+  cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
+  position: relative;
+}
+.saltCard-interactable:active {
+  box-shadow: var(--saltCard-boxShadow-active, var(--salt-overlayable-shadow-hover));
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+a:focus .saltCard-interactable.saltCard-disabled,
+.saltCard-interactable.saltCard-disabled:hover,
+.saltCard-interactable.saltCard-disabled:active {
+  box-shadow: var(--saltCard-boxShadow-disabled, var(--salt-overlayable-shadow));
+}
+.saltCard-disabled,
+.saltCard-disabled.saltCard-interactable,
+a:focus .saltCard-interactable.saltCard-disabled {
+  border-color: var(--salt-container-primary-borderColor-disabled);
+  color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
+  cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
+  outline: none;
+}
+.saltCard-disabled div {
+  pointer-events: none;
+}
+
+/* src/card/InteractableCard.css */
+.saltInteractableCard {
+  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
+  border-width: var(--saltCard-borderWidth, var(--card-borderWidth));
+  border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
+  border-color: var(--saltCard-borderColor, var(--salt-accent-borderColor));
+  border-radius: var(--saltCard-borderRadius, 0);
+  display: block;
+  transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
+}
+.saltInteractableCard-primary {
+  background: var(--saltCard-background, var(--salt-container-primary-background));
+}
+.saltInteractableCard-secondary {
+  background: var(--saltCard-background, var(--salt-container-secondary-background));
+}
+.saltInteractableCard-accentBottom {
+  --card-borderWidth: 0 0 var(--salt-size-accent) 0;
+}
+.saltInteractableCard-accentLeft {
+  --card-borderWidth: 0 0 0 var(--salt-size-accent);
+}
+.saltInteractableCard-accentTop {
+  --card-borderWidth: var(--salt-size-accent) 0 0 0;
+}
+.saltInteractableCard-accentRight {
+  --card-borderWidth: 0 var(--salt-size-accent) 0 0;
+}
+a:focus-visible .saltInteractableCard,
+.saltInteractableCard:focus-visible {
+  cursor: var(--saltCard-interactable-cursor-focus, var(--salt-selectable-cursor-hover));
+  box-shadow: var(--saltCard-interactable-shadow-focus, var(--salt-overlayable-shadow-hover));
+  color: var(--saltCard-color-focus, var(--salt-text-primary-foreground));
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+a:link .saltInteractableCard * {
+  text-decoration: none;
+}
+.saltInteractableCard:active {
+  cursor: var(--saltCard-interactable-cursor-active, var(--salt-selectable-cursor-active));
+  box-shadow: var(--saltCard-interactable-shadow-active, var(--salt-overlayable-shadow-hover));
+}
+.saltInteractableCard:hover {
+  cursor: var(--saltCard-interactable-cursor-hover, var(--salt-selectable-cursor-hover));
+  box-shadow: var(--saltCard-interactable-shadow-hover, var(--salt-overlayable-shadow-hover));
+}
+.saltInteractableCard-disabled,
+.saltInteractableCard-disabled:focus,
+.saltInteractableCard-disabled:hover,
+.saltInteractableCard-disabled:active {
+  box-shadow: var(--saltCard-interactable-shadow, var(--salt-overlayable-shadow));
+  color: var(--saltCard-color-disabled, var(--salt-text-primary-foreground-disabled));
+  cursor: var(--saltCard-interactable-cursor-disabled, var(--salt-selectable-cursor-disabled));
+  outline: none;
+}
+.saltInteractableCard-primary.saltInteractableCard-disabled,
+.saltInteractableCard-primary.saltInteractableCard-disabled:focus,
+.saltInteractableCard-primary.saltInteractableCard-disabled:hover,
+.saltInteractableCard-primary.saltInteractableCard-disabled:active {
+  border-color: var(--saltCard-borderColor-disabled, var(--salt-container-primary-borderColor-disabled));
+  background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
+}
+.saltInteractableCard-secondary.saltInteractableCard-disabled,
+.saltInteractableCard-secondary.saltInteractableCard-disabled:focus,
+.saltInteractableCard-secondary.saltInteractableCard-disabled:hover,
+.saltInteractableCard-secondary.saltInteractableCard-disabled:active {
+  border-color: var(--saltCard-borderColor-disabled, var(--salt-container-secondary-borderColor-disabled));
+  background: var(--saltCard-background-disabled, var(--salt-container-secondary-background));
+}
+.saltInteractableCard-disabled div {
+  pointer-events: none;
+}
+.saltInteractableCard-link {
+  color: var(--saltCard-link-color, var(--salt-text-primary-foreground));
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
+
+/* src/checkbox/Checkbox.css */
+.saltCheckbox {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  cursor: var(--salt-selectable-cursor-hover);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
+}
+.saltCheckbox-disabled {
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+.saltCheckbox-readOnly {
+  color: var(--salt-text-primary-foreground);
+  cursor: var(--salt-selectable-cursor-readonly);
+}
+.saltCheckbox-input,
+.saltCheckboxIcon {
+  margin-top: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+}
+.saltCheckboxIcon > svg {
+  transform: translate(0px, 0px);
+}
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline: var(--saltCheckbox-outline, var(--salt-focused-outline));
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+.saltCheckbox-input:focus-visible + .saltCheckboxIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+.saltCheckbox-error .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-color: var(--salt-status-error-foreground);
+  border-color: var(--salt-status-error-foreground);
+  color: var(--salt-status-error-foreground);
+}
+.saltCheckbox-warning .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
+  outline-color: var(--salt-status-warning-foreground);
+  border-color: var(--salt-status-warning-foreground);
+  color: var(--salt-status-warning-foreground);
+}
+.saltCheckbox-input {
+  cursor: inherit;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  z-index: var(--salt-zIndex-default);
+}
+
+/* src/checkbox/CheckboxGroup.css */
+.saltCheckboxGroup {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.saltCheckboxGroup-horizontal {
+  display: flex;
+  gap: var(--salt-spacing-200);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.saltCheckboxGroup-vertical {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-direction: column;
+}
+.saltCheckboxGroup-noWrap {
+  flex-wrap: nowrap;
+}
+.saltCheckboxGroup-noWrap .saltCheckbox {
+  white-space: break-spaces;
+}
+.saltFormField-labelLeft .saltCheckboxGroup,
+.saltFormField-labelRight .saltCheckboxGroup {
+  padding-top: var(--salt-spacing-100);
+}
+
+/* src/checkbox/CheckboxIcon.css */
+.saltCheckboxIcon {
+  --checkbox-size: var(--salt-size-selectable);
+  width: var(--checkbox-size);
+  min-width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  min-height: var(--checkbox-size);
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  color: var(--salt-selectable-foreground);
+  background: var(--salt-container-primary-background);
+  position: relative;
+  --saltIcon-color: currentColor;
+  --saltIcon-size: 100%;
+  display: flex;
+}
+.saltCheckbox:hover .saltCheckboxIcon,
+.saltCheckbox:hover .saltCheckboxIcon-indeterminate {
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+.saltCheckboxIcon-checked,
+.saltCheckbox:hover .saltCheckboxIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+.saltCheckboxIcon-disabled,
+.saltCheckbox:hover .saltCheckboxIcon-disabled,
+.saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate,
+.saltCheckbox:hover .saltCheckboxIcon-disabled.saltCheckboxIcon-indeterminate {
+  border-color: var(--salt-selectable-borderColor-disabled);
+  background: var(--salt-container-primary-background-disabled);
+  color: var(--salt-selectable-foreground-disabled);
+}
+.saltCheckboxIcon-checked.saltCheckboxIcon-disabled,
+.saltCheckbox:hover .saltCheckboxIcon-checked.saltCheckboxIcon-disabled {
+  border-color: var(--salt-selectable-borderColor-selectedDisabled);
+  color: var(--salt-selectable-foreground-selectedDisabled);
+}
+.saltCheckboxIcon-indeterminate::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--checkbox-size) - 6px);
+  height: 2px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.saltCheckboxIcon-error,
+.saltCheckbox:hover .saltCheckboxIcon-error {
+  color: var(--salt-status-error-foreground);
+  border-color: var(--salt-status-error-borderColor);
+  outline-color: var(--salt-status-error-foreground);
+}
+.saltCheckboxIcon-warning,
+.saltCheckbox:hover .saltCheckboxIcon-warning {
+  color: var(--salt-status-warning-foreground);
+  border-color: var(--salt-status-warning-borderColor);
+  outline-color: var(--salt-status-warning-foreground);
+}
+.saltCheckboxIcon-readOnly,
+.saltCheckbox:hover .saltCheckboxIcon-readOnly {
+  border-color: var(--salt-selectable-borderColor-readonly);
+  color: var(--salt-text-primary-foreground);
+}
+
+/* src/flex-item/FlexItem.css */
+.saltFlexItem {
+  --saltFlexItem-alignment: auto;
+  --saltFlexItem-shrink: 1;
+  --saltFlexItem-grow: 0;
+  --saltFlexItem-basis: auto;
+}
+.saltFlexItem {
+  position: relative;
+  align-self: var(--saltFlexItem-alignment);
+  flex-grow: var(--saltFlexItem-grow);
+  flex-shrink: var(--saltFlexItem-shrink);
+  flex-basis: var(--saltFlexItem-basis);
+}
+.saltFlexItem-stacked {
+  flex-grow: 2;
+}
+
+/* src/flex-layout/FlexLayout.css */
+.saltFlexLayout {
+  --flexLayout-gap-multiplier: var(--flexLayout-gap-density-multiplier, 3);
+  --flexLayout-layout-display: flex;
+  --flexLayout-direction: row;
+  --flexLayout-wrap: nowrap;
+  --flexLayout-justify: flex-start;
+  --flexLayout-align: stretch;
+  --flexLayout-separator: var(--salt-size-border);
+  --flexLayout-gap: calc(var(--salt-size-unit) * var(--flexLayout-gap-multiplier));
+}
+.saltFlexLayout {
+  gap: var(--flexLayout-gap);
+  display: var(--flexLayout-layout-display);
+  flex-direction: var(--flexLayout-direction);
+  flex-wrap: var(--flexLayout-wrap);
+  justify-content: var(--flexLayout-justify);
+  align-items: var(--flexLayout-align);
+}
+.saltFlexLayout-separator {
+  gap: calc(var(--flexLayout-gap) * 2);
+}
+.saltFlexLayout-separator > * {
+  position: relative;
+}
+.saltFlexLayout-separator > *:not(:last-child)::after {
+  position: absolute;
+  display: block;
+  content: "";
+  background-color: var(--salt-separable-secondary-borderColor);
+}
+.saltFlexLayout-separator-row > *:not(:last-child)::after {
+  height: 100%;
+}
+.saltFlexLayout-separator-row > *:not(:last-child)::after {
+  width: var(--flexLayout-separator);
+  top: 0;
+}
+.saltFlexLayout-separator-row-start > *:not(:last-child)::after {
+  right: 0;
+}
+.saltFlexLayout-separator-row-center > *:not(:last-child)::after {
+  right: calc(var(--flexLayout-gap) * -1);
+}
+.saltFlexLayout-separator-row-end > *:not(:last-child)::after {
+  right: calc(var(--flexLayout-gap) * -2);
+}
+.saltFlexLayout-separator-column > *:not(:last-child)::after {
+  width: 100%;
+}
+.saltFlexLayout-separator-column > *:not(:last-child)::after {
+  height: var(--flexLayout-separator);
+  left: 0;
+  width: 100%;
+}
+.saltFlexLayout-separator-column-start > *:not(:last-child)::after {
+  bottom: 0;
+}
+.saltFlexLayout-separator-column-center > *:not(:last-child)::after {
+  bottom: calc(var(--flexLayout-gap) * -1);
+}
+.saltFlexLayout-separator-column-end > *:not(:last-child)::after {
+  bottom: calc(var(--flexLayout-gap) * -2);
+}
+
+/* src/form-field/FormField.css */
+.saltFormField {
+  display: inline-grid;
+  position: relative;
+  gap: var(--salt-spacing-100);
+  text-align: left;
+  width: var(--saltFormField-width, 100%);
+}
+.saltFormField-labelTop {
+  grid-template-areas: "label" "controls";
+}
+.saltFormField-labelTop .saltFormFieldHelperText {
+  grid-area: 3 / 1;
+}
+.saltFormField-labelLeft {
+  align-self: center;
+  grid-template-columns: var(--formField-label-width, 40%) 1fr;
+  grid-template-areas: "label controls";
+}
+.saltFormField-labelRight {
+  align-self: center;
+  grid-template-columns: var(--formField-label-width, 40%) 1fr;
+  grid-template-areas: "label controls";
+}
+.saltFormField-labelLeft .saltFormFieldHelperText,
+.saltFormField-labelRight .saltFormFieldHelperText {
+  grid-area: 2 / 2;
+}
+.saltFormField-labelRight .saltFormFieldLabel,
+.saltFormField-labelLeft .saltFormFieldLabel {
+  padding-top: var(--salt-spacing-100);
+}
+.saltFormField-labelRight .saltFormFieldLabel {
+  text-align: right;
+}
+.saltFormField-controls {
+  align-items: center;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  grid-column-gap: var(--salt-spacing-100);
+}
+.saltFormFieldLabel {
+  grid-area: label;
+}
+.saltFormFieldHelperText {
+  grid-area: helperText;
+}
+.saltFormField-disabled {
+  --saltInput-outline: none;
+  --saltCheckbox-outline: none;
+  --saltRadioButton-outline: none;
+}
+
+/* src/form-field/FormFieldHelperText.css */
+.saltFormFieldHelperText {
+  cursor: default;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.saltFormFieldHelperText .saltText {
+  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+}
+.saltFormFieldHelperText-withValidation {
+  column-gap: var(--salt-spacing-75);
+}
+
+/* src/form-field/FormFieldLabel.css */
+.saltFormFieldLabel.saltText {
+  font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
+  width: 100%;
+}
+.saltFormFieldLabel:hover + .saltFormField-controls * {
+  --input-borderColor: var(--input-borderColor-hover);
+}
+.saltFormField-labelLeft .saltFormFieldLabel.saltText {
+  align-self: baseline;
+  padding-top: var(--salt-spacing-100);
+}
+.saltFormFieldLabel-necessityLabel {
+  font-weight: var(--salt-text-fontWeight);
+  font-style: var(--salt-editable-help-fontStyle);
+}
+.saltFormFieldLabel-sentence.saltText {
+  color: var(--salt-text-primary-foreground);
+  font-size: var(--salt-text-fontSize);
+}
+
+/* src/grid-item/GridItem.css */
+.saltGridItem {
+  justify-self: var(--gridItem-justifySelf);
+  align-self: var(--gridItem-alignSelf);
+  grid-row-start: var(--gridItem-gridRowStart);
+  grid-column-start: var(--gridItem-gridColumnStart);
+  grid-row-end: var(--gridItem-gridRowEnd);
+  grid-column-end: var(--gridItem-gridColumnEnd);
+}
+.saltGridItem-area {
+  grid-area: var(--gridItem-gridArea);
+}
+
+/* src/grid-layout/GridLayout.css */
+.salt-density-touch {
+  --gridLayout-gap-density-multiplier: 2;
+}
+.saltGridLayout {
+  --gridLayout-space: 1fr;
+  --gridLayout-rowGap: var(--gridLayout-gap-density-multiplier, 3);
+  --gridLayout-columnGap: var(--gridLayout-gap-density-multiplier, 3);
+}
+.saltGridLayout {
+  display: grid;
+  column-gap: calc(var(--salt-size-unit) * var(--gridLayout-columnGap));
+  row-gap: calc(var(--salt-size-unit) * var(--gridLayout-rowGap));
+  grid-template-columns: repeat(var(--gridLayout-columns), var(--gridLayout-space));
+  grid-template-rows: repeat(var(--gridLayout-rows), var(--gridLayout-space));
+  grid-auto-columns: auto;
+  grid-auto-rows: auto;
+}
+.saltGridLayout-area {
+  grid-template: var(--gridLayout-gridTemplate);
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: min-content 1fr min-content;
+}
+
+/* src/input/Input.css */
+.saltInput {
+  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderStyle: var(--salt-editable-borderStyle);
+  --input-outlineColor: var(--salt-focused-outlineColor);
+  --input-borderWidth: var(--salt-size-border);
+  align-items: center;
+  background: var(--saltInput-background, var(--input-background));
+  color: var(--saltInput-color, var(--salt-text-primary-foreground));
+  display: inline-flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--saltInput-fontSize, var(--salt-text-fontSize));
+  height: var(--saltInput-height, var(--salt-size-base));
+  line-height: var(--saltInput-lineHeight, var(--salt-text-lineHeight));
+  min-height: var(--saltInput-minHeight, var(--salt-size-base));
+  min-width: var(--saltInput-minWidth, 4em);
+  padding-left: var(--saltInput-paddingLeft, var(--salt-spacing-100));
+  padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
+  position: relative;
+  width: 100%;
+}
+.saltInput:hover {
+  --input-borderStyle: var(--salt-editable-borderStyle-hover);
+  --input-borderColor: var(--salt-editable-borderColor-hover);
+  background: var(--saltInput-background-hover, var(--input-background-hover));
+  cursor: var(--salt-editable-cursor-hover);
+}
+.saltInput:active {
+  --input-borderColor: var(--salt-editable-borderColor-active);
+  --input-borderStyle: var(--salt-editable-borderStyle-active);
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+  background: var(--saltInput-background-active, var(--input-background-active));
+  cursor: var(--salt-editable-cursor-active);
+}
+.saltInput-primary {
+  --input-background: var(--salt-editable-primary-background);
+  --input-background-active: var(--salt-editable-primary-background-active);
+  --input-background-hover: var(--salt-editable-primary-background-hover);
+  --input-background-disabled: var(--salt-editable-primary-background-disabled);
+  --input-background-readonly: var(--salt-editable-primary-background-readonly);
+}
+.saltInput-secondary {
+  --input-background: var(--salt-editable-secondary-background);
+  --input-background-active: var(--salt-editable-secondary-background-active);
+  --input-background-hover: var(--salt-editable-secondary-background-active);
+  --input-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --input-background-readonly: var(--salt-editable-secondary-background-readonly);
+}
+.saltInput-error,
+.saltInput-error:hover {
+  --input-background: var(--salt-status-error-background);
+  --input-background-active: var(--salt-status-error-background);
+  --input-background-hover: var(--salt-status-error-background);
+  --input-borderColor: var(--salt-status-error-borderColor);
+  --input-outlineColor: var(--salt-status-error-borderColor);
+}
+.saltInput-warning,
+.saltInput-warning:hover {
+  --input-background: var(--salt-status-warning-background);
+  --input-background-active: var(--salt-status-warning-background);
+  --input-background-hover: var(--salt-status-warning-background);
+  --input-borderColor: var(--salt-status-warning-borderColor);
+  --input-outlineColor: var(--salt-status-warning-borderColor);
+}
+.saltInput-success,
+.saltInput-success:hover {
+  --input-background: var(--salt-status-success-background);
+  --input-background-active: var(--salt-status-success-background);
+  --input-background-hover: var(--salt-status-success-background);
+  --input-borderColor: var(--salt-status-success-borderColor);
+  --input-outlineColor: var(--salt-status-success-borderColor);
+}
+.saltInput-input {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  height: 100%;
+  letter-spacing: var(--saltInput-letterSpacing, 0);
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  text-align: var(--input-textAlign);
+  width: 100%;
+}
+.saltInput-input:focus {
+  outline: none;
+}
+.saltInput-input::selection {
+  background: var(--salt-text-background-selected);
+}
+.saltInput-input::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
+}
+.saltInput-focused {
+  --input-borderColor: var(--input-outlineColor);
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+  outline: var(--saltInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
+}
+.saltInput.saltInput-readOnly {
+  --input-borderColor: var(--salt-editable-borderColor-readonly);
+  --input-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --input-borderWidth: var(--salt-size-border);
+  background: var(--input-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+.saltInput-focused.saltInput-disabled {
+  --input-borderWidth: var(--salt-size-border);
+  outline: none;
+}
+.saltInput-focused.saltInput-readOnly {
+  --input-borderWidth: var(--salt-size-border);
+}
+.saltInput-disabled .saltInput-input::selection {
+  background: none;
+}
+.saltInput.saltInput-disabled,
+.saltInput.saltInput-disabled:hover,
+.saltInput.saltInput-disabled:active {
+  --input-borderColor: var(--salt-editable-borderColor-disabled);
+  --input-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --input-borderWidth: var(--salt-size-border);
+  background: var(--input-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--saltInput-color-disabled, var(--salt-text-primary-foreground-disabled));
+}
+.saltInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
+}
+.saltInput-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-right: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+.saltInput-endAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-left: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+.saltInput-readOnly .saltInput-startAdornmentContainer {
+  margin-left: var(--salt-spacing-50);
+}
+.saltInput-startAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+.saltInput-endAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+.saltInput-startAdornmentContainer .saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-50) * -1);
+}
+.saltInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+.saltInput .saltButton {
+  --saltButton-padding: 0;
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+}
+
+/* src/link/Link.css */
+.saltLink {
+  --link-color-hover: var(--saltLink-color-hover, var(--salt-text-link-foreground-hover));
+  --link-color-active: var(--saltLink-color-active, var(--salt-text-link-foreground-active));
+  --link-color-visited: var(--saltLink-color-visited, var(--salt-text-link-foreground-visited));
+  --link-color-focus: var(--saltLink-color-focus, var(--link-color-hover));
+  --link-textDecoration: var(--salt-text-link-textDecoration);
+  --link-textDecoration-hover: var(--salt-text-link-textDecoration-hover);
+  --link-fontFamily: var(--salt-text-fontFamily);
+  --link-focus-outline: var(--salt-focused-outline);
+}
+.saltLink {
+  color: var(--link-color);
+  letter-spacing: 0px;
+  text-decoration: var(--link-textDecoration);
+  font-family: var(--link-fontFamily);
+}
+.saltText-primary {
+  --link-color: var(--salt-text-primary-foreground);
+}
+.saltText-secondary {
+  --link-color: var(--salt-text-secondary-foreground);
+}
+.saltLink-icon {
+  margin-left: var(--salt-size-adornmentGap);
+  margin-bottom: -2px;
+}
+.saltLink:visited {
+  --saltIcon-color: var(--link-color-visited);
+  color: var(--link-color-visited);
+}
+.saltLink:hover {
+  --saltIcon-color: var(--link-color-hover);
+  color: var(--link-color-hover);
+  text-decoration: var(--link-textDecoration-hover);
+}
+.saltLink:active {
+  --saltIcon-color: var(--link-color-active);
+  color: var(--link-color-active);
+}
+.saltLink:focus {
+  --saltIcon-color: var(--link-color-focus);
+  outline: var(--link-focus-outline);
+  color: var(--link-color-focus);
+  text-decoration: var(--link-textDecoration-hover);
+}
+.saltLink-externalLinkADA {
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+}
+
+/* src/multiline-input/MultilineInput.css */
+.saltMultilineInput {
+  --multilineInput-borderColor: var(--salt-editable-borderColor);
+  --multilineInput-borderStyle: var(--salt-editable-borderStyle);
+  --multilineInput-outlineColor: var(--salt-focused-outlineColor);
+  --multilineInput-border: none;
+  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
+  align-items: center;
+  background: var(--multilineInput-background);
+  border: var(--multilineInput-border);
+  color: var(--salt-text-primary-foreground);
+  display: inline-flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  height: auto;
+  line-height: var(--salt-text-lineHeight);
+  min-height: var(--salt-size-base);
+  min-width: 4em;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  position: relative;
+  width: 100%;
+}
+.saltMultilineInput:hover {
+  --multilineInput-borderStyle: var(--salt-editable-borderStyle-hover);
+  --multilineInput-borderColor: var(--salt-editable-borderColor-hover);
+  background: var(--multilineInput-background-hover);
+  cursor: var(--salt-editable-cursor-hover);
+}
+.saltMultilineInput:active {
+  --multilineInput-borderColor: var(--salt-editable-borderColor-active);
+  --multilineInput-borderStyle: var(--salt-editable-borderStyle-active);
+  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+  background: var(--multilineInput-background-active);
+  cursor: var(--salt-editable-cursor-active);
+}
+.saltMultilineInput-primary {
+  --multilineInput-background: var(--salt-editable-primary-background);
+  --multilineInput-background-active: var(--salt-editable-primary-background-active);
+  --multilineInput-background-hover: var(--salt-editable-primary-background-hover);
+  --multilineInput-background-disabled: var(--salt-editable-primary-background-disabled);
+  --multilineInput-background-readonly: var(--salt-editable-primary-background-readonly);
+}
+.saltMultilineInput-secondary {
+  --multilineInput-background: var(--salt-editable-secondary-background);
+  --multilineInput-background-active: var(--salt-editable-secondary-background-active);
+  --multilineInput-background-hover: var(--salt-editable-secondary-background-active);
+  --multilineInput-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --multilineInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+}
+.saltMultilineInput-error,
+.saltMultilineInput-error:hover {
+  --multilineInput-background: var(--salt-status-error-background);
+  --multilineInput-background-active: var(--salt-status-error-background);
+  --multilineInput-background-hover: var(--salt-status-error-background);
+  --multilineInput-borderColor: var(--salt-status-error-borderColor);
+  --multilineInput-outlineColor: var(--salt-status-error-borderColor);
+}
+.saltMultilineInput-warning,
+.saltMultilineInput-warning:hover {
+  --multilineInput-background: var(--salt-status-warning-background);
+  --multilineInput-background-active: var(--salt-status-warning-background);
+  --multilineInput-background-hover: var(--salt-status-warning-background);
+  --multilineInput-borderColor: var(--salt-status-warning-borderColor);
+  --multilineInput-outlineColor: var(--salt-status-warning-borderColor);
+}
+.saltMultilineInput-success,
+.saltMultilineInput-success:hover {
+  --multilineInput-background: var(--salt-status-success-background);
+  --multilineInput-background-active: var(--salt-status-success-background);
+  --multilineInput-background-hover: var(--salt-status-success-background);
+  --multilineInput-borderColor: var(--salt-status-success-borderColor);
+  --multilineInput-outlineColor: var(--salt-status-success-borderColor);
+}
+.saltMultilineInput.saltMultilineInput-withAdornmentRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+.saltMultilineInput-textarea {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: inline-flex;
+  height: calc(var(--saltMultilineInput-rows, 3) * var(--salt-text-lineHeight));
+  flex-grow: 1;
+  font: inherit;
+  letter-spacing: 0;
+  margin: var(--salt-spacing-75) 0;
+  min-width: 0;
+  overflow: hidden;
+  resize: none;
+  padding: 0;
+}
+.saltMultilineInput-textarea::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
+}
+.saltMultilineInput-textarea:focus {
+  outline: none;
+}
+.saltMultilineInput-textarea::selection {
+  background: var(--salt-text-background-selected);
+}
+.saltMultilineInput-focused {
+  --multilineInput-borderColor: var(--multilineInput-outlineColor);
+  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
+}
+.saltMultilineInput-readOnly,
+.saltMultilineInput-readOnly:active,
+.saltMultilineInput-readOnly:hover {
+  --multilineInput-borderColor: var(--salt-editable-borderColor-readonly);
+  --multilineInput-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
+  background: var(--multilineInput-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+.saltMultilineInput-disabled .saltMultilineInput-textarea::selection {
+  background: none;
+}
+.saltMultilineInput-disabled,
+.saltMultilineInput-disabled:hover,
+.saltMultilineInput-disabled:active {
+  --multilineInput-borderColor: var(--salt-editable-borderColor-disabled);
+  --multilineInput-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
+  background: var(--multilineInput-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--salt-text-primary-foreground-disabled);
+}
+.saltMultilineInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
+}
+.saltMultilineInput.saltMultilineInput-bordered {
+  --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
+  --multilineInput-activationIndicator-borderWidth: 0;
+}
+.saltMultilineInput-bordered:active,
+.saltMultilineInput-bordered.saltMultilineInput-focused {
+  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+}
+.saltMultilineInput-bordered.saltMultilineInput-readOnly:hover,
+.saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
+  --multilineInput-activationIndicator-borderWidth: 0;
+}
+.saltMultilineInput-endAdornmentContainer,
+.saltMultilineInput-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  min-height: var(--salt-size-base);
+  column-gap: var(--salt-spacing-100);
+}
+.saltMultilineInput-startAdornmentContainer {
+  align-self: self-start;
+  padding-right: var(--salt-spacing-100);
+}
+.saltMultilineInput-suffixAdornments {
+  align-self: self-end;
+}
+.saltMultilineInput-withAdornmentRow .saltMultilineInput-suffixAdornments {
+  display: inline-flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+}
+.saltMultilineInput-endAdornmentContainer {
+  padding-left: var(--salt-spacing-100);
+}
+.saltMultilineInput-statusAdornmentContainer {
+  align-self: self-end;
+  display: inline-flex;
+  min-height: var(--salt-size-base);
+}
+.saltMultilineInput-startAdornmentContainer .saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-50) * -1);
+}
+.saltMultilineInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+.saltMultilineInput-readOnly .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: 0;
+}
+.saltMultilineInput .saltButton {
+  --saltButton-padding: 0;
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-50));
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-50));
+}
+
+/* src/panel/Panel.css */
+.saltPanel-primary.saltPanel {
+  --panel-background: var(--salt-container-primary-background);
+}
+.saltPanel-secondary.saltPanel {
+  --panel-background: var(--salt-container-secondary-background);
+}
+.saltPanel {
+  background: var(--saltPanel-background, var(--panel-background));
+  color: var(--saltPanel-color, initial);
+  height: var(--saltPanel-height, 100%);
+  overflow: auto;
+  padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
+  width: var(--saltPanel-width, 100%);
+}
+
+/* src/radio-button/RadioButton.css */
+.saltRadioButton {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  cursor: var(--salt-selectable-cursor-hover);
+  position: relative;
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
+  --radioButton-icon-marginTop: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+}
+.saltRadioButton-disabled {
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+.saltRadioButton-readOnly {
+  color: var(--salt-text-primary-foreground);
+  cursor: var(--salt-selectable-cursor-readonly);
+}
+.saltRadioButton-input {
+  cursor: inherit;
+  position: absolute;
+  height: var(--salt-size-selectable);
+  opacity: 0;
+  margin: var(--radioButton-icon-marginTop) 0 0 0;
+  padding: 0;
+  width: var(--salt-size-selectable);
+  z-index: var(--salt-zIndex-default);
+}
+.saltRadioButtonIcon {
+  margin-top: var(--radioButton-icon-marginTop);
+}
+.saltRadioButtonIcon > svg {
+  transform: translate(0px, 0px);
+}
+.saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
+  outline: var(--saltRadioButton-outline, var(--salt-focused-outline));
+  outline-offset: var(--salt-focused-outlineOffset);
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+.saltRadioButton-input:focus-visible + .saltRadioButtonIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+.saltRadioButton-error .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
+  outline-color: var(--salt-status-error-foreground);
+  border-color: var(--salt-status-error-foreground);
+  color: var(--salt-status-error-foreground);
+}
+.saltRadioButton-warning .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
+  outline-color: var(--salt-status-warning-foreground);
+  border-color: var(--salt-status-warning-foreground);
+  color: var(--salt-status-warning-foreground);
+}
+
+/* src/radio-button/RadioButtonGroup.css */
+.saltRadioButtonGroup {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.saltRadioButtonGroup-vertical {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-direction: column;
+}
+.saltRadioButtonGroup-horizontal {
+  display: flex;
+  gap: var(--salt-spacing-200);
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.saltRadioButtonGroup-noWrap {
+  flex-wrap: nowrap;
+}
+.saltRadioButtonGroup-noWrap .saltRadioButton {
+  white-space: break-spaces;
+}
+.saltFormField-labelLeft .saltRadioButtonGroup,
+.saltFormField-labelRight .saltRadioButtonGroup {
+  padding-top: var(--salt-spacing-100);
+}
+
+/* src/radio-button/RadioButtonIcon.css */
+.saltRadioButtonIcon {
+  --radioButton-size: var(--salt-size-selectable);
+  width: var(--radioButton-size);
+  height: var(--radioButton-size);
+  min-width: var(--radioButton-size);
+  min-height: var(--radioButton-size);
+  border-radius: 50%;
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  color: var(--salt-selectable-foreground);
+  background: var(--salt-container-primary-background);
+  --saltIcon-color: currentColor;
+  --saltIcon-size: 100%;
+  display: flex;
+}
+.saltRadioButton:hover .saltRadioButtonIcon {
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+.saltRadioButtonIcon-checked,
+.saltRadioButton:hover .saltRadioButtonIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+.saltRadioButtonIcon-disabled,
+.saltRadioButton:hover .saltRadioButtonIcon-disabled {
+  border-color: var(--salt-selectable-borderColor-disabled);
+  background: var(--salt-container-primary-background-disabled);
+  color: var(--salt-selectable-foreground-disabled);
+}
+.saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled,
+.saltRadioButton:hover .saltRadioButtonIcon-checked.saltRadioButtonIcon-disabled {
+  border-color: var(--salt-selectable-borderColor-selectedDisabled);
+  color: var(--salt-selectable-foreground-selectedDisabled);
+}
+.saltRadioButtonIcon-error,
+.saltRadioButton:hover .saltRadioButtonIcon-error {
+  color: var(--salt-status-error-foreground);
+  border-color: var(--salt-status-error-borderColor);
+  outline-color: var(--salt-status-error-foreground);
+}
+.saltRadioButtonIcon-warning,
+.saltRadioButton:hover .saltRadioButtonIcon-warning {
+  color: var(--salt-status-warning-foreground);
+  border-color: var(--salt-status-warning-borderColor);
+  outline-color: var(--salt-status-warning-foreground);
+}
+.saltRadioButtonIcon-readOnly,
+.saltRadioButton:hover .saltRadioButtonIcon-readOnly {
+  border-color: var(--salt-selectable-borderColor-readonly);
+  color: var(--salt-text-primary-foreground);
+}
+
+/* src/salt-provider/SaltProvider.css */
+.salt-provider {
+  display: contents;
+}
+
+/* src/spinner/Spinner.css */
+.saltSpinner {
+  position: relative;
+}
+.saltSpinner-gradientStop {
+  stop-color: var(--saltSpinner-gradient-color, var(--salt-accent-background));
+}
+.saltSpinner-medium {
+  --spinner-strokeWidth: var(--salt-size-bar);
+  height: var(--salt-size-base);
+  width: var(--salt-size-base);
+}
+.saltSpinner-large {
+  --spinner-strokeWidth: var(--salt-size-bar);
+  height: calc(var(--salt-size-base) * 2);
+  width: calc(var(--salt-size-base) * 2);
+}
+.saltSpinner-small {
+  --spinner-strokeWidth: var(--salt-size-bar-small);
+  height: var(--salt-size-icon);
+  width: var(--salt-size-icon);
+}
+.saltSpinner-spinner {
+  animation: spinner 0.9s linear infinite;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* src/split-layout/SplitLayout.css */
+.saltSplitLayout {
+  flex-grow: 1;
+}
+
+/* src/stack-layout/StackLayout.css */
+.saltStackLayout {
+  --stackLayout-gap-multiplier: var(--stackLayout-gap-density-multiplier, 3);
+  --stackLayout-separator-weight: var(--salt-size-border, 1);
+  --stackLayout-gap: calc(var(--salt-size-unit) * var(--stackLayout-gap-multiplier));
+}
+.saltStackLayout-separator > * {
+  position: relative;
+}
+.saltStackLayout-separator > *:not(:last-child)::after {
+  position: absolute;
+  display: block;
+  content: "";
+  background-color: var(--salt-separable-secondary-borderColor);
+}
+.saltStackLayout-separator-start {
+  --stackLayout-seperator-offset: calc(var(--stackLayout-separator-weight) * -1);
+}
+.saltStackLayout-separator-center {
+  --stackLayout-seperator-offset: calc((var(--stackLayout-gap) * -0.5) + (var(--stackLayout-separator-weight) * -0.5));
+}
+.saltStackLayout-separator-end {
+  --stackLayout-seperator-offset: calc(var(--stackLayout-gap) * -1);
+}
+.saltStackLayout-row.saltStackLayout-separator > *:not(:last-child)::after {
+  height: 100%;
+  width: var(--stackLayout-separator-weight);
+  right: var(--stackLayout-seperator-offset);
+  top: 0;
+}
+.saltStackLayout-column.saltStackLayout-separator > *:not(:last-child)::after {
+  width: 100%;
+  height: var(--stackLayout-separator-weight);
+  bottom: var(--stackLayout-seperator-offset);
+  left: 0;
+}
+
+/* src/status-adornment/StatusAdornment.css */
+.saltStatusAdornment {
+  align-self: center;
+  display: inline-block;
+  fill: var(--saltStatusAdornment-color, var(--statusAdornment-color));
+  height: var(--salt-icon-size-status-adornment);
+  min-height: var(--salt-icon-size-status-adornment);
+  padding-left: var(--salt-spacing-100);
+  position: relative;
+}
+.saltStatusAdornment-error {
+  --statusAdornment-color: var(--salt-status-error-foreground);
+}
+.saltStatusAdornment-warning {
+  --statusAdornment-color: var(--salt-status-warning-foreground);
+}
+.saltStatusAdornment-success {
+  --statusAdornment-color: var(--salt-status-success-foreground);
+}
+
+/* src/status-indicator/StatusIndicator.css */
+.saltStatusIndicator {
+  --statusIndicator-warning-color: var(--salt-status-warning-foreground);
+  --statusIndicator-info-color: var(--salt-status-info-foreground);
+  --statusIndicator-success-color: var(--salt-status-success-foreground);
+  --statusIndicator-error-color: var(--salt-status-error-foreground);
+  --saltIcon-color: var(--statusIndicator-Color);
+  color: var(--statusIndicator-Color);
+}
+.saltStatusIndicator-error {
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-error-color));
+}
+.saltStatusIndicator-warning {
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-warning-color));
+}
+.saltStatusIndicator-success {
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-success-color));
+}
+.saltStatusIndicator-info {
+  --statusIndicator-Color: var(--saltStatusIndicator-color, var(--statusIndicator-info-color));
+}
+
+/* src/switch/Switch.css */
+.saltSwitch {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  cursor: var(--salt-selectable-cursor-hover);
+  color: var(--salt-text-primary-foreground);
+}
+.saltSwitch-disabled {
+  color: var(--salt-text-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+.saltSwitch-track {
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  --saltIcon-color: currentColor;
+  --saltIcon-size: 100%;
+  display: flex;
+  flex-shrink: 0;
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
+  align-items: center;
+  color: var(--salt-selectable-foreground);
+  background: var(--salt-container-primary-background);
+}
+.saltSwitch-label {
+  padding-top: var(--salt-spacing-25);
+}
+.saltSwitch-input:focus-visible + .saltSwitch-track {
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline: var(--salt-focused-outline);
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+.saltSwitch:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-hover);
+  color: var(--salt-selectable-foreground-hover);
+}
+.saltSwitch-checked .saltSwitch-track,
+.saltSwitch-checked:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+.saltSwitch-disabled .saltSwitch-track,
+.saltSwitch-disabled:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-disabled);
+  color: var(--salt-selectable-foreground-disabled);
+  background: var(--salt-container-primary-background-disabled);
+}
+.saltSwitch-checked.saltSwitch-disabled .saltSwitch-track,
+.saltSwitch-checked.saltSwitch-disabled:hover .saltSwitch-track {
+  border-color: var(--salt-selectable-borderColor-selectedDisabled);
+  color: var(--salt-selectable-foreground-selectedDisabled);
+}
+.saltSwitch-thumb {
+  display: flex;
+  aspect-ratio: 1;
+  height: var(--salt-size-selectable);
+  background: currentColor;
+  margin: var(--salt-spacing-25);
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+}
+.saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
+.saltSwitch:hover .saltSwitch-thumb {
+  border-color: var(--salt-selectable-borderColor-hover);
+  transition: transform var(--salt-duration-perceptible) ease-in-out;
+}
+.saltSwitch-checked .saltSwitch-thumb,
+.saltSwitch-checked:hover .saltSwitch-thumb {
+  background: transparent;
+  border-color: var(--salt-selectable-borderColor-selected);
+  transform: translateX(100%);
+}
+.saltSwitch-disabled .saltSwitch-thumb,
+.saltSwitch-disabled:hover .saltSwitch-thumb {
+  border: 0;
+}
+.saltSwitch-input {
+  cursor: inherit;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  z-index: var(--salt-zIndex-default);
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
+}
+@media (prefers-reduced-motion) {
+  .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,
+  .saltSwitch:hover .saltSwitch-thumb {
+    transition: none;
+  }
+}
+.salt-density-high .saltSwitch-thumb {
+  border: 0;
+}
+
+/* src/text/Text.css */
+.saltText {
+  color: var(--saltText-color, var(--text-color));
+  font-family: var(--saltText-fontFamily, var(--salt-text-fontFamily));
+}
+.saltText::selection {
+  background: var(--saltText-highlight, var(--salt-text-background-selected));
+}
+.saltText-lineClamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--text-max-rows, 0);
+  overflow: hidden;
+  word-break: break-word;
+}
+.saltText-primary {
+  --text-color: var(--salt-text-primary-foreground);
+}
+.saltText-primary.saltText-disabled {
+  --text-color: var(--salt-text-primary-foreground-disabled);
+}
+.saltText-secondary {
+  --text-color: var(--salt-text-secondary-foreground);
+}
+.saltText-secondary.saltText-disabled {
+  --text-color: var(--salt-text-secondary-foreground-disabled);
+}
+.saltText strong {
+  font-weight: var(--salt-text-fontWeight-strong);
+}
+.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-fontWeight-small);
+}
+.saltText-display1.saltText {
+  font-family: var(--salt-text-display1-fontFamily);
+  font-size: var(--salt-text-display1-fontSize);
+  font-weight: var(--salt-text-display1-fontWeight);
+  line-height: var(--salt-text-display1-lineHeight);
+}
+.saltText-display2.saltText {
+  font-family: var(--salt-text-display2-fontFamily);
+  font-size: var(--salt-text-display2-fontSize);
+  font-weight: var(--salt-text-display2-fontWeight);
+  line-height: var(--salt-text-display2-lineHeight);
+}
+.saltText-display3.saltText {
+  font-family: var(--salt-text-display3-fontFamily);
+  font-size: var(--salt-text-display3-fontSize);
+  font-weight: var(--salt-text-display3-fontWeight);
+  line-height: var(--salt-text-display3-lineHeight);
+}
+h1.saltText,
+.saltText-h1.saltText {
+  font-family: var(--salt-text-h1-fontFamily);
+  font-size: var(--salt-text-h1-fontSize);
+  font-weight: var(--salt-text-h1-fontWeight);
+  line-height: var(--salt-text-h1-lineHeight);
+}
+h1.saltText strong,
+.saltText-h1.saltText strong {
+  font-weight: var(--salt-text-h1-fontWeight-strong);
+}
+h1.saltText small,
+.saltText-h1.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-h1-fontWeight-small);
+}
+h2.saltText,
+.saltText-h2.saltText {
+  font-family: var(--salt-text-h2-fontFamily);
+  font-size: var(--salt-text-h2-fontSize);
+  font-weight: var(--salt-text-h2-fontWeight);
+  line-height: var(--salt-text-h2-lineHeight);
+}
+h2.saltText strong,
+.saltText-h2.saltText strong {
+  font-weight: var(--salt-text-h2-fontWeight-strong);
+}
+h2.saltText small,
+.saltText-h2.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-h2-fontWeight-small);
+}
+h3.saltText,
+.saltText-h3.saltText {
+  font-family: var(--salt-text-h3-fontFamily);
+  font-size: var(--salt-text-h3-fontSize);
+  font-weight: var(--salt-text-h3-fontWeight);
+  line-height: var(--salt-text-h3-lineHeight);
+}
+h3.saltText strong,
+.saltText-h3.saltText strong {
+  font-weight: var(--salt-text-h3-fontWeight-strong);
+}
+h3.saltText small,
+.saltText-h3.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-h3-fontWeight-small);
+}
+h4.saltText,
+.saltText-h4.saltText {
+  font-family: var(--salt-text-h4-fontFamily);
+  font-size: var(--salt-text-h4-fontSize);
+  font-weight: var(--salt-text-h4-fontWeight);
+  line-height: var(--salt-text-h4-lineHeight);
+}
+h4.saltText strong,
+.saltText-h4.saltText strong {
+  font-weight: var(--salt-text-h4-fontWeight-strong);
+}
+h4.saltText small,
+.saltText-h4.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-h4-fontWeight-small);
+}
+label.saltText,
+.saltText-label.saltText {
+  font-family: var(--salt-text-label-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
+}
+label.saltText strong,
+.saltText-label.saltText strong {
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+label.saltText small,
+.saltText-label.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* src/toast/Toast.css */
+.saltToast {
+  --toast-background: var(--salt-container-primary-background);
+  background: var(--saltToast-background, var(--toast-background));
+  border-color: var(--saltToast-borderColor, var(--toast-borderColor));
+  border-width: var(--saltToast-borderWidth, var(--salt-size-border));
+  border-style: var(--saltToast-borderStyle, var(--salt-container-borderStyle));
+  box-sizing: border-box;
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  display: flex;
+  gap: var(--salt-spacing-75);
+  padding: var(--saltToast-padding, var(--salt-spacing-100));
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  margin: 0 var(--salt-spacing-100) var(--salt-spacing-100) var(--salt-spacing-100);
+}
+.saltToast:last-child {
+  margin-bottom: var(--salt-spacing-200);
+}
+.saltToast-icon.saltIcon {
+  margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
+}
+.salt-density-high.saltToast-icon.saltIcon {
+  margin: calc(var(--salt-spacing-75) + 1px) 0 var(--salt-spacing-75) 0;
+}
+.saltToast-info {
+  --toast-borderColor: var(--salt-status-info-borderColor);
+}
+.saltToast-error {
+  --toast-borderColor: var(--salt-status-error-borderColor);
+}
+.saltToast-warning {
+  --toast-borderColor: var(--salt-status-warning-borderColor);
+}
+.saltToast-success {
+  --toast-borderColor: var(--salt-status-success-borderColor);
+}
+
+/* src/toast/ToastContent.css */
+.saltToastContent {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+}
+
+/* src/toggle-button/ToggleButton.css */
+.saltToggleButton {
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  background: var(--salt-actionable-secondary-background);
+  border: 0 solid transparent;
+  border-radius: 0;
+  height: var(--salt-size-base);
+  color: var(--salt-actionable-secondary-foreground);
+  text-transform: var(--salt-actionable-textTransform);
+  font-weight: var(--salt-actionable-secondary-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  text-align: var(--salt-actionable-textAlign);
+  letter-spacing: var(--salt-actionable-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  gap: var(--salt-spacing-50);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground);
+}
+.saltToggleButton:hover {
+  background: var(--salt-actionable-secondary-background-hover);
+  color: var(--salt-actionable-secondary-foreground-hover);
+  cursor: var(--salt-actionable-cursor-hover);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
+}
+.saltToggleButton:focus-visible {
+  outline: var(--salt-focused-outline);
+  background: var(--salt-actionable-secondary-background-hover);
+  color: var(--salt-actionable-secondary-foreground-hover);
+  cursor: var(--salt-actionable-cursor-hover);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
+}
+.saltToggleButton[aria-checked=true]:focus-visible {
+  background: var(--salt-actionable-secondary-background-active);
+  color: var(--salt-actionable-secondary-foreground-active);
+  cursor: var(--salt-actionable-cursor-active);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
+}
+.saltToggleButton[aria-checked=true] {
+  background: var(--salt-actionable-secondary-background-active);
+  color: var(--salt-actionable-secondary-foreground-active);
+  cursor: var(--salt-actionable-cursor-active);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
+}
+.saltToggleButton:disabled {
+  background: var(--salt-actionable-secondary-background-disabled);
+  cursor: var(--salt-actionable-cursor-disabled);
+  color: var(--salt-actionable-secondary-foreground-disabled);
+  --saltIcon-color: var(--salt-actionable-secondary-foreground-disabled);
+}
+
+/* src/toggle-button-group/ToggleButtonGroup.css */
+.saltToggleButtonGroup {
+  display: flex;
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  width: fit-content;
+  gap: var(--salt-spacing-50);
+  padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  flex-direction: row;
+}
+.saltToggleButtonGroup-horizontal .saltToggleButton {
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+}
+.saltToggleButtonGroup-vertical {
+  flex-direction: column;
+}
+.saltToggleButtonGroup-vertical .saltToggleButton {
+  justify-content: start;
+}
+
+/* src/tooltip/Tooltip.css */
+.saltTooltip {
+  --tooltip-background: var(--saltTooltip-background, var(--salt-container-primary-background));
+  --tooltip-zIndex: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
+  --tooltip-icon-marginTop: calc((var(--salt-text-lineHeight) - max(var(--salt-icon-size-base), 12px)) / 2);
+}
+.saltTooltip {
+  background: var(--tooltip-background);
+  border-color: var(--saltTooltip-borderColor, var(--tooltip-status-borderColor));
+  border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
+  border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
+  box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
+  color: var(--saltTooltip-text-color, var(--salt-text-primary-foreground));
+  font-size: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
+  font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
+  line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
+  max-width: var(--saltTooltip-maxWidth, 230px);
+  padding: var(--saltTooltip-padding, var(--salt-size-unit));
+  position: relative;
+  text-align: var(--saltTooltip-textAlign, left);
+  z-index: var(--tooltip-zIndex);
+}
+.saltTooltip-container {
+  display: flex;
+  align-items: baseline;
+  position: relative;
+}
+.saltTooltip-content {
+  overflow: hidden;
+}
+.saltTooltip-icon {
+  --saltIcon-margin: var(--tooltip-icon-marginTop) var(--saltTooltip-icon-marginRight, 6px) 0 0;
+  vertical-align: top;
+  align-self: flex-start;
+}
+.saltTooltip-info {
+  --tooltip-status-borderColor: var(--salt-status-info-borderColor);
+}
+.saltTooltip-error {
+  --tooltip-status-borderColor: var(--salt-status-error-borderColor);
+}
+.saltTooltip-warning {
+  --tooltip-status-borderColor: var(--salt-status-warning-borderColor);
+}
+.saltTooltip-success {
+  --tooltip-status-borderColor: var(--salt-status-success-borderColor);
+}
+
+/* src/10396537-7be3-41f4-bd67-c82c5001316e.css */

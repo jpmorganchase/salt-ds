@@ -11,7 +11,7 @@
 .saltAppHeader {
   --appHeader-background: var(--salt-container-primary-background);
   --appHeader-separable-bar: var(--salt-separable-secondary-borderColor);
-  --appHeader-shadow: var(--saltAppHeader-shadow, var(--salt-overlayable-shadow-borderRegion));
+  --appHeader-shadow: var(--saltAppHeader-shadow, var(--salt-overlayable-shadow-region));
   --appHeader-padding: var(--salt-size-container-spacing);
   --appHeader-paddingLeft: 8px;
   --appHeader-paddingRight: var(--appHeader-padding);

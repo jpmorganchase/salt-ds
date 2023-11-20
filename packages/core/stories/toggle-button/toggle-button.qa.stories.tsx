@@ -1,6 +1,11 @@
 import { ToggleButton } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  QAContainerNoStyleInjectionProps,
+  QAContainerProps,
+} from "docs/components";
 import { FavoriteSolidIcon, HomeIcon } from "@salt-ds/icons";
 
 export default {
@@ -30,5 +35,32 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
 );
 
 AllVariantsGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props
+) => (
+  <QAContainerNoStyleInjection height={500} width={1000} {...props}>
+    <ToggleButton aria-label="favorite" value="Icon only">
+      <FavoriteSolidIcon />
+    </ToggleButton>
+    <ToggleButton value="Text only">AND</ToggleButton>
+    <ToggleButton value="Icon and text">
+      <HomeIcon aria-hidden /> Home
+    </ToggleButton>
+    <ToggleButton aria-label="favorite" value="Icon only disabled" disabled>
+      <FavoriteSolidIcon />
+    </ToggleButton>
+    <ToggleButton value="Text only disabled" disabled>
+      AND
+    </ToggleButton>
+    <ToggleButton value="Icon and text disabled" disabled>
+      <HomeIcon aria-hidden /> Home
+    </ToggleButton>
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };

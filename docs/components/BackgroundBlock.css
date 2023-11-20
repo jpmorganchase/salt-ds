@@ -1,6 +1,6 @@
 .BackgroundBlock {
   background: var(--salt-container-primary-background);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   padding: 8px;
 
   /* We have to reset the line-height, otherwise in some smaller blocks, height will be larger than needed. */

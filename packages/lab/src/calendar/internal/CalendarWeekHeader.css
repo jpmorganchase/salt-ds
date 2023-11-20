@@ -1,6 +1,6 @@
 .saltCalendarWeekHeader {
   --calendar-week-header-underline-color: var(--salt-separable-secondary-borderColor);
-  --calendar-week-header-text-color: var(--salt-text-secondary-foreground);
+  --calendar-week-header-text-color: var(--salt-content-secondary-foreground);
   --calendar-week-header-size: var(--salt-size-base);
   --calendar-week-header-fontSize: var(--saltCalendar-week-header-fontSize, var(--salt-text-label-fontSize));
 }
