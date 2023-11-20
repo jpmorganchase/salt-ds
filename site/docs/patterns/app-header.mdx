@@ -1,0 +1,157 @@
+---
+title: App header
+layout: DetailPattern
+aliases:
+  - /salt/patterns/app-header
+data:
+  resources:
+    [
+      { href: "https://www.saltdesignsystem.com/salt/components/navigation-item/examples", label: "Navigation item" },
+    ]
+---
+
+The app header is a consistently available element that sits on top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions. This pattern introduces guidelines to make the app header consistent and usable. 
+
+  <Diagram
+    src="/img/patterns/app-header/app-header.png"
+    alt="App header example"
+    border
+  />
+
+## When to use it
+
+The app header serves as the primary element for users to orient themselves within the UI. It should be globally persistent, enabling easy navigation and access to utility functions.
+
+## How to build it
+
+### Anatomy
+
+The app header has three functional areas:
+
+1. **Branding:** Displays a brand logo or mark followed by the application name in text form. This should always link to the product’s home page.
+2. **Navigation:** Serves as the container for the primary navigation. Its inclusion is optional if you have single-page applications or use a persistent side navigation.
+3. **Utilities:** Provides access to persistent application-wide utilities, such as external links, search, notifications, help, account details and settings.
+
+  <Diagram
+    src="/img/patterns/app-header/anatomy.png"
+    alt="Header functional areas—branding, navigation and utilities."
+    border
+  />
+
+### Spacing and sizing
+
+  <Diagram
+    src="/img/patterns/app-header/spacing-and-sizing.png"
+    alt="Example showing header pattern spacing and sizing."
+    border
+  />
+
+## Variants
+
+### Header only
+
+In this layout, the app header is globally persistent, and and you can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and combined navigation may be required to navigate complex hierarchies.
+
+  <Diagram
+    src="/img/patterns/app-header/header-only.png"
+    alt="Example of the header-only variant."
+    border
+  />
+
+### Header with vertical navigation
+
+The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, sub-menus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the navigation pattern.  
+
+  <Diagram
+    src="/img/patterns/app-header/with-vertical-nav.png"
+    alt="Header paired with vertical navigation."
+    border
+  />
+
+
+## Behaviors
+
+### Responsive Behaviors
+
+The app header is responsive to the width of the application viewport and responds dynamically to the Salt breakpoints. As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience. 
+
+For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to left of the brand logo. The navigation items will sit on top of the utility actions in the hierarchy of the vertical navigation. 
+
+#### Large viewport
+
+  <Diagram
+    src="/img/patterns/app-header/large-viewport.png"
+    alt="App header on large viewport."
+    border
+  />
+
+#### Small viewport
+
+<Diagrams>
+  <Diagram
+    src="/img/patterns/app-header/small-viewport-1.png"
+    alt="App header on small viewport."
+  />
+  <Diagram
+    src="/img/patterns/app-header/ex-2.png"
+    alt="App header on small viewport with menu open."
+  />
+</Diagrams>
+
+
+<ExampleContainer type="positive">
+  - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
+  - If search utility action is part of the app header, keep search functionality persistently available for small viewports. 
+</ExampleContainer>
+
+### Sticky header position
+
+The app header should sit in the north region, above the main, in a sticky position while the user scrolls down the page. This increases the discoverability of the elements in the header, where users can quickly access the navigation and utility actions elements without scrolling up to the top of the page. 
+
+  <Diagram
+    src="/img/patterns/app-header/sticky-header.png"
+    alt="The header stays in place while user scrolls."
+    border
+  />
+
+## Accessibility
+
+### Using skip links to bypass the app header
+
+If you're implementing a complex app header with several navigation items and utility actions, you should precede the component with a skip link. This will enable keyboard and screen reader users to quickly shift focus to the main page content, and navigate your application more efficiently.
+
+You can display and set focus to a skip link when the user moves focus from the previous component in the tab sequence to the app header—and configure the skip link to move focus to the main page content or an alternative target.
+
+  <Diagram
+    src="/img/patterns/app-header/skip-links.png"
+    alt="The 'skip to content' link should be the first focusable element in the header."
+    border
+  />
+
+### Keyboard interactions
+
+The underlying components provide many keyboard interactions  (i.e., navigation items, dropdowns, buttons) and are available on their respective documentation pages.
+
+The following keyboard interactions are specific to the app header:
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Tab moves focus to a target element in the correct tabbing order on a page.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+When focus is on a target element, moves focus to the previous interactive element within the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+If the target element has focus, Enter performs an action.
+
+</KeyboardControl>
+</KeyboardControls>
+
+## Expanding the pattern
+
+If you find a need to expand the pattern or have feedback, please [reach out to the team](/salt/support-and-contributions/index) to discuss.
