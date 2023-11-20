@@ -2,7 +2,7 @@
 "@salt-ds/core": patch
 ---
 
-Fixed component text properties (`font-weight`, `font-family`, `font-size`, `line-height`) incorrectly impacted by external global styles, which should follow text characteristic from Salt theme.
+Fixed component text properties (`font-weight`, `font-family`, `font-size`, `line-height`) incorrectly inheriting external global styles, which should follow the text characteristic from the Salt theme.
 
 - Avatar
 - Badge
