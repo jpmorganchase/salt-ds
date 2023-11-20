@@ -20,7 +20,9 @@ import {
 import {
   Button,
   ButtonProps,
-  makePrefixer, MultilineInput, MultilineInputProps,
+  makePrefixer,
+  MultilineInput,
+  MultilineInputProps,
   useDensity,
   useForkRef,
   useId,
@@ -59,7 +61,7 @@ export interface TokenizedInputBaseProps<Item>
   disabled?: boolean;
   expandButtonRef?: Ref<HTMLButtonElement>;
   helpers: TokenizedInputHelpers<Item>;
-  inputRef?: Ref<HTMLInputElement>;
+  inputRef?: Ref<HTMLTextAreaElement>;
   itemToString?: ItemToString<Item>;
   onFocus?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
@@ -83,7 +85,7 @@ const getItemsAriaLabel = (itemCount: number) =>
     ? "no item selected"
     : `${itemCount} ${itemCount > 1 ? "items" : "item"}`;
 
-const hasHelpers = (helpers: any) => {
+const hasHelpers = (helpers: TokenizedInputHelpers<unknown>) => {
   if (process.env.NODE_ENV !== "production") {
     if (helpers == null) {
       console.warn(
@@ -144,7 +146,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   const expandButtonId = `${id}-expand-button`;
   const clearButtonId = `${id}-clear-button`;
 
-  // TODO: Use proper machanism to get variable values from theme in React. Something like below
+  // TODO: Use proper mechanism to get variable values from theme in React. Something like below
   // getComputedStyle(document.documentElement)
   // .getPropertyValue('--my-variable-name'); // #999999
   const pillGroupPadding = 16;
@@ -232,15 +234,9 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     // Call keydown again if the initail event has been used to expand the input
     if (keydownExpandButton.current && "Enter" !== event.key) {
       keydownExpandButton.current = false;
-
-      if (onKeyDown) {
-        onKeyDown(event);
-      }
+      onKeyDown?.(event);
     }
-
-    if (onKeyUp) {
-      onKeyUp(event);
-    }
+    onKeyUp?.(event);
   };
 
   const handleExpand = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -284,7 +280,6 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
     InputProps
   );
 
-  console.log(mergedInputProps)
   const {
     accessibleText: expandButtonAccessibleText,
     ...restExpandButtonProps
@@ -346,30 +341,31 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
           onClick={handleExpand}
           onFocus={onFocus}
           onKeyDown={handleExpandButtonKeyDown}
+          onKeyUp={handleInputKeyUp}
           ref={useForkRef(expandButtonRef, expandButtonRefProp)}
           variant="secondary"
           {...restExpandButtonProps}
         >
           <OverflowMenuIcon
-            aria-label={
-              expandButtonAccessibleText ?? "expand edit"
-            }
+            aria-label={expandButtonAccessibleText ?? "expand edit"}
           />
         </Button>
-        {!showExpandButton && <MultilineInput
-          rows={1}
-          {...mergedInputProps}
-          id={inputId}
-          disabled={disabled}
-          onChange={onInputChange}
-          onKeyDown={onKeyDown}
-          onBlur={onInputBlur}
-          onFocus={onInputFocus}
-          onSelect={onInputSelect}
-          value={value}
-          textAreaRef={inputRef}
-          className={ clsx(withBaseName("input"), withBaseName("inputField"))}
-          />}
+        {!showExpandButton && (
+          <MultilineInput
+            rows={1}
+            {...mergedInputProps}
+            id={inputId}
+            disabled={disabled}
+            onChange={onInputChange}
+            onKeyDown={onKeyDown}
+            onBlur={onInputBlur}
+            onFocus={onInputFocus}
+            onSelect={onInputSelect}
+            value={value}
+            textAreaRef={inputRef}
+            className={clsx(withBaseName("input"), withBaseName("inputField"))}
+          />
+        )}
       </div>
       <Button
         className={clsx(withBaseName("clearButton"), {

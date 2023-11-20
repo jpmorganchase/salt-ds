@@ -1,6 +1,6 @@
 import { MutableRefObject } from "react";
 export const getCursorPosition = (
-  inputRef: MutableRefObject<HTMLInputElement | null>
+  inputRef: MutableRefObject<HTMLTextAreaElement | null>
 ) => {
   if (inputRef.current) {
     const { selectionStart, selectionEnd } = inputRef.current;

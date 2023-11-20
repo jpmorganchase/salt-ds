@@ -24,11 +24,11 @@ import { TokenizedInputBaseProps } from "./TokenizedInputBase";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 export interface TokenizedInputState<Item> {
-  activeIndices: Array<number>;
+  activeIndices: number[];
   expanded: boolean | undefined;
   focused: boolean;
   highlightedIndex: number | undefined;
-  selectedItems: Array<Item>;
+  selectedItems: Item[];
   value: string | undefined;
 }
 
@@ -37,7 +37,7 @@ export interface TokenizedInputHelpers<Item> {
   setFocused: (expanded: boolean) => void;
   setHighlightedIndex: (value?: number) => void;
   setValue: (value: string) => void;
-  setSelectedItems: (selectedItems: Array<Item>) => void;
+  setSelectedItems: (selectedItems: Item[]) => void;
   updateExpanded: (expanded: boolean) => void;
 }
 
@@ -63,7 +63,7 @@ function isValidItem<Item>(data: unknown): data is Item {
   );
 }
 
-type useTokenizedInputResult<Item> = {
+interface useTokenizedInputResult<Item> {
   /**
    * Used to do auto focus. It should be set to the actual input node.
    */
@@ -80,7 +80,7 @@ type useTokenizedInputResult<Item> = {
    * Properties applied to a basic tokenized input component
    */
   inputProps: Omit<TokenizedInputBaseProps<Item>, "helpers">;
-};
+}
 
 export function useTokenizedInput<Item>(
   props: TokenizedInputProps<Item>
@@ -119,7 +119,7 @@ export function useTokenizedInput<Item>(
     onClick,
     onExpand,
     onCollapse,
-    onKeyUp,
+    onKeyUp, // TODO: this is not being used
     onKeyDown,
     onInputSelect,
     onInputChange,
@@ -171,7 +171,7 @@ export function useTokenizedInput<Item>(
   );
   const [focused, setFocusedState] = useState(false);
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const blurTimeout = useRef<number | null>(null);
   const preventBlurOnCopy = useRef(false);
   const hasActiveItems = Boolean(activeIndices.length);
@@ -456,11 +456,12 @@ export function useTokenizedInput<Item>(
   const highlightAtPillGroupEnd = () =>
     highlightedIndex === selectedItems.length - 1;
 
-  const pillGroupKeyDownHandlers: {
-    [key: string]: KeyboardEventHandler<HTMLInputElement>;
-  } = {
+  const pillGroupKeyDownHandlers: Record<
+    string,
+    KeyboardEventHandler<HTMLInputElement>
+  > = {
     ArrowLeft: (event) => {
-      console.log('arrow left');
+      console.log("arrow left");
       event.preventDefault();
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
@@ -511,11 +512,12 @@ export function useTokenizedInput<Item>(
     },
   };
 
-  const inputKeyDownHandlers: {
-    [key: string]: KeyboardEventHandler<HTMLInputElement>;
-  } = {
+  const inputKeyDownHandlers: Record<
+    string,
+    KeyboardEventHandler<HTMLInputElement>
+  > = {
     ArrowLeft: (event) => {
-      console.log('arrow left', cursorAtInputStart());
+      console.log("arrow left", cursorAtInputStart());
       if (cursorAtInputStart()) {
         event.preventDefault();
         setHighlightedIndex(selectedItems.length - 1);
@@ -547,7 +549,7 @@ export function useTokenizedInput<Item>(
   const handleCtrlModifierKeyDown: InputHTMLAttributes<HTMLInputElement>["onKeyDown"] =
     (event) => {
       const win = ownerWindow(event.target as HTMLElement);
-      const supportClipboard = win.navigator && win.navigator.clipboard;
+      const supportClipboard = win.navigator?.clipboard;
 
       switch (event.key.toUpperCase()) {
         case "A":
@@ -628,7 +630,7 @@ export function useTokenizedInput<Item>(
       handleCtrlModifierKeyDown(event);
     } else {
       let handler;
-      console.log('here', highlightedIndex)
+      console.log("here", highlightedIndex);
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
         setActiveIndices([]);

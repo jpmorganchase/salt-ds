@@ -1,8 +1,12 @@
 import { clsx } from "clsx";
-import {memo, MutableRefObject, useRef, useState} from "react";
-import {makePrefixer, Tooltip, useIsomorphicLayoutEffect} from "@salt-ds/core";
+import { memo, MutableRefObject, useRef, useState } from "react";
+import {
+  makePrefixer,
+  Tooltip,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { getWidth } from "./useWidth";
-import {PillNext, PillNextProps} from "../../pill-next";
+import { PillNext, PillNextProps } from "../../pill-next";
 
 const withBaseName = makePrefixer("saltInputPill");
 
@@ -10,7 +14,7 @@ export type InputPillProps = PillNextProps & {
   /**
    * An ref object holds pills index map to width.
    */
-  pillsRef: MutableRefObject<{ [index: number]: number | undefined }>;
+  pillsRef: MutableRefObject<Record<number, number | undefined>>;
   /**
    * Index of the pill within Input.
    */
@@ -76,24 +80,26 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     onClose?.(index);
   };
 
-  return (<Tooltip content={label} disabled={!isEllipsisActive}>
-    <PillNext
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("pillActive")]: active || highlighted,
-          // TODO: can this be avoid by passing the close button to end adornment?
-          [withBaseName("pillLastVisible")]: lastVisible,
-          [withBaseName("hidden")]: hidden,
-        },
-        className
-      )}
-      onClose={isRemovable ? handleClose : undefined}
-      ref={ref}
-      role="option"
-      {...rest}
-    >{label}</PillNext>
+  return (
+    <Tooltip content={label} disabled={!isEllipsisActive}>
+      <PillNext
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("pillActive")]: active || highlighted,
+            // TODO: can this be avoid by passing the close button to end adornment?
+            [withBaseName("pillLastVisible")]: lastVisible,
+            [withBaseName("hidden")]: hidden,
+          },
+          className
+        )}
+        onClose={isRemovable ? handleClose : undefined}
+        ref={ref}
+        role="option"
+        {...rest}
+      >
+        {label}
+      </PillNext>
     </Tooltip>
-
   );
 });

@@ -7,7 +7,7 @@ import {
 import { useTokenizedInput } from "./useTokenizedInput";
 
 export type StringToItem<Item> = (
-  selectedItems: Array<Item>,
+  selectedItems: Item[],
   value: string
 ) => Item | null | undefined;
 
@@ -23,9 +23,9 @@ export interface TokenizedInputProps<Item>
     | "onRemoveItem"
   > {
   Tooltip?: ComponentType;
-  delimiter?: string | Array<string>;
+  delimiter?: string | string[];
   disableAddOnBlur?: boolean;
-  initialSelectedItems?: Array<Item>;
+  initialSelectedItems?: Item[];
   onChange?: ChangeHandler<Item>;
   onCollapse?: () => void;
   onExpand?: () => void;

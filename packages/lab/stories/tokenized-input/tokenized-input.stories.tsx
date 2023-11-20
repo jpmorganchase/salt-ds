@@ -1,5 +1,10 @@
-import { Button } from "@salt-ds/core";
-import { ChangeHandler, TokenizedInput, FormField, Input } from "@salt-ds/lab";
+import {
+  Button,
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import { ChangeHandler, TokenizedInput, Input } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   ChangeEventHandler,
@@ -54,7 +59,7 @@ export const Controlled: StoryFn<typeof TokenizedInput> = () => {
 
   const [option, setOption] = useState(42);
   const [inputValue, setInputValue] = useState("");
-  const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
   const [offsetHeight, setOffsetHeight] = useState(0);
 
@@ -118,7 +123,8 @@ export const Controlled: StoryFn<typeof TokenizedInput> = () => {
           <Button onClick={handleAddRandomOption}>Add {option}</Button>
         </div>
         <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
-          <FormField label="Natural numbers only">
+          <FormField>
+            <FormLabel>Natural numbers only</FormLabel>
             <TokenizedInput
               onChange={handleChange}
               onClear={handleClear}
@@ -151,17 +157,17 @@ export const Disabled: StoryFn<typeof TokenizedInput> = () => {
   );
 };
 
-type Validator = (values: Array<string>) => string | null;
+type Validator = (values: string[]) => string | null;
 
 export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
   const [inputValue, setInputValue] = useState("");
-  const [selectedItems, setSelectedItems] = useState<Array<string>>([]);
-  const [exceptions, setExceptions] = useState<Array<string>>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [exceptions, setExceptions] = useState<string[]>([]);
 
-  const validations: Array<Validator> = [
+  const validations: Validator[] = [
     (newItems) => {
       const upperCased = newItems.map((value) => value.toUpperCase());
-      const validated: Array<string> = [];
+      const validated: string[] = [];
 
       for (let i = 0; i < upperCased.length; i++) {
         if (validated.indexOf(upperCased[i]) !== -1) {
@@ -180,13 +186,10 @@ export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
   };
 
   const handleChange: ChangeHandler<unknown> = (newItems) => {
-    const newExceptions = validations.reduce<Array<string>>(
-      (results, validate) => {
-        const result = validate(newItems as string[]);
-        return result != null ? results.concat(result) : results;
-      },
-      []
-    );
+    const newExceptions = validations.reduce<string[]>((results, validate) => {
+      const result = validate(newItems as string[]);
+      return result != null ? results.concat(result) : results;
+    }, []);
 
     if (newExceptions.length === 0) {
       setInputValue("");
@@ -211,11 +214,10 @@ export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
       }}
     >
       <FormField
-        helperText={exceptions.join(", ")}
-        label="No duplication"
         style={{ maxWidth: 292 }}
         validationStatus={exceptions.length > 0 ? "error" : undefined}
       >
+        <FormLabel>No duplication</FormLabel>
         <TokenizedInput
           onChange={handleChange}
           onClear={handleClear}
@@ -223,6 +225,7 @@ export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
           selectedItems={selectedItems}
           value={inputValue}
         />
+        <FormHelperText>{exceptions.join(", ")}</FormHelperText>
       </FormField>
     </div>
   );

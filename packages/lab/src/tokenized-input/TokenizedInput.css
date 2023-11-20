@@ -84,7 +84,6 @@
   --saltButton-margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
 }
 
-
 /* Styles applied to root component and pill container if `expanded={true}` */
 .saltTokenizedInput-expanded,
 .saltTokenizedInput-expanded .saltTokenizedInput-pillGroup {
