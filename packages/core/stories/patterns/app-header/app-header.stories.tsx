@@ -152,19 +152,13 @@ export const AppHeaderInPage = () => {
         <AppHeader items={items} />
       </BorderItem>
       <BorderItem
-        style={{ backgroundColor: "var(--salt-color-teal-30)", padding: "1em" }}
-        position="west"
-      >
-        <p>Left content</p>
-      </BorderItem>
-      <BorderItem
         style={{
           backgroundColor: "var(--salt-color-purple-30)",
           padding: "1em",
         }}
         position="center"
       >
-        <p>right content</p>
+        <p>Main content</p>
       </BorderItem>
       <BorderItem
         style={{
@@ -173,7 +167,7 @@ export const AppHeaderInPage = () => {
         }}
         position="south"
       >
-        <p>footer</p>
+        <p>Footer</p>
       </BorderItem>
     </BorderLayout>
   );
