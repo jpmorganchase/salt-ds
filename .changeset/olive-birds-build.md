@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Removed default minWidth in `PillNext`
+Removed default min width styling in `PillNext`. Smaller Pills should look cleaner.

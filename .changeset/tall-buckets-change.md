@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-**_Theming and CSS updates_** For teams customizing theme, the following tokens will be impacted. Update them as per suggestion.
+**_Theming and CSS updates_** Although these changes are not considered breaking. For teams customizing theme, the following tokens will be impacted. Update them as per suggestion. Deprecated tokens will be removed in the next major version.
 
 ### Characteristics
 
