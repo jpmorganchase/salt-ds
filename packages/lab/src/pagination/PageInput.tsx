@@ -28,7 +28,7 @@ export const PageInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     forwardedRef
   ) {
-    const { count, onPageChange, page, paginatorElement } =
+    const { count, onPageChange, paginatorElement } =
       usePaginationContext();
 
     const id = useId(idProp);
@@ -36,7 +36,7 @@ export const PageInput = forwardRef<HTMLSpanElement, GoToInputProps>(
     const rootRef = useRef<HTMLSpanElement>(null);
     const forkedRef = useForkRef(rootRef, forwardedRef);
 
-    const [inputValue, setInputValue] = useState(`${page}`);
+    const [inputValue, setInputValue] = useState("");
 
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
       (event) => {

@@ -1,8 +1,9 @@
 import { ComponentPropsWithoutRef, forwardRef, useCallback } from "react";
 import { clsx } from "clsx";
+import { useForkRef } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { ArrowButton } from "./ArrowButton";
-import { PageInput } from "./PageInput";
+import { CompactInput } from "./CompactInput";
 import { PageButton } from "./PageButton";
 import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";
@@ -19,7 +20,7 @@ interface CompactPaginatorProps extends ComponentPropsWithoutRef<"div"> {
 export const CompactPaginator = forwardRef<
   HTMLDivElement,
   CompactPaginatorProps
->(function CompactPaginator({ className, withInput, ...restProps }, ref) {
+>(function CompactPaginator({ className, withInput, ...restProps }, forwardedRef) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pagination",
@@ -27,13 +28,17 @@ export const CompactPaginator = forwardRef<
     window: targetWindow,
   });
 
-  const { count, page, onPageChange } = usePaginationContext();
+  const { count, page, onPageChange, setPaginatorElement } = usePaginationContext();
+
+  const ref = useForkRef(setPaginatorElement, forwardedRef);
 
   const onPreviousPage = useCallback(() => {
     onPageChange(Math.max(1, page - 1));
   }, [page, onPageChange]);
 
   const onNextPage = useCallback(() => {
+    console.log('page', page);
+    
     onPageChange(Math.min(page + 1, count));
   }, [page, onPageChange, count]);
 
@@ -50,7 +55,7 @@ export const CompactPaginator = forwardRef<
         <ChevronLeftIcon />
       </ArrowButton>
       {withInput ? (
-        <PageInput />
+        <CompactInput />
       ) : (
         <PageButton
           page={page}

@@ -34,7 +34,7 @@ export const CompactInput = () => {
       if (!isNaN(pageValue) && pageValue <= count && pageValue > 0) {
         onPageChange(pageValue);
       } else {
-        setInputValue(`${page}`);
+        setInputValue(`${pageValue}`);
       }
     }
   };
