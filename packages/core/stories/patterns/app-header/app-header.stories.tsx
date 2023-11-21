@@ -48,53 +48,41 @@ export const AppHeaderInPage = () => {
       <header>
         {isMobile ? (
           // Mobile Header
-          <FlexLayout
+          <StackLayout
+            direction="row"
             style={{
-              height:
-                "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
+              width: "100%",
               backgroundColor: "var(--salt-container-primary-background)",
+              zIndex: 999999999,
+              paddingRight: "1em",
+              borderBottom:
+                "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
             }}
-            justify="space-between"
-            gap={3}
           >
-            <StackLayout
-              direction="row"
+            <FlexItem
               style={{
-                width: "100%",
-                backgroundColor: "var(--salt-container-primary-background)",
-                zIndex: 999999999,
-                paddingRight: "1em",
-                borderBottom:
+                justifyContent: "center",
+                display: "flex",
+                height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+                width: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+                borderRight:
                   "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
               }}
             >
-              <FlexItem
-                style={{
-                  justifyContent: "center",
-                  display: "flex",
-                  height:
-                    "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
-                  width:
-                    "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
-                  borderRight:
-                    "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
-                }}
+              <Button
+                onClick={handleDrawerToggle}
+                variant={drawerOpen ? "primary" : "secondary"}
+                style={{ alignSelf: "center" }}
               >
-                <Button
-                  onClick={handleDrawerToggle}
-                  variant={drawerOpen ? "primary" : "secondary"}
-                  style={{ alignSelf: "center" }}
-                >
-                  {drawerOpen ? <CloseIcon /> : <MenuIcon />}
-                </Button>
-              </FlexItem>
-              <FlexItem align="center">App logo</FlexItem>
-            </StackLayout>
+                {drawerOpen ? <CloseIcon /> : <MenuIcon />}
+              </Button>
+            </FlexItem>
+            <FlexItem align="center">App logo</FlexItem>
 
             <Drawer
               style={{
                 paddingTop:
-                  "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
+                  "calc(var(--salt-size-base) + var(--salt-spacing-200))",
                 paddingLeft: "0",
               }}
               open={drawerOpen}
@@ -134,13 +122,12 @@ export const AppHeaderInPage = () => {
                 ))}
               </StackLayout>
             </Drawer>
-          </FlexLayout>
+          </StackLayout>
         ) : (
           // Desktop Header
           <FlexLayout
             style={{
-              height:
-                "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
+              height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
               paddingLeft: "1em",
               paddingRight: "1em",
               backgroundColor: "var(--salt-container-primary-background)",
