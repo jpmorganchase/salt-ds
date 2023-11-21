@@ -41,10 +41,6 @@
   display: contents;
 }
 
-.saltColorChooser-overlayButtonClose {
-  margin: 5px;
-}
-
 .saltColorChooser-defaultButton {
   float: right;
   background: transparent;
@@ -53,7 +49,8 @@
 }
 
 .saltColorChooser-defaultButton {
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
+    var(--salt-editable-borderColor);
 }
 
 .saltColorChooser-overlayContent {

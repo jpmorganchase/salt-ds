@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
-import { Overlay, useOverlay } from "../overlay";
+import { Overlay } from "../overlay";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
@@ -134,28 +134,48 @@ export const ColorChooser = ({
       onClear();
     }
   };
+
   const onTabClick = (index: number): void => {
     setActiveTab(index);
   };
 
-  const { getTriggerProps, getOverlayProps } = useOverlay({
-    placement: "bottom",
-    open,
-    onOpenChange: handleOpenChange,
-  });
+  const OverlayContent = () => (
+    <div
+      className={clsx(withBaseName("overlayContent"))}
+      data-testid="overlay-content"
+    >
+      <Button
+        data-testid="default-button"
+        variant="secondary"
+        className={clsx(withBaseName("defaultButton"))}
+        onClick={onDefaultSelected}
+      >
+        <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
+        Default
+      </Button>
+      <DictTabs
+        tabs={tabsMapping}
+        hexValue={color?.hex}
+        onTabClick={onTabClick}
+        activeTab={activeTab}
+      />
+    </div>
+  );
 
   return (
-    <>
+    <Overlay
+      placement="bottom"
+      content={<OverlayContent />}
+      data-testid="color-chooser-overlay"
+    >
       <Button
-        {...getTriggerProps<typeof Button>({
-          className: clsx(withBaseName("overlayButton"), {
-            [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
-          }),
-          // @ts-ignore
-          "data-testid": "color-chooser-overlay-button",
-          disabled: readOnly,
-          ...buttonProps,
+        className={clsx(withBaseName("overlayButton"), {
+          [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
         })}
+        // @ts-ignore
+        data-testid="color-chooser-overlay-button"
+        disabled={readOnly}
+        {...buttonProps}
       >
         {color && (
           <div
@@ -177,37 +197,6 @@ export const ColorChooser = ({
           </div>
         )}
       </Button>
-      <Overlay
-        {...getOverlayProps({
-          adaExceptions: {
-            showClose: false,
-          },
-          // @ts-ignore
-          "data-testid": "color-chooser-overlay",
-          className: clsx(withBaseName("overlayButtonClose")),
-        })}
-      >
-        <div
-          className={clsx(withBaseName("overlayContent"))}
-          data-testid="overlay-content"
-        >
-          <Button
-            data-testid="default-button"
-            variant="secondary"
-            className={clsx(withBaseName("defaultButton"))}
-            onClick={onDefaultSelected}
-          >
-            <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
-            Default
-          </Button>
-          <DictTabs
-            tabs={tabsMapping}
-            hexValue={color?.hex}
-            onTabClick={onTabClick}
-            activeTab={activeTab}
-          />
-        </div>
-      </Overlay>
-    </>
+    </Overlay>
   );
 };
