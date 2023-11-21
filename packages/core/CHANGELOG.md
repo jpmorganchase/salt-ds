@@ -1,5 +1,21 @@
 # @salt-ds/core
 
+## 1.13.0
+
+### Minor Changes
+
+- c85334b5: `Text` component has two new variants: `TextAction` and `TextNotation`. See [Text component](/salt/components/text) for more information.
+
+  ```tsx
+  <Text styleAs="notation" as="span">Lorem ipsum</Text>
+  <Text styleAs="action" as="span">Lorem ipsum</Text>
+  ```
+
+  ```tsx
+  <TextNotation>Lorem ipsum</TextNotation>
+  <TextAction>Lorem ipsum</TextAction>
+  ```
+
 ## 1.12.0
 
 ### Minor Changes
