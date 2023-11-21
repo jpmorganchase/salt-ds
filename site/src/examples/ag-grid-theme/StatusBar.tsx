@@ -1,6 +1,7 @@
+import { Text } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
+import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const statusBar = {
   statusPanels: [
@@ -19,7 +20,7 @@ export const StatusBar = (props: AgGridReactProps) => {
 
   return (
     <>
-      <p>Select rows to enable status bar display</p>
+      <Text>Select rows to enable status bar display</Text>
       <div {...containerProps}>
         <AgGridReact
           enableRangeSelection

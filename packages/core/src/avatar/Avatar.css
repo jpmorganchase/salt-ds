@@ -20,6 +20,8 @@
   background: var(--saltAvatar-background, var(--salt-accent-background));
   color: var(--avatar-foreground);
   font-size: var(--avatar-fontSize);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
   width: var(--avatar-container-size);
   min-width: var(--avatar-container-size);
   height: var(--avatar-container-size);

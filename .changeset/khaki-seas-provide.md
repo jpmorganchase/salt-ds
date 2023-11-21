@@ -2,4 +2,4 @@
 "@salt-ds/ag-grid-theme": patch
 ---
 
-[Ag Grid Theme] Remove override on column header so that alignment is consistent with the column alignment.
+Removed a style override for column headers so that header alignment is consistent with column alignment.

@@ -14,11 +14,17 @@
   display: flex;
   flex-direction: column;
   gap: var(--salt-size-unit);
+
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied to status title */
-.saltContentStatus-title {
-  font-weight: var(--salt-text-display1-fontWeight); /* TODO: Use correct token */
+.saltContentStatus-title.saltText {
+  font-weight: var(--salt-text-display1-fontWeight);
+  /* TODO: Use correct token */
 }
 
 /* Styles applied to status message */

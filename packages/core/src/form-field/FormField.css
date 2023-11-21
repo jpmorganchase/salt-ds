@@ -4,6 +4,11 @@
   gap: var(--salt-spacing-100);
   text-align: left;
   width: var(--saltFormField-width, 100%);
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
 }
 
 .saltFormField-labelTop {

@@ -36,7 +36,6 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
-  min-width: 4em;
 }
 
 .saltPillNext-label {
