@@ -49,7 +49,7 @@ div[class*="ag-theme-uitk"][class*="dark"] {
 div[class*="ag-theme-uitk"][class*="light"] .ag-icon {
   color: #61656e;
 }
-div[class*="ag-theme-uitk"][class*="light"] .ag-icon {
+div[class*="ag-theme-uitk"][class*="dark"] .ag-icon {
   color: var(--salt-color-white);
 }
 
