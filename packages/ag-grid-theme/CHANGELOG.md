@@ -1,5 +1,12 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.5
+
+### Patch Changes
+
+- 86508404: Cell text from a pinned column no longer overlaps the cell next to it.
+- b083861b: Removed a style override for column headers so that header alignment is consistent with column alignment.
+
 ## 1.3.4
 
 ### Patch Changes
