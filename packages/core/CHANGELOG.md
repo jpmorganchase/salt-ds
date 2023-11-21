@@ -10,6 +10,12 @@
   <SaltProvider enableStyleInjection={false} >
   ```
 
+Expose a CSS file that allows Salt to be used without runtime CSS injection.
+
+```tsx
+import "@salt-ds/core/css/salt-core.css";
+```
+
 - feb80146: **_Theming and CSS updates_** with visual changes to Salt components:
 
   1. Minor changes in `Button` component width as font weight gets updated. Font weight for two button variants,`CTA` and `Primary` changed from bold to semi-bold. Expect components containing Salt `Button` to have similar change.
