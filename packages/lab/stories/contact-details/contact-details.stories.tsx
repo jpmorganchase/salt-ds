@@ -472,54 +472,45 @@ const WithinTileTemplate: StoryFn = () => {
   );
 };
 
-const WithinOverlayTemplate: StoryFn = () => {
-  const { getOverlayProps, getTriggerProps } = useOverlay({
-    placement: "bottom",
-  });
-  return (
-    <div>
-      <Button
-        {...getTriggerProps<typeof Button>({
-          "aria-label": "This triggers a popover with contact details",
-        })}
-      >
-        View Contact Details
-      </Button>
+const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
+  const OverlayContent = () => (
+    <ContactDetails className={"withinOverlay"} embedded={true}>
+      <ContactFavoriteToggle />
+      <ContactAvatar />
+      <ContactPrimaryInfo text={personaA.name} />
+      <ContactSecondaryInfo text={personaA.company} />
+      <ContactTertiaryInfo text={personaA.spn} />
+      <ContactActions>
+        <ContactAction
+          icon={CallIcon}
+          accessibleText="Call personaA"
+          onClick={() => console.log("Action: Call personaA")}
+        />
+        <ContactAction
+          icon={MessageIcon}
+          accessibleText="Message personaA"
+          onClick={() => console.log("Action: Message personaA")}
+        />
+        <ContactAction
+          icon={ChatIcon}
+          accessibleText="Chat with personaA"
+          onClick={() => console.log("Action: Chat with personaA")}
+        />
+      </ContactActions>
+      <ContactMetadata>
+        <ContactMetadataItem value={personaA.role} label="Role" />
+        <ContactMetadataItem value={personaA.location} label="Location" />
+        <ContactMetadataItem value={personaA.officePhone} label="Office" />
+        <ContactMetadataItem value={personaA.bloomberg} label="Bloomberg" />
+        <ContactMetadataItem value={personaA.email} label="Email" />
+      </ContactMetadata>
+    </ContactDetails>
+  );
 
-      <Overlay {...getOverlayProps()}>
-        <ContactDetails className={"withinOverlay"} embedded={true}>
-          <ContactFavoriteToggle />
-          <ContactAvatar />
-          <ContactPrimaryInfo text={personaA.name} />
-          <ContactSecondaryInfo text={personaA.company} />
-          <ContactTertiaryInfo text={personaA.spn} />
-          <ContactActions>
-            <ContactAction
-              icon={CallIcon}
-              accessibleText="Call personaA"
-              onClick={() => console.log("Action: Call personaA")}
-            />
-            <ContactAction
-              icon={MessageIcon}
-              accessibleText="Message personaA"
-              onClick={() => console.log("Action: Message personaA")}
-            />
-            <ContactAction
-              icon={ChatIcon}
-              accessibleText="Chat with personaA"
-              onClick={() => console.log("Action: Chat with personaA")}
-            />
-          </ContactActions>
-          <ContactMetadata>
-            <ContactMetadataItem value={personaA.role} label="Role" />
-            <ContactMetadataItem value={personaA.location} label="Location" />
-            <ContactMetadataItem value={personaA.officePhone} label="Office" />
-            <ContactMetadataItem value={personaA.bloomberg} label="Bloomberg" />
-            <ContactMetadataItem value={personaA.email} label="Email" />
-          </ContactMetadata>
-        </ContactDetails>
-      </Overlay>
-    </div>
+  return (
+    <Overlay {...props} content={<OverlayContent />}>
+      <Button>view contact details</Button>
+    </Overlay>
   );
 };
 
