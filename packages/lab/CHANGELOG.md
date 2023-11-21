@@ -1,5 +1,33 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.22
+
+### Minor Changes
+
+- 01fa27ad: Removed Badge from Lab and promoted it to Core.
+- feb80146: **_Theming and CSS updates_** with visual change to Salt components.
+
+  1. `Drawer`, `Dialog`, and `Scrim` components overlay colour updated from black to white in light mode.
+
+  2. `Badge` component line height in HD updated from 11px to 10px.
+
+  **_Theming and CSS updates_** with no visual change to `Pill` component. `Pill` CSS tokens have been updated to match design specs.
+
+### Patch Changes
+
+- 7023034a: Fix Combobox input's `onChange` and `onKeyDown` not being invoked.
+- 0ddc1e42: Removed default min width styling in `PillNext`. Smaller Pills should look cleaner.
+- 9dbe7f4c: Fixed component text properties (`font-weight`, `font-family`, `font-size`, `line-height`) incorrectly inheriting external global styles, which should follow the text characteristic from the Salt theme.
+
+  - Content Status
+  - Dialog
+  - Form Field Legacy
+  - List
+  - List Next
+  - Tab
+  - Tab Next
+  - Toolbar
+
 ## 1.0.0-alpha.21
 
 ### Patch Changes
