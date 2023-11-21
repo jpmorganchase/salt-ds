@@ -6016,7 +6016,7 @@ __metadata:
     eslint-config-next: "npm:^13.5.2"
     lodash-es: "npm:^4.17.21"
     next: "npm:^13.5.2"
-    next-auth: "npm:^4.23.1"
+    next-auth: "npm:^4.24.5"
     raw-loader: "npm:^4.0.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -22737,9 +22737,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.23.1":
-  version: 4.23.1
-  resolution: "next-auth@npm:4.23.1"
+"next-auth@npm:^4.24.5":
+  version: 4.24.5
+  resolution: "next-auth@npm:4.24.5"
   dependencies:
     "@babel/runtime": "npm:^7.20.13"
     "@panva/hkdf": "npm:^1.0.2"
@@ -22751,14 +22751,14 @@ __metadata:
     preact-render-to-string: "npm:^5.1.19"
     uuid: "npm:^8.3.2"
   peerDependencies:
-    next: ^12.2.5 || ^13
+    next: ^12.2.5 || ^13 || ^14
     nodemailer: ^6.6.5
     react: ^17.0.2 || ^18
     react-dom: ^17.0.2 || ^18
   peerDependenciesMeta:
     nodemailer:
       optional: true
-  checksum: 1777a62c7e1d931d5e81fc79c2b16822fbeba2dfb3dd0697925bbd147d33c5bb3111667e4307bef6829a16668bb742adf34e8676137ccba0be9b6ef3b5c85107
+  checksum: c9256deaa7a77741be2c8829c290c43c63fd8fa86ace3196910d3fa4389c101d6a610f3c5f4b55000e766a51dd89eafc9b5cd876e373884db3bf90122fdfa6a1
   languageName: node
   linkType: hard
 
