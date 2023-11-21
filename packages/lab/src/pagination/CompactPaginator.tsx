@@ -65,7 +65,13 @@ export const CompactPaginator = forwardRef<
           disabled={isOnFirstPage}
         />
       )}
-      <Text as="span" variant="secondary" className={withBaseName("compactSeparator")}>of</Text>
+      <Text
+        as="span"
+        variant="secondary"
+        className={withBaseName("compactSeparator")}
+      >
+        of
+      </Text>
       <PageButton
         page={count}
         onPageChange={onPageChange}
