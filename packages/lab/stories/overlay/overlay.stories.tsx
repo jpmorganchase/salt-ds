@@ -1,5 +1,4 @@
 import { Button, Tooltip } from "@salt-ds/core";
-import { CheckboxGroupExample } from "@salt-ds/core/stories/checkbox/checkbox.qa.stories";
 import { Overlay } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 
@@ -18,7 +17,7 @@ const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
       {/* <CheckboxGroupExample /> */}
       <br />
       <Tooltip content={"im a tooltip"}>
-        <Button>button w/ tooltip</Button>
+        <Button>hover me</Button>
       </Tooltip>
     </>
   );

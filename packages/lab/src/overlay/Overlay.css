@@ -51,7 +51,7 @@
   padding: var(--salt-spacing-100) 0 var(--salt-spacing-100)
     var(--salt-spacing-100);
   width: calc(
-    100% - max(var(--salt-size-icon, 12px)) - (2 * var(--salt-size-unit))
+    100% - max(var(--salt-size-icon), 12px) - (2 * var(--salt-size-unit))
   );
 }
 
