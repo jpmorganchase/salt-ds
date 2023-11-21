@@ -117,7 +117,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
           {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
           <SaltProvider>
             {open && showComponent && (
-              <FloatingFocusManager context={context}>
+              <FloatingFocusManager context={context} initialFocus={-1}>
                 <div
                   ref={floatingRef}
                   className={clsx(withBaseName(), className)}
@@ -126,6 +126,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
                   {...rest}
                 >
                   <div className={withBaseName("container")}>
+                    <div className={withBaseName("content")}>{content}</div>
                     <div className={withBaseName("closeButton")}>
                       <Button onClick={handleCloseButton} variant="secondary">
                         <CloseIcon
@@ -134,7 +135,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
                         />
                       </Button>
                     </div>
-                    <div className={withBaseName("content")}>{content}</div>
                   </div>
                   <FloatingArrow
                     {...(arrowProps as FloatingArrowProps)}
