@@ -2,21 +2,18 @@ import {
   Button,
   makePrefixer,
   mergeProps,
-  StatusIndicator,
-  useFloatingComponent,
+  SaltProvider,
   UseFloatingUIProps,
   useForkRef,
 } from "@salt-ds/core";
 import {
   forwardRef,
-  ComponentPropsWithoutRef,
   ReactNode,
-  Ref,
   isValidElement,
   cloneElement,
+  HTMLAttributes,
   useState,
   useEffect,
-  HTMLAttributes,
 } from "react";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
@@ -29,7 +26,8 @@ import { useOverlay } from "./useOverlay";
 import {
   FloatingArrow,
   FloatingArrowProps,
-  useTransitionStyles,
+  FloatingFocusManager,
+  FloatingPortal,
 } from "@floating-ui/react";
 
 export interface OverlayProps
@@ -70,12 +68,13 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       window: targetWindow,
     });
 
-    const { Component: FloatingComponent } = useFloatingComponent();
+    const [showComponent, setShowComponent] = useState(false);
 
     const {
       arrowProps,
       open,
       onOpenChange,
+      context,
       floating,
       reference,
       getTriggerProps,
@@ -95,6 +94,12 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
+    useEffect(() => {
+      if (open && !showComponent) {
+        setShowComponent(true);
+      }
+    }, [open, showComponent]);
+
     const handleCloseButton = () => {
       console.log("close ovl");
       onOpenChange(false);
@@ -108,38 +113,43 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             ref: triggerRef,
           })}
 
-        <FloatingComponent
-          className={clsx(withBaseName(), className)}
-          open={open}
-          ref={floatingRef}
-          {...getOverlayProps()}
-          {...getOverlayPosition()}
-          {...rest}
-        >
-          <div className={withBaseName("container")}>
-            <div className={withBaseName("content")}>{content}</div>
-            <Button
-              onClick={handleCloseButton}
-              className={withBaseName("close")}
-              variant="secondary"
-              // tabIndex={1}
-            >
-              <CloseIcon
-                accessible-text="close overlay"
-                className={withBaseName("closeIcon")}
-              />
-            </Button>
-          </div>
-          <FloatingArrow
-            {...(arrowProps as FloatingArrowProps)}
-            className={withBaseName("arrow")}
-            strokeWidth={1}
-            fill="var(--overlay-background)"
-            stroke="var(--overlay-borderColor)"
-            height={8}
-            width={14}
-          />
-        </FloatingComponent>
+        <FloatingPortal>
+          {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
+          <SaltProvider>
+            {open && showComponent && (
+              <FloatingFocusManager context={context}>
+                <div
+                  ref={floatingRef}
+                  className={clsx(withBaseName(), className)}
+                  style={getOverlayPosition()}
+                  {...getOverlayProps()}
+                  {...rest}
+                >
+                  <div className={withBaseName("container")}>
+                    <div className={withBaseName("closeButton")}>
+                      <Button onClick={handleCloseButton} variant="secondary">
+                        <CloseIcon
+                          accessible-text="close overlay"
+                          className={withBaseName("closeIcon")}
+                        />
+                      </Button>
+                    </div>
+                    <div className={withBaseName("content")}>{content}</div>
+                  </div>
+                  <FloatingArrow
+                    {...(arrowProps as FloatingArrowProps)}
+                    className={withBaseName("arrow")}
+                    strokeWidth={1}
+                    fill="var(--overlay-background)"
+                    stroke="var(--overlay-borderColor)"
+                    height={8}
+                    width={14}
+                  />
+                </div>
+              </FloatingFocusManager>
+            )}
+          </SaltProvider>
+        </FloatingPortal>
       </>
     );
   }
