@@ -50,7 +50,8 @@ export const AppHeaderInPage = () => {
           // Mobile Header
           <FlexLayout
             style={{
-              height: "44px",
+              height:
+                "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
               backgroundColor: "var(--salt-container-primary-background)",
             }}
             justify="space-between"
@@ -71,8 +72,10 @@ export const AppHeaderInPage = () => {
                 style={{
                   justifyContent: "center",
                   display: "flex",
-                  height: "44px",
-                  width: "44px",
+                  height:
+                    "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
+                  width:
+                    "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
                   borderRight:
                     "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
                 }}
@@ -89,7 +92,11 @@ export const AppHeaderInPage = () => {
             </StackLayout>
 
             <Drawer
-              style={{ paddingTop: "44px", paddingLeft: "0" }}
+              style={{
+                paddingTop:
+                  "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
+                paddingLeft: "0",
+              }}
               open={drawerOpen}
             >
               <nav>
@@ -132,7 +139,8 @@ export const AppHeaderInPage = () => {
           // Desktop Header
           <FlexLayout
             style={{
-              height: "44px",
+              height:
+                "calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap))",
               paddingLeft: "1em",
               paddingRight: "1em",
               backgroundColor: "var(--salt-container-primary-background)",
