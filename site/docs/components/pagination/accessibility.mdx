@@ -1,0 +1,29 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is above the Pagination group, Tab moves focus to the first Pagination item in the group. Then each next Pagination item is a tab stop.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+If focus is below the Pagination Group, Shift + Tab moves focus to the last Pagination item in the group. Then each Shift + Tab moves focus to the previous Pagination item in the group.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- Accordions are collapsed by default. Enter or Space expands, or collapses, Accordions.
+
+</KeyboardControl>
+</KeyboardControls>

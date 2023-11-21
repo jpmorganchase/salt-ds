@@ -101,11 +101,11 @@
   align-items: baseline;
 }
 
-.saltPagination-leftPageInput {
+.saltPagination-leftGoToInput {
   margin-right: var(--salt-spacing-100);
 }
 
-.saltPagination-rightPageInput {
+.saltPagination-rightGoToInput {
   margin-left: var(--salt-spacing-100);
 }
 

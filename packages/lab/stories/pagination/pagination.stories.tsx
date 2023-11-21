@@ -1,5 +1,5 @@
 import {
-  PageInput,
+  GoToInput,
   CompactPaginator,
   Pagination,
   PaginationProps,
@@ -45,7 +45,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
       compact={compact}
       compactWithInput={compactWithInput}
     >
-      {goToPosition === "left" ? <PageInput label={"Go to"} /> : null}
+      {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
       {compact ?? compactWithInput ? (
         <CompactPaginator withInput={compactWithInput} />
       ) : (
@@ -55,7 +55,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
           showPreviousNext={showPreviousNext}
         />
       )}
-      {goToPosition === "right" ? <PageInput label={"Go to"} /> : null}
+      {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
     </Pagination>
   );
 };

@@ -22,8 +22,8 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   label?: string;
 }
 
-export const PageInput = forwardRef<HTMLSpanElement, GoToInputProps>(
-  function PageInput(
+export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
+  function GoToInput(
     { className, id: idProp, label, ...restProps },
 
     forwardedRef
@@ -83,7 +83,7 @@ export const PageInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       <span
         className={clsx(
           withBaseName("pageInputWrapper"),
-          { [withBaseName(`${position!}PageInput`)]: position },
+          { [withBaseName(`${position!}GoToInput`)]: position },
           className
         )}
         ref={forkedRef}
