@@ -20,7 +20,10 @@ interface CompactPaginatorProps extends ComponentPropsWithoutRef<"div"> {
 export const CompactPaginator = forwardRef<
   HTMLDivElement,
   CompactPaginatorProps
->(function CompactPaginator({ className, withInput, ...restProps }, forwardedRef) {
+>(function CompactPaginator(
+  { className, withInput, ...restProps },
+  forwardedRef
+) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pagination",
@@ -28,7 +31,8 @@ export const CompactPaginator = forwardRef<
     window: targetWindow,
   });
 
-  const { count, page, onPageChange, setPaginatorElement } = usePaginationContext();
+  const { count, page, onPageChange, setPaginatorElement } =
+    usePaginationContext();
 
   const ref = useForkRef(setPaginatorElement, forwardedRef);
 
@@ -37,8 +41,6 @@ export const CompactPaginator = forwardRef<
   }, [page, onPageChange]);
 
   const onNextPage = useCallback(() => {
-    console.log('page', page);
-    
     onPageChange(Math.min(page + 1, count));
   }, [page, onPageChange, count]);
 
