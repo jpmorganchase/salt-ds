@@ -112,7 +112,10 @@ export const AppHeaderInPage = () => {
                 align="start"
                 direction="column"
                 gap={1}
-                style={{ paddingLeft: "26px" }}
+                style={{
+                  paddingLeft:
+                    "calc(var(--salt-spacing-300) + var(--salt-spacing-25))",
+                }}
               >
                 {utilities?.map((utility, index) => (
                   <StackLayout
