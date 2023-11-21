@@ -127,14 +127,16 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
                 >
                   <div className={withBaseName("container")}>
                     <div className={withBaseName("content")}>{content}</div>
-                    <div className={withBaseName("closeButton")}>
-                      <Button onClick={handleCloseButton} variant="secondary">
-                        <CloseIcon
-                          accessible-text="close overlay"
-                          className={withBaseName("closeIcon")}
-                        />
-                      </Button>
-                    </div>
+                    <Button
+                      onClick={handleCloseButton}
+                      variant="secondary"
+                      className={withBaseName("closeButton")}
+                    >
+                      <CloseIcon
+                        accessible-text="close overlay"
+                        className={withBaseName("closeIcon")}
+                      />
+                    </Button>
                   </div>
                   <FloatingArrow
                     {...(arrowProps as FloatingArrowProps)}

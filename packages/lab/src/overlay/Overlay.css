@@ -35,6 +35,7 @@
 }
 
 .saltOverlay-container {
+  display: flex;
   animation: fade-in var(--salt-duration-perceptible) ease-in-out;
 }
 
@@ -50,14 +51,8 @@
 .saltOverlay-content {
   padding: var(--salt-spacing-100) 0 var(--salt-spacing-100)
     var(--salt-spacing-100);
-  width: calc(
-    100% - max(var(--salt-size-icon), 12px) - (2 * var(--salt-size-unit))
-  );
 }
 
 .saltOverlay-closeButton {
-  position: absolute;
-  right: 0;
-  top: 0;
   z-index: var(--overlay-zindex);
 }
