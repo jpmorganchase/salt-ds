@@ -1,15 +1,12 @@
 .saltPagination {
-  --pagination-button-size: var(--salt-size-base);
-  --pagination-fontSize: var(--salt-text-fontSize);
-
   display: flex;
   flex-direction: row;
-  color: var(--salt-content-secondary-foreground);
+  align-items: center;
 }
 
 .saltPagination-arrowButton {
-  --saltButton-width: var(--pagination-button-size);
-  --saltButton-height: var(--pagination-button-size);
+  --saltButton-width: var(--salt-size-base);
+  --saltButton-height: var(--salt-size-base);
   --saltButton-padding: var(--salt-spacing-100);
   --saltButton-margin: 0;
 }
@@ -23,9 +20,9 @@
 }
 
 .saltPagination-pageButton {
-  --saltButton-minWidth: var(--pagination-button-size);
+  --saltButton-minWidth: var(--salt-size-base);
   --saltButton-fontWeight: var(--salt-text-fontWeight);
-  --saltButton-height: var(--pagination-button-size);
+  --saltButton-height: var(--salt-size-base);
   --saltButton-text-color: var(--salt-content-primary-foreground);
 }
 
@@ -54,10 +51,10 @@
 }
 
 .saltPagination-ellipsis {
-  width: var(--pagination-button-size);
-  height: var(--pagination-button-size);
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
   text-align: center;
-  line-height: var(--pagination-button-size);
+  line-height: var(--salt-size-base);
 }
 
 .saltPagination-accessibleText {
@@ -71,27 +68,21 @@
   opacity: 0;
 }
 
-/* .saltPagination-compactInputField {
-} */
-
 .saltPagination-compactInput {
   --saltInput-minWidth: unset;
   --saltInput-paddingLeft: 0;
   --saltInput-paddingRight: 0;
-  height: var(--pagination-button-size);
+  height: var(--salt-size-base);
 }
 
 .saltPagination-compactInputFixed {
-  --saltInput-minWidth: var(--pagination-button-size);
-  width: var(--pagination-button-size);
+  --saltInput-minWidth: var(--salt-size-base);
+  width: var(--salt-size-base);
 }
 
 .saltPagination-compactSeparator {
-  height: var(--pagination-button-size);
-  width: var(--pagination-button-size);
+  width: var(--salt-size-base);
   text-align: center;
-  font-size: var(--pagination-fontSize);
-  line-height: var(--pagination-button-size);
 }
 
 .saltPagination-pageInputWrapper {
@@ -110,12 +101,12 @@
 }
 
 .saltPagination-pageInput {
-  height: var(--pagination-button-size);
+  height: var(--salt-size-base);
   --saltInput-minWidth: unset;
 }
 
 .saltPagination-pageInputFixed {
-  --saltInput-minWidth: var(--pagination-button-size);
-  max-width: var(--pagination-button-size);
-  width: var(--pagination-button-size);
+  --saltInput-minWidth: var(--salt-size-base);
+  max-width: var(--salt-size-base);
+  width: var(--salt-size-base);
 }

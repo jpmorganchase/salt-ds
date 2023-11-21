@@ -8,7 +8,7 @@ export type ArrowButtonType = "previous" | "next";
 
 export interface ArrowButtonProps extends ButtonProps {
   arrowButtonType: ArrowButtonType;
-  onPress: () => void;
+  onClick: () => void;
 }
 
 interface ButtonContent {
@@ -38,7 +38,8 @@ const contentByType = new Map<ArrowButtonType, ButtonContent>([
 
 export const ArrowButton = ({
   arrowButtonType,
-  onPress,
+  onClick,
+  disabled,
   ...restProps
 }: ArrowButtonProps) => {
   const { icon: Icon, name, className } = contentByType.get(arrowButtonType)!;
@@ -46,7 +47,7 @@ export const ArrowButton = ({
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      onPress();
+      onClick();
     }
   };
 
@@ -59,7 +60,8 @@ export const ArrowButton = ({
       name={name}
       aria-label={name}
       onKeyDown={onKeyDown}
-      onClick={onPress}
+      onClick={onClick}
+      disabled={disabled}
     >
       <Icon aria-label={name} />
     </Button>

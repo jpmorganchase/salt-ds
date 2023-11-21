@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, useCallback } from "react";
 import { clsx } from "clsx";
-import { useForkRef } from "@salt-ds/core";
+import { useForkRef, Text } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { ArrowButton } from "./ArrowButton";
 import { CompactInput } from "./CompactInput";
@@ -51,7 +51,7 @@ export const CompactPaginator = forwardRef<
     <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
       <ArrowButton
         arrowButtonType="previous"
-        onPress={onPreviousPage}
+        onClick={onPreviousPage}
         disabled={isOnFirstPage}
       >
         <ChevronLeftIcon />
@@ -65,7 +65,7 @@ export const CompactPaginator = forwardRef<
           disabled={isOnFirstPage}
         />
       )}
-      <span className={withBaseName("compactSeparator")}>of</span>
+      <Text as="span" variant="secondary" className={withBaseName("compactSeparator")}>of</Text>
       <PageButton
         page={count}
         onPageChange={onPageChange}
@@ -73,7 +73,7 @@ export const CompactPaginator = forwardRef<
       />
       <ArrowButton
         arrowButtonType="next"
-        onPress={onNextPage}
+        onClick={onNextPage}
         disabled={isOnLastPage}
       >
         <ChevronRightIcon />
