@@ -12,4 +12,9 @@
   position: relative;
   padding-inline-start: 0;
   box-sizing: content-box;
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
 }
