@@ -1,4 +1,4 @@
-import { SaltProvider } from "@salt-ds/core";
+import { SaltProvider, H3 } from "@salt-ds/core";
 import { Dropdown, FormField, FormFieldProps, Input } from "@salt-ds/lab";
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
@@ -38,7 +38,7 @@ export const Secondary: StoryFn<typeof FormField> = () => (
     }}
   >
     <div style={{ width: "200px" }}>
-      <h3>Secondary</h3>
+      <H3>Secondary</H3>
       <FormField
         label="Secondary form field"
         helperText="Helper text value"
@@ -48,7 +48,7 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       </FormField>
     </div>
     <div style={{ width: "200px" }}>
-      <h3>Secondary with disabled outer ring</h3>
+      <H3>Secondary with disabled outer ring</H3>
       <FormField
         label="Secondary form field"
         helperText="Helper text value"
@@ -63,7 +63,7 @@ export const Secondary: StoryFn<typeof FormField> = () => (
 
 export const Tertiary: StoryFn<typeof FormField> = () => (
   <div style={{ width: "200px" }}>
-    <h3>Tertiary</h3>
+    <H3>Tertiary</H3>
     <FormField
       label="Tertiary form field"
       helperText="Helper text value"

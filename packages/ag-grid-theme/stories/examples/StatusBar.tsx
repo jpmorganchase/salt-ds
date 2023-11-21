@@ -1,4 +1,4 @@
-import { StackLayout } from "@salt-ds/core";
+import { StackLayout, Text } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -27,7 +27,7 @@ const StatusBar = (props: AgGridReactProps) => {
     <StackLayout gap={4}>
       {switcher}
       <StackLayout gap={2}>
-        <p>Select rows to enable status bar display</p>
+        <Text>Select rows to enable status bar display</Text>
         <div {...containerProps}>
           <AgGridReact
             enableRangeSelection

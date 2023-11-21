@@ -58,3 +58,14 @@
 .salt-theme .sbdocs table tr:nth-of-type(2n) {
   background: var(--salt-color-gray-20);
 }
+
+/* 
+ * This is to make sure Salt components will work ok with UITK
+ * https://github.com/jpmorganchase/salt-ds/issues/2671
+ */
+body {
+  font-weight: 400;
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 1.85714286em;
+}

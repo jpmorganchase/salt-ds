@@ -12,6 +12,11 @@
   padding: var(--saltBanner-padding, var(--salt-spacing-50) var(--salt-spacing-100));
   width: 100%;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
 }
 
 /* Styles applied to icon */
