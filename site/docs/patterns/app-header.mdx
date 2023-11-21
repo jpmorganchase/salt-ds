@@ -38,6 +38,8 @@ The app header has three functional areas:
     border
   />
 
+*Header functional areas—branding, navigation and utilities.* 
+
 ### Spacing and sizing
 
   <Diagram
@@ -58,6 +60,8 @@ In this layout, the app header is globally persistent, and and you can use it as
     border
   />
 
+*Example of the header-only variant.*
+
 ### Header with vertical navigation
 
 The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, sub-menus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the navigation pattern.  
@@ -68,6 +72,7 @@ The app header with vertical navigation offers an additional layer of hierarchy.
     border
   />
 
+*Header paired with vertical navigation.*
 
 ## Behaviors
 
@@ -77,27 +82,13 @@ The app header is responsive to the width of the application viewport and respon
 
 For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to left of the brand logo. The navigation items will sit on top of the utility actions in the hierarchy of the vertical navigation. 
 
-#### Large viewport
-
   <Diagram
-    src="/img/patterns/app-header/large-viewport.png"
-    alt="App header on large viewport."
+    src="/img/patterns/app-header/viewports.png"
+    alt="App header responsive behavior on viewport’s size change."
     border
   />
 
-#### Small viewport
-
-<Diagrams>
-  <Diagram
-    src="/img/patterns/app-header/small-viewport-1.png"
-    alt="App header on small viewport."
-  />
-  <Diagram
-    src="/img/patterns/app-header/small-viewport-2.png"
-    alt="App header on small viewport with menu open."
-  />
-</Diagrams>
-
+*App header responsive behavior on viewport’s size change.*
 
 <ExampleContainer type="positive">
   - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
@@ -114,6 +105,8 @@ The app header should sit in the north region, above the main, in a sticky posit
     border
   />
 
+*The header stays in place while user scrolls.*
+
 ## Accessibility
 
 ### Using skip links to bypass the app header
@@ -123,10 +116,12 @@ If you're implementing a complex app header with several navigation items and ut
 You can display and set focus to a skip link when the user moves focus from the previous component in the tab sequence to the app header—and configure the skip link to move focus to the main page content or an alternative target.
 
   <Diagram
-    src="/img/patterns/app-header/skip-links.png"
+    src="/img/patterns/app-header/skip-link.png"
     alt="The 'skip to content' link should be the first focusable element in the header."
     border
   />
+
+*The "skip to content" link should be the first focusable element in the header.*
 
 ### Keyboard interactions
 
