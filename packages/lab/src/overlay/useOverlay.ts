@@ -110,6 +110,7 @@ export function useOverlay(props?: UseOverlayProps) {
 
   return {
     arrowProps,
+    context,
     open,
     onOpenChange: handleOpenChange,
     floating,
