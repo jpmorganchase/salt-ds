@@ -16,4 +16,9 @@
   overflow: auto;
   padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
   width: var(--saltPanel-width, 100%);
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
 }
