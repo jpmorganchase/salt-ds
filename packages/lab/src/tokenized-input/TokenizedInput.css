@@ -42,7 +42,7 @@
 .saltTokenizedInput-pillGroup {
   align-content: flex-start;
   display: flex;
-  column-gap: var(--salt-size-basis-unit);
+  /*column-gap: var(--salt-size-basis-unit); */
   flex: 1;
   flex-wrap: wrap;
   min-height: var(--tokenizedInput-height);
@@ -115,16 +115,16 @@
 }
 
 /* Styles applied to a Pill when active */
-.saltTokenizedInput .saltInputPill-pillActive {
+.saltTokenizedInput .saltInputPill-pillHighlighted {
   --saltButton-text-color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
   --saltButton-background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
 }
 
-.saltTokenizedInput .saltInputPill-pillActive .saltPillNext-action {
+.saltTokenizedInput .saltInputPill-pillHighlighted .saltPillNext-action {
   --pillNext-background: var(--saltTokenizedInput-pill-background-active, var(--salt-selectable-background-hover));
 }
 
 /* Styles applied to a Pills delete icon */
-.saltTokenizedInput .saltInputPill-pillActive .saltIcon {
+.saltTokenizedInput .saltInputPill-pillHighlighted .saltIcon {
   --saltIcon-color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
 }

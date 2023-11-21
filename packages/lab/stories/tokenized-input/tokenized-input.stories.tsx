@@ -2,6 +2,7 @@ import {
   Button,
   FormField,
   FormFieldHelperText as FormHelperText,
+  FormFieldLabel,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import { ChangeHandler, TokenizedInput, Input } from "@salt-ds/lab";
@@ -148,8 +149,10 @@ export const Disabled: StoryFn<typeof TokenizedInput> = () => {
         justifyContent: "center",
       }}
     >
-      <FormField disabled label="Enter a value" style={{ maxWidth: 292 }}>
+      <FormField disabled style={{ maxWidth: 292 }}>
+        <FormFieldLabel>Enter a value</FormFieldLabel>
         <TokenizedInput
+          disabled
           initialSelectedItems={["Value 1", "Value 2", "Value 3"]}
         />
       </FormField>

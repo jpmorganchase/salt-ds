@@ -1,6 +1,4 @@
-//TODO remove when popout code has been migrated
-/* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
-import { ownerWindow, useControlled, useDensity, useId } from "@salt-ds/core";
+import { ownerWindow, useControlled, useId } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
   ChangeEvent,
@@ -20,7 +18,6 @@ import { escapeRegExp, useEventCallback } from "../utils";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
-import { TokenizedInputBaseProps } from "./TokenizedInputBase";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 export interface TokenizedInputState<Item> {
@@ -41,20 +38,8 @@ export interface TokenizedInputHelpers<Item> {
   updateExpanded: (expanded: boolean) => void;
 }
 
-// Timeout to accommodate blur from the input and a click inside of the container
+// Timeout to accommodate blur from the input and a click inside the container
 const BLUR_TIMEOUT = 200;
-
-/**
- * Map of the height of TokenizedInput in different density.
- * We have to keep a map of this as we can't always measure the height of the input in it's
- * collapsed state, e.g. in a controlled 'expanded' state.
- */
-const SINGLE_LINE_HEIGHT_MAP = {
-  touch: 45,
-  low: 36,
-  medium: 28,
-  high: 23,
-};
 
 function isValidItem<Item>(data: unknown): data is Item {
   return (
@@ -65,9 +50,9 @@ function isValidItem<Item>(data: unknown): data is Item {
 
 interface useTokenizedInputResult<Item> {
   /**
-   * Used to do auto focus. It should be set to the actual input node.
+   * Used to do autofocus. It should be set to the actual input node.
    */
-  inputRef: Ref<HTMLInputElement>;
+  inputRef: Ref<HTMLTextAreaElement>;
   /**
    * The tokenized input state
    */
@@ -79,7 +64,7 @@ interface useTokenizedInputResult<Item> {
   /**
    * Properties applied to a basic tokenized input component
    */
-  inputProps: Omit<TokenizedInputBaseProps<Item>, "helpers">;
+  inputProps: Omit<TokenizedInputProps<Item>, "helpers">;
 }
 
 export function useTokenizedInput<Item>(
@@ -89,29 +74,16 @@ export function useTokenizedInput<Item>(
 
   const {
     inFormField,
-    // @ts-ignore
-    popoutMode,
-    // @ts-ignore
-    popoutActions,
-    // @ts-ignore
-    setIsPoppedOut,
-    // @ts-ignore
-    setManagedPopout,
-    // @ts-ignore
-    setIntendedHeight,
     a11yProps: {
       "aria-labelledby": ariaLabelledBy,
       disabled: formFieldDisabled,
     } = {},
   } = useFormFieldLegacyProps(); // FIXME: FormField Props
 
-  const density = useDensity();
-
   const {
     delimiter = ",",
     initialSelectedItems = [],
     itemToString = defaultItemToString,
-    stringToItem = (_, value) => value.trim(),
     disabled = formFieldDisabled,
     disableAddOnBlur,
     onFocus,
@@ -184,9 +156,7 @@ export function useTokenizedInput<Item>(
   );
 
   const onChange = useEventCallback((selectedItems: Item[] | undefined) => {
-    if (onChangeProp) {
-      onChangeProp(selectedItems);
-    }
+    onChangeProp?.(selectedItems);
   });
 
   const cancelBlur = useCallback(() => {
@@ -199,12 +169,8 @@ export function useTokenizedInput<Item>(
   const focusInput = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.focus();
-
-      if (popoutMode && setIsPoppedOut) {
-        setIsPoppedOut(true);
-      }
     }
-  }, [popoutMode, setIsPoppedOut]);
+  }, []);
 
   useEffect(
     () => () => {
@@ -218,14 +184,6 @@ export function useTokenizedInput<Item>(
       focusInput();
     }
   }, [expanded, focusInput]);
-
-  useEffect(() => {
-    if (popoutMode && setManagedPopout) {
-      setManagedPopout(true);
-
-      setIntendedHeight(SINGLE_LINE_HEIGHT_MAP[density]);
-    }
-  }, [density, popoutMode, setIntendedHeight, setManagedPopout]);
 
   const updateInputValue = (newValue: string | undefined) => {
     if (!isInputControlled) {
@@ -262,10 +220,6 @@ export function useTokenizedInput<Item>(
       onExpand && onExpand();
     } else {
       onCollapse && onCollapse();
-    }
-
-    if (popoutMode && popoutActions) {
-      popoutActions.refresh();
     }
   };
 
@@ -313,18 +267,14 @@ export function useTokenizedInput<Item>(
 
     setFocused(true);
 
-    if (onInputFocus) {
-      onInputFocus(event);
-    }
+    onInputFocus?.(event);
 
     if (blurTimeout.current !== null) {
       cancelBlur();
     } else {
       updateExpanded(true);
 
-      if (onFocus) {
-        onFocus(event);
-      }
+      onFocus?.(event);
     }
   };
 
@@ -335,9 +285,7 @@ export function useTokenizedInput<Item>(
     setHighlightedIndex(undefined);
     setActiveIndices([]);
 
-    if (onInputBlur) {
-      onInputBlur(event);
-    }
+    onInputBlur?.(event);
 
     handleBlur(event);
   };
@@ -359,13 +307,7 @@ export function useTokenizedInput<Item>(
         handleAddItems(value, true);
       }
 
-      if (onBlur) {
-        onBlur(event);
-      }
-
-      if (popoutMode && setIsPoppedOut) {
-        setIsPoppedOut(false);
-      }
+      onBlur?.(event);
     }, BLUR_TIMEOUT) as unknown as number;
   };
 
@@ -374,17 +316,13 @@ export function useTokenizedInput<Item>(
     setActiveIndices([]);
     focusInput();
 
-    if (onClick) {
-      onClick(event);
-    }
+    onClick?.(event);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setHighlightedIndex(undefined);
 
-    if (onInputChange) {
-      onInputChange(event);
-    }
+    onInputChange?.(event);
 
     const newValue = event.target.value;
 
@@ -409,11 +347,8 @@ export function useTokenizedInput<Item>(
 
     const newItems = newValue
       .split(delimiterRegex)
-      .reduce<Item[]>((values, part) => {
-        const newItem = stringToItem(
-          hasActiveItems ? values : selectedItems.concat(values),
-          part
-        );
+      .reduce<Item[]>((values, item) => {
+        const newItem = item.trim();
         return isValidItem<Item>(newItem) ? values.concat(newItem) : values;
       }, []);
 
@@ -440,14 +375,7 @@ export function useTokenizedInput<Item>(
     updateSelectedItems([]);
     resetInput();
     focusInput();
-
-    if (onClear) {
-      onClear(event);
-    }
-
-    if (popoutMode && popoutActions) {
-      popoutActions.refresh();
-    }
+    onClear?.(event);
   };
 
   const cursorAtInputStart = () =>
@@ -461,7 +389,6 @@ export function useTokenizedInput<Item>(
     KeyboardEventHandler<HTMLInputElement>
   > = {
     ArrowLeft: (event) => {
-      console.log("arrow left");
       event.preventDefault();
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
@@ -615,10 +542,7 @@ export function useTokenizedInput<Item>(
   const handleKeyDown: InputHTMLAttributes<HTMLInputElement>["onKeyDown"] = (
     event
   ) => {
-    console.log(event.key);
-    if (onKeyDown) {
-      onKeyDown(event);
-    }
+    onKeyDown?.(event);
     if (event.defaultPrevented) {
       return;
     }
@@ -644,10 +568,6 @@ export function useTokenizedInput<Item>(
         handleCommonKeyDown(event);
       }
     }
-
-    if (popoutMode && popoutActions) {
-      popoutActions.refresh();
-    }
   };
 
   const state: TokenizedInputState<Item> = {
@@ -672,6 +592,7 @@ export function useTokenizedInput<Item>(
     onInputFocus: handleInputFocus,
     onInputBlur: handleInputBlur,
     onKeyDown: handleKeyDown,
+    onKeyUp,
     onRemoveItem: handleRemoveItem,
     onClear: handleClear,
   };

@@ -31,10 +31,7 @@ export type InputPillProps = PillNextProps & {
    * Whether the pill is highlighted.
    */
   highlighted?: boolean;
-  /**
-   * Whether the pill is active.
-   */
-  active?: boolean;
+
   /**
    * Callback when pill is deleted.
    */
@@ -43,7 +40,6 @@ export type InputPillProps = PillNextProps & {
 
 export const InputPill = memo(function InputPill(props: InputPillProps) {
   const {
-    active,
     className,
     hidden,
     highlighted,
@@ -86,7 +82,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("pillActive")]: active || highlighted,
+            [withBaseName("pillHighlighted")]: highlighted,
             // TODO: can this be avoid by passing the close button to end adornment?
             [withBaseName("pillLastVisible")]: lastVisible,
             [withBaseName("hidden")]: hidden,
