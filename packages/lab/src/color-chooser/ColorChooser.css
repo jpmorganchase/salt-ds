@@ -49,8 +49,7 @@
 }
 
 .saltColorChooser-defaultButton {
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle)
-    var(--salt-editable-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
 }
 
 .saltColorChooser-overlayContent {
