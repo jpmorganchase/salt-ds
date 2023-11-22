@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.11.0",
+  "version": "1.13.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -27,5 +27,11 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-core",
     "provenance": true
-  }
+  },
+  "scripts": {
+    "bundle:css": "yarn node ./scripts/build.mjs"
+  },
+  "files": [
+    "css"
+  ]
 }

@@ -13,14 +13,19 @@
 
 /* Styles applied to root component if `disabled={true}` */
 .saltCheckbox-disabled {
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
 /* Styles applied to root component if `readOnly={true}` */
 .saltCheckbox-readOnly {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   cursor: var(--salt-selectable-cursor-readonly);
+}
+
+.saltCheckbox-input,
+.saltCheckboxIcon {
+  margin-top: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
 }
 
 .saltCheckboxIcon > svg {
@@ -55,11 +60,9 @@
 /* Styles applied to input element */
 .saltCheckbox-input {
   cursor: inherit;
-  left: 0;
   margin: 0;
   opacity: 0;
   padding: 0;
   position: absolute;
-  top: 0;
   z-index: var(--salt-zIndex-default);
 }

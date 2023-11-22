@@ -11,6 +11,7 @@ import {
   useMeta,
 } from "@jpmorganchase/mosaic-store";
 import { TabPanel, Tabs } from "@salt-ds/lab";
+import ReactMarkdown from "react-markdown";
 import { LayoutProps } from "../types/index";
 import { DetailBase } from "../DetailBase";
 import SecondarySidebar from "./SecondarySidebar";
@@ -19,6 +20,9 @@ import MobileDrawer from "./MobileDrawer";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 import styles from "./DetailComponent.module.css";
+import { code, p, ul } from "../../components";
+
+const components = { code, ul, p };
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
@@ -28,17 +32,17 @@ const tabs = [
 
 export type Relationship = "similarTo" | "contains";
 
-type RelatedComponent = {
+interface RelatedComponent {
   name: string;
   relationship: Relationship;
-};
+}
 
-type ComponentNpmInfo = {
+interface ComponentNpmInfo {
   name: string;
   initialRelease?: string;
-};
+}
 
-export type Data = {
+export interface Data {
   description: string;
   alsoKnownAs: string[];
   relatedComponents: RelatedComponent[];
@@ -48,14 +52,14 @@ export type Data = {
   bugReport?: string;
   featureRequest?: string;
   askQuestion?: string;
-};
+}
 
 type CustomSiteState = SiteState & { data?: Data };
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
-  const { push } = useRouter();
+  const { replace, push } = useRouter();
   const { route } = useRoute();
 
   const [allExamplesView, setAllExamplesView] = useState(false);
@@ -73,15 +77,16 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     return state.data ? { ...defaultData, ...state.data } : undefined;
   });
 
-  const { description } = useData || {};
+  const { description } = useData ?? {};
 
   const currentTab = tabs.find(({ name }) => route?.includes(name));
 
   useEffect(() => {
+    // Default to first tab, "Examples"
     if (!currentTab) {
-      push(`${newRoute}${tabs[0].name}`);
+      replace(`${newRoute}${tabs[0].name}`);
     }
-  }, [route]);
+  }, [currentTab, newRoute, replace, route]);
 
   const isMobileView = useIsMobileView();
 
@@ -125,6 +130,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             />
           ) : undefined
         }
+        isMobileView={isMobileView}
       >
         {isMobileView && (
           <MobileDrawer
@@ -132,8 +138,9 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             drawerContent={<SecondarySidebar additionalData={useData} />}
           />
         )}
-
-        <p>{description}</p>
+        <ReactMarkdown components={components}>
+          {description ?? ""}
+        </ReactMarkdown>
         <Tabs
           activeTabIndex={currentTabIndex}
           onActiveChange={updateRouteWhenTabChanges}

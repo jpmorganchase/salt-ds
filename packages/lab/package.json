@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.20",
+  "version": "1.0.0-alpha.22",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -40,5 +40,11 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-lab",
     "provenance": true
-  }
+  },
+  "scripts": {
+    "bundle:css": "yarn node ./scripts/build.mjs"
+  },
+  "files": [
+    "css"
+  ]
 }

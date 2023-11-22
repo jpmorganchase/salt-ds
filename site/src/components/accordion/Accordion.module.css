@@ -11,11 +11,11 @@
 }
 
 .accordion a {
-  text-decoration: var(--salt-text-link-textDecoration);
+  text-decoration: var(--salt-navigable-textDecoration);
 }
 
 .accordion :global(.saltIcon) {
-  --salt-icon-size-base: var(--salt-spacing-200);
+  --salt-size-icon: var(--salt-spacing-200);
 }
 
 .accordion .panel {
@@ -26,6 +26,6 @@
 
 @media screen and (max-width: 768px) {
   .accordion :global(.saltIcon) {
-    --salt-icon-size-base: var(--salt-spacing-100);
+    --salt-size-icon: var(--salt-spacing-100);
   }
 }

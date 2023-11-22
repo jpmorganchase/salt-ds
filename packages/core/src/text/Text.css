@@ -2,10 +2,13 @@
 .saltText {
   color: var(--saltText-color, var(--text-color));
   font-family: var(--saltText-fontFamily, var(--salt-text-fontFamily));
+  font-size: var(--saltText-fontSize, var(--salt-text-fontSize));
+  line-height: var(--saltText-lineHeight, var(--salt-text-lineHeight));
+  font-weight: var(--saltText-fontWeight, var(--salt-text-fontWeight));
 }
 
 .saltText::selection {
-  background: var(--saltText-highlight, var(--salt-text-background-selected));
+  background: var(--saltText-highlight, var(--salt-content-foreground-highlight));
 }
 
 /* Allows truncation */
@@ -19,32 +22,60 @@
 
 /* Primary variant */
 .saltText-primary {
-  --text-color: var(--salt-text-primary-foreground);
+  --text-color: var(--salt-content-primary-foreground);
 }
 
 /* Disabled primary variant */
 .saltText-primary.saltText-disabled {
-  --text-color: var(--salt-text-primary-foreground-disabled);
+  --text-color: var(--salt-content-primary-foreground-disabled);
 }
 
 /* Secondary variant */
 .saltText-secondary {
-  --text-color: var(--salt-text-secondary-foreground);
+  --text-color: var(--salt-content-secondary-foreground);
 }
 
 /* Disabled secondary variant */
 .saltText-secondary.saltText-disabled {
-  --text-color: var(--salt-text-secondary-foreground-disabled);
+  --text-color: var(--salt-content-secondary-foreground-disabled);
 }
 
 /* Body emphasis strong */
 .saltText strong {
   font-weight: var(--salt-text-fontWeight-strong);
 }
+
 /* Body emphasis small */
 .saltText small {
   font-size: inherit;
   font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Notation */
+.saltText-notation.saltText {
+  font-family: var(--salt-text-notation-fontFamily);
+  font-size: var(--salt-text-notation-fontSize);
+  line-height: var(--salt-text-notation-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
+}
+
+/* Notation emphasis strong */
+.saltText-notation.saltText strong {
+  font-weight: var(--salt-text-notation-fontWeight-strong);
+}
+
+/* Notation emphasis small */
+.saltText-notation.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-notation-fontWeight-small);
+}
+
+/* Action */
+.saltText-action.saltText {
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  text-transform: var(--salt-text-action-textTransform);
+  text-align: var(--salt-text-action-textAlign);
+  font-weight: var(--salt-text-action-fontWeight);
 }
 
 /* Display 1 */
@@ -85,6 +116,7 @@ h1.saltText strong,
 .saltText-h1.saltText strong {
   font-weight: var(--salt-text-h1-fontWeight-strong);
 }
+
 /* H1 emphasis small */
 h1.saltText small,
 .saltText-h1.saltText small {
@@ -106,6 +138,7 @@ h2.saltText strong,
 .saltText-h2.saltText strong {
   font-weight: var(--salt-text-h2-fontWeight-strong);
 }
+
 /* H2 emphasis small */
 h2.saltText small,
 .saltText-h2.saltText small {
@@ -127,6 +160,7 @@ h3.saltText strong,
 .saltText-h3.saltText strong {
   font-weight: var(--salt-text-h3-fontWeight-strong);
 }
+
 /* H3 emphasis small */
 h3.saltText small,
 .saltText-h3.saltText small {
@@ -148,6 +182,7 @@ h4.saltText strong,
 .saltText-h4.saltText strong {
   font-weight: var(--salt-text-h4-fontWeight-strong);
 }
+
 /* H4 emphasis small */
 h4.saltText small,
 .saltText-h4.saltText small {
@@ -169,6 +204,7 @@ label.saltText strong,
 .saltText-label.saltText strong {
   font-weight: var(--salt-text-label-fontWeight-strong);
 }
+
 /* Label emphasis small */
 label.saltText small,
 .saltText-label.saltText small {

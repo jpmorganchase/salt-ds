@@ -3,10 +3,10 @@ import { DocGrid } from "docs/components/DocGrid";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { TextBlock } from "docs/components/TextBlock";
 import { TextDecorationBlock } from "docs/components/TextDecorationBlock";
-import { LineBlock } from "docs/components/LineBlock";
 import { BlankBlockCell, BlankBlockCode } from "docs/components/BlankBlock";
-
-import { CornerBlock } from "docs/components/CornerBlock";
+import { FontSizeBlock } from "docs/components/FontSizeBlock";
+import { FontWeightBlock } from "docs/components/FontWeightBlock";
+import { LetterSpacingBlock } from "docs/components/LetterSpacingBlock";
 import { TextAlignBlock } from "docs/components/TextAlignBlock";
 
 <Meta title="Theme/Characteristics/Text" />
@@ -16,20 +16,6 @@ import { TextAlignBlock } from "docs/components/TextAlignBlock";
 All text examples are shown using the default `fontWeight` token.
 
 ## Tokens
-
-### Base
-
-<Canvas>
-  <Story name="Base">
-    <DocGrid>
-      <ColorBlock colorVar="--salt-text-background-selected" />
-      <ColorBlock colorVar="--salt-text-primary-foreground" />
-      <ColorBlock colorVar="--salt-text-primary-foreground-disabled" />
-      <ColorBlock colorVar="--salt-text-secondary-foreground" />
-      <ColorBlock colorVar="--salt-text-secondary-foreground-disabled" />
-    </DocGrid>
-  </Story>
-</Canvas>
 
 ### Body
 
@@ -64,6 +50,10 @@ All text examples are shown using the default `fontWeight` token.
       <BlankBlockCode>--salt-text-fontWeight-strong</BlankBlockCode>
       <BlankBlockCell />
       <BlankBlockCode>--salt-text-fontWeight-small</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight-small</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight-strong</BlankBlockCode>
     </DocGrid>
   </Story>
 </Canvas>
@@ -190,6 +180,52 @@ All text examples are shown using the default `fontWeight` token.
   </Story>
 </Canvas>
 
+### Notation
+
+<Canvas>
+  <Story name="Notation">
+    <TextBlock
+      lineHeight="--salt-text-notation-lineHeight"
+      fontSize="--salt-text-notation-fontSize"
+      fontWeight="--salt-text-notation-fontWeight"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-lineHeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontSize</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight-strong</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-notation-fontWeight-small</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
+### Action
+
+<Canvas>
+  <Story name="Action">
+    <TextBlock
+      fontWeight="--salt-text-action-fontWeight"
+      textTransform="--salt-text-action-textTransform"
+      textAlign="--salt-text-action-textAlign"
+    />
+    <DocGrid textExample={true}>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-fontWeight</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-letterSpacing</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-textTransform</BlankBlockCode>
+      <BlankBlockCell />
+      <BlankBlockCode>--salt-text-action-textAlign</BlankBlockCode>
+    </DocGrid>
+  </Story>
+</Canvas>
+
 ### Code
 
 <Canvas>
@@ -261,25 +297,6 @@ All text examples are shown using the default `fontWeight` token.
       <BlankBlockCode>--salt-text-display3-fontWeight-small</BlankBlockCode>
       <BlankBlockCell />
       <BlankBlockCode>--salt-text-display3-fontWeight-strong</BlankBlockCode>
-    </DocGrid>
-  </Story>
-</Canvas>
-
-### Links
-
-<Canvas>
-  <Story name="Links">
-    <TextBlock
-      textDecoration="--salt-text-link-textDecoration"
-      color="--salt-text-link-foreground-hover"
-    />
-    <DocGrid textExample={true}>
-      <ColorBlock colorVar="--salt-text-link-foreground-hover" />
-      <ColorBlock colorVar="--salt-text-link-foreground-active" />
-      <ColorBlock colorVar="--salt-text-link-foreground-visited" />
-      <TextDecorationBlock textDecoration="--salt-text-link-textDecoration" />
-      <TextDecorationBlock textDecoration="--salt-text-link-textDecoration-hover" />
-      <TextDecorationBlock textDecoration="--salt-text-link-textDecoration-selected" />
     </DocGrid>
   </Story>
 </Canvas>

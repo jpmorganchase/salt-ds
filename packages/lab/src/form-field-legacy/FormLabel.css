@@ -30,7 +30,7 @@
 
 .saltFormLabel {
   align-items: center;
-  color: var(--saltFormFieldLegacy-label-text-color, var(--salt-text-secondary-foreground));
+  color: var(--saltFormFieldLegacy-label-text-color, var(--salt-content-secondary-foreground));
   display: block;
   font-size: var(--formFieldLegacy-label-fontSize);
   margin-bottom: var(--saltFormFieldLegacy-label-marginBottom, var(--formFieldLegacy-label-marginBottom));
@@ -55,7 +55,7 @@
 
 /* Styles applied when `disabled={true}` */
 .saltFormLabel-disabled {
-  color: var(--saltFormFieldLegacy-label-text-color-disabled, var(--salt-text-secondary-foreground-disabled));
+  color: var(--saltFormFieldLegacy-label-text-color-disabled, var(--salt-content-secondary-foreground-disabled));
   cursor: var(--salt-editable-cursor-disabled);
 }
 

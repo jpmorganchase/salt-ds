@@ -55,7 +55,7 @@
 
 .saltCategoryListItem-valuesContainer {
   font-style: italic;
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   flex-grow: 1;
   display: flex;
   flex-direction: row;
@@ -108,7 +108,7 @@
 }
 
 .saltQueryInputSearchList-categoryTitle {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   background: var(--salt-container-primary-background);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);

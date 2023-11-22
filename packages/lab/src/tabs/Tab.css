@@ -4,7 +4,7 @@
   --saltEditableLabel-height: var(--tabs-tabstrip-height);
   --saltInputLegacy-minWidth: 4em;
 
-  --tabs-tab-background: var(--salt-navigable-primary-background);
+  --tabs-tab-background: transparent;
   --tabs-tab-cursor: pointer;
   --tabs-tab-spacing: var(--salt-size-unit);
   --tabs-tab-position: relative;
@@ -16,7 +16,7 @@
   background: var(--saltTabs-tab-background, var(--tabs-tab-background));
   border: none;
   border-radius: 0;
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   cursor: var(--saltTabs-tab-cursor, var(--tabs-tab-cursor));
   display: var(--tabs-tabstrip-display);
   height: var(--saltTabs-tab-height, var(--tabs-tabstrip-height));
@@ -25,6 +25,11 @@
   outline: none;
   position: var(--saltTabs-tab-position, var(--tabs-tab-position));
   user-select: none;
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  /* Not specify line-height, otherwise tabs are misaligned */
 }
 
 /* Overrides characteristic used in saltFocusVisible */
@@ -37,7 +42,7 @@
 }
 
 .saltTab[aria-selected="true"] {
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }
 
@@ -126,7 +131,7 @@
 }
 
 .saltTab.saltFocusVisible {
-  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-primary-background-hover));
+  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-background-hover));
 }
 
 .saltTab:before {
@@ -158,5 +163,5 @@
 }
 
 .saltTab:hover:not(.saltTab-closeHover) {
-  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-primary-background-hover));
+  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-background-hover));
 }

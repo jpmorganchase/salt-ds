@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/icons",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "yarn clean && yarn node ./scripts/generateIcons.mjs '*.svg'",
+    "copy:css": "yarn node ./scripts/copyCss.mjs",
     "clean": "rimraf ./src/components"
   },
   "dependencies": {
@@ -36,5 +37,8 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-icons",
     "provenance": true
-  }
+  },
+  "files": [
+    "css"
+  ]
 }

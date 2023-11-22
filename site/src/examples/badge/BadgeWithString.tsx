@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Button } from "@salt-ds/core";
-import { Badge } from "@salt-ds/lab";
+import { Badge, Button } from "@salt-ds/core";
 import { MessageIcon } from "@salt-ds/icons";
 
 export const BadgeWithString = (): ReactElement => (

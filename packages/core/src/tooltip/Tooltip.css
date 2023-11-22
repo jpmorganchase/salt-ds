@@ -12,7 +12,8 @@
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
-  color: var(--saltTooltip-text-color, var(--salt-text-primary-foreground));
+  color: var(--saltTooltip-text-color, var(--salt-content-primary-foreground));
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
   line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));

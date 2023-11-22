@@ -251,7 +251,7 @@
   /* --- Status bar styles --- */
 
   .ag-status-bar {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-content-secondary-foreground);
     height: var(--agGrid-row-height-default);
     font-size: var(--salt-text-fontSize);
     font-weight: var(--salt-text-label-fontWeight);
@@ -261,12 +261,12 @@
 
   .ag-status-panel {
     align-items: center;
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-content-secondary-foreground);
     padding: var(--salt-spacing-100) 0;
   }
 
   .ag-status-name-value-value {
-    color: var(--salt-text-primary-foreground);
+    color: var(--salt-content-primary-foreground);
     font-weight: var(--salt-text-fontWeight-strong);
   }
 
@@ -274,10 +274,6 @@
 
   .ag-header {
     border-color: var(--agGrid-header-borderColor);
-  }
-
-  .ag-ltr .ag-header-cell .ag-header-cell-label .ag-header-cell-text {
-    margin-right: auto;
   }
 
   .ag-header-row {
@@ -309,21 +305,6 @@
   .ag-header-cell,
   .ag-header-group-cell {
     padding: 0px calc(var(--salt-spacing-100));
-  }
-
-  /* --- Pinned column styles --- */
-
-  /* Removes border from pinned cells and ensures fake border can be seen */
-  .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(
-      .ag-cell-range-single-cell
-    ) {
-    overflow: unset;
-  }
-
-  .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(
-      .ag-cell-range-single-cell
-    ) {
-    overflow: unset;
   }
 
   /* --- General row styles --- */
@@ -669,12 +650,12 @@
   }
 
   .ag-floating-filter-button-button .ag-icon-filter:before {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-content-secondary-foreground);
     content: "\e9ac";
   }
 
   .ag-floating-filter-input {
-    color: var(--salt-text-secondary-foreground);
+    color: var(--salt-content-secondary-foreground);
     padding-left: var(--salt-spacing-100);
   }
 
@@ -716,7 +697,7 @@
     overflow: unset;
   }
 
-  /* 
+  /*
     * This react-container class is added as a wrapper for custom components.
     * Adding styling for these components added in the status and tool bars.
     */

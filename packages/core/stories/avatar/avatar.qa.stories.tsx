@@ -1,6 +1,11 @@
 import { Avatar } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  QAContainerNoStyleInjectionProps,
+  QAContainerProps,
+} from "docs/components";
 import persona1 from "../assets/avatar.png";
 
 export default {
@@ -17,5 +22,19 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
 );
 
 AllVariantsGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props
+) => (
+  <QAContainerNoStyleInjection height={500} width={1000} {...props}>
+    <Avatar size={1} name="Alex Brailescu" src={persona1 as string} />
+    <Avatar size={2} src="bad_url" name="Peter Piper" />
+    <Avatar size={3} src="bad_url" />
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
