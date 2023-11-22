@@ -25,6 +25,11 @@
   outline: none;
   position: var(--saltTabs-tab-position, var(--tabs-tab-position));
   user-select: none;
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  /* Not specify line-height, otherwise tabs are misaligned */
 }
 
 /* Overrides characteristic used in saltFocusVisible */

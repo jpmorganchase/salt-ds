@@ -1,5 +1,109 @@
 # @salt-ds/core
 
+## 1.13.0
+
+### Minor Changes
+
+- c85334b5: `Text` component has two new variants: `TextAction` and `TextNotation`. See [Text component](/salt/components/text) for more information.
+
+  ```tsx
+  <Text styleAs="notation" as="span">Lorem ipsum</Text>
+  <Text styleAs="action" as="span">Lorem ipsum</Text>
+  ```
+
+  ```tsx
+  <TextNotation>Lorem ipsum</TextNotation>
+  <TextAction>Lorem ipsum</TextAction>
+  ```
+
+## 1.12.0
+
+### Minor Changes
+
+- 966c362f: Supports turning off style injection via `SaltProvider`.
+
+  ```tsx
+  <SaltProvider enableStyleInjection={false} >
+  ```
+
+Expose a CSS file that allows Salt to be used without runtime CSS injection.
+
+```tsx
+import "@salt-ds/core/css/salt-core.css";
+```
+
+- feb80146: **_Theming and CSS updates_** with visual changes to Salt components:
+
+  1. Minor changes in `Button` component width as font weight gets updated. Font weight for two button variants,`CTA` and `Primary` changed from bold to semi-bold. Expect components containing Salt `Button` to have similar change.
+
+  ```diff
+  - --salt-actionable-cta-fontWeight
+  - --salt-actionable-primary-fontWeight
+  - --salt-actionable-secondary-fontWeight
+  + --salt-text-action-fontWeight
+  ```
+
+  ![Button before and after](/packages/core/images/buttons-old-and-new.png)
+
+  2. Disabled `InteractableCard` component has default border color updated from blue to grey.
+
+  ```diff
+  - --salt-accent-borderColor-disabled
+  + --salt-container-primary-borderColor-disabled
+  ```
+
+  ![Interactable Card before and after](/packages/core/images/card-old-and-new.png)
+
+  3. `Avatar` component line height in HD updated from `11px` to `10px`.
+
+  4. Small `Spinner` component size in HD updated from `12px` to `10px`.
+
+  **_Theming and CSS updates_** with no visual change to Salt components, useful for teams overriding theme locally:
+
+  - `Avatar` component CSS token name updated
+
+  ```diff
+  - --salt-icon-size-base
+  + --salt-size-icon
+  ```
+
+- 01fa27ad: Added Badge.
+
+  Badge is a numeric or alpha character annotation that represents a number of items. It appears either on the top-right of an element, or inline.
+
+  ```
+    <Badge value={9}>
+      <Button>
+        <NotificationSolidIcon />
+      </Button>
+    </Badge>
+  ```
+
+- c6f5feeb: Added a secondary variant to `Card` and `InteractableCard` via their `variant` prop.
+
+  ```tsx
+  <Card variant="secondary" />
+  <InteractableCard variant="secondary" />
+  ```
+
+### Patch Changes
+
+- 9dbe7f4c: Fixed component text properties (`font-weight`, `font-family`, `font-size`, `line-height`) incorrectly inheriting external global styles, which should follow the text characteristic from the Salt theme.
+
+  - Avatar
+  - Badge
+  - Banner
+  - Card
+  - Form Field
+  - Panel
+  - Switch
+  - Text
+  - Toast
+  - Tooltip
+
+- bb41157b: Fixed alignment for Checkbox and Radio Button. They are now correctly aligned to their labels.
+  Fixed alignment for Checkbox Group and Radio Button Group when in a Form Field with label left. The Form Field label is now inline with the groups.
+
 ## 1.11.1
 
 ### Patch Changes
