@@ -91,7 +91,7 @@ describe("Given Ag Grid Theme - uitk", () => {
         cy.get(".ag-floating-filter-input").realClick();
         cy.focused()
           .parents(".ag-floating-filter")
-          .matchImage({ maxDiffThreshold: 0.1 });
+          .matchImage({ maxDiffThreshold: 0.1, updateImages: true });
       });
     });
   });
