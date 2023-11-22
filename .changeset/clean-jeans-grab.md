@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-`className` is now forwarded to `PillNext`'s wrapper instead of the nested button.
+Pill Next's `className` prop is now forwarded to its wrapper instead of the nested button.
