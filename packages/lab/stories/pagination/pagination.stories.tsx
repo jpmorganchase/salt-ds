@@ -7,8 +7,7 @@ import {
   PaginatorProps,
 } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { StackLayout } from "@salt-ds/core";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 export default {
   title: "Lab/Pagination",
@@ -17,6 +16,8 @@ export default {
 
 interface StoryProps {
   goToPosition: "left" | "right" | "none";
+  compact?: boolean;
+  compactWithInput?: boolean;
 }
 
 const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
@@ -38,14 +39,8 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
   };
 
   return (
-    <Pagination
-      page={page}
-      onPageChange={onPageChange}
-      count={count}
-      compact={compact}
-      compactWithInput={compactWithInput}
-    >
-      {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
+    <Pagination page={page} onPageChange={onPageChange} count={count}>
+      {goToPosition === "left" ? <GoToInput /> : null}
       {compact ?? compactWithInput ? (
         <CompactPaginator withInput={compactWithInput} />
       ) : (
@@ -55,7 +50,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
           showPreviousNext={showPreviousNext}
         />
       )}
-      {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
+      {goToPosition === "right" ? <GoToInput /> : null}
     </Pagination>
   );
 };
@@ -109,88 +104,6 @@ WithInput.argTypes = {
   },
 };
 
-export const SiblingCount = (
-  props: PaginationProps & PaginatorProps & StoryProps
-) => {
-  const { siblingCount: siblingCountProp, ...restProps } = props;
-  const [siblingCount, setSiblingCount] = useState(siblingCountProp);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
-    setSiblingCount(value);
-  };
-
-  return (
-    <>
-      <StackLayout>
-        <input
-          type="number"
-          value={siblingCount?.toString()}
-          onChange={handleChange}
-          style={{ width: 50 }}
-        />
-        <Template siblingCount={siblingCount} {...restProps} />
-      </StackLayout>
-    </>
-  );
-};
-
-SiblingCount.args = {
-  count: 25,
-  page: 13,
-  siblingCount: 2,
-  boundaryCount: 1,
-  showPreviousNext: true,
-};
-
-SiblingCount.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
-};
-
-export const BoundaryCount = (
-  props: PaginationProps & PaginatorProps & StoryProps
-) => {
-  const { boundaryCount: boundaryCountProp, ...restProps } = props;
-  const [boundaryCount, setBoundaryCount] = useState(boundaryCountProp);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
-    setBoundaryCount(value);
-  };
-
-  return (
-    <>
-      <StackLayout>
-        <input
-          type="number"
-          value={boundaryCount?.toString()}
-          onChange={handleChange}
-          style={{ width: 50 }}
-        />
-        <Template boundaryCount={boundaryCount} {...restProps} />
-      </StackLayout>
-    </>
-  );
-};
-
-BoundaryCount.args = {
-  count: 25,
-  page: 13,
-  siblingCount: 2,
-  boundaryCount: 1,
-  showPreviousNext: true,
-};
-
-BoundaryCount.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
-};
-
 export const Compact = Template.bind({});
 
 Compact.args = {
@@ -217,6 +130,22 @@ CompactWithInput.args = {
 };
 
 CompactWithInput.argTypes = {
+  goToPosition: {
+    options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+};
+
+export const CompactWithGoTo = Template.bind({});
+
+CompactWithGoTo.args = {
+  compact: true,
+  count: 25,
+  showPreviousNext: true,
+  goToPosition: "left",
+};
+
+CompactWithGoTo.argTypes = {
   goToPosition: {
     options: ["none", "left", "right"],
     control: { type: "radio" },

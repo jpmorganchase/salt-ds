@@ -24,7 +24,7 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
 
 export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
   function GoToInput(
-    { className, id: idProp, label, ...restProps },
+    { className, id: idProp, label = "Go to", ...restProps },
 
     forwardedRef
   ) {

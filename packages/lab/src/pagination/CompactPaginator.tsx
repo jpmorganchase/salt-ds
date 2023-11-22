@@ -75,7 +75,7 @@ export const CompactPaginator = forwardRef<
       <PageButton
         page={count}
         onPageChange={onPageChange}
-        disabled={page === count}
+        disabled={isOnLastPage}
       />
       <ArrowButton
         arrowButtonType="next"

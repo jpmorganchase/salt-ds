@@ -16,12 +16,22 @@ import { withBaseName } from "./utils";
 const { Provider } = paginationContext;
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
+  /**
+   * Number of pages.
+   */
   count: number;
+  /**
+   * Current/active page.
+   */
   page?: number;
+  /**
+   * Default current/active page.
+   */
   initialPage?: number;
+  /**
+   * Callback function triggered when current page changed.
+   */
   onPageChange?: (page: number) => void;
-  compact?: boolean;
-  compactWithInput?: boolean;
 }
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
@@ -33,8 +43,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       initialPage = 1,
       page: pageProp,
       onPageChange: onPageChangeProp,
-      compact,
-      compactWithInput,
       ...restProps
     },
     ref
@@ -60,20 +68,11 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       () => ({
         page: pageState,
         count,
-        compact,
-        compactWithInput,
         onPageChange,
         paginatorElement,
         setPaginatorElement,
       }),
-      [
-        pageState,
-        compact,
-        compactWithInput,
-        count,
-        onPageChange,
-        paginatorElement,
-      ]
+      [pageState, count, onPageChange, paginatorElement]
     );
 
     const onKeyDown: KeyboardEventHandler = useCallback(

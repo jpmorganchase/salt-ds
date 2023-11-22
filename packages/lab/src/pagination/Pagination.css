@@ -32,7 +32,7 @@
   --saltButton-text-color-hover: var(--salt-content-secondary-foreground);
 }
 
-.saltPagination-pageButton.saltPagination-readonly {
+.saltPagination-pageButtonReadonly {
   --saltButton-text-color-disabled: var(--salt-content-secondary-foreground);
   --saltButton-cursor-disabled: var(--salt-editable-cursor-readonly);
 }

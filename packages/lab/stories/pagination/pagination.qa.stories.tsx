@@ -16,12 +16,13 @@ export default {
   component: Pagination,
 } as Meta<typeof Pagination>;
 
-const Template = (
-  args: PaginationProps &
-    PaginatorProps & {
-      goToPosition?: string;
-    }
-) => {
+interface StoryProps {
+  goToPosition?: "left" | "right" | "none";
+  compact?: boolean;
+  compactWithInput?: boolean;
+}
+
+const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
   const {
     count,
     boundaryCount,
@@ -37,14 +38,8 @@ const Template = (
   };
 
   return (
-    <Pagination
-      page={page}
-      onPageChange={onPageChange}
-      count={count}
-      compact={compact}
-      compactWithInput={compactWithInput}
-    >
-      {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
+    <Pagination page={page} onPageChange={onPageChange} count={count}>
+      {goToPosition === "left" ? <GoToInput /> : null}
       {compact ?? compactWithInput ? (
         <CompactPaginator withInput={compactWithInput} />
       ) : (
@@ -54,7 +49,7 @@ const Template = (
           showPreviousNext={showPreviousNext}
         />
       )}
-      {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
+      {goToPosition === "right" ? <GoToInput /> : null}
     </Pagination>
   );
 };
@@ -66,7 +61,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       vertical
       transposeDensity
       height={1400}
-      width={2500}
+      width={2600}
       className="saltMetricQA"
       imgSrc={props.imgSrc}
     >

@@ -35,7 +35,7 @@ export const PageButton = ({
       aria-current={isSelected ? "page" : undefined}
       variant="secondary"
       className={clsx(withBaseName("pageButton"), {
-        [withBaseName("readonly")]: disabled,
+        [withBaseName("pageButtonReadonly")]: disabled,
         [withBaseName("pageButtonSelected")]: isSelected,
         [withBaseName("pageButtonFixed")]: page < 100,
       })}
