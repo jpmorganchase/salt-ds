@@ -141,6 +141,8 @@ export const AppHeader = () => {
               backgroundColor: "var(--salt-container-primary-background)",
               position: "fixed",
               inset: "0 0 auto 0",
+              borderBottom:
+                "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
             }}
             justify="space-between"
             gap={3}
@@ -194,8 +196,6 @@ export const AppHeader = () => {
         style={{
           backgroundColor: "var(--salt-color-purple-30)",
           padding: "1em",
-          paddingTop:
-            "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
           height: "120vh",
         }}
         position="center"
