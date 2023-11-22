@@ -15,7 +15,6 @@ import {
   useState,
 } from "react";
 import { escapeRegExp, useEventCallback } from "../utils";
-import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
@@ -83,7 +82,6 @@ export function useTokenizedInput<Item>(
   const {
     delimiter = ",",
     initialSelectedItems = [],
-    itemToString = defaultItemToString,
     disabled = formFieldDisabled,
     disableAddOnBlur,
     onFocus,
@@ -91,7 +89,6 @@ export function useTokenizedInput<Item>(
     onClick,
     onExpand,
     onCollapse,
-    onKeyUp, // TODO: this is not being used
     onKeyDown,
     onInputSelect,
     onInputChange,
@@ -490,7 +487,7 @@ export function useTokenizedInput<Item>(
           // Copy
           copy(
             activeIndices
-              .map((index) => itemToString(selectedItems[index]))
+              .map((index) => String(selectedItems[index]))
               .concat(value != null ? String(value).trim() : "")
               .filter(Boolean)
               .join(primaryDelimiter)
@@ -592,7 +589,6 @@ export function useTokenizedInput<Item>(
     onInputFocus: handleInputFocus,
     onInputBlur: handleInputBlur,
     onKeyDown: handleKeyDown,
-    onKeyUp,
     onRemoveItem: handleRemoveItem,
     onClear: handleClear,
   };
@@ -610,7 +606,6 @@ export function useTokenizedInput<Item>(
     },
     inputProps: {
       id,
-      itemToString,
       disabled,
       "aria-labelledby": ariaLabelledBy,
       "aria-label": ariaLabel,

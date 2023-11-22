@@ -1,24 +1,29 @@
 import {
-  Button,
+  Button, ButtonProps,
   makePrefixer,
-  MultilineInput,
+  MultilineInput, MultilineInputProps,
   useDensity,
   useForkRef,
   useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import {
-  FocusEvent,
+  ChangeEventHandler,
+  FocusEvent, FocusEventHandler,
   ForwardedRef,
-  forwardRef,
-  KeyboardEvent,
+  forwardRef, HTMLAttributes,
+  KeyboardEvent, KeyboardEventHandler, ReactEventHandler,
   Ref,
   SyntheticEvent,
   useCallback,
   useRef,
   useState,
 } from "react";
-import {TokenizedInputHelpers, useTokenizedInput} from "./useTokenizedInput";
+import {
+  TokenizedInputHelpers,
+  TokenizedInputState,
+  useTokenizedInput
+} from "./useTokenizedInput";
 import {clsx} from "clsx";
 import {InputPill} from "./internal/InputPill";
 import {CloseIcon, OverflowMenuIcon} from "@salt-ds/icons";
@@ -29,7 +34,6 @@ import deepmerge from "deepmerge";
 import {useWindow} from "@salt-ds/window";
 import {useComponentCssInjection} from "@salt-ds/styles";
 import tokenizedInputCss from "./TokenizedInput.css";
-import {defaultItemToString} from "./internal/defaultItemToString";
 
 export type StringToItem<Item> = (
   selectedItems: Item[],
@@ -38,7 +42,34 @@ export type StringToItem<Item> = (
 
 export type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
 
-export interface TokenizedInputProps<Item> {
+export type ExpandButtonProps = Pick<
+  ButtonProps,
+  "role" | "aria-roledescription" | "aria-describedby"
+  > & { accessibleText?: string };
+
+export interface TokenizedInputProps<Item> extends Partial<TokenizedInputState<Item>>,
+  Omit<
+    HTMLAttributes<HTMLDivElement>,
+  "onFocus" | "onBlur" | "onChange" | "onKeyUp" | "onKeyDown"
+  > {
+  ExpandButtonProps?: ExpandButtonProps;
+  InputProps?: Pick<MultilineInputProps, "aria-describedby" | "textAreaProps">;
+  disabled?: boolean;
+  expandButtonRef?: Ref<HTMLButtonElement>;
+  helpers: TokenizedInputHelpers<Item>;
+  onFocus?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
+  onBlur?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
+  onKeyUp?: KeyboardEventHandler<HTMLButtonElement>;
+  // Can key down on either input or expand button
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement | HTMLButtonElement>;
+  onRemoveItem?: (itemIndex: number) => void;
+  onInputBlur?: FocusEventHandler<HTMLInputElement>;
+  onInputFocus?: FocusEventHandler<HTMLInputElement>;
+  onInputChange?: ChangeEventHandler<HTMLInputElement>;
+  onInputSelect?: ReactEventHandler<HTMLInputElement>;
+  onClick?: (event: SyntheticEvent<HTMLElement>) => void;
+  onClear?: ReactEventHandler;
+
   delimiter?: string | string[];
   disableAddOnBlur?: boolean;
   initialSelectedItems?: Item[];
@@ -69,34 +100,8 @@ const hasHelpers = (helpers: TokenizedInputHelpers<unknown>) => {
 
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   {
-    // InputProps = {},
-    // ExpandButtonProps = {},
-    // className,
-    // activeIndices = [],
-    // selectedItems = [],
-    // highlightedIndex,
-    // value,
-    // focused,
-    // expanded,
-    // disabled,
-    // helpers,
-    // onFocus,
-    // onBlur,
-    // onKeyUp,
-    // onKeyDown,
-    // onRemoveItem,
-    // onInputChange,
-    // onInputFocus,
-    // onInputBlur,
-    // onInputSelect,
-    // onClear,
-    // onClick,
     inputRef: inputRefProp,
-    // itemToString = defaultItemToString,
-    // id: idProp,
-    // expandButtonRef: expandButtonRefProp,
-    // "aria-label": ariaLabel,
-    // "aria-labelledby": ariaLabelledBy,
+    onKeyUp,
     ...restProps
   }: TokenizedInputProps<Item>,
   ref: ForwardedRef<HTMLDivElement>
@@ -116,7 +121,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     disabled,
     onFocus,
     onBlur,
-    onKeyUp,
     onKeyDown,
     onRemoveItem,
     onInputChange,
@@ -125,7 +129,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     onInputSelect,
     onClear,
     onClick,
-    itemToString = defaultItemToString,
     id: idProp,
     expandButtonRef: expandButtonRefProp,
     "aria-label": ariaLabel,
@@ -231,7 +234,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     }
   };
 
-  const handleInputKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyUp = (event: KeyboardEvent<HTMLButtonElement | HTMLInputElement>) => {
     // Call keydown again if the initail event has been used to expand the input
     if (keydownExpandButton.current && "Enter" !== event.key) {
       keydownExpandButton.current = false;
@@ -310,8 +313,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
       />
       <div className={withBaseName("pillGroup")}>
         {selectedItems.map((item, index) => {
-          const label = itemToString(item);
-
+          const label = String(item)
           return (
             <InputPill
               disabled={disabled}

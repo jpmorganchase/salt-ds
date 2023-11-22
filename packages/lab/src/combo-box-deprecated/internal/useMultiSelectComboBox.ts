@@ -21,7 +21,6 @@ import {
 } from "react";
 import { useList } from "../../list-deprecated";
 import { ExpandButtonProps, useTokenizedInput } from "../../tokenized-input";
-import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
@@ -60,7 +59,7 @@ export const useMultiSelectComboBox = <Item>(
     initialSelectedItem: initialSelectedItems,
     "aria-labelledby": ariaLabelledBy,
     getFilterRegex = getDefaultFilterRegex,
-    itemToString = defaultItemToString,
+    itemToString = value => String(value),
     stringToItem: stringToItemProp = (_: any, value: string) => value.trim(),
     InputProps = {
       onBlur,

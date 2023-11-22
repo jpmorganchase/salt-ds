@@ -17,7 +17,6 @@ import {
   useState,
 } from "react";
 import { useList } from "../../list-deprecated";
-import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
 import { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
@@ -61,7 +60,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     getFilterRegex = getDefaultFilterRegex,
-    itemToString = defaultItemToString,
+    itemToString = value => String(value),
     stringToItem: stringToItemProp = (value) => (value ? value.trim() : value),
     InputProps: inputProps = {
       onBlur: onBlur || onInputBlur,
