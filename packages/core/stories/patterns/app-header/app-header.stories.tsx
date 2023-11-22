@@ -23,7 +23,7 @@ export default {
   title: "Patterns/App Header",
 } as Meta;
 
-export const AppHeaderInPage = () => {
+export const AppHeader = () => {
   interface AppHeaderProps extends HTMLAttributes<HTMLElement> {
     /**
      * Items included in the App Header navigation
@@ -215,6 +215,6 @@ export const AppHeaderInPage = () => {
   );
 };
 
-AppHeaderInPage.parameters = {
+AppHeader.parameters = {
   layout: "fullscreen",
 };
