@@ -13,17 +13,33 @@ data:
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the Pagination group, Tab moves focus to the first Pagination item in the group. Then each next Pagination item is a tab stop.
+Moves focus into the Pagination component, setting focus to the first active button.
+
+If the first page is active, sets focus on the first page. If any other page is active, focus is set on the “previous” button. If the input field is present and positioned on the left of Pagination, focus is initially set in the field.
+
+If focus is inside the Pagination group, moves focus to the next item within the tabbing order.
+
+If the last page is active and in focus, and the input field isn’t present on the right of Pagination, moves focus out of the component and onto the next component in the tabbing order. It ignores the “next” button, which would be disabled in this scenario.
+
+If the last page is not active but is in focus, moves focus to the “next” button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-If focus is below the Pagination Group, Shift + Tab moves focus to the last Pagination item in the group. Then each Shift + Tab moves focus to the previous Pagination item in the group.
+If focus is inside the Pagination group, moves focus to the previous active item within the tabbing order.
+
+If focus is on the first page number, moves focus to the “previous” button.
+
+If the first page is also the active page, so the “previous” button is disabled, focus moves out of Pagination to the previous component in the tabbing order. If the input field is displayed on the left, focus moves to the field.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-- Accordions are collapsed by default. Enter or Space expands, or collapses, Accordions.
+When focus is on an available button in the Pagination group, activates the button. Focus remains on the selected button.
+
+If the active page is in focus, does nothing.
+
+If focus is in the input field and a value has been entered, submits the value and changes the active page accordingly.
 
 </KeyboardControl>
 </KeyboardControls>
