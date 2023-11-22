@@ -47,6 +47,15 @@
   padding: var(--qaContainer-item-padding, 0);
   vertical-align: top;
   width: var(--qaContainer-item-width, var(--itemWrapper-calculated-item-width));
+
+  /* 
+   * This is to make sure Salt components will work ok with UITK
+   * https://github.com/jpmorganchase/salt-ds/issues/2671
+   */
+  font-weight: 400;
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 1.85714286em;
 }
 .saltFormFieldQA.saltQAContainer {
   height: unset !important;

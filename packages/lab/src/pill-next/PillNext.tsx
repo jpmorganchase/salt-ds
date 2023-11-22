@@ -37,19 +37,14 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
     const { tabIndex, ...restButtonProps } = buttonProps;
 
     return (
-      <div className={withBaseName()}>
+      <div className={clsx(withBaseName(), className)}>
         <button
           data-testid="pill"
           ref={ref}
-          className={clsx(
-            withBaseName("action"),
-            withBaseName("clickable"),
-            {
-              [withBaseName("active")]: active,
-              [withBaseName("disabled")]: disabled,
-            },
-            className
-          )}
+          className={clsx(withBaseName("action"), withBaseName("clickable"), {
+            [withBaseName("active")]: active,
+            [withBaseName("disabled")]: disabled,
+          })}
           {...restButtonProps}
           {...restProps}
         >
