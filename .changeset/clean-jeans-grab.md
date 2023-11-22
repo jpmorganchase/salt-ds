@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-Move `className` prop to apply to parent in `PillNext`
+`className` is now forwarded to `PillNext`'s wrapper instead of the nested button.
