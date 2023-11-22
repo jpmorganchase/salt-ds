@@ -27,3 +27,7 @@
 .saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
   padding-right: var(--salt-spacing-100);
 }
+
+.saltTabstripNext-inline {
+  padding: 0;
+}
