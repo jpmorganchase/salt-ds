@@ -11,6 +11,7 @@ import {
   useMeta,
 } from "@jpmorganchase/mosaic-store";
 import { TabPanel, Tabs } from "@salt-ds/lab";
+import ReactMarkdown from "react-markdown";
 import { LayoutProps } from "../types/index";
 import { DetailBase } from "../DetailBase";
 import SecondarySidebar from "./SecondarySidebar";
@@ -19,6 +20,9 @@ import MobileDrawer from "./MobileDrawer";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 import styles from "./DetailComponent.module.css";
+import { code, p, ul } from "../../components";
+
+const components = { code, ul, p };
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
@@ -134,8 +138,9 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             drawerContent={<SecondarySidebar additionalData={useData} />}
           />
         )}
-
-        <p>{description}</p>
+        <ReactMarkdown components={components}>
+          {description ?? ""}
+        </ReactMarkdown>
         <Tabs
           activeTabIndex={currentTabIndex}
           onActiveChange={updateRouteWhenTabChanges}

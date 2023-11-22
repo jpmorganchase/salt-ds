@@ -4,7 +4,7 @@
 }
 
 .code {
-  font-family: SFMono-Regular, Menlo;
+  font-family: var(--salt-text-code-fontFamily);
   overflow-wrap: anywhere;
   vertical-align: text-bottom;
   white-space: pre-wrap;

@@ -10,6 +10,8 @@ import {
   Text,
   Label,
   StackLayout,
+  TextNotation,
+  TextAction,
 } from "@salt-ds/core";
 
 export const Styles = (): ReactElement => (
@@ -23,5 +25,7 @@ export const Styles = (): ReactElement => (
     <H4>H4</H4>
     <Text>Text</Text>
     <Label>Label</Label>
+    <TextNotation>Notation</TextNotation>
+    <TextAction>Action</TextAction>
   </StackLayout>
 );
