@@ -195,7 +195,7 @@ export const AppHeader = () => {
       <BorderItem
         style={{
           backgroundColor: "var(--salt-color-purple-30)",
-          padding: "1em",
+          padding: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
           height: "120vh",
         }}
         position="center"
