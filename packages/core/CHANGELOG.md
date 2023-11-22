@@ -1,5 +1,21 @@
 # @salt-ds/core
 
+## 1.13.0
+
+### Minor Changes
+
+- c85334b5: `Text` component has two new variants: `TextAction` and `TextNotation`. See [Text component](/salt/components/text) for more information.
+
+  ```tsx
+  <Text styleAs="notation" as="span">Lorem ipsum</Text>
+  <Text styleAs="action" as="span">Lorem ipsum</Text>
+  ```
+
+  ```tsx
+  <TextNotation>Lorem ipsum</TextNotation>
+  <TextAction>Lorem ipsum</TextAction>
+  ```
+
 ## 1.12.0
 
 ### Minor Changes
@@ -9,6 +25,12 @@
   ```tsx
   <SaltProvider enableStyleInjection={false} >
   ```
+
+Expose a CSS file that allows Salt to be used without runtime CSS injection.
+
+```tsx
+import "@salt-ds/core/css/salt-core.css";
+```
 
 - feb80146: **_Theming and CSS updates_** with visual changes to Salt components:
 

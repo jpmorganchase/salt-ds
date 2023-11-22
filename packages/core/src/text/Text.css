@@ -51,6 +51,33 @@
   font-weight: var(--salt-text-fontWeight-small);
 }
 
+/* Notation */
+.saltText-notation.saltText {
+  font-family: var(--salt-text-notation-fontFamily);
+  font-size: var(--salt-text-notation-fontSize);
+  line-height: var(--salt-text-notation-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
+}
+
+/* Notation emphasis strong */
+.saltText-notation.saltText strong {
+  font-weight: var(--salt-text-notation-fontWeight-strong);
+}
+
+/* Notation emphasis small */
+.saltText-notation.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-notation-fontWeight-small);
+}
+
+/* Action */
+.saltText-action.saltText {
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  text-transform: var(--salt-text-action-textTransform);
+  text-align: var(--salt-text-action-textAlign);
+  font-weight: var(--salt-text-action-fontWeight);
+}
+
 /* Display 1 */
 .saltText-display1.saltText {
   font-family: var(--salt-text-display1-fontFamily);

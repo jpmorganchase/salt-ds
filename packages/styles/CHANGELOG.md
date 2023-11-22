@@ -1,5 +1,11 @@
 # @salt-ds/styles
 
+## 0.2.0
+
+### Minor Changes
+
+- 02815995: Updated `useComponentCssInjection` to not inject styles when configured by the SaltProvider.
+
 ## 0.1.2
 
 ### Patch Changes

@@ -4,6 +4,12 @@
 
 ### Minor Changes
 
+- 966c362f: Expose a CSS file that allows Salt to be used without runtime CSS injection.
+
+```tsx
+import "@salt-ds/lab/css/salt-lab.css";
+```
+
 - 01fa27ad: Removed Badge from Lab and promoted it to Core.
 - feb80146: **_Theming and CSS updates_** with visual change to Salt components.
 
