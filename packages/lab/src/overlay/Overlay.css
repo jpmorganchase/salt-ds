@@ -1,12 +1,6 @@
 .saltOverlay {
-  --overlay-borderColor: var(
-    --saltOverlay-borderColor,
-    var(--salt-container-primary-borderColor)
-  );
-  --overlay-background: var(
-    --saltOverlay-background,
-    var(--salt-container-primary-background)
-  );
+  --overlay-borderColor: var(--saltOverlay-borderColor, var(--salt-container-primary-borderColor));
+  --overlay-background: var(--saltOverlay-background, var(--salt-container-primary-background));
   --overlay-zindex: var(--saltOverlay-zIndex, var(--salt-zIndex-flyover));
 }
 
@@ -17,25 +11,17 @@
   line-height: var(--saltOverlay-lineHeight, var(--salt-text-lineHeight));
 
   border-color: var(--overlay-borderColor);
-  border-style: var(
-    --saltOverlay-borderStyle,
-    var(--salt-container-borderStyle)
-  );
+  border-style: var(--saltOverlay-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltOverlay-borderWidth, var(--salt-size-border));
 
   background: var(--overlay-background);
-  box-shadow: var(
-    --saltOverlay-boxShadow,
-    var(--salt-overlayable-shadow-popout)
-  );
+  box-shadow: var(--saltOverlay-boxShadow, var(--salt-overlayable-shadow-popout));
 
   color: var(--saltOverlay-text-color, var(--salt-text-primary-foreground));
   z-index: var(--overlay-zindex);
-  position: relative;
 }
 
 .saltOverlay-container {
-  display: flex;
   animation: fade-in var(--salt-duration-perceptible) ease-in-out;
 }
 
@@ -49,10 +35,12 @@
 }
 
 .saltOverlay-content {
-  padding: var(--salt-spacing-100) 0 var(--salt-spacing-100)
-    var(--salt-spacing-100);
+  padding: var(--salt-spacing-100) 0 var(--salt-spacing-100) var(--salt-spacing-100);
+  padding-right: calc(max(var(--salt-size-icon), 12px) + (2 * var(--salt-size-unit)));
 }
 
-.saltOverlay-closeButton {
-  z-index: var(--overlay-zindex);
+.saltButton-secondary.saltOverlay-closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

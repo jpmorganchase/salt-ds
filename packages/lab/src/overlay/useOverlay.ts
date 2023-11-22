@@ -14,7 +14,7 @@ import {
   useFloatingUI,
   UseFloatingUIProps,
 } from "@salt-ds/core";
-import { HTMLProps, useRef, KeyboardEvent, HTMLAttributes } from "react";
+import { HTMLProps, useRef, KeyboardEvent } from "react";
 
 export interface UseOverlayProps
   extends Partial<
@@ -45,6 +45,7 @@ export function useOverlay(props?: UseOverlayProps) {
   const {
     reference,
     floating,
+    refs,
     x,
     y,
     strategy,
@@ -100,21 +101,26 @@ export function useOverlay(props?: UseOverlayProps) {
       },
     });
 
-  const getOverlayPosition = () => ({
-    top: y ?? 0,
-    left: x ?? 0,
-    position: strategy,
-  });
+  const floatingStyles = () => {
+    return {
+      top: y ?? 0,
+      left: x ?? 0,
+      position: strategy,
+      width: elements.floating?.offsetWidth,
+      height: elements.floating?.offsetHeight,
+    };
+  };
 
   return {
     arrowProps,
     context,
     open,
     onOpenChange: handleOpenChange,
+    refs,
     floating,
     reference,
     getOverlayProps,
     getTriggerProps,
-    getOverlayPosition,
+    floatingStyles,
   };
 }

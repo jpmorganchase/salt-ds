@@ -2,7 +2,7 @@ import {
   Button,
   makePrefixer,
   mergeProps,
-  SaltProvider,
+  useFloatingComponent,
   UseFloatingUIProps,
   useForkRef,
 } from "@salt-ds/core";
@@ -27,7 +27,6 @@ import {
   FloatingArrow,
   FloatingArrowProps,
   FloatingFocusManager,
-  FloatingPortal,
 } from "@floating-ui/react";
 
 export interface OverlayProps
@@ -68,8 +67,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       window: targetWindow,
     });
 
-    const [showComponent, setShowComponent] = useState(false);
-
     const {
       arrowProps,
       open,
@@ -77,14 +74,18 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       context,
       floating,
       reference,
+      refs,
       getTriggerProps,
       getOverlayProps,
-      getOverlayPosition,
+      floatingStyles,
     } = useOverlay({
       open: openProp,
       placement,
       onOpenChange: onOpenChangeProp,
     });
+
+    const [showComponent, setShowComponent] = useState(false);
+    const { Component: FloatingComponent } = useFloatingComponent();
 
     const triggerRef = useForkRef(
       // @ts-ignore
@@ -101,7 +102,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     }, [open, showComponent]);
 
     const handleCloseButton = () => {
-      console.log("close ovl");
       onOpenChange(false);
     };
 
@@ -113,45 +113,46 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             ref: triggerRef,
           })}
 
-        <FloatingPortal>
-          {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
-          <SaltProvider>
-            {open && showComponent && (
-              <FloatingFocusManager context={context} initialFocus={-1}>
-                <div
-                  ref={floatingRef}
-                  className={clsx(withBaseName(), className)}
-                  style={getOverlayPosition()}
-                  {...getOverlayProps()}
-                  {...rest}
+        {showComponent && (
+          <FloatingFocusManager
+            context={context}
+            // initialFocus={
+            //   refs.reference as React.MutableRefObject<HTMLElement | null>
+            // }
+            order={["reference", "content"]}
+            // modal={true}
+            // returnFocus
+          >
+            <FloatingComponent
+              ref={floatingRef}
+              open={open}
+              className={clsx(withBaseName(), className)}
+              {...getOverlayProps()}
+              {...floatingStyles()}
+            >
+              <div className={withBaseName("container")} {...rest}>
+                <Button
+                  onClick={handleCloseButton}
+                  variant="secondary"
+                  className={withBaseName("closeButton")}
+                  aria-label="Close Overlay"
                 >
-                  <div className={withBaseName("container")}>
-                    <div className={withBaseName("content")}>{content}</div>
-                    <Button
-                      onClick={handleCloseButton}
-                      variant="secondary"
-                      className={withBaseName("closeButton")}
-                    >
-                      <CloseIcon
-                        accessible-text="close overlay"
-                        className={withBaseName("closeIcon")}
-                      />
-                    </Button>
-                  </div>
-                  <FloatingArrow
-                    {...(arrowProps as FloatingArrowProps)}
-                    className={withBaseName("arrow")}
-                    strokeWidth={1}
-                    fill="var(--overlay-background)"
-                    stroke="var(--overlay-borderColor)"
-                    height={8}
-                    width={14}
-                  />
-                </div>
-              </FloatingFocusManager>
-            )}
-          </SaltProvider>
-        </FloatingPortal>
+                  <CloseIcon aria-hidden />
+                </Button>
+                <div className={withBaseName("content")}>{content}</div>
+              </div>
+              <FloatingArrow
+                {...(arrowProps as FloatingArrowProps)}
+                className={withBaseName("arrow")}
+                strokeWidth={1}
+                fill="var(--overlay-background)"
+                stroke="var(--overlay-borderColor)"
+                height={8}
+                width={14}
+              />
+            </FloatingComponent>
+          </FloatingFocusManager>
+        )}
       </>
     );
   }
