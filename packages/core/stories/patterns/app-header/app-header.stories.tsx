@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, useState } from "react";
+import { FC, HTMLAttributes, ReactNode, useState } from "react";
 import {
   Button,
   FlexItem,
@@ -32,7 +32,7 @@ export const AppHeader = () => {
     /**
      * Utilities included in the App Header
      */
-    utilities?: JSX.Element[];
+    utilities?: { icon: ReactNode; label: string; key: string }[];
   }
 
   const AppHeader: FC<AppHeaderProps> = ({ items, utilities }) => {
@@ -106,6 +106,14 @@ export const AppHeader = () => {
                       </NavigationItem>
                     </li>
                   ))}
+                  {utilities?.map((utility) => (
+                    <li key={utility.key}>
+                      <NavigationItem orientation="vertical" href="#">
+                        {utility.icon}
+                        {utility.label}
+                      </NavigationItem>
+                    </li>
+                  ))}
                 </ul>
               </nav>
               <StackLayout
@@ -116,19 +124,7 @@ export const AppHeader = () => {
                   paddingLeft:
                     "calc(var(--salt-spacing-300) + var(--salt-spacing-25))",
                 }}
-              >
-                {utilities?.map((utility, index) => (
-                  <StackLayout
-                    gap={1}
-                    align="center"
-                    key={index}
-                    direction="row"
-                  >
-                    {utility}
-                    <Text>{utility.key}</Text>
-                  </StackLayout>
-                ))}
-              </StackLayout>
+              ></StackLayout>
             </Drawer>
           </>
         ) : (
@@ -165,7 +161,11 @@ export const AppHeader = () => {
             </nav>
             <FlexItem align="center">
               <StackLayout direction="row" gap={1}>
-                {utilities}
+                {utilities?.map((utility) => (
+                  <Button key={utility.key} variant="secondary">
+                    {utility.icon}
+                  </Button>
+                ))}
               </StackLayout>
             </FlexItem>
           </FlexLayout>
@@ -175,16 +175,23 @@ export const AppHeader = () => {
   };
 
   const items = ["Home", "About", "Services", "Contact", "Blog"];
+
   const utilities = [
-    <Button key="Symphony" variant="secondary">
-      <SymphonyIcon />
-    </Button>,
-    <Button key="Stack Overflow" variant="secondary">
-      <StackoverflowIcon />
-    </Button>,
-    <Button key="GitHub" variant="secondary">
-      <GithubIcon />
-    </Button>,
+    {
+      icon: <SymphonyIcon />,
+      label: "Symphony",
+      key: "Symphony",
+    },
+    {
+      icon: <StackoverflowIcon />,
+      label: "Stack Overflow",
+      key: "Stack Overflow",
+    },
+    {
+      icon: <GithubIcon />,
+      label: "GitHub",
+      key: "GitHub",
+    },
   ];
 
   return (
