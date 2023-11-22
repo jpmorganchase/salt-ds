@@ -38,6 +38,8 @@ export default {
         "display1",
         "display2",
         "display3",
+        "notation",
+        "action",
       ],
       control: { type: "select" },
     },

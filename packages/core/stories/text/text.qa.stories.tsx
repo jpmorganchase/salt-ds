@@ -8,6 +8,8 @@ import {
   H4,
   Label,
   Text,
+  TextNotation,
+  TextAction,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -30,7 +32,6 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Text disabled>
       Primary disabled <strong>strong</strong> and <small>small</small> text
     </Text>
-
     <Text variant="secondary">
       Secondary <strong>strong</strong> and <small>small</small> text
     </Text>
@@ -61,6 +62,12 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Label>
       Label <strong>strong</strong> and <small>small</small> text
     </Label>
+    <TextNotation>
+      Notation <strong>strong</strong> and <small>small</small> text
+    </TextNotation>
+    <TextAction>
+      Action <strong>strong</strong> and <small>small</small> text
+    </TextAction>
   </QAContainer>
 );
 
@@ -78,7 +85,6 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Text disabled>
       Primary disabled <strong>strong</strong> and <small>small</small> text
     </Text>
-
     <Text variant="secondary">
       Secondary <strong>strong</strong> and <small>small</small> text
     </Text>
@@ -109,6 +115,12 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Label>
       Label <strong>strong</strong> and <small>small</small> text
     </Label>
+    <TextNotation>
+      Notation <strong>strong</strong> and <small>small</small> text
+    </TextNotation>
+    <TextAction>
+      Action <strong>strong</strong> and <small>small</small> text
+    </TextAction>
   </QAContainerNoStyleInjection>
 );
 
