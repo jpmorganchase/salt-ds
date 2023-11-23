@@ -1,7 +1,9 @@
 import {
-  Button, ButtonProps,
+  Button,
+  ButtonProps,
   makePrefixer,
-  MultilineInput, MultilineInputProps,
+  MultilineInput,
+  MultilineInputProps,
   useDensity,
   useForkRef,
   useId,
@@ -9,10 +11,14 @@ import {
 } from "@salt-ds/core";
 import {
   ChangeEventHandler,
-  FocusEvent, FocusEventHandler,
+  FocusEvent,
+  FocusEventHandler,
   ForwardedRef,
-  forwardRef, HTMLAttributes,
-  KeyboardEvent, KeyboardEventHandler, ReactEventHandler,
+  forwardRef,
+  HTMLAttributes,
+  KeyboardEvent,
+  KeyboardEventHandler,
+  ReactEventHandler,
   Ref,
   SyntheticEvent,
   useCallback,
@@ -22,17 +28,17 @@ import {
 import {
   TokenizedInputHelpers,
   TokenizedInputState,
-  useTokenizedInput
+  useTokenizedInput,
 } from "./useTokenizedInput";
-import {clsx} from "clsx";
-import {InputPill} from "./internal/InputPill";
-import {CloseIcon, OverflowMenuIcon} from "@salt-ds/icons";
-import {useWidth} from "./internal/useWidth";
-import {useResizeObserver} from "./internal/useResizeObserver";
-import {calcFirstHiddenIndex} from "./internal/calcFirstHiddenIndex";
+import { clsx } from "clsx";
+import { InputPill } from "./internal/InputPill";
+import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import { useWidth } from "./internal/useWidth";
+import { useResizeObserver } from "./internal/useResizeObserver";
+import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import deepmerge from "deepmerge";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import tokenizedInputCss from "./TokenizedInput.css";
 
 export type StringToItem<Item> = (
@@ -45,13 +51,14 @@ export type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
 export type ExpandButtonProps = Pick<
   ButtonProps,
   "role" | "aria-roledescription" | "aria-describedby"
-  > & { accessibleText?: string };
+> & { accessibleText?: string };
 
-export interface TokenizedInputProps<Item> extends Partial<TokenizedInputState<Item>>,
-  Omit<
-    HTMLAttributes<HTMLDivElement>,
-  "onFocus" | "onBlur" | "onChange" | "onKeyUp" | "onKeyDown"
-  > {
+export interface TokenizedInputProps<Item>
+  extends Partial<TokenizedInputState<Item>>,
+    Omit<
+      HTMLAttributes<HTMLDivElement>,
+      "onFocus" | "onBlur" | "onChange" | "onKeyUp" | "onKeyDown"
+    > {
   ExpandButtonProps?: ExpandButtonProps;
   InputProps?: Pick<MultilineInputProps, "aria-describedby" | "textAreaProps">;
   disabled?: boolean;
@@ -87,26 +94,11 @@ const getItemsAriaLabel = (itemCount: number) =>
     ? "no item selected"
     : `${itemCount} ${itemCount > 1 ? "items" : "item"}`;
 
-const hasHelpers = (helpers: TokenizedInputHelpers<unknown>) => {
-  if (process.env.NODE_ENV !== "production") {
-    if (helpers == null) {
-      console.warn(
-        'TokenizedInputBase is used without helpers. You should pass in "helpers" from "useTokenizedInput".'
-      );
-    }
-  }
-  return helpers != null;
-};
-
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
-  {
-    inputRef: inputRefProp,
-    onKeyUp,
-    ...restProps
-  }: TokenizedInputProps<Item>,
+  { inputRef: inputRefProp, onKeyUp, ...restProps }: TokenizedInputProps<Item>,
   ref: ForwardedRef<HTMLDivElement>
 ) {
-  const {inputRef, helpers, inputProps} = useTokenizedInput(restProps);
+  const { inputRef, helpers, inputProps } = useTokenizedInput(restProps);
 
   const {
     InputProps = {},
@@ -172,7 +164,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
 
   const containerRef = useResizeObserver<HTMLDivElement>(
     useCallback(
-      ([{contentRect}]) => {
+      ([{ contentRect }]) => {
         setPillGroupWidth(contentRect.width - widthOffset);
       },
       [widthOffset]
@@ -208,6 +200,16 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     // Additional dependency on selectedItems is for the controlled version
     [expanded, pillGroupWidth, selectedItems]
   );
+  const hasHelpers = (helpers: TokenizedInputHelpers<Item>) => {
+    if (process.env.NODE_ENV !== "production") {
+      if (helpers == null) {
+        console.warn(
+          'TokenizedInputBase is used without helpers. You should pass in "helpers" from "useTokenizedInput".'
+        );
+      }
+    }
+    return helpers != null;
+  };
 
   const handleExpandButtonKeyDown = (
     event: KeyboardEvent<HTMLButtonElement>
@@ -234,7 +236,9 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     }
   };
 
-  const handleInputKeyUp = (event: KeyboardEvent<HTMLButtonElement | HTMLInputElement>) => {
+  const handleInputKeyUp = (
+    event: KeyboardEvent<HTMLButtonElement | HTMLInputElement>
+  ) => {
     // Call keydown again if the initail event has been used to expand the input
     if (keydownExpandButton.current && "Enter" !== event.key) {
       keydownExpandButton.current = false;
@@ -271,6 +275,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   const mergedInputProps = deepmerge(
     {
       textAreaProps: {
+        onKeyDown: onKeyDown,
         "aria-label": [ariaLabel, getItemsAriaLabel(selectedItems.length)]
           .filter(Boolean)
           .join(" "),
@@ -313,7 +318,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
       />
       <div className={withBaseName("pillGroup")}>
         {selectedItems.map((item, index) => {
-          const label = String(item)
+          const label = String(item);
           return (
             <InputPill
               disabled={disabled}
@@ -364,7 +369,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
             id={inputId}
             disabled={disabled}
             onChange={onInputChange}
-            onKeyDown={onKeyDown}
             onBlur={onInputBlur}
             onFocus={onInputFocus}
             onSelect={onInputSelect}
@@ -374,9 +378,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
             endAdornment={
               (expanded || selectedItems.length > 0) && (
                 <Button
-                  className={clsx(withBaseName("clearButton"), {
-                    // [withBaseName("hidden")]: ,
-                  })}
+                  className={clsx(withBaseName("clearButton"), {})}
                   disabled={disabled}
                   id={clearButtonId}
                   onBlur={onBlur}
@@ -386,7 +388,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
                   variant="secondary"
                   data-testid="clear-button"
                 >
-                  <CloseIcon aria-label="clear input"/>
+                  <CloseIcon aria-label="clear input" />
                 </Button>
               )
             }

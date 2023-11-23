@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { memo, MutableRefObject, useRef, useState } from "react";
+import { memo, MutableRefObject, useEffect, useRef, useState } from "react";
 import {
   makePrefixer,
   Tooltip,
@@ -89,6 +89,8 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
           },
           className
         )}
+        // todo: we need to  be able to ignore tab to on close button
+        tabIndex={-1}
         onClose={isRemovable ? handleClose : undefined}
         ref={ref}
         role="option"

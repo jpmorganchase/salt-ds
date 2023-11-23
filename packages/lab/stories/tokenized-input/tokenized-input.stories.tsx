@@ -43,12 +43,11 @@ export const Default: StoryFn<typeof TokenizedInput> = () => {
         onChange={handleChange}
         style={{ maxWidth: 292 }}
         initialSelectedItems={[
-          "abc",
-          "defghi",
-          "jklm",
-          "nopqrstu",
-          "vwexyz",
-          "very looooooooooong looooooooooong long pill",
+          "Tokyo",
+          "Delhi",
+          "Shanghai",
+          "São Paulo",
+          "Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu",
         ]}
       />
     </div>

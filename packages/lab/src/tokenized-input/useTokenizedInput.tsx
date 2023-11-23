@@ -361,7 +361,7 @@ export function useTokenizedInput<Item>(
   const handleRemoveItem = useCallback(
     (itemIndex?: number) => {
       focusInput();
-      if (itemIndex) {
+      if (itemIndex != undefined) {
         removeItems([itemIndex]);
       }
     },
@@ -441,7 +441,6 @@ export function useTokenizedInput<Item>(
     KeyboardEventHandler<HTMLInputElement>
   > = {
     ArrowLeft: (event) => {
-      console.log("arrow left", cursorAtInputStart());
       if (cursorAtInputStart()) {
         event.preventDefault();
         setHighlightedIndex(selectedItems.length - 1);
@@ -526,7 +525,6 @@ export function useTokenizedInput<Item>(
 
   const handleCommonKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const eventKey = event.key.toUpperCase();
-
     if (eventKey === "ESCAPE") {
       event.preventDefault();
       resetInput();
@@ -551,7 +549,6 @@ export function useTokenizedInput<Item>(
       handleCtrlModifierKeyDown(event);
     } else {
       let handler;
-      console.log("here", highlightedIndex);
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
         setActiveIndices([]);
