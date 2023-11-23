@@ -38,13 +38,19 @@ The app header has three functional areas:
     border
   />
 
-*Header functional areas—branding, navigation and utilities.* 
-
-### Spacing and sizing
+### Desktop layout construction
 
   <Diagram
-    src="/img/patterns/app-header/spacing-and-sizing.png"
-    alt="Example showing header pattern spacing and sizing."
+    src="/img/patterns/app-header/desktop.png"
+    alt="Example showing header’s desktop layout construction."
+    border
+  />
+
+### Mobile layout construction
+
+  <Diagram
+    src="/img/patterns/app-header/mobile.png"
+    alt="Example showing header’s mobile layout construction."
     border
   />
 
@@ -64,7 +70,7 @@ In this layout, the app header is globally persistent, and and you can use it as
 
 ### Header with vertical navigation
 
-The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, sub-menus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the navigation pattern.  
+The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, sub-menus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).  
 
   <Diagram
     src="/img/patterns/app-header/with-vertical-nav.png"
@@ -72,27 +78,35 @@ The app header with vertical navigation offers an additional layer of hierarchy.
     border
   />
 
-*Header paired with vertical navigation.*
-
 ## Behaviors
 
 ### Responsive Behaviors
-
-The app header is responsive to the width of the application viewport and responds dynamically to the Salt breakpoints. As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience. 
+()
+The app header is responsive to the width of the application viewport and responds dynamically to the [Salt breakpoints](/salt/foundations/responsiveness). As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience. 
 
 For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to left of the brand logo. The navigation items will sit on top of the utility actions in the hierarchy of the vertical navigation. 
 
+#### Desktop
+
   <Diagram
-    src="/img/patterns/app-header/viewports.png"
-    alt="App header responsive behavior on viewport’s size change."
+    src="/img/patterns/app-header/responsive-desktop.png"
+    alt="App header with desktop layout for medium, large and extra large viewport experiences."
     border
   />
 
-*App header responsive behavior on viewport’s size change.*
+#### Mobile
+
+  <Diagram
+    src="/img/patterns/app-header/responsive-mobile.png"
+    alt="App header with mobile layout for extra small and small viewport experiences."
+    border
+  />
 
 <ExampleContainer type="positive">
-  - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
-  - If search utility action is part of the app header, keep search functionality persistently available for small viewports. 
+ - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
+ - If search utility action is part of the app header, keep search functionality persistently available for small viewports. 
+ - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness) for desktop experiences. 
+ - Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness) for mobile experiences.
 </ExampleContainer>
 
 ### Sticky header position
@@ -104,8 +118,6 @@ The app header should sit in the north region, above the main, in a sticky posit
     alt="The header stays in place while user scrolls."
     border
   />
-
-*The header stays in place while user scrolls.*
 
 ## Accessibility
 
