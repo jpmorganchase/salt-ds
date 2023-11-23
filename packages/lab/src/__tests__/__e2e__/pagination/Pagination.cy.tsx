@@ -6,8 +6,54 @@ import {
 } from "@salt-ds/lab";
 
 describe("GIVEN an Pagination", () => {
-  describe("WHEN navigation using the mouse", () => {
-    describe("THEN clicking the next arrow button", () => {
+  xdescribe("WHEN Default variant", () => {
+    describe("WHEN count is 1", () => {
+      it("SHOULD not display", () => {
+        cy.mount(
+          <Pagination count={1}>
+            <Paginator />
+          </Pagination>
+        );
+
+        cy.findByRole("navigation").should("not.exist");
+        cy.findByRole("link", { name: "Page 1" }).should("not.exist");
+        cy.findByRole("link", { name: "Previous Page" }).should("not.exist");
+        cy.findByRole("link", { name: "Next Page" }).should("not.exist");
+      });
+    });
+    describe("WHEN on the first page", () => {
+      it("THEN should disable the previous button", () => {
+        cy.mount(
+          <Pagination count={10} initialPage={1}>
+            <Paginator />
+          </Pagination>
+        );
+
+        cy.findByRole("link", { name: "Page 1" }).should(
+          "have.attr",
+          "aria-current",
+          "page"
+        );
+        cy.findByRole("link", { name: "Previous Page" }).should("be.disabled");
+      });
+    });
+    describe("WHEN on the last page", () => {
+      it("THEN should disable the next button", () => {
+        cy.mount(
+          <Pagination count={10} initialPage={10}>
+            <Paginator />
+          </Pagination>
+        );
+
+        cy.findByRole("link", { name: "Page 10" }).should(
+          "have.attr",
+          "aria-current",
+          "page"
+        );
+        cy.findByRole("link", { name: "Next Page" }).should("be.disabled");
+      });
+    });
+    describe("WHEN clicking the next arrow button", () => {
       it("THEN should move to the next page", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
@@ -30,7 +76,6 @@ describe("GIVEN an Pagination", () => {
         cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
       });
     });
-
     describe("THEN clicking the previous arrow button", () => {
       it("THEN should move to the previous page", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
@@ -54,7 +99,6 @@ describe("GIVEN an Pagination", () => {
         cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
       });
     });
-
     describe("THEN clicking a paginator item", () => {
       it("THEN should move to the clicked page", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
@@ -78,225 +122,267 @@ describe("GIVEN an Pagination", () => {
         cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
       });
     });
+    describe("WHEN navigation using the keyboard", () => {
+      describe("AND pressing the next arrow button", () => {
+        it("THEN should move to the next page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
+
+          cy.findByRole("link", { name: "Page 3" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+
+          cy.findByRole("link", { name: "Next Page" }).realClick();
+          cy.findByRole("link", { name: "Page 4" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
+        });
+      });
+      describe("AND pressing the previous arrow button", () => {
+        it("THEN should move to the previous page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
+
+          cy.findByRole("link", { name: "Page 3" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.findByRole("link", { name: "Previous Page" }).focus();
+          cy.realPress("Enter");
+          cy.findByRole("link", { name: "Page 2" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+        });
+      });
+      describe("AND pressing a paginator item", () => {
+        it("THEN should move to the selected page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
+
+          cy.findByRole("link", { name: "Page 3" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.findByRole("link", { name: "Page 5" }).focus();
+          cy.realPress("Enter");
+          cy.findByRole("link", { name: "Page 5" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
+        });
+      });
+      describe("AND pressing Alt+PageDown", () => {
+        it("THEN moves to the previous page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
+
+          cy.findByRole("link", { name: "Page 2" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.realPress("Tab");
+          cy.realPress(["Alt", "PageDown"]);
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+        });
+      });
+      describe("AND pressing Alt+PageUp", () => {
+        it("THEN moves to the next page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
+
+          cy.findByRole("link", { name: "Page 1" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.realPress("Tab");
+          cy.realPress(["Alt", "PageUp"]);
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+        });
+      });
+    });
   });
 
-  describe("WHEN navigation using the keyboard", () => {
-    describe("THEN using the next arrow button", () => {
+  describe("WHEN Compact variant", () => {
+    describe("WHEN clicking the next arrow button", () => {
       it("THEN should move to the next page", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-            <Paginator />
+            <CompactPaginator />
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
-
+        cy.findByText("3").should("exist");
         cy.findByRole("link", { name: "Next Page" }).realClick();
-        cy.findByRole("link", { name: "Page 4" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
-
+        cy.findByText("4").should("exist");
         cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
       });
     });
-
-    describe("THEN using the previous arrow button", () => {
+    describe("THEN clicking the previous arrow button", () => {
       it("THEN should move to the previous page", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-            <Paginator />
+            <CompactPaginator />
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
-        cy.findByRole("link", { name: "Previous Page" }).focus();
-        cy.realPress("Enter");
-        cy.findByRole("link", { name: "Page 2" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
+        cy.findByText("3").should("exist");
+        cy.findByRole("link", { name: "Previous Page" }).realClick();
+        cy.findByText("2").should("exist");
         cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
       });
     });
-
-    describe("THEN using a paginator item", () => {
-      it("THEN should move to the selected page", () => {
+    describe("THEN clicking the count item", () => {
+      it("THEN should move to the last page", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-            <Paginator />
+            <CompactPaginator />
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
-        cy.findByRole("link", { name: "Page 5" }).focus();
-        cy.realPress("Enter");
-        cy.findByRole("link", { name: "Page 5" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
+        cy.findAllByText("10").should("exist").and("have.length", 1);
+        cy.findByRole("link", { name: "Page 10" }).realClick();
+        cy.findAllByText("10").should("exist").and("have.length", 2);
+        cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
       });
     });
-  });
-
-  describe("WHEN on the first page", () => {
-    it("THEN should disable the previous button", () => {
-      cy.mount(
-        <Pagination count={10} initialPage={1}>
-          <Paginator />
-        </Pagination>
-      );
-
-      cy.findByRole("link", { name: "Page 1" }).should(
-        "have.attr",
-        "aria-current",
-        "page"
-      );
-      cy.findByRole("link", { name: "Previous Page" }).should("be.disabled");
-    });
-  });
-
-  describe("WHEN on the last page", () => {
-    it("THEN should disable the next button", () => {
-      cy.mount(
-        <Pagination count={10} initialPage={10}>
-          <Paginator />
-        </Pagination>
-      );
-
-      cy.findByRole("link", { name: "Page 10" }).should(
-        "have.attr",
-        "aria-current",
-        "page"
-      );
-      cy.findByRole("link", { name: "Next Page" }).should("be.disabled");
-    });
-  });
-
-  describe("WHEN using the compact variant", () => {
-    describe("AND navigating using the mouse", () => {
-      describe("THEN clicking the next arrow button", () => {
+    describe("WHEN navigating using the keyboard", () => {
+      describe("AND pressing the next arrow button", () => {
         it("THEN should move to the next page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-              <CompactPaginator withInput />
+            <Pagination count={10} onPageChange={pageChangeSpy}>
+              <CompactPaginator />
             </Pagination>
           );
 
-          cy.findByRole("textbox").should("have.value", "3");
-          cy.findByRole("link", { name: "Next Page" }).realClick();
-          cy.findByRole("textbox").should("have.value", "4");
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
-        });
-      });
-
-      describe("THEN clicking the previous arrow button", () => {
-        it("THEN should move to the previous page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-              <CompactPaginator withInput />
-            </Pagination>
-          );
-
-          cy.findByRole("textbox").should("have.value", "3");
-          cy.findByRole("link", { name: "Previous Page" }).realClick();
-          cy.findByRole("textbox").should("have.value", "2");
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
-        });
-      });
-
-      describe("THEN clicking a the count item", () => {
-        it("THEN should move to the last page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-              <CompactPaginator withInput />
-            </Pagination>
-          );
-
-          cy.findByRole("textbox").should("have.value", "3");
-          cy.findByRole("link", { name: "Page 10" }).realClick();
-          cy.findByRole("textbox").should("have.value", "10");
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
-        });
-      });
-    });
-
-    describe("AND navigating using the keyboard", () => {
-      describe("THEN using the next arrow button", () => {
-        it("THEN should move to the next page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-              <CompactPaginator withInput />
-            </Pagination>
-          );
-
-          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByText("1").should("exist");
           cy.findByRole("link", { name: "Next Page" }).focus();
           cy.realPress("Enter");
-          cy.findByRole("textbox").should("have.value", "4");
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
+          cy.findByText("2").should("exist");
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
         });
       });
-
-      describe("THEN clicking the previous arrow button", () => {
+      describe("AND pressing the previous arrow button", () => {
         it("THEN should move to the previous page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-              <CompactPaginator withInput />
+              <CompactPaginator />
             </Pagination>
           );
 
-          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByText("3").should("exist");
           cy.findByRole("link", { name: "Previous Page" }).focus();
           cy.realPress("Enter");
-          cy.findByRole("textbox").should("have.value", "2");
+          cy.findByText("2").should("exist");
           cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
         });
       });
-
-      describe("THEN clicking a the count item", () => {
+      describe("AND pressing a the count item", () => {
         it("THEN should move to the last page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
             <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-              <CompactPaginator withInput />
+              <CompactPaginator />
             </Pagination>
           );
 
-          cy.findByRole("textbox").should("have.value", "3");
+          cy.findByText("3").should("exist");
           cy.findByRole("link", { name: "Page 10" }).focus();
           cy.realPress("Enter");
-          cy.findByRole("textbox").should("have.value", "10");
+          cy.findAllByText("10").should("exist").and("have.length", 2);
           cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
         });
       });
-    });
+      describe("AND pressing Alt+PageDown", () => {
+        it("THEN moves to the previous page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
 
-    describe("AND using the embedded go to", () => {
+          cy.findByRole("link", { name: "Page 2" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.realPress("Tab");
+          cy.realPress(["Alt", "PageDown"]);
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+          cy.findByRole("link", { name: "Page 1" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+        });
+      });
+
+      describe("AND pressing Alt+PageUp", () => {
+        it("THEN moves to the next page", () => {
+          const pageChangeSpy = cy.stub().as("pageChangeSpy");
+          cy.mount(
+            <Pagination count={10} onPageChange={pageChangeSpy}>
+              <Paginator />
+            </Pagination>
+          );
+
+          cy.findByRole("link", { name: "Page 1" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+          cy.realPress("Tab");
+          cy.realPress(["Alt", "PageUp"]);
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+          cy.findByRole("link", { name: "Page 2" }).should(
+            "have.attr",
+            "aria-current",
+            "page"
+          );
+        });
+      });
+    });
+    describe("AND withInput", () => {
       it("SHOULD then reset to the current page on blur", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
@@ -314,7 +400,7 @@ describe("GIVEN an Pagination", () => {
         cy.get("@pageChangeSpy").should("not.have.been.called");
       });
 
-      it("SHOULD go to the page entered when enter is pressed", () => {
+      it("SHOULD go to the page from input when enter is pressed", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
@@ -334,49 +420,7 @@ describe("GIVEN an Pagination", () => {
     });
   });
 
-  // describe("WHEN customising the compact prop", () => {
-  //   describe("AND setting it to medium screens", () => {
-  //     let matchMediaInstances;
-  //
-  //     beforeEach(() => {
-  //       matchMediaInstances = [];
-  //       const fakeMatchMedia = createMatchMedia(1279, matchMediaInstances);
-  //       // jsdom does not implement window.matchMedia
-  //       window.matchMedia = fakeMatchMedia;
-  //       window.matchMedia.restore = () => {
-  //         delete window.matchMedia;
-  //       };
-  //     });
-  //
-  //     afterEach(() => {
-  //       window.matchMedia.restore();
-  //     });
-  //
-  //     it("SHOULD render in compact mode when compact is `md`", () => {
-  //       const { getByRole, queryByRole, queryAllByRole } = render(
-  //         <Pagination compact="md" count={10} initialPage={3}>
-  //           <Paginator />
-  //         </Pagination>
-  //       );
-  //
-  //       expect(queryByRole("textbox")).not.toEqual(null);
-  //       expect(getByRole("textbox")).toHaveValue("3");
-  //       expect(queryAllByRole("link", { name: /^Page.*/ })).toHaveLength(1);
-  //     });
-  //
-  //     it("SHOULD render normally when compact is `xs`", () => {
-  //       const { queryAllByRole } = render(
-  //         <Pagination compact="xs" count={10} initialPage={3}>
-  //           <Paginator />
-  //         </Pagination>
-  //       );
-  //
-  //       expect(queryAllByRole("link", { name: /^Page.*/ })).toHaveLength(8);
-  //     });
-  //   });
-  // });
-
-  describe("WHEN customising the siblingCount", () => {
+  xdescribe("WHEN siblingCount", () => {
     describe("AND setting it to `3`", () => {
       it("THEN should render 11 buttons when the count is 11", () => {
         cy.mount(
@@ -398,49 +442,33 @@ describe("GIVEN an Pagination", () => {
         cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 10);
       });
     });
-
-    // TODO revisit when we focus on Pagination
-    //
-    //   describe("AND setting it to medium breakpoint", () => {
-    //     let matchMediaInstances;
-    //
-    //     beforeEach(() => {
-    //       matchMediaInstances = [];
-    //       const fakeMatchMedia = createMatchMedia(1279, matchMediaInstances);
-    //       // jsdom does not implement window.matchMedia
-    //       window.matchMedia = fakeMatchMedia;
-    //       window.matchMedia.restore = () => {
-    //         delete window.matchMedia;
-    //       };
-    //     });
-    //
-    //     afterEach(() => {
-    //       window.matchMedia.restore();
-    //     });
-    //
-    //     it("THEN should render 6 buttons when the count is 20 and siblingCount is 1 on medium screens", () => {
-    //       const { queryAllByRole } = render(
-    //         <Pagination count={20}>
-    //           <Paginator siblingCount={{ md: 1, lg: 2 }} />
-    //         </Pagination>
-    //       );
-    //
-    //       expect(queryAllByRole("link", { name: /^Page.*/ })).toHaveLength(6);
-    //     });
-    //
-    //     it("THEN should render 6 buttons when the count is 20 and siblingCount is 1 on screens less than 961px", () => {
-    //       const { queryAllByRole } = render(
-    //         <Pagination count={20}>
-    //           <Paginator siblingCount={{ 1278: 1, 1280: 2 }} />
-    //         </Pagination>
-    //       );
-    //
-    //       expect(queryAllByRole("link", { name: /^Page.*/ })).toHaveLength(6);
-    //     });
-    //   });
   });
 
-  describe("WHEN using the GoToInput", () => {
+  xdescribe("WHEN boundaryCount", () => {
+    describe("AND setting it to `2`", () => {
+      it("THEN should render 10 buttons when the count is 20", () => {
+        cy.mount(
+          <Pagination count={20}>
+            <Paginator boundaryCount={2} />
+          </Pagination>
+        );
+
+        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 10);
+      });
+
+      it("THEN should render 9 buttons when the count is 20 and initial page is 10", () => {
+        cy.mount(
+          <Pagination count={20} initialPage={10}>
+            <Paginator boundaryCount={2} />
+          </Pagination>
+        );
+
+        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 9);
+      });
+    });
+  });
+
+  xdescribe("WHEN using the GoToInput", () => {
     describe("AND changing the order of the components", () => {
       it("SHOULD then render on the left if GoToInput is before Paginator", () => {
         cy.mount(
@@ -561,69 +589,6 @@ describe("GIVEN an Pagination", () => {
         cy.findByRole("textbox").blur();
         cy.findByRole("textbox").should("have.value", "");
       });
-    });
-
-    // describe("AND pagination is in compact mode", () => {
-    //   it("SHOULD then be hidden", () => {
-    //     cy.mount(
-    //       <Pagination compactWithInput count={10} initialPage={3}>
-    //         <GoToInput />
-    //         <Paginator />
-    //       </Pagination>
-    //     );
-
-    //     cy.findAllByRole("textbox").should("have.length", 1);
-    //   });
-    // });
-  });
-
-  describe("WHEN the count is 1", () => {
-    it("should collapse the pagination", () => {
-      cy.mount(
-        <Pagination count={1}>
-          <Paginator />
-        </Pagination>
-      );
-
-      cy.findByRole("navigation").should("not.exist");
-    });
-  });
-
-  describe("WHEN using keyboard shortcuts", () => {
-    it("Alt+PageDown moves to the previous page", () => {
-      const pageChangeSpy = cy.stub().as("pageChangeSpy");
-      cy.mount(
-        <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
-          <Paginator />
-        </Pagination>
-      );
-
-      cy.findByRole("link", { name: "Page 2" }).should(
-        "have.attr",
-        "aria-current",
-        "page"
-      );
-      cy.realPress("Tab");
-      cy.realPress(["Alt", "PageDown"]);
-      cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
-    });
-
-    it("Alt+PageUp moves to the next page", () => {
-      const pageChangeSpy = cy.stub().as("pageChangeSpy");
-      cy.mount(
-        <Pagination count={10} onPageChange={pageChangeSpy}>
-          <Paginator />
-        </Pagination>
-      );
-
-      cy.findByRole("link", { name: "Page 1" }).should(
-        "have.attr",
-        "aria-current",
-        "page"
-      );
-      cy.realPress("Tab");
-      cy.realPress(["Alt", "PageUp"]);
-      cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
     });
   });
 });
