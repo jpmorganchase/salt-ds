@@ -84,7 +84,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       onOpenChange: onOpenChangeProp,
     });
 
-    const [showComponent, setShowComponent] = useState(false);
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const triggerRef = useForkRef(
@@ -94,12 +93,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     );
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
-
-    useEffect(() => {
-      if (open && !showComponent) {
-        setShowComponent(true);
-      }
-    }, [open, showComponent]);
 
     const handleCloseButton = () => {
       onOpenChange(false);
@@ -113,7 +106,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             ref: triggerRef,
           })}
 
-        {showComponent && (
+        {open && (
           <FloatingFocusManager
             context={context}
             // initialFocus={

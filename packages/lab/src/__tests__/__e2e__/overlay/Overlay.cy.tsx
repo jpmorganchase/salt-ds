@@ -9,13 +9,24 @@ describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN rendered", () => {
-    it("THEN it should show Overlay on anchor element click", () => {
+    it("THEN it should show Overlay on anchor element press", () => {
       cy.mount(<Default />);
 
       cy.realPress("Tab").realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       // focus remains on anchor element
       cy.findByRole("button", { name: /Toggle Overlay/i }).should("be.focused");
+    });
+
+    it("THEN it should remain open on repeated anchor element press", () => {
+      cy.mount(<Default />);
+
+      cy.realPress("Tab").realPress("Enter");
+      cy.findByRole("dialog").should("be.visible");
+      cy.realPress("Enter");
+      cy.findByRole("dialog").should("be.visible");
+      cy.realPress("Enter");
+      cy.findByRole("dialog").should("be.visible");
     });
 
     it("THEN it should dismiss on Esc key press", () => {
@@ -43,7 +54,7 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("dialog").should("not.exist");
     });
 
-    xit("THEN it should trap focus within Overlay once opened", () => {
+    it("THEN it should trap focus within Overlay once opened", () => {
       cy.mount(<Default open />);
 
       cy.findByRole("dialog").should("be.visible");
