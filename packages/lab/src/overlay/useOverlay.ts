@@ -14,7 +14,7 @@ import {
   useFloatingUI,
   UseFloatingUIProps,
 } from "@salt-ds/core";
-import { HTMLProps, useRef, KeyboardEvent } from "react";
+import { HTMLProps, useRef } from "react";
 
 export interface UseOverlayProps
   extends Partial<
@@ -95,10 +95,6 @@ export function useOverlay(props?: UseOverlayProps) {
   const getTriggerProps = () =>
     getReferenceProps({
       ref: reference,
-      onKeyDown: (event: KeyboardEvent<HTMLElement>) => {
-        if (event.key === "Enter" || event.key === " ")
-          return handleOpenChange(false);
-      },
     });
 
   const floatingStyles = () => {
