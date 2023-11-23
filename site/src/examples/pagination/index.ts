@@ -1,5 +1,5 @@
 export * from "./Default";
-export * from "./WithInput";
+export * from "./DefaultWithInput";
 export * from "./Compact";
 export * from "./CompactWithInput";
 export * from "./CompactWithGoTo";

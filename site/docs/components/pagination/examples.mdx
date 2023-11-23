@@ -13,11 +13,23 @@ data:
 
 ### Default
 
+Use the default component to allow a small range of pages to be navigated; back and forth in single page increments or by jumping directly to a page within the present range.
+
+#### Best practice
+
+Ensure that the component is placed in close proximity to page content, and consider whether it should be located above, below, or both above and below the related content.
+
 </LivePreview>
 
-<LivePreview componentName="pagination" exampleName="WithInput" >
+<LivePreview componentName="pagination" exampleName="DefaultWithInput" >
 
-### DefaultWithInput
+You can display an input field that allows users to specify, and navigate directly to, any page they require within the Pagination range. To allow users to enter large values without restriction, the input’s width increases in line with the number of digits in the total page count.
+
+#### Best practices
+
+- Include the input field when pagination is likely to total 100s or 1000s of pages.
+- Order results, if possible, to maximize the benefit of users being able to jump to any page. When ordered by age, for example, it’s easier for users to step back two weeks.
+- Position the input on the left of the Pagination range if it’s likely to be used regularly. If it only benefits a small percentage of users or is likely to be used infrequently, you could position it to the right.
 
 </LivePreview>
 
@@ -29,19 +41,21 @@ data:
 
 <LivePreview componentName="pagination" exampleName="CompactWithInput" >
 
-### CompactWithInput
+### Compact with input
 
 </LivePreview>
 
 <LivePreview componentName="pagination" exampleName="SiblingCount" >
 
-### SiblingCount
+### Sibling count
+
+You can configure the visible page range using the `siblingCount` prop—increasing or decreasing the sibling range, i.e., pages on either side of the active page, depending on the breakpoint. Always make changes to sibling pages in sets of two to ensure that your page range is an odd number. This keeps the active page centred within the range and visually balanced.
 
 </LivePreview>
 
 <LivePreview componentName="pagination" exampleName="BoundaryCount" >
 
-### BoundaryCount
+### Boundary count
 
 </LivePreview>
 
