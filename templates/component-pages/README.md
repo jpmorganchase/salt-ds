@@ -45,7 +45,46 @@ Change the header title to "Using the components" where applicable.
 
 If needed, provide general usage and guidance that the reader should know. This could cover how they might use it, what sort of questions they might have, what sort of usage you want to discourage. Link to other resources where relevant.
 
-Keep the guidance here short, no more than five sentences. Leave the section blank if 
+Keep the guidance here short, no more than five sentences. Leave the section blank (but keep the header for navigation consistency) if general usage tips are already covered by the introduction and when to use sections.
+
+### When to use/when not to use
+
+These are H4 headers that sit underneath the "using the component" header and text (if present).
+
+Use this section to outline situations where a user may want to use a given component. Be as thorough as possible, and try to cover all scenarios. Try to ensure each "when to use" has an accompanying "when not to use" and vice versa.
+
+Use bullet points, unless there is one point in **both** sections. Use a new bullet point for each new point for clarity.
+
+Don't worry about writing "use" and "don't use" at the start of each sentence, as it's implied by the section header. Try to start the sentence with "when" or "to", such as "when the nav item contains more than four items." 
+
+For the "when not to use" section, provide an alternative solution for each point where possible. Format as "Instead, use X" or "Instead, use X to Y" where X is a component or alternative solution and Y is a task or outcome. Use back ticks and Pascal case for component names, and link to the relevant documentation.
+
+### Import
+
+Introduce with the text "To import `[ComponentName]` from the [core/lab/other] Salt package, use:"
+
+ - When there are two components: "To import `[Component1]` and `[Component2]` from the [core/lab/other] Salt package, use:"
+ - When there are three or more components: "To import `[Component1]` and related components from the [core/lab/other] Salt package, use:"
+
+Format import commands with "\```js".
+
+### Props
+
+Props tables are automatically generated using the `PropsTable` component. 
+
+```js
+<PropsTable packageName="core" componentName="ComponentName" />
+```
+
+If there are two or more components, use an H4 header with the name of the component above each props table. Use back ticks and Pascal case for the header. Use the name of the component as it appears in code.
+
+### Content
+
+Provide content-related guidance if applicable. This could include label text for a button component, or list item length for a dropdown. Remove the section if it's blank.
+
+### References
+
+Include any third-party links that may be relevant here, such as W3C guidance. Use bullet points, unless there is only one.
 
 ## 4. Examples.mdx
 
