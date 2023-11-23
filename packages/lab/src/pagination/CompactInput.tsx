@@ -44,7 +44,7 @@ export const CompactInput = forwardRef<HTMLSpanElement, CompactInputProps>(
         if (!isNaN(pageValue) && pageValue <= count && pageValue > 0) {
           onPageChange(pageValue);
         } else {
-          setInputValue(`${pageValue}`);
+          setInputValue(`${page}`);
         }
       }
     };
