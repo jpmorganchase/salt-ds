@@ -81,7 +81,7 @@
 }
 
 .saltPagination-compactSeparator {
-  width: var(--salt-size-base);
+  min-width: var(--salt-size-base);
   text-align: center;
 }
 
