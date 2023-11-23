@@ -17,62 +17,62 @@ data:
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the multiline input, moves focus onto the multiline input and highlights the text. If the Multiline Input area is empty, it will display the text cursor.
-- If the multiline input is disabled, skips the multiline input.
-- If the multiline input has focus, moves focus out of the multiline input to next focusable component in the tab order.
+- If focus is above the multiline input, Tab moves focus onto the multiline input and highlights the text. If the Multiline Input area is empty, it will display the text cursor.
+- If the multiline input is disabled, Tab skips the multiline input.
+- If the multiline input has focus, Tab moves focus out of the multiline input to next focusable component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focused, moves focus out of the component to the previous component in the tab order.
+- If focused, this action moves focus out of the component to the previous component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
 
-- If an interactive adornment, e.g., a button, has focus, actions the element.
+- If an interactive adornment, e.g., a button, has focus, Enter actions the element.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space">
 
-- When the multiline input area has focus, inserts a space character at the positon of the text cursor.
+- When the multiline input area has focus, Space inserts a space character at the positon of the text cursor.
 - If an interactive adornment, e.g., a button, has focus, actions the element.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Right Arrow">
+<KeyboardControl keyOrCombos="Right arrow">
 
 When the multiline input area has focus:
 
-- If text is in a highlighted state, removes the highlight and positions the text cursor at the right edge of the highlight.
-- If the text cursor is visible, positions it on the alternative side of the following character. If there's no following character, there's no effect.
+- If text is in a highlighted state, Right arrow removes the highlight and positions the text cursor at the right edge of the highlight.
+- If the text cursor is visible, Right arrow positions it on the alternative side of the following character. If there's no following character, there's no effect.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Left Arrow">
+<KeyboardControl keyOrCombos="Left arrow">
 
 When the multiline input area has focus:
 
-- If text is in a highlighted state, removes the highlight and positions the text cursor at the left edge of the highlight.
-- If the text cursor is visible, positions it on the alternative side of the following character. If there's no preceding character, there's no effect.
+- If text is in a highlighted state, Left arrow removes the highlight and positions the text cursor at the left edge of the highlight.
+- If the text cursor is visible, Left arrow positions it on the alternative side of the following character. If there's no preceding character, there's no effect.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Left Arrow, Shift + Right Arrow">
+<KeyboardControl keyOrCombos="Shift + Left arrow / Shift + Right arrow">
 
-Drags selection over text characters, one at a time.
+This action drags selection over text characters, one at a time.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Backspace">
 
 When the multiline input area has focus and:
 
-- Text is highlighted, removes all highlighted characters.
-- The text cursor is to the right of text, removes the preceding character.
+- Text is highlighted, Backspace removes all highlighted characters.
+- The text cursor is to the right of text, Backspace removes the preceding character.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Alphanumeric/Special keys">
 
-When the multiline input area has focus, the relevant character is inserted at the point where the text cursor is positioned.
+When the multiline input area has focus, this action inserts the relevant character at the point where the text cursor is positioned.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Control + A or Command + A">
+<KeyboardControl keyOrCombos="Control + A / Command + A">
 
 Highlights all strings within the field.
 
