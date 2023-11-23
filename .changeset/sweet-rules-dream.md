@@ -2,5 +2,6 @@
 "@salt-ds/core": patch
 ---
 
-Fixed Button Input adornments being clipped if they contain text.
-Fixed nested buttons being affected by Button Input adornment overrides.
+Fixed Input and Multiline Input button adornments being clipped if they contain text.
+Fixed nested buttons being affected by overrides applied to Input and Multiline Input button adornments.
+Fixed Multiline Input button adornments being an incorrect size.
