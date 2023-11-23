@@ -19,7 +19,7 @@ export const BoundaryCount = (): ReactElement => {
           onChange={handleChange}
           style={{ width: 50 }}
         />
-        <Pagination count={20} page={10}>
+        <Pagination count={20} initialPage={10}>
           <Paginator boundaryCount={boundaryCount} />
         </Pagination>
       </StackLayout>

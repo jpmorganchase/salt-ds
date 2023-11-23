@@ -19,7 +19,7 @@ export const SiblingCount = (): ReactElement => {
           onChange={handleChange}
           style={{ width: 50 }}
         />
-        <Pagination count={20} page={10}>
+        <Pagination count={20} initialPage={10}>
           <Paginator siblingCount={siblingCount} />
         </Pagination>
       </StackLayout>
