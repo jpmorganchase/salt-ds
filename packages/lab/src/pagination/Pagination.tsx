@@ -80,10 +80,10 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         if (altKey) {
           switch (key) {
             case "PageDown":
-              onPageChange(Math.min(pageState + 1, count));
+              onPageChange(Math.max(pageState - 1, 1));
               break;
             case "PageUp":
-              onPageChange(Math.max(pageState - 1, 1));
+              onPageChange(Math.min(pageState + 1, count));
               break;
             default:
           }

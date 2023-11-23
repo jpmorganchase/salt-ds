@@ -590,25 +590,7 @@ describe("GIVEN an Pagination", () => {
   });
 
   describe("WHEN using keyboard shortcuts", () => {
-    it("Alt+PageDown moves to the next page", () => {
-      const pageChangeSpy = cy.stub().as("pageChangeSpy");
-      cy.mount(
-        <Pagination count={10} onPageChange={pageChangeSpy}>
-          <Paginator />
-        </Pagination>
-      );
-
-      cy.findByRole("link", { name: "Page 1" }).should(
-        "have.attr",
-        "aria-current",
-        "page"
-      );
-      cy.realPress("Tab");
-      cy.realPress(["Alt", "PageDown"]);
-      cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
-    });
-
-    it("Alt+PageUp moves to the next page", () => {
+    it("Alt+PageDown moves to the previous page", () => {
       const pageChangeSpy = cy.stub().as("pageChangeSpy");
       cy.mount(
         <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
@@ -622,8 +604,26 @@ describe("GIVEN an Pagination", () => {
         "page"
       );
       cy.realPress("Tab");
-      cy.realPress(["Alt", "PageUp"]);
+      cy.realPress(["Alt", "PageDown"]);
       cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+    });
+
+    it("Alt+PageUp moves to the next page", () => {
+      const pageChangeSpy = cy.stub().as("pageChangeSpy");
+      cy.mount(
+        <Pagination count={10} onPageChange={pageChangeSpy}>
+          <Paginator />
+        </Pagination>
+      );
+
+      cy.findByRole("link", { name: "Page 1" }).should(
+        "have.attr",
+        "aria-current",
+        "page"
+      );
+      cy.realPress("Tab");
+      cy.realPress(["Alt", "PageUp"]);
+      cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
     });
   });
 });
