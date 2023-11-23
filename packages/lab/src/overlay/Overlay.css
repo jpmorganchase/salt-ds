@@ -38,11 +38,10 @@
 .saltOverlay-content {
   overflow: auto;
   padding: var(--salt-spacing-100) 0 var(--salt-spacing-100) var(--salt-spacing-100);
-  padding-right: calc(max(var(--salt-size-icon), 12px) + (2 * var(--salt-size-unit)));
 }
 
 .saltButton-secondary.saltOverlay-closeButton {
-  position: absolute;
+  position: sticky;
   top: 0;
-  right: 0;
+  float: right;
 }
