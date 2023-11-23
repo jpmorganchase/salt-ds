@@ -37,11 +37,20 @@ You can display an input field that allows users to specify, and navigate direct
 
 ### Compact
 
+Use `CompactPaginator` when you need to optimize the component for small viewports—or minimize visual clutter in a high-density interface. It has a more predictable width, as only the active and last pages are displayed, providing more flexibility when you're including it in a layout.
+
+#### Best practices
+
+- Consider this variant when space is limited and you have a large page range.
+- Position the compact component appropriately for your UI; left aligned is best when you’re displaying lists of text results, centre for a page of images or equally-sized tiles, and right aligned for a full-width data grid.
+
 </LivePreview>
 
 <LivePreview componentName="pagination" exampleName="CompactWithInput" >
 
 ### Compact with input
+
+Use `CompactPaginator` with the `withInput` prop when you want to have the ability to jump to a specific page number.
 
 </LivePreview>
 

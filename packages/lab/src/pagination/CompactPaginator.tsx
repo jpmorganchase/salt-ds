@@ -14,6 +14,17 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import paginationCss from "./Pagination.css";
 
 interface CompactPaginatorProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Id of the input field
+   */
+  id?: string;
+  /**
+   * Change input variant.
+   */
+  inputVariant?: "primary" | "secondary";
+  /**
+   * Display an input field in place of the current page.
+   */
   withInput?: boolean;
 }
 
@@ -21,7 +32,7 @@ export const CompactPaginator = forwardRef<
   HTMLDivElement,
   CompactPaginatorProps
 >(function CompactPaginator(
-  { className, withInput, ...restProps },
+  { className, id, inputVariant, withInput, ...restProps },
   forwardedRef
 ) {
   const targetWindow = useWindow();
@@ -57,7 +68,7 @@ export const CompactPaginator = forwardRef<
         <ChevronLeftIcon />
       </ArrowButton>
       {withInput ? (
-        <CompactInput />
+        <CompactInput id={id} inputVariant={inputVariant} />
       ) : (
         <PageButton
           page={page}

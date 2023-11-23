@@ -18,6 +18,7 @@ interface StoryProps {
   goToPosition: "left" | "right" | "none";
   compact?: boolean;
   compactWithInput?: boolean;
+  inputVariant?: "primary" | "secondary";
 }
 
 const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
@@ -32,6 +33,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     compact,
     compactWithInput,
     goToPosition,
+    inputVariant,
   } = args;
   const [page, setPage] = useState<number>(pageProp);
   const onPageChange = (page: number) => {
@@ -40,9 +42,14 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
 
   return (
     <Pagination page={page} onPageChange={onPageChange} count={count}>
-      {goToPosition === "left" ? <GoToInput /> : null}
+      {goToPosition === "left" ? (
+        <GoToInput inputVariant={inputVariant} />
+      ) : null}
       {compact ?? compactWithInput ? (
-        <CompactPaginator withInput={compactWithInput} />
+        <CompactPaginator
+          withInput={compactWithInput}
+          inputVariant={inputVariant}
+        />
       ) : (
         <Paginator
           boundaryCount={boundaryCount}
@@ -50,7 +57,9 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
           showPreviousNext={showPreviousNext}
         />
       )}
-      {goToPosition === "right" ? <GoToInput /> : null}
+      {goToPosition === "right" ? (
+        <GoToInput inputVariant={inputVariant} />
+      ) : null}
     </Pagination>
   );
 };
@@ -102,6 +111,10 @@ WithInput.argTypes = {
     options: ["none", "left", "right"],
     control: { type: "radio" },
   },
+  inputVariant: {
+    options: ["primary", "secondary"],
+    control: { type: "radio" },
+  },
 };
 
 export const Compact = Template.bind({});
@@ -134,6 +147,10 @@ CompactWithInput.argTypes = {
     options: ["none", "left", "right"],
     control: { type: "radio" },
   },
+  inputVariant: {
+    options: ["primary", "secondary"],
+    control: { type: "radio" },
+  },
 };
 
 export const CompactWithGoTo = Template.bind({});
@@ -148,6 +165,10 @@ CompactWithGoTo.args = {
 CompactWithGoTo.argTypes = {
   goToPosition: {
     options: ["none", "left", "right"],
+    control: { type: "radio" },
+  },
+  inputVariant: {
+    options: ["primary", "secondary"],
     control: { type: "radio" },
   },
 };

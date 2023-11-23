@@ -19,13 +19,29 @@ import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
 
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
+  /**
+   * Input label.
+   */
   label?: string;
+  /**
+   * Id of the input field
+   */
+  id?: string;
+  /**
+   * Change input variant.
+   */
+  inputVariant?: "primary" | "secondary";
 }
 
 export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
   function GoToInput(
-    { className, id: idProp, label = "Go to", ...restProps },
-
+    {
+      className,
+      id: idProp,
+      inputVariant = "primary",
+      label = "Go to",
+      ...restProps
+    },
     forwardedRef
   ) {
     const { count, onPageChange, paginatorElement } = usePaginationContext();
@@ -104,6 +120,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           onKeyDown={onKeyDown}
           value={inputValue}
           textAlign={"center"}
+          variant={inputVariant}
         />
       </span>
     );
