@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { memo, MutableRefObject, useEffect, useRef, useState } from "react";
+import { memo, MutableRefObject, useRef, useState } from "react";
 import {
   makePrefixer,
   Tooltip,

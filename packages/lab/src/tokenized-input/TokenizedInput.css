@@ -27,6 +27,10 @@
   justify-content: space-between;
   min-width: 8em; /* same min-width as Input component */
   width: 100%;
+  align-items: flex-start;
+  flex-grow: 1;
+  padding: 0;
+  height: 100%;
 }
 
 /* Styles applied to root component on hover state  */
@@ -34,43 +38,28 @@
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltTokenizedInput.saltTokenizedInput-disabled:hover {
-  cursor: var(--salt-selectable-cursor-disabled);
-}
-
 /* Styles applied to container of pills */
 .saltTokenizedInput-pillGroup {
-  align-content: flex-start;
+  max-width: 100%;
+  overflow: hidden;
   display: flex;
-  /*column-gap: var(--salt-size-basis-unit); */
   flex: 1;
   flex-wrap: wrap;
   min-height: var(--tokenizedInput-height);
   padding: var(--tokenizedInput-pill-group-y-padding) var(--tokenizedInput-spacing);
-  overflow: hidden;
+}
+.saltTokenizedInput .saltInputPill .saltPillNext-action {
   max-width: 100%;
 }
-
-/* Styles applied to root component if `focused={true}` */
-.saltTokenizedInput-focused {
-  outline: var(--saltTokenizedInput-focused-outline, var(--salt-focused-outline));
+.saltTokenizedInput .saltTokenizedInput-expanded-pill.saltInputPill .saltPillNext-action {
+  max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
 }
-
-/* Styles applied to Input and Clear Button if `expanded={false}` */
+/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
 .saltTokenizedInput-hidden,
-.saltTokenizedInput-input.saltTokenizedInput-hidden,
-.saltButton.saltTokenizedInput-hidden {
+.saltTokenizedInput .saltInputPill.saltInputPill-hidden {
   display: none;
 }
 
-.saltMultilineInput.saltTokenizedInput-input {
-  align-items: flex-start;
-  cursor: text;
-  flex-grow: 1;
-  padding: 0;
-  outline: none;
-  width: 100%;
-}
 /* Styles applied to Clear Button  */
 .saltTokenizedInput-clearButton {
   flex: none;
@@ -83,36 +72,26 @@
   --saltButton-padding: var(--salt-spacing-50);
   --saltButton-margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
 }
-
-/* Styles applied to root component and pill container if `expanded={true}` */
-.saltTokenizedInput-expanded,
-.saltTokenizedInput-expanded .saltTokenizedInput-pillGroup {
-  height: auto;
+.saltTokenizedInput .saltMultilineInput-startAdornmentContainer {
+  min-width: 100%;
+  flex-basis: 0;
+  flex-grow: 1;
 }
-
-/* TODO: Adjust specificity of .InputPill depending on styling solution.
-  This is an example of internal sub-component naming convension. */
-.saltTokenizedInput .saltInputPill,
-.saltInputLegacy.saltTokenizedInput-input,
-.saltTokenizedInput-inputField.saltTokenizedInput-inputMultiline .saltTokenizedInput-input {
-  margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
-  height: calc(var(--tokenizedInput-height) - var(--tokenizedInput-spacing) * 1.5);
+.saltTokenizedInput .saltMultilineInput-startAdornmentContainer .saltPillNext-close-button {
+  /* TODO: a bit nuclear, check this, should it be in pillNext? */
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
-
 /* Styles applied to inner Pills */
 .saltTokenizedInput .saltInputPill {
+  margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
   margin-right: var(--tokenizedInput-gutter-size);
-  max-width: 100%;
-}
-
-/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
-.saltTokenizedInput .saltInputPill.saltInputPill-hidden {
-  display: none;
 }
 
 /* Styles applied to the last visible Pill when all visible */
 .saltTokenizedInput .saltInputPill-pillLastVisible {
-  margin-right: var(--saltTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin)); // TODO: check with design
+  /* TODO: check with design */
+  margin-right: var(--saltTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin));
 }
 
 /* Styles applied to a Pill when active */

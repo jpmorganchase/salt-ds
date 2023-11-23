@@ -296,105 +296,100 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
 
   const textAreaRef = useForkRef(inputRef, inputRefProp);
   return (
-    <div
+    <MultilineInput
+      rows={1}
+      {...mergedInputProps}
       {...restInputProps}
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("focused")]: focused,
-          [withBaseName("expanded")]: expanded,
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      )}
-      id={id}
+      id={inputId}
+      // id={id} TODO: merge the 2 ids, do we need to pass id like this?
+      disabled={disabled}
+      onChange={onInputChange}
+      onBlur={onInputBlur}
+      onFocus={onInputFocus}
+      onSelect={onInputSelect}
       onClick={onClick}
+      value={value}
+      textAreaRef={textAreaRef}
+      className={clsx(withBaseName(), className)}
       ref={useForkRef(ref, containerRef)}
+      startAdornment={
+        <div className={withBaseName("pillGroup")}>
+          {selectedItems.map((item, index) => {
+            const label = String(item);
+            return (
+              <InputPill
+                disabled={disabled}
+                className={clsx({
+                  [withBaseName("expanded-pill")]: expanded,
+                })}
+                hidden={showExpandButton && index >= firstHiddenIndex}
+                // TODO: activeIndices is used to keep highlighted to copy items, check if needs rename
+                highlighted={
+                  index === highlightedIndex ||
+                  activeIndices.indexOf(index) !== -1
+                }
+                id={`${id}-pill-${index}`}
+                index={index}
+                key={`${index}-${label}`}
+                label={label}
+                lastVisible={
+                  !showExpandButton && index === selectedItems.length - 1
+                }
+                onClose={expanded ? onRemoveItem : undefined}
+                pillsRef={pillsRef}
+              />
+            );
+          })}
+        </div>
+      }
+      endAdornment={
+        <>
+          {/*TODO: check the logic below, it needs tweaks */}
+          {expanded && !showExpandButton && selectedItems.length > 0 && (
+            <Button
+              className={clsx(withBaseName("clearButton"))}
+              disabled={disabled}
+              id={clearButtonId}
+              onBlur={onBlur}
+              onClick={onClear}
+              onFocus={handleClearButtonFocus}
+              ref={clearButtonRef}
+              variant="secondary"
+              data-testid="clear-button"
+            >
+              <CloseIcon aria-label="clear input" />
+            </Button>
+          )}
+          {showExpandButton && (
+            <Button
+              aria-labelledby={[ariaLabelledBy, inputId, expandButtonId]
+                .filter(Boolean)
+                .join(" ")}
+              className={clsx(withBaseName("expandButton"))}
+              disabled={disabled}
+              id={expandButtonId}
+              // onBlur={onBlur}
+              onClick={handleExpand}
+              // onFocus={onFocus}
+              // onKeyDown={handleExpandButtonKeyDown}
+              // onKeyUp={handleInputKeyUp}
+              // ref={useForkRef(expandButtonRef, expandButtonRefProp)}
+              variant="secondary"
+              {...restExpandButtonProps}
+            >
+              <OverflowMenuIcon
+                aria-label={expandButtonAccessibleText ?? "expand edit"}
+              />
+            </Button>
+          )}
+        </>
+      }
     >
       <span
         aria-owns={selectedItemIds.join(" ")}
         className={withBaseName("hidden")}
         role="listbox"
       />
-      <div className={withBaseName("pillGroup")}>
-        {selectedItems.map((item, index) => {
-          const label = String(item);
-          return (
-            <InputPill
-              disabled={disabled}
-              hidden={showExpandButton && index >= firstHiddenIndex}
-              // TODO: activeIndices is used to keep highlighted to copy items, check if needs rename
-              highlighted={
-                index === highlightedIndex ||
-                activeIndices.indexOf(index) !== -1
-              }
-              id={`${id}-pill-${index}`}
-              index={index}
-              key={`${index}-${label}`}
-              label={label}
-              lastVisible={
-                !showExpandButton && index === selectedItems.length - 1
-              }
-              onClose={expanded ? onRemoveItem : undefined}
-              pillsRef={pillsRef}
-            />
-          );
-        })}
-        <Button
-          aria-labelledby={[ariaLabelledBy, inputId, expandButtonId]
-            .filter(Boolean)
-            .join(" ")}
-          className={clsx(withBaseName("expandButton"), {
-            [withBaseName("hidden")]: !showExpandButton,
-          })}
-          disabled={disabled}
-          id={expandButtonId}
-          onBlur={onBlur}
-          onClick={handleExpand}
-          onFocus={onFocus}
-          onKeyDown={handleExpandButtonKeyDown}
-          onKeyUp={handleInputKeyUp}
-          ref={useForkRef(expandButtonRef, expandButtonRefProp)}
-          variant="secondary"
-          {...restExpandButtonProps}
-        >
-          <OverflowMenuIcon
-            aria-label={expandButtonAccessibleText ?? "expand edit"}
-          />
-        </Button>
-        {!showExpandButton && (
-          <MultilineInput
-            rows={1}
-            {...mergedInputProps}
-            id={inputId}
-            disabled={disabled}
-            onChange={onInputChange}
-            onBlur={onInputBlur}
-            onFocus={onInputFocus}
-            onSelect={onInputSelect}
-            value={value}
-            textAreaRef={textAreaRef}
-            className={clsx(withBaseName("input"), withBaseName("inputField"))}
-            endAdornment={
-              (expanded || selectedItems.length > 0) && (
-                <Button
-                  className={clsx(withBaseName("clearButton"), {})}
-                  disabled={disabled}
-                  id={clearButtonId}
-                  onBlur={onBlur}
-                  onClick={onClear}
-                  onFocus={handleClearButtonFocus}
-                  ref={clearButtonRef}
-                  variant="secondary"
-                  data-testid="clear-button"
-                >
-                  <CloseIcon aria-label="clear input" />
-                </Button>
-              )
-            }
-          />
-        )}
-      </div>
-    </div>
+    </MultilineInput>
   );
 });

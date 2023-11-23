@@ -1,7 +1,7 @@
 import { PillNext } from "@salt-ds/lab";
 import { FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
-import { ChangeEvent, Ref, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { shortColorData } from "./../assets/exampleData";
 import { Button, FlowLayout, Input, StackLayout, Tooltip } from "@salt-ds/core";
 
@@ -89,10 +89,7 @@ export const Truncated: StoryFn<typeof PillNext> = () => {
         }
       />
       <Tooltip content={content} disabled={!isEllipsisActive}>
-        <PillNext
-          ref={pillRef as Ref<HTMLButtonElement>}
-          style={{ maxWidth: `${maxWidth}px` }}
-        >
+        <PillNext ref={pillRef} style={{ maxWidth: `${maxWidth}px` }}>
           {content}
         </PillNext>
       </Tooltip>
