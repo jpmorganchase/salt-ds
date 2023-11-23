@@ -6,7 +6,7 @@ import {
 } from "@salt-ds/lab";
 
 describe("GIVEN an Pagination", () => {
-  xdescribe("WHEN Default variant", () => {
+  describe("WHEN Default variant", () => {
     describe("WHEN count is 1", () => {
       it("SHOULD not display", () => {
         cy.mount(
@@ -420,7 +420,7 @@ describe("GIVEN an Pagination", () => {
     });
   });
 
-  xdescribe("WHEN siblingCount", () => {
+  describe("WHEN siblingCount", () => {
     describe("AND setting it to `3`", () => {
       it("THEN should render 11 buttons when the count is 11", () => {
         cy.mount(
@@ -444,7 +444,7 @@ describe("GIVEN an Pagination", () => {
     });
   });
 
-  xdescribe("WHEN boundaryCount", () => {
+  describe("WHEN boundaryCount", () => {
     describe("AND setting it to `2`", () => {
       it("THEN should render 10 buttons when the count is 20", () => {
         cy.mount(
@@ -468,7 +468,7 @@ describe("GIVEN an Pagination", () => {
     });
   });
 
-  xdescribe("WHEN using the GoToInput", () => {
+  describe("WHEN using the GoToInput", () => {
     describe("AND changing the order of the components", () => {
       it("SHOULD then render on the left if GoToInput is before Paginator", () => {
         cy.mount(
