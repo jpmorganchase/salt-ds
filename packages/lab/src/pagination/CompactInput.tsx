@@ -1,29 +1,17 @@
 import { clsx } from "clsx";
 import {
   ChangeEventHandler,
-  HTMLAttributes,
   KeyboardEventHandler,
   forwardRef,
   useEffect,
   useState,
 } from "react";
-import { Input, useId } from "@salt-ds/core";
+import { Input, InputProps, useId } from "@salt-ds/core";
 import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";
 
-export interface CompactInputProps extends HTMLAttributes<HTMLSpanElement> {
-  /**
-   * Id of the input field
-   */
-  id?: string;
-  /**
-   * Change input variant.
-   */
-  inputVariant?: "primary" | "secondary";
-}
-
-export const CompactInput = forwardRef<HTMLSpanElement, CompactInputProps>(
-  function CompactInput({ id: idProp, inputVariant, ...restProps }, ref) {
+export const CompactInput = forwardRef<HTMLInputElement, InputProps>(
+  function CompactInput({ id: idProp, variant, ...restProps }, ref) {
     const { count, page, onPageChange } = usePaginationContext();
 
     const [inputValue, setInputValue] = useState(`${page}`);
@@ -54,29 +42,25 @@ export const CompactInput = forwardRef<HTMLSpanElement, CompactInputProps>(
     };
 
     return (
-      <span
-        className={clsx(withBaseName("compactInputField"))}
-        {...restProps}
+      <Input
+        className={clsx(withBaseName("compactInput"), {
+          [withBaseName("compactInputFixed")]: count < 100,
+        })}
+        inputProps={{
+          "aria-label": `Go to page, ${count} total`,
+          style: { width: `${`${count}`.length}ch` },
+          role: "textbox",
+        }}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        id={id}
+        value={inputValue}
+        textAlign={"center"}
+        variant={variant}
         ref={ref}
-      >
-        <Input
-          className={clsx(withBaseName("compactInput"), {
-            [withBaseName("compactInputFixed")]: count < 100,
-          })}
-          inputProps={{
-            "aria-label": `Go to page, ${count} total`,
-            style: { width: `${`${count}`.length}ch` },
-            role: "textbox",
-          }}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          id={id}
-          value={inputValue}
-          textAlign={"center"}
-          variant={inputVariant}
-        />
-      </span>
+        {...restProps}
+      />
     );
   }
 );

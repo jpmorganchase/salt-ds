@@ -68,7 +68,7 @@ export const CompactPaginator = forwardRef<
         <ChevronLeftIcon />
       </ArrowButton>
       {withInput ? (
-        <CompactInput id={id} inputVariant={inputVariant} />
+        <CompactInput id={id} variant={inputVariant} />
       ) : (
         <PageButton
           page={page}

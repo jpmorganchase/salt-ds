@@ -2659,8 +2659,7 @@
   left: 0;
   opacity: 0;
 }
-.saltPagination-compactInputField {
-}
+
 .saltPagination-compactInput {
   height: var(--pagination-button-size);
   min-width: unset;
