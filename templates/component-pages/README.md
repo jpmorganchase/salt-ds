@@ -86,7 +86,25 @@ Provide content-related guidance if applicable. This could include label text fo
 
 Include any third-party links that may be relevant here, such as W3C guidance. Use bullet points, unless there is only one.
 
+Follow 
+
 ## 4. Examples.mdx
+
+Follow the structure as outlined in the template for examples. Each example needs a corresponding live preview.
+
+Write header titles in sentence case as always.
+
+Example text should describe what is being demonstrated and why it's significant. Why is it different to other examples? Aim for fewer than six sentences, and avoid bullet points.
+
+Where relevant, include a "best practices" section for the given example. Wrap the section in these tags:
+
+```js
+<ExampleContainer type="positive" customPillText="Best practices">
+
+</ExampleContainer>
+```
+
+Use bullet points for each tip. Don't use any bullet points if there is only one tip.
 
 ## 5. Accessibility.mdx
 
