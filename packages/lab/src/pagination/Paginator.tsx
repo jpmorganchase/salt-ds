@@ -13,8 +13,17 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import paginationCss from "./Pagination.css";
 
 export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * Number of pages next to the arrow buttons when page range is truncated.
+   */
   boundaryCount?: number;
+  /**
+   * Number of pages on each side of the current page when page range is truncated.
+   */
   siblingCount?: number;
+  /**
+   * Display arrow buttons.
+   */
   showPreviousNext?: boolean;
 }
 
