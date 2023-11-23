@@ -3,7 +3,7 @@ import { StackLayout } from "@salt-ds/core";
 import { Pagination, Paginator } from "@salt-ds/lab";
 
 export const BoundaryCount = (): ReactElement => {
-  const [boundaryCount, setBoundaryCount] = useState(2);
+  const [boundaryCount, setBoundaryCount] = useState(1);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
