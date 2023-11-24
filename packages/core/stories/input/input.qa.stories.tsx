@@ -77,6 +77,11 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       }
       defaultValue={"Button adornments"}
     />
+    <Input
+      variant="secondary"
+      endAdornment={<Button variant="cta">SEND</Button>}
+      defaultValue={"Text button adornments"}
+    />
 
     <Input defaultValue="Error value" validationStatus="error" />
     <Input defaultValue="Warning value" validationStatus="warning" />
@@ -130,6 +135,11 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         </Button>
       }
       defaultValue={"Button adornments"}
+    />
+    <Input
+      variant="secondary"
+      endAdornment={<Button variant="cta">SEND</Button>}
+      defaultValue={"Text button adornments"}
     />
 
     <Input defaultValue="Secondary Value" variant="secondary" />
