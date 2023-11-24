@@ -7,6 +7,8 @@ data:
   $ref: ./#/data
 ---
 
+### Best practices
+
 - Wrap `Input` in [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the field with a visible label, help text and a status message for validation feedback. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
 - The component clips text that extends beyond its visible area. All states have the same behavior—default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
@@ -14,7 +16,7 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="input" exampleName="EmptyReadonlyMarker" >
 
-### Empty read-only marker
+#### Empty read-only marker
 
 For accessibility purposes, we recommend you use the `emptyReadOnlyMarker` prop to add a marker for empty read-only fields. This ensures it’s clear that a value is not necessary for the current selection or configuration.
 
