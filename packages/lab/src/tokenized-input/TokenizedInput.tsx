@@ -17,7 +17,7 @@ import {
   forwardRef,
   HTMLAttributes,
   KeyboardEvent,
-  KeyboardEventHandler, MouseEventHandler,
+  KeyboardEventHandler,
   ReactEventHandler,
   Ref,
   SyntheticEvent,
@@ -153,7 +153,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   const [clearButtonRef, clearButtonWidth] = useWidth(density);
   const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
   const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
-  const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp)
+  const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
   const showExpandButton = !expanded && firstHiddenIndex != null;
 
   const widthOffset =
@@ -199,6 +199,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     // Additional dependency on selectedItems is for the controlled version
     [expanded, pillGroupWidth, selectedItems]
   );
+
   const hasHelpers = (helpers: TokenizedInputHelpers<Item>) => {
     if (process.env.NODE_ENV !== "production") {
       if (helpers == null) {
@@ -238,7 +239,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   const handleInputKeyUp = (
     event: KeyboardEvent<HTMLButtonElement | HTMLInputElement>
   ) => {
-    // Call keydown again if the initail event has been used to expand the input
+    // Call keydown again if the initial event has been used to expand the input
     if (keydownExpandButton.current && "Enter" !== event.key) {
       keydownExpandButton.current = false;
       onKeyDown?.(event);
@@ -259,7 +260,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     event.stopPropagation();
 
     if (hasHelpers(helpers)) {
-      helpers.setFocused(false);
+      //TODO: return focus?
       helpers.cancelBlur();
     }
   };
@@ -295,7 +296,8 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   } = ExpandButtonProps;
 
   const textAreaRef = useForkRef(inputRef, inputRefProp);
-  return (<div>
+  return (
+    <div>
       <span
         aria-owns={selectedItemIds.join(" ")}
         className={withBaseName("hidden")}

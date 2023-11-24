@@ -1,4 +1,9 @@
-import { ownerWindow, useControlled, useId } from "@salt-ds/core";
+import {
+  ownerWindow,
+  useControlled,
+  useFormFieldProps,
+  useId
+} from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
   ChangeEvent,
@@ -17,12 +22,10 @@ import {
 import { escapeRegExp, useEventCallback } from "../utils";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
-import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 export interface TokenizedInputState<Item> {
   activeIndices: number[];
   expanded: boolean | undefined;
-  focused: boolean;
   highlightedIndex: number | undefined;
   selectedItems: Item[];
   value: string | undefined;
@@ -30,7 +33,6 @@ export interface TokenizedInputState<Item> {
 
 export interface TokenizedInputHelpers<Item> {
   cancelBlur: () => void;
-  setFocused: (expanded: boolean) => void;
   setHighlightedIndex: (value?: number) => void;
   setValue: (value: string) => void;
   setSelectedItems: (selectedItems: Item[]) => void;
@@ -72,12 +74,11 @@ export function useTokenizedInput<Item>(
   validateProps(props);
 
   const {
-    inFormField,
+    disabled: formFieldDisabled,
     a11yProps: {
       "aria-labelledby": ariaLabelledBy,
-      disabled: formFieldDisabled,
     } = {},
-  } = useFormFieldLegacyProps(); // FIXME: FormField Props
+  } = useFormFieldProps();
 
   const {
     delimiter = ",",
@@ -138,7 +139,6 @@ export function useTokenizedInput<Item>(
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
     undefined
   );
-  const [focused, setFocusedState] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const blurTimeout = useRef<number | null>(null);
@@ -220,10 +220,6 @@ export function useTokenizedInput<Item>(
     }
   };
 
-  const setFocused = (newState: boolean) => {
-    setFocusedState(newState);
-  };
-
   const resetInput = () => {
     updateInputValue("");
     setHighlightedIndex(undefined);
@@ -262,8 +258,6 @@ export function useTokenizedInput<Item>(
       return;
     }
 
-    setFocused(true);
-
     onInputFocus?.(event);
 
     if (blurTimeout.current !== null) {
@@ -278,7 +272,6 @@ export function useTokenizedInput<Item>(
   const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
 
-    setFocused(false);
     setHighlightedIndex(undefined);
     setActiveIndices([]);
 
@@ -570,7 +563,6 @@ export function useTokenizedInput<Item>(
     activeIndices,
     highlightedIndex,
     expanded,
-    focused: !inFormField && focused,
   };
 
   const eventHandlers = {
@@ -598,7 +590,6 @@ export function useTokenizedInput<Item>(
       setValue,
       setSelectedItems,
       setHighlightedIndex,
-      setFocused,
       updateExpanded,
     },
     inputProps: {

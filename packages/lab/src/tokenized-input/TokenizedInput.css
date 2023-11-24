@@ -1,41 +1,36 @@
 /* Styles applied to root component (TokenizedInput) */
-.salt-density-medium {
+.salt-density-medium ,
+salt-density-touch,
+.salt-density-low,
+.salt-density-high {
   --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
   --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
+
+}
+
+.salt-density-medium, .salt-density-high {
   --tokenizedInput-last-pill-margin: var(--salt-size-unit);
 }
 .salt-density-touch {
-  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
   --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 2px);
-  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
 }
 
-.salt-density-low {
-  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
+.salt-density-low, .salt-density-high {
   --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
 }
 
 .salt-density-high {
   --tokenizedInput-gutter-size: calc(var(--salt-size-basis-unit) - 1px);
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
 }
 
 .saltTokenizedInput {
   display: inline-flex;
   justify-content: space-between;
-  min-width: 8em; /* same min-width as Input component */
   width: 100%;
   align-items: flex-start;
   flex-grow: 1;
-  padding: 0;
   height: 100%;
-}
-
-/* Styles applied to root component on hover state  */
-.saltTokenizedInput:hover {
-  cursor: var(--salt-selectable-cursor-hover);
 }
 
 /* Styles applied to container of pills */
