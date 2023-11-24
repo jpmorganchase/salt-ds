@@ -94,17 +94,22 @@ Follow the structure as outlined in the template for examples. Each example need
 
 Write header titles in sentence case as always.
 
-Example text should describe what is being demonstrated and why it's significant. Why is it different to other examples? Aim for fewer than six sentences, and avoid bullet points.
+Example text should describe what is being demonstrated, what it shows about how the component functions, and why it's significant. Why is it different to other examples? Aim for fewer than six sentences, and avoid bullet points.
 
-Where relevant, include a "best practices" section for the given example. Wrap the section in these tags:
-
-```js
-<ExampleContainer type="positive" customPillText="Best practices">
-
-</ExampleContainer>
-```
+Where relevant, include a "best practices" H4 section for the given example. While the main example section covers what the component does, this section covers how the component should be used. What sort of usage would you like the encourage or discourage?
 
 Use bullet points for each tip. Don't use any bullet points if there is only one tip.
 
 ## 5. Accessibility.mdx
 
+Under the best practices header, write general accessibility tips that the user should know. Refer to third-party sources and guidance where applicable.
+
+Add keyboard interactions underneath the relevant template header. Use the component structure as outlined in the template to produce a table of key combinations. See the style guide for detailed information on how to refer to given keys.
+
+Use bullet points unless there is only one point in every row. If the combination refers to a single key, use the name of the key in the explanation. If it's a combination or there are multiple possible keys, refer to the combination with "this action."
+
+Place modifier keys, such as Shift, before other keys in a combination.
+
+Use + to separate keys within a combination. Add a space to either side of +.
+
+Use / to separate alternative keys or key combinations. Add a space to either side of /.
