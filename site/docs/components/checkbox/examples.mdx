@@ -24,7 +24,7 @@ A single checkbox can be either selected or deselected.
 
 `CheckboxGroup` allows selection of one or more values from a given set of choices. They can be aligned horizontally or vertically. By default, the group is aligned vertically.
 
-#### Guidance
+#### Best practices
 
 - Do not truncate checkbox text descriptions as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
 - The checkbox should always be placed left aligned to the text.
@@ -33,11 +33,11 @@ A single checkbox can be either selected or deselected.
 
 <LivePreview componentName="checkbox" exampleName="HorizontalGroup" >
 
-### Chekcbox Group: horizontal
+### Checkbox Group: horizontal
 
 By default, a checkbox group is aligned vertically. To align horizontally, set `direction="horizontal"`.
 
-#### Guidance
+#### Best practices
 
 Keep text as clear and concise as possible in the horizontal orientation.
 
@@ -75,9 +75,9 @@ A checkbox with the prop `indeterminate={true}` will display an indeterminate ic
 
 A disabled checkbox is not interactive or focusable.
 
-A checkbox can be disabled by setting `disabled={true}`.
+You can disable a checkbox by setting `disabled={true}`.
 
-#### Guidance
+#### Best practices
 
 Use a disabled state for checkboxes that have permissions, dependencies or pre-requisites. For example, a checkbox in a [form](/salt/patterns/forms) may be disabled because the user has not yet completed an earlier section of the form.
 
@@ -93,7 +93,7 @@ A read-only checkbox permits the user to only read or copy the text description,
 
 A checkbox with the prop `readOnly={true}` will suppress all functionality along with displaying read-only styling.
 
-#### Guidance
+#### Best practices
 
 Read-only checkboxes are navigable using keyboard shortcuts. This means that, unlike disabled checkboxes, users can interact with the text description. Use a read-only checkbox instead of a disabled checkbox when the text description contains information that is valuable to the user.
 
@@ -113,7 +113,7 @@ Indicate an error state by setting the `validationStatus` prop to "error". Use w
 
 Indicate a warning state by setting the `validationStatus` prop to "warning". Use when you want to alert the user to a non-critical issue related to the checkbox.
 
-#### Guidance
+#### Best practices
 
 - When used in a group, use `validationStatus` on the group rather than the individual controls. Any status provided to the group will take precedence over the statuses applied directly to the nested controls.
 - Avoid using `validationStatus` when a checkbox is disabled. If provided, disabled functionality and styling will take precedence over any validation status styling.

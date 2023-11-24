@@ -18,7 +18,7 @@ Radio button groups allow users to select one or more values from a given set of
 
 When `direction="vertical"`
 
-#### Guidance
+#### Best practices
 
 - Keep text short and as concise as possible in the horizontal orientation.
 - Do not truncate text descriptions as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
@@ -59,7 +59,7 @@ A disabled radio button isn't interactive or focusable.
 
 You can disable a radio button by setting `disabled={true}`.
 
-#### Guidance
+#### Best practices
 
 Use a disabled state for radio buttons that have permissions, dependencies or pre-requisites. For example, a radio button in a [form](/salt/patterns/forms) may be disabled because the user hasn't yet completed an earlier section of the form.
 
@@ -75,7 +75,7 @@ A read-only radio button permits the user to only read or copy the value, but no
 
 A radio button with the prop `readOnly={true}` will suppress all functionality along with displaying read-only styling.
 
-#### Guidance
+#### Best practices
 
 Users can interact with read-only radio buttons using keyboard shortcuts. This means that, unlike disabled radio buttons, users can interact with the text description. Use a read-only radio button instead of a disabled radio button when the text description contains information valuable to the user.
 
