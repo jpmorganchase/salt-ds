@@ -29,7 +29,7 @@
 .saltPagination-pageButton:hover,
 .saltPagination-pageButton:focus-visible {
   --saltButton-background-hover: var(--salt-selectable-background-hover);
-  --saltButton-text-color-hover: var(--salt-content-secondary-foreground);
+  --saltButton-text-color-hover: var(--salt-content-primary-foreground);
 }
 
 .saltPagination-pageButtonReadonly {
@@ -39,11 +39,11 @@
 
 .saltPagination-pageButtonSelected {
   --saltButton-background: var(--salt-selectable-background-selected);
-  --saltButton-text-color: var(--salt-content-secondary-foreground);
+  --saltButton-text-color: var(--salt-content-primary-foreground);
 }
 .saltPagination-pageButtonSelected:focus-visible {
   --saltButton-background-hover: var(--salt-selectable-background-selected);
-  --saltButton-text-color-hover: var(--salt-content-secondary-foreground);
+  --saltButton-text-color-hover: var(--salt-content-primary-foreground);
 }
 
 .saltPagination-pageButtonFixed {
