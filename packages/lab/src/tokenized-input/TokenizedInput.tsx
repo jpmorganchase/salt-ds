@@ -17,7 +17,7 @@ import {
   forwardRef,
   HTMLAttributes,
   KeyboardEvent,
-  KeyboardEventHandler,
+  KeyboardEventHandler, MouseEventHandler,
   ReactEventHandler,
   Ref,
   SyntheticEvent,
@@ -69,7 +69,7 @@ export interface TokenizedInputProps<Item>
   onKeyUp?: KeyboardEventHandler<HTMLButtonElement>;
   // Can key down on either input or expand button
   onKeyDown?: KeyboardEventHandler<HTMLInputElement | HTMLButtonElement>;
-  onRemoveItem?: (itemIndex: number) => void;
+  onRemoveItem?: (index: number) => void;
   onInputBlur?: FocusEventHandler<HTMLInputElement>;
   onInputFocus?: FocusEventHandler<HTMLInputElement>;
   onInputChange?: ChangeEventHandler<HTMLInputElement>;
@@ -108,7 +108,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
     selectedItems = [],
     highlightedIndex,
     value,
-    focused,
     expanded,
     disabled,
     onFocus,
@@ -150,11 +149,11 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   const pillsRef = useRef<Record<number, number | undefined>>({});
   const keydownExpandButton = useRef(false);
 
-  const [expandButtonRef, expandButtonWidth] = useWidth(density);
+  const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
   const [clearButtonRef, clearButtonWidth] = useWidth(density);
   const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
   const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
-
+  const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp)
   const showExpandButton = !expanded && firstHiddenIndex != null;
 
   const widthOffset =
@@ -244,6 +243,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
       keydownExpandButton.current = false;
       onKeyDown?.(event);
     }
+    // TODO: split this into 2 handlers?
     onKeyUp?.(event);
   };
 
@@ -295,7 +295,12 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   } = ExpandButtonProps;
 
   const textAreaRef = useForkRef(inputRef, inputRefProp);
-  return (
+  return (<div>
+      <span
+        aria-owns={selectedItemIds.join(" ")}
+        className={withBaseName("hidden")}
+        role="listbox"
+      />
     <MultilineInput
       rows={1}
       {...mergedInputProps}
@@ -335,7 +340,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
                 lastVisible={
                   !showExpandButton && index === selectedItems.length - 1
                 }
-                onClose={expanded ? onRemoveItem : undefined}
+                onClose={expanded ? () => onRemoveItem : undefined}
                 pillsRef={pillsRef}
               />
             );
@@ -368,12 +373,12 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
               className={clsx(withBaseName("expandButton"))}
               disabled={disabled}
               id={expandButtonId}
-              // onBlur={onBlur}
+              onBlur={onBlur}
               onClick={handleExpand}
-              // onFocus={onFocus}
-              // onKeyDown={handleExpandButtonKeyDown}
-              // onKeyUp={handleInputKeyUp}
-              // ref={useForkRef(expandButtonRef, expandButtonRefProp)}
+              onFocus={onFocus}
+              onKeyDown={handleExpandButtonKeyDown}
+              onKeyUp={handleInputKeyUp}
+              ref={expandButtonRef}
               variant="secondary"
               {...restExpandButtonProps}
             >
@@ -384,12 +389,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
           )}
         </>
       }
-    >
-      <span
-        aria-owns={selectedItemIds.join(" ")}
-        className={withBaseName("hidden")}
-        role="listbox"
-      />
-    </MultilineInput>
+    /></div>
   );
 });
