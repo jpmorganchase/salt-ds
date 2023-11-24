@@ -24,21 +24,23 @@ The component offers several benefits to users, and you can use it to:
 
 Depending on your use case, other functionality may be more suitable. Consider these alternatives when users will need to trawl through content:
 
-#### Infinite scrolling
+**Stepped Tracker**
+
+Use a [Stepped Tracker](../stepped-tracker/index) if you’re walking the user through a sequential process, such as an onboarding form.
+
+**Infinite scrolling**
 
 This allows users to scroll through a large amount of content with no clear end point. The page keeps refreshing as the user scrolls, adding more content each time.
 
 Consider infinite scrolling when there’s no need for users to navigate between, or filter, results. It’s typically used for news articles or social site feeds, for example, where searching or filtering isn’t an expected behaviour and the content has a flat hierarchy.
 
-#### Lazy loading
+**Lazy loading**
 
 Lazy loading is half way between infinite scroll and pagination. Like infinite scrolling, it can be difficult to navigate search results; however, like pagination, content loads in batches. Actioning the “Load more” button loads the next set of results on the same page—giving the user greater control.
 
 It’s ideal when you want to present content in clearly defined batches without alluding to the full set of results up front e.g., 1 of 10 pages. Use it in a photo gallery or app store, for example, where each batch of results takes time to download.
 
-### Best practices
-
-Use a [Stepped Tracker](../stepped-tracker/index) if you’re walking the user through a sequential process, such as an onboarding form.
+#### Best practice
 
 Position the component where it’s most appropriate for your content length. On longer pages, for example, display the component both above and below content. Placing it below the content may cause frustration and excessive scrolling, and the user may not see it if it's positioned only at the top.
 
