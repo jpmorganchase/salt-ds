@@ -26,6 +26,19 @@ const MasterDetailDark = (props: { defaultTheme: string }) => {
     });
   }, []);
 
+  const detailCellRenderer = () => (
+    <div
+      className={containerProps.className}
+      style={{ height: "100%", padding: 20 }}
+    >
+      <AgGridReact
+        columnDefs={columnDefs}
+        rowData={rowData}
+        {...agGridProps}
+      ></AgGridReact>
+    </div>
+  );
+
   return (
     <SaltProvider mode={mode}>
       <StackLayout gap={4}>
@@ -34,6 +47,7 @@ const MasterDetailDark = (props: { defaultTheme: string }) => {
           <AgGridReact
             ref={gridRef}
             columnDefs={columnDefs}
+            detailCellRenderer={detailCellRenderer}
             detailCellRendererParams={{
               detailGridOptions: { columnDefs },
               // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any

@@ -60,7 +60,7 @@ export function useAgGridHelpers({
     }
   }, [density, agThemeName, compact]);
 
-  const className = `${agThemeName}-${density}${
+  const className = `${agThemeName}${
     compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 
@@ -79,8 +79,8 @@ export function useAgGridHelpers({
         apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
         // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
       }
-    }, 0);
-  }, [rowHeight, isGridReady, agThemeName, listItemHeight]);
+    });
+  }, [rowHeight, isGridReady, apiRef]);
 
   return {
     containerProps: {

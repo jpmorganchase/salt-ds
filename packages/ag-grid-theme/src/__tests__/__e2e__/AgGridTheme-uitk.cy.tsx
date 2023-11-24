@@ -90,7 +90,7 @@ describe("Given Ag Grid Theme - uitk", () => {
         cy.wait(500);
         cy.get(".ag-floating-filter-input").realClick();
         cy.focused()
-          .parents(".ag-floating-filter")
+          .parents(".ag-header-row")
           .matchImage({ maxDiffThreshold: 0.1 });
       });
     });
