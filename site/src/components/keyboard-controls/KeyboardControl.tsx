@@ -9,8 +9,8 @@ export interface KeyboardControlProps {
    * Use "+" to indcate combos - i.e. when more than one key
    * need to pressed at the same time (e.g. "CTRL + A").
    *
-   * Use "/" to separate alternative keys or combos.
-   * E.g. "SPACE / ENTER"
+   * Use "/" or "or" to separate alternative keys or combos.
+   * E.g. "SPACE / ENTER" or "SPACE or ENTER"
    *
    * You can combine alternate combos too.
    * E.g.: "CTRL + A / CMD + A"
@@ -20,7 +20,7 @@ export interface KeyboardControlProps {
   className?: string;
 }
 
-const keyOrComboSeparator = /\s*([\+\/])\s*/;
+const keyOrComboSeparator = /\s*([\+\/]|or)\s*/i;
 
 function splitCombo(keyOrCombo: string): string[] {
   return keyOrCombo.split(keyOrComboSeparator);
