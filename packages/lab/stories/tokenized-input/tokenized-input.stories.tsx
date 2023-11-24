@@ -5,10 +5,10 @@ import {
   FormFieldLabel,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import { ChangeHandler, TokenizedInput, Input } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import {ChangeHandler, TokenizedInput, Input} from "@salt-ds/lab";
+import {Meta, StoryFn} from "@storybook/react";
 import {
-  ChangeEventHandler,
+  ChangeEventHandler, SyntheticEvent,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -24,7 +24,7 @@ const NUMBER_REGEX = /^(|[1-9][0-9]*)$/;
 
 const getRandomNumber = () => Math.floor(Math.random() * 99 + 1);
 
-export const Default: StoryFn<typeof TokenizedInput> = () => {
+const TokenizedInputTemplate: StoryFn<typeof TokenizedInput> = (props) => {
   const handleChange = (selectedItems: unknown) => {
     console.log("selection changed", selectedItems);
   };
@@ -40,19 +40,16 @@ export const Default: StoryFn<typeof TokenizedInput> = () => {
       }}
     >
       <TokenizedInput
+        style={{width: "266px"}}
         onChange={handleChange}
-        style={{ maxWidth: 292 }}
-        initialSelectedItems={[
-          "Tokyo",
-          "Delhi",
-          "Shanghai",
-          "São Paulo",
-          "Taumatawhakatangihangakoauauotamateaturipukakapikimaungahoronukupokaiwhenuakitanatahu",
-        ]}
+        {...props}
       />
     </div>
   );
 };
+
+export const Default = TokenizedInputTemplate.bind({});
+Default.args = {}
 
 export const Controlled: StoryFn<typeof TokenizedInput> = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -122,7 +119,7 @@ export const Controlled: StoryFn<typeof TokenizedInput> = () => {
         >
           <Button onClick={handleAddRandomOption}>Add {option}</Button>
         </div>
-        <div style={{ height: `calc(100% - ${offsetHeight}px)` }}>
+        <div style={{height: `calc(100% - ${offsetHeight}px)`}}>
           <FormField>
             <FormLabel>Natural numbers only</FormLabel>
             <TokenizedInput
@@ -148,7 +145,7 @@ export const Disabled: StoryFn<typeof TokenizedInput> = () => {
         justifyContent: "center",
       }}
     >
-      <FormField disabled style={{ maxWidth: 292 }}>
+      <FormField disabled style={{maxWidth: 292}}>
         <FormFieldLabel>Enter a value</FormFieldLabel>
         <TokenizedInput
           disabled
@@ -216,7 +213,7 @@ export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
       }}
     >
       <FormField
-        style={{ maxWidth: 292 }}
+        style={{maxWidth: 292}}
         validationStatus={exceptions.length > 0 ? "error" : undefined}
       >
         <FormLabel>No duplication</FormLabel>
@@ -287,27 +284,27 @@ export const WithCustomizedDelimiter: StoryFn<typeof TokenizedInput> = () => {
           }}
         >
           {isLocked ? (
-            <div style={{ color: "grey" }}>
+            <div style={{color: "grey"}}>
               Using delimiter &quot;<strong>{delimiter}</strong>&quot;
             </div>
           ) : (
             <Input
-              inputProps={{ maxLength: 1 }}
+              inputProps={{maxLength: 1}}
               onChange={handleInputChange}
               placeholder="Enter a delimiter"
-              style={{ maxWidth: 180 }}
+              style={{maxWidth: 180}}
             />
           )}
           <Button
             onClick={() => updateLock((locked) => !locked)}
-            style={{ marginLeft: 10 }}
+            style={{marginLeft: 10}}
           >
             {isLocked ? "Modify" : "Save"}
           </Button>
         </div>
         <FormField
           label="Enter a value"
-          style={{ height: `calc(100% - ${offsetHeight}px)` }}
+          style={{height: `calc(100% - ${offsetHeight}px)`}}
         >
           <TokenizedInput
             delimiter={savedDelimiter.current}
