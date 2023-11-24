@@ -77,6 +77,12 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       }
     />
     <MultilineInput
+      defaultValue="Secondary with text button adornment"
+      variant="secondary"
+      startAdornment={<Text>£</Text>}
+      endAdornment={<Button variant="cta">SEND</Button>}
+    />
+    <MultilineInput
       defaultValue="Secondary bordered"
       bordered
       variant="secondary"
@@ -207,6 +213,12 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
           </Button>
         </>
       }
+    />
+    <MultilineInput
+      defaultValue="Secondary with text button adornment"
+      variant="secondary"
+      startAdornment={<Text>£</Text>}
+      endAdornment={<Button variant="cta">SEND</Button>}
     />
     <MultilineInput
       defaultValue="Secondary bordered"
