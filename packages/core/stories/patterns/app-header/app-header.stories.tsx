@@ -40,8 +40,9 @@ export const AppHeader = () => {
     const [active, setActive] = useState(items?.[0]);
     const isMobile = useResponsiveProp({ xs: true, sm: false }, false);
 
-    const handleDrawerToggle = () => {
-      setDrawerOpen(!drawerOpen);
+    const handleClick = (item: string) => {
+      setActive(item);
+      setDrawerOpen(false);
     };
 
     return (
@@ -74,13 +75,23 @@ export const AppHeader = () => {
                     "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
                 }}
               >
-                <Button
-                  onClick={handleDrawerToggle}
-                  variant={drawerOpen ? "primary" : "secondary"}
-                  style={{ alignSelf: "center" }}
-                >
-                  {drawerOpen ? <CloseIcon /> : <MenuIcon />}
-                </Button>
+                {!drawerOpen && (
+                  <Button
+                    onClick={() => setDrawerOpen(true)}
+                    style={{ alignSelf: "center" }}
+                  >
+                    <MenuIcon />
+                  </Button>
+                )}
+
+                {drawerOpen && (
+                  <Button
+                    onClick={() => setDrawerOpen(false)}
+                    style={{ alignSelf: "center" }}
+                  >
+                    <CloseIcon />
+                  </Button>
+                )}
               </FlexItem>
               <FlexItem align="center">
                 <Text>App logo</Text>
@@ -93,6 +104,11 @@ export const AppHeader = () => {
                 paddingLeft: "0",
               }}
               open={drawerOpen}
+              onOpenChange={() => {
+                if (drawerOpen) {
+                  setDrawerOpen(false);
+                }
+              }}
             >
               <nav>
                 <ul style={{ listStyle: "none", padding: "0" }}>
@@ -102,7 +118,9 @@ export const AppHeader = () => {
                         orientation="vertical"
                         active={active === item}
                         href="#"
-                        onClick={() => setActive(item)}
+                        onClick={() => {
+                          handleClick(item);
+                        }}
                       >
                         {item}
                       </NavigationItem>
@@ -110,7 +128,13 @@ export const AppHeader = () => {
                   ))}
                   {utilities?.map((utility) => (
                     <li key={utility.key}>
-                      <NavigationItem orientation="vertical" href="#">
+                      <NavigationItem
+                        orientation="vertical"
+                        href="#"
+                        onClick={(event) => {
+                          setDrawerOpen(false);
+                        }}
+                      >
                         {utility.icon}
                         {utility.key}
                       </NavigationItem>
