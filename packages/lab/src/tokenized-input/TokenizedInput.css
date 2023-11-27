@@ -1,92 +1,38 @@
-/* Styles applied to root component (TokenizedInput) */
-.salt-density-medium ,
-salt-density-touch,
-.salt-density-low,
-.salt-density-high {
-  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2);
-  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
-
-}
-
-.salt-density-medium, .salt-density-high {
-  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
-}
-.salt-density-touch {
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 2px);
-}
-
-.salt-density-low, .salt-density-high {
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
-}
-
-.salt-density-high {
-  --tokenizedInput-gutter-size: calc(var(--salt-size-basis-unit) - 1px);
-}
-
 .saltTokenizedInput {
-  display: inline-flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: flex-start;
-  flex-grow: 1;
   height: 100%;
 }
 
 /* Styles applied to container of pills */
 .saltTokenizedInput-pillGroup {
-  max-width: 100%;
   overflow: hidden;
   display: flex;
   flex: 1;
+  gap: var(--salt-spacing-100);
   flex-wrap: wrap;
   min-height: var(--tokenizedInput-height);
-  padding: var(--tokenizedInput-pill-group-y-padding) var(--tokenizedInput-spacing);
+  padding: var(--salt-spacing-100) 0;
 }
-.saltTokenizedInput .saltInputPill .saltPillNext-action {
+
+.saltTokenizedInput-pillGroup,
+.saltTokenizedInput .saltInputPill .saltPillNext-action,
+.saltTokenizedInput .saltMultilineInput-startAdornmentContainer {
   max-width: 100%;
 }
+
 .saltTokenizedInput .saltTokenizedInput-expanded-pill.saltInputPill .saltPillNext-action {
   max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
 }
+
 /* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
 .saltTokenizedInput-hidden,
 .saltTokenizedInput .saltInputPill.saltInputPill-hidden {
   display: none;
 }
 
-/* Styles applied to Clear Button  */
-.saltTokenizedInput-clearButton {
-  flex: none;
-  align-self: flex-end;
-}
-
-/* Styles applied to Expand Button  */
-.saltTokenizedInput-expandButton.saltButton {
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-padding: var(--salt-spacing-50);
-  --saltButton-margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
-}
-.saltTokenizedInput .saltMultilineInput-startAdornmentContainer {
-  min-width: 100%;
-  flex-basis: 0;
-  flex-grow: 1;
-}
 .saltTokenizedInput .saltMultilineInput-startAdornmentContainer .saltPillNext-close-button {
-  /* TODO: a bit nuclear, check this, should it be in pillNext? */
+  /* TODO: a bit nuclear, should this be in pillNext? */
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
-}
-/* Styles applied to inner Pills */
-.saltTokenizedInput .saltInputPill {
-  margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
-  margin-right: var(--tokenizedInput-gutter-size);
-}
-
-/* Styles applied to the last visible Pill when all visible */
-.saltTokenizedInput .saltInputPill-pillLastVisible {
-  /* TODO: check with design */
-  margin-right: var(--saltTokenizedInput-pill-last-visible-marginRight, var(--tokenizedInput-last-pill-margin));
 }
 
 /* Styles applied to a Pill when active */
@@ -102,9 +48,4 @@ salt-density-touch,
 /* Styles applied to a Pills delete icon */
 .saltTokenizedInput .saltInputPill-pillHighlighted .saltIcon {
   --saltIcon-color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
-}
-.expandButton {
-  margin-left: auto;
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  max-height: var(--salt-text-minHeight);
 }

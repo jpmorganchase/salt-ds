@@ -63,10 +63,9 @@ export interface TokenizedInputProps<Item>
   InputProps?: Pick<MultilineInputProps, "aria-describedby" | "textAreaProps">;
   disabled?: boolean;
   expandButtonRef?: Ref<HTMLButtonElement>;
-  helpers: TokenizedInputHelpers<Item>;
   onFocus?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
   onBlur?: FocusEventHandler<HTMLInputElement | HTMLButtonElement>;
-  onKeyUp?: KeyboardEventHandler<HTMLButtonElement>;
+  onKeyUp?: KeyboardEventHandler<HTMLDivElement | HTMLButtonElement>;
   // Can key down on either input or expand button
   onKeyDown?: KeyboardEventHandler<HTMLInputElement | HTMLButtonElement>;
   onRemoveItem?: (index: number) => void;
@@ -86,7 +85,6 @@ export interface TokenizedInputProps<Item>
   inputRef?: Ref<HTMLTextAreaElement>;
 }
 
-const INITIAL_INPUT_WIDTH = 5;
 const withBaseName = makePrefixer("saltTokenizedInput");
 
 const getItemsAriaLabel = (itemCount: number) =>
@@ -102,7 +100,9 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
 
   const {
     InputProps = {},
-    ExpandButtonProps = {},
+    ExpandButtonProps = {
+      accessibleText: "expand edit",
+    },
     className,
     activeIndices = [],
     selectedItems = [],
@@ -141,11 +141,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   const expandButtonId = `${id}-expand-button`;
   const clearButtonId = `${id}-clear-button`;
 
-  // TODO: Use proper mechanism to get variable values from theme in React. Something like below
-  // getComputedStyle(document.documentElement)
-  // .getPropertyValue('--my-variable-name'); // #999999
-  const pillGroupPadding = 16;
-
   const pillsRef = useRef<Record<number, number | undefined>>({});
   const keydownExpandButton = useRef(false);
 
@@ -156,10 +151,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
   const showExpandButton = !expanded && firstHiddenIndex != null;
 
-  const widthOffset =
-    pillGroupPadding +
-    INITIAL_INPUT_WIDTH +
-    (expanded ? clearButtonWidth : expandButtonWidth);
+  const widthOffset = expanded ? clearButtonWidth : expandButtonWidth;
 
   const containerRef = useResizeObserver<HTMLDivElement>(
     useCallback(
@@ -244,7 +236,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
       keydownExpandButton.current = false;
       onKeyDown?.(event);
     }
-    // TODO: split this into 2 handlers?
     onKeyUp?.(event);
   };
 
@@ -258,11 +249,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
 
   const handleClearButtonFocus = (event: FocusEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-
-    if (hasHelpers(helpers)) {
-      //TODO: return focus?
-      helpers.cancelBlur();
-    }
   };
 
   const selectedItemIds = selectedItems.map(
@@ -303,94 +289,91 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
         className={withBaseName("hidden")}
         role="listbox"
       />
-    <MultilineInput
-      rows={1}
-      {...mergedInputProps}
-      {...restInputProps}
-      id={inputId}
-      // id={id} TODO: merge the 2 ids, do we need to pass id like this?
-      disabled={disabled}
-      onChange={onInputChange}
-      onBlur={onInputBlur}
-      onFocus={onInputFocus}
-      onSelect={onInputSelect}
-      onClick={onClick}
-      value={value}
-      textAreaRef={textAreaRef}
-      className={clsx(withBaseName(), className)}
-      ref={useForkRef(ref, containerRef)}
-      startAdornment={
-        <div className={withBaseName("pillGroup")}>
-          {selectedItems.map((item, index) => {
-            const label = String(item);
-            return (
-              <InputPill
+      <MultilineInput
+        rows={1}
+        {...mergedInputProps}
+        {...restInputProps}
+        id={inputId}
+        disabled={disabled}
+        onChange={onInputChange}
+        onBlur={onInputBlur}
+        onFocus={onInputFocus}
+        onSelect={onInputSelect}
+        onClick={onClick}
+        value={value}
+        textAreaRef={textAreaRef}
+        className={clsx(withBaseName(), className)}
+        ref={useForkRef(ref, containerRef)}
+        startAdornment={
+          <div className={withBaseName("pillGroup")}>
+            {selectedItems.map((item, index) => {
+              const label = String(item);
+              return (
+                <InputPill
+                  disabled={disabled}
+                  className={clsx({
+                    [withBaseName("expanded-pill")]: expanded,
+                  })}
+                  hidden={showExpandButton && index >= firstHiddenIndex}
+                  // TODO: activeIndices is used to keep highlighted to copy items, check if needs rename
+                  highlighted={
+                    index === highlightedIndex ||
+                    activeIndices.indexOf(index) !== -1
+                  }
+                  id={`${id}-pill-${index}`}
+                  index={index}
+                  key={`${index}-${label}`}
+                  label={label}
+                  lastVisible={
+                    !showExpandButton && index === selectedItems.length - 1
+                  }
+                  onClose={expanded ? () => onRemoveItem?.(index) : undefined}
+                  pillsRef={pillsRef}
+                />
+              );
+            })}
+          </div>
+        }
+        endAdornment={
+          <>
+            {expanded && !showExpandButton && selectedItems.length > 0 && (
+              <Button
+                className={clsx(withBaseName("clearButton"))}
                 disabled={disabled}
-                className={clsx({
-                  [withBaseName("expanded-pill")]: expanded,
-                })}
-                hidden={showExpandButton && index >= firstHiddenIndex}
-                // TODO: activeIndices is used to keep highlighted to copy items, check if needs rename
-                highlighted={
-                  index === highlightedIndex ||
-                  activeIndices.indexOf(index) !== -1
-                }
-                id={`${id}-pill-${index}`}
-                index={index}
-                key={`${index}-${label}`}
-                label={label}
-                lastVisible={
-                  !showExpandButton && index === selectedItems.length - 1
-                }
-                onClose={expanded ? () => onRemoveItem : undefined}
-                pillsRef={pillsRef}
-              />
-            );
-          })}
-        </div>
-      }
-      endAdornment={
-        <>
-          {/*TODO: check the logic below, it needs tweaks */}
-          {expanded && !showExpandButton && selectedItems.length > 0 && (
-            <Button
-              className={clsx(withBaseName("clearButton"))}
-              disabled={disabled}
-              id={clearButtonId}
-              onBlur={onBlur}
-              onClick={onClear}
-              onFocus={handleClearButtonFocus}
-              ref={clearButtonRef}
-              variant="secondary"
-              data-testid="clear-button"
-            >
-              <CloseIcon aria-label="clear input" />
-            </Button>
-          )}
-          {showExpandButton && (
-            <Button
-              aria-labelledby={[ariaLabelledBy, inputId, expandButtonId]
-                .filter(Boolean)
-                .join(" ")}
-              className={clsx(withBaseName("expandButton"))}
-              disabled={disabled}
-              id={expandButtonId}
-              onBlur={onBlur}
-              onClick={handleExpand}
-              onFocus={onFocus}
-              onKeyDown={handleExpandButtonKeyDown}
-              onKeyUp={handleInputKeyUp}
-              ref={expandButtonRef}
-              variant="secondary"
-              {...restExpandButtonProps}
-            >
-              <OverflowMenuIcon
-                aria-label={expandButtonAccessibleText ?? "expand edit"}
-              />
-            </Button>
-          )}
-        </>
-      }
-    /></div>
+                id={clearButtonId}
+                onBlur={onBlur}
+                onClick={onClear}
+                onFocus={handleClearButtonFocus}
+                ref={clearButtonRef}
+                variant="secondary"
+                data-testid="clear-button"
+                aria-label="clear input"
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            )}
+            {showExpandButton && (
+              <Button
+                aria-label={expandButtonAccessibleText}
+                aria-labelledby={clsx(ariaLabelledBy, inputId, expandButtonId)}
+                className={clsx(withBaseName("expandButton"))}
+                disabled={disabled}
+                id={expandButtonId}
+                onBlur={onBlur}
+                onClick={handleExpand}
+                onFocus={onFocus}
+                onKeyDown={handleExpandButtonKeyDown}
+                onKeyUp={handleInputKeyUp}
+                ref={expandButtonRef}
+                variant="secondary"
+                {...restExpandButtonProps}
+              >
+                <OverflowMenuIcon />
+              </Button>
+            )}
+          </>
+        }
+      />
+    </div>
   );
 });

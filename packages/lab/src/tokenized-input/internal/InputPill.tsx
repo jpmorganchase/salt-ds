@@ -90,6 +90,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
           className
         )}
         // todo: we need to  be able to ignore tab to on close button
+        // Q for ben: navigation with arrows or tabs
         tabIndex={-1}
         onClose={isRemovable ? handleClose : undefined}
         ref={ref}

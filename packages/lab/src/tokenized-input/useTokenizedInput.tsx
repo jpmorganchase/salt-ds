@@ -2,7 +2,7 @@ import {
   ownerWindow,
   useControlled,
   useFormFieldProps,
-  useId
+  useId,
 } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
@@ -16,10 +16,11 @@ import {
   SyntheticEvent,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
-import { escapeRegExp, useEventCallback } from "../utils";
+import { escapeRegExp } from "../utils";
 import { getCursorPosition } from "./internal/getCursorPosition";
 import { TokenizedInputProps } from "./TokenizedInput";
 
@@ -32,15 +33,11 @@ export interface TokenizedInputState<Item> {
 }
 
 export interface TokenizedInputHelpers<Item> {
-  cancelBlur: () => void;
   setHighlightedIndex: (value?: number) => void;
   setValue: (value: string) => void;
   setSelectedItems: (selectedItems: Item[]) => void;
   updateExpanded: (expanded: boolean) => void;
 }
-
-// Timeout to accommodate blur from the input and a click inside the container
-const BLUR_TIMEOUT = 200;
 
 function isValidItem<Item>(data: unknown): data is Item {
   return (
@@ -75,9 +72,7 @@ export function useTokenizedInput<Item>(
 
   const {
     disabled: formFieldDisabled,
-    a11yProps: {
-      "aria-labelledby": ariaLabelledBy,
-    } = {},
+    a11yProps: { "aria-labelledby": ariaLabelledBy } = {},
   } = useFormFieldProps();
 
   const {
@@ -100,7 +95,7 @@ export function useTokenizedInput<Item>(
     value: valueProp,
     expanded: expandedProp,
     selectedItems: selectedItemsProp,
-    onChange: onChangeProp,
+    onChange,
     "aria-label": ariaLabel,
     ...restProps
   } = props;
@@ -140,41 +135,22 @@ export function useTokenizedInput<Item>(
     undefined
   );
 
-  const inputRef = useRef<HTMLTextAreaElement | null>(null);
-  const blurTimeout = useRef<number | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const preventBlurOnCopy = useRef(false);
   const hasActiveItems = Boolean(activeIndices.length);
 
   const delimiters = ([] as string[]).concat(delimiter);
   const primaryDelimiter = delimiters[0];
-  const delimiterRegex = new RegExp(
-    delimiters.map(escapeRegExp).join("|"),
-    "gi"
+  const delimiterRegex = useMemo(
+    () => new RegExp(delimiters.map(escapeRegExp).join("|"), "gi"),
+    [delimiters]
   );
-
-  const onChange = useEventCallback((selectedItems: Item[] | undefined) => {
-    onChangeProp?.(selectedItems);
-  });
-
-  const cancelBlur = useCallback(() => {
-    if (blurTimeout.current) {
-      clearTimeout(blurTimeout.current);
-    }
-    blurTimeout.current = null;
-  }, []);
 
   const focusInput = useCallback(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
-
-  useEffect(
-    () => () => {
-      cancelBlur();
-    },
-    [cancelBlur]
-  );
 
   useEffect(() => {
     if (expanded) {
@@ -196,13 +172,14 @@ export function useTokenizedInput<Item>(
             typeof action === "function" ? action(prevSelectedItems) : action;
 
           if (newItems !== prevSelectedItems) {
-            onChange(newItems);
+            onChange?.(newItems);
           }
-
           return newItems;
         });
       } else {
-        onChange(typeof action === "function" ? action(selectedItems) : action);
+        onChange?.(
+          typeof action === "function" ? action(selectedItems) : action
+        );
       }
     },
     [isSelectionControlled, setSelectedItems, onChange, selectedItems]
@@ -259,53 +236,36 @@ export function useTokenizedInput<Item>(
     }
 
     onInputFocus?.(event);
-
-    if (blurTimeout.current !== null) {
-      cancelBlur();
-    } else {
-      updateExpanded(true);
-
-      onFocus?.(event);
-    }
-  };
-
-  const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-
-    setHighlightedIndex(undefined);
-    setActiveIndices([]);
-
-    onInputBlur?.(event);
-
-    handleBlur(event);
+    updateExpanded(true);
+    onFocus?.(event);
   };
 
   const handleBlur = (
     event: FocusEvent<HTMLInputElement | HTMLButtonElement>
   ) => {
-    if (preventBlurOnCopy.current) {
-      return focusInput();
+    onBlur?.(event);
+    updateExpanded(false);
+  };
+
+  const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+    // Check if the related target is the clear button
+    const isClearButton =
+      event.relatedTarget instanceof HTMLElement &&
+      event.relatedTarget.classList.contains("saltPillNext-close-button");
+
+    event.stopPropagation();
+    setHighlightedIndex(undefined);
+    setActiveIndices([]);
+    onInputBlur?.(event);
+    if (!isClearButton) {
+      handleBlur(event);
     }
-
-    event.persist();
-
-    blurTimeout.current = setTimeout(() => {
-      blurTimeout.current = null;
-      updateExpanded(false);
-
-      if (!disableAddOnBlur) {
-        handleAddItems(value, true);
-      }
-
-      onBlur?.(event);
-    }, BLUR_TIMEOUT) as unknown as number;
   };
 
   const handleClick = (event: SyntheticEvent<HTMLElement>) => {
     updateExpanded(true);
     setActiveIndices([]);
     focusInput();
-
     onClick?.(event);
   };
 
@@ -516,6 +476,13 @@ export function useTokenizedInput<Item>(
       }
     };
 
+  const isCtrlModifier = (event: KeyboardEvent<HTMLInputElement>) => {
+    return (
+      event.ctrlKey ||
+      event.metaKey ||
+      ["CONTROL", "META"].indexOf(event.key.toUpperCase()) !== -1
+    );
+  };
   const handleCommonKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const eventKey = event.key.toUpperCase();
     if (eventKey === "ESCAPE") {
@@ -534,11 +501,7 @@ export function useTokenizedInput<Item>(
     if (event.defaultPrevented) {
       return;
     }
-    if (
-      event.ctrlKey ||
-      event.metaKey ||
-      ["CONTROL", "META"].indexOf(event.key.toUpperCase()) !== -1
-    ) {
+    if (isCtrlModifier(event)) {
       handleCtrlModifierKeyDown(event);
     } else {
       let handler;
@@ -586,7 +549,6 @@ export function useTokenizedInput<Item>(
     inputRef,
     state,
     helpers: {
-      cancelBlur,
       setValue,
       setSelectedItems,
       setHighlightedIndex,
@@ -610,17 +572,17 @@ const validateProps = function validateProps<Item>(
   if (process.env.NODE_ENV !== "production") {
     const { delimiter } = props;
 
+    const isChar = (value: unknown) =>
+      typeof value === "string" && value.length === 1;
+
     const invalidDelimiter = Array.isArray(delimiter)
       ? delimiter.every(isChar)
       : isChar(delimiter);
 
-    useEffect(() => {
+    if (invalidDelimiter) {
       console.warn(
         "TokenizedInput delimiter should be a single character or an array of single characters"
       );
-    }, [invalidDelimiter]);
+    }
   }
 };
-
-const isChar = (value: unknown) =>
-  typeof value === "string" && value.length === 1;
