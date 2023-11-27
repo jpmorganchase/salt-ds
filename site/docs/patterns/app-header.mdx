@@ -40,6 +40,9 @@ The app header has three functional areas:
 
 ### Desktop layout construction
 
+1. Use [navigation item](/salt/components/navigation-item) to build the horizontal page navigation, as explained in the [navigation pattern](./navigation).
+2. Use the flex layout component with justify set to `space-between` to position the brand logo, navigation and utilities.
+
   <Diagram
     src="/img/patterns/app-header/desktop.png"
     alt="Example showing header’s desktop layout construction."
@@ -47,6 +50,10 @@ The app header has three functional areas:
   />
 
 ### Mobile layout construction
+
+1. Use a stack layout with direction property set to row to position the menu button and the logo. 
+2. The menu button is used to toggle the navigation [drawer](/salt/components/drawer). 
+3. Use a stack layout to position the [vertical navigation]((./navigation)) and utilities within the drawer.
 
   <Diagram
     src="/img/patterns/app-header/mobile.png"
@@ -100,7 +107,7 @@ For small viewport experiences, the app logo remains visible, while navigation a
     border
   />
 
-<ExampleContainer type="positive">
+<ExampleContainer type="positive" customPillText="Best practices">
  - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
  - If search utility action is part of the app header, keep search functionality persistently available for small viewports. 
  - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for desktop experiences. 
@@ -121,17 +128,15 @@ The app header should sit in the north region, above the main, in a sticky posit
 
 ### Using skip links to bypass the app header
 
-If you're implementing a complex app header with several navigation items and utility actions, you should precede the component with a skip link. This will enable keyboard and screen reader users to quickly shift focus to the main page content, and navigate your application more efficiently.
+If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This will enable keyboard and screen reader users to quickly shift focus to the main page content, and navigate your application more efficiently.
 
-You can display and set focus to a skip link when the user moves focus from the previous component in the tab sequence to the app header—and configure the skip link to move focus to the main page content or an alternative target.
+You can display and set focus to a skip link when the user moves focus to the app header—and configure the skip link to move focus to the main page content or an alternative target.
 
   <Diagram
     src="/img/patterns/app-header/skip-link.png"
-    alt="The 'skip to content' link should be the first focusable element in the header."
+    alt="App header with a skip link displayed when the user moves focus to the app header."
     border
   />
-
-*The "skip to content" link should be the first focusable element in the header.*
 
 ### Keyboard interactions
 
@@ -147,7 +152,7 @@ The following keyboard interactions are specific to the app header:
 - When focus is inside the hamburger menu list, Enter selects the navigation item with focus, closes the hamburger menu list and navigates the user to the target page. If the selected navigation item is a parent item, it will open the sub-items list under it.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="ArrowUp / ArrowDown">
+<KeyboardControl keyOrCombos="Up arrow / Down arrow">
 
 - When the hamburger menu button is visible and has focus, this action activates the button and displays the dropdown list of navigation items. Sets focus to the currently selected item. 
 
