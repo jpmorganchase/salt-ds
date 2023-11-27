@@ -138,46 +138,6 @@ You can display and set focus to a skip link when the user moves focus to the ap
     border
   />
 
-### Keyboard interactions
-
-The underlying components provide many keyboard interactions (i.e., navigation items, dropdowns, buttons) and are available on their respective documentation pages.
-
-The following keyboard interactions are specific to the app header:
-
-<KeyboardControls>
-<KeyboardControl keyOrCombos="Enter">
-
-- When the hamburger menu button is visible and has focus, Enter activates the button and displays the dropdown list of navigation items. 
-
-- When focus is inside the hamburger menu list, Enter selects the navigation item with focus, closes the hamburger menu list and navigates the user to the target page. If the selected navigation item is a parent item, it will open the sub-items list under it.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Up arrow / Down arrow">
-
-- When the hamburger menu button is visible and has focus, this action activates the button and displays the dropdown list of navigation items. Sets focus to the currently selected item. 
-
-- When focus is inside the hamburger menu list, moves focus to the previous or next navigation item in the list.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Tab">
-
-- If focus is above the app header, Tab moves focus to the navigation (or hamburger menu, if visible). 
-
-- If focus is in the app header, Tab moves focus to the next focusable element within the app header in this order: hamburger menu, navigation and utility actions.
-
-- If focus is on the last utility action, Tab moves focus out of the app header to the next focusable element in the tab sequence.
-
-</KeyboardControl>
-
-<KeyboardControl keyOrCombos="Shift + Tab">
-
-- If focus is below the app header, this action moves focus to the last item in the utility actions. 
-- If focus is in the app header, this action moves moves focus to the previous focusable element within the app header. Focus moves back through elements in this order: utility actions, navigation and hamburger menu. 
-- If focus is in the navigation (or hamburger menu, if visible), this action moves focus out of the app header to the previous focusable element in the tab sequence.
-
-</KeyboardControl>
-</KeyboardControls>
-
 ## Expanding the pattern
 
 If you find a need to expand the pattern or have feedback, please [reach out to the team](/salt/support-and-contributions/index) to discuss.
