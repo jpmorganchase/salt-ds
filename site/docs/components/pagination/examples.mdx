@@ -13,23 +13,25 @@ data:
 
 ### Default
 
-Use the default component to allow a small range of pages to be navigated; back and forth in single page increments or by jumping directly to a page within the present range.
+Use the default component to navigate a small number of pages. The user can navigate in single page increments or jump directly to a page in a set range.
 
-#### Best practice
+#### Best practices
 
-Ensure that the component is placed in close proximity to page content, and consider whether it should be located above, below, or both above and below the related content.
+Place the component close to the page content. Consider whether you should place it above, below, or both above and below the related content.
 
 </LivePreview>
 
 <LivePreview componentName="pagination" exampleName="DefaultWithInput" >
 
-You can display an input field that allows users to specify, and navigate directly to, any page they require within the Pagination range. To allow users to enter large values without restriction, the input’s width increases in line with the number of digits in the total page count.
+### Default with input
+
+You can display an input field so users can specify, and navigate directly to, any page within the pagination range. To allow users to enter the largest possible page number, the input’s width increases in line with the number of digits in the total page count.
 
 #### Best practices
 
-- Include the input field when pagination is likely to total 100s or 1000s of pages.
+- Include the input field when pagination is likely to total hundreds or thousands of pages.
 - Order results, if possible, to maximize the benefit of users being able to jump to any page. When ordered by age, for example, it’s easier for users to step back two weeks.
-- Position the input on the left of the Pagination range if it’s likely to be used regularly. If it only benefits a small percentage of users or is likely to be used infrequently, you could position it to the right.
+- Place the input to the left of the pagination range if users will use it regularly. Otherwise, position it to the right.
 
 </LivePreview>
 
@@ -37,12 +39,12 @@ You can display an input field that allows users to specify, and navigate direct
 
 ### Compact
 
-Use `CompactPaginator` when you need to optimize the component for small viewports—or minimize visual clutter in a high-density interface. It has a more predictable width, as only the active and last pages are displayed, providing more flexibility when you're including it in a layout.
+Use `CompactPaginator` for small viewports, or to minimize visual clutter in a high-density interface. This component only displays the active and last pages. which means the width is more predictable. This provides more flexibility in a layout.
 
 #### Best practices
 
 - Consider this variant when space is limited and you have a large page range.
-- Position the compact component appropriately for your UI; left aligned is best when you’re displaying lists of text results, centre for a page of images or equally-sized tiles, and right aligned for a full-width data grid.
+- Position the compact component appropriately for your UI. Use left aligned for pages of text results, center for pages of images or equally-sized tiles, and right aligned for a full-width data grid.
 
 </LivePreview>
 
@@ -58,7 +60,7 @@ Use `CompactPaginator` with the `withInput` prop when you want to have the abili
 
 ### Truncation
 
-Truncation, represented by ellipses, occurs when it’s not possible to display all pages within a range. It enables you to accommodate a large set of results without displaying every page.
+The component will truncate the page numbers displayed when it cannot display all of them in a given space. An ellipsis communicates this to the user.
 
 #### Best practices
 
@@ -79,7 +81,7 @@ You can configure the visible page range using the `siblingCount` prop—increas
 
 ### Boundary count
 
-You can configure the visible page range using the `boundaryCount` prop—increasing or decreasing the number of pages displayed next to the arrow buttons. Minimum value is 1, so there will always be at least one item next to the arrow buttons.
+You can configure the visible page range using the `boundaryCount` prop—increasing or decreasing the number of pages displayed next to the arrow buttons. The minimum value is 1, so there will always be at least one item next to the arrow buttons.
 
 </LivePreview>
 
@@ -87,7 +89,7 @@ You can configure the visible page range using the `boundaryCount` prop—increa
 
 ### Compact with GoToInput
 
-Example of custom combination of CompactPaginator and GoToInput.
+This is an example of a custom combination of `CompactPaginator` and `GoToInput`.
 
 </LivePreview>
 
