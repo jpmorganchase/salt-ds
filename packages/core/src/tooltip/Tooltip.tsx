@@ -90,11 +90,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = useFormFieldProps();
 
     const disabled = formFieldDisabled ?? disabledProp;
-    const status = VALIDATION_NAMED_STATUS.some(
-      (validStatus) => validStatus === formFieldValidationStatus
-    )
-      ? formFieldValidationStatus ?? statusProp
-      : statusProp;
+    const status =
+      formFieldValidationStatus !== undefined &&
+      VALIDATION_NAMED_STATUS.includes(formFieldValidationStatus)
+        ? formFieldValidationStatus
+        : statusProp;
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const hookProps: UseTooltipProps = {
