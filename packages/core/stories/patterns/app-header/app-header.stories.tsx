@@ -32,7 +32,7 @@ export const AppHeader = () => {
     /**
      * Utilities included in the App Header
      */
-    utilities?: { icon: ReactNode; label: string; key: string }[];
+    utilities?: { icon: ReactNode; key: string }[];
   }
 
   const AppHeader: FC<AppHeaderProps> = ({ items, utilities }) => {
@@ -82,7 +82,9 @@ export const AppHeader = () => {
                   {drawerOpen ? <CloseIcon /> : <MenuIcon />}
                 </Button>
               </FlexItem>
-              <FlexItem align="center">App logo</FlexItem>
+              <FlexItem align="center">
+                <Text>App logo</Text>
+              </FlexItem>
             </StackLayout>
             <Drawer
               style={{
@@ -110,7 +112,7 @@ export const AppHeader = () => {
                     <li key={utility.key}>
                       <NavigationItem orientation="vertical" href="#">
                         {utility.icon}
-                        {utility.label}
+                        {utility.key}
                       </NavigationItem>
                     </li>
                   ))}
@@ -134,7 +136,9 @@ export const AppHeader = () => {
             justify="space-between"
             gap={3}
           >
-            <FlexItem align="center">App logo</FlexItem>
+            <FlexItem align="center">
+              <Text>App logo</Text>
+            </FlexItem>
             <nav>
               <ul style={{ display: "flex", listStyle: "none", margin: "0" }}>
                 {items?.map((item) => (
@@ -170,17 +174,14 @@ export const AppHeader = () => {
   const utilities = [
     {
       icon: <SymphonyIcon />,
-      label: "Symphony",
       key: "Symphony",
     },
     {
       icon: <StackoverflowIcon />,
-      label: "Stack Overflow",
       key: "Stack Overflow",
     },
     {
       icon: <GithubIcon />,
-      label: "GitHub",
       key: "GitHub",
     },
   ];
@@ -193,21 +194,19 @@ export const AppHeader = () => {
       <BorderItem
         style={{
           backgroundColor: "var(--salt-color-purple-30)",
-          padding: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-          height: "120vh",
+          paddingTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
         }}
         position="center"
       >
-        <p>Main content</p>
+        <Text style={{ height: "120vh" }}>Main content</Text>
       </BorderItem>
       <BorderItem
         style={{
           backgroundColor: "var(--salt-color-orange-30)",
-          padding: "1em",
         }}
         position="south"
       >
-        <p>Footer</p>
+        <Text>Footer</Text>
       </BorderItem>
     </BorderLayout>
   );
