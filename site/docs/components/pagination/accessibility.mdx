@@ -13,43 +13,35 @@ data:
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-Moves focus into the Pagination component, setting focus to the first active button.
-
-If the first page is active, sets focus on the first page. If any other page is active, focus is set on the “previous” button. If the input field is present and positioned on the left of Pagination, focus is initially set in the field.
-
-If focus is inside the Pagination group, moves focus to the next item within the tabbing order.
-
-If the last page is active and in focus, and the input field isn’t present on the right of Pagination, moves focus out of the component and onto the next component in the tabbing order. It ignores the “next” button, which would be disabled in this scenario.
-
-If the last page is not active but is in focus, moves focus to the “next” button.
+- Tab moves focus into the pagination component, setting focus to the first active button.
+- If the first page is active, Tab sets focus on the first page. If any other page is active, sets focus on the **Previous Page** button. If the input field is present and positioned on the left of pagination, initially sets focus in the field.
+- If focus is inside the pagination group, Tab moves focus to the next item within the tab order.
+- If the last page is active and in focus, and the input field isn’t present on the right of the pagination group, Tab moves focus out of the component and onto the next component in the tab order. It ignores the **Next Page** button, which would be disabled in this scenario.
+- If the last page is not active but is in focus, Tab moves focus to the **Next Page** button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-If focus is inside the Pagination group, moves focus to the previous active item within the tabbing order.
-
-If focus is on the first page number, moves focus to the “previous” button.
-
-If the first page is also the active page, so the “previous” button is disabled, focus moves out of Pagination to the previous component in the tabbing order. If the input field is displayed on the left, focus moves to the field.
+- If focus is inside the pagination group, this action moves focus to the previous active item within the tabbing order.
+- If focus is on the first page number, moves focus to the “previous” button.
+- If the first page is also the active page, so the “previous” button is disabled, focus moves out of pagination to the previous component in the tabbing order. If the input field is displayed on the left, focus moves to the field.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-When focus is on an available button in the Pagination group, activates the button. Focus remains on the selected button.
-
-If the active page is in focus, does nothing.
-
-If focus is in the input field and a value has been entered, submits the value and changes the active page accordingly.
+- When focus is on an available button in the pagination group, this action activates the button. Focus remains on the selected button.
+- If the active page is in focus, this action does nothing.
+- If focus is in the input field and a value has been entered, this action submits the value and changes the active page accordingly.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Windows: Alt + PageUp; Mac: Fn + Option + Arrow up">
+<KeyboardControl keyOrCombos="Alt + PageUp / Fn + Option + Up arrow">
 
-If focus is on any of the Pagination elements moves to the next page. Analogous to selecting the Next Page button.
+- If focus is on any of the pagination elements, this action moves to the next page. Analogous to selecting the **Next Page** button.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Windows: Alt + PageDown; Mac: Fn + Option + Arrow down">
+<KeyboardControl keyOrCombos="Alt + PageDown / Fn + Option + Down arrow">
 
-If focus is on any of the Pagination elements moves to the previous page. Analogous to selecting the Previous Page button.
+- If focus is on any of the Pagination elements, this action moves to the previous page. Analogous to selecting the **Previous Page** button.
 
 </KeyboardControl>
 </KeyboardControls>
