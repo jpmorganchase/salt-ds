@@ -37,6 +37,7 @@
 
 /* Styles applied to a Pill when active */
 .saltTokenizedInput .saltInputPill-pillHighlighted {
+  /* TODO: design Q: what happens on hover? (uitk doesnt change)*/
   --saltButton-text-color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
   --saltButton-background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
 }

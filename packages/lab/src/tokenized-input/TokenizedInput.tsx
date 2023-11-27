@@ -365,6 +365,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
                 onKeyUp={handleInputKeyUp}
                 ref={expandButtonRef}
                 variant="secondary"
+                data-testid="expand-button"
                 {...restExpandButtonProps}
               >
                 <OverflowMenuIcon />
