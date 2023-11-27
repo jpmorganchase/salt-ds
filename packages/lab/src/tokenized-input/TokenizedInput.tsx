@@ -338,7 +338,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
           <>
             {expanded && !showExpandButton && selectedItems.length > 0 && (
               <Button
-                className={clsx(withBaseName("clearButton"))}
+                className={clsx(withBaseName("clear-button"))}
                 disabled={disabled}
                 id={clearButtonId}
                 onBlur={onBlur}
@@ -356,7 +356,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
               <Button
                 aria-label={expandButtonAccessibleText}
                 aria-labelledby={clsx(ariaLabelledBy, inputId, expandButtonId)}
-                className={clsx(withBaseName("expandButton"))}
                 disabled={disabled}
                 id={expandButtonId}
                 onBlur={onBlur}

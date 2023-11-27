@@ -7,7 +7,7 @@ export default {
   component: TokenizedInput,
 } as Meta<typeof TokenizedInput>;
 
-export const ExamplesGrid: StoryFn<typeof TokenizedInput> = (props) => {
+export const ExamplesGrid: StoryFn<typeof TokenizedInput> = () => {
   return (
     <AllRenderer>
       <div

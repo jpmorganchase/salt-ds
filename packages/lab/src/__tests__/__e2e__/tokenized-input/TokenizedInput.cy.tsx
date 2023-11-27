@@ -1,6 +1,7 @@
 import { composeStories } from "@storybook/react";
 import * as tokenizedInputStories from "@stories/tokenized-input/tokenized-input.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import { statesData } from "@stories/assets/exampleData";
 
 const composedStories = composeStories(tokenizedInputStories);
 
@@ -28,26 +29,46 @@ describe("Given a Tokenized Input", () => {
     cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
     cy.findByRole("textbox").should("exist");
     cy.findByRole("textbox").focus();
-    // clear buton should exist
+    // Clear button should exist
     cy.findByRole("option").should("exist");
+
+    // Remove the item
     cy.realPress("ArrowLeft");
     cy.realPress("Backspace");
+
+    // clear button should not exist after removal
     cy.findByRole("option").should("not.exist");
   });
-  it("should expand on clicking the expand button", () => {
-    // TODO:  this is not working on first load
-    cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
-  });
+
   it("should clear input on clicking the clear button", () => {
-    cy.mount(<Default />);
+    cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
+    cy.findByRole("textbox").focus();
+    cy.findByTestId("clear-button").click();
+    cy.findByRole("textbox").should("have.value", "");
   });
-  it("should collapse when blur", () => {
-    cy.mount(<Default />);
+  it("should expand on clicking the expand button and collapse when blur", () => {
+    cy.mount(<Default initialSelectedItems={statesData} />);
+    cy.findByRole("textbox").focus();
+    cy.get('[data-testid="pill"]').should("have.length", 50);
+    cy.get('[data-testid="pill"]').eq(49).should("be.visible");
+    // Move focus out of Tokenized input
+    cy.realPress("Tab");
+    cy.realPress("Tab");
+
+    cy.findByRole("textbox").should("not.be.focused");
+    cy.get('[data-testid="pill"]').should("have.length", 50);
+    cy.findAllByTestId("pill").eq(49).should("not.be.visible");
   });
   it("should not display the clear button if there is no selection", () => {
     cy.mount(<Default />);
+    cy.findByTestId("clear-button").should("not.exist");
   });
   it("should return focus to input if an item is closed", () => {
-    cy.mount(<Default />);
+    cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
+    cy.findByRole("textbox").focus();
+    // move focus to clear button
+    cy.findByTestId("clear-button").focus();
+    cy.findByTestId("clear-button").realPress("Enter");
+    cy.findByRole("textbox").should("have.focus");
   });
 });

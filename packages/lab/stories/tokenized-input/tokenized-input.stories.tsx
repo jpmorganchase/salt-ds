@@ -1,11 +1,12 @@
 import {
   Button,
+  Input,
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import { ChangeHandler, TokenizedInput, Input } from "@salt-ds/lab";
+import { ChangeHandler, TokenizedInput } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   ChangeEventHandler,
@@ -284,16 +285,18 @@ export const WithCustomizedDelimiter: StoryFn<typeof TokenizedInput> = () => {
           }}
         >
           {isLocked ? (
-            <div style={{ color: "grey" }}>
+            <div>
               Using delimiter &quot;<strong>{delimiter}</strong>&quot;
             </div>
           ) : (
-            <Input
-              inputProps={{ maxLength: 1 }}
-              onChange={handleInputChange}
-              placeholder="Enter a delimiter"
-              style={{ maxWidth: 180 }}
-            />
+            <FormField style={{ height: `calc(100% - ${offsetHeight}px)` }}>
+              <FormFieldLabel>Enter a delimiter</FormFieldLabel>
+              <Input
+                inputProps={{ maxLength: 1 }}
+                onChange={handleInputChange}
+                style={{ maxWidth: 180 }}
+              />{" "}
+            </FormField>
           )}
           <Button
             onClick={() => updateLock((locked) => !locked)}

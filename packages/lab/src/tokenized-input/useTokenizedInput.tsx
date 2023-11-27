@@ -249,10 +249,15 @@ export function useTokenizedInput<Item>(
 
   const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
     // Check if the related target is the clear button
+    // TODO: flimsy, we might want a better way of checking it is no internal button
     const isClearButton =
-      event.relatedTarget instanceof HTMLElement &&
-      event.relatedTarget.classList.contains("saltPillNext-close-button");
-
+      (event.relatedTarget instanceof HTMLElement &&
+        event.relatedTarget?.classList?.contains(
+          "saltPillNext-close-button"
+        )) ||
+      event.relatedTarget?.classList?.contains(
+        "saltTokenizedInput-clear-button"
+      );
     event.stopPropagation();
     setHighlightedIndex(undefined);
     setActiveIndices([]);
