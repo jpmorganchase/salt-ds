@@ -263,6 +263,22 @@ describe("GIVEN a FormField", () => {
           cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
         });
       });
+      
+      describe("AND has empty validation status", () => {
+        it("THEN tooltip should reflect status", () => {
+          cy.mount(
+            <FormField validationStatus="">
+              <FormFieldLabel>Label</FormFieldLabel>
+              <Tooltip content="Helper text">
+                <Input defaultValue="Value" data-testid="test-id-2" />
+              </Tooltip>
+            </FormField>
+          );
+          cy.findByLabelText("Label").realHover();
+
+          cy.findByRole("tooltip").should("have.class", "saltTooltip-info");
+        });
+      });
     });
 
     describe("AND Input has an button adornment", () => {
