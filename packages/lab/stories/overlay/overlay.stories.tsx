@@ -29,9 +29,9 @@ const OverlayContent = (
 
 const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
   return (
-      <Overlay {...props} content={props.content}>
-        <Button>Toggle Overlay</Button>
-      </Overlay>
+    <Overlay {...props} content={props.content}>
+      <Button>Toggle Overlay</Button>
+    </Overlay>
   );
 };
 
