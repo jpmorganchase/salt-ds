@@ -2,7 +2,7 @@ import {
   Button,
   makePrefixer,
   mergeProps,
-  useFloatingComponent,
+  useFloatingComponentWithFocusManager,
   UseFloatingUIProps,
   useForkRef,
 } from "@salt-ds/core";
@@ -12,8 +12,7 @@ import {
   isValidElement,
   cloneElement,
   HTMLAttributes,
-  useState,
-  useEffect,
+  MutableRefObject,
 } from "react";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
@@ -23,11 +22,7 @@ import { useWindow } from "@salt-ds/window";
 
 import overlayCSS from "./Overlay.css";
 import { useOverlay } from "./useOverlay";
-import {
-  FloatingArrow,
-  FloatingArrowProps,
-  FloatingFocusManager,
-} from "@floating-ui/react";
+import { FloatingArrow, FloatingArrowProps } from "@floating-ui/react";
 
 export interface OverlayProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
@@ -84,7 +79,8 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       onOpenChange: onOpenChangeProp,
     });
 
-    const { Component: FloatingComponent } = useFloatingComponent();
+    const { Component: FloatingComponentWithFocusManager } =
+      useFloatingComponentWithFocusManager();
 
     const triggerRef = useForkRef(
       // @ts-ignore
@@ -107,44 +103,40 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
           })}
 
         {open && (
-          <FloatingFocusManager
-            context={context}
-            // initialFocus={
-            //   refs.reference as React.MutableRefObject<HTMLElement | null>
-            // }
-            order={["reference", "content"]}
-            // modal={true}
-            // returnFocus
+          <FloatingComponentWithFocusManager
+            ref={floatingRef}
+            open={open}
+            className={clsx(withBaseName(), className)}
+            {...getOverlayProps()}
+            {...floatingStyles()}
+            // @ts-ignore
+            focusManagerProps={{
+              context: context,
+              initialFocus: refs.reference as MutableRefObject<HTMLElement>,
+            }}
           >
-            <FloatingComponent
-              ref={floatingRef}
-              open={open}
-              className={clsx(withBaseName(), className)}
-              {...getOverlayProps()}
-              {...floatingStyles()}
-            >
-              <div className={withBaseName("container")} {...rest}>
-                <Button
-                  onClick={handleCloseButton}
-                  variant="secondary"
-                  className={withBaseName("closeButton")}
-                  aria-label="Close Overlay"
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-                <div className={withBaseName("content")}>{content}</div>
-              </div>
-              <FloatingArrow
-                {...(arrowProps as FloatingArrowProps)}
-                className={withBaseName("arrow")}
-                strokeWidth={1}
-                fill="var(--overlay-background)"
-                stroke="var(--overlay-borderColor)"
-                height={8}
-                width={14}
-              />
-            </FloatingComponent>
-          </FloatingFocusManager>
+            <div className={withBaseName("container")} {...rest}>
+              <div className={withBaseName("content")}>{content}</div>
+              <Button
+                onClick={handleCloseButton}
+                variant="secondary"
+                className={withBaseName("closeButton")}
+                aria-label="Close Overlay"
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            </div>
+
+            <FloatingArrow
+              {...(arrowProps as FloatingArrowProps)}
+              className={withBaseName("arrow")}
+              strokeWidth={1}
+              fill="var(--overlay-background)"
+              stroke="var(--overlay-borderColor)"
+              height={8}
+              width={14}
+            />
+          </FloatingComponentWithFocusManager>
         )}
       </>
     );
