@@ -24,7 +24,7 @@ export const WrappedHeader = (props: AgGridReactProps) => {
     if (isGridReady) {
       api?.sizeColumnsToFit();
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   return (
     <div {...containerProps} style={{ height: "400px", width: "500px" }}>
@@ -36,6 +36,7 @@ export const WrappedHeader = (props: AgGridReactProps) => {
         defaultColDef={{
           ...propsColDefs,
           autoHeaderHeight: true,
+          wrapHeaderText: true
         }}
         {...restAgGridProps}
         {...props}
