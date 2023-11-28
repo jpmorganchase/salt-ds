@@ -39,6 +39,10 @@ export interface OverlayProps
    * Set the placement of the Overlay component relative to the anchor element. Defaults to `top`.
    */
   placement?: "bottom" | "top" | "left" | "right";
+  /*
+   * Use in controlled version to close Overlay.
+   */
+  onClose?: () => void;
 }
 
 const withBaseName = makePrefixer("saltOverlay");
@@ -52,6 +56,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       onOpenChange: onOpenChangeProp,
       content,
       placement = "top",
+      onClose,
       ...rest
     } = props;
 
@@ -92,6 +97,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
 
     const handleCloseButton = () => {
       onOpenChange(false);
+      onClose?.();
     };
 
     return (
