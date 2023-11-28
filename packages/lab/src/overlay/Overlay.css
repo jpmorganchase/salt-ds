@@ -21,8 +21,10 @@
 }
 
 .saltOverlay-container {
+  display: inline-flex;
   animation: fade-in var(--salt-duration-perceptible) ease-in-out;
   position: relative;
+  overflow: auto;
 }
 
 @keyframes fade-in {
@@ -35,7 +37,7 @@
 }
 
 .saltOverlay-content {
-  overflow: auto;
+  width: 100%;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100) 0 var(--salt-spacing-100) var(--salt-spacing-100));
 }
 
