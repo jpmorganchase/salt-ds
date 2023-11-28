@@ -2,7 +2,7 @@ import {
   Button,
   makePrefixer,
   mergeProps,
-  useFloatingComponentWithFocusManager,
+  useFloatingComponent,
   UseFloatingUIProps,
   useForkRef,
 } from "@salt-ds/core";
@@ -84,8 +84,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       onOpenChange: onOpenChangeProp,
     });
 
-    const { Component: FloatingComponentWithFocusManager } =
-      useFloatingComponentWithFocusManager();
+    const { Component: FloatingComponent } = useFloatingComponent();
 
     const triggerRef = useForkRef(
       // @ts-ignore
@@ -109,7 +108,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
           })}
 
         {open && (
-          <FloatingComponentWithFocusManager
+          <FloatingComponent
             ref={floatingRef}
             open={open}
             className={clsx(withBaseName(), className)}
@@ -142,7 +141,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
               height={8}
               width={14}
             />
-          </FloatingComponentWithFocusManager>
+          </FloatingComponent>
         )}
       </>
     );

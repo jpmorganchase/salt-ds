@@ -33,6 +33,9 @@ export interface FloatingComponentProps
    * for caching windows and reusing them, rather than always spawning a new one
    */
   open: boolean;
+  /**
+   * Use this prop when `FloatingFocusManager` is needed for floating component
+   */
   focusManagerProps?: FocusManagerProps;
   /**
    * Position props for the floating component
@@ -57,41 +60,33 @@ const DefaultFloatingComponent = forwardRef<
     width,
     height,
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    ...rest
+    focusManagerProps, ...rest
   } = props;
   const style = {
     top,
     left,
     position,
   };
+
+  if (focusManagerProps) {
+    const { context, ...restFocusManagerProps } =
+      focusManagerProps as FocusManagerProps;
+
+    return (
+      <FloatingPortal>
+        <SaltProvider>
+          <FloatingFocusManager context={context} {...restFocusManagerProps}>
+            <div style={style} {...rest} ref={ref} />
+          </FloatingFocusManager>
+        </SaltProvider>
+      </FloatingPortal>
+    );
+  }
+
   return open ? (
     <FloatingPortal>
       <SaltProvider>
         <div style={style} {...rest} ref={ref} />
-      </SaltProvider>
-    </FloatingPortal>
-  ) : null;
-});
-
-export const FloatingComponentWithFocusManager = forwardRef<
-  HTMLElement,
-  CombinedFloatingComponentProps
->(function FloatingComponentWithFocusManager(props, ref) {
-  const { open, top, left, position, focusManagerProps, ...rest } = props;
-  const { context, ...restFocusManagerProps } =
-    focusManagerProps as FocusManagerProps;
-  const style = {
-    top,
-    left,
-    position,
-  };
-
-  return open && context ? (
-    <FloatingPortal>
-      <SaltProvider>
-        <FloatingFocusManager context={context} {...restFocusManagerProps}>
-          <div style={style} {...rest} ref={ref as Ref<HTMLDivElement>} />
-        </FloatingFocusManager>
       </SaltProvider>
     </FloatingPortal>
   ) : null;
@@ -104,11 +99,6 @@ export interface FloatingComponentContextType {
 const FloatingComponentContext = createContext<FloatingComponentContextType>({
   Component: DefaultFloatingComponent,
 });
-
-const FloatingComponentWithFocusManagerContext =
-  createContext<FloatingComponentContextType>({
-    Component: FloatingComponentWithFocusManager,
-  });
 
 if (process.env.NODE_ENV !== "production") {
   FloatingComponentContext.displayName = "FloatingComponentContext";
@@ -132,25 +122,8 @@ export function FloatingComponentProvider(
   );
 }
 
-export function FloatingComponentWithFocusManagerProvider(
-  props: FloatingComponentProviderProps
-) {
-  const { Component, children } = props;
-  const value = useMemo(() => ({ Component }), [Component]);
-
-  return (
-    <FloatingComponentWithFocusManagerContext.Provider value={value}>
-      {children}
-    </FloatingComponentWithFocusManagerContext.Provider>
-  );
-}
-
 export function useFloatingComponent() {
   return useContext(FloatingComponentContext);
-}
-
-export function useFloatingComponentWithFocusManager() {
-  return useContext(FloatingComponentWithFocusManagerContext);
 }
 
 export interface UseFloatingUIProps {
