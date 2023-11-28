@@ -112,7 +112,6 @@ export function useTokenizedInput<Item>(
   });
 
   const [
-    // TODO: Check whether defaultValue of [] changes the logic
     selectedItems = [],
     setSelectedItems,
     isSelectionControlled,
@@ -249,7 +248,7 @@ export function useTokenizedInput<Item>(
 
   const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
     // Check if the related target is the clear button
-    // TODO: flimsy, we might want a better way of checking it is no internal button
+    // FIXME: flimsy, we might want a better way of checking it is no internal button
     const isClearButton =
       (event.relatedTarget instanceof HTMLElement &&
         event.relatedTarget?.classList?.contains(
@@ -488,6 +487,7 @@ export function useTokenizedInput<Item>(
       ["CONTROL", "META"].indexOf(event.key.toUpperCase()) !== -1
     );
   };
+
   const handleCommonKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const eventKey = event.key.toUpperCase();
     if (eventKey === "ESCAPE") {
@@ -506,6 +506,7 @@ export function useTokenizedInput<Item>(
     if (event.defaultPrevented) {
       return;
     }
+
     if (isCtrlModifier(event)) {
       handleCtrlModifierKeyDown(event);
     } else {

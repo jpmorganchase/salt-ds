@@ -305,7 +305,7 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
         className={clsx(withBaseName(), className)}
         ref={useForkRef(ref, containerRef)}
         startAdornment={
-          <div className={withBaseName("pillGroup")}>
+          selectedItems.length > 0 && <div className={withBaseName("pillGroup")}>
             {selectedItems.map((item, index) => {
               const label = String(item);
               return (
@@ -315,7 +315,6 @@ export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
                     [withBaseName("expanded-pill")]: expanded,
                   })}
                   hidden={showExpandButton && index >= firstHiddenIndex}
-                  // TODO: activeIndices is used to keep highlighted to copy items, check if needs rename
                   highlighted={
                     index === highlightedIndex ||
                     activeIndices.indexOf(index) !== -1

@@ -21,7 +21,7 @@ describe("GIVEN a Tokenized Input", () => {
     cy.findByRole("option").should("exist");
   });
   it.skip("should highlihht pills if navigating with arrows", () => {
-    // TODO: option and testid are in the button, not pill wrapper
+    // FIXME: option and testid are in the button, not pill wrapper
     cy.mount(<Default initialSelectedItems={["Tokyo", "Delhi", "Shanghai"]} />);
     cy.findByRole("textbox").focus();
 

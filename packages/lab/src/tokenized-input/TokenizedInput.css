@@ -1,13 +1,9 @@
-.saltTokenizedInput {
-  height: 100%;
-}
-
 /* Styles applied to container of pills */
 .saltTokenizedInput-pillGroup {
   overflow: hidden;
   display: flex;
   flex: 1;
-  gap: var(--salt-spacing-100);
+  gap: var(--salt-spacing-50);
   flex-wrap: wrap;
   min-height: var(--tokenizedInput-height);
   padding: var(--salt-spacing-100) 0;
@@ -30,23 +26,24 @@
 }
 
 .saltTokenizedInput .saltMultilineInput-startAdornmentContainer .saltPillNext-close-button {
-  /* TODO: a bit nuclear, should this be in pillNext? */
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  /* FIXME: a bit nuclear, should this be in pillNext? */
+  /*--saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));*/
+  /*--saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));*/
 }
 
 /* Styles applied to a Pill when active */
-.saltTokenizedInput .saltInputPill-pillHighlighted {
-  /* TODO: design Q: what happens on hover? (uitk doesnt change)*/
-  --saltButton-text-color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
-  --saltButton-background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
+.saltInputPill:hover,
+.saltInputPill:hover .saltPillNext-clickable {
+  --saltButton-background: var(--salt-selectable-background-hover);
+  --saltButton-background-hover: var(--salt-selectable-background-hover);
+  --pillNext-background: var(--salt-selectable-background-hover);
+  --pillNext-background-hover: var(--salt-selectable-background-hover);
 }
 
-.saltTokenizedInput .saltInputPill-pillHighlighted .saltPillNext-action {
-  --pillNext-background: var(--saltTokenizedInput-pill-background-active, var(--salt-selectable-background-hover));
+.saltInputPill-pillHighlighted {
+  --saltButton-background: var(--salt-selectable-background-hover);
 }
 
-/* Styles applied to a Pills delete icon */
-.saltTokenizedInput .saltInputPill-pillHighlighted .saltIcon {
-  --saltIcon-color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
+.saltInputPill-pillHighlighted .saltPillNext-action {
+  --pillNext-background: var(--salt-selectable-background-hover);
 }
