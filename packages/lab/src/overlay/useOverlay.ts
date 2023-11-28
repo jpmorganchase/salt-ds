@@ -22,11 +22,7 @@ export interface UseOverlayProps
   > {}
 
 export function useOverlay(props?: UseOverlayProps) {
-  const {
-    open: openProp,
-    placement: placementProp,
-    onOpenChange: onOpenChangeProp,
-  } = props || {};
+  const { open: openProp, placement: placementProp } = props || {};
 
   const arrowRef = useRef<SVGSVGElement | null>(null);
 
@@ -36,11 +32,6 @@ export function useOverlay(props?: UseOverlayProps) {
     name: "Overlay",
     state: "open",
   });
-
-  const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    onOpenChangeProp?.(newOpen);
-  };
 
   const {
     reference,
@@ -55,7 +46,7 @@ export function useOverlay(props?: UseOverlayProps) {
     placement,
   } = useFloatingUI({
     open,
-    onOpenChange: handleOpenChange,
+    onOpenChange: setOpen,
     placement: placementProp,
     middleware: [
       offset(10),
@@ -96,8 +87,7 @@ export function useOverlay(props?: UseOverlayProps) {
     getReferenceProps({
       ref: reference,
       onKeyDown: (event: KeyboardEvent<HTMLElement>) => {
-        if (event.key === "Enter" || event.key === " ")
-          return handleOpenChange(false);
+        if (event.key === "Enter" || event.key === " ") return setOpen(false);
       },
     });
 
@@ -115,7 +105,7 @@ export function useOverlay(props?: UseOverlayProps) {
     arrowProps,
     context,
     open,
-    onOpenChange: handleOpenChange,
+    onOpenChange: setOpen,
     refs,
     floating,
     reference,
