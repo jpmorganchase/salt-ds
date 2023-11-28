@@ -1,6 +1,13 @@
-import { Button, StackLayout, Tooltip } from "@salt-ds/core";
-import { Overlay } from "@salt-ds/lab";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  StackLayout,
+  Tooltip,
+} from "@salt-ds/core";
+import { Overlay, useOverlay } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
+import React, { ChangeEvent } from "react";
 
 import "./overlay.stories.css";
 
@@ -22,9 +29,9 @@ const OverlayContent = (
 
 const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
   return (
-    <Overlay {...props} content={props.content}>
-      <Button>Toggle Overlay</Button>
-    </Overlay>
+      <Overlay {...props} content={props.content}>
+        <Button>Toggle Overlay</Button>
+      </Overlay>
   );
 };
 
@@ -77,4 +84,146 @@ LongContent.args = {
       </div>
     </StackLayout>
   ),
+};
+
+const Divider = () => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        width: "100%",
+        paddingTop: 8,
+        paddingBottom: 8,
+      }}
+    >
+      <div
+        style={{
+          borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
+          width: "100%",
+        }}
+      />
+    </div>
+  );
+};
+
+const checkboxesData = [
+  {
+    label: "Overlay",
+    value: "overlay",
+  },
+  {
+    label: "Row",
+    value: "row",
+  },
+];
+
+const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
+  const [controlledValues, setControlledValues] = React.useState([
+    checkboxesData[0].value,
+  ]);
+
+  const [checkboxState, setCheckboxState] = React.useState({
+    checked: false,
+    indeterminate: true,
+  });
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedChecked = event.target.checked;
+    setCheckboxState({
+      indeterminate: !updatedChecked && checkboxState.checked,
+      checked:
+        checkboxState.indeterminate && updatedChecked ? false : updatedChecked,
+    });
+  };
+
+  const handleGroupChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (controlledValues.indexOf(value) === -1) {
+      setControlledValues((prevControlledValues) => [
+        ...prevControlledValues,
+        value,
+      ]);
+    } else {
+      setControlledValues((prevControlledValues) =>
+        prevControlledValues.filter(
+          (controlledValue) => controlledValue !== value
+        )
+      );
+    }
+  };
+
+  const getStatus = () => {
+    return controlledValues.length <= 1 ? true : false;
+  };
+
+  const handleExport = () => {
+    console.log(`${controlledValues.length} file(s) exported`);
+    onClose();
+  };
+
+  return (
+    <>
+      <h3 style={{ marginTop: 0 }}>Export</h3>
+      <Checkbox
+        indeterminate={getStatus()}
+        checked={!getStatus()}
+        label={`${controlledValues.length} of 2 selected`}
+        onChange={handleChange}
+      />
+      <Divider />
+      <CheckboxGroup
+        checkedValues={controlledValues}
+        onChange={handleGroupChange}
+      >
+        {checkboxesData.map((data) => (
+          <Checkbox key={data.value} {...data} />
+        ))}
+      </CheckboxGroup>
+      <Divider />
+      <Button style={{ float: "right" }} onClick={handleExport}>
+        Export
+      </Button>
+    </>
+  );
+};
+
+export const WithActions = () => {
+  const [show, setShow] = React.useState(false);
+  const { onOpenChange } = useOverlay({ onOpenChange: setShow });
+
+  return (
+    <Overlay
+      open={show}
+      content={
+        <WithActionsContent
+          onClose={() => {
+            setShow(false);
+          }}
+        />
+      }
+      onClose={() => {
+        setShow(false);
+      }}
+      placement={"bottom"}
+      style={{
+        width: 246,
+      }}
+      onOpenChange={onOpenChange}
+      onKeyDown={(event) => {
+        event.key === "Escape" && setShow(false);
+      }}
+    >
+      <Button
+        onClick={() => {
+          setShow(true);
+        }}
+        onKeyDown={(event) => {
+          event.key === "Escape" && setShow(false);
+        }}
+      >
+        Toggle Overlay
+      </Button>
+    </Overlay>
+  );
 };
