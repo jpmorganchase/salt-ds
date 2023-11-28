@@ -263,10 +263,12 @@ describe("GIVEN a FormField", () => {
           cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
         });
       });
-      
+
       describe("AND has empty validation status", () => {
         it("THEN tooltip should reflect status", () => {
           cy.mount(
+            //check for falsy value not included in validationstatus
+            //@ts-expect-error
             <FormField validationStatus="">
               <FormFieldLabel>Label</FormFieldLabel>
               <Tooltip content="Helper text">
