@@ -74,6 +74,7 @@ export * from "./tabs";
 export * from "./tabs-next";
 export * from "./toast-group";
 export * from "./tokenized-input";
+export * from "./tokenized-input-next";
 export * from "./toolbar";
 export * from "./tree";
 export * from "./utils";

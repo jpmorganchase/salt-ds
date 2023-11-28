@@ -1,8 +1,13 @@
-import { forwardRef, ComponentPropsWithoutRef, MouseEvent } from "react";
+import {
+  forwardRef,
+  ComponentPropsWithoutRef,
+  MouseEvent,
+  ReactNode,
+} from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Button, makePrefixer, useButton } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./PillNext.css";
 import { CloseIcon } from "@salt-ds/icons";
 
@@ -10,15 +15,24 @@ export interface PillNextProps extends ComponentPropsWithoutRef<"button"> {
   /* If true the pill will be disabled */
   disabled?: boolean;
   onClose?: (event: MouseEvent<HTMLButtonElement>) => void;
+  closeButtonProps?: ButtonProps;
   /* Pass an element to render an icon descriptor on the left of the label */
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltPillNext");
 
 export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
   function PillNext(
-    { children, className, icon, disabled, onClose, ...restProps },
+    {
+      children,
+      className,
+      icon,
+      disabled,
+      onClose,
+      closeButtonProps,
+      ...restProps
+    },
     ref
   ) {
     const targetWindow = useWindow();
@@ -57,6 +71,7 @@ export const PillNext = forwardRef<HTMLButtonElement, PillNextProps>(
             className={withBaseName("close-button")}
             disabled={disabled}
             onClick={onClose}
+            {...closeButtonProps}
           >
             <CloseIcon />
           </Button>

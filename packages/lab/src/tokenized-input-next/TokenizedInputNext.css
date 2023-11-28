@@ -1,0 +1,278 @@
+/* Style applied to the root element */
+.saltTokenizedInputNext {
+  --tokenizedInput-borderColor: var(--salt-editable-borderColor);
+  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle);
+  --tokenizedInput-outlineColor: var(--salt-focused-outlineColor);
+  --tokenizedInput-border: none;
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-border);
+
+  align-items: center;
+  background: var(--tokenizedInput-background);
+  border: var(--tokenizedInput-border);
+  color: var(--salt-content-primary-foreground);
+  display: inline-flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  height: auto;
+  line-height: var(--salt-text-lineHeight);
+  min-height: var(--salt-size-base);
+  min-width: 4em;
+  padding: var(--salt-spacing-100) var(--salt-spacing-100) 0 var(--salt-spacing-100);
+  position: relative;
+  width: 100%;
+}
+
+/* Style applied on hover */
+.saltTokenizedInputNext:hover {
+  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-hover);
+  --tokenizedInput-borderColor: var(--salt-editable-borderColor-hover);
+
+  background: var(--tokenizedInput-background-hover);
+  cursor: var(--salt-editable-cursor-hover);
+}
+
+/* Style applied when active */
+.saltTokenizedInputNext:active {
+  --tokenizedInput-borderColor: var(--salt-editable-borderColor-active);
+  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-active);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+
+  background: var(--tokenizedInput-background-active);
+  cursor: var(--salt-editable-cursor-active);
+}
+
+/* Class applied if `variant="primary"` */
+.saltTokenizedInputNext-primary {
+  --tokenizedInput-background: var(--salt-editable-primary-background);
+  --tokenizedInput-background-active: var(--salt-editable-primary-background-active);
+  --tokenizedInput-background-hover: var(--salt-editable-primary-background-hover);
+  --tokenizedInput-background-disabled: var(--salt-editable-primary-background-disabled);
+  --tokenizedInput-background-readonly: var(--salt-editable-primary-background-readonly);
+}
+
+/* Class applied if `variant="secondary"` */
+.saltTokenizedInputNext-secondary {
+  --tokenizedInput-background: var(--salt-editable-secondary-background);
+  --tokenizedInput-background-active: var(--salt-editable-secondary-background-active);
+  --tokenizedInput-background-hover: var(--salt-editable-secondary-background-active);
+  --tokenizedInput-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --tokenizedInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+}
+
+/* Style applied to input if `validationState="error"` */
+.saltTokenizedInputNext-error,
+.saltTokenizedInputNext-error:hover {
+  --tokenizedInput-background: var(--salt-status-error-background);
+  --tokenizedInput-background-active: var(--salt-status-error-background);
+  --tokenizedInput-background-hover: var(--salt-status-error-background);
+  --tokenizedInput-borderColor: var(--salt-status-error-borderColor);
+  --tokenizedInput-outlineColor: var(--salt-status-error-borderColor);
+}
+
+/* Style applied to input if `validationState="warning"` */
+.saltTokenizedInputNext-warning,
+.saltTokenizedInputNext-warning:hover {
+  --tokenizedInput-background: var(--salt-status-warning-background);
+  --tokenizedInput-background-active: var(--salt-status-warning-background);
+  --tokenizedInput-background-hover: var(--salt-status-warning-background);
+  --tokenizedInput-borderColor: var(--salt-status-warning-borderColor);
+  --tokenizedInput-outlineColor: var(--salt-status-warning-borderColor);
+}
+
+/* Style applied to input if `validationState="success"` */
+.saltTokenizedInputNext-success,
+.saltTokenizedInputNext-success:hover {
+  --tokenizedInput-background: var(--salt-status-success-background);
+  --tokenizedInput-background-active: var(--salt-status-success-background);
+  --tokenizedInput-background-hover: var(--salt-status-success-background);
+  --tokenizedInput-borderColor: var(--salt-status-success-borderColor);
+  --tokenizedInput-outlineColor: var(--salt-status-success-borderColor);
+}
+
+.saltTokenizedInputNext.saltTokenizedInputNext-withAdornmentRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Style applied to inner textarea element */
+.saltTokenizedInputNext-textarea {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: inline-flex;
+  height: var(--salt-text-lineHeight);
+  font: inherit;
+  letter-spacing: 0;
+  min-width: 0;
+  width: auto;
+  overflow: hidden;
+  resize: none;
+  padding: 0;
+}
+
+/* Style applied to placeholder */
+.saltTokenizedInputNext-textarea::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Reset in the  class */
+.saltTokenizedInputNext-textarea:focus {
+  outline: none;
+}
+
+/* Style applied to selected input */
+.saltTokenizedInputNext-textarea::selection {
+  background: var(--salt-content-foreground-highlight);
+}
+
+/* Styling when focused */
+.saltTokenizedInputNext-focused {
+  --tokenizedInput-borderColor: var(--tokenizedInput-outlineColor);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--tokenizedInput-outlineColor);
+}
+
+/* Style applied if `readOnly={true}` */
+.saltTokenizedInputNext-readOnly,
+.saltTokenizedInputNext-readOnly:active,
+.saltTokenizedInputNext-readOnly:hover {
+  --tokenizedInput-borderColor: var(--salt-editable-borderColor-readonly);
+  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-border);
+
+  background: var(--tokenizedInput-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Style applied to selected text if `disabled={true}` */
+.saltTokenizedInputNext-disabled .saltTokenizedInputNext-textarea::selection {
+  background: none;
+}
+
+/* Style applied when `disabled={true}` */
+.saltTokenizedInputNext-disabled,
+.saltTokenizedInputNext-disabled:hover,
+.saltTokenizedInputNext-disabled:active {
+  --tokenizedInput-borderColor: var(--salt-editable-borderColor-disabled);
+  --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-border);
+
+  background: var(--tokenizedInput-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
+}
+
+/* Style for activation indicator */
+.saltTokenizedInputNext-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--tokenizedInput-activationIndicator-borderWidth) var(--tokenizedInput-borderStyle) var(--tokenizedInput-borderColor);
+}
+
+/* Style applied if `bordered={true}` */
+.saltTokenizedInputNext.saltTokenizedInputNext-bordered {
+  --tokenizedInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--tokenizedInput-borderColor);
+  --tokenizedInput-activationIndicator-borderWidth: 0;
+}
+
+/* Style applied if active or focused when `bordered={true}` */
+.saltTokenizedInputNext-bordered:active,
+.saltTokenizedInputNext-bordered.saltTokenizedInputNext-focused {
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltTokenizedInputNext-bordered.saltTokenizedInputNext-readOnly:hover,
+.saltTokenizedInputNext-bordered.saltTokenizedInputNext-disabled:hover {
+  --tokenizedInput-activationIndicator-borderWidth: 0;
+}
+
+/* Style applied to adornment containers */
+.saltTokenizedInputNext-endAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  min-height: var(--salt-size-base);
+  column-gap: var(--salt-spacing-100);
+}
+
+/* Style applied to start adornment container */
+.saltTokenizedInputNext {
+  overflow: hidden;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-50);
+}
+
+/* Style applied to suffix adornment container */
+.saltTokenizedInputNext-suffixAdornments {
+  align-self: self-end;
+}
+
+/* Style applied to suffix adornment container when end adornments are provided */
+.saltTokenizedInputNext-withAdornmentRow .saltTokenizedInputNext-suffixAdornments {
+  display: inline-flex;
+  flex-basis: 100%;
+  justify-content: flex-end;
+}
+
+/* Style applied to end adornment container */
+.saltTokenizedInputNext-endAdornmentContainer {
+  margin-left: auto;
+}
+
+/* Style applied to status adornment container */
+.saltTokenizedInputNext-statusAdornmentContainer {
+  align-self: self-end;
+  display: inline-flex;
+  min-height: var(--salt-size-base);
+}
+
+/* Style applied to button start adornment if first child */
+.saltTokenizedInputNext .saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-50) * -1);
+}
+
+/* Style applied to button end adornment if last child */
+.saltTokenizedInputNext-endAdornmentContainer .saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+
+/* Style applied to button end adornment if last child */
+.saltTokenizedInputNext-readOnly .saltTokenizedInputNext-endAdornmentContainer .saltButton:last-child {
+  margin-right: 0;
+}
+
+.saltTokenizedInputNext .saltInputPill .saltPillNext-action {
+  max-width: 100%;
+}
+
+.saltTokenizedInputNext .saltTokenizedInputNext-expanded-pill.saltInputPill .saltPillNext-action {
+  max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
+}
+
+/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
+.saltTokenizedInputNext-hidden,
+.saltTokenizedInputNext .saltInputPill.saltInputPill-hidden {
+  display: none;
+}
+
+/* Styles applied to a Pill when active */
+.saltInputPill:hover,
+.saltInputPill:hover .saltPillNext-clickable {
+  --saltButton-background: var(--salt-selectable-background-hover);
+  --saltButton-background-hover: var(--salt-selectable-background-hover);
+  --pillNext-background: var(--salt-selectable-background-hover);
+  --pillNext-background-hover: var(--salt-selectable-background-hover);
+}
+
+.saltInputPill-pillHighlighted {
+  --saltButton-background: var(--salt-selectable-background-hover);
+}
+
+.saltInputPill-pillHighlighted .saltPillNext-action {
+  --pillNext-background: var(--salt-selectable-background-hover);
+}
