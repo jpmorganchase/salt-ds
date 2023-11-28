@@ -4,12 +4,12 @@ div[class*="ag-theme-salt"] {
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
   --ag-checkbox-checked-color: var(--salt-selectable-primary-foreground-selected);
   --ag-checkbox-border-radius: 0;
-  --ag-checkbox-indeterminate-color: var(--salt-text-primary-foreground);
+  --ag-checkbox-indeterminate-color: var(--salt-content-primary-foreground);
   --ag-chip-background-color: var(--salt-taggable-background);
-  --ag-data-color: var(--salt-text-primary-foreground);
+  --ag-data-color: var(--salt-content-primary-foreground);
   --ag-font-size: var(--salt-text-fontSize);
   --ag-font-family: var(--salt-typography-fontFamily);
-  --ag-foreground-color: var(--salt-text-primary-foreground);
+  --ag-foreground-color: var(--salt-content-primary-foreground);
   --ag-grid-size: var(--salt-spacing-50);
   --ag-header-background-color: var(--salt-container-primary-background);
   --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
@@ -17,7 +17,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-display: block;
   --ag-header-column-separator-height: var(--salt-text-fontSize);
   --ag-header-column-separator-width: var(--salt-size-border);
-  --ag-header-foreground-color: var(--salt-text-primary-foreground);
+  --ag-header-foreground-color: var(--salt-content-primary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-icon-size: var(--salt-icon-size-base);
   --ag-input-focus-box-shadow: none;
@@ -28,7 +28,7 @@ div[class*="ag-theme-salt"] {
   --ag-row-group-indent-size: calc(var(--ag-grid-size) * 3 + var(--salt-spacing-100));
   --ag-row-hover-color: var(--salt-selectable-background-hover);
   --ag-secondary-border-color: var(--salt-palette-neutral-tertiary-separator);
-  --ag-secondary-foreground-color: var(--salt-text-primary-foreground);
+  --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
   --ag-selected-row-background-color: var(--salt-selectable-background-selected);
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
   --ag-selected-tab-underline-width: 2px;
@@ -226,7 +226,7 @@ div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]::placeho
 div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]::placeholder,
 div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]::placeholder,
 div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]::placeholder {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   opacity: 1;
 }
 
@@ -295,7 +295,7 @@ div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
 }
 
 div[class*="ag-theme-salt"] .ag-floating-filter-button-button .ag-icon-filter:before {
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   content: "\e9ac";
 }
 
@@ -349,7 +349,7 @@ div[class*="ag-theme-salt"] .ag-set-filter-item {
 div[class*="ag-theme-salt"] .ag-status-bar {
   border: none;
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-palette-neutral-primary-border);
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-label-fontWeight);
   line-height: var(--salt-text-label-lineHeight);
@@ -362,7 +362,7 @@ div[class*="ag-theme-salt"] .ag-status-name-value {
 }
 div[class*="ag-theme-salt"] .ag-status-name-value-value {
   font-weight: var(--salt-text-fontWeight-strong);
-  color: var(--salt-text-primary-foreground);
+  color: var(--salt-content-primary-foreground);
 }
 
 div[class*="ag-theme-salt"] .ag-paging-panel {
