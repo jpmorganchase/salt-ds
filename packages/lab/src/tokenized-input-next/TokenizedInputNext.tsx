@@ -184,12 +184,13 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
 
   const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
   const [clearButtonRef, clearButtonWidth] = useWidth(density);
+  const [inputRef, inputWidth] = useWidth(density);
   const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
   const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
   const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
   const showExpandButton = !expanded && firstHiddenIndex != null;
 
-  const widthOffset = expanded ? clearButtonWidth : expandButtonWidth;
+  const widthOffset = inputWidth +( expanded ? clearButtonWidth : expandButtonWidth);
 
   const containerRef = useResizeObserver<HTMLDivElement>(
     useCallback(
@@ -369,7 +370,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           disabled={disabled}
           id={inputId}
           readOnly={readOnly}
-          ref={useForkRef(textAreaRef, textAreaRefProp)}
+          ref={useForkRef(useForkRef(inputRef, textAreaRef), textAreaRefProp)}
           required={isRequired}
           rows={1}
           tabIndex={disabled ? -1 : 0}
@@ -387,6 +388,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             <StatusAdornment status={validationStatus} />
           </div>
         )}
+        <div className={withBaseName("endAdornmentContainer")}>
           {expandedWithItems && (
             <Button
               className={clsx(withBaseName("clear-button"), withBaseName("endAdornment"))}
@@ -423,6 +425,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
               <OverflowMenuIcon />
             </Button>
           )}
+        </div>
         <div className={withBaseName("activationIndicator")} />
       </div>
     </div>

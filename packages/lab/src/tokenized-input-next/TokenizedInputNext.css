@@ -102,14 +102,13 @@
   height: var(--salt-text-lineHeight);
   font: inherit;
   letter-spacing: 0;
-  min-width: 0;
+  min-width: var(--salt-size-base);
   overflow: hidden;
   resize: none;
   padding: 0;
 }
 .saltTokenizedInputNext-expanded .saltTokenizedInputNext-textarea {
   flex-grow: 1;
-  min-width: var(--salt-size-base);
 }
 
 /* Style applied to placeholder */
@@ -192,14 +191,17 @@
   --tokenizedInput-activationIndicator-borderWidth: 0;
 }
 
-/* Style applied to button end adornment if last child */
+.saltTokenizedInputNext-endAdornmentContainer {
+  margin-left: auto;
+}
+  /* Style applied to button end adornment if last child */
 .saltTokenizedInputNext-endAdornment {
-  --saltButton-margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
+  --saltButton-margin: inherit calc(var(--salt-spacing-50) * -1) inherit inherit;
 }
 
 /* Style applied to button end adornment if last child */
 .saltTokenizedInputNext-readOnly .saltTokenizedInputNext-endAdornment {
-  --saltButton-margin: auto 0 auto auto;
+  --saltButton-margin: inherit 0 inherit inherit;
 }
 
 /* Style applied to start adornment container */
