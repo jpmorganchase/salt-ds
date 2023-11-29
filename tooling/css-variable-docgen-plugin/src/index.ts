@@ -168,9 +168,9 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
             node.moduleSpecifier.text.endsWith(".css?inline")
           ) {
             cssImports.push(
-              // @ts-ignore
               path.resolve(
                 path.dirname(id),
+                // @ts-ignore
                 node.moduleSpecifier.text.replace("?inline", "")
               )
             );
@@ -360,9 +360,9 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     ts.factory.createPropertyAssignment(
                       ts.factory.createStringLiteral("cssVariablesApi"),
                       ts.factory.createObjectLiteralExpression(
-                        Object.entries(identifierMap).map(([name, value]) => {
-                          return createCSSVariablesApiDefinition(name, value);
-                        })
+                        Object.entries(identifierMap).map(([name, value]) =>
+                          createCSSVariablesApiDefinition(name, value)
+                        )
                       )
                     ),
                   ])
