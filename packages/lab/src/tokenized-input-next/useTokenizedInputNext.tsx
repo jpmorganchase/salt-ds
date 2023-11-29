@@ -451,13 +451,17 @@ export function useTokenizedInputNext<Item>(
           break;
         case "C":
           // Copy
-          copy(
-            activeIndices
-              .map((index) => String(selectedItems[index]))
-              .concat(value != null ? String(value).trim() : "")
-              .filter(Boolean)
-              .join(primaryDelimiter)
-          )
+          const textToCopy =
+            activeIndices.length > 0
+              ? activeIndices
+                  .map((index) => String(selectedItems[index]))
+                  .concat(value != null ? String(value).trim() : "")
+                  .filter(Boolean)
+                  .join(primaryDelimiter)
+              : highlightedIndex !== undefined
+              ? String(selectedItems[highlightedIndex] + ",")
+              : "";
+          copy(textToCopy)
             .then((result) => {
               preventBlurOnCopy.current = !supportClipboard;
               return result;
