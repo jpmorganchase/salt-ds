@@ -147,7 +147,6 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
   const isIncluded = matchGlob(include);
 
   const valueTypes = ["Identifier", "Dimension", "Number", "Percentage"];
-
   return {
     name: "vite-plugin-css-variable-docgen",
     enforce: "post",
@@ -166,11 +165,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
             ts.isImportDeclaration(node) &&
             // @ts-ignore
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-            node.moduleSpecifier.text.endsWith(".css")
+            node.moduleSpecifier.text.endsWith(".css?inline")
           ) {
             cssImports.push(
               // @ts-ignore
-              path.resolve(path.dirname(id), node.moduleSpecifier.text)
+              path.resolve(
+                path.dirname(id),
+                node.moduleSpecifier.text.replace("?inline", "")
+              )
             );
           }
         });
@@ -358,9 +360,9 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     ts.factory.createPropertyAssignment(
                       ts.factory.createStringLiteral("cssVariablesApi"),
                       ts.factory.createObjectLiteralExpression(
-                        Object.entries(identifierMap).map(([name, value]) =>
-                          createCSSVariablesApiDefinition(name, value)
-                        )
+                        Object.entries(identifierMap).map(([name, value]) => {
+                          return createCSSVariablesApiDefinition(name, value);
+                        })
                       )
                     ),
                   ])
