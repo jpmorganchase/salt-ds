@@ -5950,9 +5950,9 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.6.0"
     "@typescript-eslint/parser": "npm:^6.6.0"
     "@vitejs/plugin-react": "npm:^4.1.0"
-    ag-grid-community: "npm:^28.2.1"
-    ag-grid-enterprise: "npm:^28.2.1"
-    ag-grid-react: "npm:^28.2.1"
+    ag-grid-community: "npm:^31.0.0"
+    ag-grid-enterprise: "npm:^31.0.0"
+    ag-grid-react: "npm:^31.0.0"
     axe-core: "npm:^4.4.3"
     chromatic: "npm:^7.0.0"
     ci-info: "npm:^3.3.1"
@@ -10107,30 +10107,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:^28.2.1":
-  version: 28.2.1
-  resolution: "ag-grid-community@npm:28.2.1"
-  checksum: 32de9e6cb547b57d2fa89d9fffed70d445e0542c70ace5a3b6fc92f9547b2d5a97caeaab3ae1c21f2f5a58c0669857427a79ea1a0bd97a8273a0f571f56c20bf
+"ag-grid-community@npm:^31.0.0, ag-grid-community@npm:~31.0.0":
+  version: 31.0.0
+  resolution: "ag-grid-community@npm:31.0.0"
+  checksum: 24ebe5e99def4e484221000eb49627efabaafd7e74de3d354b03054e9d286728adc2af65085955801920482333b4abf5d361eb68a3f82286c5063734fe13279a
   languageName: node
   linkType: hard
 
-"ag-grid-enterprise@npm:^28.2.1":
-  version: 28.2.1
-  resolution: "ag-grid-enterprise@npm:28.2.1"
-  checksum: 6bb113eca7cc86f7d603f6f7ed9e26cb01f1af85c3bf37747fa86e903d77f231ca4ed5df1126efe283a9dc7dab26bd7e58e0a63176aabae3e955ec36a734dabc
-  languageName: node
-  linkType: hard
-
-"ag-grid-react@npm:^28.2.1":
-  version: 28.2.1
-  resolution: "ag-grid-react@npm:28.2.1"
+"ag-grid-enterprise@npm:^31.0.0":
+  version: 31.0.0
+  resolution: "ag-grid-enterprise@npm:31.0.0"
   dependencies:
+    ag-grid-community: "npm:~31.0.0"
+  checksum: d4faba5f315feba468c3f586a7e4f69de23b002815765e05b11ef48acce1451e85e5c00cf36a3d858f0bcbca9870d9884a473e6643646aef48f25f04cb16a03a
+  languageName: node
+  linkType: hard
+
+"ag-grid-react@npm:^31.0.0":
+  version: 31.0.0
+  resolution: "ag-grid-react@npm:31.0.0"
+  dependencies:
+    ag-grid-community: "npm:~31.0.0"
     prop-types: "npm:^15.8.1"
   peerDependencies:
-    ag-grid-community: ~28.2.1
     react: ^16.3.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 5f494d1c7032c50b91020cb3b3e5ea6c34651ff01ff6e52009c729f96c83615013eb00930af02af8696420bca75626fcd0f36a5a8b0fca7c1f5d45634e7bf52c
+  checksum: 4563ab6feea06e46b9578078eb000b74d5f3381d9da3ab6973380ecc80b7e094094dcb0afefee675f46fa1fe26000c7ee7dd2d49dad0eed3819dbff426c084c8
   languageName: node
   linkType: hard
 
