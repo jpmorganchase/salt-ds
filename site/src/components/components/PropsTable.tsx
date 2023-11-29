@@ -1,6 +1,9 @@
 import { FC, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Table } from "../mdx/table";
+import { code, p, ul } from "../mdx";
+
+const components = { code, ul, p };
 
 type PropsTableType = {
   /**
@@ -65,7 +68,9 @@ export const PropsTable: FC<PropsTableType> = ({
                   <code>{type.name}</code>
                 </td>
                 <td>
-                  <ReactMarkdown>{description}</ReactMarkdown>
+                  <ReactMarkdown components={components}>
+                    {description}
+                  </ReactMarkdown>
                 </td>
                 <td>
                   <code>{defaultValue ? defaultValue.value : "-"}</code>

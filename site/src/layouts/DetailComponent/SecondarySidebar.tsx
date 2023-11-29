@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { Image } from "@jpmorganchase/mosaic-site-components";
-import { Pill } from "@salt-ds/lab";
+import { PillNext } from "@salt-ds/lab";
 import { Link } from "@salt-ds/core";
 import { Heading4 } from "../../components/mdx/h4";
 import { Data, Relationship } from "./DetailComponent";
@@ -53,7 +53,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
       <Heading4>Also known as</Heading4>
       <div className={styles.pills}>
         {alsoKnownAs.map((name) => (
-          <Pill key={name} label={name} />
+          <PillNext key={name}>{name}</PillNext>
         ))}
       </div>
     </>
@@ -76,7 +76,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
           <Heading4>{heading}</Heading4>
           <div className={styles.pills}>
             {components.map(({ name }) => (
-              <Pill key={name} label={name} />
+              <PillNext key={name}>{name}</PillNext>
             ))}
           </div>
         </>
