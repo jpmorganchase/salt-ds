@@ -194,7 +194,7 @@
 .saltTokenizedInputNext-endAdornmentContainer {
   margin-left: auto;
 }
-  /* Style applied to button end adornment if last child */
+/* Style applied to button end adornment if last child */
 .saltTokenizedInputNext-endAdornment {
   --saltButton-margin: inherit calc(var(--salt-spacing-50) * -1) inherit inherit;
 }

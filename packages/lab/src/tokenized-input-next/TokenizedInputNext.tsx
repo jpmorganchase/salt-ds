@@ -190,7 +190,8 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
   const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
   const showExpandButton = !expanded && firstHiddenIndex != null;
 
-  const widthOffset = inputWidth +( expanded ? clearButtonWidth : expandButtonWidth);
+  const widthOffset =
+    inputWidth + (expanded ? clearButtonWidth : expandButtonWidth);
 
   const containerRef = useResizeObserver<HTMLDivElement>(
     useCallback(
@@ -391,7 +392,10 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
         <div className={withBaseName("endAdornmentContainer")}>
           {expandedWithItems && (
             <Button
-              className={clsx(withBaseName("clear-button"), withBaseName("endAdornment"))}
+              className={clsx(
+                withBaseName("clear-button"),
+                withBaseName("endAdornment")
+              )}
               disabled={disabled}
               id={clearButtonId}
               onBlur={onBlur}
