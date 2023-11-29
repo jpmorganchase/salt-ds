@@ -14,9 +14,9 @@ import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
   }}
 />
 
-# Tokenized Input
+# Tokenized Input Next
 
-Tokenized Input provides an input field for text that’s converted into a pill within the field, or tokenized, when the user enters a delimiting character.
+Tokenized Input Next provides an input field for text that’s converted into a pill within the field, or tokenized, when the user enters a delimiting character.
 
 The component accepts free-form text and can create an unlimited number of pills.
 
@@ -36,7 +36,7 @@ The default component has no text input constraints, so you can use it to accept
 
 ### Controlled
 
-With the controlled mode, the logic of Tokenized Input is determined by the application and not internally, within the component. It provides developers finer-grained control of both the input value and selected items.
+With the controlled mode, the logic of Tokenized Input Next is determined by the application and not internally, within the component. It provides developers finer-grained control of both the input value and selected items.
 
 <Canvas>
   <Story id="lab-tokenized-input-next--controlled" />
@@ -44,7 +44,7 @@ With the controlled mode, the logic of Tokenized Input is determined by the appl
 
 ### Disabled
 
-You can disable the Tokenized Input if required, e.g., due to context or user permissions.
+You can disable the Tokenized Input Next if required, e.g., due to context or user permissions.
 
 <Canvas>
   <Story id="lab-tokenized-input-next--disabled" />
@@ -62,7 +62,7 @@ In this example, we’ve configured the component to reject duplicated values.
 
 ### With Customized Delimiter
 
-By default, the component tokenizes preceding text into a pill when Enter, Tab or the comma (,) key is actioned by the user. 
+By default, the component tokenizes preceding text into a pill when Enter, Tab or the comma (,) key is actioned by the user.
 You can customize the key or character that separates and delimits text to fit the expected convention within your application. For example, you may choose to define a semi-colon (;) or full-stop (.) as your delimiter.
 
 <Canvas>
@@ -71,17 +71,18 @@ You can customize the key or character that separates and delimits text to fit t
 
 ## How to use
 
-Always wrap Tokenized Input in a Form Field component to ensure ADA compliance—and never use it independently. The Form Field provides a label, activation line, background fill, help text and various states.
+Always wrap Tokenized Input Next in a Form Field component to ensure ADA compliance—and never use it independently. The Form Field provides a label, activation line, background fill, help text and various states.
 
-### When to use Tokenized Input
+### When to use Tokenized Input Next
 
-Tokenized Input is typically used within the context of a form. It’s ideal when you have a field that can contain multiple, specific values related to a single topic or context—and these values can be removed quickly and in their entirety. You would use the component, for example, in a field for email addresses or a fast field for a cash ticket.
+Tokenized Input Next is typically used within the context of a form. It’s ideal when you have a field that can contain multiple, specific values related to a single topic or context—and these values can be removed quickly and in their entirety. You would use the component, for example, in a field for email addresses or a fast field for a cash ticket.
 
-### When not to use Tokenized Input
+### When not to use Tokenized Input Next
 
-- Never use Tokenized Input as a standalone component; it will fail to meet ADA requirements.
+- Never use Tokenized Input Next as a standalone component; it will fail to meet ADA requirements.
 - Consider the Combo Box component if you need to generate a list of suggested values that partially match the text entered by the user.
 - Use a Combo Box when your selection is constrained to options in an existing dataset.
+
 ## API
 
 ```
@@ -102,6 +103,6 @@ import { TokenizedInputNext } from "@salt-ds/lab";
 
 ### Accessibility
 
-To be considered accessible within a form, the Tokenized Input _must_ be wrapped in a [Form Field](?path=/docs/documentation-core-form-field--docs) component, which will provide the field with a visible label, help text and a status message for validation feedback.
+To be considered accessible within a form, the Tokenized Input Next _must_ be wrapped in a [Form Field](?path=/docs/documentation-core-form-field--docs) component, which will provide the field with a visible label, help text and a status message for validation feedback.
 
 <HelpAndSupport />
