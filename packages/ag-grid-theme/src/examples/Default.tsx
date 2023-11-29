@@ -13,10 +13,9 @@ const Default = (props: { defaultTheme: string }) => {
   //   agThemeName: `ag-theme-${themeName}`,
   // });
 
-
   const [isGridReady, setGridReady] = useState(false);
   const { mode } = useTheme();
-  const density = useDensity()
+  const density = useDensity();
 
   const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
@@ -28,14 +27,14 @@ const Default = (props: { defaultTheme: string }) => {
   useEffect(() => {
     // setHeaderHeight doesn't work if not in setTimeout
     setTimeout(() => {
-    if (isGridReady) {
-      // const rowHeight = apiRef.current!.api.getRowHeight()
-      console.log('resetRowHeights');
+      if (isGridReady) {
+        // const rowHeight = apiRef.current!.api.getRowHeight()
+        console.log("resetRowHeights");
 
-      apiRef.current?.api.resetRowHeights();
-      // apiRef.current!.api.setHeaderHeight(rowHeight);
-      // apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
-    }
+        apiRef.current?.api.resetRowHeights();
+        // apiRef.current!.api.setHeaderHeight(rowHeight);
+        // apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
+      }
     }, 0);
   }, [density, isGridReady]);
 
@@ -43,7 +42,10 @@ const Default = (props: { defaultTheme: string }) => {
     <StackLayout gap={4}>
       {switcher}
 
-      <div className={`ag-theme-salt-${mode}`} style={{ height: 500, width: "800px" }}>
+      <div
+        className={`ag-theme-salt-${mode}`}
+        style={{ height: 500, width: "800px" }}
+      >
         {/* <div {...containerProps}> */}
         <AgGridReact
           columnDefs={[
@@ -68,7 +70,7 @@ const Default = (props: { defaultTheme: string }) => {
           rowData={dataGridExampleData}
           rowSelection="single"
           onGridReady={onGridReady}
-        // {...agGridProps}
+          // {...agGridProps}
         />
       </div>
     </StackLayout>

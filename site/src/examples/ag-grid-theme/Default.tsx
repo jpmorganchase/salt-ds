@@ -8,10 +8,9 @@ import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt.css";
 
 export const Default = (): ReactElement => {
-
   const [isGridReady, setGridReady] = useState(false);
   const { mode } = useTheme();
-  const density = useDensity()
+  const density = useDensity();
 
   const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
@@ -43,11 +42,14 @@ export const Default = (): ReactElement => {
         apiRef.current!.api.setHeaderHeight(rowHeight);
         apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
       }
-      }, 0);
+    }, 0);
   }, [density, isGridReady, rowHeight]);
 
   return (
-    <div className={`ag-theme-salt-${mode}`} style={{ height: 500, width: "100%" }}>
+    <div
+      className={`ag-theme-salt-${mode}`}
+      style={{ height: 500, width: "100%" }}
+    >
       <AgGridReact
         columnDefs={[
           {
@@ -57,7 +59,7 @@ export const Default = (): ReactElement => {
               buttons: ["reset", "apply"],
             },
             editable: false,
-            autoHeight: true
+            autoHeight: true,
           },
           {
             headerName: "Code",

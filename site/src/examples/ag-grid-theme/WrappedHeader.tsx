@@ -36,7 +36,7 @@ export const WrappedHeader = (props: AgGridReactProps) => {
         defaultColDef={{
           ...propsColDefs,
           autoHeaderHeight: true,
-          wrapHeaderText: true
+          wrapHeaderText: true,
         }}
         {...restAgGridProps}
         {...props}

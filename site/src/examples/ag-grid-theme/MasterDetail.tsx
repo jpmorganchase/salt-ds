@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultData, masterDetailColumns } from "./data";
@@ -38,7 +38,7 @@ export const MasterDetail = (props: AgGridReactProps) => {
       <AgGridReact
         ref={gridRef}
         columnDefs={masterDetailColumns}
-          detailCellRenderer={detailCellRenderer}
+        detailCellRenderer={detailCellRenderer}
         detailCellRendererParams={{
           detailGridOptions: { columnDefs: masterDetailColumns },
           getDetailRowData: (params: {
