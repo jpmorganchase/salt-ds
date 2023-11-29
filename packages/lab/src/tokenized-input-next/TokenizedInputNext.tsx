@@ -121,7 +121,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-tokenized-input",
+    testId: "salt-tokenized-input-next",
     css: tokenizedInputCss,
     window: targetWindow,
   });
