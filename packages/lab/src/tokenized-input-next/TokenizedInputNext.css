@@ -194,13 +194,12 @@
 
 /* Style applied to button end adornment if last child */
 .saltTokenizedInputNext-endAdornment {
-  margin-left: auto;
-  margin-right: calc(var(--salt-spacing-50) * -1);
+  --saltButton-margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
 }
 
 /* Style applied to button end adornment if last child */
 .saltTokenizedInputNext-readOnly .saltTokenizedInputNext-endAdornment {
-  margin-right: 0;
+  --saltButton-margin: auto 0 auto auto;
 }
 
 /* Style applied to start adornment container */
