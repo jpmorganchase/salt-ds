@@ -44,7 +44,7 @@
     "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "yarn build:ag-grid-theme && storybook build",
+    "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build",
     "typecheck": "tsc --noEmit",
     "chromatic": "chromatic"
   },
