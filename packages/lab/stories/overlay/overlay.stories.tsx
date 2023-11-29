@@ -30,7 +30,7 @@ const OverlayContent = (
 const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
   return (
     <Overlay {...props} content={props.content}>
-      <Button>Toggle Overlay</Button>
+      <Button>Show Overlay</Button>
     </Overlay>
   );
 };
@@ -222,7 +222,7 @@ export const WithActions = () => {
           event.key === "Escape" && setShow(false);
         }}
       >
-        Toggle Overlay
+        Show Overlay
       </Button>
     </Overlay>
   );

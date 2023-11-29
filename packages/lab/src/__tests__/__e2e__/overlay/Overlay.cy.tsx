@@ -15,7 +15,7 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Tab").realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       // focus remains on anchor element
-      cy.findByText(/Toggle Overlay/i).should("be.focused");
+      cy.findByText(/Show Overlay/i).should("be.focused");
     });
 
     it("THEN it should remain open on repeated anchor element press", () => {
@@ -37,18 +37,18 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Escape");
       cy.findByRole("dialog").should("not.exist");
       // focus goes back to anchor element
-      cy.findByRole("button", { name: /Toggle Overlay/i }).should("be.focused");
+      cy.findByRole("button", { name: /Show Overlay/i }).should("be.focused");
     });
 
     it("THEN it should remain open until outside Overlay click or close button click", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button", { name: /Toggle Overlay/i }).click();
+      cy.findByRole("button", { name: /Show Overlay/i }).click();
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltOverlay-closeButton").click();
       cy.findByRole("dialog").should("not.exist");
 
-      cy.findByRole("button", { name: /Toggle Overlay/i }).click();
+      cy.findByRole("button", { name: /Show Overlay/i }).click();
       cy.findByRole("dialog").should("be.visible");
       cy.get("body").click(0, 0); // click outside of Overlay
       cy.findByRole("dialog").should("not.exist");
@@ -76,7 +76,7 @@ describe("GIVEN an Overlay", () => {
 
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().y;
-        cy.findByText(/Toggle Overlay/i).should(($el) => {
+        cy.findByText(/Show Overlay/i).should(($el) => {
           expect($el[0].getBoundingClientRect().y).greaterThan(position);
         });
       });
@@ -89,7 +89,7 @@ describe("GIVEN an Overlay", () => {
 
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().x;
-        cy.findByText(/Toggle Overlay/i).should(($el) => {
+        cy.findByText(/Show Overlay/i).should(($el) => {
           expect($el[0].getBoundingClientRect().x).lessThan(position);
         });
       });
@@ -102,7 +102,7 @@ describe("GIVEN an Overlay", () => {
 
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().y;
-        cy.findByText(/Toggle Overlay/i).should(($el) => {
+        cy.findByText(/Show Overlay/i).should(($el) => {
           expect($el[0].getBoundingClientRect().y).lessThan(position);
         });
       });
@@ -115,7 +115,7 @@ describe("GIVEN an Overlay", () => {
 
       cy.findByRole("dialog").then(($el) => {
         const textPosition = $el[0].getBoundingClientRect().x;
-        cy.findByText(/Toggle Overlay/i).should(($el) => {
+        cy.findByText(/Show Overlay/i).should(($el) => {
           expect($el[0].getBoundingClientRect().x).greaterThan(textPosition);
         });
       });
