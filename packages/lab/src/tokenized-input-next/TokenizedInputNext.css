@@ -11,6 +11,7 @@
   border: var(--tokenizedInput-border);
   color: var(--salt-content-primary-foreground);
   display: inline-flex;
+  flex-wrap: wrap;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   height: auto;
@@ -89,11 +90,6 @@
   --tokenizedInput-outlineColor: var(--salt-status-success-borderColor);
 }
 
-.saltTokenizedInputNext.saltTokenizedInputNext-withAdornmentRow {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 /* Style applied to inner textarea element */
 .saltTokenizedInputNext-textarea {
   background: none;
@@ -102,14 +98,18 @@
   color: inherit;
   cursor: inherit;
   display: inline-flex;
+  flex-basis: 0;
   height: var(--salt-text-lineHeight);
   font: inherit;
   letter-spacing: 0;
   min-width: 0;
-  width: auto;
   overflow: hidden;
   resize: none;
   padding: 0;
+}
+.saltTokenizedInputNext-expanded .saltTokenizedInputNext-textarea {
+  flex-grow: 1;
+  min-width: var(--salt-size-base);
 }
 
 /* Style applied to placeholder */
@@ -192,12 +192,15 @@
   --tokenizedInput-activationIndicator-borderWidth: 0;
 }
 
-/* Style applied to adornment containers */
-.saltTokenizedInputNext-endAdornmentContainer {
-  align-items: center;
-  display: inline-flex;
-  min-height: var(--salt-size-base);
-  column-gap: var(--salt-spacing-100);
+/* Style applied to button end adornment if last child */
+.saltTokenizedInputNext-endAdornment {
+  margin-left: auto;
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+
+/* Style applied to button end adornment if last child */
+.saltTokenizedInputNext-readOnly .saltTokenizedInputNext-endAdornment {
+  margin-right: 0;
 }
 
 /* Style applied to start adornment container */
@@ -205,23 +208,6 @@
   overflow: hidden;
   flex-wrap: wrap;
   gap: var(--salt-spacing-50);
-}
-
-/* Style applied to suffix adornment container */
-.saltTokenizedInputNext-suffixAdornments {
-  align-self: self-end;
-}
-
-/* Style applied to suffix adornment container when end adornments are provided */
-.saltTokenizedInputNext-withAdornmentRow .saltTokenizedInputNext-suffixAdornments {
-  display: inline-flex;
-  flex-basis: 100%;
-  justify-content: flex-end;
-}
-
-/* Style applied to end adornment container */
-.saltTokenizedInputNext-endAdornmentContainer {
-  margin-left: auto;
 }
 
 /* Style applied to status adornment container */
@@ -234,16 +220,6 @@
 /* Style applied to button start adornment if first child */
 .saltTokenizedInputNext .saltButton:first-child {
   margin-left: calc(var(--salt-spacing-50) * -1);
-}
-
-/* Style applied to button end adornment if last child */
-.saltTokenizedInputNext-endAdornmentContainer .saltButton:last-child {
-  margin-right: calc(var(--salt-spacing-50) * -1);
-}
-
-/* Style applied to button end adornment if last child */
-.saltTokenizedInputNext-readOnly .saltTokenizedInputNext-endAdornmentContainer .saltButton:last-child {
-  margin-right: 0;
 }
 
 .saltTokenizedInputNext .saltInputPill .saltPillNext-action {

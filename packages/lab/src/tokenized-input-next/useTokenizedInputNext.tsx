@@ -62,7 +62,7 @@ interface useTokenizedInputNextResult<Item> {
   /**
    * Properties applied to a basic tokenized input component
    */
-  inputProps: Omit<TokenizedInputNextProps<Item>, "helpers">;
+  inputProps: Omit<TokenizedInputNextProps<Item>, "helpers" | "onChange">;
 }
 
 export function useTokenizedInputNext<Item>(
@@ -99,12 +99,12 @@ export function useTokenizedInputNext<Item>(
     onInputFocus,
     onInputBlur,
     onClear,
+    onChange,
     id: idProp,
     value: valueProp,
     expanded: expandedProp,
     necessity: necessityProp,
     selectedItems: selectedItemsProp,
-    onChange,
     "aria-label": ariaLabel,
     "aria-describedby": ariaDescribedByProp,
     ...restProps

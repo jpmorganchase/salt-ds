@@ -97,6 +97,10 @@ export interface TokenizedInputNextProps<Item>
   textAreaRef?: Ref<HTMLTextAreaElement>;
   necessity?: NecessityType;
   //  TODO: should we have variant and bordered?
+  /**
+   * Styling variant. Defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
 }
 
 const withBaseName = makePrefixer("saltTokenizedInputNext");
@@ -109,8 +113,8 @@ const getItemsAriaLabel = (itemCount: number) =>
 export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
   {
     textAreaRef: textAreaRefProp,
-    onKeyUp,
     textAreaProps = {},
+    variant = "primary",
     ...rest
   }: TokenizedInputNextProps<Item>,
   ref: ForwardedRef<HTMLDivElement>
@@ -157,6 +161,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     onInputSelect,
     onClear,
     onClick,
+    onKeyUp,
     id: idProp,
     expandButtonRef: expandButtonRefProp,
     "aria-label": ariaLabel,
@@ -309,9 +314,9 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
       <div
         className={clsx(
           withBaseName(),
-          // withBaseName(variant),
+          withBaseName(variant),
           {
-            [withBaseName("withAdornmentRow")]: expandedWithItems,
+            [withBaseName("expanded")]: expanded,
             // [withBaseName("bordered")]: bordered,
             [withBaseName("focused")]: !disabled && focused,
             [withBaseName("disabled")]: disabled,
@@ -382,10 +387,9 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             <StatusAdornment status={validationStatus} />
           </div>
         )}
-        <div className={withBaseName("endAdornmentContainer")}>
           {expandedWithItems && (
             <Button
-              className={clsx(withBaseName("clear-button"))}
+              className={clsx(withBaseName("clear-button"), withBaseName("endAdornment"))}
               disabled={disabled}
               id={clearButtonId}
               onBlur={onBlur}
@@ -401,6 +405,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           )}
           {showExpandButton && (
             <Button
+              className={withBaseName("endAdornment")}
               aria-label={expandButtonAccessibleText}
               aria-labelledby={clsx(ariaLabelledBy, inputId, expandButtonId)}
               disabled={disabled}
@@ -418,7 +423,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
               <OverflowMenuIcon />
             </Button>
           )}
-        </div>
         <div className={withBaseName("activationIndicator")} />
       </div>
     </div>
