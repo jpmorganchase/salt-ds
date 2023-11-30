@@ -8,10 +8,10 @@
     "directory": "packages/ag-grid-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "style": "uitk-ag-theme.css",
+  "style": "uitk.css",
   "files": [
-    "/uitk-ag-theme.css",
-    "/salt-ag-theme.css"
+    "/uitk.css",
+    "/salt.css"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
