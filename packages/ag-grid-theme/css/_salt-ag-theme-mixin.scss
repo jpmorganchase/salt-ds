@@ -427,7 +427,7 @@
 
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-left::before {
+    ).ag-cell-range-left:before {
     border-left: 2px dotted var(--agGrid-range-selection-borderColor);
     content: "";
     height: 100%;
@@ -439,7 +439,7 @@
   }
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-right:after {
+    ).ag-cell-range-right:before {
     border-right: 2px dotted var(--agGrid-range-selection-borderColor);
     content: "";
     height: 100%;
@@ -452,7 +452,7 @@
 
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
-    ).ag-cell-range-top:before {
+    ).ag-cell-range-top:after {
     border-top: 2px dotted var(--agGrid-range-selection-borderColor);
     content: "";
     width: 100%;
