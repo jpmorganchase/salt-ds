@@ -35,6 +35,7 @@ const Default = (props: AgGridReactProps) => {
           ]}
           rowData={dataGridExampleData}
           rowSelection="single"
+          enableRangeSelection={true}
           {...agGridProps}
           {...props}
         />
