@@ -12,7 +12,6 @@ import {
   isValidElement,
   cloneElement,
   HTMLAttributes,
-  MutableRefObject,
 } from "react";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
@@ -74,7 +73,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       context,
       floating,
       reference,
-      refs,
       getTriggerProps,
       getOverlayProps,
       floatingStyles,
@@ -117,11 +115,9 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             // @ts-ignore
             focusManagerProps={{
               context: context,
-              initialFocus: refs.reference as MutableRefObject<HTMLElement>,
             }}
           >
             <div className={withBaseName("container")} {...rest}>
-              <div className={withBaseName("content")}>{content}</div>
               <Button
                 onClick={handleCloseButton}
                 variant="secondary"
@@ -130,6 +126,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
               >
                 <CloseIcon aria-hidden />
               </Button>
+              <div className={withBaseName("content")}>{content}</div>
             </div>
 
             <FloatingArrow
