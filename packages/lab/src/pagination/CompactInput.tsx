@@ -11,7 +11,7 @@ import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";
 
 export const CompactInput = forwardRef<HTMLInputElement, InputProps>(
-  function CompactInput({variant, ...restProps }, ref) {
+  function CompactInput({ variant, ...restProps }, ref) {
     const { count, page, onPageChange } = usePaginationContext();
 
     const [inputValue, setInputValue] = useState(`${page}`);

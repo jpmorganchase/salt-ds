@@ -49,7 +49,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     const rootRef = useRef<HTMLSpanElement>(null);
     const forkedRef = useForkRef(rootRef, forwardedRef);
-    const labelId = useId()
+    const labelId = useId();
     const [inputValue, setInputValue] = useState("");
 
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(

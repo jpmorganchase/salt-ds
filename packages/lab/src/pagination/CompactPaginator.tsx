@@ -15,11 +15,11 @@ import paginationCss from "./Pagination.css";
 
 interface CompactPaginatorProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Optional ref for the input component. Only applied if `withInput` is set to true. 
+   * Optional ref for the input component. Only applied if `withInput` is set to true.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * Change input variant. Only applied if `withInput` is set to true. 
+   * Change input variant. Only applied if `withInput` is set to true.
    */
   inputVariant?: "primary" | "secondary";
   /**
