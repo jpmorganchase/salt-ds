@@ -15,7 +15,7 @@ export default {
 
 export const Metric = () => {
   return (
-    <StackLayout gap={1}>
+    <StackLayout gap={0}>
       <Text>
         <b>Revenue YTD</b>
       </Text>
@@ -37,7 +37,7 @@ export const HorizontalMetric = () => {
 
 export const Subtitle = () => {
   return (
-    <StackLayout gap={1}>
+    <StackLayout gap={0}>
       <Text>
         <b>Revenue YTD</b>
       </Text>
@@ -49,7 +49,7 @@ export const Subtitle = () => {
 
 export const Subvalue = () => {
   return (
-    <StackLayout gap={1}>
+    <StackLayout gap={0}>
       <Text>
         <b>Revenue YTD</b>
       </Text>
@@ -64,7 +64,7 @@ export const Subvalue = () => {
 
 export const LinkSubtitle = () => {
   return (
-    <StackLayout gap={1}>
+    <StackLayout gap={0}>
       <Text>
         <b>Revenue YTD</b>
       </Text>
@@ -80,7 +80,7 @@ export const LinkSubtitle = () => {
 export const Indicators = () => {
   return (
     <StackLayout direction={"row"} gap={8}>
-      <StackLayout gap={1}>
+      <StackLayout gap={0}>
         <Text>
           <b>Revenue YTD</b>
         </Text>
@@ -96,7 +96,7 @@ export const Indicators = () => {
           +10.1 (+1.23%)
         </Text>
       </StackLayout>
-      <StackLayout gap={1}>
+      <StackLayout gap={0}>
         <Text>
           <b>Revenue YTD</b>
         </Text>
@@ -119,7 +119,7 @@ export const Indicators = () => {
 export const Hierarchical = () => {
   return (
     <StackLayout direction={"row"} gap={8} align="end">
-      <StackLayout gap={1}>
+      <StackLayout gap={0}>
         <Text>
           <b>Revenue YTD</b>
         </Text>
@@ -135,7 +135,7 @@ export const Hierarchical = () => {
           +10.1 (+1.23%)
         </Text>
       </StackLayout>
-      <StackLayout gap={1}>
+      <StackLayout gap={0}>
         <Text>
           <b>Revenue YTD</b>
         </Text>
@@ -151,7 +151,7 @@ export const Hierarchical = () => {
           +10.1 (+1.23%)
         </Text>
       </StackLayout>
-      <StackLayout gap={1}>
+      <StackLayout gap={0}>
         <Text>
           <b>Revenue YTD</b>
         </Text>
