@@ -35,8 +35,6 @@ const themeDirPath = path.resolve(
   "../packages/theme/css/characteristics"
 );
 
-const cireDirPath = path.resolve(__dirname, "../packages/core/src");
-
 const allCssVariables = getCssVariablesFromDir(themeDirPath);
 const jsonData = JSON.stringify(allCssVariables, null, 2);
 const cssFolderPath = path.resolve(
