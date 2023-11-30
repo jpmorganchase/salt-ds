@@ -4,6 +4,7 @@ import {
   forwardRef,
   HTMLAttributes,
   KeyboardEventHandler,
+  Ref,
   useCallback,
   useRef,
   useState,
@@ -24,9 +25,9 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
    */
   label?: string;
   /**
-   * Id of the input field
+   * Optional ref for the input component
    */
-  id?: string;
+  inputRef?: Ref<HTMLInputElement>;
   /**
    * Change input variant.
    */
@@ -37,7 +38,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
   function GoToInput(
     {
       className,
-      id: idProp,
+      inputRef,
       inputVariant = "primary",
       label = "Go to",
       ...restProps
@@ -46,11 +47,9 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
   ) {
     const { count, onPageChange, paginatorElement } = usePaginationContext();
 
-    const id = useId(idProp);
-
     const rootRef = useRef<HTMLSpanElement>(null);
     const forkedRef = useForkRef(rootRef, forwardedRef);
-
+    const labelId = useId()
     const [inputValue, setInputValue] = useState("");
 
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -104,14 +103,14 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
         ref={forkedRef}
         {...restProps}
       >
-        {label && <FormFieldLabel>{label}</FormFieldLabel>}
+        {label && <FormFieldLabel id={labelId}>{label}</FormFieldLabel>}
         <Input
           className={clsx(withBaseName("pageInput"), {
             [withBaseName("pageInputFixed")]: count < 100,
           })}
-          id={id}
+          ref={inputRef}
           inputProps={{
-            "aria-labelledby": id,
+            "aria-labelledby": labelId,
             "aria-label": `Page, ${count} total`,
             style: { width: widthCh },
           }}

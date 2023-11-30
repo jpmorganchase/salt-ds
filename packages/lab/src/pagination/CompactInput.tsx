@@ -6,17 +6,15 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Input, InputProps, useId } from "@salt-ds/core";
+import { Input, InputProps } from "@salt-ds/core";
 import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";
 
 export const CompactInput = forwardRef<HTMLInputElement, InputProps>(
-  function CompactInput({ id: idProp, variant, ...restProps }, ref) {
+  function CompactInput({variant, ...restProps }, ref) {
     const { count, page, onPageChange } = usePaginationContext();
 
     const [inputValue, setInputValue] = useState(`${page}`);
-
-    const id = useId(idProp);
 
     useEffect(() => {
       setInputValue(`${page}`);
@@ -54,7 +52,6 @@ export const CompactInput = forwardRef<HTMLInputElement, InputProps>(
         onBlur={handleBlur}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        id={id}
         value={inputValue}
         textAlign={"center"}
         variant={variant}

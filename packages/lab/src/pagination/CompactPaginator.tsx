@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useCallback } from "react";
+import { ComponentPropsWithoutRef, forwardRef, Ref, useCallback } from "react";
 import { clsx } from "clsx";
 import { useForkRef, Text } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
@@ -15,11 +15,11 @@ import paginationCss from "./Pagination.css";
 
 interface CompactPaginatorProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Id of the input field
+   * Optional ref for the input component. Only applied if `withInput` is set to true. 
    */
-  id?: string;
+  inputRef?: Ref<HTMLInputElement>;
   /**
-   * Change input variant.
+   * Change input variant. Only applied if `withInput` is set to true. 
    */
   inputVariant?: "primary" | "secondary";
   /**
@@ -32,7 +32,7 @@ export const CompactPaginator = forwardRef<
   HTMLDivElement,
   CompactPaginatorProps
 >(function CompactPaginator(
-  { className, id, inputVariant, withInput, ...restProps },
+  { className, inputRef, inputVariant, withInput, ...restProps },
   forwardedRef
 ) {
   const targetWindow = useWindow();
@@ -68,7 +68,7 @@ export const CompactPaginator = forwardRef<
         <ChevronLeftIcon />
       </ArrowButton>
       {withInput ? (
-        <CompactInput id={id} variant={inputVariant} />
+        <CompactInput inputRef={inputRef} variant={inputVariant} />
       ) : (
         <PageButton page={page} onPageChange={onPageChange} disabled />
       )}
