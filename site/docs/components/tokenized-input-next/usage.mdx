@@ -8,19 +8,19 @@ data:
   $ref: ./#/data
 ---
 
-### When to use Tokenized Input Next
+### Using the component
 
-Tokenized Input Next is typically used within the context of a form. It’s ideal when you have a field that can contain multiple, specific values related to a single topic or context—and these values can be removed quickly and in their entirety. You would use the component, for example, in a field for email addresses or a fast field for a cash ticket.
+The component is typically used in a form. It’s ideal for fields that can contain multiple, specific values related to a single topic or context—and these values can be removed quickly and in their entirety. You would use the component, for example, in a field for email addresses or a fast field for a cash ticket.
 
-### When not to use Tokenized Input Next
+### When not to use
 
-- Never use Tokenized Input Next as a standalone component; it will fail to meet ADA requirements.
-- Consider the Combo Box component if you need to generate a list of suggested values that partially match the text entered by the user.
-- Use a Combo Box when your selection is constrained to options in an existing dataset.
+- As a standalone component. It will fail to meet ADA requirements.
+- To generate a list of suggested values that partially match the text entered by the user. Instead, use [`ComboBoxNext`](/salt/components/combo-box/).
+- To choose exclusively from options in an existing dataset. Instead, use [`ComboBoxNext`](/salt/components/combo-box/).
 
 ### Import
 
-To import Tokenized Input Next from the core Salt package, use:
+To import`TokenizedInputNext` from the core Salt package, use:
 
 ```js
 import { TokenizedInputNext } from "@salt-ds/lab";
