@@ -6,13 +6,14 @@ import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const CustomFilter = () => {
   const [hasSavedState, setHasSavedState] = useState(true);
+  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
     if (isGridReady) {
       api?.sizeColumnsToFit();
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   const handlePopMt100kClick = () => {
     const popMt100kComponent = api!.getFilterInstance("population")!;
@@ -55,11 +56,13 @@ export const CustomFilter = () => {
   };
 
   const saveState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     (window as any).filterState = api!.getFilterModel();
     setHasSavedState(false);
   };
 
   const restoreState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     api!.setFilterModel((window as any).filterState);
     setHasSavedState(true);
   };

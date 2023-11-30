@@ -3,10 +3,8 @@ import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultData, masterDetailColumns } from "./data";
 
-import "ag-grid-community/styles/ag-grid.css";
-import "@salt-ds/ag-grid-theme/salt.css";
-
 export const MasterDetail = (props: AgGridReactProps) => {
+  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   const gridRef = useRef<AgGridReact>(null);

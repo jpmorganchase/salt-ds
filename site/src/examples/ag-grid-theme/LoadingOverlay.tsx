@@ -5,6 +5,7 @@ import { useAgGridHelpers } from "./useAgGridHelpers";
 import { defaultColumns, defaultData } from "./data";
 
 export const LoadingOverlay = () => {
+  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   const getModalStyle: CSSProperties = {
