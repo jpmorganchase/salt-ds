@@ -36,6 +36,7 @@ const Default = (props: { defaultTheme: string }) => {
           ]}
           rowData={dataGridExampleData}
           rowSelection="single"
+          enableRangeSelection={true}
           {...agGridProps}
         />
       </div>
