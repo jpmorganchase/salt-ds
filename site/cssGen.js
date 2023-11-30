@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 function getCssVariablesFromDir(dirPath) {
-  const cssVariableRegex = /([a-zA-Z0-9_-]+)\s*:\s*([^;]+)/g;
+  const cssVariableRegex = /(-{2}[a-zA-Z0-9_-]+)\s*:\s*([^;]+)/g;
   const cssVariables = {};
 
   const files = fs.readdirSync(dirPath);
@@ -35,11 +35,13 @@ const themeDirPath = path.resolve(
   "../packages/theme/css/characteristics"
 );
 
+const cireDirPath = path.resolve(__dirname, "../packages/core/src");
+
 const allCssVariables = getCssVariablesFromDir(themeDirPath);
 const jsonData = JSON.stringify(allCssVariables, null, 2);
 const cssFolderPath = path.resolve(
   __dirname,
-  "../site/src/components/css-display"
+  "../site/src/components/token-definitions"
 );
 
 const outputPath = path.join(cssFolderPath, "cssVariables.json");

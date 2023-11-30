@@ -151,6 +151,27 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
     name: "vite-plugin-css-variable-docgen",
     enforce: "post",
     async transform(code, id) {
+      if (id.includes("theme/index.css")) {
+        const sourceFile = ts.createSourceFile(
+          id,
+          code,
+          ts.ScriptTarget.ESNext
+        );
+
+        const transformer = <T extends ts.Node>(
+          context: ts.TransformationContext
+        ) => {
+          return (rootNode: T) => {
+            function visit(node: ts.Node): ts.Node {
+              console.log(node);
+
+              return ts.visitEachChild(node, visit, context);
+            }
+            return ts.visitNode(rootNode, visit);
+          };
+        };
+        const result = ts.transform<ts.SourceFile>(sourceFile, [transformer]);
+      }
       if (!(await isExcluded(id)) && (await isIncluded(id))) {
         const cssImports: string[] = [];
 
@@ -343,6 +364,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                 node.left.name.escapedText === "___docgenInfo" &&
                 ts.isObjectLiteralExpression(node.right)
               ) {
+                // console.log(identifierMap);
                 return ts.factory.updateBinaryExpression(
                   node,
                   node.left,
@@ -375,7 +397,9 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           };
         };
 
-        const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+        const printer = ts.createPrinter({
+          newLine: ts.NewLineKind.LineFeed,
+        });
         const result = ts.transform<ts.SourceFile>(sourceFile, [transformer]);
         const transformedSourceFile = result.transformed[0];
         const newContent = printer.printFile(transformedSourceFile);

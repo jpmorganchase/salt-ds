@@ -11,4 +11,5 @@ next-env.d.ts
 /snapshots/
 /public/sitemap.xml
 /src/props/*.json
-/src/components/css-display/cssVariables.json
+/src/components/token-definitions/cssVariables.json
+/src/components/token-definitions/usage.json

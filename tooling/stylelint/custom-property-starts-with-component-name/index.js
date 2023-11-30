@@ -95,23 +95,12 @@ module.exports = stylelint.createPlugin(
 
       function check(property) {
         const checkResult =
-          isCssApi(property) ||
-          isComponentCustomProperty(property) ||
-          property.startsWith("--backwardsCompat-") || // Do not check backwardsCompat CSS
-          property.startsWith("--svg-"); // FIXME: Do not check SVG tokens for now
+          isCssApi(property) || isComponentCustomProperty(property);
         verboseLog && console.log("Checking", checkResult, property);
         return checkResult;
       }
 
       root.walkDecls((decl) => {
-        if (
-          decl.parent?.type === "rule" &&
-          decl.parent?.selector?.includes?.("backwardsCompat")
-        ) {
-          // Do not check backwardsCompat CSS
-          return;
-        }
-
         const { prop, value } = decl;
 
         const parsedValue = valueParser(value);

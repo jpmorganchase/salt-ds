@@ -18,4 +18,4 @@ export * from "./image-switcher";
 export * from "./keyboard-controls";
 export * from "./mdx";
 export * from "./support-and-contributions";
-export * from "./css-display";
+export * from "./token-definitions";

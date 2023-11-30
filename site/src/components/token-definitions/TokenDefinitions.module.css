@@ -19,13 +19,13 @@
   font-size: 15px;
 }
 
-.searchBar {
-  margin-bottom: 20px;
-}
-
 .loading {
   display: flex;
   margin-left: 50%;
+}
+
+.usageAccordion {
+  margin-top: var(--salt-spacing-300);
 }
 
 @media (max-width: 768px) {
