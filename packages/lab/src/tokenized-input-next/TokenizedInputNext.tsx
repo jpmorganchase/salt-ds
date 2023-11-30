@@ -389,8 +389,9 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             <StatusAdornment status={validationStatus} />
           </div>
         )}
-        <div className={withBaseName("endAdornmentContainer")}>
-          {expandedWithItems && (
+
+        {expandedWithItems && (
+          <div className={withBaseName("endAdornmentContainer")}>
             <Button
               className={clsx(
                 withBaseName("clear-button"),
@@ -408,8 +409,10 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             >
               <CloseIcon aria-hidden />
             </Button>
-          )}
-          {showExpandButton && (
+          </div>
+        )}
+        {showExpandButton && (
+          <div className={withBaseName("endAdornmentContainer")}>
             <Button
               className={withBaseName("endAdornment")}
               aria-label={expandButtonAccessibleText}
@@ -428,8 +431,8 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             >
               <OverflowMenuIcon />
             </Button>
-          )}
-        </div>
+          </div>
+        )}
         <div className={withBaseName("activationIndicator")} />
       </div>
     </div>

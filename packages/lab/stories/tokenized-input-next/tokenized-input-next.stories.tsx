@@ -36,10 +36,6 @@ const TokenizedInputNextTemplate: StoryFn<typeof TokenizedInputNext> = (
     <div
       style={{
         background: "aliceblue",
-        width: "calc(100vw - 40px)",
-        height: "50vh",
-        display: "flex",
-        justifyContent: "center",
       }}
     >
       <TokenizedInputNext

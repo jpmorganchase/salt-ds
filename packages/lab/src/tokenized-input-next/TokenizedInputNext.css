@@ -14,11 +14,11 @@
   flex-wrap: wrap;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
-  height: auto;
+  height: 100%;
   line-height: var(--salt-text-lineHeight);
   min-height: var(--salt-size-base);
   min-width: 4em;
-  padding: var(--salt-spacing-100) var(--salt-spacing-100) 0 var(--salt-spacing-100);
+  padding: 0 var(--salt-spacing-100);
   position: relative;
   width: 100%;
 }
@@ -208,7 +208,6 @@
 .saltTokenizedInputNext {
   overflow: hidden;
   flex-wrap: wrap;
-  gap: var(--salt-spacing-50);
 }
 
 /* Style applied to status adornment container */
@@ -218,13 +217,17 @@
   min-height: var(--salt-size-base);
 }
 
-/* Style applied to button start adornment if first child */
-.saltTokenizedInputNext .saltButton:first-child {
-  margin-left: calc(var(--salt-spacing-50) * -1);
+.saltTokenizedInputNext .saltButton {
+  --saltButton-padding: 0;
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 .saltTokenizedInputNext .saltInputPill .saltPillNext-action {
   max-width: 100%;
+}
+.saltTokenizedInputNext .saltInputPill {
+  margin: var(--salt-spacing-25);
 }
 
 .saltTokenizedInputNext .saltTokenizedInputNext-expanded-pill.saltInputPill .saltPillNext-action {
