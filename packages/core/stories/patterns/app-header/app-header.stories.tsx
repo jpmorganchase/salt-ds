@@ -79,7 +79,7 @@ export const AppHeader = () => {
                   <Button
                     onClick={() => setDrawerOpen(true)}
                     style={{ alignSelf: "center" }}
-                   variant="secondary"
+                    variant="secondary"
                   >
                     <MenuIcon />
                   </Button>
