@@ -17,7 +17,7 @@ When you want to use the Salt theme with AG Grid.
 
 #### When not to use AG Grid Theme
 
-When you want to use a component that is not related to AG Grid. Instead, use Grid.
+When you want to use a component that is not related to AG Grid.
 
 ### Import
 
@@ -33,37 +33,36 @@ yarn add @salt-ds/ag-grid-theme
 npm install @salt-ds/ag-grid-theme
 ```
 
+#### Import ag-grid styles
+
+You need to import ag-grid styles along with our themes.
+
+```
+import "ag-grid-community/styles/ag-grid.css";
+```
+
 #### Import Salt AG Grid theme
 
 To import the Salt AG Grid theme, use:
 
-```js
-import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+```
+import "@salt-ds/ag-grid-theme/salt.css";
 ```
 
-For light mode, use these CSS class names:
+For light mode, use these CSS class name `.ag-theme-salt-light`.
 
-```js
-.ag-theme-salt-high-compact-light
-.ag-theme-salt-high-light
-.ag-theme-salt-medium-light
-.ag-theme-salt-low-light
-.ag-theme-salt-touch-light
+For dark mode, use these CSS class name `.ag-theme-salt-dark`.
+
+For `compact` version, use these CSS class names:
+
+```
+.ag-theme-salt-compact-light
+.ag-theme-salt-compact-dark
 ```
 
-For dark mode, use these CSS class names:
+For variants, which are available only on salt theme, use these CSS class names:
 
-```js
-.ag-theme-salt-high-compact-dark
-.ag-theme-salt-high-dark
-.ag-theme-salt-medium-dark
-.ag-theme-salt-low-dark
-.ag-theme-salt-touch-dark
 ```
-
-For variants, use these CSS class names:
-
-```js
 .ag-theme-salt-variant-secondary
 .ag-theme-salt-variant-zebra
 ```
@@ -71,3 +70,24 @@ For variants, use these CSS class names:
 For editable fields, add the class name `.editable-cell` to the `cellClass` array in your column definition.
 
 For fields displaying numeric values, add the class name `.numeric-cell` to the `cellClass` array in your column definition.
+
+#### Import UITK AG Grid theme
+
+UITK AG Grid theme contains CSS files with a theme that resembles the Toolkit V1 Data Grid component; use this when you would like to keep the Toolkit V1 theme.
+
+To import the UITK AG Grid theme, use:
+
+```js
+import "@salt-ds/ag-grid-theme/uitk.css";
+```
+
+For light mode, use these CSS class name `.ag-theme-uitk-light`.
+
+For dark mode, use these CSS class name `.ag-theme-uitk-dark`.
+
+For `compact` version, use these CSS class names:
+
+```js
+.ag-theme-uitk-compact-light
+.ag-theme-uitk-compact-dark
+```
