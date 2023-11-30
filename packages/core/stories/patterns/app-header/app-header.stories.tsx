@@ -89,6 +89,7 @@ export const AppHeader = () => {
                   <Button
                     onClick={() => setDrawerOpen(false)}
                     style={{ alignSelf: "center" }}
+                    variant="secondary"
                   >
                     <CloseIcon />
                   </Button>
