@@ -15,7 +15,6 @@ import {
   SetStateAction,
   SyntheticEvent,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -158,12 +157,6 @@ export function useTokenizedInputNext<Item>(
       textAreaRef.current.focus();
     }
   }, []);
-
-  useEffect(() => {
-    if (expanded) {
-      focusInput();
-    }
-  }, [expanded, focusInput]);
 
   const updateInputValue = (newValue: string | undefined) => {
     if (!isInputControlled) {

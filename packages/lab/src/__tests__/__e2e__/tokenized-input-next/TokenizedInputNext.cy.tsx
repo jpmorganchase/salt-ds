@@ -92,14 +92,14 @@ describe("GIVEN a Tokenized Input", () => {
       cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
       cy.findByRole("textbox").should("exist");
       cy.findByRole("textbox").focus();
-      // Clear button should exist
+      // pill should exist
       cy.findByRole("option").should("exist");
 
       // Remove the item
       cy.realPress("ArrowLeft");
       cy.realPress("Backspace");
 
-      // clear button should not exist after removal
+      // pill should not exist after removal
       cy.findByRole("option").should("not.exist");
     });
 
@@ -130,6 +130,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
       cy.findByRole("textbox").focus();
       // move focus to clear button
+      cy.findByTestId("clear-button").should("exist");
       cy.findByTestId("clear-button").focus();
       cy.findByTestId("clear-button").realPress("Enter");
       cy.findByRole("textbox").should("have.focus");
@@ -159,6 +160,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.findByTestId("clear-button").click();
       // type and add an item
       cy.findByRole("textbox").type("Tokio,");
+      cy.findByRole("option").should("exist");
 
       cy.get("@onExpand").should("have.been.called");
       cy.get("@onChange").should("have.been.called");

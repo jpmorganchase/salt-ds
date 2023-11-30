@@ -12,7 +12,7 @@ const withBaseName = makePrefixer("saltInputPill");
 
 export type InputPillProps = PillNextProps & {
   /**
-   * An ref object holds pills index map to width.
+   * A ref object holds pills index map to width.
    */
   pillsRef: MutableRefObject<Record<number, number | undefined>>;
   /**
