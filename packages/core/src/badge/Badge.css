@@ -14,7 +14,6 @@
   min-width: var(--salt-text-notation-lineHeight);
   border-radius: 9999px;
   white-space: nowrap;
-  z-index: var(--salt-zIndex-notification);
 
   align-items: center;
   justify-content: center;
