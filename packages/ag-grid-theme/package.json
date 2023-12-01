@@ -11,7 +11,8 @@
   "style": "uitk.css",
   "files": [
     "/uitk.css",
-    "/salt.css"
+    "/salt.css",
+    "/fonts"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
