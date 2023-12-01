@@ -5,6 +5,10 @@ import {
   useTheme,
 } from "@salt-ds/core";
 import { mount } from "cypress/react";
+import { composeStories } from "@storybook/react";
+import * as saltProviderStories from "@stories/salt-provider/salt-provider.stories";
+
+const { NestedProviders } = composeStories(saltProviderStories);
 
 const TestComponent = ({
   id = "test-1",
@@ -188,4 +192,19 @@ describe("Given a SaltProvider", () => {
         .and("have.class", "salt-density-high");
     });
   });
+});
+
+describe("Theme name(s)", () => {
+  beforeEach(() => {
+    mount(<NestedProviders />);
+  });
+
+  it("should default to salt-theme only", () => {
+    cy.get("div.salt-provider").should("have.length", 2);
+
+    // TODO: check no other theme
+  });
+
+  it.todo("should default theme name when nested");
+  it.todo("should accept 2 theme names as array");
 });

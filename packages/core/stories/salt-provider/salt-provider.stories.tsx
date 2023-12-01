@@ -1,16 +1,19 @@
-import { SyntheticEvent, useState } from "react";
 import {
   Button,
   Card,
   Checkbox,
+  CheckboxGroup,
   Density,
+  H1,
   Mode,
   SaltProvider,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
+import { ChangeEvent, ReactNode, SyntheticEvent, useState } from "react";
 
 import "docs/story.css";
+import "./salt-provider.stories.css";
 
 export default {
   title: "Core/Salt Provider",
@@ -41,7 +44,7 @@ export const ToggleTheme = () => {
     <SaltProvider mode={mode}>
       <Card>
         <div>
-          <h1>This Card is wrapped with a SaltProvider</h1>
+          <H1>This Card is wrapped with a SaltProvider</H1>
           <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
             <ToggleButton aria-label="light theme" value="light">
               Light
@@ -75,52 +78,75 @@ export const ToggleTheme = () => {
   );
 };
 
-export const NestedProviders = () => {
-  const [outerMode, setOuterMode] = useState<Mode | "unset">("light");
-  const [outerDensity, setOuterDensity] = useState<Density | "unset">("high");
-  const [innerMode, setInnerMode] = useState<Mode | "unset">("dark");
-  const [innerDensity, setInnerDensity] = useState<Density | "unset">("unset");
+const getThemeName = (selectedTheme: string[]) => {
+  if (selectedTheme.length === 0) {
+    return undefined;
+  } else if (selectedTheme.length === 1) {
+    return selectedTheme[0];
+  } else {
+    return selectedTheme;
+  }
+};
 
-  const handleChangeOuterTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setOuterMode(event.currentTarget.value as Mode);
+const CardWithProvider = ({
+  defaultMode,
+  defaultDensity,
+  children,
+}: {
+  defaultMode: Mode | "unset";
+  defaultDensity: Density | "unset";
+  children?: ReactNode;
+}) => {
+  const [mode, setMode] = useState(defaultMode);
+  const [density, setDensity] = useState(defaultDensity);
+  const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
+
+  const handleChangeMode = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
+  };
+  const handleChangeDensity = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setDensity(event.currentTarget.value as Density);
   };
 
-  const handleChangeOuterDensity = (
-    event: SyntheticEvent<HTMLButtonElement>
-  ) => {
-    setOuterDensity(event.currentTarget.value as Density);
-  };
-
-  const handleChangeInnerTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
-    setInnerMode(event.currentTarget.value as Mode);
-  };
-  const handleChangeInnerDensity = (
-    event: SyntheticEvent<HTMLButtonElement>
-  ) => {
-    setInnerDensity(event.currentTarget.value as Density);
+  const handleThemeNamesChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (selectedThemes.indexOf(value) === -1) {
+      setSelectedThemes((prevControlledValues) => [
+        ...prevControlledValues,
+        value,
+      ]);
+    } else {
+      setSelectedThemes((prevControlledValues) =>
+        prevControlledValues.filter(
+          (controlledValue) => controlledValue !== value
+        )
+      );
+    }
   };
 
   return (
     <SaltProvider
-      density={outerDensity === "unset" ? undefined : outerDensity}
-      mode={outerMode === "unset" ? undefined : outerMode}
+      mode={mode === "unset" ? undefined : mode}
+      density={density === "unset" ? undefined : density}
+      theme={getThemeName(selectedThemes)}
     >
       <Card>
         <div>
-          <h1>This Card is wrapped with a SaltProvider</h1>
+          <H1>Card with Salt Provider</H1>
           <ToggleButtonGroup
-            aria-label="Outer theme selection"
-            onChange={handleChangeOuterTheme}
-            value={outerMode}
+            aria-label="Theme selection"
+            onChange={handleChangeMode}
+            value={mode}
           >
             <ToggleButton value="light">Light</ToggleButton>
             <ToggleButton value="dark">Dark</ToggleButton>
             <ToggleButton value="unset">Not set</ToggleButton>
           </ToggleButtonGroup>
+
           <ToggleButtonGroup
-            aria-label="Outer density selection"
-            onChange={handleChangeOuterDensity}
-            value={outerDensity}
+            aria-label="Density selection"
+            onChange={handleChangeDensity}
+            value={density}
           >
             <ToggleButton value="high">High</ToggleButton>
             <ToggleButton value="medium">Medium</ToggleButton>
@@ -128,50 +154,31 @@ export const NestedProviders = () => {
             <ToggleButton value="touch">Touch</ToggleButton>
             <ToggleButton value="unset">Not set</ToggleButton>
           </ToggleButtonGroup>
+
+          <CheckboxGroup
+            checkedValues={selectedThemes}
+            onChange={handleThemeNamesChange}
+          >
+            <Checkbox label="Custom font" value="custom-font" />
+            <Checkbox label="No spacing" value="no-spacing" />
+          </CheckboxGroup>
+
           <p>
-            This Card is wrapped with a SaltProvider, theme is light, density is
-            high.
+            This Card is wrapped with SaltProvider, default mode is{" "}
+            {defaultMode}, default density is {defaultDensity}
           </p>
+
+          {children}
         </div>
-        <br />
-        <SaltProvider
-          mode={innerMode === "unset" ? undefined : innerMode}
-          density={innerDensity === "unset" ? undefined : innerDensity}
-        >
-          <Card>
-            <div>
-              <h1>Nested Card</h1>
-              <ToggleButtonGroup
-                aria-label="Inner theme selection"
-                onChange={handleChangeInnerTheme}
-                value={innerMode}
-              >
-                <ToggleButton value="light">Light</ToggleButton>
-                <ToggleButton value="dark">Dark</ToggleButton>
-                <ToggleButton value="unset">Not set</ToggleButton>
-              </ToggleButtonGroup>
-
-              <ToggleButtonGroup
-                aria-label="Inner density selection"
-                onChange={handleChangeInnerDensity}
-                value={innerDensity}
-              >
-                <ToggleButton value="high">High</ToggleButton>
-                <ToggleButton value="medium">Medium</ToggleButton>
-                <ToggleButton value="low">Low</ToggleButton>
-                <ToggleButton value="touch">Touch</ToggleButton>
-                <ToggleButton value="unset">Not set</ToggleButton>
-              </ToggleButtonGroup>
-
-              <p>
-                This nested Card is also wrapped with a SaltProvider, theme is
-                dark. Density is not specified, so inherits high value from
-                outer SaltProvider
-              </p>
-            </div>
-          </Card>
-        </SaltProvider>
       </Card>
     </SaltProvider>
+  );
+};
+
+export const NestedProviders = () => {
+  return (
+    <CardWithProvider defaultMode="light" defaultDensity="high">
+      <CardWithProvider defaultMode="dark" defaultDensity="unset" />
+    </CardWithProvider>
   );
 };

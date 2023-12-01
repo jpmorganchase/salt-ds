@@ -41,6 +41,14 @@ export const ThemeContext = createContext<ThemeContextProps>({
 export const BreakpointContext =
   createContext<Breakpoints>(DEFAULT_BREAKPOINTS);
 
+const getThemeNames = (themeName: ThemeName): string[] => {
+  return themeName === DEFAULT_THEME_NAME
+    ? [DEFAULT_THEME_NAME]
+    : typeof themeName === "string"
+    ? [DEFAULT_THEME_NAME, themeName]
+    : [DEFAULT_THEME_NAME, ...themeName];
+};
+
 const createThemedChildren = (
   children: ReactNode,
   themeName: ThemeName,
@@ -48,10 +56,8 @@ const createThemedChildren = (
   mode: Mode,
   applyClassesTo?: TargetElement
 ) => {
-  const themeNames =
-    themeName === DEFAULT_THEME_NAME
-      ? [DEFAULT_THEME_NAME]
-      : [DEFAULT_THEME_NAME, themeName];
+  const themeNames = getThemeNames(themeName);
+
   if (applyClassesTo === "root") {
     return children;
   } else if (applyClassesTo === "child") {
@@ -62,6 +68,7 @@ const createThemedChildren = (
           ...themeNames,
           `salt-density-${density}`
         ),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         "data-mode": mode,
       });
@@ -91,14 +98,14 @@ const createThemedChildren = (
 
 type TargetElement = "root" | "scope" | "child";
 
-type SaltProviderBaseProps = {
+interface SaltProviderBaseProps {
   applyClassesTo?: TargetElement;
   density?: Density;
   theme?: ThemeName;
   mode?: Mode;
   breakpoints?: Breakpoints;
   enableStyleInjection?: boolean;
-};
+}
 
 interface SaltProviderThatAppliesClassesToChild extends SaltProviderBaseProps {
   children: ReactElement;
@@ -161,10 +168,7 @@ function InternalSaltProvider({
   });
 
   useIsomorphicLayoutEffect(() => {
-    const themeNames =
-      themeName === DEFAULT_THEME_NAME
-        ? [DEFAULT_THEME_NAME]
-        : [DEFAULT_THEME_NAME, themeName];
+    const themeNames = getThemeNames(themeName);
     if (applyClassesTo === "root" && targetWindow) {
       if (isRoot) {
         // add the styles we want to apply
@@ -228,7 +232,7 @@ export const useTheme = (): ThemeContextProps => {
  */
 export function useDensity(density?: Density): Density {
   const densityFromContext = useContext(DensityContext);
-  return density || densityFromContext || DEFAULT_DENSITY;
+  return density ?? densityFromContext ?? DEFAULT_DENSITY;
 }
 
 export const useBreakpoints = (): Breakpoints => {
