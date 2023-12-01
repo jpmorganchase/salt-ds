@@ -109,7 +109,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
           <FloatingComponent
             ref={floatingRef}
             open={open}
-            className={clsx(withBaseName(), className)}
+            className={withBaseName()}
             {...getOverlayProps()}
             {...floatingStyles()}
             // @ts-ignore
@@ -117,7 +117,11 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
               context: context,
             }}
           >
-            <div className={withBaseName("container")} {...rest}>
+            <div
+              className={clsx(withBaseName("container"), className)}
+              aria-modal="true"
+              {...rest}
+            >
               <Button
                 onClick={handleCloseButton}
                 variant="secondary"
@@ -131,7 +135,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
 
             <FloatingArrow
               {...(arrowProps as FloatingArrowProps)}
-              className={withBaseName("arrow")}
               strokeWidth={1}
               fill="var(--overlay-background)"
               stroke="var(--overlay-borderColor)"
