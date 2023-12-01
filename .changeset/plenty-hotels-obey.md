@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Changes for fixing tooltip UI breaks inside formfield
+Fixed Tooltip breaking when used inside a Form Field with an invalid value passed to the `validationStatus` prop.

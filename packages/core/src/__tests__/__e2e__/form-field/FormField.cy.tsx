@@ -264,11 +264,10 @@ describe("GIVEN a FormField", () => {
         });
       });
 
-      describe("AND has empty validation status", () => {
-        it("THEN tooltip should reflect status", () => {
+      describe("AND has an invalid validation status", () => {
+        it("THEN tooltip should default to the info status", () => {
           cy.mount(
-            //check for falsy value not included in validationstatus
-            //@ts-expect-error
+            //@ts-expect-error - intentionally invalid validationStatus
             <FormField validationStatus="">
               <FormFieldLabel>Label</FormFieldLabel>
               <Tooltip content="Helper text">
