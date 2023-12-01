@@ -21,8 +21,8 @@ export interface UseOverlayProps
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {}
 
-export function useOverlay(props?: UseOverlayProps) {
-  const { open: openProp, placement: placementProp } = props || {};
+export function useOverlay(props: UseOverlayProps = {}) {
+  const { open: openProp, placement: placementProp } = props;
 
   const arrowRef = useRef<SVGSVGElement | null>(null);
 

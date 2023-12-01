@@ -18,18 +18,28 @@ export default {
 
 const OverlayContent = (
   <>
-    <h3 className="content-heading">Title</h3>
-    <div className="content-body">Content of Overlay</div>
-    <br />
-    <Tooltip content={"im a tooltip"}>
-      <Button>hover me</Button>
-    </Tooltip>
+    <h3 id="overlay_label" className="content-heading">
+      Title
+    </h3>
+    <div id="overlay_description">
+      Content of Overlay
+      <br />
+      <br />
+      <Tooltip content={"im a tooltip"}>
+        <Button>hover me</Button>
+      </Tooltip>
+    </div>
   </>
 );
 
 const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
   return (
-    <Overlay {...props} content={props.content}>
+    <Overlay
+      aria-labelledby="overlay_label"
+      aria-describedby="overlay_description"
+      {...props}
+      content={props.content}
+    >
       <Button>Show Overlay</Button>
     </Overlay>
   );
@@ -68,7 +78,7 @@ LongContent.args = {
     overflow: "auto",
   },
   content: (
-    <StackLayout>
+    <StackLayout id="overlay_description">
       <div>
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -88,21 +98,8 @@ LongContent.args = {
 
 const Divider = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        width: "100%",
-        paddingTop: 8,
-        paddingBottom: 8,
-      }}
-    >
-      <div
-        style={{
-          borderBottom: "1px solid rgba(0, 0, 0, 0.15)",
-          width: "100%",
-        }}
-      />
+    <div className="divider-container">
+      <div className="divider" />
     </div>
   );
 };
@@ -164,12 +161,15 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <>
-      <h3 style={{ marginTop: 0 }}>Export</h3>
+      <h3 style={{ marginTop: 0 }} id="overlay_label">
+        Export
+      </h3>
       <Checkbox
         indeterminate={getStatus()}
         checked={!getStatus()}
         label={`${controlledValues.length} of 2 selected`}
         onChange={handleChange}
+        id="overlay_description"
       />
       <Divider />
       <CheckboxGroup
@@ -213,6 +213,8 @@ export const WithActions = () => {
       onKeyDown={(event) => {
         event.key === "Escape" && setShow(false);
       }}
+      aria-labelledby="overlay_label"
+      aria-describedby="overlay_description"
     >
       <Button
         onClick={() => {
