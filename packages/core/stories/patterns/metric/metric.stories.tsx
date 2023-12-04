@@ -5,7 +5,6 @@ import {
   Display2,
   Display3,
   Link,
-  H1,
 } from "@salt-ds/core";
 import { ArrowUpIcon, ArrowDownIcon } from "@salt-ds/icons";
 import { Meta } from "@storybook/react";
@@ -69,16 +68,7 @@ export const LinkSubtitle = () => {
       <Text>
         <strong>Revenue YTD</strong>
       </Text>
-      <H1>
-        header with{" "}
-        <Link styleAs="h1" variant="secondary">
-          Total Value
-        </Link>{" "}
-        link
-      </H1>
-      <Link styleAs="h1" variant="secondary">
-        Total Value
-      </Link>
+      <Link variant="secondary">Total Value</Link>
       <Display1>$801.9B</Display1>
       <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
         +10.1 (+1.23%)
