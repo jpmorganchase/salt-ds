@@ -23,6 +23,7 @@
     "gen:css": "yarn node './cssGen.js'"
   },
   "dependencies": {
+    "@codesandbox/sandpack-react": "^2.10.0",
     "@jpmorganchase/mosaic-cli": "^0.1.0-beta.55",
     "@jpmorganchase/mosaic-components": "^0.1.0-beta.55",
     "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.55",

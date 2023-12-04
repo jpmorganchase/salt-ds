@@ -17,5 +17,6 @@ export * from "./getting-started";
 export * from "./image-switcher";
 export * from "./keyboard-controls";
 export * from "./mdx";
+export * from "./salt-sandpack"
 export * from "./support-and-contributions";
 export * from "./css-display";
