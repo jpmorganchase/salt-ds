@@ -79,6 +79,7 @@ export const AppHeader = () => {
                   <Button
                     onClick={() => setDrawerOpen(true)}
                     style={{ alignSelf: "center" }}
+                    variant="secondary"
                   >
                     <MenuIcon />
                   </Button>
@@ -88,6 +89,7 @@ export const AppHeader = () => {
                   <Button
                     onClick={() => setDrawerOpen(false)}
                     style={{ alignSelf: "center" }}
+                    variant="secondary"
                   >
                     <CloseIcon />
                   </Button>
