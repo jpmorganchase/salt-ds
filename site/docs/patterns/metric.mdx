@@ -1,0 +1,114 @@
+---
+title: Metric
+layout: DetailPattern
+aliases:
+  - /salt/patterns/metric
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric", label: "Examples" },
+    ]
+---
+
+Metrics is a pattern that displays an important number value prominently. Indicators or labels can be added to help provide context to the presented value.
+
+  <Diagram
+    src="/img/patterns/metric/metric.png"
+    alt="Two example metrics displaying positive and negative indicators."
+    contentPosition="top"
+    border
+  />
+
+We provide design guidance for using Salt [icon](/salt/components/icon), [link](/salt/components/link), [stack layout](/salt/components/stack-layout) and [text](/salt/components/text) components to achieve the pattern. You can also find implementation examples in the storybook [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric).
+
+## When to use it
+
+Use the pattern to give more prominence to a key measure. Metrics are often used as building blocks in dashboards. They effectively direct users to key information that may otherwise be lost within the content, particularly when multiple numerical values are displayed.
+
+Multiple metrics can be included in your UI, and you can indicate hierarchy if necessary.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Consider placing Metric pattern higher up in your layout to further emphasize their importance.
+  - Never leave the user guessing how to interpret your Metric. Make sure you provide enough context, and use subtitles and indicators if they’ll help minimize ambiguity.
+  - Keep titles and values as short and concise as possible. Round or truncate values to significant figures, and use common abbreviations instead of spelling out words.
+  - Avoid having more than five Metrics in single dashboard view. They may clutter your screen and overwhelm your user with too much information.
+</ExampleContainer>
+
+## How to build it
+
+### Default (Vertical)
+
+The default Metric is comprised of a single number value and a title. By default, it's arranged vertically with the key value beneath the title.
+
+  <Diagram
+    src="/img/patterns/metric/vertical.png"
+    alt="Example showing metric with vertical layout."
+    contentPosition="top"
+    border
+  />
+
+## Horizontal
+
+You can configure the Metric component to have a horizontal orientation, if that's more suitable for your layout. 
+
+  <Diagram
+    src="/img/patterns/metric/horizontal.png"
+    alt="Example showing metric with horizontal layout."
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive">
+  - Consider using the same configuration when displaying multiple Metrics, for greater visual consistency.
+</ExampleContainer>
+
+
+## Subtitle and subvalue
+
+In addition to the title, you can display a supporting subtitle and/or subvalue in the Metric pattern. This information can be used to provide more context, and improve users' comprehension of your Metric value and its impact.
+
+Subtitles are always displayed directly beneath the title, while subvalues are beneath the key value.
+  
+  <Diagram
+    src="/img/patterns/metric/subtitle.png"
+    alt="Example showing metric with a subtitle and subvalue."
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - To give more context about a Metric value such as whether it is positive or negative — consider including past data, average, threshold or target values, or comparable high or low values.
+</ExampleContainer>
+
+## Link
+
+  <Diagram
+    src="/img/patterns/metric/link.png"
+    alt="Example showing metric with a link."
+    contentPosition="top"
+    border
+  />
+
+You can provide a link in the Metric's subtitle text, enabling users to navigate to another page with related information.
+
+## Indicators
+
+If the Metric value represents a change from a previous value, an arrow icon can be displayed as a strong visual indicator of the direction of change.
+
+  <Diagram
+    src="/img/patterns/metric/indicators.png"
+    alt="Example showing two metrica with positive and negative indicators."
+    contentPosition="top"
+    border
+  />
+
+## Hierarchical Metrics
+
+  <Diagram
+    src="/img/patterns/metric/hierarchical.png"
+    alt="Example showing three metrics of increasing size."
+    contentPosition="top"
+    border
+  />
+
+If you're displaying multiple Metrics with varying levels of importance (e.g. in a dashboard view), hierarchy can be implied by showing the values in different sizes—indicating a low, medium or high level of prominence. Use Display 1, Display 2 or Display 3 depending on the level of prominence.
