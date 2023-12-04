@@ -17,7 +17,7 @@ export const Metric = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <b>Revenue YTD</b>
+        <strong>Revenue YTD</strong>
       </Text>
       <Display1>$801.9B</Display1>
     </StackLayout>
@@ -28,7 +28,7 @@ export const HorizontalMetric = () => {
   return (
     <StackLayout direction="row" gap={1}>
       <Text>
-        <b>Revenue YTD</b>
+        <strong>Revenue YTD</strong>
       </Text>
       <Display1 style={{ lineHeight: "0.8" }}>$801.9B</Display1>
     </StackLayout>
@@ -39,7 +39,7 @@ export const Subtitle = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <b>Revenue YTD</b>
+        <strong>Revenue YTD</strong>
       </Text>
       <Text variant="secondary">Total Value</Text>
       <Display1>$801.9B</Display1>
@@ -51,7 +51,7 @@ export const Subvalue = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <b>Revenue YTD</b>
+        <strong>Revenue YTD</strong>
       </Text>
       <Text variant="secondary">Total Value</Text>
       <Display1>$801.9B</Display1>
@@ -66,9 +66,18 @@ export const LinkSubtitle = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <b>Revenue YTD</b>
+        <strong>Revenue YTD</strong>
       </Text>
-      <Link variant="secondary">Total Value</Link>
+      <H1>
+        header with{" "}
+        <Link styleAs="h1" variant="secondary">
+          Total Value
+        </Link>{" "}
+        link
+      </H1>
+      <Link styleAs="h1" variant="secondary">
+        Total Value
+      </Link>
       <Display1>$801.9B</Display1>
       <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
         +10.1 (+1.23%)
@@ -82,7 +91,7 @@ export const Indicators = () => {
     <StackLayout direction={"row"} gap={8}>
       <StackLayout gap={0}>
         <Text>
-          <b>Revenue YTD</b>
+          <strong>Revenue YTD</strong>
         </Text>
         <Text variant="secondary">Total Value</Text>
         <Display1>
@@ -98,7 +107,7 @@ export const Indicators = () => {
       </StackLayout>
       <StackLayout gap={0}>
         <Text>
-          <b>Revenue YTD</b>
+          <strong>Revenue YTD</strong>
         </Text>
         <Text variant="secondary">Total Value</Text>
         <Display1>
@@ -121,7 +130,7 @@ export const Hierarchical = () => {
     <StackLayout direction={"row"} gap={8} align="end">
       <StackLayout gap={0}>
         <Text>
-          <b>Revenue YTD</b>
+          <strong>Revenue YTD</strong>
         </Text>
         <Text variant="secondary">Total Value</Text>
         <Display3>
@@ -137,7 +146,7 @@ export const Hierarchical = () => {
       </StackLayout>
       <StackLayout gap={0}>
         <Text>
-          <b>Revenue YTD</b>
+          <strong>Revenue YTD</strong>
         </Text>
         <Text variant="secondary">Total Value</Text>
         <Display2>
@@ -153,7 +162,7 @@ export const Hierarchical = () => {
       </StackLayout>
       <StackLayout gap={0}>
         <Text>
-          <b>Revenue YTD</b>
+          <strong>Revenue YTD</strong>
         </Text>
         <Text variant="secondary">Total Value</Text>
         <Display1>
