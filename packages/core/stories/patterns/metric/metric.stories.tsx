@@ -5,6 +5,7 @@ import {
   Display2,
   Display3,
   Link,
+  H1,
 } from "@salt-ds/core";
 import { ArrowUpIcon, ArrowDownIcon } from "@salt-ds/icons";
 import { Meta } from "@storybook/react";
