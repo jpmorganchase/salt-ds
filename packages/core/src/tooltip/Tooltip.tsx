@@ -7,7 +7,7 @@ import {
   ReactNode,
 } from "react";
 
-import { ValidationStatus } from "../status-indicator";
+import { ValidationStatus, VALIDATION_NAMED_STATUS } from "../status-indicator";
 import {
   makePrefixer,
   mergeProps,
@@ -90,8 +90,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = useFormFieldProps();
 
     const disabled = formFieldDisabled ?? disabledProp;
-    const status = formFieldValidationStatus ?? statusProp;
-
+    const status =
+      formFieldValidationStatus !== undefined &&
+      VALIDATION_NAMED_STATUS.includes(formFieldValidationStatus)
+        ? formFieldValidationStatus
+        : statusProp;
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const hookProps: UseTooltipProps = {
