@@ -27,10 +27,10 @@ export const Metric = () => {
 export const HorizontalMetric = () => {
   return (
     <StackLayout direction="row" gap={1}>
-      <Text>
+      <Text style={{ marginTop: "var(--salt-spacing-100)" }}>
         <strong>Revenue YTD</strong>
       </Text>
-      <Display1 style={{ lineHeight: "0.8" }}>$801.9B</Display1>
+      <Display1>$801.9B</Display1>
     </StackLayout>
   );
 };
