@@ -113,7 +113,7 @@
     "vite": "^4.4.9",
     "vite-plugin-istanbul": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.34.4",
+    "vitest": "^1.0.0",
     "webpack": "5.74.0",
     "yup": "^1.0.2"
   },
