@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- cdf44770: Fix border misalignment on range selection when a sigle column or a single row is selected.
+- cdf44770: Fixed border misalignment in range selection on a single column or a single row.
 
 ## 1.3.5
 
