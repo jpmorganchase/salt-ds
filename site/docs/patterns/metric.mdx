@@ -10,7 +10,7 @@ data:
     ]
 ---
 
-Metrics is a pattern that displays an important number value prominently. Indicators or labels can be added to help provide context to the presented value.
+Metric is a pattern that displays an important number value prominently. Indicators or labels can be added to help provide context to the presented value.
 
   <Diagram
     src="/img/patterns/metric/metric.png"
@@ -36,9 +36,11 @@ Multiple metrics can be included in your UI, and you can indicate hierarchy if n
 
 ## How to build it
 
-### Default (Vertical)
+Metric is comprised of a single number value and a title.
 
-The default Metric is comprised of a single number value and a title. By default, it's arranged vertically with the key value beneath the title.
+### Vertical Metric
+
+By default, it's arranged vertically with the key value beneath the title.
 
   <Diagram
     src="/img/patterns/metric/vertical.png"
@@ -58,7 +60,7 @@ You can configure the Metric component to have a horizontal orientation, if that
     border
   />
 
-<ExampleContainer type="positive">
+<ExampleContainer type="positive" customPillText="Best practices">
   - Consider using the same configuration when displaying multiple Metrics, for greater visual consistency.
 </ExampleContainer>
 
