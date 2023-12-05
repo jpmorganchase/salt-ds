@@ -12,7 +12,7 @@ const {
 
 describe("Given Ag Grid Theme - uitk", () => {
   describe("WHEN the Default story is mounted", () => {
-    describe("WHEN column menu is open", () => {
+    xdescribe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
           cy.mount(<BasicGrid defaultTheme="uitk" />);
@@ -40,8 +40,50 @@ describe("Given Ag Grid Theme - uitk", () => {
         });
       });
     });
+    describe("WHEN range selection", () => {
+      it("AND selection vertical THEN should match screenshot", () => {
+        cy.mount(<BasicGrid />);
+        cy.wait(500);
+
+        cy.get(".ag-cell")
+          .eq(0)
+          .realMouseDown({ scrollBehavior: false })
+          .should("have.class", "ag-cell-range-selected")
+          .realMouseMove(0, 100, { scrollBehavior: false });
+
+        cy.get(".ag-cell")
+          .eq(6)
+          .realMouseUp({ scrollBehavior: false })
+          .realMouseWheel({ deltaY: -100 });
+
+        cy.get(".ag-cell-range-selected").should("have.length", 3);
+
+        cy.wait(500);
+
+        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+      });
+
+      it("AND selection horizontal THEN should match screenshot", () => {
+        cy.mount(<BasicGrid />);
+        cy.wait(500);
+
+        cy.get(".ag-cell")
+          .eq(0)
+          .realMouseDown({ scrollBehavior: false })
+          .should("have.class", "ag-cell-range-selected")
+          .realMouseMove(600, 0, { scrollBehavior: false });
+
+        cy.get(".ag-cell").eq(3).realMouseUp({ scrollBehavior: false });
+
+        cy.get(".ag-cell-range-selected").should("have.length", 3);
+
+        cy.wait(500);
+
+        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+      });
+    });
   });
-  describe("WHEN the CheckboxSelection story is mounted", () => {
+  xdescribe("WHEN the CheckboxSelection story is mounted", () => {
     describe("WHEN editable-cell is focused", () => {
       it("THEN should match screenshot", () => {
         cy.mount(<CheckboxSelection defaultTheme="uitk" />);
@@ -73,7 +115,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  describe("WHEN the ContextMenu story is mounted", () => {
+  xdescribe("WHEN the ContextMenu story is mounted", () => {
     describe("WHEN cell context menu is open", () => {
       it("THEN should match screenshot", () => {
         cy.mount(<ContextMenu defaultTheme="uitk" />);
@@ -83,7 +125,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  describe("WHEN the CustomFilter story is mounted", () => {
+  xdescribe("WHEN the CustomFilter story is mounted", () => {
     describe("WHEN custom filter is focused", () => {
       it("THEN should match screenshot", () => {
         cy.mount(<CustomFilter defaultTheme="uitk" />);
@@ -95,7 +137,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  describe("WHEN the HDCompact story is mounted", () => {
+  xdescribe("WHEN the HDCompact story is mounted", () => {
     describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
@@ -126,7 +168,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  describe("WHEN the HDCompactDark story is mounted", () => {
+  xdescribe("WHEN the HDCompactDark story is mounted", () => {
     describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {

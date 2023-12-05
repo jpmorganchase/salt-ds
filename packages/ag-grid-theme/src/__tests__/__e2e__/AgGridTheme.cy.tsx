@@ -40,6 +40,48 @@ describe("Given Ag Grid Theme", () => {
         });
       });
     });
+    describe("WHEN range selection", () => {
+      it("AND selection vertical THEN should match screenshot", () => {
+        cy.mount(<BasicGrid />);
+        cy.wait(500);
+
+        cy.get(".ag-cell")
+          .eq(0)
+          .realMouseDown({ scrollBehavior: false })
+          .should("have.class", "ag-cell-range-selected")
+          .realMouseMove(0, 100, { scrollBehavior: false });
+
+        cy.get(".ag-cell")
+          .eq(6)
+          .realMouseUp({ scrollBehavior: false })
+          .realMouseWheel({ deltaY: -100 });
+
+        cy.get(".ag-cell-range-selected").should("have.length", 3);
+
+        cy.wait(500);
+
+        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+      });
+
+      it("AND selection horizontal THEN should match screenshot", () => {
+        cy.mount(<BasicGrid />);
+        cy.wait(500);
+
+        cy.get(".ag-cell")
+          .eq(0)
+          .realMouseDown({ scrollBehavior: false })
+          .should("have.class", "ag-cell-range-selected")
+          .realMouseMove(600, 0, { scrollBehavior: false });
+
+        cy.get(".ag-cell").eq(3).realMouseUp({ scrollBehavior: false });
+
+        cy.get(".ag-cell-range-selected").should("have.length", 3);
+
+        cy.wait(500);
+
+        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+      });
+    });
   });
   describe("WHEN the CheckboxSelection story is mounted", () => {
     describe("WHEN editable-cell is focused", () => {
