@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.6
+
+### Patch Changes
+
+- cdf44770: Fix border misalignment on range selection when a sigle column or a single row is selected.
+
 ## 1.3.5
 
 ### Patch Changes
