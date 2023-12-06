@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.13.1
+
+### Patch Changes
+
+- 7f58c773: Fixed Tooltip breaking when used inside a Form Field with an invalid value passed to the `validationStatus` prop.
+
 ## 1.13.0
 
 ### Minor Changes
