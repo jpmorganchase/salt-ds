@@ -27,7 +27,6 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
     count,
     boundaryCount,
     siblingCount,
-    showPreviousNext,
     compact,
     compactWithInput,
     goToPosition,
@@ -43,11 +42,7 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
       {compact ?? compactWithInput ? (
         <CompactPaginator withInput={compactWithInput} />
       ) : (
-        <Paginator
-          boundaryCount={boundaryCount}
-          siblingCount={siblingCount}
-          showPreviousNext={showPreviousNext}
-        />
+        <Paginator boundaryCount={boundaryCount} siblingCount={siblingCount} />
       )}
       {goToPosition === "right" ? <GoToInput /> : null}
     </Pagination>
@@ -65,32 +60,19 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       className="saltMetricQA"
       imgSrc={props.imgSrc}
     >
-      <Template
-        count={5}
-        siblingCount={2}
-        boundaryCount={1}
-        showPreviousNext={true}
-      />
+      <Template count={5} siblingCount={2} boundaryCount={1} />
       <Template
         count={25}
         siblingCount={2}
         boundaryCount={1}
-        showPreviousNext={true}
         goToPosition="left"
       />
-      <Template
-        compact
-        count={25}
-        siblingCount={2}
-        boundaryCount={1}
-        showPreviousNext={true}
-      />
+      <Template compact count={25} siblingCount={2} boundaryCount={1} />
       <Template
         compactWithInput
         count={25}
         siblingCount={2}
         boundaryCount={1}
-        showPreviousNext={true}
       />
     </QAContainer>
   );

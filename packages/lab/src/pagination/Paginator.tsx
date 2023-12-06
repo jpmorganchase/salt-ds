@@ -21,21 +21,11 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
    * Number of pages on each side of the current page when page range is truncated.
    */
   siblingCount?: number;
-  /**
-   * Display arrow buttons.
-   */
-  showPreviousNext?: boolean;
 }
 
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   function Paginator(
-    {
-      className,
-      boundaryCount,
-      siblingCount,
-      showPreviousNext = true,
-      ...restProps
-    },
+    { className, boundaryCount, siblingCount, ...restProps },
     forwardedRef
   ) {
     const targetWindow = useWindow();
@@ -64,15 +54,13 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
 
     return (
       <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
-        {showPreviousNext && (
-          <ArrowButton
-            arrowButtonType="previous"
-            onClick={onPreviousPage}
-            disabled={isOnFirstPage}
-          >
-            <ChevronLeftIcon />
-          </ArrowButton>
-        )}
+        <ArrowButton
+          arrowButtonType="previous"
+          onClick={onPreviousPage}
+          disabled={isOnFirstPage}
+        >
+          <ChevronLeftIcon />
+        </ArrowButton>
         <RegularControls
           count={count}
           page={page}
@@ -80,15 +68,13 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
           siblingCount={siblingCount}
           boundaryCount={boundaryCount}
         />
-        {showPreviousNext && (
-          <ArrowButton
-            arrowButtonType="next"
-            onClick={onNextPage}
-            disabled={isOnLastPage}
-          >
-            <ChevronRightIcon />
-          </ArrowButton>
-        )}
+        <ArrowButton
+          arrowButtonType="next"
+          onClick={onNextPage}
+          disabled={isOnLastPage}
+        >
+          <ChevronRightIcon />
+        </ArrowButton>
       </div>
     );
   }
