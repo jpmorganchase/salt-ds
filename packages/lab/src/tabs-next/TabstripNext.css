@@ -7,13 +7,16 @@
   position: relative;
   background: transparent;
   width: 100%;
-  padding-left: var(--salt-spacing-300);
-  padding-right: var(--salt-spacing-300);
 
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+}
+
+.saltTabstripNext-main {
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
 }
 
 .saltTabstripNext-main::before {
@@ -26,8 +29,4 @@
 
 .saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
   padding-right: var(--salt-spacing-100);
-}
-
-.saltTabstripNext-inline {
-  padding: 0;
 }
