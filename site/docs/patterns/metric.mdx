@@ -19,7 +19,7 @@ Metric is a pattern that displays an important number value prominently. Indicat
     border
   />
 
-We provide design guidance for using Salt [icon](/salt/components/icon), [link](/salt/components/link), [stack layout](/salt/components/stack-layout) and [text](/salt/components/text) components to achieve the pattern. You can also find implementation examples in the storybook [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric).
+We provide design guidance for using Salt [icon](/salt/components/icon), [link](/salt/components/link), [stack layout](/salt/components/stack-layout) and [text](/salt/components/text) components to achieve the pattern. You can also find implementation examples in the [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric).
 
 ## When to use it
 
@@ -37,6 +37,8 @@ Multiple metrics can be included in your UI, and you can indicate hierarchy if n
 ## How to build it
 
 Metric is comprised of a single number value and a title.
+
+**Hierarchical Metrics:** If you're displaying multiple Metrics with varying levels of importance (e.g. in a dashboard view), hierarchy can be implied by showing the values in different sizes—indicating a low, medium or high level of prominence. Use Display 1, Display 2 or Display 3 depending on the level of prominence.
 
 ### Vertical Metric
 
@@ -63,7 +65,6 @@ You can configure the Metric component to have a horizontal orientation, if that
 <ExampleContainer type="positive" customPillText="Best practices">
   - Consider using the same configuration when displaying multiple Metrics, for greater visual consistency.
 </ExampleContainer>
-
 
 ## Subtitle and subvalue
 
@@ -103,14 +104,3 @@ If the Metric value represents a change from a previous value, an arrow icon can
     contentPosition="top"
     border
   />
-
-## Hierarchical Metrics
-
-  <Diagram
-    src="/img/patterns/metric/hierarchical.png"
-    alt="Example showing three metrics of increasing size."
-    contentPosition="top"
-    border
-  />
-
-If you're displaying multiple Metrics with varying levels of importance (e.g. in a dashboard view), hierarchy can be implied by showing the values in different sizes—indicating a low, medium or high level of prominence. Use Display 1, Display 2 or Display 3 depending on the level of prominence.
