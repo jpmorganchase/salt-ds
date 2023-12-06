@@ -12,7 +12,7 @@ const {
 
 describe("Given Ag Grid Theme - uitk", () => {
   describe("WHEN the Default story is mounted", () => {
-    xdescribe("WHEN column menu is open", () => {
+    describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
           cy.mount(<BasicGrid defaultTheme="uitk" />);
@@ -83,7 +83,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  xdescribe("WHEN the CheckboxSelection story is mounted", () => {
+  describe("WHEN the CheckboxSelection story is mounted", () => {
     describe("WHEN editable-cell is focused", () => {
       it("THEN should match screenshot", () => {
         cy.mount(<CheckboxSelection defaultTheme="uitk" />);
@@ -115,7 +115,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  xdescribe("WHEN the ContextMenu story is mounted", () => {
+  describe("WHEN the ContextMenu story is mounted", () => {
     describe("WHEN cell context menu is open", () => {
       it("THEN should match screenshot", () => {
         cy.mount(<ContextMenu defaultTheme="uitk" />);
@@ -125,7 +125,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  xdescribe("WHEN the CustomFilter story is mounted", () => {
+  describe("WHEN the CustomFilter story is mounted", () => {
     describe("WHEN custom filter is focused", () => {
       it("THEN should match screenshot", () => {
         cy.mount(<CustomFilter defaultTheme="uitk" />);
@@ -137,7 +137,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  xdescribe("WHEN the HDCompact story is mounted", () => {
+  describe("WHEN the HDCompact story is mounted", () => {
     describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
@@ -168,7 +168,7 @@ describe("Given Ag Grid Theme - uitk", () => {
       });
     });
   });
-  xdescribe("WHEN the HDCompactDark story is mounted", () => {
+  describe("WHEN the HDCompactDark story is mounted", () => {
     describe("WHEN column menu is open", () => {
       describe("AND general tab is selected", () => {
         it("THEN should match screenshot", () => {
