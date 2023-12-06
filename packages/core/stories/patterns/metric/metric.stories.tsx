@@ -27,7 +27,7 @@ export const Metric = () => {
 export const HorizontalMetric = () => {
   return (
     <StackLayout direction="row" gap={1}>
-      <Text style={{ marginTop: "var(--salt-spacing-100)" }}>
+      <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
         <strong>Revenue YTD</strong>
       </Text>
       <Display1>$801.9B</Display1>
@@ -89,7 +89,7 @@ export const Indicators = () => {
           $801.9B
           <ArrowUpIcon
             style={{ fill: "var(--salt-status-positive-foreground)" }}
-            size={2}
+            size={3}
           />
         </Display1>
         <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
@@ -105,7 +105,7 @@ export const Indicators = () => {
           $801.9B
           <ArrowDownIcon
             style={{ fill: "var(--salt-status-negative-foreground)" }}
-            size={2}
+            size={3}
           />
         </Display1>
         <Text style={{ color: "var(--salt-status-negative-foreground)" }}>
@@ -116,7 +116,7 @@ export const Indicators = () => {
   );
 };
 
-export const Hierarchical = () => {
+export const HierarchicalVertical = () => {
   return (
     <StackLayout direction={"row"} gap={8} align="end">
       <StackLayout gap={0}>
@@ -160,12 +160,37 @@ export const Hierarchical = () => {
           $801.9B
           <ArrowUpIcon
             style={{ fill: "var(--salt-status-positive-foreground)" }}
-            size={2}
+            size={3}
           />
         </Display1>
         <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
           +10.1 (+1.23%)
         </Text>
+      </StackLayout>
+    </StackLayout>
+  );
+};
+
+export const HierarchicalHorizontal = () => {
+  return (
+    <StackLayout direction={"row"} gap={8} align="end">
+      <StackLayout direction="row" gap={1}>
+        <Text style={{ marginTop: "var(--salt-spacing-50)" }}>
+          <strong>Revenue YTD</strong>
+        </Text>
+        <Display3>$801.9B</Display3>
+      </StackLayout>
+      <StackLayout direction="row" gap={1}>
+        <Text style={{ marginTop: "var(--salt-spacing-100)" }}>
+          <strong>Revenue YTD</strong>
+        </Text>
+        <Display2>$801.9B</Display2>
+      </StackLayout>
+      <StackLayout direction="row" gap={1}>
+        <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
+          <strong>Revenue YTD</strong>
+        </Text>
+        <Display1>$801.9B</Display1>
       </StackLayout>
     </StackLayout>
   );
