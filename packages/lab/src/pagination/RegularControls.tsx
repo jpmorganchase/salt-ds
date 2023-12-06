@@ -31,9 +31,6 @@ export function RegularControls({
   siblingCount = 2,
   boundaryCount = 1,
 }: RegularControlsProps) {
-  // const { count, page, onPageChange, compactWithInput } =
-  // usePaginationContext();
-
   const renderPages = (range?: PageRange, selectedPage?: number) => {
     if (!range) {
       return null;
