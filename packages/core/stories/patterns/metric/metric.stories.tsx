@@ -173,7 +173,7 @@ export const HierarchicalVertical = () => {
 
 export const HierarchicalHorizontal = () => {
   return (
-    <StackLayout direction={"row"} gap={8} align="end">
+    <StackLayout gap={8} align="end">
       <StackLayout direction="row" gap={1}>
         <Text style={{ marginTop: "var(--salt-spacing-50)" }}>
           <strong>Revenue YTD</strong>
