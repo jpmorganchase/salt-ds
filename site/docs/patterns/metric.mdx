@@ -36,9 +36,9 @@ Multiple metrics can be included in your UI, and you can indicate hierarchy if n
 
 ## How to build it
 
-Metric is comprised of a single number value and a title.
+Metric is comprised of a single number value and a title. 
 
-**Hierarchical Metrics:** If you're displaying multiple Metrics with varying levels of importance (e.g. in a dashboard view), hierarchy can be implied by showing the values in different sizes—indicating a low, medium or high level of prominence. Use Display 1, Display 2 or Display 3 depending on the level of prominence.
+Metrics come in three sizes—small, medium and large. This is achieved by changing the metric value's text style to display 1, display 2 or display 3. Those are available in both horizontal and vertical layouts.
 
 ### Vertical Metric
 
@@ -55,12 +55,35 @@ By default, it's arranged vertically with the key value beneath the title.
 
 You can configure the Metric component to have a horizontal orientation, if that's more suitable for your layout. 
 
+## Large
+
   <Diagram
-    src="/img/patterns/metric/horizontal.png"
-    alt="Example showing metric with horizontal layout."
+    src="/img/patterns/metric/horizontal-large.png"
+    alt="Example showing large metric with horizontal layout."
     contentPosition="top"
     border
   />
+
+## Medium
+
+  <Diagram
+    src="/img/patterns/metric/horizontal-medium.png"
+    alt="Example showing medium metric with horizontal layout."
+    contentPosition="top"
+    border
+  />
+
+## Small
+
+  <Diagram
+    src="/img/patterns/metric/horizontal-small.png"
+    alt="Example showing small metric with horizontal layout."
+    contentPosition="top"
+    border
+  />
+
+
+
 
 <ExampleContainer type="positive" customPillText="Best practices">
   - Consider using the same configuration when displaying multiple Metrics, for greater visual consistency.
