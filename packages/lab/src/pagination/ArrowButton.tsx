@@ -1,14 +1,13 @@
 import { Button, ButtonProps } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon, IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { ComponentType, KeyboardEventHandler } from "react";
+import { ComponentType } from "react";
 import { withBaseName } from "./utils";
 
 export type ArrowButtonType = "previous" | "next";
 
 export interface ArrowButtonProps extends ButtonProps {
   arrowButtonType: ArrowButtonType;
-  onClick: () => void;
 }
 
 interface ButtonContent {
@@ -38,30 +37,20 @@ const contentByType = new Map<ArrowButtonType, ButtonContent>([
 
 export const ArrowButton = ({
   arrowButtonType,
-  onClick,
   disabled,
   ...restProps
 }: ArrowButtonProps) => {
   const { icon: Icon, name, className } = contentByType.get(arrowButtonType)!;
 
-  const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    if (event.key === "Enter") {
-      event.preventDefault();
-      onClick();
-    }
-  };
-
   return (
     <Button
-      {...restProps}
       variant="secondary"
       className={clsx(withBaseName("arrowButton"), className)}
       role="link"
       name={name}
       aria-label={name}
-      onKeyDown={onKeyDown}
-      onClick={onClick}
       disabled={disabled}
+      {...restProps}
     >
       <Icon aria-label={name} />
     </Button>
