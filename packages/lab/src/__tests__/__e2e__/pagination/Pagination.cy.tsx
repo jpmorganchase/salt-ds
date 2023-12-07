@@ -316,7 +316,7 @@ describe("GIVEN an Pagination", () => {
           cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
         });
       });
-      describe("AND pressing a the count item", () => {
+      describe("AND pressing the count item", () => {
         it("THEN should move to the last page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
