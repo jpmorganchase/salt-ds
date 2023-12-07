@@ -96,7 +96,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
     return (
       <span
         className={clsx(
-          withBaseName("pageInputWrapper"),
+          withBaseName("goToInputWrapper"),
           { [withBaseName(`${position!}GoToInput`)]: position },
           className
         )}
@@ -105,8 +105,8 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       >
         {label && <FormFieldLabel id={labelId}>{label}</FormFieldLabel>}
         <Input
-          className={clsx(withBaseName("pageInput"), {
-            [withBaseName("pageInputFixed")]: count < 100,
+          className={clsx(withBaseName("goToInput"), {
+            [withBaseName("goToInputFixed")]: count < 100,
           })}
           ref={inputRef}
           inputProps={{

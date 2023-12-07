@@ -2,7 +2,6 @@ import { withBaseName } from "./utils";
 import { PageRange, usePagination } from "./usePagination";
 import { ReactElement } from "react";
 import { PageButton } from "./PageButton";
-// import { usePaginationContext } from "./usePaginationContext";
 
 export interface RegularControlsProps {
   count: number;

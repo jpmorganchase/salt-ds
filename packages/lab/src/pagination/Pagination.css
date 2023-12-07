@@ -85,7 +85,7 @@
   text-align: center;
 }
 
-.saltPagination-pageInputWrapper {
+.saltPagination-goToInputWrapper {
   display: flex;
   flex-direction: row;
   gap: var(--salt-spacing-100);
@@ -100,12 +100,12 @@
   margin-left: var(--salt-spacing-100);
 }
 
-.saltPagination-pageInput {
+.saltPagination-goToInput {
   height: var(--salt-size-base);
   --saltInput-minWidth: unset;
 }
 
-.saltPagination-pageInputFixed {
+.saltPagination-goToInputFixed {
   --saltInput-minWidth: var(--salt-size-base);
   max-width: var(--salt-size-base);
   width: var(--salt-size-base);
