@@ -157,11 +157,13 @@ Cypress.Commands.add("paste", { prevSubject: "element" }, (input, value) => {
 Cypress.Screenshot.defaults({
   onBeforeScreenshot($el) {
     // turn off pointer events for everything in the body element
+    // @ts-ignore
     document.querySelector("body").style.pointerEvents = "none";
   },
 
   onAfterScreenshot($el, props) {
     // restore default pointer event behavior
+    // @ts-ignore
     document.querySelector("body").style.pointerEvents = "initial";
   },
 });
