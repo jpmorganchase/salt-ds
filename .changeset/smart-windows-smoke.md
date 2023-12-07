@@ -1,5 +1,4 @@
 ---
-"docs": patch
 "@salt-ds/site": patch
 ---
 
