@@ -40,6 +40,19 @@ describe("Given Ag Grid Theme", () => {
         });
       });
     });
+    describe("AND cell is hovered", () => {
+      it("THEN should show tooltip", () => {
+        cy.mount(<BasicGrid />);
+        cy.wait(500);
+        cy.findByText("Capital").realHover();
+        cy.findAllByText("Capital").should("have.length", 2);
+        cy.get(".ag-tooltip").should(
+          "have.css",
+          "background-color",
+          "rgb(255, 255, 255)"
+        );
+      });
+    });
     describe("WHEN range selection", () => {
       it("AND selection vertical THEN should match screenshot", () => {
         cy.mount(<BasicGrid />);
@@ -60,7 +73,7 @@ describe("Given Ag Grid Theme", () => {
 
         cy.wait(500);
 
-        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+        cy.get(".ag-root-wrapper").matchImage({ maxDiffThreshold: 0.1 });
       });
 
       it("AND selection horizontal THEN should match screenshot", () => {
@@ -79,7 +92,7 @@ describe("Given Ag Grid Theme", () => {
 
         cy.wait(500);
 
-        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+        cy.get(".ag-root-wrapper").matchImage({ maxDiffThreshold: 0.1 });
       });
     });
   });
