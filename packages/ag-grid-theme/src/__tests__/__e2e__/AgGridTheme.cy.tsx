@@ -45,7 +45,8 @@ describe("Given Ag Grid Theme", () => {
         cy.mount(<BasicGrid />);
         cy.wait(500);
         cy.findByText("Capital").realHover();
-        cy.get(".ag-tooltip").matchImage({ maxDiffThreshold: 0.1 });
+        cy.findAllByText("Capital").should("have.length", 2)
+        cy.get(".ag-tooltip").should("have.css","background-color","rgb(255, 255, 255)")
       })
     })
     describe("WHEN range selection", () => {
@@ -68,7 +69,7 @@ describe("Given Ag Grid Theme", () => {
 
         cy.wait(500);
 
-        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+        cy.get(".ag-root-wrapper").matchImage({ maxDiffThreshold: 0.1 });
       });
 
       it("AND selection horizontal THEN should match screenshot", () => {
@@ -87,7 +88,7 @@ describe("Given Ag Grid Theme", () => {
 
         cy.wait(500);
 
-        cy.get(".ag-theme-salt-light").matchImage({ maxDiffThreshold: 0.1 });
+        cy.get(".ag-root-wrapper").matchImage({ maxDiffThreshold: 0.1 });
       });
     });
   });

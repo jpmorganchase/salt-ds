@@ -40,7 +40,6 @@ const Default = (props: { defaultTheme: string }) => {
           rowSelection="single"
           enableRangeSelection={true}
           {...agGridProps}
-          tooltipShowDelay={0}
         />
       </div>
     </StackLayout>

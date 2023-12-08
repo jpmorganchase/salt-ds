@@ -33,6 +33,7 @@ div[class*="ag-theme-salt"] {
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
   --ag-selected-tab-underline-width: 2px;
   --ag-subheader-background-color: var(--salt-palette-neutral-primary-background);
+  --ag-tooltip-background-color:  var(--salt-container-primary-background);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
 }
 
