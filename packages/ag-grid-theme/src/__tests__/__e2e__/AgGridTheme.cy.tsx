@@ -45,10 +45,14 @@ describe("Given Ag Grid Theme", () => {
         cy.mount(<BasicGrid />);
         cy.wait(500);
         cy.findByText("Capital").realHover();
-        cy.findAllByText("Capital").should("have.length", 2)
-        cy.get(".ag-tooltip").should("have.css","background-color","rgb(255, 255, 255)")
-      })
-    })
+        cy.findAllByText("Capital").should("have.length", 2);
+        cy.get(".ag-tooltip").should(
+          "have.css",
+          "background-color",
+          "rgb(255, 255, 255)"
+        );
+      });
+    });
     describe("WHEN range selection", () => {
       it("AND selection vertical THEN should match screenshot", () => {
         cy.mount(<BasicGrid />);
