@@ -38,22 +38,46 @@ Multiple metrics can be included in your UI, and you can indicate hierarchy if n
 
 Metric is comprised of a single number value and a title. 
 
-Metrics come in three sizes—small, medium and large. This is achieved by changing the metric value's text style to display 1, display 2 or display 3. Those are available in both horizontal and vertical layouts.
+Metric comes in three sizes—small, medium and large. This is achieved by changing the Metric’s value text style to display 1, display 2 or display 3. Those are available in both horizontal and vertical layouts.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Consider using the same orientation when displaying multiple Metrics, for greater visual consistency.
+</ExampleContainer>
 
 ### Vertical Metric
 
 By default, it's arranged vertically with the key value beneath the title.
 
+#### Large
+
   <Diagram
-    src="/img/patterns/metric/vertical.png"
-    alt="Example showing metric with vertical layout."
+    src="/img/patterns/metric/vertical-large.png"
+    alt="Example showing large metric with vertical layout."
+    contentPosition="top"
+    border
+  />
+
+#### Medium
+
+  <Diagram
+    src="/img/patterns/metric/vertical-medium.png"
+    alt="Example showing medium metric with vertical layout."
+    contentPosition="top"
+    border
+  />
+
+#### Small
+
+  <Diagram
+    src="/img/patterns/metric/vertical-small.png"
+    alt="Example showing small metric with vertical layout."
     contentPosition="top"
     border
   />
 
 ### Horizontal Metric
 
-You can configure the Metric component to have a horizontal orientation, if that's more suitable for your layout. 
+You can configure the Metric component to have a horizontal orientation, if that's more suitable for your layout. Make sure you adjust the margin if you are varying the sizes.
 
 #### Large
 
@@ -82,9 +106,6 @@ You can configure the Metric component to have a horizontal orientation, if that
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
-  - Consider using the same configuration when displaying multiple Metrics, for greater visual consistency.
-</ExampleContainer>
 
 ### Subtitle and subvalue
 
@@ -105,14 +126,14 @@ Subtitles are always displayed directly beneath the title, while subvalues are b
 
 ### Link
 
+You can provide a link in the Metric's subtitle text, enabling users to navigate to another page with related information.
+
   <Diagram
     src="/img/patterns/metric/link.png"
     alt="Example showing metric with a link."
     contentPosition="top"
     border
   />
-
-You can provide a link in the Metric's subtitle text, enabling users to navigate to another page with related information.
 
 ### Indicators
 
