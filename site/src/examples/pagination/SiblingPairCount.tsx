@@ -2,8 +2,8 @@ import { ChangeEvent, ReactElement, useState } from "react";
 import { StackLayout } from "@salt-ds/core";
 import { Pagination, Paginator } from "@salt-ds/lab";
 
-export const SiblingCount = (): ReactElement => {
-  const [siblingCount, setSiblingCount] = useState(2);
+export const SiblingPairCount = (): ReactElement => {
+  const [siblingPairCount, setSiblingCount] = useState(2);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
@@ -15,12 +15,12 @@ export const SiblingCount = (): ReactElement => {
       <StackLayout>
         <input
           type="number"
-          value={siblingCount?.toString()}
+          value={siblingPairCount?.toString()}
           onChange={handleChange}
           style={{ width: 50 }}
         />
         <Pagination count={20} initialPage={10}>
-          <Paginator siblingCount={siblingCount} />
+          <Paginator siblingPairCount={siblingPairCount} />
         </Pagination>
       </StackLayout>
     </>

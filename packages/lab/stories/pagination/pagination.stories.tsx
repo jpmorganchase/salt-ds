@@ -28,7 +28,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     count,
     page: pageProp = 1,
     boundaryCount,
-    siblingCount,
+    siblingPairCount,
     compact,
     compactWithInput,
     goToPosition,
@@ -50,7 +50,10 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
           inputVariant={inputVariant}
         />
       ) : (
-        <Paginator boundaryCount={boundaryCount} siblingCount={siblingCount} />
+        <Paginator
+          boundaryCount={boundaryCount}
+          siblingPairCount={siblingPairCount}
+        />
       )}
       {goToPosition === "right" ? (
         <GoToInput inputVariant={inputVariant} />
@@ -63,7 +66,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   count: 5,
-  siblingCount: 2,
+  siblingPairCount: 2,
   boundaryCount: 1,
 };
 
@@ -78,7 +81,7 @@ export const WithTruncation = Template.bind({});
 
 WithTruncation.args = {
   count: 25,
-  siblingCount: 2,
+  siblingPairCount: 2,
   boundaryCount: 1,
 };
 
@@ -93,7 +96,7 @@ export const WithInput = Template.bind({});
 
 WithInput.args = {
   count: 25,
-  siblingCount: 2,
+  siblingPairCount: 2,
   boundaryCount: 1,
   goToPosition: "left",
 };
@@ -114,7 +117,7 @@ export const Compact = Template.bind({});
 Compact.args = {
   compact: true,
   count: 25,
-  siblingCount: 2,
+  siblingPairCount: 2,
   boundaryCount: 1,
 };
 

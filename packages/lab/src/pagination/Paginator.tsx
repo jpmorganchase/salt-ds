@@ -20,12 +20,12 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Number of pages on each side of the current page when page range is truncated.
    */
-  siblingCount?: number;
+  siblingPairCount?: number;
 }
 
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   function Paginator(
-    { className, boundaryCount, siblingCount, ...restProps },
+    { className, boundaryCount, siblingPairCount, ...restProps },
     forwardedRef
   ) {
     const targetWindow = useWindow();
@@ -65,7 +65,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
           count={count}
           page={page}
           onPageChange={onPageChange}
-          siblingCount={siblingCount}
+          siblingPairCount={siblingPairCount}
           boundaryCount={boundaryCount}
         />
         <ArrowButton

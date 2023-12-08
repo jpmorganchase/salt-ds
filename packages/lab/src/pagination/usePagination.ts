@@ -4,16 +4,16 @@ export function usePagination(
   page: number,
   count: number,
   boundaryCount: number,
-  siblingCount: number
+  siblingPairCount: number
 ) {
-  const totalButtonsVisible = 2 * (boundaryCount + siblingCount) + 3;
+  const totalButtonsVisible = 2 * (boundaryCount + siblingPairCount) + 3;
   const isEnoughSpace = totalButtonsVisible >= count;
 
   const isLeftEllipsis =
-    !isEnoughSpace && page - boundaryCount - siblingCount > 2;
+    !isEnoughSpace && page - boundaryCount - siblingPairCount > 2;
 
   const isRightEllipsis =
-    !isEnoughSpace && page + boundaryCount + siblingCount + 1 < count;
+    !isEnoughSpace && page + boundaryCount + siblingPairCount + 1 < count;
 
   const leftPages = isLeftEllipsis
     ? ([1, boundaryCount] as PageRange)
@@ -28,12 +28,12 @@ export function usePagination(
   if (!isLeftEllipsis) {
     middlePages = [
       1,
-      isRightEllipsis ? boundaryCount + 2 + 2 * siblingCount : count,
+      isRightEllipsis ? boundaryCount + 2 + 2 * siblingPairCount : count,
     ];
   } else if (!isRightEllipsis) {
-    middlePages = [count - boundaryCount - 1 - 2 * siblingCount, count];
+    middlePages = [count - boundaryCount - 1 - 2 * siblingPairCount, count];
   } else {
-    middlePages = [page - siblingCount, page + siblingCount];
+    middlePages = [page - siblingPairCount, page + siblingPairCount];
   }
 
   return [leftPages, middlePages, rightPages] as const;

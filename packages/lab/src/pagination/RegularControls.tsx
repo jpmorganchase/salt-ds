@@ -8,7 +8,7 @@ export interface RegularControlsProps {
   page: number;
   onPageChange: (page: number) => void;
   boundaryCount?: number;
-  siblingCount?: number;
+  siblingPairCount?: number;
 }
 
 const Ellipsis = () => {
@@ -27,7 +27,7 @@ export function RegularControls({
   page,
   count,
   onPageChange,
-  siblingCount = 2,
+  siblingPairCount = 2,
   boundaryCount = 1,
 }: RegularControlsProps) {
   const renderPages = (range?: PageRange, selectedPage?: number) => {
@@ -48,7 +48,7 @@ export function RegularControls({
     page,
     count,
     Math.max(1, boundaryCount),
-    siblingCount
+    siblingPairCount
   );
 
   return (
