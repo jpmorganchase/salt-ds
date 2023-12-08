@@ -41,12 +41,12 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     const ref = useForkRef(setPaginatorElement, forwardedRef);
 
     const onPreviousPage = useCallback(() => {
-      onPageChange(Math.min(page + 1, count));
-    }, [count, page, onPageChange]);
-
-    const onNextPage = useCallback(() => {
       onPageChange(Math.max(1, page - 1));
     }, [page, onPageChange]);
+
+    const onNextPage = useCallback(() => {
+      onPageChange(Math.min(page + 1, count));
+    }, [count, page, onPageChange]);
 
     const isOnFirstPage = page === 1;
 

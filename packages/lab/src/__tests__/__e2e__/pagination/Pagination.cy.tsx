@@ -212,26 +212,26 @@ describe("GIVEN an Pagination", () => {
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageDown"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 3);
         });
       });
       describe("AND pressing Alt+PageUp", () => {
         it("THEN moves to the next page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination count={10} onPageChange={pageChangeSpy}>
+            <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
               <Paginator />
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 1" }).should(
+          cy.findByRole("link", { name: "Page 2" }).should(
             "have.attr",
             "aria-current",
             "page"
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageUp"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
         });
       });
     });
@@ -348,8 +348,8 @@ describe("GIVEN an Pagination", () => {
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageDown"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
-          cy.findByRole("link", { name: "Page 1" }).should(
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 3);
+          cy.findByRole("link", { name: "Page 3" }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -361,20 +361,20 @@ describe("GIVEN an Pagination", () => {
         it("THEN moves to the next page", () => {
           const pageChangeSpy = cy.stub().as("pageChangeSpy");
           cy.mount(
-            <Pagination count={10} onPageChange={pageChangeSpy}>
+            <Pagination count={10} initialPage={2} onPageChange={pageChangeSpy}>
               <Paginator />
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 1" }).should(
+          cy.findByRole("link", { name: "Page 2" }).should(
             "have.attr",
             "aria-current",
             "page"
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageUp"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
-          cy.findByRole("link", { name: "Page 2" }).should(
+          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+          cy.findByRole("link", { name: "Page 1" }).should(
             "have.attr",
             "aria-current",
             "page"
