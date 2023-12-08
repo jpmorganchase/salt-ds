@@ -83,7 +83,7 @@
     "ag-grid-enterprise": "^30.2.0",
     "ag-grid-react": "^30.2.0",
     "axe-core": "^4.4.3",
-    "chromatic": "^7.0.0",
+    "chromatic": "^10.0.0",
     "ci-info": "^3.3.1",
     "clsx": "^2.0.0",
     "cypress": "^13.0.0",
@@ -114,7 +114,7 @@
     "vite": "^4.4.9",
     "vite-plugin-istanbul": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.34.4",
+    "vitest": "^1.0.0",
     "webpack": "5.74.0",
     "yup": "^1.0.2"
   },

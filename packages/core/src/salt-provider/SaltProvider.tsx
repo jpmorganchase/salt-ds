@@ -209,7 +209,7 @@ function InternalSaltProvider({
 }
 
 export function SaltProvider({
-  enableStyleInjection = true,
+  enableStyleInjection,
   ...restProps
 }: SaltProviderProps) {
   return (

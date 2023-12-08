@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/ag-grid-theme",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -10,6 +10,7 @@
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "uitk.css",
   "files": [
+    "/fonts",
     "/uitk.css",
     "/salt.css",
     "/fonts"
