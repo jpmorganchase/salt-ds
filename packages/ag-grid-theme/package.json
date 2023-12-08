@@ -10,6 +10,7 @@
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "uitk.css",
   "files": [
+    "/fonts",
     "/uitk.css",
     "/salt.css",
     "/fonts"
