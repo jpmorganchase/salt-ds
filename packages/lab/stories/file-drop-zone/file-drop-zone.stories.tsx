@@ -50,7 +50,9 @@ export const Default: StoryFn<typeof FileDropZone> = ({
         data-testid="file-drop-zone-example"
         onFilesAccepted={handleFilesAccepted}
         {...args}
-      />
+      >
+        <strong>Drop files here or</strong>
+      </FileDropZone>
       <ResultCard result={result} />
     </>
   );
@@ -76,41 +78,12 @@ export const Disabled: StoryFn<typeof FileDropZone> = ({
       disabled
       onFilesAccepted={handleFilesAccepted}
       {...args}
-    />
+    >
+      <strong>Drop files here or</strong>
+    </FileDropZone>
   );
 };
 Disabled.args = {};
-
-export const WithCustomText: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
-  const [result, setResult] = useState<{ files: readonly File[] }>();
-
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-      setResult({ files });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
-
-  return (
-    <>
-      <FileDropZone
-        data-testid="file-drop-zone-example"
-        onFilesAccepted={handleFilesAccepted}
-        {...args}
-      >
-        Some custom text
-      </FileDropZone>
-      <ResultCard result={result} />
-    </>
-  );
-};
-WithCustomText.args = {};
 
 export const WithFileTypeValidation: StoryFn<typeof FileDropZone> = ({
   onFilesAccepted,
@@ -150,12 +123,13 @@ export const WithFileTypeValidation: StoryFn<typeof FileDropZone> = ({
       <FileDropZone
         accept={ACCEPTED_TYPES}
         data-testid="file-drop-zone-example"
-        description="Only .png or .xls files."
         onFilesAccepted={handleFilesAccepted}
         onFilesRejected={handleFilesRejected}
         validate={[validateFileType]}
         {...args}
-      />
+      >
+        <strong>Only .png or .xls files.</strong>
+      </FileDropZone>
       <ResultCard result={result} />
     </>
   );
@@ -395,8 +369,8 @@ export const ResultCard = ({ result }: ResultCardProps) => {
       }}
     >
       {!result && <strong>No files have been added.</strong>}
-      {result && result.files && renderFiles(result.files)}
-      {result && result.errors && renderErrors(result.errors)}
+      {result?.files && renderFiles(result.files)}
+      {result?.errors && renderErrors(result.errors)}
       <em style={{ display: "block" }}>
         This card is for example only. It is not a part of the FileDropZone
         component. <br />

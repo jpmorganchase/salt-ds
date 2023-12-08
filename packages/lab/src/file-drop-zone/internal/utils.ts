@@ -6,7 +6,7 @@ export const toArray = (obj: any) => Object.keys(obj).map((key) => obj[key]);
 export const containsFiles = (e: DragEvent) => {
   if (!e.dataTransfer) {
     const target = e.target as HTMLInputElement;
-    return target && target.files;
+    return target?.files;
   }
 
   return Array.prototype.some.call(
@@ -33,8 +33,8 @@ export const validateFiles = ({
   files = [],
   validate = [],
 }: {
-  files: ReadonlyArray<File>;
-  validate: ReadonlyArray<FilesValidator>;
+  files: readonly File[];
+  validate: readonly FilesValidator[];
 }) =>
   validate
     .reduce(
