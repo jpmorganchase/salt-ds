@@ -111,7 +111,6 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           ref={inputRef}
           inputProps={{
             "aria-labelledby": labelId,
-            "aria-label": `Page, ${count} total`,
             style: { width: widthCh },
           }}
           onBlur={onBlur}
