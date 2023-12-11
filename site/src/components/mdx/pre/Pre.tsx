@@ -1,9 +1,12 @@
 import { FC, PropsWithChildren } from "react";
-import { components } from "@jpmorganchase/mosaic-site-components";
 import type { PreProps } from "@jpmorganchase/mosaic-components";
+import {
+  Pre as InnerPre,
+  withMarkdownSpacing,
+} from "@jpmorganchase/mosaic-components";
 import styles from "./Pre.module.css";
 
-const MosaicPre = components.pre;
+const MosaicPre = withMarkdownSpacing(InnerPre);
 
 export const Pre: FC<PropsWithChildren<PreProps>> = ({ ...props }) => (
   <div className={styles.pre}>
