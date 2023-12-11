@@ -17,9 +17,9 @@ export const Metric = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <strong>Revenue YTD</strong>
+        <strong>Performance</strong>
       </Text>
-      <Display1>$801.9B</Display1>
+      <Display1>801</Display1>
     </StackLayout>
   );
 };
@@ -28,9 +28,9 @@ export const HorizontalMetric = () => {
   return (
     <StackLayout direction="row" gap={1}>
       <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
-        <strong>Revenue YTD</strong>
+        <strong>Performance</strong>
       </Text>
-      <Display1>$801.9B</Display1>
+      <Display1>801</Display1>
     </StackLayout>
   );
 };
@@ -39,10 +39,10 @@ export const Subtitle = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <strong>Revenue YTD</strong>
+        <strong>Performance</strong>
       </Text>
-      <Text variant="secondary">Total Value</Text>
-      <Display1>$801.9B</Display1>
+      <Text variant="secondary">Interactions</Text>
+      <Display1>801</Display1>
     </StackLayout>
   );
 };
@@ -51,10 +51,10 @@ export const Subvalue = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <strong>Revenue YTD</strong>
+        <strong>Performance</strong>
       </Text>
-      <Text variant="secondary">Total Value</Text>
-      <Display1>$801.9B</Display1>
+      <Text variant="secondary">Interactions</Text>
+      <Display1>801</Display1>
       <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
         +10.1 (+1.23%)
       </Text>
@@ -66,10 +66,10 @@ export const LinkSubtitle = () => {
   return (
     <StackLayout gap={0}>
       <Text>
-        <strong>Revenue YTD</strong>
+        <strong>Performance</strong>
       </Text>
-      <Link variant="secondary">Total Value</Link>
-      <Display1>$801.9B</Display1>
+      <Link variant="secondary">Interactions</Link>
+      <Display1>801</Display1>
       <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
         +10.1 (+1.23%)
       </Text>
@@ -82,11 +82,11 @@ export const Indicators = () => {
     <StackLayout direction={"row"} gap={8}>
       <StackLayout gap={0}>
         <Text>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Total Value</Text>
+        <Text variant="secondary">Interactions</Text>
         <Display1>
-          $801.9B
+          801
           <ArrowUpIcon
             style={{ fill: "var(--salt-status-positive-foreground)" }}
             size={3}
@@ -98,11 +98,11 @@ export const Indicators = () => {
       </StackLayout>
       <StackLayout gap={0}>
         <Text>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Total Value</Text>
+        <Text variant="secondary">Interactions</Text>
         <Display1>
-          $801.9B
+          801
           <ArrowDownIcon
             style={{ fill: "var(--salt-status-negative-foreground)" }}
             size={3}
@@ -121,11 +121,11 @@ export const HierarchicalVertical = () => {
     <StackLayout direction={"row"} gap={8} align="end">
       <StackLayout gap={0}>
         <Text>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Total Value</Text>
+        <Text variant="secondary">Interactions</Text>
         <Display3>
-          $801.9B
+          801
           <ArrowUpIcon
             style={{ fill: "var(--salt-status-positive-foreground)" }}
             size={1}
@@ -137,11 +137,11 @@ export const HierarchicalVertical = () => {
       </StackLayout>
       <StackLayout gap={0}>
         <Text>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Total Value</Text>
+        <Text variant="secondary">Interactions</Text>
         <Display2>
-          $801.9B
+          801
           <ArrowUpIcon
             style={{ fill: "var(--salt-status-positive-foreground)" }}
             size={2}
@@ -153,11 +153,11 @@ export const HierarchicalVertical = () => {
       </StackLayout>
       <StackLayout gap={0}>
         <Text>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Text variant="secondary">Total Value</Text>
+        <Text variant="secondary">Interactions</Text>
         <Display1>
-          $801.9B
+          801
           <ArrowUpIcon
             style={{ fill: "var(--salt-status-positive-foreground)" }}
             size={3}
@@ -176,21 +176,21 @@ export const HierarchicalHorizontal = () => {
     <StackLayout gap={8} align="end">
       <StackLayout direction="row" gap={1}>
         <Text style={{ marginTop: "var(--salt-spacing-50)" }}>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Display3>$801.9B</Display3>
+        <Display3>801</Display3>
       </StackLayout>
       <StackLayout direction="row" gap={1}>
         <Text style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Display2>$801.9B</Display2>
+        <Display2>801</Display2>
       </StackLayout>
       <StackLayout direction="row" gap={1}>
         <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
-          <strong>Revenue YTD</strong>
+          <strong>Performance</strong>
         </Text>
-        <Display1>$801.9B</Display1>
+        <Display1>801</Display1>
       </StackLayout>
     </StackLayout>
   );
