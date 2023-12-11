@@ -26,14 +26,10 @@
 }
 /*!* Styles applied if `status="error" *!*/
 .saltFileDropZone-error {
-  /* TODO: remove if we don't need secondary variant */
-  /*background: var(--saltFileDropZone-error-background, var(--salt-status-error-background));*/
   border: var(--saltFileDropZone-error-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-status-error-borderColor));
 }
 
 .saltFileDropZone-success {
-  /* TODO: remove if we don't need secondary variant */
-  /*background: var(--saltFileDropZone-success-background, var(--salt-status-success-background));*/
   border: var(--saltFileDropZone-success-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-status-success-borderColor));
 }
 
@@ -45,6 +41,7 @@
 
 /*!* Styles applied if `disabled={true}` *!*/
 .saltFileDropZone-disabled {
+  /*TODO: solve accessibility issue*/
   background: var(--saltFileDropZone-background-disabled, var(--salt-container-secondary-background-disabled));
   border: var(--saltFileDropZone-disabled, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-container-secondary-borderColor-disabled));
   cursor: var(--salt-target-cursor-disabled);

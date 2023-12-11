@@ -181,7 +181,6 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       },
       []
     );
-
     return (
       <div
         className={clsx(
@@ -203,13 +202,11 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         {HeaderComponent && <HeaderComponent status={status} />}
 
         {/* TODO: pass labelledBy to trigger */}
-        {
-          <TriggerComponent
-            onClick={handleInputClick}
-            disabled={disabled}
-            ref={buttonRef}
-          />
-        }
+        <TriggerComponent
+          onClick={handleInputClick}
+          disabled={disabled}
+          ref={buttonRef}
+        />
         {children}
         <input
           accept={accept}
