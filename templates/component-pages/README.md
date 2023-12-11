@@ -104,7 +104,7 @@ Use bullet points for each tip. Don't use any bullet points if there is only one
 
 Under the best practices header, write general accessibility tips that the user should know. Refer to third-party sources and guidance where applicable.
 
-Add keyboard interactions underneath the relevant template header. Use the component structure as outlined in the template to produce a table of key combinations. See the style guide for detailed information on how to refer to given keys.
+Add keyboard interactions underneath the relevant template header. Use the component structure as outlined in the template to produce a table of key combinations. See [the style guide](../../content-style-guide.md) for detailed information on how to refer to given keys.
 
 Use bullet points unless there is only one point in every row. If the combination refers to a single key, use the name of the key in the explanation. If it's a combination or there are multiple possible keys, refer to the combination with "this action."
 
