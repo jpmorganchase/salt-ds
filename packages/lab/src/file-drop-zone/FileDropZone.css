@@ -1,7 +1,7 @@
 .saltFileDropZone {
   color: var(--saltFileDropZone-text-color, var(--salt-text-primary-foreground));
   display: inline-flex;
-  background: var(--saltFileDropZone-background, var(--salt-container-secondary-background));
+  background: var(--saltFileDropZone-background, var(--salt-container-primary-background));
   text-align: center;
   align-items: stretch;
   justify-content: center;
@@ -16,6 +16,7 @@
 }
 
 /* Styles applied if `isActive={true}` */
+.saltFileDropZone-active,
 .saltFileDropZone-active {
   background: var(--saltFileDropZone-background-hover, var(--salt-target-background-hover));
   border: var(--saltFileDropZone-border-hover, var(--salt-size-border) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover));
@@ -25,18 +26,18 @@
 }
 /*!* Styles applied if `status="error" *!*/
 .saltFileDropZone-error {
-  /* TODO: check the exposed variable name */
-  background: var(--saltFileDropZone-error-background, var(--salt-status-error-background));
+  /* TODO: remove if we don't need secondary variant */
+  /*background: var(--saltFileDropZone-error-background, var(--salt-status-error-background));*/
   border: var(--saltFileDropZone-error-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-status-error-borderColor));
 }
 
 .saltFileDropZone-success {
-  /* TODO: check the exposed variable name */
-  background: var(--saltFileDropZone-success-background, var(--salt-status-success-background));
+  /* TODO: remove if we don't need secondary variant */
+  /*background: var(--saltFileDropZone-success-background, var(--salt-status-success-background));*/
   border: var(--saltFileDropZone-success-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-status-success-borderColor));
 }
 
-.saltFileDropZone-inputRoot .input-hidden {
+.saltFileDropZone .input-hidden {
   position: absolute;
   clip: rect(0, 0, 0, 0);
   visibility: hidden;
@@ -49,4 +50,3 @@
   cursor: var(--salt-target-cursor-disabled);
   color: var(--saltFileDropZone-text-color-disabled, var(--salt-text-primary-foreground-disabled));
 }
-/* TODO: do we need disabled-error status?*/

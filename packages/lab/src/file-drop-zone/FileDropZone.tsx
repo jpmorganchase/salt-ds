@@ -20,7 +20,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import fileDropZoneCss from "./FileDropZone.css";
-import { FileDropZoneIcon } from "./FileDropZoneIcon";
+import { FileDropZoneHeader } from "./FileDropZoneHeader";
 import { IconProps } from "@salt-ds/icons";
 
 const INVALID_DROP_TARGET = "Drop target doesn't contain any file.";
@@ -77,9 +77,9 @@ export interface FileDropZoneProps extends HTMLAttributes<HTMLDivElement> {
    * All errors are collected in the end and returned as an array to `onFilesRejected`.
    */
   validate?: readonly FilesValidator[];
-
-  IconComponent?: ComponentType<IconProps> | null;
+  HeaderComponent?: ComponentType<IconProps> | null;
   TriggerComponent?: ComponentType<ButtonProps>;
+  status?: "success" | "error";
 }
 
 const withBaseName = makePrefixer("saltFileDropZone");
@@ -97,8 +97,9 @@ const FileDropZoneButton = forwardRef<HTMLButtonElement>(
 export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
   function FileDropZone(
     {
-      IconComponent = FileDropZoneIcon,
+      HeaderComponent = FileDropZoneHeader,
       accept,
+      status,
       className,
       children,
       disabled,
@@ -116,12 +117,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       css: fileDropZoneCss,
       window: targetWindow,
     });
-
     const [isActive, setActive] = useState(false);
-    const [status, setStatus] = useState<"success" | "error" | undefined>(
-      undefined
-    );
-
     const buttonRef = useRef<HTMLButtonElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -150,17 +146,14 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       event.stopPropagation();
       if (!containsFiles(event as DragEvent)) {
         const errors = [INVALID_DROP_TARGET];
-        setStatus("error");
         return onFilesRejected?.(errors, event);
       }
       const files = extractFiles(event as DragEvent);
       if (files.length > 0) {
         const errors = validate ? validateFiles({ files, validate }) : [];
         if (errors && errors.length !== 0) {
-          setStatus("error");
           return onFilesRejected?.(errors, event);
         }
-        setStatus("success");
         return onFilesAccepted?.(files, event);
       }
     };
@@ -191,7 +184,6 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
 
     return (
       <div
-        {...restProps}
         className={clsx(
           withBaseName(),
           {
@@ -206,30 +198,30 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         ref={ref}
+        {...restProps}
       >
-        {IconComponent && <IconComponent status={status} />}
-        {children}
-        <div className={withBaseName("inputRoot")}>
-          {/* TODO: pass labelledBy to trigger */}
-          {
-            <TriggerComponent
-              onClick={handleInputClick}
-              disabled={disabled}
-              ref={buttonRef}
-            />
-          }
-          <input
-            accept={accept}
-            className="input-hidden"
-            data-testid="file-input"
+        {HeaderComponent && <HeaderComponent status={status} />}
+
+        {/* TODO: pass labelledBy to trigger */}
+        {
+          <TriggerComponent
+            onClick={handleInputClick}
             disabled={disabled}
-            multiple
-            onChange={handleFilesDrop}
-            onFocus={handleInputFocus}
-            ref={fileInputRef}
-            type="file"
+            ref={buttonRef}
           />
-        </div>
+        }
+        {children}
+        <input
+          accept={accept}
+          className="input-hidden"
+          data-testid="file-input"
+          disabled={disabled}
+          multiple
+          onChange={handleFilesDrop}
+          onFocus={handleInputFocus}
+          ref={fileInputRef}
+          type="file"
+        />
       </div>
     );
   }
