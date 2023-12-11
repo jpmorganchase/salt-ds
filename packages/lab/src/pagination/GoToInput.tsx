@@ -10,10 +10,10 @@ import {
   useState,
 } from "react";
 import {
+  FormField,
   FormFieldLabel,
   Input,
   useForkRef,
-  useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
@@ -49,7 +49,6 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
 
     const rootRef = useRef<HTMLSpanElement>(null);
     const forkedRef = useForkRef(rootRef, forwardedRef);
-    const labelId = useId();
     const [inputValue, setInputValue] = useState("");
 
     const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -103,23 +102,24 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
         ref={forkedRef}
         {...restProps}
       >
-        {label && <FormFieldLabel id={labelId}>{label}</FormFieldLabel>}
-        <Input
-          className={clsx(withBaseName("goToInput"), {
-            [withBaseName("goToInputFixed")]: count < 100,
-          })}
-          ref={inputRef}
-          inputProps={{
-            "aria-labelledby": labelId,
-            style: { width: widthCh },
-          }}
-          onBlur={onBlur}
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={inputValue}
-          textAlign={"center"}
-          variant={inputVariant}
-        />
+        <FormField className={withBaseName("FormField")}>
+          <FormFieldLabel>{label}</FormFieldLabel>
+          <Input
+            className={clsx(withBaseName("goToInput"), {
+              [withBaseName("goToInputFixed")]: count < 100,
+            })}
+            ref={inputRef}
+            inputProps={{
+              style: { width: widthCh },
+            }}
+            onBlur={onBlur}
+            onChange={onChange}
+            onKeyDown={onKeyDown}
+            value={inputValue}
+            textAlign={"center"}
+            variant={inputVariant}
+          />
+        </FormField>
       </span>
     );
   }

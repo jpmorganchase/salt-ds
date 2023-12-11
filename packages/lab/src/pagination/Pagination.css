@@ -110,3 +110,8 @@
   max-width: var(--salt-size-base);
   width: var(--salt-size-base);
 }
+
+.saltPagination-FormField.saltFormField {
+  display: flex;
+  flex-direction: row;
+}
