@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 export interface PageButtonProps {
   page: number;
   isSelected?: boolean;
-  onPageChange: (page: number) => void;
+  onPageChange?: (page: number) => void;
   disabled?: boolean;
 }
 
@@ -20,12 +20,12 @@ export const PageButton = ({
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
     if (event.key === "Enter") {
-      onPageChange(page);
+      onPageChange?.(page);
     }
   };
 
   const onClick: MouseEventHandler<HTMLButtonElement> = () => {
-    onPageChange(page);
+    onPageChange?.(page);
   };
 
   return (

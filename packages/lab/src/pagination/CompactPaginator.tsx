@@ -70,7 +70,7 @@ export const CompactPaginator = forwardRef<
       {withInput ? (
         <CompactInput inputRef={inputRef} variant={inputVariant} />
       ) : (
-        <PageButton page={page} onPageChange={onPageChange} disabled />
+        <PageButton page={page} disabled />
       )}
       <Text
         as="span"
