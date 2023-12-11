@@ -56,7 +56,7 @@ export const Subvalue = () => {
       <Text variant="secondary">Interactions</Text>
       <Display1>801</Display1>
       <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
-        +10.1 (+1.23%)
+        +10 (+1.23%)
       </Text>
     </StackLayout>
   );
@@ -71,7 +71,7 @@ export const LinkSubtitle = () => {
       <Link variant="secondary">Interactions</Link>
       <Display1>801</Display1>
       <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
-        +10.1 (+1.23%)
+        +10 (+1.23%)
       </Text>
     </StackLayout>
   );
@@ -93,7 +93,7 @@ export const Indicators = () => {
           />
         </Display1>
         <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
-          +10.1 (+1.23%)
+          +10 (+1.23%)
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
@@ -109,7 +109,7 @@ export const Indicators = () => {
           />
         </Display1>
         <Text style={{ color: "var(--salt-status-negative-foreground)" }}>
-          -10.1 (+1.23%)
+          -10 (-1.23%)
         </Text>
       </StackLayout>
     </StackLayout>
@@ -132,7 +132,7 @@ export const HierarchicalVertical = () => {
           />
         </Display3>
         <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
-          +10.1 (+1.23%)
+          +10 (+1.23%)
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
@@ -148,7 +148,7 @@ export const HierarchicalVertical = () => {
           />
         </Display2>
         <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
-          +10.1 (+1.23%)
+          +10 (+1.23%)
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
@@ -164,7 +164,7 @@ export const HierarchicalVertical = () => {
           />
         </Display1>
         <Text style={{ color: "var(--salt-status-positive-foreground)" }}>
-          +10.1 (+1.23%)
+          +10 (+1.23%)
         </Text>
       </StackLayout>
     </StackLayout>
