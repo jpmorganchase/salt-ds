@@ -8,13 +8,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  FormField,
-  FormFieldLabel,
-  Input,
-  useForkRef,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
+import { FormField, FormFieldLabel, Input, useForkRef } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
 import { withBaseName } from "./utils";
 
@@ -44,7 +38,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
     },
     forwardedRef
   ) {
-    const { count, onPageChange, paginatorElement } = usePaginationContext();
+    const { count, onPageChange } = usePaginationContext();
 
     const rootRef = useRef<HTMLSpanElement>(null);
     const forkedRef = useForkRef(rootRef, forwardedRef);
@@ -73,28 +67,11 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       setInputValue("");
     };
 
-    const [position, setPosition] = useState<"left" | "right">();
-
-    useIsomorphicLayoutEffect(() => {
-      if (paginatorElement && rootRef.current) {
-        setPosition(
-          rootRef.current.compareDocumentPosition(paginatorElement) ===
-            Node.DOCUMENT_POSITION_PRECEDING
-            ? "right"
-            : "left"
-        );
-      }
-    }, [paginatorElement, rootRef]);
-
     const widthCh = `${`${count}`.length}ch`;
 
     return (
       <span
-        className={clsx(
-          withBaseName("goToInputWrapper"),
-          { [withBaseName(`${position!}GoToInput`)]: position },
-          className
-        )}
+        className={clsx(withBaseName("goToInputWrapper"), className)}
         ref={forkedRef}
         {...restProps}
       >

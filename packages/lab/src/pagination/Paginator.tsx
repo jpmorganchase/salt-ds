@@ -1,4 +1,3 @@
-import { useForkRef } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, MouseEventHandler } from "react";
@@ -26,7 +25,7 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   function Paginator(
     { className, boundaryCount, siblingPairCount, ...restProps },
-    forwardedRef
+    ref
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -35,12 +34,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
       window: targetWindow,
     });
 
-    const { count, page, onPageChange, setPaginatorElement } =
-      usePaginationContext();
-
-    console.log("Paginator - page", page);
-
-    const ref = useForkRef(setPaginatorElement, forwardedRef);
+    const { count, page, onPageChange } = usePaginationContext();
 
     const onPreviousPage: MouseEventHandler<HTMLButtonElement> = (event) => {
       onPageChange(event, Math.max(1, page - 1));

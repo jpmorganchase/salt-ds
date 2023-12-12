@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
 import { clsx } from "clsx";
-import { useForkRef, Text } from "@salt-ds/core";
+import { Text } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { ArrowButton } from "./ArrowButton";
 import { PageButton } from "./PageButton";
@@ -15,10 +15,7 @@ import paginationCss from "./Pagination.css";
 export const CompactPaginator = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<"div">
->(function CompactPaginator(
-  { children, className, ...restProps },
-  forwardedRef
-) {
+>(function CompactPaginator({ children, className, ...restProps }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pagination",
@@ -26,10 +23,7 @@ export const CompactPaginator = forwardRef<
     window: targetWindow,
   });
 
-  const { count, page, onPageChange, setPaginatorElement } =
-    usePaginationContext();
-
-  const ref = useForkRef(setPaginatorElement, forwardedRef);
+  const { count, page, onPageChange } = usePaginationContext();
 
   const onPreviousPage: MouseEventHandler<HTMLButtonElement> = (event) => {
     onPageChange(event, Math.max(1, page - 1));
