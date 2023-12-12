@@ -27,7 +27,7 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   /**
    * Default current/active page.
    */
-  initialPage?: number;
+  defaultPage?: number;
   /**
    * Callback function triggered when current page changed.
    */
@@ -40,7 +40,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       className,
       count,
       children,
-      initialPage = 1,
+      defaultPage = 1,
       page: pageProp,
       onPageChange: onPageChangeProp,
       ...restProps
@@ -49,7 +49,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
   ) {
     const [pageState, setPageState] = useControlled({
       controlled: pageProp,
-      default: initialPage,
+      default: defaultPage,
       name: "Paginator",
       state: "page",
     });
