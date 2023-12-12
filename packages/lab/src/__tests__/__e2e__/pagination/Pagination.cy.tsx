@@ -3,6 +3,7 @@ import {
   Paginator,
   GoToInput,
   CompactPaginator,
+  CompactInput,
 } from "@salt-ds/lab";
 
 describe("GIVEN an Pagination", () => {
@@ -382,12 +383,14 @@ describe("GIVEN an Pagination", () => {
         });
       });
     });
-    describe("AND withInput", () => {
+    describe("AND with input", () => {
       it("SHOULD then reset to the current page on blur", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-            <CompactPaginator withInput />
+            <CompactPaginator>
+              <CompactInput />
+            </CompactPaginator>
           </Pagination>
         );
 
@@ -404,7 +407,9 @@ describe("GIVEN an Pagination", () => {
         const pageChangeSpy = cy.stub().as("pageChangeSpy");
         cy.mount(
           <Pagination count={10} initialPage={3} onPageChange={pageChangeSpy}>
-            <CompactPaginator withInput />
+            <CompactPaginator>
+              <CompactInput />
+            </CompactPaginator>
           </Pagination>
         );
 

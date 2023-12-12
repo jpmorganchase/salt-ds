@@ -3,6 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 
 import {
   GoToInput,
+  CompactInput,
   CompactPaginator,
   Pagination,
   Paginator,
@@ -40,7 +41,9 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
     <Pagination page={page} onPageChange={onPageChange} count={count}>
       {goToPosition === "left" ? <GoToInput /> : null}
       {compact ?? compactWithInput ? (
-        <CompactPaginator withInput={compactWithInput} />
+        <CompactPaginator>
+          {compactWithInput && <CompactInput />}
+        </CompactPaginator>
       ) : (
         <Paginator
           boundaryCount={boundaryCount}

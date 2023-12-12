@@ -1,5 +1,6 @@
 import {
   GoToInput,
+  CompactInput,
   CompactPaginator,
   Pagination,
   PaginationProps,
@@ -45,10 +46,9 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
         <GoToInput inputVariant={inputVariant} />
       ) : null}
       {compact ?? compactWithInput ? (
-        <CompactPaginator
-          withInput={compactWithInput}
-          inputVariant={inputVariant}
-        />
+        <CompactPaginator>
+          {compactWithInput && <CompactInput variant={inputVariant} />}
+        </CompactPaginator>
       ) : (
         <Paginator
           boundaryCount={boundaryCount}
