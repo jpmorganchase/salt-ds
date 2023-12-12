@@ -1,7 +1,7 @@
 import { useForkRef } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, MouseEventHandler } from "react";
 import { ArrowButton } from "./ArrowButton";
 import { RegularControls } from "./RegularControls";
 import { usePaginationContext } from "./usePaginationContext";
@@ -38,14 +38,16 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     const { count, page, onPageChange, setPaginatorElement } =
       usePaginationContext();
 
+    console.log("Paginator - page", page);
+
     const ref = useForkRef(setPaginatorElement, forwardedRef);
 
-    const onPreviousPage = () => {
-      onPageChange(Math.max(1, page - 1));
+    const onPreviousPage: MouseEventHandler<HTMLButtonElement> = (event) => {
+      onPageChange(event, Math.max(1, page - 1));
     };
 
-    const onNextPage = () => {
-      onPageChange(Math.min(page + 1, count));
+    const onNextPage: MouseEventHandler<HTMLButtonElement> = (event) => {
+      onPageChange(event, Math.min(page + 1, count));
     };
 
     const isOnFirstPage = page === 1;

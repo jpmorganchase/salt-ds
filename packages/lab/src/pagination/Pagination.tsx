@@ -4,6 +4,7 @@ import {
   forwardRef,
   HTMLAttributes,
   KeyboardEventHandler,
+  SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -31,7 +32,7 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
   /**
    * Callback function triggered when current page changed.
    */
-  onPageChange?: (page: number) => void;
+  onPageChange?: (event: SyntheticEvent, page: number) => void;
 }
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
@@ -57,9 +58,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const [paginatorElement, setPaginatorElement] = useState<HTMLDivElement>();
 
     const onPageChange = useCallback(
-      (page: number) => {
+      (event: SyntheticEvent, page: number) => {
         setPageState(page);
-        onPageChangeProp && onPageChangeProp(page);
+        onPageChangeProp && onPageChangeProp(event, page);
       },
       [onPageChangeProp, setPageState]
     );
@@ -75,14 +76,15 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       [pageState, count, onPageChange, paginatorElement]
     );
 
-    const onKeyDown: KeyboardEventHandler = ({ altKey, key }) => {
+    const onKeyDown: KeyboardEventHandler = (event) => {
+      const { altKey, key } = event;
       if (altKey) {
         switch (key) {
           case "PageDown":
-            onPageChange(Math.min(pageState + 1, count));
+            onPageChange(event, Math.min(pageState + 1, count));
             break;
           case "PageUp":
-            onPageChange(Math.max(pageState - 1, 1));
+            onPageChange(event, Math.max(pageState - 1, 1));
             break;
           default:
         }
@@ -99,12 +101,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         mounted.current = true;
       }
     }, [announce, pageState]);
-
-    useEffect(() => {
-      if (count < pageState) {
-        onPageChange(1);
-      }
-    }, [count, pageState, onPageChange]);
 
     if (count < 2) {
       return null;

@@ -16,12 +16,12 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
     if (event.key === "Enter") {
-      onPageChange?.(page);
+      onPageChange(event, page);
     }
   };
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = () => {
-    onPageChange?.(page);
+  const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    onPageChange(event, page);
   };
 
   return (

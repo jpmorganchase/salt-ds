@@ -8,7 +8,6 @@ import {
   PaginatorProps,
 } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
 
 export default {
   title: "Lab/Pagination",
@@ -27,7 +26,6 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
 ) => {
   const {
     count,
-    page: pageProp = 1,
     boundaryCount,
     siblingPairCount,
     compact,
@@ -35,13 +33,9 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     goToPosition,
     inputVariant,
   } = args;
-  const [page, setPage] = useState<number>(pageProp);
-  const onPageChange = (page: number) => {
-    setPage(page);
-  };
 
   return (
-    <Pagination page={page} onPageChange={onPageChange} count={count}>
+    <Pagination count={count}>
       {goToPosition === "left" ? (
         <GoToInput inputVariant={inputVariant} />
       ) : null}

@@ -63,7 +63,7 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           pageValue > 0 &&
           pageValue <= count
         ) {
-          onPageChange(pageValue);
+          onPageChange(event, pageValue);
         }
         setInputValue("");
       }

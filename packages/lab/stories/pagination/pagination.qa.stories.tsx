@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 
 import {
@@ -32,13 +31,9 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
     compactWithInput,
     goToPosition,
   } = args;
-  const [page, setPage] = useState<number>(1);
-  const onPageChange = (page: number) => {
-    setPage(page);
-  };
 
   return (
-    <Pagination page={page} onPageChange={onPageChange} count={count}>
+    <Pagination count={count}>
       {goToPosition === "left" ? <GoToInput /> : null}
       {compact ?? compactWithInput ? (
         <CompactPaginator>

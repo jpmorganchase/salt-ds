@@ -1,9 +1,9 @@
-import { createContext } from "react";
+import { SyntheticEvent, createContext } from "react";
 
 export interface PaginationContext {
   page: number;
   count: number;
-  onPageChange: (page: number) => void;
+  onPageChange: (event: SyntheticEvent, page: number) => void;
   paginatorElement?: HTMLDivElement;
   setPaginatorElement: (element: HTMLDivElement) => void;
 }

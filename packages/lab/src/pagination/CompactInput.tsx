@@ -30,7 +30,7 @@ export const CompactInput = forwardRef<
     if (event.key === "Enter") {
       const pageValue = Number(inputValue);
       if (!isNaN(pageValue) && pageValue <= count && pageValue > 0) {
-        onPageChange(pageValue);
+        onPageChange(event, pageValue);
       } else {
         setInputValue(`${page}`);
       }

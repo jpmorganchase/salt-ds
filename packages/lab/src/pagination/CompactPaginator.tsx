@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
 import { clsx } from "clsx";
 import { useForkRef, Text } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
@@ -31,12 +31,12 @@ export const CompactPaginator = forwardRef<
 
   const ref = useForkRef(setPaginatorElement, forwardedRef);
 
-  const onPreviousPage = () => {
-    onPageChange(Math.max(1, page - 1));
+  const onPreviousPage: MouseEventHandler<HTMLButtonElement> = (event) => {
+    onPageChange(event, Math.max(1, page - 1));
   };
 
-  const onNextPage = () => {
-    onPageChange(Math.min(page + 1, count));
+  const onNextPage: MouseEventHandler<HTMLButtonElement> = (event) => {
+    onPageChange(event, Math.min(page + 1, count));
   };
 
   const isOnFirstPage = page === 1;
