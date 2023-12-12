@@ -74,7 +74,7 @@ describe("GIVEN an Pagination", () => {
           "aria-current",
           "page"
         );
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
     describe("THEN clicking the previous arrow button", () => {
@@ -97,7 +97,7 @@ describe("GIVEN an Pagination", () => {
           "aria-current",
           "page"
         );
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
     describe("THEN clicking a paginator item", () => {
@@ -120,7 +120,7 @@ describe("GIVEN an Pagination", () => {
           "aria-current",
           "page"
         );
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
     describe("WHEN navigation using the keyboard", () => {
@@ -146,7 +146,7 @@ describe("GIVEN an Pagination", () => {
             "page"
           );
 
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing the previous arrow button", () => {
@@ -170,7 +170,7 @@ describe("GIVEN an Pagination", () => {
             "aria-current",
             "page"
           );
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing a paginator item", () => {
@@ -194,7 +194,7 @@ describe("GIVEN an Pagination", () => {
             "aria-current",
             "page"
           );
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 5);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing Alt+PageDown", () => {
@@ -213,7 +213,7 @@ describe("GIVEN an Pagination", () => {
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageDown"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 3);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing Alt+PageUp", () => {
@@ -232,7 +232,7 @@ describe("GIVEN an Pagination", () => {
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageUp"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
     });
@@ -251,7 +251,7 @@ describe("GIVEN an Pagination", () => {
         cy.findByText("3").should("exist");
         cy.findByRole("link", { name: "Next Page" }).realClick();
         cy.findByText("4").should("exist");
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
     describe("THEN clicking the previous arrow button", () => {
@@ -266,7 +266,7 @@ describe("GIVEN an Pagination", () => {
         cy.findByText("3").should("exist");
         cy.findByRole("link", { name: "Previous Page" }).realClick();
         cy.findByText("2").should("exist");
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
     describe("THEN clicking the count item", () => {
@@ -281,7 +281,7 @@ describe("GIVEN an Pagination", () => {
         cy.findAllByText("10").should("exist").and("have.length", 1);
         cy.findByRole("link", { name: "Page 10" }).realClick();
         cy.findAllByText("10").should("exist").and("have.length", 2);
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
     describe("WHEN navigating using the keyboard", () => {
@@ -298,7 +298,7 @@ describe("GIVEN an Pagination", () => {
           cy.findByRole("link", { name: "Next Page" }).focus();
           cy.realPress("Enter");
           cy.findByText("2").should("exist");
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing the previous arrow button", () => {
@@ -314,7 +314,7 @@ describe("GIVEN an Pagination", () => {
           cy.findByRole("link", { name: "Previous Page" }).focus();
           cy.realPress("Enter");
           cy.findByText("2").should("exist");
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 2);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing the count item", () => {
@@ -330,7 +330,7 @@ describe("GIVEN an Pagination", () => {
           cy.findByRole("link", { name: "Page 10" }).focus();
           cy.realPress("Enter");
           cy.findAllByText("10").should("exist").and("have.length", 2);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 10);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
       describe("AND pressing Alt+PageDown", () => {
@@ -349,7 +349,7 @@ describe("GIVEN an Pagination", () => {
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageDown"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 3);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
           cy.findByRole("link", { name: "Page 3" }).should(
             "have.attr",
             "aria-current",
@@ -374,7 +374,7 @@ describe("GIVEN an Pagination", () => {
           );
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageUp"]);
-          cy.get("@pageChangeSpy").should("have.been.calledWith", 1);
+          cy.get("@pageChangeSpy").should("have.been.calledOnce");
           cy.findByRole("link", { name: "Page 1" }).should(
             "have.attr",
             "aria-current",
@@ -420,7 +420,7 @@ describe("GIVEN an Pagination", () => {
         cy.findByRole("textbox").should("have.value", "4");
         cy.realPress("Enter");
         cy.findByRole("textbox").should("have.value", "4");
-        cy.get("@pageChangeSpy").should("have.been.calledWith", 4);
+        cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
     });
   });

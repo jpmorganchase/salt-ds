@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import { Button } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { usePaginationContext } from "./usePaginationContext";
@@ -13,12 +13,6 @@ export interface PageButtonProps {
 export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
   const { onPageChange } = usePaginationContext();
   const name = `Page ${page}`;
-
-  const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    if (event.key === "Enter") {
-      onPageChange(event, page);
-    }
-  };
 
   const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     onPageChange(event, page);
@@ -36,7 +30,6 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
         [withBaseName("pageButtonFixed")]: page < 100,
       })}
       onClick={onClick}
-      onKeyDown={onKeyDown}
       role="link"
       disabled={disabled}
     >
