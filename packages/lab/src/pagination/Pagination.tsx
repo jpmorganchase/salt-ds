@@ -75,22 +75,19 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       [pageState, count, onPageChange, paginatorElement]
     );
 
-    const onKeyDown: KeyboardEventHandler = useCallback(
-      ({ altKey, key }) => {
-        if (altKey) {
-          switch (key) {
-            case "PageDown":
-              onPageChange(Math.min(pageState + 1, count));
-              break;
-            case "PageUp":
-              onPageChange(Math.max(pageState - 1, 1));
-              break;
-            default:
-          }
+    const onKeyDown: KeyboardEventHandler = ({ altKey, key }) => {
+      if (altKey) {
+        switch (key) {
+          case "PageDown":
+            onPageChange(Math.min(pageState + 1, count));
+            break;
+          case "PageUp":
+            onPageChange(Math.max(pageState - 1, 1));
+            break;
+          default:
         }
-      },
-      [count, onPageChange, pageState]
-    );
+      }
+    };
 
     const { announce } = useAriaAnnouncer();
     const mounted = useRef<boolean>(false);

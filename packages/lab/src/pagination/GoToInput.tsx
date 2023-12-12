@@ -5,7 +5,6 @@ import {
   HTMLAttributes,
   KeyboardEventHandler,
   Ref,
-  useCallback,
   useRef,
   useState,
 } from "react";
@@ -51,12 +50,9 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
     const forkedRef = useForkRef(rootRef, forwardedRef);
     const [inputValue, setInputValue] = useState("");
 
-    const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-      (event) => {
-        setInputValue(event.target.value);
-      },
-      [setInputValue]
-    );
+    const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      setInputValue(event.target.value);
+    };
 
     const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
       if (event.key === "Enter") {
@@ -73,9 +69,9 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       }
     };
 
-    const onBlur = useCallback(() => {
+    const onBlur = () => {
       setInputValue("");
-    }, [setInputValue]);
+    };
 
     const [position, setPosition] = useState<"left" | "right">();
 

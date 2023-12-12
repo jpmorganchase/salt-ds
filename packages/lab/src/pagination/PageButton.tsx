@@ -10,11 +10,7 @@ export interface PageButtonProps {
   disabled?: boolean;
 }
 
-export const PageButton = ({
-  page,
-  isSelected,
-  disabled,
-}: PageButtonProps) => {
+export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
   const { onPageChange } = usePaginationContext();
   const name = `Page ${page}`;
 

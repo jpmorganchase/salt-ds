@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useCallback } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
 import { useForkRef, Text } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
@@ -31,13 +31,13 @@ export const CompactPaginator = forwardRef<
 
   const ref = useForkRef(setPaginatorElement, forwardedRef);
 
-  const onPreviousPage = useCallback(() => {
+  const onPreviousPage = () => {
     onPageChange(Math.max(1, page - 1));
-  }, [page, onPageChange]);
+  };
 
-  const onNextPage = useCallback(() => {
+  const onNextPage = () => {
     onPageChange(Math.min(page + 1, count));
-  }, [page, onPageChange, count]);
+  };
 
   const isOnFirstPage = page === 1;
   const isOnLastPage = page === count;
