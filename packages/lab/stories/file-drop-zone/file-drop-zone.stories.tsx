@@ -1,4 +1,10 @@
-import { useState, useCallback, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  SyntheticEvent,
+  DragEvent,
+} from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -12,33 +18,40 @@ import {
   createFileTypeValidator,
   createTotalSizeValidator,
   FileDropZone,
-  FilesAcceptedEventHandler,
-  FilesRejectedEventHandler,
+  FileDropZoneIcon,
+  FileDropZoneIconProps,
+  FileDropZoneProps,
+  FileDropZoneTrigger,
+  FileDropZoneTriggerProps,
   FilesValidator,
 } from "@salt-ds/lab";
 import { AllRenderer } from "docs/components";
+import {
+  containsFiles,
+  extractFiles,
+  validateFiles,
+} from "../../src/file-drop-zone/internal/utils";
 
 export default {
   title: "Lab/File Drop Zone",
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
 
-export const All: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
+export const All: StoryFn<typeof FileDropZone> = ({ onDrop, ...args }) => {
   return (
     <AllRenderer>
-      <FileDropZone {...args} />
+      <FileDropZone {...args}>
+        <FileDropZoneIcon/>
+        <strong>Drop files here or</strong>
+        <FileDropZoneTrigger/>
+      </FileDropZone>
     </AllRenderer>
   );
 };
 
-const FileDropzoneTemplate: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  onFilesRejected,
-  ...args
-}) => {
+const FileDropzoneTemplate: StoryFn<
+  FileDropZoneProps & FileDropZoneIconProps & FileDropZoneTriggerProps & {validate: readonly FilesValidator[];}
+> = ({ accept, children, disabled, validate, ...rest }) => {
   const [result, setResult] = useState<{
     files?: readonly File[];
     errors?: readonly string[];
@@ -59,34 +72,56 @@ const FileDropzoneTemplate: StoryFn<typeof FileDropZone> = ({
       clearTimeout(t);
     };
   }, [status]);
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-      setResult({ files });
-      setStatus("success");
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
 
-  const handleFilesRejected = useCallback<FilesRejectedEventHandler>(
-    (errors, event) => {
-      console.error("onFilesRejected:", { errors });
-      setResult({ errors });
-      setStatus("error");
-      onFilesRejected?.(errors, event);
-    },
-    [onFilesRejected]
-  );
+  const handleFilesAccepted = (
+    files: File[],
+    event: SyntheticEvent
+  ) => {
+    console.log("onFilesAccepted:", { files, event });
+    setResult({ files });
+    setStatus("success");
+  };
+
+  const handleFilesRejected = (errors: string[]) => {
+    console.error("onFilesRejected:", { errors });
+    setResult({ errors });
+    setStatus("error");
+  };
+
+  const handleFilesDrop = (event: SyntheticEvent) => {
+    event.stopPropagation();
+    if (!containsFiles(event as DragEvent)) {
+      const errors = ["Drop target doesn't contain any file."];
+      return handleFilesRejected(errors);
+    }
+    const files = extractFiles(event as DragEvent);
+    if (files.length > 0) {
+      const errors = validate ? validateFiles({ files, validate }): [];
+      if (errors && errors.length !== 0) {
+        return handleFilesRejected(errors);
+      }
+      return handleFilesAccepted(files, event);
+    }
+  };
+
+  const statusTitles = {"success": "Upload completed", "error": "Error uploading"}
+
   return (
     <StackLayout style={{ width: 250 }}>
       <FileDropZone
         data-testid="file-drop-zone-example"
-        onFilesAccepted={handleFilesAccepted}
-        onFilesRejected={handleFilesRejected}
         status={status}
-        {...args}
-      ></FileDropZone>
+        onDrop={handleFilesDrop}
+        disabled={disabled}
+        {...rest}
+      >
+        <FileDropZoneIcon status={status} />
+        <strong>
+          {status !== undefined ? statusTitles[status] : "Drop files here or"}
+        </strong>
+        <FileDropZoneTrigger accept={accept} disabled={disabled} onChange={handleFilesDrop} />
+        {children}
+      </FileDropZone>
       <ResultCard result={result} />
     </StackLayout>
   );

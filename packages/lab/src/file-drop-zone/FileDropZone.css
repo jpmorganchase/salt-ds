@@ -5,7 +5,7 @@
   text-align: center;
   align-items: stretch;
   justify-content: center;
-  border: var(--saltFileDropZone-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-container-secondary-borderColor));
+  border: var(--saltFileDropZone-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor));
   flex-direction: column;
   padding: var(--salt-spacing-200);
   gap: var(--salt-spacing-200);
@@ -19,31 +19,29 @@
 .saltFileDropZone-active,
 .saltFileDropZone-active {
   background: var(--saltFileDropZone-background-hover, var(--salt-target-background-hover));
-  border: var(--saltFileDropZone-border-hover, var(--salt-size-border) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover));
+  border: var(--saltFileDropZone-border-hover, var(--salt-size-border-strong) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover));
 }
 .saltFileDropZone-active * {
   pointer-events: none;
 }
 /*!* Styles applied if `status="error" *!*/
 .saltFileDropZone-error {
-  border: var(--saltFileDropZone-error-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-status-error-borderColor));
+  border: var(--saltFileDropZone-error-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-error-borderColor));
 }
 
 .saltFileDropZone-success {
-  border: var(--saltFileDropZone-success-border, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-status-success-borderColor));
+  border: var(--saltFileDropZone-success-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-success-borderColor));
 }
 
 .saltFileDropZone .input-hidden {
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-  visibility: hidden;
+  display: none;
 }
 
 /*!* Styles applied if `disabled={true}` *!*/
 .saltFileDropZone-disabled {
   /*TODO: solve accessibility issue*/
-  background: var(--saltFileDropZone-background-disabled, var(--salt-container-secondary-background-disabled));
-  border: var(--saltFileDropZone-disabled, var(--salt-size-border) var(--salt-target-borderStyle) var(--salt-container-secondary-borderColor-disabled));
+  background: var(--saltFileDropZone-background-disabled, var(--salt-container-primary-background-disabled));
+  border: var(--saltFileDropZone-disabled, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor-disabled));
   cursor: var(--salt-target-cursor-disabled);
-  color: var(--saltFileDropZone-text-color-disabled, var(--salt-text-primary-foreground-disabled));
+  color: var(--saltFileDropZone-text-color-disabled, var(--salt-content-primary-foreground-disabled));
 }

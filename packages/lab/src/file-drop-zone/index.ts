@@ -1,3 +1,4 @@
 export * from "./FileDropZone";
-export * from "./FileDropZoneHeader";
+export * from "./FileDropZoneIcon";
+export * from "./FileDropZoneTrigger";
 export * from "./validators";
