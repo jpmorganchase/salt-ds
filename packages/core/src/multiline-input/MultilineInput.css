@@ -242,14 +242,15 @@
 .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
+
 /* Style applied to button end adornment if last child */
 .saltMultilineInput-readOnly .saltMultilineInput-endAdornmentContainer .saltButton:last-child {
   margin-right: 0;
 }
 
 /* Styles for button adornment */
-.saltMultilineInput .saltButton {
-  --saltButton-padding: 0;
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-50));
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-50));
+.saltMultilineInput-startAdornmentContainer > .saltButton,
+.saltMultilineInput-endAdornmentContainer > .saltButton {
+  --saltButton-padding: var(--salt-spacing-50);
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
