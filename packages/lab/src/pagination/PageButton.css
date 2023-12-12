@@ -1,0 +1,30 @@
+.saltPageButton {
+  --saltButton-minWidth: var(--salt-size-base);
+  --saltButton-fontWeight: var(--salt-text-fontWeight);
+  --saltButton-height: var(--salt-size-base);
+  --saltButton-text-color: var(--salt-content-primary-foreground);
+}
+
+.saltPageButton:hover,
+.saltPageButton:focus-visible {
+  --saltButton-background-hover: var(--salt-selectable-background-hover);
+  --saltButton-text-color-hover: var(--salt-content-primary-foreground);
+}
+
+.saltPageButton:disabled {
+  --saltButton-text-color-disabled: var(--salt-content-secondary-foreground);
+  --saltButton-cursor-disabled: var(--salt-editable-cursor-readonly);
+}
+
+.saltPageButton-selected {
+  --saltButton-background: var(--salt-selectable-background-selected);
+  --saltButton-text-color: var(--salt-content-primary-foreground);
+}
+.saltPageButton-selected:focus-visible {
+  --saltButton-background-hover: var(--salt-selectable-background-selected);
+  --saltButton-text-color-hover: var(--salt-content-primary-foreground);
+}
+
+.saltPageButton-fixed {
+  padding: 0;
+}

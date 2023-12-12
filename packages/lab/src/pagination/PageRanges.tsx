@@ -1,10 +1,17 @@
-import { withBaseName } from "./utils";
-import { PageRange, usePagination } from "./usePagination";
 import { ReactElement } from "react";
+import { makePrefixer } from "@salt-ds/core";
 import { PageButton } from "./PageButton";
+import { PageRange, usePagination } from "./usePagination";
 import { usePaginationContext } from "./usePaginationContext";
 
-export interface RegularControlsProps {
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import pageRangesCss from "./PageRanges.css";
+
+const withBaseName = makePrefixer("saltPageRanges");
+
+export interface PageRangesProps {
   boundaryCount?: number;
   siblingPairCount?: number;
 }
@@ -21,10 +28,17 @@ const mapRange = (range: PageRange, fn: (i: number) => ReactElement) => {
   return result;
 };
 
-export function RegularControls({
+export function PageRanges({
   siblingPairCount = 2,
   boundaryCount = 1,
-}: RegularControlsProps) {
+}: PageRangesProps) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-pageRanges",
+    css: pageRangesCss,
+    window: targetWindow,
+  });
+
   const { count, page } = usePaginationContext();
 
   const renderPages = (range?: PageRange, selectedPage?: number) => {

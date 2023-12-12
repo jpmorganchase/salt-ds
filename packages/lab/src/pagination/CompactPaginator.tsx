@@ -1,16 +1,16 @@
 import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
 import { clsx } from "clsx";
-import { Text } from "@salt-ds/core";
+import { Button, Text, makePrefixer } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { ArrowButton } from "./ArrowButton";
 import { PageButton } from "./PageButton";
-import { withBaseName } from "./utils";
 import { usePaginationContext } from "./usePaginationContext";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import paginationCss from "./Pagination.css";
+import compactPaginatorCss from "./CompactPaginator.css";
+
+const withBaseName = makePrefixer("saltCompactPaginator");
 
 export const CompactPaginator = forwardRef<
   HTMLDivElement,
@@ -18,8 +18,8 @@ export const CompactPaginator = forwardRef<
 >(function CompactPaginator({ children, className, ...restProps }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-pagination",
-    css: paginationCss,
+    testId: "salt-compactPaginator",
+    css: compactPaginatorCss,
     window: targetWindow,
   });
 
@@ -38,29 +38,29 @@ export const CompactPaginator = forwardRef<
 
   return (
     <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
-      <ArrowButton
-        arrowButtonType="previous"
+      <Button
+        variant="secondary"
+        name="Previous Button"
         onClick={onPreviousPage}
         disabled={isOnFirstPage}
+        className={withBaseName("arrowButton")}
       >
         <ChevronLeftIcon />
-      </ArrowButton>
+      </Button>
       {children ? children : <PageButton page={page} disabled />}
-      <Text
-        as="span"
-        variant="secondary"
-        className={withBaseName("compactSeparator")}
-      >
+      <Text as="span" variant="secondary" className={withBaseName("separator")}>
         of
       </Text>
       <PageButton page={count} disabled={isOnLastPage} />
-      <ArrowButton
-        arrowButtonType="next"
+      <Button
+        variant="secondary"
+        name="Next Button"
         onClick={onNextPage}
         disabled={isOnLastPage}
+        className={withBaseName("arrowButton")}
       >
         <ChevronRightIcon />
-      </ArrowButton>
+      </Button>
     </div>
   );
 });

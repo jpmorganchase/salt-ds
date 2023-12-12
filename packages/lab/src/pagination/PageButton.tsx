@@ -1,8 +1,14 @@
 import { MouseEventHandler } from "react";
-import { Button } from "@salt-ds/core";
+import { Button, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { usePaginationContext } from "./usePaginationContext";
-import { withBaseName } from "./utils";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import pageButtonCss from "./PageButton.css";
+
+const withBaseName = makePrefixer("saltPageButton");
 
 export interface PageButtonProps {
   page: number;
@@ -11,6 +17,13 @@ export interface PageButtonProps {
 }
 
 export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-pageButton",
+    css: pageButtonCss,
+    window: targetWindow,
+  });
+
   const { onPageChange } = usePaginationContext();
   const name = `Page ${page}`;
 
@@ -24,10 +37,10 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
       name={name}
       aria-current={isSelected ? "page" : undefined}
       variant="secondary"
-      className={clsx(withBaseName("pageButton"), {
-        [withBaseName("pageButtonReadonly")]: disabled,
-        [withBaseName("pageButtonSelected")]: isSelected,
-        [withBaseName("pageButtonFixed")]: page < 100,
+      className={clsx(withBaseName(), {
+        // [withBaseName("disabled")]: disabled,
+        [withBaseName("selected")]: isSelected,
+        [withBaseName("fixed")]: page < 100,
       })}
       onClick={onClick}
       role="link"

@@ -6,14 +6,27 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Input, InputProps } from "@salt-ds/core";
-import { withBaseName } from "./utils";
+import { Input, InputProps, makePrefixer } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import compactInputCss from "./CompactInput.css";
+
+const withBaseName = makePrefixer("saltCompactInput");
 
 export const CompactInput = forwardRef<
   HTMLInputElement,
   Pick<InputProps, "inputRef" | "variant">
 >(function CompactInput(props, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-compactInput",
+    css: compactInputCss,
+    window: targetWindow,
+  });
+
   const { count, page, onPageChange } = usePaginationContext();
 
   const [inputValue, setInputValue] = useState(`${page}`);
@@ -43,8 +56,8 @@ export const CompactInput = forwardRef<
 
   return (
     <Input
-      className={clsx(withBaseName("compactInput"), {
-        [withBaseName("compactInputFixed")]: count < 100,
+      className={clsx(withBaseName(), {
+        [withBaseName("defaultSize")]: count < 100,
       })}
       inputProps={{
         "aria-label": `Go to page, ${count} total`,

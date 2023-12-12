@@ -1,15 +1,16 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, MouseEventHandler } from "react";
-import { ArrowButton } from "./ArrowButton";
-import { RegularControls } from "./RegularControls";
+import { Button, makePrefixer } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
+import { PageRanges } from "./PageRanges";
 import { usePaginationContext } from "./usePaginationContext";
-import { withBaseName } from "./utils";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import paginationCss from "./Pagination.css";
+import paginatorCss from "./Paginator.css";
+
+const withBaseName = makePrefixer("saltPaginator");
 
 export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -29,8 +30,8 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-pagination",
-      css: paginationCss,
+      testId: "salt-paginator",
+      css: paginatorCss,
       window: targetWindow,
     });
 
@@ -49,24 +50,28 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
 
     return (
       <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
-        <ArrowButton
-          arrowButtonType="previous"
+        <Button
+          variant="secondary"
+          name="Previous Button"
           onClick={onPreviousPage}
           disabled={isOnFirstPage}
+          className={withBaseName("arrowButton-previous")}
         >
           <ChevronLeftIcon />
-        </ArrowButton>
-        <RegularControls
+        </Button>
+        <PageRanges
           siblingPairCount={siblingPairCount}
           boundaryCount={boundaryCount}
         />
-        <ArrowButton
-          arrowButtonType="next"
+        <Button
+          variant="secondary"
+          name="Next Button"
           onClick={onNextPage}
           disabled={isOnLastPage}
+          className={withBaseName("arrowButton-next")}
         >
           <ChevronRightIcon />
-        </ArrowButton>
+        </Button>
       </div>
     );
   }

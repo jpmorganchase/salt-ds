@@ -1,0 +1,17 @@
+.saltCompactPaginator {
+  flex-wrap: nowrap;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: baseline;
+}
+
+.saltCompactPaginator-arrowButton {
+  --saltButton-width: var(--salt-size-base);
+  --saltButton-height: var(--salt-size-base);
+  --saltButton-padding: var(--salt-spacing-100);
+}
+
+.saltCompactPaginator-separator {
+  min-width: var(--salt-size-base);
+  text-align: center;
+}

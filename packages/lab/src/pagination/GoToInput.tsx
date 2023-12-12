@@ -5,13 +5,17 @@ import {
   HTMLAttributes,
   KeyboardEventHandler,
   Ref,
-  useRef,
   useState,
 } from "react";
-import { FormField, FormFieldLabel, Input, useForkRef } from "@salt-ds/core";
+import { FormField, FormFieldLabel, Input, makePrefixer } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
-import { withBaseName } from "./utils";
 
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import goToInputCss from "./GoToInput.css";
+
+const withBaseName = makePrefixer("saltGoToInput");
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * Input label.
@@ -27,7 +31,7 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
   inputVariant?: "primary" | "secondary";
 }
 
-export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
+export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
   function GoToInput(
     {
       className,
@@ -36,12 +40,16 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
       label = "Go to",
       ...restProps
     },
-    forwardedRef
+    ref
   ) {
-    const { count, onPageChange } = usePaginationContext();
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-goToInput",
+      css: goToInputCss,
+      window: targetWindow,
+    });
 
-    const rootRef = useRef<HTMLSpanElement>(null);
-    const forkedRef = useForkRef(rootRef, forwardedRef);
+    const { count, onPageChange } = usePaginationContext();
     const [inputValue, setInputValue] = useState("");
 
     const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -70,30 +78,29 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
     const widthCh = `${`${count}`.length}ch`;
 
     return (
-      <span
-        className={clsx(withBaseName("goToInputWrapper"), className)}
-        ref={forkedRef}
+      <FormField
+        labelPlacement="left"
+        className={clsx(withBaseName(), className)}
+        ref={ref}
         {...restProps}
       >
-        <FormField className={withBaseName("FormField")}>
-          <FormFieldLabel>{label}</FormFieldLabel>
-          <Input
-            className={clsx(withBaseName("goToInput"), {
-              [withBaseName("goToInputFixed")]: count < 100,
-            })}
-            ref={inputRef}
-            inputProps={{
-              style: { width: widthCh },
-            }}
-            onBlur={onBlur}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            value={inputValue}
-            textAlign={"center"}
-            variant={inputVariant}
-          />
-        </FormField>
-      </span>
+        <FormFieldLabel>{label}</FormFieldLabel>
+        <Input
+          className={clsx(withBaseName("input"), {
+            [withBaseName("inputDefaultSize")]: count < 100,
+          })}
+          ref={inputRef}
+          inputProps={{
+            style: { width: widthCh },
+          }}
+          onBlur={onBlur}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={inputValue}
+          textAlign={"center"}
+          variant={inputVariant}
+        />
+      </FormField>
     );
   }
 );
