@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Table } from "../mdx/table";
 import { code, p, ul } from "../mdx";
@@ -32,21 +32,48 @@ type ComponentData = {
   props: Props;
 };
 
+type JSONData = {
+  props: Record<
+    string,
+    {
+      name: string;
+      type: { name: string };
+      description: string;
+      defaultValue?: { value: string };
+    }
+  >;
+  displayName?: string;
+};
+
 export const PropsTable: FC<PropsTableType> = ({
   packageName = "core",
   componentName,
 }) => {
-  const props: ComponentData[] = require(`../../props/${packageName}-props.json`);
-
-  const propsTableData = props.find(
-    ({ displayName }) => displayName === componentName
-  )?.props;
+  const [props, setProps] = useState({} as JSONData["props"]);
 
   useEffect(() => {
-    if (!propsTableData) {
-      console.warn(`No props were found for the ${componentName} component.`);
+    async function fetchProps() {
+      const props = (await import(`../../props/${packageName}-props.json`))
+        .default as JSONData[];
+
+      return props.find(({ displayName }) => displayName === componentName)
+        ?.props;
     }
-  }, []);
+
+    fetchProps()
+      .then((propsTableData) => {
+        if (!propsTableData) {
+          console.warn(
+            `No props were found for the ${componentName} component.`
+          );
+        } else {
+          setProps(propsTableData);
+        }
+      })
+      .catch(() => {
+        console.warn(`No props were found for the ${componentName} component.`);
+      });
+  }, [packageName, componentName]);
 
   return (
     <Table>
@@ -59,8 +86,8 @@ export const PropsTable: FC<PropsTableType> = ({
         </tr>
       </thead>
       <tbody>
-        {propsTableData &&
-          Object.values(propsTableData).map(
+        {props &&
+          Object.values(props).map(
             ({ name, type, description, defaultValue }) => (
               <tr key={name}>
                 <td>{name}</td>

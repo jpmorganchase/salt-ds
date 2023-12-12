@@ -1,4 +1,12 @@
-import { FC, ChangeEvent, useState, ReactNode, ReactElement } from "react";
+import {
+  FC,
+  ChangeEvent,
+  useState,
+  ReactNode,
+  ReactElement,
+  useEffect,
+  ElementType,
+} from "react";
 import clsx from "clsx";
 import { Switch } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
@@ -34,11 +42,34 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   const isMobileView = useIsMobileView();
 
-  const ComponentExample: () => ReactElement =
-    require(`../../examples/${componentName}`)[exampleName];
+  const [ComponentExample, setComponentExample] = useState<{
+    Example?: ElementType;
+    sourceCode: string;
+  }>({
+    Example: undefined,
+    sourceCode: "",
+  });
+  useEffect(() => {
+    async function fetchExample() {
+      const Example = (
+        (await import(`../../examples/${componentName}`)) as Record<
+          string,
+          ElementType
+        >
+      )[exampleName];
+      const sourceCode = (
+        (await import(
+          `!!raw-loader!../../examples/${componentName}/${exampleName}.tsx`
+        )) as Record<string, string>
+      ).default;
 
-  const codePreview =
-    require(`!!raw-loader!../../examples/${componentName}/${exampleName}.tsx`).default;
+      return { Example, sourceCode };
+    }
+
+    fetchExample()
+      .then((data) => setComponentExample(data))
+      .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
+  }, [exampleName, componentName]);
 
   const {
     density,
@@ -75,7 +106,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
             <div className={styles.exampleWithSwitch}>
               <div className={styles.example}>
                 <SaltProvider density={density}>
-                  {ComponentExample && <ComponentExample />}
+                  {ComponentExample.Example && <ComponentExample.Example />}
                 </SaltProvider>
               </div>
               <SaltProvider density="medium">
@@ -92,7 +123,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
         {showCode && (
           <Pre className={styles.codePreview}>
-            <div className="language-tsx">{codePreview}</div>
+            <div className="language-tsx">{ComponentExample.sourceCode}</div>
           </Pre>
         )}
       </div>
