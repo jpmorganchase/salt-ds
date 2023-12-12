@@ -6192,12 +6192,12 @@ __metadata:
     ag-grid-community: "npm:^28.2.1"
     ag-grid-enterprise: "npm:^28.2.1"
     ag-grid-react: "npm:^28.2.1"
-    axe-core: "npm:^4.4.3"
+    axe-core: "npm:^4.8.2"
     chromatic: "npm:^10.0.0"
     ci-info: "npm:^3.3.1"
     clsx: "npm:^2.0.0"
     cypress: "npm:^13.0.0"
-    cypress-axe: "npm:^1.2.0"
+    cypress-axe: "npm:^1.5.0"
     cypress-real-events: "npm:^1.10.0"
     deepmerge: "npm:^4.2.2"
     dom-accessibility-api: "npm:^0.5.10"
@@ -11044,10 +11044,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^4.2.0, axe-core@npm:^4.4.3, axe-core@npm:^4.6.2":
-  version: 4.6.3
-  resolution: "axe-core@npm:4.6.3"
-  checksum: 280f6a7067129875380f733ae84093ce29c4b8cfe36e1a8ff46bd5d2bcd57d093f11b00223ddf5fef98ca147e0e6568ddd0ada9415cf8ae15d379224bf3cbb51
+"axe-core@npm:^4.2.0, axe-core@npm:^4.6.2, axe-core@npm:^4.8.2":
+  version: 4.8.2
+  resolution: "axe-core@npm:4.8.2"
+  checksum: 3e8dbf264a57767713daa77fe04bbabd71a956b08b99c2eb0ec61b75852f21190653f557d2da623dea9e0a7555460deaac71d9f6a9125c0b52576f8581bfbe52
   languageName: node
   linkType: hard
 
@@ -13454,13 +13454,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress-axe@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "cypress-axe@npm:1.2.0"
+"cypress-axe@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "cypress-axe@npm:1.5.0"
   peerDependencies:
     axe-core: ^3 || ^4
-    cypress: ^10 || ^11 || ^12
-  checksum: cfe93e7af73e3dc343f772396c1cad80cf6c7dc770445b9bc90d36cccb653de03adc21182b4e0b72ef5d0b1c6f1cec8b24c050a1d0e8c93d45c77a33c83b3ae7
+    cypress: ^10 || ^11 || ^12 || ^13
+  checksum: 9e5dde486e352da0597f26134e5afd5b998c4020c1b7292a38d6be72dc46778a1e06fa6b051fac397dd9cf45c7ad7ff93a1a33300590d512d015c622d00a7031
   languageName: node
   linkType: hard
 
