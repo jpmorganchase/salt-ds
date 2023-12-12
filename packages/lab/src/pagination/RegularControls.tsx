@@ -2,11 +2,9 @@ import { withBaseName } from "./utils";
 import { PageRange, usePagination } from "./usePagination";
 import { ReactElement } from "react";
 import { PageButton } from "./PageButton";
+import { usePaginationContext } from "./usePaginationContext";
 
 export interface RegularControlsProps {
-  count: number;
-  page: number;
-  onPageChange: (page: number) => void;
   boundaryCount?: number;
   siblingPairCount?: number;
 }
@@ -24,23 +22,17 @@ const mapRange = (range: PageRange, fn: (i: number) => ReactElement) => {
 };
 
 export function RegularControls({
-  page,
-  count,
-  onPageChange,
   siblingPairCount = 2,
   boundaryCount = 1,
 }: RegularControlsProps) {
+  const { count, page } = usePaginationContext();
+
   const renderPages = (range?: PageRange, selectedPage?: number) => {
     if (!range) {
       return null;
     }
     return mapRange(range, (i) => (
-      <PageButton
-        key={i}
-        page={i}
-        isSelected={selectedPage === i}
-        onPageChange={onPageChange}
-      />
+      <PageButton key={i} page={i} isSelected={selectedPage === i} />
     ));
   };
 

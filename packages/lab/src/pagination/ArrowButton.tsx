@@ -37,7 +37,6 @@ const contentByType = new Map<ArrowButtonType, ButtonContent>([
 
 export const ArrowButton = ({
   arrowButtonType,
-  disabled,
   ...restProps
 }: ArrowButtonProps) => {
   const { icon: Icon, name, className } = contentByType.get(arrowButtonType)!;
@@ -49,7 +48,6 @@ export const ArrowButton = ({
       role="link"
       name={name}
       aria-label={name}
-      disabled={disabled}
       {...restProps}
     >
       <Icon aria-label={name} />

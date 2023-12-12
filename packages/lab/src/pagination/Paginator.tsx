@@ -62,9 +62,6 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
           <ChevronLeftIcon />
         </ArrowButton>
         <RegularControls
-          count={count}
-          page={page}
-          onPageChange={onPageChange}
           siblingPairCount={siblingPairCount}
           boundaryCount={boundaryCount}
         />
