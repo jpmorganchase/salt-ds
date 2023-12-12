@@ -10,7 +10,7 @@ export default {
 export const AllExamplesGrid: StoryFn<typeof FileDropZone> = (props) => {
   return (
     <AllRenderer>
-      <FileDropZone onFilesAccepted={() => console.log("files accepted")} />
+      <FileDropZone onDrop={() => console.log("files accepted")} />
     </AllRenderer>
   );
 };

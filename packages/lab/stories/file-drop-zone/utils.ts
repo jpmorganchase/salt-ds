@@ -1,3 +1,47 @@
+import { DragEvent } from "react";
+
+export const toArray = (obj: any) => Object.keys(obj).map((key) => obj[key]);
+
+export const containsFiles = (e: DragEvent) => {
+  if (!e.dataTransfer) {
+    const target = e.target as HTMLInputElement;
+    return target?.files;
+  }
+
+  return Array.prototype.some.call(
+    e.dataTransfer.types,
+    (type) => type === "Files"
+  );
+};
+
+export const extractFiles = (e: DragEvent): File[] => {
+  if (containsFiles(e)) {
+    if (e.dataTransfer) {
+      return toArray(e.dataTransfer.files);
+    }
+
+    if (e.target) {
+      return toArray((e.target as HTMLInputElement).files);
+    }
+  }
+
+  return [];
+};
+
+export const validateFiles = ({
+  files = [],
+  validate = [],
+}: {
+  files: readonly File[];
+  validate: readonly FilesValidator[];
+}) =>
+  validate
+    .reduce(
+      (result, validator) => result.concat(validator(files)),
+      [] as (string | undefined)[]
+    )
+    .filter(Boolean) as string[];
+
 export type FilesValidator<ErrorType = string> = (
   files: readonly File[]
 ) =>
@@ -13,7 +57,7 @@ export type FilesValidator<ErrorType = string> = (
  * @param {function} getError - A callback function for generating a customised user error.
  */
 
-const trimSlashAsteric = (type: string) => type.replace(/\/.*$/, "");
+const trimSlashAsterisk = (type: string) => type.replace(/\/.*$/, "");
 
 export function createFileTypeValidator<ErrorType = string>({
   accept,
@@ -34,7 +78,7 @@ export function createFileTypeValidator<ErrorType = string>({
           return fileName.endsWith(type);
         }
         if (type.endsWith("/*")) {
-          return trimSlashAsteric(fileType) === trimSlashAsteric(type);
+          return trimSlashAsterisk(fileType) === trimSlashAsterisk(type);
         }
         return fileType === type;
       });

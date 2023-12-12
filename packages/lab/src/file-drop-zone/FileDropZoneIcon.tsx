@@ -13,13 +13,14 @@ export const FileDropZoneIcon = forwardRef<
   SVGSVGElement,
   FileDropZoneIconProps
 >(function FileDropZoneIcon({ status, size = 2, ...rest }, ref) {
-  return (
-    <div>
-      {status ? (
-        <StatusIndicator ref={ref} status={status} size={size} {...rest} />
-      ) : (
-        <UploadIcon size={size} />
-      )}
-    </div>
+  const iconProps = {
+    ref,
+    size,
+    ...rest,
+  };
+  return status ? (
+    <StatusIndicator status={status} {...iconProps} />
+  ) : (
+    <UploadIcon {...iconProps} />
   );
 });

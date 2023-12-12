@@ -10,27 +10,28 @@ import { Meta, StoryFn } from "@storybook/react";
 import {
   Banner,
   BannerContent,
+  Button,
   StackLayout,
   Text,
   Tooltip,
 } from "@salt-ds/core";
 import {
-  createFileTypeValidator,
-  createTotalSizeValidator,
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneIconProps,
   FileDropZoneProps,
   FileDropZoneTrigger,
   FileDropZoneTriggerProps,
-  FilesValidator,
 } from "@salt-ds/lab";
 import { AllRenderer } from "docs/components";
 import {
   containsFiles,
+  createFileTypeValidator,
+  createTotalSizeValidator,
   extractFiles,
+  FilesValidator,
   validateFiles,
-} from "../../src/file-drop-zone/internal/utils";
+} from "./utils";
 
 export default {
   title: "Lab/File Drop Zone",
@@ -41,16 +42,18 @@ export const All: StoryFn<typeof FileDropZone> = ({ onDrop, ...args }) => {
   return (
     <AllRenderer>
       <FileDropZone {...args}>
-        <FileDropZoneIcon/>
+        <FileDropZoneIcon />
         <strong>Drop files here or</strong>
-        <FileDropZoneTrigger/>
+        <FileDropZoneTrigger />
       </FileDropZone>
     </AllRenderer>
   );
 };
 
 const FileDropzoneTemplate: StoryFn<
-  FileDropZoneProps & FileDropZoneIconProps & FileDropZoneTriggerProps & {validate: readonly FilesValidator[];}
+  FileDropZoneProps &
+    FileDropZoneIconProps &
+    FileDropZoneTriggerProps & { validate: readonly FilesValidator[] }
 > = ({ accept, children, disabled, validate, ...rest }) => {
   const [result, setResult] = useState<{
     files?: readonly File[];
@@ -59,24 +62,8 @@ const FileDropzoneTemplate: StoryFn<
   const [status, setStatus] = useState<"success" | "error" | undefined>(
     undefined
   );
-  const delay = 3000;
 
-  useEffect(() => {
-    const t = setTimeout(() => {
-      if (status === "success") {
-        setStatus(undefined);
-      }
-    }, delay);
-
-    return () => {
-      clearTimeout(t);
-    };
-  }, [status]);
-
-  const handleFilesAccepted = (
-    files: File[],
-    event: SyntheticEvent
-  ) => {
+  const handleFilesAccepted = (files: File[], event: SyntheticEvent) => {
     console.log("onFilesAccepted:", { files, event });
     setResult({ files });
     setStatus("success");
@@ -96,7 +83,7 @@ const FileDropzoneTemplate: StoryFn<
     }
     const files = extractFiles(event as DragEvent);
     if (files.length > 0) {
-      const errors = validate ? validateFiles({ files, validate }): [];
+      const errors = validate ? validateFiles({ files, validate }) : [];
       if (errors && errors.length !== 0) {
         return handleFilesRejected(errors);
       }
@@ -104,10 +91,18 @@ const FileDropzoneTemplate: StoryFn<
     }
   };
 
-  const statusTitles = {"success": "Upload completed", "error": "Error uploading"}
+  const statusTitles = {
+    success: "Upload completed",
+    error: "Error uploading",
+  };
 
+  const reset = () => {
+    setStatus(undefined);
+    setResult({});
+  };
   return (
     <StackLayout style={{ width: 250 }}>
+      <Button onClick={reset}>Reset</Button>
       <FileDropZone
         data-testid="file-drop-zone-example"
         status={status}
@@ -119,10 +114,15 @@ const FileDropzoneTemplate: StoryFn<
         <strong>
           {status !== undefined ? statusTitles[status] : "Drop files here or"}
         </strong>
-        <FileDropZoneTrigger accept={accept} disabled={disabled} onChange={handleFilesDrop} />
+        <FileDropZoneTrigger
+          accept={accept}
+          disabled={disabled}
+          onChange={handleFilesDrop}
+          data-testid="file-input-trigger"
+        />
         {children}
       </FileDropZone>
-      <ResultCard result={result} />
+      <Results result={result} />
     </StackLayout>
   );
 };
@@ -184,7 +184,7 @@ interface ResultCardProps {
   result: ResultCardType | undefined;
 }
 
-export const ResultCard = ({ result }: ResultCardProps) => {
+export const Results = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (
@@ -225,7 +225,7 @@ export const ResultCard = ({ result }: ResultCardProps) => {
     []
   );
   return (
-    <>
+    <div style={{ height: 500, maxHeight: 500, overflow: "hidden" }}>
       {!result && (
         <Banner>
           <BannerContent>
@@ -235,6 +235,6 @@ export const ResultCard = ({ result }: ResultCardProps) => {
       )}
       {result?.files && renderFiles(result.files)}
       {result?.errors && renderErrors(result.errors)}
-    </>
+    </div>
   );
 };

@@ -3,7 +3,7 @@
   display: inline-flex;
   background: var(--saltFileDropZone-background, var(--salt-container-primary-background));
   text-align: center;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   border: var(--saltFileDropZone-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor));
   flex-direction: column;
@@ -18,7 +18,7 @@
 /* Styles applied if `isActive={true}` */
 .saltFileDropZone-active,
 .saltFileDropZone-active {
-  background: var(--saltFileDropZone-background-hover, var(--salt-target-background-hover));
+  background: var(--salt-target-background-hover);
   border: var(--saltFileDropZone-border-hover, var(--salt-size-border-strong) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover));
 }
 .saltFileDropZone-active * {
@@ -39,9 +39,8 @@
 
 /*!* Styles applied if `disabled={true}` *!*/
 .saltFileDropZone-disabled {
-  /*TODO: solve accessibility issue*/
-  background: var(--saltFileDropZone-background-disabled, var(--salt-container-primary-background-disabled));
+  background: var(--salt-container-primary-background-disabled);
   border: var(--saltFileDropZone-disabled, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor-disabled));
   cursor: var(--salt-target-cursor-disabled);
-  color: var(--saltFileDropZone-text-color-disabled, var(--salt-content-primary-foreground-disabled));
+  color: var(--salt-content-primary-foreground-disabled);
 }

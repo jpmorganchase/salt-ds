@@ -32,32 +32,35 @@ export interface FileDropZoneTriggerProps
 export const FileDropZoneTrigger = forwardRef<
   HTMLButtonElement,
   FileDropZoneTriggerProps
->(function FileDropZoneTrigger({ disabled, accept, onChange, ...rest }, ref) {
+>(function FileDropZoneTrigger(
+  { disabled, accept, children, onChange, ...rest },
+  ref
+) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const triggerRef = useForkRef(ref, buttonRef);
 
   // As an ADA requirement when dialog is closed and the focus is returned to the input, we need to
   // move focus back on the button element so that all labels can be announced correctly
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
     event.stopPropagation();
-    buttonRef.current && buttonRef.current.focus();
+    buttonRef.current?.focus();
   };
 
   const handleClick = (event: SyntheticEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    fileInputRef.current && fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   return (
     <>
       <Button
-        data-testid="file-input-button"
         onClick={handleClick}
         disabled={disabled}
-        ref={useForkRef(ref, buttonRef)}
+        ref={triggerRef}
         {...rest}
       >
-        Browse files
+        {children ?? "Browse files"}
       </Button>
       <input
         accept={accept}

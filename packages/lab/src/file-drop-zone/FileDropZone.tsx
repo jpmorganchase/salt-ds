@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, ValidationStatus } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { DragEventHandler, forwardRef, HTMLAttributes, useState } from "react";
 import { containsFiles } from "./internal/utils";
@@ -16,7 +16,7 @@ export interface FileDropZoneProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Status indicator to be displayed.
    */
-  status?: "success" | "error";
+  status?: Omit<ValidationStatus, "info" | "warning">;
 }
 
 const withBaseName = makePrefixer("saltFileDropZone");
@@ -28,9 +28,9 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       className,
       children,
       disabled,
-      onDragOver: onDragOverProp,
-      onDragLeave: onDragLeaveProp,
-      onDrop: onDropProp,
+      onDragOver,
+      onDragLeave,
+      onDrop,
       ...restProps
     },
     ref
@@ -51,25 +51,35 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       event.stopPropagation();
 
       if (disabled) {
-        event.dataTransfer && (event.dataTransfer.dropEffect = "none");
+        if (event.dataTransfer) {
+          event.dataTransfer.dropEffect = "none";
+        }
         return;
       }
-      event.dataTransfer && (event.dataTransfer.dropEffect = "copy");
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = "copy";
+      }
       if (!isActive && containsFiles(event)) {
         setActive(true);
       }
-      onDragOverProp?.(event);
+      onDragOver?.(event);
     };
 
     const handleDragLeave: DragEventHandler<HTMLDivElement> = (event) => {
+      if (disabled) {
+        return;
+      }
       setActive(false);
-      onDragLeaveProp?.(event);
+      onDragLeave?.(event);
     };
 
     const handleDrop: DragEventHandler<HTMLDivElement> = (event) => {
+      if (disabled) {
+        return;
+      }
       event.preventDefault();
       setActive(false);
-      onDropProp?.(event);
+      onDrop?.(event);
     };
 
     return (
@@ -77,14 +87,13 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("error")]: status === "error",
-            [withBaseName("success")]: status === "success",
+            [withBaseName(status as string)]: status,
             [withBaseName("active")]: isActive,
             [withBaseName("disabled")]: disabled,
           },
           className
         )}
-        onDragLeave={!disabled ? handleDragLeave : undefined}
+        onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         ref={ref}
