@@ -98,6 +98,11 @@
   font-family: "salt-icons";
   content: "\e961";
 }
+/* drag-row */
+[class*="ag-theme-salt"] .ag-icon-grip:before {
+  font-family: "salt-icons";
+  content: "\e900";
+}
 
 [class*="ag-theme-salt"] .ag-icon-group:before {
   font-family: "salt-icons";
