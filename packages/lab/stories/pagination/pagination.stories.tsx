@@ -1,3 +1,4 @@
+import { Meta, StoryFn } from "@storybook/react";
 import {
   GoToInput,
   CompactInput,
@@ -7,7 +8,7 @@ import {
   Paginator,
   PaginatorProps,
 } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import { FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Pagination",
@@ -15,7 +16,6 @@ export default {
 } as Meta;
 
 interface StoryProps {
-  goToPosition: "left" | "right" | "none";
   compact?: boolean;
   compactWithInput?: boolean;
   inputVariant?: "primary" | "secondary";
@@ -30,28 +30,24 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     siblingPairCount,
     compact,
     compactWithInput,
-    goToPosition,
     inputVariant,
   } = args;
 
   return (
     <Pagination count={count}>
-      {goToPosition === "left" ? (
+      <FlexLayout gap={1}>
         <GoToInput inputVariant={inputVariant} />
-      ) : null}
-      {compact ?? compactWithInput ? (
-        <CompactPaginator>
-          {compactWithInput && <CompactInput variant={inputVariant} />}
-        </CompactPaginator>
-      ) : (
-        <Paginator
-          boundaryCount={boundaryCount}
-          siblingPairCount={siblingPairCount}
-        />
-      )}
-      {goToPosition === "right" ? (
-        <GoToInput inputVariant={inputVariant} />
-      ) : null}
+        {compact ?? compactWithInput ? (
+          <CompactPaginator>
+            {compactWithInput && <CompactInput variant={inputVariant} />}
+          </CompactPaginator>
+        ) : (
+          <Paginator
+            boundaryCount={boundaryCount}
+            siblingPairCount={siblingPairCount}
+          />
+        )}
+      </FlexLayout>
     </Pagination>
   );
 };
@@ -64,13 +60,6 @@ Default.args = {
   boundaryCount: 1,
 };
 
-Default.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
-};
-
 export const WithTruncation = Template.bind({});
 
 WithTruncation.args = {
@@ -79,27 +68,15 @@ WithTruncation.args = {
   boundaryCount: 1,
 };
 
-WithTruncation.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
-};
-
 export const WithInput = Template.bind({});
 
 WithInput.args = {
   count: 25,
   siblingPairCount: 2,
   boundaryCount: 1,
-  goToPosition: "left",
 };
 
 WithInput.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
   inputVariant: {
     options: ["primary", "secondary"],
     control: { type: "radio" },
@@ -115,13 +92,6 @@ Compact.args = {
   boundaryCount: 1,
 };
 
-Compact.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
-};
-
 export const CompactWithInput = Template.bind({});
 
 CompactWithInput.args = {
@@ -130,10 +100,6 @@ CompactWithInput.args = {
 };
 
 CompactWithInput.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
   inputVariant: {
     options: ["primary", "secondary"],
     control: { type: "radio" },
@@ -145,14 +111,9 @@ export const CompactWithGoTo = Template.bind({});
 CompactWithGoTo.args = {
   compact: true,
   count: 25,
-  goToPosition: "left",
 };
 
 CompactWithGoTo.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
-    control: { type: "radio" },
-  },
   inputVariant: {
     options: ["primary", "secondary"],
     control: { type: "radio" },

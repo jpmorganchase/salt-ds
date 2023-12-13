@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from "@storybook/react";
-
 import {
   GoToInput,
   CompactInput,
@@ -9,6 +8,7 @@ import {
   PaginationProps,
   PaginatorProps,
 } from "@salt-ds/lab";
+import { FlexLayout } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
@@ -17,7 +17,7 @@ export default {
 } as Meta<typeof Pagination>;
 
 interface StoryProps {
-  goToPosition?: "left" | "right" | "none";
+  goTo?: boolean;
   compact?: boolean;
   compactWithInput?: boolean;
 }
@@ -29,23 +29,24 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
     siblingPairCount,
     compact,
     compactWithInput,
-    goToPosition,
+    goTo,
   } = args;
 
   return (
     <Pagination count={count}>
-      {goToPosition === "left" ? <GoToInput /> : null}
-      {compact ?? compactWithInput ? (
-        <CompactPaginator>
-          {compactWithInput && <CompactInput />}
-        </CompactPaginator>
-      ) : (
-        <Paginator
-          boundaryCount={boundaryCount}
-          siblingPairCount={siblingPairCount}
-        />
-      )}
-      {goToPosition === "right" ? <GoToInput /> : null}
+      <FlexLayout gap={1}>
+        {goTo && <GoToInput />}
+        {compact ?? compactWithInput ? (
+          <CompactPaginator>
+            {compactWithInput && <CompactInput />}
+          </CompactPaginator>
+        ) : (
+          <Paginator
+            boundaryCount={boundaryCount}
+            siblingPairCount={siblingPairCount}
+          />
+        )}
+      </FlexLayout>
     </Pagination>
   );
 };
@@ -62,12 +63,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       imgSrc={props.imgSrc}
     >
       <Template count={5} siblingPairCount={2} boundaryCount={1} />
-      <Template
-        count={25}
-        siblingPairCount={2}
-        boundaryCount={1}
-        goToPosition="left"
-      />
+      <Template count={25} siblingPairCount={2} boundaryCount={1} goTo />
       <Template compact count={25} siblingPairCount={2} boundaryCount={1} />
       <Template
         compactWithInput

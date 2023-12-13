@@ -2,7 +2,7 @@
   flex-wrap: nowrap;
   display: flex;
   gap: var(--salt-spacing-100);
-  align-items: baseline;
+  align-items: center;
 }
 
 .saltCompactPaginator-arrowButton {
