@@ -1,4 +1,4 @@
-import { useAriaAnnouncer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useAriaAnnouncer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   forwardRef,
@@ -12,7 +12,13 @@ import {
   useState,
 } from "react";
 import { PaginationContext, paginationContext } from "./PaginationContext";
-import { withBaseName } from "./utils";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import paginationCss from "./Pagination.css";
+
+const withBaseName = makePrefixer("saltPagination");
 
 const { Provider } = paginationContext;
 
@@ -48,6 +54,13 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     },
     ref
   ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-pagination",
+      css: paginationCss,
+      window: targetWindow,
+    });
+
     const [pageState, setPageState] = useControlled({
       controlled: pageProp,
       default: defaultPage,

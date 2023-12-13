@@ -1,3 +1,8 @@
+.saltPaginator {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
 .saltPaginator-arrowButton-previous {
   --saltButton-margin: 0 var(--salt-spacing-100) 0 0;
 }
