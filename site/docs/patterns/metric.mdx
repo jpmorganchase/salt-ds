@@ -47,9 +47,11 @@ Metric comes in three sizes—small, medium and large. This is achieved by chang
 
 ### Vertical metric
 
-By default, metrics are arranged vertically with the key value under the title.
+By default, metrics are arranged vertically with the key value under the title. Use the stack layout component to arrange the title and the value. The title should use the text component with a strong tag.
 
 #### Large
+
+Use the Display 1 text component for the value to build a large metric.
 
   <Diagram
     src="/img/patterns/metric/vertical-large.png"
@@ -60,6 +62,8 @@ By default, metrics are arranged vertically with the key value under the title.
 
 #### Medium
 
+Use the Display 2 text component for the value to build a medium metric.
+
   <Diagram
     src="/img/patterns/metric/vertical-medium.png"
     alt="Example showing medium metric with vertical layout."
@@ -68,6 +72,8 @@ By default, metrics are arranged vertically with the key value under the title.
   />
 
 #### Small
+
+Use the Display 3 text component for the value to build a small metric.
 
   <Diagram
     src="/img/patterns/metric/vertical-small.png"
@@ -78,9 +84,11 @@ By default, metrics are arranged vertically with the key value under the title.
 
 ### Horizontal metric
 
-You can configure the metric to have a horizontal orientation if it's more suitable for your layout. Make sure you adjust the margin if you are varying the sizes.
+You can configure the metric to have a horizontal orientation if it's more suitable for your layout. Use the stack layout component with the direction property set to row to arrange the title and the value. The title should have a top margin to align to the value text. Make sure you adjust the margin if you are varying the sizes.
 
 #### Large
+
+Use the Display 1 text component for the value to build a large metric. Set the margin above the title to `--salt-spacing-150`.
 
   <Diagram
     src="/img/patterns/metric/horizontal-large.png"
@@ -91,6 +99,8 @@ You can configure the metric to have a horizontal orientation if it's more suita
 
 #### Medium
 
+Use the Display 2 text component for the value to build a medium metric. Set the margin above the title to `--salt-spacing-100`.
+
   <Diagram
     src="/img/patterns/metric/horizontal-medium.png"
     alt="Example showing medium metric with horizontal layout."
@@ -99,6 +109,8 @@ You can configure the metric to have a horizontal orientation if it's more suita
   />
 
 #### Small
+
+Use the Display 3 text component for the value to build a small metric. Set the margin above the title to `--salt-spacing-50`.
 
   <Diagram
     src="/img/patterns/metric/horizontal-small.png"
@@ -112,18 +124,14 @@ You can configure the metric to have a horizontal orientation if it's more suita
 
 In addition to the title, you can display a supporting subtitle and/or subvalue in the metric pattern. You can use this to provide more context and improve users' comprehension of your metric value and its impact, such as whether it is positive or negative. Consider including past data, average, threshold or target values, or comparable high or low values.
 
-Subtitles are always displayed directly beneath the title, while subvalues are beneath the key value.
-  
+Subtitles are always displayed directly beneath the title, while subvalues are beneath the key value. Include the subtitle or subvalue in the corresponding position in the stack layout, using the default text component.
+
   <Diagram
     src="/img/patterns/metric/subtitle.png"
     alt="Example showing metric with a subtitle and subvalue."
     contentPosition="top"
     border
   />
-
-<ExampleContainer type="positive" customPillText="Best practices">
-  - To give more context about a metric value, such as whether it is positive or negative, consider including past data, average, threshold or target values, or comparable high or low values.
-</ExampleContainer>
 
 ### Link
 
