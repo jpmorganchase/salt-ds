@@ -83,8 +83,13 @@
   font-family: "salt-icons";
   content: "\ea59";
 }
-/* filter-solid */
+/* filter */
 [class*="ag-theme-salt"] .ag-icon-filter:before {
+  font-family: "salt-icons";
+  content: "\e973";
+}
+/* filter-solid */
+[class*="ag-theme-salt"] .ag-icon-filter-solid:before {
   font-family: "salt-icons";
   content: "\e972";
 }
@@ -223,13 +228,13 @@
   content: "";
   font-family: "salt-icons";
 }
-
+/* success-tick */
 [class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked:after {
-  content: "\ea2e";
+  content: "\ea23";
   font-family: "salt-icons";
 }
-
+/* remove */
 [class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate:after {
-  content: "\ea10";
+  content: "\e9f4";
   font-family: "salt-icons";
 }
