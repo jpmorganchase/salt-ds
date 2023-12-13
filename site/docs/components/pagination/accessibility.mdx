@@ -13,10 +13,15 @@ data:
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- Tab moves focus into the pagination component, setting focus to the first active button.
-- If the first page is active, Tab sets focus on the first page. If any other page is active, sets focus on the **Previous Page** button. If the input field is present and positioned on the left of pagination, initially sets focus in the field.
-- If focus is inside the pagination group, Tab moves focus to the next item within the tab order.
-- If the last page is active and in focus, and the input field isn’t present on the right of the pagination group, Tab moves focus out of the component and onto the next component in the tab order. It ignores the **Next Page** button, which is disabled in this scenario.
+Tab moves focus into the pagination component, setting focus to the first focusable element. 
+- If the input field is present and positioned on the left of pagination, initially sets focus in the input field. 
+- If the first page is active, focus will be placed on the first page item. It ignores the **Previous Page** button, which is disabled in this scenario.
+- If the active page is greater than 1, focus will be placed on the **Previous Page** button.
+
+If focus is inside the pagination group.
+
+- Tab moves focus to the next item within the tab order.
+- If the last page is active and in focus, and the input field isn’t present on the right of the pagination group, Tab moves focus out of the component. It ignores the **Next Page** button, which is disabled in this scenario.
 - If the last page isn't active but is in focus, Tab moves focus to the **Next Page** button.
 
 </KeyboardControl>
