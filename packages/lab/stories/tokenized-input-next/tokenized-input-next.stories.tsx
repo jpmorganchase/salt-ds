@@ -6,7 +6,7 @@ import {
   FormFieldLabel as FormLabel,
   Input,
 } from "@salt-ds/core";
-import { ChangeHandler, TokenizedInputNext } from "@salt-ds/lab";
+import { TokenizedInputNext } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   ChangeEventHandler,
@@ -15,6 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { statesData } from "../assets/exampleData";
 
 export default {
   title: "Lab/Tokenized Input Next",
@@ -32,23 +33,21 @@ const TokenizedInputNextTemplate: StoryFn<typeof TokenizedInputNext> = (
     console.log("selection changed", selectedItems);
   };
   return (
-    // Background color for debug purposes only
-    <div
-      style={{
-        background: "aliceblue",
-      }}
-    >
       <TokenizedInputNext
         style={{ width: "266px" }}
         onChange={handleChange}
         {...props}
       />
-    </div>
   );
 };
 
 export const Default = TokenizedInputNextTemplate.bind({});
 Default.args = {};
+
+export const WithCollapsedButton = TokenizedInputNextTemplate.bind({});
+WithCollapsedButton.args = {
+  defaultSelected: statesData
+};
 
 export const Controlled: StoryFn<typeof TokenizedInputNext> = () => {
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -82,7 +81,9 @@ export const Controlled: StoryFn<typeof TokenizedInputNext> = () => {
     }
   };
 
-  const handleChange: ChangeHandler<unknown> = (newItems) => {
+  const handleChange: ChangeEventHandler<HTMLElement> = (event) => {
+    console.log(event)
+    //TODO: get newtems from event
     setInputValue("");
     setSelectedItems(newItems as string[]);
   };
@@ -150,7 +151,7 @@ export const Disabled: StoryFn<typeof TokenizedInputNext> = () => {
         <FormFieldLabel>Enter a value</FormFieldLabel>
         <TokenizedInputNext
           disabled
-          initialSelectedItems={["Value 1", "Value 2", "Value 3"]}
+          defaultSelected={["Value 1", "Value 2", "Value 3"]}
         />
       </FormField>
     </div>
@@ -312,9 +313,9 @@ export const WithCustomizedDelimiter: StoryFn<
         <FormField style={{ height: `calc(100% - ${offsetHeight}px)` }}>
           <FormFieldLabel>Enter a value</FormFieldLabel>
           <TokenizedInputNext
-            delimiter={savedDelimiter.current}
+            delimiters={[savedDelimiter.current]}
             disabled={!isLocked}
-            initialSelectedItems={["Value 1", "Value 2"]}
+            defaultSelected={["Value 1", "Value 2"]}
             key={`input-delimiter-${savedDelimiter.current}`}
             onChange={handleChange}
           />

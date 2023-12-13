@@ -1,0 +1,32 @@
+.saltInputPill .saltPillNext-action {
+  max-width: 100%;
+}
+.saltInputPill {
+  margin: var(--salt-spacing-25);
+}
+
+.saltInputPill-expanded.saltInputPill .saltPillNext-action {
+  max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
+}
+
+/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
+.saltInputPill.saltInputPill-hidden {
+  display: none;
+}
+
+/* Styles applied to a Pill when active */
+.saltInputPill:hover,
+.saltInputPill:hover .saltPillNext-clickable {
+  --saltButton-background: var(--salt-selectable-background-hover);
+  --saltButton-background-hover: var(--salt-selectable-background-hover);
+  --pillNext-background: var(--salt-selectable-background-hover);
+  --pillNext-background-hover: var(--salt-selectable-background-hover);
+}
+
+.saltInputPill-pillHighlighted {
+  --saltButton-background: var(--salt-selectable-background-hover);
+}
+
+.saltInputPill-pillHighlighted .saltPillNext-action {
+  --pillNext-background: var(--salt-selectable-background-hover);
+}

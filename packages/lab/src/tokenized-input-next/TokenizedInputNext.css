@@ -21,6 +21,7 @@
   padding: 0 var(--salt-spacing-100);
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 /* Style applied on hover */
@@ -204,12 +205,6 @@
   --saltButton-margin: inherit 0 inherit inherit;
 }
 
-/* Style applied to start adornment container */
-.saltTokenizedInputNext {
-  overflow: hidden;
-  flex-wrap: wrap;
-}
-
 /* Style applied to status adornment container */
 .saltTokenizedInputNext-statusAdornmentContainer {
   align-self: self-end;
@@ -223,36 +218,6 @@
   --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
-.saltTokenizedInputNext .saltInputPill .saltPillNext-action {
-  max-width: 100%;
-}
-.saltTokenizedInputNext .saltInputPill {
-  margin: var(--salt-spacing-25);
-}
-
-.saltTokenizedInputNext .saltTokenizedInputNext-expanded-pill.saltInputPill .saltPillNext-action {
-  max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
-}
-
-/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
-.saltTokenizedInputNext-hidden,
-.saltTokenizedInputNext .saltInputPill.saltInputPill-hidden {
+.saltTokenizedInputNext-hidden {
   display: none;
-}
-
-/* Styles applied to a Pill when active */
-.saltInputPill:hover,
-.saltInputPill:hover .saltPillNext-clickable {
-  --saltButton-background: var(--salt-selectable-background-hover);
-  --saltButton-background-hover: var(--salt-selectable-background-hover);
-  --pillNext-background: var(--salt-selectable-background-hover);
-  --pillNext-background-hover: var(--salt-selectable-background-hover);
-}
-
-.saltInputPill-pillHighlighted {
-  --saltButton-background: var(--salt-selectable-background-hover);
-}
-
-.saltInputPill-pillHighlighted .saltPillNext-action {
-  --pillNext-background: var(--salt-selectable-background-hover);
 }

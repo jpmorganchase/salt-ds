@@ -1,51 +1,24 @@
 import { composeStories } from "@storybook/react";
 import * as tokenizedInputNextStories from "@stories/tokenized-input-next/tokenized-input-next.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { MultilineInput } from "@salt-ds/core";
-import { ChangeEvent, useState } from "react";
-
-const statesData = [
-  "Alabama",
-  "Alaska",
-  "Arizona",
-  "Arkansas",
-  "California",
-  "Colorado",
-  "Connecticut",
-  "Delaware",
-  "Florida",
-  "Georgia",
-  "Hawaii",
-  "Idaho",
-  "Illinois",
-  "Indiana",
-  "Iowa",
-  "Kansas",
-  "Kentucky",
-  "Louisiana",
-  "Maine",
-  "Maryland",
-  "Massachusetts",
-  "Michigan",
-  "Minnesota",
-  "Mississippi",
-];
+import { TokenizedInput } from "@salt-ds/lab";
+import { useState } from "react";
 
 const composedStories = composeStories(tokenizedInputNextStories);
 
-const { Default } = composedStories;
+const { Default, WithCollapsedButton } = composedStories;
 
 describe("GIVEN a Tokenized Input", () => {
   checkAccessibility(composedStories);
   describe("WHEN disabled", () => {
     it("SHOULD mount as disabled", () => {
-      cy.mount(<Default initialSelectedItems={statesData} disabled />);
+      cy.mount(<Default disabled />);
       cy.findByRole("textbox").should("be.disabled");
     });
   });
   describe("WHEN mounted as an uncontrolled component", () => {
     it("should render the Tokenized Input with pre selected items", () => {
-      cy.mount(<Default initialSelectedItems={statesData} />);
+      cy.mount(<WithCollapsedButton />);
       cy.findByRole("textbox").should("exist");
       cy.findByTestId("expand-button").should("exist");
     });
@@ -56,9 +29,7 @@ describe("GIVEN a Tokenized Input", () => {
     });
     it.skip("should highlihht pills if navigating with arrows", () => {
       // FIXME: option and testid are in the button, not pill wrapper
-      cy.mount(
-        <Default initialSelectedItems={["Tokyo", "Delhi", "Shanghai"]} />
-      );
+      cy.mount(<Default defaultSelected={["Tokyo", "Delhi", "Shanghai"]} />);
       cy.findByRole("textbox").focus();
 
       // navigating trough pills with arrows
@@ -73,7 +44,7 @@ describe("GIVEN a Tokenized Input", () => {
         .should("have.class", "saltInputPill-pillHighlighted");
     });
     it("should be able to change delimiter", () => {
-      cy.mount(<Default delimiter={";"} />);
+      cy.mount(<Default delimiters={[";"]} />);
       cy.findByRole("textbox").type("Tokio, Delhi, Shanghai");
       cy.findAllByRole("option").should("have.length", 0);
       cy.findByRole("textbox").type("{selectall}{backspace}");
@@ -81,7 +52,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.findAllByRole("option").should("have.length", 3);
     });
     it("should be able to take an array of delimiters", () => {
-      cy.mount(<Default delimiter={[";", "/", "."]} />);
+      cy.mount(<Default delimiters={[";", "/", "."]} />);
       cy.findByRole("textbox").type("Tokio, Delhi, Shanghai");
       cy.findAllByRole("option").should("have.length", 0);
       cy.findByRole("textbox").type("{selectall}{backspace}");
@@ -89,7 +60,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.findAllByRole("option").should("have.length", 3);
     });
     it("should allow removing items by clicking on the close button", () => {
-      cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
+      cy.mount(<Default defaultSelected={["Tokyo"]} />);
       cy.findByRole("textbox").should("exist");
       cy.findByRole("textbox").focus();
       // pill should exist
@@ -104,13 +75,13 @@ describe("GIVEN a Tokenized Input", () => {
     });
 
     it("should clear input on clicking the clear button", () => {
-      cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
+      cy.mount(<Default defaultSelected={["Tokyo"]} />);
       cy.findByRole("textbox").focus();
       cy.findByTestId("clear-button").click();
       cy.findByRole("textbox").should("have.value", "");
     });
     it("should expand on clicking the expand button and collapse when blur", () => {
-      cy.mount(<Default initialSelectedItems={statesData} />);
+      cy.mount(<WithCollapsedButton />);
       cy.findByRole("textbox").focus();
       cy.findAllByRole("option").should("have.length", 24);
       cy.get('[data-testid="pill"]').eq(23).should("be.visible");
@@ -127,7 +98,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.findByTestId("clear-button").should("not.exist");
     });
     it("should return focus to input if an item is closed", () => {
-      cy.mount(<Default initialSelectedItems={["Tokyo"]} />);
+      cy.mount(<Default defaultSelected={["Tokyo"]} />);
       cy.findByRole("textbox").focus();
       // move focus to clear button
       cy.findByTestId("clear-button").should("exist");
@@ -142,8 +113,7 @@ describe("GIVEN a Tokenized Input", () => {
       const onExpandSpy = cy.spy().as("onExpand");
       const onCollapseSpy = cy.spy().as("onCollapse");
       cy.mount(
-        <Default
-          initialSelectedItems={statesData}
+        <WithCollapsedButton
           onChange={onChangeSpy}
           onClear={onClearSpy}
           onExpand={onExpandSpy}
@@ -170,7 +140,7 @@ describe("GIVEN a Tokenized Input", () => {
 
   describe("WHEN mounted as a controlled component", () => {
     it("THEN have the specified value", () => {
-      cy.mount(<Default initialSelectedItems={["Delhi"]} value="Tokio" />);
+      cy.mount(<Default defaultSelected={["Delhi"]} value="Tokio" />);
       cy.findByRole("textbox").should("have.value", "Tokio");
     });
 
@@ -178,19 +148,19 @@ describe("GIVEN a Tokenized Input", () => {
       it("SHOULD call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
 
-        function ControlledMultilineInput() {
+        function ControlledTokenizedInput() {
           const [value, setValue] = useState("Tokio");
-          const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          const onChange = (event) => {
             // React 16 backwards compatibility
             event.persist();
             setValue(event.target.value);
             changeSpy(event);
           };
 
-          return <MultilineInput value={value} onChange={onChange} />;
+          return <TokenizedInput value={value} onChange={onChange} />;
         }
 
-        cy.mount(<ControlledMultilineInput />);
+        cy.mount(<ControlledTokenizedInput />);
         cy.findByRole("textbox").click().clear().type("Mexico City");
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: "Mexico City" },

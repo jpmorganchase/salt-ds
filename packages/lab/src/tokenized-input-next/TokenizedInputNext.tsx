@@ -1,4 +1,5 @@
 import {
+  AdornmentValidationStatus,
   Button,
   ButtonProps,
   makePrefixer,
@@ -8,6 +9,7 @@ import {
   useForkRef,
   useId,
   useIsomorphicLayoutEffect,
+  ValidationStatus,
 } from "@salt-ds/core";
 import {
   ChangeEventHandler,
@@ -46,7 +48,7 @@ type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
 type ExpandButtonProps = Pick<
   ButtonProps,
   "role" | "aria-roledescription" | "aria-describedby"
-> & { accessibleText?: string };
+> & { "aria-label"?: string };
 
 export interface TokenizedInputNextProps<Item>
   extends Partial<TokenizedInputNextState<Item>>,
@@ -68,21 +70,20 @@ export interface TokenizedInputNextProps<Item>
   onInputFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onInputChange?: ChangeEventHandler<HTMLTextAreaElement>;
   onInputSelect?: ReactEventHandler<HTMLTextAreaElement>;
-  onClick?: (event: SyntheticEvent<HTMLElement>) => void;
+  onClick?: ReactEventHandler;
   onClear?: ReactEventHandler;
-
-  delimiter?: string | string[];
+  delimiters?: string[];
   disableAddOnBlur?: boolean;
-  initialSelectedItems?: Item[];
+  defaultSelected?: Item[];
   onChange?: ChangeHandler<Item>;
-  onCollapse?: () => void;
-  onExpand?: () => void;
+  onCollapse?: ReactEventHandler;
+  onExpand?: ReactEventHandler;
 
   /// from input
   /**
    * Validation status.
    */
-  validationStatus?: "error" | "warning" | "success";
+  validationStatus?: Omit<ValidationStatus, "info">;
   /**
    * If `true`, the component is read only.
    */
@@ -127,6 +128,10 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
   });
 
   const density = useDensity();
+  const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
+  const [clearButtonRef, clearButtonWidth] = useWidth(density);
+  const [inputRef, inputWidth] = useWidth(density);
+
   const { textAreaRef, helpers, inputProps } = useTokenizedInputNext(rest);
 
   const {
@@ -138,7 +143,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
 
   const {
     ExpandButtonProps = {
-      accessibleText: "expand edit",
+      "aria-label": "expand edit",
     },
     className,
     activeIndices = [],
@@ -155,7 +160,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     focused,
     validationStatus,
     readOnly,
-    necessity,
     onInputFocus,
     onInputBlur,
     onInputSelect,
@@ -169,22 +173,16 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     "aria-describedby": ariaDescribedBy,
     ...restProps
   } = inputProps;
-
+  // where are this going?
+  console.log(onClear)
   const id = useId(idProp);
   const inputId = `${id}-input`;
   const expandButtonId = `${id}-expand-button`;
   const clearButtonId = `${id}-clear-button`;
 
-  const isRequired = necessity
-    ? ["required", "asterisk"].includes(necessity)
-    : undefined ?? textAreaRequired;
-
   const pillsRef = useRef<Record<number, number | undefined>>({});
   const keydownExpandButton = useRef(false);
 
-  const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
-  const [clearButtonRef, clearButtonWidth] = useWidth(density);
-  const [inputRef, inputWidth] = useWidth(density);
   const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
   const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
   const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
@@ -211,7 +209,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     [density]
   );
 
-  // useLayoutEffect because of potential layout change
+  // useIsomorphicLayoutEffect because of potential layout change
   // We want to do that before paint to avoid layout jumps
   useIsomorphicLayoutEffect(
     () => {
@@ -263,7 +261,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
         event.preventDefault();
         event.stopPropagation();
       }
-      helpers.updateExpanded(true);
+      helpers.updateExpanded(event, true);
       keydownExpandButton.current = true;
     }
   };
@@ -280,10 +278,11 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
   };
 
   const handleExpand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    console.log('expand')
     event.stopPropagation();
 
     if (hasHelpers(helpers)) {
-      helpers.updateExpanded(true);
+      helpers.updateExpanded(event,true);
     }
   };
 
@@ -301,10 +300,8 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
 
   const expandedWithItems =
     expanded && !showExpandButton && selectedItems.length > 0;
-  const {
-    accessibleText: expandButtonAccessibleText,
-    ...restExpandButtonProps
-  } = ExpandButtonProps;
+  const { "aria-label": expandButtonAccessibleText, ...restExpandButtonProps } =
+    ExpandButtonProps;
 
   return (
     <div>
@@ -319,11 +316,10 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           withBaseName(variant),
           {
             [withBaseName("expanded")]: expanded,
-            // [withBaseName("bordered")]: bordered,
             [withBaseName("focused")]: !disabled && focused,
             [withBaseName("disabled")]: disabled,
             [withBaseName("readOnly")]: readOnly,
-            [withBaseName(validationStatus ?? "")]: validationStatus,
+            [withBaseName(validationStatus as string)]: validationStatus,
           },
           className
         )}
@@ -337,9 +333,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             return (
               <InputPill
                 disabled={disabled}
-                className={clsx({
-                  [withBaseName("expanded-pill")]: expanded,
-                })}
                 hidden={showExpandButton && index >= firstHiddenIndex}
                 highlighted={
                   index === highlightedIndex ||
@@ -350,9 +343,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
                 key={`${index}-${label}`}
                 label={label}
                 onClick={expanded ? () => onRemoveItem?.(index) : undefined}
-                lastVisible={
-                  !showExpandButton && index === selectedItems.length - 1
-                }
                 onClose={expanded ? () => onRemoveItem?.(index) : undefined}
                 closeButtonProps={{ tabIndex: -1 }}
                 pillsRef={pillsRef}
@@ -372,7 +362,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           id={inputId}
           readOnly={readOnly}
           ref={useForkRef(useForkRef(inputRef, textAreaRef), textAreaRefProp)}
-          required={isRequired}
+          required={textAreaRequired}
           rows={1}
           tabIndex={disabled ? -1 : 0}
           value={value}
@@ -386,15 +376,15 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
         />
         {!disabled && !readOnly && validationStatus && (
           <div className={withBaseName("statusAdornmentContainer")}>
-            <StatusAdornment status={validationStatus} />
+            <StatusAdornment
+              status={validationStatus as AdornmentValidationStatus}
+            />
           </div>
         )}
-
         {expandedWithItems && (
           <div className={withBaseName("endAdornmentContainer")}>
             <Button
               className={clsx(
-                withBaseName("clear-button"),
                 withBaseName("endAdornment")
               )}
               disabled={disabled}

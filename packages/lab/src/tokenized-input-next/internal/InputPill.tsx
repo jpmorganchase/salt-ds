@@ -7,6 +7,9 @@ import {
 } from "@salt-ds/core";
 import { getWidth } from "./useWidth";
 import { PillNext, PillNextProps } from "../../pill-next";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import inputPillCss from "./InputPill.css";
 
 const withBaseName = makePrefixer("saltInputPill");
 
@@ -44,18 +47,23 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     hidden,
     highlighted,
     index,
-    lastVisible,
     label,
     onClose,
     pillsRef,
     ...rest
   } = props;
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-input-pill",
+    css: inputPillCss,
+    window: targetWindow,
+  });
 
   const ref = useRef<HTMLButtonElement | null>(null);
   const [isEllipsisActive, setEllipsisActive] = useState(false);
   const isRemovable = Boolean(onClose);
 
-  // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
+  // useIsomorphicLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
   // We need to collect widths before the calculation
   useIsomorphicLayoutEffect(() => {
     const text = ref?.current?.firstElementChild as HTMLElement;
@@ -63,7 +71,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
       pillsRef.current[index] = getWidth(ref.current);
     }
     setEllipsisActive(text?.offsetWidth < text?.scrollWidth);
-  }, [pillsRef, index, isRemovable, lastVisible]);
+  }, [pillsRef, index, isRemovable]);
 
   useIsomorphicLayoutEffect(
     () => () => {
@@ -78,12 +86,12 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
 
   return (
     <Tooltip content={label} disabled={!isEllipsisActive}>
-      {/* FIXME: send tabindex -1 to close button */}
       <PillNext
         className={clsx(
           withBaseName(),
           {
             [withBaseName("pillHighlighted")]: highlighted,
+            [withBaseName("expanded")]: isRemovable,
             [withBaseName("hidden")]: hidden,
           },
           className

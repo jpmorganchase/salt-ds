@@ -12,16 +12,30 @@ import {
   KeyboardEvent,
   KeyboardEventHandler,
   Ref,
-  SetStateAction,
-  SyntheticEvent,
+  SetStateAction, SyntheticEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
+  MutableRefObject,
 } from "react";
-import { escapeRegExp } from "../utils";
-import { getCursorPosition } from "./internal/getCursorPosition";
-import { TokenizedInputNextProps } from "./TokenizedInputNext";
+import {escapeRegExp} from "../utils";
+import {TokenizedInputNextProps} from "./TokenizedInputNext";
+
+const getCursorPosition = (
+  inputRef: MutableRefObject<HTMLTextAreaElement | null>
+) => {
+  if (inputRef.current) {
+    const {selectionStart, selectionEnd} = inputRef.current;
+
+    // if there is no selection range
+    if (selectionStart != null && selectionStart === selectionEnd) {
+      return selectionStart;
+    }
+  }
+
+  return -1;
+};
 
 export interface TokenizedInputNextState<Item> {
   activeIndices: number[];
@@ -35,7 +49,7 @@ export interface TokenizedInputNextHelpers<Item> {
   setHighlightedIndex: (value?: number) => void;
   setValue: (value: string) => void;
   setSelectedItems: (selectedItems: Item[]) => void;
-  updateExpanded: (expanded: boolean) => void;
+  updateExpanded: (event: SyntheticEvent, expanded: boolean) => void;
 }
 
 function isValidItem<Item>(data: unknown): data is Item {
@@ -67,8 +81,6 @@ interface useTokenizedInputNextResult<Item> {
 export function useTokenizedInputNext<Item>(
   props: TokenizedInputNextProps<Item>
 ): useTokenizedInputNextResult<Item> {
-  validateProps(props);
-
   const {
     disabled: formFieldDisabled,
     readOnly,
@@ -81,8 +93,8 @@ export function useTokenizedInputNext<Item>(
   } = useFormFieldProps();
 
   const {
-    delimiter = ",",
-    initialSelectedItems = [],
+    delimiters = [","],
+    defaultSelected = [],
     disabled = formFieldDisabled,
     readOnly: readOnlyProp,
     validationStatus: validationStatusProp,
@@ -102,7 +114,6 @@ export function useTokenizedInputNext<Item>(
     id: idProp,
     value: valueProp,
     expanded: expandedProp,
-    necessity: necessityProp,
     selectedItems: selectedItemsProp,
     "aria-label": ariaLabel,
     "aria-describedby": ariaDescribedByProp,
@@ -112,9 +123,7 @@ export function useTokenizedInputNext<Item>(
   const id = useId(idProp);
   const [focused, setFocused] = useState(false);
 
-  const [value, setValue, isInputControlled] = useControlled<
-    string | undefined
-  >({
+  const [value, setValue, isInputControlled] = useControlled<string | undefined>({
     controlled: valueProp,
     default: "",
     name: "TokenizedInputNext",
@@ -124,7 +133,7 @@ export function useTokenizedInputNext<Item>(
   const [selectedItems = [], setSelectedItems, isSelectionControlled] =
     useControlled<Item[] | undefined>({
       controlled: selectedItemsProp,
-      default: initialSelectedItems,
+      default: defaultSelected,
       name: "TokenizedInputNext",
       state: "selectedItems",
     });
@@ -145,7 +154,6 @@ export function useTokenizedInputNext<Item>(
   const preventBlurOnCopy = useRef(false);
   const hasActiveItems = Boolean(activeIndices.length);
 
-  const delimiters = ([] as string[]).concat(delimiter);
   const primaryDelimiter = delimiters[0];
   const delimiterRegex = useMemo(
     () => new RegExp(delimiters.map(escapeRegExp).join("|"), "gi"),
@@ -176,7 +184,8 @@ export function useTokenizedInputNext<Item>(
           }
           return newItems;
         });
-      } else {
+      }
+      else {
         onChange?.(
           typeof action === "function" ? action(selectedItems) : action
         );
@@ -185,15 +194,15 @@ export function useTokenizedInputNext<Item>(
     [isSelectionControlled, setSelectedItems, onChange, selectedItems]
   );
 
-  const updateExpanded = (newExpanded: boolean) => {
+  const updateExpanded = (event: SyntheticEvent, newExpanded: boolean) => {
     if (!isExpandedControlled) {
       setExpanded(newExpanded);
     }
 
     if (newExpanded) {
-      onExpand && onExpand();
+      onExpand?.(event);
     } else {
-      onCollapse && onCollapse();
+      onCollapse?.(event);
     }
   };
 
@@ -211,8 +220,8 @@ export function useTokenizedInputNext<Item>(
           (prevSelectedItems.length === 0
             ? prevSelectedItems
             : prevSelectedItems.filter(
-                (_, index) => itemIndices.indexOf(index) === -1
-              ))
+              (_, index) => itemIndices.indexOf(index) === -1
+            ))
       );
     },
     [updateSelectedItems]
@@ -228,7 +237,7 @@ export function useTokenizedInputNext<Item>(
       preventBlurOnCopy.current = false;
       setActiveIndices(
         Array.from(
-          { length: selectedItems ? selectedItems.length : 0 },
+          {length: selectedItems ? selectedItems.length : 0},
           (_, index) => index
         )
       );
@@ -236,7 +245,7 @@ export function useTokenizedInputNext<Item>(
     }
 
     onInputFocus?.(event);
-    updateExpanded(true);
+    updateExpanded(event, true);
     onFocus?.(event);
     setFocused(true);
   };
@@ -246,20 +255,14 @@ export function useTokenizedInputNext<Item>(
   ) => {
     onBlur?.(event);
     setFocused(false);
-    updateExpanded(false);
+    updateExpanded(event,false);
   };
 
   const handleInputBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
     // Check if the related target is the clear button
-    // FIXME: flimsy, we might want a better way of checking it is no internal button
     const isClearButton =
-      (event.relatedTarget instanceof HTMLElement &&
-        event.relatedTarget?.classList?.contains(
-          "saltPillNext-close-button"
-        )) ||
-      event.relatedTarget?.classList?.contains(
-        "saltTokenizedInputNext-clear-button"
-      );
+      (event.relatedTarget instanceof HTMLButtonElement &&
+        event.relatedTarget.type === 'button');
     event.stopPropagation();
     setHighlightedIndex(undefined);
     setActiveIndices([]);
@@ -270,7 +273,7 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleClick = (event: SyntheticEvent<HTMLElement>) => {
-    updateExpanded(true);
+    updateExpanded(event,true);
     setActiveIndices([]);
     focusInput();
     onClick?.(event);
@@ -329,6 +332,7 @@ export function useTokenizedInputNext<Item>(
   );
 
   const handleClear = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    console.log('clear')
     updateSelectedItems([]);
     resetInput();
     focusInput();
@@ -571,7 +575,7 @@ export function useTokenizedInputNext<Item>(
       disabled,
       validationStatus: validationStatus ?? validationStatusProp,
       readOnly: readOnly ?? readOnlyProp,
-      necessity: necessity ?? necessityProp,
+      necessity: necessity,
       focused,
       "aria-labelledby": ariaLabelledBy,
       "aria-label": ariaLabel,
@@ -582,24 +586,3 @@ export function useTokenizedInputNext<Item>(
     },
   };
 }
-
-const validateProps = function validateProps<Item>(
-  props: TokenizedInputNextProps<Item>
-) {
-  if (process.env.NODE_ENV !== "production") {
-    const { delimiter } = props;
-
-    const isChar = (value: unknown) =>
-      typeof value === "string" && value.length === 1;
-
-    const invalidDelimiter = Array.isArray(delimiter)
-      ? delimiter.every(isChar)
-      : isChar(delimiter);
-
-    if (invalidDelimiter) {
-      console.warn(
-        "TokenizedInputNext delimiter should be a single character or an array of single characters"
-      );
-    }
-  }
-};
