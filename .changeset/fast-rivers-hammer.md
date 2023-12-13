@@ -4,10 +4,10 @@
 
 Added:
 
-- DragRow
-- Jigsaw
-- JigsawSolid
-- Layers
-- LayersSolid
-- Type
-- TypeSolid
+- DragRowIcon
+- JigsawIcon
+- JigsawSolidIcon
+- LayersIcon
+- LayersSolidIcon
+- TypeIcon
+- TypeSolidIcon
