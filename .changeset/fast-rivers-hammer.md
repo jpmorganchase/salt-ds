@@ -1,5 +1,5 @@
 ---
-"@salt-ds/icons": patch
+"@salt-ds/icons": minor
 ---
 
 Added:
