@@ -18,6 +18,7 @@ export default {
 interface StoryProps {
   compact?: boolean;
   compactWithInput?: boolean;
+  goTo?: boolean;
   inputVariant?: "primary" | "secondary";
 }
 
@@ -28,6 +29,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     count,
     boundaryCount,
     siblingPairCount,
+    goTo,
     compact,
     compactWithInput,
     inputVariant,
@@ -36,7 +38,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
   return (
     <Pagination count={count}>
       <FlexLayout gap={1}>
-        <GoToInput inputVariant={inputVariant} />
+        {goTo && <GoToInput inputVariant={inputVariant} />}
         {compact ?? compactWithInput ? (
           <CompactPaginator>
             {compactWithInput && <CompactInput variant={inputVariant} />}
@@ -74,6 +76,7 @@ WithInput.args = {
   count: 25,
   siblingPairCount: 2,
   boundaryCount: 1,
+  goTo: true,
 };
 
 WithInput.argTypes = {
@@ -111,6 +114,7 @@ export const CompactWithGoTo = Template.bind({});
 CompactWithGoTo.args = {
   compact: true,
   count: 25,
+  goTo: true,
 };
 
 CompactWithGoTo.argTypes = {
