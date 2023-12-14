@@ -17,7 +17,7 @@ describe("GIVEN an Pagination", () => {
         );
 
         cy.findByRole("navigation").should("not.exist");
-        cy.findByRole("link", { name: "Page 1" }).should("not.exist");
+        cy.findByRole("link", { name: /Page 1/i }).should("not.exist");
         cy.findByRole("link", { name: "Previous Page" }).should("not.exist");
         cy.findByRole("link", { name: "Next Page" }).should("not.exist");
       });
@@ -30,11 +30,9 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 1" }).should(
-          "have.attr",
-          "aria-current",
-          "page"
-        );
+        cy.findAllByRole("link", { name: /Page 1/i })
+          .first()
+          .should("have.attr", "aria-current", "page");
         cy.findByRole("link", { name: "Previous Page" }).should("be.disabled");
       });
     });
@@ -46,7 +44,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 10" }).should(
+        cy.findByRole("link", { name: /Page 10/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -63,13 +61,13 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
+        cy.findByRole("link", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
           "page"
         );
-        cy.findByRole("link", { name: "Page 4" }).realClick();
-        cy.findByRole("link", { name: "Page 4" }).should(
+        cy.findByRole("link", { name: /Page 4/i }).realClick();
+        cy.findByRole("link", { name: /Page 4/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -86,13 +84,13 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
+        cy.findByRole("link", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
           "page"
         );
-        cy.findByRole("link", { name: "Page 2" }).realClick();
-        cy.findByRole("link", { name: "Page 2" }).should(
+        cy.findByRole("link", { name: /Page 2/i }).realClick();
+        cy.findByRole("link", { name: /Page 2/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -109,13 +107,13 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
+        cy.findByRole("link", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
           "page"
         );
-        cy.findByRole("link", { name: "Page 5" }).realClick();
-        cy.findByRole("link", { name: "Page 5" }).should(
+        cy.findByRole("link", { name: /Page 5/i }).realClick();
+        cy.findByRole("link", { name: /Page 5/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -133,14 +131,14 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 3" }).should(
+          cy.findByRole("link", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
             "page"
           );
 
           cy.findByRole("link", { name: "Next Page" }).realClick();
-          cy.findByRole("link", { name: "Page 4" }).should(
+          cy.findByRole("link", { name: /Page 4/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -158,14 +156,14 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 3" }).should(
+          cy.findByRole("link", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
             "page"
           );
           cy.findByRole("link", { name: "Previous Page" }).focus();
           cy.realPress("Enter");
-          cy.findByRole("link", { name: "Page 2" }).should(
+          cy.findByRole("link", { name: /Page 2/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -182,14 +180,14 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 3" }).should(
+          cy.findByRole("link", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
             "page"
           );
-          cy.findByRole("link", { name: "Page 5" }).focus();
+          cy.findByRole("link", { name: /Page 5/i }).focus();
           cy.realPress("Enter");
-          cy.findByRole("link", { name: "Page 5" }).should(
+          cy.findByRole("link", { name: /Page 5/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -206,7 +204,7 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 2" }).should(
+          cy.findByRole("link", { name: /Page 2/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -225,7 +223,7 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 2" }).should(
+          cy.findByRole("link", { name: /Page 2/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -279,7 +277,7 @@ describe("GIVEN an Pagination", () => {
         );
 
         cy.findAllByText("10").should("exist").and("have.length", 1);
-        cy.findByRole("link", { name: "Page 10" }).realClick();
+        cy.findByRole("link", { name: /Page 10/ }).realClick();
         cy.findAllByText("10").should("exist").and("have.length", 2);
         cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
@@ -327,7 +325,7 @@ describe("GIVEN an Pagination", () => {
           );
 
           cy.findByText("3").should("exist");
-          cy.findByRole("link", { name: "Page 10" }).focus();
+          cy.findByRole("link", { name: /Page 10/ }).focus();
           cy.realPress("Enter");
           cy.findAllByText("10").should("exist").and("have.length", 2);
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
@@ -342,7 +340,7 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 2" }).should(
+          cy.findByRole("link", { name: /Page 2/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -350,7 +348,7 @@ describe("GIVEN an Pagination", () => {
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageDown"]);
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
-          cy.findByRole("link", { name: "Page 3" }).should(
+          cy.findByRole("link", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -367,7 +365,7 @@ describe("GIVEN an Pagination", () => {
             </Pagination>
           );
 
-          cy.findByRole("link", { name: "Page 2" }).should(
+          cy.findByRole("link", { name: /Page 2/i }).should(
             "have.attr",
             "aria-current",
             "page"
@@ -375,11 +373,9 @@ describe("GIVEN an Pagination", () => {
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageUp"]);
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
-          cy.findByRole("link", { name: "Page 1" }).should(
-            "have.attr",
-            "aria-current",
-            "page"
-          );
+          cy.findAllByRole("link", { name: /Page 1/i })
+            .first()
+            .should("have.attr", "aria-current", "page");
         });
       });
     });
@@ -540,7 +536,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
+        cy.findByRole("link", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -549,7 +545,7 @@ describe("GIVEN an Pagination", () => {
         cy.realType("abc");
         cy.findByRole("textbox").should("have.value", "abc");
         cy.realPress("Enter");
-        cy.findByRole("link", { name: "Page 3" }).should(
+        cy.findByRole("link", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -564,7 +560,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findByRole("link", { name: "Page 3" }).should(
+        cy.findByRole("link", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
           "page"
@@ -573,7 +569,7 @@ describe("GIVEN an Pagination", () => {
         cy.realType("5");
         cy.findByRole("textbox").should("have.value", "5");
         cy.realPress("Enter");
-        cy.findByRole("link", { name: "Page 5" }).should(
+        cy.findByRole("link", { name: /Page 5/i }).should(
           "have.attr",
           "aria-current",
           "page"
