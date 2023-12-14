@@ -63,7 +63,6 @@ export interface TokenizedInputNextProps<Item>
   disabled?: boolean;
   focused?: boolean;
   expandButtonRef?: Ref<HTMLButtonElement>;
-  onFocus?: FocusEventHandler<HTMLTextAreaElement | HTMLButtonElement>;
   onBlur?: FocusEventHandler<HTMLTextAreaElement | HTMLButtonElement>;
   onKeyUp?: KeyboardEventHandler<HTMLTextAreaElement | HTMLButtonElement>;
   // Can key down on either input or expand button
@@ -72,7 +71,6 @@ export interface TokenizedInputNextProps<Item>
   onInputBlur?: FocusEventHandler<HTMLTextAreaElement>;
   onInputFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onInputChange?: ChangeEventHandler<HTMLTextAreaElement>;
-  onInputSelect?: ReactEventHandler<HTMLTextAreaElement>;
   onClick?: ReactEventHandler;
   onClear?: ReactEventHandler;
   delimiters?: string[];
@@ -155,7 +153,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     value,
     expanded,
     disabled,
-    onFocus,
     onBlur,
     onKeyDown,
     onRemoveItem,
@@ -165,7 +162,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     readOnly,
     onInputFocus,
     onInputBlur,
-    onInputSelect,
     onClear,
     onClick,
     onKeyUp,
@@ -375,7 +371,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           onChange={onInputChange}
           onBlur={onInputBlur}
           onFocus={!disabled ? onInputFocus : undefined}
-          onSelect={onInputSelect}
           onKeyDown={onKeyDown}
           {...restTextAreaProps}
         />
@@ -414,7 +409,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
               id={expandButtonId}
               onBlur={onBlur}
               onClick={handleExpand}
-              onFocus={onFocus}
               onKeyDown={handleExpandButtonKeyDown}
               onKeyUp={handleInputKeyUp}
               ref={expandButtonRef}
