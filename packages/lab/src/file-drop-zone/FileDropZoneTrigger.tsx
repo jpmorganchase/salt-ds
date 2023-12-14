@@ -1,4 +1,4 @@
-import { Button, useForkRef, ValidationStatus } from "@salt-ds/core";
+import { Button, useForkRef } from "@salt-ds/core";
 import {
   FocusEvent,
   forwardRef,
@@ -20,20 +20,20 @@ export interface FileDropZoneTriggerProps
    */
   disabled?: boolean;
   /**
+   * Allows multiple files to be uploaded.
+   */
+  multiple?: boolean;
+  /**
    * Callback for input change event
    */
   onChange?: (event: SyntheticEvent<HTMLInputElement>) => void;
-  /**
-   * Status indicator to be displayed.
-   */
-  status?: ValidationStatus;
 }
 
 export const FileDropZoneTrigger = forwardRef<
   HTMLButtonElement,
   FileDropZoneTriggerProps
 >(function FileDropZoneTrigger(
-  { disabled, accept, children, onChange, ...rest },
+  { accept, children, disabled, multiple = false, onChange, ...rest },
   ref
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -67,7 +67,7 @@ export const FileDropZoneTrigger = forwardRef<
         className="input-hidden"
         data-testid="file-input"
         disabled={disabled}
-        multiple
+        multiple={multiple}
         onChange={onChange}
         onFocus={handleFocus}
         ref={fileInputRef}

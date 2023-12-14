@@ -1,6 +1,12 @@
-import { makePrefixer, ValidationStatus } from "@salt-ds/core";
+import { makePrefixer, useForkRef, ValidationStatus } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { DragEventHandler, forwardRef, HTMLAttributes, useState } from "react";
+import {
+  DragEventHandler,
+  forwardRef,
+  HTMLAttributes,
+  useRef,
+  useState,
+} from "react";
 import { containsFiles } from "./internal/utils";
 
 import { useWindow } from "@salt-ds/window";
@@ -43,6 +49,9 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     });
     const [isActive, setActive] = useState(false);
 
+    const regionRef = useRef<HTMLDivElement>(null);
+    const dropZoneRef = useForkRef(ref, regionRef);
+
     const handleDragOver: DragEventHandler<HTMLDivElement> = (event) => {
       // Need to cancel the default events to allow drop
       // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations#droptargets
@@ -69,7 +78,11 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       if (disabled) {
         return;
       }
-      setActive(false);
+      const region = regionRef?.current;
+      const eventTarget = event.relatedTarget;
+      if (eventTarget !== region && !region?.contains(eventTarget as Node)) {
+        setActive(false);
+      }
       onDragLeave?.(event);
     };
 
@@ -96,7 +109,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        ref={ref}
+        ref={dropZoneRef}
         {...restProps}
       >
         {children}

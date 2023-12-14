@@ -16,15 +16,12 @@
 }
 
 /* Styles applied if `isActive={true}` */
-.saltFileDropZone-active,
 .saltFileDropZone-active {
   background: var(--salt-target-background-hover);
   border: var(--saltFileDropZone-border-hover, var(--salt-size-border-strong) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover));
 }
-.saltFileDropZone-active * {
-  pointer-events: none;
-}
-/*!* Styles applied if `status="error" *!*/
+
+/* Styles applied if `status="error" */
 .saltFileDropZone-error {
   border: var(--saltFileDropZone-error-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-error-borderColor));
 }
@@ -37,7 +34,7 @@
   display: none;
 }
 
-/*!* Styles applied if `disabled={true}` *!*/
+/* Styles applied if `disabled={true}` */
 .saltFileDropZone-disabled {
   background: var(--salt-container-primary-background-disabled);
   border: var(--saltFileDropZone-disabled, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor-disabled));
