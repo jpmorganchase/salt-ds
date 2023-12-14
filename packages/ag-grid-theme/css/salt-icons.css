@@ -86,7 +86,7 @@
 /* filter */
 [class*="ag-theme-salt"] .ag-icon-filter:before {
   font-family: "salt-icons";
-  content: "\e973";
+  content: "\e972";
 }
 /* filter-solid */
 [class*="ag-theme-salt"] .ag-icon-filter-solid:before {
