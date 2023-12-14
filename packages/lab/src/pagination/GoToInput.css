@@ -3,6 +3,7 @@
   flex-direction: row;
   gap: var(--salt-spacing-100);
   align-items: baseline;
+  text-wrap: nowrap;
 }
 
 .saltGoToInput-input {
