@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.23
+
+### Patch Changes
+
+- 2fd8c03c: Pill Next's `className` prop is now forwarded to its wrapper instead of the nested button.
+
 ## 1.0.0-alpha.22
 
 ### Minor Changes
