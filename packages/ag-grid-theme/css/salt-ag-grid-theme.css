@@ -295,6 +295,11 @@ div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
   border: 0;
 }
 
+div[class*="ag-theme-salt"] .ag-floating-filter-button-button .ag-icon-filter:before {
+  color: var(--salt-content-secondary-foreground);
+  content: "\e973";
+}
+
 div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button {
   margin-left: var(--salt-spacing-100);
 }
