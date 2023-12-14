@@ -84,7 +84,7 @@ export const Compact = Template.bind({});
 
 Compact.args = {
   compact: true,
-  count: 25
+  count: 25,
 };
 
 export const CompactWithInput = Template.bind({});
