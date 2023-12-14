@@ -90,9 +90,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     );
 
     const onKeyDown: KeyboardEventHandler = (event) => {
-      const { altKey, key } = event;
-      if (altKey) {
-        switch (key) {
+      if (event.altKey) {
+        switch (event.key) {
           case "PageDown":
             onPageChange(event, Math.min(pageState + 1, count));
             break;

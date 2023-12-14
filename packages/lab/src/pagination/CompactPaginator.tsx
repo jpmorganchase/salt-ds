@@ -18,7 +18,7 @@ export const CompactPaginator = forwardRef<
 >(function CompactPaginator({ children, className, ...restProps }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-compactPaginator",
+    testId: "salt-compact-paginator",
     css: compactPaginatorCss,
     window: targetWindow,
   });

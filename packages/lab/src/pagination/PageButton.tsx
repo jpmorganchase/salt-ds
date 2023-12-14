@@ -19,7 +19,7 @@ export interface PageButtonProps {
 export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-pageButton",
+    testId: "salt-page-button",
     css: pageButtonCss,
     window: targetWindow,
   });

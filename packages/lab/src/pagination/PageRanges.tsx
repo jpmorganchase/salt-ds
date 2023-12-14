@@ -34,7 +34,7 @@ export function PageRanges({
 }: PageRangesProps) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-pageRanges",
+    testId: "salt-page-ranges",
     css: pageRangesCss,
     window: targetWindow,
   });

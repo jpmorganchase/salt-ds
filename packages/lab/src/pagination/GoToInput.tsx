@@ -44,7 +44,7 @@ export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-goToInput",
+      testId: "salt-go-to-input",
       css: goToInputCss,
       window: targetWindow,
     });

@@ -22,7 +22,7 @@ export const CompactInput = forwardRef<
 >(function CompactInput(props, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-compactInput",
+    testId: "salt-compact-input",
     css: compactInputCss,
     window: targetWindow,
   });
@@ -62,7 +62,6 @@ export const CompactInput = forwardRef<
       inputProps={{
         "aria-label": `Go to page, ${count} total`,
         style: { width: `${`${count}`.length}ch` },
-        role: "textbox",
       }}
       onBlur={handleBlur}
       onChange={handleChange}
