@@ -297,7 +297,7 @@ div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
 
 div[class*="ag-theme-salt"] .ag-floating-filter-button-button .ag-icon-filter:before {
   color: var(--salt-content-secondary-foreground);
-  content: "\e9ac";
+  content: "\e973";
 }
 
 div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button {
