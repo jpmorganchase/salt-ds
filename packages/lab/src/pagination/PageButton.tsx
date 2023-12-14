@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
-import { Button, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { Button, makePrefixer } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
 
 import { useWindow } from "@salt-ds/window";
@@ -24,7 +24,7 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
     window: targetWindow,
   });
 
-  const { onPageChange } = usePaginationContext();
+  const { count, onPageChange } = usePaginationContext();
   const name = `Page ${page}`;
 
   const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -33,12 +33,11 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
 
   return (
     <Button
-      aria-label={name}
+      aria-label={`${name} of ${count}`}
       name={name}
       aria-current={isSelected ? "page" : undefined}
       variant="secondary"
       className={clsx(withBaseName(), {
-        // [withBaseName("disabled")]: disabled,
         [withBaseName("selected")]: isSelected,
         [withBaseName("fixed")]: page < 100,
       })}
