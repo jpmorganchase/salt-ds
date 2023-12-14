@@ -3,227 +3,238 @@
   src: url(../fonts/salt-icons.woff) format("woff");
 }
 
+/* sum-solid */
 [class*="ag-theme-salt"] .ag-icon-aggregation:before {
   font-family: "salt-icons";
-  content: "\ea2f";
+  content: "\ea25";
 }
-
+/* move-all */
 [class*="ag-theme-salt"] .ag-icon-arrows:before {
   font-family: "salt-icons";
-  content: "\e9e7";
+  content: "\e9c3";
 }
-
+/* arrow-up */
 [class*="ag-theme-salt"] .ag-icon-asc:before {
   font-family: "salt-icons";
-  content: "\e954";
+  content: "\e90b";
 }
-
+/* close */
 [class*="ag-theme-salt"] .ag-icon-cancel:before {
   font-family: "salt-icons";
-  content: "\e975";
+  content: "\e934";
 }
-
+/* bar-chart */
 [class*="ag-theme-salt"] .ag-icon-chart:before {
   font-family: "salt-icons";
-  content: "\e958";
+  content: "\e911";
 }
-
+/* column-chooser */
 [class*="ag-theme-salt"] .ag-icon-columns:before {
   font-family: "salt-icons";
-  content: "\e981";
+  content: "\e941";
 }
-
+/* chevron-down */
 [class*="ag-theme-salt"] .ag-icon-contracted:before {
   font-family: "salt-icons";
-  content: "\e96d";
+  content: "\e92c";
 }
-
+/* clone */
 [class*="ag-theme-salt"] .ag-icon-copy:before {
   font-family: "salt-icons";
-  content: "\e973";
+  content: "\e932";
 }
-
+/* close */
 [class*="ag-theme-salt"] .ag-icon-cross:before {
   font-family: "salt-icons";
-  content: "\e975";
+  content: "\e934";
 }
 
 [class*="ag-theme-salt"] .ag-icon-cut:before {
   font-family: "salt-icons";
-  content: "\e98e";
+  content: "\e950";
 }
 
 [class*="ag-theme-salt"] .ag-icon-csv:before {
   font-family: "salt-icons";
-  content: "\e98d";
+  content: "\e94f";
 }
-
+/* arrow-down */
 [class*="ag-theme-salt"] .ag-icon-desc:before {
   font-family: "salt-icons";
-  content: "\e951";
+  content: "\e908";
 }
-
+/* xls */
 [class*="ag-theme-salt"] .ag-icon-excel:before {
   font-family: "salt-icons";
-  content: "\ea62";
+  content: "\ea68";
 }
-
+/* chevron-right */
 [class*="ag-theme-salt"] .ag-icon-expanded:before {
   font-family: "salt-icons";
-  content: "\e96f";
+  content: "\e92e";
 }
-
+/* hidden */
 [class*="ag-theme-salt"] .ag-icon-eye-slash:before {
   font-family: "salt-icons";
-  content: "\e9c1";
+  content: "\e98b";
 }
-
+/* visible */
 [class*="ag-theme-salt"] .ag-icon-eye:before {
   font-family: "salt-icons";
-  content: "\ea5b";
+  content: "\ea59";
 }
-
+/* filter */
 [class*="ag-theme-salt"] .ag-icon-filter:before {
   font-family: "salt-icons";
-  content: "\e9ab";
+  content: "\e972";
 }
-
+/* filter-solid */
+[class*="ag-theme-salt"] .ag-icon-filter-solid:before {
+  font-family: "salt-icons";
+  content: "\e972";
+}
+/* filter */
 [class*="ag-theme-salt"] .ag-icon-filter-clear:before {
   font-family: "salt-icons";
-  content: "\e9ac";
+  content: "\e973";
 }
-
+/* double-chevron-left */
 [class*="ag-theme-salt"] .ag-icon-first:before {
   font-family: "salt-icons";
-  content: "\e99b";
+  content: "\e961";
+}
+/* drag-row */
+[class*="ag-theme-salt"] .ag-icon-grip:before {
+  font-family: "salt-icons";
+  content: "\e900";
 }
 
 [class*="ag-theme-salt"] .ag-icon-group:before {
   font-family: "salt-icons";
-  content: "\ea68";
+  content: "\e984";
 }
-
+/* double-chevron-right */
 [class*="ag-theme-salt"] .ag-icon-last:before {
   font-family: "salt-icons";
-  content: "\e99c";
+  content: "\e962";
 }
-
+/* chevron-left */
 [class*="ag-theme-salt"] .ag-icon-left:before {
   font-family: "salt-icons";
-  content: "\e96e";
+  content: "\e92d";
 }
 
 [class*="ag-theme-salt"] .ag-icon-linked:before {
   font-family: "salt-icons";
-  content: "\e9da";
+  content: "\e9a8";
 }
-
+/* loader */
 [class*="ag-theme-salt"] .ag-icon-loading:before {
   font-family: "salt-icons";
-  content: "\e9dc";
+  content: "\e9aa";
 }
-
+/* micro-menu */
 [class*="ag-theme-salt"] .ag-icon-menu:before {
   font-family: "salt-icons";
-  content: "\e9e5";
+  content: "\e9bd";
 }
-
+/* chevron-right */
 [class*="ag-theme-salt"] .ag-icon-next:before {
   font-family: "salt-icons";
-  content: "\e96f";
+  content: "\e92e";
 }
-
+/* move-vertical */
 [class*="ag-theme-salt"] .ag-icon-none:before {
   font-family: "salt-icons";
-  content: "\e9e9";
+  content: "\e9c5";
 }
-
+/* close */
 [class*="ag-theme-salt"] .ag-icon-not-allowed:before {
   font-family: "salt-icons";
-  content: "\e975";
+  content: "\e934";
 }
-
+/* place-in */
 [class*="ag-theme-salt"] .ag-icon-paste:before {
   font-family: "salt-icons";
-  content: "\e9f9";
+  content: "\e9d9";
 }
-
+/* pin-solid */
 [class*="ag-theme-salt"] .ag-icon-pin:before {
   font-family: "salt-icons";
-  content: "\e9f5";
+  content: "\e9d5";
 }
 
 [class*="ag-theme-salt"] .ag-icon-pivot:before {
   font-family: "salt-icons";
-  content: "\e9f8";
+  content: "\e9d8";
 }
-
+/* chevron-left */
 [class*="ag-theme-salt"] .ag-icon-previous:before {
   font-family: "salt-icons";
-  content: "\e96e";
+  content: "\e92d";
 }
-
+/* chevron-right */
 [class*="ag-theme-salt"] .ag-icon-right:before {
   font-family: "salt-icons";
-  content: "\e96f";
+  content: "\e92e";
 }
 
 [class*="ag-theme-salt"] .ag-icon-save:before {
   font-family: "salt-icons";
-  content: "\ea19";
+  content: "\e9ff";
 }
-
+/* triangle-down */
 [class*="ag-theme-salt"] .ag-icon-small-down:before {
   font-family: "salt-icons";
-  content: "\ea41";
+  content: "\ea39";
 }
-
+/* triangle-left */
 [class*="ag-theme-salt"] .ag-icon-small-left:before {
   font-family: "salt-icons";
-  content: "\ea42";
+  content: "\ea3a";
 }
-
+/* triangle-right */
 [class*="ag-theme-salt"] .ag-icon-small-right:before {
   font-family: "salt-icons";
-  content: "\ea44";
+  content: "\ea3c";
 }
-
+/* triangle-up */
 [class*="ag-theme-salt"] .ag-icon-small-up:before {
   font-family: "salt-icons";
-  content: "\ea45";
+  content: "\ea3d";
 }
-
+/* success-tick */
 [class*="ag-theme-salt"] .ag-icon-tick:before {
   font-family: "salt-icons";
-  content: "\ea2e";
+  content: "\ea23";
 }
-
+/* chevron-right */
 [class*="ag-theme-salt"] .ag-icon-tree-closed:before {
   font-family: "salt-icons";
-  content: "\e96f";
+  content: "\e92e";
 }
-
+/* chevron-down */
 [class*="ag-theme-salt"] .ag-icon-tree-open:before {
   font-family: "salt-icons";
-  content: "\e96d";
+  content: "\e92c";
 }
 
 [class*="ag-theme-salt"] .ag-icon-unlinked:before {
   font-family: "salt-icons";
-  content: "\ea47";
+  content: "\ea43";
 }
 
 [class*="ag-theme-salt"] .ag-checkbox-input-wrapper:after {
   content: "";
   font-family: "salt-icons";
 }
-
+/* success-tick */
 [class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked:after {
-  content: "\ea2e";
+  content: "\ea23";
   font-family: "salt-icons";
 }
-
+/* remove */
 [class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate:after {
-  content: "\ea10";
+  content: "\e9f4";
   font-family: "salt-icons";
 }
