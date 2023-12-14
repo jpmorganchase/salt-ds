@@ -1,8 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as tokenizedInputNextStories from "@stories/tokenized-input-next/tokenized-input-next.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { TokenizedInput } from "@salt-ds/lab";
-import { useState } from "react";
 
 const composedStories = composeStories(tokenizedInputNextStories);
 
@@ -83,15 +81,15 @@ describe("GIVEN a Tokenized Input", () => {
     it("should expand on clicking the expand button and collapse when blur", () => {
       cy.mount(<WithCollapsedButton />);
       cy.findByRole("textbox").focus();
-      cy.findAllByRole("option").should("have.length", 24);
-      cy.get('[data-testid="pill"]').eq(23).should("be.visible");
+      cy.findAllByRole("option").should("have.length", 50);
+      cy.get('[data-testid="pill"]').eq(49).should("be.visible");
       // Move focus out of Tokenized input
       cy.realPress("Tab");
       cy.realPress("Tab");
 
       cy.findByRole("textbox").should("not.be.focused");
-      cy.get('[data-testid="pill"]').should("have.length", 24);
-      cy.findAllByTestId("pill").eq(23).should("not.be.visible");
+      cy.get('[data-testid="pill"]').should("have.length", 50);
+      cy.findAllByTestId("pill").eq(49).should("not.be.visible");
     });
     it("should not display the clear button if there is no selection", () => {
       cy.mount(<Default />);
@@ -147,24 +145,15 @@ describe("GIVEN a Tokenized Input", () => {
     describe("THEN the user input is updated", () => {
       it("SHOULD call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
-
-        function ControlledTokenizedInput() {
-          const [value, setValue] = useState("Tokio");
-          const onChange = (event) => {
-            // React 16 backwards compatibility
-            event.persist();
-            setValue(event.target.value);
-            changeSpy(event);
-          };
-
-          return <TokenizedInput value={value} onChange={onChange} />;
-        }
-
-        cy.mount(<ControlledTokenizedInput />);
-        cy.findByRole("textbox").click().clear().type("Mexico City");
-        cy.get("@changeSpy").should("have.been.calledWithMatch", {
-          target: { value: "Mexico City" },
-        });
+        cy.mount(
+          <Default
+            defaultSelected={["Delhi"]}
+            value="Tokio"
+            onChange={changeSpy}
+          />
+        );
+        cy.findByRole("textbox").click().clear().type("Mexico City,");
+        cy.get("@changeSpy").should("have.been.called");
       });
     });
   });

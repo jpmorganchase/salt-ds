@@ -1,5 +1,11 @@
 import { clsx } from "clsx";
-import { memo, MutableRefObject, useRef, useState } from "react";
+import {
+  memo,
+  MutableRefObject,
+  SyntheticEvent,
+  useRef,
+  useState,
+} from "react";
 import {
   makePrefixer,
   Tooltip,
@@ -38,7 +44,7 @@ export type InputPillProps = PillNextProps & {
   /**
    * Callback when pill is deleted.
    */
-  onClose?: (index: number) => void;
+  onClose?: (event: SyntheticEvent, index: number) => void;
 };
 
 export const InputPill = memo(function InputPill(props: InputPillProps) {
@@ -80,8 +86,8 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     [pillsRef, index]
   );
 
-  const handleClose = () => {
-    onClose?.(index);
+  const handleClose = (event: SyntheticEvent) => {
+    onClose?.(event, index);
   };
 
   return (

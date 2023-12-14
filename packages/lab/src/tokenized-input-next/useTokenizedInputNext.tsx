@@ -12,21 +12,22 @@ import {
   KeyboardEvent,
   KeyboardEventHandler,
   Ref,
-  SetStateAction, SyntheticEvent,
+  SetStateAction,
+  SyntheticEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
   MutableRefObject,
 } from "react";
-import {escapeRegExp} from "../utils";
-import {TokenizedInputNextProps} from "./TokenizedInputNext";
+import { escapeRegExp } from "../utils";
+import { TokenizedInputNextProps } from "./TokenizedInputNext";
 
 const getCursorPosition = (
   inputRef: MutableRefObject<HTMLTextAreaElement | null>
 ) => {
   if (inputRef.current) {
-    const {selectionStart, selectionEnd} = inputRef.current;
+    const { selectionStart, selectionEnd } = inputRef.current;
 
     // if there is no selection range
     if (selectionStart != null && selectionStart === selectionEnd) {
@@ -123,7 +124,9 @@ export function useTokenizedInputNext<Item>(
   const id = useId(idProp);
   const [focused, setFocused] = useState(false);
 
-  const [value, setValue, isInputControlled] = useControlled<string | undefined>({
+  const [value, setValue, isInputControlled] = useControlled<
+    string | undefined
+  >({
     controlled: valueProp,
     default: "",
     name: "TokenizedInputNext",
@@ -173,20 +176,20 @@ export function useTokenizedInputNext<Item>(
   };
 
   const updateSelectedItems = useCallback(
-    (action: SetStateAction<Item[] | undefined>) => {
+    (event: SyntheticEvent, action: SetStateAction<Item[] | undefined>) => {
       if (!isSelectionControlled) {
         setSelectedItems((prevSelectedItems?: Item[]) => {
           const newItems =
             typeof action === "function" ? action(prevSelectedItems) : action;
 
           if (newItems !== prevSelectedItems) {
-            onChange?.(newItems);
+            onChange?.(event, newItems);
           }
           return newItems;
         });
-      }
-      else {
+      } else {
         onChange?.(
+          event,
           typeof action === "function" ? action(selectedItems) : action
         );
       }
@@ -213,15 +216,16 @@ export function useTokenizedInputNext<Item>(
   };
 
   const removeItems = useCallback(
-    (itemIndices: number[]) => {
+    (event: SyntheticEvent, itemIndices: number[]) => {
       updateSelectedItems(
+        event,
         (prevSelectedItems) =>
           prevSelectedItems &&
           (prevSelectedItems.length === 0
             ? prevSelectedItems
             : prevSelectedItems.filter(
-              (_, index) => itemIndices.indexOf(index) === -1
-            ))
+                (_, index) => itemIndices.indexOf(index) === -1
+              ))
       );
     },
     [updateSelectedItems]
@@ -237,7 +241,7 @@ export function useTokenizedInputNext<Item>(
       preventBlurOnCopy.current = false;
       setActiveIndices(
         Array.from(
-          {length: selectedItems ? selectedItems.length : 0},
+          { length: selectedItems ? selectedItems.length : 0 },
           (_, index) => index
         )
       );
@@ -255,14 +259,14 @@ export function useTokenizedInputNext<Item>(
   ) => {
     onBlur?.(event);
     setFocused(false);
-    updateExpanded(event,false);
+    updateExpanded(event, false);
   };
 
   const handleInputBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
     // Check if the related target is the clear button
     const isClearButton =
-      (event.relatedTarget instanceof HTMLButtonElement &&
-        event.relatedTarget.type === 'button');
+      event.relatedTarget instanceof HTMLButtonElement &&
+      event.relatedTarget.type === "button";
     event.stopPropagation();
     setHighlightedIndex(undefined);
     setActiveIndices([]);
@@ -273,7 +277,7 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleClick = (event: SyntheticEvent<HTMLElement>) => {
-    updateExpanded(event,true);
+    updateExpanded(event, true);
     setActiveIndices([]);
     focusInput();
     onClick?.(event);
@@ -288,7 +292,7 @@ export function useTokenizedInputNext<Item>(
 
     if (delimiterRegex.test(newValue)) {
       // Process value with delimiters
-      handleAddItems(newValue);
+      handleAddItems(event, newValue);
     } else {
       // Just update input value if there is no delimiter
       updateInputValue(newValue);
@@ -296,6 +300,7 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleAddItems = (
+    event: SyntheticEvent,
     newValue: string | undefined,
     appendOnly?: boolean
   ) => {
@@ -313,7 +318,7 @@ export function useTokenizedInputNext<Item>(
       }, []);
 
     if (newItems.length) {
-      updateSelectedItems((prevSelectedItems = []) =>
+      updateSelectedItems(event, (prevSelectedItems = []) =>
         hasActiveItems && !appendOnly
           ? newItems
           : prevSelectedItems.concat(newItems)
@@ -322,18 +327,17 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleRemoveItem = useCallback(
-    (itemIndex?: number) => {
+    (event: SyntheticEvent, itemIndex?: number) => {
       focusInput();
       if (itemIndex != undefined) {
-        removeItems([itemIndex]);
+        removeItems(event, [itemIndex]);
       }
     },
     [focusInput, removeItems]
   );
 
   const handleClear = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    console.log('clear')
-    updateSelectedItems([]);
+    updateSelectedItems(event, []);
     resetInput();
     focusInput();
     onClear?.(event);
@@ -371,7 +375,7 @@ export function useTokenizedInputNext<Item>(
     },
     Backspace: (event) => {
       event.preventDefault();
-      handleRemoveItem(highlightedIndex);
+      handleRemoveItem(event, highlightedIndex);
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? prevHighlightedIndex
@@ -388,15 +392,15 @@ export function useTokenizedInputNext<Item>(
     },
     Enter: (event) => {
       event.preventDefault();
-      handleRemoveItem(highlightedIndex);
+      handleRemoveItem(event, highlightedIndex);
     },
     Delete: (event) => {
       event.preventDefault();
-      handleRemoveItem(highlightedIndex);
+      handleRemoveItem(event, highlightedIndex);
     },
     " ": (event) => {
       event.preventDefault();
-      handleRemoveItem(highlightedIndex);
+      handleRemoveItem(event, highlightedIndex);
     },
   };
 
@@ -410,25 +414,25 @@ export function useTokenizedInputNext<Item>(
         setHighlightedIndex(selectedItems.length - 1);
       }
     },
-    Backspace: () => {
+    Backspace: (event) => {
       if (hasActiveItems) {
-        removeItems(activeIndices);
+        removeItems(event, activeIndices);
       } else if (cursorAtInputStart()) {
         setHighlightedIndex(selectedItems.length - 1);
       }
     },
-    Delete: () => {
+    Delete: (event) => {
       if (hasActiveItems) {
-        removeItems(activeIndices);
+        removeItems(event, activeIndices);
       }
     },
     Enter: (event) => {
       event.preventDefault();
 
       if (hasActiveItems) {
-        removeItems(activeIndices);
+        removeItems(event, activeIndices);
       } else {
-        handleAddItems(value);
+        handleAddItems(event, value);
       }
     },
   };
@@ -478,7 +482,7 @@ export function useTokenizedInputNext<Item>(
           break;
         case "BACKSPACE":
           if (cursorAtInputStart()) {
-            handleRemoveItem(selectedItems.length - 1);
+            handleRemoveItem(event, selectedItems.length - 1);
           }
           break;
         case "CONTROL":
@@ -506,7 +510,7 @@ export function useTokenizedInputNext<Item>(
       resetInput();
     } else if (eventKey === "TAB" && !disableAddOnBlur) {
       // Pressing Tab adds a new value
-      handleAddItems(value);
+      handleAddItems(event, value);
     }
   };
 

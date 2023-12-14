@@ -10,6 +10,7 @@ import { TokenizedInputNext } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   ChangeEventHandler,
+  SyntheticEvent,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -29,15 +30,19 @@ const getRandomNumber = () => Math.floor(Math.random() * 99 + 1);
 const TokenizedInputNextTemplate: StoryFn<typeof TokenizedInputNext> = (
   props
 ) => {
-  const handleChange = (selectedItems: unknown) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    selectedItems: unknown[] | undefined
+  ) => {
     console.log("selection changed", selectedItems);
   };
+
   return (
-      <TokenizedInputNext
-        style={{ width: "266px" }}
-        onChange={handleChange}
-        {...props}
-      />
+    <TokenizedInputNext
+      style={{ width: "266px" }}
+      onChange={handleChange}
+      {...props}
+    />
   );
 };
 
@@ -46,7 +51,7 @@ Default.args = {};
 
 export const WithCollapsedButton = TokenizedInputNextTemplate.bind({});
 WithCollapsedButton.args = {
-  defaultSelected: statesData
+  defaultSelected: statesData,
 };
 
 export const Controlled: StoryFn<typeof TokenizedInputNext> = () => {
@@ -80,12 +85,12 @@ export const Controlled: StoryFn<typeof TokenizedInputNext> = () => {
       setInputValue(newValue);
     }
   };
-
-  const handleChange: ChangeEventHandler<HTMLElement> = (event) => {
-    console.log(event)
-    //TODO: get newtems from event
+  const handleChange = (
+    event: SyntheticEvent,
+    selectedItems: unknown[] | undefined
+  ) => {
     setInputValue("");
-    setSelectedItems(newItems as string[]);
+    setSelectedItems(selectedItems as string[]);
   };
 
   const handleClear = () => {
@@ -187,16 +192,18 @@ export const WithValidation: StoryFn<typeof TokenizedInputNext> = () => {
     setExceptions([]);
     setInputValue(event.target.value);
   };
-
-  const handleChange: ChangeHandler<unknown> = (newItems) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    selectedItems: unknown[] | undefined
+  ) => {
     const newExceptions = validations.reduce<string[]>((results, validate) => {
-      const result = validate(newItems as string[]);
+      const result = validate(selectedItems as string[]);
       return result != null ? results.concat(result) : results;
     }, []);
 
     if (newExceptions.length === 0) {
       setInputValue("");
-      setSelectedItems(newItems as string[]);
+      setSelectedItems(selectedItems as string[]);
     } else {
       setExceptions(newExceptions);
     }
@@ -256,7 +263,10 @@ export const WithCustomizedDelimiter: StoryFn<
     }
   }, []);
 
-  const handleChange: ChangeHandler<unknown> = (selectedItems) => {
+  const handleChange = (
+    event: SyntheticEvent,
+    selectedItems: unknown[] | undefined
+  ) => {
     console.log("selection changed", selectedItems);
   };
 

@@ -43,7 +43,10 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import tokenizedInputCss from "./TokenizedInputNext.css";
 
-type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
+type ChangeHandler<Item> = (
+  event: SyntheticEvent,
+  selectedItems: Item[] | undefined
+) => void;
 
 type ExpandButtonProps = Pick<
   ButtonProps,
@@ -65,7 +68,7 @@ export interface TokenizedInputNextProps<Item>
   onKeyUp?: KeyboardEventHandler<HTMLTextAreaElement | HTMLButtonElement>;
   // Can key down on either input or expand button
   onKeyDown?: KeyboardEventHandler<HTMLTextAreaElement | HTMLButtonElement>;
-  onRemoveItem?: (index: number) => void;
+  onRemoveItem?: (event: SyntheticEvent, index: number) => void;
   onInputBlur?: FocusEventHandler<HTMLTextAreaElement>;
   onInputFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onInputChange?: ChangeEventHandler<HTMLTextAreaElement>;
@@ -174,7 +177,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     ...restProps
   } = inputProps;
   // where are this going?
-  console.log(onClear)
   const id = useId(idProp);
   const inputId = `${id}-input`;
   const expandButtonId = `${id}-expand-button`;
@@ -278,11 +280,10 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
   };
 
   const handleExpand = (event: SyntheticEvent<HTMLButtonElement>) => {
-    console.log('expand')
     event.stopPropagation();
 
     if (hasHelpers(helpers)) {
-      helpers.updateExpanded(event,true);
+      helpers.updateExpanded(event, true);
     }
   };
 
@@ -342,8 +343,12 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
                 index={index}
                 key={`${index}-${label}`}
                 label={label}
-                onClick={expanded ? () => onRemoveItem?.(index) : undefined}
-                onClose={expanded ? () => onRemoveItem?.(index) : undefined}
+                onClick={
+                  expanded ? (event) => onRemoveItem?.(event, index) : undefined
+                }
+                onClose={
+                  expanded ? (event) => onRemoveItem?.(event, index) : undefined
+                }
                 closeButtonProps={{ tabIndex: -1 }}
                 pillsRef={pillsRef}
               />
@@ -384,9 +389,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
         {expandedWithItems && (
           <div className={withBaseName("endAdornmentContainer")}>
             <Button
-              className={clsx(
-                withBaseName("endAdornment")
-              )}
+              className={clsx(withBaseName("endAdornment"))}
               disabled={disabled}
               id={clearButtonId}
               onBlur={onBlur}
