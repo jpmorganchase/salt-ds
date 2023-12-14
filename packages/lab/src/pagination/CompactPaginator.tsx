@@ -50,7 +50,7 @@ export const CompactPaginator = forwardRef<
         <ChevronLeftIcon />
       </Button>
       {children ? children : <PageButton page={page} disabled />}
-      <Text as="span" variant="secondary" className={withBaseName("separator")}>
+      <Text as="span" variant="secondary">
         of
       </Text>
       <PageButton page={count} disabled={isOnLastPage} />

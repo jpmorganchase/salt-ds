@@ -58,24 +58,18 @@ export const Default = Template.bind({});
 
 Default.args = {
   count: 5,
-  siblingPairCount: 2,
-  boundaryCount: 1,
 };
 
 export const WithTruncation = Template.bind({});
 
 WithTruncation.args = {
   count: 25,
-  siblingPairCount: 2,
-  boundaryCount: 1,
 };
 
 export const WithInput = Template.bind({});
 
 WithInput.args = {
   count: 25,
-  siblingPairCount: 2,
-  boundaryCount: 1,
   goTo: true,
 };
 
@@ -90,9 +84,7 @@ export const Compact = Template.bind({});
 
 Compact.args = {
   compact: true,
-  count: 25,
-  siblingPairCount: 2,
-  boundaryCount: 1,
+  count: 25
 };
 
 export const CompactWithInput = Template.bind({});

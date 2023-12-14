@@ -10,8 +10,3 @@
   --saltButton-height: var(--salt-size-base);
   --saltButton-padding: var(--salt-spacing-100);
 }
-
-.saltCompactPaginator-separator {
-  min-width: var(--salt-size-base);
-  text-align: center;
-}
