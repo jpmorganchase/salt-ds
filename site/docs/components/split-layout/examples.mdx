@@ -15,9 +15,9 @@ data:
 
 ### Default
 
-Split Layout displays items horizontally at either end of the container by default.
+Split layouts display items horizontally at either end of the container by default.
 
-Its items align centrally within the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The items drive the height and width of the overall layout.
+Its items align centrally in the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The items drive the height and width of the overall layout.
 
 </LivePreview>
 
@@ -25,7 +25,7 @@ Its items align centrally within the layout, with a `gap` between items of 3, wh
 
 ### Column direction
 
-The Split Layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `column` to display items in a vertical direction along a single line.
+The split layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `column` to display items in a vertical direction along a single line.
 
 </LivePreview>
 
@@ -33,7 +33,7 @@ The Split Layout `direction` prop defines the main axis that items are displayed
 
 ### Button bar
 
-This example shows two groups of buttons inside a Split Layout, such as within an App Header. Here, Split Layout is in its default configuration.
+This example shows two groups of buttons inside a split layout, such as within an app header. Here, the split layout is in its default configuration.
 
 </LivePreview>
 
@@ -41,7 +41,7 @@ This example shows two groups of buttons inside a Split Layout, such as within a
 
 ### Responsive layout
 
-Split Layout supports responsive props, so you can define different behaviors based on viewport size. You can use the default [Salt breakpoints](https://www.saltdesignsystem.com/salt/foundations/responsiveness) or pass in your own using `SaltProvider`.
+The split layout component supports responsive props, so you can define different behaviors based on viewport size. You can use the default [Salt breakpoints](https://www.saltdesignsystem.com/salt/foundations/responsiveness) or pass in your own using `SaltProvider`.
 
 #### Responsive props
 
@@ -57,7 +57,7 @@ direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
 
 ### Layout alignment
 
-Control the position of Split Layout and its items using the `align` prop.
+Control the position of the split layout and its items using the `align` prop.
 
 If there is additional space available around the layout (i.e., above or below the row, or beside the column) use the `align` prop to position items within that space.
 
@@ -67,7 +67,7 @@ If there is additional space available around the layout (i.e., above or below t
 
 ### Flex item position
 
-Use the Flex Item `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
+Use the flex item component's `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
 </LivePreview>
 
@@ -75,15 +75,13 @@ Use the Flex Item `align` prop to set an alignment for a specific item in the la
 
 ### Flex item size
 
-The Flex Item `grow` prop enables specific items in the layout to grow and fill any remaining space that is available in the layout:
+The flex item component's `grow` prop enables specific items in the layout to grow and fill any remaining space that is available in the layout:
 
-- By default, `grow` is set to `0` and items will be displayed in their normal size.
-- If an item is set to `1` it will fill the available space.
-- If an item is set to `2` it will fill twice as much space as other items that have `grow` set to `1`.
+- By default, `grow` is set to 0 and items will display in their normal size.
+- If you set an item to 1, it will fill the available space.
+- If you set an item to 2, it will fill twice as much space as items that have `grow` set to 1.
 
-#### Guidance
-
-In contrast to the `grow` prop, the `shrink` prop shrinks specific items as small as possible within the layout. By default, `shrink` is set to `1`. If an item is set to `2`, that item would attempt to take half as much space.
+In contrast to the `grow` prop, the `shrink` prop shrinks specific items as small as possible within the layout. By default, `shrink` is set to 1. If an item is set to 2, that item would attempt to take half as much space.
 
 </LivePreview>
 

@@ -11,41 +11,44 @@ data:
 
 ### Best practices
 
-- On focus, the screen reader should:
-  - Identify the toggle button
-  - Read out the text
-  - Expresses the state
-  - Read the position of the option within the total number of buttons available
+On focus, the screen reader should:
+
+- Identify the toggle button.
+- Read out the text.
+- Expresses the state.
+- Read the position of the option within the total number of buttons available.
+
+### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- Moves focus into the toggle button group. Focus is set to the active button.
-- If focus is inside the toggle button group, moves focus out of the toggle button group. Focus is set to the next component in the tab order.
+- Tab moves focus into the toggle button group. Focus is set to the active button.
+- If focus is inside the toggle button group, Tab moves focus out of the toggle button group. Focus is set to the next component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space / Enter">
 
-- When focus is on the toggle button and the button is inactive, it activates the button.
-- If focus is on an active button, the button remains active.
+- When focus is on the toggle button and the button is inactive, this action activates the button.
+- If focus is on an active button, this actions keeps the button active.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is inside the toggle button group, moves focus out of the component. Focus is set to the previous component in the tab order.
-- If focus is below the toggle button group, move focus into the toggle button group. Focus is set to the active button.
+- If focus is inside the toggle button group, this action moves focus out of the component. Focus is set to the previous component in the tab order.
+- If focus is below the toggle button group, this action move focus into the toggle button group. Focus is set to the active button.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="ArrowRight / ArrowDown">
+<KeyboardControl keyOrCombos="Right arrow / Down arrow">
 
-- Moves focus to the next toggle button in the toggle button group.
-- If focus is on the last toggle button, wrap focus to the first toggle button.
+- This action moves focus to the next toggle button in the toggle button group.
+- If focus is on the last toggle button, this action wraps focus to the first toggle button.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="ArrowLeft / ArrowUp">
+<KeyboardControl keyOrCombos="Left arrow / Up arrow">
 
-- Moves focus to the previous toggle button in the toggle button group.
-- If focus is on the first toggle button, wrap focus to the last toggle button.
+- This action moves focus to the previous toggle button in the toggle button group.
+- If focus is on the first toggle button, this action wraps focus to the last toggle button.
 
 </KeyboardControl>
 </KeyboardControls>

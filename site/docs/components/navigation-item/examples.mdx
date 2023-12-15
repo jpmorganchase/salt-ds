@@ -14,58 +14,58 @@ data:
   <LivePreview componentName="navigation-item" exampleName="Default">
     ### Default (Horizontal)
 
-By default the Navigation Item is oriented horizontally.
+By default the navigation item is oriented horizontally.
 
-#### Guidance
+#### Best practices
 
-A Navigation Item hugs its content by default, but is customisable so that its container can be adjusted to fit any preferred width.
+A navigation item hugs its content by default, but you can customize it and adjust its container to fit any preferred width.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="Vertical">
     ### Vertical
 
-To change the orientation of the Navigation Item you can use the vertical orientation prop.
+To change the orientation of the navigation item, you can use the vertical orientation prop.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="WithIcon">
-    ### With Icon
+    ### With icon
 
-Use an icon to effectively signify the Navigation Item’s purpose, whether it’s related to a product’s identity, a specific tool, function, or a configuration setting.
+Use an icon to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, function, or a configuration setting.
 
-#### Guidance
+#### Best practices
 
-Ensure that icon descriptors are used consistently across all items within the same hierarchy level. This helps keep them equally weighted.
+Ensure that you use icon descriptors consistently across all items within the same hierarchy level. This helps keep them equally weighted.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="WithBadge">
-    ### With Badge
+    ### With badge
 
-You can add a [Badge](../badge) to a Navigation Item to serve as a visual cue. A badge can inform users of additional context, notifications, signpost new content or indicate a status.
+You can add a [badge](../badge) to a navigation item to serve as a visual cue. A badge can inform users of additional context, notifications, signpost new content or indicate a status.
 
-#### Guidance
+#### Best practices
 
-A badge should only be placed in a Navigation Item that does not include nested items, i.e., it will not have a chevron.
+You should only place a badge in a navigation item that does not include nested items, i.e., it will not have a chevron.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="WithNestedItems">
     ### With nested items
 
-You can use a Navigation Item as a parent which nests other Navigation Items inside it. Parent Navigation Items are displayed with a chevron on the right-hand side. To set a Navigation Item as a parent use the `Parent` prop.
+You can use a navigation item as a parent which nests other navigation items inside it. Parent navigation items are displayed with a chevron on the right-hand side. To set a navigation item as a parent, use the `parent` prop.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="HorizontalGroup">
     ### Horizontal group
 
-Use horizontal Navigation Items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. Users will be able to easily scan and identify navigation options in a seamless user experience.
+Use horizontal navigation items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. This will allow users to easily scan and identify navigation options in a seamless user experience.
 
-#### Guidance
+#### Best practices
 
-Use a horizontal group of Navigation Items when you have fewer than eight items, otherwise consider a vertical group of items.
+Use a horizontal group of navigation items when you have fewer than eight items, otherwise consider a vertical group of items.
 
 </LivePreview>
 
@@ -79,13 +79,13 @@ A vertical navigation group provides a simple, single-level list of links that u
   <LivePreview componentName="navigation-item" exampleName="VerticalNestedGroup">
     ### Vertical group nested
 
-Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, facilitating an intuitive exploration of the content hierarchy.
+Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, making it easy to explore the content hierarchy.
 
 When the user collapses a vertical nested group, and there is an active nested item within it, the parent item will obtain a blur-active state. The indicator will stay on the parent item in the blur-active state. This tells the user which item is currently selected.
 
-#### Guidance
+#### Best practices
 
-If a Navigation Item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
+If a navigation item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
 
 </LivePreview>
 
