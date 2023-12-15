@@ -12,10 +12,11 @@ import {
   ImageProvider,
   LinkProvider,
   ThemeProvider,
+  getMarkdownComponents,
+  withMarkdownSpacing,
 } from "@jpmorganchase/mosaic-components";
 import { LayoutProvider } from "@jpmorganchase/mosaic-layouts";
 import { useCreateStore, StoreProvider } from "@jpmorganchase/mosaic-store";
-import { components as mosaicComponents } from "@jpmorganchase/mosaic-site-components";
 import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
@@ -40,10 +41,11 @@ import * as saltComponents from "../components";
 import { MyAppProps } from "../types/mosaic";
 
 const components = {
-  ...mosaicComponents,
+  ...getMarkdownComponents(),
   ...saltComponents,
   Homepage,
   Image,
+  img: withMarkdownSpacing(Image),
 };
 
 const layoutComponents = { ...mosaicLayouts, ...saltLayouts };
