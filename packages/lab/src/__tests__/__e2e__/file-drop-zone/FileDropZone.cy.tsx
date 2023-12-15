@@ -8,10 +8,9 @@ const { Default } = composedStories;
 describe("Given a file drop zone", () => {
   checkAccessibility(composedStories);
 
-  it("should render an input that accepts multiple files", () => {
+  it("should render an input that accepts one file", () => {
     cy.mount(<Default />);
-    cy.findByTestId("file-input").should("have.attr", "type", "file");
-    cy.findByTestId("file-input").should("have.attr", "multiple");
+    cy.get("input").should("have.attr", "type", "file");
   });
   it("should accept files on drop", () => {
     cy.mount(<Default />);
@@ -30,24 +29,44 @@ describe("Given a file drop zone", () => {
       "saltFileDropZone-success"
     );
   });
-  it("should trigger onDrop when files are dropped", () => {
-    const dropFilesSpy = cy.stub().as("dropFilesSpy");
-    cy.mount(<Default onDrop={dropFilesSpy} />);
-    const file = [
+  it("should be able to accept multiple files", () => {
+    const dropSpy = cy.stub().as("dropSpy");
+    cy.mount(<Default multiple onDrop={dropSpy} />);
+    const files = [
+      {
+        contents: Cypress.Buffer.from("image1"),
+        fileName: "image1",
+        mimeType: "image/jpg",
+      },
       {
         contents: Cypress.Buffer.from("image2"),
         fileName: "image2",
         mimeType: "image/jpg",
       },
     ];
+    cy.findByTestId("file-drop-zone-example").selectFile(files, {
+      action: "drag-drop",
+    });
+    cy.get("@dropSpy").should("have.been.called");
+  });
+  it("should trigger onDrop when files are dropped", () => {
+    const dropSpy = cy.stub().as("dropSpy");
+    cy.mount(<Default onDrop={dropSpy} />);
+    const file = [
+      {
+        contents: Cypress.Buffer.from("image1"),
+        fileName: "image1",
+        mimeType: "image/jpg",
+      },
+    ];
     cy.findByTestId("file-drop-zone-example").selectFile(file, {
       action: "drag-drop",
     });
-    cy.get("@dropFilesSpy").should("have.been.called");
+    cy.get("@dropSpy").should("have.been.called");
   });
   it("should be disabled if disabled prop is passed", () => {
     cy.mount(<Default disabled />);
-    cy.findByTestId("file-input").should("be.disabled");
+    cy.get("input").should("be.disabled");
     cy.findByTestId("file-input-trigger").should("be.disabled");
   });
   it("should focus on the button on initial focus", () => {

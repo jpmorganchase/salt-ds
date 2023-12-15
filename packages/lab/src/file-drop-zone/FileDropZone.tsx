@@ -106,6 +106,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
           },
           className
         )}
+        aria-disabled={disabled}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}

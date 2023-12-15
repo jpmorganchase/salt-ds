@@ -1,7 +1,5 @@
 import { DragEvent } from "react";
 
-export const toArray = (obj: any) => Object.keys(obj).map((key) => obj[key]);
-
 export const containsFiles = (e: DragEvent) => {
   if (!e.dataTransfer) {
     const target = e.target as HTMLInputElement;
@@ -17,11 +15,11 @@ export const containsFiles = (e: DragEvent) => {
 export const extractFiles = (e: DragEvent): File[] => {
   if (containsFiles(e)) {
     if (e.dataTransfer) {
-      return toArray(e.dataTransfer.files);
+      return Array.from(e.dataTransfer.files);
     }
 
     if (e.target) {
-      return toArray((e.target as HTMLInputElement).files);
+      return Array.from((e.target as HTMLInputElement).files ?? []);
     }
   }
 

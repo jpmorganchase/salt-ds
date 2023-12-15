@@ -1,10 +1,4 @@
-import {
-  useState,
-  useCallback,
-  useEffect,
-  SyntheticEvent,
-  DragEvent,
-} from "react";
+import { useState, useCallback, SyntheticEvent, DragEvent } from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -76,7 +70,6 @@ const FileDropzoneTemplate: StoryFn<
   };
 
   const handleFilesDrop = (event: SyntheticEvent) => {
-    event.stopPropagation();
     if (!containsFiles(event as DragEvent)) {
       const errors = ["Drop target doesn't contain any file."];
       return handleFilesRejected(errors);
@@ -89,6 +82,10 @@ const FileDropzoneTemplate: StoryFn<
       }
       return handleFilesAccepted(files, event);
     }
+  };
+
+  const handleChange = (event: SyntheticEvent, files: File[]) => {
+    console.log("files changed", files);
   };
 
   const statusTitles = {
@@ -117,7 +114,7 @@ const FileDropzoneTemplate: StoryFn<
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
-          onChange={handleFilesDrop}
+          onChange={handleChange}
           data-testid="file-input-trigger"
         />
         {children}

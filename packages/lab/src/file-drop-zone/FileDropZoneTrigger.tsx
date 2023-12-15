@@ -26,7 +26,7 @@ export interface FileDropZoneTriggerProps
   /**
    * Callback for input change event
    */
-  onChange?: (event: SyntheticEvent<HTMLInputElement>) => void;
+  onChange?: (event: SyntheticEvent<HTMLInputElement>, files: File[]) => void;
 }
 
 export const FileDropZoneTrigger = forwardRef<
@@ -52,6 +52,10 @@ export const FileDropZoneTrigger = forwardRef<
     fileInputRef.current?.click();
   };
 
+  const handleChange = (event: SyntheticEvent<HTMLInputElement>) => {
+    const files = Array.from((event.target as HTMLInputElement).files ?? []);
+    onChange?.(event, files);
+  };
   return (
     <>
       <Button
@@ -65,10 +69,9 @@ export const FileDropZoneTrigger = forwardRef<
       <input
         accept={accept}
         className="input-hidden"
-        data-testid="file-input"
         disabled={disabled}
         multiple={multiple}
-        onChange={onChange}
+        onChange={handleChange}
         onFocus={handleFocus}
         ref={fileInputRef}
         type="file"
