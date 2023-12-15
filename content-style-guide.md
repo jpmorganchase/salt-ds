@@ -20,7 +20,7 @@ Use \<kbd> tags where appropriate.
 
 ### Best practices
 
-Use as a section header where necessary to draw the reader's attention to recommended tips and guidance.
+Use as a section header where necessary to draw the reader's attention to recommended tips and guidance. Never skip levels when using section headers.
 
 ### Components
 
