@@ -89,7 +89,6 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
   const handleClose = (event: SyntheticEvent) => {
     onClose?.(event, index);
   };
-
   return (
     <Tooltip content={label} disabled={!isEllipsisActive}>
       <PillNext
@@ -103,6 +102,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
           className
         )}
         tabIndex={-1}
+        onClick={isRemovable ? handleClose : undefined}
         onClose={isRemovable ? handleClose : undefined}
         ref={ref}
         role="option"

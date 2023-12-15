@@ -5,10 +5,8 @@ import {
   makePrefixer,
   NecessityType,
   StatusAdornment,
-  useDensity,
   useForkRef,
   useId,
-  useIsomorphicLayoutEffect,
   ValidationStatus,
 } from "@salt-ds/core";
 import {
@@ -24,9 +22,7 @@ import {
   Ref,
   SyntheticEvent,
   TextareaHTMLAttributes,
-  useCallback,
   useRef,
-  useState,
 } from "react";
 import {
   TokenizedInputNextHelpers,
@@ -36,9 +32,6 @@ import {
 import { clsx } from "clsx";
 import { InputPill } from "./internal/InputPill";
 import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
-import { useWidth } from "./internal/useWidth";
-import { useResizeObserver } from "./internal/useResizeObserver";
-import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import tokenizedInputCss from "./TokenizedInputNext.css";
@@ -127,20 +120,23 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     css: tokenizedInputCss,
     window: targetWindow,
   });
-
-  const density = useDensity();
-  const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
-  const [clearButtonRef, clearButtonWidth] = useWidth(density);
-  const [inputRef, inputWidth] = useWidth(density);
-
-  const { textAreaRef, helpers, inputProps } = useTokenizedInputNext(rest);
-
   const {
     "aria-describedby": textAreaDescribedBy,
     "aria-labelledby": textAreaLabelledBy,
     required: textAreaRequired,
     ...restTextAreaProps
   } = textAreaProps;
+
+  const { refs, helpers, inputProps, firstHiddenIndex } =
+    useTokenizedInputNext(rest);
+
+  const {
+    textAreaRef: textAreaHookRef,
+    pillsRef,
+    clearButtonRef,
+    expandButtonRef,
+    containerRef: containerHookRef,
+  } = refs;
 
   const {
     ExpandButtonProps = {
@@ -166,67 +162,21 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     onClick,
     onKeyUp,
     id: idProp,
-    expandButtonRef: expandButtonRefProp,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     ...restProps
   } = inputProps;
-  // where are this going?
+
   const id = useId(idProp);
   const inputId = `${id}-input`;
   const expandButtonId = `${id}-expand-button`;
   const clearButtonId = `${id}-clear-button`;
 
-  const pillsRef = useRef<Record<number, number | undefined>>({});
   const keydownExpandButton = useRef(false);
-
-  const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
-  const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
-  const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
+  const containerRef = useForkRef(ref, containerHookRef);
+  const textAreaRef = useForkRef(textAreaHookRef, textAreaRefProp);
   const showExpandButton = !expanded && firstHiddenIndex != null;
-
-  const widthOffset =
-    inputWidth + (expanded ? clearButtonWidth : expandButtonWidth);
-
-  const containerRef = useResizeObserver<HTMLDivElement>(
-    useCallback(
-      ([{ contentRect }]) => {
-        setPillGroupWidth(contentRect.width - widthOffset);
-      },
-      [widthOffset]
-    )
-  );
-
-  useIsomorphicLayoutEffect(
-    () => () => {
-      // When density changes, set hidden index to null so that pills are in their
-      // readonly state before they are measured.
-      setFirstHiddenIndex(null);
-    },
-    [density]
-  );
-
-  // useIsomorphicLayoutEffect because of potential layout change
-  // We want to do that before paint to avoid layout jumps
-  useIsomorphicLayoutEffect(
-    () => {
-      if (expanded) {
-        setFirstHiddenIndex(null);
-      } else if (pillGroupWidth != null) {
-        setFirstHiddenIndex(
-          calcFirstHiddenIndex({
-            containerWidth: pillGroupWidth,
-            pillWidths: Object.values(pillsRef.current).filter(
-              Boolean
-            ) as number[],
-          })
-        );
-      }
-    },
-    // Additional dependency on selectedItems is for the controlled version
-    [expanded, pillGroupWidth, selectedItems]
-  );
 
   const hasHelpers = (helpers: TokenizedInputNextHelpers<Item>) => {
     if (process.env.NODE_ENV !== "production") {
@@ -320,8 +270,10 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           },
           className
         )}
-        ref={useForkRef(ref, containerRef)}
+        ref={containerRef}
         onClick={onClick}
+        // Tab index allows the div to be found as related target and prevents it closing when a click in happens
+        tabIndex={-1}
         {...restProps}
       >
         {selectedItems.length > 0 &&
@@ -339,9 +291,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
                 index={index}
                 key={`${index}-${label}`}
                 label={label}
-                onClick={
-                  expanded ? (event) => onRemoveItem?.(event, index) : undefined
-                }
                 onClose={
                   expanded ? (event) => onRemoveItem?.(event, index) : undefined
                 }
@@ -362,7 +311,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           disabled={disabled}
           id={inputId}
           readOnly={readOnly}
-          ref={useForkRef(useForkRef(inputRef, textAreaRef), textAreaRefProp)}
+          ref={textAreaRef}
           required={textAreaRequired}
           rows={1}
           tabIndex={disabled ? -1 : 0}

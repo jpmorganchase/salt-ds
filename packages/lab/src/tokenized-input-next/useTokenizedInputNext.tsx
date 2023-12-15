@@ -1,8 +1,11 @@
 import {
   ownerWindow,
   useControlled,
+  useDensity,
+  useForkRef,
   useFormFieldProps,
   useId,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
@@ -22,21 +25,9 @@ import {
 } from "react";
 import { escapeRegExp } from "../utils";
 import { TokenizedInputNextProps } from "./TokenizedInputNext";
-
-const getCursorPosition = (
-  inputRef: MutableRefObject<HTMLTextAreaElement | null>
-) => {
-  if (inputRef.current) {
-    const { selectionStart, selectionEnd } = inputRef.current;
-
-    // if there is no selection range
-    if (selectionStart != null && selectionStart === selectionEnd) {
-      return selectionStart;
-    }
-  }
-
-  return -1;
-};
+import { useWidth } from "./internal/useWidth";
+import { useResizeObserver } from "./internal/useResizeObserver";
+import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 
 export interface TokenizedInputNextState<Item> {
   activeIndices: number[];
@@ -53,6 +44,37 @@ export interface TokenizedInputNextHelpers<Item> {
   updateExpanded: (event: SyntheticEvent, expanded: boolean) => void;
 }
 
+export interface TokenizedInputNextRefs {
+  textAreaRef: Ref<HTMLTextAreaElement>;
+  pillsRef: MutableRefObject<Record<number, number | undefined>>;
+  clearButtonRef: (newNode: HTMLButtonElement) => void;
+  expandButtonRef: Ref<HTMLButtonElement>;
+  containerRef: Ref<HTMLDivElement>;
+}
+
+const getCursorPosition = (
+  inputRef: MutableRefObject<HTMLTextAreaElement | null>
+) => {
+  if (inputRef.current) {
+    const { selectionStart, selectionEnd } = inputRef.current;
+
+    // if there is no selection range
+    if (selectionStart != null && selectionStart === selectionEnd) {
+      return selectionStart;
+    }
+  }
+
+  return -1;
+};
+
+const isCtrlModifier = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  return (
+    event.ctrlKey ||
+    event.metaKey ||
+    ["CONTROL", "META"].indexOf(event.key.toUpperCase()) !== -1
+  );
+};
+
 function isValidItem<Item>(data: unknown): data is Item {
   return (
     (typeof data === "string" && Boolean(data.length)) ||
@@ -62,17 +84,21 @@ function isValidItem<Item>(data: unknown): data is Item {
 
 interface useTokenizedInputNextResult<Item> {
   /**
-   * Used to do autofocus. It should be set to the actual input node.
-   */
-  textAreaRef: Ref<HTMLTextAreaElement>;
-  /**
    * The tokenized input state
    */
   state: TokenizedInputNextState<Item>;
   /**
+   * First hidden element when collapsed
+   */
+  firstHiddenIndex: number | null;
+  /**
    * Utility functions for modifying tokenized input state
    */
   helpers: TokenizedInputNextHelpers<Item>;
+  /**
+   * Refs for tokenized input items.
+   */
+  refs: TokenizedInputNextRefs;
   /**
    * Properties applied to a basic tokenized input component
    */
@@ -100,13 +126,11 @@ export function useTokenizedInputNext<Item>(
     readOnly: readOnlyProp,
     validationStatus: validationStatusProp,
     disableAddOnBlur,
-    onFocus,
     onBlur,
     onClick,
     onExpand,
     onCollapse,
     onKeyDown,
-    onInputSelect,
     onInputChange,
     onInputFocus,
     onInputBlur,
@@ -118,11 +142,37 @@ export function useTokenizedInputNext<Item>(
     selectedItems: selectedItemsProp,
     "aria-label": ariaLabel,
     "aria-describedby": ariaDescribedByProp,
+    expandButtonRef: expandButtonRefProp,
     ...restProps
   } = props;
 
+  const density = useDensity();
   const id = useId(idProp);
+
   const [focused, setFocused] = useState(false);
+  const [pillGroupWidth, setPillGroupWidth] = useState<number | null>(null);
+  const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
+  const [activeIndices, setActiveIndices] = useState<number[]>([]);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
+    undefined
+  );
+
+  const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
+  const [clearButtonRef, clearButtonWidth] = useWidth(density);
+  const [inputRef, inputWidth] = useWidth(density);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pillsRef = useRef<Record<number, number | undefined>>({});
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const preventBlurOnCopy = useRef(false);
+  const expandButtonRef = useForkRef(expandButtonHookRef, expandButtonRefProp);
+
+  const hasActiveItems = Boolean(activeIndices.length);
+  const primaryDelimiter = delimiters[0];
+  const delimiterRegex = useMemo(
+    () => new RegExp(delimiters.map(escapeRegExp).join("|"), "gi"),
+    [delimiters]
+  );
 
   const [value, setValue, isInputControlled] = useControlled<
     string | undefined
@@ -148,19 +198,46 @@ export function useTokenizedInputNext<Item>(
     state: "expanded",
   });
 
-  const [activeIndices, setActiveIndices] = useState<number[]>([]);
-  const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
-    undefined
+  const widthOffset =
+    inputWidth + (expanded ? clearButtonWidth : expandButtonWidth);
+
+  const containerObserverRef = useResizeObserver<HTMLDivElement>(
+    useCallback(
+      ([{ contentRect }]) => {
+        setPillGroupWidth(contentRect.width - widthOffset);
+      },
+      [widthOffset]
+    )
   );
 
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const preventBlurOnCopy = useRef(false);
-  const hasActiveItems = Boolean(activeIndices.length);
+  useIsomorphicLayoutEffect(
+    () => () => {
+      // When density changes, set hidden index to null so that pills are in their
+      // readonly state before they are measured.
+      setFirstHiddenIndex(null);
+    },
+    [density]
+  );
 
-  const primaryDelimiter = delimiters[0];
-  const delimiterRegex = useMemo(
-    () => new RegExp(delimiters.map(escapeRegExp).join("|"), "gi"),
-    [delimiters]
+  // useIsomorphicLayoutEffect because of potential layout change
+  // We want to do that before paint to avoid layout jumps
+  useIsomorphicLayoutEffect(
+    () => {
+      if (expanded) {
+        setFirstHiddenIndex(null);
+      } else if (pillGroupWidth != null) {
+        setFirstHiddenIndex(
+          calcFirstHiddenIndex({
+            containerWidth: pillGroupWidth,
+            pillWidths: Object.values(pillsRef.current).filter(
+              Boolean
+            ) as number[],
+          })
+        );
+      }
+    },
+    // Additional dependency on selectedItems is for the controlled version
+    [expanded, pillGroupWidth, selectedItems]
   );
 
   const focusInput = useCallback(() => {
@@ -203,6 +280,7 @@ export function useTokenizedInputNext<Item>(
     }
 
     if (newExpanded) {
+      focusInput();
       onExpand?.(event);
     } else {
       onCollapse?.(event);
@@ -250,7 +328,6 @@ export function useTokenizedInputNext<Item>(
 
     onInputFocus?.(event);
     updateExpanded(event, true);
-    onFocus?.(event);
     setFocused(true);
   };
 
@@ -263,15 +340,18 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleInputBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
-    // Check if the related target is the clear button
-    const isClearButton =
-      event.relatedTarget instanceof HTMLButtonElement &&
-      event.relatedTarget.type === "button";
+    // Check if the related target inside TokenizedInput
+    const container = containerRef?.current;
+    const eventTarget = event.relatedTarget;
+    event.preventDefault();
     event.stopPropagation();
     setHighlightedIndex(undefined);
     setActiveIndices([]);
     onInputBlur?.(event);
-    if (!isClearButton) {
+    if (
+      eventTarget !== container &&
+      !container?.contains(eventTarget as Node)
+    ) {
       handleBlur(event);
     }
   };
@@ -279,7 +359,6 @@ export function useTokenizedInputNext<Item>(
   const handleClick = (event: SyntheticEvent<HTMLElement>) => {
     updateExpanded(event, true);
     setActiveIndices([]);
-    focusInput();
     onClick?.(event);
   };
 
@@ -495,14 +574,6 @@ export function useTokenizedInputNext<Item>(
       }
     };
 
-  const isCtrlModifier = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    return (
-      event.ctrlKey ||
-      event.metaKey ||
-      ["CONTROL", "META"].indexOf(event.key.toUpperCase()) !== -1
-    );
-  };
-
   const handleCommonKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     const eventKey = event.key.toUpperCase();
     if (eventKey === "ESCAPE") {
@@ -551,12 +622,10 @@ export function useTokenizedInputNext<Item>(
   const eventHandlers = {
     // onFocus is a focus on the expand button
     // It can also be triggered by a focus on the input
-    onFocus,
     // onBlur is a blur from the expand button when it's collapsed
     // It can also be triggered by the clear button
     onBlur: expanded ? handleBlur : onBlur,
     onClick: handleClick,
-    onInputSelect,
     onInputChange: handleInputChange,
     onInputFocus: handleInputFocus,
     onInputBlur: handleInputBlur,
@@ -566,8 +635,15 @@ export function useTokenizedInputNext<Item>(
   };
 
   return {
-    textAreaRef,
     state,
+    firstHiddenIndex,
+    refs: {
+      textAreaRef: useForkRef(textAreaRef, inputRef),
+      pillsRef,
+      clearButtonRef,
+      expandButtonRef,
+      containerRef: useForkRef(containerRef, containerObserverRef),
+    },
     helpers: {
       setValue,
       setSelectedItems,
