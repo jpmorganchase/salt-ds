@@ -10,24 +10,24 @@ data:
   $ref: ./#/data
 ---
 
-### Using the List component
+### Using the components
 
-#### When to use List
+#### When to use
 
-- To present a set of selectable options that allow users to make a choice for an onward action, such as filtering a data grid, selecting a country, or assigning a task.
+- To present a set of selectable options that allow users to make a choice for an onward action, such as filtering a data grid, selecting a country or assigning a task.
 
-#### When not to use List
+#### When not to use
 
-- If the List items are intended to provide navigation, consider using stacked [Navigation Items](../navigation-item) to form a vertical navigation pattern.
-- If the List is likely to contain five items or fewer, consider using a [Radio Button Group](../radio-button).
-- If the List is likely to contain between five and 10 items and does not need to be visible at all times, consider placing the list of items within a [Dropdown](../dropdown).
-- If the List contains more than 10 items and screen space is limited, consider using a [Combo Box](../combo-box).
+- If the list items provide navigation, consider using stacked [`NavigationItem`s](../navigation-item) to form a vertical navigation pattern.
+- If the list is likely to contain five items or fewer, consider using [`RadioButtonGroup`](../radio-button).
+- If the list is likely to contain between five and 10 items and doesn't need to be visible at all times, consider placing the list of items within [`Dropdown`](../dropdown).
+- If the List contains more than 10 items and you have limited screen space, consider using a [`ComboBox`](../combo-box).
 
 ### Import
 
 {/* Update the text and code snippet below as needed: */}
 
-To import List from the lab Salt package, use:
+To import `ListNext` and `ListItemNext` from the lab Salt package, use:
 
 ```js
 import { ListNext, ListItemNext } from “@salt-ds/lab”;
@@ -38,11 +38,11 @@ import { ListNext, ListItemNext } from “@salt-ds/lab”;
 {/* Update packageName and componentName below as needed */}
 {/* packageName is optional and defaults to "core" if omitted */}
 
-#### List Next
+#### `ListNext`
 
 <PropsTable packageName="lab" componentName="ListNext" />
 
-#### List Item Next
+#### `ListItemNext`
 
 <PropsTable packageName="lab" componentName="ListItemNext" />
 

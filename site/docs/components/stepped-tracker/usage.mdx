@@ -8,25 +8,25 @@ data:
   $ref: ./#/data
 ---
 
-### When to use Stepped Tracker
+### Using the components
 
-- When there are separate steps within a process, such as a wizard or a multi-step form.
+#### When to use
 
-- When you can break a process into distinct, bite-sized sections that are less daunting than lengthy forms.
+- When there are separate steps within a process, such as a wizard or a multistep form.
+- When you want to split a process into distinct, bite-sized sections that are less daunting than lengthy forms.
 
-### When not to use Stepped Tracker
+#### When not to use
 
 - When there are fewer than three steps in a process.
-
-- As navigation; the steps are not interactable.
+- As navigation; users cannot interact with the steps.
 
 ### Content
 
-Stepped Tracker labels never truncate, only wrap. Therefore, ensure they are short and self-explanatory.
+Stepped tracker labels never truncate, only wrap. Therefore, ensure they're short and self-explanatory.
 
 ### Import
 
-To import Stepped Tracker from the lab Salt package, use:
+To import `SteppedTracker` and related components from the lab Salt package, use:
 
 ```
 import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
@@ -34,14 +34,14 @@ import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 
 ### Props
 
-#### Stepped Tracker
+#### `SteppedTracker`
 
 <PropsTable packageName="lab" componentName="SteppedTracker" />
 
-#### Tracker Step
+#### `TrackerStep`
 
 <PropsTable packageName="lab" componentName="TrackerStep" />
 
-#### Step Label
+#### `StepLabel`
 
 <PropsTable packageName="lab" componentName="StepLabel" />

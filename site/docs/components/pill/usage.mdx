@@ -7,23 +7,28 @@ data:
   $ref: ./#/data
 ---
 
-#### When to use Pill
+### Using the component
 
-- To organize content that may be mapped to more than one category. This provides users with a way of distinguishing different types of content and categories.
+Use title or sentence case when labelling pills. This maintains a visual distinction between `Pill` and `Button`, which always has uppercase labels.
 
-- To trigger an immediate action—such as changing the view of content that’s currently on display or navigating to a new page that is contextually related to the pill.
+Position any pill you’re using to tag content below or on the right of the related content, so that it’s not the primary focus.
 
-- To enable an action that may change depending on the context. In a messaging application, you could use pills to display predefined replies that change depending on the received message.
+Never apply red/amber/green status colors to pills to differentiate between categories. Use [icons](/salt/components/icon) or text instead.
 
-#### When not to use Pill
+#### When to use
 
-- For actions that may change depending on the context, and are not fixed, are better represented by Button than Pill.
+- To organize content mapped to more than one category, providing users with a way of distinguishing different content types and categories.
+- To trigger an immediate action—such as changing the view of currently displayed content or going to a new page contextually related to the pill.
+- To enable an action that could change depending on the context. In a messaging application, you could use pills to display predefined replies that change depending on the received message.
 
-- When the content is a system message and does not support interaction. Instead, use [Badge](/salt/components/badge).
+#### When not to use
+
+- For nonfixed actions that may change depending on the context. Instead, use [`Button`](/salt/components/button).
+- When the content is a system message that doesn't support interaction. Instead, use [`Badge`](/salt/components/badge).
 
 ### Import
 
-To import Pill from the lab Salt package, use:
+To import `PillNext` from the lab Salt package, use:
 
 ```
 import { PillNext } from “@salt-ds/lab”;
@@ -32,11 +37,3 @@ import { PillNext } from “@salt-ds/lab”;
 ### Props
 
 <PropsTable componentName="PillNext" packageName="lab" />
-
-### Using the Pill component
-
-Use title or sentence case when labelling Pill. This maintains a visual distinction between Pill and Button, which always has uppercase labels.
-
-Position any Pill you’re using to tag content below or on the right of the related content, so that it’s not the primary focus.
-
-Never apply RAG (status) colors to Pill to differentiate between categories. Use [Icons](/salt/components/icon) or text instead.
