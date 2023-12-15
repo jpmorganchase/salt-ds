@@ -86,7 +86,6 @@ Provide content-related guidance if applicable. This could include label text fo
 
 Include any third-party links that may be relevant here, such as W3C guidance. Use bullet points, unless there is only one.
 
-Follow 
 
 ## 4. Examples.mdx
 
