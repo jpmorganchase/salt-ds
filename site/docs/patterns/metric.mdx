@@ -24,7 +24,7 @@ We provide design guidance for using Salt [`Icon`](/salt/components/icon), [`Lin
 
 ## When to use it
 
-Use the pattern to give more prominence to key measurements. Metrics are often used as building blocks in dashboards. They direct users to key information that they may otherwise overlook, particularly when multiple numerical values are displayed. Metrics can encompass a broad range of quantitative data, such as financial statistics, performance indicators and user engagement.
+Use the pattern to give more prominence to key measurements. Metrics often serve as building blocks in dashboards. They direct users to key information that they may otherwise overlook, particularly when multiple numerical values are visible. Metrics can encompass a broad range of quantitative data, such as financial statistics, performance indicators and user engagement.
 
 You can add multiple metrics to your UI if needed. Visual differences, like size and positioning, can help users understand which metrics are most important.
 
@@ -47,7 +47,7 @@ Metric comes in three sizes—small, medium and large. This is achieved by chang
 
 ### Vertical metric
 
-By default, metrics are arranged vertically with the key value under the title. Use the stack layout component to arrange the title and the value. The title should use the text component with a strong tag.
+It has a vertical orientation by default with the key value under the title. Use the stack layout component to arrange the title and the value. The title should use the text component with a strong tag.
 
 #### Large
 
@@ -84,7 +84,7 @@ Use the Display 3 text component for the value to build a small metric.
 
 ### Horizontal metric
 
-You can configure the metric to have a horizontal orientation if it's more suitable for your layout. Use the stack layout component with the direction property set to row to arrange the title and the value. The title should have a top margin to align to the value text. Make sure you adjust the margin if you are varying the sizes.
+If it suits your layout, you can configure the metric to have a horizontal orientation. Use the stack layout component with the direction property set to row to arrange the title and the value. The title should have a top margin to align to the value text. Make sure you adjust the margin if you're varying the sizes.
 
 #### Large
 
@@ -122,9 +122,9 @@ Use the Display 3 text component for the value to build a small metric. Set the 
 
 ### Subtitle and subvalue
 
-In addition to the title, you can display a supporting subtitle and/or subvalue in the metric pattern. You can use this to provide more context and improve users' comprehension of your metric value and its impact, such as whether it is positive or negative. Consider including past data, average, threshold or target values, or comparable high or low values.
+In addition to the title, you can display a supporting subtitle and/or subvalue in the metric pattern. You can use this to provide more context and improve users' comprehension of the metric value and its impact, such as whether it is positive or negative. Consider including past data, average, threshold or target values, or comparable high or low values.
 
-Subtitles are always displayed directly beneath the title, while subvalues are beneath the key value. Include the subtitle or subvalue in the corresponding position in the stack layout, using the default text component.
+Subtitles are always displayed directly beneath the title, while subvalues are under the key value. Include the subtitle or subvalue in the corresponding position in the stack layout, using the default text component.
 
   <Diagram
     src="/img/patterns/metric/subtitle.png"
