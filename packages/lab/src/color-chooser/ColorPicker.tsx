@@ -87,8 +87,8 @@ export const ColorPicker = ({
       {/** @ts-ignore react-color has incorrect types **/}
       <SketchPicker
         className={clsx(withBaseName("swatchPickerStyles"), {
-          ["rootDisabledAlpha"]: disableAlphaChooser,
-          ["root"]: !disableAlphaChooser,
+          [withBaseName("rootDisabledAlpha")]: disableAlphaChooser,
+          [withBaseName("root")]: !disableAlphaChooser,
         })}
         color={rgbaValue}
         onChange={onSketchPickerChange}
