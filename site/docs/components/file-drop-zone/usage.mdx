@@ -1,0 +1,37 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the FileDropZone component
+
+Use FileDropZone when you want to enable users to upload single or multiple files from a native file browser.
+
+This simple component only provides the upload zone. If you'd like to display a Dialog — with advanced functionality such as upload progress, file listing and management — it will need to be created separately for your application.
+
+### Import
+
+To import FileDropZone from the lab Salt package, use:
+
+```js
+import { FileDropZone, FileDropZoneIcon, FileDropZoneTrigger } from "@salt-ds/lab";
+```
+
+### Props
+
+#### File Drop Zone
+
+<PropsTable packageName="lab" componentName="FileDropZone" />
+
+#### File Drop Zone Icon
+<PropsTable packageName="lab" componentName="FileDropZoneIcon" />
+
+#### File Drop Zone Trigger
+<PropsTable packageName="lab" componentName="FileDropZoneTrigger" />
+
