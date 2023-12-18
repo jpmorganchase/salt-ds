@@ -12,7 +12,8 @@ describe("GIVEN an Overlay", () => {
     it("THEN it should show Overlay on trigger element press", () => {
       cy.mount(<Default />);
 
-      cy.realPress("Tab").realPress("Enter");
+      cy.realPress("Tab");
+      cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       // focus goes into floating element
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
@@ -21,7 +22,8 @@ describe("GIVEN an Overlay", () => {
     it("THEN it should remain open on repeated trigger element press", () => {
       cy.mount(<Default />);
 
-      cy.realPress("Tab").realPress("Enter");
+      cy.realPress("Tab");
+      cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       cy.findByText(/Show Overlay/i).realClick();
       cy.findByRole("dialog").should("be.visible");
@@ -30,7 +32,8 @@ describe("GIVEN an Overlay", () => {
     it("THEN it should dismiss on Esc key press", () => {
       cy.mount(<Default />);
 
-      cy.realPress("Tab").realPress("Enter");
+      cy.realPress("Tab");
+      cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       cy.realPress("Escape");
       cy.findByRole("dialog").should("not.exist");
@@ -43,7 +46,7 @@ describe("GIVEN an Overlay", () => {
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltOverlay-closeButton").realClick();
+      cy.findByRole("button", { name: /Close Overlay/i }).realClick();
       cy.findByRole("dialog").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
@@ -56,7 +59,7 @@ describe("GIVEN an Overlay", () => {
       cy.mount(<Default open />);
 
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltOverlay-closeButton").should("be.focused");
+      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
       cy.realPress("Tab");
       cy.findByText(/im a tooltip/i).should("be.visible");
       cy.realPress("Tab");
