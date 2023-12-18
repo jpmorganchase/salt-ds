@@ -12,6 +12,7 @@ import {
   isValidElement,
   cloneElement,
   HTMLAttributes,
+  SyntheticEvent,
 } from "react";
 import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
@@ -41,7 +42,7 @@ export interface OverlayProps
   /*
    * Use in controlled version to close Overlay.
    */
-  onClose?: () => void;
+  onClose?: (event: SyntheticEvent) => void;
 }
 
 const withBaseName = makePrefixer("saltOverlay");
@@ -92,9 +93,9 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
-    const handleCloseButton = () => {
+    const handleCloseButton = (event: SyntheticEvent) => {
       onOpenChange(false);
-      onClose?.();
+      onClose?.(event);
     };
 
     return (
