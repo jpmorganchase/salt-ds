@@ -1,0 +1,41 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Best practices
+
+### Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is on close button, Tab moves focus through focusable content elements in the overlay. 
+- If focus is on the last element in the overlay content, Tab wraps focus to the close button. Focus does not leave the overlay. 
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is on close button, this action moves focus to last focusable content element in the overlay. 
+
+- If focus is on the first element in the overlay content, this action wraps focus to the close button. Focus does not leave the overlay. 
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If focus is on close button, this action closes the overlay. Focus returns to trigger element. 
+- This action closes the overlay if a content element is configured to close the overlay when activated. 
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+- If focus is in the overlay content, Escape closes the overlay and returns focus to trigger element. 
+
+</KeyboardControl>
+</KeyboardControls>
