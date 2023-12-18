@@ -16,11 +16,11 @@ The correct terms for the four arrow buttons on a keyboard are:
  - <kbd>Left arrow</kbd>
  - <kbd>Right arrow</kbd>
 
-Use \<kbd> tags where appropriate.
+Use \<kbd> tags when referring to keyboard keys.
 
 ### Best practices
 
-Use as a section header where necessary to draw the reader's attention to recommended tips and guidance. Never skip levels when using section headers.
+Use as a section header where necessary to draw the reader's attention to recommended tips and guidance. Never skip levels when using section headers. See the section section below for more information.
 
 ### Components
 
@@ -30,8 +30,8 @@ When referring to the component as a whole, use Pascal case wrapped in back tick
 
 It's likely you will need to use this version if:
 
-- You are introducing the component in a document for the first time
-- You are recommending the component in a document where the component is not a primary subject
+- You are introducing the component in a document for the first time.
+- You are recommending the component in a document where the component is not a primary subject.
 - You are describing a release or new version of the component.
 - You are describing how to import the component for use in a project.
 
@@ -75,6 +75,10 @@ Outline the simplest possible complete statement. When a user can use a prop wit
 The name of the design system is Salt. You can describe Salt as a design system, i.e. "We used the Salt design system in our project."
 
 Do not use Salt Design System, Salt DS, or SALT.
+
+### Sections
+
+Section levels should always follow a clear order—as an example, an H3 should follow an H2 or another H3. Refer to the [W3C guidance](https://www.w3.org/WAI/tutorials/page-structure/headings/) for more information.
 
 ### Space
 
