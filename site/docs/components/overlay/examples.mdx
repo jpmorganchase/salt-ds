@@ -1,0 +1,61 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="overlay" exampleName="Default">
+
+### Default
+
+The basic overlay component allows the user to expose and interact with supplemental information. The overlay remains persistent until the user dismisses it.  
+
+You can configure the `placement` of an overlay to the top, bottom, left or right in relation to a UI element.  
+
+</LivePreview>
+
+<LivePreview componentName="overlay" exampleName="OverlayRight" >
+
+### Placement right
+
+Use `placement=”right”` to display overlay content to the right of the trigger element.
+
+</LivePreview>
+
+<LivePreview componentName="overlay" exampleName="OverlayBottom" >
+
+### Placement bottom
+
+Use `placement=”bottom”` to display overlay content to the bottom of the trigger element.
+
+</LivePreview>
+
+<LivePreview componentName="overlay" exampleName="OverlayLeft" >
+
+### Placement left
+
+Use `placement=”left”` to display overlay content to the left of the trigger element.
+
+</LivePreview>
+
+<LivePreview componentName="overlay" exampleName="LongContent" >
+
+### Long content
+
+When overlay content extends beyond the set height, the content defaults to scroll. The close button remains sticky and accessible at all times.  
+
+</LivePreview>
+
+<LivePreview componentName="overlay" exampleName="WithActions" >
+
+### With actions
+
+With actions, users can decide if interacting with content in the overlay should close the overlay. This example shows how activating the **Export** button triggers the export function, closes the overlay, and returns focus to the trigger element. 
+
+</LivePreview>
