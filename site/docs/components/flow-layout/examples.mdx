@@ -15,11 +15,11 @@ data:
 
 ### Default
 
-Flow Layout displays items in a row which will responsively wrap onto a new line.
+Flow Layout displays items in a row that will responsively wrap onto a new line.
 
 By default, items will stretch across the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing).
 
-The height and width of the layout area are driven by the items contained within it.
+The height and width of the layout area depend on the items contained within it.
 
 </LivePreview>
 
@@ -27,39 +27,37 @@ The height and width of the layout area are driven by the items contained within
 
 ### Layout position
 
-Control the position of Flow Layout and its items using `align` and `justify` props.
+Control the position of the flow layout and its items using `align` and `justify` props.
 
 Use `justify` to define how to distribute any remaining space between or at the ends of items in the row.
 
-If there is additional space available above or below the row, use the `align` property to define how items should be positioned within that space.
+If there's additional space available above or below the row, use the `align` property to define the position of items within that space.
 
 </LivePreview>
 
 <LivePreview componentName="flow-layout" exampleName="FlexItemPosition">
 
-### Flex Item position
+### Flex item position
 
-Use the Flex Item `align` prop to set an alignment for a specific item in the layout.
+Use the flex item `align` prop to set an alignment for a specific item in the layout.
 
-Set the item’s position along the cross-axis of the layout (i.e., perpendicular to the row).
+Set the item’s position along the cross axis of the layout (i.e., perpendicular to the row).
 
 </LivePreview>
 
 <LivePreview componentName="flow-layout" exampleName="FlexItemSize">
 
-### Flex Item size
+### Flex item size
 
-The Flex Item `grow` prop enables specific items in the layout to grow and fill any remaining space in the row:
+The flex item `grow` prop enables specific items in the layout to grow and fill any remaining space in the row:
 
-- By default, `grow` is set to 0 and items will be displayed in their ‘normal’ size.
+- By default, `grow` is 0 and items will be in their "normal" size.
 
-- If an item is set to ‘1’ it will fill the available space.
+- If you set an item to 1, it will fill the available space.
 
-- If an item is set to ‘2’ it will fill twice as much space as other items that have `grow` set to ‘1’.
+- If you set an item to 2, it will fill twice as much space as other items that have `grow` set to 1.
 
-#### Guidance
-
-- In contrast to `grow`, `shrink` makes a specific item as small as possible within the row. By default, `shrink` is set to `1`. If an item is set to `2`, that item will attempt to take half as much space.
+In contrast to `grow`, `shrink` makes a specific item as small as possible within the row. By default, `shrink` is 1. If you set an item to 2, it will attempt to take half as much space.
 
 </LivePreview>
 

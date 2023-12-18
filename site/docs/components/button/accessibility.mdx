@@ -11,41 +11,32 @@ data:
 
 ### Best practices
 
-- When a Button has both an icon and text, use`aria-hidden` on the icon so that screen readers do not announce its text.
-- When a Button has an icon only and no text, pass an `aria-label` to Button that describes its purpose.
+- When a button has both an icon and text, use `aria-hidden` on the icon so that screen readers don't announce its text.
+- When a button has an icon only and no text, pass an `aria-label` to the button that describes its purpose.
 
 #### Focusable disabled button
 
-- By default, a disabled button is not focusable. However, in certain scenarios it may be preferable for a disabled button to receive focus. To determine if this is necessary, the following rule of thumb can be followed: "If a disabled element can be enabled (either by the user or by the system) it should be made focusable.” For further information, view the W3C guidance on the [`aria-disabled` attribute](https://www.w3.org/TR/wai-aria/#aria-disabled).
-
-#### Screen reader behavior:
-
-On focus, the screen reader should:
-
-- Identify the button
-- Read out the text,
-- Express the state
-  - In certain situations, the screen reader may need to indicate if the button has a popup for lists or menus.
+- By default, a user can't place focus on a disabled button. However in certain scenarios, it may be preferable for a disabled button to receive focus. To determine if this is necessary, you can apply the following rule of thumb: "If the user or the system can enable a disabled element, it should be focusable." For further information, view the W3C guidance on the [`aria-disabled` attribute](https://www.w3.org/TR/wai-aria/#aria-disabled).
 
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- Tab moves focus onto the button.
-- If the button is disabled and not set to receive focus, Tab moves focus to the next focusable component.
+- Tab moves focus to the button.
+- If the button is disabled and cannot receive focus, Tab moves focus to the next focusable component.
 - If the button has focus, Tab moves focus to the next focusable component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- Shift + Tab moves focus out of the component to the previous component in the tab order.
+- This action moves focus out of the component to the previous component in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-- If the button has focus, Enter or Space key press activates the button.
-- If the button is disabled and can receive focus, does nothing.
+- If the button has focus, this action activates it.
+- If the button is disabled and can receive focus, this action does nothing.
 
 </KeyboardControl>
 </KeyboardControls>
