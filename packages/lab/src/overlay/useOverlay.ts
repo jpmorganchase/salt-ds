@@ -60,7 +60,6 @@ export function useOverlay(props: UseOverlayProps = {}) {
     useRole(context, { role: "dialog" }),
     useClick(context),
     useDismiss(context, {
-      outsidePressEvent: "pointerdown",
       referencePress: true,
     }),
   ]);
@@ -86,9 +85,6 @@ export function useOverlay(props: UseOverlayProps = {}) {
   const getTriggerProps = () =>
     getReferenceProps({
       ref: reference,
-      onKeyDown: (event: KeyboardEvent<HTMLElement>) => {
-        if (event.key === "Enter" || event.key === " ") return setOpen(false);
-      },
     });
 
   const floatingStyles = () => {
