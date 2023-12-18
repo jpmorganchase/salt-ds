@@ -1,0 +1,156 @@
+---
+title: Metric
+layout: DetailPattern
+aliases:
+  - /salt/patterns/metric
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric", label: "Examples" },
+      { href: "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0", label: "Metric examples", internal: true },
+    ]
+---
+
+Metric is a pattern that displays an important number value prominently. You can add indicators or labels to help provide context to the presented value.
+
+  <Diagram
+    src="/img/patterns/metric/metric.png"
+    alt="Two example metrics displaying positive and negative indicators."
+    contentPosition="top"
+    border
+  />
+
+We provide design guidance for using Salt [`Icon`](/salt/components/icon), [`Link`](/salt/components/link), [`StackLayout`](/salt/components/stack-layout) and [`Text`](/salt/components/text) components to build the pattern. You can also find implementation examples in the [Storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-metric--metric).
+
+## When to use it
+
+Use the pattern to give more prominence to key measurements. Metrics often serve as building blocks in dashboards. They direct users to key information that they may otherwise overlook, particularly when multiple numerical values are visible. Metrics can encompass a broad range of quantitative data, such as financial statistics, performance indicators and user engagement.
+
+You can add multiple metrics to your UI if needed. Visual differences, like size and positioning, can help users understand which metrics are most important.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Place metrics higher in your layout and make them larger when you want to emphasize their importance.
+  - Never leave the user guessing how to interpret a metric. Use subtitles and indicators to minimize ambiguity, such as a green arrow to indicate a positive change in a metric's value.
+  - Keep titles and values as short and concise as possible. Round or truncate values to significant figures, and use common abbreviations instead of spelling out words.
+  - Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information.
+</ExampleContainer>
+
+## How to build it
+
+A metric is comprised of a single number value and a title. You can orient it vertically or horizontally.
+
+Metric comes in three sizes—small, medium and large. This is achieved by changing the Metric’s value text style to display 1, display 2 or display 3. Those are available in both horizontal and vertical layouts.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+ Use the same orientation when displaying multiple metrics for greater visual consistency.
+</ExampleContainer>
+
+### Vertical metric
+
+It has a vertical orientation by default with the key value under the title. Use the stack layout component to arrange the title and the value. The title should use the text component with a strong tag.
+
+#### Large
+
+Use the Display 1 text component for the value to build a large metric.
+
+  <Diagram
+    src="/img/patterns/metric/vertical-large.png"
+    alt="Example showing large metric with vertical layout."
+    contentPosition="top"
+    border
+  />
+
+#### Medium
+
+Use the Display 2 text component for the value to build a medium metric.
+
+  <Diagram
+    src="/img/patterns/metric/vertical-medium.png"
+    alt="Example showing medium metric with vertical layout."
+    contentPosition="top"
+    border
+  />
+
+#### Small
+
+Use the Display 3 text component for the value to build a small metric.
+
+  <Diagram
+    src="/img/patterns/metric/vertical-small.png"
+    alt="Example showing small metric with vertical layout."
+    contentPosition="top"
+    border
+  />
+
+### Horizontal metric
+
+If it suits your layout, you can configure the metric to have a horizontal orientation. Use the stack layout component with the direction property set to row to arrange the title and the value. The title should have a top margin to align to the value text. Make sure you adjust the margin if you're varying the sizes.
+
+#### Large
+
+Use the Display 1 text component for the value to build a large metric. Set the margin above the title to `--salt-spacing-150`.
+
+  <Diagram
+    src="/img/patterns/metric/horizontal-large.png"
+    alt="Example showing large metric with horizontal layout."
+    contentPosition="top"
+    border
+  />
+
+#### Medium
+
+Use the Display 2 text component for the value to build a medium metric. Set the margin above the title to `--salt-spacing-100`.
+
+  <Diagram
+    src="/img/patterns/metric/horizontal-medium.png"
+    alt="Example showing medium metric with horizontal layout."
+    contentPosition="top"
+    border
+  />
+
+#### Small
+
+Use the Display 3 text component for the value to build a small metric. Set the margin above the title to `--salt-spacing-50`.
+
+  <Diagram
+    src="/img/patterns/metric/horizontal-small.png"
+    alt="Example showing small metric with horizontal layout."
+    contentPosition="top"
+    border
+  />
+
+
+### Subtitle and subvalue
+
+In addition to the title, you can display a supporting subtitle and/or subvalue in the metric pattern. You can use this to provide more context and improve users' comprehension of the metric value and its impact, such as whether it is positive or negative. Consider including past data, average, threshold or target values, or comparable high or low values.
+
+Subtitles are always displayed directly beneath the title, while subvalues are under the key value. Include the subtitle or subvalue in the corresponding position in the stack layout, using the default text component.
+
+  <Diagram
+    src="/img/patterns/metric/subtitle.png"
+    alt="Example showing metric with a subtitle and subvalue."
+    contentPosition="top"
+    border
+  />
+
+### Link
+
+You can provide a link in the metric's subtitle text. This enables users to navigate to another page with related information.
+
+  <Diagram
+    src="/img/patterns/metric/link.png"
+    alt="Example showing metric with a link."
+    contentPosition="top"
+    border
+  />
+
+### Indicators
+
+If the metric value represents a change from a previous value, you can display an arrow icon as a strong visual indicator of the direction of change.
+
+  <Diagram
+    src="/img/patterns/metric/indicators.png"
+    alt="Example showing two metrics with positive and negative indicators."
+    contentPosition="top"
+    border
+  />

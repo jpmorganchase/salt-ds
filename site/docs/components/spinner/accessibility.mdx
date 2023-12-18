@@ -12,8 +12,8 @@ data:
 
 - Improve accessibility by customizing the `aria-label` to provide additional context about what is loading, for example, `aria-label="loading settings panel"`.
 
-- The `aria-label` will be announced to screen-reader users at a regular interval which can be customised using the `announcerInterval` property.
+- Screen-reader users will hear the `aria-label` at a regular interval, which you can customize using the `announcerInterval` property.
 
-- After a set timeout the component will stop announcing the `aria-label`, this can be customised using the `announcerTimeout` property
+- After a set timeout, the component will stop announcing the `aria-label`, which you can customize using the `announcerTimeout` property.
 
-- A completion message will be announced to screen reader users when the spinner is unmounted to indicate that loading had completed. This can be customised using the `completionAnnouncement` prop or disabled by setting `completionAnnouncement={null}`
+- Screen-reader users will hear a completion message when the spinner unmounts to indicate that loading has finished. You can customize this using the `completionAnnouncement` prop or disable it by setting `completionAnnouncement={null}`.

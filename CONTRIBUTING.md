@@ -4,6 +4,19 @@ To do: intro.
 
 ## How to's
 
+### How to add a new icon
+
+1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.
+2. Navigate to `packages/icons` e.g. `cd packages/icons`.
+3. Run `yarn build` to build the icons.
+4. Write a changeset using `yarn changeset`, this should have the format:
+
+```md
+Added:
+
+- IconName
+```
+
 ### Prop deprecation
 
 To do.

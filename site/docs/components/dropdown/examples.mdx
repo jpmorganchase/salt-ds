@@ -14,7 +14,7 @@ data:
 
 ### Dropdown
 
-Dropdown contains a button that opens a list on mouse or keyboard interaction.
+Dropdowns contain a button that opens a list on mouse or keyboard interaction.
 
 </LivePreview>
 
@@ -22,13 +22,13 @@ Dropdown contains a button that opens a list on mouse or keyboard interaction.
 
 ### Variants
 
-Dropdown has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
+The component has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
 
 Choose secondary when used in a data-dense or compact interface, or for a form with multiple columns or sections.
 
 The choice between primary and secondary variants should be considered alongside the background color it sits upon.
 
-Tip: The [Forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection.
+Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection.
 
 </LivePreview>
 
@@ -44,7 +44,7 @@ By default, the dropdown’s field is empty. When the `defaultSelected` prop is 
 
 ### Read-only
 
-Set Dropdown to read-only to allow values to be displayed that are predefined and not editable, for instance when a user does not have the appropriate permissions to select an option within the dropdown.
+Set the dropdown to read-only to allow values to be displayed that are predefined and not editable, for instance when a user does not have the appropriate permissions to select an option within the dropdown.
 
 When `readOnly={true}` users will not be able to interact with dropdown apart from focusing on it.
 Use to indicate that the pre-selected value is valid but changes are not permitted.
@@ -55,11 +55,11 @@ Use to indicate that the pre-selected value is valid but changes are not permitt
 
 ### Disabled
 
-Dropdown can be disabled if required, for instance if the access to the options needs to be restricted based on the current context.
+You can disable the dropdown if required, for instance if the access to the options needs to be restricted based on the current context.
 
 Unlike read-only, the disabled state can change for the current user depending on context. Showing it in a disabled state allows the user to be aware of the presence of the control, without enabling access to its functionality temporarily.
 
-When `disabled={true}`, user will not be able to interact with dropdown, it does not receive focus on any interaction.
+When `disabled={true}`, user will not be able to interact with dropdown. It does not receive focus on any interaction.
 
 </LivePreview>
 </LivePreviewControls>
