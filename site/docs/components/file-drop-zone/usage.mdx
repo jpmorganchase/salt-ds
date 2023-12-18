@@ -9,29 +9,42 @@ data:
   $ref: ./#/data
 ---
 
-### Using the FileDropZone component
+### Using the component
 
-Use FileDropZone when you want to enable users to upload single or multiple files from a native file browser.
+Make sure you communicate any limits, such as maximum file size and type restrictions, before the user uploads their file. If the upload fails, clearly explain the reason why and how to resolve it.
+Inform users when files successfully upload to reassure them that the action has completed.
 
-This simple component only provides the upload zone. If you'd like to display a Dialog — with advanced functionality such as upload progress, file listing and management — it will need to be created separately for your application.
+#### When to use
+
+- To enable users to upload single or multiple files from a native file browser.
+- To enable users to attach supporting files to a form.
+
+#### When not to use
+
+- To display upload progress, file listing and management. This is a simple component that only provides an upload zone. Instead, use [`Dialog`](../dialog) as a starting point to create a more comprehensive file interface.
 
 ### Import
 
-To import FileDropZone from the lab Salt package, use:
+To import `FileDropZone` and related components from the lab Salt package, use:
 
 ```js
-import { FileDropZone, FileDropZoneIcon, FileDropZoneTrigger } from "@salt-ds/lab";
+import {
+  FileDropZone,
+  FileDropZoneIcon,
+  FileDropZoneTrigger,
+} from "@salt-ds/lab";
 ```
 
 ### Props
 
-#### File Drop Zone
+#### `FileDropZone`
 
 <PropsTable packageName="lab" componentName="FileDropZone" />
 
-#### File Drop Zone Icon
+#### `FileDropZoneIcon`
+
 <PropsTable packageName="lab" componentName="FileDropZoneIcon" />
 
-#### File Drop Zone Trigger
-<PropsTable packageName="lab" componentName="FileDropZoneTrigger" />
+#### `FileDropZoneTrigger`
 
+<PropsTable packageName="lab" componentName="FileDropZoneTrigger" />
