@@ -12,20 +12,6 @@ export const containsFiles = (e: DragEvent) => {
   );
 };
 
-export const extractFiles = (e: DragEvent): File[] => {
-  if (containsFiles(e)) {
-    if (e.dataTransfer) {
-      return Array.from(e.dataTransfer.files);
-    }
-
-    if (e.target) {
-      return Array.from((e.target as HTMLInputElement).files ?? []);
-    }
-  }
-
-  return [];
-};
-
 export const validateFiles = ({
   files = [],
   validate = [],

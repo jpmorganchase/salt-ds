@@ -47,7 +47,7 @@ describe("Given a file drop zone", () => {
     cy.findByTestId("file-drop-zone-example").selectFile(files, {
       action: "drag-drop",
     });
-    cy.get("@dropSpy").should("have.been.called");
+    cy.get("@dropSpy").should("have.been.calledOnce");
   });
   it("should trigger onDrop when files are dropped", () => {
     const dropSpy = cy.stub().as("dropSpy");
@@ -62,7 +62,7 @@ describe("Given a file drop zone", () => {
     cy.findByTestId("file-drop-zone-example").selectFile(file, {
       action: "drag-drop",
     });
-    cy.get("@dropSpy").should("have.been.called");
+    cy.get("@dropSpy").should("have.been.calledOnce");
   });
   it("should be disabled if disabled prop is passed", () => {
     cy.mount(<Default disabled />);

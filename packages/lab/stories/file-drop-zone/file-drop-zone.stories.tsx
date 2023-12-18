@@ -17,12 +17,11 @@ import {
   FileDropZoneTrigger,
   FileDropZoneTriggerProps,
 } from "@salt-ds/lab";
-import { AllRenderer } from "docs/components";
+
 import {
   containsFiles,
   createFileTypeValidator,
   createTotalSizeValidator,
-  extractFiles,
   FilesValidator,
   validateFiles,
 } from "./utils";
@@ -31,18 +30,6 @@ export default {
   title: "Lab/File Drop Zone",
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
-
-export const All: StoryFn<typeof FileDropZone> = ({ onDrop, ...args }) => {
-  return (
-    <AllRenderer>
-      <FileDropZone {...args}>
-        <FileDropZoneIcon />
-        <strong>Drop files here or</strong>
-        <FileDropZoneTrigger />
-      </FileDropZone>
-    </AllRenderer>
-  );
-};
 
 const FileDropzoneTemplate: StoryFn<
   FileDropZoneProps &
@@ -69,12 +56,11 @@ const FileDropzoneTemplate: StoryFn<
     setStatus("error");
   };
 
-  const handleFilesDrop = (event: SyntheticEvent) => {
+  const handleFilesDrop = (event: SyntheticEvent, files: File[]) => {
     if (!containsFiles(event as DragEvent)) {
       const errors = ["Drop target doesn't contain any file."];
       return handleFilesRejected(errors);
     }
-    const files = extractFiles(event as DragEvent);
     if (files.length > 0) {
       const errors = validate ? validateFiles({ files, validate }) : [];
       if (errors && errors.length !== 0) {
@@ -82,10 +68,6 @@ const FileDropzoneTemplate: StoryFn<
       }
       return handleFilesAccepted(files, event);
     }
-  };
-
-  const handleChange = (event: SyntheticEvent, files: File[]) => {
-    console.log("files changed", files);
   };
 
   const statusTitles = {
@@ -114,7 +96,7 @@ const FileDropzoneTemplate: StoryFn<
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
-          onChange={handleChange}
+          onChange={handleFilesDrop}
           data-testid="file-input-trigger"
         />
         {children}
@@ -181,7 +163,7 @@ interface ResultCardProps {
   result: ResultCardType | undefined;
 }
 
-export const Results = ({ result }: ResultCardProps) => {
+const Results = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (
@@ -223,7 +205,7 @@ export const Results = ({ result }: ResultCardProps) => {
   );
   return (
     <div style={{ height: 500, maxHeight: 500, overflow: "hidden" }}>
-      {!result && (
+      {!result?.files && (
         <Banner>
           <BannerContent>
             <strong>No files have been added.</strong>
