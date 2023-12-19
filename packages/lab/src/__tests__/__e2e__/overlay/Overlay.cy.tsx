@@ -42,11 +42,13 @@ describe("GIVEN an Overlay", () => {
     });
 
     it("THEN it should remain open until outside Overlay click or close button click", () => {
-      cy.mount(<Default />);
+      const closeSpy = cy.stub().as("closeSpy");
+      cy.mount(<Default onClose={closeSpy} />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: /Close Overlay/i }).realClick();
+      cy.get("@closeSpy").should("have.callCount", 1);
       cy.findByRole("dialog").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
