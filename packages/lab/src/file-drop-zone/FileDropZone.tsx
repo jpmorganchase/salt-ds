@@ -5,7 +5,8 @@ import {
   forwardRef,
   DragEvent,
   useRef,
-  useState, ComponentPropsWithoutRef,
+  useState,
+  ComponentPropsWithoutRef,
 } from "react";
 import { containsFiles, extractFiles } from "./internal/utils";
 

@@ -30,7 +30,6 @@ export default {
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
 
-
 const statusTitles = {
   success: "Upload completed",
   error: "Error uploading",
