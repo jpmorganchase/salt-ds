@@ -1,4 +1,9 @@
-import { useState, useCallback, SyntheticEvent } from "react";
+import {
+  useState,
+  useCallback,
+  SyntheticEvent,
+  DragEvent,
+} from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -39,7 +44,7 @@ const FileDropzoneTemplate: StoryFn<
   FileDropZoneProps &
     FileDropZoneIconProps &
     FileDropZoneTriggerProps & { validate: readonly FilesValidator[] }
-> = ({ accept, children, disabled, validate, ...rest }) => {
+> = ({ accept, children, disabled, validate, onDrop, ...rest }) => {
   const [result, setResult] = useState<{
     files?: readonly File[];
     errors?: readonly string[];
@@ -60,7 +65,7 @@ const FileDropzoneTemplate: StoryFn<
     setStatus("error");
   };
 
-  const handleFilesDrop = (event: SyntheticEvent, files: File[]) => {
+  const addFiles = (event: SyntheticEvent, files: File[]) => {
     if (!files) {
       const errors = ["Drop target doesn't contain any file."];
       return handleFilesRejected(errors);
@@ -72,6 +77,11 @@ const FileDropzoneTemplate: StoryFn<
       }
       return handleFilesAccepted(files, event);
     }
+  };
+
+  const handleDrop = (event: DragEvent<HTMLDivElement>, files: File[]) => {
+    addFiles(event, files);
+    onDrop?.(event, files);
   };
 
   const reset = () => {
@@ -86,7 +96,7 @@ const FileDropzoneTemplate: StoryFn<
         status={status}
         disabled={disabled}
         {...rest}
-        onDrop={handleFilesDrop}
+        onDrop={handleDrop}
       >
         <FileDropZoneIcon status={status} />
         <strong>
@@ -95,7 +105,7 @@ const FileDropzoneTemplate: StoryFn<
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
-          onChange={handleFilesDrop}
+          onChange={addFiles}
           data-testid="file-input-trigger"
         />
         {children}

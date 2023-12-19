@@ -48,6 +48,10 @@ describe("Given a file drop zone", () => {
       action: "drag-drop",
     });
     cy.get("@dropSpy").should("have.been.calledOnce");
+    cy.findByTestId("file-drop-zone-example").should(
+      "have.class",
+      "saltFileDropZone-success"
+    );
   });
   it("should trigger onDrop when files are dropped", () => {
     const dropSpy = cy.stub().as("dropSpy");
