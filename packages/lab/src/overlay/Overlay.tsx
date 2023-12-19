@@ -22,7 +22,7 @@ import { useWindow } from "@salt-ds/window";
 
 import overlayCSS from "./Overlay.css";
 import { useOverlay } from "./useOverlay";
-import { FloatingArrow, FloatingArrowProps } from "@floating-ui/react";
+import { FloatingArrow } from "@floating-ui/react";
 
 export interface OverlayProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
@@ -86,7 +86,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const triggerRef = useForkRef(
-      // @ts-ignore
+      // @ts-ignore error TS2339
       isValidElement(children) ? children.ref : null,
       reference
     );
@@ -113,7 +113,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             className={withBaseName()}
             {...getOverlayProps()}
             {...floatingStyles()}
-            // @ts-ignore
+            // @ts-ignore missing 'children' property
             focusManagerProps={{
               context: context,
             }}
@@ -135,7 +135,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             </div>
 
             <FloatingArrow
-              {...(arrowProps as FloatingArrowProps)}
+              {...arrowProps}
               strokeWidth={1}
               fill="var(--overlay-background)"
               stroke="var(--overlay-borderColor)"
