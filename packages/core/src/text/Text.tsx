@@ -37,9 +37,13 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "action";
     /**
      * Change text color palette
+     * @deprecated Use `color` instead
      */
     variant?: "primary" | "secondary";
-    color?: "primary" | "secondary";
+    /*
+     * The color of the text. Defaults to "primary".
+     */
+    color?: "inherit" | "primary" | "secondary";
   }
 >;
 
@@ -59,8 +63,8 @@ export const Text: TextComponent = forwardRef(
       maxRows,
       style,
       styleAs,
-      variant = "primary",
-      color = "primary",
+      variant,
+      color: colorProp,
       ...restProps
     }: TextProps<T>,
     ref?: PolymorphicRef<T>
@@ -72,9 +76,11 @@ export const Text: TextComponent = forwardRef(
       window: targetWindow,
     });
 
-    const Component = as || "div";
+    const Component = as ?? "div";
 
     const textStyles = { "--text-max-rows": maxRows, ...style };
+
+    const color = variant ?? colorProp ?? "primary";
 
     return (
       <Component
@@ -83,9 +89,8 @@ export const Text: TextComponent = forwardRef(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("lineClamp")]: maxRows,
-            [withBaseName(styleAs || "")]: styleAs,
-            [withBaseName(variant)]: variant,
-            [withBaseName(color)]: color,
+            [withBaseName(styleAs as string)]: styleAs,
+            [withBaseName(color)]: color !== "inherit",
           },
           className
         )}
