@@ -9,7 +9,7 @@ import {
 export const Error = (): ReactElement => (
   <FileDropZone style={{ width: 300 }} status="error">
     <FileDropZoneIcon status="error" />
-    <strong>Error uploading</strong>
+    <strong>File format is not allowed</strong>
     <FileDropZoneTrigger accept=".png" />
     <Text>Only .png files</Text>
   </FileDropZone>
