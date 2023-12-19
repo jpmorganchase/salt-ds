@@ -32,11 +32,12 @@
 }
 
 .saltInputPill:has(:active) > .saltPillNext-action,
-.saltInputPill:has(:active) > .saltPillNext-close-button{
+.saltInputPill:has(:active) > .saltPillNext-close-button {
   --pillNext-background: var(--salt-actionable-primary-background-active);
   --pillNext-background-hover: var(--salt-actionable-primary-background-active);
   --pillNext-text-color: var(--salt-actionable-primary-foreground-active);
   --saltButton-background: var(--salt-actionable-primary-background-active);
-  --saltButton-background-hover: var(--salt-actionable-primary-background-active);  --saltButton-text-color: var(--salt-actionable-primary-foreground-active);
+  --saltButton-background-hover: var(--salt-actionable-primary-background-active);
+  --saltButton-text-color: var(--salt-actionable-primary-foreground-active);
   --saltIcon-color: var(--salt-actionable-primary-foreground-active);
 }
