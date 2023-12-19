@@ -10,5 +10,8 @@ export const Color = (): ReactElement => (
     <Link href="#" color="secondary" className={styles.linkExample}>
       Secondary Link color
     </Link>
+    <Link href="#" color="inherit" className={styles.linkExample}>
+      Inherit Link color
+    </Link>
   </StackLayout>
 );

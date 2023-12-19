@@ -8,7 +8,7 @@ import { ValueComponentProps } from "./types";
 const withBaseName = makePrefixer("saltContactSecondaryInfo");
 
 export interface ContactSecondaryInfoProps
-  extends HTMLAttributes<HTMLDivElement> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   icon?: ComponentType<IconProps>;
   text: string;
   ValueComponent?: ComponentType<ValueComponentProps>;

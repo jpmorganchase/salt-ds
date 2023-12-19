@@ -23,14 +23,14 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         <strong>Strong</strong> and <small>small</small> truncation example
       </Link>
     </div>
-    <Link href="https://www.google.com" variant="secondary">
+    <Link href="https://www.google.com" color="secondary">
       Secondary Link
     </Link>
-    <Link href="https://www.google.com" variant="secondary" target="_blank">
+    <Link href="https://www.google.com" color="secondary" target="_blank">
       Secondary Link target blank
     </Link>
     <div style={{ width: 150 }}>
-      <Link href="https://www.google.com" maxRows={1} variant="secondary">
+      <Link href="https://www.google.com" maxRows={1} color="secondary">
         <strong>Strong</strong> and <small>small</small> truncation example
       </Link>
     </div>
@@ -54,14 +54,14 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         <strong>Strong</strong> and <small>small</small> truncation example
       </Link>
     </div>
-    <Link href="https://www.google.com" variant="secondary">
+    <Link href="https://www.google.com" color="secondary">
       Secondary Link
     </Link>
-    <Link href="https://www.google.com" variant="secondary" target="_blank">
+    <Link href="https://www.google.com" color="secondary" target="_blank">
       Secondary Link target blank
     </Link>
     <div style={{ width: 150 }}>
-      <Link href="https://www.google.com" maxRows={1} variant="secondary">
+      <Link href="https://www.google.com" maxRows={1} color="secondary">
         <strong>Strong</strong> and <small>small</small> truncation example
       </Link>
     </div>
