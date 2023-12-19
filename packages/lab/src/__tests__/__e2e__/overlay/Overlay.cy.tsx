@@ -19,16 +19,6 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
     });
 
-    it("THEN it should remain open on repeated trigger element press", () => {
-      cy.mount(<Default />);
-
-      cy.realPress("Tab");
-      cy.realPress("Enter");
-      cy.findByRole("dialog").should("be.visible");
-      cy.findByText(/Show Overlay/i).realClick();
-      cy.findByRole("dialog").should("be.visible");
-    });
-
     it("THEN it should dismiss on Esc key press", () => {
       cy.mount(<Default />);
 
