@@ -177,7 +177,7 @@ export const WithValidation: StoryFn<typeof TokenizedInputNext> = () => {
 
       for (let i = 0; i < upperCased.length; i++) {
         if (validated.indexOf(upperCased[i]) !== -1) {
-          return `'${newItems[i]}' is already selected.`;
+          return `'${newItems[i]}' is already added to the selection.`;
         }
         validated.push(upperCased[i]);
       }

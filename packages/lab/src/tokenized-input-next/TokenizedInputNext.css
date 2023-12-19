@@ -102,7 +102,6 @@
   height: var(--salt-text-lineHeight);
   font: inherit;
   letter-spacing: 0;
-  min-width: var(--salt-size-base);
   overflow: hidden;
   resize: none;
   padding: 0;
@@ -207,6 +206,7 @@
 /* Style applied to status adornment container */
 .saltTokenizedInputNext-statusAdornmentContainer {
   margin-left: auto;
+  margin-right: var(--salt-spacing-100);
   align-self: self-end;
   display: inline-flex;
   min-height: var(--salt-size-base);
