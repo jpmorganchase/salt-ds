@@ -11,31 +11,37 @@ data:
 
 ### Best practices
 
+- Overlay is exposed via a focusable UI element such as a button, which is within the tabbing order. On button activation by either the enter or space keys, focus enters floating element and focus traps.
+- Overlay can only be closed by close button click or press, or clicking outside of the floating element.
+- Overlay Close Button always receives focus before overlay content
+- If an overlay contains an interactive element, pressing tab will move focus from close button to the next focusable element within tabbing order. If there are no interactive elements within the content area, focus remains on the close button.
+- If focus is on the overlay close button, press enter or space key to activate the close button will dismiss the overlay and return focus back to the triggering UI element.
+- Pressing the Esc key also closes an open overlay and returns focus back to the triggering UI element if the focus is inside the overlay.
+
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is on close button, Tab moves focus through focusable content elements in the overlay. 
-- If focus is on the last element in the overlay content, Tab wraps focus to the close button. Focus does not leave the overlay. 
+- If focus is on close button, Tab moves focus through focusable content elements in the overlay.
+- If focus is on the last element in the overlay content, Tab wraps focus to the close button. Focus does not leave the overlay.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is on close button, this action moves focus to last focusable content element in the overlay. 
-
-- If focus is on the first element in the overlay content, this action wraps focus to the close button. Focus does not leave the overlay. 
+- If focus is on close button, this action moves focus to last focusable content element in the overlay.
+- If focus is on the first element in the overlay content, this action wraps focus to the close button. Focus does not leave the overlay.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-- If focus is on close button, this action closes the overlay. Focus returns to trigger element. 
-- This action closes the overlay if a content element is configured to close the overlay when activated. 
+- If focus is on close button, this action closes the overlay. Focus returns to trigger element.
+- This action closes the overlay if a content element is configured to close the overlay when activated.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">
 
-- If focus is in the overlay content, Escape closes the overlay and returns focus to trigger element. 
+- If focus is in the overlay content, Escape closes the overlay and returns focus to trigger element.
 
 </KeyboardControl>
 </KeyboardControls>
