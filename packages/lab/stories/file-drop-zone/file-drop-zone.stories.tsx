@@ -85,9 +85,9 @@ const FileDropzoneTemplate: StoryFn<
       <FileDropZone
         data-testid="file-drop-zone-example"
         status={status}
-        onDrop={handleFilesDrop}
         disabled={disabled}
         {...rest}
+        onDrop={handleFilesDrop}
       >
         <FileDropZoneIcon status={status} />
         <strong>
