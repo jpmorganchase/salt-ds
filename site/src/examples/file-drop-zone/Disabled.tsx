@@ -11,6 +11,6 @@ export const Disabled = (): ReactElement => (
     <FileDropZoneIcon />
     <strong>Drop files here or</strong>
     <FileDropZoneTrigger disabled />
-    <Text>Only .png files</Text>
+    <Text disabled>Only .png files</Text>
   </FileDropZone>
 );
