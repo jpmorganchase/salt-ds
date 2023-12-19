@@ -13,7 +13,6 @@
 }
 
 .divider {
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle)
-    var(--salt-shadow-300-color);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-shadow-300-color);
   width: 100%;
 }
