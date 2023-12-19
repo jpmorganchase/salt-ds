@@ -139,8 +139,10 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
               strokeWidth={1}
               fill="var(--overlay-background)"
               stroke="var(--overlay-borderColor)"
-              height={8}
-              width={14}
+              style={{
+                height: "calc(var(--salt-size-adornment) + 6px)",
+                width: "calc(var(--salt-size-adornment) + 8px)",
+              }}
             />
           </FloatingComponent>
         )}

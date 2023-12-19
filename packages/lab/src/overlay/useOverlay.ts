@@ -14,7 +14,7 @@ import {
   useFloatingUI,
   UseFloatingUIProps,
 } from "@salt-ds/core";
-import { HTMLProps, useRef, KeyboardEvent } from "react";
+import { HTMLProps, useRef } from "react";
 
 export interface UseOverlayProps
   extends Partial<

@@ -14,7 +14,7 @@
   border-width: var(--saltOverlay-borderWidth, var(--salt-size-border));
 
   background: var(--overlay-background);
-  box-shadow: var(--saltOverlay-boxShadow, var(--salt-overlayable-shadow-popout));
+  box-shadow: var(--saltOverlay-boxShadow, var(--salt-overlayable-shadow-modal));
 
   color: var(--saltOverlay-text-color, var(--salt-text-primary-foreground));
   z-index: var(--saltOverlay-zIndex, var(--salt-zIndex-flyover));
