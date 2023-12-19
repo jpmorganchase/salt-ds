@@ -1,4 +1,4 @@
-import { useState, useCallback, SyntheticEvent, DragEvent } from "react";
+import { useState, useCallback, SyntheticEvent } from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -19,7 +19,6 @@ import {
 } from "@salt-ds/lab";
 
 import {
-  containsFiles,
   createFileTypeValidator,
   createTotalSizeValidator,
   FilesValidator,
@@ -30,6 +29,12 @@ export default {
   title: "Lab/File Drop Zone",
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
+
+
+const statusTitles = {
+  success: "Upload completed",
+  error: "Error uploading",
+};
 
 const FileDropzoneTemplate: StoryFn<
   FileDropZoneProps &
@@ -57,7 +62,7 @@ const FileDropzoneTemplate: StoryFn<
   };
 
   const handleFilesDrop = (event: SyntheticEvent, files: File[]) => {
-    if (!containsFiles(event as DragEvent)) {
+    if (!files) {
       const errors = ["Drop target doesn't contain any file."];
       return handleFilesRejected(errors);
     }
@@ -68,11 +73,6 @@ const FileDropzoneTemplate: StoryFn<
       }
       return handleFilesAccepted(files, event);
     }
-  };
-
-  const statusTitles = {
-    success: "Upload completed",
-    error: "Error uploading",
   };
 
   const reset = () => {
@@ -137,13 +137,13 @@ export const WithMultipleValidations = FileDropzoneTemplate.bind({});
 WithMultipleValidations.args = {
   accept: "image/*",
   children: (
-    <p>
+    <Text>
       Images only.
       <br />
       500KB total file size limit.
       <br />
       36 chars File name limit.
-    </p>
+    </Text>
   ),
   validate: [validateFileType, validateTotalSize, validateFileName],
 };
@@ -173,7 +173,7 @@ const Results = ({ result }: ResultCardProps) => {
           const label = `${name} - ${size} bytes`;
           const longLabel = label.split("").length > 36;
           return (
-            <Banner key={name} status="success" variant={"secondary"}>
+            <Banner key={name} status="success" variant="secondary">
               <BannerContent>
                 <Tooltip content={label} disabled={!longLabel}>
                   <Text maxRows={1}>{label}</Text>
@@ -192,7 +192,7 @@ const Results = ({ result }: ResultCardProps) => {
         const longLabel = error.split("").length > 36;
 
         return (
-          <Banner status="error" variant={"secondary"} key={error}>
+          <Banner status="error" variant="secondary" key={error}>
             <BannerContent>
               <Tooltip content={error} disabled={!longLabel}>
                 <Text maxRows={1}>{error}</Text>

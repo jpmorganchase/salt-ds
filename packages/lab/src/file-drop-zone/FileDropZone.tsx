@@ -3,10 +3,9 @@ import { clsx } from "clsx";
 import {
   DragEventHandler,
   forwardRef,
-  HTMLAttributes,
   DragEvent,
   useRef,
-  useState,
+  useState, ComponentPropsWithoutRef,
 } from "react";
 import { containsFiles, extractFiles } from "./internal/utils";
 
@@ -16,7 +15,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import fileDropZoneCss from "./FileDropZone.css";
 
 export interface FileDropZoneProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "onDrop"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "onDrop"> {
   /**
    * If `true`, the file drop zone will be disabled.
    */
