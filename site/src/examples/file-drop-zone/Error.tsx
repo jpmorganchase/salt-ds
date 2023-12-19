@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Text } from "@salt-ds/core"
+import { Text } from "@salt-ds/core";
 import {
   FileDropZone,
   FileDropZoneIcon,

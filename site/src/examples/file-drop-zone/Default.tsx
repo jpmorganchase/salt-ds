@@ -4,7 +4,7 @@ import {
   FileDropZoneIcon,
   FileDropZoneTrigger,
 } from "@salt-ds/lab";
-import {Text} from "@salt-ds/core";
+import { Text } from "@salt-ds/core";
 
 export const Default = (): ReactElement => (
   <FileDropZone style={{ width: 300 }}>
