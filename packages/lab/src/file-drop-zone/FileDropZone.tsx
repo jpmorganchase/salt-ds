@@ -3,18 +3,20 @@ import { clsx } from "clsx";
 import {
   DragEventHandler,
   forwardRef,
-  HTMLAttributes,
+  DragEvent,
   useRef,
   useState,
+  ComponentPropsWithoutRef,
 } from "react";
-import { containsFiles } from "./internal/utils";
+import { containsFiles, extractFiles } from "./internal/utils";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import fileDropZoneCss from "./FileDropZone.css";
 
-export interface FileDropZoneProps extends HTMLAttributes<HTMLDivElement> {
+export interface FileDropZoneProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onDrop"> {
   /**
    * If `true`, the file drop zone will be disabled.
    */
@@ -23,6 +25,10 @@ export interface FileDropZoneProps extends HTMLAttributes<HTMLDivElement> {
    * Status indicator to be displayed.
    */
   status?: Omit<ValidationStatus, "info" | "warning">;
+  /**
+   * Callback for on drop event
+   */
+  onDrop?: (event: DragEvent<HTMLDivElement>, files: File[]) => void;
 }
 
 const withBaseName = makePrefixer("saltFileDropZone");
@@ -91,8 +97,9 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         return;
       }
       event.preventDefault();
+      const files = extractFiles(event);
       setActive(false);
-      onDrop?.(event);
+      onDrop?.(event, files);
     };
 
     return (

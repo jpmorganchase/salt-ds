@@ -1,4 +1,9 @@
-import { useState, useCallback, SyntheticEvent, DragEvent } from "react";
+import {
+  useState,
+  useCallback,
+  SyntheticEvent,
+  DragEvent,
+} from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -17,12 +22,10 @@ import {
   FileDropZoneTrigger,
   FileDropZoneTriggerProps,
 } from "@salt-ds/lab";
-import { AllRenderer } from "docs/components";
+
 import {
-  containsFiles,
   createFileTypeValidator,
   createTotalSizeValidator,
-  extractFiles,
   FilesValidator,
   validateFiles,
 } from "./utils";
@@ -32,23 +35,16 @@ export default {
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
 
-export const All: StoryFn<typeof FileDropZone> = ({ onDrop, ...args }) => {
-  return (
-    <AllRenderer>
-      <FileDropZone {...args}>
-        <FileDropZoneIcon />
-        <strong>Drop files here or</strong>
-        <FileDropZoneTrigger />
-      </FileDropZone>
-    </AllRenderer>
-  );
+const statusTitles = {
+  success: "Upload completed",
+  error: "Error uploading",
 };
 
 const FileDropzoneTemplate: StoryFn<
   FileDropZoneProps &
     FileDropZoneIconProps &
     FileDropZoneTriggerProps & { validate: readonly FilesValidator[] }
-> = ({ accept, children, disabled, validate, ...rest }) => {
+> = ({ accept, children, disabled, validate, onDrop, ...rest }) => {
   const [result, setResult] = useState<{
     files?: readonly File[];
     errors?: readonly string[];
@@ -69,12 +65,11 @@ const FileDropzoneTemplate: StoryFn<
     setStatus("error");
   };
 
-  const handleFilesDrop = (event: SyntheticEvent) => {
-    if (!containsFiles(event as DragEvent)) {
+  const addFiles = (event: SyntheticEvent, files: File[]) => {
+    if (!files) {
       const errors = ["Drop target doesn't contain any file."];
       return handleFilesRejected(errors);
     }
-    const files = extractFiles(event as DragEvent);
     if (files.length > 0) {
       const errors = validate ? validateFiles({ files, validate }) : [];
       if (errors && errors.length !== 0) {
@@ -84,13 +79,9 @@ const FileDropzoneTemplate: StoryFn<
     }
   };
 
-  const handleChange = (event: SyntheticEvent, files: File[]) => {
-    console.log("files changed", files);
-  };
-
-  const statusTitles = {
-    success: "Upload completed",
-    error: "Error uploading",
+  const handleDrop = (event: DragEvent<HTMLDivElement>, files: File[]) => {
+    addFiles(event, files);
+    onDrop?.(event, files);
   };
 
   const reset = () => {
@@ -103,9 +94,9 @@ const FileDropzoneTemplate: StoryFn<
       <FileDropZone
         data-testid="file-drop-zone-example"
         status={status}
-        onDrop={handleFilesDrop}
         disabled={disabled}
         {...rest}
+        onDrop={handleDrop}
       >
         <FileDropZoneIcon status={status} />
         <strong>
@@ -114,7 +105,7 @@ const FileDropzoneTemplate: StoryFn<
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
-          onChange={handleChange}
+          onChange={addFiles}
           data-testid="file-input-trigger"
         />
         {children}
@@ -155,13 +146,13 @@ export const WithMultipleValidations = FileDropzoneTemplate.bind({});
 WithMultipleValidations.args = {
   accept: "image/*",
   children: (
-    <p>
+    <Text>
       Images only.
       <br />
       500KB total file size limit.
       <br />
       36 chars File name limit.
-    </p>
+    </Text>
   ),
   validate: [validateFileType, validateTotalSize, validateFileName],
 };
@@ -181,7 +172,7 @@ interface ResultCardProps {
   result: ResultCardType | undefined;
 }
 
-export const Results = ({ result }: ResultCardProps) => {
+const Results = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (
@@ -191,7 +182,7 @@ export const Results = ({ result }: ResultCardProps) => {
           const label = `${name} - ${size} bytes`;
           const longLabel = label.split("").length > 36;
           return (
-            <Banner key={name} status="success" variant={"secondary"}>
+            <Banner key={name} status="success" variant="secondary">
               <BannerContent>
                 <Tooltip content={label} disabled={!longLabel}>
                   <Text maxRows={1}>{label}</Text>
@@ -210,7 +201,7 @@ export const Results = ({ result }: ResultCardProps) => {
         const longLabel = error.split("").length > 36;
 
         return (
-          <Banner status="error" variant={"secondary"} key={error}>
+          <Banner status="error" variant="secondary" key={error}>
             <BannerContent>
               <Tooltip content={error} disabled={!longLabel}>
                 <Text maxRows={1}>{error}</Text>
@@ -223,7 +214,7 @@ export const Results = ({ result }: ResultCardProps) => {
   );
   return (
     <div style={{ height: 500, maxHeight: 500, overflow: "hidden" }}>
-      {!result && (
+      {!result?.files && (
         <Banner>
           <BannerContent>
             <strong>No files have been added.</strong>

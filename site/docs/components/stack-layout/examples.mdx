@@ -15,9 +15,9 @@ data:
 
 ### Default
 
-By default, Stack Layout displays items in a single column.
+By default, `StackLayout` displays items in a single column.
 
-Its items align to the start of the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The height and width of the layout are driven by the items contained within it.
+Its items align to the start of the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The items contained within the layout determine its height and width.
 
 </LivePreview>
 
@@ -25,7 +25,7 @@ Its items align to the start of the layout, with a `gap` between items of 3, whi
 
 ### Row direction
 
-The Stack Layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `row` to display items in a horizontal direction along a single line.
+The `direction` prop defines the main axis to display items along. Set `direction` to `row` to display items in a horizontal direction along a single line.
 
 </LivePreview>
 
@@ -33,9 +33,9 @@ The Stack Layout `direction` prop defines the main axis that items are displayed
 
 ### Layout separators
 
-Stack Layout allows for `separators` to be displayed between items. By default, the separators are centered when `separators={true}` but can be customized to sit on the left or right of items.
+The component allows for `separators` between items. By default, the separators have a cnetered alignment when `separators={true}` but you can customize them to sit on the left or right of items.
 
-The separator will span across the layout component if the `direction` is `column`, or span the height if the `direction` is `row`. The Stack Layout `gap` is applied to both sides of the separator.
+The separator will span across the layout component if the `direction` is `column` or span the height if the `direction` is `row`. The Stack Layout `gap` applies to both sides of the separator.
 
 </LivePreview>
 
@@ -43,11 +43,11 @@ The separator will span across the layout component if the `direction` is `colum
 
 ### Responsive layout
 
-Stack Layout supports responsive props, so you can define different behaviors based on viewport size (e.g., switching `direction` of a card stack with separators across screen size). You can use the default [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) or pass in your own using `SaltProvider`.
+`StackLayout` supports responsive props, so you can define different behaviors based on viewport size (e.g., switching `direction` of a card stack with separators across screen size). You can use the default [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) or pass in your own using [`SaltProvider`](/salt/components/salt-provider/).
 
 #### What are responsive props?
 
-A responsive prop is a prop that takes either multiple values (one value per breakpoint), or a single value that would take effect across all different screen sizes. For example, a layout that will responsively change direction from row to column at specific breakpoints or viewport sizes:
+A responsive prop takes either multiple values (one value per breakpoint) or a single value that would take effect across all different screen sizes. For example, this is a layout that will responsively change direction from row to column at specific breakpoints or viewport sizes:
 
 ```js
 direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
@@ -59,33 +59,31 @@ direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
 
 ### Layout alignment
 
-Control the position of Stack Layout and its items using the `align` prop.
+Control the position of `StackLayout` and its items using the `align` prop.
 
-If there is additional space available around the layout (i.e., above or below the row, or beside the column) use the `align` prop to define how items should be positioned within that space.
+If there's additional space available around the layout (i.e., above or below the row or beside the column), use the `align` prop to define the position of items within that space.
 
 </LivePreview>
 
 <LivePreview componentName="stack-layout" exampleName="FlexItemPosition" >
 
-### Flex Item position
+### `FlexItem` position
 
-Use the Flex Item `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
+Use the `FlexItem` `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
 </LivePreview>
 
 <LivePreview componentName="stack-layout" exampleName="FlexItemSize" >
 
-### Flex Item size
+### `FlexItem` size
 
-The Flex Item `grow` prop enables specific items in the layout to grow and fill any remaining space that is available in the layout:
+The `FlexItem` `grow` prop enables specific items in the layout to grow and fill any remaining space in the layout:
 
-- By default, `grow` is set to 0 and items will be displayed in their ‘normal’ size.
-- If an item is set to `1` it will fill the available space.
-- If an item is set to `2` it will fill twice as much space as other items that have `grow` set to `1`.
+- By default, `grow` is set to `0`, and items will be in their "normal" size.
+- If you set an item to `1`, it will fill the available space.
+- If you set an item to `2`, it will fill twice as much space as other items where `grow` is `1`.
 
-#### Guidance
-
-- In contrast to the `grow` prop, the `shrink` prop makes a specific item as small as possible within the layout. By default, `shrink` is set to `1`. If an item is set to `2`, that item would attempt to take half as much space.
+In contrast to the `grow` prop, the `shrink` prop makes a specific item as small as possible within the layout. By default, `shrink` is `1`. If you set an item to `2`, that item would attempt to take half as much space.
 
 </LivePreview>
 

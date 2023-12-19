@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.13.2
+
+### Patch Changes
+
+- 2ca80cb7: Fixed Input and Multiline Input button adornments being clipped if they contain text.
+  Fixed nested buttons being affected by overrides applied to Input and Multiline Input button adornments.
+  Fixed Multiline Input button adornments being an incorrect size.
+- d6e2e2c1: Fixed nested Salt Providers not inheriting a parent provider's `enableStyleInjection` value.
+
 ## 1.13.1
 
 ### Patch Changes
