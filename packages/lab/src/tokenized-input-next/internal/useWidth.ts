@@ -3,6 +3,16 @@ import { Density, useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 const safeParseFloat = (target?: string) => parseFloat(target || "0");
 
+export const getPadding = (node: HTMLElement | null) => {
+  if (node == null) {
+    return 0;
+  }
+  const style = window.getComputedStyle(node);
+  const padding =
+    safeParseFloat(style.paddingLeft) + safeParseFloat(style.paddingRight);
+  return padding;
+};
+
 export const getWidth = (node: HTMLElement | null) => {
   if (node == null) {
     return 0;

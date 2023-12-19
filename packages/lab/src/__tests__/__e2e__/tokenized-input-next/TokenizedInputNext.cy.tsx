@@ -22,6 +22,7 @@ describe("GIVEN a Tokenized Input", () => {
     });
     it("should allow adding items by typing and pressing the delimiter", () => {
       cy.mount(<Default />);
+      cy.findByRole("textbox").focus();
       cy.findByRole("textbox").type("Tokio,");
       cy.findByRole("option").should("exist");
     });
@@ -43,6 +44,7 @@ describe("GIVEN a Tokenized Input", () => {
     });
     it("should be able to change delimiter", () => {
       cy.mount(<Default delimiters={[";"]} />);
+      cy.findByRole("textbox").focus();
       cy.findByRole("textbox").type("Tokio, Delhi, Shanghai");
       cy.findAllByRole("option").should("have.length", 0);
       cy.findByRole("textbox").type("{selectall}{backspace}");
@@ -51,6 +53,7 @@ describe("GIVEN a Tokenized Input", () => {
     });
     it("should be able to take an array of delimiters", () => {
       cy.mount(<Default delimiters={[";", "/", "."]} />);
+      cy.findByRole("textbox").focus();
       cy.findByRole("textbox").type("Tokio, Delhi, Shanghai");
       cy.findAllByRole("option").should("have.length", 0);
       cy.findByRole("textbox").type("{selectall}{backspace}");
@@ -119,6 +122,7 @@ describe("GIVEN a Tokenized Input", () => {
         />
       );
       // expand
+      cy.findByTestId("expand-button").should("exist");
       cy.findByTestId("expand-button").click();
       // Move focus out of Tokenized input
       cy.realPress("Tab");
@@ -152,6 +156,7 @@ describe("GIVEN a Tokenized Input", () => {
             onChange={changeSpy}
           />
         );
+        cy.findByRole("textbox").focus();
         cy.findByRole("textbox").click().clear().type("Mexico City,");
         cy.get("@changeSpy").should("have.been.called");
       });

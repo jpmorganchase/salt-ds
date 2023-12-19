@@ -25,7 +25,7 @@ import {
 } from "react";
 import { escapeRegExp } from "../utils";
 import { TokenizedInputNextProps } from "./TokenizedInputNext";
-import { useWidth } from "./internal/useWidth";
+import { getPadding, useWidth } from "./internal/useWidth";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 
@@ -204,7 +204,8 @@ export function useTokenizedInputNext<Item>(
   const containerObserverRef = useResizeObserver<HTMLDivElement>(
     useCallback(
       ([{ contentRect }]) => {
-        setPillGroupWidth(contentRect.width - widthOffset);
+        const padding = getPadding(containerRef.current);
+        setPillGroupWidth(contentRect.width - padding - widthOffset);
       },
       [widthOffset]
     )

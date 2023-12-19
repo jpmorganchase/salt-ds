@@ -2,7 +2,8 @@
   max-width: 100%;
 }
 .saltInputPill {
-  margin: var(--salt-spacing-25);
+  margin: var(--salt-spacing-25) var(--salt-spacing-50);
+  margin-left: 0;
 }
 
 .saltInputPill-expanded.saltInputPill .saltPillNext-action {
