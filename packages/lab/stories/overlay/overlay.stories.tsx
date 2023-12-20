@@ -181,7 +181,7 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
         ))}
       </CheckboxGroup>
       <Divider />
-      <Button style={{ float: "right", marginRight: 1 }} onClick={handleExport}>
+      <Button style={{ float: "right", marginRight: 2 }} onClick={handleExport}>
         Export
       </Button>
     </>
