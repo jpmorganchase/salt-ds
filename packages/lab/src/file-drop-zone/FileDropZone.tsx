@@ -56,7 +56,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
     const [isActive, setActive] = useState(false);
 
     const regionRef = useRef<HTMLDivElement>(null);
-    const dropZoneRef = useForkRef(ref, regionRef);
+    const handleRef = useForkRef(ref, regionRef);
 
     const handleDragOver: DragEventHandler<HTMLDivElement> = (event) => {
       // Need to cancel the default events to allow drop
@@ -117,7 +117,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        ref={dropZoneRef}
+        ref={handleRef}
         {...restProps}
       >
         {children}

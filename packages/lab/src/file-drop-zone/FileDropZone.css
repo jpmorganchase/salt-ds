@@ -15,7 +15,6 @@
   line-height: var(--saltFileDropZone-lineHeight, var(--salt-text-lineHeight));
 }
 
-/* Styles applied if `isActive={true}` */
 .saltFileDropZone-active {
   background: var(--salt-target-background-hover);
   border: var(--salt-size-border-strong) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover);
@@ -26,6 +25,7 @@
   border: var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-error-borderColor);
 }
 
+/* Styles applied if `status="success" */
 .saltFileDropZone-success {
   border: var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-success-borderColor);
 }
