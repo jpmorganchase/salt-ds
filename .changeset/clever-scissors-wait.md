@@ -7,12 +7,18 @@ Update Overlay to use floating-ui. Supports placement on top (default), right, b
 ```tsx
 const OverlayContent = (
   <>
-    <h3>Title</h3>
-    <div>Content of Overlay</div>
+    <h3 id="overlay_label">Title</h3>
+    <div id="overlay_description">Content of Overlay</div>
   </>
 );
 
-<Overlay content={<OverlayContent />} placement="right" {...props}>
+<Overlay
+  content={<OverlayContent />}
+  placement="right"
+  aria-labelledby="overlay_label"
+  aria-describedby="overlay_description"
+  {...props}
+>
   <Button>Show Overlay</Button>
 </Overlay>;
 ```
