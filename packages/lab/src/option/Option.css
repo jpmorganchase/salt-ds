@@ -12,7 +12,8 @@
   align-items: center;
   margin-top: var(--salt-size-border);
   margin-bottom: var(--salt-size-border);
-  border: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
+  border-top: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
   cursor: var(--salt-selectable-cursor-hover);
 }
 

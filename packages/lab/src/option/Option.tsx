@@ -112,13 +112,13 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
     // set active descendent
     setActive(optionValue);
 
+    // handle selection
+    select(event, optionValue);
+
     // handle close if multi-select
     if (!multiselect) {
       setOpen(event, false);
     }
-
-    // handle selection
-    select(event, optionValue);
 
     onClick?.(event);
   };

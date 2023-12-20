@@ -15,7 +15,11 @@ data:
 
 A single item can be selected from the dropdown options.
 
-Dropdowns contain a button that opens a list on mouse or keyboard interaction.
+`DropdownNext` contains a button that opens a list on mouse or keyboard interaction.
+
+#### Best practices
+
+- `DropdownNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
@@ -41,7 +45,7 @@ The `value` prop can be used to control the value of the dropdown. This is usefu
 
 You can use a placeholder to prompt user input if no default value is provided.
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
 More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -90,7 +94,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 </LivePreview>
 
-<LivePreview componentName="dropdown" exampleName="WithFormField" displayName="Form Field support" >
+<LivePreview componentName="dropdown" exampleName="WithFormField" displayName="FormField support" >
 
 ### `FormField` support
 

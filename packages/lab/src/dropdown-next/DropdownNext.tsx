@@ -23,7 +23,7 @@ import {
   useId,
   ValidationStatus,
 } from "@salt-ds/core";
-import { flip, offset, shift, limitShift, size } from "@floating-ui/react";
+import { flip, size } from "@floating-ui/react";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -182,7 +182,6 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
       open,
       placement: "bottom-start",
       middleware: [
-        offset(0),
         size({
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
@@ -192,7 +191,6 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
           },
         }),
         flip(),
-        shift({ limiter: limitShift() }),
       ],
     });
 

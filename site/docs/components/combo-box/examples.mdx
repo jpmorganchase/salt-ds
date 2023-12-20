@@ -15,7 +15,11 @@ data:
 
 A single item can be selected from the combo box options.
 
-Combo Box contains an input field that opens a list. As users type, the list displays all filtered options based on their input.
+`ComboBoxNext` contains an input field that opens a list. As users type, the list displays all filtered options based on their input.
+
+#### Best practices
+
+- `ComboBoxNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
   
@@ -33,7 +37,7 @@ When `multiSelect={true}`, users can select multiple items from the combo box op
 
 You can use a placeholder to prompt user input if no default value is provided.
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
 More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -82,7 +86,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 </LivePreview>
 
-<LivePreview componentName="combo-box" exampleName="WithFormField" displayName="Form Field support" >
+<LivePreview componentName="combo-box" exampleName="WithFormField" displayName="FormField support" >
 
 ### `FormField` support
 
@@ -125,7 +129,7 @@ If the children are not plain text, then the `textValue` prop must also be set t
 
 ### Validation
 
-Combo Box can show validation states (warning, success, error) with the prop `validationStatus`.
+`ComboBoxNext` can show validation states (warning, success, error) with the prop `validationStatus`.
 
 #### Best practices
 
@@ -138,7 +142,7 @@ Combo Box can show validation states (warning, success, error) with the prop `va
 
 ### Custom filtering
 
-Due to Combo Box’s flexible API, you can customize the filtering logic to suit your needs. In this example it displays the entire list of options when the combo box opens due to a mouse click.
+Due to its flexible API, you can customize the filtering logic `ComboBoxNext` uses to suit your needs. In this example it displays the entire list of options when the combo box opens due to a mouse click.
 
 </LivePreview>
 
@@ -146,7 +150,7 @@ Due to Combo Box’s flexible API, you can customize the filtering logic to suit
 
 ### Server side data
 
-Combo Box can be used to display data from a server. In this example, the data is fetched and filtered on the server side.
+`ComboBoxNext` can be used to display data from a server. In this example, the data is fetched and filtered on the server side.
 
 Note that the data fetching in this example has been made intentionally show to highlight the loading states.
 

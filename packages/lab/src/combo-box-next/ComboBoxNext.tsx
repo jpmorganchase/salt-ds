@@ -22,7 +22,7 @@ import {
 import { ListControlProps } from "../list-control/ListControlState";
 import { ListControlContext } from "../list-control/ListControlContext";
 import { clsx } from "clsx";
-import { flip, limitShift, offset, shift, size } from "@floating-ui/react";
+import { flip, size } from "@floating-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComboBoxNext } from "./useComboBoxNext";
 import { OptionList } from "../option/OptionList";
@@ -44,6 +44,7 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
       children,
       className,
       disabled: disabledProp,
+      endAdornment,
       readOnly: readOnlyProp,
       multiselect,
       onSelectionChange,
@@ -112,19 +113,17 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
       open,
       placement: "bottom-start",
       middleware: [
-        offset(0),
         size({
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
               minWidth: `${rects.reference.width}px`,
-              height: `calc(${availableHeight}px - var(--salt-spacing-100))`,
+              maxHeight: `${availableHeight}px`,
             });
           },
         }),
         flip({
           fallbackStrategy: "initialPlacement",
         }),
-        shift({ limiter: limitShift() }),
       ],
     });
 
@@ -309,26 +308,29 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
         <Input
           className={clsx(withBaseName(), className)}
           endAdornment={
-            !readOnly ? (
-              <Button
-                aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
-                aria-label="Show options"
-                aria-expanded={openState}
-                aria-controls={openState ? listId : undefined}
-                aria-haspopup="listbox"
-                disabled={disabled}
-                variant="secondary"
-                onClick={handleButtonClick}
-                onFocus={handleButtonFocus}
-                tabIndex={-1}
-              >
-                {openState ? (
-                  <ChevronUpIcon aria-hidden />
-                ) : (
-                  <ChevronDownIcon aria-hidden />
-                )}
-              </Button>
-            ) : undefined
+            <>
+              {endAdornment}
+              {!readOnly ? (
+                <Button
+                  aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
+                  aria-label="Show options"
+                  aria-expanded={openState}
+                  aria-controls={openState ? listId : undefined}
+                  aria-haspopup="listbox"
+                  disabled={disabled}
+                  variant="secondary"
+                  onClick={handleButtonClick}
+                  onFocus={handleButtonFocus}
+                  tabIndex={-1}
+                >
+                  {openState ? (
+                    <ChevronUpIcon aria-hidden />
+                  ) : (
+                    <ChevronDownIcon aria-hidden />
+                  )}
+                </Button>
+              ) : undefined}
+            </>
           }
           onClick={handleClick}
           onBlur={handleBlur}
@@ -354,8 +356,8 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
         />
         <FloatingComponent
           open={(openState || focusedState) && !readOnly}
-          left={x ?? 0}
-          top={y ?? 0}
+          left={x}
+          top={y}
           position={strategy}
           width={elements.floating?.offsetWidth}
           height={elements.floating?.offsetHeight}

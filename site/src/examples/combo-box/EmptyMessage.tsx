@@ -1,6 +1,8 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
+import cslx from "clsx";
 import { ComboBoxNext, Option } from "@salt-ds/lab";
 import { shortColorData } from "./exampleData";
+import styles from "./index.module.css";
 
 export const EmptyMessage = (): ReactElement => {
   const [value, setValue] = useState("");
@@ -39,7 +41,13 @@ export const EmptyMessage = (): ReactElement => {
           </Option>
         ))
       ) : (
-        <Option value="">No results found for &quot;{value}&quot;</Option>
+        <div
+          className={styles.statusOption}
+          role="option"
+          aria-selected="false"
+        >
+          No results found for &quot;{value}&quot;
+        </div>
       )}
     </ComboBoxNext>
   );
