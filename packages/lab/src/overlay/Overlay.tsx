@@ -57,6 +57,8 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       content,
       placement = "top",
       onClose,
+      "aria-labelledby": overlayLabelledBy,
+      "aria-describedby": overlayDescribedBy,
       ...rest
     } = props;
 
@@ -112,6 +114,9 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
               ref={floatingRef}
               open={open}
               className={withBaseName()}
+              aria-modal="true"
+              aria-labelledBy={overlayLabelledBy}
+              aria-describedBy={overlayDescribedBy}
               {...getOverlayProps()}
               {...floatingStyles()}
               // @ts-ignore missing 'children' property
@@ -121,7 +126,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             >
               <div
                 className={clsx(withBaseName("container"), className)}
-                aria-modal="true"
                 {...rest}
               >
                 <Button
@@ -141,8 +145,8 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
                 fill="var(--overlay-background)"
                 stroke="var(--overlay-borderColor)"
                 style={{
-                  height: "calc(var(--salt-size-adornment) + 6px)",
-                  width: "calc(var(--salt-size-adornment) + 8px)",
+                  height: "calc(var(--salt-size-adornment) + 6px)", // +6px to account for Floating UI's FloatingArrow positioning calculation
+                  width: "calc(var(--salt-size-adornment) + 8px)", // +8px to account for Floating UI's FloatingArrow positioning calculation
                 }}
               />
             </FloatingComponent>
