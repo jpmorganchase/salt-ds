@@ -1,5 +1,4 @@
 import {
-  Button,
   makePrefixer,
   mergeProps,
   useFloatingComponent,
@@ -14,15 +13,12 @@ import {
   HTMLAttributes,
   SyntheticEvent,
 } from "react";
-import { CloseIcon } from "@salt-ds/icons";
+
 import { clsx } from "clsx";
 
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import overlayCSS from "./Overlay.css";
 import { useOverlay } from "./useOverlay";
-import { FloatingArrow, FloatingOverlay } from "@floating-ui/react";
+import { FloatingOverlay } from "@floating-ui/react";
+import { OverlayBase } from "./OverlayBase";
 
 export interface OverlayProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
@@ -61,13 +57,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       "aria-describedby": overlayDescribedBy,
       ...rest
     } = props;
-
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-overlay",
-      css: overlayCSS,
-      window: targetWindow,
-    });
 
     const {
       arrowProps,
@@ -113,7 +102,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
             <FloatingComponent
               ref={floatingRef}
               open={open}
-              className={withBaseName()}
+              className={clsx(withBaseName(), className)}
               aria-modal="true"
               aria-labelledBy={overlayLabelledBy}
               aria-describedBy={overlayDescribedBy}
@@ -124,30 +113,11 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
                 context: context,
               }}
             >
-              <div
-                className={clsx(withBaseName("container"), className)}
+              <OverlayBase
+                arrowProps={arrowProps}
+                content={content}
+                handleCloseButton={handleCloseButton}
                 {...rest}
-              >
-                <Button
-                  onClick={handleCloseButton}
-                  variant="secondary"
-                  className={withBaseName("closeButton")}
-                  aria-label="Close Overlay"
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-                <div className={withBaseName("content")}>{content}</div>
-              </div>
-
-              <FloatingArrow
-                {...arrowProps}
-                strokeWidth={1}
-                fill="var(--overlay-background)"
-                stroke="var(--overlay-borderColor)"
-                style={{
-                  height: "calc(var(--salt-size-adornment) + 6px)", // +6px to account for Floating UI's FloatingArrow positioning calculation
-                  width: "calc(var(--salt-size-adornment) + 8px)", // +8px to account for Floating UI's FloatingArrow positioning calculation
-                }}
               />
             </FloatingComponent>
           </FloatingOverlay>
