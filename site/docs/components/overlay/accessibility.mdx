@@ -11,12 +11,9 @@ data:
 
 ### Best practices
 
-- An overlay is exposed via a focusable UI element such as a button, which is within the tabbing order. On button activation by either the enter or space keys, focus enters floating element and focus traps.
-- Users can only close an overlay by a close button click or press, or clicking outside of the floating element.
-- The overlay's close button always receives focus before overlay content
-- If an overlay contains an interactive element, pressing <kbd>Tab</kbd> will move focus from close button to the next focusable element within tabbing order. If there are no interactive elements within the content area, focus remains on the close button.
-- If focus is on the overlay close button, press <kbd>Enter</kbd> or <kbd>Space</kbd> to activate the close button. This will dismiss the overlay and return focus back to the triggering UI element.
-- Pressing the <kbd>Escape</kbd> key also closes an open overlay and returns focus back to the triggering UI element if the focus is inside the overlay.
+- Users expose an overlay using a focusable UI element, such as a button. On button activation by either the <kbd>Enter</kbd> or <kbd>Space</kbd> keys, focus enters the overlay.
+- Users can close an overlay by a close button click or press, or clicking outside of the floating element. Users can also close an overlay by pressing <kbd>Enter</kbd> or <kbd>Space</kbd> when focus is on the close button.
+- The overlay's close button always receives focus before overlay content.
 
 ### Keyboard interactions
 
