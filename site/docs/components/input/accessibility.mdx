@@ -7,16 +7,18 @@ data:
   $ref: ./#/data
 ---
 
-- Wrap Input in a [Form Field](/salt/components/form-field) to make it accessible within a form. This will provide the field with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+### Best practices
 
-- Text that extends beyond the visible area of Input is clipped. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
+- Wrap `Input` in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+
+- The component clips text that extends beyond its visible area. All states have the same behavior—default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
 
 <LivePreviewControls>
 <LivePreview componentName="input" exampleName="EmptyReadonlyMarker" >
 
-### Empty Read-only Marker
+#### Empty read-only marker
 
-For accessibility purposes, we recommend you use the `emptyReadOnlyMarker` prop to add a marker for empty read-only fields. This ensures it’s clear that for the current selection or configuration a value is not necessary.
+For accessibility purposes, we recommend you use the `emptyReadOnlyMarker` prop to add a marker for empty read-only fields. This ensures it’s clear that a value is not necessary for the current selection or configuration.
 
 </LivePreview>
 </LivePreviewControls>
@@ -26,8 +28,8 @@ For accessibility purposes, we recommend you use the `emptyReadOnlyMarker` prop 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the Input, Tab key press moves focus onto the input. The text will be highlighted. If the input area is empty, the text cursor is displayed.
-- If the input is disabled, Tab key press will skip the input.
+- If focus is above the input, Tab moves focus onto the input and highlights the text. If the input area is empty, Tab displays a text cursor in the input area.
+- If the input is disabled, Tab skips the input.
 - If the input has focus, Tab moves focus out of the input, to next focusable component in the tab order.
 
 </KeyboardControl>
@@ -38,18 +40,18 @@ If focused, Shift + Tab moves focus out of the component to the previous compone
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
 
-If an interactive adornment, e.g., a button, has focus, the element is activated.
+If an interactive adornment, e.g., a button, has focus, Tab activates the element.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space">
 
-- When the Input area has focus, a space character is inserted at the point where the text cursor is positioned.
-- If an interactive adornment, e.g., a button, has focus, the element is activated.
+- When the input area has focus, Space inserts a character at the position of the text cursor.
+- If an interactive adornment, e.g., a button, has focus, Space activates the element.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Right Arrow">
 
-When the Input area has focus:
+When the input area has focus:
 
 - If text is highlighted, the highlight is removed and the text cursor is positioned at the right edge of the highlight.
 - If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no following character, there is no effect.
@@ -57,32 +59,32 @@ When the Input area has focus:
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Left Arrow">
 
-When the Input area has focus:
+When the input area has focus:
 
-- If text is highlighted, the highlight is removed and the text cursor is positioned at the left edge of the highlight.
-- If the text cursor is displayed, it is positioned on the alternative side of the following character. If is there is no preceding character, there is no effect.
+- If text is in a highlighted state, Left Arrow removes the highlight and positions the text cursor at the left edge of the highlight.
+- If the text cursor is visible, Left Arrow positions it on the alternative side of the following character. If there's no preceding character, there's no effect.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Left Arrow, Shift + Right Arrow">
+<KeyboardControl keyOrCombos="Shift + Left Arrow / Shift + Right Arrow">
  
 Drags selection over text characters, one at a time.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Backspace">
  
-When Input area has focus and: 
-- Text is highlighted, all highlighted characters are removed. 
-- The text cursor is positioned to the right of text, the preceding character is removed.
+When the input area has focus and: 
+- Text is highlighted, this action removes all highlighted characters. 
+- The text cursor is positioned to the right of text, this action removes the preceding character.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Alphanumeric/Special keys">
  
-When the Input area has focus, the relevant character is inserted at the point where the text cursor is positioned.
+When the input area has focus, this action inserts the relevant character at the position of the text cursor.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Control/Command + A">
+<KeyboardControl keyOrCombos="Control + A / Command + A">
  
-Highlights all strings within the field.
+This action highlights all strings within the field.
 
 </KeyboardControl>
 </KeyboardControls>

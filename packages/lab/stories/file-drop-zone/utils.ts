@@ -1,11 +1,21 @@
-// TODO: verify whether we still needs to this library
-// HTML5's `accept` should be ok for the browsers we want to support.
-import accepts from "attr-accept";
+export const validateFiles = ({
+  files = [],
+  validate = [],
+}: {
+  files: readonly File[];
+  validate: readonly FilesValidator[];
+}) =>
+  validate
+    .reduce(
+      (result, validator) => result.concat(validator(files)),
+      [] as (string | undefined)[]
+    )
+    .filter(Boolean) as string[];
 
 export type FilesValidator<ErrorType = string> = (
-  files: ReadonlyArray<File>
+  files: readonly File[]
 ) =>
-  | ReadonlyArray<ErrorType | string | undefined>
+  | readonly (ErrorType | string | undefined)[]
   | ErrorType
   | string
   | undefined;
@@ -16,6 +26,9 @@ export type FilesValidator<ErrorType = string> = (
  * @param {string} accept - It is the same as 'accept' attribute for HTML <input>.
  * @param {function} getError - A callback function for generating a customised user error.
  */
+
+const trimSlashAsterisk = (type: string) => type.replace(/\/.*$/, "");
+
 export function createFileTypeValidator<ErrorType = string>({
   accept,
   getError,
@@ -24,15 +37,30 @@ export function createFileTypeValidator<ErrorType = string>({
   getError?: (file: File) => ErrorType;
 }): FilesValidator<ErrorType> {
   return (files) => {
-    const validate = (file: File) => {
-      if (!accepts(file, accept)) {
+    const validateFile = (file: File) => {
+      const acceptedTypes = accept.toLowerCase().split(",");
+      const fileName = (file.name || "").toLowerCase();
+      const fileType = (file.type || "").toLowerCase();
+
+      const accepted = acceptedTypes.some((acceptedType) => {
+        const type = acceptedType.trim();
+        if (type.startsWith(".")) {
+          return fileName.endsWith(type);
+        }
+        if (type.endsWith("/*")) {
+          return trimSlashAsterisk(fileType) === trimSlashAsterisk(type);
+        }
+        return fileType === type;
+      });
+
+      if (!accepted) {
         return getError
           ? getError(file)
           : `File ${file.name} does not have an accepted type.`;
       }
     };
 
-    return files.map(validate);
+    return files.map(validateFile);
   };
 }
 

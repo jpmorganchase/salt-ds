@@ -11,29 +11,23 @@ data:
 
 ### Best practices
 
-- On focus, the screen reader should:
-
-  - Identify the radio button
-  - Read out the text
-  - Express the state
-
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- Moves focus to the checked radio button in the radio button group.
-- If a radio button is not checked, focus moves to the first radio button in the group.
+- Tab moves focus to the checked radio button in the radio button group.
+- If the user hasn't checked a radio button, Tab moves focus to the first radio button in the group.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space">
 
-- If the radio button with focus is not checked, changes the state to checked.
+- If the focused radio button isn't checked, Space changes the state to checked.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Up/Down / Left/Right">
+<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
 
-- Moves focus between the available radio button options, and simultaneously selects an option.
+- This action moves focus between the available radio button options, and simultaneously selects an option.
 
 </KeyboardControl>
 </KeyboardControls>

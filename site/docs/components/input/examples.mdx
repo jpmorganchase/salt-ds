@@ -12,54 +12,56 @@ data:
 
 ### Primary
 
-Input comprises value text and a focus ring. The component is initially empty and then, once it has focus, it accepts text on a single line only.
+`Input` comprises value text and a focus ring. The component is initially empty; once it has focus, it accepts text on a single line only.
 
-The default variant for Input is "primary".
+The default variant for Input is "primary."
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Secondary" >
 
 ### Secondary
 
-Input has a "secondary" variant.
+`Input` has a "secondary" variant.
 
-For recommendations on variant choice, see the [Forms pattern](salt/patterns/forms).
+For recommendations on variant choice, see the [forms pattern](salt/patterns/forms).
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Disabled" >
 
 ### Disabled
 
-You can disable Input, with no resultant action when the user interacts with it.
+You can disable the input, resulting in no action when the user interacts with it.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Readonly" >
 
 ### Read-only
 
-You can set Input to a read-only state. The value text can’t be edited in this state, but it can be highlighted and copied.
+You can set `Input` to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
 
-By default, the marker is set to an em dash. If your application requires a different marker it can be set via the `emptyReadOnlyMarker` prop.
+By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
 
-- Use the read-only state when the value is necessary for the users flow or current task but cannot be edited, for example, because of user permissions.
+- Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
 
 </LivePreview>
-<LivePreview componentName="input" exampleName="EmptyReadonlyMarker" >
+<LivePreview componentName="input" exampleName="Placeholder" >
 
 ### Placeholder
 
-You can use a placeholder to prompt user input if no default value is provided.
+You can use a placeholder to prompt user input if there's no default value.
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+#### Best practices
 
-More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+You should never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+
+You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Spellcheck" >
 
 ### Spellcheck
 
-Turn automatic spellchecking on using `inputProps`.
+Turn on automatic spellchecking using `inputProps`.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="StaticAdornments" >
@@ -68,40 +70,42 @@ Turn automatic spellchecking on using `inputProps`.
 
 You can add custom adornments at the beginning or end of the Input field using the `startAdornment` and `endAdornment` props.
 
-Start adornments are typically used to describe the purpose of the field (e.g., a phone number input, or a currency), whereas end adornments are typically used to indicate a reveal of more information (e.g., using an arrow icon) or to trigger a new UI (such as a date picker).
+Start adornments typically describe the purpose of the field (e.g., a phone number input, or a currency), while end adornments typically indicate a reveal of more information (e.g., using an arrow icon) or to trigger a new user interface (such as a date picker).
 
-Salt [Text](/salt/components/text) and [Icons](/salt/foundations/iconography) can be used to add Salt styled alphanumeric text or symbols as adornments. Multiple start or end adornments should be wrapped in a parent container and passed to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
+You can use [text](/salt/components/text) and [icons](/salt/foundations/iconography) to add Salt styled alphanumeric text or symbols as adornments. You should wrap multiple start or end adornments in a parent container and pass them to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="ButtonAdornments" >
 
 ### Button adornments
 
-You can use [Button](/salt/components/button) at the beginning or end of the Input field with the `startAdornment` and `endAdornment` props. Buttons can allow for custom interactivity within the Input field itself, or elsewhere in the app via the Input field.
+You can use [`Button`](/salt/components/button) at the beginning or end of the input field with the `startAdornment` and `endAdornment` props. Buttons can allow for custom interactivity within the input field itself or elsewhere in the app via the input field.
 
-Ensure to make your interactive Buttons disabled or read-only should it match the state of the containing Input field.
+Disable your interactive buttons or make them read-only should they match the state of the containing input field.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Validation" >
 
 ### Validation
 
-Input can show validation states (warning, success, error) with the prop `validationStatus`.
+Input can show validation states (warning, success and error) with the prop `validationStatus`.
 
-- Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
+#### Best practices
 
-- Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
+- Use the error state to alert the user of a critical issue related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
+
+- Display the warning state when you need to alert the user of a potential issue that won’t prevent them from continuing with a task but may cause errors if they don't address it.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="TextAlignment" >
 
-### Text Alignment
+### Text alignment
 
-Text is left-aligned by default. Use the `textAlign` prop to change the alignment to “center” or “right”.
+Text has left alignment by default. Use the `textAlign` prop to change the alignment to “center” or “right.”
 
-- Numeric values are often displayed right aligned to make them easier to compare. However, sometimes number fields are unrelated or are mixed with text fields in a form, so left-alignment may promote better visual flow. Consider your use case when deciding on Input field alignment.
+Numeric values often have right alignment to make comparing them easier. However, sometimes number fields don't relate to each other or mix with text fields in a form, so left alignment may promote better visual flow. Consider your use case when deciding on input field alignment.
 
-You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception and used sparingly.
+You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception, and you should use it sparingly.
 
 </LivePreview>
 </LivePreviewControls>

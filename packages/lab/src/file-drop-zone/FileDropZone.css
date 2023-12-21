@@ -1,106 +1,43 @@
-/* Styles applied to root component */
 .saltFileDropZone {
-  --fileDropZone-background: var(--salt-container-secondary-background);
-  --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
-  --fileDropZone-borderWidth: var(--salt-size-border);
-  --fileDropZone-borderStyle: var(--salt-target-borderStyle);
-  --fileDropZone-text-color: var(--salt-content-primary-foreground);
-  --fileDropZone-icon-color: var(--salt-content-primary-foreground);
-  --fileDropZone-padding: var(--salt-size-container-spacing);
-  --fileDropZone-title-fontSize: var(--salt-text-fontSize);
-  --fileDropZone-title-lineHeight: var(--salt-text-lineHeight);
-}
-
-.saltFileDropZone {
-  color: var(--saltFileDropZone-text-color, var(--fileDropZone-text-color));
+  color: var(--saltFileDropZone-text-color, var(--salt-text-primary-foreground));
   display: inline-flex;
-  background: var(--saltFileDropZone-background, var(--fileDropZone-background));
+  background: var(--saltFileDropZone-background, var(--salt-container-primary-background));
   text-align: center;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
-  border-color: var(--saltFileDropZone-borderColor, var(--fileDropZone-borderColor));
-  border-style: var(--saltFileDropZone-borderStyle, var(--fileDropZone-borderStyle));
-  border-width: var(--saltFileDropZone-borderWidth, var(--fileDropZone-borderWidth));
+  border: var(--saltFileDropZone-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor));
   flex-direction: column;
-  padding: var(--saltFileDropZone-padding, var(--fileDropZone-padding));
+  padding: var(--salt-spacing-200);
+  gap: var(--salt-spacing-200);
+  width: 100%;
+  font-size: var(--saltFileDropZone-fontSize, var(--salt-text-fontSize));
+  font-family: var(--saltFileDropZone-fontFamily, var(--salt-text-fontFamily));
+  line-height: var(--saltFileDropZone-lineHeight, var(--salt-text-lineHeight));
 }
 
-.saltFileDropZone *:not(.saltFileDropZone-inputRoot, .saltFileDropZone-inputRoot *) {
-  pointer-events: none;
+.saltFileDropZone-active {
+  background: var(--salt-target-background-hover);
+  border: var(--salt-size-border-strong) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover);
 }
 
-/* Styles applied to icon */
-.saltFileDropZone-icon {
-  fill: var(--fileDropZone-icon-color);
-  margin-bottom: var(--salt-size-unit);
-}
-
-.saltFileDropZone .saltFileDropZone-title:not(:last-child),
-.saltFileDropZone .saltFileDropZone-inputRoot:not(:last-child) {
-  margin-bottom: calc(var(--salt-size-unit) * 2);
-}
-
-/* Styles applied if `isActive={true}` */
-.saltFileDropZone-active:not(.saltFileDropZone-disabled) {
-  --fileDropZone-background: var(--salt-target-background-hover);
-}
-
-/* Styles applied to description if `isRejected={true}`  */
-.saltFileDropZone-error .saltFileDropZone-description {
-  margin-bottom: calc(var(--salt-size-unit) * 2);
-}
-
-/* Styles applied if `isRejected={true}`  */
+/* Styles applied if `status="error" */
 .saltFileDropZone-error {
-  --fileDropZone-background: var(--salt-status-error-background);
-  --fileDropZone-borderColor: var(--salt-status-error-borderColor);
-  --fileDropZone-icon-color: var(--salt-status-error-foreground);
+  border: var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-error-borderColor);
 }
 
-/* Styles applied on if `isRejected={true}` and `isActive={true}` */
-.saltFileDropZone-error:not(.saltFileDropZone-disabled).saltFileDropZone-active {
-  --fileDropZone-background: var(--salt-target-background-hover);
-  --fileDropZone-borderColor: var(--salt-container-secondary-borderColor);
+/* Styles applied if `status="success" */
+.saltFileDropZone-success {
+  border: var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-status-success-borderColor);
 }
 
-/* Styles applied to title and description */
-.saltFileDropZone-title,
-.saltFileDropZone-description {
-  font-size: var(--saltFileDropZone-title-fontSize, var(--fileDropZone-title-fontSize));
-  line-height: var(--saltFileDropZone-title-lineHeight, var(--fileDropZone-title-lineHeight));
-}
-
-/* Styles applied to title */
-.saltFileDropZone-title {
-  font-weight: var(--saltFileDropZone-fontWeight, var(--salt-text-fontWeight-strong));
-}
-
-/* Styles applied to input button */
-.saltFileDropZone-inputButton {
-  display: inline-flex;
-}
-
-/* Styles applied to input root */
-.saltFileDropZone-inputRoot {
-  line-height: 1;
-}
-
-.saltFileDropZone-inputRoot .input-hidden {
-  position: absolute;
-  clip: rect(0, 0, 0, 0);
-  visibility: hidden;
+.saltFileDropZone .input-hidden {
+  display: none;
 }
 
 /* Styles applied if `disabled={true}` */
 .saltFileDropZone-disabled {
-  --fileDropZone-borderColor: var(--salt-container-secondary-borderColor-disabled);
-
+  background: var(--salt-container-primary-background-disabled);
+  border: var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor-disabled);
   cursor: var(--salt-target-cursor-disabled);
-}
-
-/* Styles applied if `disabled={true}` to icon and title */
-.saltFileDropZone-disabled .saltFileDropZone-icon,
-.saltFileDropZone-disabled .saltFileDropZone-title {
-  --fileDropZone-text-color: var(--salt-content-primary-foreground-disabled);
-  --fileDropZone-icon-color: var(--salt-content-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
 }
