@@ -16,11 +16,11 @@ The correct terms for the four arrow buttons on a keyboard are:
  - <kbd>Left arrow</kbd>
  - <kbd>Right arrow</kbd>
 
-Use \<kbd> tags when referring to keyboard keys.
-
 ### Best practices
 
 Use as a section header where necessary to draw the reader's attention to recommended tips and guidance. Never skip levels when using section headers. See the section section below for more information.
+
+"Best practices" is preferred to "guidance" as it provides greater clarity on what a reader can expect from the section, and provides greater differentiation from other parts of the section.
 
 ### Components
 
@@ -47,7 +47,9 @@ Write both the term foundation and the name of the foundation in sentence case, 
 
 ### Key combinations
 
-Wrap individual keys in \<kbd> tags. Remember that when using the `KeyboardControl` component to produce a table, the component adds these tags to keys in the function column.
+Wrap individual keys in \<kbd> tags. 
+
+Remember that when using the `KeyboardControl` component to produce a table, the component adds these tags to keys in the function column. Don't worry about adding tags elsewhere in the table, as it would make the table very large and hard to read.
 
 Place modifier keys, such as Shift, before other keys in a combination.
 
