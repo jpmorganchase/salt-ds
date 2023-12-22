@@ -16,10 +16,10 @@ data:
 
 By default, the switch thumb sits to the left side of the track and is in an unchecked state.
 
-- The switch state can be set using the optional `defaultChecked` prop.
-- The `onChange` event can be used to read the value using the second parameter.
+- You can set the switch state using the optional `defaultChecked` prop.
+- You can use the `onChange` event to read the value using the second parameter.
 
-Guidance:
+#### Best practices
 
 - Only use the `checked` prop for a controlled switch that requires some logic for validating value.
 - We recommend that you always use a text description for a switch.
@@ -30,7 +30,7 @@ Guidance:
 
 ### Checked
 
-When `defaultChecked={true}`, switch is in a `checked` state and the switch thumb sits to the right side of the track.
+When `defaultChecked={true}`, switch is in a `checked` state, and the switch thumb sits to the right side of the track.
 
 </LivePreview>
 
@@ -38,11 +38,11 @@ When `defaultChecked={true}`, switch is in a `checked` state and the switch thum
 
 ### Disabled
 
-You can set Switch to a disabled state. When `disabled`, it is not interactive or focusable.
+You can set a switch to a disabled state. When `disabled`, it's not interactive or focusable.
 
-Guidance:
+#### Best practices
 
-Use a disabled state for switches that have permissions, dependencies or pre-requisites. For example, a switch in a [Form](/salt/patterns/forms) may be disabled because the user has not yet completed an earlier section of the form.
+Use a disabled state for switches that have permissions, dependencies or prerequisites. For example, you can disable a switch in a [form](/salt/patterns/forms) because the user hasn't yet completed an earlier section of the form.
 
 </LivePreview>
 
@@ -50,11 +50,11 @@ Use a disabled state for switches that have permissions, dependencies or pre-req
 
 ### Disabled checked
 
-You can set a `checked` switch to a disabled state. When `disabled`, it is not interactive or focusable. This shows an option has been toggled to be “checked” but cannot be changed.
+You can set a `checked` switch to a disabled state. When `disabled`, it's not interactive or focusable. This shows an option has been “checked” but the user cannot change it.
 
-Guidance:
+#### Best practices
 
-Use a disabled checked state for switches that have permissions, dependencies or pre-requisites. For example, a switch in a [Form](/salt/patterns/forms) may be checked but disabled as the user does not have permissions to edit their selection during a later stage in a form.
+Use a disabled checked state for switches that have permissions, dependencies or pre-requisites. For example, a switch in a [form](/salt/patterns/forms) may be in a checked state but disabled as the user doesn't have permissions to edit their selection during a later stage in a form.
 
 </LivePreview>
 </LivePreviewControls>

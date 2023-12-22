@@ -8,26 +8,26 @@ data:
   $ref: ./#/data
 ---
 
-### Using the Link component
+### Using the component
 
 A standalone link is typically displayed in a body text style in the primary variant. If you want to display the link with less prominence, such as when linking to secondary information, you can display it in the secondary variant.
 
 An inline link should always use the same text formatting as the text that it is displayed with.
 
-#### When to use Link
+#### When to use
 
 - To provide navigation to a page on the same or different site.
 - To link to documents, email addresses or phone numbers.
 - To send users to a specific section on the same page.
 - To provide users with more detailed information or assistance e.g., terms and conditions, help sections or contact information.
 
-#### When not to use Link
+#### When not to use
 
-To trigger an action, such as submitting a form or opening a dialog. Instead, use [Button](../button).
+- To trigger an action, such as submitting a form or opening a dialog. Instead, use [Button](../button).
 
 ### Import
 
-To import Link from the core Salt package, use:
+To import `Link` from the core Salt package, use:
 
 ```js
 import { Link } from "@salt-ds/core";
@@ -42,9 +42,9 @@ import { Link } from "@salt-ds/core";
 - Link text should be concise, no longer than a single sentence. This helps to keep the user interface clean, minimize distractions and maintain a clear visual hierarchy.
 - Do not overload sentences or pages with links.
 - Consider writing standalone links as calls-to-action and begin with a verb e.g., “Visit the help page”.
-- Inline links should be written as if they were part of the sentence.
+- You should write inline links as if they were part of the sentence.
 - Do not include the word “link” in the link text. Most screen readers say “link” before each link.
-- Link text should accurately describe the content the link leads to. When a link is not labelled correctly to reflect the destination or purpose, it can confuse or frustrate the user.
+- Link text should accurately describe the linked content. Link text that does not correctly reflect the destination or purpose can confuse or frustrate the user.
 
 ### References
 

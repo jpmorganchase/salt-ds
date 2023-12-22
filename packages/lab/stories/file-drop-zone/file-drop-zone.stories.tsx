@@ -1,336 +1,155 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, SyntheticEvent, DragEvent } from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
-import { useDensity } from "@salt-ds/core";
+import {
+  Banner,
+  BannerContent,
+  Button,
+  StackLayout,
+  Text,
+  Tooltip,
+} from "@salt-ds/core";
+import {
+  FileDropZone,
+  FileDropZoneIcon,
+  FileDropZoneIconProps,
+  FileDropZoneProps,
+  FileDropZoneTrigger,
+  FileDropZoneTriggerProps,
+} from "@salt-ds/lab";
+
 import {
   createFileTypeValidator,
   createTotalSizeValidator,
-  FileDropZone,
-  FilesAcceptedEventHandler,
-  FilesRejectedEventHandler,
   FilesValidator,
-} from "@salt-ds/lab";
-import { AllRenderer } from "docs/components";
+  validateFiles,
+} from "./utils";
 
 export default {
   title: "Lab/File Drop Zone",
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
 
-export const All: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
-  return (
-    <AllRenderer>
-      <FileDropZone {...args} />
-    </AllRenderer>
-  );
+const statusTitles = {
+  success: "Upload completed",
+  error: "Error uploading",
 };
 
-export const Default: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
-  const [result, setResult] = useState<{ files: readonly File[] }>();
-
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-      setResult({ files });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
+const FileDropzoneTemplate: StoryFn<
+  FileDropZoneProps &
+    FileDropZoneIconProps &
+    FileDropZoneTriggerProps & { validate: readonly FilesValidator[] }
+> = ({ accept, children, disabled, validate, onDrop, ...rest }) => {
+  const [result, setResult] = useState<{
+    files?: readonly File[];
+    errors?: readonly string[];
+  }>();
+  const [status, setStatus] = useState<"success" | "error" | undefined>(
+    undefined
   );
 
+  const handleFilesAccepted = (files: File[], event: SyntheticEvent) => {
+    console.log("onFilesAccepted:", { files, event });
+    setResult({ files });
+    setStatus("success");
+  };
+
+  const handleFilesRejected = (errors: string[]) => {
+    console.error("onFilesRejected:", { errors });
+    setResult({ errors });
+    setStatus("error");
+  };
+
+  const addFiles = (event: SyntheticEvent, files: File[]) => {
+    if (!files) {
+      const errors = ["Drop target doesn't contain any file."];
+      return handleFilesRejected(errors);
+    }
+    if (files.length > 0) {
+      const errors = validate ? validateFiles({ files, validate }) : [];
+      if (errors && errors.length !== 0) {
+        return handleFilesRejected(errors);
+      }
+      return handleFilesAccepted(files, event);
+    }
+  };
+
+  const handleDrop = (event: DragEvent<HTMLDivElement>, files: File[]) => {
+    addFiles(event, files);
+    onDrop?.(event, files);
+  };
+
+  const reset = () => {
+    setStatus(undefined);
+    setResult({});
+  };
   return (
-    <>
+    <StackLayout style={{ width: 250 }}>
+      <Button onClick={reset}>Reset</Button>
       <FileDropZone
         data-testid="file-drop-zone-example"
-        onFilesAccepted={handleFilesAccepted}
-        {...args}
-      />
-      <ResultCard result={result} />
-    </>
+        status={status}
+        disabled={disabled}
+        {...rest}
+        onDrop={handleDrop}
+      >
+        <FileDropZoneIcon status={status} />
+        <strong>
+          {status !== undefined ? statusTitles[status] : "Drop files here or"}
+        </strong>
+        <FileDropZoneTrigger
+          accept={accept}
+          disabled={disabled}
+          onChange={addFiles}
+          data-testid="file-input-trigger"
+        />
+        {children}
+      </FileDropZone>
+      <Results result={result} />
+    </StackLayout>
   );
 };
+export const Default = FileDropzoneTemplate.bind({});
 Default.args = {};
 
-export const Disabled: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
-
-  return (
-    <FileDropZone
-      data-testid="file-drop-zone-example"
-      disabled
-      onFilesAccepted={handleFilesAccepted}
-      {...args}
-    />
-  );
+export const Disabled = FileDropzoneTemplate.bind({});
+Disabled.args = {
+  disabled: true,
 };
-Disabled.args = {};
 
-export const WithCustomText: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  ...args
-}) => {
-  const [result, setResult] = useState<{ files: readonly File[] }>();
-
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-      setResult({ files });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
-
-  return (
-    <>
-      <FileDropZone
-        data-testid="file-drop-zone-example"
-        onFilesAccepted={handleFilesAccepted}
-        {...args}
-      >
-        Some custom text
-      </FileDropZone>
-      <ResultCard result={result} />
-    </>
-  );
+export const WithFileTypeValidation = FileDropzoneTemplate.bind({});
+WithFileTypeValidation.args = {
+  accept: ".png, .xls",
+  children: "Only .png or .xls files.",
+  validate: [createFileTypeValidator({ accept: ".png, .xls" })],
 };
-WithCustomText.args = {};
 
-export const WithFileTypeValidation: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  onFilesRejected,
-  ...args
-}) => {
-  const ACCEPTED_TYPES = ".png, .xls";
-  const validateFileType = createFileTypeValidator({ accept: ACCEPTED_TYPES });
-
-  const [result, setResult] = useState<{
-    files?: readonly File[];
-    errors?: readonly string[];
-  }>();
-
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-      setResult({ files });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
-
-  const handleFilesRejected = useCallback<FilesRejectedEventHandler>(
-    (errors, event) => {
-      console.error("onFilesRejected:", { errors });
-      setResult({ errors });
-
-      onFilesRejected?.(errors, event);
-    },
-    [onFilesRejected]
-  );
-
-  return (
-    <>
-      <FileDropZone
-        accept={ACCEPTED_TYPES}
-        data-testid="file-drop-zone-example"
-        description="Only .png or .xls files."
-        onFilesAccepted={handleFilesAccepted}
-        onFilesRejected={handleFilesRejected}
-        validate={[validateFileType]}
-        {...args}
-      />
-      <ResultCard result={result} />
-    </>
-  );
-};
-WithFileTypeValidation.args = {};
-
-export const WithMultipleValidations: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  onFilesRejected,
-  ...args
-}) => {
-  const width = {
-    high: 150,
-    medium: 180,
-    low: 210,
-    touch: 250,
-  };
-  const ACCEPTED_TYPES = "image/*";
-  const ONE_KB = Math.pow(2, 10);
-  const MAX_KB = 500;
-  const MAX_CHARS = 35;
-
-  const fakeServiceCall = () =>
-    new Promise((resolve) => setTimeout(resolve, 1500));
-
-  const validateFileType = createFileTypeValidator({ accept: ACCEPTED_TYPES });
-
-  const validateTotalSize = createTotalSizeValidator({
-    maxSize: MAX_KB * ONE_KB,
-    getError: () =>
-      `The file/s exceed the maximum upload limit of ${MAX_KB}KB.`,
+const validateFileType = createFileTypeValidator({ accept: "image/*" });
+const validateTotalSize = createTotalSizeValidator({
+  maxSize: 500 * Math.pow(2, 10),
+  getError: () => "The file/s exceed the maximum upload limit of 500KB.",
+});
+const validateFileName: FilesValidator = (files) =>
+  files.map((file) => {
+    if (file.name.length > 36) {
+      return `File name ${file.name} is longer than 36 chars.`;
+    }
+    return undefined;
   });
 
-  const validateFileName: FilesValidator = (files) =>
-    files.map((file) => {
-      if (file.name.length > MAX_CHARS) {
-        return `File name ${file.name} is longer than ${MAX_CHARS} chars.`;
-      }
-      return undefined;
-    });
-
-  const [result, setResult] = useState<{
-    files?: readonly ResultCardFile[];
-    isUploading: boolean;
-    errors?: readonly string[];
-  }>();
-
-  const density = useDensity();
-
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-
-      const fileValues: readonly ResultCardFile[] = files.map((f) => ({
-        name: f.name,
-        size: f.size,
-      }));
-
-      setResult({
-        files: fileValues,
-        isUploading: true,
-      });
-
-      // call a fake service on accepting files
-      void fakeServiceCall().then(() => {
-        setResult({
-          files: fileValues,
-          isUploading: false,
-        });
-      });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
-
-  const handleFilesRejected = useCallback<FilesRejectedEventHandler>(
-    (errors, event) => {
-      console.error("onFilesRejected:", { errors });
-      setResult({
-        errors,
-        isUploading: false,
-      });
-
-      onFilesRejected?.(errors, event);
-    },
-    [onFilesRejected]
-  );
-
-  return (
-    <>
-      <FileDropZone
-        accept={ACCEPTED_TYPES}
-        data-testid="file-drop-zone-example"
-        description={`${MAX_KB}KB total file size limit. Accept only images with file name no more than ${MAX_CHARS} chars.`}
-        style={{ width: width[density] }}
-        onFilesAccepted={handleFilesAccepted}
-        onFilesRejected={handleFilesRejected}
-        validate={[validateFileType, validateFileName, validateTotalSize]}
-        {...args}
-      />
-      <ResultCard result={result} />
-    </>
-  );
-};
-WithMultipleValidations.args = {};
-
-export const WithTotalSizeValidation: StoryFn<typeof FileDropZone> = ({
-  onFilesAccepted,
-  onFilesRejected,
-  ...args
-}) => {
-  const ONE_KB = Math.pow(2, 10);
-  const MAX_KB = 500;
-
-  const validateTotalSize = createTotalSizeValidator({
-    maxSize: MAX_KB * ONE_KB,
-    getError: () =>
-      `The file/s exceed the maximum upload limit of ${MAX_KB}KB.`,
-  });
-  const [result, setResult] = useState<{
-    files?: readonly File[];
-    errors?: readonly string[];
-  }>();
-
-  const handleFilesAccepted = useCallback<FilesAcceptedEventHandler>(
-    (files, event) => {
-      console.log("onFilesAccepted:", { files, event });
-      setResult({ files });
-
-      onFilesAccepted?.(files, event);
-    },
-    [onFilesAccepted]
-  );
-
-  const handleFilesRejected = useCallback<FilesRejectedEventHandler>(
-    (errors, event) => {
-      console.error("onFilesRejected:", { errors });
-      setResult({ errors });
-
-      onFilesRejected?.(errors, event);
-    },
-    [onFilesRejected]
-  );
-
-  return (
-    <>
-      <FileDropZone
-        accept=".png, .jpg"
-        data-testid="file-drop-zone-example"
-        description="500KB total file size limit."
-        onFilesAccepted={handleFilesAccepted}
-        onFilesRejected={handleFilesRejected}
-        validate={[validateTotalSize]}
-        {...args}
-      />
-      <ResultCard result={result} />
-    </>
-  );
-};
-WithTotalSizeValidation.args = {};
-
-// Increase the size, to show content will be centered
-export const StretchSize: StoryFn<typeof FileDropZone> = (props) => {
-  return (
-    <FileDropZone
-      data-testid="file-drop-zone-example"
-      onFilesAccepted={(files, event) => {
-        console.log("onFilesAccepted:", { files, event });
-      }}
-      style={{ width: 400, height: 400 }}
-      description="Some custom description."
-      {...props}
-    />
-  );
+export const WithMultipleValidations = FileDropzoneTemplate.bind({});
+WithMultipleValidations.args = {
+  accept: "image/*",
+  children: (
+    <Text>
+      Images only.
+      <br />
+      500KB total file size limit.
+      <br />
+      36 chars File name limit.
+    </Text>
+  ),
+  validate: [validateFileType, validateTotalSize, validateFileName],
 };
 
 interface ResultCardFile {
@@ -348,61 +167,57 @@ interface ResultCardProps {
   result: ResultCardType | undefined;
 }
 
-export const ResultCard = ({ result }: ResultCardProps) => {
+const Results = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (
         <strong>No files selected.</strong>
       ) : (
-        <div>
-          <strong>Files:</strong>
-          <ul>
-            {files.map(({ name, size }) => (
-              <li key={name}>
-                {name} - {size} bytes
-              </li>
-            ))}
-          </ul>
-        </div>
+        files.map(({ name, size }) => {
+          const label = `${name} - ${size} bytes`;
+          const longLabel = label.split("").length > 36;
+          return (
+            <Banner key={name} status="success" variant="secondary">
+              <BannerContent>
+                <Tooltip content={label} disabled={!longLabel}>
+                  <Text maxRows={1}>{label}</Text>
+                </Tooltip>
+              </BannerContent>
+            </Banner>
+          );
+        })
       ),
     []
   );
 
   const renderErrors = useCallback(
-    (errors: readonly string[]) => (
-      <div style={{ color: "firebrick" }}>
-        <strong>Errors:</strong>
-        <ul>
-          {errors.map((error) => (
-            <li key={error}>{error}</li>
-          ))}
-        </ul>
-      </div>
-    ),
+    (errors: readonly string[]) =>
+      errors.map((error) => {
+        const longLabel = error.split("").length > 36;
+
+        return (
+          <Banner status="error" variant="secondary" key={error}>
+            <BannerContent>
+              <Tooltip content={error} disabled={!longLabel}>
+                <Text maxRows={1}>{error}</Text>
+              </Tooltip>
+            </BannerContent>
+          </Banner>
+        );
+      }),
     []
   );
-
   return (
-    <div
-      style={{
-        fontFamily: "Open Sans",
-        lineHeight: "1.85em",
-        marginTop: "2em",
-        padding: "1em 1em 0 1em",
-        border: "1px solid lightgrey",
-        fontSize: 12,
-        width: 450,
-      }}
-    >
-      {!result && <strong>No files have been added.</strong>}
-      {result && result.files && renderFiles(result.files)}
-      {result && result.errors && renderErrors(result.errors)}
-      <em style={{ display: "block" }}>
-        This card is for example only. It is not a part of the FileDropZone
-        component. <br />
-        <strong>Note:</strong> No information about files you upload to this
-        example will be stored on our servers.
-      </em>
+    <div style={{ height: 500, maxHeight: 500, overflow: "hidden" }}>
+      {!result?.files && (
+        <Banner>
+          <BannerContent>
+            <strong>No files have been added.</strong>
+          </BannerContent>
+        </Banner>
+      )}
+      {result?.files && renderFiles(result.files)}
+      {result?.errors && renderErrors(result.errors)}
     </div>
   );
 };

@@ -1,5 +1,19 @@
 # @salt-ds/icons
 
+## 1.9.0
+
+### Minor Changes
+
+- b9831e3e: Added:
+
+  - DragRowIcon
+  - JigsawIcon
+  - JigsawSolidIcon
+  - LayersIcon
+  - LayersSolidIcon
+  - TypeIcon
+  - TypeSolidIcon
+
 ## 1.8.0
 
 ### Minor Changes

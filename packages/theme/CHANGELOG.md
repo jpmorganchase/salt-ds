@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.10.1
+
+### Patch Changes
+
+- dbc44243: Add --salt-text-background-selected back as a deprecated token after it was accidentally removed.
+
 ## 1.10.0
 
 ### Minor Changes

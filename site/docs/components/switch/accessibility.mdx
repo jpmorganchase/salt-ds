@@ -9,31 +9,24 @@ data:
   $ref: ./#/data
 ---
 
-### Best practices
-
-- On focus, the screen reader should:
-  - Identify the switch
-  - Read out the text
-  - Express the state
-
 ### Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is on the previous element in the tab order, move focus onto Switch.
-- If focus is on Switch, moves focus to the next focusable element in the tab order.
+- If focus is on the previous element in the tab order, Tab moves focus to the switch.
+- If focus is on switch, Tab moves focus to the next focusable element in the tab order.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Space">
 
-- Activate Switch to change state.
+- Space activates switch to change between checked and unchecked state.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is on Switch, moves focus out of the component. Focus is set to the previous component in the tab order.
-- If focus is below Switch, move focus to Switch.
+- If focus is on the switch, this action moves focus out of the component and sets the focus to the previous component in the tab order.
+- If focus is below the switch, this action moves focus to the switch.
 
 </KeyboardControl>
 </KeyboardControls>

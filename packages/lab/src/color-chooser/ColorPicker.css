@@ -34,21 +34,21 @@
  **/
 
 /* Entire container for react-color component */
-.root,
-.rootDisabledAlpha {
+.saltColorChooserPicker-root,
+.saltColorChooserPicker-rootDisabledAlpha {
   box-shadow: none !important;
   padding: 8px 8px 0px 0px !important;
   background: transparent !important;
   width: calc(9 * var(--salt-size-stackable)) !important;
 }
 /* Color sliders container */
-.root .flexbox-fix,
-.rootDisabledAlpha .flexbox-fix {
+.saltColorChooserPicker-root .flexbox-fix,
+.saltColorChooserPicker-rootDisabledAlpha .flexbox-fix {
   padding-top: 8px !important;
 }
 /* RGB Inputs provided by react-color */
-.rootDisabledAlpha .flexbox-fix ~ .flexbox-fix,
-.root .flexbox-fix ~ .flexbox-fix {
+.saltColorChooserPicker-rootDisabledAlpha .flexbox-fix ~ .flexbox-fix,
+.saltColorChooserPicker-root .flexbox-fix ~ .flexbox-fix {
   display: none !important;
 }
 /* Height of hue and saturation boxes */
@@ -81,7 +81,7 @@
   height: calc(var(--salt-size-base) / 4) !important;
 }
 /* Cursor on hue slider */
-.rootDisabledAlpha .hue-horizontal > div > div {
+.saltColorChooserPicker-rootDisabledAlpha .hue-horizontal > div > div {
   position: relative;
   margin-top: 0px !important;
   width: 4px !important;
