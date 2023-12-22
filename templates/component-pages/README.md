@@ -5,7 +5,8 @@ Follow these steps to add a new component page to the Salt website.
 ## 1. Getting started
 
 Copy the [`component-name/`](./component-name/) folder into the [`site/docs/components/` directory](../../site/docs/components/) and rename it to your component's name in kebab case. For example `form-field/`.
-   - 💡 **Tip:** If you are using GitHub's website to edit component docs, you can press the <kbd>.</kbd> key to launch a version of VS Code in your browser and copy the directory via that. 
+
+- 💡 **Tip:** If you are using GitHub's website to edit component docs, you can press the <kbd>.</kbd> key to launch a version of VS Code in your browser and copy the directory via that.
 
 Read the [Salt content style guide](../../content-style-guide.md) to ensure your writing maintains consistency with other documentation.
 
@@ -55,7 +56,7 @@ Use this section to outline situations where a user may want to use a given comp
 
 Use bullet points, unless there is one point in **both** sections. Use a new bullet point for each new point for clarity.
 
-Don't worry about writing "use" and "don't use" at the start of each sentence, as it's implied by the section header. Try to start the sentence with "when" or "to", such as "when the nav item contains more than four items." 
+Don't worry about writing "use" and "don't use" at the start of each sentence, as it's implied by the section header. Try to start the sentence with "when" or "to", such as "when the nav item contains more than four items."
 
 For the "when not to use" section, provide an alternative solution for each point where possible. Format as "Instead, use X" or "Instead, use X to Y" where X is a component or alternative solution and Y is a task or outcome. Use back ticks and Pascal case for component names, and link to the relevant documentation.
 
@@ -63,14 +64,14 @@ For the "when not to use" section, provide an alternative solution for each poin
 
 Introduce with the text "To import `[ComponentName]` from the [core/lab/other] Salt package, use:"
 
- - When there are two components: "To import `[Component1]` and `[Component2]` from the [core/lab/other] Salt package, use:"
- - When there are three or more components: "To import `[Component1]` and related components from the [core/lab/other] Salt package, use:"
+- When there are two components: "To import `[Component1]` and `[Component2]` from the [core/lab/other] Salt package, use:"
+- When there are three or more components: "To import `[Component1]` and related components from the [core/lab/other] Salt package, use:"
 
 Format import commands with "\```js".
 
 ### Props
 
-Props tables are automatically generated using the `PropsTable` component. 
+Props tables are automatically generated using the `PropsTable` component.
 
 ```js
 <PropsTable packageName="core" componentName="ComponentName" />

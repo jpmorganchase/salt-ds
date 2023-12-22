@@ -11,10 +11,11 @@ Entries are listed in alphabetical order.
 ### Arrow keys
 
 The correct terms for the four arrow buttons on a keyboard are:
- - <kbd>Up arrow</kbd>
- - <kbd>Down arrow</kbd>
- - <kbd>Left arrow</kbd>
- - <kbd>Right arrow</kbd>
+
+- <kbd>Up arrow</kbd>
+- <kbd>Down arrow</kbd>
+- <kbd>Left arrow</kbd>
+- <kbd>Right arrow</kbd>
 
 ### Best practices
 
@@ -41,13 +42,13 @@ Here is an example of a correctly-formatted sentence: "I see `Button` has just b
 
 ### Foundations
 
-Used when referring to the Salt foundations. Avoid the term if not referring to the Salt foundations (or foundations in another design system) to reduce confusion. 
+Used when referring to the Salt foundations. Avoid the term if not referring to the Salt foundations (or foundations in another design system) to reduce confusion.
 
 Write both the term foundation and the name of the foundation in sentence case, e.g. "Read more in the size foundation."
 
 ### Key combinations
 
-Wrap individual keys in \<kbd> tags. 
+Wrap individual keys in \<kbd> tags.
 
 Remember that when using the `KeyboardControl` component to produce a table, the component adds these tags to keys in the function column. Don't worry about adding tags elsewhere in the table, as it would make the table very large and hard to read.
 
@@ -67,8 +68,8 @@ Write both the term pattern and the name of the pattern in sentence case, e.g. "
 
 Use prop, do not use property. Wrap the prop in back ticks. Write out the statement in full to make the formatting clear.
 
- - Correct: "Set `wrap={true}`"
- - Incorrect: "Set the `wrap` prop to `true`"
+- Correct: "Set `wrap={true}`"
+- Incorrect: "Set the `wrap` prop to `true`"
 
 Outline the simplest possible complete statement. When a user can use a prop with no values, such as `aria-hidden`, recommend the reader use it as-is, rather than passing a Boolean or a string value. When a user can pass a Boolean or string value, prefer Boolean where possible.
 
