@@ -12,13 +12,15 @@ const OverlayContent = (
   </>
 );
 
-<Overlay
-  content={<OverlayContent />}
-  placement="right"
-  aria-labelledby="overlay_label"
-  aria-describedby="overlay_description"
-  {...props}
->
-  <Button>Show Overlay</Button>
+<Overlay placement="right">
+  <OverlayTrigger>
+    <Button>Show Overlay</Button>
+  </OverlayTrigger>
+  <OverlayPanel
+    aria-labelledby="overlay_label"
+    aria-describedby="overlay_description"
+  >
+    <OverlayContent />
+  </OverlayPanel>
 </Overlay>;
 ```

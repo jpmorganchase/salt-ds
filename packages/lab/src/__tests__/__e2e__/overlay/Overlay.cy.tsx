@@ -3,7 +3,7 @@ import * as overlayStories from "@stories/overlay/overlay.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, OverlayRight, OverlayBottom, OverlayLeft } = composedStories;
+const { Default, Right, Bottom, Left } = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -74,7 +74,7 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted right", () => {
     it("THEN it should appear on right of trigger element", () => {
-      cy.mount(<OverlayRight open />);
+      cy.mount(<Right open />);
 
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().x;
@@ -87,7 +87,7 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted bottom", () => {
     it("THEN it should appear on bottom of trigger element", () => {
-      cy.mount(<OverlayBottom open />);
+      cy.mount(<Bottom open />);
 
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().y;
@@ -100,7 +100,7 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted left", () => {
     it("THEN it should appear on left of trigger element", () => {
-      cy.mount(<OverlayLeft open />);
+      cy.mount(<Left open />);
 
       cy.findByRole("dialog").then(($el) => {
         const textPosition = $el[0].getBoundingClientRect().x;

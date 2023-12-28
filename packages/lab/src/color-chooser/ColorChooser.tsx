@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
-import { Overlay } from "../overlay";
+import { Overlay, OverlayPanel, OverlayTrigger } from "../overlay";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
@@ -163,40 +163,41 @@ export const ColorChooser = ({
   );
 
   return (
-    <Overlay
-      placement="bottom"
-      content={<OverlayContent />}
-      data-testid="color-chooser-overlay"
-    >
-      <Button
-        className={clsx(withBaseName("overlayButton"), {
-          [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
-        })}
-        // @ts-ignore
-        data-testid="color-chooser-overlay-button"
-        disabled={readOnly}
-        {...buttonProps}
-      >
-        {color && (
-          <div
-            className={clsx(withBaseName("overlayButtonSwatch"), {
-              [withBaseName("overlayButtonSwatchWithBorder")]:
-                color?.hex.startsWith("#ffffff"),
-              [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
-                color?.hex
-              ),
-            })}
-            style={{
-              backgroundColor: color?.hex,
-            }}
-          />
-        )}
-        {!hideLabel && (
-          <div className={withBaseName("overlayButtonText")}>
-            {displayColorName ?? placeholder ?? "No color selected"}
-          </div>
-        )}
-      </Button>
+    <Overlay placement="bottom" data-testid="color-chooser-overlay">
+      <OverlayTrigger>
+        <Button
+          className={clsx(withBaseName("overlayButton"), {
+            [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
+          })}
+          // @ts-ignore
+          data-testid="color-chooser-overlay-button"
+          disabled={readOnly}
+          {...buttonProps}
+        >
+          {color && (
+            <div
+              className={clsx(withBaseName("overlayButtonSwatch"), {
+                [withBaseName("overlayButtonSwatchWithBorder")]:
+                  color?.hex.startsWith("#ffffff"),
+                [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
+                  color?.hex
+                ),
+              })}
+              style={{
+                backgroundColor: color?.hex,
+              }}
+            />
+          )}
+          {!hideLabel && (
+            <div className={withBaseName("overlayButtonText")}>
+              {displayColorName ?? placeholder ?? "No color selected"}
+            </div>
+          )}
+        </Button>
+      </OverlayTrigger>
+      <OverlayPanel>
+        <OverlayContent />
+      </OverlayPanel>
     </Overlay>
   );
 };

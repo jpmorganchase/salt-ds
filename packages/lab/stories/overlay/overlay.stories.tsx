@@ -5,9 +5,15 @@ import {
   StackLayout,
   Tooltip,
 } from "@salt-ds/core";
-import { Overlay, useOverlay } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import { Meta } from "@storybook/react";
 import React, { ChangeEvent } from "react";
+
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayProps,
+  OverlayTrigger,
+} from "@salt-ds/lab";
 
 import "./overlay.stories.css";
 
@@ -32,68 +38,75 @@ const OverlayContent = (
   </>
 );
 
-const OverlayTemplate: StoryFn<typeof Overlay> = (props) => {
+const OverlayTemplate = (props: OverlayProps) => {
+  const { placement, style, ...rest } = props;
+
   return (
-    <Overlay
-      aria-labelledby="overlay_label"
-      aria-describedby="overlay_description"
-      {...props}
-      content={props.content}
-    >
-      <Button>Show Overlay</Button>
+    <Overlay placement={placement} {...rest}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel
+        aria-labelledby="overlay_label"
+        aria-describedby="overlay_description"
+        style={style}
+      >
+        {OverlayContent}
+      </OverlayPanel>
     </Overlay>
   );
 };
 
-export const Default = OverlayTemplate.bind({});
-Default.args = {
-  placement: "top",
-  content: OverlayContent,
+export const Default = (props: OverlayProps) => {
+  return OverlayTemplate({ ...props });
 };
 
-export const OverlayRight = OverlayTemplate.bind({});
-OverlayRight.args = {
-  placement: "right",
-  content: OverlayContent,
+export const Bottom = (props: OverlayProps) => {
+  return OverlayTemplate({ placement: "bottom", ...props });
 };
 
-export const OverlayBottom = OverlayTemplate.bind({});
-OverlayBottom.args = {
-  placement: "bottom",
-  content: OverlayContent,
+export const Left = (props: OverlayProps) => {
+  return OverlayTemplate({ placement: "left", ...props });
 };
 
-export const OverlayLeft = OverlayTemplate.bind({});
-OverlayLeft.args = {
-  placement: "left",
-  content: OverlayContent,
+export const Right = (props: OverlayProps) => {
+  return OverlayTemplate({ placement: "right", ...props });
 };
 
-export const LongContent = OverlayTemplate.bind({});
-LongContent.args = {
-  placement: "right",
-  style: {
-    width: 300,
-    height: 200,
-    overflow: "auto",
-  },
-  content: (
-    <StackLayout id="overlay_description">
-      <div>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book.
-      </div>
-      <div>
-        It has survived not only five centuries, but also the leap into
-        electronic typesetting, remaining essentially unchanged. It was
-        popularised in the 1960s with the release of Letraset sheets containing
-        Lorem Ipsum passages, and more recently with desktop publishing software
-        like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-    </StackLayout>
-  ),
+export const LongContent = () => {
+  return (
+    <Overlay placement="right">
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel
+        aria-labelledby="overlay_label"
+        aria-describedby="overlay_description"
+        style={{
+          width: 300,
+          height: 200,
+          overflow: "auto",
+        }}
+      >
+        <StackLayout id="overlay_description">
+          <div>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book.
+          </div>
+          <div>
+            It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was
+            popularised in the 1960s with the release of Letraset sheets
+            containing Lorem Ipsum passages, and more recently with desktop
+            publishing software like Aldus PageMaker including versions of Lorem
+            Ipsum.
+          </div>
+        </StackLayout>
+      </OverlayPanel>
+    </Overlay>
+  );
 };
 
 const Divider = () => {
@@ -190,42 +203,40 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
-  const { onOpenChange } = useOverlay({ onOpenChange: setShow });
 
   return (
     <Overlay
       open={show}
-      content={
-        <WithActionsContent
-          onClose={() => {
-            setShow(false);
-          }}
-        />
-      }
       onClose={() => {
         setShow(false);
       }}
-      placement={"bottom"}
-      style={{
-        width: 246,
-      }}
-      onOpenChange={onOpenChange}
       onKeyDown={(event) => {
         event.key === "Escape" && setShow(false);
       }}
-      aria-labelledby="overlay_label"
-      aria-describedby="overlay_description"
+      placement="bottom"
     >
-      <Button
-        onClick={() => {
-          setShow(true);
-        }}
-        onKeyDown={(event) => {
-          event.key === "Escape" && setShow(false);
+      <OverlayTrigger>
+        <Button
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          Show Overlay
+        </Button>
+      </OverlayTrigger>
+      <OverlayPanel
+        aria-labelledby="overlay_label"
+        aria-describedby="overlay_description"
+        style={{
+          width: 246,
         }}
       >
-        Show Overlay
-      </Button>
+        {WithActionsContent({
+          onClose: () => {
+            setShow(false);
+          },
+        })}
+      </OverlayPanel>
     </Overlay>
   );
 };

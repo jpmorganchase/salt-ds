@@ -19,10 +19,11 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   ListItem,
-  ListItemType,
   Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  ListItemType,
   SelectionChangeHandler,
-  useOverlay,
   ValueComponentProps,
   FormField,
 } from "@salt-ds/lab";
@@ -508,8 +509,13 @@ const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
   );
 
   return (
-    <Overlay {...props} content={<OverlayContent />}>
-      <Button>view contact details</Button>
+    <Overlay {...props}>
+      <OverlayTrigger>
+        <Button>view contact details</Button>
+      </OverlayTrigger>
+      <OverlayPanel>
+        <OverlayContent />
+      </OverlayPanel>
     </Overlay>
   );
 };
