@@ -1,128 +1,136 @@
 import {
-  makePrefixer,
-  mergeProps,
-  useFloatingComponent,
-  UseFloatingUIProps,
-  useForkRef,
-} from "@salt-ds/core";
-import {
+  ComponentPropsWithoutRef,
+  CSSProperties,
   forwardRef,
-  ReactNode,
-  isValidElement,
-  cloneElement,
-  HTMLAttributes,
   SyntheticEvent,
+  useMemo,
+  useRef,
 } from "react";
+import { OverlayContext } from "./OverlayContext";
+import { useControlled, useFloatingUI } from "@salt-ds/core";
+import {
+  flip,
+  offset,
+  shift,
+  limitShift,
+  arrow,
+  useClick,
+  useDismiss,
+  useInteractions,
+  useRole,
+} from "@floating-ui/react";
 
-import { clsx } from "clsx";
-
-import { useOverlay } from "./useOverlay";
-import { FloatingOverlay } from "@floating-ui/react";
-import { OverlayBase } from "./OverlayBase";
-
-export interface OverlayProps
-  extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
-    Omit<HTMLAttributes<HTMLDivElement>, "content"> {
-  /**
-   * The children will be the Overlay's trigger.
-   */
-  children: ReactNode;
-  /**
-   * Content displayed inside the Overlay. Can be a string or a React component.
-   */
-  content: ReactNode;
+export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
+  open?: boolean;
+  onOpenChange?: (event: SyntheticEvent, newOpen: boolean) => void;
   /*
    * Set the placement of the Overlay component relative to the anchor element. Defaults to `top`.
    */
-  placement?: "bottom" | "top" | "left" | "right";
+  placement?: "top" | "bottom" | "left" | "right";
   /*
    * Use in controlled version to close Overlay.
    */
   onClose?: (event: SyntheticEvent) => void;
 }
 
-const withBaseName = makePrefixer("saltOverlay");
-
 export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
   function Overlay(props, ref) {
     const {
       children,
-      className,
-      open: openProp,
-      onOpenChange: onOpenChangeProp,
-      content,
-      placement = "top",
+      open,
+      onOpenChange,
+      placement: placementProp = "top",
       onClose,
-      "aria-labelledby": overlayLabelledBy,
-      "aria-describedby": overlayDescribedBy,
       ...rest
     } = props;
 
-    const {
-      arrowProps,
-      open,
-      onOpenChange,
-      context,
-      floating,
-      reference,
-      getTriggerProps,
-      getOverlayProps,
-      floatingStyles,
-    } = useOverlay({
-      open: openProp,
-      placement,
-      onOpenChange: onOpenChangeProp,
+    const arrowRef = useRef<SVGSVGElement | null>(null);
+
+    const [openState, setOpenState] = useControlled({
+      controlled: open,
+      default: false,
+      name: "Overlay",
+      state: "open",
     });
 
-    const { Component: FloatingComponent } = useFloatingComponent();
+    const {
+      x,
+      y,
+      strategy,
+      context,
+      elements,
+      floating,
+      reference,
+      middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+      placement,
+    } = useFloatingUI({
+      open: openState,
+      onOpenChange: setOpenState,
+      placement: placementProp,
+      middleware: [
+        offset(11),
+        flip(),
+        shift({ limiter: limitShift() }),
+        arrow({ element: arrowRef }),
+      ],
+    });
 
-    const triggerRef = useForkRef(
-      // @ts-ignore error TS2339
-      isValidElement(children) ? children.ref : null,
-      reference
-    );
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+      useRole(context, { role: "dialog" }),
+      useClick(context),
+      useDismiss(context),
+    ]);
 
-    const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
+    const floatingStyles: CSSProperties = useMemo(() => {
+      return {
+        top: y ?? 0,
+        left: x ?? 0,
+        position: strategy,
+        width: elements.floating?.offsetWidth,
+        height: elements.floating?.offsetHeight,
+      };
+    }, [elements.floating, strategy, x, y]);
+
+    const setOpen = (event: SyntheticEvent, newOpen: boolean) => {
+      setOpenState(newOpen);
+      onOpenChange?.(event, newOpen);
+    };
+
+    const arrowProps = {
+      ref: arrowRef,
+      context,
+      style: {
+        position: strategy,
+        left: arrowX ?? 0,
+        top: arrowY ?? 0,
+      },
+    };
 
     const handleCloseButton = (event: SyntheticEvent) => {
-      onOpenChange(false);
+      setOpen(event, false);
       onClose?.(event);
     };
 
     return (
-      <>
-        {isValidElement(children) &&
-          cloneElement(children, {
-            ...mergeProps(getTriggerProps(), children.props),
-            ref: triggerRef,
-          })}
-
-        {open && (
-          <FloatingOverlay>
-            <FloatingComponent
-              ref={floatingRef}
-              open={open}
-              className={clsx(withBaseName(), className)}
-              aria-modal="true"
-              aria-labelledBy={overlayLabelledBy}
-              aria-describedBy={overlayDescribedBy}
-              {...getOverlayProps()}
-              {...floatingStyles()}
-              // @ts-ignore missing 'children' property
-              focusManagerProps={{
-                context: context,
-              }}
-            >
-              <OverlayBase
-                arrowProps={arrowProps}
-                content={content}
-                handleCloseButton={handleCloseButton}
-                {...rest}
-              />
-            </FloatingComponent>
-          </FloatingOverlay>
-        )}
-      </>
+      <OverlayContext.Provider
+        value={{
+          openState,
+          setOpen,
+          floatingStyles,
+          placement,
+          context,
+          arrowProps,
+          floating,
+          reference,
+          handleCloseButton,
+          getFloatingProps,
+          getReferenceProps,
+        }}
+      >
+        <div ref={ref} {...rest}>
+          {children}
+        </div>
+      </OverlayContext.Provider>
     );
   }
 );

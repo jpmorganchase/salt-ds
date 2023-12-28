@@ -1,24 +1,19 @@
-import { FloatingArrow, FloatingArrowProps } from "@floating-ui/react";
-import { OverlayProps } from "./Overlay";
+import { FloatingArrow } from "@floating-ui/react";
 
 import overlayCss from "./Overlay.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { Button, makePrefixer } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { SyntheticEvent } from "react";
+import { ComponentPropsWithoutRef } from "react";
+import { useOverlayContext } from "./OverlayContext";
+import clsx from "clsx";
 
 const withBaseName = makePrefixer("saltOverlay");
 
-interface OverlayBaseProps extends Omit<OverlayProps, "children"> {
-  arrowProps: FloatingArrowProps;
-  /*
-   * Handles close button click or press.
-   */
-  handleCloseButton: (event: SyntheticEvent) => void;
-}
+interface OverlayPanelBaseProps extends ComponentPropsWithoutRef<"div"> {}
 
-export const OverlayBase = (props: OverlayBaseProps) => {
+export const OverlayPanelBase = (props: OverlayPanelBaseProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-overlay",
@@ -26,7 +21,8 @@ export const OverlayBase = (props: OverlayBaseProps) => {
     window: targetWindow,
   });
 
-  const { content, arrowProps, handleCloseButton, ...rest } = props;
+  const { arrowProps, handleCloseButton } = useOverlayContext();
+  const { children, className, ...rest } = props;
 
   return (
     <>
@@ -39,7 +35,9 @@ export const OverlayBase = (props: OverlayBaseProps) => {
         >
           <CloseIcon aria-hidden />
         </Button>
-        <div className={withBaseName("content")}>{content}</div>
+        <div className={clsx(withBaseName("content"), className)}>
+          {children}
+        </div>
       </div>
 
       <FloatingArrow

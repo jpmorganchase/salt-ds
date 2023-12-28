@@ -1,2 +1,3 @@
 export * from "./Overlay";
-export * from "./useOverlay";
+export * from "./OverlayTrigger";
+export * from "./OverlayPanel";
