@@ -23,5 +23,5 @@
 }
 
 .saltPageButton-fixed {
-  padding: 0;
+  --saltButton-padding: 0;
 }

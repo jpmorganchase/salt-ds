@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltPageRanges");
 
 export interface PageRangesProps {
   boundaryCount?: number;
-  siblingPairCount?: number;
+  siblingCount?: number;
 }
 
 const Ellipsis = () => {
@@ -29,7 +29,7 @@ const mapRange = (range: PageRange, fn: (i: number) => ReactElement) => {
 };
 
 export function PageRanges({
-  siblingPairCount = 2,
+  siblingCount = 2,
   boundaryCount = 1,
 }: PageRangesProps) {
   const targetWindow = useWindow();
@@ -54,7 +54,7 @@ export function PageRanges({
     page,
     count,
     Math.max(1, boundaryCount),
-    siblingPairCount
+    siblingCount
   );
 
   return (

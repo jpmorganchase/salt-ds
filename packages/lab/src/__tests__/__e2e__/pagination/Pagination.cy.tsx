@@ -421,12 +421,12 @@ describe("GIVEN an Pagination", () => {
     });
   });
 
-  describe("WHEN siblingPairCount", () => {
+  describe("WHEN siblingCount", () => {
     describe("AND setting it to `3`", () => {
       it("THEN should render 11 buttons when the count is 11", () => {
         cy.mount(
           <Pagination count={11}>
-            <Paginator siblingPairCount={3} />
+            <Paginator siblingCount={3} />
           </Pagination>
         );
 
@@ -436,7 +436,7 @@ describe("GIVEN an Pagination", () => {
       it("THEN should render 9 buttons when the count is 12", () => {
         cy.mount(
           <Pagination count={12}>
-            <Paginator siblingPairCount={3} />
+            <Paginator siblingCount={3} />
           </Pagination>
         );
 

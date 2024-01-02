@@ -20,12 +20,12 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Number of pages on each side of the current page when page range is truncated.
    */
-  siblingPairCount?: number;
+  siblingCount?: number;
 }
 
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   function Paginator(
-    { className, boundaryCount, siblingPairCount, ...restProps },
+    { className, boundaryCount, siblingCount, ...restProps },
     ref
   ) {
     const targetWindow = useWindow();
@@ -60,10 +60,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
         >
           <ChevronLeftIcon aria-hidden />
         </Button>
-        <PageRanges
-          siblingPairCount={siblingPairCount}
-          boundaryCount={boundaryCount}
-        />
+        <PageRanges siblingCount={siblingCount} boundaryCount={boundaryCount} />
         <Button
           variant="secondary"
           aria-label="Next Page"

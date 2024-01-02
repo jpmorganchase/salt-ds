@@ -25,7 +25,6 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
   });
 
   const { count, onPageChange } = usePaginationContext();
-  const name = `Page ${page}`;
 
   const onClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     onPageChange(event, page);
@@ -33,8 +32,7 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
 
   return (
     <Button
-      aria-label={`${name} of ${count}`}
-      name={name}
+      aria-label={`Page ${page} of ${count}`}
       aria-current={isSelected ? "page" : undefined}
       variant="secondary"
       className={clsx(withBaseName(), {
@@ -42,7 +40,6 @@ export const PageButton = ({ page, isSelected, disabled }: PageButtonProps) => {
         [withBaseName("fixed")]: page < 100,
       })}
       onClick={onClick}
-      role="link"
       disabled={disabled}
     >
       {page}

@@ -28,7 +28,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
   const {
     count,
     boundaryCount,
-    siblingPairCount,
+    siblingCount,
     goTo,
     compact,
     compactWithInput,
@@ -46,7 +46,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
         ) : (
           <Paginator
             boundaryCount={boundaryCount}
-            siblingPairCount={siblingPairCount}
+            siblingCount={siblingCount}
           />
         )}
       </FlexLayout>
