@@ -1,5 +1,11 @@
 # @salt-ds/countries
 
+## 1.1.3
+
+### Patch Changes
+
+- f7fcbd11: Fixed issue where components are not injecting their styles.
+
 ## 1.1.2
 
 ### Patch Changes
