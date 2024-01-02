@@ -1,4 +1,7 @@
 /* Style applied to the root element */
+.saltTokenizedInputNext-container {
+  width: 100%;
+}
 .saltTokenizedInputNext {
   --tokenizedInput-borderColor: var(--salt-editable-borderColor);
   --tokenizedInput-borderStyle: var(--salt-editable-borderStyle);
@@ -109,6 +112,7 @@
 }
 .saltTokenizedInputNext-expanded .saltTokenizedInputNext-textarea {
   flex-grow: 1;
+  min-width: 4em; /* on expanded, use the same min-width as input*/
 }
 
 /* Style applied to placeholder */

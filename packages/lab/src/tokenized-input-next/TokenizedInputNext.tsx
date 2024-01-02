@@ -91,7 +91,6 @@ export interface TokenizedInputNextProps<Item>
    */
   textAreaRef?: Ref<HTMLTextAreaElement>;
   necessity?: NecessityType;
-  //  TODO: should we have variant and bordered?
   /**
    * Styling variant. Defaults to "primary".
    */
@@ -251,7 +250,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     ExpandButtonProps;
 
   return (
-    <div>
+    <div className={withBaseName("container")}>
       <span
         aria-owns={selectedItemIds.join(" ")}
         className={withBaseName("hidden")}
@@ -292,7 +291,9 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
                 key={`${index}-${label}`}
                 label={label}
                 onClose={
-                  expanded ? (event) => onRemoveItem?.(event, index) : undefined
+                  expanded && !readOnly
+                    ? (event) => onRemoveItem?.(event, index)
+                    : undefined
                 }
                 closeButtonProps={{ tabIndex: -1 }}
                 pillsRef={pillsRef}
@@ -330,7 +331,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             />
           </div>
         )}
-        {expandedWithItems && (
+        {expandedWithItems && !readOnly && (
           <div className={withBaseName("endAdornmentContainer")}>
             <Button
               className={clsx(withBaseName("endAdornment"))}

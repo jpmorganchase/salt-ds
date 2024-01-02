@@ -348,6 +348,9 @@ export function useTokenizedInputNext<Item>(
     event.stopPropagation();
     setHighlightedIndex(undefined);
     setActiveIndices([]);
+    if (!disableAddOnBlur) {
+      handleAddItems(event, value);
+    }
     onInputBlur?.(event);
     if (
       eventTarget !== container &&
