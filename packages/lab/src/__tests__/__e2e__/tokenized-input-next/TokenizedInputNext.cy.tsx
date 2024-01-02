@@ -128,7 +128,7 @@ describe("GIVEN a Tokenized Input", () => {
       //clear input
       cy.findByRole("textbox").focus();
       cy.findByTestId("clear-button").click();
-      cy.findByRole("textbox").should("be.visible");
+      cy.get("@onClear").should("have.been.called");
       cy.findByRole("textbox").should("have.focus");
       // type and add an item
       cy.findByRole("textbox").type("Tokio,");
@@ -136,7 +136,6 @@ describe("GIVEN a Tokenized Input", () => {
 
       cy.get("@onExpand").should("have.been.called");
       cy.get("@onChange").should("have.been.called");
-      cy.get("@onClear").should("have.been.called");
     });
   });
 
