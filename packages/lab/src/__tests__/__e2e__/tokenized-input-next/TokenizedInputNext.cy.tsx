@@ -101,10 +101,8 @@ describe("GIVEN a Tokenized Input", () => {
     it("should return focus to input if an item is closed", () => {
       cy.mount(<Default defaultSelected={["Tokyo"]} />);
       cy.findByRole("textbox").focus();
-      // move focus to clear button
-      cy.findByTestId("clear-button").should("exist");
-      cy.findByTestId("clear-button").focus();
-      cy.findByTestId("clear-button").realPress("Enter");
+      // clear
+      cy.findByTestId("clear-button").click();
       cy.findByRole("textbox").should("have.focus");
     });
     it("should call onChange, onClear, onExpand and onCollapse when actions are prompted", () => {
@@ -130,6 +128,8 @@ describe("GIVEN a Tokenized Input", () => {
       //clear input
       cy.findByRole("textbox").focus();
       cy.findByTestId("clear-button").click();
+      cy.findByRole("textbox").should("be.visible");
+      cy.findByRole("textbox").should("have.focus");
       // type and add an item
       cy.findByRole("textbox").type("Tokio,");
       cy.findByRole("option").should("exist");
