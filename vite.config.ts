@@ -4,9 +4,4 @@ export default defineConfig({
   test: {
     include: ["**/*.spec.[jt]s"],
   },
-  server: {
-    hmr: {
-      overlay: false,
-    },
-  },
 });
