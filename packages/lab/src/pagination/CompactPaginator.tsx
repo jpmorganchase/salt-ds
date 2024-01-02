@@ -47,7 +47,7 @@ export const CompactPaginator = forwardRef<
         disabled={isOnFirstPage}
         className={withBaseName("arrowButton")}
       >
-        <ChevronLeftIcon />
+        <ChevronLeftIcon aria-hidden />
       </Button>
       {children ? children : <PageButton page={page} disabled />}
       <Text as="span" variant="secondary">
@@ -63,7 +63,7 @@ export const CompactPaginator = forwardRef<
         disabled={isOnLastPage}
         className={withBaseName("arrowButton")}
       >
-        <ChevronRightIcon />
+        <ChevronRightIcon aria-hidden />
       </Button>
     </div>
   );

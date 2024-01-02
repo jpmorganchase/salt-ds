@@ -58,7 +58,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
           disabled={isOnFirstPage}
           className={withBaseName("arrowButton-previous")}
         >
-          <ChevronLeftIcon />
+          <ChevronLeftIcon aria-hidden />
         </Button>
         <PageRanges
           siblingPairCount={siblingPairCount}
@@ -72,7 +72,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
           disabled={isOnLastPage}
           className={withBaseName("arrowButton-next")}
         >
-          <ChevronRightIcon />
+          <ChevronRightIcon aria-hidden />
         </Button>
       </div>
     );
