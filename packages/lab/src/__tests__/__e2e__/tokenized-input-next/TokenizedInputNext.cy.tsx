@@ -78,7 +78,7 @@ describe("GIVEN a Tokenized Input", () => {
     it("should clear input on clicking the clear button", () => {
       cy.mount(<Default defaultSelected={["Tokyo"]} />);
       cy.findByRole("textbox").focus();
-      cy.findByTestId("clear-button").click();
+      cy.findByTestId("clear-button").realClick();
       cy.findByRole("textbox").should("have.value", "");
     });
     it("should expand on clicking the expand button and collapse when blur", () => {
@@ -102,7 +102,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.mount(<Default defaultSelected={["Tokyo"]} />);
       cy.findByRole("textbox").focus();
       // clear
-      cy.findByTestId("clear-button").click();
+      cy.findByTestId("clear-button").realClick();
       cy.findByRole("textbox").should("have.focus");
     });
     it("should call onChange, onClear, onExpand and onCollapse when actions are prompted", () => {
@@ -121,19 +121,19 @@ describe("GIVEN a Tokenized Input", () => {
       );
       // expand
       cy.findByTestId("expand-button").should("exist");
-      cy.findByTestId("expand-button").click();
+      cy.findByTestId("expand-button").realClick();
       // Move focus out of Tokenized input
       cy.realPress("Tab");
       cy.realPress("Tab");
       //clear input
       cy.findByRole("textbox").focus();
-      cy.findByTestId("clear-button").click();
-      cy.get("@onClear").should("have.been.called");
+      cy.findByTestId("clear-button").realClick();
       cy.findByRole("textbox").should("have.focus");
       // type and add an item
       cy.findByRole("textbox").type("Tokio,");
       cy.findByRole("option").should("exist");
 
+      cy.get("@onClear").should("have.been.called");
       cy.get("@onExpand").should("have.been.called");
       cy.get("@onChange").should("have.been.called");
     });
