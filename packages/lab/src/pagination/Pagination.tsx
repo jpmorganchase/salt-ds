@@ -7,7 +7,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
 import { clsx } from "clsx";
 import { makePrefixer, useAriaAnnouncer, useControlled } from "@salt-ds/core";
@@ -64,11 +63,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const [pageState, setPageState] = useControlled({
       controlled: pageProp,
       default: defaultPage,
-      name: "Paginator",
+      name: "Pagination",
       state: "page",
     });
-
-    const [paginatorElement, setPaginatorElement] = useState<HTMLDivElement>();
 
     const onPageChange = useCallback(
       (event: SyntheticEvent, page: number) => {
@@ -83,10 +80,8 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         page: pageState,
         count,
         onPageChange,
-        paginatorElement,
-        setPaginatorElement,
       }),
-      [pageState, count, onPageChange, paginatorElement]
+      [pageState, count, onPageChange]
     );
 
     const onKeyDown: KeyboardEventHandler = (event) => {
