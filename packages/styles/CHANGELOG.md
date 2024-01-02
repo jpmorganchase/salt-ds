@@ -1,5 +1,11 @@
 # @salt-ds/styles
 
+## 0.2.1
+
+### Patch Changes
+
+- f7fcbd11: Fixed issue where components are not injecting their styles.
+
 ## 0.2.0
 
 ### Minor Changes

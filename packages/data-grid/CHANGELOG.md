@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.8
+
+### Patch Changes
+
+- f7fcbd11: Fixed issue where components are not injecting their styles.
+
 ## 1.0.4-alpha.7
 
 ### Patch Changes
