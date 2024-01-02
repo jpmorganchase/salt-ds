@@ -105,6 +105,7 @@
   overflow: hidden;
   resize: none;
   padding: 0;
+  min-width: 1px; /* requires a min width to be visible */
 }
 .saltTokenizedInputNext-expanded .saltTokenizedInputNext-textarea {
   flex-grow: 1;
