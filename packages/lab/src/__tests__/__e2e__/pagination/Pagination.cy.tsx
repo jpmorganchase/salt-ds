@@ -33,7 +33,9 @@ describe("GIVEN an Pagination", () => {
         cy.findAllByRole("link", { name: /Page 1/i })
           .first()
           .should("have.attr", "aria-current", "page");
-        cy.findByRole("button", { name: "Previous Page" }).should("be.disabled");
+        cy.findByRole("button", { name: "Previous Page" }).should(
+          "be.disabled"
+        );
       });
     });
     describe("WHEN on the last page", () => {
