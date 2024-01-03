@@ -164,36 +164,34 @@ export const ColorChooser = ({
 
   return (
     <Overlay placement="bottom" data-testid="color-chooser-overlay">
-      <OverlayTrigger>
-        <Button
-          className={clsx(withBaseName("overlayButton"), {
-            [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
-          })}
-          // @ts-ignore
-          data-testid="color-chooser-overlay-button"
-          disabled={readOnly}
-          {...buttonProps}
-        >
-          {color && (
-            <div
-              className={clsx(withBaseName("overlayButtonSwatch"), {
-                [withBaseName("overlayButtonSwatchWithBorder")]:
-                  color?.hex.startsWith("#ffffff"),
-                [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
-                  color?.hex
-                ),
-              })}
-              style={{
-                backgroundColor: color?.hex,
-              }}
-            />
-          )}
-          {!hideLabel && (
-            <div className={withBaseName("overlayButtonText")}>
-              {displayColorName ?? placeholder ?? "No color selected"}
-            </div>
-          )}
-        </Button>
+      <OverlayTrigger
+        className={clsx(withBaseName("overlayButton"), {
+          [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
+        })}
+        // @ts-ignore
+        data-testid="color-chooser-overlay-button"
+        disabled={readOnly}
+        {...buttonProps}
+      >
+        {color && (
+          <div
+            className={clsx(withBaseName("overlayButtonSwatch"), {
+              [withBaseName("overlayButtonSwatchWithBorder")]:
+                color?.hex.startsWith("#ffffff"),
+              [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
+                color?.hex
+              ),
+            })}
+            style={{
+              backgroundColor: color?.hex,
+            }}
+          />
+        )}
+        {!hideLabel && (
+          <div className={withBaseName("overlayButtonText")}>
+            {displayColorName ?? placeholder ?? "No color selected"}
+          </div>
+        )}
       </OverlayTrigger>
       <OverlayPanel>
         <OverlayContent />
