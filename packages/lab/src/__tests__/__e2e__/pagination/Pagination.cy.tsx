@@ -30,7 +30,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findAllByRole("link", { name: /Page 1/i })
+        cy.findAllByRole("button", { name: /Page 1/i })
           .first()
           .should("have.attr", "aria-current", "page");
         cy.findByRole("button", { name: "Previous Page" }).should(
@@ -375,7 +375,7 @@ describe("GIVEN an Pagination", () => {
           cy.realPress("Tab");
           cy.realPress(["Alt", "PageUp"]);
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
-          cy.findAllByRole("link", { name: /Page 1/i })
+          cy.findAllByRole("button", { name: /Page 1/i })
             .first()
             .should("have.attr", "aria-current", "page");
         });
@@ -432,7 +432,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 11);
+        cy.findAllByRole("button", { name: /^Page.*/ }).should("have.length", 11);
       });
 
       it("THEN should render 9 buttons when the count is 12", () => {
@@ -442,7 +442,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 10);
+        cy.findAllByRole("button", { name: /^Page.*/ }).should("have.length", 10);
       });
     });
   });
@@ -456,7 +456,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 10);
+        cy.findAllByRole("button", { name: /^Page.*/ }).should("have.length", 10);
       });
 
       it("THEN should render 9 buttons when the count is 20 and initial page is 10", () => {
@@ -466,7 +466,7 @@ describe("GIVEN an Pagination", () => {
           </Pagination>
         );
 
-        cy.findAllByRole("link", { name: /^Page.*/ }).should("have.length", 9);
+        cy.findAllByRole("button", { name: /^Page.*/ }).should("have.length", 9);
       });
     });
   });
