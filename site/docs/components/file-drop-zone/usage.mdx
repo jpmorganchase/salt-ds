@@ -1,0 +1,51 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the component
+
+Make sure you communicate any limits, such as maximum file size and type restrictions, before the user uploads their file. If the upload fails, clearly explain the reason why and how to resolve it.
+
+Inform users when files successfully upload to reassure them that the action has completed.
+
+#### When to use
+
+- To enable users to upload single or multiple files from a native file browser.
+- To enable users to attach supporting files to a form.
+
+#### When not to use
+
+- To display upload progress, file listing and management. This is a simple component that only provides an upload zone. Instead, use [`Dialog`](../dialog) as a starting point to create a more comprehensive file interface.
+
+### Import
+
+To import `FileDropZone` and related components from the lab Salt package, use:
+
+```js
+import {
+  FileDropZone,
+  FileDropZoneIcon,
+  FileDropZoneTrigger,
+} from "@salt-ds/lab";
+```
+
+### Props
+
+#### `FileDropZone`
+
+<PropsTable packageName="lab" componentName="FileDropZone" />
+
+#### `FileDropZoneIcon`
+
+<PropsTable packageName="lab" componentName="FileDropZoneIcon" />
+
+#### `FileDropZoneTrigger`
+
+<PropsTable packageName="lab" componentName="FileDropZoneTrigger" />

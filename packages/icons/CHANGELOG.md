@@ -1,5 +1,11 @@
 # @salt-ds/icons
 
+## 1.9.1
+
+### Patch Changes
+
+- f7fcbd11: Fixed issue where components are not injecting their styles.
+
 ## 1.9.0
 
 ### Minor Changes

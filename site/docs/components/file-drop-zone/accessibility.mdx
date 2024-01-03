@@ -1,0 +1,32 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Keyboard interactions
+
+<KeyboardControls>
+
+<KeyboardControl keyOrCombos="Tab">
+
+- Tab sets focus to the **Browse files** button. If focus is in the file drop zone, Tab sets focus to the next focusable component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is in the file drop zone, this action sets focus to the previous focusable component in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space / Enter">
+
+- When focus is on the **Browse files** button, this action activates the button and opens the native file explorer window.
+
+</KeyboardControl>
+</KeyboardControls>
+  Note: The operating system determines keyboard interactions within the file explorer.
