@@ -9,11 +9,10 @@ import { ComponentPropsWithoutRef } from "react";
 import { useOverlayContext } from "./OverlayContext";
 import clsx from "clsx";
 
-const withBaseName = makePrefixer("saltOverlay");
+const withBaseName = makePrefixer("saltOverlayPanelBase");
 
-interface OverlayPanelBaseProps extends ComponentPropsWithoutRef<"div"> {}
-
-export const OverlayPanelBase = (props: OverlayPanelBaseProps) => {
+// OverlayPanelBase component needed for CSS style injection
+export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-overlay",
@@ -26,7 +25,7 @@ export const OverlayPanelBase = (props: OverlayPanelBaseProps) => {
 
   return (
     <>
-      <div className={withBaseName("container")} {...rest}>
+      <div className={clsx(withBaseName("container"), className)} {...rest}>
         <Button
           onClick={handleCloseButton}
           variant="secondary"
@@ -35,9 +34,7 @@ export const OverlayPanelBase = (props: OverlayPanelBaseProps) => {
         >
           <CloseIcon aria-hidden />
         </Button>
-        <div className={clsx(withBaseName("content"), className)}>
-          {children}
-        </div>
+        <div className={withBaseName("content")}>{children}</div>
       </div>
 
       <FloatingArrow
@@ -46,8 +43,8 @@ export const OverlayPanelBase = (props: OverlayPanelBaseProps) => {
         fill="var(--overlay-background)"
         stroke="var(--overlay-borderColor)"
         style={{
-          height: "calc(var(--salt-size-adornment) + 6px)", // +6px to account for Floating UI's FloatingArrow positioning calculation
-          width: "calc(var(--salt-size-adornment) + 8px)", // +8px to account for Floating UI's FloatingArrow positioning calculation
+          height: "calc(var(--salt-size-adornment) + 6px)", // FIXME: +6px to account for Floating UI's FloatingArrow positioning calculation
+          width: "calc(var(--salt-size-adornment) + 8px)", // FIXME: +8px to account for Floating UI's FloatingArrow positioning calculation
         }}
       />
     </>

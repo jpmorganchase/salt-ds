@@ -24,7 +24,7 @@ export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
   open?: boolean;
   onOpenChange?: (event: SyntheticEvent, newOpen: boolean) => void;
   /*
-   * Set the placement of the Overlay component relative to the anchor element. Defaults to `top`.
+   * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
   placement?: "top" | "bottom" | "left" | "right";
   /*

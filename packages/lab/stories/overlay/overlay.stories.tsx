@@ -43,9 +43,7 @@ const OverlayTemplate = (props: OverlayProps) => {
 
   return (
     <Overlay placement={placement} {...rest}>
-      <OverlayTrigger>
-        <Button>Show Overlay</Button>
-      </OverlayTrigger>
+      <OverlayTrigger>Show Overlay</OverlayTrigger>
       <OverlayPanel
         aria-labelledby="overlay_label"
         aria-describedby="overlay_description"
@@ -76,9 +74,7 @@ export const Right = (props: OverlayProps) => {
 export const LongContent = () => {
   return (
     <Overlay placement="right">
-      <OverlayTrigger>
-        <Button>Show Overlay</Button>
-      </OverlayTrigger>
+      <OverlayTrigger>Show Overlay</OverlayTrigger>
       <OverlayPanel
         aria-labelledby="overlay_label"
         aria-describedby="overlay_description"
@@ -163,9 +159,7 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
-  const getStatus = () => {
-    return controlledValues.length <= 1 ? true : false;
-  };
+  const indeterminate = controlledValues.length <= 1;
 
   const handleExport = () => {
     console.log(`${controlledValues.length} file(s) exported`);
@@ -178,8 +172,8 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
         Export
       </h3>
       <Checkbox
-        indeterminate={getStatus()}
-        checked={!getStatus()}
+        indeterminate={indeterminate}
+        checked={!indeterminate}
         label={`${controlledValues.length} of 2 selected`}
         onChange={handleChange}
         id="overlay_description"
@@ -215,14 +209,12 @@ export const WithActions = () => {
       }}
       placement="bottom"
     >
-      <OverlayTrigger>
-        <Button
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          Show Overlay
-        </Button>
+      <OverlayTrigger
+        onClick={() => {
+          setShow(true);
+        }}
+      >
+        Show Overlay
       </OverlayTrigger>
       <OverlayPanel
         aria-labelledby="overlay_label"
@@ -231,11 +223,11 @@ export const WithActions = () => {
           width: 246,
         }}
       >
-        {WithActionsContent({
-          onClose: () => {
+        <WithActionsContent
+          onClose={() => {
             setShow(false);
-          },
-        })}
+          }}
+        />
       </OverlayPanel>
     </Overlay>
   );
