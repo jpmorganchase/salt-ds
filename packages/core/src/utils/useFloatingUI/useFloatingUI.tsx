@@ -21,6 +21,7 @@ import {
   useMemo,
   forwardRef,
   ComponentPropsWithoutRef,
+  CSSProperties,
 } from "react";
 
 import { SaltProvider } from "../../salt-provider";
@@ -28,7 +29,7 @@ import { SaltProvider } from "../../salt-provider";
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Whether the floating component is open (used for determinig whether to show the component)
+   * Whether the floating component is open (used for determining whether to show the component)
    * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
    * for caching windows and reusing them, rather than always spawning a new one
    */
@@ -36,15 +37,15 @@ export interface FloatingComponentProps
   /**
    * Use this prop when `FloatingFocusManager` is needed for floating component
    */
-  focusManagerProps?: FocusManagerProps;
+  focusManagerProps?: Omit<FocusManagerProps, "children">;
   /**
    * Position props for the floating component
    */
-  top: number;
-  left: number;
-  width?: number;
-  height?: number;
-  position: Strategy;
+  top?: number | string;
+  left?: number | string;
+  width?: number | string;
+  height?: number | string;
+  position?: Omit<Strategy, "-moz-initial">;
 }
 
 const DefaultFloatingComponent = forwardRef<
@@ -69,14 +70,15 @@ const DefaultFloatingComponent = forwardRef<
   };
 
   if (focusManagerProps) {
-    const { context, ...restFocusManagerProps } =
-      focusManagerProps as FocusManagerProps;
-
     return (
       <FloatingPortal>
         <SaltProvider>
-          <FloatingFocusManager context={context} {...restFocusManagerProps}>
-            <div style={style} {...rest} ref={ref} />
+          <FloatingFocusManager {...focusManagerProps}>
+            <div
+              style={style as CSSProperties}
+              {...rest}
+              ref={ref}
+            />
           </FloatingFocusManager>
         </SaltProvider>
       </FloatingPortal>
@@ -86,7 +88,11 @@ const DefaultFloatingComponent = forwardRef<
   return open ? (
     <FloatingPortal>
       <SaltProvider>
-        <div style={style} {...rest} ref={ref} />
+        <div
+          style={style as CSSProperties}
+          {...rest}
+          ref={ref}
+        />
       </SaltProvider>
     </FloatingPortal>
   ) : null;
@@ -229,7 +235,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   };
 
   const {
-    platform: contextPlaform,
+    platform: contextPlatform,
     middleware: contextMiddleware,
     animationFrame,
   } = useFloatingPlatform();
@@ -245,7 +251,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
 
       return cleanup;
     },
-    platform: contextPlaform,
+    platform: contextPlatform,
   });
 
   return {
