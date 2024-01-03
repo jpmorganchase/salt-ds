@@ -1,4 +1,4 @@
-export default [
+const tokenDefinitions = [
   {
     key: "accent",
     value:
@@ -74,3 +74,5 @@ export default [
       "Components which have the ability to visually indicate progress, scale, or range along a defined track.    ",
   },
 ];
+
+export default tokenDefinitions;
