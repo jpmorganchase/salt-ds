@@ -53,7 +53,6 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
         <Button
           variant="secondary"
           aria-label="Previous Page"
-          role="link"
           onClick={onPreviousPage}
           disabled={isOnFirstPage}
           className={withBaseName("arrowButton-previous")}
@@ -64,7 +63,6 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
         <Button
           variant="secondary"
           aria-label="Next Page"
-          role="link"
           onClick={onNextPage}
           disabled={isOnLastPage}
           className={withBaseName("arrowButton-next")}
