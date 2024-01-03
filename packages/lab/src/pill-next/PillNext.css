@@ -50,10 +50,6 @@
   --saltButton-padding: var(--salt-spacing-50);
 }
 
-.saltPillNext-action .saltIcon {
-  --saltIcon-color: currentColor;
-}
-
 /* Style applied to Pill if `onClick` prop is provided  */
 .saltPillNext-clickable {
   cursor: var(--salt-selectable-cursor-hover);

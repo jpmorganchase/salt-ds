@@ -10,21 +10,6 @@
   --button-text-color-hover: var(--salt-actionable-cta-foreground-hover);
 }
 
-/* Icon API in "CTA" variant @ignore */
-.saltButton-cta {
-  --saltIcon-color: var(--salt-actionable-cta-foreground);
-}
-.saltButton-cta:hover {
-  --saltIcon-color: var(--salt-actionable-cta-foreground-hover);
-}
-.saltButton-cta:active,
-.saltButton-cta.saltButton-active {
-  --saltIcon-color: var(--salt-actionable-cta-foreground-active);
-}
-.saltButton-cta.saltButton-disabled {
-  --saltIcon-color: var(--salt-actionable-cta-foreground-disabled);
-}
-
 /* Styles applied to the root element if variant="primary" (or no variant specified) */
 .saltButton-primary {
   --button-background: var(--salt-actionable-primary-background);
@@ -37,21 +22,6 @@
   --button-text-color-hover: var(--salt-actionable-primary-foreground-hover);
 }
 
-/* Icon API in "primary" variant @ignore */
-.saltButton-primary {
-  --saltIcon-color: var(--salt-actionable-primary-foreground);
-}
-.saltButton-primary:hover {
-  --saltIcon-color: var(--salt-actionable-primary-foreground-hover);
-}
-.saltButton-primary:active,
-.saltButton-primary.saltButton-active {
-  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
-}
-.saltButton-primary.saltButton-disabled {
-  --saltIcon-color: var(--salt-actionable-primary-foreground-disabled);
-}
-
 /* Styles applied to the root element if variant="secondary" */
 .saltButton-secondary {
   --button-background: var(--salt-actionable-secondary-background);
@@ -62,22 +32,6 @@
   --button-text-color-active: var(--salt-actionable-secondary-foreground-active);
   --button-text-color-disabled: var(--salt-actionable-secondary-foreground-disabled);
   --button-text-color-hover: var(--salt-actionable-secondary-foreground-hover);
-}
-
-/* Icon API in "secondary" variant @ignore */
-.saltButton-secondary {
-  --saltIcon-color: var(--salt-actionable-secondary-foreground);
-}
-
-.saltButton-secondary:hover {
-  --saltIcon-color: var(--salt-actionable-secondary-foreground-hover);
-}
-.saltButton-secondary:active,
-.saltButton-secondary.saltButton-active {
-  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
-}
-.saltButton-secondary.saltButton-disabled {
-  --saltIcon-color: var(--salt-actionable-secondary-foreground-disabled);
 }
 
 .saltButton {
