@@ -297,10 +297,10 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
             return;
           }
 
+          event.preventDefault();
           select(event, activeState);
 
           if (!multiselect) {
-            event.preventDefault();
             setOpen(event, false);
           }
 
@@ -358,7 +358,9 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
     };
 
     useEffect(() => {
-      if (openState && !activeState) {
+      // We check the active index because the active item may have been removed
+      const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
+      if (openState && activeIndex < 0) {
         if (openKey.current.key === "ArrowDown") {
           setActive(getOptionAtIndex(0));
         } else if (openKey.current.key === "ArrowUp") {

@@ -278,7 +278,9 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
     };
 
     useEffect(() => {
-      if (openState && !activeState) {
+      // We check the active index because the active item may have been removed
+      const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
+      if (openState && activeIndex < 0) {
         if (openKey.current.key === "ArrowDown") {
           setActive(getOptionAtIndex(0));
         } else if (openKey.current.key === "ArrowUp") {
@@ -356,8 +358,8 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
         />
         <FloatingComponent
           open={(openState || focusedState) && !readOnly}
-          left={x}
-          top={y}
+          left={x ?? 0}
+          top={y ?? 0}
           position={strategy}
           width={elements.floating?.offsetWidth}
           height={elements.floating?.offsetHeight}

@@ -283,7 +283,7 @@ describe("Given a Dropdown", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"])
     );
-    cy.findByRole("listbox").should("not.exist");
+    cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.text", "Alabama, Alaska");
   });
 
