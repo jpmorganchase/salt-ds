@@ -16,16 +16,12 @@ export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
-    const {
-      className,
-      "aria-labelledby": overlayLabelledBy,
-      "aria-describedby": overlayDescribedBy,
-      ...rest
-    } = props;
+    const { className, ...rest } = props;
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const {
+      id,
       openState,
       floatingStyles,
       placement,
@@ -41,6 +37,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         // @ts-ignore data-placement does not exist
         "data-placement": placement,
         ref: floating,
+        id: `${id}-panel`,
       });
     };
 
@@ -53,8 +50,8 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
           ref={handleRef}
           className={clsx(withBaseName(), className)}
           aria-modal="true"
-          aria-labelledby={overlayLabelledBy}
-          aria-describedby={overlayDescribedBy}
+          aria-labelledby={`${id}-header`}
+          aria-describedby={`${id}-content`}
           {...getOverlayProps()}
           {...floatingStyles}
           focusManagerProps={{

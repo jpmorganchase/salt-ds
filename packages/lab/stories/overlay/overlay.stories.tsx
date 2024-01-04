@@ -16,40 +16,42 @@ import {
 } from "@salt-ds/lab";
 
 import "./overlay.stories.css";
+import { useOverlayContext } from "../../src/overlay/OverlayContext";
 
 export default {
   title: "Lab/Overlay",
   component: Overlay,
 } as Meta<typeof Overlay>;
 
-const OverlayContent = (
-  <>
-    <h3 id="overlay_label" className="content-heading">
-      Title
-    </h3>
-    <div id="overlay_description">
-      Content of Overlay
-      <br />
-      <br />
-      <Tooltip content={"im a tooltip"}>
-        <Button>hover me</Button>
-      </Tooltip>
-    </div>
-  </>
-);
+const OverlayContent = () => {
+  const { id } = useOverlayContext();
+  return (
+    <>
+      <h3 id={`${id}-header`} className="content-heading">
+        Title
+      </h3>
+      <div id={`${id}-content`}>
+        Content of Overlay
+        <br />
+        <br />
+        <Tooltip content={"im a tooltip"}>
+          <Button>hover me</Button>
+        </Tooltip>
+      </div>
+    </>
+  );
+};
 
 const OverlayTemplate = (props: OverlayProps) => {
-  const { placement, style, ...rest } = props;
+  const { style, ...rest } = props;
 
   return (
-    <Overlay placement={placement} {...rest}>
-      <OverlayTrigger>Show Overlay</OverlayTrigger>
-      <OverlayPanel
-        aria-labelledby="overlay_label"
-        aria-describedby="overlay_description"
-        style={style}
-      >
-        {OverlayContent}
+    <Overlay {...rest}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel style={style}>
+        <OverlayContent />
       </OverlayPanel>
     </Overlay>
   );
@@ -74,17 +76,17 @@ export const Right = (props: OverlayProps) => {
 export const LongContent = () => {
   return (
     <Overlay placement="right">
-      <OverlayTrigger>Show Overlay</OverlayTrigger>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
       <OverlayPanel
-        aria-labelledby="overlay_label"
-        aria-describedby="overlay_description"
         style={{
           width: 300,
           height: 200,
           overflow: "auto",
         }}
       >
-        <StackLayout id="overlay_description">
+        <StackLayout>
           <div>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -125,6 +127,8 @@ const checkboxesData = [
 ];
 
 const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
+  const { id } = useOverlayContext();
+
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
   ]);
@@ -168,29 +172,33 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <>
-      <h3 style={{ marginTop: 0 }} id="overlay_label">
+      <h3 id={`${id}-header`} style={{ marginTop: 0 }}>
         Export
       </h3>
-      <Checkbox
-        indeterminate={indeterminate}
-        checked={!indeterminate}
-        label={`${controlledValues.length} of 2 selected`}
-        onChange={handleChange}
-        id="overlay_description"
-      />
-      <Divider />
-      <CheckboxGroup
-        checkedValues={controlledValues}
-        onChange={handleGroupChange}
-      >
-        {checkboxesData.map((data) => (
-          <Checkbox key={data.value} {...data} />
-        ))}
-      </CheckboxGroup>
-      <Divider />
-      <Button style={{ float: "right", marginRight: 2 }} onClick={handleExport}>
-        Export
-      </Button>
+      <div id={`${id}-content`}>
+        <Checkbox
+          indeterminate={indeterminate}
+          checked={!indeterminate}
+          label={`${controlledValues.length} of 2 selected`}
+          onChange={handleChange}
+        />
+        <Divider />
+        <CheckboxGroup
+          checkedValues={controlledValues}
+          onChange={handleGroupChange}
+        >
+          {checkboxesData.map((data) => (
+            <Checkbox key={data.value} {...data} />
+          ))}
+        </CheckboxGroup>
+        <Divider />
+        <Button
+          style={{ float: "right", marginRight: 2 }}
+          onClick={handleExport}
+        >
+          Export
+        </Button>
+      </div>
     </>
   );
 };
@@ -209,16 +217,16 @@ export const WithActions = () => {
       }}
       placement="bottom"
     >
-      <OverlayTrigger
-        onClick={() => {
-          setShow(true);
-        }}
-      >
-        Show Overlay
+      <OverlayTrigger>
+        <Button
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          Show Overlay
+        </Button>
       </OverlayTrigger>
       <OverlayPanel
-        aria-labelledby="overlay_label"
-        aria-describedby="overlay_description"
         style={{
           width: 246,
         }}
