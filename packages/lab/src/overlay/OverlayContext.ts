@@ -10,6 +10,7 @@ import { CSSProperties, SyntheticEvent, useContext } from "react";
 type FloatingReturn = ReturnType<typeof useFloatingUI>;
 
 export interface OverlayContextValue {
+  id: string;
   openState: boolean;
   setOpen: (event: SyntheticEvent, newOpen: boolean) => void;
   floatingStyles: CSSProperties;
@@ -30,6 +31,7 @@ export interface OverlayContextValue {
 export const OverlayContext = createContext<OverlayContextValue>(
   "OverlayContext",
   {
+    id: "",
     openState: false,
     setOpen() {
       return undefined;

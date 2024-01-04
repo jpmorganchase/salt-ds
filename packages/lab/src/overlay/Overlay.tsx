@@ -7,7 +7,7 @@ import {
   useRef,
 } from "react";
 import { OverlayContext } from "./OverlayContext";
-import { useControlled, useFloatingUI } from "@salt-ds/core";
+import { useControlled, useFloatingUI, useId } from "@salt-ds/core";
 import {
   flip,
   offset,
@@ -40,10 +40,12 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       open,
       onOpenChange,
       placement: placementProp = "top",
+      id: idProp,
       onClose,
       ...rest
     } = props;
 
+    const overlayId = useId(idProp);
     const arrowRef = useRef<SVGSVGElement | null>(null);
 
     const [openState, setOpenState] = useControlled({
@@ -114,6 +116,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     return (
       <OverlayContext.Provider
         value={{
+          id: overlayId ?? "",
           openState,
           setOpen,
           floatingStyles,
