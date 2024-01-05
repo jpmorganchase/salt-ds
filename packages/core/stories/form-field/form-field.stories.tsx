@@ -181,7 +181,10 @@ export const LabelLeftWithControls: StoryFn<typeof FormField> = (props) => {
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Assignment</FormLabel>
         <CheckboxGroup>
-          <Checkbox label="Private placement of equity or debt securities" />
+          <Checkbox
+            aria-labelledby={"Private places"}
+            label="Private placement of equity or debt securities"
+          />
           <Checkbox defaultChecked label="Syndicated credit facility or loan" />
           <Checkbox label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
           <Checkbox label="Escrow arrangement" />
@@ -835,7 +838,7 @@ export const GroupedWithVariant: StoryFn<typeof FormField> = (props) => {
 export const MultiColumnLayout: StoryFn<typeof FormField> = (props) => {
   return (
     <StackLayout
-      style={{ "--formField-label-width": "100px" } as CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>
@@ -894,7 +897,7 @@ export const MultiColumnLayoutEmptySlot: StoryFn<typeof FormField> = (
 ) => {
   return (
     <StackLayout
-      style={{ "--formField-label-width": "100px" } as React.CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as React.CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>

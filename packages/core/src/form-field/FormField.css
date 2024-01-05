@@ -23,13 +23,13 @@
 
 .saltFormField-labelLeft {
   align-self: center;
-  grid-template-columns: var(--formField-label-width, 40%) 1fr;
+  grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
   grid-template-areas: "label controls";
 }
 
 .saltFormField-labelRight {
   align-self: center;
-  grid-template-columns: var(--formField-label-width, 40%) 1fr;
+  grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
   grid-template-areas: "label controls";
 }
 
