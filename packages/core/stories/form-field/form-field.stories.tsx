@@ -181,10 +181,7 @@ export const LabelLeftWithControls: StoryFn<typeof FormField> = (props) => {
       <FormField labelPlacement="left" {...props}>
         <FormLabel>Assignment</FormLabel>
         <CheckboxGroup>
-          <Checkbox
-            aria-labelledby={"Private places"}
-            label="Private placement of equity or debt securities"
-          />
+          <Checkbox label="Private placement of equity or debt securities" />
           <Checkbox defaultChecked label="Syndicated credit facility or loan" />
           <Checkbox label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
           <Checkbox label="Escrow arrangement" />
