@@ -195,26 +195,20 @@
   --tokenizedInput-activationIndicator-borderWidth: 0;
 }
 
-.saltTokenizedInputNext-endAdornmentContainer {
-  margin-left: auto;
-}
-/* Style applied to button end adornment if last child */
-.saltTokenizedInputNext-endAdornment {
-  --saltButton-margin: inherit calc(var(--salt-spacing-50) * -1) inherit inherit;
-}
-
-/* Style applied to button end adornment if last child */
-.saltTokenizedInputNext-readOnly .saltTokenizedInputNext-endAdornment {
-  --saltButton-margin: inherit 0 inherit inherit;
-}
-
-/* Style applied to status adornment container */
-.saltTokenizedInputNext-statusAdornmentContainer {
+.saltTokenizedInputNext-statusAdornment {
   margin-left: auto;
   margin-right: var(--salt-spacing-100);
+}
+
+.saltTokenizedInputNext-endAdornmentContainer {
+  margin-left: auto;
   align-self: self-end;
   display: inline-flex;
   min-height: var(--salt-size-base);
+}
+
+.saltTokenizedInputNext-statusAdornment ~ .saltTokenizedInputNext-endAdornmentContainer {
+  margin-left: 0;
 }
 
 .saltTokenizedInputNext .saltButton {
@@ -223,6 +217,9 @@
   --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
+.saltTokenizedInputNext .saltButton.saltTokenizedInputNext-endAdornment {
+  --saltButton-margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
+}
 .saltTokenizedInputNext-hidden {
   display: none;
 }

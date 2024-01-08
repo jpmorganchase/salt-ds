@@ -49,6 +49,7 @@ export interface TokenizedInputNextRefs {
   pillsRef: MutableRefObject<Record<number, number | undefined>>;
   clearButtonRef: (newNode: HTMLButtonElement) => void;
   expandButtonRef: Ref<HTMLButtonElement>;
+  statusAdornmentRef: Ref<SVGSVGElement>;
   containerRef: Ref<HTMLDivElement>;
 }
 
@@ -159,6 +160,7 @@ export function useTokenizedInputNext<Item>(
 
   const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
   const [clearButtonRef, clearButtonWidth] = useWidth(density);
+  const [statusAdornmentRef, statusAdornmentWidth] = useWidth(density);
   const [inputRef, inputWidth] = useWidth(density);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -199,7 +201,9 @@ export function useTokenizedInputNext<Item>(
   });
 
   const widthOffset =
-    inputWidth + (expanded ? clearButtonWidth : expandButtonWidth);
+    inputWidth +
+    statusAdornmentWidth +
+    (expanded ? clearButtonWidth : expandButtonWidth);
 
   const containerObserverRef = useResizeObserver<HTMLDivElement>(
     useCallback(
@@ -646,6 +650,7 @@ export function useTokenizedInputNext<Item>(
       pillsRef,
       clearButtonRef,
       expandButtonRef,
+      statusAdornmentRef,
       containerRef: useForkRef(containerRef, containerObserverRef),
     },
     helpers: {

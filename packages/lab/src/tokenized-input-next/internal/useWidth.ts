@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Density, useIsomorphicLayoutEffect } from "@salt-ds/core";
 
-const safeParseFloat = (target?: string) => parseFloat(target || "0");
+const safeParseFloat = (target?: string) => parseFloat(target ?? "0");
 
 export const getPadding = (node: HTMLElement | null) => {
   if (node == null) {

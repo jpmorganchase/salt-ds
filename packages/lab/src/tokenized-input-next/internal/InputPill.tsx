@@ -69,7 +69,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
   const [isEllipsisActive, setEllipsisActive] = useState(false);
   const isRemovable = Boolean(onClose);
 
-  // useIsomorphicLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
+  // useIsomorphicLayoutEffect to match the calcFirstHiddenIndex
   // We need to collect widths before the calculation
   useIsomorphicLayoutEffect(() => {
     const text = ref?.current?.firstElementChild as HTMLElement;

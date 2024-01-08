@@ -134,6 +134,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     pillsRef,
     clearButtonRef,
     expandButtonRef,
+    statusAdornmentRef,
     containerRef: containerHookRef,
   } = refs;
 
@@ -324,17 +325,17 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           onKeyDown={onKeyDown}
           {...restTextAreaProps}
         />
-        {!disabled && !readOnly && validationStatus && (
-          <div className={withBaseName("statusAdornmentContainer")}>
+        <div className={withBaseName("endAdornmentContainer")}>
+          {!disabled && !readOnly && validationStatus && (
             <StatusAdornment
+              className={withBaseName("statusAdornment")}
+              ref={statusAdornmentRef}
               status={validationStatus as AdornmentValidationStatus}
             />
-          </div>
-        )}
-        {expandedWithItems && !readOnly && (
-          <div className={withBaseName("endAdornmentContainer")}>
+          )}
+          {expandedWithItems && !readOnly && (
             <Button
-              className={clsx(withBaseName("endAdornment"))}
+              className={withBaseName("endAdornment")}
               disabled={disabled}
               id={clearButtonId}
               onBlur={onBlur}
@@ -347,10 +348,8 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             >
               <CloseIcon aria-hidden />
             </Button>
-          </div>
-        )}
-        {showExpandButton && (
-          <div className={withBaseName("endAdornmentContainer")}>
+          )}
+          {showExpandButton && (
             <Button
               className={withBaseName("endAdornment")}
               aria-label={expandButtonAccessibleText}
@@ -368,8 +367,9 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             >
               <OverflowMenuIcon />
             </Button>
-          </div>
-        )}
+          )}
+        </div>
+
         <div className={withBaseName("activationIndicator")} />
       </div>
     </div>
