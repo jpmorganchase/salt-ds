@@ -1,43 +1,49 @@
 import { ReactElement } from "react";
 
-import { Overlay, OverlayProps } from "@salt-ds/lab";
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayProps,
+  OverlayTrigger,
+} from "@salt-ds/lab";
 import { Tooltip, Button } from "@salt-ds/core";
-import styles from "./index.module.css";
 
-const OverlayContent = (
-  <>
-    <h3 id="overlay_label" className={styles.contentHeading}>
-      Title
-    </h3>
-    <div id="overlay_description">
-      Content of Overlay
-      <br />
-      <br />
-      <Tooltip content={"im a tooltip"}>
-        <Button>hover me</Button>
-      </Tooltip>
-    </div>
-  </>
-);
+export const OverlayTemplate = (props: OverlayProps): ReactElement => {
+  const { style, id, placement, ...rest } = props;
 
-const OverlayTemplate = (
-  placement?: OverlayProps["placement"]
-): ReactElement => (
-  <Overlay
-    aria-labelledby="overlay_label"
-    aria-describedby="overlay_description"
-    content={OverlayContent}
-    placement={placement}
-  >
-    <Button>{placement}</Button>
-  </Overlay>
-);
+  return (
+    <Overlay id={id} placement={placement} {...rest}>
+      <OverlayTrigger>
+        <Button>{placement}</Button>
+      </OverlayTrigger>
+      <OverlayPanel style={style}>
+        <h3 id={`${id}-header`} className="content-heading">
+          Title
+        </h3>
+        <div id={`${id}-content`}>
+          Content of Overlay
+          <br />
+          <br />
+          <Tooltip content={"im a tooltip"}>
+            <Button>hover me</Button>
+          </Tooltip>
+        </div>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
 
 export const Placement = (): ReactElement => (
   <div>
-    <div style={{ marginBottom: 10 }}>{OverlayTemplate("top")}</div>
-    <div style={{ marginBottom: 40 }}>{OverlayTemplate("bottom")}</div>
-    <div style={{ marginBottom: 10 }}>{OverlayTemplate("left")}</div>
-    {OverlayTemplate("right")}
+    <div style={{ marginBottom: 10 }}>
+      <OverlayTemplate id="overlay-top" placement="top" />
+    </div>
+    <div style={{ marginBottom: 40 }}>
+      <OverlayTemplate id="overlay-bottom" placement="bottom" />
+    </div>
+    <div style={{ marginBottom: 10 }}>
+      <OverlayTemplate id="overlay-left" placement="left" />
+    </div>
+    <OverlayTemplate id="overlay-right" placement="right" />
   </div>
 );

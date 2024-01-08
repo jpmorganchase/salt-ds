@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 
-import { Overlay, useOverlay } from "@salt-ds/lab";
+import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
 import { Button, CheckboxGroup, Checkbox } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
@@ -24,7 +24,13 @@ const checkboxesData = [
   },
 ];
 
-const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
+const WithActionsContent = ({
+  onClose,
+  id,
+}: {
+  onClose: () => void;
+  id: string;
+}) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
   ]);
@@ -59,9 +65,7 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
-  const getStatus = () => {
-    return controlledValues.length <= 1 ? true : false;
-  };
+  const indeterminate = controlledValues.length <= 1;
 
   const handleExport = () => {
     console.log(`${controlledValues.length} file(s) exported`);
@@ -70,71 +74,74 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <>
-      <h3 style={{ marginBottom: 12 }} id="overlay_label">
+      <h3 id={`${id}-header`} style={{ marginTop: 0, paddingBottom: 10 }}>
         Export
       </h3>
-      <Checkbox
-        indeterminate={getStatus()}
-        checked={!getStatus()}
-        label={`${controlledValues.length} of 2 selected`}
-        onChange={handleChange}
-        id="overlay_description"
-      />
-      <Divider />
-      <CheckboxGroup
-        checkedValues={controlledValues}
-        onChange={handleGroupChange}
-      >
-        {checkboxesData.map((data) => (
-          <Checkbox key={data.value} {...data} />
-        ))}
-      </CheckboxGroup>
-      <Divider />
-      <Button style={{ float: "right", marginRight: 2 }} onClick={handleExport}>
-        Export
-      </Button>
+      <div id={`${id}-content`}>
+        <Checkbox
+          indeterminate={indeterminate}
+          checked={!indeterminate}
+          label={`${controlledValues.length} of 2 selected`}
+          onChange={handleChange}
+        />
+        <Divider />
+        <CheckboxGroup
+          checkedValues={controlledValues}
+          onChange={handleGroupChange}
+        >
+          {checkboxesData.map((data) => (
+            <Checkbox key={data.value} {...data} />
+          ))}
+        </CheckboxGroup>
+        <Divider />
+        <Button
+          style={{ float: "right", marginRight: 2 }}
+          onClick={handleExport}
+        >
+          Export
+        </Button>
+      </div>
     </>
   );
 };
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
-  const { onOpenChange } = useOverlay({ onOpenChange: setShow });
+  const id = "overlay-with-actions";
 
   return (
     <Overlay
       open={show}
-      content={
+      onClose={() => {
+        setShow(false);
+      }}
+      onKeyDown={(event) => {
+        event.key === "Escape" && setShow(false);
+      }}
+      placement="bottom"
+      id={id}
+    >
+      <OverlayTrigger>
+        <Button
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          Show Overlay
+        </Button>
+      </OverlayTrigger>
+      <OverlayPanel
+        style={{
+          width: 246,
+        }}
+      >
         <WithActionsContent
           onClose={() => {
             setShow(false);
           }}
+          id={id}
         />
-      }
-      onClose={() => {
-        setShow(false);
-      }}
-      placement="bottom"
-      style={{
-        width: 246,
-      }}
-      onOpenChange={onOpenChange}
-      onKeyDown={(event) => {
-        event.key === "Escape" && setShow(false);
-      }}
-      aria-labelledby="overlay_label"
-      aria-describedby="overlay_description"
-    >
-      <Button
-        onClick={() => {
-          setShow(true);
-        }}
-        onKeyDown={(event) => {
-          event.key === "Escape" && setShow(false);
-        }}
-      >
-        Show Overlay
-      </Button>
+      </OverlayPanel>
     </Overlay>
   );
 };

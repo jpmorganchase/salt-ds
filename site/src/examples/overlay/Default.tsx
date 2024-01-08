@@ -1,31 +1,43 @@
 import { ReactElement } from "react";
 
-import { Overlay } from "@salt-ds/lab";
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayProps,
+  OverlayTrigger,
+} from "@salt-ds/lab";
 import { Tooltip, Button } from "@salt-ds/core";
-import styles from "./index.module.css";
 
-const OverlayContent = (
-  <>
-    <h3 id="overlay_label" className={styles.contentHeading}>
-      Title
-    </h3>
-    <div id="overlay_description">
-      Content of Overlay
-      <br />
-      <br />
-      <Tooltip content={"im a tooltip"}>
-        <Button>hover me</Button>
-      </Tooltip>
-    </div>
-  </>
-);
+const OverlayContent = ({ id }: { id: string }) => {
+  return (
+    <>
+      <h3 id={`${id}-header`} className="content-heading">
+        Title
+      </h3>
+      <div id={`${id}-content`}>
+        Content of Overlay
+        <br />
+        <br />
+        <Tooltip content={"im a tooltip"}>
+          <Button>hover me</Button>
+        </Tooltip>
+      </div>
+    </>
+  );
+};
 
-export const Default = (): ReactElement => (
-  <Overlay
-    aria-labelledby="overlay_label"
-    aria-describedby="overlay_description"
-    content={OverlayContent}
-  >
-    <Button>Show Overlay</Button>
-  </Overlay>
-);
+export const Default = (props: OverlayProps): ReactElement => {
+  const { style, ...rest } = props;
+  const id = "overlay-default";
+
+  return (
+    <Overlay id={id} {...rest}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel style={style}>
+        <OverlayContent id={id ?? ""} />
+      </OverlayPanel>
+    </Overlay>
+  );
+};
