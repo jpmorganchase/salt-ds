@@ -117,13 +117,12 @@ export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
               minWidth: `${rects.reference.width}px`,
-              maxHeight: `${availableHeight}px`,
+              maxHeight: `calc(${availableHeight}px - var(--salt-spacing-100))`,
+              minHeight: `calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5)`,
             });
           },
         }),
-        flip({
-          fallbackStrategy: "initialPlacement",
-        }),
+        flip({ fallbackStrategy: "initialPlacement" }),
       ],
     });
 

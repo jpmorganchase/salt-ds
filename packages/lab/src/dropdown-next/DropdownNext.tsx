@@ -186,11 +186,12 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
               minWidth: `${rects.reference.width}px`,
-              height: `calc(${availableHeight}px - var(--salt-spacing-100))`,
+              maxHeight: `calc(${availableHeight}px - var(--salt-spacing-100))`,
+              minHeight: `calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5)`,
             });
           },
         }),
-        flip(),
+        flip({ fallbackStrategy: "initialPlacement" }),
       ],
     });
 
@@ -438,6 +439,7 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}
             ref={floating}
+            // style={floatingStyles}
           >
             <OptionList
               id={listId}
