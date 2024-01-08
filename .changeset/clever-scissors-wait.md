@@ -5,27 +5,18 @@
 Update Overlay to use floating-ui. Supports placement on top (default), right, bottom, and left.
 
 ```tsx
-const OverlayContent = () => {
-  const { id } = useOverlayContext();
-
-  return (
-    <>
-      <h3 id={`${id}-header`}>Title</h3>
-      <div id={`${id}-content`}>Content of Overlay</div>
-    </>
-  );
-};
-
 const OverlayTemplate = (props: OverlayProps) => {
   const { style, ...rest } = props;
+  const id = "salt-overlay";
 
   return (
-    <Overlay {...rest}>
+    <Overlay id={id} {...rest}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel style={style}>
-        <OverlayContent />
+        <h3 id={`${id}-header`}>Title</h3>
+        <div id={`${id}-content`}>Content of Overlay</div>
       </OverlayPanel>
     </Overlay>
   );
