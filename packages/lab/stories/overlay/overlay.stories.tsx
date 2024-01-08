@@ -16,15 +16,13 @@ import {
 } from "@salt-ds/lab";
 
 import "./overlay.stories.css";
-import { useOverlayContext } from "../../src/overlay/OverlayContext";
 
 export default {
   title: "Lab/Overlay",
   component: Overlay,
 } as Meta<typeof Overlay>;
 
-const OverlayContent = () => {
-  const { id } = useOverlayContext();
+const OverlayContent = ({ id }: { id: string }) => {
   return (
     <>
       <h3 id={`${id}-header`} className="content-heading">
@@ -43,39 +41,45 @@ const OverlayContent = () => {
 };
 
 const OverlayTemplate = (props: OverlayProps) => {
-  const { style, ...rest } = props;
+  const { style, id, ...rest } = props;
 
   return (
-    <Overlay {...rest}>
+    <Overlay id={id} {...rest}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel style={style}>
-        <OverlayContent />
+        <OverlayContent id={id ?? ""} />
       </OverlayPanel>
     </Overlay>
   );
 };
 
 export const Default = (props: OverlayProps) => {
-  return OverlayTemplate({ ...props });
+  return OverlayTemplate({ id: "overlay-default", ...props });
 };
 
 export const Bottom = (props: OverlayProps) => {
-  return OverlayTemplate({ placement: "bottom", ...props });
+  return OverlayTemplate({
+    id: "overlay-bottom",
+    placement: "bottom",
+    ...props,
+  });
 };
 
 export const Left = (props: OverlayProps) => {
-  return OverlayTemplate({ placement: "left", ...props });
+  return OverlayTemplate({ id: "overlay-left", placement: "left", ...props });
 };
 
 export const Right = (props: OverlayProps) => {
-  return OverlayTemplate({ placement: "right", ...props });
+  return OverlayTemplate({ id: "overlay-right", placement: "right", ...props });
 };
 
 export const LongContent = () => {
+  const id = "overlay-long-content";
+
   return (
-    <Overlay placement="right">
+    <Overlay id={id} placement="right">
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
@@ -86,7 +90,7 @@ export const LongContent = () => {
           overflow: "auto",
         }}
       >
-        <StackLayout>
+        <StackLayout id={`${id}-content`}>
           <div>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -126,9 +130,13 @@ const checkboxesData = [
   },
 ];
 
-const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
-  const { id } = useOverlayContext();
-
+const WithActionsContent = ({
+  onClose,
+  id,
+}: {
+  onClose: () => void;
+  id: string;
+}) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
   ]);
@@ -205,6 +213,7 @@ const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
+  const id = "overlay-with-actions";
 
   return (
     <Overlay
@@ -216,6 +225,7 @@ export const WithActions = () => {
         event.key === "Escape" && setShow(false);
       }}
       placement="bottom"
+      id={id}
     >
       <OverlayTrigger>
         <Button
@@ -235,6 +245,7 @@ export const WithActions = () => {
           onClose={() => {
             setShow(false);
           }}
+          id={id}
         />
       </OverlayPanel>
     </Overlay>
