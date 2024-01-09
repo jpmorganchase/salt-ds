@@ -1,8 +1,4 @@
-import {
-  CSSProperties,
-  forwardRef,
-  ReactNode,
-} from "react";
+import { CSSProperties, forwardRef, ReactNode } from "react";
 import {
   FloatingComponentProps,
   SaltProvider,
