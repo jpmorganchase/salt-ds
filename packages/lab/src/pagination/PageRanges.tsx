@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { PageButton } from "./PageButton";
 import { PageRange, usePagination } from "./usePagination";
@@ -41,14 +41,17 @@ export function PageRanges({
 
   const { count, page } = usePaginationContext();
 
-  const renderPages = (range?: PageRange, selectedPage?: number) => {
-    if (!range) {
-      return null;
-    }
-    return mapRange(range, (i) => (
-      <PageButton key={i} page={i} isSelected={selectedPage === i} />
-    ));
-  };
+  const renderPages = useCallback(
+    (range: PageRange) =>
+      mapRange(range, (i) => (
+        <PageButton
+          key={i}
+          page={i}
+          selected={page === i}
+        />
+      )),
+    [page]
+  );
 
   const [leftPages, middlePages, rightPages] = usePagination(
     page,
@@ -59,11 +62,19 @@ export function PageRanges({
 
   return (
     <>
-      {renderPages(leftPages, page)}
-      {leftPages && <Ellipsis />}
-      {renderPages(middlePages, page)}
-      {rightPages && <Ellipsis />}
-      {renderPages(rightPages, page)}
+      {leftPages && (
+        <>
+          {renderPages(leftPages)}
+          <Ellipsis />
+        </>
+      )}
+      {middlePages && renderPages(middlePages)}
+      {rightPages && (
+        <>
+          <Ellipsis />
+          {renderPages(rightPages)}
+        </>
+      )}
     </>
   );
 }
