@@ -44,11 +44,7 @@ export function PageRanges({
   const renderPages = useCallback(
     (range: PageRange) =>
       mapRange(range, (i) => (
-        <PageButton
-          key={i}
-          page={i}
-          selected={page === i}
-        />
+        <PageButton key={i} page={i} selected={page === i} />
       )),
     [page]
   );
