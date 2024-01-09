@@ -177,9 +177,14 @@ export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
   shift({ limiter: limitShift() }),
 ];
 
-export function useFloatingUI(
-  props: UseFloatingUIProps
-): ReturnType<typeof useFloating> {
+type UseFloatingRefs = ReturnType<typeof useFloating>["refs"];
+
+export interface UseFloatingUIReturn extends ReturnType<typeof useFloating> {
+  reference: UseFloatingRefs["setReference"];
+  floating: UseFloatingRefs["setFloating"];
+}
+
+export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   const {
     placement,
     strategy,
@@ -199,7 +204,7 @@ export function useFloatingUI(
     animationFrame,
   } = useFloatingPlatform();
 
-  const { reference, floating, refs, update, ...rest } = useFloating({
+  const { refs, update, ...rest } = useFloating({
     placement,
     strategy,
     middleware: contextMiddleware(middleware),
@@ -214,8 +219,8 @@ export function useFloatingUI(
   });
 
   return {
-    reference,
-    floating,
+    reference: refs.setReference,
+    floating: refs.setFloating,
     refs,
     update,
     ...rest,
