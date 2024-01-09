@@ -30,7 +30,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       floating,
     } = useOverlayContext();
 
-    const handleRef = useForkRef(floating, ref);
+    const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
     const getOverlayProps = (): HTMLProps<HTMLDivElement> => {
       return getFloatingProps({
@@ -45,14 +45,15 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
 
     return (
       <FloatingOverlay>
+        {/* @ts-ignore Type of "translate" incompatible */}
         <FloatingComponent
           open={openState}
-          ref={handleRef}
           className={clsx(withBaseName(), className)}
           aria-modal="true"
           aria-labelledby={`${id}-header`}
           aria-describedby={`${id}-content`}
           {...getOverlayProps()}
+          ref={handleRef}
           {...floatingStyles}
           focusManagerProps={{
             context: context,

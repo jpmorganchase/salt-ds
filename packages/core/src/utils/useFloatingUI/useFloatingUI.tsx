@@ -46,6 +46,7 @@ export interface FloatingComponentProps
   width?: number | string;
   height?: number | string;
   position?: Omit<Strategy, "-moz-initial">;
+  translate?: "yes" | "no";
 }
 
 const DefaultFloatingComponent = forwardRef<
@@ -61,7 +62,8 @@ const DefaultFloatingComponent = forwardRef<
     width,
     height,
     /* eslint-enable @typescript-eslint/no-unused-vars */
-    focusManagerProps, ...rest
+    focusManagerProps,
+    ...rest
   } = props;
   const style = {
     top,
@@ -74,11 +76,7 @@ const DefaultFloatingComponent = forwardRef<
       <FloatingPortal>
         <SaltProvider>
           <FloatingFocusManager {...focusManagerProps}>
-            <div
-              style={style as CSSProperties}
-              {...rest}
-              ref={ref}
-            />
+            <div style={style as CSSProperties} {...rest} ref={ref} />
           </FloatingFocusManager>
         </SaltProvider>
       </FloatingPortal>
@@ -88,11 +86,7 @@ const DefaultFloatingComponent = forwardRef<
   return open ? (
     <FloatingPortal>
       <SaltProvider>
-        <div
-          style={style as CSSProperties}
-          {...rest}
-          ref={ref}
-        />
+        <div style={style as CSSProperties} {...rest} ref={ref} />
       </SaltProvider>
     </FloatingPortal>
   ) : null;
