@@ -11,8 +11,8 @@ import {
   useFloating,
   FloatingPortal,
   FloatingFocusManager,
+  FloatingFocusManagerProps,
 } from "@floating-ui/react";
-import { Props as FocusManagerProps } from "@floating-ui/react/src/components/FloatingFocusManager";
 
 import {
   createContext,
@@ -37,7 +37,7 @@ export interface FloatingComponentProps
   /**
    * Use this prop when `FloatingFocusManager` is needed for floating component
    */
-  focusManagerProps?: Omit<FocusManagerProps, "children">;
+  focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
    * Position props for the floating component
    */
