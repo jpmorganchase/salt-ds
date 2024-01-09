@@ -3,6 +3,8 @@
   --saltButton-fontWeight: var(--salt-text-fontWeight);
   --saltButton-height: var(--salt-size-base);
   --saltButton-text-color: var(--salt-content-primary-foreground);
+  --saltButton-background-active: var(--salt-selectable-background-selected);
+  --saltButton-text-color-active: var(--salt-content-primary-foreground);
 }
 
 .saltPageButton:hover,
