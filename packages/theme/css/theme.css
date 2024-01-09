@@ -5,6 +5,7 @@
 
 /* Foundations (base values) */
 @import url(foundations/animation.css);
+@import url(foundations/categorical.css);
 @import url(foundations/color.css);
 @import url(foundations/duration.css);
 @import url(foundations/fade.css);

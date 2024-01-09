@@ -1,0 +1,81 @@
+.salt-theme {
+  --salt-category-cobalt-400: rgb(35, 77, 140);
+  --salt-category-cobalt-500: rgb(70, 118, 191);
+  --salt-category-cobalt-600: rgb(126, 172, 242);
+
+  --salt-category-cider-400: rgb(242, 175, 116);
+  --salt-category-cider-500: rgb(171, 101, 40);
+  --salt-category-cider-600: rgb(133, 72, 20);
+
+  --salt-category-plum-400: rgb(209, 132, 245);
+  --salt-category-plum-500: rgb(159, 85, 194);
+  --salt-category-plum-600: rgb(97, 31, 128);
+
+  --salt-category-aqua-400: rgb(111, 219, 222);
+  --salt-category-aqua-500: rgb(42, 130, 133);
+  --salt-category-aqua-600: rgb(21, 92, 94);
+
+  --salt-category-slate-400: rgb(157, 169, 199);
+  --salt-category-slate-500: rgb(105, 118, 148);
+  --salt-category-slate-600: rgb(59, 70, 97);
+
+  --salt-category-rose-400: rgb(245, 157, 227);
+  --salt-category-rose-500: rgb(176, 86, 158);
+  --salt-category-rose-600: rgb(138, 47, 119);
+
+  --salt-category-olive-400: rgb(155, 176, 109);
+  --salt-category-olive-500: rgb(109, 124, 77);
+  --salt-category-olive-600: rgb(83, 94, 58);
+
+  --salt-category-salmon-400: rgb(252, 139, 143);
+  --salt-category-salmon-500: rgb(189, 85, 88);
+  --salt-category-salmon-600: rgb(138, 55, 58);
+
+  --salt-category-indigo-400: rgb(152, 135, 245);
+  --salt-category-indigo-500: rgb(120, 104, 206);
+  --salt-category-indigo-600: rgb(70, 59, 130);
+
+  --salt-category-jade-400: rgb(82, 186, 108);
+  --salt-category-jade-500: rgb(45, 133, 67);
+  --salt-category-jade-600: rgb(24, 84, 39);
+
+  --salt-category-citrine-400: rgb(204, 186, 98);
+  --salt-category-citrine-500: rgb(135, 116, 16);
+  --salt-category-citrine-600: rgb(99, 83, 3);
+
+  --salt-category-autumn-400: rgb(242, 159, 99);
+  --salt-category-autumn-500: rgb(189, 91, 21);
+  --salt-category-autumn-600: rgb(128, 58, 8);
+
+  --salt-category-lavender-400: rgb(212, 146, 212);
+  --salt-category-lavender-500: rgb(148, 102, 148);
+  --salt-category-lavender-600: rgb(97, 52, 97);
+
+  --salt-category-ocean-400: rgb(95, 196, 212);
+  --salt-category-ocean-500: rgb(0, 128, 148);
+  --salt-category-ocean-600: rgb(0, 84, 97);
+
+  --salt-category-smoke-400: rgb(187, 192, 201);
+  --salt-category-smoke-500: rgb(114, 117, 122);
+  --salt-category-smoke-600: rgb(76, 80, 87);
+
+  --salt-category-fuchsia-400: rgb(232, 121, 191);
+  --salt-category-fuchsia-500: rgb(194, 71, 149);
+  --salt-category-fuchsia-600: rgb(130, 42, 98);
+
+  --salt-category-lime-400: rgb(177, 204, 86);
+  --salt-category-lime-500: rgb(102, 125, 21);
+  --salt-category-lime-600: rgb(58, 71, 14);
+
+  --salt-category-fur-400: rgb(204, 150, 108);
+  --salt-category-fur-500: rgb(153, 106, 69);
+  --salt-category-fur-600: rgb(102, 64, 34);
+
+  --salt-category-violet-400: rgb(138, 150, 242);
+  --salt-category-violet-500: rgb(99, 110, 191);
+  --salt-category-violet-600: rgb(69, 79, 161);
+
+  --salt-category-forest-400: rgb(96, 209, 164);
+  --salt-category-forest-500: rgb(35, 133, 94);
+  --salt-category-forest-600: rgb(25, 97, 69);
+}
