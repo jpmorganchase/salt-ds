@@ -1,11 +1,10 @@
 import { Middleware } from "@floating-ui/core";
-import { MiddlewareArguments } from "@floating-ui/react";
 
 export const margin = (value = 0): Middleware => ({
   name: "margin",
   options: value,
-  fn(middlewareArguments: MiddlewareArguments) {
-    const { x, y, elements } = middlewareArguments;
+  fn(middlewareState) {
+    const { x, y, elements } = middlewareState;
 
     if (elements.floating.children.length > 0) {
       const rootChildElement = elements.floating.children[0] as HTMLElement;

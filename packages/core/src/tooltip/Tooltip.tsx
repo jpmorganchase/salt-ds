@@ -116,12 +116,12 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = useTooltip(hookProps);
 
     const triggerRef = useForkRef(
-      // @ts-ignore
+      // @ts-expect-error children.ref cannot currently be typed.
       isValidElement(children) ? children.ref : null,
       reference
     );
 
-    const floatingRef = useForkRef(floating, ref);
+    const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
     return (
       <>
@@ -134,8 +134,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         <FloatingComponent
           className={clsx(withBaseName(), withBaseName(status), className)}
           open={open && !disabled}
-          ref={floatingRef}
           {...getTooltipProps()}
+          ref={floatingRef}
           {...getTooltipPosition()}
         >
           <TooltipBase

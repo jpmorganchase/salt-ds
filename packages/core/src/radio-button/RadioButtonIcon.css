@@ -10,7 +10,6 @@
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);
-  --saltIcon-color: currentColor;
   --saltIcon-size: 100%;
   display: flex;
 }
