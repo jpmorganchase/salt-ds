@@ -3,4 +3,4 @@
 "@salt-ds/lab": patch
 ---
 
-Upgraded @floating-ui/react to 0.26.5.
+Updated @floating-ui/react to 0.26.5.
