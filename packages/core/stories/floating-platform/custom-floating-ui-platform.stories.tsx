@@ -1,6 +1,5 @@
-import { ComponentMeta, Story } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import React, {
-  ForwardedRef,
   forwardRef,
   useMemo,
   ComponentPropsWithoutRef,
@@ -33,7 +32,7 @@ import { NewWindow, FloatingComponentWindow } from "./NewWindow";
 export default {
   title: "Core/Floating Platform",
   component: Tooltip,
-} as ComponentMeta<typeof Tooltip>;
+} as Meta<typeof Tooltip>;
 
 const defaultArgs: Omit<TooltipProps, "children"> = {
   content:
@@ -113,8 +112,8 @@ const NewWindowTest = (props: NewWindowTestProps) => {
 
   const FloatingUIComponent = useMemo(
     () =>
-      forwardRef(
-        (
+      forwardRef<HTMLDivElement, RootComponentProps>(
+        function FloatingUIComponent(
           {
             style,
             open,
@@ -122,11 +121,12 @@ const NewWindowTest = (props: NewWindowTestProps) => {
             left,
             width,
             height,
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             position,
             ...rest
-          }: RootComponentProps,
-          ref: ForwardedRef<HTMLElement>
-        ) => {
+          },
+          ref
+        ) {
           const FloatingRoot = (
             /* In thise case to avoid Flash of Unstyled Text (FOUT) in the tooltip, due to being in an iframe, we are always rendering the tooltip.
              * We are visually hiding it until it is open to 'eagerly load' the font
@@ -190,9 +190,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
   );
 };
 
-export const CustomFloatingUiPlatform: Story<TooltipProps> = (
-  props: TooltipProps
-) => {
+export const CustomFloatingUiPlatform: StoryFn<typeof Tooltip> = (args) => {
   return (
     <NewWindow style={{ width: "600px", height: "550px", border: "none" }}>
       <StackLayout gap={2}>
@@ -201,7 +199,7 @@ export const CustomFloatingUiPlatform: Story<TooltipProps> = (
           It represents a global coordinate space (e.g. a users screen)
         </Text>
         <StackLayout gap={10} direction="row">
-          <NewWindowTest {...props} />
+          <NewWindowTest {...args} />
         </StackLayout>
       </StackLayout>
     </NewWindow>
@@ -209,7 +207,7 @@ export const CustomFloatingUiPlatform: Story<TooltipProps> = (
 };
 CustomFloatingUiPlatform.args = defaultArgs;
 
-export const AnimationFrame: Story<TooltipProps> = (props: TooltipProps) => {
+export const AnimationFrame: StoryFn = () => {
   const targetWindow = useWindow();
   useComponentCssInjection({ css: floatingCss, window: targetWindow });
 
@@ -232,9 +230,8 @@ export const AnimationFrame: Story<TooltipProps> = (props: TooltipProps) => {
     </div>
   );
 };
-CustomFloatingUiPlatform.args = defaultArgs;
 
-export const CustomMiddleware: Story<TooltipProps> = (props: TooltipProps) => {
+export const CustomMiddleware: StoryFn = () => {
   const targetWindow = useWindow();
   useComponentCssInjection({ css: floatingCss, window: targetWindow });
 
@@ -254,4 +251,3 @@ export const CustomMiddleware: Story<TooltipProps> = (props: TooltipProps) => {
     </FloatingPlatformProvider>
   );
 };
-CustomFloatingUiPlatform.args = defaultArgs;
