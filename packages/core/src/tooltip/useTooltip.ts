@@ -108,11 +108,6 @@ export function useTooltip(props?: UseTooltipProps) {
   const arrowProps = {
     ref: arrowRef,
     context,
-    style: {
-      position: strategy,
-      left: arrowX ?? 0,
-      top: arrowY ?? 0,
-    },
   };
 
   const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
