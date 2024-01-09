@@ -288,8 +288,12 @@
     top: var(--agGrid-column-separator-top);
   }
 
+  .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
+    margin-right: auto;
+  }
+
   .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
-    margin-left: var(--salt-spacing-100);
+    margin-left: auto;
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
@@ -305,10 +309,6 @@
   .ag-header-cell,
   .ag-header-group-cell {
     padding: 0px calc(var(--salt-spacing-100));
-  }
-
-  .ag-header-cell-text {
-    margin-right: auto;
   }
 
   /* --- General row styles --- */
