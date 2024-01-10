@@ -197,44 +197,6 @@ describe("GIVEN an Pagination", () => {
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
       });
-      describe("AND pressing Alt+PageDown", () => {
-        it("THEN moves to the previous page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} defaultPage={2} onPageChange={pageChangeSpy}>
-              <Paginator />
-            </Pagination>
-          );
-
-          cy.findByRole("button", { name: /Page 2/i }).should(
-            "have.attr",
-            "aria-current",
-            "page"
-          );
-          cy.realPress("Tab");
-          cy.realPress(["Alt", "PageDown"]);
-          cy.get("@pageChangeSpy").should("have.been.calledOnce");
-        });
-      });
-      describe("AND pressing Alt+PageUp", () => {
-        it("THEN moves to the next page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} defaultPage={2} onPageChange={pageChangeSpy}>
-              <Paginator />
-            </Pagination>
-          );
-
-          cy.findByRole("button", { name: /Page 2/i }).should(
-            "have.attr",
-            "aria-current",
-            "page"
-          );
-          cy.realPress("Tab");
-          cy.realPress(["Alt", "PageUp"]);
-          cy.get("@pageChangeSpy").should("have.been.calledOnce");
-        });
-      });
     });
   });
 
@@ -331,53 +293,6 @@ describe("GIVEN an Pagination", () => {
           cy.realPress("Enter");
           cy.findAllByText("10").should("exist").and("have.length", 2);
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
-        });
-      });
-      describe("AND pressing Alt+PageDown", () => {
-        it("THEN moves to the previous page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} defaultPage={2} onPageChange={pageChangeSpy}>
-              <Paginator />
-            </Pagination>
-          );
-
-          cy.findByRole("button", { name: /Page 2/i }).should(
-            "have.attr",
-            "aria-current",
-            "page"
-          );
-          cy.realPress("Tab");
-          cy.realPress(["Alt", "PageDown"]);
-          cy.get("@pageChangeSpy").should("have.been.calledOnce");
-          cy.findByRole("button", { name: /Page 3/i }).should(
-            "have.attr",
-            "aria-current",
-            "page"
-          );
-        });
-      });
-
-      describe("AND pressing Alt+PageUp", () => {
-        it("THEN moves to the next page", () => {
-          const pageChangeSpy = cy.stub().as("pageChangeSpy");
-          cy.mount(
-            <Pagination count={10} defaultPage={2} onPageChange={pageChangeSpy}>
-              <Paginator />
-            </Pagination>
-          );
-
-          cy.findByRole("button", { name: /Page 2/i }).should(
-            "have.attr",
-            "aria-current",
-            "page"
-          );
-          cy.realPress("Tab");
-          cy.realPress(["Alt", "PageUp"]);
-          cy.get("@pageChangeSpy").should("have.been.calledOnce");
-          cy.findAllByRole("button", { name: /Page 1/i })
-            .first()
-            .should("have.attr", "aria-current", "page");
         });
       });
     });

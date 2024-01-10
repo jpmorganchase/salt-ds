@@ -1,7 +1,6 @@
 import {
   forwardRef,
   HTMLAttributes,
-  KeyboardEventHandler,
   SyntheticEvent,
   useCallback,
   useEffect,
@@ -84,20 +83,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       [pageState, count, onPageChange]
     );
 
-    const onKeyDown: KeyboardEventHandler = (event) => {
-      if (event.altKey) {
-        switch (event.key) {
-          case "PageDown":
-            onPageChange(event, Math.min(pageState + 1, count));
-            break;
-          case "PageUp":
-            onPageChange(event, Math.max(pageState - 1, 1));
-            break;
-          default:
-        }
-      }
-    };
-
     const { announce } = useAriaAnnouncer();
     const mounted = useRef<boolean>(false);
 
@@ -117,7 +102,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       <Provider value={contextValue}>
         <nav
           className={clsx(withBaseName(), className)}
-          onKeyDown={onKeyDown}
           ref={ref}
           {...restProps}
         >
