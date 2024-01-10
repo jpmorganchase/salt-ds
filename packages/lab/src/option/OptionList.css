@@ -7,6 +7,7 @@
   z-index: var(--salt-zIndex-popout);
   box-shadow: var(--salt-overlayable-shadow-popout);
   max-height: inherit;
+  min-height: inherit;
 }
 
 .saltOptionList-collapsed {
