@@ -89,7 +89,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
 
-    const disabled = formFieldDisabled ?? disabledProp;
+    const disabled = Boolean(formFieldDisabled) || disabledProp;
+
     const status =
       formFieldValidationStatus !== undefined &&
       VALIDATION_NAMED_STATUS.includes(formFieldValidationStatus)
