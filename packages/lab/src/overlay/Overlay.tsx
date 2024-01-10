@@ -1,6 +1,5 @@
 import {
   ComponentPropsWithoutRef,
-  CSSProperties,
   forwardRef,
   SyntheticEvent,
   useMemo,
@@ -83,7 +82,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       useDismiss(context),
     ]);
 
-    const floatingStyles: CSSProperties = useMemo(() => {
+    const floatingStyles = useMemo(() => {
       return {
         top: y ?? 0,
         left: x ?? 0,
