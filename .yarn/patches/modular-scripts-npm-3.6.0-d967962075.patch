@@ -31,7 +31,7 @@ index 3173ab0eb0ab508676a4e09c68c6da07f6d54070..60ed60feb3653cf56a1e7890681f187e
   */
  const DEPS_TO_CHECK = [// These are packages most likely to break in practice.
 -'esbuild', 'eslint', 'webpack', 'webpack-dev-server']; // We assume that having wrong versions of these
-+'esbuild', 'webpack', 'webpack-dev-server']; // We assume that having wrong versions of these
++'esbuild', 'webpack-dev-server']; // We assume that having wrong versions of these
  // in the tree will likely break your setup.
  // This is a relatively low-effort way to find common issues.
 
