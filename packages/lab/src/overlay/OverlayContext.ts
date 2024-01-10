@@ -3,17 +3,25 @@ import {
   FloatingContext,
   Placement,
   ReferenceType,
+  Strategy,
 } from "@floating-ui/react";
 import { createContext, useFloatingUI } from "@salt-ds/core";
-import { CSSProperties, SyntheticEvent, useContext } from "react";
+import { SyntheticEvent, useContext } from "react";
 
 type FloatingReturn = ReturnType<typeof useFloatingUI>;
+type FloatingStyleProps = {
+  top: number;
+  left: number;
+  position: Strategy;
+  width?: number;
+  height?: number;
+};
 
 export interface OverlayContextValue {
   id: string;
   openState: boolean;
   setOpen: (event: SyntheticEvent, newOpen: boolean) => void;
-  floatingStyles: CSSProperties;
+  floatingStyles: FloatingStyleProps;
   placement: Placement;
   arrowProps: FloatingArrowProps;
   context: FloatingContext;
@@ -36,7 +44,11 @@ export const OverlayContext = createContext<OverlayContextValue>(
     setOpen() {
       return undefined;
     },
-    floatingStyles: {},
+    floatingStyles: {
+      top: 0,
+      left: 0,
+      position: "" as Strategy,
+    },
     placement: "" as Placement,
     context: {} as FloatingContext,
     arrowProps: {} as FloatingArrowProps,
