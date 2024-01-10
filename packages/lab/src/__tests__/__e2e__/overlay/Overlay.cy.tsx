@@ -15,7 +15,7 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Tab");
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
-      // focus goes into floating element
+      // focus goes into Overlay
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
     });
 
@@ -27,7 +27,7 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.realPress("Escape");
       cy.findByRole("dialog").should("not.exist");
-      // focus goes back to trigger element on floating element close
+      // focus goes back to trigger element after Overlay is closed
       cy.findByRole("button", { name: /Show Overlay/i }).should("be.focused");
     });
 
