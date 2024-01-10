@@ -44,7 +44,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       ...rest
     } = props;
 
-    const overlayId = useId(idProp);
+    const id = useId(idProp);
     const arrowRef = useRef<SVGSVGElement | null>(null);
 
     const [openState, setOpenState] = useControlled({
@@ -115,7 +115,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     return (
       <OverlayContext.Provider
         value={{
-          id: overlayId ?? "",
+          id: id ?? "",
           openState,
           setOpen,
           floatingStyles,
