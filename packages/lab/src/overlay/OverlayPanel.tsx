@@ -7,7 +7,7 @@ import {
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
-import { FloatingOverlay, Strategy } from "@floating-ui/react";
+import { FloatingOverlay } from "@floating-ui/react";
 import { OverlayPanelBase } from "./OverlayPanelBase";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
@@ -55,11 +55,11 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
           aria-describedby={`${id}-content`}
           {...getOverlayProps()}
           ref={handleRef}
-          top={top as number}
-          left={left as number}
-          width={width as number}
-          height={height as number}
-          position={position as Strategy}
+          width={width}
+          height={height}
+          top={top}
+          left={left}
+          position={position}
           focusManagerProps={{
             context: context,
           }}
