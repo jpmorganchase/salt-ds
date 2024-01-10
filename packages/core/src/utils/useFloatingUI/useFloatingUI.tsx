@@ -21,7 +21,6 @@ import {
   useMemo,
   forwardRef,
   ComponentPropsWithoutRef,
-  CSSProperties,
 } from "react";
 
 import { SaltProvider } from "../../salt-provider";
@@ -41,12 +40,11 @@ export interface FloatingComponentProps
   /**
    * Position props for the floating component
    */
-  top?: number | string;
-  left?: number | string;
-  width?: number | string;
-  height?: number | string;
-  position?: Omit<Strategy, "-moz-initial">;
-  translate?: "yes" | "no";
+  top: number;
+  left: number;
+  width?: number;
+  height?: number;
+  position: Strategy;
 }
 
 const DefaultFloatingComponent = forwardRef<
@@ -76,7 +74,7 @@ const DefaultFloatingComponent = forwardRef<
       <FloatingPortal>
         <SaltProvider>
           <FloatingFocusManager {...focusManagerProps}>
-            <div style={style as CSSProperties} {...rest} ref={ref} />
+            <div style={style} {...rest} ref={ref} />
           </FloatingFocusManager>
         </SaltProvider>
       </FloatingPortal>
@@ -86,7 +84,7 @@ const DefaultFloatingComponent = forwardRef<
   return open ? (
     <FloatingPortal>
       <SaltProvider>
-        <div style={style as CSSProperties} {...rest} ref={ref} />
+        <div style={style} {...rest} ref={ref} />
       </SaltProvider>
     </FloatingPortal>
   ) : null;
