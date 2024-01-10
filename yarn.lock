@@ -22742,7 +22742,7 @@ __metadata:
 
 "modular-scripts@patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch::locator=%40salt-ds%2Froot%40workspace%3A.":
   version: 3.6.0
-  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch::version=3.6.0&hash=ec9e2e&locator=%40salt-ds%2Froot%40workspace%3A."
+  resolution: "modular-scripts@patch:modular-scripts@npm%3A3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch::version=3.6.0&hash=a20b82&locator=%40salt-ds%2Froot%40workspace%3A."
   dependencies:
     "@babel/code-frame": "npm:7.18.6"
     "@modular-scripts/workspace-resolver": "npm:1.2.0"
@@ -22853,7 +22853,7 @@ __metadata:
     typescript: ^4.3.5
   bin:
     modular: dist-cjs/cli.js
-  checksum: a8e6bdc35ec1c7d5202a636fbe6a8866c27982414f53aaaee1078fefcc991f90b2cede610d06d6b88778a5618adf71a3d49ebe2cdaf58df4a642da1f25429af2
+  checksum: 3175f2fe959e4b256092a831352d2c23d6090f8497cf55d1c7aa9c6b88cea068553f201f2cb3800e044c25ad9c1de4134a147cfef63203722f94052a06da3a46
   languageName: node
   linkType: hard
 
