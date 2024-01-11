@@ -13,9 +13,8 @@ data:
 
 #### Composition
 
-When composing the file drop zone, consider using `FileDropZoneIcon` to inform users about the current status. You can show an upload icon when the user has not yet uploaded an item, or a status icon that communicates the current upload status.
-
-- We recommend passing a title paragraph to the component to indicate the expected action.
+ - When composing the file drop zone, consider using `FileDropZoneIcon` to inform users about the current status. You can show an upload icon when the user has not yet uploaded an item, or a status icon that communicates the current upload status.
+- We recommend passing a header to the component to indicate the expected action, such as "drop files here."
 - You can customize the `FileDropZoneTrigger`'s text by passing `children` into the component.
 - Communicate any requirements, such as maximum file size and type restrictions as validation text, before the user uploads their file. If the upload fails, clearly explain the reason why and how to resolve it.
 
