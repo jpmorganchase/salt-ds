@@ -53,23 +53,58 @@
   gap: var(--salt-spacing-100);
 }
 
+/* Styles applied to root NavigationItem component */
+.saltNavigationItem {
+  padding: 0 var(--salt-spacing-100);
+}
+
+/* Styles applied when orientation = "horizontal" */
+.saltNavigationItem-horizontal {
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
+  width: fit-content;
+}
+
+/* Styles applied when orientation = "vertical" */
+.saltNavigationItem-vertical {
+  min-height: calc(var(--salt-size-base));
+  padding-left: calc(var(--salt-spacing-300) + var(--salt-spacing-25));
+  padding-right: var(--salt-spacing-100);
+  margin: var(--salt-spacing-50) 0;
+}
+
+/* Styles applied to NavigationItem label */
+.saltNavigationItem-label {
+  --link-color-visited: var(--salt-content-primary-foreground);
+  --link-color-hover: var(--salt-content-primary-foreground);
+
+  color: var(--salt-content-primary-foreground);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
+  flex: 1;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: var(--salt-spacing-100);
+}
+
 /* Styles applied to NavigationItem Badge */
 .saltNavigationItem-label .saltBadge {
   margin-left: auto;
 }
 
 /* Styles applied to NavigationItem when focus is visible */
-.saltNavigationItem-wrapper:focus-visible {
+.saltNavigationItem:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
 /* Styles applied to NavigationItem for non-keyboard focus */
-.saltNavigationItem-wrapper:focus:not(:focus-visible) {
+.saltNavigationItem:focus:not(:focus-visible) {
   outline: 0;
 }
 
 /* Styles applied to activation line */
-.saltNavigationItem-wrapper::after {
+.saltNavigationItem::after {
   content: "";
   position: absolute;
   top: var(--salt-spacing-25);
@@ -91,8 +126,8 @@
 }
 
 /* Styles applied to activation line on hover  */
-.saltNavigationItem-wrapper:hover::after,
-.saltNavigationItem-wrapper:focus-visible::after {
+.saltNavigationItem:hover::after,
+.saltNavigationItem:focus-visible::after {
   background: var(--salt-navigable-indicator-hover);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
