@@ -114,16 +114,18 @@
     "vite-plugin-istanbul": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^1.0.0",
-    "webpack": "5.74.0",
+    "webpack": "5.76.0",
     "yup": "^1.0.2"
   },
   "resolutions": {
-    "webpack-dev-server": "4.9.3",
     "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
-    "modular-scripts/rollup": "2.79.1",
+    "@next/eslint-plugin-next": "^14.0.0",
     "@salt-ds/lab": "workspace:*",
+    "modular-scripts/rollup": "2.79.1",
     "next": "^14.0.0",
-    "@next/eslint-plugin-next": "^14.0.0"
+    "webpack-dev-server": "4.9.3",
+    "webpack": "5.76.0",
+    "recursive-readdir": "2.2.3"
   },
   "browserslist": {
     "production": [
