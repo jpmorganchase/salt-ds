@@ -23,9 +23,9 @@ Use as a section header where necessary to draw the reader's attention to recomm
 
 "Best practices" is preferred to "guidance" as it provides greater clarity on what a reader can expect from the section, and provides greater differentiation from other parts of the section.
 
-### Components
+### Component
 
-Write the term components in sentence case.
+Write the term component in sentence case.
 
 When referring to the component as a whole, use Pascal case wrapped in back ticks. Use the name of the component as it appears in code, i.e. `PillNext` rather than `Pill`.
 
@@ -58,7 +58,27 @@ Use + to separate keys within a combination. Add a space to either side of +.
 
 Use / to separate alternative keys or key combinations. Add a space to either side of /.
 
-### Patterns
+### Object positioning
+
+#### Alignment
+
+The positioning of the object(s) along a given axis or line. "Start," "end," "left" and "right" are all alignments.
+
+#### Direction
+
+The path of travel that the object(s) will take. "Left-to-right" and "right-to-left" are directions.
+
+Words typically used to describe orientation can also describe direction in limited cases. Where setting the language as LTR or RTL changes the order of objects, "horizontal" and "vertical" also become directions. This is consistent with the CSS flexbox layout, where the `flex-direction` property accepts `row` or `column` and the direction of objects is determined by whether the language is LTR or RTL.
+
+#### Justification
+
+The spacing between a series of objects.
+
+#### Orientation
+
+The rotational position of the object(s) as a whole in relation to another point. "Horizontal" and "vertical" are orientations.
+
+### Pattern
 
 Used when referring to the Salt patterns. Avoid the term if not referring to the Salt patterns (or patterns in another design system) to reduce confusion.
 
@@ -73,6 +93,10 @@ Use prop, do not use property. Wrap the prop in back ticks. Write out the statem
 
 Outline the simplest possible complete statement. When a user can use a prop with no values, such as `aria-hidden`, recommend the reader use it as-is, rather than passing a Boolean or a string value. When a user can pass a Boolean or string value, prefer Boolean where possible.
 
+### Responsive property
+
+A property that takes either multiple values (one value per breakpoint), or a single value that would take effect across all different screen sizes.
+
 ### Salt
 
 The name of the design system is Salt. You can describe Salt as a design system, i.e. "We used the Salt design system in our project."
@@ -86,6 +110,28 @@ Section levels should always follow a clear order—as an example, an H3 should 
 ### Space
 
 Use <kbd>Space</kbd> to refer to the keyboard button. Use \<kbd> tags where appropriate. Don't use <kbd>Spacebar</kbd>.
+
+### Status
+
+You can typically find statuses in `Tooltip`, `Dialog`, `Banner` and `Toast`. Status definitions are typically listed in info-red-amber-green order. 
+
+A team would use a status, not a component: "Use the info status" is correct, but "use the info toast" is incorrect.
+
+#### Info
+
+Use info when you need to display general information. Don't use info when the information concerns a successful action. Instead, use success.
+
+#### Error
+
+Use error to communicate a critical issue that prevents the user for continuing. Don't use error when the issue does not prevent the user from completing their task. Instead, use warning.
+
+#### Warning
+
+Use warning to inform users of an issue or potential issue related to their current task. Use this for issues that do not prevent the user from continuing or completing their task. Don't use warning when the issue prevents the user from completing their task. Instead, use error.
+
+#### Success
+
+Use success to confirm that a user's action has been completed successfully.
 
 ### Tab
 
