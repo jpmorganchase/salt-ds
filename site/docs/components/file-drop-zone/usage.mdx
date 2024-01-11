@@ -13,12 +13,12 @@ data:
 
 #### Composition
 
-When composing the fileDropzone, consider using `FileDropZoneIcon` to help inform users by showing an upload icon while items have not been updated and a status icon giving feedback about the state of the input.
+When composing the file drop zone, consider using `FileDropZoneIcon` to help inform users by showing an upload icon while items have not been updated and a status icon giving feedback about the state of the input.
 It is recommended to pass a title paragraph to the component to indicate the expected action.
 You can customize the `FileDropZoneTrigger`'s text by passing `children` into the component.
 If specific criteria is required, make sure you communicate any limits, such as maximum file size and type restrictions as validation text, before the user uploads their file. If the upload fails, clearly explain the reason why and how to resolve it.
 
-####     Validation and acceptance criteria
+#### Validation and acceptance criteria
 
 Acceptable file types can be specified with the `accept` prop to `FileDropZoneTrigger`.
 The `accept` prop doesn't validate the types of the selected files;
