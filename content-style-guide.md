@@ -113,7 +113,7 @@ Use <kbd>Space</kbd> to refer to the keyboard button. Use \<kbd> tags where appr
 
 ### Status
 
-You can typically find statuses in `Tooltip`, `Dialog`, `Banner` and `Toast`. Status definitions are typically listed in info-red-amber-green order. 
+You can typically find statuses in `Tooltip`, `Dialog`, `Banner` and `Toast`. Status definitions are typically listed in info-red-amber-green order.
 
 A team would use a status, not a component: "Use the info status" is correct, but "use the info toast" is incorrect.
 
