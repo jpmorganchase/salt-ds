@@ -27,7 +27,6 @@ interface RoadmapProps {
 }
 
 interface RoadmapData {
-  content: { url: string };
   id: string;
   startDate: Date;
   targetDate: Date;
@@ -75,11 +74,11 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${endpoint}`);
-        const items = (await response.json()?.data?.organization?.repository
-          ?.projectV2?.items?.nodes) as unknown[];
+        const items = (await response.json()).data?.organization?.repository
+          ?.projectV2?.items?.nodes as unknown[];
 
         //creates an array of objects with data from github
-        const extractedData: RoadmapData[] = items?.map((item: RoadmapData) => {
+        const extractedData: RoadmapData[] = items?.map((item: any) => {
           const fieldValueNodes = item?.fieldValues?.nodes;
           const text = getFieldValueByName(fieldValueNodes, "Title");
           const startDate = getFieldValueByName(fieldValueNodes, "Start Date");
@@ -90,7 +89,14 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
           const quarter = getFieldValueByName(fieldValueNodes, "Quarter");
           const issueUrl = item?.content?.url;
 
-          return { text, startDate, targetDate, quarter, issueUrl };
+          return {
+            text,
+            startDate,
+            targetDate,
+            quarter,
+            issueUrl,
+            id: item.id,
+          };
         });
 
         setRoadmapData(extractedData || []);
