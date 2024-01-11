@@ -75,11 +75,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     };
 
     return (
-      <div
-        ref={ref}
-        style={style}
-        {...rest}
-      >
+      <div ref={ref} style={style} {...rest}>
         <ConditionalWrapper
           className={clsx(
             withBaseName(),
