@@ -1,11 +1,5 @@
-/* Styles applied to the root element */
-
+/*!* Styles applied to the root element *!*/
 .saltPillNext {
-  display: flex;
-  max-width: 100%;
-}
-
-.saltPillNext-action {
   --pillNext-background: var(--salt-actionable-primary-background);
   --pillNext-background-active: var(--salt-actionable-primary-background-active);
   --pillNext-background-disabled: var(--salt-actionable-primary-background-disabled);
@@ -16,7 +10,7 @@
   --pillNext-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
 }
 
-.saltPillNext-action {
+.saltPillNext {
   appearance: none;
   -webkit-appearance: none;
   display: inline-flex;
@@ -38,16 +32,11 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.saltPillNext-label {
-  min-width: 0;
+.saltPillNext > * {
+  max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.saltPillNext-close-button {
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-padding: var(--salt-spacing-50);
+  text-overflow: ellipsis;
 }
 
 /* Style applied to Pill if `onClick` prop is provided  */
@@ -61,7 +50,7 @@
   background: var(--pillNext-background-hover);
 }
 
-.saltPillNext-clickable.saltPillNext-disabled:hover {
+.saltPillNext-disabled:hover {
   color: var(--pillNext-text-color);
   background: var(--pillNext-background);
 }
@@ -72,22 +61,22 @@
   color: var(--pillNext-text-color-active);
 }
 
-.saltPillNext-clickable.saltPillNext-disabled.saltPillNext-active,
-.saltPillNext-clickable.saltPillNext-disabled:active {
+.saltPillNext-disabled.saltPillNext-active,
+.saltPillNext-disabled:active {
   background: var(--pillNext-background);
   color: var(--pillNext-text-color);
 }
 
 /* Style applied to Pill on focus */
-.saltPillNext-action:focus-visible {
+.saltPillNext:focus-visible {
   outline: var(--salt-focused-outline);
   /* increase index by one so the focus ring sits on top of the sibling button */
   z-index: var(--salt-zIndex-default);
 }
 
 /* Style applied to Pill when disabled */
-.saltPillNext-action.saltPillNext-disabled,
-.saltPillNext-action.saltPillNext-disabled:hover {
+.saltPillNext-disabled,
+.saltPillNext-disabled:hover {
   color: var(--pillNext-text-color-disabled);
   background: var(--pillNext-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);

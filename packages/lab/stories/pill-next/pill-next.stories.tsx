@@ -1,5 +1,5 @@
 import { PillNext } from "@salt-ds/lab";
-import { FavoriteIcon } from "@salt-ds/icons";
+import { CloseIcon, FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { ChangeEvent, Ref, useEffect, useRef, useState } from "react";
 import { shortColorData } from "./../assets/exampleData";
@@ -48,10 +48,9 @@ export const Closable: StoryFn<typeof PillNext> = () => {
         <PillNext
           key={color}
           disabled={index < 3}
-          onClick={() => console.log(`Clicked ${color}`)}
-          onClose={() => removeColor(color)}
+          onClick={() => removeColor(color)}
         >
-          {color}
+          {color} <CloseIcon />
         </PillNext>
       ))}
     </FlowLayout>
@@ -60,8 +59,8 @@ export const Closable: StoryFn<typeof PillNext> = () => {
 
 export const Icon: StoryFn<typeof PillNext> = () => {
   return (
-    <PillNext icon={<FavoriteIcon />} onClick={() => console.log("Clicked.")}>
-      Pill with Icon
+    <PillNext onClick={() => console.log("Clicked.")}>
+      <FavoriteIcon /> Pill with Icon
     </PillNext>
   );
 };
@@ -72,11 +71,14 @@ export const Truncated: StoryFn<typeof PillNext> = () => {
   const [isEllipsisActive, setEllipsisActive] = useState(false);
 
   useEffect(() => {
-    const text = pillRef?.current?.firstElementChild as HTMLElement;
+    const text = pillRef?.current as HTMLElement;
+    console.log(text?.offsetWidth < text?.scrollWidth);
     setEllipsisActive(text?.offsetWidth < text?.scrollWidth);
   }, [maxWidth]);
 
-  const content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+  const content = (
+    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+  );
 
   return (
     <StackLayout direction={"column"}>
@@ -89,10 +91,7 @@ export const Truncated: StoryFn<typeof PillNext> = () => {
         }
       />
       <Tooltip content={content} disabled={!isEllipsisActive}>
-        <PillNext
-          ref={pillRef as Ref<HTMLButtonElement>}
-          style={{ maxWidth: `${maxWidth}px` }}
-        >
+        <PillNext ref={pillRef} style={{ maxWidth: `${maxWidth}px` }}>
           {content}
         </PillNext>
       </Tooltip>
