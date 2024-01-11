@@ -7,17 +7,18 @@ import {
   OverlayTrigger,
 } from "@salt-ds/lab";
 import { Tooltip, Button } from "@salt-ds/core";
+import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
-  const { style, id, placement, ...rest } = props;
+  const { id, placement, ...rest } = props;
 
   return (
     <Overlay id={id} placement={placement} {...rest}>
       <OverlayTrigger>
         <Button>{placement}</Button>
       </OverlayTrigger>
-      <OverlayPanel style={style}>
-        <h3 id={`${id}-header`} className="content-heading">
+      <OverlayPanel>
+        <h3 id={`${id}-header`} className={styles.contentHeading}>
           Title
         </h3>
         <div id={`${id}-content`}>

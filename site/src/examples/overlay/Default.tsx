@@ -1,24 +1,19 @@
 import { ReactElement } from "react";
 
-import {
-  Overlay,
-  OverlayPanel,
-  OverlayProps,
-  OverlayTrigger,
-} from "@salt-ds/lab";
+import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
 import { Tooltip, Button } from "@salt-ds/core";
+import styles from "./index.module.css";
 
-export const Default = (props: OverlayProps): ReactElement => {
-  const { style, ...rest } = props;
+export const Default = (): ReactElement => {
   const id = "overlay-default";
 
   return (
-    <Overlay id={id} {...rest}>
+    <Overlay id={id}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel style={style}>
-        <h3 id={`${id}-header`} className="content-heading">
+      <OverlayPanel>
+        <h3 id={`${id}-header`} className={styles.contentHeading}>
           Title
         </h3>
         <div id={`${id}-content`}>
