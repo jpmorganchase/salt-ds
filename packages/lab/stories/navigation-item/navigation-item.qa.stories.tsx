@@ -1,8 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import {
-  QAContainer,
-  QAContainerProps,
-} from "docs/components";
+import { QAContainer, QAContainerProps } from "docs/components";
 import { NavigationItem } from "@salt-ds/lab";
 import { NotificationIcon } from "@salt-ds/icons";
 
@@ -23,14 +20,17 @@ const multipleLevelNesting = [
       {
         name: "Label 1 - level 1",
         expanded: true,
-        subNav: [{
-          name: "Label 1 - level 2"
-        }, {
-          active: true,
-          name: "Label 2 - level 2"
-        }, {
-          name: "Label 3 - level 2"
-        }],
+        subNav: [
+          {
+            name: "Label 1 - level 2",
+          },
+          {
+            name: "Label 2 - level 2",
+          },
+          {
+            name: "Label 3 - level 2",
+          },
+        ],
       },
     ],
   },
@@ -39,7 +39,7 @@ const multipleLevelNesting = [
 export const AllExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer height={1000} width={800} itemPadding={4} itemWidthAuto>
     <nav>
-      <ul className="vertical" style={{ listStyle: 'none', padding: 0 }}>
+      <ul style={{ listStyle: "none", padding: 0 }}>
         {multipleLevelNesting.map(({ active, expanded, name, subNav }) => (
           <li key={name}>
             <NavigationItem
@@ -52,8 +52,9 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
               <NotificationIcon />
               {name}
             </NavigationItem>
+
             {expanded && (
-              <ul className="vertical" style={{ listStyle: 'none', padding: 0 }}>
+              <ul style={{ listStyle: "none", padding: 0 }}>
                 {subNav?.map((item) => (
                   <li key={item.name}>
                     <NavigationItem
@@ -67,7 +68,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
                     </NavigationItem>
 
                     {item.expanded && (
-                      <ul className="vertical" style={{ listStyle: 'none', padding: 0 }}>
+                      <ul style={{ listStyle: "none", padding: 0 }}>
                         {item.subNav.map((nestedItem) => (
                           <li key={nestedItem.name}>
                             <NavigationItem
@@ -78,13 +79,11 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
                               {nestedItem.name}
                             </NavigationItem>
                           </li>
-                        )
-                        )}
+                        ))}
                       </ul>
                     )}
                   </li>
-                )
-                )}
+                ))}
               </ul>
             )}
           </li>
