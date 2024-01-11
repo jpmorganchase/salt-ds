@@ -1,12 +1,14 @@
+import { Meta, StoryFn } from "@storybook/react";
 import {
   GoToInput,
+  CompactInput,
+  CompactPaginator,
   Pagination,
   PaginationProps,
   Paginator,
   PaginatorProps,
 } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
+import { FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Pagination",
@@ -14,7 +16,10 @@ export default {
 } as Meta;
 
 interface StoryProps {
-  goToPosition: "left" | "right" | "none";
+  compact?: boolean;
+  compactWithInput?: boolean;
+  goTo?: boolean;
+  inputVariant?: "primary" | "secondary";
 }
 
 const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
@@ -24,29 +29,27 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     count,
     boundaryCount,
     siblingCount,
-    showPreviousNext,
+    goTo,
     compact,
-    goToPosition,
+    compactWithInput,
+    inputVariant,
   } = args;
-  const [page, setPage] = useState<number>(1);
-  const onPageChange = (page: number) => {
-    setPage(page);
-  };
 
   return (
-    <Pagination
-      page={page}
-      onPageChange={onPageChange}
-      count={count}
-      compact={compact}
-    >
-      {goToPosition === "left" ? <GoToInput label={"Go to"} /> : null}
-      <Paginator
-        boundaryCount={boundaryCount}
-        siblingCount={siblingCount}
-        showPreviousNext={showPreviousNext}
-      />
-      {goToPosition === "right" ? <GoToInput label={"Go to"} /> : null}
+    <Pagination count={count}>
+      <FlexLayout gap={1}>
+        {goTo && <GoToInput inputVariant={inputVariant} />}
+        {compact ?? compactWithInput ? (
+          <CompactPaginator>
+            {compactWithInput && <CompactInput variant={inputVariant} />}
+          </CompactPaginator>
+        ) : (
+          <Paginator
+            boundaryCount={boundaryCount}
+            siblingCount={siblingCount}
+          />
+        )}
+      </FlexLayout>
     </Pagination>
   );
 };
@@ -54,17 +57,61 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
 export const Default = Template.bind({});
 
 Default.args = {
-  compact: false,
-  count: 25,
-  siblingCount: 2,
-  boundaryCount: 1,
-  showPreviousNext: true,
-  goToPosition: "left",
+  count: 5,
 };
 
-Default.argTypes = {
-  goToPosition: {
-    options: ["none", "left", "right"],
+export const WithTruncation = Template.bind({});
+
+WithTruncation.args = {
+  count: 25,
+};
+
+export const WithInput = Template.bind({});
+
+WithInput.args = {
+  count: 25,
+  goTo: true,
+};
+
+WithInput.argTypes = {
+  inputVariant: {
+    options: ["primary", "secondary"],
+    control: { type: "radio" },
+  },
+};
+
+export const Compact = Template.bind({});
+
+Compact.args = {
+  compact: true,
+  count: 25,
+};
+
+export const CompactWithInput = Template.bind({});
+
+CompactWithInput.args = {
+  compactWithInput: true,
+  count: 25,
+};
+
+CompactWithInput.argTypes = {
+  inputVariant: {
+    options: ["primary", "secondary"],
+    control: { type: "radio" },
+  },
+};
+
+export const CompactWithGoTo = Template.bind({});
+
+CompactWithGoTo.args = {
+  compact: true,
+  count: 25,
+  goTo: true,
+};
+
+CompactWithGoTo.argTypes = {
+  inputVariant: {
+    options: ["primary", "secondary"],
     control: { type: "radio" },
   },
 };

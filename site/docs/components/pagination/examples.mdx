@@ -1,0 +1,92 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="pagination" exampleName="Default" >
+
+### Default
+
+Use the default component to navigate a small number of pages. The user can navigate in single page increments or jump directly to a page in a set range.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="DefaultWithInput" >
+
+### Default with input
+
+You can display an input field so users can specify, and navigate directly to, any page within the pagination range. To allow users to enter the largest possible page number, the input’s width increases in line with the number of digits in the total page count.
+
+#### Best practices
+
+- Include the input field when pagination is likely to total hundreds or thousands of pages.
+- Order results logically, such as in a chronological order. This helps users to navigate through several pages at a time.
+- Place the input to the left of the pagination range if users will use it regularly. Otherwise, position it to the right.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="Compact" >
+
+### Compact
+
+Use `CompactPaginator` for small viewports, or to minimize visual clutter in a high-density interface. This component only displays the active and last pages. which means the width is more predictable. This provides more flexibility in a layout.
+
+#### Best practices
+
+- Consider this variant when space is limited.
+- Position the compact component appropriately for your UI. Use left aligned for pages of text results, center for pages of images or equally-sized tiles, and right aligned for a full-width data grid.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="CompactWithInput" >
+
+### Compact with input
+
+Use `CompactInput` component to provide the ability to jump to a specific page number.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="Truncation" >
+
+### Truncation
+
+The component will truncate the page numbers displayed when it cannot display all of them in a given space. An ellipsis communicates this to the user.
+
+#### Best practices
+
+- Consider the number of likely displayed results and the available space when configuring the width of your pagination. Although truncation helps minimize the component's width, a range containing hundreds or thousands of pages will inevitably be wider than a range containing tens of pages.
+- Allow space for the width to change, when setting horizontal alignment, as it may impact other surrounding elements.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="SiblingPairCount" >
+
+### Sibling pair count
+
+You can configure the visible page range using the `siblingCount` prop—increasing or decreasing the sibling range, i.e., pages on either side of the active page, depending on the breakpoint. Always make changes to sibling pages in sets of two to ensure that your page range is an odd number. This keeps the active page centred within the range and visually balanced.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="BoundaryCount" >
+
+### Boundary count
+
+You can configure the visible page range using the `boundaryCount` prop—increasing or decreasing the number of pages displayed next to the arrow buttons. The minimum value is 1, so there will always be at least one item next to the arrow buttons.
+
+</LivePreview>
+
+<LivePreview componentName="pagination" exampleName="CompactWithGoTo" >
+
+### Compact with GoToInput
+
+You can use a combination of `CompactPaginator` and `GoToInput` if you want a compressed version of pagination that also provides an input with a label.
+
+</LivePreview>
+
+</LivePreviewControls>
