@@ -11,6 +11,8 @@
   cursor: var(--salt-selectable-cursor-hover);
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
+
+  --navigationItem-padding-left: calc(var(--salt-spacing-300) + var(--navigationItem-padding-left-extra));
 }
 
 /* Vars applied to NavigationItem component when root */
@@ -66,10 +68,12 @@
 
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-vertical {
+  --navigationItem-padding-left-extra: var(--salt-spacing-25);
+  padding: 0 var(--salt-spacing-100) 0 var(--navigationItem-padding-left);
+  --saltButton-padding: 0 var(--salt-spacing-100) 0 var(--navigationItem-padding-left);
+  --saltButton-margin: var(--salt-spacing-50) 0;
+
   min-height: calc(var(--salt-size-base));
-  padding-left: calc(var(--salt-spacing-300) + var(--salt-spacing-25));
-  padding-right: var(--salt-spacing-100);
-  margin: var(--salt-spacing-50) 0;
 }
 
 /* Styles applied to NavigationItem label */
