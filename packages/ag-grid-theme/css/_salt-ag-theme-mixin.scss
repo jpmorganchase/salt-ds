@@ -288,8 +288,12 @@
     top: var(--agGrid-column-separator-top);
   }
 
+  .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
+    margin-right: auto;
+  }
+
   .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
-    margin-left: var(--salt-spacing-100);
+    margin-left: auto;
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
