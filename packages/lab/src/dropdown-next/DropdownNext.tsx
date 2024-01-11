@@ -186,8 +186,7 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
               minWidth: `${rects.reference.width}px`,
-              maxHeight: `calc(${availableHeight}px - var(--salt-spacing-100))`,
-              minHeight: `calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5)`,
+              maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
             });
           },
         }),
