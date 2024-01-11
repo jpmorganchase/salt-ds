@@ -77,7 +77,9 @@ export const Truncated: StoryFn<typeof PillNext> = () => {
   }, [maxWidth]);
 
   const content = (
-    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>
+    <span style={{ maxWidth: "100%", overflow: "hidden" }}>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+    </span>
   );
 
   return (
