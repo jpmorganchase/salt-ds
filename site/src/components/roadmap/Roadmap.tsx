@@ -1,35 +1,39 @@
-import { Key, ReactNode, useEffect, useState } from "react";
 import {
-  GridLayout,
-  Input,
   Banner,
   BannerContent,
+  GridLayout,
+  H3,
+  Input,
   InteractableCard,
   InteractableCardProps,
-  H3,
   Spinner,
+  Text,
 } from "@salt-ds/core";
-
-import styles from "./style.module.css";
 import {
   FilterIcon,
   ProgressInprogressIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
-
-import { formatDate } from "src/utils/formatDate";
+import { Key, ReactNode, useEffect, useState } from "react";
+import { formatDate } from "../../utils/formatDate";
 import { Heading4 } from "../mdx/h4";
 
-type RoadmapProps = { title: string; children: ReactNode; endpoint: string };
+import styles from "./style.module.css";
+
+interface RoadmapProps {
+  title: string;
+  children: ReactNode;
+  endpoint: string;
+}
 
 interface RoadmapData {
-  content: any;
-  fieldValues: any;
+  content: { url: string };
   id: string;
   startDate: Date;
   targetDate: Date;
   issueUrl: string;
   text: string;
+  quarter: string;
 }
 
 interface CardViewProps {
@@ -54,7 +58,7 @@ function sortRoadmapDataByDate(roadmapData: RoadmapData[]): RoadmapData[] {
   return sortedData;
 }
 
-function RoadmapCard(props: InteractableCardProps, item: ItemProps) {
+function RoadmapCard(props: InteractableCardProps) {
   return (
     <>
       <InteractableCard accentPlacement="left" {...props} />
@@ -62,8 +66,8 @@ function RoadmapCard(props: InteractableCardProps, item: ItemProps) {
   );
 }
 
-export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
-  const [roadmapData, setRoadmapData] = useState<any[]>([]);
+export const Roadmap = ({ endpoint }: RoadmapProps) => {
+  const [roadmapData, setRoadmapData] = useState<RoadmapData[]>([]);
   const sortedRoadmapData = sortRoadmapDataByDate(roadmapData);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -71,10 +75,8 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${endpoint}`);
-        const responseData = await response.json();
-
-        const items =
-          responseData?.data?.organization?.repository?.projectV2?.items?.nodes;
+        const items = (await response.json()?.data?.organization?.repository
+          ?.projectV2?.items?.nodes) as unknown[];
 
         //creates an array of objects with data from github
         const extractedData: RoadmapData[] = items?.map((item: RoadmapData) => {
@@ -85,9 +87,10 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
             fieldValueNodes,
             "Target Date"
           );
+          const quarter = getFieldValueByName(fieldValueNodes, "Quarter");
           const issueUrl = item?.content?.url;
 
-          return { text, startDate, targetDate, issueUrl };
+          return { text, startDate, targetDate, quarter, issueUrl };
         });
 
         setRoadmapData(extractedData || []);
@@ -106,7 +109,11 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
       (node: any) => node?.field?.name === fieldName
     );
     return (
-      fieldValueNode?.text || fieldValueNode?.date || fieldValueNode?.name || ""
+      fieldValueNode?.text ||
+      fieldValueNode?.date ||
+      fieldValueNode?.name ||
+      fieldValueNode?.title ||
+      ""
     );
   };
 
@@ -149,6 +156,7 @@ interface ItemProps {
     | React.ReactPortal
     | null
     | undefined;
+  quarter: string;
 }
 const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
   item,
@@ -164,8 +172,11 @@ const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
           key={item.id}
         >
           <Heading4 className={styles.heading4}>{item.text}</Heading4>
-          Due Date:
-          <p className={styles.date}> {formattedDate}</p>
+          <Text>
+            Due Date:
+            <span className={styles.date}> {formattedDate}</span>
+          </Text>
+          <Text>Scheduled in quarter: {item.quarter}</Text>
         </RoadmapCard>
       </a>
     </>

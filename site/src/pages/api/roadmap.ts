@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         organization(login: $org) {
           repository(name: $repo) {
             projectV2(number: 18) {
-              items(first: 100, after: $endCursor) {
+              items(first: 200, after: $endCursor) {
                 pageInfo {
                   hasNextPage
                   endCursor
@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                       url
                     }
                   }
-                  fieldValues(first: 10) {
+                  fieldValues(first: 20) {
                     nodes {
                       ...on ProjectV2ItemFieldDateValue {
                         date
@@ -45,6 +45,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                         name
                         field {
                           ...on ProjectV2SingleSelectField {
+                            name
+                          }
+                        }
+                      }
+                      ... on ProjectV2ItemFieldIterationValue {
+                        title
+                        field {
+                          ... on ProjectV2IterationField {
                             name
                           }
                         }
