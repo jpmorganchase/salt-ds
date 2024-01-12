@@ -4,53 +4,57 @@ import {
   forwardRef,
   HTMLAttributes,
   KeyboardEventHandler,
-  useCallback,
-  useEffect,
-  useRef,
+  Ref,
   useState,
 } from "react";
-import { useForkRef, useId, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { FormField, FormFieldLabel, Input, makePrefixer } from "@salt-ds/core";
 import { usePaginationContext } from "./usePaginationContext";
-import { withBaseName } from "./utils";
-import {
-  FormFieldLegacy as FormField,
-  FormFieldLegacyProps as FormFieldProps,
-} from "../form-field-legacy";
-import { InputLegacy as Input } from "../input-legacy";
 
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import goToInputCss from "./GoToInput.css";
+
+const withBaseName = makePrefixer("saltGoToInput");
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
+  /**
+   * Input label.
+   */
   label?: string;
-  FormFieldProps?: Partial<FormFieldProps>;
+  /**
+   * Optional ref for the input component
+   */
+  inputRef?: Ref<HTMLInputElement>;
+  /**
+   * Change input variant.
+   */
+  inputVariant?: "primary" | "secondary";
 }
 
-export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
-  (
+export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
+  function GoToInput(
     {
       className,
-      id: idProp,
+      inputRef,
+      inputVariant = "primary",
       label = "Go to",
-      FormFieldProps: { ...restFormFieldLegacyProps } = {},
       ...restProps
     },
+    ref
+  ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-go-to-input",
+      css: goToInputCss,
+      window: targetWindow,
+    });
 
-    forwardedRef
-  ) => {
-    const { compact, count, onPageChange, paginatorElement } =
-      usePaginationContext();
-
-    const id = useId(idProp);
-
-    const rootRef = useRef<HTMLSpanElement>(null);
-    const forkedRef = useForkRef(rootRef, forwardedRef);
-
+    const { count, onPageChange } = usePaginationContext();
     const [inputValue, setInputValue] = useState("");
 
-    const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-      (event) => {
-        setInputValue(event.target.value);
-      },
-      [setInputValue]
-    );
+    const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      setInputValue(event.target.value);
+    };
 
     const onKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
       if (event.key === "Enter") {
@@ -61,75 +65,42 @@ export const GoToInput = forwardRef<HTMLSpanElement, GoToInputProps>(
           pageValue > 0 &&
           pageValue <= count
         ) {
-          onPageChange(pageValue);
+          onPageChange(event, pageValue);
         }
         setInputValue("");
       }
     };
 
-    const onBlur = useCallback(() => {
+    const onBlur = () => {
       setInputValue("");
-    }, [setInputValue]);
-
-    useEffect(() => {
-      if (compact) {
-        setInputValue("");
-      }
-    }, [compact]);
-
-    const [position, setPosition] = useState<"left" | "right">();
-
-    useIsomorphicLayoutEffect(() => {
-      if (paginatorElement && !compact && rootRef.current) {
-        setPosition(
-          rootRef.current.compareDocumentPosition(paginatorElement) ===
-            Node.DOCUMENT_POSITION_PRECEDING
-            ? "right"
-            : "left"
-        );
-      }
-    }, [paginatorElement, compact, rootRef.current]);
-
-    if (compact) {
-      return null;
-    }
+    };
 
     const widthCh = `${`${count}`.length}ch`;
 
     return (
-      <span
-        className={clsx(
-          withBaseName("goToInputWrapper"),
-          { [withBaseName(`${position!}GoToInput`)]: position },
-          className
-        )}
-        ref={forkedRef}
+      <FormField
+        labelPlacement="left"
+        className={clsx(withBaseName(), className)}
+        ref={ref}
+        {...restProps}
       >
-        <FormField
-          className={withBaseName("goToInputField")}
-          fullWidth={false}
-          label={label}
-          labelPlacement="left"
-          {...restFormFieldLegacyProps}
-        >
-          <Input
-            className={clsx(withBaseName("goToInput"), {
-              [withBaseName("goToInputFixed")]: count < 100,
-            })}
-            id={id}
-            inputProps={{
-              "aria-labelledby": id,
-              "aria-label": `Page, ${count} total`,
-              style: { width: widthCh },
-            }}
-            onBlur={onBlur}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            value={inputValue}
-            textAlign={"center"}
-          />
-        </FormField>
-      </span>
+        <FormFieldLabel>{label}</FormFieldLabel>
+        <Input
+          className={clsx(withBaseName("input"), {
+            [withBaseName("inputDefaultSize")]: count < 100,
+          })}
+          ref={inputRef}
+          inputProps={{
+            style: { width: widthCh },
+          }}
+          onBlur={onBlur}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          value={inputValue}
+          textAlign={"center"}
+          variant={inputVariant}
+        />
+      </FormField>
     );
   }
 );
