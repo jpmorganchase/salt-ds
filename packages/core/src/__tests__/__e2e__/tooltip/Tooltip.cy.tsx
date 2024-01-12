@@ -57,11 +57,19 @@ describe("GIVEN a Tooltip", () => {
     });
   });
 
-  describe.only("WHEN disabled", () => {
+  describe("WHEN disabled", () => {
     it("should not render when form field context disabled is undefined", () => {
       cy.mount(
         <FormField>
-          <Default disabled />
+          <Open disabled />
+        </FormField>
+      );
+      cy.findByRole("tooltip").should("not.exist");
+    });
+    it("should not render when form field context disabled is disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <Open />
         </FormField>
       );
       cy.findByRole("tooltip").should("not.exist");
