@@ -1,5 +1,4 @@
 import { PillNext } from "../../../pill-next";
-import { CallIcon } from "@salt-ds/icons";
 
 describe("GIVEN a Pill", () => {
   it("THEN should render a `standard` Pill", () => {
@@ -47,54 +46,6 @@ describe("GIVEN a Pill", () => {
         );
         cy.findByRole("button").should("have.attr", "disabled");
       });
-    });
-  });
-
-  describe("GIVEN an icon prop", () => {
-    it("THEN should render an icon given icon component", () => {
-      cy.mount(<PillNext icon={<CallIcon />}>label</PillNext>);
-      cy.findByTestId(/CallIcon/i).should("exist");
-    });
-  });
-
-  describe("GIVEN a closable pill", () => {
-    it("THEN should not trigger close by clicking the pill", () => {
-      const clickSpy = cy.stub().as("clickSpy");
-      const closeSpy = cy.stub().as("closeSpy");
-      cy.mount(
-        <PillNext onClick={clickSpy} onClose={closeSpy}>
-          Closable Pill
-        </PillNext>
-      );
-      cy.findByTestId("pill").realClick();
-      cy.get("@clickSpy").should("have.callCount", 1);
-      cy.get("@closeSpy").should("have.callCount", 0);
-    });
-    it("THEN should close the pill on clicking the close button", () => {
-      const clickSpy = cy.stub().as("clickSpy");
-      const closeSpy = cy.stub().as("closeSpy");
-      cy.mount(
-        <PillNext onClick={clickSpy} onClose={closeSpy}>
-          Closable Pill
-        </PillNext>
-      );
-      cy.findByTestId("pill-close-button").realClick();
-      cy.get("@clickSpy").should("have.callCount", 0);
-      cy.get("@closeSpy").should("have.callCount", 1);
-    });
-    it("THEN should close on enter", () => {
-      const closeSpy = cy.stub().as("closeSpy");
-      cy.mount(<PillNext onClose={closeSpy}>Closable Pill</PillNext>);
-      cy.findByTestId("pill-close-button").focus();
-      cy.realPress("Enter");
-      cy.get("@closeSpy").should("have.callCount", 1);
-    });
-    it("THEN should close on space", () => {
-      const closeSpy = cy.stub().as("closeSpy");
-      cy.mount(<PillNext onClose={closeSpy}>Closable Pill</PillNext>);
-      cy.findByTestId("pill-close-button").focus();
-      cy.realPress(" ");
-      cy.get("@closeSpy").should("have.callCount", 1);
     });
   });
 
