@@ -46,10 +46,8 @@ export const PillNext = forwardRef<
       ref={ref}
       className={clsx(
         withBaseName(),
-        {
-          [withBaseName("clickable")]: Boolean(onClick),
-          [withBaseName("active")]: active,
-        },
+        withBaseName("clickable"),
+        { [withBaseName("active")]: active },
         className
       )}
       {...restButtonProps}

@@ -14,9 +14,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   const { className, ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <PillNext className={className}>Default Pill</PillNext>
       <PillNext className={className} onClick={noop}>
-        Clickable Pill
+        Default Pill
       </PillNext>
       <PillNext className={className} onClick={noop} disabled>
         Disabled Pill

@@ -1,5 +1,4 @@
 import { PillNext } from "../../../pill-next";
-import { CallIcon } from "@salt-ds/icons";
 
 describe("GIVEN a Pill", () => {
   it("THEN should render a `standard` Pill", () => {
