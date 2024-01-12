@@ -149,7 +149,6 @@ export const DropdownNext = forwardRef(function DropdownNext(
   } = handlers;
 
   const triggerRef = useForkRef<HTMLButtonElement>(ref, reference);
-  const portalRef = useForkRef<HTMLButtonElement>(ref, floating);
 
   const getIcon = () => {
     if (readOnly) return;
@@ -230,9 +229,9 @@ export const DropdownNext = forwardRef(function DropdownNext(
       </button>
       <FloatingComponent
         open={open && !disabled}
-        ref={portalRef}
         {...getDropdownNextProps()}
         {...getPosition()}
+        ref={floating}
       >
         <ListNext
           data-test-id={"list-container"}

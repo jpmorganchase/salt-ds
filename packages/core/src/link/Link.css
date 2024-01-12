@@ -38,26 +38,22 @@
 
 /* Set color for visited link */
 .saltLink:visited {
-  --saltIcon-color: var(--link-color-visited);
   color: var(--link-color-visited);
 }
 
 /* Set color for hovered link */
 .saltLink:hover {
-  --saltIcon-color: var(--link-color-hover);
   color: var(--link-color-hover);
   text-decoration: var(--link-textDecoration-hover);
 }
 
 /* Set color for active link */
 .saltLink:active {
-  --saltIcon-color: var(--link-color-active);
   color: var(--link-color-active);
 }
 
 /* Set color for focused link */
 .saltLink:focus {
-  --saltIcon-color: var(--link-color-focus);
   outline: var(--link-focus-outline);
   color: var(--link-color-focus);
   text-decoration: var(--link-textDecoration-hover);

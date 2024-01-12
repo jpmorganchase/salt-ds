@@ -840,7 +840,9 @@ describe("Grid", () => {
       });
 
       const getPage = (n: number) => {
-        cy.findByTestId("paginator").find(`[aria-label="Page ${n}"]`).click();
+        cy.findByTestId("paginator")
+          .find(`[aria-label="Page ${n} of 8"]`)
+          .click();
       };
 
       getPage(1);

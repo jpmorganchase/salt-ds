@@ -252,9 +252,9 @@ export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
 
       <FloatingComponent
         open={Boolean(open && !disabled && filteredSource)}
-        ref={floating}
         {...getPortalProps()}
         {...getPosition()}
+        ref={floating}
       >
         <ListNext
           className={clsx(withBaseName("list"), listClassName)}

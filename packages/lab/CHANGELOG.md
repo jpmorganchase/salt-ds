@@ -1,5 +1,19 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.25
+
+### Minor Changes
+
+- 1d292f2e: Refactored FileDropZone.
+
+  - FileDropZone has been split into three composible pieces: FileDropZone, FileDropZoneIcon and FileDropZoneTrigger.
+  - Validation is handled outside of the component. `onFilesAccepted`, `onFilesRejected` and `validate` have been replaced with `onDrop` and `status`.
+  - Aligned styling to Salt.
+
+### Patch Changes
+
+- f7fcbd11: Fixed issue where components are not injecting their styles.
+
 ## 1.0.0-alpha.24
 
 ### Patch Changes

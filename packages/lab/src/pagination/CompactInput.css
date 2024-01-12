@@ -1,0 +1,9 @@
+.saltCompactInput {
+  --saltInput-paddingLeft: 0;
+  --saltInput-paddingRight: 0;
+}
+
+.saltCompactInput-defaultSize.saltInput {
+  --saltInput-minWidth: var(--salt-size-base);
+  width: var(--salt-size-base);
+}

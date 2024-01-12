@@ -18,7 +18,6 @@
 
 .saltSwitch-track {
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
-  --saltIcon-color: currentColor;
   --saltIcon-size: 100%;
   display: flex;
   flex-shrink: 0;

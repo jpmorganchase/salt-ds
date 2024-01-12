@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.13.3
+
+### Patch Changes
+
+- f7fcbd11: Fixed issue where components are not injecting their styles.
+- bb250947: Fixed `Badge` appearing over `Dialogs` due to an incorrect z-index.
+
 ## 1.13.2
 
 ### Patch Changes
