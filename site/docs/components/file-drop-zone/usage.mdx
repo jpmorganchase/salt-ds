@@ -11,9 +11,21 @@ data:
 
 ### Using the component
 
-Make sure you communicate any limits, such as maximum file size and type restrictions, before the user uploads their file. If the upload fails, clearly explain the reason why and how to resolve it.
+#### Composition
+
+- When composing the file drop zone, consider using `FileDropZoneIcon` to inform users about the current status. You can show an upload icon when the user has not yet uploaded an item, or a status icon that communicates the current upload status.
+- We recommend passing a header to the component to indicate the expected action, such as "drop files here."
+- You can customize the `FileDropZoneTrigger`'s text by passing `children` into the component.
+- Communicate any requirements, such as maximum file size and type restrictions as validation text, before the user uploads their file. If the upload fails, clearly explain the reason why and how to resolve it.
+
+#### Validation and acceptance criteria
+
+- You can specify acceptable file types with `FileDropZoneTrigger`'s `accept` prop. The prop doesn't validate the selected files' types. Instead, it provides the acceptable types to the browser, which in turn can guide users towards selecting the correct file types.
+- Make sure that the acceptance criteria is backed up by appropriate validation. Use `FileDropZone`'s `onDrop` prop to validate the file types.
 
 Inform users when files successfully upload to reassure them that the action has completed.
+
+- To inform users of the criteria, you can display custom validation text on the file drop zone. When uploaded files fail to meet the validation criteria, change the `state` prop to `"error"` so the file drop zone displays the error state.
 
 #### When to use
 
