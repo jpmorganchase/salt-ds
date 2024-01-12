@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.7
+
+### Patch Changes
+
+- 13279948: Update header icon alignment. Adding space between the text and the icon, so the icon will be aligned opposite the text.
+
 ## 1.3.6
 
 ### Patch Changes

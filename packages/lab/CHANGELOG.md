@@ -1,5 +1,23 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.26
+
+### Minor Changes
+
+- 641197da: - Removed `onClose` prop from `PillNext`. PillNext has been updated to support only one action. The `onClick`prop can be used instead.
+  - Remove `icon` prop from `PillNext`. An icon can be added as a children instead.
+
+### Patch Changes
+
+- 70fad5a1: Updated @floating-ui/react to 0.26.5.
+- c49c246e: Removed redundant Icon color overrides.
+- 61072b78: Changes to Pagination:
+
+  - Removed `compact` prop from `Pagination` component. Replaced by new `CompactPaginator` composition component
+  - Removed `showPreviousNext` and `FormFieldProps` from `Paginator` component.
+  - Added `CompactPaginator` for the compact version of pagination.
+  - Removed `FormFieldProps` from `GoToInput` component and added `inputRef` and `inputVariant`
+
 ## 1.0.0-alpha.25
 
 ### Minor Changes
