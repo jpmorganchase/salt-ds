@@ -3,7 +3,7 @@
   appearance: none;
   display: inline-flex;
   align-items: center;
-  background: var(--pillNext-background, var(--salt-actionable-primary-background));
+  background: var(--saltPillNext-background, var(--salt-actionable-primary-background));
   border-radius: 0;
   border: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
@@ -13,7 +13,7 @@
   gap: var(--salt-spacing-50);
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
-  color: var(--pillNext-color, var(--salt-actionable-primary-foreground));
+  color: var(--saltPillNext-color, var(--salt-actionable-primary-foreground));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
