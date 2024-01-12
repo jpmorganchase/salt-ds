@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.13.4
+
+### Patch Changes
+
+- 70fad5a1: Updated @floating-ui/react to 0.26.5.
+- c49c246e: Removed redundant Icon color overrides.
+- b4d72c16: Fixed FloatingComponent types
+- dbe8571b: Fixed Input placeholder color.
+
 ## 1.13.3
 
 ### Patch Changes

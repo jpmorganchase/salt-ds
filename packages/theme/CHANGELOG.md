@@ -1,5 +1,12 @@
 # @salt-ds/theme
 
+## 1.11.0
+
+### Minor Changes
+
+- c6db7d56: Added `--salt-color-white-fade-backdrop` token with value `rgba(255, 255, 255, var(--salt-palette-opacity-backdrop))`
+  Updated `--salt-color-black-fade-backdrop` token to value `rgba(0, 0, 0, var(--salt-palette-opacity-backdrop))`
+
 ## 1.10.1
 
 ### Patch Changes
