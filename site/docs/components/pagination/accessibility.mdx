@@ -1,0 +1,43 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Tab moves focus into the pagination component, setting focus to the first focusable element.
+
+- If the input field is present and positioned on the left of pagination, initially sets focus in the input field.
+- If the first page is active, focus will be placed on the first page item. It ignores the **Previous Page** button, which is disabled in this scenario.
+- If the active page is greater than 1, focus will be placed on the **Previous Page** button.
+
+If focus is inside the pagination group.
+
+- Tab moves focus to the next item within the tab order.
+- If the last page is active and in focus, and the input field isn’t present on the right of the pagination group, Tab moves focus out of the component. It ignores the **Next Page** button, which is disabled in this scenario.
+- If the last page isn't active but is in focus, Tab moves focus to the **Next Page** button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is inside the pagination group, this action moves focus to the previous active item within the tabbing order.
+- If focus is on the first page number, moves focus to the “previous” button.
+- If the first page is also the active page, meaning the “previous” button is disabled, focus moves out of pagination to the previous component in the tabbing order. If the input field is on the left, focus moves to the field.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- When focus is on an available button in the pagination group, this action activates the button. Focus remains on the selected button.
+- If the active page is in focus, this action does nothing.
+- If focus is in the input field and the user has entered a value, this action submits the value and changes the active page accordingly.
+
+</KeyboardControl>
+</KeyboardControls>

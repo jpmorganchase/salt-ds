@@ -1,0 +1,7 @@
+.saltPageRanges-ellipsis {
+  display: inline-flex;
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
+  line-height: var(--salt-size-base);
+  justify-content: center;
+}
