@@ -398,7 +398,8 @@
   }
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-  .ag-cell.editable-cell.ag-cell-focus:focus:before {
+  .ag-cell.editable-cell.ag-cell-focus:focus:before,
+  .ag-cell.editable-cell.ag-cell-focus:focus-within:before {
     content: "";
     position: absolute;
     top: 0;
@@ -410,21 +411,25 @@
     z-index: 2;
   }
 
-  .ag-cell-inline-editing.ag-cell-focus {
-    background-color: var(--agGrid-background);
-  }
-
-  .ag-cell-inline-editing.ag-cell-focus:before {
-    opacity: 0;
+  .ag-cell-inline-editing.ag-cell-focus input:focus {
+    // background-color: var(--agGrid-background);
+    outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+    var(--salt-focused-outlineColor);
+    outline-offset: -2px;
   }
 
   .ag-cell.ag-cell-inline-editing {
-    padding: 0 !important;
+    padding: 0;
   }
 
-  .ag-cell-editor .ag-input-field-input {
+  .ag-cell-editor .ag-input-field-input,
+  .ag-cell-editor .ag-input-field-input[type=text] {
     padding-left: ag-param(cell-horizontal-padding);
     padding-right: ag-param(cell-horizontal-padding);
+  }
+
+  .ag-row-selected .ag-cell.editable-cell input:not(:focus) {
+    background-color: var(--agGrid-row-background-selected);
   }
 
   /* --- Cell range --- */
