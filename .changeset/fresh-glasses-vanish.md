@@ -2,5 +2,5 @@
 "@salt-ds/ag-grid-theme": patch
 ---
 
-Fix missing padding and focus ring on focused editable cell.
-Fix wrong background and missing corner flag when editable cell loses focus.
+Fixed missing padding and focus ring on focused editable cell.
+Fixed wrong background and missing corner flag when editable cell loses focus.
