@@ -399,7 +399,8 @@
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
   .ag-cell.editable-cell.ag-cell-focus:focus:before,
-  .ag-cell.editable-cell.ag-cell-focus:focus-within:before {
+  .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+  .ag-cell.editable-cell.ag-cell-focus.ag-cell-inline-editing:before {
     content: "";
     position: absolute;
     top: 0;
@@ -411,14 +412,14 @@
     z-index: 2;
   }
 
+  .ag-cell.ag-cell-inline-editing {
+    padding: 0;
+  }
+
   .ag-cell-inline-editing.ag-cell-focus input:focus {
     outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--salt-focused-outlineColor);
     outline-offset: -2px;
-  }
-
-  .ag-cell.ag-cell-inline-editing {
-    padding: 0;
   }
 
   .ag-cell-editor .ag-input-field-input,
