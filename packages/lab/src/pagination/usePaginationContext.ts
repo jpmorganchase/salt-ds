@@ -1,5 +1,5 @@
-import { paginationContext } from "./PaginationContext";
 import { useContext } from "react";
+import { paginationContext } from "./PaginationContext";
 
 export const usePaginationContext = () => {
   const context = useContext(paginationContext);

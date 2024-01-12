@@ -1,0 +1,18 @@
+.saltGoToInput.saltFormField {
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  align-items: baseline;
+  text-wrap: nowrap;
+}
+
+.saltGoToInput-input {
+  height: var(--salt-size-base);
+  --saltInput-minWidth: unset;
+}
+
+.saltGoToInput-inputDefaultSize {
+  --saltInput-minWidth: var(--salt-size-base);
+  max-width: var(--salt-size-base);
+  width: var(--salt-size-base);
+}

@@ -1,0 +1,62 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the component
+
+Position the component where it’s most appropriate for your content length. On longer pages, for example, display the component both above and below content. Placing it below the content may cause frustration and excessive scrolling, and the user may not see it if it's positioned only at the top.
+
+#### When to use
+
+- When presenting a large amount of content that may take time to load, or when users need to review and navigate to content that’s split across sequential pages.
+- To organize and present search results or data within a grid.
+- To provide a natural break point that allows users to determine if they’ve found what they need when viewing the results of a search or data query, or if they must navigate to another page or refine their initial query.
+- To enable users to reference specific pages within a set of results.
+
+#### When not to use
+
+- When you’re walking the user through a sequential process, such as an onboarding form. Instead, use [`SteppedTracker`](../stepped-tracker/index) to communicate current progress and the [button bar](../../../patterns/button-bar) pattern to provide navigation.
+- When there’s no need for users to navigate between, or filter, results. Instead, use infinite scrolling. This allows users to scroll through a large amount of content with no clear end point, adding more content to the page as the user scrolls. For example, a common use case is for news articles or social site feeds, where searching or filtering isn’t an expected behavior and the content has a flat hierarchy.
+- When you want to present content in clearly defined batches without defining the total number of pages. Instead, use lazy loading. A **Load More** button loads the next set of results on the same page—giving the user greater control.
+
+### Import
+
+To import `Pagination` and related components from the lab Salt package, use:
+
+```js
+import {
+  Pagination,
+  Paginator,
+  CompactPaginator,
+  CompactInput,
+  GoToInput,
+} from "@salt-ds/lab";
+```
+
+### Props
+
+#### `Pagination`
+
+<PropsTable packageName="lab" componentName="Pagination" />
+
+#### `Paginator`
+
+<PropsTable packageName="lab" componentName="Paginator" />
+
+#### `CompactPaginator`
+
+<PropsTable packageName="lab" componentName="CompactPaginator" />
+
+#### `GoToInput`
+
+<PropsTable packageName="lab" componentName="GoToInput" />
+
+#### `CompactInput`
+
+<PropsTable packageName="lab" componentName="CompactInput" />

@@ -1,55 +1,75 @@
-import { useAriaAnnouncer, useControlled } from "@salt-ds/core";
-import { clsx } from "clsx";
 import {
   forwardRef,
   HTMLAttributes,
-  KeyboardEventHandler,
+  SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from "react";
+import { clsx } from "clsx";
+import { makePrefixer, useAriaAnnouncer, useControlled } from "@salt-ds/core";
 import { PaginationContext, paginationContext } from "./PaginationContext";
-import { withBaseName } from "./utils";
+
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import paginationCss from "./Pagination.css";
+
+const withBaseName = makePrefixer("saltPagination");
 
 const { Provider } = paginationContext;
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
+  /**
+   * Number of pages.
+   */
   count: number;
+  /**
+   * Current/active page.
+   */
   page?: number;
-  initialPage?: number;
-  onPageChange?: (page: number) => void;
-  compact?: boolean;
+  /**
+   * Default current/active page.
+   */
+  defaultPage?: number;
+  /**
+   * Callback function triggered when current page changed.
+   */
+  onPageChange?: (event: SyntheticEvent, page: number) => void;
 }
 
 export const Pagination = forwardRef<HTMLElement, PaginationProps>(
-  (
+  function Pagination(
     {
       className,
       count,
       children,
-      initialPage = 1,
+      defaultPage = 1,
       page: pageProp,
       onPageChange: onPageChangeProp,
-      compact = false,
       ...restProps
     },
     ref
-  ) => {
+  ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-pagination",
+      css: paginationCss,
+      window: targetWindow,
+    });
+
     const [pageState, setPageState] = useControlled({
       controlled: pageProp,
-      default: initialPage,
-      name: "Paginator",
+      default: defaultPage,
+      name: "Pagination",
       state: "page",
     });
 
-    const [paginatorElement, setPaginatorElement] = useState<HTMLDivElement>();
-
     const onPageChange = useCallback(
-      (page: number) => {
+      (event: SyntheticEvent, page: number) => {
         setPageState(page);
-        onPageChangeProp && onPageChangeProp(page);
+        onPageChangeProp && onPageChangeProp(event, page);
       },
       [onPageChangeProp, setPageState]
     );
@@ -58,29 +78,9 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       () => ({
         page: pageState,
         count,
-        compact,
         onPageChange,
-        paginatorElement,
-        setPaginatorElement,
       }),
       [pageState, count, onPageChange]
-    );
-
-    const onKeyDown: KeyboardEventHandler = useCallback(
-      ({ altKey, key }) => {
-        if (altKey) {
-          switch (key) {
-            case "PageDown":
-              onPageChange(Math.min(pageState + 1, count));
-              break;
-            case "PageUp":
-              onPageChange(Math.max(pageState - 1, 1));
-              break;
-            default:
-          }
-        }
-      },
-      [onPageChange]
     );
 
     const { announce } = useAriaAnnouncer();
@@ -94,12 +94,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       }
     }, [announce, pageState]);
 
-    useEffect(() => {
-      if (count < pageState) {
-        onPageChange(1);
-      }
-    }, [count, pageState, onPageChange]);
-
     if (count < 2) {
       return null;
     }
@@ -108,7 +102,6 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
       <Provider value={contextValue}>
         <nav
           className={clsx(withBaseName(), className)}
-          onKeyDown={onKeyDown}
           ref={ref}
           {...restProps}
         >

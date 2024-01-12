@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import { useMemo, useState } from "react";
+import { SyntheticEvent, useMemo, useState } from "react";
 import { FlexLayout } from "@salt-ds/core";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
 import { Pagination, Paginator } from "@salt-ds/lab";
@@ -19,7 +19,7 @@ const GridPaginationTemplate: StoryFn<{}> = (props) => {
   const pageSize = 7;
   const pageCount = Math.ceil(dummyInvestors.length / pageSize);
 
-  const onPageChange = (page: number) => {
+  const onPageChange = (event: SyntheticEvent, page: number) => {
     setPage(page);
   };
 
