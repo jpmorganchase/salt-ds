@@ -412,9 +412,8 @@
   }
 
   .ag-cell-inline-editing.ag-cell-focus input:focus {
-    // background-color: var(--agGrid-background);
     outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-    var(--salt-focused-outlineColor);
+      var(--salt-focused-outlineColor);
     outline-offset: -2px;
   }
 
@@ -423,7 +422,7 @@
   }
 
   .ag-cell-editor .ag-input-field-input,
-  .ag-cell-editor .ag-input-field-input[type=text] {
+  .ag-cell-editor .ag-input-field-input[type="text"] {
     padding-left: ag-param(cell-horizontal-padding);
     padding-right: ag-param(cell-horizontal-padding);
   }
