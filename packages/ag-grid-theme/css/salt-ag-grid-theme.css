@@ -69,6 +69,14 @@ div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-group-ce
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
+  margin-left: auto;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
+  margin-right: auto;
+}
+
 /* MENU */
 
 div[class*="ag-theme-salt"] .ag-menu {
@@ -110,11 +118,6 @@ div[class*="ag-theme-salt"] .ag-column-select-header {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   border: 0;
 }
-
-/* 
-.ag-column-select-virtual-list-item {
-  padding: var(--salt-spacing-50) var(--salt-spacing-100);
-} */
 
 /* ROW */
 
@@ -179,13 +182,15 @@ div[class*="ag-theme-salt"] .ag-cell-wrapper.ag-row-group {
 }
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus,
-div[class*="ag-theme-salt"] .editable-numeric-cell.ag-cell-focus:focus {
+div[class*="ag-theme-salt"] .editable-numeric-cell.ag-cell-focus:focus,
+div[class*="ag-theme-salt"] .editable-cell.ag-cell-focus:focus-within {
   clip-path: inset(0, 0);
   overflow: visible;
 }
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus:before,
-div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before {
+div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
+div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus-within:before {
   border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
   border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-focused-outlineColor);
   border-top: 0 solid transparent;
@@ -196,12 +201,19 @@ div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:b
   z-index: 2;
 }
 
-div[class*="ag-theme-salt"] .editable-cell input,
-div[class*="ag-theme-salt"] .numeric-cell input,
+div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing {
+  padding: 0;
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+}
+
+div[class*="ag-theme-salt"] .ag-row-selected .editable-cell.ag-cell-inline-editing input:not(:focus) {
+  background-color: var(--salt-selectable-background-selected);
+}
+
 div[class*="ag-theme-salt"] .editable-numeric-cell input,
 div[class*="ag-theme-salt"] input[class^="ag-"][type="number"] {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) transparent;
-  padding: 0;
+  padding: 0 var(--salt-spacing-100);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 div[class*="ag-theme-salt"] .editable-cell input:focus,
@@ -209,6 +221,8 @@ div[class*="ag-theme-salt"] .numeric-cell input:focus,
 div[class*="ag-theme-salt"] .editable-numeric-cell input:focus,
 div[class*="ag-theme-salt"] input[class^="ag-"][type="number"]:focus {
   border: none;
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
 }
 
 /* INPUT */
