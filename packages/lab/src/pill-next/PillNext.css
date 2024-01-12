@@ -13,7 +13,7 @@
   gap: var(--salt-spacing-50);
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
-  color: var(--pillNext-text-color, var(--salt-actionable-primary-foreground));
+  color: var(--pillNext-color, var(--salt-actionable-primary-foreground));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
