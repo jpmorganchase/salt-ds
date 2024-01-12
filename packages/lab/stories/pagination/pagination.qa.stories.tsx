@@ -36,7 +36,7 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
     <Pagination count={count}>
       <FlexLayout gap={1}>
         {goTo && <GoToInput />}
-        {compact ?? compactWithInput ? (
+        {compact || compactWithInput ? (
           <CompactPaginator>
             {compactWithInput && <CompactInput />}
           </CompactPaginator>

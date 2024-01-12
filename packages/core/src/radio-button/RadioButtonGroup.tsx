@@ -87,8 +87,8 @@ export const RadioButtonGroup = forwardRef<
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
-  const disabled = formFieldDisabled ?? disabledProp;
-  const readOnly = formFieldReadOnly ?? readOnlyProp;
+  const disabled = formFieldDisabled || disabledProp;
+  const readOnly = formFieldReadOnly || readOnlyProp;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [value, setStateValue] = useControlled({

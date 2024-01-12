@@ -141,9 +141,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     } = useFormFieldProps();
 
     const disabled =
-      checkboxGroup.disabled ?? formFieldDisabled ?? disabledProp;
+      checkboxGroup.disabled || formFieldDisabled || disabledProp;
     const readOnly =
-      checkboxGroup.readOnly ?? formFieldReadOnly ?? readOnlyProp;
+      checkboxGroup.readOnly || formFieldReadOnly || readOnlyProp;
     const validationStatus = !disabled
       ? checkboxGroup.validationStatus ??
         formFieldValidationStatus ??

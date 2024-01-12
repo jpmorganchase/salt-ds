@@ -39,7 +39,7 @@ const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
     <Pagination count={count}>
       <FlexLayout gap={1}>
         {goTo && <GoToInput inputVariant={inputVariant} />}
-        {compact ?? compactWithInput ? (
+        {compact || compactWithInput ? (
           <CompactPaginator>
             {compactWithInput && <CompactInput variant={inputVariant} />}
           </CompactPaginator>
