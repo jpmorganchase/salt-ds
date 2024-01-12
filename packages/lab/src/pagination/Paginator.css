@@ -1,0 +1,12 @@
+.saltPaginator {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.saltPaginator-arrowButton-previous {
+  --saltButton-margin: 0 var(--salt-spacing-100) 0 0;
+}
+
+.saltPaginator-arrowButton-next {
+  --saltButton-margin: 0 0 0 var(--salt-spacing-100);
+}

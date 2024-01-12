@@ -2,29 +2,33 @@ import { clsx } from "clsx";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
+  forwardRef,
   useEffect,
   useState,
 } from "react";
-import {
-  FormFieldLegacy as FormField,
-  FormFieldLegacyProps as FormFieldProps,
-} from "../form-field-legacy";
-import { InputLegacy as Input } from "../input-legacy";
-import { withBaseName } from "./utils";
+import { Input, InputProps, makePrefixer } from "@salt-ds/core";
+import { usePaginationContext } from "./usePaginationContext";
 
-export interface CompactInputProps {
-  count: number;
-  page: number;
-  onPageChange: (page: number) => void;
-  FormFieldProps?: Partial<FormFieldProps>;
-}
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
-export const CompactInput = ({
-  page,
-  count,
-  onPageChange,
-  FormFieldProps: { className, ...restFormFieldLegacyProps } = {},
-}: CompactInputProps) => {
+import compactInputCss from "./CompactInput.css";
+
+const withBaseName = makePrefixer("saltCompactInput");
+
+export const CompactInput = forwardRef<
+  HTMLInputElement,
+  Pick<InputProps, "inputRef" | "variant">
+>(function CompactInput(props, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-compact-input",
+    css: compactInputCss,
+    window: targetWindow,
+  });
+
+  const { count, page, onPageChange } = usePaginationContext();
+
   const [inputValue, setInputValue] = useState(`${page}`);
 
   useEffect(() => {
@@ -39,7 +43,7 @@ export const CompactInput = ({
     if (event.key === "Enter") {
       const pageValue = Number(inputValue);
       if (!isNaN(pageValue) && pageValue <= count && pageValue > 0) {
-        onPageChange(pageValue);
+        onPageChange(event, pageValue);
       } else {
         setInputValue(`${page}`);
       }
@@ -51,29 +55,21 @@ export const CompactInput = ({
   };
 
   return (
-    <span>
-      <FormField
-        className={clsx(withBaseName("compactInputField"), className)}
-        fullWidth={false}
-        {...restFormFieldLegacyProps}
-      >
-        <Input
-          className={clsx(withBaseName("compactInput"), {
-            [withBaseName("compactInputFixed")]: count < 100,
-          })}
-          highlightOnFocus
-          inputProps={{
-            "aria-label": `Go to page, ${count} total`,
-            style: { width: `${`${count}`.length}ch` },
-            role: "textbox",
-          }}
-          onBlur={handleBlur}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          value={inputValue}
-          textAlign={"center"}
-        />
-      </FormField>
-    </span>
+    <Input
+      className={clsx(withBaseName(), {
+        [withBaseName("defaultSize")]: count < 100,
+      })}
+      inputProps={{
+        "aria-label": `Go to page, ${count} total`,
+        style: { width: `${`${count}`.length}ch` },
+      }}
+      onBlur={handleBlur}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      value={inputValue}
+      textAlign={"center"}
+      ref={ref}
+      {...props}
+    />
   );
-};
+});

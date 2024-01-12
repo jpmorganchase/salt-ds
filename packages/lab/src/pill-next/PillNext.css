@@ -1,27 +1,9 @@
 /* Styles applied to the root element */
-
 .saltPillNext {
-  display: flex;
-  max-width: 100%;
-}
-
-.saltPillNext-action {
-  --pillNext-background: var(--salt-actionable-primary-background);
-  --pillNext-background-active: var(--salt-actionable-primary-background-active);
-  --pillNext-background-disabled: var(--salt-actionable-primary-background-disabled);
-  --pillNext-background-hover: var(--salt-actionable-primary-background-hover);
-  --pillNext-text-color: var(--salt-actionable-primary-foreground);
-  --pillNext-text-color-active: var(--salt-actionable-primary-foreground-active);
-  --pillNext-text-color-hover: var(--salt-actionable-primary-foreground-hover);
-  --pillNext-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
-}
-
-.saltPillNext-action {
   appearance: none;
-  -webkit-appearance: none;
   display: inline-flex;
   align-items: center;
-  background: var(--pillNext-background);
+  background: var(--saltPillNext-background, var(--salt-actionable-primary-background));
   border-radius: 0;
   border: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
@@ -31,64 +13,41 @@
   gap: var(--salt-spacing-50);
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
-  color: var(--pillNext-text-color);
+  color: var(--saltPillNext-color, var(--salt-actionable-primary-foreground));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
-}
-
-.saltPillNext-label {
-  min-width: 0;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.saltPillNext-close-button {
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-padding: var(--salt-spacing-50);
-}
-
-/* Style applied to Pill if `onClick` prop is provided  */
+/* Style applied to Pill if pill is clickable  */
 .saltPillNext-clickable {
   cursor: var(--salt-selectable-cursor-hover);
 }
 
 .saltPillNext-clickable:hover,
 .saltPillNext-clickable:focus-visible {
-  color: var(--pillNext-text-color-hover);
-  background: var(--pillNext-background-hover);
-}
-
-.saltPillNext-clickable.saltPillNext-disabled:hover {
-  color: var(--pillNext-text-color);
-  background: var(--pillNext-background);
+  color: var(--salt-actionable-primary-foreground-hover);
+  background: var(--salt-actionable-primary-background-hover);
 }
 
 .saltPillNext-clickable.saltPillNext-active,
 .saltPillNext-clickable:active {
-  background: var(--pillNext-background-active);
-  color: var(--pillNext-text-color-active);
-}
-
-.saltPillNext-clickable.saltPillNext-disabled.saltPillNext-active,
-.saltPillNext-clickable.saltPillNext-disabled:active {
-  background: var(--pillNext-background);
-  color: var(--pillNext-text-color);
+  background: var(--salt-actionable-primary-background-active);
+  color: var(--salt-actionable-primary-foreground-active);
 }
 
 /* Style applied to Pill on focus */
-.saltPillNext-action:focus-visible {
+.saltPillNext:focus-visible {
   outline: var(--salt-focused-outline);
-  /* increase index by one so the focus ring sits on top of the sibling button */
-  z-index: var(--salt-zIndex-default);
 }
 
 /* Style applied to Pill when disabled */
-.saltPillNext-action.saltPillNext-disabled,
-.saltPillNext-action.saltPillNext-disabled:hover {
-  color: var(--pillNext-text-color-disabled);
-  background: var(--pillNext-background-disabled);
+.saltPillNext:disabled,
+.saltPillNext:disabled:hover {
+  color: var(--salt-actionable-primary-foreground-disabled);
+  background: var(--salt-actionable-primary-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
