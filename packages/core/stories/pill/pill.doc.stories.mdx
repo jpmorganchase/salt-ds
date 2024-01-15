@@ -1,20 +1,19 @@
 import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { PillNext } from "@salt-ds/lab";
-import { UserBadgeIcon } from "@salt-ds/icons";
+import { Pill } from "@salt-ds/core";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
 
 <Meta
-  title="Documentation/Lab/Pill Next"
-  component={PillNext}
+  title="Documentation/Core/Pill"
+  component={Pill}
   parameters={{
     viewMode: "docs",
   }}
 />
 
-# Pill Next
+# Pill
 
 Pill is a small visual element that contains versatile content. You can use Pill to label, tag or categorize content. With Pill, users can trigger actions, make selections or filter results. Actions that may change depending on the context, and are not fixed, are better represented by Pill than Button.
 
@@ -22,13 +21,13 @@ Pill is a small visual element that contains versatile content. You can use Pill
 
 Pill is a versatile, interactive and stand-alone component. It is often used to:
 
-### When to use Pill Next
+### When to use Pill
 
 - Organize content that may be mapped to more than one category. This provides users with a way of distinguishing different types of content and categories.
 - Trigger an immediate action—such as changing the view of content that’s currently on display or navigating to a new page.
 - Enable an action that’s subject to change. Actions that may change depending on the context, and are not fixed, are better represented by Pill than Button. In a messaging application, for example, Pills can be used to display quick stock responses that change so they’re appropriate responses to received message.
 
-### When not to use Pill Next
+### When not to use Pill
 
 - When the content is a system message and cannot be interacted with. Use Badge instead.
 
@@ -44,7 +43,7 @@ The default Pill is often used for tagging purposes, or to categorize content. P
   categories. Use [Icon Descriptor](/docs/documentation-icons-icon--docs) instead.
 
 <Canvas>
-  <Story id="lab-pill-next--default" />
+  <Story id="core-pill--default" />
 </Canvas>
 
 ## Icon Descriptors
@@ -53,7 +52,7 @@ Icons can be displayed on the left of the Pill label to visually
 reinforce the theme or grouping of that Pill, and for quick recognition.
 
 <Canvas>
-  <Story id="lab-pill-next--icon" />
+  <Story id="core-pill--icon" />
 </Canvas>
 
 ## Disabled
@@ -62,7 +61,7 @@ A Pill can be set to a disabled state, with no resultant action when the user
 interacts with it.
 
 <Canvas>
-  <Story id="lab-pill-next--disabled" />
+  <Story id="core-pill--disabled" />
 </Canvas>
 
 ## Accessibility
@@ -87,17 +86,17 @@ ensure it provides an accurate role to screen readers.
 ## API
 
 ```
-import { PillNext } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/core";
 ```
 
 ## Props
 
-<ArgsTable of={PillNext} />
+<ArgsTable of={Pill} />
 
 ## CSS Class
 
-<CSSClassTable of={PillNext} />
+<CSSClassTable of={Pill} />
 
 ## Characteristics Used
 
-<CharacteristicUsage of={PillNext} />
+<CharacteristicUsage of={Pill} />
