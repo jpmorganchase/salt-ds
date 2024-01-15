@@ -3,4 +3,4 @@
 "@salt-ds/lab": patch
 ---
 
-Replace incorrect usage of nullish operator
+Replace incorrect usage of nullish operators
