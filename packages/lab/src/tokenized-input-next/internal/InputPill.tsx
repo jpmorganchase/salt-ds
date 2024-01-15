@@ -10,9 +10,10 @@ import {
   makePrefixer,
   Tooltip,
   useIsomorphicLayoutEffect,
+  Pill,
+  PillProps,
 } from "@salt-ds/core";
 import { getWidth } from "./useWidth";
-import { Pill, PillProps } from "../../pill";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import inputPillCss from "./InputPill.css";

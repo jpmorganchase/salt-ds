@@ -2,8 +2,9 @@ import { forwardRef, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer, useButton } from "@salt-ds/core";
 import pillCss from "./Pill.css";
+import { makePrefixer } from "../utils";
+import { useButton } from "../button";
 
 const withBaseName = makePrefixer("saltPill");
 

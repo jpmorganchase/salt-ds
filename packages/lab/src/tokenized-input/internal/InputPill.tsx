@@ -1,8 +1,12 @@
 import { clsx } from "clsx";
 import { memo, MutableRefObject, useRef } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+  Pill,
+  PillProps,
+} from "@salt-ds/core";
 import { getWidth } from "./useWidth";
-import { Pill, PillProps } from "../../pill";
 import { CloseIcon } from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltInputPill");
