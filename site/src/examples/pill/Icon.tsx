@@ -7,7 +7,7 @@ const handleClick = () => {
 };
 
 export const Icon = (): ReactElement => (
-  <PillNext icon={<FavoriteIcon />} onClick={handleClick}>
-    Pill with Icon
+  <PillNext onClick={handleClick}>
+    <FavoriteIcon /> Pill with Icon
   </PillNext>
 );

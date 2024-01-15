@@ -2,7 +2,7 @@ import * as tooltipStories from "@stories/tooltip/tooltip.stories";
 import { composeStories } from "@storybook/react";
 import { InfoIcon } from "@salt-ds/icons";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { Tooltip } from "@salt-ds/core";
+import { Tooltip, FormField } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -57,6 +57,24 @@ describe("GIVEN a Tooltip", () => {
     });
   });
 
+  describe("WHEN disabled", () => {
+    it("should not render when form field context disabled is undefined", () => {
+      cy.mount(
+        <FormField>
+          <Open disabled />
+        </FormField>
+      );
+      cy.findByRole("tooltip").should("not.exist");
+    });
+    it("should not render when form field context disabled is disabled", () => {
+      cy.mount(
+        <FormField disabled>
+          <Open />
+        </FormField>
+      );
+      cy.findByRole("tooltip").should("not.exist");
+    });
+  });
   describe("WHEN tooltip placement is", () => {
     it("TOP - tooltip should be positioned above the trigger", () => {
       cy.mount(<Open placement="top" />);

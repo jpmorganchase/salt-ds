@@ -65,7 +65,7 @@ export const EditableLabel = forwardRef(function EditableLabel(
 
   const [editing, setEditing] = useControlled({
     controlled: editingProp,
-    default: defaultEditing ?? false,
+    default: defaultEditing || false,
     name: "EditableLabel",
     state: "editing",
   });

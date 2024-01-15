@@ -1,0 +1,31 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the component
+
+The component is typically used in a form. It’s ideal for fields that can contain multiple, specific values related to a single topic or context—and these values can be removed quickly and in their entirety. You would use the component, for example, in a field for email addresses or a fast field for a cash ticket.
+
+### When not to use
+
+- To generate a list of suggested values that partially match the text entered by the user. Instead, use [`ComboBoxNext`](/salt/components/combo-box/).
+- To choose exclusively from options in an existing dataset. Instead, use [`ComboBoxNext`](/salt/components/combo-box/).
+
+### Import
+
+To import `TokenizedInputNext` from the lab Salt package, use:
+
+```js
+import { TokenizedInputNext } from "@salt-ds/lab";
+```
+
+### Props
+
+<PropsTable packageName="lab" componentName="TokenizedInputNext" />
