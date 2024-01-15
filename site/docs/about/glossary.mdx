@@ -7,13 +7,27 @@ sidebar:
 
 Below are definitions of terms commonly used in Salt design system content, communications and documentation.
 
+## Breakpoint
+
+In responsive design, a breakpoint is the viewport width at which a layout will adapt in order to provide the best possible user experience.
+
+## Density
+
+Density relates to the amount of content that can fit on a screen based on the size and spacing of components.
+
+The Salt design system supports four base densities: high, medium, low and touch. Read more in the [density foundation](/salt/foundations/density).
+
+## Disabled state
+
+A component in a disabled state (like a checkbox or radio button) is not interactive or focusable. This is different from a [read-only](#read-only) state as the user cannot interact with any accompanying text.
+
 ## Foundation
 
 A guide to fundamental principles that help create a cohesive design language.
 
 ## Object positioning
 
-These terms describe how objects are positioned, like within `FlexLayout`.
+The below terms describe how objects are positioned, like within `FlexLayout`.
 
 ### Alignment
 
@@ -37,9 +51,13 @@ The rotational position of the object(s) as a whole in relation to another point
 
 A design solution that helps users complete common tasks. Salt offers a set of composable components that are the building blocks of patterns.
 
-## Responsive property
+## Read-only state
 
-A property that takes either multiple values (one value per breakpoint), or a single value that would take effect across all different screen sizes.
+A component in a read-only state (like a checkbox or radio button) is navigable using keyboard shortcuts, but the user cannot edit any relevant values or directly change its state. This is different from a [disabled](#disabled) state as the user can interact with accompanying text in limited ways.
+
+## Responsive prop
+
+In resposive design, a responsive prop is one that takes either multiple values (one value per [breakpoint](#breakpoint)) or a single value that would take effect across all screen sizes. `FlexLayout` supports responsive props.
 
 ## Salt
 
@@ -47,7 +65,7 @@ The J.P. Morgan design system, an open-source solution for building exceptional 
 
 ## Status
 
-A status prop visually modifies a component to more effectively communicate a message. You can typically find statuses in `Tooltip`, `Dialog`, `Banner` and `Toast`.
+A status prop visually modifies a component to more effectively communicate a message. Statuses are typically listed in info-red-amber-green order. You can find statuses in `Tooltip`, `Dialog`, `Banner` and `Toast`.
 
 ### Info
 
