@@ -14,6 +14,22 @@ describe("GIVEN a Tokenized Input", () => {
       cy.findByRole("textbox").should("be.disabled");
     });
   });
+  describe("WHEN readonly", () => {
+    it("SHOULD mount as readonly", () => {
+      cy.mount(<Default defaultSelected={["Tokyo"]} readOnly />);
+      cy.findByRole("textbox").should("have.attr", "readonly");
+    });
+    it("should not allow to remove or add items", () => {
+      cy.mount(<Default defaultSelected={["Tokyo"]} readOnly />);
+      cy.findByRole("option").should("exist");
+      // Remove the item
+      cy.realPress("ArrowLeft");
+      cy.realPress("Backspace");
+
+      // pill should not have been removed
+      cy.findByRole("option").should("exist");
+    });
+  });
   describe("WHEN mounted as an uncontrolled component", () => {
     it("should render the Tokenized Input with pre selected items", () => {
       cy.mount(<WithCollapsedButton />);

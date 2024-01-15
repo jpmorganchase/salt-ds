@@ -416,7 +416,7 @@ export function useTokenizedInputNext<Item>(
   const handleRemoveItem = useCallback(
     (event: SyntheticEvent, itemIndex?: number) => {
       focusInput();
-      if (itemIndex != undefined) {
+      if (itemIndex != undefined && !readOnly && !readOnlyProp) {
         removeItems(event, [itemIndex]);
       }
     },
