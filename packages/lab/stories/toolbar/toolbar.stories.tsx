@@ -33,7 +33,7 @@ import {
   ToolbarProps,
   Tooltray,
   Input,
-  PillNext,
+  Pill,
   StaticInputAdornment,
 } from "@salt-ds/lab";
 import { CSSProperties, MouseEvent, useState } from "react";
@@ -133,13 +133,13 @@ export const TooltrayAlignment: StoryFn = () => {
             </ToggleButton>
           </ToolbarField>
           <ToolbarField>
-            <PillNext onClick={() => console.log("lorem.")} >LOREM</PillNext>
+            <Pill onClick={() => console.log("lorem.")}>LOREM</Pill>
           </ToolbarField>
           <ToolbarField>
-            <PillNext onClick={() => console.log("ipsum.")} >IPSUM</PillNext>
+            <Pill onClick={() => console.log("ipsum.")}>IPSUM</Pill>
           </ToolbarField>
           <ToolbarField>
-            <PillNext onClick={() => console.log("dolar.")} >DOLAR</PillNext>
+            <Pill onClick={() => console.log("dolar.")}>DOLAR</Pill>
           </ToolbarField>
         </Tooltray>
         <Tooltray aria-label="status tooltray" alignStart>

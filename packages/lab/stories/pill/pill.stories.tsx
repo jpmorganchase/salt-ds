@@ -1,4 +1,4 @@
-import { PillNext } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/lab";
 import { CloseIcon, FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
@@ -6,26 +6,26 @@ import { shortColorData } from "./../assets/exampleData";
 import { Button, FlowLayout } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Pill Next",
-  component: PillNext,
-} as Meta<typeof PillNext>;
+  title: "Lab/Pill",
+  component: Pill,
+} as Meta<typeof Pill>;
 
-export const Default: StoryFn<typeof PillNext> = () => {
+export const Default: StoryFn<typeof Pill> = () => {
   const handleClick = () => {
     console.log("clicked");
   };
-  return <PillNext onClick={handleClick}>Clickable Pill</PillNext>;
+  return <Pill onClick={handleClick}>Clickable Pill</Pill>;
 };
 
-export const Disabled: StoryFn<typeof PillNext> = () => {
+export const Disabled: StoryFn<typeof Pill> = () => {
   return (
-    <PillNext disabled onClick={() => console.log("Click")}>
+    <Pill disabled onClick={() => console.log("Click")}>
       Disabled Pill
-    </PillNext>
+    </Pill>
   );
 };
 
-export const Closable: StoryFn<typeof PillNext> = () => {
+export const Closable: StoryFn<typeof Pill> = () => {
   const [colors, setColor] = useState(shortColorData);
 
   const removeColor = (color: string) => {
@@ -45,22 +45,22 @@ export const Closable: StoryFn<typeof PillNext> = () => {
         <Button onClick={() => setColor(shortColorData)}>reset</Button>
       </FlowLayout>
       {colors.map((color, index) => (
-        <PillNext
+        <Pill
           key={color}
           disabled={index < 3}
           onClick={() => removeColor(color)}
         >
           {color} <CloseIcon />
-        </PillNext>
+        </Pill>
       ))}
     </FlowLayout>
   );
 };
 
-export const Icon: StoryFn<typeof PillNext> = () => {
+export const Icon: StoryFn<typeof Pill> = () => {
   return (
-    <PillNext onClick={() => console.log("Clicked.")}>
+    <Pill onClick={() => console.log("Clicked.")}>
       <FavoriteIcon /> Pill with Icon
-    </PillNext>
+    </Pill>
   );
 };

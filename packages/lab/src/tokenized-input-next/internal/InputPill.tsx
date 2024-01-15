@@ -12,7 +12,7 @@ import {
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { getWidth } from "./useWidth";
-import { PillNext, PillNextProps } from "../../pill-next";
+import { Pill, PillProps } from "../../pill";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import inputPillCss from "./InputPill.css";
@@ -20,7 +20,7 @@ import { CloseIcon } from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltInputPill");
 
-export type InputPillProps = PillNextProps & {
+export type InputPillProps = PillProps & {
   /**
    * A ref object holds pills index map to width.
    */
@@ -92,7 +92,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
   };
   return (
     <Tooltip content={label} disabled={!isEllipsisActive}>
-      <PillNext
+      <Pill
         className={clsx(
           withBaseName(),
           {
@@ -110,7 +110,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
       >
         <span className={withBaseName("label")}>{label}</span>
         {isRemovable && <CloseIcon />}
-      </PillNext>
+      </Pill>
     </Tooltip>
   );
 });

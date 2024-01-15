@@ -1,6 +1,4 @@
 import { ReactElement } from "react";
-import { PillNext } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/lab";
 
-export const Disabled = (): ReactElement => (
-  <PillNext disabled>Disabled Pill</PillNext>
-);
+export const Disabled = (): ReactElement => <Pill disabled>Disabled Pill</Pill>;
