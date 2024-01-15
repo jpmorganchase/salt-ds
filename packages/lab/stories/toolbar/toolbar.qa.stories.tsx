@@ -94,13 +94,13 @@ export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
           <SwapIcon aria-hidden /> AND
         </ToggleButton>
         <FormField>
-          <Pill onClick={() => console.log("lorem.")} >LOREM</Pill>
+          <Pill onClick={() => console.log("lorem.")}>LOREM</Pill>
         </FormField>
         <FormField>
-          <Pill onClick={() => console.log("ipsum.")} >IPSUM</Pill>
+          <Pill onClick={() => console.log("ipsum.")}>IPSUM</Pill>
         </FormField>
         <FormField>
-          <Pill onClick={() => console.log("dolar.")} >DOLAR</Pill>
+          <Pill onClick={() => console.log("dolar.")}>DOLAR</Pill>
         </FormField>
       </Tooltray>
       <Tooltray aria-label="status tooltray" data-pad-end>

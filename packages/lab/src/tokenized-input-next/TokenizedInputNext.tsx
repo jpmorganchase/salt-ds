@@ -293,7 +293,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
                 label={label}
                 onClose={
                   expanded && !readOnly
-                    ? (event) => onRemoveItem?.(event, index)
+                    ? (event: SyntheticEvent) => onRemoveItem?.(event, index)
                     : undefined
                 }
                 pillsRef={pillsRef}

@@ -132,13 +132,13 @@ export const TooltrayAlignment: StoryFn = () => {
             </ToggleButton>
           </ToolbarField>
           <ToolbarField>
-            <Pill onClick={() => console.log("lorem.")} >LOREM</Pill>
+            <Pill onClick={() => console.log("lorem.")}>LOREM</Pill>
           </ToolbarField>
           <ToolbarField>
-            <Pill onClick={() => console.log("ipsum.")} >IPSUM</Pill>
+            <Pill onClick={() => console.log("ipsum.")}>IPSUM</Pill>
           </ToolbarField>
           <ToolbarField>
-            <Pill onClick={() => console.log("dolar.")} >DOLAR</Pill>
+            <Pill onClick={() => console.log("dolar.")}>DOLAR</Pill>
           </ToolbarField>
         </Tooltray>
         <Tooltray aria-label="status tooltray" alignStart>
