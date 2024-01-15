@@ -2,4 +2,7 @@
 "@salt-ds/lab": patch
 ---
 
-Fixed styles on Navigation Item
+Navigation Item
+- Fixed: if `href` prop exists then renders a link; if not then renders a button. Except for when `parent` is set to `true` then it's always a button.
+- Fixed styles.
+
