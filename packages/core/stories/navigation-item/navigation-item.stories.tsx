@@ -1,5 +1,4 @@
-import { NavigationItem, NavigationItemProps } from "@salt-ds/lab";
-import { Badge, FlexLayout } from "@salt-ds/core";
+import { Badge, FlexLayout, NavigationItem, NavigationItemProps } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
@@ -7,7 +6,7 @@ import { NotificationIcon } from "@salt-ds/icons";
 import "./navigation-item.stories.css";
 
 export default {
-  title: "Lab/Navigation Item",
+  title: "Core/Navigation Item",
   component: NavigationItem,
 } as Meta;
 
