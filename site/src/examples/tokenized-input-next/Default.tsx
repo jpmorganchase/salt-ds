@@ -6,5 +6,5 @@ const handleChange = (selectedItems: unknown) => {
 };
 
 export const Default = (): ReactElement => (
-  <TokenizedInputNext onChange={handleChange} />
+  <TokenizedInputNext style={{ width: "266px" }} onChange={handleChange} />
 );
