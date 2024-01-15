@@ -19,7 +19,7 @@ import {
   Tooltray,
   FormField,
   Input,
-  Pill,
+  PillNext,
   StaticInputAdornment,
 } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -95,13 +95,13 @@ export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
           <SwapIcon aria-hidden /> AND
         </ToggleButton>
         <FormField>
-          <Pill label="LOREM" onClick={() => console.log("lorem.")} />
+          <PillNext onClick={() => console.log("lorem.")} >LOREM</PillNext>
         </FormField>
         <FormField>
-          <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
+          <PillNext onClick={() => console.log("ipsum.")} >IPSUM</PillNext>
         </FormField>
         <FormField>
-          <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
+          <PillNext onClick={() => console.log("dolar.")} >DOLAR</PillNext>
         </FormField>
       </Tooltray>
       <Tooltray aria-label="status tooltray" data-pad-end>
