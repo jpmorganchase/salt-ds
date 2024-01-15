@@ -164,7 +164,7 @@ export function FloatingPlatformProvider(props: FloatingPlatformProviderProps) {
     () => ({
       platform: platformProp ?? platform,
       middleware: middleware ?? defaultGetMiddleware,
-      animationFrame: animationFrame ?? false,
+      animationFrame: animationFrame || false,
     }),
     [platformProp, middleware, animationFrame]
   );
