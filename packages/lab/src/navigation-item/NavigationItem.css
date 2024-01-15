@@ -1,10 +1,19 @@
 /* Vars applied to root NavigationItem component */
-.saltNavigationItem {
+.saltNavigationItem {  
+  --saltButton-background-hover: none;
+  --saltButton-background-active: none;
+  --saltButton-textTransform: none;
+  --saltButton-letterSpacing: none;
+  --saltButton-fontWeight: var(--salt-text-fontWeight);
+  --saltButton-width: 100%;
+
+  --saltIcon-color: var(--salt-content-primary-foreground);
+
   display: flex;
+  gap: var(--salt-spacing-100);
   align-items: center;
   position: relative;
   gap: var(--salt-spacing-100);
-  text-decoration: none;
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
@@ -12,11 +21,6 @@
 /* Vars applied to NavigationItem component when root */
 .saltNavigationItem-rootItem {
   --saltText-fontWeight: var(--salt-text-fontWeight-strong);
-}
-
-/* Vars applied to NavigationItem component when nested */
-.saltNavigationItem-nested {
-  --saltButton-fontWeight: var(--salt-text-fontWeight);
 }
 
 /* Styles applied to NavigationItem link */
@@ -48,9 +52,6 @@
 
 /* Styles applied to NavigationItem label */
 .saltNavigationItem-label {
-  --link-color-visited: var(--salt-content-primary-foreground);
-  --link-color-hover: var(--salt-content-primary-foreground);
-
   color: var(--salt-content-primary-foreground);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
@@ -67,30 +68,9 @@
   margin-left: auto;
 }
 
-/* Styles applied to expand button */
-.saltNavigationItem-expandButton {
-  --saltButton-background-hover: none;
-  --saltButton-background-active: none;
-  --saltButton-textTransform: none;
-  --saltButton-letterSpacing: none;
-  --saltButton-width: 100%;
-  --saltButton-gap: var(--salt-spacing-100);
-
-  --saltIcon-color: var(--salt-content-primary-foreground);
-
-  top: 0;
-  /* Required to match link's outline offset */
-  outline-offset: var(--salt-size-border);
-}
-
 /* Styles applied to NavigationItem when focus is visible */
 .saltNavigationItem:focus-visible {
   outline: var(--salt-focused-outline);
-}
-
-/* Styles applied to NavigationItem for non-keyboard focus */
-.saltNavigationItem:focus:not(:focus-visible) {
-  outline: 0;
 }
 
 /* Styles applied to activation line */
