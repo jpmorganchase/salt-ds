@@ -11,7 +11,7 @@ export interface A11yValueProps {
   labelId?: string;
 }
 
-type NecessityType = "required" | "optional" | "asterisk";
+export type NecessityType = "required" | "optional" | "asterisk";
 
 export interface a11yValueAriaProps {
   "aria-labelledby": A11yValueProps["labelId"];

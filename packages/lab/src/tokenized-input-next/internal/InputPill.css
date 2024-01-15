@@ -1,0 +1,30 @@
+.saltInputPill {
+  max-width: 100%;
+  margin: var(--salt-spacing-25) var(--salt-spacing-50);
+  margin-left: 0;
+}
+.saltInputPill-expanded {
+  max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
+}
+.saltInputPill-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saltInputPill.saltInputPill-hidden {
+  display: none;
+}
+
+.saltInputPill.saltInputPill:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltInputPill.saltInputPill-pillHighlighted {
+  --saltPillNext-background: var(--salt-selectable-background-hover);
+}
+
+.saltInputPill.saltInputPill:active {
+  background: var(--salt-actionable-primary-background-active);
+  --saltPillNext-color: var(--salt-actionable-primary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
+}
