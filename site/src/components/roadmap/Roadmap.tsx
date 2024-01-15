@@ -1,60 +1,48 @@
-import { Key, ReactNode, useEffect, useState } from "react";
 import {
-  GridLayout,
-  Input,
   Banner,
   BannerContent,
+  GridLayout,
+  H3,
+  FormField,
+  FormFieldLabel,
+  Input,
   InteractableCard,
   InteractableCardProps,
-  H3,
   Spinner,
+  Text,
 } from "@salt-ds/core";
-
-import styles from "./style.module.css";
 import {
   FilterIcon,
   ProgressInprogressIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
-
-import { formatDate } from "src/utils/formatDate";
+import { ReactNode, useEffect, useState } from "react";
 import { Heading4 } from "../mdx/h4";
 
-type RoadmapProps = { title: string; children: ReactNode; endpoint: string };
+import styles from "./style.module.css";
+
+interface RoadmapProps {
+  title: string;
+  children: ReactNode;
+  endpoint: string;
+}
+
+interface IterationData {
+  title: string; // e.g. Q1
+  startDate: string; // e.g. "2024-01-01"
+  duration: number; // e.g. 91
+}
 
 interface RoadmapData {
-  content: any;
-  fieldValues: any;
   id: string;
-  startDate: Date;
-  targetDate: Date;
+  startSprint: IterationData | null;
+  endSprint: IterationData | null;
   issueUrl: string;
-  text: string;
+  title: string;
+  quarter: IterationData | null;
 }
 
-interface CardViewProps {
-  data: RoadmapData[];
-  searchQuery: string;
-}
-
-function sortRoadmapDataByDate(roadmapData: RoadmapData[]): RoadmapData[] {
-  const sortedData = [...roadmapData];
-  sortedData.sort((a, b) => {
-    const startDateA = new Date(a.targetDate);
-    const startDateB = new Date(b.targetDate);
-
-    if (isNaN(startDateA.getTime())) {
-      return 1; // Item A doesn't have a valid date, so it should be placed below item B
-    } else if (isNaN(startDateB.getTime())) {
-      return -1; // Item B doesn't have a valid date, so it should be placed below item A
-    } else {
-      return startDateA.getTime() - startDateB.getTime();
-    }
-  });
-  return sortedData;
-}
-
-function RoadmapCard(props: InteractableCardProps, item: ItemProps) {
+function RoadmapCard(props: InteractableCardProps) {
   return (
     <>
       <InteractableCard accentPlacement="left" {...props} />
@@ -62,33 +50,27 @@ function RoadmapCard(props: InteractableCardProps, item: ItemProps) {
   );
 }
 
-export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
-  const [roadmapData, setRoadmapData] = useState<any[]>([]);
-  const sortedRoadmapData = sortRoadmapDataByDate(roadmapData);
+export const Roadmap = ({ endpoint }: RoadmapProps) => {
+  const [roadmapData, setRoadmapData] = useState<RoadmapData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const filteredRoadmapData = roadmapData.filter(
+    (r) =>
+      (r.quarter !== null || r.startSprint !== null || r.endSprint !== null) &&
+      r.title.match(new RegExp(searchQuery, "i"))
+  );
+
   useEffect(() => {
+    const abortController = new AbortController();
+
     const fetchData = async () => {
       try {
-        const response = await fetch(`${endpoint}`);
-        const responseData = await response.json();
-
-        const items =
-          responseData?.data?.organization?.repository?.projectV2?.items?.nodes;
-
-        //creates an array of objects with data from github
-        const extractedData: RoadmapData[] = items?.map((item: RoadmapData) => {
-          const fieldValueNodes = item?.fieldValues?.nodes;
-          const text = getFieldValueByName(fieldValueNodes, "Title");
-          const startDate = getFieldValueByName(fieldValueNodes, "Start Date");
-          const targetDate = getFieldValueByName(
-            fieldValueNodes,
-            "Target Date"
-          );
-          const issueUrl = item?.content?.url;
-
-          return { text, startDate, targetDate, issueUrl };
+        const response = await fetch(`${endpoint}`, {
+          signal: abortController.signal,
         });
+        const items = (await response.json()).nodes as unknown[];
+        //creates an array of objects with data from github
+        const extractedData: RoadmapData[] = items?.map(mapRoadmapData);
 
         setRoadmapData(extractedData || []);
       } catch (error) {
@@ -98,32 +80,78 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
       }
     };
 
-    fetchData();
+    void fetchData();
+
+    return () => {
+      abortController.abort();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getFieldValueByName = (fieldValueNodes: any[], fieldName: string) => {
-    const fieldValueNode = fieldValueNodes?.find(
-      (node: any) => node?.field?.name === fieldName
-    );
-    return (
-      fieldValueNode?.text || fieldValueNode?.date || fieldValueNode?.name || ""
-    );
+  const mapRoadmapData = (responseItem: any): RoadmapData => {
+    const data: RoadmapData = {
+      id: responseItem.id,
+      startSprint: null,
+      endSprint: null,
+      issueUrl: responseItem.content.url,
+      title: "",
+      quarter: null,
+    };
+    for (const fieldValueNode of responseItem.fieldValues.nodes) {
+      if (!("field" in fieldValueNode)) {
+        continue;
+      }
+      switch (fieldValueNode.field.name) {
+        case "Title": {
+          data.title = fieldValueNode.text;
+          break;
+        }
+        case "Start Sprint": {
+          data.startSprint = {
+            title: fieldValueNode.title,
+            startDate: fieldValueNode.startDate,
+            duration: fieldValueNode.duration,
+          };
+          break;
+        }
+        case "End Sprint": {
+          data.endSprint = {
+            title: fieldValueNode.title,
+            startDate: fieldValueNode.startDate,
+            duration: fieldValueNode.duration,
+          };
+          break;
+        }
+        case "Quarter": {
+          data.quarter = {
+            title: fieldValueNode.title,
+            startDate: fieldValueNode.startDate,
+            duration: fieldValueNode.duration,
+          };
+          break;
+        }
+      }
+    }
+    return data;
   };
 
   return (
     <div className={styles.content}>
-      <Input
-        value={searchQuery}
-        variant="secondary"
-        onChange={(event) =>
-          setSearchQuery((event.target as HTMLInputElement).value)
-        }
-        className={styles.searchInput}
-        startAdornment={<FilterIcon />}
-      />
+      <FormField>
+        <FormFieldLabel>Filter list</FormFieldLabel>
+        <Input
+          value={searchQuery}
+          variant="secondary"
+          onChange={(event) =>
+            setSearchQuery((event.target as HTMLInputElement).value)
+          }
+          className={styles.searchInput}
+          startAdornment={<FilterIcon />}
+        />
+      </FormField>
 
       {roadmapData !== null && roadmapData.length > 0 ? (
-        <CardView data={sortedRoadmapData} searchQuery={searchQuery} />
+        <CardView data={filteredRoadmapData} />
       ) : (
         <Spinner
           className={styles.loading}
@@ -136,26 +164,10 @@ export const Roadmap = ({ title, children, endpoint }: RoadmapProps) => {
   );
 };
 
-interface ItemProps {
-  targetDate: string | number | Date;
-  id: Key | null | undefined;
-  issueUrl: string | undefined;
-  text:
-    | string
-    | number
-    | boolean
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-    | React.ReactFragment
-    | React.ReactPortal
-    | null
-    | undefined;
-}
-const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
+const ColumnData: React.FC<{ item: RoadmapData; future?: boolean }> = ({
   item,
   future = true,
 }) => {
-  const formattedDate = formatDate(new Date(item.targetDate));
-
   return (
     <>
       <a href={item.issueUrl}>
@@ -163,36 +175,39 @@ const ColumnData: React.FC<{ item: ItemProps; future?: boolean }> = ({
           className={future ? styles.cardFuture : styles.cardInProgress}
           key={item.id}
         >
-          <Heading4 className={styles.heading4}>{item.text}</Heading4>
-          Due Date:
-          <p className={styles.date}> {formattedDate}</p>
+          <Heading4 className={styles.heading4}>{item.title}</Heading4>
+          {future ? (
+            <Text>Scheduled for: {item.quarter?.title}</Text>
+          ) : (
+            <Text>Target for sprint: {item.endSprint?.title}</Text>
+          )}
         </RoadmapCard>
       </a>
     </>
   );
 };
 
-export const CardView = ({ data, searchQuery }: CardViewProps) => {
-  const futureData = data.filter((item) => {
-    const startDate = item.startDate ? new Date(item.startDate) : null;
-    const today = new Date();
-    const isFutureItem = !startDate || startDate > today;
-    const matchesSearchQuery =
-      searchQuery === "" ||
-      item.text.toLowerCase().includes(searchQuery.toLowerCase());
-    return isFutureItem && matchesSearchQuery;
-  });
+interface CardViewProps {
+  data: RoadmapData[];
+}
 
-  const inProgressData = data.filter((item) => {
-    const startDate = new Date(item.startDate);
-    const targetDate = new Date(item.targetDate);
-    const today = new Date();
-    const isInRange = startDate <= today && today <= targetDate;
-    const matchesSearchQuery =
-      searchQuery === "" ||
-      item.text.toLowerCase().includes(searchQuery.toLowerCase());
-    return isInRange && matchesSearchQuery;
-  });
+const CardView = ({ data }: CardViewProps) => {
+  const plannedData: RoadmapData[] = [];
+  const inProgressData: RoadmapData[] = [];
+
+  for (const d of data) {
+    if (d.endSprint) {
+      const sprintDate = new Date(d.endSprint.startDate);
+      sprintDate.setDate(sprintDate.getDate() + d.endSprint.duration);
+      if (new Date() < sprintDate) {
+        inProgressData.push(d);
+      } else {
+        plannedData.push(d);
+      }
+    } else {
+      plannedData.push(d);
+    }
+  }
 
   return (
     <GridLayout className={styles.cardContainer} columns={2}>
@@ -210,9 +225,11 @@ export const CardView = ({ data, searchQuery }: CardViewProps) => {
           <ProgressTodoIcon className={styles.backlogIcon} size={2} />
           In backlog
         </H3>
-        {futureData.map((item) => (
-          <ColumnData key={item.id} item={item} />
-        ))}
+        {plannedData
+          .sort((a, b) => a.quarter!.title.localeCompare(b.quarter!.title))
+          .map((item) => (
+            <ColumnData key={item.id} item={item} />
+          ))}
       </div>
     </GridLayout>
   );

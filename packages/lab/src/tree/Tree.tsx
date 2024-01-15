@@ -103,7 +103,7 @@ export const Tree = forwardRef(function Tree<
     options: {
       noChildrenLabel: "No children available",
       revealSelected: revealSelected
-        ? selectedProp ?? defaultSelected ?? false
+        ? Boolean(selectedProp) || Boolean(defaultSelected) || false
         : undefined,
     },
   });

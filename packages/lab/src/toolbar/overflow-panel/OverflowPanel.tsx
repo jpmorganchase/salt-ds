@@ -70,7 +70,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useControlled<boolean>({
     controlled: isOpenProp,
-    default: defaultIsOpen ?? false,
+    default: defaultIsOpen || false,
     name: "DropdownPanel",
   });
 
