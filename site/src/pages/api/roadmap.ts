@@ -18,12 +18,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   endCursor
                 }
                 nodes {
+                  id
                   content {
                     ...on Issue {
                       url
                     }
                   }
-                  fieldValues(first: 10) {
+                  fieldValues(first: 20) {
                     nodes {
                       ...on ProjectV2ItemFieldDateValue {
                         date
@@ -49,6 +50,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                           }
                         }
                       }
+                      ... on ProjectV2ItemFieldIterationValue {
+                        title
+                        startDate
+                        duration
+                        field {
+                          ... on ProjectV2IterationField {
+                            name
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -59,20 +70,36 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     `;
 
-    const response = await fetch(`${process.env.GRAPH_QL}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      },
-      body: JSON.stringify({
-        query,
-        variables: { org, repo, endCursor: "null" },
-      }),
-    });
+    let hasNextPage = true;
+    let endCursor = "null";
+    const allProjectItems = [];
 
-    const responseData = await response.json();
-    res.status(200).json(responseData);
+    while (hasNextPage) {
+      const response = await fetch(`${process.env.GRAPH_QL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        },
+        body: JSON.stringify({
+          query,
+          variables: { org, repo, endCursor },
+        }),
+      });
+
+      const responseData = await response.json();
+      const projectItems =
+        responseData.data.organization.repository.projectV2.items;
+
+      hasNextPage = projectItems.pageInfo.hasNextPage;
+      endCursor = projectItems.pageInfo.endCursor;
+
+      allProjectItems.push(...projectItems.nodes);
+    }
+
+    const response = { nodes: allProjectItems };
+    console.log("Requested GitHub API", { allProjectItems });
+    res.status(200).json(response);
   } catch (error) {
     console.error(error);
     res.status(404).json({ message: "Error fetching data" });

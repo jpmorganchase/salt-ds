@@ -122,7 +122,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
   const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
     useFormFieldProps();
 
-  const disabled = formFieldDisabled ?? disabledProp;
+  const disabled = formFieldDisabled || disabledProp;
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     // Workaround for https://github.com/facebook/react/issues/9023

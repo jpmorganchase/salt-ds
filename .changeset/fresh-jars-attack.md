@@ -3,4 +3,4 @@
 "@salt-ds/lab": patch
 ---
 
-Removed redundant Icon color overrides.
+Replaced incorrect usage of nullish operators.

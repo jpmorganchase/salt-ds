@@ -1,0 +1,103 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+- Wrap the component in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+
+- The component clips text that extends beyond the visible area. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the component has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
+
+### Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab">
+
+    - If focus is above the component, Tab moves focus to the component. The input becomes active, with a visible text cursor.
+    - If focus is in the component (i.e., in the text input or on a token), Tab moves focus to the field’s **X** button. If there’s text in the input field, Tab tokenizes the text.
+    - If focus is on the **X** button, Tab moves focus out of the component to the next component in the tab order.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Tab">
+
+    - If focus is below the component, this action moves the focus to the collapsed button.
+    - If focus is in the **X** button, this action moves focus to the text input and the text cursor is displayed.
+    - If focus is in the text input or on a token, this action moves focus out of the component to the previous component in the tab order. If there’s text in the input field, this action tokenizes the text.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Enter / Comma">
+
+    - Default delimiting character. This action tokenizes the preceding text, if there’s any, within the input field.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Escape">
+
+    - Escape clears the current text from the input field without tokenizing it.
+    - If highlight is on a pill, Escape clears the pill from the group.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Right arrow">
+
+    - If visual focus is on a token, Right arrow moves visual focus to the next token.
+
+    - If there are multiple lines and visual focus is on the token at the end of the current line, Right arrow wraps focus to the first token on the following line.
+
+    - If visual focus is on the last token, Right arrow removes focus from the tokens. The text input becomes active, with a visible text cursor.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Left arrow">
+
+    - If the text cursor immediately succeeds the token group, Left arrow moves visual focus to the last token.
+
+    - If visual focus is on a token, Left arrow moves focus to the previous token.
+
+    - If there are multiple lines and visual focus is on the token at the start of the current line, Left arrow wraps focus to the last token in the preceding line.
+
+    - If visual focus is on the first token, Left arrow does nothing.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Backspace">
+
+    - If the text cursor immediately succeeds the token group, Backspace moves visual focus to the last token.
+
+    - If visual focus is on a token, Backspace removes it from the field and sets focus on the preceding token.
+
+    - If there’s only one token with visual focus, Backspace removes the token. The text input becomes active, with a visible text cursor.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Home">
+
+    - If there’s text in the input field, Home moves the cursor to the first character position.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="End">
+
+    - If there’s text in the input field, End moves the cursor to the last character position.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Control + A / Command + A">
+
+    - This action highlights all values, text and tokens, within the field.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Control + Backspace / Option + Backspace">
+
+    - This action removes the entire word or token immediately preceding the text cursor.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Control + Arrow keys / Option + Arrow keys">
+
+    - This action moves the cursor or visual focus one word or token at a time. If it reaches the beginning or end of the field, does nothing.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Shift + Home / Shift + End">
+
+    - If there’s text in the input field, this action immediately drags selection from the current location of the text cursor to the start/end of the field.
+
+  </KeyboardControl>
+</KeyboardControls>

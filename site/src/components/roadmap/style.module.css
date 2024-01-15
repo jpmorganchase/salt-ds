@@ -27,11 +27,6 @@
   flex: 1;
   max-width: 400px;
   width: 100%;
-  margin-top: var(--saltCard-padding, var(--salt-size-container-spacing));
-}
-
-.date {
-  display: inline;
 }
 
 .column {
