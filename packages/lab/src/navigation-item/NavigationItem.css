@@ -71,9 +71,6 @@
 
 /* Styles applied to NavigationItem label */
 .saltNavigationItem-label {
-  --link-color-visited: var(--salt-content-primary-foreground);
-  --link-color-hover: var(--salt-content-primary-foreground);
-
   color: var(--salt-content-primary-foreground);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
@@ -93,11 +90,6 @@
 /* Styles applied to NavigationItem when focus is visible */
 .saltNavigationItem:focus-visible {
   outline: var(--salt-focused-outline);
-}
-
-/* Styles applied to NavigationItem for non-keyboard focus */
-.saltNavigationItem:focus:not(:focus-visible) {
-  outline: 0;
 }
 
 /* Styles applied to activation line */
