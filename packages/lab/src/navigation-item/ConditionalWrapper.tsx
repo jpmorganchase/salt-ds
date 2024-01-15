@@ -25,7 +25,7 @@ export const ConditionalWrapper = ({
     onExpand?.(event);
   };
 
-  return parent ? (
+  return parent || !href ? (
     <Button
       aria-label="expand"
       variant="secondary"
