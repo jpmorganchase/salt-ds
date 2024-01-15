@@ -4,5 +4,5 @@
 
 Navigation Item
 
-- Fixed: if `href` prop exists then renders a link; if not then renders a button. Except for when `parent` is set to `true` then it's always a button.
+- Updated the logic to make Navigation Item act like a button when a href isn't passed.
 - Fixed styles.
