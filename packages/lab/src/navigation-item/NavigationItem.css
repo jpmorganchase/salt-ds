@@ -7,8 +7,6 @@
   text-decoration: none;
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
-
-  --navigationItem-paddingLeft: calc(var(--salt-spacing-300) + var(--navigationItem-paddingLeftExtra));
 }
 
 /* Vars applied to NavigationItem component when root */
@@ -32,25 +30,20 @@
   top: var(--salt-size-border);
 }
 
-/* Styles applied to root NavigationItem component */
-.saltNavigationItem {
-  padding: 0 var(--salt-spacing-100);
-}
-
 /* Styles applied when orientation = "horizontal" */
 .saltNavigationItem-horizontal {
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-spacing-100));
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) * 2);
+  padding: 0 var(--salt-spacing-100);
   width: fit-content;
 }
 
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-vertical {
-  --navigationItem-paddingLeftExtra: var(--salt-spacing-25);
-  padding: 0 var(--salt-spacing-100) 0 var(--navigationItem-paddingLeft);
-  --saltButton-padding: 0 var(--salt-spacing-100) 0 var(--navigationItem-paddingLeft);
   --saltButton-margin: var(--salt-spacing-50) 0;
 
-  min-height: calc(var(--salt-size-base));
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-50) * 2);
+  padding-right: var(--salt-spacing-100);
+  padding-left: calc(var(--salt-spacing-300) * (min(var(--saltNavigationItem-level, 0) + 1, 2)));
 }
 
 /* Styles applied to NavigationItem label */
@@ -72,11 +65,6 @@
 /* Styles applied to NavigationItem Badge */
 .saltNavigationItem-label .saltBadge {
   margin-left: auto;
-}
-
-/* Styles applied when level is not 0 */
-.saltNavigationItem-nested {
-  padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-400));
 }
 
 /* Styles applied to expand button */
