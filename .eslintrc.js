@@ -44,6 +44,12 @@ module.exports = {
         ],
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-unsafe-assignment ": "off",
+        "@typescript-eslint/prefer-nullish-coalescing": [
+          "error",
+          {
+            ignorePrimitives: { boolean: true },
+          },
+        ],
         // TypeScript provides the same checks as part of standard type checking.
         "import/named": "off",
         "import/namespace": "off",
