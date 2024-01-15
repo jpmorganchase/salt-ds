@@ -97,11 +97,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         >
           <span className={withBaseName("label")}>{children}</span>
           {parent && (
-            <ExpansionIcon
-              expanded={expanded}
-              orientation={orientation}
-              className={withBaseName("expandIcon")}
-            />
+            <ExpansionIcon expanded={expanded} orientation={orientation} />
           )}
         </ConditionalWrapper>
       </div>
