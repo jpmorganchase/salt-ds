@@ -1,4 +1,4 @@
-import { Pill } from "../../../../../core/src/pill";
+import { Pill } from "../../../pill";
 
 describe("GIVEN a Pill", () => {
   it("THEN should render a `standard` Pill", () => {

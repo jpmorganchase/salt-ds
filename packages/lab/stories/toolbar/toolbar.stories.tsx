@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { Avatar, Button, ToggleButton } from "@salt-ds/core";
+import { Avatar, Button, Pill, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -33,7 +33,6 @@ import {
   ToolbarProps,
   Tooltray,
   Input,
-  Pill,
   StaticInputAdornment,
 } from "@salt-ds/lab";
 import { CSSProperties, MouseEvent, useState } from "react";
@@ -133,13 +132,13 @@ export const TooltrayAlignment: StoryFn = () => {
             </ToggleButton>
           </ToolbarField>
           <ToolbarField>
-            <Pill label="LOREM" onClick={() => console.log("lorem.")} />
+            <Pill onClick={() => console.log("lorem.")} >LOREM</Pill>
           </ToolbarField>
           <ToolbarField>
-            <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
+            <Pill onClick={() => console.log("ipsum.")} >IPSUM</Pill>
           </ToolbarField>
           <ToolbarField>
-            <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
+            <Pill onClick={() => console.log("dolar.")} >DOLAR</Pill>
           </ToolbarField>
         </Tooltray>
         <Tooltray aria-label="status tooltray" alignStart>
