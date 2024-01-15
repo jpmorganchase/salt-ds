@@ -9,7 +9,7 @@ export default {
 } as Meta<typeof TokenizedInputNext>;
 
 export const QA: StoryFn<QAContainerProps> = () => (
-  <QAContainer height={500} width={1000} itemPadding={4}>
+  <QAContainer height={500} width={1200} itemPadding={4}>
     <TokenizedInputNext />
     <TokenizedInputNext defaultSelected={["Mexico City"]} />
     <TokenizedInputNext readOnly defaultSelected={["Read only value"]} />

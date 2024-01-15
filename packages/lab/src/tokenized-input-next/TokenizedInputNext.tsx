@@ -296,7 +296,6 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
                     ? (event) => onRemoveItem?.(event, index)
                     : undefined
                 }
-                closeButtonProps={{ tabIndex: -1 }}
                 pillsRef={pillsRef}
               />
             );

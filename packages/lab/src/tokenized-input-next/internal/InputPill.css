@@ -1,44 +1,30 @@
-.saltInputPill .saltPillNext-action {
-  max-width: 100%;
-}
 .saltInputPill {
+  max-width: 100%;
   margin: var(--salt-spacing-25) var(--salt-spacing-50);
   margin-left: 0;
 }
-
-.saltInputPill-expanded.saltInputPill .saltPillNext-action {
+.saltInputPill-expanded {
   max-width: calc(100% - (var(--salt-size-base) - var(--salt-spacing-100)));
 }
+.saltInputPill-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-/* Styles applied to a Pill if `expanded={false} && index >= firstHiddenIndex` */
 .saltInputPill.saltInputPill-hidden {
   display: none;
 }
 
-/* Styles applied to a Pill when active */
-.saltInputPill:hover > .saltPillNext-action,
-.saltInputPill:hover > .saltPillNext-close-button {
-  --saltButton-background: var(--salt-selectable-background-hover);
-  --saltButton-background-hover: var(--salt-selectable-background-hover);
-  --pillNext-background: var(--salt-selectable-background-hover);
-  --pillNext-background-hover: var(--salt-selectable-background-hover);
+.saltInputPill:hover {
+  --saltPillNext-background: var(--salt-selectable-background-hover);
 }
 
 .saltInputPill-pillHighlighted {
-  --saltButton-background: var(--salt-selectable-background-hover);
+  --saltPillNext-background: var(--salt-selectable-background-hover);
 }
 
-.saltInputPill-pillHighlighted .saltPillNext-action {
-  --pillNext-background: var(--salt-selectable-background-hover);
-}
-
-.saltInputPill:has(:active) > .saltPillNext-action,
-.saltInputPill:has(:active) > .saltPillNext-close-button {
-  --pillNext-background: var(--salt-actionable-primary-background-active);
-  --pillNext-background-hover: var(--salt-actionable-primary-background-active);
-  --pillNext-text-color: var(--salt-actionable-primary-foreground-active);
-  --saltButton-background: var(--salt-actionable-primary-background-active);
-  --saltButton-background-hover: var(--salt-actionable-primary-background-active);
-  --saltButton-text-color: var(--salt-actionable-primary-foreground-active);
+.saltInputPill:active {
+  --saltPillNext-background: var(--salt-actionable-primary-background-active);
+  --saltPillNext-color: var(--salt-actionable-primary-foreground-active);
   --saltIcon-color: var(--salt-actionable-primary-foreground-active);
 }

@@ -105,8 +105,7 @@ describe("GIVEN a Tokenized Input", () => {
       cy.findByTestId("clear-button").realClick();
       cy.findByRole("textbox").should("have.focus");
     });
-    it("should call onChange, onClear, onExpand and onCollapse when actions are prompted", () => {
-      // could do with a better description
+    it("should trigger event callbacks when actions are prompted", () => {
       const onChangeSpy = cy.spy().as("onChange");
       const onClearSpy = cy.spy().as("onClear");
       const onExpandSpy = cy.spy().as("onExpand");

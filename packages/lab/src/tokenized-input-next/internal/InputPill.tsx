@@ -16,6 +16,7 @@ import { PillNext, PillNextProps } from "../../pill-next";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import inputPillCss from "./InputPill.css";
+import { CloseIcon } from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltInputPill");
 
@@ -103,12 +104,12 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         )}
         tabIndex={-1}
         onClick={isRemovable ? handleClose : undefined}
-        onClose={isRemovable ? handleClose : undefined}
         ref={ref}
         role="option"
         {...rest}
       >
-        {label}
+        <span className={withBaseName("label")}>{label}</span>
+        {isRemovable && <CloseIcon />}
       </PillNext>
     </Tooltip>
   );
