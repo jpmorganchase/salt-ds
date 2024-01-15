@@ -11,15 +11,15 @@ Below are definitions of terms commonly used in Salt design system content, comm
 
 In responsive design, a breakpoint is the viewport width at which a layout will adapt in order to provide the best possible user experience.
 
+## Component
+
+The building blocks that help teams create high-quality user experiences. Salt provides a simple set of core components that can form more complex [patterns](#pattern).
+
 ## Density
 
 Density relates to the amount of content that can fit on a screen based on the size and spacing of components.
 
 The Salt design system supports four base densities: high, medium, low and touch. Read more in the [density foundation](/salt/foundations/density).
-
-## Disabled state
-
-A component in a disabled state (like a checkbox or radio button) is not interactive or focusable. This is different from a [read-only](#read-only) state as the user cannot interact with any accompanying text.
 
 ## Foundation
 
@@ -27,7 +27,7 @@ A guide to fundamental principles that help create a cohesive design language.
 
 ## Object positioning
 
-The below terms describe how objects are positioned, like within `FlexLayout`.
+The below terms describe how objects are positioned, like within [`FlexLayout`](/salt/components/flex-layout).
 
 ### Alignment
 
@@ -49,19 +49,27 @@ The rotational position of the object(s) as a whole in relation to another point
 
 ## Pattern
 
-A design solution that helps users complete common tasks. Salt offers a set of composable components that are the building blocks of patterns.
-
-## Read-only state
-
-A component in a read-only state (like a checkbox or radio button) is navigable using keyboard shortcuts, but the user cannot edit any relevant values or directly change its state. This is different from a [disabled](#disabled) state as the user can interact with accompanying text in limited ways.
+A design solution that helps users complete common tasks, documented to enable teams to build them into their own projects. Salt offers a set of composable components that are the building blocks of patterns.
 
 ## Responsive prop
 
-In resposive design, a responsive prop is one that takes either multiple values (one value per [breakpoint](#breakpoint)) or a single value that would take effect across all screen sizes. `FlexLayout` supports responsive props.
+In resposive design, a responsive prop is one that takes either multiple values (one value per [breakpoint](#breakpoint)) or a single value that would take effect across all screen sizes. [`FlexLayout`](/salt/components/flex-layout) supports responsive props.
 
 ## Salt
 
 The J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries.
+
+## State 
+
+Components like [`Checkbox`](/salt/components/checkbox), [`DropdownNext`](/salt/components/dropdown) or [`RadioButton`](/salt/components/radio-button) support states that modify the user's ability to interact with the component. 
+
+### Disabled
+
+A component in a disabled state is not interactive or focusable. This is different from a [read-only](#read-only) state as the user cannot interact with any accompanying text.
+
+### Read-only
+
+A component in a read-only state is navigable using keyboard shortcuts, but the user cannot edit any relevant values or directly change its state. This is different from a [disabled](#disabled) state as the user can interact with accompanying text in limited ways.
 
 ## Status
 
@@ -69,15 +77,15 @@ A status prop visually modifies a component to more effectively communicate a me
 
 ### Info
 
-An info status is used to display general information. When the information concerns a successful action, a success status is more appropriate.
+An info status is used to display general information. When the information concerns a successful action, a [success](#success) status is more appropriate.
 
 ### Error
 
-An error status communicates a critical issue that prevents the user for continuing. When the issue does not prevent the user from completing their task, a warning status is more appropriate.
+An error status communicates a critical issue that prevents the user for continuing. When the issue does not prevent the user from completing their task, a [warning](#warning) status is more appropriate.
 
 ### Warning
 
-A warning status informs users of an issue or potential issue related to their current task. It's used for issues that do not prevent the user from continuing or completing their task. When the issue prevents the user from completing their task, an error warning is more appropriate.
+A warning status informs users of an issue or potential issue related to their current task. It's used for issues that do not prevent the user from continuing or completing their task, but may cause errors if they don't address it. When the issue prevents the user from completing their task, an [error](#error) warning is more appropriate.
 
 ### Success
 
