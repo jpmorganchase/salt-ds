@@ -7,13 +7,12 @@
   --saltButton-fontWeight: var(--salt-text-fontWeight);
   --saltButton-width: 100%;
 
-  --saltIcon-color: var(--salt-content-primary-foreground);
+  /* --saltIcon-color: var(--salt-content-primary-foreground); */
 
   display: flex;
   gap: var(--salt-spacing-100);
   align-items: center;
   position: relative;
-  gap: var(--salt-spacing-100);
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
@@ -31,8 +30,7 @@
 
 /* Styles applied to NavigationItem icon */
 .saltNavigationItem .saltIcon {
-  fill: var(--salt-content-primary-foreground);
-  top: var(--salt-size-border);
+  top: var(--salt-spacing-25);
 }
 
 /* Styles applied when orientation = "horizontal" */
