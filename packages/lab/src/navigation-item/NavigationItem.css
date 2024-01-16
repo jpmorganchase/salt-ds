@@ -21,6 +21,7 @@
 /* Vars applied to NavigationItem component when root */
 .saltNavigationItem-rootItem {
   --saltText-fontWeight: var(--salt-text-fontWeight-strong);
+  --saltButton-fontWeight: var(--salt-text-fontWeight-strong);
 }
 
 /* Styles applied to NavigationItem link */
