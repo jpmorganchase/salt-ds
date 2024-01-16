@@ -1,7 +1,7 @@
 .saltDropdownNext {
-  --dropdown-next-borderColor: var(--salt-editable-borderColor);
-  --dropdown-next-color: var(--salt-content-primary-foreground);
-  --dropdown-next-cursor: var(--salt-selectable-cursor-hover);
+  --dropdownNext-borderColor: var(--salt-editable-borderColor);
+  --dropdownNext-color: var(--salt-content-primary-foreground);
+  --dropdownNext-cursor: var(--salt-selectable-cursor-hover);
 }
 
 .saltDropdownNext {
@@ -9,27 +9,27 @@
   box-sizing: border-box;
   min-width: 4em;
   width: 100%;
-  background: var(--dropdown-next-background);
-  cursor: var(--dropdown-next-cursor);
+  background: var(--dropdownNext-background);
+  cursor: var(--dropdownNext-cursor);
   min-height: var(--salt-size-base);
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-next-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdownNext-borderColor);
   display: flex;
   align-items: center;
   padding: 0 var(--salt-spacing-100);
   gap: var(--salt-spacing-100);
-  color: var(--dropdown-next-color);
+  color: var(--dropdownNext-color);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
 }
 
 .saltDropdownNext:hover {
-  --dropdown-next-borderColor: var(--salt-editable-borderColor-hover);
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-hover);
 }
 
 .saltDropdownNext:focus-visible {
   outline: var(--salt-focused-outline);
-  --dropdown-next-borderColor: var(--salt-editable-borderColor-hover);
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-hover);
 }
 
 .saltDropdownNext-content {
@@ -46,53 +46,53 @@
 }
 
 .saltDropdownNext-primary {
-  --dropdown-next-background: var(--salt-editable-primary-background);
+  --dropdownNext-background: var(--salt-editable-primary-background);
 }
 
 .saltDropdownNext-secondary {
-  --dropdown-next-background: var(--salt-editable-secondary-background);
+  --dropdownNext-background: var(--salt-editable-secondary-background);
 }
 
 .saltDropdownNext:disabled {
-  --dropdown-next-background: var(--salt-editable-primary-background-disabled);
-  --dropdown-next-borderColor: var(--salt-editable-borderColor-disabled);
-  --dropdown-next-color: var(--salt-content-primary-foreground-disabled);
-  --dropdown-next-cursor: var(--salt-selectable-cursor-disabled);
+  --dropdownNext-background: var(--salt-editable-primary-background-disabled);
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-disabled);
+  --dropdownNext-color: var(--salt-content-primary-foreground-disabled);
+  --dropdownNext-cursor: var(--salt-selectable-cursor-disabled);
 }
 
 .saltDropdownNext[aria-readonly="true"] {
-  --dropdown-next-background: var(--salt-editable-primary-background-readonly);
-  --dropdown-next-borderColor: var(--salt-editable-borderColor-readonly);
-  --dropdown-next-color: var(--salt-content-primary-foreground);
-  --dropdown-next-cursor: var(--salt-selectable-cursor-readonly);
+  --dropdownNext-background: var(--salt-editable-primary-background-readonly);
+  --dropdownNext-borderColor: var(--salt-editable-borderColor-readonly);
+  --dropdownNext-color: var(--salt-content-primary-foreground);
+  --dropdownNext-cursor: var(--salt-selectable-cursor-readonly);
 }
 
 .saltDropdownNext-error {
-  --dropdown-next-background: var(--salt-status-error-background);
-  --dropdown-next-borderColor: var(--salt-status-error-borderColor);
+  --dropdownNext-background: var(--salt-status-error-background);
+  --dropdownNext-borderColor: var(--salt-status-error-borderColor);
 }
 
 .saltDropdownNext-error .saltDropdownNext:focus-visible {
   outline-color: var(--salt-status-error-borderColor);
-  --dropdown-next-borderColor: var(--salt-status-error-borderColor);
+  --dropdownNext-borderColor: var(--salt-status-error-borderColor);
 }
 
 .saltDropdownNext-warning {
-  --dropdown-next-background: var(--salt-status-warning-background);
-  --dropdown-next-borderColor: var(--salt-status-warning-borderColor);
+  --dropdownNext-background: var(--salt-status-warning-background);
+  --dropdownNext-borderColor: var(--salt-status-warning-borderColor);
 }
 
 .saltDropdownNext-warning .saltDropdownNext:focus-visible {
   outline-color: var(--salt-status-warning-borderColor);
-  --dropdown-next-borderColor: var(--salt-status-warning-borderColor);
+  --dropdownNext-borderColor: var(--salt-status-warning-borderColor);
 }
 
 .saltDropdownNext-success {
-  --dropdown-next-background: var(--salt-status-success-background);
-  --dropdown-next-borderColor: var(--salt-status-success-borderColor);
+  --dropdownNext-background: var(--salt-status-success-background);
+  --dropdownNext-borderColor: var(--salt-status-success-borderColor);
 }
 
 .saltDropdownNext-success .saltDropdownNext:focus-visible {
   outline-color: var(--salt-status-success-borderColor);
-  --dropdown-next-borderColor: var(--salt-status-success-borderColor);
+  --dropdownNext-borderColor: var(--salt-status-success-borderColor);
 }

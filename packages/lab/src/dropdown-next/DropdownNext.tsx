@@ -195,11 +195,11 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
     });
 
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const handleFloatingRef = useForkRef<HTMLButtonElement>(
+    const handleTriggerRef = useForkRef<HTMLButtonElement>(
       reference,
       buttonRef
     );
-    const handleButtonRef = useForkRef(handleFloatingRef, ref);
+    const handleButtonRef = useForkRef(handleTriggerRef, ref);
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
       if (!readOnly) {
@@ -385,75 +385,72 @@ export const DropdownNext = forwardRef<HTMLButtonElement, DropdownNextProps>(
     const listId = useId();
 
     return (
-      <>
-        <ListControlContext.Provider value={listControl}>
-          <button
-            className={clsx(
-              withBaseName(),
-              withBaseName(variant),
-              {
-                [withBaseName("disabled")]: disabled,
-                [withBaseName(validationStatus ?? "")]: validationStatus,
-              },
-              className
-            )}
-            ref={handleButtonRef}
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            role="combobox"
-            type="button"
-            disabled={disabled}
-            aria-readonly={readOnly ? "true" : undefined}
-            aria-required={required ? "true" : undefined}
-            aria-expanded={openState}
-            aria-activedescendant={activeState?.id}
-            aria-labelledby={
-              clsx(formFieldLabelledBy, ariaLabelledBy) || undefined
-            }
-            aria-describedby={
-              clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
-            }
-            aria-multiselectable={multiselect}
-            aria-controls={openState ? listId : undefined}
-            {...rest}
+      <ListControlContext.Provider value={listControl}>
+        <button
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName(validationStatus ?? "")]: validationStatus,
+            },
+            className
+          )}
+          ref={handleButtonRef}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          role="combobox"
+          type="button"
+          disabled={disabled}
+          aria-readonly={readOnly ? "true" : undefined}
+          aria-required={required ? "true" : undefined}
+          aria-expanded={openState}
+          aria-activedescendant={activeState?.id}
+          aria-labelledby={
+            clsx(formFieldLabelledBy, ariaLabelledBy) || undefined
+          }
+          aria-describedby={
+            clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
+          }
+          aria-multiselectable={multiselect}
+          aria-controls={openState ? listId : undefined}
+          {...rest}
+        >
+          {startAdornment}
+          <span
+            className={clsx(withBaseName("content"), {
+              [withBaseName("placeholder")]: !valueState,
+            })}
           >
-            {startAdornment}
-            <span
-              className={clsx(withBaseName("content"), {
-                [withBaseName("placeholder")]: !valueState,
-              })}
-            >
-              {valueState ?? placeholder}
-            </span>
-            {validationStatus && <StatusAdornment status={validationStatus} />}
-            {!readOnly && <ExpandIcon open={openState} />}
-          </button>
-          <FloatingComponent
-            open={(openState || focusedState) && !readOnly}
-            left={x ?? 0}
-            top={y ?? 0}
-            position={strategy}
-            width={elements.floating?.offsetWidth}
-            height={elements.floating?.offsetHeight}
-            ref={floating}
-            // style={floatingStyles}
+            {valueState ?? placeholder}
+          </span>
+          {validationStatus && <StatusAdornment status={validationStatus} />}
+          {!readOnly && <ExpandIcon open={openState} />}
+        </button>
+        <FloatingComponent
+          open={(openState || focusedState) && !readOnly}
+          left={x ?? 0}
+          top={y ?? 0}
+          position={strategy}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+          ref={floating}
+        >
+          <OptionList
+            id={listId}
+            collapsed={!openState}
+            onMouseOver={handleListMouseOver}
+            onMouseDown={handleListMouseDown}
+            onFocus={handleListFocus}
+            onClick={handleListClick}
+            ref={listRef}
           >
-            <OptionList
-              id={listId}
-              collapsed={!openState}
-              onMouseOver={handleListMouseOver}
-              onMouseDown={handleListMouseDown}
-              onFocus={handleListFocus}
-              onClick={handleListClick}
-              ref={listRef}
-            >
-              {children}
-            </OptionList>
-          </FloatingComponent>
-        </ListControlContext.Provider>
-      </>
+            {children}
+          </OptionList>
+        </FloatingComponent>
+      </ListControlContext.Provider>
     );
   }
 );
