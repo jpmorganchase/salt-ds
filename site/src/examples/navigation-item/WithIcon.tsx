@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+import { FlexLayout, NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 export const WithIcon = (): ReactElement => {

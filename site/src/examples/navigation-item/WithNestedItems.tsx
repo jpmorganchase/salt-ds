@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+import { FlexLayout, NavigationItem } from "@salt-ds/core";
 
 export const WithNestedItems = (): ReactElement => {
   const [horizontalActive, setHorizontalActive] = useState(false);

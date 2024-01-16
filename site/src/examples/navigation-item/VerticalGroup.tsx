@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
-import { StackLayout } from "@salt-ds/core";
+import { NavigationItem, StackLayout } from "@salt-ds/core";
 
 const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
 

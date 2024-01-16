@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
+import { NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 const multipleLevelNesting = [
