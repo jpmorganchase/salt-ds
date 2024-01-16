@@ -1,4 +1,5 @@
 import { forwardRef, useState } from "react";
+import { useId } from "@salt-ds/core";
 
 import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 
@@ -7,7 +8,7 @@ export type {{componentName}}Props = CountrySymbolProps;
 const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
   function {{componentName}}(props: {{componentName}}Props, ref) {
 
-    const [uid] = useState(() => props.id || Math.random().toString());
+    const [uid] = useState(useId(props.id));
 
     return (
       <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {...props}>
