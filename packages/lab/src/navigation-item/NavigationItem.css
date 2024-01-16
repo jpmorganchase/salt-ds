@@ -1,5 +1,5 @@
 /* Vars applied to root NavigationItem component */
-.saltNavigationItem {  
+.saltNavigationItem {
   --saltButton-background-hover: none;
   --saltButton-background-active: none;
   --saltButton-textTransform: none;

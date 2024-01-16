@@ -5,7 +5,7 @@ import { NotificationIcon } from "@salt-ds/icons";
 import { FlexLayout } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Navigation Item/QA",
+  title: "Lab/Navigation Item/Navigation Item QA",
   component: NavigationItem,
 } as Meta<typeof NavigationItem>;
 
