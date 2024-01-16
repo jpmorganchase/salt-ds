@@ -27,7 +27,7 @@
 }
 
 /* Styles applied to NavigationItem icon */
-.saltNavigationItem .saltIcon {
+.saltNavigationItem-label .saltIcon {
   top: var(--salt-spacing-25);
 }
 
