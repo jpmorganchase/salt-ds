@@ -7,7 +7,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 export type TCProps = CountrySymbolProps;
 
 const TC = forwardRef<SVGSVGElement, TCProps>(function TC(props: TCProps, ref) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

@@ -7,7 +7,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 export type KZProps = CountrySymbolProps;
 
 const KZ = forwardRef<SVGSVGElement, KZProps>(function KZ(props: KZProps, ref) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

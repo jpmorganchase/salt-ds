@@ -10,7 +10,7 @@ const GB_WLS = forwardRef<SVGSVGElement, GB_WLSProps>(function GB_WLS(
   props: GB_WLSProps,
   ref
 ) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

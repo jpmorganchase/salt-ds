@@ -10,7 +10,7 @@ const GB_NIR = forwardRef<SVGSVGElement, GB_NIRProps>(function GB_NIR(
   props: GB_NIRProps,
   ref
 ) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

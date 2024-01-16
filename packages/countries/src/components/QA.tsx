@@ -7,7 +7,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 export type QAProps = CountrySymbolProps;
 
 const QA = forwardRef<SVGSVGElement, QAProps>(function QA(props: QAProps, ref) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

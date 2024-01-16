@@ -7,7 +7,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 export type EHProps = CountrySymbolProps;
 
 const EH = forwardRef<SVGSVGElement, EHProps>(function EH(props: EHProps, ref) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

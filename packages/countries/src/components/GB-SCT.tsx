@@ -10,7 +10,7 @@ const GB_SCT = forwardRef<SVGSVGElement, GB_SCTProps>(function GB_SCT(
   props: GB_SCTProps,
   ref
 ) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

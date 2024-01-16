@@ -10,7 +10,7 @@ const GB_ENG = forwardRef<SVGSVGElement, GB_ENGProps>(function GB_ENG(
   props: GB_ENGProps,
   ref
 ) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

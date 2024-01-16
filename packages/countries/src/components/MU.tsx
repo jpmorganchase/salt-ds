@@ -7,7 +7,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 export type MUProps = CountrySymbolProps;
 
 const MU = forwardRef<SVGSVGElement, MUProps>(function MU(props: MUProps, ref) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol

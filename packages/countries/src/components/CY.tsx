@@ -7,7 +7,7 @@ import { CountrySymbol, CountrySymbolProps } from "../country-symbol";
 export type CYProps = CountrySymbolProps;
 
 const CY = forwardRef<SVGSVGElement, CYProps>(function CY(props: CYProps, ref) {
-  const [uid] = useState(useId(props.id));
+  const uid = useId(props.id);
 
   return (
     <CountrySymbol
