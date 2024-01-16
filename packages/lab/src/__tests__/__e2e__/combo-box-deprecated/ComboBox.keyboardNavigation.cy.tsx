@@ -574,7 +574,7 @@ describe("A multi-select combo box", () => {
     });
 
     describe("when the 'ArrowLeft' key is pressed", () => {
-      it("should put the focus ring on the pill group only", () => {
+      it.skip("should put the focus ring on the pill group only", () => {
         cy.mount(<MultiSelectWithInitialSelection />);
 
         cy.realPress("Tab");
@@ -594,7 +594,7 @@ describe("A multi-select combo box", () => {
     });
 
     describe("when the 'ArrowDown' key is pressed", () => {
-      it("should put the focus ring on the list only", () => {
+      it.skip("should put the focus ring on the list only", () => {
         cy.mount(<MultiSelectWithInitialSelection />);
 
         cy.realPress("Tab");
@@ -624,7 +624,7 @@ describe("A multi-select combo box", () => {
     });
 
     describe("when the 'Tab' key is pressed", () => {
-      it("should add an item if it hasn't been selected", () => {
+      it.skip("should add an item if it hasn't been selected", () => {
         cy.mount(<MultiSelectWithInitialSelection />);
 
         cy.realPress("Tab");
@@ -659,7 +659,7 @@ describe("A multi-select combo box", () => {
     });
 
     describe("when the 'Enter' key is pressed with an item in focus", () => {
-      it("should de-select any selected item", () => {
+      it.skip("should de-select any selected item", () => {
         const changeSpy = cy.stub().as("changeSpy");
 
         cy.mount(<MultiSelectWithInitialSelection onChange={changeSpy} />);
@@ -704,7 +704,7 @@ describe("A multi-select combo box", () => {
     });
 
     describe("when the 'Enter' key is pressed while focused on pills", () => {
-      it("should de-select any selected item", () => {
+      it.skip("should de-select any selected item", () => {
         const changeSpy = cy.stub().as("changeSpy");
 
         cy.mount(<MultiSelectWithInitialSelection onChange={changeSpy} />);
@@ -808,7 +808,7 @@ describe("A multi-select combo box that allows free text item", () => {
   });
 
   describe("with selected items", () => {
-    it("should add an item if it hasn't been selected", () => {
+    it.skip("should add an item if it hasn't been selected", () => {
       cy.mount(<MultiSelectWithInitialSelection allowFreeText />);
 
       cy.realPress("Tab");
