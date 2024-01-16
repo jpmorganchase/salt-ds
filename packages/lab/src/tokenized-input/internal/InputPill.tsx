@@ -91,11 +91,11 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         className
       )}
       disabled={disabled}
+      tabIndex={-1}
       onClick={isRemovable ? handleDelete : undefined}
       ref={ref}
       role="option"
       //  style={useMemo(() => ({ maxWidth }), [maxWidth])}
-      tabIndex={undefined}
       {...restProps}
     >
       <span className={withBaseName("label")}>{label}</span>

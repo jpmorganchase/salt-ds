@@ -219,7 +219,7 @@ describe("A multi-select combo box", () => {
       .should("have.attr", "aria-selected", "true");
   });
 
-  it.skip("should de-select when the selected term is removed from input", () => {
+  it("should de-select when the selected term is removed from input", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(<MultiSelect onChange={changeSpy} />);
 
@@ -246,7 +246,6 @@ describe("A multi-select combo box", () => {
 
     cy.findAllByTestId("pill")
       .eq(1)
-      .findByRole("button", { hidden: true })
       .realClick();
 
     cy.get("@changeSpy").should(

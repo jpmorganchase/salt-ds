@@ -151,7 +151,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should("not.have.attr", "aria-activedescendant");
     });
 
-    it.skip("should attach correct aria-activedescendant when navigating through list and pills", () => {
+    it("should attach correct aria-activedescendant when navigating through list and pills", () => {
       cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
 
       cy.realPress("Tab");
@@ -172,7 +172,7 @@ describe("A multi-select combo box", () => {
       );
     });
 
-    it.skip("should re-attach aria-activedescendant when navigating through pills", () => {
+    it("should re-attach aria-activedescendant when navigating through pills", () => {
       cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
 
       cy.realPress("Tab");
@@ -202,7 +202,7 @@ describe("A multi-select combo box", () => {
     });
 
     (["ArrowUp", "ArrowDown"] as const).forEach((key) => {
-      it.skip(`should re-attach aria-activedescendant when navigating through list using ${key} key`, () => {
+      it(`should re-attach aria-activedescendant when navigating through list using ${key} key`, () => {
         cy.mount(<MultiSelectWithInitialSelection id={mockId} />);
 
         // first time highlight
