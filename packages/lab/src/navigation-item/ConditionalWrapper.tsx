@@ -5,7 +5,7 @@ import { NavigationItemProps } from "./NavigationItem";
 interface ConditionalWrapperProps
   extends Pick<
     NavigationItemProps,
-    "parent" | "expanded" | "onExpand" | "active" | "href"
+    "parent" | "expanded" | "onExpand" | "active" | "href" | "onClick"
   > {
   children: ReactNode;
   className: string;
@@ -25,7 +25,7 @@ export const ConditionalWrapper = ({
     onExpand?.(event);
   };
 
-  return parent || !href ? (
+  return parent || href === undefined ? (
     <Button
       aria-label="expand"
       variant="secondary"

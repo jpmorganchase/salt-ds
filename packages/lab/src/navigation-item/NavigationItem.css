@@ -7,8 +7,6 @@
   --saltButton-fontWeight: var(--salt-text-fontWeight);
   --saltButton-width: 100%;
 
-  /* --saltIcon-color: var(--salt-content-primary-foreground); */
-
   display: flex;
   gap: var(--salt-spacing-100);
   align-items: center;
@@ -70,6 +68,11 @@
 /* Styles applied to NavigationItem when focus is visible */
 .saltNavigationItem:focus-visible {
   outline: var(--salt-focused-outline);
+}
+
+/* Styles applied to NavigationItem for non-keyboard focus */
+.saltNavigationItem:focus:not(:focus-visible) {
+  outline: 0;
 }
 
 /* Styles applied to activation line */
