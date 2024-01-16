@@ -4,7 +4,7 @@ import {
   CSSClassTable,
   CharacteristicUsage,
 } from "css-variable-docgen-components";
-import { Default, Closable, WithContainer } from "./scrim.stories";
+import { Default, CloseOnClick, WithSpinner, Fixed } from "./scrim.stories";
 
 <Meta
   title="Documentation/Lab/Scrim"
@@ -30,30 +30,30 @@ Don’t use a Scrim if the user needs to interact with the content beneath the o
 ## Interactions and behaviors
 
 **Modal experience**
-The Scrim provides a modal experience by obscuring the underlying content. It also prevents keyboard or mouse interactions from reaching this content until the Scrim and overlaying component are closed by the user or system.
+The Scrim provides a modal experience by obscuring the underlying content.
 
 ## Default
-
-When triggered, the basic Scrim fills the application window and blocks user interaction with the underlying content, until it’s closed. It is often displayed as the backdrop to another component, as demonstrated in this example.
 
 <Canvas>
   <Story id="lab-scrim--default" />
 </Canvas>
 
-## Closable Scrim
-
-If required for your particular use case, you can configure the Scrim to be closable on mouse click or keyboard interaction.
+## Close On Click
 
 <Canvas>
-  <Story id="lab-scrim--closable" />
+  <Story id="lab-scrim--close-on-click" />
 </Canvas>
 
-## Scrim in a container
-
-You can display a Scrim within a container such as a [Card](/docs/documentation-core-card--docs) or to temporarily block interaction while the container content is loading or unavailable.
+## With spinner
 
 <Canvas>
-  <Story id="lab-scrim--with-container" />
+  <Story id="lab-scrim--with-spinner" />
+</Canvas>
+
+## Fixed
+
+<Canvas>
+  <Story id="lab-scrim--fixed" />
 </Canvas>
 
 # API
@@ -73,22 +73,3 @@ import { Scrim } from "@salt-ds/lab";
 ## Characteristics Used
 
 <CharacteristicUsage of={Scrim} />
-
-## Accessibility
-
-The Scrim component is accessible by screen readers and provides full WAI ARIA support. When Scrim is used directly it requires an `aria-label` or `aria-labelledby` prop for it to be correctly labelled for the screen reader software.
-
-**Focus Trap**
-For accessibility purposes, the key responsibility of the Scrim component is to block interaction with the underlying page.
-
-This has two consequences:
-
-1. The tab order is restricted, only cycling through items within the overlaying component.
-2. Content beneath the scrim is programmatically disabled to stop Assistive Technologies from conveying it to users.
-
-**Keyboard interactions**
-The following keyboard interactions apply:
-
-| Key               | Function                                                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| <kbd>Escape</kbd> | Closes the Scrim and the associated overlaying component. Note: Provided the Escape key isn’t absorbed by an active component. |
