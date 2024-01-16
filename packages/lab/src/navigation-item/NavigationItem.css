@@ -23,7 +23,7 @@
 
 /* Styles applied to NavigationItem link */
 .saltNavigationItem.saltLink {
-  --link-textDecoration: none;
+  text-decoration: none;
 }
 
 /* Styles applied to NavigationItem icon */

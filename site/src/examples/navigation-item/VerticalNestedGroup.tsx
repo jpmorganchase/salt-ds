@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
 import { NavigationItem } from "@salt-ds/lab";
-import { StackLayout } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 const multipleLevelNesting = [
@@ -46,9 +45,7 @@ export const VerticalNestedGroup = (): ReactElement => {
               }
               href="#"
               orientation="vertical"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
+              onClick={() => {
                 setActive(name);
               }}
               onExpand={() => {
@@ -95,10 +92,6 @@ export const VerticalNestedGroup = (): ReactElement => {
                         }
                         href="#"
                         orientation="vertical"
-                        onClick={(event) => {
-                          // Prevent default to avoid navigation
-                          event.preventDefault();
-                        }}
                         level={1}
                         onExpand={() => {
                           if (expanded.includes(item.name)) {
@@ -134,9 +127,7 @@ export const VerticalNestedGroup = (): ReactElement => {
                                   active={active === itemValue}
                                   href="#"
                                   orientation="vertical"
-                                  onClick={(event) => {
-                                    // Prevent default to avoid navigation
-                                    event.preventDefault();
+                                  onClick={() => {
                                     setActive(itemValue);
                                   }}
                                   level={2}

@@ -20,9 +20,7 @@ export const HorizontalGroup = (): ReactElement => {
             <NavigationItem
               active={active === item}
               href="#"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
+              onClick={() => {
                 setActive(item);
               }}
             >
