@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { Image } from "@jpmorganchase/mosaic-site-components";
-import { Pill } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/core";
 import { Link } from "@salt-ds/core";
 import { Heading4 } from "../../components/mdx/h4";
 import { Data, Relationship } from "./DetailComponent";

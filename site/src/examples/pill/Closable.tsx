@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Pill } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 
 const handleClose = () => {

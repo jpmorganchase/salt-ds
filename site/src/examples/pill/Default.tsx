@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Pill } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/core";
 
 const handleClick = () => {
   console.log("clicked");
