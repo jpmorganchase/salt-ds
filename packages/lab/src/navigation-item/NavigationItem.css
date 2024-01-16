@@ -92,6 +92,11 @@
   outline: var(--salt-focused-outline);
 }
 
+/* Styles applied to NavigationItem for non-keyboard focus */
+.saltNavigationItem:focus:not(:focus-visible) {
+  outline: 0;
+}
+
 /* Styles applied to activation line */
 .saltNavigationItem::after {
   content: "";
