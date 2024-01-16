@@ -1,5 +1,4 @@
 ---
-# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -24,22 +23,32 @@ data:
 - If you have a Boolean selection, for instance “on” or “off”. Instead, use [`Switch`](../switch).
 - When you have large number (>100) of list items, to prevent performance issues without virtualization, we strongly recommend adding a filter e.g. use a [`ComboBox`](../combo-box) instead.
 
-### Import
+#### Controlled/Uncontrolled
 
-{/* Update the text and code snippet below as needed: */}
+Just like native input elements in React, Dropdown can be controlled or uncontrolled. By default Dropdown is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of Dropdown.
+If you want to control the value of Dropdown, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+
+### Import
 
 To import `DropdownNext` from the lab Salt package, use:
 
 ```js
-import { DropdownNext } from "@salt-ds/lab";
+import { DropdownNext, Option, OptionGroup } from "@salt-ds/lab";
 ```
 
 ### Props
 
-{/* Update packageName and componentName below as needed */}
-{/* packageName is optional and defaults to "core" if omitted */}
+#### Dropdown Next
 
 <PropsTable packageName="lab" componentName="DropdownNext" />
+
+#### Option
+
+<PropsTable packageName="lab" componentName="Option" />
+
+#### Option Group
+
+<PropsTable packageName="lab" componentName="OptionGroup" />
 
 ### References
 

@@ -16,6 +16,7 @@ import {
   DialogActions,
   DialogContent,
   DropdownNext as Dropdown,
+  Option,
 } from "@salt-ds/lab";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
@@ -234,10 +235,12 @@ const formFields = (
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
       <Dropdown
-        source={["Value"]}
-        defaultSelected="Value"
+        defaultValue={"Value"}
+        defaultSelected={["Value"]}
         style={{ width: "100%" }}
-      />
+      >
+        <Option value="Value">Value</Option>
+      </Dropdown>
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
     <FormField>
