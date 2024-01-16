@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { Avatar, Button, ToggleButton } from "@salt-ds/core";
+import { Avatar, Button, Pill, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
   ChatIcon,
@@ -33,7 +33,6 @@ import {
   ToolbarProps,
   Tooltray,
   Input,
-  Pill,
   StaticInputAdornment,
 } from "@salt-ds/lab";
 import { CSSProperties, MouseEvent, useState } from "react";

@@ -1,9 +1,8 @@
-import { Pill } from "@salt-ds/lab";
 import { CloseIcon, FavoriteIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { shortColorData } from "@stories/assets/exampleData";
-import { Button, FlowLayout } from "packages/core/src";
+import { Button, Pill, FlowLayout } from "@salt-ds/core";
+import { shortColorData } from "../assets/exampleData";
 
 export default {
   title: "Lab/Pill",

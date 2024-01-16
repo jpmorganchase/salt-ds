@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import { Button, ToggleButton } from "@salt-ds/core";
+import { Button, Pill, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
   ColumnChooserIcon,
@@ -19,7 +19,6 @@ import {
   Tooltray,
   FormField,
   Input,
-  Pill,
   StaticInputAdornment,
 } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";

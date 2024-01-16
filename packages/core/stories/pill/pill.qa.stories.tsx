@@ -1,10 +1,10 @@
-import { Pill } from "@salt-ds/lab";
+import { Pill } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { FavoriteIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Pill/QA",
+  title: "Core/Pill/QA",
   component: Pill,
 } as Meta<typeof Pill>;
 
