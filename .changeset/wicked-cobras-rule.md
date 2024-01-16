@@ -4,5 +4,5 @@
 
 Navigation Item
 
-- Updated the logic to make Navigation Item act like a button when a href isn't passed.
+- Updated the logic to make Navigation Item act like a button when `href` isn't passed.
 - Fixed styles.
