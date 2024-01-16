@@ -5,7 +5,7 @@ import { Button, Pill, FlowLayout } from "@salt-ds/core";
 import { shortColorData } from "../assets/exampleData";
 
 export default {
-  title: "Lab/Pill",
+  title: "Core/Pill",
   component: Pill,
 } as Meta<typeof Pill>;
 
