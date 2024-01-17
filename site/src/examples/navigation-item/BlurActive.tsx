@@ -61,7 +61,7 @@ export const BlurActive = (): ReactElement => {
                         active={active === nestedItem.name}
                         href="#"
                         orientation={orientation}
-                        level={2}
+                        level={1}
                         onClick={() => {
                           setActive(nestedItem.name);
                         }}
