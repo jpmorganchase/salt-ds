@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon, EditIcon, SearchIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useRef, useState } from "react";
 
 export default {
   title: "Patterns/Search",
@@ -15,28 +15,39 @@ export default {
 
 export const DefaultIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <Input
+      ref={inputRef}
       startAdornment={<SearchIcon />}
       endAdornment={
         value && (
-          <Button onClick={handleClose}>
+          <Button onClick={handleClear} aria-label="Clear input">
             <CloseIcon aria-hidden />
           </Button>
         )
       }
-      placeholder="Enter your search"
       value={value}
       onChange={handleChange}
       style={{ width: 200 }}
@@ -46,23 +57,35 @@ export const DefaultIcon: StoryFn<typeof Input> = (args) => {
 
 export const DefaultValue: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("default value");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <Input
+      ref={inputRef}
       startAdornment={<SearchIcon />}
       endAdornment={
         value && (
-          <Button onClick={handleClose}>
+          <Button onClick={handleClear} aria-label="Clear input">
             <CloseIcon aria-hidden />
           </Button>
         )
@@ -77,25 +100,37 @@ export const DefaultValue: StoryFn<typeof Input> = (args) => {
 
 export const WithFormField: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <FormField>
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Input
+        ref={inputRef}
         startAdornment={<SearchIcon />}
         endAdornment={
           value && (
-            <Button onClick={handleClose}>
+            <Button onClick={handleClear} aria-label="Clear input">
               <CloseIcon aria-hidden />
             </Button>
           )
@@ -111,25 +146,37 @@ export const WithFormField: StoryFn<typeof Input> = (args) => {
 
 export const LabelLeft: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <FormField labelPlacement="left">
       <FormFieldLabel>Form field label left</FormFieldLabel>
       <Input
+        ref={inputRef}
         startAdornment={<SearchIcon />}
         endAdornment={
           value && (
-            <Button onClick={handleClose}>
+            <Button onClick={handleClear} aria-label="Clear input">
               <CloseIcon aria-hidden />
             </Button>
           )
@@ -145,22 +192,34 @@ export const LabelLeft: StoryFn<typeof Input> = (args) => {
 
 export const DefaultValueNoIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("default value");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <Input
+      ref={inputRef}
       endAdornment={
         value && (
-          <Button onClick={handleClose}>
+          <Button onClick={handleClear} aria-label="Clear input">
             <CloseIcon aria-hidden />
           </Button>
         )
@@ -175,24 +234,36 @@ export const DefaultValueNoIcon: StoryFn<typeof Input> = (args) => {
 
 export const LabelNoIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <FormField>
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Input
+        ref={inputRef}
         endAdornment={
           value && (
-            <Button onClick={handleClose}>
+            <Button onClick={handleClear} aria-label="Clear input">
               <CloseIcon aria-hidden />
             </Button>
           )
@@ -208,28 +279,39 @@ export const LabelNoIcon: StoryFn<typeof Input> = (args) => {
 
 export const CustomIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = () => {
+    if (inputRef.current) {
+      const input = inputRef.current.querySelector(
+        ".saltInput-input"
+      ) as HTMLInputElement;
+      input.focus();
+    }
+  };
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const value = event.target.value;
-    setValue(value);
+    const newValue = event.target.value;
+    setValue(newValue);
     args.onChange?.(event);
   };
 
-  const handleClose = () => {
+  const handleClear = () => {
     setValue("");
+    focusOnInput();
   };
 
   return (
     <Input
+      ref={inputRef}
       startAdornment={<EditIcon />}
       endAdornment={
         value && (
-          <Button onClick={handleClose}>
+          <Button onClick={handleClear} aria-label="Clear input">
             <CloseIcon aria-hidden />
           </Button>
         )
       }
-      placeholder="Enter your search"
       value={value}
       onChange={handleChange}
       style={{ width: 200 }}
