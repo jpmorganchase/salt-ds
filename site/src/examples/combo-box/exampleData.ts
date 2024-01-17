@@ -1,7 +1,4 @@
-export type LargeCity = {
-  name: string;
-  countryCode: string;
-};
+import { CountryCode } from "@salt-ds/countries";
 
 export const shortColorData = [
   "Baby blue",
@@ -16,6 +13,38 @@ export const shortColorData = [
   "White",
   "Yellow",
 ];
+
+export const citiesWithCountries = [
+  {
+    value: "Chicago",
+    country: "US",
+  },
+  {
+    value: "Miami",
+    country: "US",
+  },
+  {
+    value: "New York",
+    country: "US",
+  },
+  {
+    value: "Liverpool",
+    country: "GB",
+  },
+  {
+    value: "London",
+    country: "GB",
+  },
+  {
+    value: "Manchester",
+    country: "GB",
+  },
+];
+
+export type LargeCity = {
+  name: string;
+  countryCode: CountryCode;
+};
 
 export const largestCities: LargeCity[] = [
   { name: "Tokyo", countryCode: "JP" },

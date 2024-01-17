@@ -1,0 +1,14 @@
+.saltOptionGroup-label {
+  background: var(--salt-container-primary-background);
+  color: var(--salt-text-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}

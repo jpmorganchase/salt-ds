@@ -1,5 +1,4 @@
 ---
-# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -14,46 +13,67 @@ data:
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is above the dropdown, Tab sets focus on the component.
+- If focus is above the dropdown, Tab sets focus on the component. When focused, dropdown has a visible text cursor and the list is opened.
+- If focus is on dropdown, Tab moves focus to the next focusable element in the tab order and selects the current active option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
 - If focus is below the dropdown, this action sets focus on the component.
+- If focus is on dropdown, this action moves focus to the previous focusable element in the tab order and selects the current active option.
 
 </KeyboardControl>
-
 <KeyboardControl keyOrCombos="Space / Enter">
 
-- If the dropdown list is closed, this action opens the list. Focus is set to the first item.
-- If the list is open, this action selects the list item that has focus and closes the list.
+- If the list is open and focus is on a option that is not disabled, Enter makes a selection.
+- If the dropdown is single-select, the list closes.
+- If the dropdown is multi-select, the list remains open.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">
 
-- If the dropdown list is open and has focus, Escape closes the list without making a selection. Focus remains on the dropdown button.
-
-</KeyboardControl>
-
-<KeyboardControl keyOrCombos="Down arrow">
-
-- If the dropdown list is closed, Down arrow opens it and moves visual focus to the next item in the list. Focus does not wrap.
+- If the list is open, closes the list without making a selection, existing text in input field remains. Focus remains on dropdown.
+- If the list is closed, does nothing. Focus remains on dropdown.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Up arrow">
 
-- If the dropdown list is open, Up arrow moves visual focus to the previous item in the list. Focus does not wrap.
+- If the list is open, moves visual focus to the previous option in the list. Focus does not wrap.
+- If the list is closed, opens the list and moves visual focus to the last option in the list.
 
 </KeyboardControl>
+<KeyboardControl keyOrCombos="Down arrow">
 
+- If the list is open, moves visual focus to the next option in the list. Focus does not wrap.
+- If the list is closed, opens the list and moves visual focus to the first option in the list.
+
+</KeyboardControl>
 <KeyboardControl keyOrCombos="Home">
 
-- When focus is within the dropdown, Home moves focus to the first list item.
+When focus is within the dropdown, Home moves focus to the first option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="End">
 
-- When focus is within the dropdown, End moves focus to the last list item.
+When focus is within the dropdown, this action moves focus to the last option.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page up">
+
+- When focus is within the dropdown, this action moves focus up 10 options in the list.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page down">
+
+- When focus is within the dropdown, this action moves focus down 10 options in the list.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Printable Characters">
+
+First opens the list if it is not already displayed and then moves visual focus to the first option that matches the typed character.
+
+- If multiple keys are typed in quick succession, visual focus moves to the first option that matches the full string.
+- If the same character is typed in succession, visual focus cycles among the options starting with that character.
 
 </KeyboardControl>
 </KeyboardControls>
