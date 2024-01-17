@@ -1,12 +1,7 @@
 import { ChangeEvent, ReactElement, useState } from "react";
-import {
-  ComboBoxNext,
-  ComboBoxNextProps,
-  Option,
-  PillNext,
-} from "@salt-ds/lab";
+import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/lab";
 import { shortColorData } from "./exampleData";
-import { FlowLayout, StackLayout } from "@salt-ds/core";
+import { FlowLayout, StackLayout, Pill } from "@salt-ds/core";
 
 export const Multiselect = (): ReactElement => {
   const [value, setValue] = useState("");
@@ -29,7 +24,7 @@ export const Multiselect = (): ReactElement => {
     <StackLayout>
       <FlowLayout gap={0.5}>
         {selected.map((color) => (
-          <PillNext key={color}>{color}</PillNext>
+          <Pill key={color}>{color}</Pill>
         ))}
       </FlowLayout>
       <ComboBoxNext

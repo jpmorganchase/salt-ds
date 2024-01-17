@@ -4,8 +4,8 @@
 
 ### Minor Changes
 
-- 641197da: - Removed `onClose` prop from `PillNext`. PillNext has been updated to support only one action. The `onClick`prop can be used instead.
-  - Remove `icon` prop from `PillNext`. An icon can be added as a children instead.
+- 641197da: - Removed `onClose` prop from `Pill`. Pill has been updated to support only one action. The `onClick`prop can be used instead.
+  - Remove `icon` prop from `Pill`. An icon can be added as a children instead.
 
 ### Patch Changes
 
@@ -67,7 +67,7 @@ import "@salt-ds/lab/css/salt-lab.css";
 ### Patch Changes
 
 - 7023034a: Fix Combobox input's `onChange` and `onKeyDown` not being invoked.
-- 0ddc1e42: Removed default min width styling in `PillNext`. Smaller Pills should look cleaner.
+- 0ddc1e42: Removed default min width styling in `Pill`. Smaller Pills should look cleaner.
 - 9dbe7f4c: Fixed component text properties (`font-weight`, `font-family`, `font-size`, `line-height`) incorrectly inheriting external global styles, which should follow the text characteristic from the Salt theme.
 
   - Content Status
@@ -99,7 +99,7 @@ import "@salt-ds/lab/css/salt-lab.css";
     console.log("closed");
   };
 
-  <PillNext onClose={handleClose}>Closable Pill</PillNext>
+  <Pill onClose={handleClose}>Closable Pill</Pill>
   ```
 
 ### Patch Changes
@@ -396,17 +396,17 @@ import "@salt-ds/lab/css/salt-lab.css";
 
 ### Minor Changes
 
-- 05c77e70: Add PillNext
+- 05c77e70: Add Pill
 
   ```tsx
-  <PillNext onClick={handleClick}>
+  <Pill onClick={handleClick}>
       Pill
-  </PillNext>
+  </Pill>
 
 
-  <PillNext icon={<FavoriteIcon/>} onClick={handleClick}>
+  <Pill icon={<FavoriteIcon/>} onClick={handleClick}>
       Pill With Icon
-  </PillNext>
+  </Pill>
   ```
 
 ### Patch Changes
