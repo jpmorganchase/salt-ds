@@ -345,6 +345,43 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
   );
 };
 
+/** Generate a map from country code to component */
+const generateCountryToComponentMap = ({ countryMetaMap, basePath }) => {
+  console.log("Generating countryToComponentMap file");
+
+  const outputFile = path.join(basePath, "countryComponentMap.ts");
+
+  const allCountries = Object.keys(countryMetaMap);
+
+  const importsStatements =
+    "import {\n" +
+    allCountries.map((code) => code.replace("-", "_")).join(",\n") +
+    `\n} from "./components";\n`;
+  const exportStatements =
+    "export const countryToComponentMap = {\n" +
+    allCountries
+      .map((code) => `"${code}": ${code.replace("-", "_")}`)
+      .join(",\n") +
+    "\n};\n";
+
+  const joinedText = [
+    GENERATED_WARNING_COMMENT,
+    importsStatements,
+    exportStatements,
+  ].join("\n");
+
+  const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
+
+  fs.writeFile(
+    outputFile,
+    formattedResult,
+    { encoding: "utf8" },
+    function (err) {
+      if (err) return console.log(err);
+    }
+  );
+};
+
 // Run the script
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
@@ -359,4 +396,5 @@ const countryMetaMap = generateCountrySymbolComponents({
 });
 generateCountryMetaMap({ countryMetaMap, basePath });
 generateLazyMap({ countryMetaMap, basePath });
+generateCountryToComponentMap({ countryMetaMap, basePath });
 generateIndex({ countryMetaMap, componentsPath });
