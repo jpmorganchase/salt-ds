@@ -1,16 +1,26 @@
-import { StoryFn, Meta } from "@storybook/react";
+import {
+  DropdownNext,
+  DropdownNextProps,
+  Option,
+  OptionGroup,
+} from "@salt-ds/lab";
 
-import { DropdownNext, DropdownNextProps } from "@salt-ds/lab";
-import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import { SyntheticEvent, useState } from "react";
+import { Meta, StoryFn } from "@storybook/react";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  StackLayout,
+} from "@salt-ds/core";
+import { GB, US } from "@salt-ds/countries";
+import { useState } from "react";
 
 export default {
   title: "Lab/Dropdown Next",
   component: DropdownNext,
 } as Meta<typeof DropdownNext>;
 
-const ListExample = [
+const usStates = [
   "Alabama",
   "Alaska",
   "Arizona",
@@ -22,108 +32,261 @@ const ListExample = [
   "Georgia",
 ];
 
-const DropdownTemplate: StoryFn<DropdownNextProps> = ({ source, ...args }) => {
-  const handleSelect = (_event: SyntheticEvent, data: { value: string }) => {
-    console.log("selected item", data.value);
-  };
+const longUsStates = [
+  "Alabama",
+  "Alaska",
+  "Arizona",
+  "Arkansas",
+  "California",
+  "Colorado",
+  "Connecticut",
+  "Delaware",
+  "Florida",
+  "Georgia",
+  "Hawaii",
+  "Idaho",
+  "Illinois",
+  "Indiana",
+  "Iowa",
+  "Kansas",
+  "Kentucky",
+  "Louisiana",
+  "Maine",
+  "Maryland",
+  "Massachusetts",
+  "Michigan",
+  "Minnesota",
+  "Mississippi",
+  "Missouri",
+  "Montana",
+  "Nebraska",
+  "Nevada",
+  "New Hampshire",
+  "New Jersey",
+  "New Mexico",
+  "New York",
+  "North Carolina",
+  "North Dakota",
+  "Ohio",
+  "Oklahoma",
+  "Oregon",
+  "Pennsylvania",
+  "Rhode Island",
+  "South Carolina",
+  "South Dakota",
+  "Tennessee",
+  "Texas",
+  "Utah",
+  "Vermont",
+  "Virginia",
+  "Washington",
+  "West Virginia",
+  "Wisconsin",
+  "Wyoming",
+];
+
+const Template: StoryFn<typeof DropdownNext> = (args) => {
   return (
-    <DropdownNext source={ListExample} onSelect={handleSelect} {...args} />
+    <DropdownNext {...args}>
+      {usStates.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </DropdownNext>
   );
 };
 
-export const Default = DropdownTemplate.bind({});
+export const Default = Template.bind({});
 
-export const WithDefaultSelected = DropdownTemplate.bind({});
-WithDefaultSelected.args = {
-  defaultSelected: "California",
+export const Placeholder = Template.bind({});
+Placeholder.args = {
+  placeholder: "State",
 };
 
-export const Readonly = DropdownTemplate.bind({});
+export const WithDefaultSelected = Template.bind({});
+WithDefaultSelected.args = {
+  defaultSelected: ["California"],
+  defaultValue: "California",
+};
+
+export const Readonly = Template.bind({});
 Readonly.args = {
   readOnly: true,
-  defaultSelected: "California",
+  defaultSelected: ["California"],
+  defaultValue: "California",
 };
 
-export const Disabled = DropdownTemplate.bind({});
+export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
-  defaultSelected: "California",
+  defaultSelected: ["California"],
+  defaultValue: "California",
 };
 
-export const Variants: StoryFn<DropdownNextProps> = ({
-  source = ListExample,
-}) => {
+export const DisabledOption: StoryFn<typeof DropdownNext> = (args) => {
+  return (
+    <DropdownNext {...args}>
+      {usStates.map((state) => (
+        <Option value={state} key={state} disabled={state === "California"}>
+          {state}
+        </Option>
+      ))}
+    </DropdownNext>
+  );
+};
+
+export const Variants: StoryFn<typeof DropdownNext> = () => {
   return (
     <StackLayout>
-      <DropdownNext source={source} />
-      <DropdownNext source={source} variant="secondary" />
+      <DropdownNext>
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </DropdownNext>
+      <DropdownNext variant="secondary">
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </DropdownNext>
     </StackLayout>
   );
 };
 
-export const Controlled: StoryFn<DropdownNextProps> = ({
-  source = ListExample,
-  ...props
-}) => {
-  const initialValue = "California";
+export const MultiSelect = Template.bind({});
+MultiSelect.args = {
+  multiselect: true,
+};
 
-  const [highlightedIndex, setHighlightedIndex] = useState(
-    ListExample.indexOf(initialValue) ?? 0
+export const WithFormField: StoryFn = () => {
+  return (
+    <FormField>
+      <FormFieldLabel>State</FormFieldLabel>
+      <DropdownNext>
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </DropdownNext>
+      <FormFieldHelperText>Pick a US state</FormFieldHelperText>
+    </FormField>
   );
-  const [selectedItem, setSelectedItem] = useState(initialValue);
-  const [open, setOpen] = useState(false);
+};
 
-  const handleOpenClose = () => {
-    setOpen(!open);
+export const Grouped: StoryFn<typeof DropdownNext> = (args) => {
+  return (
+    <DropdownNext {...args}>
+      <OptionGroup label="US">
+        <Option value="Chicago">Chicago</Option>
+        <Option value="Miami">Miami</Option>
+        <Option value="New York">New York</Option>
+      </OptionGroup>
+      <OptionGroup label="UK">
+        <Option value="Liverpool">Liverpool</Option>
+        <Option value="London">London</Option>
+        <Option value="Manchester">Manchester</Option>
+      </OptionGroup>
+    </DropdownNext>
+  );
+};
+
+const adornmentMap: Record<string, JSX.Element> = {
+  GB: <GB aria-hidden size={0.75} />,
+  US: <US aria-hidden size={0.75} />,
+};
+
+export const ComplexOption: StoryFn<typeof DropdownNext> = (args) => {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
+    event,
+    newSelected
+  ) => {
+    setSelected(newSelected);
+    args.onSelectionChange?.(event, newSelected);
   };
 
-  const handleArrowDown = () => {
-    setOpen(true);
-    const nextIndex = highlightedIndex === undefined ? 0 : highlightedIndex + 1;
-    setHighlightedIndex(nextIndex);
-  };
+  const adornment = adornmentMap[selected[0] ?? ""] || null;
 
-  const handleArrowUp = () => {
-    setOpen(true);
-    const prevIndex = highlightedIndex === undefined ? 0 : highlightedIndex - 1;
-    setHighlightedIndex(prevIndex);
-  };
+  return (
+    <DropdownNext
+      {...args}
+      selected={selected}
+      startAdornment={adornment}
+      onSelectionChange={handleSelectionChange}
+    >
+      <Option
+        value="GB"
+        textValue="United Kingdom of Great Britain and Northern Ireland"
+      >
+        <GB size={0.75} aria-hidden /> United Kingdom of Great Britain and
+        Northern Ireland
+      </Option>
+      <Option value="US" textValue="United States of America">
+        <US size={0.75} aria-hidden /> United States of America
+      </Option>
+    </DropdownNext>
+  );
+};
 
-  const handleSelect = () => {
-    highlightedIndex && setSelectedItem(ListExample[highlightedIndex]);
-    setOpen(false);
+export const LongList: StoryFn<typeof DropdownNext> = (args) => {
+  return (
+    <DropdownNext {...args}>
+      {longUsStates.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </DropdownNext>
+  );
+};
+
+export const CustomValue: StoryFn<typeof DropdownNext> = (args) => {
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
+    event,
+    newSelected
+  ) => {
+    setSelected(newSelected);
+    args.onSelectionChange?.(event, newSelected);
   };
 
   return (
-    <FlexLayout>
-      <FlexLayout gap={1}>
-        <Button onClick={handleOpenClose}>{open ? "Close" : "Open"}</Button>
-        <Button
-          disabled={highlightedIndex === ListExample.length - 1}
-          onClick={handleArrowDown}
-        >
-          <ArrowDownIcon />
-        </Button>
-        <Button
-          disabled={!highlightedIndex || highlightedIndex === 0}
-          onClick={handleArrowUp}
-        >
-          <ArrowUpIcon />
-        </Button>
-        <Button
-          disabled={highlightedIndex === undefined}
-          onClick={handleSelect}
-        >
-          Select
-        </Button>
-      </FlexLayout>
-      <DropdownNext
-        {...props}
-        source={source}
-        open={open}
-        selected={selectedItem}
-        highlightedItem={ListExample[highlightedIndex]}
-      />
-    </FlexLayout>
+    <DropdownNext
+      {...args}
+      selected={selected}
+      value={
+        selected.length < 2 ? selected[0] : `${selected.length} items selected`
+      }
+      onSelectionChange={handleSelectionChange}
+      multiselect
+    >
+      {usStates.map((state) => (
+        <Option value={state} key={state}>
+          {state}
+        </Option>
+      ))}
+    </DropdownNext>
   );
+};
+
+export const Validation = () => {
+  return (
+    <StackLayout>
+      <Template validationStatus="error" />
+      <Template validationStatus="warning" />
+      <Template validationStatus="success" />
+    </StackLayout>
+  );
+};
+
+export const WithStartAdornment = Template.bind({});
+WithStartAdornment.args = {
+  startAdornment: <GB aria-hidden size={0.75} />,
 };
