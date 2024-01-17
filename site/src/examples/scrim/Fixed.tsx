@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Scrim } from "@salt-ds/lab";
 import { Button, Card, StackLayout, Text } from "@salt-ds/core";
 
-export const Default = (): ReactElement => {
+export const Fixed = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -25,7 +25,7 @@ export const Default = (): ReactElement => {
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
         <Button onClick={handleOpen}>Click to open scrim</Button>
-        <Scrim open={open}>
+        <Scrim open={open} fixed>
           <Button onClick={handleClose}>Click to close scrim</Button>
         </Scrim>
       </StackLayout>

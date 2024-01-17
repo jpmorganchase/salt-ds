@@ -1,17 +1,8 @@
-import { ReactElement, useState } from "react";
+import { ReactElement } from "react";
 import { Scrim } from "@salt-ds/lab";
-import { Button, Card, StackLayout, Text } from "@salt-ds/core";
+import { Card, Spinner, StackLayout, Text } from "@salt-ds/core";
 
-export const Default = (): ReactElement => {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+export const WithSpinner = (): ReactElement => {
   return (
     <Card style={{ position: "relative", width: "512px" }}>
       <StackLayout>
@@ -24,9 +15,8 @@ export const Default = (): ReactElement => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
         </Text>
-        <Button onClick={handleOpen}>Click to open scrim</Button>
-        <Scrim open={open}>
-          <Button onClick={handleClose}>Click to close scrim</Button>
+        <Scrim open>
+          <Spinner size="medium" />
         </Scrim>
       </StackLayout>
     </Card>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Spinner, Text, H1, H2, Card } from "@salt-ds/core";
+import { useState } from "react";
+import { Button, Spinner, Text, Card, StackLayout } from "@salt-ds/core";
 import { Scrim } from "@salt-ds/lab";
 import { StoryFn, Meta } from "@storybook/react";
 
@@ -7,30 +7,6 @@ export default {
   title: "Lab/Scrim",
   component: Scrim,
 } as Meta<typeof Scrim>;
-
-const Content = () => (
-  <>
-    <H1>What we do</H1>
-    <article id="main">
-      <section>
-        <H2>Investment Banking</H2>
-        <Text>
-          A global leader, we deliver strategic advice and solutions, including
-          capital raising, risk management, and trade finance to corporations,
-          institutions and governments.
-        </Text>
-      </section>
-      <section>
-        <H2>Markets</H2>
-        <Text>
-          Serving the world&apos;s largest corporate clients and institutional
-          investors, we support the investment cycle with market-leading
-          research, analytics and trade execution across multiple asset classes.
-        </Text>
-      </section>
-    </article>
-  </>
-);
 
 const cardStyle: React.CSSProperties = {
   position: "relative",
@@ -53,14 +29,22 @@ export const Default: StoryFn<typeof Scrim> = () => {
   };
 
   return (
-    <Card style={cardStyle}>
-      <Content />
-      <div style={buttonStyle}>
+    <Card style={{ position: "relative", width: "512px" }}>
+      <StackLayout>
+        <Text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
         <Button onClick={handleOpen}>Click to open scrim</Button>
         <Scrim open={open}>
           <Button onClick={handleClose}>Click to close scrim</Button>
         </Scrim>
-      </div>
+      </StackLayout>
     </Card>
   );
 };
@@ -76,27 +60,43 @@ export const CloseOnClick: StoryFn<typeof Scrim> = () => {
   };
 
   return (
-    <Card style={cardStyle}>
-      <Content />
-      <div style={buttonStyle}>
+    <Card style={{ position: "relative", width: "512px" }}>
+      <StackLayout>
+        <Text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
         <Button onClick={handleOpen}>Click to open scrim</Button>
         <Scrim open={open} onClick={handleClose}>
           <Text>Click to close scrim</Text>
         </Scrim>
-      </div>
+      </StackLayout>
     </Card>
   );
 };
 
 export const WithSpinner: StoryFn<typeof Scrim> = () => {
   return (
-    <Card style={cardStyle}>
-      <Content />
-      <div style={buttonStyle}>
+    <Card style={{ position: "relative", width: "512px" }}>
+      <StackLayout>
+        <Text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
         <Scrim open>
           <Spinner size="medium" />
         </Scrim>
-      </div>
+      </StackLayout>
     </Card>
   );
 };
@@ -112,14 +112,22 @@ export const Fixed: StoryFn<typeof Scrim> = () => {
   };
 
   return (
-    <Card style={cardStyle}>
-      <Content />
-      <div style={buttonStyle}>
+    <Card style={{ position: "relative", width: "512px" }}>
+      <StackLayout>
+        <Text>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
+        </Text>
         <Button onClick={handleOpen}>Click to open scrim</Button>
         <Scrim open={open} fixed>
           <Button onClick={handleClose}>Click to close scrim</Button>
         </Scrim>
-      </div>
+      </StackLayout>
     </Card>
   );
 };
