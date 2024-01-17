@@ -31,7 +31,7 @@ export const BlurActive = (): ReactElement => {
           const hasActiveChild = item.subNav.some((i) => active === i.name);
           const isParent = item.subNav && item.subNav.length > 0;
 
-          // Has blur-active state when the item has an active child and is not expanded
+          // Setting blur-active state when the item is not expanded and has an active child. So it's visible where the active item is located.
           const isBlurActive = hasActiveChild && !expanded;
 
           return (
