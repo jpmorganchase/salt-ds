@@ -83,14 +83,13 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       >
         <ConditionalWrapper
           className={clsx(
-            withBaseName(),
+            withBaseName("wrapper"),
             {
               [withBaseName("active")]: active || blurActive,
               [withBaseName("blurActive")]: blurActive,
               [withBaseName("rootItem")]: level === 0,
             },
-            withBaseName(orientation),
-            className
+            withBaseName(orientation)
           )}
           parent={parent}
           expanded={expanded}

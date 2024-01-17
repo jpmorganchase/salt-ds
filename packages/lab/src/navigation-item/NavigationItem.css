@@ -88,17 +88,17 @@
 }
 
 /* Styles applied to NavigationItem when focus is visible */
-.saltNavigationItem:focus-visible {
+.saltNavigationItem-wrapper:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
 /* Styles applied to NavigationItem for non-keyboard focus */
-.saltNavigationItem:focus:not(:focus-visible) {
+.saltNavigationItem-wrapper:focus:not(:focus-visible) {
   outline: 0;
 }
 
 /* Styles applied to activation line */
-.saltNavigationItem::after {
+.saltNavigationItem-wrapper::after {
   content: "";
   position: absolute;
   top: var(--salt-spacing-25);
@@ -120,8 +120,8 @@
 }
 
 /* Styles applied to activation line on hover  */
-.saltNavigationItem:hover::after,
-.saltNavigationItem:focus-visible::after {
+.saltNavigationItem-wrapper:hover::after,
+.saltNavigationItem-wrapper:focus-visible::after {
   background: var(--salt-navigable-indicator-hover);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
