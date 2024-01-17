@@ -1,10 +1,8 @@
-import { createContext } from "react";
-import { a11yValueAriaProps } from "../../form-field-context";
 import { AdornmentValidationStatus } from "../../status-adornment";
 import { CheckboxGroupProps } from "../CheckboxGroup";
+import { createContext } from "../../utils";
 
 export interface CheckboxGroupState {
-  a11yProps?: a11yValueAriaProps;
   disabled?: boolean;
   name?: CheckboxGroupProps["name"];
   onChange?: CheckboxGroupProps["onChange"];
@@ -13,10 +11,9 @@ export interface CheckboxGroupState {
   validationStatus?: AdornmentValidationStatus;
 }
 
-const CheckboxGroupContext = createContext<CheckboxGroupState>({});
-
-if (process.env.NODE_ENV !== "production") {
-  CheckboxGroupContext.displayName = "CheckboxGroupContext";
-}
+const CheckboxGroupContext = createContext<CheckboxGroupState | undefined>(
+  "CheckboxGroupContext",
+  undefined
+);
 
 export { CheckboxGroupContext };
