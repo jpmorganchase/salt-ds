@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import {
+  FlexLayout,
   GoToInput,
   CompactInput,
   CompactPaginator,
@@ -7,8 +8,7 @@ import {
   PaginationProps,
   Paginator,
   PaginatorProps,
-} from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+} from "@salt-ds/core";
 
 export default {
   title: "Lab/Pagination",
