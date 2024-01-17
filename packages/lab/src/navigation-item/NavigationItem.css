@@ -33,8 +33,11 @@
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-vertical {
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-50) * 2);
+  padding-top: 0;
+  padding-bottom: 0;
   padding-right: var(--salt-spacing-100);
   padding-left: calc(var(--salt-spacing-300) * (min(var(--saltNavigationItem-level, 0) + 1, 2)));
+  width: 100%;
 }
 
 /* Styles applied to NavigationItem label */
