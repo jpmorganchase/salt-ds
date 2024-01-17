@@ -1,5 +1,4 @@
 import { MouseEvent, ReactNode } from "react";
-import { Link, Button } from "@salt-ds/core";
 import { NavigationItemProps } from "./NavigationItem";
 
 interface ConditionalWrapperProps
@@ -26,22 +25,21 @@ export const ConditionalWrapper = ({
   };
 
   return parent || href === undefined ? (
-    <Button
+    <button
       aria-label="expand"
-      variant="secondary"
       aria-expanded={expanded}
       className={className}
       onClick={handleExpand}
     >
       {children}
-    </Button>
+    </button>
   ) : (
-    <Link
+    <a
       aria-current={active ? "page" : undefined}
       href={href}
       className={className}
     >
       {children}
-    </Link>
+    </a>
   );
 };

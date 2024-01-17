@@ -1,29 +1,20 @@
 /* Vars applied to root NavigationItem component */
 .saltNavigationItem {
-  --saltButton-background-hover: none;
-  --saltButton-background-active: none;
-  --saltButton-textTransform: none;
-  --saltButton-letterSpacing: none;
-  --saltButton-fontWeight: var(--salt-text-fontWeight);
-  --saltButton-width: 100%;
-
   display: flex;
   gap: var(--salt-spacing-100);
   align-items: center;
   position: relative;
+  background: none;
+  border: none;
+  text-decoration: none;
+  cursor: var(--salt-selectable-cursor-hover);
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
 
 /* Vars applied to NavigationItem component when root */
 .saltNavigationItem-rootItem {
-  --saltText-fontWeight: var(--salt-text-fontWeight-strong);
-  --saltButton-fontWeight: var(--salt-text-fontWeight-strong);
-}
-
-/* Styles applied to NavigationItem link */
-.saltNavigationItem.saltLink {
-  text-decoration: none;
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 /* Styles applied to NavigationItem icon */
@@ -40,8 +31,6 @@
 
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-vertical {
-  --saltButton-margin: var(--salt-spacing-50) 0;
-
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-50) * 2);
   padding-right: var(--salt-spacing-100);
   padding-left: calc(var(--salt-spacing-300) * (min(var(--saltNavigationItem-level, 0) + 1, 2)));
