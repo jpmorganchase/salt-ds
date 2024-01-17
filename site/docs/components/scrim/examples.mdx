@@ -1,0 +1,50 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="scrim" exampleName="Default">
+
+### Default
+
+By default, a scrim is bound to its parent container.
+
+#### Best practices
+
+Ensure you have explicitly set a position attribute for the parent container.
+
+</LivePreview>
+
+<LivePreview componentName="scrim" exampleName="WithSpinner">
+
+### With Spinner
+
+You can pass children to a scrim, such as a spinner to indicate loading state. You can incorporate other elements as children, to display them above the scrim and draw attention to them.
+
+</LivePreview>
+
+<LivePreview componentName="scrim" exampleName="CloseOnClick">
+
+### Close on click
+
+Pass an `onClick` handler to a scrim to close it on click. This is useful for modals or any floating elements where clicking on the scrim area (outside the main content) should dismiss the view.
+
+</LivePreview>
+
+<LivePreview componentName="scrim" exampleName="Fixed">
+
+### Fixed
+
+A fixed scrim fills the entire viewport, regardless of the parent container.
+
+</LivePreview>
+
+</LivePreviewControls>
