@@ -122,8 +122,8 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     } = inputProps;
 
     const checkboxGroupChecked =
-      checkedProp == null && value != null
-        ? checkboxGroup.checkedValues?.includes(value)
+      checkboxGroup?.checkedValues != null && value != null
+        ? checkboxGroup.checkedValues.includes(value)
         : checkedProp;
 
     const [checked, setChecked] = useControlled({
@@ -141,11 +141,11 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     } = useFormFieldProps();
 
     const disabled =
-      checkboxGroup.disabled || formFieldDisabled || disabledProp;
+      checkboxGroup?.disabled || formFieldDisabled || disabledProp;
     const readOnly =
-      checkboxGroup.readOnly || formFieldReadOnly || readOnlyProp;
+      checkboxGroup?.readOnly || formFieldReadOnly || readOnlyProp;
     const validationStatus = !disabled
-      ? checkboxGroup.validationStatus ??
+      ? checkboxGroup?.validationStatus ??
         formFieldValidationStatus ??
         validationStatusProp
       : undefined;
@@ -160,7 +160,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       setChecked(value);
       onChange?.(event);
       inputOnChange?.(event);
-      checkboxGroup.onChange?.(event);
+      checkboxGroup?.onChange?.(event);
     };
 
     return (
@@ -182,13 +182,15 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           // aria-checked only needed when indeterminate since native indeterminate behaviour is not used
           aria-checked={indeterminate ? "mixed" : undefined}
           aria-describedby={clsx(
-            checkboxGroup.a11yProps?.["aria-describedby"] ??
-              formFieldA11yProps?.["aria-describedby"],
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-describedby"]
+              : undefined,
             inputDescribedBy
           )}
           aria-labelledby={clsx(
-            checkboxGroup.a11yProps?.["aria-labelledby"] ??
-              formFieldA11yProps?.["aria-labelledby"],
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-labelledby"]
+              : undefined,
             inputLabelledBy
           )}
           name={name}

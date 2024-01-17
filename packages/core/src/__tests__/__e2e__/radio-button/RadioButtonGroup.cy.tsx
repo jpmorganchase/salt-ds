@@ -1,5 +1,7 @@
 import { ChangeEventHandler } from "react";
 import {
+  Checkbox,
+  CheckboxGroup,
   FormField,
   FormFieldLabel,
   RadioButton,
@@ -149,6 +151,20 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
 
       cy.findAllByRole("radio").eq(0).should("have.attr", "readonly");
       cy.findAllByRole("radio").eq(1).should("have.attr", "readonly");
+    });
+
+    it("THEN should have the correct aria labelling", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <RadioButtonGroup>
+            <RadioButton label="Spot" value="spot" />
+            <RadioButton label="Forward" value="forward" />
+          </RadioButtonGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("radio").eq(0).should("have.accessibleName", "Spot");
     });
   });
 });

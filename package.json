@@ -89,7 +89,7 @@
     "cypress-axe": "^1.5.0",
     "cypress-real-events": "^1.10.0",
     "deepmerge": "^4.2.2",
-    "dom-accessibility-api": "^0.5.10",
+    "dom-accessibility-api": "^0.6.3",
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.14.0",
