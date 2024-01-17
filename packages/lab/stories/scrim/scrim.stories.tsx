@@ -8,16 +8,6 @@ export default {
   component: Scrim,
 } as Meta<typeof Scrim>;
 
-const cardStyle: React.CSSProperties = {
-  position: "relative",
-  maxWidth: 500,
-};
-
-const buttonStyle: React.CSSProperties = {
-  marginTop: 30,
-  textAlign: "right",
-};
-
 export const Default: StoryFn<typeof Scrim> = () => {
   const [open, setOpen] = useState(false);
 
