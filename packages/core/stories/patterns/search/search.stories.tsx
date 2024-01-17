@@ -17,15 +17,6 @@ export const DefaultIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -34,12 +25,12 @@ export const DefaultIcon: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <Input
-      ref={inputRef}
+      inputRef={inputRef}
       startAdornment={<SearchIcon />}
       endAdornment={
         value && (
@@ -59,15 +50,6 @@ export const DefaultValue: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("default value");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -76,12 +58,12 @@ export const DefaultValue: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <Input
-      ref={inputRef}
+      inputRef={inputRef}
       startAdornment={<SearchIcon />}
       endAdornment={
         value && (
@@ -102,15 +84,6 @@ export const WithFormField: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -119,14 +92,14 @@ export const WithFormField: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <FormField>
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Input
-        ref={inputRef}
+        inputRef={inputRef}
         startAdornment={<SearchIcon />}
         endAdornment={
           value && (
@@ -148,15 +121,6 @@ export const LabelLeft: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -165,14 +129,14 @@ export const LabelLeft: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <FormField labelPlacement="left">
       <FormFieldLabel>Form field label left</FormFieldLabel>
       <Input
-        ref={inputRef}
+        inputRef={inputRef}
         startAdornment={<SearchIcon />}
         endAdornment={
           value && (
@@ -194,15 +158,6 @@ export const DefaultValueNoIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("default value");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -211,12 +166,12 @@ export const DefaultValueNoIcon: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <Input
-      ref={inputRef}
+      inputRef={inputRef}
       endAdornment={
         value && (
           <Button onClick={handleClear} aria-label="Clear input">
@@ -236,15 +191,6 @@ export const LabelNoIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -253,14 +199,14 @@ export const LabelNoIcon: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <FormField>
       <FormFieldLabel>Form field label</FormFieldLabel>
       <Input
-        ref={inputRef}
+        inputRef={inputRef}
         endAdornment={
           value && (
             <Button onClick={handleClear} aria-label="Clear input">
@@ -281,15 +227,6 @@ export const CustomIcon: StoryFn<typeof Input> = (args) => {
   const [value, setValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const focusOnInput = () => {
-    if (inputRef.current) {
-      const input = inputRef.current.querySelector(
-        ".saltInput-input"
-      ) as HTMLInputElement;
-      input.focus();
-    }
-  };
-
   const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const newValue = event.target.value;
     setValue(newValue);
@@ -298,12 +235,12 @@ export const CustomIcon: StoryFn<typeof Input> = (args) => {
 
   const handleClear = () => {
     setValue("");
-    focusOnInput();
+    inputRef.current?.focus(); // focus goes back to input
   };
 
   return (
     <Input
-      ref={inputRef}
+      inputRef={inputRef}
       startAdornment={<EditIcon />}
       endAdornment={
         value && (
