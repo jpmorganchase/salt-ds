@@ -1,10 +1,8 @@
 import { ChangeEventHandler } from "react";
-import { a11yValueAriaProps } from "../../form-field-context";
 import { AdornmentValidationStatus } from "../../status-adornment";
 import { createContext } from "../../utils";
 
 export interface RadioGroupContextValue {
-  a11yProps?: a11yValueAriaProps;
   disabled?: boolean;
   name?: string;
   value?: string;
@@ -13,7 +11,6 @@ export interface RadioGroupContextValue {
   validationStatus?: AdornmentValidationStatus;
 }
 
-export const RadioGroupContext = createContext<RadioGroupContextValue>(
-  "RadioGroupContext",
-  {}
-);
+export const RadioGroupContext = createContext<
+  RadioGroupContextValue | undefined
+>("RadioGroupContext", undefined);
