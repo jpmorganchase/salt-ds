@@ -1,289 +1,381 @@
 import {
   ChangeEvent,
-  ComponentPropsWithoutRef,
-  ForwardedRef,
+  FocusEvent,
   forwardRef,
-  ReactElement,
-  Ref,
-  SyntheticEvent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  useEffect,
   useRef,
 } from "react";
 import {
+  Button,
   Input,
+  InputProps,
   makePrefixer,
-  useForkRef,
-  useId,
   useFloatingComponent,
+  useFloatingUI,
+  useForkRef,
+  useFormFieldProps,
+  useId,
 } from "@salt-ds/core";
-import { ListNext, ListNextProps } from "../list-next";
-import { useComboBox } from "./useComboBox";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import comboBoxNextCss from "./ComboBoxNext.css";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { DefaultListItem, defaultFilter, ComboBoxItemProps } from "./utils";
+import { ListControlProps } from "../list-control/ListControlState";
+import { ListControlContext } from "../list-control/ListControlContext";
 import { clsx } from "clsx";
-import { UseComboBoxPortalProps } from "./useComboboxPortal";
+import { flip, size } from "@floating-ui/react";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
+import { useComboBoxNext } from "./useComboBoxNext";
+import { OptionList } from "../option/OptionList";
+
+export interface ComboBoxNextProps
+  extends InputProps,
+    Omit<ListControlProps, "value" | "defaultValue"> {
+  /**
+   * The options to display in the combo box.
+   */
+  children?: ReactNode;
+}
 
 const withBaseName = makePrefixer("saltComboBoxNext");
 
-export interface ComboBoxNextProps<T>
-  extends Omit<ComponentPropsWithoutRef<"input">, "onChange" | "onSelect"> {
-  /**
-   * Additional props for the list component.
-   */
-  ListProps?: ListNextProps;
-  /**
-   * Additional props for the portal.
-   */
-  PortalProps?: UseComboBoxPortalProps;
-  /**
-   * Controlled prop. Controls the Input value in the Combo Box Input.
-   */
-  inputValue?: string;
-  /**
-   * Controlled prop. Controls the Highlighted item in the Combo Box list.
-   */
-  highlightedItem?: string;
-  /**
-   * Controlled prop. Controls the Selected value in the Combo Box list.
-   */
-  selected?: string;
-  /**
-   * Initial input value for when the list is uncontrolled.
-   */
-  defaultInputValue?: string;
-  /**
-   * Initial selected value for when the list is uncontrolled.
-   */
-  defaultSelected?: string;
-  /**
-   * If `true`, the component will be disabled.
-   */
-  disabled?: boolean;
-  /**
-   * Styling variant. Defaults to "primary".
-   */
-  variant?: "primary" | "secondary";
-  /**
-  /**
-   * The source of combobox items.
-   */
-  source: T[];
-  /**
-   * Optional ref for the list component
-   */
-  listRef?: Ref<HTMLUListElement>;
-  /**
-   * The component used for item instead of the default.
-   */
-  ListItem?: (
-    props: ComboBoxItemProps<T>
-  ) => ReactElement<ComboBoxItemProps<T>>;
-  /**
-   * Function to be used as filter.
-   */
-  itemFilter?: (source: T[], filterValue?: string) => T[];
-  /**
-   * Callback for mouse over event
-   */
-  onMouseOver?: (event: SyntheticEvent) => void;
-  /**
-   * Callback for list selection event
-   */
-  onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
-  /**
-  /**
-   * Callback for list change event
-   */
-  onListChange?: (
-    event: SyntheticEvent,
-    data: { value: string | undefined }
-  ) => void;
-  /**
-   * Callback for input change event
-   */
-  onChange?: (event: SyntheticEvent, data: { value: string }) => void;
-}
+export const ComboBoxNext = forwardRef<HTMLDivElement, ComboBoxNextProps>(
+  function ComboBox(props, ref) {
+    const {
+      children,
+      className,
+      disabled: disabledProp,
+      endAdornment,
+      readOnly: readOnlyProp,
+      multiselect,
+      onSelectionChange,
+      selected,
+      defaultSelected,
+      defaultOpen,
+      onOpenChange,
+      onChange,
+      open,
+      inputProps: inputPropsProp,
+      variant = "primary",
+      onClick,
+      onKeyDown,
+      onFocus,
+      onBlur,
+      value,
+      defaultValue,
+      ...rest
+    } = props;
 
-export const ComboBoxNext = forwardRef(function ComboBoxNext<T>(
-  {
-    ListProps = {},
-    PortalProps = {},
-    inputValue: inputValueProp,
-    highlightedItem: highlightedItemProp,
-    selected: selectedProp,
-    defaultInputValue,
-    defaultSelected,
-    disabled,
-    variant = "primary",
-    source,
-    listRef: listRefProp,
-    ListItem = DefaultListItem as unknown as ComboBoxNextProps<T>["ListItem"],
-    itemFilter = defaultFilter as unknown as ComboBoxNextProps<T>["itemFilter"],
-    onMouseOver,
-    onFocus,
-    onKeyDown,
-    onSelect,
-    onListChange,
-    onChange: onInputChange,
-    ...rest
-  }: ComboBoxNextProps<T>,
-  ref?: ForwardedRef<HTMLInputElement>
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-combo-box-next",
-    css: comboBoxNextCss,
-    window: targetWindow,
-  });
-  const listId = useId(ListProps?.id);
-  const listRef = useRef<HTMLUListElement>(null);
+    const {
+      a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
+      disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
+    } = useFormFieldProps();
 
-  const setListRef = useForkRef(listRefProp, listRef);
-  const listProps = {
-    disabled,
-    highlightedItem: highlightedItemProp,
-    selected: selectedProp,
-    defaultSelected,
-    onChange: onListChange,
-    onSelect: onSelect,
-    id: listId,
-    ref: listRef,
-  };
+    const disabled = Boolean(disabledProp) || formFieldDisabled;
+    const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
 
-  const {
-    inputValue,
-    setInputValue,
-    portalProps,
-    selectedItem,
-    highlightedItem,
-    activeDescendant,
-    focusVisibleRef,
-    keyDownHandler,
-    focusHandler,
-    setSelectedItem,
-    setHighlightedItem,
-    mouseOverHandler,
-    mouseDownHandler,
-    listSelectHandler,
-  } = useComboBox({
-    defaultInputValue,
-    inputValue: inputValueProp,
-    onFocus,
-    onMouseOver,
-    onKeyDown,
-    listProps,
-    PortalProps,
-  });
+    const listControl = useComboBoxNext({
+      open,
+      defaultOpen,
+      onOpenChange,
+      multiselect,
+      defaultSelected,
+      selected,
+      onSelectionChange,
+      value,
+      defaultValue,
+    });
 
-  const {
-    open,
-    setOpen,
-    floating,
-    reference,
-    getTriggerProps,
-    getPortalProps,
-    getPosition,
-  } = portalProps;
+    const {
+      activeState,
+      setActive,
+      openState,
+      setOpen,
+      openKey,
+      getOptionAtIndex,
+      getIndexOfOption,
+      getOptionsMatching,
+      options,
+      selectedState,
+      select,
+      clear,
+      setFocusVisibleState,
+      focusedState,
+      setFocusedState,
+      listRef,
+      valueState,
+      setValueState,
+    } = listControl;
 
-  // floating references
-  const triggerRef = useForkRef(ref, reference);
-  const inputRef = useForkRef(triggerRef, focusVisibleRef);
+    const { Component: FloatingComponent } = useFloatingComponent();
 
-  const { Component: FloatingComponent } = useFloatingComponent();
+    const { x, y, strategy, elements, floating, reference } = useFloatingUI({
+      open,
+      placement: "bottom-start",
+      middleware: [
+        size({
+          apply({ rects, elements, availableHeight }) {
+            Object.assign(elements.floating.style, {
+              minWidth: `${rects.reference.width}px`,
+              maxHeight: `max(calc(${availableHeight}px - var(--salt-spacing-100)), calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5))`,
+            });
+          },
+        }),
+        flip({ fallbackStrategy: "initialPlacement" }),
+      ],
+    });
 
-  const getFilteredSource = () => {
-    if (!source) return null;
-    if (selectedItem && inputValue === selectedItem) return source;
-    return itemFilter?.(source, inputValue);
-  };
-  const filteredSource = getFilteredSource();
+    const handleRef = useForkRef<HTMLDivElement>(reference, ref);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setInputValue(value);
-    if (value === "") {
-      setHighlightedItem(undefined);
-      setSelectedItem(value);
-    } else {
-      if (!open) {
-        setOpen(true);
+    const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
+      if (!readOnly) {
+        event.stopPropagation();
+        setFocusVisibleState(false);
+        setOpen(event, !openState);
       }
-      if (filteredSource) {
-        setHighlightedItem(filteredSource[0] as unknown as string);
+    };
+
+    const handleButtonFocus = () => {
+      inputRef.current?.focus();
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
+      const count = options.length - 1;
+
+      if (readOnly) {
+        return;
       }
-    }
-    onInputChange?.(event, { value: value ?? "" });
-  };
 
-  const adornment = open ? (
-    <ChevronUpIcon className={withBaseName("chevron")} />
-  ) : (
-    <ChevronDownIcon className={withBaseName("chevron")} />
-  );
+      if (!openState) {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          setOpen(event, true);
+          return;
+        }
+      }
 
-  const { className: listClassName, ...restListProps } = ListProps;
-  const { className: inputClassName, ...restInputProps } = rest;
+      let newActive;
+      switch (event.key) {
+        case "ArrowDown":
+          newActive = getOptionAtIndex(Math.min(count, currentIndex + 1));
+          break;
+        case "ArrowUp":
+          newActive = getOptionAtIndex(Math.max(0, currentIndex - 1));
+          break;
+        case "Home":
+          newActive = getOptionAtIndex(0);
+          break;
+        case "End":
+          newActive = getOptionAtIndex(count);
+          break;
+        case "PageUp":
+          newActive = getOptionAtIndex(Math.max(0, currentIndex - 10));
+          break;
+        case "PageDown":
+          newActive = getOptionAtIndex(Math.min(count, currentIndex + 10));
+          break;
+        case "Enter":
+          if (openState && activeState?.disabled) {
+            event.preventDefault();
+            return;
+          }
 
-  return (
-    <>
-      <Input
-        aria-controls={listId}
-        aria-activedescendant={disabled ? undefined : activeDescendant}
-        className={clsx(withBaseName("input"), inputClassName)}
-        disabled={disabled}
-        endAdornment={adornment}
-        onChange={onChange}
-        onMouseDown={mouseDownHandler}
-        inputRef={inputRef as Ref<HTMLInputElement>}
-        inputProps={{
-          "aria-expanded": open,
-          tabIndex: disabled ? -1 : 0,
-          onFocus: focusHandler,
-          onKeyDown: keyDownHandler,
-        }}
-        role="combobox"
-        variant={variant}
-        value={inputValue}
-        {...getTriggerProps()}
-        {...restInputProps}
-      />
+          if (!openState || !activeState) {
+            return;
+          }
 
-      <FloatingComponent
-        open={Boolean(open && !disabled && filteredSource)}
-        {...getPortalProps()}
-        {...getPosition()}
-        ref={floating}
-      >
-        <ListNext
-          className={clsx(withBaseName("list"), listClassName)}
-          disableFocus
-          highlightedItem={highlightedItem}
-          onMouseOver={mouseOverHandler}
-          onSelect={listSelectHandler}
-          selected={selectedItem}
-          {...restListProps}
-          ref={setListRef}
+          select(event, activeState);
+
+          if (!multiselect) {
+            event.preventDefault();
+            setOpen(event, false);
+          }
+
+          break;
+        case "Escape":
+          setOpen(event, false);
+          break;
+        case "Tab":
+          if (!multiselect && activeState) {
+            select(event, activeState);
+          }
+          break;
+      }
+
+      if (newActive && newActive?.id != activeState?.id) {
+        event.preventDefault();
+        setActive(newActive);
+        setFocusVisibleState(true);
+      }
+
+      onKeyDown?.(event);
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+      setFocusedState(true);
+
+      onFocus?.(event);
+    };
+
+    const ignoreBlur = useRef(false);
+
+    const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      if (!ignoreBlur.current) {
+        setOpen(event, false);
+      }
+      ignoreBlur.current = false;
+
+      setFocusedState(false);
+      onBlur?.(event);
+    };
+
+    const handleClick = (event: MouseEvent<HTMLInputElement>) => {
+      if (!readOnly) {
+        setOpen(event, true);
+      }
+
+      onClick?.(event);
+    };
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      if (!openState) {
+        setOpen(event, true);
+      }
+
+      if (event.target.value === "" && !multiselect) {
+        clear(event);
+      }
+
+      setValueState(event.target.value);
+
+      // Wait for the filter to happen
+      queueMicrotask(() => {
+        const newOption = getOptionAtIndex(0);
+        if (newOption) {
+          setActive(newOption);
+        }
+      });
+      onChange?.(event);
+    };
+
+    const handleListMouseOver = () => {
+      setFocusVisibleState(false);
+    };
+
+    const handleListMouseDown = () => {
+      ignoreBlur.current = true;
+    };
+
+    const handleListFocus = () => {
+      inputRef.current?.focus();
+    };
+
+    const handleListClick = () => {
+      inputRef.current?.focus();
+    };
+
+    useEffect(() => {
+      // We check the active index because the active item may have been removed
+      const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
+      if (openState && activeIndex < 0) {
+        if (openKey.current.key === "ArrowDown") {
+          setActive(getOptionAtIndex(0));
+        } else if (openKey.current.key === "ArrowUp") {
+          setActive(getOptionAtIndex(options.length - 1));
+        } else {
+          if (selectedState.length > 0) {
+            const selected = getOptionsMatching(
+              (option) => option.value === selectedState[0]
+            ).pop();
+            if (selected) {
+              setActive(selected);
+            }
+          } else {
+            setActive(getOptionAtIndex(0));
+          }
+        }
+      } else if (!openState) {
+        setActive(undefined);
+      }
+    }, [openState, children]);
+
+    const buttonId = useId();
+    const listId = useId();
+
+    return (
+      <ListControlContext.Provider value={listControl}>
+        <Input
+          className={clsx(withBaseName(), className)}
+          endAdornment={
+            <>
+              {endAdornment}
+              {!readOnly ? (
+                <Button
+                  aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
+                  aria-label="Show options"
+                  aria-expanded={openState}
+                  aria-controls={openState ? listId : undefined}
+                  aria-haspopup="listbox"
+                  disabled={disabled}
+                  variant="secondary"
+                  onClick={handleButtonClick}
+                  onFocus={handleButtonFocus}
+                  tabIndex={-1}
+                >
+                  {openState ? (
+                    <ChevronUpIcon aria-hidden />
+                  ) : (
+                    <ChevronDownIcon aria-hidden />
+                  )}
+                </Button>
+              ) : undefined}
+            </>
+          }
+          onClick={handleClick}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          onChange={handleChange}
+          role="combobox"
+          disabled={disabled}
+          readOnly={readOnly}
+          inputProps={{
+            role: "combobox",
+            "aria-expanded": openState,
+            "aria-multiselectable": multiselect,
+            "aria-controls": openState ? listId : undefined,
+            ...inputPropsProp,
+          }}
+          aria-activedescendant={activeState?.id}
+          variant={variant}
+          inputRef={inputRef}
+          value={valueState}
+          {...rest}
+          ref={handleRef}
+        />
+        <FloatingComponent
+          open={(openState || focusedState) && !readOnly}
+          left={x ?? 0}
+          top={y ?? 0}
+          position={strategy}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+          ref={floating}
         >
-          {filteredSource?.map((value, index) => {
-            const onMouseDown = (event: SyntheticEvent<HTMLLIElement>) => {
-              setSelectedItem(event.currentTarget?.dataset.value);
-              setInputValue(event.currentTarget?.dataset.value);
-            };
-            return (
-              ListItem && (
-                <ListItem
-                  key={index}
-                  value={value}
-                  matchPattern={inputValue}
-                  onMouseDown={onMouseDown}
-                />
-              )
-            );
-          })}
-        </ListNext>
-      </FloatingComponent>
-    </>
-  );
-});
+          <OptionList
+            collapsed={!openState}
+            ref={listRef}
+            id={listId}
+            onMouseOver={handleListMouseOver}
+            onMouseDown={handleListMouseDown}
+            onFocus={handleListFocus}
+            onClick={handleListClick}
+          >
+            {children}
+          </OptionList>
+        </FloatingComponent>
+      </ListControlContext.Provider>
+    );
+  }
+);
