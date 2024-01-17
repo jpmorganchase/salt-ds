@@ -86,7 +86,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             withBaseName("wrapper"),
             {
               [withBaseName("active")]: active || blurActive,
-              [withBaseName("blurActive")]: blurActive && level !== 0,
+              [withBaseName("blurActive")]: blurActive,
               [withBaseName("rootItem")]: level === 0,
             },
             withBaseName(orientation)
