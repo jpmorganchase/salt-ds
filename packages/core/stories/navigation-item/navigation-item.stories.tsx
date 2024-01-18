@@ -1,4 +1,9 @@
-import { Badge, FlexLayout, NavigationItem, NavigationItemProps } from "@salt-ds/core";
+import {
+  Badge,
+  FlexLayout,
+  NavigationItem,
+  NavigationItemProps,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
