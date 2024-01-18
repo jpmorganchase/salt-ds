@@ -1,8 +1,5 @@
 ---
-"@salt-ds/core": patch
-"@salt-ds/data-grid": patch
-"@salt-ds/lab": patch
-"@salt-ds/site": patch
+"@salt-ds/core": minor
 ---
 
 Added Pagination
