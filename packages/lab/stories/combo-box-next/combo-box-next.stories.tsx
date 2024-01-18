@@ -30,7 +30,7 @@ export default {
 
 const usStates = usStateExampleData.slice(0, 10);
 
-const Template: StoryFn<typeof ComboBoxNext> = (args) => {
+const Template: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +108,7 @@ Disabled.args = {
   defaultValue: "California",
 };
 
-export const DisabledOption: StoryFn<typeof ComboBoxNext> = (args) => {
+export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -203,7 +203,7 @@ export const WithFormField: StoryFn = () => {
   );
 };
 
-export const Grouped: StoryFn<typeof ComboBoxNext> = (args) => {
+export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -282,7 +282,7 @@ export const Grouped: StoryFn<typeof ComboBoxNext> = (args) => {
   );
 };
 
-export const ComplexOption: StoryFn<typeof ComboBoxNext> = (args) => {
+export const ComplexOption: StoryFn<ComboBoxNextProps> = (args) => {
   const options = [
     {
       value: "GB",
@@ -342,7 +342,7 @@ export const ComplexOption: StoryFn<typeof ComboBoxNext> = (args) => {
   );
 };
 
-export const LongList: StoryFn<typeof ComboBoxNext> = (args) => {
+export const LongList: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -408,7 +408,7 @@ export const LongList: StoryFn<typeof ComboBoxNext> = (args) => {
   );
 };
 
-export const EmptyMessage: StoryFn<typeof ComboBoxNext> = (args) => {
+export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -465,7 +465,7 @@ export const Validation = () => {
   );
 };
 
-export const CustomFiltering: StoryFn<typeof ComboBoxNext> = (args) => {
+export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
   const [showAll, setShowAll] = useState(false);
 
@@ -516,6 +516,61 @@ export const CustomFiltering: StoryFn<typeof ComboBoxNext> = (args) => {
       {options.map((state) => (
         <Option value={state} key={state}>
           {state}
+        </Option>
+      ))}
+    </ComboBoxNext>
+  );
+};
+
+interface Person {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+const people: Person[] = [
+  { id: 1, firstName: "John", lastName: "Doe" },
+  { id: 2, firstName: "Jane", lastName: "Doe" },
+  { id: 3, firstName: "John", lastName: "Smith" },
+  { id: 4, firstName: "Jane", lastName: "Smith" },
+];
+
+export const ObjectValue: StoryFn<typeof ComboBoxNext> = (args) => {
+  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+  const [selected, setSelected] = useState<Person[]>([]);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: Person[]
+  ) => {
+    setSelected(newSelected);
+
+    setValue("");
+  };
+
+  const options = people.filter(
+    (person) =>
+      person.firstName.toLowerCase().includes(value.trim().toLowerCase()) ||
+      person.lastName.toLowerCase().includes(value.trim().toLowerCase())
+  );
+
+  console.log(selected, value);
+
+  return (
+    <ComboBoxNext<Person>
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      selected={selected}
+      multiselect
+    >
+      {options.map((person) => (
+        <Option value={person} key={person.id}>
+          {person.firstName} {person.lastName}
         </Option>
       ))}
     </ComboBoxNext>
