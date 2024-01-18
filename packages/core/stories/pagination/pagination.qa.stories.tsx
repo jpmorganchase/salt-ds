@@ -12,7 +12,7 @@ import {
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Core/Pagination/QA",
+  title: "Core/Pagination/Pagination QA",
   component: Pagination,
 } as Meta;
 
