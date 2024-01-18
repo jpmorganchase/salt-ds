@@ -1,9 +1,9 @@
 /* Styles applied to the root element */
-.saltPillNext {
+.saltPill {
   appearance: none;
   display: inline-flex;
   align-items: center;
-  background: var(--saltPillNext-background, var(--salt-actionable-primary-background));
+  background: var(--saltPill-background, var(--salt-actionable-primary-background));
   border-radius: 0;
   border: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
@@ -13,7 +13,7 @@
   gap: var(--salt-spacing-50);
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
-  color: var(--saltPillNext-color, var(--salt-actionable-primary-foreground));
+  color: var(--saltPill-color, var(--salt-actionable-primary-foreground));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
@@ -23,30 +23,30 @@
 }
 
 /* Style applied to Pill if pill is clickable  */
-.saltPillNext-clickable {
+.saltPill-clickable {
   cursor: var(--salt-selectable-cursor-hover);
 }
 
-.saltPillNext-clickable:hover,
-.saltPillNext-clickable:focus-visible {
+.saltPill-clickable:hover,
+.saltPill-clickable:focus-visible {
   color: var(--salt-actionable-primary-foreground-hover);
   background: var(--salt-actionable-primary-background-hover);
 }
 
-.saltPillNext-clickable.saltPillNext-active,
-.saltPillNext-clickable:active {
+.saltPill-clickable.saltPill-active,
+.saltPill-clickable:active {
   background: var(--salt-actionable-primary-background-active);
   color: var(--salt-actionable-primary-foreground-active);
 }
 
 /* Style applied to Pill on focus */
-.saltPillNext:focus-visible {
+.saltPill:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
 /* Style applied to Pill when disabled */
-.saltPillNext:disabled,
-.saltPillNext:disabled:hover {
+.saltPill:disabled,
+.saltPill:disabled:hover {
   color: var(--salt-actionable-primary-foreground-disabled);
   background: var(--salt-actionable-primary-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);

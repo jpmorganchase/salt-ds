@@ -7,8 +7,8 @@
   bottom: 0;
   height: 100%;
   display: flex;
-  z-index: 1199;
-  position: fixed;
+  z-index: calc(var(--salt-zIndex-drawer) - 1);
+  position: absolute;
   align-items: center;
   justify-content: center;
   background: var(--saltScrim-background, var(--salt-overlayable-background));
@@ -19,8 +19,7 @@
   outline: none;
 }
 
-/* Style applied to the root element when containerFix={true} */
-.saltScrim-containerFix {
-  position: absolute;
-  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+/* Style applied to the root element when fixed={true} */
+.saltScrim-fixed {
+  position: fixed;
 }
