@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Scrim } from "@salt-ds/lab";
-import { Button, Card, StackLayout, Text } from "@salt-ds/core";
+import { Button, Card, Scrim, StackLayout, Text } from "@salt-ds/core";
 
 export const CloseOnClick = (): ReactElement => {
   const [open, setOpen] = useState(false);

@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Scrim } from "@salt-ds/lab";
-import { Card, Spinner, StackLayout, Text } from "@salt-ds/core";
+import { Card, Scrim, Spinner, StackLayout, Text } from "@salt-ds/core";
 
 export const WithSpinner = (): ReactElement => {
   return (
