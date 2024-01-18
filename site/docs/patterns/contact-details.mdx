@@ -1,0 +1,131 @@
+---
+title: Contact Details
+layout: DetailPattern
+aliases:
+  - /salt/patterns/contact-details
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-contact-details--contact-details", label: "Examples" },
+    ]
+---
+
+Contact Details is a pattern that displays communication information—for a person, company, distribution list or individual channel, such as a name, a phone number or email address.
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details.png"
+    alt="Contact details how to build"
+    border
+  />
+
+We provide design guidance for using Salt [Avatar](/salt/components/avatar), [Button](/salt/components/button), [Icon](/salt/components/icon), [Text](/salt/components/text), [Tooltip](/salt/components/tooltip), [Stack Layout](/salt/components/stack-layout) and [Flow Layout](/salt/components/flow-layout) components to achieve the pattern. You can also find implementation examples in the [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-contact-details--contact-details)
+
+## When to use it
+
+Use cases for this pattern could include:
+- Provide details and direct channels of communication for sales or support purposes.
+- Display contact information in a directory or CRM (Customer Relationship Management) system.
+- Allow users to populate form fields in a workflow with details from a list of contacts, e.g. client contact selection for a ticket.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Consider a Data Grid when you need to display a large number of contacts with a standardized set of contact information.
+</ExampleContainer>
+
+## How to build it
+
+Contact Details is comprised of an avatar and text elements, a title can be used as a name of a contact or a company, optional details can be company names or company ID.
+Any relevant meta data that you want to communicate can be displayed depending on the requirements of your applications. 
+
+You can define the details as links, making them interactive, to enable immediate communication to a contact from within your application.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Keep label lengths similar, in order to ensure close proximity to their respective values. If you’re displaying supplementary details, we recommend that you left align their labels.
+</ExampleContainer>
+
+### Contact Details
+
+
+ <Diagram
+    src="/img/patterns/contact-details/how-to-build.png"
+    alt="Contact Details with component annotations"
+    border
+  />
+
+#### Using Stack Layout
+
+ <Diagram
+    src="/img/patterns/contact-details/using-stack-layout.png"
+    alt="Contact Details with spacing annotations for Stack Layout"
+    border
+  />
+
+#### Using Icons
+
+You can use icon descriptors as a visually concise alternative to textual labels—to help users quickly identify the available communication channels.
+
+ <Diagram
+    src="/img/patterns/contact-details/using-icons.png"
+    alt="Contact Details using Icon Descriptors"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Refrain from using icon descriptors when you have multiple values for similar channels, such as work and cellphone numbers.
+</ExampleContainer>
+
+### Embedded in a container component
+
+You have the flexibility to embed Contact Details in a range of container components. 
+
+This example demonstrates the component embedded within a [Card](/salt/components/card).
+
+ <Diagram
+    src="/img/patterns/contact-details/card-embedded.png"
+    alt="Contact Details Embedded in a Card"
+    border
+  />
+
+
+### Quick Actions
+
+You can define quick actions, which are one-click shortcuts to specific functions or features—such as launching a new email in Outlook, dialling a contact in Zoom.
+
+Ensure that quick action buttons have Tooltip displayed as per the [Icon Only Button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
+
+ <Diagram
+    src="/img/patterns/contact-details/quick-actions.png"
+    alt="Contact Details with quick actions button bar"
+    border
+  />
+
+### Collapsible
+
+If you’re displaying supplementary details, you can configure them to be collapsible.
+
+ <Diagram
+    src="/img/patterns/contact-details/collapsible.png"
+    alt="Contact Details with collapsible details"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Consider making supplementary details collapsible when they contain secondary information, and don’t need to be on display at all times.
+</ExampleContainer>
+
+### List Version
+
+The List Version allows you to display a snapshot of key details. It’s ideal when you have restricted real estate, such as in a client picker dropdown menu or a contact directory list.
+
+In order to show as many options as possible, we recommend to keep data points no more than one line. Prioritise the most important values.
+
+ <Diagram
+    src="/img/patterns/contact-details/list.png"
+    alt="Contact Details in list"
+    border
+  />
+
+
+
+
+
+
