@@ -22,6 +22,7 @@ export * from "./multiline-input";
 export * from "./panel";
 export * from "./pill";
 export * from "./radio-button";
+export * from "./scrim";
 export * from "./spinner";
 export * from "./stack-layout";
 export * from "./status-adornment";

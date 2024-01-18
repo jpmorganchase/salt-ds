@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Button, Spinner, Text, Card, StackLayout } from "@salt-ds/core";
-import { Scrim } from "@salt-ds/lab";
+import { Scrim } from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 
 export default {
-  title: "Lab/Scrim",
+  title: "Core/Scrim",
   component: Scrim,
 } as Meta<typeof Scrim>;
 
