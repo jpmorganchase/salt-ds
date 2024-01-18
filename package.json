@@ -89,7 +89,7 @@
     "cypress-axe": "^1.5.0",
     "cypress-real-events": "^1.10.0",
     "deepmerge": "^4.2.2",
-    "dom-accessibility-api": "^0.5.10",
+    "dom-accessibility-api": "^0.6.3",
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.14.0",
@@ -125,7 +125,9 @@
     "next": "^14.0.0",
     "webpack-dev-server": "4.9.3",
     "webpack": "5.76.0",
-    "recursive-readdir": "2.2.3"
+    "recursive-readdir": "2.2.3",
+    "@jpmorganchase/mosaic-components@npm:0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch",
+    "@jpmorganchase/mosaic-components@npm:^0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch"
   },
   "browserslist": {
     "production": [

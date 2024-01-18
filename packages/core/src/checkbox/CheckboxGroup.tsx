@@ -61,6 +61,8 @@ export const CheckboxGroup = forwardRef<
   CheckboxGroupProps
 >(function CheckboxGroup(
   {
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     checkedValues: checkedValuesProp,
     defaultCheckedValues = [],
     children,
@@ -116,6 +118,12 @@ export const CheckboxGroup = forwardRef<
 
   return (
     <fieldset
+      aria-labelledby={
+        clsx(a11yProps?.["aria-labelledby"], ariaLabelledBy) || undefined
+      }
+      aria-describedby={
+        clsx(a11yProps?.["aria-describedby"], ariaDescribedBy) || undefined
+      }
       className={clsx(
         withBaseName(),
         withBaseName(direction),
@@ -129,7 +137,6 @@ export const CheckboxGroup = forwardRef<
     >
       <CheckboxGroupContext.Provider
         value={{
-          a11yProps,
           disabled,
           name,
           onChange: handleChange,

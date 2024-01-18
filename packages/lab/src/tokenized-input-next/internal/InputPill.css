@@ -20,11 +20,11 @@
 }
 
 .saltInputPill.saltInputPill-pillHighlighted {
-  --saltPillNext-background: var(--salt-selectable-background-hover);
+  --saltPill-background: var(--salt-selectable-background-hover);
 }
 
 .saltInputPill.saltInputPill:active {
   background: var(--salt-actionable-primary-background-active);
-  --saltPillNext-color: var(--salt-actionable-primary-foreground-active);
+  --saltPill-color: var(--salt-actionable-primary-foreground-active);
   --saltIcon-color: var(--salt-actionable-primary-foreground-active);
 }
