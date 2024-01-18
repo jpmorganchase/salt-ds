@@ -1,23 +1,29 @@
 import { clsx } from "clsx";
 import { memo, MutableRefObject, useRef } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+  Pill,
+  PillProps,
+} from "@salt-ds/core";
 import { getWidth } from "./useWidth";
-import { Pill, PillProps } from "../../pill";
+import { CloseIcon } from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltInputPill");
 
-export type InputPillProps = Omit<
-  PillProps<"basic" | "closable">,
-  "variant" | "onDelete" | "clickable"
-> & {
+export type InputPillProps = PillProps & {
   /**
    * An ref object holds pills index map to width.
    */
-  pillsRef: MutableRefObject<{ [index: number]: number | undefined }>;
+  pillsRef: MutableRefObject<Record<number, number | undefined>>;
   /**
    * Index of the pill within Input.
    */
   index: number;
+  /**
+   * Pill label.
+   */
+  label?: string;
   /**
    * Whether the pill is the last visible one within Input.
    */
@@ -44,14 +50,14 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     hidden,
     highlighted,
     index,
+    label,
     lastVisible,
     onDelete,
     pillsRef,
-    tabIndex: tabIndexProp,
     ...restProps
   } = props;
 
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLButtonElement | null>(null);
   const isRemovable = Boolean(onDelete);
 
   // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
@@ -85,13 +91,15 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
         className
       )}
       disabled={disabled}
-      onDelete={isRemovable ? handleDelete : undefined}
+      tabIndex={-1}
+      onClick={isRemovable ? handleDelete : undefined}
       ref={ref}
       role="option"
       //  style={useMemo(() => ({ maxWidth }), [maxWidth])}
-      tabIndex={undefined}
-      variant={isRemovable ? "closable" : "basic"}
       {...restProps}
-    />
+    >
+      <span className={withBaseName("label")}>{label}</span>
+      {isRemovable && <CloseIcon />}
+    </Pill>
   );
 });

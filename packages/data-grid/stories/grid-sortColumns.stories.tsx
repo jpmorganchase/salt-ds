@@ -115,7 +115,6 @@ export function ServerSideSort() {
       <Scrim
         aria-label="Example Scrim"
         open={showFetching && !isFetchedAfterMount}
-        enableContainerMode
       >
         <ContentStatus status="loading" />
       </Scrim>

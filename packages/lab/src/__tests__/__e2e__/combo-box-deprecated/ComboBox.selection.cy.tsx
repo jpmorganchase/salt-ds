@@ -244,10 +244,7 @@ describe("A multi-select combo box", () => {
 
     cy.findAllByTestId("pill").should("have.length", 2);
 
-    cy.findAllByTestId("pill")
-      .eq(1)
-      .findByRole("button", { hidden: true })
-      .realClick();
+    cy.findAllByTestId("pill").eq(1).realClick();
 
     cy.get("@changeSpy").should(
       "have.been.calledWith",

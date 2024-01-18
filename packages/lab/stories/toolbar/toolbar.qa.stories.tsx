@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import { Button, ToggleButton } from "@salt-ds/core";
+import { Button, Pill, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
   ColumnChooserIcon,
@@ -19,7 +19,6 @@ import {
   Tooltray,
   FormField,
   Input,
-  Pill,
   StaticInputAdornment,
 } from "@salt-ds/lab";
 import { QAContainer, QAContainerProps } from "docs/components";
@@ -95,13 +94,13 @@ export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
           <SwapIcon aria-hidden /> AND
         </ToggleButton>
         <FormField>
-          <Pill label="LOREM" onClick={() => console.log("lorem.")} />
+          <Pill onClick={() => console.log("lorem.")}>LOREM</Pill>
         </FormField>
         <FormField>
-          <Pill label="IPSUM" onClick={() => console.log("ipsum.")} />
+          <Pill onClick={() => console.log("ipsum.")}>IPSUM</Pill>
         </FormField>
         <FormField>
-          <Pill label="DOLAR" onClick={() => console.log("dolar.")} />
+          <Pill onClick={() => console.log("dolar.")}>DOLAR</Pill>
         </FormField>
       </Tooltray>
       <Tooltray aria-label="status tooltray" data-pad-end>
