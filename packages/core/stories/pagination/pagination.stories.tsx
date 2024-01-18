@@ -11,7 +11,7 @@ import {
 } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Pagination",
+  title: "Core/Pagination",
   component: Paginator,
 } as Meta;
 

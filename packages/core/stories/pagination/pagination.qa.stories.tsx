@@ -12,9 +12,9 @@ import {
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Pagination/QA",
+  title: "Core/Pagination/QA",
   component: Pagination,
-} as Meta<typeof Pagination>;
+} as Meta;
 
 interface StoryProps {
   goTo?: boolean;
