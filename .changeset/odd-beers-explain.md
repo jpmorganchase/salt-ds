@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Removed Navigation item from lab and promoted it to core
+Removed NavigationItem from lab and promoted it to core
