@@ -1,6 +1,6 @@
 import { NavigationItem, NavigationItemProps } from "@salt-ds/lab";
 import { Badge, FlexLayout } from "@salt-ds/core";
-import { StoryFn } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
 
@@ -9,7 +9,7 @@ import "./navigation-item.stories.css";
 export default {
   title: "Lab/Navigation Item",
   component: NavigationItem,
-};
+} as Meta;
 
 const Template: StoryFn<NavigationItemProps> = (args) => {
   const [active, setActive] = useState(false);

@@ -16,9 +16,7 @@ export const VerticalGroup = (): ReactElement => {
               active={active === item}
               href="#"
               orientation="vertical"
-              onClick={(event) => {
-                // Prevent default to avoid navigation
-                event.preventDefault();
+              onClick={() => {
                 setActive(item);
               }}
             >

@@ -77,8 +77,8 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     return (
       <div
         ref={ref}
-        style={style}
         className={clsx(withBaseName(), className)}
+        style={style}
         {...rest}
       >
         <ConditionalWrapper
@@ -86,10 +86,8 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             withBaseName("wrapper"),
             {
               [withBaseName("active")]: active || blurActive,
-              [withBaseName("blurActive")]: blurActive && level !== 0,
-              [withBaseName("nested")]: level !== 0,
+              [withBaseName("blurActive")]: blurActive,
               [withBaseName("rootItem")]: level === 0,
-              [withBaseName("expandButton")]: parent,
             },
             withBaseName(orientation)
           )}
@@ -101,11 +99,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         >
           <span className={withBaseName("label")}>{children}</span>
           {parent && (
-            <ExpansionIcon
-              expanded={expanded}
-              orientation={orientation}
-              className={withBaseName("expandIcon")}
-            />
+            <ExpansionIcon expanded={expanded} orientation={orientation} />
           )}
         </ConditionalWrapper>
       </div>

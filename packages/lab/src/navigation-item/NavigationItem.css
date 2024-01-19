@@ -1,46 +1,56 @@
 /* Vars applied to root NavigationItem component */
-.saltNavigationItem {
-  --navigationItem-color: var(--salt-content-primary-foreground);
-  --navigationItem-fill: var(--salt-content-primary-foreground);
-  --navigationItem-bar-inset: var(--salt-spacing-25);
-  --navigationItem-bar-size: var(--salt-size-indicator);
-  --navigationItem-indicator-background: var(--salt-navigable-indicator-active);
-  --navigationItem-gap: var(--salt-spacing-100);
-}
-
-/* Vars applied to NavigationItem component when active */
-.saltNavigationItem-active,
-.saltNavigationItem-rootItem {
-  --navigationItem-fontWeight: var(--salt-text-fontWeight-strong);
-}
-
-/* Vars applied to NavigationItem component when  blur active */
-.saltNavigationItem-blurActive,
-.saltNavigationItem-active.saltNavigationItem-nested {
-  --navigationItem-fontWeight: var(--salt-text-fontWeight);
-}
-
-/* Styles applied to NavigationItem wrapper */
 .saltNavigationItem-wrapper {
   display: flex;
+  gap: var(--salt-spacing-100);
   align-items: center;
   position: relative;
-  gap: var(--navigationItem-gap);
-  font-weight: var(--navigationItem-fontWeight);
+  background: none;
+  border: none;
+  font-size: var(--salt-text-fontSize);
   text-decoration: none;
+  cursor: var(--salt-selectable-cursor-hover);
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
 }
 
-/* Styles applied to NavigationItem link */
-.saltNavigationItem-wrapper.saltLink {
-  --link-textDecoration: none;
+/* Vars applied to NavigationItem component when root */
+.saltNavigationItem-rootItem {
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 /* Styles applied to NavigationItem icon */
-.saltNavigationItem-wrapper .saltIcon {
-  fill: var(--navigationItem-fill);
-  top: var(--salt-size-border);
+.saltNavigationItem-label .saltIcon {
+  top: var(--salt-spacing-25);
+}
+
+/* Styles applied when orientation = "horizontal" */
+.saltNavigationItem-horizontal {
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) * 2);
+  padding: 0 var(--salt-spacing-100);
+  width: fit-content;
+}
+
+/* Styles applied when orientation = "vertical" */
+.saltNavigationItem-vertical {
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-50) * 2);
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: var(--salt-spacing-100);
+  padding-left: calc(var(--salt-spacing-300) * (min(var(--saltNavigationItem-level, 0) + 1, 2)));
+  width: 100%;
+}
+
+/* Styles applied to NavigationItem label */
+.saltNavigationItem-label {
+  color: var(--salt-content-primary-foreground);
+  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-fontFamily);
+  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
+  flex: 1;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: var(--salt-spacing-100);
 }
 
 /* Styles applied to NavigationItem Badge */
@@ -48,77 +58,9 @@
   margin-left: auto;
 }
 
-/* Styles applied to root NavigationItem component */
-.saltNavigationItem {
-  margin: 0 var(--navigationItem-gap);
-}
-
-/* Styles applied when orientation = "horizontal" */
-.saltNavigationItem-wrapper.saltNavigationItem-horizontal {
-  min-height: calc(var(--salt-size-base) + var(--navigationItem-gap) + var(--navigationItem-gap));
-  padding: calc(var(--navigationItem-gap) + var(--navigationItem-bar-inset)) 0 var(--navigationItem-gap) 0;
-  width: fit-content;
-}
-
-/* Styles applied when orientation = "vertical" */
-.saltNavigationItem-wrapper.saltNavigationItem-vertical {
-  min-height: calc(var(--salt-size-base));
-  padding-left: calc(var(--salt-spacing-300) + var(--navigationItem-bar-inset));
-  padding-right: var(--navigationItem-gap);
-  margin: var(--salt-spacing-50) 0;
-}
-
-/* Styles applied to NavigationItem label */
-.saltNavigationItem-wrapper .saltNavigationItem-label {
-  --link-color-visited: var(--navigationItem-color);
-  --link-color-hover: var(--navigationItem-color);
-
-  color: var(--navigationItem-color);
-  line-height: var(--salt-text-lineHeight);
-  font-family: var(--salt-text-fontFamily);
-  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--navigationItem-gap));
-  flex: 1;
-  text-align: left;
-  display: flex;
-  align-items: baseline;
-  gap: var(--navigationItem-gap);
-}
-
-/* Styles applied when level is not 0 */
-.saltNavigationItem-wrapper.saltNavigationItem-nested {
-  padding-left: calc(var(--salt-size-icon) + var(--salt-spacing-400));
-}
-
-/* Styles applied to expand button */
-.saltNavigationItem-wrapper.saltNavigationItem-expandButton {
-  --saltButton-background-hover: none;
-  --saltButton-background-active: none;
-  --saltButton-textTransform: none;
-  --saltButton-width: 100%;
-  --saltButton-letterSpacing: none;
-
-  gap: var(--navigationItem-gap);
-  /* Required to match link's outline offset */
-  outline-offset: var(--salt-size-border);
-}
-
-/* Styles applied to expand icon */
-.saltNavigationItem-wrapper .saltNavigationItem-expandIcon {
-  --saltIcon-color: var(--navigationItem-fill);
-
-  top: 0;
-}
-
 /* Styles applied to NavigationItem when focus is visible */
 .saltNavigationItem-wrapper:focus-visible {
   outline: var(--salt-focused-outline);
-}
-
-/* Styles applied to NavigationItem when when orientation = "horizontal" and focus is visible */
-.saltNavigationItem-horizontal:focus-visible {
-  border-right: var(--navigationItem-gap) solid transparent;
-  border-left: var(--navigationItem-gap) solid transparent;
-  margin: 0 calc(var(--navigationItem-gap) * -1);
 }
 
 /* Styles applied to NavigationItem for non-keyboard focus */
@@ -130,7 +72,7 @@
 .saltNavigationItem-wrapper::after {
   content: "";
   position: absolute;
-  top: 0;
+  top: var(--salt-spacing-25);
   left: 0;
   display: block;
 }
@@ -138,15 +80,13 @@
 /* Styles applied to activation line when orientation = "horizontal" */
 .saltNavigationItem-horizontal::after {
   width: 100%;
-  height: var(--navigationItem-bar-size);
-  top: var(--navigationItem-bar-inset);
+  height: var(--salt-size-indicator);
 }
 
 /* Styles applied to activation line when orientation = "vertical" */
 .saltNavigationItem-vertical::after {
-  width: var(--navigationItem-bar-size);
-  left: var(--navigationItem-bar-inset);
-  top: var(--navigationItem-bar-inset);
+  width: var(--salt-size-indicator);
+  left: var(--salt-spacing-25);
   height: calc(100% - var(--salt-spacing-50));
 }
 
@@ -159,10 +99,10 @@
 }
 
 /* Styles applied to activation line when item is active */
-.saltNavigationItem-wrapper.saltNavigationItem-active::after,
-.saltNavigationItem-wrapper.saltNavigationItem-active:hover::after,
-.saltNavigationItem-wrapper.saltNavigationItem-active:focus::after {
-  background: var(--navigationItem-indicator-background);
+.saltNavigationItem-active::after,
+.saltNavigationItem-active:hover::after,
+.saltNavigationItem-active:focus::after {
+  background: var(--salt-navigable-indicator-active);
   /* Hover on animation */
   transition: all var(--salt-duration-perceptible) ease-in-out;
 }
