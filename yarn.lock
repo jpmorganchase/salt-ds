@@ -6266,7 +6266,7 @@ __metadata:
     storybook: "npm:7.4.6"
     stylelint: "npm:^16.0.0"
     typescript: "npm:4.6.4"
-    vite: "npm:^4.4.9"
+    vite: "npm:^4.5.2"
     vite-plugin-istanbul: "npm:^5.0.0"
     vite-tsconfig-paths: "npm:^4.2.0"
     vitest: "npm:^1.0.0"
@@ -31244,9 +31244,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^4.4.9":
-  version: 4.5.1
-  resolution: "vite@npm:4.5.1"
+"vite@npm:^4.5.2":
+  version: 4.5.2
+  resolution: "vite@npm:4.5.2"
   dependencies:
     esbuild: "npm:^0.18.10"
     fsevents: "npm:~2.3.2"
@@ -31280,7 +31280,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 2ea9c030a5718ca0adaaa0ecc54402a725cff59131cf80bc84d0237f59c98168803ee59d23e697b98b1184be3af6c6edc2e81517f769c62159f11531b3341a4e
+  checksum: 3feb39f8da038fb2b1ad074c19a9579c263c1d7a872c5c6e0269b82d67805bb8c93cf9fc393e852807483ae9a918b1ac2861c72f73ee92fb3935ea68333a2cf7
   languageName: node
   linkType: hard
 
