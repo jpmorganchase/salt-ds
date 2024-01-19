@@ -12,9 +12,7 @@ export const Vertical = (): ReactElement => {
       href="#"
       active={active}
       orientation="vertical"
-      onClick={(event) => {
-        // Prevent default to avoid navigation
-        event.preventDefault();
+      onClick={() => {
         handleActiveToggle();
       }}
     >

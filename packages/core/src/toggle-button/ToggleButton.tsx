@@ -1,9 +1,9 @@
 import {
-  ComponentProps,
   forwardRef,
   useRef,
   MouseEvent,
   FocusEvent,
+  ComponentPropsWithoutRef,
 } from "react";
 import { clsx } from "clsx";
 import { useToggleButtonGroup } from "../toggle-button-group";
@@ -13,7 +13,7 @@ import { makePrefixer, useControlled, useForkRef } from "../utils";
 
 import toggleButtonCss from "./ToggleButton.css";
 
-export interface ToggleButtonProps extends ComponentProps<"button"> {
+export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
   selected?: boolean;
   onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   value: string | ReadonlyArray<string> | number | undefined;
