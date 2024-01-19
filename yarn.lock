@@ -4121,7 +4121,7 @@ __metadata:
 
 "@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch":
   version: 0.1.0-beta.60
-  resolution: "@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch::version=0.1.0-beta.60&hash=040fa4"
+  resolution: "@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch::version=0.1.0-beta.60&hash=f6d4bb"
   dependencies:
     "@jpmorganchase/mosaic-store": "npm:^0.1.0-beta.60"
     "@jpmorganchase/mosaic-theme": "npm:^0.1.0-beta.60"
@@ -4146,7 +4146,7 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 0b4a83fa86614fd299afae2ba0182e127bdbe2c5b1ed6bb70be9a6fd9d4fe4237e3cf615d24db18b3fe6eeddc1747e4b44917151685ec76beb879cc25ac4ac5d
+  checksum: 52406b9ec1df76373d3b48120da74b07be75694f9f19cbf534521b06f7c19ce24cfbac3a0fe9e3b14d88339080630a425e2b6a1e7bb861a9980a066d222fbf47
   languageName: node
   linkType: hard
 
