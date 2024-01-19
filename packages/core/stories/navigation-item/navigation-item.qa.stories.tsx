@@ -1,11 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { NavigationItem } from "@salt-ds/lab";
+import { FlexLayout, NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
-import { FlexLayout } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Navigation Item/Navigation Item QA",
+  title: "Core/Navigation Item/Navigation Item QA",
   component: NavigationItem,
 } as Meta;
 

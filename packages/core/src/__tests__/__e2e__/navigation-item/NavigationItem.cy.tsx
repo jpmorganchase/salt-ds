@@ -1,4 +1,4 @@
-import { NavigationItem } from "@salt-ds/lab";
+import { NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 describe("GIVEN a NavItem", () => {
