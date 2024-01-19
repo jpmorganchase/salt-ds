@@ -521,3 +521,58 @@ export const CustomFiltering: StoryFn<typeof ComboBoxNext> = (args) => {
     </ComboBoxNext>
   );
 };
+
+interface Person {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+const people: Person[] = [
+  { id: 1, firstName: "John", lastName: "Doe" },
+  { id: 2, firstName: "Jane", lastName: "Doe" },
+  { id: 3, firstName: "John", lastName: "Smith" },
+  { id: 4, firstName: "Jane", lastName: "Smith" },
+];
+
+export const ObjectValue: StoryFn<typeof ComboBoxNext> = (args) => {
+  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+  const [selected, setSelected] = useState<Person[]>([]);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: Person[]
+  ) => {
+    setSelected(newSelected);
+
+    setValue("");
+  };
+
+  const options = people.filter(
+    (person) =>
+      person.firstName.toLowerCase().includes(value.trim().toLowerCase()) ||
+      person.lastName.toLowerCase().includes(value.trim().toLowerCase())
+  );
+
+  console.log(selected, value);
+
+  return (
+    <ComboBoxNext
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      selected={selected}
+      multiselect
+    >
+      {options.map((person) => (
+        <Option value={person} key={person.id}>
+          {person.firstName} {person.lastName}
+        </Option>
+      ))}
+    </ComboBoxNext>
+  );
+};

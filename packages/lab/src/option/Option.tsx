@@ -26,7 +26,7 @@ export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The value of the option.
    */
-  value: string;
+  value: unknown;
   /**
    * The text value of the option. If not provided, the text value will be inferred from the children.
    */

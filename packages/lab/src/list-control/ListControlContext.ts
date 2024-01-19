@@ -1,10 +1,12 @@
 import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
 
+type Item = any;
+
 export interface OptionValue {
   id: string;
   disabled: boolean;
-  value: string;
+  value: Item;
   text: string;
 }
 
@@ -12,7 +14,7 @@ export interface ListControlContextValue {
   openState: boolean;
   setOpen: (event: SyntheticEvent, newOpen: boolean) => void;
   register: (optionValue: OptionValue, element: HTMLElement) => () => void;
-  selectedState: string[];
+  selectedState: Item[];
   select: (event: SyntheticEvent, option: OptionValue) => void;
   activeState?: OptionValue;
   setActive: (option: OptionValue) => void;

@@ -8,6 +8,8 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { OptionValue } from "./ListControlContext";
 
+type Item = any;
+
 export interface ListControlProps {
   /**
    * If true, the list will be open by default.
@@ -24,15 +26,15 @@ export interface ListControlProps {
   /**
    * The default selected options. If this is provided `defaultValue` should be provided as well.
    */
-  defaultSelected?: string[];
+  defaultSelected?: Item[];
   /**
    * The selected options. The component will be controlled if this prop is provided.
    */
-  selected?: string[];
+  selected?: Item[];
   /**
    * Callback fired when the selected options change.
    */
-  onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
+  onSelectionChange?: (event: SyntheticEvent, newSelected: Item[]) => void;
   /**
    * The default value.
    */
