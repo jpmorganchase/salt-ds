@@ -56,7 +56,6 @@ export * from "./metric";
 export * from "./navigation-item";
 export * from "./option";
 export * from "./overlay";
-export * from "./pagination";
 export * from "./parent-child-item";
 export * from "./parent-child-layout";
 export * from "./portal";

@@ -8,7 +8,8 @@ import {
   useRef,
 } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, useAriaAnnouncer, useControlled } from "@salt-ds/core";
+import { useAriaAnnouncer } from "../aria-announcer";
+import { makePrefixer, useControlled } from "../utils";
 import { PaginationContext, paginationContext } from "./PaginationContext";
 
 import { useWindow } from "@salt-ds/window";
