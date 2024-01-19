@@ -44,15 +44,49 @@ const generateComponentsFolder = (basePath) => {
   }
 };
 
+/** Generate all country SVG as background image, in a single CSS */
+const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
+  // options is optional
+  const options = {};
+
+  const globPath = path
+    .join(basePath, `./SVG/+(${fileArg})`)
+    .replace(/\\/g, "/");
+
+  const fileNames = glob.sync(globPath, options);
+
+  const countryCss = fileNames
+    .map((fileName) => {
+      const svgString = fs.readFileSync(fileName, "utf-8").trim();
+
+      const filenameWithoutExtension = path.parse(fileName).name;
+
+      const firstSpaceIndex = filenameWithoutExtension.indexOf(" ");
+
+      const countryCode = filenameWithoutExtension
+        .slice(0, firstSpaceIndex)
+        .toUpperCase();
+
+      return `.saltCountry-${countryCode}{background-image:url("data:image/svg+xml,${encodeURIComponent(
+        svgString
+      )}")}`;
+    })
+    .join("\n");
+
+  fs.writeFileSync(cssOutputPath, countryCss, {
+    encoding: "utf8",
+  });
+};
+
 // Generate all the country symbol components
 const generateCountrySymbolComponents = ({
   templatePath,
   basePath,
   componentsPath,
+  fileArg,
 }) => {
   const countryMetaMap = {};
 
-  const fileArg = process.argv.splice(2).join("|");
   // options is optional
   const options = {};
 
@@ -63,7 +97,7 @@ const generateCountrySymbolComponents = ({
 
   const fileNames = glob.sync(globPath, options);
 
-  fileNames.map((fileName) => {
+  fileNames.forEach((fileName) => {
     const svgString = fs.readFileSync(fileName, "utf-8");
 
     const filenameWithoutExtension = path.parse(fileName).name;
@@ -355,12 +389,12 @@ const generateCountryToComponentMap = ({ countryMetaMap, basePath }) => {
 
   const importsStatements =
     "import {\n" +
-    allCountries.map((code) => code.replace("-", "_")).join(",\n") +
+    allCountries.map(countryCodeToComponentName).join(",\n") +
     `\n} from "./components";\n`;
   const exportStatements =
     "export const countryToComponentMap = {\n" +
     allCountries
-      .map((code) => `"${code}": ${code.replace("-", "_")}`)
+      .map((code) => `"${code}": ${countryCodeToComponentName(code)}`)
       .join(",\n") +
     "\n};\n";
 
@@ -387,12 +421,20 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
 const componentsPath = path.join(basePath, "./components/");
 const templatePath = path.join(__dirname, "./templateCountrySymbol.mustache");
+const cssOutputPath = path.join(basePath, "saltCountries.css");
+const fileArg = process.argv.splice(2).join("|");
 
 generateComponentsFolder(basePath);
 const countryMetaMap = generateCountrySymbolComponents({
   templatePath,
   componentsPath,
   basePath,
+  fileArg,
+});
+generateCssAsBg({
+  basePath,
+  cssOutputPath,
+  fileArg,
 });
 generateCountryMetaMap({ countryMetaMap, basePath });
 generateLazyMap({ countryMetaMap, basePath });

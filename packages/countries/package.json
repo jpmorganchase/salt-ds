@@ -13,6 +13,9 @@
     "type": "package"
   },
   "sideEffects": false,
+  "files": [
+    "saltCountries.css"
+  ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components"
