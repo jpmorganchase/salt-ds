@@ -6,7 +6,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Input, InputProps, makePrefixer } from "@salt-ds/core";
+import { Input, InputProps } from "../input";
+import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
 import { useWindow } from "@salt-ds/window";

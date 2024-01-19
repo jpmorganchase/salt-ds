@@ -1,5 +1,11 @@
 # @salt-ds/countries
 
+## 1.1.4
+
+### Patch Changes
+
+- f0d5b359: Update country symbols to use useid to generate ids
+
 ## 1.1.3
 
 ### Patch Changes

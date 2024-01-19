@@ -1,6 +1,7 @@
 import { MouseEventHandler, forwardRef } from "react";
 import { clsx } from "clsx";
-import { Button, makePrefixer } from "@salt-ds/core";
+import { Button } from "../button";
+import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
 import { useWindow } from "@salt-ds/window";

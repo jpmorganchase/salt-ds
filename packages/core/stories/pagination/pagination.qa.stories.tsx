@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import {
+  FlexLayout,
   GoToInput,
   CompactInput,
   CompactPaginator,
@@ -7,14 +8,13 @@ import {
   Paginator,
   PaginationProps,
   PaginatorProps,
-} from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+} from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Pagination/QA",
+  title: "Core/Pagination/Pagination QA",
   component: Pagination,
-} as Meta<typeof Pagination>;
+} as Meta;
 
 interface StoryProps {
   goTo?: boolean;

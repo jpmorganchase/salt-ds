@@ -7,7 +7,9 @@ import {
   Ref,
   useState,
 } from "react";
-import { FormField, FormFieldLabel, Input, makePrefixer } from "@salt-ds/core";
+import { FormField, FormFieldLabel } from "../form-field";
+import { Input } from "../input";
+import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
 import { useWindow } from "@salt-ds/window";

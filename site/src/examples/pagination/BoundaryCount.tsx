@@ -1,6 +1,5 @@
 import { ChangeEvent, ReactElement, useState } from "react";
-import { StackLayout } from "@salt-ds/core";
-import { Pagination, Paginator } from "@salt-ds/lab";
+import { Pagination, Paginator, StackLayout } from "@salt-ds/core";
 
 export const BoundaryCount = (): ReactElement => {
   const [boundaryCount, setBoundaryCount] = useState(1);
