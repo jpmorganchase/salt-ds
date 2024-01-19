@@ -2,10 +2,7 @@ import { ReactElement, useState } from "react";
 import {
   Button,
   Card,
-  Display1,
-  Display2,
   Display3,
-  FlowLayout,
   H3,
   Scrim,
   StackLayout,
@@ -25,7 +22,10 @@ export const FillContainer = (): ReactElement => {
 
   return (
     <StackLayout>
-      <Card style={{ position: "relative" }} variant="secondary">
+      <Card
+        style={{ position: "relative", padding: "var(--salt-spacing-200)" }}
+        variant="secondary"
+      >
         <Scrim open={open} />
         <StackLayout gap={1}>
           <H3>Emails</H3>

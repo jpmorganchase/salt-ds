@@ -23,7 +23,10 @@ export const WithChild = (): ReactElement => {
 
   return (
     <StackLayout>
-      <Card style={{ position: "relative" }} variant="secondary">
+      <Card
+        style={{ position: "relative", padding: "var(--salt-spacing-200)" }}
+        variant="secondary"
+      >
         <Scrim open={open}>
           <Spinner size="medium" />
         </Scrim>
