@@ -1,7 +1,7 @@
-diff --git a/dist/chunk-ABJ2QGLD.js b/dist/chunk-ABJ2QGLD.js
-index 4154d3adbf29d771eeaf731a539bd1fdb2bcd4f3..d9a779da869932f91276bc5af09b812fb8e5ae80 100644
---- a/dist/chunk-ABJ2QGLD.js
-+++ b/dist/chunk-ABJ2QGLD.js
+diff --git a/dist/chunk-W3HASNBP.js b/dist/chunk-W3HASNBP.js
+index 6578c9c1abe3ccb0dbfbc96e03ad85ca360289e2..a8f4749b691f7e0e390d790533f8cf6078560329 100644
+--- a/dist/chunk-W3HASNBP.js
++++ b/dist/chunk-W3HASNBP.js
 @@ -1 +1 @@
--import{b as l,c as t}from"./chunk-I3NDLK5N.js";import{a as o}from"./chunk-HF7NXOFI.js";import i from"react";import{Pill as n}from"@salt-ds/lab";import c from"clsx";var h=({className:s})=>{let{filters:e=[]}=l(),a=t(),p=r=>{a({type:"removeFilter",value:e[r]})};return i.createElement("div",{className:c(o.root,s)},e.map((r,m)=>i.createElement(n,{"data-mosaic-testid":"pill",key:`pill-${r}`,label:r,onDelete:()=>p(m),variant:"closable"})))};export{h as a};
-+import{b as l,c as t}from"./chunk-I3NDLK5N.js";import{a as o}from"./chunk-HF7NXOFI.js";import i from"react";import c from"clsx";var h=({className:s})=>{let{filters:e=[]}=l(),a=t(),p=r=>{a({type:"removeFilter",value:e[r]})};return i.createElement("div",{className:c(o.root,s)},e.map((r,m)=>i.createElement("div",{"data-mosaic-testid":"pill",key:`pill-${r}`})))};export{h as a};
+-import{a}from"./chunk-3EUVTL6D.js";import o from"react";import g from"clsx";import{Paginator as e,Pagination as s}from"@salt-ds/lab";var f=({className:n,pageCount:i,page:t,onPageChange:r})=>o.createElement("div",{className:g(a.root,n)},o.createElement(s,{count:i,onPageChange:r,page:t},o.createElement(e,{className:a.paginator})));export{f as a};
++import{a}from"./chunk-3EUVTL6D.js";import o from"react";import g from"clsx";import{Paginator as e,Pagination as s}from"@salt-ds/core";var f=({className:n,pageCount:i,page:t,onPageChange:r})=>o.createElement("div",{className:g(a.root,n)},o.createElement(s,{count:i,onPageChange:r,page:t},o.createElement(e,{className:a.paginator})));export{f as a};
