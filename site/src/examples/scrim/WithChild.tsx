@@ -13,14 +13,12 @@ import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 export const WithChild = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const [buttonText, setButtonText] = useState("Show scrim");
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleClick = () => {
+    setOpen(!open);
+    setButtonText(!open ? "Hide scrim" : "Show scrim");
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <StackLayout>
       <Card
@@ -100,24 +98,13 @@ export const WithChild = (): ReactElement => {
           </StackLayout>
         </StackLayout>
       </Card>
-      {!open && (
-        <Button
-          style={{ width: "fit-content", alignSelf: "center" }}
-          onClick={handleOpen}
-          variant="cta"
-        >
-          Show scrim
-        </Button>
-      )}
-      {open && (
-        <Button
-          style={{ width: "fit-content", alignSelf: "center" }}
-          onClick={handleClose}
-          variant="cta"
-        >
-          Hide scrim
-        </Button>
-      )}
+      <Button
+        style={{ width: "fit-content", alignSelf: "center" }}
+        onClick={handleClick}
+        variant="cta"
+      >
+        {buttonText}
+      </Button>
     </StackLayout>
   );
 };

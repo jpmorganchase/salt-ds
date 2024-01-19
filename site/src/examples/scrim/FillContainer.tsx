@@ -12,12 +12,11 @@ import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 export const FillContainer = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const [buttonText, setButtonText] = useState("Show scrim");
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
+  const handleClick = () => {
+    setOpen(!open);
+    setButtonText(!open ? "Hide scrim" : "Show scrim");
   };
 
   return (
@@ -97,24 +96,13 @@ export const FillContainer = (): ReactElement => {
           </StackLayout>
         </StackLayout>
       </Card>
-      {!open && (
-        <Button
-          style={{ width: "fit-content", alignSelf: "center" }}
-          onClick={handleOpen}
-          variant="cta"
-        >
-          Show scrim
-        </Button>
-      )}
-      {open && (
-        <Button
-          style={{ width: "fit-content", alignSelf: "center" }}
-          onClick={handleClose}
-          variant="cta"
-        >
-          Hide scrim
-        </Button>
-      )}
+      <Button
+        style={{ width: "fit-content", alignSelf: "center" }}
+        onClick={handleClick}
+        variant="cta"
+      >
+        {buttonText}
+      </Button>
     </StackLayout>
   );
 };
