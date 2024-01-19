@@ -6,10 +6,11 @@ import {
   StackLayout,
   BorderLayout,
   BorderItem,
+  NavigationItem,
   useResponsiveProp,
   Text,
 } from "@salt-ds/core";
-import { Drawer, NavigationItem } from "@salt-ds/lab";
+import { Drawer } from "@salt-ds/lab";
 import {
   SymphonyIcon,
   StackoverflowIcon,
@@ -133,7 +134,7 @@ export const AppHeader = () => {
                       <NavigationItem
                         orientation="vertical"
                         href="#"
-                        onClick={(event) => {
+                        onClick={() => {
                           setDrawerOpen(false);
                         }}
                       >
