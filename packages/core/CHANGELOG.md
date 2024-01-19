@@ -1,5 +1,24 @@
 # @salt-ds/core
 
+## 1.14.0
+
+### Minor Changes
+
+- 91d22148: Added `Pill` to Core
+
+  `PillNext` is a small visual element that can contain descriptive text and an icon. You can use pills to label, tag or categorize content. With pills, users can trigger actions, make selections or filter results.
+
+  ```tsx
+  <Pill onClick={handleClick}>Clickable Pill</Pill>
+  ```
+
+### Patch Changes
+
+- 5f449172: Fixed incorrect aria attributes on `RadioButtonGroup` and `CheckboxGroup`, which caused Screen Readers to incorrectly report the group's label as the radio button or checkbox's accessible name.
+- d9ce0737: Replaced incorrect usage of nullish operators.
+- 32dbea7e: Update `ToggleButton` props to use `ComponentPropsWithoutRef`.
+- 48f6c20c: Fixed Tooltip not honoring `disabled` prop when used in Form Field
+
 ## 1.13.4
 
 ### Patch Changes

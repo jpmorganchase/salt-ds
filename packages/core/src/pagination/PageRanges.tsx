@@ -1,5 +1,5 @@
 import { ReactElement, useCallback } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 import { PageButton } from "./PageButton";
 import { PageRange, usePagination } from "./usePagination";
 import { usePaginationContext } from "./usePaginationContext";

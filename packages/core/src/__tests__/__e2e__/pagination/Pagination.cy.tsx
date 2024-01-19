@@ -4,7 +4,7 @@ import {
   GoToInput,
   CompactPaginator,
   CompactInput,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 describe("GIVEN an Pagination", () => {
   describe("WHEN Default variant", () => {

@@ -81,11 +81,16 @@ A vertical navigation group provides a simple, single-level list of links that u
 
 Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, making it easy to explore the content hierarchy.
 
-When the user collapses a vertical nested group, and there is an active nested item within it, the parent item will obtain a blur-active state. The indicator will stay on the parent item in the blur-active state. This tells the user which item is currently selected.
-
 #### Best practices
 
 If a navigation item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
+
+</LivePreview>
+
+  <LivePreview componentName="navigation-item" exampleName="BlurActive">
+    ### Blur-active
+
+When the user collapses a vertical nested group, and there is an active nested item within it, the parent item should be configured with `blurActive={true}`. The indicator will stay on the parent item in the blur-active state. This tells the user that the active item is within this nested structure.
 
 </LivePreview>
 

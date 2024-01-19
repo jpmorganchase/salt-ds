@@ -1,6 +1,8 @@
 import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
 import { clsx } from "clsx";
-import { Button, Text, makePrefixer } from "@salt-ds/core";
+import { Button } from "../button";
+import { Text } from "../text";
+import { makePrefixer } from "../utils";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { PageButton } from "./PageButton";
 import { usePaginationContext } from "./usePaginationContext";
