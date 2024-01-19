@@ -19,9 +19,7 @@ export const WithBadge = (): ReactElement => {
     <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleHorizontalActiveToggle();
         }}
         href="#"
@@ -32,9 +30,7 @@ export const WithBadge = (): ReactElement => {
 
       <NavigationItem
         active={verticalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleVerticalActiveToggle();
         }}
         href="#"

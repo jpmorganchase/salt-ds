@@ -1,8 +1,7 @@
 import { StoryFn } from "@storybook/react";
 import { SyntheticEvent, useMemo, useState } from "react";
-import { FlexLayout } from "@salt-ds/core";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
-import { Pagination, Paginator } from "@salt-ds/lab";
+import { FlexLayout, Pagination, Paginator } from "@salt-ds/core";
 import { createDummyInvestors, investorKeyGetter } from "./dummyData";
 import "./grid.stories.css";
 

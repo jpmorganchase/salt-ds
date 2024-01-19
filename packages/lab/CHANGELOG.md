@@ -1,5 +1,59 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.27
+
+### Minor Changes
+
+- ebe9feca: - Focus trap behavior is no longer managed by Scrim. Props related to this behavior such as `autoFocusRef`, `disableAutoFocus`, `disableFocusTrap`, `disableReturnFocus`, `fallbackFocusRef`, `returnFocusOptions` an `tabEnabledSelectors`, have been removed.
+  - Removed `onBackDropClick` prop. Use `onClick` instead.
+  - Removed `closeWithEscape` and `onClose` props. You can handle this outside of the scrim.
+  - Removed `enableContainerMode` and `containerRef` props and added `fixed` prop. The default behavior is now for the scrim to fill its container, and you can use the `fixed` prop to fill the viewport.
+  - Removed `zIndex` prop. You can change the `zIndex` using CSS.
+  - Removed `ScrimContext`.
+- 18576480: Refactor Combo Box Next and Dropdown Next to use compositional APIs.
+
+  ## Dropdown Next
+
+  ```tsx
+  <DropdownNext>
+    {colors.map((color) => (
+      <Option value={color} key={color}>
+        {color}
+      </Option>
+    ))}
+  </DropdownNext>
+  ```
+
+  ## Combo Box Next
+
+  ```tsx
+  <ComboBoxNext>
+    {colors.map((color) => (
+      <Option value={color} key={color}>
+        {color}
+      </Option>
+    ))}
+  </ComboBoxNext>
+  ```
+
+- 91d22148: Removed `pillNext` from Lab and promoted it to Core.
+
+### Patch Changes
+
+- d9ce0737: Replaced incorrect usage of nullish operators.
+- bbc4ccb1: Added TokenizedInputNext to lab.
+
+  Tokenized input provides an input field for text that’s converted into a pill within the field, or tokenized, when the user enters a delimiting character.
+
+  ```tsx
+  <TokenizedInputNext />
+  ```
+
+- e668b2d6: Navigation Item
+
+  - Updated the logic to make Navigation Item act like a button when `href` isn't passed.
+  - Fixed styles.
+
 ## 1.0.0-alpha.26
 
 ### Minor Changes

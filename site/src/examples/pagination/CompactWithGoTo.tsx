@@ -1,6 +1,10 @@
 import { ReactElement } from "react";
-import { Pagination, CompactPaginator, GoToInput } from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+import {
+  FlexLayout,
+  Pagination,
+  CompactPaginator,
+  GoToInput,
+} from "@salt-ds/core";
 
 export const CompactWithGoTo = (): ReactElement => (
   <Pagination count={20}>
