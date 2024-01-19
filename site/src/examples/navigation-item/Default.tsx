@@ -11,9 +11,7 @@ export const Default = (): ReactElement => {
     <NavigationItem
       href="#"
       active={active}
-      onClick={(event) => {
-        // Prevent default to avoid navigation
-        event.preventDefault();
+      onClick={() => {
         handleActiveToggle();
       }}
     >

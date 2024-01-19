@@ -20,9 +20,7 @@ export const WithIcon = (): ReactElement => {
     <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleHorizontalActiveToggle();
         }}
         href="#"
@@ -33,9 +31,7 @@ export const WithIcon = (): ReactElement => {
 
       <NavigationItem
         active={verticalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleVerticalActiveToggle();
         }}
         href="#"
