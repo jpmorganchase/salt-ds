@@ -57,7 +57,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
 
     variant === "compact" &&
       isStacked &&
-      console.log("componentSize", componentSize.width, containerRef.current);
+      console.debug("componentSize", componentSize.width, containerRef.current);
 
     const ref = useForkRef(externalRef, containerRef);
 
