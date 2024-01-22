@@ -387,8 +387,10 @@
 
   .ag-ltr {
     .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
-      border: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
-      outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+      border: var(--salt-size-border) var(--salt-container-borderStyle)
+        transparent;
+      outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+        var(--salt-focused-outlineColor);
       outline-offset: -2px;
     }
   }
