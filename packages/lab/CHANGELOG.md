@@ -1,5 +1,13 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.28
+
+### Minor Changes
+
+- 69549229: Removed `Scrim` from Lab and moved it to Core.
+- 907397e2: Removed NavigationItem from lab and promoted it to core
+- b2dd61d7: Removed Pagination from lab
+
 ## 1.0.0-alpha.27
 
 ### Minor Changes
