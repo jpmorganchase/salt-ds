@@ -78,7 +78,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   const ALL_CSS = `[class*=' saltCountry-'],[class^='saltCountry-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
 
   const formattedResult = prettier.format(
-    ALL_CSS.concat(CSS_GENERATED_WARNING_COMMENT, countryCss),
+    CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
     { ...PRETTIER_SETTINGS, parser: "css" }
   );
 
