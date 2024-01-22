@@ -1,75 +1,34 @@
-import { Card, SaltProvider, Scrim, Spinner } from "@salt-ds/core";
+import { Button, Card, SaltProvider, Scrim } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
-import { DetailedHTMLProps } from "react";
 
 export default {
   title: "Core/Scrim/Scrim QA",
   component: Scrim,
 } as Meta<typeof Scrim>;
 
-const AllModes = ({
-  children,
-}: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => (
+export const WithChildren: StoryFn<typeof Scrim> = () => (
   <>
-    <SaltProvider mode="light">{children}</SaltProvider>
-    <SaltProvider mode="dark">{children}</SaltProvider>
+    <SaltProvider mode="light">
+      <Card style={{ position: "relative", width: "512px" }}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+        <Scrim open>
+          <Button>Close scrim</Button>
+        </Scrim>
+      </Card>
+    </SaltProvider>
+    <SaltProvider mode="dark">
+      <Card style={{ position: "relative", width: "512px" }}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+        <Scrim open>
+          <Button>Close scrim</Button>
+        </Scrim>
+      </Card>
+    </SaltProvider>
   </>
 );
 
-export const InContainer: StoryFn<typeof Scrim> = () => (
-  <AllModes>
-    <Card style={{ position: "relative", width: "512px" }}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-      <Scrim open />
-    </Card>
-  </AllModes>
-);
-
-InContainer.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const WithChildren: StoryFn<typeof Scrim> = () => (
-  <AllModes>
-    <Card style={{ position: "relative", width: "512px" }}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-      <Scrim open>
-        <Spinner size="medium" />
-      </Scrim>
-    </Card>
-  </AllModes>
-);
-
 WithChildren.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const FixedLight: StoryFn<typeof Scrim> = () => (
-  <SaltProvider mode="light">
-    <Card style={{ position: "relative", width: "512px" }}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-      <Scrim open fixed />
-    </Card>
-  </SaltProvider>
-);
-
-FixedLight.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const FixedDark: StoryFn<typeof Scrim> = () => (
-  <SaltProvider mode="dark">
-    <Card style={{ position: "relative", width: "512px" }}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-      <Scrim open fixed />
-    </Card>
-  </SaltProvider>
-);
-
-FixedDark.parameters = {
   chromatic: { disableSnapshot: false },
 };
