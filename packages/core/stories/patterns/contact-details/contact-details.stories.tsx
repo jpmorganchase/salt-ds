@@ -31,7 +31,7 @@ export default {
 
 const basicContact = {
   primary: "Jane Doe",
-  secondary: "ABC Bank",
+  secondary: "Example Bank",
   tertiary: "SPN 2188538",
   metadata: [
     {
@@ -45,13 +45,13 @@ const basicContact = {
       icon: <LocationIcon aria-hidden />,
     },
     {
-      label: "Office",
-      value: "+44 2077 431102",
+      label: "Phone",
+      value: "+1 (212) 555-0100",
       icon: <CallIcon aria-hidden />,
     },
     {
       label: "Email",
-      value: "email@company.com",
+      value: "jane.doe@example.com",
       icon: <MessageIcon aria-hidden />,
     },
   ],
@@ -331,22 +331,22 @@ const contactList = [
     primary: "Jane Doe",
     sid: "O12",
     avatarImage: persona,
-    number: "+44 2023 102112",
-    email: "jane@company.com",
+    number: "+1 (212) 555-0100",
+    email: "jane.doe@example.com",
   },
   {
     primary: "Logan Rider",
     sid: "U34",
     avatarImage: persona2,
-    number: "+44 2734 673890",
-    email: "logan@company.com",
+    number: "+1 (212) 555-0101",
+    email: "logan.rider@company.com",
   },
   {
     primary: "Paul Hill",
     sid: "L56",
     avatarImage: persona3,
-    number: "+44 2077 431102",
-    email: "paul@company.com",
+    number: "+1 (212) 555-0102",
+    email: "paul.hill@company.com",
   },
 ];
 
@@ -386,7 +386,6 @@ export const List = () => {
           <StackLayout
             direction={"row"}
             gap={1}
-            align="center"
             style={{
               paddingLeft: "var(--salt-spacing-100)",
               paddingRight: "var(--salt-spacing-100)",
@@ -405,11 +404,11 @@ export const List = () => {
                 <strong> {contact.primary} </strong>
               </Text>
               <FlowLayout gap={3}>
-                <FlexLayout align="center" justify="center" gap={1}>
+                <FlexLayout gap={1} align="center">
                   <CallIcon />
                   <Text>{contact.number}</Text>
                 </FlexLayout>
-                <FlexLayout align="center" justify="center" gap={1}>
+                <FlexLayout gap={1} align="center">
                   <MessageIcon />
                   <Text>{contact.email}</Text>
                 </FlexLayout>
