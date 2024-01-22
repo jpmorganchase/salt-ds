@@ -75,8 +75,10 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     })
     .join("\n");
 
+  const ALL_CSS = `[class*=' saltCountry-'],[class^='saltCountry-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
+
   const formattedResult = prettier.format(
-    CSS_GENERATED_WARNING_COMMENT.concat(countryCss),
+    ALL_CSS.concat(CSS_GENERATED_WARNING_COMMENT, countryCss),
     { ...PRETTIER_SETTINGS, parser: "css" }
   );
 
@@ -386,43 +388,6 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
   );
 };
 
-/** Generate a map from country code to component */
-const generateCountryToComponentMap = ({ countryMetaMap, basePath }) => {
-  console.log("Generating countryToComponentMap file");
-
-  const outputFile = path.join(basePath, "countryComponentMap.ts");
-
-  const allCountries = Object.keys(countryMetaMap);
-
-  const importsStatements =
-    "import {\n" +
-    allCountries.map(countryCodeToComponentName).join(",\n") +
-    `\n} from "./components";\n`;
-  const exportStatements =
-    "export const countryToComponentMap = {\n" +
-    allCountries
-      .map((code) => `"${code}": ${countryCodeToComponentName(code)}`)
-      .join(",\n") +
-    "\n};\n";
-
-  const joinedText = [
-    GENERATED_WARNING_COMMENT,
-    importsStatements,
-    exportStatements,
-  ].join("\n");
-
-  const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
-
-  fs.writeFile(
-    outputFile,
-    formattedResult,
-    { encoding: "utf8" },
-    function (err) {
-      if (err) return console.log(err);
-    }
-  );
-};
-
 // Run the script
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
@@ -445,5 +410,4 @@ generateCssAsBg({
 });
 generateCountryMetaMap({ countryMetaMap, basePath });
 generateLazyMap({ countryMetaMap, basePath });
-generateCountryToComponentMap({ countryMetaMap, basePath });
 generateIndex({ countryMetaMap, componentsPath });
