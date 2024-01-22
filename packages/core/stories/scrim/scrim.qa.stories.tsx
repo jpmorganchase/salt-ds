@@ -30,20 +30,6 @@ InContainer.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const Fixed: StoryFn<typeof Scrim> = () => (
-  <AllModes>
-    <Card style={{ position: "relative", width: "512px" }}>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
-      <Scrim open fixed />
-    </Card>
-  </AllModes>
-);
-
-Fixed.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
 export const WithChildren: StoryFn<typeof Scrim> = () => (
   <AllModes>
     <Card style={{ position: "relative", width: "512px" }}>
@@ -57,5 +43,33 @@ export const WithChildren: StoryFn<typeof Scrim> = () => (
 );
 
 WithChildren.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const FixedLight: StoryFn<typeof Scrim> = () => (
+  <SaltProvider mode="light">
+    <Card style={{ position: "relative", width: "512px" }}>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+      <Scrim open fixed />
+    </Card>
+  </SaltProvider>
+);
+
+FixedLight.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const FixedDark: StoryFn<typeof Scrim> = () => (
+  <SaltProvider mode="dark">
+    <Card style={{ position: "relative", width: "512px" }}>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+      <Scrim open fixed />
+    </Card>
+  </SaltProvider>
+);
+
+FixedDark.parameters = {
   chromatic: { disableSnapshot: false },
 };
