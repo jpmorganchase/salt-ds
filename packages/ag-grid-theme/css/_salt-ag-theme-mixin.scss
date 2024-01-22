@@ -11,18 +11,6 @@
     border: none;
   }
 
-  .ag-ltr,
-  .ag-rtl {
-    .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected),
-    .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-    .ag-cell-range-single-cell,
-    .ag-cell-range-single-cell.ag-cell-range-handle {
-      outline: var(--agGrid-focused-borderWidth)
-        var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor);
-      outline-offset: -2px;
-      border: none;
-    }
-  }
   // Because we are using a different border thickness on focus than default
   // we have to adjust height on various elements either using the line-height or height
   // properties.
@@ -388,13 +376,26 @@
   .editable-numeric-cell,
   .ag-cell.editable-cell {
     border: var(--salt-size-border) var(--salt-container-borderStyle)
-      var(--agGrid-cell-borderColor-editable);
+      var(--salt-editable-borderColor);
   }
 
   .editable-numeric-cell.ag-cell-focus:focus,
   .ag-cell.editable-cell.ag-cell-focus:focus {
     overflow: visible;
     clip-path: inset(0, 0);
+  }
+
+  .ag-ltr {
+    .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+      border: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
+      outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+      outline-offset: -2px;
+    }
+  }
+
+  .ag-ltr .ag-cell-focus.ag-cell-inline-editing:focus-within {
+    border-color: transparent !important;
+    background-color: white;
   }
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
@@ -407,7 +408,7 @@
     left: 0;
     border-top: 0 solid transparent;
     border-left: var(--agGrid-editableCell-cornerTag-size) solid
-      var(--agGrid-focused-borderColor);
+      var(--salt-editable-borderColor-hover);
     border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
     z-index: 2;
   }
@@ -416,19 +417,13 @@
     padding: 0;
   }
 
-  .ag-cell-inline-editing.ag-cell-focus input:focus {
-    outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
-      var(--salt-focused-outlineColor);
-    outline-offset: -2px;
+  .ag-cell-inline-editing input {
+    background-color: transparent;
   }
 
   .ag-cell-editor .ag-input-field-input[type="text"] {
     padding-left: ag-param(cell-horizontal-padding);
     padding-right: ag-param(cell-horizontal-padding);
-  }
-
-  .ag-row-selected .ag-cell.editable-cell input:not(:focus) {
-    background-color: var(--agGrid-row-background-selected);
   }
 
   /* --- Cell range --- */
