@@ -433,7 +433,8 @@
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-left:before {
-    border-left: var(--salt-size-border) dotted var(--agGrid-range-selection-borderColor);
+    border-left: var(--salt-size-border) dotted
+      var(--agGrid-range-selection-borderColor);
     content: "";
     height: 100%;
     position: absolute;
