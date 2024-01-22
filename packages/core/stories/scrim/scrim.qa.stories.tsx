@@ -1,50 +1,61 @@
-import { Card, Scrim } from "@salt-ds/core";
+import { Card, SaltProvider, Scrim, Spinner } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
-} from "docs/components";
+import { DetailedHTMLProps } from "react";
 
 export default {
   title: "Core/Scrim/Scrim QA",
   component: Scrim,
 } as Meta<typeof Scrim>;
 
-const AllExamples = () => (
+const AllModes = ({
+  children,
+}: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>) => (
   <>
+    <SaltProvider mode="light">{children}</SaltProvider>
+    <SaltProvider mode="dark">{children}</SaltProvider>
+  </>
+);
+
+export const InContainer: StoryFn<typeof Scrim> = () => (
+  <AllModes>
     <Card style={{ position: "relative", width: "512px" }}>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.
       <Scrim open />
     </Card>
+  </AllModes>
+);
+
+InContainer.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const Fixed: StoryFn<typeof Scrim> = () => (
+  <AllModes>
     <Card style={{ position: "relative", width: "512px" }}>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua.
       <Scrim open fixed />
     </Card>
-  </>
+  </AllModes>
 );
 
-export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer height={500} width={1000} {...props}>
-    <AllExamples />
-  </QAContainer>
-);
-
-AllVariantsGrid.parameters = {
+Fixed.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
-) => (
-  <QAContainerNoStyleInjection height={500} width={1000} {...props}>
-    <AllExamples />
-  </QAContainerNoStyleInjection>
+export const WithChildren: StoryFn<typeof Scrim> = () => (
+  <AllModes>
+    <Card style={{ position: "relative", width: "512px" }}>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua.
+      <Scrim open>
+        <Spinner size="medium" />
+      </Scrim>
+    </Card>
+  </AllModes>
 );
 
-NoStyleInjectionGrid.parameters = {
+WithChildren.parameters = {
   chromatic: { disableSnapshot: false },
 };
