@@ -13,7 +13,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import { makePrefixer, useControlled, useForkRef } from "../utils";
-import { ToggleButtonGroupContext } from "./ToggleButtonGroupContext";
+import { ToggleButtonGroupContext, Value } from "./ToggleButtonGroupContext";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 
 export interface ToggleButtonGroupProps
@@ -21,7 +21,7 @@ export interface ToggleButtonGroupProps
   /**
    * The default value. Use when the component is not controlled.
    */
-  defaultValue?: string | ReadonlyArray<string> | number | undefined;
+  defaultValue?: Value;
   /**
    * If `true`, the Toggle Button Group will be disabled.
    */
@@ -29,7 +29,7 @@ export interface ToggleButtonGroupProps
   /**
    * The value. Use when the component is controlled.
    */
-  value?: string | ReadonlyArray<string> | number | undefined;
+  value?: Value;
   /**
    * Callback fired when the selection changes.
    * @param event
@@ -75,9 +75,7 @@ export const ToggleButtonGroup = forwardRef<
     name: "ToggleButtonGroup",
     state: "value",
   });
-  const [focused, setFocused] = useState<
-    string | ReadonlyArray<string> | number | undefined
-  >(value);
+  const [focused, setFocused] = useState<Value>(value);
 
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -91,18 +89,18 @@ export const ToggleButtonGroup = forwardRef<
   );
 
   const isSelected = useCallback(
-    (id: string | ReadonlyArray<string> | number | undefined) => {
+    (id: Value) => {
       return value === id;
     },
     [value]
   );
 
-  const focus = (id: string | ReadonlyArray<string> | number | undefined) => {
+  const focus = (id: Value) => {
     setFocused(id);
   };
 
   const isFocused = useCallback(
-    (id: string | ReadonlyArray<string> | number | undefined) => {
+    (id: Value) => {
       return focused === id || !focused;
     },
     [focused]
@@ -115,8 +113,9 @@ export const ToggleButtonGroup = forwardRef<
       focus,
       isFocused,
       disabled,
+      orientation,
     }),
-    [select, isSelected, isFocused, disabled]
+    [select, isSelected, isFocused, disabled, orientation]
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
