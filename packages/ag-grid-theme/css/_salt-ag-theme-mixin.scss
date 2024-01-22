@@ -379,25 +379,24 @@
       var(--salt-editable-borderColor);
   }
 
-  .editable-numeric-cell.ag-cell-focus:focus,
-  .ag-cell.editable-cell.ag-cell-focus:focus {
-    overflow: visible;
-    clip-path: inset(0, 0);
-  }
-
   .ag-ltr {
     .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
-      border: var(--salt-size-border) var(--salt-container-borderStyle)
-        transparent;
       outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
         var(--salt-focused-outlineColor);
       outline-offset: -2px;
+      border-color: transparent !important;
     }
   }
 
   .ag-ltr .ag-cell-focus.ag-cell-inline-editing:focus-within {
-    border-color: transparent !important;
     background-color: white;
+  }
+
+  .ag-cell.editable-numeric-cell.ag-cell-focus:focus,
+  .ag-cell.editable-cell.ag-cell-focus:focus,
+  .ag-cell.editable-cell.ag-cell-focus:focus-within,
+  .ag-cell.editable-cell.ag-cell-focus.ag-cell-inline-editing {
+    overflow: visible;
   }
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
@@ -408,6 +407,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    transform: translate(-1px, -1px);
     border-top: 0 solid transparent;
     border-left: var(--agGrid-editableCell-cornerTag-size) solid
       var(--salt-editable-borderColor-hover);
@@ -433,7 +433,7 @@
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-left:before {
-    border-left: 2px dotted var(--agGrid-range-selection-borderColor);
+    border-left: var(--salt-size-border) dotted var(--agGrid-range-selection-borderColor);
     content: "";
     height: 100%;
     position: absolute;
