@@ -12,11 +12,9 @@ import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 export const FillContainer = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const [buttonText, setButtonText] = useState("Show scrim");
 
   const handleClick = () => {
-    setOpen(!open);
-    setButtonText(!open ? "Hide scrim" : "Show scrim");
+    setOpen((old) => !old);
   };
 
   return (
@@ -101,7 +99,7 @@ export const FillContainer = (): ReactElement => {
         onClick={handleClick}
         variant="cta"
       >
-        {buttonText}
+        {open ? "Hide scrim" : "Show scrim"}
       </Button>
     </StackLayout>
   );
