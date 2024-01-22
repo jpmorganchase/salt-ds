@@ -1,12 +1,13 @@
 import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
 import { ConditionalWrapper } from "./ConditionalWrapper";
 
-import navigationItemCss from "./NavigationItem.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+
+import navigationItemCss from "./NavigationItem.css";
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
