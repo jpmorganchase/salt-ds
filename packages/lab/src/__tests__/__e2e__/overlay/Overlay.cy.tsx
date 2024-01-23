@@ -39,12 +39,14 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: /Close Overlay/i }).realClick();
       cy.get("@closeSpy").should("have.callCount", 1);
-      cy.get(".saltOverlayPanel").should("not.exist");
+      cy.findByRole("dialog").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      cy.get("body").click(0, 0); // click outside of Overlay
-      cy.get(".saltOverlayPanel").should("not.exist");
+      // dbl click to trigger outside of Overlay click, see SOF post
+      // https://stackoverflow.com/questions/51254946/cypress-does-not-always-executes-click-on-element/58302240#58302240
+      cy.get("body").dblclick();
+      cy.findByRole("dialog").should("not.exist");
     });
 
     it("THEN it should trap focus within Overlay once opened", () => {
