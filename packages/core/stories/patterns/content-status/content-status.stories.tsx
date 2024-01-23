@@ -5,22 +5,11 @@ import {
   StatusIndicator,
   Button,
 } from "@salt-ds/core";
-import { CircularProgress } from "@salt-ds/lab";
 import { Meta } from "@storybook/react";
 
 export default {
   title: "Patterns/Content Status",
 } as Meta;
-
-// progress has no sizes
-export const WithProgress = () => {
-  return (
-    <StackLayout gap={1} align="center">
-      <CircularProgress value={38} />
-      <Text>Supplementary content can go here if required.</Text>
-    </StackLayout>
-  );
-};
 
 export const WithSpinner = () => {
   return (
