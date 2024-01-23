@@ -35,11 +35,11 @@ const AlertDialog = () => {
         open={open}
         onOpenChange={onOpenChange}
         initialFocus={1}
-        disableDismiss
+        aria-describedby={"dialog-heading"}
       >
         <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>
-          Are you sure you want to permanently delete this transaction
+          Are you sre you want to permenently delete this transaction
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
