@@ -7,7 +7,7 @@ import {
   DialogContent,
 } from "@salt-ds/lab";
 
-export const Error = (): ReactElement => {
+export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -25,23 +25,24 @@ export const Error = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open error dialog
+        Open Mandatory Action Dialog
       </Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
-        status="error"
+        disableDismiss
         size={"small"}
+        status={"error"}
         aria-describedby={`dialog-description`}
       >
-        <DialogTitle>Can't move file</DialogTitle>
+        <DialogTitle> Delete Transaction </DialogTitle>
         <DialogContent>
-          You don’t have permission to move or delete this file.
+          Are you sure you want to permenantly delete transaction
         </DialogContent>
         <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
-            Close
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

@@ -15,17 +15,18 @@ export default {
   component: Dialog,
   args: {
     title: "Congratulations! You have created a Dialog.",
-    content: "This is the content of the dialog.",
+    content:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
   },
 } as Meta<typeof Dialog>;
 
 const DialogTemplate: StoryFn<typeof Dialog> = ({
   title,
-  // @ts-ignore
-  accent,
+  id,
+  size,
   // @ts-ignore
   content,
-  open: openProp = true,
+  open: openProp = false,
   ...args
 }) => {
   const [open, setOpen] = useState(openProp);
@@ -45,22 +46,19 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Click to open dialog
+        Open dialog
       </Button>
       <Dialog
         {...args}
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
+        id={id}
+        size={size}
       >
-        <DialogTitle accent={accent as boolean}>{title}</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>{content}</DialogContent>
         <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            variant="secondary"
-            onClick={handleClose}
-          >
+          <Button variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
           <Button onClick={handleClose}>Previous</Button>
@@ -75,17 +73,13 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
 };
 
 export const Default = DialogTemplate.bind({});
-
-export const Accent = DialogTemplate.bind({});
-Accent.args = {
-  // @ts-ignore
-  accent: true,
+Default.args = {
+  id: "DialogTestId",
 };
 
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
-  style: { width: 600 },
   title: "Congratulations! You have created a Dialog.",
   // @ts-ignore
   content: (
@@ -138,9 +132,10 @@ LongContent.args = {
 };
 
 const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
-  open: openProp = true,
+  open: openProp = false,
   status,
   title,
+  size = "small",
   // @ts-ignore
   content,
   ...args
@@ -165,7 +160,7 @@ const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
         Click to open dialog
       </Button>
       <Dialog
-        style={{ width: 500 }}
+        size={size}
         {...args}
         role="alertdialog"
         status={status}
@@ -211,6 +206,55 @@ ErrorStatus.args = {
   title: "Error",
 };
 
+export const MandatoryAction: StoryFn<typeof Dialog> = ({
+  open: openProp = false,
+  status = "info",
+  size = "small",
+}) => {
+  const [open, setOpen] = useState(openProp);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <Dialog
+        size={"small"}
+        status={"error"}
+        role="alertdialog"
+        open={open}
+        onOpenChange={onOpenChange}
+        initialFocus={1}
+        disableDismiss
+        aria-describedby={`dialog-description`}
+      >
+        <DialogTitle>Delete Transaction</DialogTitle>
+        <DialogContent>
+          Are you sure you want to permanently delete this transaction
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
 function FakeWindow({ children }: PropsWithChildren) {
   return (
     <div className="fakeDialogWindow">
@@ -233,7 +277,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle accent>Window Dialog</DialogTitle>
+        <DialogTitle>Window Dialog</DialogTitle>
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>

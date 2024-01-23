@@ -27,7 +27,11 @@ export const Default = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open default dialog
       </Button>
-      <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        aria-describedby={`dialog-description`}
+      >
         <DialogTitle>Terms and conditions</DialogTitle>
         <DialogContent>
           <StackLayout>

@@ -8,7 +8,7 @@ import {
   DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const CloseButton = (): ReactElement => {
+export const Scroll = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -26,11 +26,12 @@ export const CloseButton = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open dialog with close button
+        Open scrollable dialog
       </Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
+        size={"small"}
         aria-describedby={`dialog-description`}
       >
         <DialogTitle>Terms and conditions</DialogTitle>

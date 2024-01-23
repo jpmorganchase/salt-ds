@@ -28,11 +28,12 @@ export const Warning = (): ReactElement => {
         Open warning dialog
       </Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
         role="alertdialog"
         status="warning"
+        size={"small"}
+        aria-describedby={`dialog-description`}
       >
         <DialogTitle>File access</DialogTitle>
         <DialogContent>

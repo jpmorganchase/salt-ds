@@ -28,11 +28,12 @@ export const Info = (): ReactElement => {
         Open info dialog
       </Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
         role="alertdialog"
         status="info"
+        size={"small"}
+        aria-describedby={`dialiog-content`}
       >
         <DialogTitle>File update</DialogTitle>
         <DialogContent>
