@@ -389,7 +389,7 @@
   }
 
   .ag-ltr .ag-cell-focus.ag-cell-inline-editing:focus-within {
-    background-color: white;
+    background-color: var(--salt-container-primary-background);
   }
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus,
