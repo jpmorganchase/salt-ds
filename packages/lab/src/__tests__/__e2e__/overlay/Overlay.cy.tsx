@@ -39,12 +39,12 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: /Close Overlay/i }).realClick();
       cy.get("@closeSpy").should("have.callCount", 1);
-      cy.findByRole("dialog").should("not.exist");
+      cy.get(".saltOverlayPanel").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.get("body").click(0, 0); // click outside of Overlay
-      cy.findByRole("dialog").should("not.exist");
+      cy.get(".saltOverlayPanel").should("not.exist");
     });
 
     it("THEN it should trap focus within Overlay once opened", () => {
