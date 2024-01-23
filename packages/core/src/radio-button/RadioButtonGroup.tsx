@@ -59,6 +59,8 @@ export const RadioButtonGroup = forwardRef<
   RadioButtonGroupProps
 >(function RadioButtonGroup(props, ref) {
   const {
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
     children,
     className,
     defaultValue,
@@ -87,8 +89,8 @@ export const RadioButtonGroup = forwardRef<
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
 
-  const disabled = formFieldDisabled ?? disabledProp;
-  const readOnly = formFieldReadOnly ?? readOnlyProp;
+  const disabled = formFieldDisabled || disabledProp;
+  const readOnly = formFieldReadOnly || readOnlyProp;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
   const [value, setStateValue] = useControlled({
@@ -107,6 +109,12 @@ export const RadioButtonGroup = forwardRef<
 
   return (
     <fieldset
+      aria-labelledby={
+        clsx(a11yProps?.["aria-labelledby"], ariaLabelledBy) || undefined
+      }
+      aria-describedby={
+        clsx(a11yProps?.["aria-describedby"], ariaDescribedBy) || undefined
+      }
       className={clsx(
         withBaseName(),
         withBaseName(direction),
@@ -121,7 +129,6 @@ export const RadioButtonGroup = forwardRef<
     >
       <RadioGroupContext.Provider
         value={{
-          a11yProps,
           disabled,
           name,
           onChange: handleChange,

@@ -59,7 +59,7 @@ export const countryMetaMap = {
   },
   AX: {
     countryCode: "AX",
-    countryName: "Åland Islands",
+    countryName: "Åland Islands",
   },
   AZ: {
     countryCode: "AZ",
@@ -103,7 +103,7 @@ export const countryMetaMap = {
   },
   BL: {
     countryCode: "BL",
-    countryName: "Saint Barthélemy",
+    countryName: "Saint Barthélemy",
   },
   BM: {
     countryCode: "BM",
@@ -175,7 +175,7 @@ export const countryMetaMap = {
   },
   CI: {
     countryCode: "CI",
-    countryName: "Côte d'Ivoire",
+    countryName: "Côte d'Ivoire",
   },
   CK: {
     countryCode: "CK",
@@ -211,7 +211,7 @@ export const countryMetaMap = {
   },
   CW: {
     countryCode: "CW",
-    countryName: "Curaçao",
+    countryName: "Curaçao",
   },
   CX: {
     countryCode: "CX",
@@ -771,7 +771,7 @@ export const countryMetaMap = {
   },
   RE: {
     countryCode: "RE",
-    countryName: "Réunion",
+    countryName: "Réunion",
   },
   RO: {
     countryCode: "RO",
@@ -919,7 +919,7 @@ export const countryMetaMap = {
   },
   TR: {
     countryCode: "TR",
-    countryName: "Türkiye",
+    countryName: "Türkiye",
   },
   TT: {
     countryCode: "TT",

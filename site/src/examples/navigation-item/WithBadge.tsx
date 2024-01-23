@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
-import { Badge, FlexLayout } from "@salt-ds/core";
+import { Badge, FlexLayout, NavigationItem } from "@salt-ds/core";
 
 export const WithBadge = (): ReactElement => {
   const [horizontalActive, setHorizontalActive] = useState(false);
@@ -19,9 +18,7 @@ export const WithBadge = (): ReactElement => {
     <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleHorizontalActiveToggle();
         }}
         href="#"
@@ -32,9 +29,7 @@ export const WithBadge = (): ReactElement => {
 
       <NavigationItem
         active={verticalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleVerticalActiveToggle();
         }}
         href="#"

@@ -1,0 +1,42 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="scrim" exampleName="FillViewport">
+
+### Fill Viewport
+
+Use the `fixed` prop to make the scrim fill the viewport.
+
+</LivePreview>
+
+<LivePreview componentName="scrim" exampleName="FillContainer">
+
+### Fill Container
+
+A scrim can fill its parent container.
+
+#### Best practices
+
+Ensure you have explicitly set a `position` attribute for the parent container.
+
+</LivePreview>
+
+<LivePreview componentName="scrim" exampleName="WithChild">
+
+### With Child
+
+You can pass children to a scrim, such as a [`Spinner`](../spinner) to indicate loading state. You can incorporate other elements as children, to display them above the scrim and draw attention to them.
+
+</LivePreview>
+
+</LivePreviewControls>

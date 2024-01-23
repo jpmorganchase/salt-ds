@@ -1,5 +1,56 @@
 # @salt-ds/core
 
+## 1.15.0
+
+### Minor Changes
+
+- b2dd61d7: Added Pagination
+
+  Pagination helps users navigate easily between content separated into multiple pages.
+
+  ```tsx
+  <Pagination count={5}>
+    <Paginator />
+  </Pagination>
+  ```
+
+- 69549229: Added `Scrim`.
+
+  `Scrim` is a temporary, semi-transparent layer that makes underlying content less prominent.
+
+  ```tsx
+  <Scrim open={open} />
+  ```
+
+- 907397e2: Added NavigationItem
+
+  NavigationItem allows users to navigate between distinct applications and website pages.
+
+  ```tsx
+  <NavigationItem href="#">Label</NavigationItem>
+  ```
+
+- 340ff478: Updated `useToggleButtonGroup` to return the orientation of the group.
+
+## 1.14.0
+
+### Minor Changes
+
+- 91d22148: Added `Pill` to Core
+
+  `PillNext` is a small visual element that can contain descriptive text and an icon. You can use pills to label, tag or categorize content. With pills, users can trigger actions, make selections or filter results.
+
+  ```tsx
+  <Pill onClick={handleClick}>Clickable Pill</Pill>
+  ```
+
+### Patch Changes
+
+- 5f449172: Fixed incorrect aria attributes on `RadioButtonGroup` and `CheckboxGroup`, which caused Screen Readers to incorrectly report the group's label as the radio button or checkbox's accessible name.
+- d9ce0737: Replaced incorrect usage of nullish operators.
+- 32dbea7e: Update `ToggleButton` props to use `ComponentPropsWithoutRef`.
+- 48f6c20c: Fixed Tooltip not honoring `disabled` prop when used in Form Field
+
 ## 1.13.4
 
 ### Patch Changes

@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
-import { FlexLayout } from "@salt-ds/core";
+import { FlexLayout, NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 export const WithIcon = (): ReactElement => {
@@ -20,9 +19,7 @@ export const WithIcon = (): ReactElement => {
     <FlexLayout align="center">
       <NavigationItem
         active={horizontalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleHorizontalActiveToggle();
         }}
         href="#"
@@ -33,9 +30,7 @@ export const WithIcon = (): ReactElement => {
 
       <NavigationItem
         active={verticalActive}
-        onClick={(event) => {
-          // Prevent default to avoid navigation
-          event.preventDefault();
+        onClick={() => {
           handleVerticalActiveToggle();
         }}
         href="#"

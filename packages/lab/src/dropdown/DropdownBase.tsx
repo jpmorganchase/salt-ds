@@ -176,7 +176,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
                 top: y ?? 0,
                 left: x ?? 0,
                 position: strategy,
-                maxHeight: maxPopupHeight ?? undefined,
+                maxHeight: maxPopupHeight,
               }}
               ref={handleFloatingRef}
             >

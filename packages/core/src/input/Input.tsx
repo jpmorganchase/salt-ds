@@ -135,7 +135,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
 
   const isRequired = formFieldRequired
     ? ["required", "asterisk"].includes(formFieldRequired)
-    : undefined ?? inputPropsRequired;
+    : inputPropsRequired;
 
   const [value, setValue] = useControlled({
     controlled: valueProp,

@@ -4130,7 +4130,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-components@npm:0.1.0-beta.60, @jpmorganchase/mosaic-components@npm:^0.1.0-beta.60":
+"@jpmorganchase/mosaic-components@npm:0.1.0-beta.60":
   version: 0.1.0-beta.60
   resolution: "@jpmorganchase/mosaic-components@npm:0.1.0-beta.60"
   dependencies:
@@ -4158,6 +4158,37 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
   checksum: 2edb9243feebea3ba3610696afbcfb94a2204dfe44e7d15ec750c0cdbf4feaa20759c2b366da7e206abec6692356e9f7dc8171bb6330c0306c56c9a72f3e1e38
+  languageName: node
+  linkType: hard
+
+"@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch":
+  version: 0.1.0-beta.60
+  resolution: "@jpmorganchase/mosaic-components@patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch::version=0.1.0-beta.60&hash=f6d4bb"
+  dependencies:
+    "@jpmorganchase/mosaic-store": "npm:^0.1.0-beta.60"
+    "@jpmorganchase/mosaic-theme": "npm:^0.1.0-beta.60"
+    "@salt-ds/core": "npm:^1.11.0"
+    "@salt-ds/lab": "npm:1.0.0-alpha.20"
+    "@vanilla-extract/css": "npm:^1.6.0"
+    "@vanilla-extract/recipes": "npm:^0.2.1"
+    "@vanilla-extract/sprinkles": "npm:^1.3.0"
+    clsx: "npm:^2.0.0"
+    deepmerge: "npm:^2.0.1"
+    hoist-non-react-statics: "npm:^3.3.2"
+    lodash-es: "npm:^4.17.21"
+    prism-react-renderer: "npm:^1.1.1"
+    react-live: "npm:^2.2.3"
+    react-markdown: "npm:^6.0.2"
+    react-responsive-carousel: "npm:3.2.10"
+    react-table: "npm:^7.8.0"
+    swagger-ui-react: "npm:^5.0.0"
+    use-memo-one: "npm:^1.1.1"
+    warning: "npm:^3.0.0"
+  peerDependencies:
+    "@types/react": ^18.0.26
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 52406b9ec1df76373d3b48120da74b07be75694f9f19cbf534521b06f7c19ce24cfbac3a0fe9e3b14d88339080630a425e2b6a1e7bb861a9980a066d222fbf47
   languageName: node
   linkType: hard
 
@@ -6251,7 +6282,7 @@ __metadata:
     cypress-axe: "npm:^1.5.0"
     cypress-real-events: "npm:^1.10.0"
     deepmerge: "npm:^4.2.2"
-    dom-accessibility-api: "npm:^0.5.10"
+    dom-accessibility-api: "npm:^0.6.3"
     eslint: "npm:^8.48.0"
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-cypress: "npm:^2.14.0"
@@ -6286,7 +6317,7 @@ __metadata:
   resolution: "@salt-ds/site@workspace:site"
   dependencies:
     "@jpmorganchase/mosaic-cli": "npm:^0.1.0-beta.60"
-    "@jpmorganchase/mosaic-components": "npm:^0.1.0-beta.60"
+    "@jpmorganchase/mosaic-components": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch"
     "@jpmorganchase/mosaic-content-editor-plugin": "npm:^0.1.0-beta.60"
     "@jpmorganchase/mosaic-layouts": "npm:^0.1.0-beta.60"
     "@jpmorganchase/mosaic-site-components": "npm:^0.1.0-beta.60"
@@ -14470,10 +14501,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dom-accessibility-api@npm:^0.5.10, dom-accessibility-api@npm:^0.5.9":
+"dom-accessibility-api@npm:^0.5.9":
   version: 0.5.11
   resolution: "dom-accessibility-api@npm:0.5.11"
   checksum: b5b47e0c9bebe78b4f16247bad8445ccbb53472098c5759224488a9d0586b1da4b123de1941d2110ec72ff00217800332a350771d662f7f40ae1d958e1fd3946
+  languageName: node
+  linkType: hard
+
+"dom-accessibility-api@npm:^0.6.3":
+  version: 0.6.3
+  resolution: "dom-accessibility-api@npm:0.6.3"
+  checksum: 83d3371f8226487fbad36e160d44f1d9017fb26d46faba6a06fcad15f34633fc827b8c3e99d49f71d5f3253d866e2131826866fd0a3c86626f8eccfc361881ff
   languageName: node
   linkType: hard
 
@@ -31318,8 +31356,8 @@ __metadata:
   linkType: hard
 
 "vite@npm:^4.4.9":
-  version: 4.5.1
-  resolution: "vite@npm:4.5.1"
+  version: 4.5.2
+  resolution: "vite@npm:4.5.2"
   dependencies:
     esbuild: "npm:^0.18.10"
     fsevents: "npm:~2.3.2"
@@ -31353,13 +31391,13 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 2ea9c030a5718ca0adaaa0ecc54402a725cff59131cf80bc84d0237f59c98168803ee59d23e697b98b1184be3af6c6edc2e81517f769c62159f11531b3341a4e
+  checksum: 3feb39f8da038fb2b1ad074c19a9579c263c1d7a872c5c6e0269b82d67805bb8c93cf9fc393e852807483ae9a918b1ac2861c72f73ee92fb3935ea68333a2cf7
   languageName: node
   linkType: hard
 
 "vite@npm:^5.0.0-beta.15 || ^5.0.0, vite@npm:^5.0.0-beta.19 || ^5.0.0":
-  version: 5.0.6
-  resolution: "vite@npm:5.0.6"
+  version: 5.0.12
+  resolution: "vite@npm:5.0.12"
   dependencies:
     esbuild: "npm:^0.19.3"
     fsevents: "npm:~2.3.3"
@@ -31393,7 +31431,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: c4647591c76ad5a3b818efef37fb23d793512be832b7daa6c54719f24b0dbadfe383b18cf0896e2c4eaf9d1acab031b3caeaa36570b79ce9da2be6a328d27a1e
+  checksum: ed0bb26a0d0c8e1dae0b70af9e36adffd7e15d80297443fe4da762596dc81570bad7f0291f590a57c1553f5e435338d8c7ffc483bd9431a95c09d9ac90665fad
   languageName: node
   linkType: hard
 

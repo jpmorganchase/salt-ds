@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
+import { NavigationItem } from "@salt-ds/core";
 
 export const Vertical = (): ReactElement => {
   const [active, setActive] = useState(false);
@@ -12,9 +12,7 @@ export const Vertical = (): ReactElement => {
       href="#"
       active={active}
       orientation="vertical"
-      onClick={(event) => {
-        // Prevent default to avoid navigation
-        event.preventDefault();
+      onClick={() => {
         handleActiveToggle();
       }}
     >

@@ -131,7 +131,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
-      : undefined ?? textAreaRequired;
+      : textAreaRequired;
 
     const [value, setValue] = useControlled({
       controlled: valueProp,

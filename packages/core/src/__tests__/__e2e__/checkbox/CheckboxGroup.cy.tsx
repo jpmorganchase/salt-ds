@@ -430,5 +430,20 @@ describe("GIVEN a CheckboxGroup", () => {
 
       cy.findAllByRole("checkbox").should("have.attr", "readonly");
     });
+
+    it("THEN should have the correct aria labelling", () => {
+      cy.mount(
+        <FormField>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <CheckboxGroup checkedValues={["one"]}>
+            <Checkbox label="one" value="one" />
+            <Checkbox label="two" value="two" readOnly />
+            <Checkbox label="three" value="three" />
+          </CheckboxGroup>
+        </FormField>
+      );
+
+      cy.findAllByRole("checkbox").eq(0).should("have.accessibleName", "one");
+    });
   });
 });

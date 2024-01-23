@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/lab";
+import { NavigationItem } from "@salt-ds/core";
 
 export const Default = (): ReactElement => {
   const [active, setActive] = useState(false);
@@ -11,9 +11,7 @@ export const Default = (): ReactElement => {
     <NavigationItem
       href="#"
       active={active}
-      onClick={(event) => {
-        // Prevent default to avoid navigation
-        event.preventDefault();
+      onClick={() => {
         handleActiveToggle();
       }}
     >

@@ -1,0 +1,25 @@
+/* Style applied to the root element */
+.saltScrim {
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  bottom: 0;
+  height: 100%;
+  display: flex;
+  z-index: calc(var(--salt-zIndex-drawer) - 1);
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background: var(--saltScrim-background, var(--salt-overlayable-background));
+  -webkit-tap-highlight-color: transparent;
+}
+
+.saltScrim:focus {
+  outline: none;
+}
+
+/* Style applied to the root element when fixed={true} */
+.saltScrim-fixed {
+  position: fixed;
+}
