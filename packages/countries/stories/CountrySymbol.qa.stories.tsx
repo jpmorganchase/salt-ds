@@ -4,7 +4,7 @@ import { MX } from "@salt-ds/countries";
 import "@salt-ds/countries/saltCountries.css";
 
 export default {
-  title: "Country Symbols/Country Symbol/QA",
+  title: "Country Symbols/Country Symbol/Country Symbol QA",
 } as Meta;
 
 export const CountrySymbolSizes: StoryFn = () => {
