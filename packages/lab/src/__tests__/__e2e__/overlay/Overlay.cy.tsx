@@ -45,7 +45,7 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("dialog").should("be.visible");
       // dbl click to trigger outside of Overlay click, see SOF post
       // https://stackoverflow.com/questions/51254946/cypress-does-not-always-executes-click-on-element/58302240#58302240
-      cy.get("body").dblclick();
+      cy.get("body").dblclick(0, 0);
       cy.findByRole("dialog").should("not.exist");
     });
 
