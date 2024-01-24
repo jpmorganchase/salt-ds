@@ -10,7 +10,7 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-::selection {
+.salt-theme ::selection {
   background: var(--salt-content-foreground-highlight);
 }
 

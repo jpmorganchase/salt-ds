@@ -24,6 +24,7 @@
 .saltAccordionHeader:disabled {
   background: var(--salt-actionable-secondary-background);
   color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-actionable-cursor-disabled);
 }
 
 .saltAccordionHeader-icon {
