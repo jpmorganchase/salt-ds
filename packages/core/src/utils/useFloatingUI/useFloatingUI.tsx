@@ -10,6 +10,8 @@ import {
   shift,
   useFloating,
   FloatingPortal,
+  FloatingFocusManager,
+  FloatingFocusManagerProps,
 } from "@floating-ui/react";
 
 import {
@@ -26,11 +28,15 @@ import { SaltProvider } from "../../salt-provider";
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Whether the floating component is open (used for determinig whether to show the component)
+   * Whether the floating component is open (used for determining whether to show the component)
    * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
    * for caching windows and reusing them, rather than always spawning a new one
    */
   open: boolean;
+  /**
+   * Use this prop when `FloatingFocusManager` is needed for floating component
+   */
+  focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
    * Position props for the floating component
    */
@@ -54,6 +60,7 @@ const DefaultFloatingComponent = forwardRef<
     width,
     height,
     /* eslint-enable @typescript-eslint/no-unused-vars */
+    focusManagerProps,
     ...rest
   } = props;
   const style = {
@@ -61,6 +68,19 @@ const DefaultFloatingComponent = forwardRef<
     left,
     position,
   };
+
+  if (focusManagerProps) {
+    return (
+      <FloatingPortal>
+        <SaltProvider>
+          <FloatingFocusManager {...focusManagerProps}>
+            <div style={style} {...rest} ref={ref} />
+          </FloatingFocusManager>
+        </SaltProvider>
+      </FloatingPortal>
+    );
+  }
+
   return open ? (
     <FloatingPortal>
       <SaltProvider>
@@ -207,7 +227,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   };
 
   const {
-    platform: contextPlaform,
+    platform: contextPlatform,
     middleware: contextMiddleware,
     animationFrame,
   } = useFloatingPlatform();
@@ -223,7 +243,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
 
       return cleanup;
     },
-    platform: contextPlaform,
+    platform: contextPlatform,
   });
 
   return {

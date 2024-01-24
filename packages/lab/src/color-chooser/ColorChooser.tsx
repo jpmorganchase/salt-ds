@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
-import { Overlay, useOverlay } from "../overlay";
+import { Overlay, OverlayPanel, OverlayTrigger } from "../overlay";
 import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
@@ -21,6 +21,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import colorChooserCss from "./ColorChooser.css";
+import { useOverlayContext } from "../overlay/OverlayContext";
 
 const withBaseName = makePrefixer("saltColorChooser");
 
@@ -134,80 +135,75 @@ export const ColorChooser = ({
       onClear();
     }
   };
+
   const onTabClick = (index: number): void => {
     setActiveTab(index);
   };
 
-  const { getTriggerProps, getOverlayProps } = useOverlay({
-    placement: "bottom",
-    open,
-    onOpenChange: handleOpenChange,
-  });
+  const OverlayContent = () => {
+    const { id } = useOverlayContext();
+
+    return (
+      <div
+        id={`${id}-content`}
+        className={clsx(withBaseName("overlayContent"))}
+        data-testid="overlay-content"
+      >
+        <Button
+          data-testid="default-button"
+          variant="secondary"
+          className={clsx(withBaseName("defaultButton"))}
+          onClick={onDefaultSelected}
+        >
+          <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
+          Default
+        </Button>
+        <DictTabs
+          tabs={tabsMapping}
+          hexValue={color?.hex}
+          onTabClick={onTabClick}
+          activeTab={activeTab}
+        />
+      </div>
+    );
+  };
 
   return (
-    <>
-      <Button
-        {...getTriggerProps<typeof Button>({
-          className: clsx(withBaseName("overlayButton"), {
+    <Overlay placement="bottom" data-testid="color-chooser-overlay">
+      <OverlayTrigger>
+        <Button
+          className={clsx(withBaseName("overlayButton"), {
             [withBaseName("overlayButtonHiddenLabel")]: hideLabel,
-          }),
+          })}
           // @ts-ignore
-          "data-testid": "color-chooser-overlay-button",
-          disabled: readOnly,
-          ...buttonProps,
-        })}
-      >
-        {color && (
-          <div
-            className={clsx(withBaseName("overlayButtonSwatch"), {
-              [withBaseName("overlayButtonSwatchWithBorder")]:
-                color?.hex.startsWith("#ffffff"),
-              [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
-                color?.hex
-              ),
-            })}
-            style={{
-              backgroundColor: color?.hex,
-            }}
-          />
-        )}
-        {!hideLabel && (
-          <div className={withBaseName("overlayButtonText")}>
-            {displayColorName ?? placeholder ?? "No color selected"}
-          </div>
-        )}
-      </Button>
-      <Overlay
-        {...getOverlayProps({
-          adaExceptions: {
-            showClose: false,
-          },
-          // @ts-ignore
-          "data-testid": "color-chooser-overlay",
-          className: clsx(withBaseName("overlayButtonClose")),
-        })}
-      >
-        <div
-          className={clsx(withBaseName("overlayContent"))}
-          data-testid="overlay-content"
+          data-testid="color-chooser-overlay-button"
+          disabled={readOnly}
+          {...buttonProps}
         >
-          <Button
-            data-testid="default-button"
-            variant="secondary"
-            className={clsx(withBaseName("defaultButton"))}
-            onClick={onDefaultSelected}
-          >
-            <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
-            Default
-          </Button>
-          <DictTabs
-            tabs={tabsMapping}
-            hexValue={color?.hex}
-            onTabClick={onTabClick}
-            activeTab={activeTab}
-          />
-        </div>
-      </Overlay>
-    </>
+          {color && (
+            <div
+              className={clsx(withBaseName("overlayButtonSwatch"), {
+                [withBaseName("overlayButtonSwatchWithBorder")]:
+                  color?.hex.startsWith("#ffffff"),
+                [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
+                  color?.hex
+                ),
+              })}
+              style={{
+                backgroundColor: color?.hex,
+              }}
+            />
+          )}
+          {!hideLabel && (
+            <div className={withBaseName("overlayButtonText")}>
+              {displayColorName ?? placeholder ?? "No color selected"}
+            </div>
+          )}
+        </Button>
+      </OverlayTrigger>
+      <OverlayPanel>
+        <OverlayContent />
+      </OverlayPanel>
+    </Overlay>
   );
 };
