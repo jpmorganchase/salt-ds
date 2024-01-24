@@ -30,10 +30,7 @@ export default {
 } as Meta<typeof ParentChildLayout>;
 
 const parent = (
-  <div
-    className="layout-content"
-    style={{ height: 500, minWidth: 150 }}
-  >
+  <div className="layout-content" style={{ height: 500, minWidth: 150 }}>
     Parent
   </div>
 );
@@ -44,10 +41,11 @@ const child = (
   </div>
 );
 
-export const Default: StoryFn<typeof ParentChildLayout> = (
-  args
-) => (
-  <ParentChildLayout {...args} style={{ width: "90vw", maxWidth: 800, height: 500 }} />
+export const Default: StoryFn<typeof ParentChildLayout> = (args) => (
+  <ParentChildLayout
+    {...args}
+    style={{ width: "90vw", maxWidth: 800, height: 500 }}
+  />
 );
 Default.args = { parent, child };
 
@@ -70,10 +68,7 @@ export const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
         Show child
       </Button>
       <div style={{ width: "50vw", maxWidth: 800 }}>
-        <ParentChildLayout
-          {...args}
-          stackedViewElement={currentView}
-        />
+        <ParentChildLayout {...args} stackedViewElement={currentView} />
       </div>
     </>
   );
@@ -81,7 +76,8 @@ export const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
 
 Stacked.args = {
   stackedAtBreakpoint: "xl",
-  parent, child
+  parent,
+  child,
 };
 
 export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
@@ -120,7 +116,8 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
 
 ReducedMotion.args = {
   stackedAtBreakpoint: "xl",
-  parent, child
+  parent,
+  child,
 };
 
 const useTabSelection = (initialValue?: number) => {
