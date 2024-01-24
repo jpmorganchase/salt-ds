@@ -3,7 +3,7 @@ import * as parentChildStories from "@stories/parent-child-layout/parent-child-l
 
 const composedStories = composeStories(parentChildStories);
 
-const { Default, SaltStacked } = composedStories;
+const { Default, Stacked } = composedStories;
 
 describe("GIVEN a Parent and Child", () => {
   describe("WHEN no gap values are provided", () => {
@@ -68,7 +68,7 @@ describe("GIVEN a Parent and Child", () => {
 
   describe("WHEN in stacked view", () => {
     it("THEN it should only display the parent by default", () => {
-      cy.mount(<SaltStacked />);
+      cy.mount(<Stacked />);
 
       cy.get(".saltParentChildItem").should("have.length", 1);
 
@@ -78,7 +78,7 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<SaltStacked />);
+      cy.mount(<Stacked />);
 
       cy.findByRole("button", { name: /Show child/i }).click();
 
@@ -90,14 +90,14 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change the direction of animations", () => {
-      cy.mount(<SaltStacked orientation="vertical" />);
+      cy.mount(<Stacked orientation="vertical" />);
 
       cy.get(".saltParentChildItem").should(
         "have.class",
         "saltParentChildItem-slide-bottom"
       );
 
-      cy.mount(<SaltStacked orientation="horizontal" />);
+      cy.mount(<Stacked orientation="horizontal" />);
 
       cy.get(".saltParentChildItem").should(
         "have.class",
