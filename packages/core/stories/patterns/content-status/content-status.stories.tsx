@@ -5,20 +5,12 @@ import {
   StatusIndicator,
   Button,
 } from "@salt-ds/core";
+import { CircularProgress } from "@salt-ds/lab";
 import { Meta } from "@storybook/react";
 
 export default {
   title: "Patterns/Content Status",
 } as Meta;
-
-export const WithSpinner = () => {
-  return (
-    <StackLayout gap={1} align="center">
-      <Spinner size="medium" />
-      <Text>Supplementary content can go here if required.</Text>
-    </StackLayout>
-  );
-};
 
 export const Info = () => {
   return (
@@ -28,7 +20,9 @@ export const Info = () => {
         <strong>No [content] available</strong>
       </Text>
       <Text>Supplementary content can go here if required.</Text>
-      <Button>[Custom action]</Button>
+      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>
+        [Custom action]
+      </Button>
     </StackLayout>
   );
 };
@@ -41,7 +35,9 @@ export const Warning = () => {
         <strong>No permission to access [content]</strong>
       </Text>
       <Text>Supplementary content can go here if required.</Text>
-      <Button>[Custom action]</Button>
+      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>
+        [Custom action]
+      </Button>
     </StackLayout>
   );
 };
@@ -54,7 +50,7 @@ export const Error = () => {
         <strong>There&apos;s been a system error</strong>
       </Text>
       <Text>It should be temporary, so please try again.</Text>
-      <Button>Reload</Button>
+      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>Reload</Button>
     </StackLayout>
   );
 };
@@ -63,6 +59,24 @@ export const Success = () => {
   return (
     <StackLayout gap={1} align="center">
       <StatusIndicator status="success" size={2} />
+      <Text>Supplementary content can go here if required.</Text>
+    </StackLayout>
+  );
+};
+
+export const WithSpinner = () => {
+  return (
+    <StackLayout gap={1} align="center">
+      <Spinner size="medium" />
+      <Text>Supplementary content can go here if required.</Text>
+    </StackLayout>
+  );
+};
+
+export const WithProgress = () => {
+  return (
+    <StackLayout gap={1} align="center">
+      <CircularProgress value={38} />
       <Text>Supplementary content can go here if required.</Text>
     </StackLayout>
   );
