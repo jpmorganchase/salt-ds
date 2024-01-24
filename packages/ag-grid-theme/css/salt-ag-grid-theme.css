@@ -216,7 +216,7 @@ div[class*="ag-theme-salt"] input[class^="ag-"][type="number"] {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 div[class*="ag-theme-salt"] .editable-cell input,
-div[class*="ag-theme-salt"] .editable-numeric-cell input{
+div[class*="ag-theme-salt"] .editable-numeric-cell input {
   border: none;
   background-color: transparent;
 }
