@@ -7,13 +7,8 @@ import {
 
 import { clsx } from "clsx";
 import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
-import { ParentChildItem, SlideDirection } from "../parent-child-item";
+import { ParentChildItem, SlideDirection } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
-
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-
-import parentChildLayoutCss from "./ParentChildLayout.css";
 
 export type StackedViewElement = "parent" | "child";
 
@@ -91,13 +86,6 @@ export const ParentChildLayout = forwardRef<
   },
   ref
 ) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-parent-child-layout",
-    css: parentChildLayoutCss,
-    window: targetWindow,
-  });
-
   const stackedView = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
 
   const parentChildDirection = getDirection(orientation, stackedViewElement);

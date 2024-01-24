@@ -29,42 +29,29 @@ export default {
   },
 } as Meta<typeof ParentChildLayout>;
 
-const parentChildItemStyles = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  height: 500,
-};
-
 const parent = (
   <div
     className="layout-content"
-    style={{ ...parentChildItemStyles, minWidth: 150 }}
+    style={{ height: 500, minWidth: 150 }}
   >
     Parent
   </div>
 );
 
 const child = (
-  <div className="layout-active-content" style={parentChildItemStyles}>
+  <div className="layout-active-content" style={{ height: 500 }}>
     Child
   </div>
 );
 
-const DefaultParentChildLayoutStory: StoryFn<typeof ParentChildLayout> = (
+export const Default: StoryFn<typeof ParentChildLayout> = (
   args
-) => {
-  return (
-    <div style={{ width: "90vw", maxWidth: 800 }}>
-      <ParentChildLayout {...args} />
-    </div>
-  );
-};
-
-export const Default = DefaultParentChildLayoutStory.bind({});
+) => (
+  <ParentChildLayout {...args} style={{ width: "90vw", maxWidth: 800, height: 500 }} />
+);
 Default.args = { parent, child };
 
-const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
+export const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
@@ -86,20 +73,18 @@ const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
         <ParentChildLayout
           {...args}
           stackedViewElement={currentView}
-          parent={parent}
-          child={child}
         />
       </div>
     </>
   );
 };
 
-export const SaltStacked = Stacked.bind({});
-SaltStacked.args = {
+Stacked.args = {
   stackedAtBreakpoint: "xl",
+  parent, child
 };
 
-const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
+export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
@@ -127,17 +112,15 @@ const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
           {...args}
           className="reduced-motion"
           stackedViewElement={currentView}
-          parent={parent}
-          child={child}
         />
       </div>
     </>
   );
 };
 
-export const SaltReducedMotion = ReducedMotion.bind({});
-SaltReducedMotion.args = {
+ReducedMotion.args = {
   stackedAtBreakpoint: "xl",
+  parent, child
 };
 
 const useTabSelection = (initialValue?: number) => {
@@ -150,14 +133,12 @@ const useTabSelection = (initialValue?: number) => {
 
 const tabs = ["Sint", "Dolor", "Magna"];
 
-const stackedAtBreakpoint = "xs";
-
-const Dashboard: StoryFn<typeof ParentChildLayout> = (args) => {
+export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
   const [selectedTab, handleTabSelection] = useTabSelection();
 
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
-  const isStacked = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
+  const isStacked = useIsViewportLargerThanBreakpoint("xs");
 
   const handleParent = () => {
     setCurrentView("parent");
@@ -294,9 +275,4 @@ const Dashboard: StoryFn<typeof ParentChildLayout> = (args) => {
       />
     </div>
   );
-};
-
-export const Composite = Dashboard.bind({});
-Composite.args = {
-  stackedAtBreakpoint,
 };

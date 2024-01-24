@@ -1,3 +1,7 @@
+.saltParentChildItem {
+  height: 100%;
+}
+
 .saltParentChildItem-slide-top {
   animation: var(--salt-animation-slide-in-top);
 }
