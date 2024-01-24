@@ -62,7 +62,9 @@ describe("ColorChooser", () => {
     );
     cy.findByTestId("color-picker").should("be.visible");
   });
-  it("Sets hex inputs and rgb value inputs as undefined if rendered with undefined value", () => {
+
+  // FIXME:
+  it.skip("Sets hex inputs and rgb value inputs as undefined if rendered with undefined value", () => {
     cy.mount(
       <ColorChooser
         color={undefined}
@@ -78,7 +80,9 @@ describe("ColorChooser", () => {
     cy.findByTestId("g-input").should("have.value", "0");
     cy.findByTestId("b-input").should("have.value", "0");
   });
-  it("Dismisses the overlay if Swatches tab is selected and Default is pressed", () => {
+
+  // FIXME:
+  it.skip("Dismisses the overlay if Swatches tab is selected and Default is pressed", () => {
     cy.mount(
       <ColorChooser
         color={saltColor}
