@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added `FileDropZone` to Core
+Added `FileDropZone`, `FileDropZoneIcon` and `FileDropZoneTrigger` to Core.
 
 `FileDropZone` provides a target area for users to drag and drop files, such as documents or images, and automatically uploads them to the web application.
 
