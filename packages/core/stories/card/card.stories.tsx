@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   FlexLayout,
   GridLayout,
   Link,
+  Checkbox,
 } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 import exampleImage from "./../assets/exampleImage1x.png";
@@ -237,8 +238,91 @@ export const DefaultAsLink: StoryFn<typeof Card> = () => (
   </Link>
 );
 
+export const DefaultWithCheckbox: StoryFn<typeof Card> = () => {
+  const [checked, setChecked] = useState(false);
+  return (
+    <Card
+      className="withImage"
+      interactable
+      onClick={() => setChecked((old) => !old)}
+    >
+      <img
+        aria-label="The Skies by Dominik Schröder"
+        src={exampleImage}
+        className="card-demo-image"
+        style={{ width: "-webkit-fill-available" }}
+      />
+      <div
+        style={{
+          padding:
+            "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+        }}
+      >
+        <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+          <H1 styleAs="h3">{exampleData[0].title}</H1>
+          <Text>{exampleData[0].content}</Text>
+        </div>
+        <Checkbox checked={checked} label={"Fixed income"} />
+      </div>
+    </Card>
+  );
+};
+
 export const DefaultDisabled: StoryFn<typeof Card> = () => (
   <Card className="withImage" disabled>
+    <img
+      aria-label="The Skies by Dominik Schröder"
+      src={exampleImage}
+      className="card-demo-image"
+      style={{ width: "-webkit-fill-available" }}
+    />
+    <div
+      style={{
+        padding:
+          "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+      }}
+    >
+      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+        <H1 styleAs="h3">{exampleData[0].title}</H1>
+        <Text>{exampleData[0].content}</Text>
+      </div>
+      <Text>View our range of funds</Text>
+    </div>
+  </Card>
+);
+
+export const SecondaryAsLink: StoryFn<typeof Card> = () => (
+  <Link
+    style={{ textDecoration: "none" }}
+    href="#"
+    IconComponent={null}
+    target="_blank"
+  >
+    <Card className="withImage" interactable variant="secondary">
+      <img
+        aria-label="The Skies by Dominik Schröder"
+        src={exampleImage}
+        className="card-demo-image"
+        style={{ width: "-webkit-fill-available" }}
+      />
+      <div
+        style={{
+          padding:
+            "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+        }}
+      >
+        <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+          <H1 styleAs="h3">{exampleData[0].title}</H1>
+          <Text>{exampleData[0].content}</Text>
+        </div>
+        <Text>View our range of funds</Text>
+      </div>
+    </Card>
+  </Link>
+);
+
+export const SecondaryDisabled: StoryFn<typeof Card> = () => (
+  <Card className="withImage" disabled variant="secondary">
     <img
       aria-label="The Skies by Dominik Schröder"
       src={exampleImage}

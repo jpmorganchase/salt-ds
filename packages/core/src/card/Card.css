@@ -21,12 +21,6 @@
   border-color: var(--salt-container-secondary-borderColor);
 }
 
-/*
- * **Deprecated:** The following styles are deprecated
- *  Use Interactable Card component instead
- *  for interactable styling
- */
-
 /* Styles applied if `interactable={true}` */
 .saltCard-interactable {
   display: block;
@@ -34,7 +28,6 @@
 }
 
 /* Styles applied on hover if `interactable={true}` */
-.saltCard-interactable,
 .saltCard-interactable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
   cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
