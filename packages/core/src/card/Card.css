@@ -34,10 +34,12 @@
 }
 
 /* **Deprecated:** Styles applied on hover if `interactable={true}` */
-a:focus .saltCard-interactable,
+a:focus-visible .saltCard-interactable,
 .saltCard-interactable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
   cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
   position: relative;
 }
 

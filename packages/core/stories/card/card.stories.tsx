@@ -3,7 +3,6 @@ import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   Card,
-  InteractableCard,
   SaltProvider,
   Panel,
   H1,
@@ -55,14 +54,6 @@ const Examples = () => (
         enable you to align your financial goals to your values.
       </Text>
     </Card>
-  </ExampleRow>
-);
-
-const InteractableExamples = () => (
-  <ExampleRow name="Default">
-    <InteractableCard>
-      <Text>{exampleData[0].title}</Text>
-    </InteractableCard>
   </ExampleRow>
 );
 
@@ -216,128 +207,55 @@ export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
   </Card>
 );
 
-export const InteractableAll: StoryFn<typeof Card> = () => (
-  <div>
-    <SaltProvider mode="light">
-      <InteractableExamples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <InteractableExamples />
-    </SaltProvider>
-  </div>
-);
-
-export const Interactable: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }}>
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
-    <Text>{exampleData[0].content}</Text>
-  </InteractableCard>
-);
-
-export const InteractableDisabled: StoryFn<typeof Card> = () => (
-  <InteractableCard
-    style={{ width: "256px" }}
-    onClick={() => console.log("Clicked")}
-    data-testid="card-disabled-example"
-    disabled
+export const DefaultAsLink: StoryFn<typeof Card> = () => (
+  <Link
+    style={{ textDecoration: "none" }}
+    href="#"
+    IconComponent={null}
+    target="_blank"
   >
-    <H1 styleAs="h3" disabled>
-      {exampleData[0].title}
-    </H1>
-    <Text disabled>{exampleData[0].content}</Text>
-  </InteractableCard>
+    <Card className="withImage" interactable>
+      <img
+        aria-label="The Skies by Dominik Schröder"
+        src={exampleImage}
+        className="card-demo-image"
+        style={{ width: "-webkit-fill-available" }}
+      />
+      <div
+        style={{
+          padding:
+            "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
+        }}
+      >
+        <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+          <H1 styleAs="h3">{exampleData[0].title}</H1>
+          <Text>{exampleData[0].content}</Text>
+        </div>
+        <Text>View our range of funds</Text>
+      </div>
+    </Card>
+  </Link>
 );
 
-export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
-  const placements = ["left", "right", "top", "bottom"];
-  return (
+export const DefaultDisabled: StoryFn<typeof Card> = () => (
+  <Card className="withImage" disabled>
+    <img
+      aria-label="The Skies by Dominik Schröder"
+      src={exampleImage}
+      className="card-demo-image"
+      style={{ width: "-webkit-fill-available" }}
+    />
     <div
       style={{
-        display: "grid",
-        gap: "calc(2 * var(--salt-size-unit))",
-        width: "266px",
+        padding:
+          "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
       }}
     >
-      {exampleData.map((example, index) => {
-        return (
-          <InteractableCard
-            accentPlacement={
-              placements[index] as "left" | "right" | "top" | "bottom"
-            }
-            key={index}
-          >
-            <H1 styleAs="h3">{example.title}</H1>
-            <Text>{example.content}</Text>
-          </InteractableCard>
-        );
-      })}
-    </div>
-  );
-};
-
-export const InteractableAsBlockLink: StoryFn<typeof Card> = () => {
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      href="https://saltdesignsystem.com/"
-      IconComponent={null}
-      target="_blank"
-    >
-      <InteractableCard style={{ width: "266px" }}>
+      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
         <H1 styleAs="h3">{exampleData[0].title}</H1>
         <Text>{exampleData[0].content}</Text>
-      </InteractableCard>
-    </Link>
-  );
-};
-
-export const InteractableAsBlockLinkWithImage: StoryFn<typeof Card> = () => {
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      href="https://saltdesignsystem.com/"
-      IconComponent={null}
-      target="_blank"
-    >
-      <InteractableCard className="withImage">
-        <img
-          aria-label="The Skies by Dominik Schröder"
-          src={exampleImage}
-          className="card-demo-image"
-          style={{ width: "-webkit-fill-available" }}
-        />
-        <div
-          style={{
-            padding:
-              "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
-          }}
-        >
-          <H1 styleAs="h3">{exampleData[0].title}</H1>
-          <Text>{exampleData[0].content}</Text>
-        </div>
-      </InteractableCard>
-    </Link>
-  );
-};
-
-export const InteractableAsBlockLinkWithImageBackground: StoryFn<
-  typeof Card
-> = () => {
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      href="https://saltdesignsystem.com/"
-      IconComponent={null}
-      target="_blank"
-    >
-      <InteractableCard className="imageBackground">
-        <div
-          style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
-        >
-          <H1 styleAs="h3">{exampleData[0].title}</H1>
-          <Text>{exampleData[0].content}</Text>
-        </div>
-      </InteractableCard>
-    </Link>
-  );
-};
+      </div>
+      <Text>View our range of funds</Text>
+    </div>
+  </Card>
+);
