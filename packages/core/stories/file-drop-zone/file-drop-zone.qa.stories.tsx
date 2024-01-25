@@ -7,7 +7,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {
-  title: "Core/File Drop Zone/QA",
+  title: "Core/File Drop Zone/File Drop Zone QA",
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
 
