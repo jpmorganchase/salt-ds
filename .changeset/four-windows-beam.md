@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Removed `FileDropZone` from Lab and promoted it to Core.
+Removed `FileDropZone` from lab and promoted it to core.
