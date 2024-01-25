@@ -23,6 +23,10 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   interactable?: boolean;
   /**
+   * Card size; adjusts the padding.
+   */
+  size?: "small" | "medium" | "large";
+  /**
    * Styling variant; defaults to "primary".
    */
   variant?: "primary" | "secondary";
@@ -37,6 +41,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     disabled,
     interactable,
     children,
+    size = "large",
     variant = "primary",
     ...rest
   } = props;
@@ -52,6 +57,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     <div
       className={clsx(
         withBaseName(),
+        withBaseName(size),
         withBaseName(variant),
         {
           /* **Deprecated:** InteractableCard should be used instead for these features */
