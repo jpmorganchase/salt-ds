@@ -179,6 +179,14 @@ describe("GIVEN a Tooltip", () => {
     });
   });
 
+  describe("WHEN content is empty", () => {
+    it("then tooltip doesn't display", () => {
+      cy.mount(<Open content={""} />);
+
+      cy.findByRole("tooltip").should("not.exist");
+    });
+  });
+
   describe("WHEN used in header tag", () => {
     it("then tooltip displays default font weight and size", () => {
       cy.mount(

@@ -34,3 +34,7 @@
   --saltCard-padding: 0px;
   width: 256px;
 }
+
+h3 {
+  margin: 0;
+}

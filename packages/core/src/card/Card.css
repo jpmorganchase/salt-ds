@@ -1,14 +1,9 @@
 /* Styles applied to the root element */
 .saltCard {
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
-  border-width: var(--salt-size-border);
+  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
-  padding: var(--saltCard-padding, var(--salt-spacing-300));
-
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
+  padding: var(--saltCard-padding, var(--card-padding));
 }
 
 .saltCard-primary {
@@ -19,6 +14,18 @@
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
+}
+
+.saltCard-small {
+  --card-padding: var(--salt-spacing-100);
+}
+
+.saltCard-medium {
+  --card-padding: var(--salt-spacing-200);
+}
+
+.saltCard-large {
+  --card-padding: var(--salt-spacing-300);
 }
 
 /*

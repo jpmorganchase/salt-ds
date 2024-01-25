@@ -1,5 +1,37 @@
 # @salt-ds/core
 
+## 1.15.0
+
+### Minor Changes
+
+- b2dd61d7: Added Pagination
+
+  Pagination helps users navigate easily between content separated into multiple pages.
+
+  ```tsx
+  <Pagination count={5}>
+    <Paginator />
+  </Pagination>
+  ```
+
+- 69549229: Added `Scrim`.
+
+  `Scrim` is a temporary, semi-transparent layer that makes underlying content less prominent.
+
+  ```tsx
+  <Scrim open={open} />
+  ```
+
+- 907397e2: Added NavigationItem
+
+  NavigationItem allows users to navigate between distinct applications and website pages.
+
+  ```tsx
+  <NavigationItem href="#">Label</NavigationItem>
+  ```
+
+- 340ff478: Updated `useToggleButtonGroup` to return the orientation of the group.
+
 ## 1.14.0
 
 ### Minor Changes

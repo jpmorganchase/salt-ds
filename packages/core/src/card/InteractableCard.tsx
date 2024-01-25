@@ -21,6 +21,10 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   disabled?: boolean;
   /**
+   * Card size; adjusts the padding.
+   */
+  size?: "small" | "medium" | "large";
+  /**
    * Styling variant; defaults to "primary".
    */
   variant?: "primary" | "secondary";
@@ -34,6 +38,7 @@ export const InteractableCard = forwardRef<
     accentPlacement = "bottom",
     children,
     className,
+    size = "large",
     variant = "primary",
     disabled,
     onBlur,
@@ -65,6 +70,7 @@ export const InteractableCard = forwardRef<
       {...restCardProps}
       className={clsx(
         withBaseName(),
+        withBaseName(size),
         withBaseName(variant),
         withBaseName(`accent${capitalize(accentPlacement)}`),
         {
