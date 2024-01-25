@@ -1,100 +1,138 @@
-import { Button, makePrefixer, UseFloatingUIProps, useId } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
-import { ComponentProps, ComponentPropsWithoutRef, forwardRef } from "react";
-import { Portal } from "../portal";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  SyntheticEvent,
+  useMemo,
+  useRef,
+} from "react";
+import { OverlayContext } from "./OverlayContext";
+import { useControlled, useFloatingUI, useId } from "@salt-ds/core";
+import {
+  flip,
+  offset,
+  shift,
+  limitShift,
+  arrow,
+  useClick,
+  useDismiss,
+  useInteractions,
+  useRole,
+} from "@floating-ui/react";
 
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import { useWindow as usePortalWindow } from "../window";
-
-import overlayCSS from "./Overlay.css";
-
-interface ADAExceptions {
-  showClose?: boolean;
-}
-
-export interface OverlayProps
-  extends ComponentPropsWithoutRef<"div">,
-    Partial<Pick<UseFloatingUIProps, "onOpenChange" | "open">> {
-  /**
-   * object that houses ada related props.
-   * adaExceptions.showClose defaults to true. It can be removed at the risk of ADA compliance
+export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
+  open?: boolean;
+  onOpenChange?: (event: SyntheticEvent, newOpen: boolean) => void;
+  /*
+   * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
-  adaExceptions?: ADAExceptions;
-  arrowProps?: ComponentProps<"div">;
-  variant?: "primary" | "secondary";
+  placement?: "top" | "bottom" | "left" | "right";
+  /*
+   * Use in controlled version to close Overlay.
+   */
+  onClose?: (event: SyntheticEvent) => void;
 }
-
-const withBaseName = makePrefixer("saltOverlay");
 
 export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
-  (
-    {
-      adaExceptions: { showClose } = {
-        showClose: true,
-      },
-      arrowProps,
+  function Overlay(props, ref) {
+    const {
       children,
-      className,
       open,
       onOpenChange,
-      variant = "primary",
+      placement: placementProp = "top",
+      id: idProp,
+      onClose,
       ...rest
-    },
-    ref
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-overlay",
-      css: overlayCSS,
-      window: targetWindow,
+    } = props;
+
+    const id = useId(idProp);
+    const arrowRef = useRef<SVGSVGElement | null>(null);
+
+    const [openState, setOpenState] = useControlled({
+      controlled: open,
+      default: false,
+      name: "Overlay",
+      state: "open",
     });
 
-    // Will need to figure out a better way to assign popper id's for the electron windows
-    const id = useId();
-    const Window = usePortalWindow();
+    const {
+      x,
+      y,
+      strategy,
+      context,
+      elements,
+      floating,
+      reference,
+      middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
+      placement,
+    } = useFloatingUI({
+      open: openState,
+      onOpenChange: setOpenState,
+      placement: placementProp,
+      middleware: [
+        offset(11),
+        flip(),
+        shift({ limiter: limitShift() }),
+        arrow({ element: arrowRef }),
+      ],
+    });
 
-    const handleCloseButton = () => {
-      onOpenChange?.(false);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+      useRole(context, { role: "dialog" }),
+      useClick(context),
+      useDismiss(context),
+    ]);
+
+    const floatingStyles = useMemo(() => {
+      return {
+        top: y ?? 0,
+        left: x ?? 0,
+        position: strategy,
+        width: elements.floating?.offsetWidth,
+        height: elements.floating?.offsetHeight,
+      };
+    }, [elements.floating, strategy, x, y]);
+
+    const setOpen = (event: SyntheticEvent, newOpen: boolean) => {
+      setOpenState(newOpen);
+      onOpenChange?.(event, newOpen);
     };
 
-    if (!open) {
-      return null;
-    }
+    const arrowProps = {
+      ref: arrowRef,
+      context,
+      style: {
+        position: strategy,
+        left: arrowX ?? 0,
+        top: arrowY ?? 0,
+      },
+    };
+
+    const handleCloseButton = (event: SyntheticEvent) => {
+      setOpen(event, false);
+      onClose?.(event);
+    };
 
     return (
-      <Portal>
-        <Window
-          className={clsx(withBaseName(), className, {
-            [withBaseName(variant)]: variant === "secondary",
-          })}
-          id={id}
-          ref={ref}
-          {...rest}
-        >
-          <div
-            className={clsx(withBaseName("content"))}
-            data-testid="overlay-content"
-          >
-            {showClose && (
-              <Button
-                onClick={handleCloseButton}
-                className={withBaseName("close")}
-                variant="secondary"
-              >
-                <CloseIcon
-                  accessible-text="close overlay"
-                  className={withBaseName("closeIcon")}
-                />
-              </Button>
-            )}
-            {children}
-            <div className={withBaseName("arrow")} {...arrowProps} />
-          </div>
-        </Window>
-      </Portal>
+      <OverlayContext.Provider
+        value={{
+          id: id ?? "",
+          openState,
+          setOpen,
+          floatingStyles,
+          placement,
+          context,
+          arrowProps,
+          floating,
+          reference,
+          handleCloseButton,
+          getFloatingProps,
+          getReferenceProps,
+        }}
+      >
+        <div ref={ref} {...rest}>
+          {children}
+        </div>
+      </OverlayContext.Provider>
     );
   }
 );

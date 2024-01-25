@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode } from "react";
+import { CSSProperties, forwardRef, ReactNode } from "react";
 import {
   FloatingComponentProps,
   SaltProvider,
@@ -32,7 +32,7 @@ const TestCustomFloatingComponent = forwardRef<
           }
           data-position={position}
           {...rest}
-          style={style}
+          style={style as CSSProperties}
           ref={ref}
         />
       </SaltProvider>

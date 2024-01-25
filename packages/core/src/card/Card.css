@@ -4,11 +4,6 @@
   border-width: var(--salt-size-border);
   border-style: var(--salt-container-borderStyle);
   padding: var(--saltCard-padding, var(--salt-spacing-300));
-
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
 }
 
 .saltCard-primary {

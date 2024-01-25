@@ -4,6 +4,15 @@
   font-weight: var(--salt-text-fontWeight-strong);
 }
 
-.content-body {
-  font-size: var(--salt-text-fontSize);
+.divider-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.divider {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-shadow-300-color);
+  width: 100%;
 }
