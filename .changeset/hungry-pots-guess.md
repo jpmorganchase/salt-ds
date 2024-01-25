@@ -8,8 +8,8 @@ Added `FileDropZone`, `FileDropZoneIcon` and `FileDropZoneTrigger` to Core.
 
 ```tsx
 <FileDropZone>
-    <FileDropZoneIcon />
-    <strong>Drop files here or</strong>
-    <FileDropZoneTrigger />
-  </FileDropZone>
+  <FileDropZoneIcon />
+  <strong>Drop files here or</strong>
+  <FileDropZoneTrigger />
+</FileDropZone>
 ```
