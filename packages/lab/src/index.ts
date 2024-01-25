@@ -33,7 +33,6 @@ export * from "./drawer";
 export * from "./dropdown";
 export * from "./dropdown-next";
 export * from "./editable-label";
-export * from "./file-drop-zone";
 export {
   FormFieldLegacy as FormField,
   type FormFieldLegacyProps as FormFieldProps,
