@@ -7,30 +7,24 @@ import {
 
 import { clsx } from "clsx";
 import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
-import { ParentChildItem, SlideDirection } from "./ParentChildItem";
+import { ParentChildItem } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 export type StackedViewElement = "parent" | "child";
-
-type Orientation = "horizontal" | "vertical";
 
 export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
-  stackedAtBreakpoint?: keyof Breakpoints;
+  collapseAtBreakpoint?: keyof Breakpoints;
   /**
    * Change element that is displayed when in staked view.
    */
-  stackedViewElement?: StackedViewElement;
+  collapsedViewElement?: StackedViewElement;
   /**
    * Disable all animations.
    */
   disableAnimations?: boolean;
-  /**
-   * Orientation for slide animations.
-   */
-  orientation?: Orientation;
   /**
    * Controls the space between columns.
    */
@@ -47,54 +41,27 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltParentChildLayout");
 
-const getDirection = (
-  orientation: Orientation,
-  stackedViewElement: StackedViewElement
-) => {
-  let direction: SlideDirection = "right";
-
-  if (orientation === "horizontal") {
-    if (stackedViewElement === "parent") {
-      direction = "left";
-    } else {
-      direction = "right";
-    }
-  } else {
-    if (stackedViewElement === "parent") {
-      direction = "bottom";
-    } else {
-      direction = "top";
-    }
-  }
-
-  return direction;
-};
-
 export const ParentChildLayout = forwardRef<
   HTMLDivElement,
   ParentChildLayoutProps
 >(function ParentChildLayout(
   {
-    stackedAtBreakpoint = "sm",
-    stackedViewElement = "parent",
+    collapseAtBreakpoint = "sm",
+    collapsedViewElement = "parent",
     disableAnimations = false,
     parent,
     child,
     className,
-    orientation = "horizontal",
     ...rest
   },
   ref
 ) {
-  const stackedView = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
-
-  const parentChildDirection = getDirection(orientation, stackedViewElement);
+  const stackedView = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
   const stackedViewChildren = {
     parent: (
       <ParentChildItem
         disableAnimations={disableAnimations}
-        direction={parentChildDirection}
         isStacked={stackedView}
       >
         {parent}
@@ -103,7 +70,6 @@ export const ParentChildLayout = forwardRef<
     child: (
       <ParentChildItem
         disableAnimations={disableAnimations}
-        direction={parentChildDirection}
         isStacked={stackedView}
       >
         {child}
@@ -114,7 +80,7 @@ export const ParentChildLayout = forwardRef<
   return (
     <FlexLayout className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {stackedView ? (
-        stackedViewChildren[stackedViewElement]
+        stackedViewChildren[collapsedViewElement]
       ) : (
         <>
           <ParentChildItem grow={0} disableAnimations={disableAnimations}>

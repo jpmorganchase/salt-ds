@@ -2,15 +2,10 @@
   height: 100%;
 }
 
-.saltParentChildItem-slide-top {
-  animation: var(--salt-animation-slide-in-top);
-}
-.saltParentChildItem-slide-bottom {
-  animation: var(--salt-animation-slide-in-bottom);
-}
 .saltParentChildItem-slide-left {
   animation: var(--salt-animation-slide-in-left);
 }
+
 .saltParentChildItem-slide-right {
   animation: var(--salt-animation-slide-in-right);
 }

@@ -21,12 +21,7 @@ import "../layout/layout.stories.css";
 
 export default {
   title: "Lab/Layout/Parent Child Layout",
-  component: ParentChildLayout,
-  argTypes: {
-    stackedAtBreakpoint: {
-      control: { type: "select" },
-    },
-  },
+  component: ParentChildLayout
 } as Meta<typeof ParentChildLayout>;
 
 const parent = (
@@ -68,14 +63,14 @@ export const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
         Show child
       </Button>
       <div style={{ width: "50vw", maxWidth: 800 }}>
-        <ParentChildLayout {...args} stackedViewElement={currentView} />
+        <ParentChildLayout {...args} collapsedViewElement={currentView} />
       </div>
     </>
   );
 };
 
 Stacked.args = {
-  stackedAtBreakpoint: "xl",
+  collapseAtBreakpoint: "xl",
   parent,
   child,
 };
@@ -107,7 +102,7 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
         <ParentChildLayout
           {...args}
           className="reduced-motion"
-          stackedViewElement={currentView}
+          collapsedViewElement={currentView}
         />
       </div>
     </>
@@ -115,7 +110,7 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
 };
 
 ReducedMotion.args = {
-  stackedAtBreakpoint: "xl",
+  collapseAtBreakpoint: "xl",
   parent,
   child,
 };
@@ -266,7 +261,7 @@ export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
     <div className="parent-child-composite-container">
       <ParentChildLayout
         {...args}
-        stackedViewElement={currentView}
+        collapsedViewElement={currentView}
         parent={parent}
         child={child}
       />

@@ -24,10 +24,6 @@ export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
    */
   disableAnimations?: boolean;
   /**
-   * Direction for slide animations.
-   */
-  direction?: SlideDirection;
-  /**
    * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
    */
   grow?: ResponsiveProp<number>;
@@ -47,7 +43,6 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   function ParentChildItem(
     {
       disableAnimations = false,
-      direction,
       isStacked,
       children,
       className,
@@ -67,9 +62,7 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
         className={clsx(
           withBaseName(),
           {
-            ...(direction && {
-              [withBaseName(`slide-${direction}`)]: !disableAnimations,
-            }),
+            [withBaseName(`slide`)]: !disableAnimations,
             "saltFlexItem-stacked": isStacked,
           },
           className
