@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, ComponentPropsWithoutRef } from "react";
 import { clsx } from "clsx";
 import {
   FlexItem,
@@ -12,9 +12,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import parentChildItemCss from "./ParentChildItem.css";
 
-export type SlideDirection = "top" | "bottom" | "left" | "right";
-
-export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
+export interface ParentChildItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Allows the alignment specified by parent to be overridden for individual items, default is "start".
    */
@@ -24,7 +22,7 @@ export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
    */
   disableAnimations?: boolean;
   /**
-   * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
+   * Defines the ability for an item to grow x times more compared to its siblings, default is 0.
    */
   grow?: ResponsiveProp<number>;
   /**

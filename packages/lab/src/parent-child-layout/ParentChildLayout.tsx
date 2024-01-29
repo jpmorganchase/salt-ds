@@ -6,7 +6,12 @@ import {
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
+import {
+  ElementType,
+  forwardRef,
+  ComponentPropsWithoutRef,
+  ReactNode,
+} from "react";
 import { ParentChildItem } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
@@ -17,7 +22,8 @@ import parentChildLayoutCss from "./ParentChildLayout.css";
 
 export type StackedViewElement = "parent" | "child";
 
-export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
+export interface ParentChildLayoutProps
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
