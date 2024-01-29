@@ -1,4 +1,13 @@
 export * from "./AllRenderer";
 export * from "./BackgroundBlock";
+export * from "./FontSizeBlock";
+export * from "./FontWeightBlock";
+export * from "./CursorBlock";
+export * from "./LetterSpacingBlock";
+export * from "./LineBlock";
+export * from "./TextBlock";
+export * from "./OutlineBlock";
+export { ShadowBlockCell } from "./ShadowBlock";
+export * from "./ColorBlock";
 export * from "./QAContainer";
 export * from "./QAContainerNoStyleInjection";
