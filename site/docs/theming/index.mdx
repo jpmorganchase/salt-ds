@@ -11,18 +11,22 @@ Salt is under active development and theming is subject to change. At this stage
 
 Below we'll explain what a token is, how different token layers interact, and how this structure makes theming more accessible.
 
-## Why theme
+## Theming with tokens
 
-Theming enables you to modify design variables, such as color or opacity, in a simple and consistent way. While you can override such variables on a component-by-component basis, following Salt's structure offers several benefits:
+Theming enables you to modify design variables, such as color or opacity, in a simple and consistent way. 
+
+Salt uses tokens to store design decisions in a single place. Components can reuse tokens, meaning they help to define the design rules and aid the cohesiveness of the overall user interface.
+
+Instead of overriding design variables within a single component, we recommend modifying the tokens that the component references. Maintaining this token-based structure offers several benefits:
 
 - Streamlined design changes that automatically apply to related components
 - Increased consistency across all components, improving the overall user experience
 - Simplified, drag-and-drop approach when adding new components or patterns
 - Single reference points for commonly-used values
 
-Note that theming may involve an element of maintenance, and future versions of Salt may not work with existing themes as expected.
+Note that theming will involve an element of maintenance as future versions of Salt may modify the token list.
 
-## Tokens explained
+## Token tiers
 
 Salt uses design tokens to store decisions in a single place. From most generalized to most specific, the three tiers of tokens are:
 
