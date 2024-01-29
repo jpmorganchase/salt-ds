@@ -7,7 +7,11 @@ sidebar:
 
 The Salt design system enables teams to modify design variables and theme projects to their requirements. Understanding how Salt structures and manages these design variables will help you create consistent themes for your project.
 
-## Why theme?
+Salt is under active development and theming is subject to change. At this stage in development, we recommend you only modify characteristic design tokens when theming your project.
+
+Below we'll explain what a token is, how different token layers interact, and how this structure makes theming more accessible.
+
+## Why theme
 
 Theming enables you to modify design variables, such as color or opacity, in a simple and consistent way. While you can override such variables on a component-by-component basis, following Salt's structure offers several benefits:
 
@@ -20,7 +24,28 @@ Note that theming may involve an element of maintenance, and future versions of 
 
 ## Tokens explained
 
-Salt uses design tokens to store decisions in a single place.
+Salt uses design tokens to store decisions in a single place. From most generalized to most specific, the three tiers of tokens are:
+
+1. Foundational tokens
+2. Palette tokens
+3. Characteristic design tokens
+
+These tokens can reference each other and inherit values from lower tiers.
+
+Take the status characteristic tokens as an example. Components like `Toast` use these tokens to denote status using color, such as a green foreground color to denote success.
+
+1. The component uses the `--salt-status-success-foreground` characteristic token. This token has the default value `var(--salt-palette-success-foreground)`. 
+2. The characteristic token references the palette token `--salt-palette-success-foreground`. This token has the default value `var(--salt-color-green-400)`. 
+3. The palette token references the foundational token `--salt-color-green-400`. This token has the default value `rgb(48, 156, 90)`.
+
+Characteristics are both light/dark and density sensitive. That means the value the characteristic points to will change according to the values given in the nearest `SaltProvider`.
+
+As an example, `--salt-actionable-primary-background` resolves to `var(--salt-palette-interact-primary-background)`. In the light theme, this palette token has the value `var(--salt-color-gray-60)`. In the dark theme, the value is `var(--salt-color-gray-300)`. Foundational tokens then resolve to their respective RGBA values.
 
 ## Using tokens to theme 
 
+At this stage in Salt's development, we recommend you only modify the characteristic tokens. Salt is under active development and tokens are subject to change, but the characteristic token layer is likely to experience the fewest changes.
+
+We strongly recommend you don't change the foundational tokens. This can cause unexpected issues, such as breaking contrast levels or changing the size of components.
+
+It's best to store theme changes in a single override file, rather than duplicating the entire project to make changes. This will simplify the development process. 
