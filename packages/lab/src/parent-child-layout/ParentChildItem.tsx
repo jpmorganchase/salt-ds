@@ -41,13 +41,7 @@ export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltParentChildItem");
 export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   function ParentChildItem(
-    {
-      disableAnimations = false,
-      isStacked,
-      children,
-      className,
-      ...rest
-    },
+    { disableAnimations = false, isStacked, children, className, ...rest },
     ref
   ) {
     const targetWindow = useWindow();

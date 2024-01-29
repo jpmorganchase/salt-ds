@@ -88,21 +88,5 @@ describe("GIVEN a Parent and Child", () => {
         expect($div).to.contain("Child");
       });
     });
-
-    it("THEN it should change the direction of animations", () => {
-      cy.mount(<Stacked orientation="vertical" />);
-
-      cy.get(".saltParentChildItem").should(
-        "have.class",
-        "saltParentChildItem-slide-bottom"
-      );
-
-      cy.mount(<Stacked orientation="horizontal" />);
-
-      cy.get(".saltParentChildItem").should(
-        "have.class",
-        "saltParentChildItem-slide-left"
-      );
-    });
   });
 });

@@ -21,7 +21,7 @@ import "../layout/layout.stories.css";
 
 export default {
   title: "Lab/Layout/Parent Child Layout",
-  component: ParentChildLayout
+  component: ParentChildLayout,
 } as Meta<typeof ParentChildLayout>;
 
 const parent = (
