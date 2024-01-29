@@ -4,7 +4,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Stepped Tracker/QA",
+  title: "Lab/Stepped Tracker/Stepped Tracker QA",
   component: SteppedTracker,
   subcomponents: { TrackerStep, StepLabel },
 } as Meta<typeof SteppedTracker>;
