@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
 import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
@@ -28,19 +28,23 @@ export const ReducedMotion = (): ReactElement => {
 
   return (
     <>
-      <p>In order to test this on MacOS, follow these steps: </p>
-      <ul>
-        <li>Go to System Preferences</li>
-        <li>Select the Accessibility category</li>
-        <li>Select the Display tab</li>
-        <li>Enable the Reduce Motion option</li>
-      </ul>
-      <Button onClick={handleParent} disabled={currentView === "parent"}>
-        Show parent
-      </Button>
-      <Button onClick={handleChild} disabled={currentView === "child"}>
-        Show child
-      </Button>
+      <StackLayout>
+        <p>In order to test this on MacOS, follow these steps: </p>
+        <ul>
+          <li>Go to System Preferences</li>
+          <li>Select the Accessibility category</li>
+          <li>Select the Display tab</li>
+          <li>Enable the Reduce Motion option</li>
+        </ul>
+        <FlexLayout>
+          <Button onClick={handleParent} disabled={currentView === "parent"}>
+            Show parent
+          </Button>
+          <Button onClick={handleChild} disabled={currentView === "child"}>
+            Show child
+          </Button>
+        </FlexLayout>
+      </StackLayout>
       <div style={{ width: "40vw", maxWidth: 400 }}>
         <ParentChildLayout
           className="reduced-motion"

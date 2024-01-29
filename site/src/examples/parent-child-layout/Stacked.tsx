@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
+import { Button, FlexLayout } from "@salt-ds/core";
 import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
@@ -28,12 +28,14 @@ export const Stacked = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleParent} disabled={currentView === "parent"}>
-        Show parent
-      </Button>
-      <Button onClick={handleChild} disabled={currentView === "child"}>
-        Show child
-      </Button>
+      <FlexLayout>
+        <Button onClick={handleParent} disabled={currentView === "parent"}>
+          Show parent
+        </Button>
+        <Button onClick={handleChild} disabled={currentView === "child"}>
+          Show child
+        </Button>
+      </FlexLayout>
       <div style={{ width: "40vw", maxWidth: 400 }}>
         <ParentChildLayout
           collapsedViewElement={currentView}

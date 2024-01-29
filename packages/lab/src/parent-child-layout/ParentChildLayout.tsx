@@ -64,22 +64,16 @@ export const ParentChildLayout = forwardRef<
     window: targetWindow,
   });
 
-  const stackedView = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
+  const isStacked = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
   const stackedViewChildren = {
     parent: (
-      <ParentChildItem
-        isStacked={stackedView}
-        className={withBaseName("parent")}
-      >
+      <ParentChildItem isStacked className={withBaseName("parent")}>
         {parent}
       </ParentChildItem>
     ),
     child: (
-      <ParentChildItem
-        isStacked={stackedView}
-        className={withBaseName("child")}
-      >
+      <ParentChildItem isStacked className={withBaseName("child")}>
         {child}
       </ParentChildItem>
     ),
@@ -95,7 +89,7 @@ export const ParentChildLayout = forwardRef<
       )}
       {...rest}
     >
-      {stackedView ? (
+      {isStacked ? (
         stackedViewChildren[collapsedViewElement]
       ) : (
         <>
