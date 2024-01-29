@@ -1,29 +1,35 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ComponentType,
+  CSSProperties,
+  forwardRef,
+} from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import { Info } from "../Info";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import circularProgressCSS from "./CircularProgress.css";
+import { Info, InfoProps } from "../internal/Info";
 
 const withBaseName = makePrefixer("saltCircularProgress");
 
-export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
+export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * A label for accessibility
+   * Component to render info
    */
-  "aria-label"?: string;
-  /**
-   * The className(s) of the component
-   */
-  className?: string;
+  InfoComponent?: ComponentType<InfoProps>;
   /**
    * The value of the max progress indicator.
    * Default value is 100.
    */
   max?: number;
+  /**
+   * The value of the min progress indicator.
+   * Default value is 0.
+   */
+  min?: number;
   /**
    * The value of the progress indicator.
    * Value between 0 and max.
@@ -38,7 +44,15 @@ export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
 >(function CircularProgress(
-  { "aria-label": ariaLabel, className, max = 100, value = 0, ...rest },
+  {
+    InfoComponent = Info,
+    "aria-label": ariaLabel,
+    className,
+    max = 100,
+    min = 0,
+    value = 0,
+    ...rest
+  },
   ref
 ) {
   const targetWindow = useWindow();
@@ -67,14 +81,6 @@ export const CircularProgress = forwardRef<
     subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
   }
 
-  const progressInfo = (
-    <Info
-      className={withBaseName("progressValue")}
-      unit="%"
-      value={Math.round(progress)}
-    />
-  );
-
   return (
     <div
       className={clsx(withBaseName(), className)}
@@ -83,7 +89,7 @@ export const CircularProgress = forwardRef<
       role="progressbar"
       aria-label={ariaLabel}
       aria-valuemax={max}
-      aria-valuemin={0}
+      aria-valuemin={min}
       aria-valuenow={Math.round(value)}
       {...rest}
     >
@@ -108,7 +114,11 @@ export const CircularProgress = forwardRef<
           </div>
         </div>
       </div>
-      {progressInfo}
+      <InfoComponent
+        className={withBaseName("progressValue")}
+        unit="%"
+        value={Math.round(progress)}
+      />
     </div>
   );
 });

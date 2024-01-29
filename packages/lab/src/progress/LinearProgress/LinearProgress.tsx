@@ -1,25 +1,35 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import {
+  ComponentPropsWithoutRef,
+  ComponentType,
+  CSSProperties,
+  forwardRef,
+} from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
-import { Info } from "../Info";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import linearProgressCss from "./LinearProgress.css";
+import { Info, InfoProps } from "../internal/Info";
 
 const withBaseName = makePrefixer("saltLinearProgress");
 
-export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
+export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The className(s) of the component.
+   * Component to render info
    */
-  className?: string;
+  InfoComponent?: ComponentType<InfoProps>;
   /**
    * The value of the max progress indicator.
    * Default value is 100.
    */
   max?: number;
+  /**
+   * The value of the min progress indicator.
+   * Default value is 0.
+   */
+  min?: number;
   /**
    * The unit shown on the progress indicator.
    * Default unit is `%`.
@@ -36,7 +46,10 @@ export interface LinearProgressProps extends HTMLAttributes<HTMLDivElement> {
  * Linear progress bar with an Info element showing the current value
  */
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
-  function LinearProgress({ className, max = 100, value = 0, ...rest }, ref) {
+  function LinearProgress(
+    { InfoComponent = Info, className, max = 100, min = 0, value = 0, ...rest },
+    ref
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-linear-progress",
@@ -45,14 +58,6 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const progress = (value / max) * 100;
-
-    const progressInfo = (
-      <Info
-        unit="%"
-        value={Math.round(progress)}
-        className={withBaseName("progressValue")}
-      />
-    );
 
     const barStyle: CSSProperties = {};
     const trackStyle: CSSProperties = {};
@@ -67,7 +72,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         data-testid="linear-progress"
         role="progressbar"
         aria-valuemax={max}
-        aria-valuemin={0}
+        aria-valuemin={min}
         aria-valuenow={Math.round(value)}
         {...rest}
       >
@@ -75,7 +80,11 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           <div className={withBaseName("bar")} style={barStyle} />
           <div className={withBaseName("track")} style={trackStyle} />
         </div>
-        {progressInfo}
+        <InfoComponent
+          className={withBaseName("progressValue")}
+          unit="%"
+          value={Math.round(progress)}
+        />
       </div>
     );
   }
