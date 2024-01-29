@@ -24,7 +24,7 @@ export interface ParentChildItemProps extends HTMLAttributes<HTMLDivElement> {
    */
   disableAnimations?: boolean;
   /**
-   * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
+   * Defines the ability for an item to grow x times more compared to its siblings, default is 0.
    */
   grow?: ResponsiveProp<number>;
   /**
