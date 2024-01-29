@@ -6,12 +6,7 @@ import {
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import {
-  ElementType,
-  forwardRef,
-  ComponentPropsWithoutRef,
-  ReactNode,
-} from "react";
+import { forwardRef, ReactNode } from "react";
 import { ParentChildItem } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
@@ -22,8 +17,7 @@ import parentChildLayoutCss from "./ParentChildLayout.css";
 
 export type StackedViewElement = "parent" | "child";
 
-export interface ParentChildLayoutProps
-  extends ComponentPropsWithoutRef<"div"> {
+export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
@@ -36,10 +30,6 @@ export interface ParentChildLayoutProps
    * Disable all animations.
    */
   disableAnimations?: boolean;
-  /**
-   * Controls the space between columns.
-   */
-  gap?: FlexLayoutProps<ElementType>["gap"];
   /**
    * Parent component to be rendered
    */

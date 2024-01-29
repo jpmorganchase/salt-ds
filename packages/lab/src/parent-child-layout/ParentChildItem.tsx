@@ -1,42 +1,21 @@
-import { forwardRef, ComponentPropsWithoutRef } from "react";
+import { forwardRef } from "react";
 import { clsx } from "clsx";
-import {
-  FlexItem,
-  flexItemAlignment,
-  makePrefixer,
-  ResponsiveProp,
-} from "@salt-ds/core";
+import { FlexItem, FlexItemProps, makePrefixer } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import parentChildItemCss from "./ParentChildItem.css";
 
-export interface ParentChildItemProps extends ComponentPropsWithoutRef<"div"> {
-  /**
-   * Allows the alignment specified by parent to be overridden for individual items, default is "start".
-   */
-  align?: flexItemAlignment;
-  /**
-   * Disable all animations.
-   */
-  disableAnimations?: boolean;
-  /**
-   * Defines the ability for an item to grow x times more compared to its siblings, default is 0.
-   */
-  grow?: ResponsiveProp<number>;
+export interface ParentChildItemProps extends FlexItemProps<"div"> {
   /**
    * Determines whether the component is stacked
    */
   isStacked?: boolean;
-  /**
-   * Defines the ability for an item to shrink x times more compared to it's siblings, default is 1.
-
-   */
-  shrink?: ResponsiveProp<number>;
 }
 
 const withBaseName = makePrefixer("saltParentChildItem");
+
 export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
   function ParentChildItem({ isStacked, children, className, ...rest }, ref) {
     const targetWindow = useWindow();
