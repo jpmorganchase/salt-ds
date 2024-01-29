@@ -79,7 +79,6 @@ export const ParentChildLayout = forwardRef<
   const stackedViewChildren = {
     parent: (
       <ParentChildItem
-        disableAnimations={disableAnimations}
         isStacked={stackedView}
         className={withBaseName("parent")}
       >
@@ -88,7 +87,6 @@ export const ParentChildLayout = forwardRef<
     ),
     child: (
       <ParentChildItem
-        disableAnimations={disableAnimations}
         isStacked={stackedView}
         className={withBaseName("child")}
       >
@@ -98,17 +96,21 @@ export const ParentChildLayout = forwardRef<
   };
 
   return (
-    <FlexLayout ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+    <FlexLayout
+      ref={ref}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName(`no-animations`)]: disableAnimations },
+        className
+      )}
+      {...rest}
+    >
       {stackedView ? (
         stackedViewChildren[collapsedViewElement]
       ) : (
         <>
-          <ParentChildItem grow={0} disableAnimations={disableAnimations}>
-            {parent}
-          </ParentChildItem>
-          <ParentChildItem grow={2} disableAnimations={disableAnimations}>
-            {child}
-          </ParentChildItem>
+          <ParentChildItem grow={0}>{parent}</ParentChildItem>
+          <ParentChildItem grow={2}>{child}</ParentChildItem>
         </>
       )}
     </FlexLayout>

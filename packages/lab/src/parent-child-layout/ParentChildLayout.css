@@ -1,3 +1,26 @@
 .saltParentChildLayout {
   overflow: hidden;
 }
+
+.saltParentChildLayout-parent {
+  animation: var(--salt-animation-slide-in-left);
+}
+
+.saltParentChildLayout-child {
+  animation: var(--salt-animation-slide-in-right);
+}
+
+.saltParentChildLayout-no-animations .saltParentChildLayout-parent,
+.saltParentChildLayout-no-animations .saltParentChildLayout-child {
+  animation: none;
+}
+
+@media (prefers-reduced-motion) {
+  .reduced-motion .saltParentChildLayout-parent {
+    animation: none;
+  }
+
+  .reduced-motion .saltParentChildLayout-child {
+    animation: none;
+  }
+}

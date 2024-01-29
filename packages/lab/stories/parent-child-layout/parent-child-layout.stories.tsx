@@ -17,7 +17,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 
-import "../layout/layout.stories.css";
+import "./parent-child-layout.stories.css";
 
 export default {
   title: "Lab/Layout/Parent Child Layout",
@@ -25,13 +25,13 @@ export default {
 } as Meta<typeof ParentChildLayout>;
 
 const parent = (
-  <div className="layout-content" style={{ height: 500, minWidth: 150 }}>
+  <div className="parent-content" style={{ height: 500, minWidth: 150 }}>
     Parent
   </div>
 );
 
 const child = (
-  <div className="layout-active-content" style={{ height: 500 }}>
+  <div className="child-content" style={{ height: 500 }}>
     Child
   </div>
 );

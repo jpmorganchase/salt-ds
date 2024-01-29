@@ -1,11 +1,6 @@
 .saltParentChildItem {
   height: 100%;
 }
-
-.saltParentChildItem-slide.saltParentChildLayout-parent {
-  animation: var(--salt-animation-slide-in-left);
-}
-
-.saltParentChildItem-slide.saltParentChildLayout-child {
-  animation: var(--salt-animation-slide-in-right);
+.saltParentChildItem-no-animations {
+  animation: none;
 }

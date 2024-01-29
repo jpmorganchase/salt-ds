@@ -1,0 +1,38 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="parent-child-layout" exampleName="Default">
+
+### Default
+
+Parent Child Layout displays the parent component to the left and child component to the right.
+
+</LivePreview>
+
+<LivePreview componentName="parent-child-layout" exampleName="Stacked">
+
+### Stacked
+
+The parent and child component changes to a stacked view once it approaches a specified breakpoint that can be customized via the `stackedAtBreakpoint` prop.
+
+</LivePreview>
+
+<LivePreview componentName="parent-child-layout" exampleName="ReducedMotion">
+
+### Reduced motion
+
+You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
+
+</LivePreview>
+
+</LivePreviewControls>

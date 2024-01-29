@@ -38,10 +38,7 @@ export interface ParentChildItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltParentChildItem");
 export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
-  function ParentChildItem(
-    { disableAnimations = false, isStacked, children, className, ...rest },
-    ref
-  ) {
+  function ParentChildItem({ isStacked, children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-parent-child-item",
@@ -54,7 +51,6 @@ export const ParentChildItem = forwardRef<HTMLDivElement, ParentChildItemProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName(`slide`)]: !disableAnimations,
             "saltFlexItem-stacked": isStacked,
           },
           className

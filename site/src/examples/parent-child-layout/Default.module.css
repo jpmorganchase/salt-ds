@@ -1,0 +1,15 @@
+.parentContent {
+  background: var(--salt-color-orange-20);
+  padding: 1rem;
+}
+
+.childContent {
+  background: var(--salt-color-gray-40);
+  padding: 1rem;
+}
+
+.parent-child-composite-container {
+  max-width: 1200px;
+  min-height: 800px;
+  padding: var(--salt-size-container-spacing);
+}
