@@ -10,6 +10,11 @@ import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ParentChildItem } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+
+import parentChildLayoutCss from "./ParentChildLayout.css";
+
 export type StackedViewElement = "parent" | "child";
 
 export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
@@ -56,6 +61,13 @@ export const ParentChildLayout = forwardRef<
   },
   ref
 ) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-parent-child-layout",
+    css: parentChildLayoutCss,
+    window: targetWindow,
+  });
+
   const stackedView = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
   const stackedViewChildren = {
@@ -63,6 +75,7 @@ export const ParentChildLayout = forwardRef<
       <ParentChildItem
         disableAnimations={disableAnimations}
         isStacked={stackedView}
+        className={withBaseName("parent")}
       >
         {parent}
       </ParentChildItem>
@@ -71,6 +84,7 @@ export const ParentChildLayout = forwardRef<
       <ParentChildItem
         disableAnimations={disableAnimations}
         isStacked={stackedView}
+        className={withBaseName("child")}
       >
         {child}
       </ParentChildItem>
@@ -78,7 +92,7 @@ export const ParentChildLayout = forwardRef<
   };
 
   return (
-    <FlexLayout className={clsx(withBaseName(), className)} ref={ref} {...rest}>
+    <FlexLayout ref={ref} className={clsx(withBaseName(), className)} {...rest}>
       {stackedView ? (
         stackedViewChildren[collapsedViewElement]
       ) : (
