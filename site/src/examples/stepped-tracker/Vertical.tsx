@@ -5,10 +5,9 @@ import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 export const Vertical = (): ReactElement => {
   return (
     <StackLayout
-      direction="row"
-      align="stretch"
-      gap={10}
-      style={{ height: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+      direction={{ xs: "column", sm: "row", md: "column", lg: "row" }}
+      gap={8}
+      style={{ height: "100%", maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={0} orientation="vertical">
         <TrackerStep>
