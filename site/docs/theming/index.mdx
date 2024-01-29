@@ -5,29 +5,22 @@ sidebar:
   label: Overview
 ---
 
-Follow our step-by-step guides to design and develop accessible, responsive, best-in-class user experiences with Salt.
+The Salt design system enables teams to modify design variables and theme projects to their requirements. Understanding how Salt structures and manages these design variables will help you create consistent themes for your project.
 
-<GridLayout columns={{ xs: 1, sm: 2 }}>
-  <OverviewCard
-    icon={<Image src="/img/design.svg" alt="pen icon"  />}
-    title="Designers"
-    url="./designers"
-    footerText="For designers"
-    keylineColor="purple"
-    >
+## Why theme?
 
-Learn how to build themes for your project.
+Theming enables you to modify design variables, such as color or opacity, in a simple and consistent way. While you can override such variables on a component-by-component basis, following Salt's structure offers several benefits:
 
-  </OverviewCard>
-  <OverviewCard
-    icon={<Image src="/img/develop.svg" alt="code bracket icon"  />}
-    title="Developers"
-    url="./developers"
-    footerText="For developers"
-    keylineColor="orange"
-  >
+- Streamlined design changes that automatically apply to related components
+- Increased consistency across all components, improving the overall user experience
+- Simplified, drag-and-drop approach when adding new components or patterns 
+- Single reference points for commonly-used values
 
-Find out more about different technical approaches to theming.
+Note that theming may involve an element of maintenance, and future versions of Salt may not work with existing themes as expected.
 
-  </OverviewCard>
-</GridLayout>
+## Tokens explained
+
+Salt uses design tokens to store decisions in a single place.
+
+## Using tokens to theme 
+
