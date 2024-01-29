@@ -7,15 +7,17 @@ sidebar:
 
 The Salt design system enables teams to modify design variables and theme projects to their requirements. Understanding how Salt structures and manages these design variables will help you create consistent themes for your project.
 
-Salt is under active development and theming is subject to change. At this stage in development, we recommend you only modify characteristic design tokens when theming your project.
-
 Below we'll explain what a token is, how different token layers interact, and how this structure makes theming more accessible.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+At this stage in Salt's development, we recommend you only modify characteristic design tokens when theming your project.
+</ExampleContainer>
 
 ## Theming with tokens
 
-Theming enables you to modify design variables, such as color or opacity, in a simple and consistent way. 
+Salt's approach to theming enables you to modify design variables, such as color or opacity, in a simple and consistent way. 
 
-Salt uses tokens to store design decisions in a single place. Components can reuse tokens, meaning they help to define the design rules and aid the cohesiveness of the overall user interface.
+Salt uses tokens to store design decisions. Components can reuse tokens, meaning they help to define the design rules and aid the cohesiveness of the overall user interface.
 
 Instead of overriding design variables within a single component, we recommend modifying the tokens that the component references. Maintaining this token-based structure offers several benefits:
 
@@ -28,7 +30,7 @@ Note that theming will involve an element of maintenance as future versions of S
 
 ## Token tiers
 
-Salt uses design tokens to store decisions in a single place. From most generalized to most specific, the three tiers of tokens are:
+Salt's tokens are organized into three tiers. From most generalized to most specific, the tiers are:
 
 1. Foundational tokens
 2. Palette tokens
@@ -36,7 +38,7 @@ Salt uses design tokens to store decisions in a single place. From most generali
 
 These tokens can reference each other and inherit values from lower tiers.
 
-Take the status characteristic tokens as an example. Components like `Toast` use these tokens to denote status using color, such as a green foreground color to denote success.
+Take the status characteristic tokens as an example. Components like [`Toast`](/salt/components/toast/examples) use these tokens to denote status using color, such as a green foreground color to denote success.
 
 1. The component uses the `--salt-status-success-foreground` characteristic token. This token has the default value `var(--salt-palette-success-foreground)`.
 2. The characteristic token references the palette token `--salt-palette-success-foreground`. This token has the default value `var(--salt-color-green-400)`.
