@@ -10,12 +10,12 @@ const withBaseName = makePrefixer("saltTrackerConnector");
 
 type ConnectorState = "default" | "active";
 
-type TrackerConnectorProps = {
+interface TrackerConnectorProps {
   /**
    * The state of the connector, which acts as an indicator of whether the active step is ahead/behind
    */
   state: ConnectorState;
-};
+}
 
 export const TrackerConnector = ({ state }: TrackerConnectorProps) => {
   const targetWindow = useWindow();
