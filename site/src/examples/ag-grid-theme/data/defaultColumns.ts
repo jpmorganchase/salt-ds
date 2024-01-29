@@ -5,6 +5,7 @@ export const defaultColumns: ColDef[] = [
     headerName: "",
     field: "on",
     width: 70,
+    flex: 1,
     checkboxSelection: true,
     headerCheckboxSelection: true,
     pinned: "left",

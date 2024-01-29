@@ -1,7 +1,0 @@
-@import "./uitk-ag-theme-icon-font";
-
-:export {
-  @each $key, $value in $icons {
-    #{unquote($key)}: $value;
-  }
-}

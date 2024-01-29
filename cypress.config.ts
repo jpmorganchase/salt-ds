@@ -9,6 +9,7 @@ import { version as reactVersion } from "react";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
 import { cssInline } from "css-inline-plugin";
+import { initPlugin } from "@frsource/cypress-plugin-visual-regression-diff/plugins";
 
 let viteConfig: UserConfig = {
   plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
@@ -59,8 +60,13 @@ export default defineConfig({
   viewportWidth: 1280,
   viewportHeight: 1024,
   video: false,
+  env: {
+    pluginVisualRegressionMaxDiffConfig: { threshold: 0.1 },
+    pluginVisualRegressionDiffConfig: { threshold: 0.1 },
+  },
   component: {
     setupNodeEvents(on, config) {
+      initPlugin(on, config);
       installCoverageTask(on, config);
       //Setting up a log task to allow logging to the console during an axe test because console.log() does not work directly in a test
       on("task", {
@@ -70,6 +76,7 @@ export default defineConfig({
           return null;
         },
       });
+
       return config;
     },
     devServer: {

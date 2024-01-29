@@ -23,8 +23,6 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Build ag grid theme
-        run: yarn build:ag-grid-theme
       - name: Bundle css
         run: yarn bundle:css
         # 👇 Adds Chromatic as a step in the workflow
@@ -41,6 +39,6 @@ jobs:
           skip: "changeset-release/*"
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
-          traceChanged: "expanded"
+          # traceChanged: "expanded"
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"

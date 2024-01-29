@@ -21,6 +21,7 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(defaultData);
 
 export const InfiniteScroll = (props: AgGridReactProps) => {
+  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export const InfiniteScroll = (props: AgGridReactProps) => {
         },
       });
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   return (
     <div {...containerProps}>
@@ -55,8 +56,11 @@ export const InfiniteScroll = (props: AgGridReactProps) => {
 };
 
 const infiniteScrollComponents = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   loadingRenderer(params: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (params.value !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
       return params.value;
     } else {
       return <Spinner size="default" />;

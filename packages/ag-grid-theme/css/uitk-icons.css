@@ -1,0 +1,229 @@
+@font-face {
+  font-family: "uitk-icons";
+  src: url(../fonts/jpmuitk-icons.woff) format("woff");
+}
+
+[class*="ag-theme-uitk"] .ag-icon-aggregation:before {
+  font-family: "uitk-icons";
+  content: "\e974";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-arrows:before {
+  font-family: "uitk-icons";
+  content: "\e970";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-asc:before {
+  font-family: "uitk-icons";
+  content: "\e940";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-cancel:before {
+  font-family: "uitk-icons";
+  content: "\e90e";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-chart:before {
+  font-family: "uitk-icons";
+  content: "\e904";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-columns:before {
+  font-family: "uitk-icons";
+  content: "\e910";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-contracted:before {
+  font-family: "uitk-icons";
+  content: "\e91b";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-copy:before {
+  font-family: "uitk-icons";
+  content: "\e90d";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-cross:before {
+  font-family: "uitk-icons";
+  content: "\e90e";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-cut:before {
+  font-family: "uitk-icons";
+  content: "\e96d";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-csv:before {
+  font-family: "uitk-icons";
+  content: "\e915";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-desc:before {
+  font-family: "uitk-icons";
+  content: "\e93f";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-excel:before {
+  font-family: "uitk-icons";
+  content: "\e91a";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-expanded:before {
+  font-family: "uitk-icons";
+  content: "\e950";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-eye-slash:before {
+  font-family: "uitk-icons";
+  content: "\e966";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-eye:before {
+  font-family: "uitk-icons";
+  content: "\e965";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-filter:before {
+  font-family: "uitk-icons";
+  content: "\e922";
+}
+
+/* [class*="ag-theme-uitk"] .ag-icon-filter-clear:before {
+  font-family: "uitk-icons";
+  content: "\e9ac";
+} */
+
+[class*="ag-theme-uitk"] .ag-icon-first:before {
+  font-family: "uitk-icons";
+  content: "\e934";
+}
+
+/* [class*="ag-theme-uitk"] .ag-icon-group:before {
+  font-family: "uitk-icons";
+  content: "\ea68";
+} */
+
+[class*="ag-theme-uitk"] .ag-icon-last:before {
+  font-family: "uitk-icons";
+  content: "\e951";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-left:before {
+  font-family: "uitk-icons";
+  content: "\e933";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-linked:before {
+  font-family: "uitk-icons";
+  content: "\e935";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-loading:before {
+  font-family: "uitk-icons";
+  content: "\e96f";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-menu:before {
+  font-family: "uitk-icons";
+  content: "\e969";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-next:before {
+  font-family: "uitk-icons";
+  content: "\e950";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-none:before {
+  font-family: "uitk-icons";
+  content: "\e971";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-not-allowed:before {
+  font-family: "uitk-icons";
+  content: "\e90e";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-paste:before {
+  font-family: "uitk-icons";
+  content: "\e946";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-pin:before {
+  font-family: "uitk-icons";
+  content: "\e944";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-pivot:before {
+  font-family: "uitk-icons";
+  content: "\e979";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-previous:before {
+  font-family: "uitk-icons";
+  content: "\e933";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-right:before {
+  font-family: "uitk-icons";
+  content: "\e950";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-save:before {
+  font-family: "uitk-icons";
+  content: "\e953";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-small-down:before {
+  font-family: "uitk-icons";
+  content: "\e91b";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-small-left:before {
+  font-family: "uitk-icons";
+  content: "\e981";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-small-right:before {
+  font-family: "uitk-icons";
+  content: "\e980";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-small-up:before {
+  font-family: "uitk-icons";
+  content: "\e982";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-tick:before {
+  font-family: "uitk-icons";
+  content: "\e95b";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-tree-closed:before {
+  font-family: "uitk-icons";
+  content: "\e950";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-tree-open:before {
+  font-family: "uitk-icons";
+  content: "\e91b";
+}
+
+[class*="ag-theme-uitk"] .ag-icon-unlinked:before {
+  font-family: "uitk-icons";
+  content: "\e95e";
+}
+
+[class*="ag-theme-uitk"] .ag-checkbox-input-wrapper:after {
+  content: "";
+  font-family: "uitk-icons";
+}
+
+[class*="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-checked:after {
+  content: "\e95b";
+  font-family: "uitk-icons";
+}
+
+[class*="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-indeterminate:after {
+  content: "\e94e";
+  font-family: "uitk-icons";
+}

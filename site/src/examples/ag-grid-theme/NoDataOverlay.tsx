@@ -7,13 +7,14 @@ import { defaultColumns } from "./data";
 export const NoDataOverlay = (props: AgGridReactProps) => {
   const [showModal, setShowModal] = useState(true);
   const containerRef = useRef<HTMLDivElement>(null);
+  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { isGridReady, api, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
     if (isGridReady) {
       api!.sizeColumnsToFit();
     }
-  }, [isGridReady]);
+  }, [api, isGridReady]);
 
   const reloadData = () => {
     setShowModal(false);
