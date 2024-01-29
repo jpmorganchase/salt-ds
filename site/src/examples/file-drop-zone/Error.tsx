@@ -1,10 +1,10 @@
 import { DragEvent, ReactElement } from "react";
-import { Text } from "@salt-ds/core";
 import {
+  Text,
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneTrigger,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 const validate = (event: DragEvent<HTMLDivElement>, files: File[]) => {
   console.log("validate files", files);
