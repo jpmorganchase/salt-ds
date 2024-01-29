@@ -1,0 +1,57 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+### Using the component
+
+Interaction with the content in an overlay is typically constrained, as richer interactions/workflows should occur within a separate UI mechanism (such as a new page, [`Dialog`](/salt/components/dialog) or [`Drawer`](/salt/components/drawer)).
+
+#### Best practices
+
+1. To allow screen readers to correctly identify overlay's trigger and it's coresponding panel, define an `id` and pass the prop `id="YOUR-OVERLAY-ID"` to `Overlay` component.
+2. To allow screen readers to correctly identify `OverlayPanel`'s content title and description respectively, add the prop `id="YOUR-OVERLAY-ID-header"` to your content header or title, and prop `id="YOUR-OVERLAY-ID-content"` to your content description.
+
+#### When to use
+
+- To expose interactive and essential elements within a tooltip to carry out in-context tasks.
+- For filter or dropdown panels that overlay content.
+- When acknowledgement on overlay content is needed. An overlay only dismissess after user interaction.
+
+#### When not to use
+
+- To notify and present critical information that requires immediate action from the user. Instead, use [`Dialog`](/salt/components/dialog).
+- To provide a non-focusable and informative hint. Instead, use [`Tooltip`](/salt/components/tooltip).
+
+### Import
+
+{/* Update the text and code snippet below as needed: */}
+
+To import `Overlay` and related components from the lab Salt package, use:
+
+```js
+import { Overlay, OverlayTrigger, OverlayPanel } from "@salt-ds/lab";
+```
+
+### Props
+
+{/* Update packageName and componentName below as needed */}
+{/* packageName is optional and defaults to "core" if omitted */}
+
+#### Overlay
+
+<PropsTable packageName="lab" componentName="Overlay" />
+
+#### Overlay Trigger
+
+<PropsTable packageName="lab" componentName="OverlayTrigger" />
+
+#### Overlay Panel
+
+<PropsTable packageName="lab" componentName="OverlayPanel" />
