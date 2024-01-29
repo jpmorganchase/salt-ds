@@ -8,14 +8,9 @@
   overflow: auto;
   padding: var(--salt-spacing-300);
   box-shadow: var(--salt-overlayable-shadow-modal);
-  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+  z-index: var(--salt-zIndex-drawer);
   position: fixed;
   top: 0;
-}
-
-.saltDrawer-overlay {
-  background: var(--salt-overlayable-background);
-  z-index: var(--salt-zIndex-drawer);
 }
 
 /* Styles applied when variant = "primary" */
@@ -37,18 +32,12 @@
 
 /* Styles applied when position = "top" and the component mounts */
 .saltDrawer-top.saltDrawer-enterAnimation {
-  animation: var(--salt-animation-slide-in-bottom);
+  animation: slide-in-bottom var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* Styles applied when position = "top" and the component unmounts */
 .saltDrawer-top.saltDrawer-exitAnimation {
-  animation: var(--salt-animation-slide-out-bottom);
-}
-
-/* Styles applied when position = "right" or position = "left" */
-.saltDrawer-right,
-.saltDrawer-left {
-  width: calc(10 * var(--salt-size-base));
+  animation: slide-out-bottom var(--salt-duration-perceptible) ease-in-out both;
 }
 
 /* Styles applied when position = "right" */
@@ -60,12 +49,12 @@
 
 /* Styles applied when position = "right" and the component mounts */
 .saltDrawer-right.saltDrawer-enterAnimation {
-  animation: var(--salt-animation-slide-in-right);
+  animation: slide-in-right var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* Styles applied when position = "right" and the component unmounts */
 .saltDrawer-right.saltDrawer-exitAnimation {
-  animation: var(--salt-animation-slide-out-right);
+  animation: slide-out-right var(--salt-duration-perceptible) ease-in-out both;
 }
 
 /* Styles applied when position = "left" */
@@ -77,12 +66,12 @@
 
 /* Styles applied when position = "left" and the component mounts */
 .saltDrawer-left.saltDrawer-enterAnimation {
-  animation: var(--salt-animation-slide-in-left);
+  animation: slide-in-left var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* Styles applied when position = "left" and the component unmounts */
 .saltDrawer-left.saltDrawer-exitAnimation {
-  animation: var(--salt-animation-slide-out-left);
+  animation: slide-out-left var(--salt-duration-perceptible) ease-in-out both;
 }
 
 /* Styles applied when position = "bottom" */
@@ -95,10 +84,10 @@
 
 /* Styles applied when position = "bottom" and the component mounts */
 .saltDrawer-bottom.saltDrawer-enterAnimation {
-  animation: var(--salt-animation-slide-in-top);
+  animation: slide-in-top var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* Styles applied when position = "bottom" and the component unmounts */
 .saltDrawer-bottom.saltDrawer-exitAnimation {
-  animation: var(--salt-animation-slide-out-top);
+  animation: slide-out-top var(--salt-duration-perceptible) ease-in-out both;
 }

@@ -8,35 +8,59 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="drawer" exampleName="TopPositioned" >
 
-### Top positioned
+<LivePreview componentName="drawer" exampleName="Default" >
 
-Set `position="top"` to display the drawer component at the top.
+### Default
 
-</LivePreview>
+By default, a drawer anchors to the `left` edge of the screen and has `variant="primary"`.
 
-<LivePreview componentName="drawer" exampleName="RightPositioned" >
+You can place drawer on the `left`, `right`, `top` and `bottom` edges using the `position` prop.
 
-### Right positioned
-
-Set `position="right"` to display the drawer component on the right.
+Set `variant="secondary"` for a secondary drawer.
 
 </LivePreview>
 
-<LivePreview componentName="drawer" exampleName="LeftPositioned" >
+<LivePreview componentName="drawer" exampleName="RightDrawer" >
 
-### Left positioned
+### Right drawer usage example
 
-By default, the drawer is displayed on the left if the `position` prop is not set.
+Consider using a right-anchored drawer to show supporting information related to the current context, such as recent events, notifications or quick settings. Always set your drawer's width suitable for the content inside it.
 
 </LivePreview>
 
-<LivePreview componentName="drawer" exampleName="BottomPositioned" >
+<LivePreview componentName="drawer" exampleName="TopDrawer" >
 
-### Bottom positioned
+### Top drawer usage example
 
-Set `position="bottom"` to display the drawer component at the bottom.
+Anchor your drawer to the top edge if it will display supporting information that’s related to the current context and is best presented in a horizontal format, e.g., complex filters or a summary panel.
+
+</LivePreview>
+
+<LivePreview componentName="drawer" exampleName="BottomDrawer" >
+
+### Bottom drawer usage example
+
+Anchor a drawer to the bottom edge of the screen when using a master-detail layout with content, such as graphs, images or comparisons that requires a wider horizontal format.
+
+</LivePreview>
+
+<LivePreview componentName="drawer" exampleName="MandatoryAction" >
+
+### MandatoryAction
+
+This example uses the `disableDismiss` prop to prevent the drawer closing on click away therefore ensuring the user takes an action within the drawer for it to close.
+This example closes when the user clicks the **Submit** button.
+
+When the optional close button is not shown the `diableDismiss` prop should be used.
+
+</LivePreview>
+
+<LivePreview componentName="drawer" exampleName="DisableScrim" >
+
+### DisableScrim
+
+Use the `disableScrim` prop to prevent the scrim from rendering
 
 </LivePreview>
 </LivePreviewControls>

@@ -38,7 +38,7 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position props for the floating component
+   * Position props for the floating component. `top`, `left`, and `position` are optional for components where their floating elements are not positioned relative to a trigger element, i.e. Drawer, Dialog
    */
   top?: number;
   left?: number;
@@ -69,7 +69,7 @@ const DefaultFloatingComponent = forwardRef<
     position,
   };
 
-  if (focusManagerProps) {
+  if (focusManagerProps && open) {
     return (
       <FloatingPortal>
         <SaltProvider>
