@@ -1,5 +1,32 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.29
+
+### Minor Changes
+
+- f8fec5ab: Update Overlay to use floating-ui. Supports placement on top (default), right, bottom, and left.
+
+  ```tsx
+  const OverlayTemplate = (props: OverlayProps) => {
+    const { style, ...rest } = props;
+    const id = "salt-overlay";
+
+    return (
+      <Overlay id={id} {...rest}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel style={style}>
+          <h3 id={`${id}-header`}>Title</h3>
+          <div id={`${id}-content`}>Content of Overlay</div>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- 8f0012b7: Removed `FileDropZone` from lab and promoted it to core.
+
 ## 1.0.0-alpha.28
 
 ### Minor Changes

@@ -4,19 +4,32 @@
   --trackerConnector-color: var(--saltTrackerConnector-color, var(--salt-palette-neutral-secondary-border));
   --trackerConnector-thickness: var(--saltTrackerConnector-thickness, var(--salt-size-border-strong));
   --trackerConnector-margin: var(--saltTrackerConnector-margin, var(--salt-spacing-100));
+  --trackerConnector-style-border: var(--trackerConnector-style-default);
 }
 
 .saltTrackerConnector {
-  height: 0;
-  border-top-width: var(--trackerConnector-thickness);
-  border-top-style: var(--trackerConnector-style-default);
-  border-top-color: var(--trackerConnector-color);
   position: absolute;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal .saltTrackerConnector {
+  border-top-width: var(--trackerConnector-thickness);
+  border-top-style: var(--trackerConnector-style-border);
+  border-top-color: var(--trackerConnector-color);
   width: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
   left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
   top: calc(var(--saltIcon-size) / 2 - (var(--trackerConnector-thickness) / 2));
+  height: 0;
+}
+
+.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerConnector {
+  top: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
+  left: calc((var(--saltIcon-size) / 2) - (var(--trackerConnector-thickness) / 2));
+  height: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
+  border-left-width: var(--trackerConnector-thickness);
+  border-left-style: var(--trackerConnector-style-border);
+  border-left-color: var(--trackerConnector-color);
 }
 
 .saltTrackerConnector.saltTrackerConnector-active {
-  border-top-style: var(--trackerConnector-style-active);
+  --trackerConnector-style-border: var(--trackerConnector-style-active);
 }

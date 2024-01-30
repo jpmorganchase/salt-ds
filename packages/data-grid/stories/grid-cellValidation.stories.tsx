@@ -18,7 +18,7 @@ import "./grid.stories.css";
 import { RowValidationStatusColumn } from "../src/RowValidationStatus";
 
 export default {
-  title: "Data Grid/Data Grid",
+  title: "Lab/Data Grid",
   component: GridColumn,
   argTypes: {},
 };

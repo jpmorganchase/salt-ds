@@ -63,7 +63,12 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
             })
             .map(({ countryCode, countryName }) => {
               return (
-                <StackLayout style={{ width: "150px" }} gap={1} align="center">
+                <StackLayout
+                  key={countryCode}
+                  style={{ width: "150px" }}
+                  gap={1}
+                  align="center"
+                >
                   <LazyCountrySymbol
                     key={countryCode}
                     code={countryCode}
