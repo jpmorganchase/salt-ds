@@ -7,7 +7,6 @@
   position: relative;
   background: transparent;
   width: 100%;
-  height: 100%;
 
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
