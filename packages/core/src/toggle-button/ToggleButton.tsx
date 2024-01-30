@@ -78,10 +78,11 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
 
     return (
       <button
-        aria-checked={ariaChecked}
+        aria-pressed={!toggleButtonGroup ? ariaChecked : undefined}
+        aria-checked={toggleButtonGroup ? ariaChecked : undefined}
+        role={toggleButtonGroup ? "radio" : undefined}
         className={clsx(withBaseName(), className)}
         disabled={disabled}
-        role={toggleButtonGroup ? "radio" : "checkbox"}
         ref={handleRef}
         onClick={handleClick}
         onFocus={handleFocus}

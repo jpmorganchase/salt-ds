@@ -169,6 +169,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
+          aria-readonly={readOnly || undefined}
           aria-describedby={
             clsx(
               radioGroup == undefined
