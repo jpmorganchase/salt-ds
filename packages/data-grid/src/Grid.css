@@ -123,6 +123,11 @@
   outline: none;
   user-select: none;
   background: var(--grid-background);
+
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--grid-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
 }
 
 /* Styles applied to the root element if zebra is enabled */

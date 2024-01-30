@@ -22,7 +22,7 @@ import { StoryFn } from "@storybook/react";
 type Variant = "primary" | "secondary" | "zebra";
 
 export default {
-  title: "Data Grid/Data Grid",
+  title: "Lab/Data Grid",
   component: Grid,
   argTypes: {},
 };

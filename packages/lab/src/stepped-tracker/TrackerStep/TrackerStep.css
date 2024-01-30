@@ -11,20 +11,28 @@
 
 .saltTrackerStep {
   margin: 0;
-  padding: 0;
   text-indent: 0;
   list-style-type: none;
   flex: 1;
   position: relative;
   display: flex;
   align-items: center;
-  flex-direction: column;
   width: var(--saltTrackerStep-width, 100%);
   gap: var(--salt-spacing-50);
   color: var(--salt-content-primary-foreground);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal .saltTrackerStep {
+  flex-direction: column;
   padding: 0 var(--salt-spacing-25);
+}
+
+.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep {
+  flex-direction: row;
+  min-height: calc(var(--salt-size-base) * 2);
+  width: 100%;
 }
 
 /* Pseudo-class applied to the root element on focus */
