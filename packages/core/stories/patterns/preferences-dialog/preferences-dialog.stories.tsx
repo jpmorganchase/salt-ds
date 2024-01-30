@@ -1,58 +1,54 @@
 import { Meta } from "@storybook/react";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import {
   Dialog,
   DialogActions,
   DialogContent,
-  TabstripNext,
-  TabNext,
   ParentChildLayout,
 } from "@salt-ds/lab";
-import { Button, FlexItem, H2, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  FlexItem,
+  H2,
+  NavigationItem,
+  StackLayout,
+} from "@salt-ds/core";
 
 export default {
   title: "Patterns/Preferences Dialog",
 } as Meta;
 
 export const PreferencesDialog = () => {
-  const tabs = [
-    "Label 1",
-    "Label 2",
-    "Label 3",
-    "Label 4",
-    "Label 5",
-    "Label 6",
-    "Label 7",
-  ];
-
-  const [selectedTab, setSelectedTab] = useState<string>(tabs[0]);
-  const handleTabSelection = (
-    event: SyntheticEvent,
-    data: { value: string }
-  ) => {
-    setSelectedTab(data.value);
-  };
+  const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
+  const [active, setActive] = useState(items[0]);
 
   const parent = (
     <div style={{ overflowY: "auto", width: 200 }}>
-      <TabstripNext
-        orientation="vertical"
-        align="left"
-        onChange={handleTabSelection}
-        value={selectedTab}
-        minimumVisible={tabs.length}
-      >
-        {tabs.map((label) => (
-          <TabNext value={label} key={label}>
-            {label}
-          </TabNext>
-        ))}
-      </TabstripNext>
+      <nav>
+        <ul>
+          {items.map((item) => (
+            <li key={item}>
+              <NavigationItem
+                active={active === item}
+                href="#"
+                orientation="vertical"
+                onClick={(event) => {
+                  // Prevent default to avoid navigation
+                  event.preventDefault();
+                  setActive(item);
+                }}
+              >
+                {item}
+              </NavigationItem>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
   const child = (
     <div>
-      <h3>{selectedTab}</h3>
+      <h3>{active}</h3>
       <p>
         A global leader, we deliver strategic advice and solutions, including
         capital raising, risk management, and trade finance to corporations,
