@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Card, H3, Text } from "@salt-ds/core";
+import { InteractableCard, H3, Text } from "@salt-ds/core";
 
 export const AccentVariations = (): ReactElement => {
   const placements = ["left", "right", "top", "bottom"];
@@ -13,10 +13,10 @@ export const AccentVariations = (): ReactElement => {
     >
       {placements.map((_placement, index) => {
         return (
-          <Card
-            // accentPlacement={
-            //   placements[index] as "left" | "right" | "top" | "bottom"
-            // }
+          <InteractableCard
+            accentPlacement={
+              placements[index] as "left" | "right" | "top" | "bottom"
+            }
             key={index}
           >
             <H3>Sustainable investing products</H3>
@@ -25,7 +25,7 @@ export const AccentVariations = (): ReactElement => {
               solutions to enable you to align your financial goals to your
               values.
             </Text>
-          </Card>
+          </InteractableCard>
         );
       })}
     </div>

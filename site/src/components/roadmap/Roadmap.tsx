@@ -1,13 +1,13 @@
 import {
   Banner,
   BannerContent,
-  Card,
-  CardProps,
   GridLayout,
   H3,
   FormField,
   FormFieldLabel,
   Input,
+  InteractableCard,
+  InteractableCardProps,
   Spinner,
   Text,
 } from "@salt-ds/core";
@@ -42,10 +42,10 @@ interface RoadmapData {
   quarter: IterationData | null;
 }
 
-function RoadmapCard(props: CardProps) {
+function RoadmapCard(props: InteractableCardProps) {
   return (
     <>
-      <Card interactable accentPlacement="left" {...props} />
+      <InteractableCard accentPlacement="left" {...props} />
     </>
   );
 }
