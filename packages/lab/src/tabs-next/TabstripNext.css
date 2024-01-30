@@ -15,12 +15,12 @@
   line-height: var(--salt-text-lineHeight);
 }
 
-.saltTabstripNext-horizontal {
+.saltTabstripNext-main {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
 }
 
-.saltTabstripNext-horizontal::before {
+.saltTabstripNext-main::before {
   content: "";
   position: absolute;
   inset: auto 0 0 0;
@@ -30,9 +30,4 @@
 
 .saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
   padding-right: var(--salt-spacing-100);
-}
-
-.saltTabstripNext-vertical {
-  flex-direction: column;
-  align-items: flex-start;
 }

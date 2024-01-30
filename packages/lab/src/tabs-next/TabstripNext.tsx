@@ -35,8 +35,6 @@ export interface TabstripNextProps
   defaultValue?: string;
   /* The Tabs variant */
   variant?: "main" | "inline";
-  orientation?: "vertical" | "horizontal";
-  minimumVisible?: number;
 }
 
 interface TabValue {
@@ -57,8 +55,6 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       onKeyDown,
       style,
       variant = "main",
-      orientation = "horizontal",
-      minimumVisible,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -206,17 +202,13 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
 
     return (
       <TabsContext.Provider value={contextValue}>
-        <Overflow
-          ref={handleRef}
-          overflowAxis={orientation}
-          minimumVisible={minimumVisible}
-        >
+        <Overflow ref={handleRef}>
           <div
             role="tablist"
             className={clsx(
               withBaseName(),
+              withBaseName("horizontal"),
               withBaseName(variant),
-              withBaseName(orientation),
               className
             )}
             onKeyDown={handleKeyDown}

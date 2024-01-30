@@ -80,19 +80,3 @@
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }
-
-.saltTabstripNext-vertical .saltTabNext {
-  border: none;
-  width: 100%;
-  justify-content: flex-start;
-}
-
-.saltTabstripNext-vertical .saltTabNext::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: var(--salt-size-border);
-  width: var(--salt-size-indicator);
-  height: 100%;
-}
