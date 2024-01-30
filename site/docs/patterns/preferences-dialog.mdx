@@ -44,11 +44,19 @@ TA preference dialog is comprised of four key features:
 
 ### Layout construction
 
-  <Diagram
-    src="/img/patterns/preferences-dialog/layout.png"
-    alt="Example showing Preferences Dialog's layout construction."
-    border={false}
-  />
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/preferences-dialog/layout.png",
+      alt: "Example showing Preferences Dialog's layout construction.",
+    },
+    {
+      src: "/img/patterns/preferences-dialog/layout-grid.png",
+      alt: "Example showing Preferences Dialog's layout construction.",
+    },
+  ]}
+  label="Layout grid"
+/>
 
 <ExampleContainer type="positive" customPillText="Best practices">
   In the parent child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This will enable it to adapt responsively based on the viewport size.
