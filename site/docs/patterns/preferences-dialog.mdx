@@ -21,20 +21,20 @@ A preferences dialog allows you to display, group and navigate application prefe
 
 ## When to use
 
-Any editable settings should ideally be housed within a centralised preferences dialog to display and manage user preferences across a platform, application or module. Displaying preferences should be contextual, i.e. the dialog should contain all preferences but depending on the entry point to the UI, the preferences shown to you in the first instance will vary. 
+You should ideally house any editable settings within a centralized preferences dialog to display and manage user preferences across a platform, application or module. Displaying preferences should be contextual, i.e., the dialog should contain all preferences but depending on the entry point to the user interface, the preferences shown to you in the first instance will vary. 
 
-Furthermore, we recommend implementing consistent behaviour around applying preferences—whether applying changes immediately, or requiring the user to confirm any changes using the button bar actions. 
+Furthermore, we recommend implementing consistent behavior around applying preferences, whether applying changes immediately or requiring the user to confirm any changes using the button bar actions. 
 
 ## How to build
 
 ### Anatomy
 
-TA preference dialog is comprised of four key features: 
+A preferences dialog comprises four key features: 
 
-1. **Dialog:** a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information.
-2. **Navigation item:** a list of links that allows users to navigate between distinct panels of content. 
-3. **Button bar:** displays possible actions for users to take when they reach the end of a task. Use the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
-4. **Parent child layout:** positions the navigation and content within a preference dialog. 
+1. **Dialog:** a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information
+2. **Navigation item:** a list of links that allows users to navigate between distinct panels of content
+3. **Button bar:** displays possible actions for users to take when they reach the end of a task. Use the button bar pattern to understand how to implement actionable interactions within dialogs across your applications
+4. **Parent-child layout:** positions the navigation and content within a preference dialog
 
   <Diagram
     src="/img/patterns/preferences-dialog/anatomy.png"
@@ -59,7 +59,7 @@ TA preference dialog is comprised of four key features:
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  In the parent child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This will enable it to adapt responsively based on the viewport size.
+  In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This will enable it to adapt responsively based on the viewport size.
 
   To implement a responsive experience for preferences dialogs, refer to the layout guidance in the navigation pattern.
 
@@ -69,7 +69,7 @@ TA preference dialog is comprised of four key features:
 
 ### Navigation
 
-Use navigation items to switch between pages of grouped preferences. 
+You can use navigation items to switch between pages of grouped preferences. 
 
   <Diagram
     src="/img/patterns/preferences-dialog/navigation.png"
@@ -85,7 +85,7 @@ Use navigation items to switch between pages of grouped preferences.
 
 We recommend that scrolling affordance should only take effect if content in the Parent Child layout exceeds the visible content area.
 
-This is visually indicated by two separator lines above and below the Parent Child layout. Apply the shadow-scroll token for the container shadow. 
+The visual indicators are the two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow. 
 
   <Diagram
     src="/img/patterns/preferences-dialog/scrolling.png"
@@ -93,7 +93,7 @@ This is visually indicated by two separator lines above and below the Parent Chi
     border={false}
   />
 
-You should display scrolling affordance when either the content or navigation (or both) are exceeding the visible area of the parent child layout.
+You should display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
 
   <Diagram
     src="/img/patterns/preferences-dialog/scrolling-affordance.png"
@@ -103,12 +103,12 @@ You should display scrolling affordance when either the content or navigation (o
 
 ## Applying preferences
 
-**Cancel** and **Save** button bar actions allow the user to manually apply preferences in the application. This is recommended when the user wants to:
+**Cancel** and **Save** button bar actions allow the user to manually apply preferences in the application. We recommend this when the user wants to:
 
 - Make multiple changes with ease and apply them simultaneously.
 - Easily cancel any unwanted changes.
 
-It is also preferable if it’s technically complex or taxing on performance for affected components in your application to listen for live changes in the preferences dialog and dynamically update themselves.
+It's also preferable if it’s technically complex or taxing on performance for affected components in your application to listen for live changes in the preferences dialog and dynamically update themselves.
 
 <Diagram
   src="/img/patterns/preferences-dialog/applying-preferences.png"
@@ -117,12 +117,12 @@ It is also preferable if it’s technically complex or taxing on performance for
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  Core actions are displayed to the right of a dialog. Refer to the button bar pattern for further guidance on how to display user actions within dialogs. 
+  Display core actions to the right of a dialog. Refer to the button bar pattern for further guidance on how to display user actions within dialogs. 
 </ExampleContainer>
 
 ### Live updates
 
-If it’s possible for your application to listen for changes and take immediate effect, you do not need to display a button bar across a preferences dialog. A close button in the top right corner of the dialog should be on display instead to provide the user the ability to close the dialog once any preferences have been edited.
+If your application can listen for changes and take immediate effect, you don't need to display a button bar across a preferences dialog. A close button in the top-right corner of the dialog should be on display instead to allow the user to close the dialog after editing any preferences.
 
 <Diagram
   src="/img/patterns/preferences-dialog/live-updates.png"
@@ -132,7 +132,7 @@ If it’s possible for your application to listen for changes and take immediate
 
 ## Secondary actions
 
-We recommend configuring the button bar to display secondary actions to the left such as Import and Export if you need to enable additional actions.
+We recommend configuring the button bar to display secondary actions to the left such as **Import** and **Export** if you need to enable additional actions.
 
 <Diagram
   src="/img/patterns/preferences-dialog/secondary-actions.png"
@@ -142,7 +142,7 @@ We recommend configuring the button bar to display secondary actions to the left
 
 ## Responsiveness
 
-Preferences dialogs are responsive to the width of the application viewport and respond dynamically to the Salt breakpoints. 
+The preferences dialog is responsive to the width of the application viewport and respond dynamically to the Salt breakpoints. 
 
 Once a preference dialog hits a certain breakpoint, you can configure the layout to either: 
 
@@ -151,7 +151,7 @@ Once a preference dialog hits a certain breakpoint, you can configure the layout
 
 ### Collapsed navigation
 
-When the navigation is collapsed, the preferences content is displayed across the entire width of the dialog. To select and view alternative preference types, users should use the back chevron button to navigate back to the vertical navigation. The vertical navigation view also spans the dialog width. A collapsed layout ensures improved usability of dialog content in smaller screen sizes or application resolutions.
+When the navigation collapses, the preferences content displays across the entire width of the dialog. To select and view alternative preference types, users should use the back chevron button to navigate back to the vertical navigation. The vertical navigation view also spans the dialog width. A collapsed layout ensures improved usability of dialog content in smaller screen sizes or application resolutions.
 
   <Diagram
     src="/img/patterns/preferences-dialog/collapsed-navigation.png"
@@ -161,7 +161,7 @@ When the navigation is collapsed, the preferences content is displayed across th
 
 ### Stacked button bar
 
-For smaller viewports (i.e. devices with limited screen sizes) it is preferable to configure buttons to stack horizontally at the XS breakpoint. This ensures longer button labels are accommodated on mobile devices that may not fit within the horizontal layout, and further remain an adequate size for touch interactions.
+For smaller viewports (i.e. devices with limited screen sizes), it's preferable to configure buttons to stack horizontally at the XS breakpoint. This ensures longer button labels accommodate mobile devices that may not fit within the horizontal layout. They also remain an adequate size for touch interactions.
 
 <ExampleContainer type="positive" customPillText="Best practices">
   View the stacked button bar guidance to understand how to order and build a stacked button bar. 
