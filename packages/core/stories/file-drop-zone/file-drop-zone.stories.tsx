@@ -8,15 +8,13 @@ import {
   StackLayout,
   Text,
   Tooltip,
-} from "@salt-ds/core";
-import {
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneIconProps,
   FileDropZoneProps,
   FileDropZoneTrigger,
   FileDropZoneTriggerProps,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 import {
   createFileTypeValidator,
@@ -26,7 +24,7 @@ import {
 } from "./utils";
 
 export default {
-  title: "Lab/File Drop Zone",
+  title: "Core/File Drop Zone",
   component: FileDropZone,
 } as Meta<typeof FileDropZone>;
 
