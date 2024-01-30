@@ -6,9 +6,117 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-content-status--content-status", label: "Examples" },
-      { href: "https://www.figma.com/file/TI8zR16jnisL4W7ANedtUJ/(WIP)-Metric?type=design&node-id=652-3336&mode=design&t=UpxMBoYUQ8vMxz6z-0", label: "Content Status examples", internal: true },
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-content-status--info", label: "Examples" },
+      { href: "https://www.figma.com/file/InTRZY7R7OdeY0Ye9eyzma/(WIP)-Content-Status?type=design&node-id=652-3271&mode=design&t=BoYoZt69VHfzizeO-0", label: "Content Status examples", internal: true },
     ]
 ---
 
-Content Status is a pattern that provides information whe content isn't ready to be shown in a container component of an application.
+Content Status is a pattern that provides information when content isn’t ready to be shown in a container component of an application.
+
+It remains onscreen until a situation is resolved, or an action is taken by your user, making them a great tool for communication and guidance.
+
+<Diagram
+  src="/img/patterns/content-status/content-status.png"
+  alt="Example showing a content status with an info indicator"
+  border
+/>
+
+We provide design guidance for using Salt [Button](/salt/components/button), [Progress](/salt/components/progress), [Spinner](/salt/components/spinner), [Stack layout](/salt/components/stack-layout), [Status Indicator](/salt/components/status-indicator), and [Text](/salt/components/text) components to achieve the pattern. You can also find implementation examples in the [storybook](https://storybook.saltdesignsystem.com/?path=/story/patterns-content-status--info).
+
+## When to use it
+
+Use cases for this pattern could include:
+- When content is being loaded
+- When you want to share information with your users
+- When you need to let your users know there’s an error
+- When your user has successfully submitted content
+
+## How to build it
+
+Content Status is comprised of visual status indicators (Progress, Spinner, Status Indicator) and text elements as supporting messages, a Button can be added to reload content or perform a different action if it will help your users. Use Stack Layout to vertically arrange the structure of the components.
+
+<Diagram
+  src="/img/patterns/content-status/build.png"
+  alt="Example showing a content status with components and spacing labeled"
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Make sure it fills the height and width of the container component.
+- Titles and supporting messages should be horizontally and vertically centered in the container.
+</ExampleContainer>
+
+### Writing supporting messages
+
+**Have a clear hierarchy:**
+
+Your titles should be stand-alone, revealing key information your users need to know, without relying on the supporting message–which users may skim over
+
+**Be helpful:**
+
+If it’s possible for your users to resolve or rectify an issue, make sure you state this clearly.
+
+**Be simple:** 
+
+Try to limit the length of the title to less than two lines, and supporting messages to no more than three lines.
+
+## When content is loading
+
+We've used a [Progress](/salt/components/progress) component in this example to help manage user expectations. If you know the time taken to load or process content, use this to let your users know how long it will take to complete.
+
+<Diagram
+  src="/img/patterns/content-status/progress.png"
+  alt="Example showing a content status with a progress indicator"
+  border
+/>
+
+We've used a Spinner component to reassure users in this example. You should use this to let your users know that content is being loaded or processed without sharing an exact time frame.
+
+<Diagram
+  src="/img/patterns/content-status/spinner.png"
+  alt="Example showing a content status with a spinner"
+  border
+/>
+
+## Share information with your users
+
+If you need to communicate a useful piece of information, e.g., there’s no data available, this variation lets users know why they might not be seeing any content.
+
+<Diagram
+  src="/img/patterns/content-status/info.png"
+  alt="Example showing a content status with an info indicator"
+  border
+/>
+
+Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that do not prevent the user from continuing or completing their task. This could include a system status that may cause issues at a later point.
+
+<Diagram
+  src="/img/patterns/content-status/warning.png"
+  alt="Example showing a content status with a warning indicator"
+  border
+/>
+
+## Let your users know there’s an error
+
+Use the error status to communicate a critical issue that prevents the user from continuing or completing the task. This could include missing content or user information required.
+
+<Diagram
+  src="/img/patterns/content-status/error.png"
+  alt="Example showing a content status with an error indicator"
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+ Error and warning messages should: 1. Notify users when there’s an issue. 2. Identify and explain the issue. 3. Provide a resolution.
+</ExampleContainer>
+
+
+## When your user has successfully submitted content
+
+This example lets users know that content has been successfully processed, e.g., a form has been completed by the user and submitted.
+
+<Diagram
+  src="/img/patterns/content-status/success.png"
+  alt="Example showing a content status with a success indicator"
+  border
+/>
