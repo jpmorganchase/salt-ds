@@ -359,7 +359,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         ref={handleRef}
       />
       <FloatingComponent
-        open={(openState || focusedState) && !readOnly}
+        open={(openState || focusedState) && !readOnly && children != undefined}
         left={x ?? 0}
         top={y ?? 0}
         position={strategy}

@@ -1,5 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as comboBoxNextStories from "@stories/combo-box-next/combo-box-next.stories";
+import { ComboBoxNext } from "@salt-ds/lab";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -14,6 +15,7 @@ const {
   Grouped,
   EmptyMessage,
   ComplexOption,
+  ObjectValue,
 } = composeStories(comboBoxNextStories);
 
 describe("Given a ComboBox", () => {
@@ -366,6 +368,15 @@ describe("Given a ComboBox", () => {
     );
   });
 
+  it("should support object values", () => {
+    cy.mount(<ObjectValue />);
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "John Doe" }).should("exist");
+    cy.realType("Jane");
+    cy.findByRole("option", { name: "Jane Doe" }).realClick();
+    cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaSelected");
+  });
+
   it("should allow default selected options to be set", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
     cy.mount(<WithDefaultSelected onSelectionChange={selectionChangeSpy} />);
@@ -405,6 +416,11 @@ describe("Given a ComboBox", () => {
     cy.findByRole("button").realClick();
     cy.findByRole("combobox").should("have.attr", "aria-expanded", "true");
     cy.findByRole("listbox").should("exist");
+  });
+
+  it("should not show a list with no options", () => {
+    cy.mount(<ComboBoxNext open />);
+    cy.findByRole("listbox").should("not.exist");
   });
 
   it("should clear selected items when the input is cleared and the combo box is single-select", () => {

@@ -560,12 +560,12 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
 
   return (
     <ComboBoxNext<Person>
+      {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
       selected={selected}
       multiselect
-      {...args}
     >
       {options.map((person) => (
         <Option value={person} key={person.id}>

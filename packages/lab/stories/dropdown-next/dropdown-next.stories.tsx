@@ -315,10 +315,10 @@ export const ObjectValue: StoryFn<DropdownNextProps<Person>> = (args) => {
 
   return (
     <DropdownNext<Person>
+      {...args}
       onSelectionChange={handleSelectionChange}
       selected={selected}
       multiselect
-      {...args}
     >
       {people.map((person) => (
         <Option value={person} key={person.id}>

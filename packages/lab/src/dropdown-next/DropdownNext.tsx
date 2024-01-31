@@ -427,7 +427,7 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
         {!readOnly && <ExpandIcon open={openState} />}
       </button>
       <FloatingComponent
-        open={(openState || focusedState) && !readOnly}
+        open={(openState || focusedState) && !readOnly && children != undefined}
         left={x ?? 0}
         top={y ?? 0}
         position={strategy}
