@@ -6,6 +6,7 @@
   border-color: var(--saltCard-borderColor, var(--salt-accent-borderColor));
   border-radius: var(--saltCard-borderRadius, 0);
   display: block;
+  position: relative;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
   padding: var(--saltCard-padding, var(--salt-spacing-300));
 }
@@ -13,31 +14,57 @@
 /* Styles applied to InteractableCard when variant="primary" */
 .saltInteractableCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
+  border-color: var(--salt-container-primary-borderColor);
 }
 
 /* Styles applied to InteractableCard when variant="secondary" */
 .saltInteractableCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
+  border-color: var(--salt-container-secondary-borderColor);
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
-.saltInteractableCard-accentBottom {
-  --card-borderWidth: 0 0 var(--salt-size-accent) 0;
+.saltInteractableCard-accentBottom::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--salt-size-border));
+  bottom: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+  background-color: var(--saltCard-borderWidth, var(--salt-accent-borderColor));
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="left"` */
-.saltInteractableCard-accentLeft {
-  --card-borderWidth: 0 0 0 var(--salt-size-accent);
+.saltInteractableCard-accentLeft::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+  background-color: var(--saltCard-borderWidth, var(--salt-accent-borderColor));
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="top"` */
-.saltInteractableCard-accentTop {
-  --card-borderWidth: var(--salt-size-accent) 0 0 0;
+.saltInteractableCard-accentTop::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+  background-color: var(--saltCard-borderWidth, var(--salt-accent-borderColor));
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="right"` */
-.saltInteractableCard-accentRight {
-  --card-borderWidth: 0 var(--salt-size-accent) 0 0;
+.saltInteractableCard-accentRight::after {
+  content: "";
+  position: absolute;
+  right: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+  background-color: var(--saltCard-borderWidth, var(--salt-accent-borderColor));
 }
 
 /* Styles applied to InteractableCard on focus */
