@@ -33,7 +33,6 @@ export * from "./drawer";
 export * from "./dropdown";
 export * from "./dropdown-next";
 export * from "./editable-label";
-export * from "./file-drop-zone";
 export {
   FormFieldLegacy as FormField,
   type FormFieldLegacyProps as FormFieldProps,
@@ -61,7 +60,6 @@ export * from "./portal";
 export * from "./progress";
 export * from "./query-input";
 export * from "./responsive";
-export * from "./scrim";
 export * from "./search-input";
 export * from "./skip-link";
 export * from "./slider";

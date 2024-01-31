@@ -3,8 +3,8 @@ import {
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneTrigger,
-} from "@salt-ds/lab";
-import { Text } from "@salt-ds/core";
+  Text,
+} from "@salt-ds/core";
 
 const validate = (event: DragEvent<HTMLDivElement>, files: File[]) => {
   console.log("validate files", files);

@@ -30,6 +30,10 @@ export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
    * Should be one or more TrackerStep components
    */
   children: ReactNode;
+  /**
+   * The orientation of the SteppedTracker. Defaults to `horizontal`
+   */
+  orientation?: "horizontal" | "vertical";
 }
 
 const useCheckInvalidChildren = (children: ReactNode) => {
@@ -53,7 +57,13 @@ const useCheckInvalidChildren = (children: ReactNode) => {
 
 export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
   function SteppedTracker(
-    { children, className, activeStep, ...restProps },
+    {
+      children,
+      className,
+      activeStep,
+      orientation = "horizontal",
+      ...restProps
+    },
     ref
   ): ReactElement<SteppedTrackerProps> {
     const targetWindow = useWindow();
@@ -69,7 +79,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
         <ul
-          className={clsx(withBaseName(), className)}
+          className={clsx(withBaseName(), className, withBaseName(orientation))}
           ref={ref}
           {...restProps}
         >

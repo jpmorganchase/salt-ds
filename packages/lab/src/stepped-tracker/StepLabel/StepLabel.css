@@ -1,4 +1,11 @@
 .saltStepLabel {
   width: 100%;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal .saltStepLabel {
   text-align: center;
+}
+
+.saltSteppedTracker.saltSteppedTracker-vertical .saltStepLabel {
+  text-align: left;
 }
