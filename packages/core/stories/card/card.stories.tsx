@@ -11,6 +11,7 @@ import {
   FlexLayout,
   GridLayout,
   Link,
+  StackLayout,
 } from "@salt-ds/core";
 import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 import exampleImage from "./../assets/exampleImage1x.png";
@@ -339,5 +340,57 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
         </div>
       </InteractableCard>
     </Link>
+  );
+};
+
+export const CardAndInteractableCard: StoryFn<typeof Card> = () => {
+  const placements = ["left", "right", "top", "bottom"];
+  return (
+    <StackLayout direction={"row"}>
+      <StackLayout>
+        <H1>Interactable Card</H1>
+        <GridLayout rows={2} columns={2}>
+          {exampleData.map((example, index) => {
+            return (
+              <InteractableCard
+                accentPlacement={
+                  placements[index] as "left" | "right" | "top" | "bottom"
+                }
+                key={index}
+              >
+                <H1 styleAs="h3">{example.title}</H1>
+                <Text>{example.content}</Text>
+              </InteractableCard>
+            );
+          })}
+          <InteractableCard>
+            <H1 styleAs="h3">{exampleData[0].title}</H1>
+            <Text>{exampleData[0].content}</Text>
+          </InteractableCard>
+        </GridLayout>
+      </StackLayout>
+      <StackLayout>
+        <H1>Card</H1>
+        <GridLayout rows={2} columns={2}>
+          {exampleData.map((example, index) => {
+            return (
+              <Card
+                accentPlacement={
+                  placements[index] as "left" | "right" | "top" | "bottom"
+                }
+                key={index}
+              >
+                <H1 styleAs="h3">{example.title}</H1>
+                <Text>{example.content}</Text>
+              </Card>
+            );
+          })}
+          <Card>
+            <H1 styleAs="h3">{exampleData[0].title}</H1>
+            <Text>{exampleData[0].content}</Text>
+          </Card>
+        </GridLayout>
+      </StackLayout>
+    </StackLayout>
   );
 };

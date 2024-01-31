@@ -31,7 +31,7 @@ export const InteractableCard = forwardRef<
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
-    accentPlacement = "bottom",
+    accentPlacement,
     children,
     className,
     variant = "primary",
@@ -66,7 +66,7 @@ export const InteractableCard = forwardRef<
       className={clsx(
         withBaseName(),
         withBaseName(variant),
-        withBaseName(`accent${capitalize(accentPlacement)}`),
+        accentPlacement && withBaseName(`accent${capitalize(accentPlacement)}`),
         {
           [withBaseName("disabled")]: disabled,
           [withBaseName("active")]: active,

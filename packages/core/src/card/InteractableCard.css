@@ -1,7 +1,7 @@
 /* Styles applied to InteractableCard */
 .saltInteractableCard {
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
-  border-width: var(--saltCard-borderWidth, var(--card-borderWidth));
+  border-width: var(--salt-size-border);
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
   border-color: var(--saltCard-borderColor, var(--salt-accent-borderColor));
   border-radius: var(--saltCard-borderRadius, 0);
