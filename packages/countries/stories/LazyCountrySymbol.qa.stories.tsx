@@ -3,7 +3,7 @@ import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
 import { Suspense } from "react";
 
 export default {
-  title: "Country Symbols/Lazy Country Symbol/QA",
+  title: "Country Symbols/Lazy Country Symbol/Lazy Country Symbol QA",
 } as Meta;
 
 const sizes = [1, 2, 3] as const;
