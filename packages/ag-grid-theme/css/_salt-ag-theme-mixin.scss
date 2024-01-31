@@ -11,18 +11,6 @@
     border: none;
   }
 
-  .ag-ltr,
-  .ag-rtl {
-    .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected),
-    .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-    .ag-cell-range-single-cell,
-    .ag-cell-range-single-cell.ag-cell-range-handle {
-      outline: var(--agGrid-focused-borderWidth)
-        var(--agGrid-focused-borderStyle) var(--agGrid-focused-borderColor);
-      outline-offset: -2px;
-      border: none;
-    }
-  }
   // Because we are using a different border thickness on focus than default
   // we have to adjust height on various elements either using the line-height or height
   // properties.
@@ -388,41 +376,58 @@
   .editable-numeric-cell,
   .ag-cell.editable-cell {
     border: var(--salt-size-border) var(--salt-container-borderStyle)
-      var(--agGrid-cell-borderColor-editable);
+      var(--salt-editable-borderColor);
   }
 
-  .editable-numeric-cell.ag-cell-focus:focus,
-  .ag-cell.editable-cell.ag-cell-focus:focus {
+  .ag-ltr {
+    .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+      outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
+        var(--salt-focused-outlineColor);
+      outline-offset: -2px;
+      border-color: transparent !important;
+    }
+  }
+
+  .ag-ltr .ag-cell-focus.ag-cell-inline-editing:focus-within {
+    background-color: var(--salt-container-primary-background);
+  }
+
+  .ag-cell.editable-numeric-cell.ag-cell-focus:focus,
+  .ag-cell.editable-cell.ag-cell-focus:focus,
+  .ag-cell.editable-cell.ag-cell-focus:focus-within,
+  .ag-cell.editable-cell.ag-cell-focus.ag-cell-inline-editing {
     overflow: visible;
-    clip-path: inset(0, 0);
   }
 
   .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-  .ag-cell.editable-cell.ag-cell-focus:focus:before {
+  .ag-cell.editable-cell.ag-cell-focus:focus:before,
+  .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+  .ag-cell.editable-cell.ag-cell-focus.ag-cell-inline-editing:before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
+    transform: translate(-1px, -1px);
     border-top: 0 solid transparent;
     border-left: var(--agGrid-editableCell-cornerTag-size) solid
-      var(--agGrid-focused-borderColor);
+      var(--salt-editable-borderColor-hover);
     border-bottom: var(--agGrid-editableCell-cornerTag-size) solid transparent;
     z-index: 2;
   }
 
-  .ag-cell-inline-editing.ag-cell-focus {
-    background-color: var(--agGrid-background);
-  }
-
-  .ag-cell-inline-editing.ag-cell-focus:before {
-    opacity: 0;
-  }
-
   .ag-cell.ag-cell-inline-editing {
-    padding: 0 !important;
+    padding: 0;
   }
 
-  .ag-cell-editor .ag-input-field-input {
+  .ag-cell-inline-editing input {
+    background-color: transparent;
+  }
+
+  .ag-cell-inline-editing.numeric-cell input:not(:focus) {
+    text-align: right;
+  }
+
+  .ag-cell-editor .ag-input-field-input[type="text"] {
     padding-left: ag-param(cell-horizontal-padding);
     padding-right: ag-param(cell-horizontal-padding);
   }
@@ -432,7 +437,8 @@
   .ag-cell.ag-cell-range-selected:not(
       .ag-cell-range-single-cell
     ).ag-cell-range-left:before {
-    border-left: 2px dotted var(--agGrid-range-selection-borderColor);
+    border-left: var(--salt-size-border) dotted
+      var(--agGrid-range-selection-borderColor);
     content: "";
     height: 100%;
     position: absolute;
