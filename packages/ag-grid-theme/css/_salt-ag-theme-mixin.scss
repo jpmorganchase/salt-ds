@@ -423,6 +423,10 @@
     background-color: transparent;
   }
 
+  .ag-cell-inline-editing input:not(:focus) {
+    text-align: right;
+  }
+
   .ag-cell-editor .ag-input-field-input[type="text"] {
     padding-left: ag-param(cell-horizontal-padding);
     padding-right: ag-param(cell-horizontal-padding);
