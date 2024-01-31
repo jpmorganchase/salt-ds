@@ -17,12 +17,13 @@ export const Info = () => {
     <StackLayout gap={1} align="center">
       <StatusIndicator status="info" size={2} />
       <Text>
-        <strong>No [content] available</strong>
+        <strong>Message title</strong>
       </Text>
-      <Text>Supplementary content can go here if required.</Text>
-      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>
-        [Custom action]
-      </Button>
+      <Text>
+        Supplementary content can go here if required. This content area is
+        flexible in height and width as needed.
+      </Text>
+      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>Action</Button>
     </StackLayout>
   );
 };
@@ -32,12 +33,13 @@ export const Warning = () => {
     <StackLayout gap={1} align="center">
       <StatusIndicator status="warning" size={2} />
       <Text>
-        <strong>No permission to access [content]</strong>
+        <strong>Message title</strong>
       </Text>
-      <Text>Supplementary content can go here if required.</Text>
-      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>
-        [Custom action]
-      </Button>
+      <Text>
+        Supplementary content can go here if required. This content area is
+        flexible in height and width as needed.
+      </Text>
+      <Button style={{ marginTop: "var(--salt-spacing-100)" }}>Action</Button>
     </StackLayout>
   );
 };
@@ -47,9 +49,12 @@ export const Error = () => {
     <StackLayout gap={1} align="center">
       <StatusIndicator status="error" size={2} />
       <Text>
-        <strong>There&apos;s been a system error</strong>
+        <strong>Message title</strong>
       </Text>
-      <Text>It should be temporary, so please try again.</Text>
+      <Text>
+        Supplementary content can go here if required. This content area is
+        flexible in height and width as needed.
+      </Text>
       <Button style={{ marginTop: "var(--salt-spacing-100)" }}>Reload</Button>
     </StackLayout>
   );
@@ -59,7 +64,10 @@ export const Success = () => {
   return (
     <StackLayout gap={1} align="center">
       <StatusIndicator status="success" size={2} />
-      <Text>Supplementary content can go here if required.</Text>
+      <Text>
+        Supplementary content can go here if required. This content area is
+        flexible in height and width as needed.
+      </Text>
     </StackLayout>
   );
 };
@@ -68,7 +76,10 @@ export const WithSpinner = () => {
   return (
     <StackLayout gap={1} align="center">
       <Spinner size="medium" />
-      <Text>Supplementary content can go here if required.</Text>
+      <Text>
+        Supplementary content can go here if required. This content area is
+        flexible in height and width as needed.
+      </Text>
     </StackLayout>
   );
 };
@@ -77,7 +88,10 @@ export const WithProgress = () => {
   return (
     <StackLayout gap={1} align="center">
       <CircularProgress value={38} />
-      <Text>Supplementary content can go here if required.</Text>
+      <Text>
+        Supplementary content can go here if required. This content area is
+        flexible in height and width as needed.
+      </Text>
     </StackLayout>
   );
 };
