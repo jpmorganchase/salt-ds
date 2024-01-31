@@ -6,7 +6,7 @@ import { createDummyInvestors, investorKeyGetter } from "./dummyData";
 import "./grid.stories.css";
 
 export default {
-  title: "Data Grid/Data Grid",
+  title: "Lab/Data Grid",
   component: Grid,
   argTypes: {},
 };

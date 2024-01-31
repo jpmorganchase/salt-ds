@@ -1,4 +1,3 @@
-import { makePrefixer, useForkRef, ValidationStatus } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   DragEventHandler,
@@ -14,6 +13,8 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import fileDropZoneCss from "./FileDropZone.css";
+import { ValidationStatus } from "../status-indicator";
+import { makePrefixer, useForkRef } from "../utils";
 
 export interface FileDropZoneProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onDrop"> {

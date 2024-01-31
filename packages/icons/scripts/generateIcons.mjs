@@ -30,7 +30,9 @@ function pascalCase(str) {
   return capital.join("");
 }
 
-// Generate all the icon components
+/**
+ * Generate all the icon React components from SVGs
+ */
 const generateIconComponents = async ({
   templatePath,
   basePath,
@@ -161,7 +163,9 @@ const generateIconComponents = async ({
   );
 };
 
-// Generate the index file to export the Icon components
+/**
+ * Generate the index file to export all Icon components
+ */
 const generateIndex = async ({ icons, componentsPath }) => {
   console.log("Generating index file");
 
@@ -182,6 +186,9 @@ const generateIndex = async ({ icons, componentsPath }) => {
   await fs.writeFile(outputFile, formattedResult, { encoding: "utf8" });
 };
 
+/**
+ * Generate a file to export all Icon components in an array.
+ */
 const generateIconAll = async ({ icons, allPath }) => {
   console.log(`Generating ${allPath}`);
 

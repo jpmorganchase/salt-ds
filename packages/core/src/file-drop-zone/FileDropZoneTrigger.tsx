@@ -1,4 +1,3 @@
-import { Button, useForkRef } from "@salt-ds/core";
 import {
   FocusEvent,
   forwardRef,
@@ -6,6 +5,8 @@ import {
   SyntheticEvent,
   useRef,
 } from "react";
+import { useForkRef } from "../utils";
+import { Button } from "../button";
 
 export interface FileDropZoneTriggerProps
   extends Omit<HTMLAttributes<HTMLButtonElement>, "onChange"> {

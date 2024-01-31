@@ -18,7 +18,7 @@ import { rest } from "msw";
 import "./grid.stories.css";
 
 export default {
-  title: "Data Grid/Data Grid",
+  title: "Lab/Data Grid",
   component: Grid,
   parameters: {
     msw: {
