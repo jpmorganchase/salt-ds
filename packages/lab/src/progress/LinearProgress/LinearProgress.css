@@ -38,9 +38,6 @@
 
 .saltLinearProgress-progressValue {
   color: inherit;
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
   margin: 0;
   white-space: nowrap;
   padding-left: var(--salt-spacing-100);

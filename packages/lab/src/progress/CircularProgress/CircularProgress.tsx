@@ -1,20 +1,19 @@
 import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Text } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import circularProgressCSS from "./CircularProgress.css";
-import { Info } from "../internal/Info";
 
 const withBaseName = makePrefixer("saltCircularProgress");
 
 export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Whether to hide the text info within the progress. Defaults to `false`.
+   * Whether to hide the text label within the progress. Defaults to `false`.
    */
-  hideInfo?: boolean;
+  hideLabel?: boolean;
   /**
    * The value of the max progress indicator.
    * Default value is 100.
@@ -33,13 +32,13 @@ export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 /**
- * Circular progress bar with an Info element showing the current value
+ * Circular progress bar with a label showing the current value
  */
 export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
 >(function CircularProgress(
-  { className, hideInfo = false, max = 100, min = 0, value = 0, ...rest },
+  { className, hideLabel = false, max = 100, min = 0, value = 0, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -100,12 +99,10 @@ export const CircularProgress = forwardRef<
           </div>
         </div>
       </div>
-      {!hideInfo && (
-        <Info
-          className={withBaseName("progressValue")}
-          unit="%"
-          value={Math.round(progress)}
-        />
+      {!hideLabel && (
+        <Text styleAs="h2" className={withBaseName("progressValue")}>
+          {`${Math.round(progress)} %`}
+        </Text>
       )}
     </div>
   );

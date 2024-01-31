@@ -8,9 +8,6 @@
   align-items: center;
   color: var(--salt-content-primary-foreground);
   display: flex;
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
   height: 100%;
   justify-content: center;
   left: 0;
