@@ -423,7 +423,7 @@
     background-color: transparent;
   }
 
-  .ag-cell-inline-editing input:not(:focus) {
+  .ag-cell-inline-editing.numeric-cell input:not(:focus) {
     text-align: right;
   }
 
