@@ -64,8 +64,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
         withBaseName(),
         withBaseName(size),
         withBaseName(variant),
-        accentPlacement && withBaseName(`accent${capitalize(accentPlacement)}`),
         {
+          [withBaseName(`accent${capitalize(accentPlacement || "")}`)]:
+            accentPlacement,
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
           [withBaseName("interactable")]: interactable,
