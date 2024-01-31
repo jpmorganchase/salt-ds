@@ -1,9 +1,4 @@
-import {
-  ComponentPropsWithoutRef,
-  ComponentType,
-  CSSProperties,
-  forwardRef,
-} from "react";
+import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
@@ -11,15 +6,15 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import circularProgressCSS from "./CircularProgress.css";
-import { Info, InfoProps } from "../internal/Info";
+import { Info } from "../internal/Info";
 
 const withBaseName = makePrefixer("saltCircularProgress");
 
 export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Component to render info
+   * Whether to hide the text info within the progress. Defaults to `false`.
    */
-  InfoComponent?: ComponentType<InfoProps>;
+  hideInfo?: boolean;
   /**
    * The value of the max progress indicator.
    * Default value is 100.
@@ -44,15 +39,7 @@ export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
 >(function CircularProgress(
-  {
-    InfoComponent = Info,
-    "aria-label": ariaLabel,
-    className,
-    max = 100,
-    min = 0,
-    value = 0,
-    ...rest
-  },
+  { className, hideInfo = false, max = 100, min = 0, value = 0, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -87,7 +74,6 @@ export const CircularProgress = forwardRef<
       data-testid="circular-progress"
       ref={ref}
       role="progressbar"
-      aria-label={ariaLabel}
       aria-valuemax={max}
       aria-valuemin={min}
       aria-valuenow={Math.round(value)}
@@ -114,11 +100,13 @@ export const CircularProgress = forwardRef<
           </div>
         </div>
       </div>
-      <InfoComponent
-        className={withBaseName("progressValue")}
-        unit="%"
-        value={Math.round(progress)}
-      />
+      {!hideInfo && (
+        <Info
+          className={withBaseName("progressValue")}
+          unit="%"
+          value={Math.round(progress)}
+        />
+      )}
     </div>
   );
 });

@@ -39,6 +39,10 @@ export const Default: StoryFn<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" value={38} />
 );
 
+export const HideInfo: StoryFn<typeof CircularProgress> = () => (
+  <CircularProgress aria-label="Download" value={38} hideInfo />
+);
+
 export const MaxValue: StoryFn<typeof CircularProgress> = () => (
   <StackLayout align="center">
     <h3> max = 500, value = 250</h3>

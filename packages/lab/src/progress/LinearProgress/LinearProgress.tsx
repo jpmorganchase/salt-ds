@@ -1,9 +1,4 @@
-import {
-  ComponentPropsWithoutRef,
-  ComponentType,
-  CSSProperties,
-  forwardRef,
-} from "react";
+import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 
@@ -11,15 +6,15 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import linearProgressCss from "./LinearProgress.css";
-import { Info, InfoProps } from "../internal/Info";
+import { Info } from "../internal/Info";
 
 const withBaseName = makePrefixer("saltLinearProgress");
 
 export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Component to render info
+   * Whether to hide the text info within the progress. Defaults to `false`.
    */
-  InfoComponent?: ComponentType<InfoProps>;
+  hideInfo?: boolean;
   /**
    * The value of the max progress indicator.
    * Default value is 100.
@@ -30,11 +25,6 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
    * Default value is 0.
    */
   min?: number;
-  /**
-   * The unit shown on the progress indicator.
-   * Default unit is `%`.
-   */
-  unit?: string;
   /**
    * The value of the progress indicator.
    * Value between 0 and max.
@@ -47,7 +37,7 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
  */
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
-    { InfoComponent = Info, className, max = 100, min = 0, value = 0, ...rest },
+    { className, hideInfo = false, max = 100, min = 0, value = 0, ...rest },
     ref
   ) {
     const targetWindow = useWindow();
@@ -80,11 +70,13 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           <div className={withBaseName("bar")} style={barStyle} />
           <div className={withBaseName("track")} style={trackStyle} />
         </div>
-        <InfoComponent
-          className={withBaseName("progressValue")}
-          unit="%"
-          value={Math.round(progress)}
-        />
+        {!hideInfo && (
+          <Info
+            className={withBaseName("progressValue")}
+            unit="%"
+            value={Math.round(progress)}
+          />
+        )}
       </div>
     );
   }
