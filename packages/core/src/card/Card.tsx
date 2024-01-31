@@ -3,12 +3,16 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { makePrefixer } from "../utils";
+import { capitalize, makePrefixer } from "../utils";
 
 import cardCss from "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Accent border position: defaults to "bottom"
+   */
+  accentPlacement?: "bottom" | "top" | "left" | "right";
   /**
    * **Deprecated:** Use the InteractableCard component instead
    *
@@ -33,6 +37,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   ref
 ) {
   const {
+    accentPlacement,
     className,
     disabled,
     interactable,
@@ -53,6 +58,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
       className={clsx(
         withBaseName(),
         withBaseName(variant),
+        accentPlacement && withBaseName(`accent${capitalize(accentPlacement)}`),
         {
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
