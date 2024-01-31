@@ -343,54 +343,33 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
   );
 };
 
-export const CardAndInteractableCard: StoryFn<typeof Card> = () => {
-  const placements = ["left", "right", "top", "bottom"];
+export const Sizes: StoryFn<typeof Card> = () => {
+  const sizes = ["small", "medium", "large"];
   return (
-    <StackLayout direction={"row"}>
-      <StackLayout>
-        <H1>Interactable Card</H1>
-        <GridLayout rows={2} columns={2}>
-          {exampleData.map((example, index) => {
-            return (
-              <InteractableCard
-                accentPlacement={
-                  placements[index] as "left" | "right" | "top" | "bottom"
-                }
-                key={index}
-              >
-                <H1 styleAs="h3">{example.title}</H1>
-                <Text>{example.content}</Text>
-              </InteractableCard>
-            );
-          })}
-          <InteractableCard>
-            <H1 styleAs="h3">{exampleData[0].title}</H1>
-            <Text>{exampleData[0].content}</Text>
-          </InteractableCard>
-        </GridLayout>
-      </StackLayout>
-      <StackLayout>
-        <H1>Card</H1>
-        <GridLayout rows={2} columns={2}>
-          {exampleData.map((example, index) => {
-            return (
-              <Card
-                accentPlacement={
-                  placements[index] as "left" | "right" | "top" | "bottom"
-                }
-                key={index}
-              >
-                <H1 styleAs="h3">{example.title}</H1>
-                <Text>{example.content}</Text>
-              </Card>
-            );
-          })}
-          <Card>
-            <H1 styleAs="h3">{exampleData[0].title}</H1>
-            <Text>{exampleData[0].content}</Text>
-          </Card>
-        </GridLayout>
-      </StackLayout>
-    </StackLayout>
+    <div
+      style={{
+        display: "grid",
+        gap: "calc(2 * var(--salt-size-unit))",
+        width: "266px",
+      }}
+    >
+      {sizes.map((size, index) => {
+        return (
+          <StackLayout direction="row">
+            <Card size={size as "small" | "medium" | "large"} key={index}>
+              <H1 styleAs="h3">{exampleData[0].title}</H1>
+              <Text>{exampleData[0].content}</Text>
+            </Card>
+            <InteractableCard
+              size={size as "small" | "medium" | "large"}
+              key={index}
+            >
+              <H1 styleAs="h3">{exampleData[0].title}</H1>
+              <Text>{exampleData[0].content}</Text>
+            </InteractableCard>
+          </StackLayout>
+        );
+      })}
+    </div>
   );
 };

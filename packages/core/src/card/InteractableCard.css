@@ -24,6 +24,18 @@
   border-color: var(--salt-container-secondary-borderColor);
 }
 
+.saltInteractableCard-small {
+  padding: var(--saltCard-padding, var(--salt-spacing-100));
+}
+
+.saltInteractableCard-medium {
+  padding: var(--saltCard-padding, var(--salt-spacing-200));
+}
+
+.saltInteractableCard-large {
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
+}
+
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
 .saltInteractableCard-accentBottom::after {
   content: "";
