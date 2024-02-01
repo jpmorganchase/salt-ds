@@ -1,7 +1,34 @@
+.parent-child-layout {
+  width: 20vw;
+  max-width: 250px;
+  height: 200px;
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+}
+
+.parent-content {
+  padding: var(--salt-spacing-300);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 85px;
+  height: 100%;
+  /* border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor); */
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+}
+
+.child-content {
+  padding: var(--salt-spacing-300);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-width: 150px; */
+  height: 100%;
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+}
+
 nav {
   position: relative;
-  min-width: 150px;
-  width: 100%;
+  min-width: 160px;
 }
 
 ul {
@@ -10,59 +37,19 @@ ul {
   margin: 0;
 }
 
-.parent-content {
-  background: var(--salt-color-orange-20);
-  padding: 1rem;
-}
-
-.child-content {
-  background: var(--salt-color-gray-40);
-  padding: 1rem;
-}
-
 .parent-child-composite-container {
-  max-width: 1200px;
-  min-height: 800px;
-  padding: var(--salt-size-container-spacing);
+  width: 545px;
+  min-height: 295px;
+  padding: var(--salt-spacing-300);
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
-.parent-child-composite-container h2 {
-  margin: 0;
+.parent-child-composite-container .child {
+  padding: var(--salt-spacing-200);
 }
 
-.parent-child-composite-title {
-  margin-bottom: var(--salt-size-container-spacing);
-}
-
-.parent-child-composite-empty-container {
-  width: 12px;
-  padding: var(--salt-size-unit);
-}
-
-.parent-child-composite-container p,
-.parent-child-composite-container h3 {
-  margin: 0;
-}
-
-.parent-child-composite-container {
-  max-width: 1200px;
-  padding: var(--salt-size-container-spacing);
-}
-
-.parent-child-composite-container h2 {
-  margin: 0;
-}
-
-.parent-child-composite-title {
-  margin-bottom: var(--salt-size-container-spacing);
-}
-
-.parent-child-composite-empty-container {
-  width: 12px;
-  padding: var(--salt-size-unit);
-}
-
-.parent-child-composite-container p,
-.parent-child-composite-container h3 {
-  margin: 0;
+.back-button {
+  position: absolute;
+  top: calc(var(--salt-spacing-100) * -1);
+  left: calc(var(--salt-spacing-100) * -1);
 }
