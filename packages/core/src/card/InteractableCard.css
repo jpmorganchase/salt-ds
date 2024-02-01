@@ -100,6 +100,7 @@ a:link .saltInteractableCard * {
 /* Styles applied on active state to InteractableCard */
 .saltInteractableCard:active {
   cursor: var(--saltCard-interactable-cursor-active, var(--salt-selectable-cursor-active));
+  border-color: var(--salt-selectable-foreground-selected);
   box-shadow: var(--saltCard-interactable-shadow-active, var(--salt-overlayable-shadow));
   --card-accentColor: var(--saltCard-accentColor-active, var(--salt-selectable-foreground-selected));
 }
