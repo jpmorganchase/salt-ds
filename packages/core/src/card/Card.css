@@ -28,50 +28,6 @@
   padding: var(--saltCard-padding, var(--salt-spacing-300));
 }
 
-/* Styles applied to Card if `accentPlacement="bottom"` (default) */
-.saltCard-accentBottom::after {
-  content: "";
-  position: absolute;
-  left: calc(-1 * var(--salt-size-border));
-  bottom: calc(-1 * var(--salt-size-border));
-  height: var(--salt-size-accent);
-  width: calc(100% + calc(2 * var(--salt-size-border)));
-  background-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
-}
-
-/* Styles applied to Card if `accentPlacement="left"` */
-.saltCard-accentLeft::after {
-  content: "";
-  position: absolute;
-  left: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: calc(100% + calc(2 * var(--salt-size-border)));
-  width: var(--salt-size-accent);
-  background-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
-}
-
-/* Styles applied to Card if `accentPlacement="top"` */
-.saltCard-accentTop::after {
-  content: "";
-  position: absolute;
-  left: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: var(--salt-size-accent);
-  width: calc(100% + calc(2 * var(--salt-size-border)));
-  background-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
-}
-
-/* Styles applied to Card if `accentPlacement="right"` */
-.saltCard-accentRight::after {
-  content: "";
-  position: absolute;
-  right: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: calc(100% + calc(2 * var(--salt-size-border)));
-  width: var(--salt-size-accent);
-  background-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
-}
-
 /*
  * **Deprecated:** The following styles are deprecated
  *  Use Interactable Card component instead
