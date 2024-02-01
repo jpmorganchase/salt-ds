@@ -1,4 +1,12 @@
-import { Card, H1, InteractableCard, Text } from "@salt-ds/core";
+import {
+  Card,
+  FlowLayout,
+  GridLayout,
+  H1,
+  InteractableCard,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -12,54 +20,8 @@ export default {
   component: Card,
 } as Meta<typeof Card>;
 
-export const AllExamplesUsingText: StoryFn<
-  QAContainerProps & { className?: string }
-> = (props) => {
-  return (
-    <QAContainer itemPadding={10} itemWidthAuto {...props}>
-      <Card>
-        <H1>Card with density</H1>
-        <Text>Content</Text>
-      </Card>
-      <Card variant="secondary">
-        <H1>Secondary card with density</H1>
-        <Text>Content</Text>
-      </Card>
-      <Card size="small">
-        <H1>Secondary card with density</H1>
-        <Text>Content</Text>
-      </Card>
-      <Card size="medium">
-        <H1>Secondary card with density</H1>
-        <Text>Content</Text>
-      </Card>
-      <InteractableCard>
-        <H1>Interactable card with density</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard variant="secondary">
-        <H1>Secondary interactable with density</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard size="small">
-        <H1>Secondary interactable with density</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard size="medium">
-        <H1>Secondary interactable with density</H1>
-        <Text>Content</Text>
-      </InteractableCard>
-    </QAContainer>
-  );
-};
-AllExamplesUsingText.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
-) => (
-  <QAContainerNoStyleInjection itemPadding={10} itemWidthAuto {...props}>
+const AllExamples = () => (
+  <FlowLayout>
     <Card>
       <H1>Card with density</H1>
       <Text>Content</Text>
@@ -80,6 +42,10 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <H1>Interactable card with density</H1>
       <Text>Content</Text>
     </InteractableCard>
+    <InteractableCard disabled>
+      <H1>Interactable card with density</H1>
+      <Text>Content</Text>
+    </InteractableCard>
     <InteractableCard variant="secondary">
       <H1>Secondary interactable with density</H1>
       <Text>Content</Text>
@@ -92,6 +58,27 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <H1>Secondary interactable with density</H1>
       <Text>Content</Text>
     </InteractableCard>
+  </FlowLayout>
+);
+
+export const AllExamplesUsingText: StoryFn<
+  QAContainerProps & { className?: string }
+> = (props) => {
+  return (
+    <QAContainer itemPadding={10} itemWidthAuto {...props}>
+      <AllExamples />
+    </QAContainer>
+  );
+};
+AllExamplesUsingText.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props
+) => (
+  <QAContainerNoStyleInjection itemPadding={10} itemWidthAuto {...props}>
+    <AllExamples />
   </QAContainerNoStyleInjection>
 );
 
