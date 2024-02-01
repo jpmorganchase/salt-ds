@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { capitalize, makePrefixer } from "../utils";
+import { makePrefixer } from "../utils";
 
 import cardCss from "./Card.css";
 

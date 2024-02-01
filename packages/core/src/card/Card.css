@@ -1,9 +1,8 @@
 /* Styles applied to the root element */
 .saltCard {
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
-  border-width: var(--salt-size-border);
+  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
-  position: relative;
 }
 
 .saltCard-primary {
