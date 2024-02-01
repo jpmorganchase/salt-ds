@@ -114,7 +114,7 @@
     "vite-plugin-istanbul": "^5.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^1.0.0",
-    "webpack": "5.76.0",
+    "webpack": "5.90.1",
     "yup": "^1.0.2"
   },
   "resolutions": {
@@ -124,7 +124,7 @@
     "modular-scripts/rollup": "2.79.1",
     "next": "^14.0.0",
     "webpack-dev-server": "4.9.3",
-    "webpack": "5.76.0",
+    "webpack": "5.90.1",
     "recursive-readdir": "2.2.3",
     "@jpmorganchase/mosaic-components@npm:0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch",
     "@jpmorganchase/mosaic-components@npm:^0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch"
