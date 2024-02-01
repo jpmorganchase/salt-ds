@@ -109,6 +109,8 @@ export const RadioButtonGroup = forwardRef<
 
   return (
     <fieldset
+      role="radiogroup"
+      aria-readonly={readOnly}
       aria-labelledby={
         clsx(a11yProps?.["aria-labelledby"], ariaLabelledBy) || undefined
       }

@@ -34,13 +34,15 @@
   cursor: var(--salt-actionable-cursor-hover);
 }
 
-.saltToggleButton[aria-checked="true"]:focus-visible {
+.saltToggleButton[aria-checked="true"]:focus-visible,
+.saltToggleButton[aria-pressed="true"]:focus-visible {
   background: var(--salt-actionable-secondary-background-active);
   color: var(--salt-actionable-secondary-foreground-active);
   cursor: var(--salt-actionable-cursor-active);
 }
 
-.saltToggleButton[aria-checked="true"] {
+.saltToggleButton[aria-checked="true"],
+.saltToggleButton[aria-pressed="true"] {
   background: var(--salt-actionable-secondary-background-active);
   color: var(--salt-actionable-secondary-foreground-active);
   cursor: var(--salt-actionable-cursor-active);
