@@ -25,11 +25,27 @@ export const AllExamplesUsingText: StoryFn<
         <H1>Secondary card with density</H1>
         <Text>Content</Text>
       </Card>
+      <Card size="small">
+        <H1>Secondary card with density</H1>
+        <Text>Content</Text>
+      </Card>
+      <Card size="medium">
+        <H1>Secondary card with density</H1>
+        <Text>Content</Text>
+      </Card>
       <InteractableCard>
         <H1>Interactable card with density</H1>
         <Text>Content</Text>
       </InteractableCard>
       <InteractableCard variant="secondary">
+        <H1>Secondary interactable with density</H1>
+        <Text>Content</Text>
+      </InteractableCard>
+      <InteractableCard size="small">
+        <H1>Secondary interactable with density</H1>
+        <Text>Content</Text>
+      </InteractableCard>
+      <InteractableCard size="medium">
         <H1>Secondary interactable with density</H1>
         <Text>Content</Text>
       </InteractableCard>
@@ -52,11 +68,27 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <H1>Secondary card with density</H1>
       <Text>Content</Text>
     </Card>
+    <Card size="small">
+      <H1>Secondary card with density</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card size="medium">
+      <H1>Secondary card with density</H1>
+      <Text>Content</Text>
+    </Card>
     <InteractableCard>
       <H1>Interactable card with density</H1>
       <Text>Content</Text>
     </InteractableCard>
     <InteractableCard variant="secondary">
+      <H1>Secondary interactable with density</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard size="small">
+      <H1>Secondary interactable with density</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard size="medium">
       <H1>Secondary interactable with density</H1>
       <Text>Content</Text>
     </InteractableCard>

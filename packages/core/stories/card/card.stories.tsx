@@ -192,7 +192,7 @@ export const DefaultWithButton: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <StackLayout gap={0}>
       <H3>{exampleData[0].title}</H3>
-      <StackLayout gap={1}>
+      <StackLayout gap={2}>
         <Text>{exampleData[0].content}</Text>
         <Button onClick={() => window.open("#")}>View funds</Button>
       </StackLayout>
@@ -216,7 +216,7 @@ export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
       gap={0}
     >
       <H3>{exampleData[0].title}</H3>
-      <StackLayout gap={1}>
+      <StackLayout gap={2}>
         <Text>{exampleData[0].content}</Text>
         <Button onClick={() => window.open("#")}>View funds</Button>
       </StackLayout>
