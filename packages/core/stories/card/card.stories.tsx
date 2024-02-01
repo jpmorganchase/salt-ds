@@ -342,7 +342,7 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
     >
       <InteractableCard className="imageBackground">
         <StackLayout
-          style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
+          style={{ paddingTop: "calc(3 * var(--salt-spacing-300))" }}
           gap={1}
         >
           <H3>{exampleData[0].title}</H3>
@@ -392,7 +392,7 @@ export const CardAndInteractableCardVariants: StoryFn<typeof Card> = () => {
                 <Text>{exampleData[0].content}</Text>
               </StackLayout>
             </Card>
-            <InteractableCard variant={variant as "primary" | "secondary"}>
+            <InteractableCard variant={variant}>
               <StackLayout gap={1}>
                 <H3>{exampleData[0].title}</H3>
                 <Text>{exampleData[0].content}</Text>

@@ -9,7 +9,7 @@
   padding: var(--saltCard-padding, var(--card-padding));
   position: relative;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
-  --card-accent-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
+  --card-accentColor: var(--saltCard-accentColor, var(--salt-accent-borderColor));
 }
 
 /* Styles applied to InteractableCard when variant="primary" */
@@ -40,7 +40,7 @@
 .saltInteractableCard::after {
   content: "";
   position: absolute;
-  background-color: var(--card-accent-color);
+  background-color: var(--card-accentColor);
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
@@ -119,7 +119,7 @@ a:link .saltInteractableCard * {
 .saltInteractableCard-primary.saltInteractableCard-disabled:focus,
 .saltInteractableCard-primary.saltInteractableCard-disabled:hover,
 .saltInteractableCard-primary.saltInteractableCard-disabled:active {
-  --card-accent-color: var(--saltCard-accentColor-disabled, var(--salt-container-primary-borderColor-disabled));
+  --card-accentColor: var(--saltCard-accentColor-disabled, var(--salt-container-primary-borderColor-disabled));
   background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
 }
 
@@ -128,7 +128,7 @@ a:link .saltInteractableCard * {
 .saltInteractableCard-secondary.saltInteractableCard-disabled:focus,
 .saltInteractableCard-secondary.saltInteractableCard-disabled:hover,
 .saltInteractableCard-secondary.saltInteractableCard-disabled:active {
-  --card-accent-color: var(--saltCard-accentColor-disabled, var(--salt-container-secondary-borderColor-disabled));
+  --card-accentColor: var(--saltCard-accentColor-disabled, var(--salt-container-secondary-borderColor-disabled));
   background: var(--saltCard-background-disabled, var(--salt-container-secondary-background));
 }
 
