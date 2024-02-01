@@ -3,8 +3,6 @@ import { Meta, StoryFn } from "@storybook/react";
 
 import { ChevronLeftIcon, ThumbsUpIcon } from "@salt-ds/icons";
 import {
-  Tab,
-  Tabstrip,
   ParentChildLayout,
   StackedViewElement,
   useIsViewportLargerThanBreakpoint,
@@ -14,6 +12,7 @@ import {
   FlexItem,
   FlexLayout,
   FlowLayout,
+  NavigationItem,
   StackLayout,
 } from "@salt-ds/core";
 
@@ -115,145 +114,78 @@ ReducedMotion.args = {
   child,
 };
 
-const useTabSelection = (initialValue?: number) => {
-  const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
-  const handleTabSelection = (tabIndex: number) => {
-    setSelectedTab(tabIndex);
-  };
-  return [selectedTab, handleTabSelection] as const;
-};
-
-const tabs = ["Sint", "Dolor", "Magna"];
-
 export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [selectedTab, handleTabSelection] = useTabSelection();
+  const items = ["Sint", "Dolor", "Magna"];
 
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
-  const isStacked = useIsViewportLargerThanBreakpoint("xs");
-
-  const handleParent = () => {
+  const showParent = () => {
     setCurrentView("parent");
   };
-  const handleChild = () => {
+  const showChild = () => {
     setCurrentView("child");
   };
 
+  const [active, setActive] = useState(items[0]);
+
   const parent = (
-    <Tabstrip
-      onActiveChange={handleTabSelection}
-      orientation="vertical"
-      onClick={() => {
-        if (isStacked) {
-          handleChild();
-        }
-      }}
-      activeTabIndex={selectedTab}
-      style={{ width: "100%", minWidth: 300 }}
-    >
-      {tabs.map((label, index) => (
-        <Tab label={label} key={index} />
-      ))}
-    </Tabstrip>
-  );
-
-  const TitleWithBackButton = ({ text }: { text: string }) => (
-    <FlowLayout
-      align="center"
-      justify="space-between"
-      className="parent-child-composite-title"
-    >
-      <Button onClick={handleParent} variant="secondary" aria-label="Back">
-        <ChevronLeftIcon />
-      </Button>
-      <h2>{text}</h2>
-      <div className="parent-child-composite-empty-container" />
-    </FlowLayout>
-  );
-
-  const Title = ({ text }: { text: string }) => (
-    <FlowLayout align="center" className="parent-child-composite-title">
-      <h2>{text}</h2>
-    </FlowLayout>
-  );
-
-  const ChildTitle = () =>
-    isStacked ? (
-      <TitleWithBackButton text={tabs[selectedTab]} />
-    ) : (
-      <Title text={tabs[selectedTab]} />
-    );
-
-  const renderArticleButtons = (
-    <FlowLayout gap={1}>
-      <Button>Save to reading list</Button>
-      <Button>Share</Button>
-      <Button aria-label="like">
-        <ThumbsUpIcon />
-      </Button>
-    </FlowLayout>
+    <nav>
+      <ul className="vertical">
+        {items.map((item) => (
+          <li key={item}>
+            <NavigationItem
+              active={active === item}
+              href="#"
+              orientation="vertical"
+              onClick={(event) => {
+                // Prevent default to avoid navigation
+                event.preventDefault();
+                setActive(item);
+                showChild();
+              }}
+            >
+              {item}
+            </NavigationItem>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 
   const child = (
     <>
-      <ChildTitle />
-      <StackLayout>
-        <FlexLayout wrap={{ xs: true, lg: false }}>
-          <FlexItem grow={1} className="flex-blog-image flex-blog-image-one" />
-          <StackLayout>
-            <h3>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            </h3>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem.
-            </p>
-            {renderArticleButtons}
-          </StackLayout>
-        </FlexLayout>
-
-        <FlexLayout wrap={{ xs: true, lg: false }}>
-          <FlexItem grow={1} className="flex-blog-image flex-blog-image-two" />
-          <StackLayout>
-            <h3>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h3>
-            <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt in culpa qui officia deserunt mollitia
-              animi.
-            </p>
-            {renderArticleButtons}
-          </StackLayout>
-        </FlexLayout>
-
-        <FlexLayout wrap={{ xs: true, lg: false }}>
-          <FlexItem
-            grow={1}
-            className="flex-blog-image flex-blog-image-three"
-          />
-          <StackLayout>
-            <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum. Duis aute irure dolor in reprehenderit in
-              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
-            </p>
-            {renderArticleButtons}
-          </StackLayout>
-        </FlexLayout>
-      </StackLayout>
+      {/* {isStacked && ( */}
+      <Button onClick={showParent} variant="secondary" aria-label="Back">
+        <ChevronLeftIcon />
+      </Button>
+      {/* )} */}
+      <h2>{active}</h2>
+      <FlexLayout wrap={{ xs: true, lg: false }}>
+        <FlexItem grow={1} className="flex-blog-image flex-blog-image-one" />
+        <StackLayout>
+          <h3>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          </h3>
+          <p>
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
+            aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
+            eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
+            qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
+            sed quia non numquam eius modi tempora incidunt ut labore et dolore
+            magnam aliquam quaerat voluptatem.
+          </p>
+          <FlowLayout gap={1}>
+            <Button>Save to reading list</Button>
+            <Button>Share</Button>
+            <Button aria-label="like">
+              <ThumbsUpIcon />
+            </Button>
+          </FlowLayout>
+        </StackLayout>
+      </FlexLayout>
     </>
   );
 
@@ -262,6 +194,7 @@ export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         {...args}
         collapsedViewElement={currentView}
+        collapseAtBreakpoint="xs"
         parent={parent}
         child={child}
       />

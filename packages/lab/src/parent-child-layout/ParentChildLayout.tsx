@@ -31,6 +31,10 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
    */
   disableAnimations?: boolean;
   /**
+   * Position of the parent component within the layout.
+   */
+  parentPosition?: "left" | "right";
+  /**
    * Parent component to be rendered
    */
   parent: ReactNode;
@@ -50,8 +54,10 @@ export const ParentChildLayout = forwardRef<
     collapseAtBreakpoint = "sm",
     collapsedViewElement = "parent",
     disableAnimations = false,
+    parentPosition = "left",
     parent,
     child,
+    gap = 0,
     className,
     ...rest
   },
@@ -64,16 +70,16 @@ export const ParentChildLayout = forwardRef<
     window: targetWindow,
   });
 
-  const isStacked = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
+  const isCollapsed = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
   const stackedViewChildren = {
     parent: (
-      <ParentChildItem isStacked className={withBaseName("parent")}>
+      <ParentChildItem isCollapsed className={withBaseName("parent")}>
         {parent}
       </ParentChildItem>
     ),
     child: (
-      <ParentChildItem isStacked className={withBaseName("child")}>
+      <ParentChildItem isCollapsed className={withBaseName("child")}>
         {child}
       </ParentChildItem>
     ),
@@ -84,12 +90,16 @@ export const ParentChildLayout = forwardRef<
       ref={ref}
       className={clsx(
         withBaseName(),
-        { [withBaseName(`no-animations`)]: disableAnimations },
+        {
+          [withBaseName(`no-animations`)]: disableAnimations,
+          [withBaseName(`reversed`)]: parentPosition === "right",
+        },
         className
       )}
+      gap={gap}
       {...rest}
     >
-      {isStacked ? (
+      {isCollapsed ? (
         stackedViewChildren[collapsedViewElement]
       ) : (
         <>

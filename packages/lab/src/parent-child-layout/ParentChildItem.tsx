@@ -5,11 +5,11 @@ export interface ParentChildItemProps extends FlexItemProps<"div"> {
   /**
    * Determines whether the component is stacked
    */
-  isStacked?: boolean;
+  isCollapsed?: boolean;
 }
 
 export const ParentChildItem = ({
-  isStacked,
+  isCollapsed,
   children,
   className,
   ...rest
@@ -17,7 +17,7 @@ export const ParentChildItem = ({
   <FlexItem
     className={clsx(
       {
-        ["saltFlexItem-stacked"]: isStacked,
+        ["saltFlexItem-stacked"]: isCollapsed,
       },
       className
     )}
