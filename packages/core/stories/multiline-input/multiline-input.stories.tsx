@@ -1,14 +1,21 @@
-import { Button, FlowLayout, Label, MultilineInput, Text } from "@salt-ds/core";
 import {
-  BankCheckSolidIcon,
+  FormField,
+  Button,
+  FlowLayout,
+  Label,
+  MultilineInput,
+  Text,
+  FormFieldLabel,
+  FormFieldHelperText,
+} from "@salt-ds/core";
+import {
   BookmarkSolidIcon,
-  EditSolidIcon,
   FilterClearIcon,
   FlagIcon,
-  HelpSolidIcon,
   PinSolidIcon,
+  RefreshIcon,
   SendIcon,
-  UserBadgeIcon,
+  CloseIcon,
 } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { ChangeEvent, useState } from "react";
@@ -34,6 +41,7 @@ export const Controlled: StoryFn<typeof MultilineInput> = (args) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue(value);
+    args.onChange?.(event);
   };
 
   return (
@@ -223,19 +231,14 @@ export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
       <MultilineInput
-        startAdornment={
-          <Button variant="cta">
-            <EditSolidIcon />
-          </Button>
-        }
         endAdornment={
           <>
             <Text>GBP</Text>
-            <Button variant="secondary">
-              <HelpSolidIcon />
+            <Button variant="secondary" aria-label="Reset">
+              <RefreshIcon aria-hidden />
             </Button>
-            <Button variant="cta">
-              <SendIcon />
+            <Button variant="cta" aria-label="Submit">
+              <SendIcon aria-hidden />
             </Button>
           </>
         }
@@ -245,8 +248,8 @@ export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
       <MultilineInput
         startAdornment={<Text>£</Text>}
         endAdornment={
-          <Button>
-            <BookmarkSolidIcon />
+          <Button aria-label="Bookmark">
+            <BookmarkSolidIcon aria-hidden />
           </Button>
         }
         defaultValue="Value"
@@ -255,8 +258,8 @@ export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
       <MultilineInput
         disabled
         endAdornment={
-          <Button disabled>
-            <UserBadgeIcon />
+          <Button disabled aria-label="Clear input">
+            <CloseIcon aria-hidden />
           </Button>
         }
         defaultValue="Disabled value"
@@ -265,8 +268,8 @@ export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
       <MultilineInput
         readOnly
         endAdornment={
-          <Button variant="secondary" disabled>
-            <BankCheckSolidIcon />
+          <Button variant="secondary" disabled aria-label="Clear input">
+            <CloseIcon aria-hidden />
           </Button>
         }
         defaultValue="Readonly value"
@@ -299,5 +302,17 @@ export const WithMultipleFeatures: StoryFn<typeof MultilineInput> = (args) => {
         {...args}
       />
     </FlowLayout>
+  );
+};
+
+export const WithFormField: StoryFn<typeof FormField> = (args) => {
+  return (
+    <FormField {...args}>
+      <FormFieldLabel>Comments</FormFieldLabel>
+      <MultilineInput defaultValue="Value" {...args} />
+      <FormFieldHelperText>
+        Please leave feedback about your experience.
+      </FormFieldHelperText>
+    </FormField>
   );
 };
