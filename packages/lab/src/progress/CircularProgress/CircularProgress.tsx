@@ -31,9 +31,6 @@ export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
   value?: number;
 }
 
-/**
- * Circular progress bar with a label showing the current value
- */
 export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
@@ -55,7 +52,7 @@ export const CircularProgress = forwardRef<
     return -180 + ((progress - shift) / 50) * 180;
   };
 
-  const progress = (value / max) * 100;
+  const progress = ((value - min) / (max - min)) * 100;
 
   if (progress <= 50) {
     const rotationAngle = getRotationAngle(progress);

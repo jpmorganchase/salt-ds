@@ -31,9 +31,6 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   value?: number;
 }
 
-/**
- * Linear progress bar with a label showing the current value
- */
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
     { className, hideLabel = false, max = 100, min = 0, value = 0, ...rest },
@@ -46,7 +43,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       window: targetWindow,
     });
 
-    const progress = (value / max) * 100;
+    const progress = ((value - min) / (max - min)) * 100;
 
     const barStyle: CSSProperties = {};
     const trackStyle: CSSProperties = {};
