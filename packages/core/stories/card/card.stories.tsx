@@ -6,7 +6,7 @@ import {
   InteractableCard,
   SaltProvider,
   Panel,
-  H1,
+  H3,
   Text,
   FlexLayout,
   GridLayout,
@@ -103,7 +103,7 @@ const exampleData = [
 
 export const Default: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
+    <H3>{exampleData[0].title}</H3>
     <Text>{exampleData[0].content}</Text>
   </Card>
 );
@@ -113,7 +113,7 @@ export const CardsInFlexLayout: StoryFn<typeof Card> = () => (
     {exampleData.map((example, index) => {
       return (
         <Card key={index}>
-          <H1 styleAs="h3">{example.title}</H1>
+          <H3>{example.title}</H3>
           <Text>{example.content}</Text>
         </Card>
       );
@@ -126,7 +126,7 @@ export const CardsInGridLayout: StoryFn<typeof Card> = () => (
     {exampleData.map((example, index) => {
       return (
         <Card key={index}>
-          <H1 styleAs="h3">{example.title}</H1>
+          <H3>{example.title}</H3>
           <Text>{example.content}</Text>
         </Card>
       );
@@ -142,7 +142,7 @@ export const DefaultWithImage: StoryFn<typeof Card> = () => (
       className="card-demo-image"
       style={{ width: "-webkit-fill-available" }}
     />
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
+    <H3>{exampleData[0].title}</H3>
     <Text>{exampleData[0].content}</Text>
   </Card>
 );
@@ -150,7 +150,7 @@ export const DefaultWithImage: StoryFn<typeof Card> = () => (
 export const DefaultWithLink: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-      <H1 styleAs="h3">{exampleData[0].title}</H1>
+      <H3>{exampleData[0].title}</H3>
       <Text>{exampleData[0].content}</Text>
     </div>
     <Link href="#" IconComponent={null} target="_blank">
@@ -174,7 +174,7 @@ export const DefaultWithLinkAndImage: StoryFn<typeof Card> = () => (
       }}
     >
       <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H1 styleAs="h3">{exampleData[0].title}</H1>
+        <H3>{exampleData[0].title}</H3>
         <Text>{exampleData[0].content}</Text>
       </div>
       <Link href="#" IconComponent={null} target="_blank">
@@ -187,7 +187,7 @@ export const DefaultWithLinkAndImage: StoryFn<typeof Card> = () => (
 export const DefaultWithButton: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
     <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-      <H1 styleAs="h3">{exampleData[0].title}</H1>
+      <H3>{exampleData[0].title}</H3>
       <Text>{exampleData[0].content}</Text>
     </div>
     <Button onClick={() => window.open("#")}>View funds</Button>
@@ -209,7 +209,7 @@ export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
       }}
     >
       <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H1 styleAs="h3">{exampleData[0].title}</H1>
+        <H3>{exampleData[0].title}</H3>
         <Text>{exampleData[0].content}</Text>
       </div>
       <Button onClick={() => window.open("#")}>View funds</Button>
@@ -230,7 +230,7 @@ export const InteractableAll: StoryFn<typeof Card> = () => (
 
 export const Interactable: StoryFn<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }}>
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
+    <H3>{exampleData[0].title}</H3>
     <Text>{exampleData[0].content}</Text>
   </InteractableCard>
 );
@@ -242,9 +242,9 @@ export const InteractableDisabled: StoryFn<typeof Card> = () => (
     data-testid="card-disabled-example"
     disabled
   >
-    <H1 styleAs="h3" disabled>
+    <H3 disabled>
       {exampleData[0].title}
-    </H1>
+    </H3>
     <Text disabled>{exampleData[0].content}</Text>
   </InteractableCard>
 );
@@ -267,7 +267,7 @@ export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
             }
             key={index}
           >
-            <H1 styleAs="h3">{example.title}</H1>
+            <H3>{example.title}</H3>
             <Text>{example.content}</Text>
           </InteractableCard>
         );
@@ -285,7 +285,7 @@ export const InteractableAsBlockLink: StoryFn<typeof Card> = () => {
       target="_blank"
     >
       <InteractableCard style={{ width: "266px" }}>
-        <H1 styleAs="h3">{exampleData[0].title}</H1>
+        <H3>{exampleData[0].title}</H3>
         <Text>{exampleData[0].content}</Text>
       </InteractableCard>
     </Link>
@@ -313,7 +313,7 @@ export const InteractableAsBlockLinkWithImage: StoryFn<typeof Card> = () => {
               "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
           }}
         >
-          <H1 styleAs="h3">{exampleData[0].title}</H1>
+          <H3>{exampleData[0].title}</H3>
           <Text>{exampleData[0].content}</Text>
         </div>
       </InteractableCard>
@@ -335,7 +335,7 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
         <div
           style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
         >
-          <H1 styleAs="h3">{exampleData[0].title}</H1>
+          <H3>{exampleData[0].title}</H3>
           <Text>{exampleData[0].content}</Text>
         </div>
       </InteractableCard>
@@ -343,28 +343,59 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
   );
 };
 
-export const Sizes: StoryFn<typeof Card> = () => {
+export const CardAndInteractableCardSizes: StoryFn<typeof Card> = () => {
   const sizes = ["small", "medium", "large"];
   return (
     <div
       style={{
         display: "grid",
         gap: "calc(2 * var(--salt-size-unit))",
-        width: "266px",
+        width: 600,
       }}
     >
       {sizes.map((size, index) => {
         return (
           <StackLayout direction="row">
             <Card size={size as "small" | "medium" | "large"} key={index}>
-              <H1 styleAs="h3">{exampleData[0].title}</H1>
+              <H3>{exampleData[0].title}</H3>
               <Text>{exampleData[0].content}</Text>
             </Card>
             <InteractableCard
               size={size as "small" | "medium" | "large"}
               key={index}
             >
-              <H1 styleAs="h3">{exampleData[0].title}</H1>
+              <H3>{exampleData[0].title}</H3>
+              <Text>{exampleData[0].content}</Text>
+            </InteractableCard>
+          </StackLayout>
+        );
+      })}
+    </div>
+  );
+};
+
+export const CardAndInteractableCardVariants: StoryFn<typeof Card> = () => {
+  const variants = ["primary", "secondary"];
+  return (
+    <div
+      style={{
+        display: "grid",
+        gap: "calc(2 * var(--salt-size-unit))",
+        width: 600,
+      }}
+    >
+      {variants.map((variant, index) => {
+        return (
+          <StackLayout direction="row">
+            <Card variant={variant as "primary" | "secondary"} key={index}>
+              <H3>{exampleData[0].title}</H3>
+              <Text>{exampleData[0].content}</Text>
+            </Card>
+            <InteractableCard
+              variant={variant as "primary" | "secondary"}
+              key={index}
+            >
+              <H3>{exampleData[0].title}</H3>
               <Text>{exampleData[0].content}</Text>
             </InteractableCard>
           </StackLayout>
