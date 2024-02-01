@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
@@ -11,7 +11,6 @@ import {
   StackLayout,
   RadioButton,
   RadioButtonGroup,
-  H2,
   Label,
 } from "@salt-ds/core";
 import exampleImage from "./../assets/exampleImage1x.png";
