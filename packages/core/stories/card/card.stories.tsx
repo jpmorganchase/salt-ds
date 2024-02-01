@@ -17,6 +17,7 @@ import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 import exampleImage from "./../assets/exampleImage1x.png";
 
 import "./card.stories.css";
+import { ST } from "packages/countries/src";
 
 export default {
   title: "Core/Card",
@@ -149,13 +150,15 @@ export const DefaultWithImage: StoryFn<typeof Card> = () => (
 
 export const DefaultWithLink: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
-    <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+    <StackLayout gap={0}>
       <H3>{exampleData[0].title}</H3>
-      <Text>{exampleData[0].content}</Text>
-    </div>
-    <Link href="#" IconComponent={null} target="_blank">
-      View our range of funds
-    </Link>
+      <StackLayout gap={1}>
+        <Text>{exampleData[0].content}</Text>
+        <Link href="#" IconComponent={null} target="_blank">
+          View our range of funds
+        </Link>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
@@ -167,30 +170,33 @@ export const DefaultWithLinkAndImage: StoryFn<typeof Card> = () => (
       className="card-demo-image"
       style={{ width: "-webkit-fill-available" }}
     />
-    <div
+    <StackLayout
       style={{
         padding:
           "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
       }}
+      gap={0}
     >
-      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H3>{exampleData[0].title}</H3>
+      <H3>{exampleData[0].title}</H3>
+      <StackLayout gap={1}>
         <Text>{exampleData[0].content}</Text>
-      </div>
-      <Link href="#" IconComponent={null} target="_blank">
-        View our range of funds
-      </Link>
-    </div>
+        <Link href="#" IconComponent={null} target="_blank">
+          View our range of funds
+        </Link>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
 export const DefaultWithButton: StoryFn<typeof Card> = () => (
   <Card style={{ width: "256px" }}>
-    <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
+    <StackLayout gap={0}>
       <H3>{exampleData[0].title}</H3>
-      <Text>{exampleData[0].content}</Text>
-    </div>
-    <Button onClick={() => window.open("#")}>View funds</Button>
+      <StackLayout gap={1}>
+        <Text>{exampleData[0].content}</Text>
+        <Button onClick={() => window.open("#")}>View funds</Button>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
@@ -202,18 +208,19 @@ export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
       className="card-demo-image"
       style={{ width: "-webkit-fill-available" }}
     />
-    <div
+    <StackLayout
       style={{
         padding:
           "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
       }}
+      gap={0}
     >
-      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H3>{exampleData[0].title}</H3>
+      <H3>{exampleData[0].title}</H3>
+      <StackLayout gap={1}>
         <Text>{exampleData[0].content}</Text>
-      </div>
-      <Button onClick={() => window.open("#")}>View funds</Button>
-    </div>
+        <Button onClick={() => window.open("#")}>View funds</Button>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
@@ -242,9 +249,7 @@ export const InteractableDisabled: StoryFn<typeof Card> = () => (
     data-testid="card-disabled-example"
     disabled
   >
-    <H3 disabled>
-      {exampleData[0].title}
-    </H3>
+    <H3 disabled>{exampleData[0].title}</H3>
     <Text disabled>{exampleData[0].content}</Text>
   </InteractableCard>
 );
@@ -252,13 +257,7 @@ export const InteractableDisabled: StoryFn<typeof Card> = () => (
 export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
   const placements = ["left", "right", "top", "bottom"];
   return (
-    <div
-      style={{
-        display: "grid",
-        gap: "calc(2 * var(--salt-size-unit))",
-        width: "266px",
-      }}
-    >
+    <StackLayout style={{ width: "266px" }}>
       {exampleData.map((example, index) => {
         return (
           <InteractableCard
@@ -272,7 +271,7 @@ export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
           </InteractableCard>
         );
       })}
-    </div>
+    </StackLayout>
   );
 };
 
@@ -346,13 +345,7 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
 export const CardAndInteractableCardSizes: StoryFn<typeof Card> = () => {
   const sizes = ["small", "medium", "large"];
   return (
-    <div
-      style={{
-        display: "grid",
-        gap: "calc(2 * var(--salt-size-unit))",
-        width: 600,
-      }}
-    >
+    <StackLayout style={{ width: 600 }}>
       {sizes.map((size, index) => {
         return (
           <StackLayout direction="row">
@@ -370,20 +363,14 @@ export const CardAndInteractableCardSizes: StoryFn<typeof Card> = () => {
           </StackLayout>
         );
       })}
-    </div>
+    </StackLayout>
   );
 };
 
 export const CardAndInteractableCardVariants: StoryFn<typeof Card> = () => {
   const variants = ["primary", "secondary"];
   return (
-    <div
-      style={{
-        display: "grid",
-        gap: "calc(2 * var(--salt-size-unit))",
-        width: 600,
-      }}
-    >
+    <StackLayout style={{ width: 600 }}>
       {variants.map((variant, index) => {
         return (
           <StackLayout direction="row">
@@ -401,6 +388,6 @@ export const CardAndInteractableCardVariants: StoryFn<typeof Card> = () => {
           </StackLayout>
         );
       })}
-    </div>
+    </StackLayout>
   );
 };
