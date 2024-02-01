@@ -2,9 +2,10 @@ import { Checkbox } from "@salt-ds/core";
 
 describe("GIVEN a Checkbox", () => {
   describe("WHEN in an indeterminate state", () => {
-    it("THEN should have aria-checked set to `mixed`", () => {
+    it("THEN should have indeterminate set to true", () => {
       cy.mount(<Checkbox indeterminate />);
-      cy.findByRole("checkbox").should("have.attr", "aria-checked", "mixed");
+      // Since indeterminate is not exposed as an attribute you have to check the property of the component.
+      cy.findByRole("checkbox").should("have.prop", "indeterminate", true);
     });
   });
 

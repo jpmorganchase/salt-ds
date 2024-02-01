@@ -11,7 +11,7 @@ import "./grid.stories.css";
 import { StoryFn } from "@storybook/react";
 
 export default {
-  title: "Data Grid/Data Grid",
+  title: "Lab/Data Grid",
   component: Grid,
   argTypes: {},
 };

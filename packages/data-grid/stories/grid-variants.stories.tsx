@@ -19,7 +19,7 @@ import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import { clsx } from "clsx";
 
 export default {
-  title: "Data Grid/Data Grid",
+  title: "Lab/Data Grid",
   component: Grid,
   argTypes: {},
 };
