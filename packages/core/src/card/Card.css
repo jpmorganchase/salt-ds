@@ -3,6 +3,7 @@
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
+  padding: var(--saltCard-padding, var(--card-padding));
 }
 
 .saltCard-primary {
@@ -16,15 +17,15 @@
 }
 
 .saltCard-small {
-  padding: var(--saltCard-padding, var(--salt-spacing-100));
+  --card-padding: var(--salt-spacing-100);
 }
 
 .saltCard-medium {
-  padding: var(--saltCard-padding, var(--salt-spacing-200));
+  --card-padding: var(--salt-spacing-200);
 }
 
 .saltCard-large {
-  padding: var(--saltCard-padding, var(--salt-spacing-300));
+  --card-padding: var(--salt-spacing-300);
 }
 
 /*

@@ -112,9 +112,9 @@ export const Default: StoryFn<typeof Card> = () => (
 
 export const CardsInFlexLayout: StoryFn<typeof Card> = () => (
   <FlexLayout>
-    {exampleData.map((example, index) => {
+    {exampleData.map((example) => {
       return (
-        <Card key={index}>
+        <Card key={example.title}>
           <StackLayout gap={1}>
             <H3>{example.title}</H3>
             <Text>{example.content}</Text>
@@ -179,7 +179,7 @@ export const DefaultWithLinkAndImage: StoryFn<typeof Card> = () => (
     />
     <StackLayout
       style={{
-        padding: " var(--salt-size-container-spacing)",
+        padding: "var(--salt-spacing-300)",
       }}
       gap={1}
     >
@@ -216,7 +216,7 @@ export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
     />
     <StackLayout
       style={{
-        padding: " var(--salt-size-container-spacing)",
+        padding: "var(--salt-spacing-300)",
       }}
       gap={1}
     >
@@ -262,16 +262,14 @@ export const InteractableDisabled: StoryFn<typeof Card> = () => (
 );
 
 export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
-  const placements = ["left", "right", "top", "bottom"];
+  const placements = ["left", "right", "top", "bottom"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
       {exampleData.map((example, index) => {
         return (
           <InteractableCard
-            accentPlacement={
-              placements[index] as "left" | "right" | "top" | "bottom"
-            }
-            key={index}
+            accentPlacement={placements[index]}
+            key={example.title}
           >
             <StackLayout gap={1}>
               <H3>{example.title}</H3>
@@ -321,7 +319,7 @@ export const InteractableAsBlockLinkWithImage: StoryFn<typeof Card> = () => {
         <StackLayout
           gap={1}
           style={{
-            padding: "var(--salt-size-container-spacing)",
+            padding: "var(--salt-spacing-300)",
           }}
         >
           <H3>{exampleData[0].title}</H3>
@@ -356,22 +354,19 @@ export const InteractableAsBlockLinkWithImageBackground: StoryFn<
 };
 
 export const CardAndInteractableCardSizes: StoryFn<typeof Card> = () => {
-  const sizes = ["small", "medium", "large"];
+  const sizes = ["small", "medium", "large"] as const;
   return (
     <StackLayout style={{ width: 600 }}>
-      {sizes.map((size, index) => {
+      {sizes.map((size) => {
         return (
-          <StackLayout direction="row">
-            <Card size={size as "small" | "medium" | "large"} key={index}>
+          <StackLayout direction="row" key={size}>
+            <Card size={size}>
               <StackLayout gap={1}>
                 <H3>{exampleData[0].title}</H3>
                 <Text>{exampleData[0].content}</Text>
               </StackLayout>
             </Card>
-            <InteractableCard
-              size={size as "small" | "medium" | "large"}
-              key={index}
-            >
+            <InteractableCard size={size}>
               <StackLayout gap={1}>
                 <H3>{exampleData[0].title}</H3>
                 <Text>{exampleData[0].content}</Text>
@@ -385,22 +380,19 @@ export const CardAndInteractableCardSizes: StoryFn<typeof Card> = () => {
 };
 
 export const CardAndInteractableCardVariants: StoryFn<typeof Card> = () => {
-  const variants = ["primary", "secondary"];
+  const variants = ["primary", "secondary"] as const;
   return (
     <StackLayout style={{ width: 600 }}>
-      {variants.map((variant, index) => {
+      {variants.map((variant) => {
         return (
-          <StackLayout direction="row">
-            <Card variant={variant as "primary" | "secondary"} key={index}>
+          <StackLayout direction="row" key={variant}>
+            <Card variant={variant}>
               <StackLayout gap={1}>
                 <H3>{exampleData[0].title}</H3>
                 <Text>{exampleData[0].content}</Text>
               </StackLayout>
             </Card>
-            <InteractableCard
-              variant={variant as "primary" | "secondary"}
-              key={index}
-            >
+            <InteractableCard variant={variant as "primary" | "secondary"}>
               <StackLayout gap={1}>
                 <H3>{exampleData[0].title}</H3>
                 <Text>{exampleData[0].content}</Text>

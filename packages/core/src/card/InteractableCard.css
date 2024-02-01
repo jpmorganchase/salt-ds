@@ -6,9 +6,9 @@
   border-color: var(--saltCard-borderColor, var(--salt-accent-borderColor));
   border-radius: var(--saltCard-borderRadius, 0);
   display: block;
+  padding: var(--saltCard-padding, var(--card-padding));
   position: relative;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
-  padding: var(--saltCard-padding, var(--salt-spacing-300));
   --card-accent-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
 }
 
@@ -25,15 +25,15 @@
 }
 
 .saltInteractableCard-small {
-  padding: var(--saltCard-padding, var(--salt-spacing-100));
+  --card-padding: var(--salt-spacing-100);
 }
 
 .saltInteractableCard-medium {
-  padding: var(--saltCard-padding, var(--salt-spacing-200));
+  --card-padding: var(--salt-spacing-200);
 }
 
 .saltInteractableCard-large {
-  padding: var(--saltCard-padding, var(--salt-spacing-300));
+  --card-padding: var(--salt-spacing-300);
 }
 
 /* Styles applied to create accent */
