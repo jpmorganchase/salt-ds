@@ -172,7 +172,9 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
       />
       <span className={withBaseName("track")}>
         <span className={withBaseName("thumb")}>
-          {checked && <CheckedIcon className={withBaseName("icon")} />}
+          {checked && (
+            <CheckedIcon aria-hidden className={withBaseName("icon")} />
+          )}
         </span>
       </span>
       <span className={withBaseName("label")}>{label}</span>

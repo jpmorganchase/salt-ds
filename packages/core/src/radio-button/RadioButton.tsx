@@ -63,6 +63,7 @@ export interface RadioButtonProps
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
    * Set the read only state.
+   * **Note**: Setting a standalone radio button as read-only is not accessible. The whole radio buttton group should be set as read-only instead.
    */
   readOnly?: boolean;
   /**

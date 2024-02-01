@@ -21,17 +21,17 @@ describe("GIVEN a ToggleButton with Icon and Text", () => {
 
     cy.mount(<ControlledToggleButtonExample />);
 
-    cy.findByRole("checkbox").should("have.text", "Home");
-    cy.findByRole("checkbox").should("have.attr", "aria-checked", "true");
+    cy.findByRole("button").should("have.text", "Home");
+    cy.findByRole("button").should("have.attr", "aria-pressed", "true");
 
     // untoggle
-    cy.findByRole("checkbox").realClick();
-    cy.findByRole("checkbox").should("have.attr", "aria-checked", "false");
+    cy.findByRole("button").realClick();
+    cy.findByRole("button").should("have.attr", "aria-pressed", "false");
     cy.get("@selectionChangeSpy").should("have.been.calledOnce");
 
     // toggle
-    cy.findByRole("checkbox").realClick();
-    cy.findByRole("checkbox").should("have.attr", "aria-checked", "true");
+    cy.findByRole("button").realClick();
+    cy.findByRole("button").should("have.attr", "aria-pressed", "true");
     cy.get("@selectionChangeSpy").should("have.been.calledTwice");
   });
 });
@@ -47,12 +47,12 @@ describe("GIVEN a disabled ToggleButton with Icon and Text", () => {
       </ToggleButton>
     );
 
-    cy.findByRole("checkbox").should("have.text", "Home");
-    cy.findByRole("checkbox").should("have.attr", "aria-checked", "false");
-    cy.findByRole("checkbox").should("be.disabled");
+    cy.findByRole("button").should("have.text", "Home");
+    cy.findByRole("button").should("have.attr", "aria-pressed", "false");
+    cy.findByRole("button").should("be.disabled");
 
     // try to toggle
-    cy.findByRole("checkbox").realClick();
+    cy.findByRole("button").realClick();
     cy.get("@selectionChangeSpy").should("not.have.been.called");
   });
 });
