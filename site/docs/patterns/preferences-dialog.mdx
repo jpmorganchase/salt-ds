@@ -31,10 +31,10 @@ Furthermore, we recommend implementing consistent behavior around applying prefe
 
 A preferences dialog comprises four key features: 
 
-1. **[Dialog](../components/dialog):** a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information
-2. **[Navigation item](../components/navigation-item):** a link that allows users to navigate to distinct panel of content
-3. **[Button bar](./button-bar):** displays possible actions for users to take when they reach the end of a task. Use the button bar pattern to understand how to implement actionable interactions within dialogs across your applications
-4. **[Parent-child layout](../components/parent-child-layout):** positions the navigation and content within a preference dialog
+1. [Dialog](../components/dialog): a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information
+2. [Navigation item](../components/navigation-item): a link that allows users to navigate to distinct panel of content
+3. [Button bar](./button-bar): displays possible actions for users to take when they reach the end of a task. Use the [button bar pattern](./button-bar) to understand how to implement actionable interactions within dialogs across your applications
+4. [Parent-child layout](../components/parent-child-layout): positions the navigation and content within a preference dialog
 
   <Diagram
     src="/img/patterns/preferences-dialog/anatomy.png"
@@ -59,7 +59,7 @@ A preferences dialog comprises four key features:
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This will enable it to adapt responsively based on the viewport size.
+  In the [Parent-child layout](../components/parent-child-layout), the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This will enable it to adapt responsively based on the viewport size.
 
   To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [Navigation pattern](./navigation).
 
@@ -117,7 +117,7 @@ It's also preferable if it’s technically complex or taxing on performance for 
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  Display core actions to the right of a dialog. Refer to the button bar pattern for further guidance on how to display user actions within dialogs. 
+  Display core actions to the right of a dialog. Refer to the [button bar pattern](./button-bar) for further guidance on how to display user actions within dialogs. 
 </ExampleContainer>
 
 ### Live updates
@@ -161,10 +161,10 @@ When the navigation collapses, the preferences content spans the entire width of
 
 ### Stacked button bar
 
-For smaller viewports (i.e. devices with limited screen sizes), it's preferable to configure buttons to stack horizontally at the XS breakpoint. This ensures longer button labels accommodate mobile devices that may not fit within the horizontal layout. They also remain an adequate size for touch interactions.
+For smaller viewports (i.e. devices with limited screen sizes), it's preferable to configure buttons to stack horizontally at the [XS breakpoint](../foundations/responsiveness#breakpoints). This ensures longer button labels accommodate mobile devices that may not fit within the horizontal layout. They also remain an adequate size for touch interactions.
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  View the stacked button bar guidance to understand how to order and build a stacked [Button bar](./button-bar). 
+  View the [stacked button bar](./button-bar#stacked-button-bar-layout) guidance to understand how to order and build a stacked button bar. 
 </ExampleContainer>
 
   <Diagram
@@ -175,4 +175,4 @@ For smaller viewports (i.e. devices with limited screen sizes), it's preferable 
 
 ## Expanding the pattern
 
-If you find a need to expand the pattern or have feedback, please reach out to the team to discuss.
+If you find a need to expand the pattern or have feedback, please [reach out to the team](../support-and-contributions/index) to discuss.
