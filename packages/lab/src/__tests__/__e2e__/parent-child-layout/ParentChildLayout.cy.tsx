@@ -3,7 +3,7 @@ import * as parentChildStories from "@stories/parent-child-layout/parent-child-l
 
 const composedStories = composeStories(parentChildStories);
 
-const { Default, Stacked } = composedStories;
+const { Default, Collapsed } = composedStories;
 
 describe("GIVEN a Parent and Child", () => {
   describe("WHEN no gap values are provided", () => {
@@ -68,7 +68,7 @@ describe("GIVEN a Parent and Child", () => {
 
   describe("WHEN in stacked view", () => {
     it("THEN it should only display the parent by default", () => {
-      cy.mount(<Stacked />);
+      cy.mount(<Collapsed />);
 
       cy.get(".saltParentChildItem").should("have.length", 1);
 
@@ -78,7 +78,7 @@ describe("GIVEN a Parent and Child", () => {
     });
 
     it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<Stacked />);
+      cy.mount(<Collapsed />);
 
       cy.findByRole("button", { name: /Show child/i }).click();
 
