@@ -2,10 +2,7 @@ import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 
 import { ChevronLeftIcon, ThumbsUpIcon } from "@salt-ds/icons";
-import {
-  ParentChildLayout,
-  StackedViewElement
-} from "@salt-ds/lab";
+import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 import {
   Button,
   FlexItem,
@@ -116,7 +113,9 @@ ReducedMotion.args = {
 export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
   const items = ["Sint", "Dolor", "Magna"];
 
-  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
+  const [currentView, setCurrentView] = useState<
+    StackedViewElement | undefined
+  >();
 
   const showParent = () => {
     setCurrentView("parent");
@@ -153,11 +152,11 @@ export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
 
   const child = (
     <>
-      {/* {isStacked && ( */}
-      <Button onClick={showParent} variant="secondary" aria-label="Back">
-        <ChevronLeftIcon />
-      </Button>
-      {/* )} */}
+      {currentView === "child" && (
+        <Button onClick={showParent} variant="secondary" aria-label="Back">
+          <ChevronLeftIcon />
+        </Button>
+      )}
       <h2>{active}</h2>
       <FlexLayout wrap={{ xs: true, lg: false }}>
         <FlexItem grow={1} className="flex-blog-image flex-blog-image-one" />
@@ -196,6 +195,9 @@ export const Composite: StoryFn<typeof ParentChildLayout> = (args) => {
         collapseAtBreakpoint="xs"
         parent={parent}
         child={child}
+        onCollapseChange={(isCollapsed) => {
+          if (!isCollapsed) setCurrentView(undefined);
+        }}
       />
     </div>
   );

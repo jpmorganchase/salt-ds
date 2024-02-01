@@ -1,5 +1,7 @@
 nav {
   position: relative;
+  min-width: 150px;
+  width: 100%;
 }
 
 ul {

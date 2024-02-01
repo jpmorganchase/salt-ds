@@ -6,7 +6,7 @@ import {
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, ReactNode, useEffect } from "react";
 import { ParentChildItem } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
@@ -42,6 +42,7 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
    * Child component to be rendered
    */
   child: ReactNode;
+  onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
 const withBaseName = makePrefixer("saltParentChildLayout");
@@ -59,6 +60,7 @@ export const ParentChildLayout = forwardRef<
     child,
     gap = 0,
     className,
+    onCollapseChange,
     ...rest
   },
   ref
@@ -72,7 +74,7 @@ export const ParentChildLayout = forwardRef<
 
   const isCollapsed = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
-  const stackedViewChildren = {
+  const collapsedViewChildren = {
     parent: (
       <ParentChildItem isCollapsed className={withBaseName("parent")}>
         {parent}
@@ -84,6 +86,10 @@ export const ParentChildLayout = forwardRef<
       </ParentChildItem>
     ),
   };
+
+  useEffect(() => {
+    onCollapseChange?.(isCollapsed);
+  }, [isCollapsed, onCollapseChange]);
 
   return (
     <FlexLayout
@@ -100,7 +106,7 @@ export const ParentChildLayout = forwardRef<
       {...rest}
     >
       {isCollapsed ? (
-        stackedViewChildren[collapsedViewElement]
+        collapsedViewChildren[collapsedViewElement]
       ) : (
         <>
           <ParentChildItem grow={0}>{parent}</ParentChildItem>
