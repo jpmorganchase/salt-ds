@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.9
+
+### Patch Changes
+
+- 51a1e9e7: Fixed text properties not set to use values from Salt theme
+
 ## 1.0.4-alpha.8
 
 ### Patch Changes
