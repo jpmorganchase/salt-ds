@@ -81,8 +81,10 @@ export const DefaultWithButton: StoryFn<typeof Card> = () => (
 
 export const Interactable: StoryFn<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }}>
-    <H3>{exampleData.title}</H3>
-    <Text>{exampleData.content}</Text>
+    <StackLayout gap={1}>
+      <H3>{exampleData.title}</H3>
+      <Text>{exampleData.content}</Text>
+    </StackLayout>
   </InteractableCard>
 );
 
