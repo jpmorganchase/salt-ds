@@ -21,7 +21,7 @@ A preferences dialog allows you to display, group and navigate application prefe
 
 ## When to use
 
-You should ideally house any editable settings within a centralized preferences dialog to display and manage user preferences across a platform, application or module. Displaying preferences should be contextual, i.e., the dialog should contain all preferences but depending on the entry point to the user interface, the preferences shown to you in the first instance will vary. 
+Any preference settings in your platform or application should ideally be found within a single centralised preferences dialog. These settings could be global, application-wide settings or settings local to a specific window or widget (such as a grid or comments feed). If accessing from a specific window, the relevant settings should immediately be displayed when the preferences dialog opens.
 
 Furthermore, we recommend implementing consistent behavior around applying preferences, whether applying changes immediately or requiring the user to confirm any changes using the button bar actions. 
 
@@ -31,10 +31,10 @@ Furthermore, we recommend implementing consistent behavior around applying prefe
 
 A preferences dialog comprises four key features: 
 
-1. **Dialog:** a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information
-2. **Navigation item:** a list of links that allows users to navigate between distinct panels of content
-3. **Button bar:** displays possible actions for users to take when they reach the end of a task. Use the button bar pattern to understand how to implement actionable interactions within dialogs across your applications
-4. **Parent-child layout:** positions the navigation and content within a preference dialog
+1. **[Dialog](../components/dialog):** a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information
+2. **[Navigation item](../components/navigation-item):** a link that allows users to navigate to distinct panel of content
+3. **[Button bar](./button-bar):** displays possible actions for users to take when they reach the end of a task. Use the button bar pattern to understand how to implement actionable interactions within dialogs across your applications
+4. **[Parent-child layout](../components/parent-child-layout):** positions the navigation and content within a preference dialog
 
   <Diagram
     src="/img/patterns/preferences-dialog/anatomy.png"
@@ -52,7 +52,7 @@ A preferences dialog comprises four key features:
     },
     {
       src: "/img/patterns/preferences-dialog/layout-grid.png",
-      alt: "Example showing Preferences Dialog's layout construction.",
+      alt: "Example showing Preferences Dialog's layout construction with grid.",
     },
   ]}
   label="Layout grid"
@@ -73,7 +73,7 @@ You can use navigation items to switch between pages of grouped preferences.
 
   <Diagram
     src="/img/patterns/preferences-dialog/navigation.png"
-    alt="Example of navigation."
+    alt="Example of vertical navigation items and content section."
     border={false}
   />
 
@@ -89,7 +89,7 @@ The visual indicators are the two separator lines above and below the parent-chi
 
   <Diagram
     src="/img/patterns/preferences-dialog/scrolling.png"
-    alt="Example of scrolling."
+    alt="Example of content section scrolling."
     border={false}
   />
 
