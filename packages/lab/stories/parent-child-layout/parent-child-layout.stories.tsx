@@ -43,7 +43,7 @@ export const Default: StoryFn<typeof ParentChildLayout> = (args) => (
 );
 Default.args = { parent, child };
 
-export const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
+export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
