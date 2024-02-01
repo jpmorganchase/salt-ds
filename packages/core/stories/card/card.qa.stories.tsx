@@ -31,11 +31,11 @@ const AllExamples = () => (
       <Text>Content</Text>
     </Card>
     <Card size="small">
-      <H1>Secondary card with density</H1>
+      <H1>Small card with density</H1>
       <Text>Content</Text>
     </Card>
     <Card size="medium">
-      <H1>Secondary card with density</H1>
+      <H1>Medium card with density</H1>
       <Text>Content</Text>
     </Card>
     <InteractableCard>
@@ -43,19 +43,19 @@ const AllExamples = () => (
       <Text>Content</Text>
     </InteractableCard>
     <InteractableCard disabled>
-      <H1>Interactable card with density</H1>
+      <H1>Disabled interactable card with density</H1>
       <Text>Content</Text>
     </InteractableCard>
     <InteractableCard variant="secondary">
-      <H1>Secondary interactable with density</H1>
+      <H1>Secondary interactable card with density</H1>
       <Text>Content</Text>
     </InteractableCard>
     <InteractableCard size="small">
-      <H1>Secondary interactable with density</H1>
+      <H1>Small interactable card with density</H1>
       <Text>Content</Text>
     </InteractableCard>
     <InteractableCard size="medium">
-      <H1>Secondary interactable with density</H1>
+      <H1>Medium interactable card with density</H1>
       <Text>Content</Text>
     </InteractableCard>
   </FlowLayout>
