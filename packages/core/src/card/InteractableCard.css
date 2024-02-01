@@ -40,7 +40,7 @@
 .saltInteractableCard::after {
   content: "";
   position: absolute;
-  background-color: var(--saltCard-accentColor, var(--salt-accent-borderColor));
+  background-color: var(--card-accent-color);
 }
 
 /* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
