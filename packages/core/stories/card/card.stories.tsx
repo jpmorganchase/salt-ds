@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
@@ -103,6 +103,11 @@ export const InteractableDisabled: StoryFn<typeof Card> = () => (
 export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
   const [placement, setPlacement] =
     useState<InteractableCardProps["accentPlacement"]>("bottom");
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPlacement(
+      event.target.value as InteractableCardProps["accentPlacement"]
+    );
+  };
   return (
     <StackLayout style={{ width: "266px" }}>
       <InteractableCard accentPlacement={placement}>
@@ -111,31 +116,31 @@ export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
           <Text>{exampleData.content}</Text>
         </StackLayout>
       </InteractableCard>
-      <RadioButtonGroup direction={"horizontal"}>
+      <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
         <RadioButton
           key="bottom"
           label="bottom"
           value="bottom"
-          onChange={() => setPlacement("bottom")}
+          onChange={handleChange}
           checked
         />
         <RadioButton
           key="top"
           label="top"
           value="top"
-          onChange={() => setPlacement("top")}
+          onChange={handleChange}
         />
         <RadioButton
           key="left"
           label="left"
           value="left"
-          onChange={() => setPlacement("left")}
+          onChange={handleChange}
         />
         <RadioButton
           key="right"
           label="right"
           value="right"
-          onChange={() => setPlacement("right")}
+          onChange={handleChange}
         />
       </RadioButtonGroup>
     </StackLayout>
