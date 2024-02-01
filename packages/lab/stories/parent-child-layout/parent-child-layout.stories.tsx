@@ -4,8 +4,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { ChevronLeftIcon, ThumbsUpIcon } from "@salt-ds/icons";
 import {
   ParentChildLayout,
-  StackedViewElement,
-  useIsViewportLargerThanBreakpoint,
+  StackedViewElement
 } from "@salt-ds/lab";
 import {
   Button,
@@ -68,7 +67,7 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
   );
 };
 
-Stacked.args = {
+Collapsed.args = {
   collapseAtBreakpoint: "xl",
   parent,
   child,
