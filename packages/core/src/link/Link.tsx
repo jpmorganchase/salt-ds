@@ -55,7 +55,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
           {IconComponent && (
             <IconComponent className={withBaseName("icon")} aria-hidden />
           )}
-          <span className={withBaseName("externalLinkADA")}>External Link</span>
+          <span className={withBaseName("externalLinkADA")}>External</span>
         </>
       )}
     </Text>
