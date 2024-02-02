@@ -9,7 +9,7 @@ import { largestCities, LargeCity } from "./exampleData";
  * }
  */
 
-export const ObjectValue = (): ReactElement => {
+export const ObjectValues = (): ReactElement => {
   const [value, setValue] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

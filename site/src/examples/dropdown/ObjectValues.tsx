@@ -9,7 +9,7 @@ import { largestCities, LargeCity } from "./exampleData";
  * }
  */
 
-export const ObjectValue = (): ReactElement => {
+export const ObjectValues = (): ReactElement => {
   return (
     <DropdownNext<LargeCity> style={{ width: "266px" }}>
       {largestCities.map((city) => (
