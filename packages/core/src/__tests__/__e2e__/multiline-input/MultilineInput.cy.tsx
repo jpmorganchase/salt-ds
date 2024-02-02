@@ -99,4 +99,21 @@ describe("GIVEN an MultilineInput", () => {
     cy.mount(<WithFormField readOnly />);
     cy.findByLabelText("Comments").should("have.attr", "readonly");
   });
+
+  it("should expand to fit its content", () => {
+    cy.mount(<Default />);
+    cy.findByRole("textbox")
+      .invoke("height")
+      .then((defaultHeight) => {
+        cy.findByRole("textbox").realClick();
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.findByRole("textbox")
+          .invoke("height")
+          .then((newHeight) => {
+            expect(newHeight).to.be.greaterThan(defaultHeight);
+          });
+      });
+  });
 });

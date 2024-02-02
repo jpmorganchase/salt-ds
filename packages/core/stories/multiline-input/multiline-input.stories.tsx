@@ -65,16 +65,6 @@ export const NumberOfRows: StoryFn<typeof MultilineInput> = (args) => {
   );
 };
 
-export const MaxRows: StoryFn<typeof MultilineInput> = (args) => {
-  return (
-    <MultilineInput
-      defaultValue="Value"
-      {...args}
-      style={{ maxWidth: "266px" }}
-    />
-  );
-};
-
 export const Bordered: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
