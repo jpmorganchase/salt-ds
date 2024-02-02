@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.saltCircularProgress-progressValue {
+.saltCircularProgress-progressLabel {
   align-items: center;
   color: var(--salt-content-primary-foreground);
   display: flex;

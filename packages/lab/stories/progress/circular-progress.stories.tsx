@@ -35,10 +35,12 @@ const ProgressWithControls = ({
   );
 };
 
-export const Default: StoryFn<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" value={38} />
+export const Default: StoryFn<typeof CircularProgress> = (args) => (
+  <CircularProgress aria-label="Download" {...args} />
 );
-
+Default.args = {
+  value: 38,
+};
 export const HideLabel: StoryFn<typeof CircularProgress> = () => (
   <CircularProgress aria-label="Download" value={38} hideLabel />
 );

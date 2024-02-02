@@ -36,7 +36,7 @@
   transform-origin: left;
 }
 
-.saltLinearProgress-progressValue {
+.saltLinearProgress-progressLabel {
   color: inherit;
   margin: 0;
   white-space: nowrap;

@@ -55,7 +55,6 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       <div
         className={clsx(withBaseName(), className)}
         ref={ref}
-        data-testid="linear-progress"
         role="progressbar"
         aria-valuemax={max}
         aria-valuemin={min}
@@ -67,7 +66,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           <div className={withBaseName("track")} style={trackStyle} />
         </div>
         {!hideLabel && (
-          <Text styleAs="h2" className={withBaseName("progressValue")}>
+          <Text styleAs="h2" className={withBaseName("progressLabel")}>
             {`${Math.round(progress)} %`}
           </Text>
         )}

@@ -67,7 +67,6 @@ export const CircularProgress = forwardRef<
   return (
     <div
       className={clsx(withBaseName(), className)}
-      data-testid="circular-progress"
       ref={ref}
       role="progressbar"
       aria-valuemax={max}
@@ -80,7 +79,6 @@ export const CircularProgress = forwardRef<
         <div className={withBaseName("barOverlayRight")}>
           <div
             className={withBaseName("barSubOverlayRight")}
-            data-testid="barSubOverlayRight"
             style={subOverlayRightStyle}
           >
             <div className={withBaseName("bar")} />
@@ -89,7 +87,6 @@ export const CircularProgress = forwardRef<
         <div className={withBaseName("barOverlayLeft")}>
           <div
             className={withBaseName("barSubOverlayLeft")}
-            data-testid="barSubOverlayLeft"
             style={subOverlayLeftStyle}
           >
             <div className={withBaseName("bar")} />
@@ -97,7 +94,7 @@ export const CircularProgress = forwardRef<
         </div>
       </div>
       {!hideLabel && (
-        <Text styleAs="h2" className={withBaseName("progressValue")}>
+        <Text styleAs="h2" className={withBaseName("progressLabel")}>
           {`${Math.round(progress)} %`}
         </Text>
       )}

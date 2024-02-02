@@ -35,10 +35,12 @@ const ProgressWithControls = ({
   );
 };
 
-export const Default: StoryFn<typeof LinearProgress> = () => (
-  <LinearProgress aria-label="Download" value={38} />
+export const Default: StoryFn<typeof LinearProgress> = (args) => (
+  <LinearProgress aria-label="Download" {...args} />
 );
-
+Default.args = {
+  value: 38,
+};
 export const HideLabel: StoryFn<typeof LinearProgress> = () => (
   <LinearProgress aria-label="Download" value={38} hideLabel />
 );
