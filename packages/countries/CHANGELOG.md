@@ -1,5 +1,20 @@
 # @salt-ds/countries
 
+## 1.2.0
+
+### Minor Changes
+
+- 3f128710: Added `saltCountries.css` with country SVG as background image.
+
+  ```js
+  import "@salt-ds/countries/saltCountries.css";
+
+  const Example = () => {
+    const countryCode = `AD`;
+    return <div className={`saltCountry-${countryCode}`} />;
+  };
+  ```
+
 ## 1.1.4
 
 ### Patch Changes
