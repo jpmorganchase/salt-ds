@@ -1,8 +1,8 @@
 ---
-title: International Address Input
+title: International address input
 layout: DetailPattern
 sidebar:
-  label: International Address Input
+  label: International address input
 aliases:
   - /salt/patterns/international-address-input
 data:
@@ -12,29 +12,27 @@ data:
     ]  
 ---
 
-International Address Input is a pattern that gives users a set of form fields to input address information for specific countries.
+International address input is a pattern that gives users a set of form fields to input address information for specific countries.
 
-## Pattern scope
+The pattern is a form that displays relevant fields for a user-selected location. You can use it to provide consistent design when implementing international address input interactions across your applications. Future versions of the pattern will cover the use of APIs, autocompletion and enhanced support for more locations.
 
-The pattern is a form that displays relevant fields for a user-selected location. You can use it to provide consistent design when implementing International Address Input interactions across your applications. Future versions of the pattern will cover the use of APIs, autocompletion and enhanced support for more locations.
-
-The pattern aims to accommodate users worldwide, but your team may be able to take further steps that fall outside its scope. For example, check with your tech partners if it's possible to detect user location and automatically adjust the form.
-
-## When to use it
+## When to use
 
 Use the pattern when your user needs to enter an address for a specific country. This could be for shipping, contact, legal or compliance purposes, such as client onboarding flow or client detail collection processes.
 
-## Pattern content
+## How to build
 
-The pattern consists of various form controls (for layout guidance, please refer to the [Forms pattern](./forms)). It comprises two formats: Dynamic and Generic.
+The pattern consists of various form controls. For layout guidance, please refer to the [forms pattern](./forms). It comprises two formats: dynamic and generic.
+
+The pattern aims to accommodate users worldwide, but your team may be able to take further steps that fall outside its scope. For example, check with your tech partners if it's possible to detect user location and automatically adjust the form.
 
 ### Dynamic format
 
 Dynamic format generates templates based on country or region. The templates only display fields relevant to a specific country in a recognizable order and with familiar labels.
 
-For the initial release, Dynamic format supports five countries: France, Germany, Spain, the United Kingdom and the United States.
+For the initial release, dynamic format supports five countries: France, Germany, Spain, the United Kingdom and the United States.
 
-We recommend using templates in Dynamic format with localized language and terms that are more familiar to the user. This will reduce barriers to input and minimize user errors.
+We recommend using templates in dynamic format with localized language and terms that are more familiar to the user. This will reduce barriers to input and minimize user errors.
 
 <ImageSwitcher
   images={[
@@ -89,22 +87,22 @@ We recommend using templates in Dynamic format with localized language and terms
 
 Generic format provides a single template of international address input for all countries and regions.
 
-Sometimes, using templates may be difficult due to requirements or product scope. In these cases, use Generic format.
+Sometimes, using templates may be difficult due to requirements or product scope. In these cases, use generic format.
 
 <Diagram
   src="/img/patterns/international-address-input/generic_format.png"
-  alt="Example showing Generic format"
+  alt="Example showing generic format"
   border
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
   - Choose the format that best fits the technical capabilities of your app, delivery timescales and required locations. 
-  - Combine Dynamic format and Generic format if users will input international addresses worldwide. You can provide templates using both Generic and Dynamic formats. 
+  - Combine dynamic format and generic format if users will input international addresses worldwide. You can provide templates using both generic and dynamic formats. 
 </ExampleContainer>
 
-## Adding an additional address
+## Add an additional address
 
-There may be cases where an additional address form is needed:
+There may be cases where you need an additional address form:
 
 - The client's address may be different from the business address. We recommend a checkbox after the first form for users to select if they need the additional form.
 - In some countries, such as China, users must input the address twice: first in English and then in Chinese. Add an additional form in the local language.
@@ -115,11 +113,11 @@ There may be cases where an additional address form is needed:
   border
 />
 
-## Customized Address Forms
+## Customized address forms
 
 In some cases, you need to customize the address form while considering other information you're collecting based on the product scope.
 
-- An additional form e.g., House No., may be needed.
+- You may need an additional form field e.g., House No..
 - You can use the address form alongside international phone number, email address, banking details, time zone selection and other fields.
 
 <Diagram
@@ -145,6 +143,6 @@ You can add a switch to toggle localization after the country selection, enablin
   />
 </Diagrams>
 
-## Expanding the pattern
+## Feedback
 
-If you need to expand the pattern, for example, to have localized Dynamic templates for more countries or regions, please [reach out to the team](/salt/support-and-contributions/index) to discuss.
+If you would like to expand the pattern or share feedback with us, please [contact the team](/salt/support-and-contributions/index).
