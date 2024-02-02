@@ -1,3 +1,4 @@
 export * from "./Default";
-export * from "./Stacked";
+export * from "./Collapsed";
 export * from "./ReducedMotion";
+export * from './PreferencesLayout'

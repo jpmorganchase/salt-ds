@@ -16,7 +16,7 @@ const child = (
   </div>
 );
 
-export const Stacked = (): ReactElement => {
+export const Collapsed = (): ReactElement => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
