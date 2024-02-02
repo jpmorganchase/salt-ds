@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, Text } from "@salt-ds/core";
-
+import { makePrefixer } from "../../utils";
+import { Text } from "../../text";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 

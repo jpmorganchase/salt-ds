@@ -1,11 +1,12 @@
 import { ReactElement, useState } from "react";
-import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import {
   FlexItem,
   FlexLayout,
   FlowLayout,
   RadioButton,
   RadioButtonGroup,
+  CircularProgress,
+  LinearProgress,
 } from "@salt-ds/core";
 
 export const HiddenLabel = (): ReactElement => {

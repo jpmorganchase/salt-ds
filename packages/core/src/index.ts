@@ -24,6 +24,7 @@ export * from "./navigation-item";
 export * from "./pagination";
 export * from "./panel";
 export * from "./pill";
+export * from "./progress";
 export * from "./radio-button";
 export * from "./scrim";
 export * from "./spinner";
