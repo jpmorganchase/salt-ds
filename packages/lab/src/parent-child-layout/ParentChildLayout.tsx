@@ -1,13 +1,13 @@
 import {
   Breakpoints,
   FlexLayout,
+  FlexItem,
   FlexLayoutProps,
   makePrefixer,
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
 import { forwardRef, ReactNode, useEffect } from "react";
-import { ParentChildItem } from "./ParentChildItem";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import { useWindow } from "@salt-ds/window";
@@ -76,14 +76,22 @@ export const ParentChildLayout = forwardRef<
 
   const collapsedViewChildren = {
     parent: (
-      <ParentChildItem isCollapsed className={withBaseName("parent")}>
+      <FlexItem
+        className={clsx(withBaseName("parent"), {
+          ["saltFlexItem-stacked"]: isCollapsed,
+        })}
+      >
         {parent}
-      </ParentChildItem>
+      </FlexItem>
     ),
     child: (
-      <ParentChildItem isCollapsed className={withBaseName("child")}>
+      <FlexItem
+        className={clsx(withBaseName("child"), {
+          ["saltFlexItem-stacked"]: isCollapsed,
+        })}
+      >
         {child}
-      </ParentChildItem>
+      </FlexItem>
     ),
   };
 
@@ -109,8 +117,8 @@ export const ParentChildLayout = forwardRef<
         collapsedViewChildren[collapsedViewElement]
       ) : (
         <>
-          <ParentChildItem grow={0}>{parent}</ParentChildItem>
-          <ParentChildItem grow={2}>{child}</ParentChildItem>
+          <FlexItem grow={0}>{parent}</FlexItem>
+          <FlexItem grow={2}>{child}</FlexItem>
         </>
       )}
     </FlexLayout>

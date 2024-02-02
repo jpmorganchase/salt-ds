@@ -1,9 +1,25 @@
+.parent-child-layout {
+  width: 20vw;
+  max-width: 250px;
+  height: 200px;
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+}
+
 .parentContent {
-  background: var(--salt-color-orange-20);
-  padding: 1rem;
+  padding: var(--salt-spacing-300);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 85px;
+  height: 100%;
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
 .childContent {
-  background: var(--salt-color-gray-40);
-  padding: 1rem;
+  padding: var(--salt-spacing-300);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }

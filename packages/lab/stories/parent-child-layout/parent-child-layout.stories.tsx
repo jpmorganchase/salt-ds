@@ -73,7 +73,6 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
 };
 
 Collapsed.args = {
-  collapseAtBreakpoint: "xl",
   parent,
   child,
 };

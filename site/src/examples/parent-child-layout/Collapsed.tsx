@@ -1,20 +1,12 @@
 import { ReactElement, useState } from "react";
-import { Button, FlexLayout } from "@salt-ds/core";
+import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
 
-const parent = (
-  <div className={styles.parentContent} style={{ height: 300 }}>
-    Parent
-  </div>
-);
+const parent = <div className={styles.parentContent}>Parent</div>;
 
-const child = (
-  <div className={styles.childContent} style={{ height: 300 }}>
-    Child
-  </div>
-);
+const child = <div className={styles.childContent}>Child</div>;
 
 export const Collapsed = (): ReactElement => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
@@ -27,23 +19,22 @@ export const Collapsed = (): ReactElement => {
   };
 
   return (
-    <>
-      <FlexLayout>
-        <Button onClick={handleParent} disabled={currentView === "parent"}>
-          Show parent
-        </Button>
-        <Button onClick={handleChild} disabled={currentView === "child"}>
-          Show child
-        </Button>
-      </FlexLayout>
-      <div style={{ width: "40vw", maxWidth: 400 }}>
-        <ParentChildLayout
-          collapsedViewElement={currentView}
-          collapseAtBreakpoint="xl"
-          parent={parent}
-          child={child}
-        />
-      </div>
-    </>
+    <StackLayout align="center">
+      <ParentChildLayout
+        collapsedViewElement={currentView}
+        collapseAtBreakpoint="xl"
+        parent={parent}
+        child={child}
+        className={styles["parent-child-layout"]}
+      />
+      <ToggleButtonGroup defaultValue="parent">
+        <ToggleButton value="parent" onClick={handleParent}>
+          Parent
+        </ToggleButton>
+        <ToggleButton value="child" onClick={handleChild}>
+          Child
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </StackLayout>
   );
 };
