@@ -13,7 +13,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { GB, US } from "@salt-ds/countries";
-import { useState } from "react";
+import { SyntheticEvent, useState } from "react";
 
 export default {
   title: "Lab/Dropdown Next",
@@ -200,7 +200,7 @@ const adornmentMap: Record<string, JSX.Element> = {
   US: <US aria-hidden size={0.75} />,
 };
 
-export const ComplexOption: StoryFn<typeof DropdownNext> = (args) => {
+export const ComplexOption: StoryFn<DropdownNextProps> = (args) => {
   const [selected, setSelected] = useState<string[]>([]);
 
   const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
@@ -246,7 +246,7 @@ export const LongList: StoryFn<typeof DropdownNext> = (args) => {
   );
 };
 
-export const CustomValue: StoryFn<typeof DropdownNext> = (args) => {
+export const CustomValue: StoryFn<DropdownNextProps> = (args) => {
   const [selected, setSelected] = useState<string[]>([]);
 
   const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
@@ -289,4 +289,42 @@ export const Validation = () => {
 export const WithStartAdornment = Template.bind({});
 WithStartAdornment.args = {
   startAdornment: <GB aria-hidden size={0.75} />,
+};
+
+interface Person {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+const people: Person[] = [
+  { id: 1, firstName: "John", lastName: "Doe" },
+  { id: 2, firstName: "Jane", lastName: "Doe" },
+  { id: 3, firstName: "John", lastName: "Smith" },
+  { id: 4, firstName: "Jane", lastName: "Smith" },
+];
+
+export const ObjectValue: StoryFn<DropdownNextProps<Person>> = (args) => {
+  const [selected, setSelected] = useState<Person[]>([]);
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: Person[]
+  ) => {
+    setSelected(newSelected);
+  };
+
+  return (
+    <DropdownNext<Person>
+      {...args}
+      onSelectionChange={handleSelectionChange}
+      selected={selected}
+      multiselect
+    >
+      {people.map((person) => (
+        <Option value={person} key={person.id}>
+          {person.firstName} {person.lastName}
+        </Option>
+      ))}
+    </DropdownNext>
+  );
 };
