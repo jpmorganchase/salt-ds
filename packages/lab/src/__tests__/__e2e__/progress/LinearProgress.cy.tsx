@@ -1,23 +1,20 @@
-import { LinearProgress } from "../../../progress";
+import { composeStories } from "@storybook/react";
+import * as linearProgressStories from "@stories/progress/linear-progress.stories";
 
+const composedStories = composeStories(linearProgressStories);
+const { Default } = composedStories;
 describe("GIVEN a LinearProgress", () => {
-  beforeEach(() => {
-    cy.mount(<LinearProgress value={50} />);
+  it("SHOULD render progress bar with correct value with correct value and percentage", () => {
+    cy.mount(<Default value={50} />);
+    cy.findByRole("progressbar").should("have.attr", "aria-valuemax", "100");
+    cy.findByRole("progressbar").should("have.attr", "aria-valuemin", "0");
+    cy.findByRole("progressbar").should("have.attr", "aria-valuenow", "50");
   });
 
-  it("SHOULD render progress bar", () => {
-    cy.get('[data-testid="linear-progress"]').should("exist");
-  });
-
-  it("SHOULD render progress bar with correct value", () => {
-    cy.get("[aria-valuenow=50]").should("exist");
-  });
-
-  it("SHOULD render progress bar with correct max value", () => {
-    cy.get("[aria-valuemax=100]").should("exist");
-  });
-
-  it("SHOULD show unit as %", () => {
-    cy.contains("%").should("exist");
+  it("SHOULD render progress bar with correct min-max values", () => {
+    cy.mount(<Default min={20} max={40} value={30} />);
+    cy.findByRole("progressbar").should("have.attr", "aria-valuemax", "40");
+    cy.findByRole("progressbar").should("have.attr", "aria-valuemin", "20");
+    cy.findByRole("progressbar").contains("50 %");
   });
 });
