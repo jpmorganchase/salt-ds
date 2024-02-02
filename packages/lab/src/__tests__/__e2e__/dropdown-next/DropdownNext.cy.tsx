@@ -1,5 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
+import { DropdownNext } from "@salt-ds/lab";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -14,6 +15,7 @@ const {
   ComplexOption,
   CustomValue,
   WithDefaultSelected,
+  ObjectValue,
 } = composeStories(dropdownNextStories);
 
 describe("Given a Dropdown", () => {
@@ -313,6 +315,15 @@ describe("Given a Dropdown", () => {
     );
   });
 
+  it("should support object values", () => {
+    cy.mount(<ObjectValue />);
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "John Doe" }).should("exist");
+    cy.realType("Jane");
+    cy.findByRole("option", { name: "Jane Doe" }).realClick();
+    cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaSelected");
+  });
+
   it("should allow value to be controlled", () => {
     cy.mount(<CustomValue />);
     cy.findByRole("combobox").realClick();
@@ -359,6 +370,11 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").realClick();
     cy.findByRole("combobox").should("have.attr", "aria-expanded", "true");
     cy.findByRole("listbox").should("exist");
+  });
+
+  it("should not show a list with no options", () => {
+    cy.mount(<DropdownNext open />);
+    cy.findByRole("listbox").should("not.exist");
   });
 
   it("should render the custom floating component", () => {
