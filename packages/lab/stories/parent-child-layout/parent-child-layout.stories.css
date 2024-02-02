@@ -37,19 +37,17 @@ ul {
   margin: 0;
 }
 
+h2 {
+  margin: 0;
+}
+
 .parent-child-composite-container {
   width: 545px;
-  min-height: 295px;
+  height: 295px;
   padding: var(--salt-spacing-300);
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
 .parent-child-composite-container .child {
   padding: var(--salt-spacing-200);
-}
-
-.back-button {
-  position: absolute;
-  top: calc(var(--salt-spacing-100) * -1);
-  left: calc(var(--salt-spacing-100) * -1);
 }

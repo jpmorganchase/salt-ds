@@ -15,8 +15,10 @@ import {
 } from "@salt-ds/lab";
 import {
   Button,
+  FlexLayout,
   FormField,
   FormFieldLabel,
+  H2,
   Input,
   NavigationItem,
   RadioButton,
@@ -317,19 +319,22 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
   );
 
   const child = (
-    <div className="child">
-      {currentView === "child" && (
-        <Button
-          onClick={showParent}
-          className="back-button"
-          variant="secondary"
-          aria-label="Back"
-        >
-          <ChevronLeftIcon />
-        </Button>
-      )}
+    <FlexLayout direction="column" className="child">
+      <FlexLayout gap={1}>
+        {currentView === "child" && (
+          <Button
+            onClick={showParent}
+            className="back-button"
+            variant="secondary"
+            aria-label="Back"
+          >
+            <ChevronLeftIcon />
+          </Button>
+        )}
+        <H2>{active.label}</H2>
+      </FlexLayout>
       {active.view?.()}
-    </div>
+    </FlexLayout>
   );
 
   return (

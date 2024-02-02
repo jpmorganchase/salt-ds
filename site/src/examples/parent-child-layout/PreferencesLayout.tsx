@@ -1,8 +1,10 @@
 import { useState } from "react";
 import {
   Button,
+  FlexLayout,
   FormField,
   FormFieldLabel,
+  H2,
   Input,
   NavigationItem,
   RadioButton,
@@ -186,13 +188,14 @@ export const PreferencesLayout = () => {
   >();
 
   const showParent = () => {
-    setCurrentView("parent");
+    collapsed && setCurrentView("parent");
   };
   const showChild = () => {
-    setCurrentView("child");
+    collapsed && setCurrentView("child");
   };
 
   const [active, setActive] = useState(items[0]);
+  const [collapsed, setCollapsed] = useState<boolean>();
 
   const parent = (
     <nav className={styles.navigation}>
@@ -219,20 +222,23 @@ export const PreferencesLayout = () => {
   );
 
   const child = (
-    <div className={styles.child}>
-      {currentView === "child" && (
-        <Button
-          onClick={showParent}
-          className={styles["back-button"]}
-          variant="secondary"
-          aria-label="Back"
-        >
-          <ChevronLeftIcon />
-        </Button>
-      )}
+    <FlexLayout direction="column" className={styles.child}>
+      <FlexLayout gap={1}>
+        {currentView === "child" && (
+          <Button onClick={showParent} variant="secondary" aria-label="Back">
+            <ChevronLeftIcon />
+          </Button>
+        )}
+        <H2>{active.label}</H2>
+      </FlexLayout>
       {active.view?.()}
-    </div>
+    </FlexLayout>
   );
+
+  const handleCollapsed = (isCollapsed: boolean) => {
+    if (!isCollapsed) setCurrentView(undefined);
+    setCollapsed(isCollapsed);
+  };
 
   return (
     <div className={styles["parent-child-composite-container"]}>
@@ -241,9 +247,7 @@ export const PreferencesLayout = () => {
         collapseAtBreakpoint="md"
         parent={parent}
         child={child}
-        onCollapseChange={(isCollapsed) => {
-          if (!isCollapsed) setCurrentView(undefined);
-        }}
+        onCollapseChange={handleCollapsed}
       />
     </div>
   );
