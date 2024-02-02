@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-Added `--salt-color-gray-40-fade-border` and `--salt-color-gray-40-fade-border`.
+Added `--salt-color-gray-40-fade-border` and `--salt-color-gray-500-fade-border`.
 
 ```diff
 +  --salt-color-gray-40-fade-border: rgba(217, 221, 227, var(--salt-palette-opacity-disabled));
