@@ -40,6 +40,8 @@ export const Controlled: StoryFn<typeof MultilineInput> = (args) => {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    // React 16 backwards compatibility
+    event.persist();
     setValue(value);
     args.onChange?.(event);
   };

@@ -1,5 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
+import { ChangeEvent } from "react";
 
 const { Default, Controlled, Readonly, WithFormField } = composeStories(
   multilineInputStories
@@ -8,7 +9,12 @@ const { Default, Controlled, Readonly, WithFormField } = composeStories(
 describe("GIVEN an MultilineInput", () => {
   it("should allow a default value to be set", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default onChange={changeSpy} />);
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      // React 16 backwards compatibility
+      event.persist();
+      changeSpy(event);
+    };
+    cy.mount(<Default onChange={handleChange} />);
     cy.findByRole("textbox").should("have.value", "Value");
     cy.findByRole("textbox").clear();
     cy.findByRole("textbox").realClick();
@@ -112,7 +118,7 @@ describe("GIVEN an MultilineInput", () => {
         cy.findByRole("textbox")
           .invoke("height")
           .then((newHeight) => {
-            expect(newHeight).to.be.greaterThan(defaultHeight);
+            expect(newHeight ?? 0).to.be.greaterThan(defaultHeight ?? 0);
           });
       });
   });
