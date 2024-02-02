@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.30
+
+### Patch Changes
+
+- b2b8dedb: Add vertical orientation for SteppedTracker
+
 ## 1.0.0-alpha.29
 
 ### Minor Changes

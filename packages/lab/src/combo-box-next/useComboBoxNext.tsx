@@ -6,7 +6,7 @@ import {
 import { SyntheticEvent } from "react";
 import { OptionValue } from "../list-control/ListControlContext";
 
-export function useComboBoxNext(props: ListControlProps) {
+export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
   const {
     open,
     defaultOpen,
@@ -19,7 +19,7 @@ export function useComboBoxNext(props: ListControlProps) {
     value,
   } = props;
 
-  const listControl = useListControl({
+  const listControl = useListControl<Item>({
     open,
     defaultOpen,
     onOpenChange,
@@ -34,7 +34,7 @@ export function useComboBoxNext(props: ListControlProps) {
   const { selectedState, getOptionsMatching, setValueState, setSelectedState } =
     listControl;
 
-  const select = (event: SyntheticEvent, option: OptionValue) => {
+  const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
     const { disabled, value } = option;
 
     if (disabled) {

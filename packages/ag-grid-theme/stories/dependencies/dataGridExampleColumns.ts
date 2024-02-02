@@ -35,7 +35,7 @@ const dataGridExampleColumns: ColDef[] = [
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
-    cellClass: ["numeric-cell", "editable-cell"],
+    cellClass: ["editable-cell"],
   },
   {
     headerName: "Population",

@@ -63,27 +63,18 @@ export function useTooltip(props?: UseTooltipProps) {
     onOpenChange?.(open);
   };
 
-  const {
-    floating,
-    reference,
-    x,
-    y,
-    strategy,
-    middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
-    placement,
-    context,
-    elements,
-  } = useFloatingUI({
-    open,
-    onOpenChange: handleOpenChange,
-    placement: placementProp,
-    middleware: [
-      offset(8),
-      flip(),
-      shift({ limiter: limitShift() }),
-      arrow({ element: arrowRef }),
-    ],
-  });
+  const { floating, reference, x, y, strategy, placement, context, elements } =
+    useFloatingUI({
+      open,
+      onOpenChange: handleOpenChange,
+      placement: placementProp,
+      middleware: [
+        offset(8),
+        flip(),
+        shift({ limiter: limitShift() }),
+        arrow({ element: arrowRef }),
+      ],
+    });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useHover(context, {
@@ -111,11 +102,14 @@ export function useTooltip(props?: UseTooltipProps) {
   };
 
   const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
-    return getFloatingProps({
-      // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- tabIndex raises false positives because it is set to "-1".
+    const { tabIndex, ...tooltipProps } = getFloatingProps({
+      // @ts-expect-error - `data-*` props need extra typing when not used on a DOM element.
       "data-placement": placement,
       ref: floating,
     });
+
+    return tooltipProps;
   };
 
   const getTriggerProps = () =>
