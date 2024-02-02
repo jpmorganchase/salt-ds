@@ -1,7 +1,6 @@
-import { CSSProperties, forwardRef, HTMLAttributes } from "react";
+import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { Info } from "../Info";
+import { makePrefixer, Text } from "@salt-ds/core";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -10,20 +9,21 @@ import circularProgressCSS from "./CircularProgress.css";
 
 const withBaseName = makePrefixer("saltCircularProgress");
 
-export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
+export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * A label for accessibility
+   * Whether to hide the text label within the progress. Defaults to `false`.
    */
-  "aria-label"?: string;
-  /**
-   * The className(s) of the component
-   */
-  className?: string;
+  hideLabel?: boolean;
   /**
    * The value of the max progress indicator.
    * Default value is 100.
    */
   max?: number;
+  /**
+   * The value of the min progress indicator.
+   * Default value is 0.
+   */
+  min?: number;
   /**
    * The value of the progress indicator.
    * Value between 0 and max.
@@ -31,14 +31,11 @@ export interface CircularProgressProps extends HTMLAttributes<HTMLDivElement> {
   value?: number;
 }
 
-/**
- * Circular progress bar with an Info element showing the current value
- */
 export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
 >(function CircularProgress(
-  { "aria-label": ariaLabel, className, max = 100, value = 0, ...rest },
+  { className, hideLabel = false, max = 100, min = 0, value = 0, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -55,7 +52,7 @@ export const CircularProgress = forwardRef<
     return -180 + ((progress - shift) / 50) * 180;
   };
 
-  const progress = (value / max) * 100;
+  const progress = ((value - min) / (max - min)) * 100;
 
   if (progress <= 50) {
     const rotationAngle = getRotationAngle(progress);
@@ -67,23 +64,13 @@ export const CircularProgress = forwardRef<
     subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
   }
 
-  const progressInfo = (
-    <Info
-      className={withBaseName("progressValue")}
-      unit="%"
-      value={Math.round(progress)}
-    />
-  );
-
   return (
     <div
       className={clsx(withBaseName(), className)}
-      data-testid="circular-progress"
       ref={ref}
       role="progressbar"
-      aria-label={ariaLabel}
       aria-valuemax={max}
-      aria-valuemin={0}
+      aria-valuemin={min}
       aria-valuenow={Math.round(value)}
       {...rest}
     >
@@ -92,7 +79,6 @@ export const CircularProgress = forwardRef<
         <div className={withBaseName("barOverlayRight")}>
           <div
             className={withBaseName("barSubOverlayRight")}
-            data-testid="barSubOverlayRight"
             style={subOverlayRightStyle}
           >
             <div className={withBaseName("bar")} />
@@ -101,14 +87,17 @@ export const CircularProgress = forwardRef<
         <div className={withBaseName("barOverlayLeft")}>
           <div
             className={withBaseName("barSubOverlayLeft")}
-            data-testid="barSubOverlayLeft"
             style={subOverlayLeftStyle}
           >
             <div className={withBaseName("bar")} />
           </div>
         </div>
       </div>
-      {progressInfo}
+      {!hideLabel && (
+        <Text styleAs="h2" className={withBaseName("progressLabel")}>
+          {`${Math.round(progress)} %`}
+        </Text>
+      )}
     </div>
   );
 });
