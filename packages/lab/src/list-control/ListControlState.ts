@@ -8,7 +8,7 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { OptionValue } from "./ListControlContext";
 
-export interface ListControlProps {
+export interface ListControlProps<Item> {
   /**
    * If true, the list will be open by default.
    */
@@ -24,15 +24,15 @@ export interface ListControlProps {
   /**
    * The default selected options. If this is provided `defaultValue` should be provided as well.
    */
-  defaultSelected?: string[];
+  defaultSelected?: Item[];
   /**
    * The selected options. The component will be controlled if this prop is provided.
    */
-  selected?: string[];
+  selected?: Item[];
   /**
    * Callback fired when the selected options change.
    */
-  onSelectionChange?: (event: SyntheticEvent, newSelected: string[]) => void;
+  onSelectionChange?: (event: SyntheticEvent, newSelected: Item[]) => void;
   /**
    * The default value.
    */
@@ -47,7 +47,7 @@ export interface ListControlProps {
   multiselect?: boolean;
 }
 
-export function useListControl(props: ListControlProps) {
+export function useListControl<Item>(props: ListControlProps<Item>) {
   const {
     open: openProp,
     defaultOpen,
@@ -70,11 +70,11 @@ export function useListControl(props: ListControlProps) {
     state: "value",
   });
 
-  const [activeState, setActiveState] = useState<OptionValue | undefined>(
+  const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
     undefined
   );
 
-  const setActive = (option?: OptionValue) => {
+  const setActive = (option?: OptionValue<Item>) => {
     if (option) {
       setActiveState(option);
     } else {
@@ -115,7 +115,7 @@ export function useListControl(props: ListControlProps) {
     state: "selected",
   });
 
-  const select = (event: SyntheticEvent, option: OptionValue) => {
+  const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
     const { disabled, value } = option;
 
     if (disabled) {
@@ -147,10 +147,12 @@ export function useListControl(props: ListControlProps) {
     onSelectionChange?.(event, []);
   };
 
-  const optionsRef = useRef<{ value: OptionValue; element: HTMLElement }[]>([]);
+  const optionsRef = useRef<
+    { value: OptionValue<Item>; element: HTMLElement }[]
+  >([]);
 
   const register = useCallback(
-    (optionValue: OptionValue, element: HTMLElement) => {
+    (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const { id } = optionValue;
       const option = optionsRef.current.find((item) => item.value.id === id);
       const index = optionsRef.current.findIndex((option) => {
@@ -181,17 +183,22 @@ export function useListControl(props: ListControlProps) {
     return optionsRef.current[index]?.value;
   };
 
-  const getIndexOfOption = (option: OptionValue) => {
+  const getIndexOfOption = (option: OptionValue<Item>) => {
     return optionsRef.current.findIndex((item) => item.value.id === option.id);
   };
 
-  const getOptionsMatching = (predicate: (option: OptionValue) => boolean) => {
+  const getOptionsMatching = (
+    predicate: (option: OptionValue<Item>) => boolean
+  ) => {
     return optionsRef.current
       .filter((item) => predicate(item.value))
       .map((item) => item.value);
   };
 
-  const getOptionFromSearch = (search: string, startFrom?: OptionValue) => {
+  const getOptionFromSearch = (
+    search: string,
+    startFrom?: OptionValue<Item>
+  ) => {
     const collator = new Intl.Collator("en", {
       usage: "search",
       sensitivity: "base",
