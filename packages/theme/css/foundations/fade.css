@@ -16,7 +16,7 @@
   --salt-color-white-fade-foreground: rgba(255, 255, 255, var(--salt-palette-opacity-disabled));
 
   --salt-color-blue-500-fade-border: rgba(38, 112, 169, var(--salt-palette-opacity-disabled));
-  --salt-color-gray-40-fade-border: rgba(217, 221, 227, var(--salt-palette-opacity-disabled));
+  --salt-color-gray-50-fade-border: rgba(206, 210, 217, var(--salt-palette-opacity-disabled));
   --salt-color-gray-60-fade-border: rgba(197, 201, 208, var(--salt-palette-opacity-disabled));
   --salt-color-gray-90-fade-border: rgba(132, 135, 142, var(--salt-palette-opacity-disabled));
   --salt-color-gray-200-fade-border: rgba(97, 101, 110, var(--salt-palette-opacity-disabled));
