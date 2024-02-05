@@ -264,19 +264,16 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
     {
       label: "Display",
       icon: <LaptopIcon />,
-      title: "Display settings",
       view: displayView,
     },
     {
       label: "Account",
       icon: <UserIcon />,
-      title: "Account settings",
       view: accountView,
     },
     {
       label: "Export",
       icon: <ExportIcon />,
-      title: "Export settings",
       view: exportView,
     },
   ];
@@ -342,7 +339,6 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         {...args}
         collapsedViewElement={currentView}
-        collapseAtBreakpoint="xs"
         parent={parent}
         child={child}
         onCollapseChange={(isCollapsed) => {
@@ -352,3 +348,7 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
     </div>
   );
 };
+
+PreferencesLayout.args = {
+  collapseAtBreakpoint: "sm"
+}

@@ -244,7 +244,7 @@ export const PreferencesLayout = () => {
     <div className={styles["parent-child-composite-container"]}>
       <ParentChildLayout
         collapsedViewElement={currentView}
-        collapseAtBreakpoint="md"
+        collapseAtBreakpoint="lg"
         parent={parent}
         child={child}
         onCollapseChange={handleCollapsed}
