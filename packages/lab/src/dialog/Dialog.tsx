@@ -116,40 +116,38 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   const contextValue = useMemo(() => ({ status }), [status]);
 
   return (
-    <>
+    <DialogContext.Provider value={contextValue}>
       {showComponent && (
         <Scrim>
-          <DialogContext.Provider value={contextValue}>
-            <FloatingComponent
-              open={open}
-              aria-modal="true"
-              ref={floatingRef}
-              focusManagerProps={{
-                context: context,
-              }}
-              className={clsx(
-                withBaseName(),
-                withBaseName(size, currentbreakpoint),
-                {
-                  [withBaseName("enterAnimation")]: open,
-                  [withBaseName("exitAnimation")]: !open,
-                  [withBaseName(status as string)]: status,
-                },
-                className
-              )}
-              onAnimationEnd={() => {
-                if (!open && showComponent) {
-                  setShowComponent(false);
-                }
-              }}
-              {...getFloatingProps()}
-              {...rest}
-            >
-              {children}
-            </FloatingComponent>
-          </DialogContext.Provider>
+          <FloatingComponent
+            open={open}
+            aria-modal="true"
+            ref={floatingRef}
+            focusManagerProps={{
+              context: context,
+            }}
+            className={clsx(
+              withBaseName(),
+              withBaseName(size, currentbreakpoint),
+              {
+                [withBaseName("enterAnimation")]: open,
+                [withBaseName("exitAnimation")]: !open,
+                [withBaseName(status as string)]: status,
+              },
+              className
+            )}
+            onAnimationEnd={() => {
+              if (!open && showComponent) {
+                setShowComponent(false);
+              }
+            }}
+            {...getFloatingProps()}
+            {...rest}
+          >
+            {children}
+          </FloatingComponent>
         </Scrim>
       )}
-    </>
+    </DialogContext.Provider>
   );
 });
