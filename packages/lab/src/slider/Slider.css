@@ -28,7 +28,7 @@
 
 .saltSlider {
   --slider-rail-height: var(--saltSlider-rail-height, 8px);
-  --slider-rail-color: var(--saltSlider-rail-color, var(--salt-palette-neutral-secondary-border));
+  --slider-rail-color: var(--saltSlider-rail-color, var(--salt-track-borderColor));
 
   --slider-rail-mark-height: var(--saltSlider-rail-mark-height, 7px);
   --slider-rail-mark-color: var(--saltSlider-rail-mark-color, var(--slider-rail-color));
