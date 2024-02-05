@@ -126,9 +126,6 @@
   - --salt-track-borderWidth-complete
   - --salt-track-borderWidth-incomplete
   + --salt-size-border-strong
-
-  - --salt-track-borderColor
-  + --salt-palette-neutral-secondary-border
   ```
 
   #### Miscellaneous

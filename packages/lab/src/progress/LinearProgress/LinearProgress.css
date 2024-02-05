@@ -27,7 +27,7 @@
 }
 
 .saltLinearProgress-track {
-  background: var(--salt-palette-neutral-secondary-border);
+  background: var(--salt-track-borderColor);
   width: 100%;
   height: var(--salt-size-bar-small);
   position: absolute;
