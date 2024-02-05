@@ -350,5 +350,5 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
 };
 
 PreferencesLayout.args = {
-  collapseAtBreakpoint: "sm"
-}
+  collapseAtBreakpoint: "sm",
+};
