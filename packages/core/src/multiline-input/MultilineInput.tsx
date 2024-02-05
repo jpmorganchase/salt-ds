@@ -7,13 +7,14 @@ import {
   ReactNode,
   Ref,
   TextareaHTMLAttributes,
+  useRef,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, useControlled, useForkRef } from "../utils";
 
 import multilineInputCss from "./MultilineInput.css";
 
@@ -90,6 +91,9 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     },
     ref
   ) {
+    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const handleRef = useForkRef(inputRef, textAreaRef);
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-multiline-input",
@@ -140,10 +144,30 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       state: "value",
     });
 
+    const previousHeight = useRef<string | undefined>(undefined);
+
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       const value = event.target.value;
       setValue(value);
       onChange?.(event);
+      const input = event.target;
+
+      const hasBeenManuallyResized =
+        previousHeight.current !== undefined &&
+        input.style.height !== previousHeight.current;
+
+      if (!hasBeenManuallyResized) {
+        const previousOverflow = input.style.overflow;
+        input.style.overflow = "hidden";
+        input.style.height = "auto";
+        input.scrollHeight; // Needed to work around Firefox bug. https://bugzilla.mozilla.org/show_bug.cgi?id=1787062
+        const newHeight = `${
+          input.scrollHeight + (input.offsetHeight - input.clientHeight)
+        }px`;
+        input.style.height = newHeight;
+        previousHeight.current = newHeight;
+        input.style.overflow = previousOverflow;
+      }
     };
 
     const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
@@ -172,7 +196,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
             [withBaseName("focused")]: !isDisabled && focused,
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
-            [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName(validationStatus ?? "")]: validationStatus,
           },
           classNameProp
         )}
@@ -192,7 +216,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           disabled={isDisabled}
           id={id}
           readOnly={isReadOnly}
-          ref={textAreaRef}
+          ref={handleRef}
           required={isRequired}
           role={role}
           rows={rows}
