@@ -1,11 +1,11 @@
 import {
+  CircularProgress,
   StackLayout,
   Text,
   Spinner,
   StatusIndicator,
   Button,
 } from "@salt-ds/core";
-import { CircularProgress } from "@salt-ds/lab";
 import { Meta } from "@storybook/react";
 
 export default {
