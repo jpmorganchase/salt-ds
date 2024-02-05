@@ -33,7 +33,6 @@ export const MandatoryAction = (): ReactElement => {
         disableDismiss
         size={"small"}
         status={"error"}
-        aria-describedby={`dialog-description`}
       >
         <DialogTitle> Delete Transaction </DialogTitle>
         <DialogContent>

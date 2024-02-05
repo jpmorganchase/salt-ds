@@ -30,7 +30,6 @@ export const Warning = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="warning"
         size={"small"}
         aria-describedby={`dialog-description`}

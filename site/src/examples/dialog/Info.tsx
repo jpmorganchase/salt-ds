@@ -30,10 +30,8 @@ export const Info = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="info"
         size={"small"}
-        aria-describedby={`dialiog-content`}
       >
         <DialogTitle>File update</DialogTitle>
         <DialogContent>

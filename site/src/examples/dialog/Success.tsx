@@ -30,10 +30,8 @@ export const Success = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="success"
         size={"small"}
-        aria-describedby={`dialog-description`}
       >
         <DialogTitle>File uploaded</DialogTitle>
         <DialogContent>
