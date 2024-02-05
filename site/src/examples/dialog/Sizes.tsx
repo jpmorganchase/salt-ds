@@ -105,7 +105,7 @@ const MediumDialog = (): ReactElement => {
                 }}
               >
                 {items.map((item) => (
-                  <li key={item}>
+                  <li key={item.heading}>
                     <NavigationItem
                       active={active === item}
                       href="#"
