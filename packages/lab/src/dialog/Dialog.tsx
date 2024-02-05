@@ -22,6 +22,7 @@ import {
   useFloatingUI,
   useFloatingComponent,
   useCurrentBreakpoint,
+  useId,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -72,6 +73,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     status,
     disableDismiss,
     size = "medium",
+    id: idProp,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -89,6 +91,8 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     open,
     onOpenChange,
   });
+
+  const id = useId(idProp);
 
   const { getFloatingProps } = useInteractions([
     useClick(context),
@@ -126,6 +130,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
             focusManagerProps={{
               context: context,
             }}
+            aria-labelledby={`${id}-header`}
             className={clsx(
               withBaseName(),
               withBaseName(size, currentbreakpoint),
