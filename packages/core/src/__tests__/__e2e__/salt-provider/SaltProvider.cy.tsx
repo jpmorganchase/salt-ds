@@ -1,10 +1,14 @@
 import {
+  ownerWindow,
   SaltProvider,
   useAriaAnnouncer,
   useDensity,
   useTheme,
 } from "@salt-ds/core";
-import { mount } from "cypress/react";
+import { mount } from "cypress/react18";
+import { WindowProvider } from "@salt-ds/window";
+import { ReactNode, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 
 const TestComponent = ({
   id = "test-1",
@@ -187,5 +191,56 @@ describe("Given a SaltProvider", () => {
         .and("have.attr", "data-mode", "dark")
         .and("have.class", "salt-density-high");
     });
+  });
+
+  it("should warn when two providers are set to apply to root", () => {
+    cy.spy(console, "warn").as("consoleSpy");
+
+    mount(
+      <SaltProvider applyClassesTo={"root"}>
+        <SaltProvider applyClassesTo={"root"}>
+          <TestComponent />
+        </SaltProvider>
+      </SaltProvider>
+    );
+
+    cy.get("@consoleSpy").should(
+      "have.been.calledWith",
+      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+    );
+  });
+
+  function FakeWindow({ children }: { children?: ReactNode }) {
+    const [mountNode, setMountNode] = useState<HTMLElement | undefined>(
+      undefined
+    );
+
+    const handleFrameRef = useCallback((node: HTMLIFrameElement) => {
+      setMountNode(node?.contentWindow?.document?.body);
+    }, []);
+
+    return (
+      <iframe ref={handleFrameRef}>
+        <WindowProvider window={ownerWindow(mountNode)}>
+          {mountNode && createPortal(children, mountNode)}
+        </WindowProvider>
+      </iframe>
+    );
+  }
+
+  it("should not warn when two providers are set to apply to root but are in different windows", () => {
+    cy.spy(console, "warn").as("consoleSpy");
+
+    mount(
+      <SaltProvider applyClassesTo={"root"}>
+        <FakeWindow>
+          <SaltProvider applyClassesTo={"root"}>
+            <TestComponent />
+          </SaltProvider>
+        </FakeWindow>
+      </SaltProvider>
+    );
+
+    cy.get("@consoleSpy").should("not.have.been.called");
   });
 });

@@ -180,7 +180,7 @@ function InternalSaltProvider({
         targetWindow.document.documentElement.dataset.mode = mode;
       } else {
         console.warn(
-          "\nSaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
         );
       }
     }
