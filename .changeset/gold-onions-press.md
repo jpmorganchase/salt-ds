@@ -3,8 +3,8 @@
 ---
 
 - Refactored `Dialog` to use floating-ui and Salt's `Scrim`.
-- Implemented desktop support.
-- Added optional `closeOnBlur` prop to prevent a click away dismissing the dialog.
+- Implement FloatingComponent for Desktop support
+- Added optional `disableDismiss` prop to prevent a click away dismissing the dialog.
 - Added a `size` prop which takes `small`, `medium` and `large`.
 
 ```tsx
