@@ -1,10 +1,10 @@
-import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import {
   H2,
   StatusIndicator,
   ValidationStatus,
   makePrefixer,
+  TextProps,
 } from "@salt-ds/core";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
@@ -13,7 +13,7 @@ import dialogTitleCss from "./DialogTitle.css";
 
 const withBaseName = makePrefixer("saltDialogTitle");
 
-interface DialogTitleProps extends ComponentPropsWithoutRef<"h2"> {
+interface DialogTitleProps extends TextProps<"h2"> {
   status?: ValidationStatus;
   accent?: boolean;
 }
