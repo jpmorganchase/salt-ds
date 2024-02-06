@@ -1,4 +1,4 @@
-import { forwardRef, ComponentPropsWithoutRef } from "react";
+import { forwardRef, ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -9,7 +9,9 @@ import { useButton } from "../button";
 const withBaseName = makePrefixer("saltPill");
 
 /* eslint-disable @typescript-eslint/no-empty-interface */
-export interface PillProps extends ComponentPropsWithoutRef<"button"> {}
+export interface PillProps extends ComponentPropsWithoutRef<"button"> {
+  children?: ReactNode;
+}
 
 export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   {
