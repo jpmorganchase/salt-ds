@@ -32,6 +32,7 @@ export const Info = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="info"
         size={"small"}
+        id={"info-dialog"}
       >
         <DialogTitle>File update</DialogTitle>
         <DialogContent>

@@ -32,7 +32,7 @@ export const Warning = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="warning"
         size={"small"}
-        aria-describedby={`dialog-description`}
+        id={"warning-dialog"}
       >
         <DialogTitle>File access</DialogTitle>
         <DialogContent>

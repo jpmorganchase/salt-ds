@@ -32,6 +32,7 @@ export const Success = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="success"
         size={"small"}
+        id={"success-dialog"}
       >
         <DialogTitle>File uploaded</DialogTitle>
         <DialogContent>

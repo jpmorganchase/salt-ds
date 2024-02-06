@@ -33,6 +33,7 @@ export const MandatoryAction = (): ReactElement => {
         disableDismiss
         size={"small"}
         status={"error"}
+        id={"error-dialog"}
       >
         <DialogTitle> Delete Transaction </DialogTitle>
         <DialogContent>

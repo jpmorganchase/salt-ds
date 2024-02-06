@@ -35,6 +35,7 @@ const SmallDialog = (): ReactElement => {
         onOpenChange={onOpenChange}
         size={"small"}
         status={"warning"}
+        id={"warning-dialog"}
       >
         <DialogTitle disableAccent>Reset grid settings?</DialogTitle>
         <DialogContent>
@@ -81,7 +82,12 @@ const MediumDialog = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open Medium Dialog
       </Button>
-      <Dialog open={open} onOpenChange={onOpenChange} size={"medium"}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        size={"medium"}
+        id={"preferences-dialog"}
+      >
         <DialogTitle disableAccent>Preferences</DialogTitle>
         <DialogContent>
           <StackLayout direction={"row"}>
@@ -148,7 +154,12 @@ const LargeDialog = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open Large Dialog
       </Button>
-      <Dialog open={open} onOpenChange={onOpenChange} size={"medium"}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        size={"medium"}
+        id={"wizard-dialog"}
+      >
         <DialogTitle>
           <div style={{ flexGrow: 1 }}>Add a Beneficiary</div>
           <SteppedTracker activeStep={0} style={{ width: "400px" }}>

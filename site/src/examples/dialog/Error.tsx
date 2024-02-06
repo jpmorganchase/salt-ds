@@ -33,6 +33,7 @@ export const Error = (): ReactElement => {
         role="alertdialog"
         status="error"
         size={"small"}
+        id={"error-dialog"}
       >
         <DialogTitle>Can`t move file</DialogTitle>
         <DialogContent>
