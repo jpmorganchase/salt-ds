@@ -40,6 +40,15 @@ export interface ComboBoxNextProps<Item = string>
 
 const withBaseName = makePrefixer("saltComboBoxNext");
 
+function focusEventOutside(event: FocusEvent, container: Element | null) {
+  const containerElement = container || (event.currentTarget as HTMLElement);
+  const relatedTarget = event.relatedTarget as HTMLElement | null;
+  return (
+    !relatedTarget ||
+    !(container == relatedTarget || containerElement.contains(relatedTarget))
+  );
+}
+
 export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   props: ComboBoxNextProps<Item>,
   ref: ForwardedRef<HTMLDivElement>
@@ -222,13 +231,13 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     onFocus?.(event);
   };
 
-  const ignoreBlur = useRef(false);
-
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    if (!ignoreBlur.current) {
+    if (
+      focusEventOutside(event, elements.floating) &&
+      focusEventOutside(event, elements.domReference)
+    ) {
       setOpen(event, false);
     }
-    ignoreBlur.current = false;
 
     setFocusedState(false);
     onBlur?.(event);
@@ -265,10 +274,6 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   const handleListMouseOver = () => {
     setFocusVisibleState(false);
-  };
-
-  const handleListMouseDown = () => {
-    ignoreBlur.current = true;
   };
 
   const handleListFocus = () => {
@@ -372,7 +377,6 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
           ref={listRef}
           id={listId}
           onMouseOver={handleListMouseOver}
-          onMouseDown={handleListMouseDown}
           onFocus={handleListFocus}
           onClick={handleListClick}
         >

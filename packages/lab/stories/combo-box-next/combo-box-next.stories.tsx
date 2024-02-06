@@ -3,6 +3,7 @@ import {
   ComboBoxNextProps,
   Option,
   OptionGroup,
+  Dialog,
 } from "@salt-ds/lab";
 
 import { Meta, StoryFn } from "@storybook/react";
@@ -573,5 +574,19 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
         </Option>
       ))}
     </ComboBoxNext>
+  );
+};
+
+export const DialogExample = () => {
+  return (
+    <Dialog open style={{ width: "50%", height: "50%" }}>
+      <ComboBoxNext style={{ width: "25%" }} open>
+        {usStates.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+    </Dialog>
   );
 };

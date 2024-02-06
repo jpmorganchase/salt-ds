@@ -85,6 +85,15 @@ function ExpandIcon({ open }: { open: boolean }) {
 
 const withBaseName = makePrefixer("saltDropdownNext");
 
+function focusEventOutside(event: FocusEvent, container: Element | null) {
+  const containerElement = container || (event.currentTarget as HTMLElement);
+  const relatedTarget = event.relatedTarget as HTMLElement | null;
+  return (
+    !relatedTarget ||
+    !(container == relatedTarget || containerElement.contains(relatedTarget))
+  );
+}
+
 export const DropdownNext = forwardRef(function DropdownNext<Item>(
   props: DropdownNextProps<Item>,
   ref: ForwardedRef<HTMLButtonElement>
@@ -329,13 +338,13 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     onFocus?.(event);
   };
 
-  const ignoreBlur = useRef(false);
-
   const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
-    if (!ignoreBlur.current) {
+    if (
+      focusEventOutside(event, elements.floating) &&
+      focusEventOutside(event, elements.domReference)
+    ) {
       setOpen(event, false);
     }
-    ignoreBlur.current = false;
 
     setFocusedState(false);
     onBlur?.(event);
@@ -343,10 +352,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
 
   const handleListMouseOver = () => {
     setFocusVisibleState(false);
-  };
-
-  const handleListMouseDown = () => {
-    ignoreBlur.current = true;
   };
 
   const handleListFocus = () => {
@@ -439,7 +444,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
           id={listId}
           collapsed={!openState}
           onMouseOver={handleListMouseOver}
-          onMouseDown={handleListMouseDown}
           onFocus={handleListFocus}
           onClick={handleListClick}
           ref={listRef}
