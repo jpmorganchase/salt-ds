@@ -12,7 +12,6 @@ import {
   useClick,
   useDismiss,
   useInteractions,
-  useRole,
 } from "@floating-ui/react";
 import {
   makePrefixer,
@@ -47,8 +46,6 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * Default value is 0 (first tabbable element).
    * */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
-
-  id?: string;
   /**
    * Size of the Dialog
    * */
@@ -74,6 +71,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     disableDismiss,
     size = "medium",
     id: idProp,
+    role: roleProp,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -93,10 +91,10 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   });
 
   const id = useId(idProp);
+  const role = roleProp ?? "dialog";
 
   const { getFloatingProps } = useInteractions([
     useClick(context),
-    useRole(context, { role: "dialog" }),
     useDismiss(context, { enabled: !disableDismiss }),
   ]);
 
@@ -125,6 +123,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
         <Scrim>
           <FloatingComponent
             open={open}
+            role={role}
             aria-modal="true"
             ref={floatingRef}
             focusManagerProps={{
