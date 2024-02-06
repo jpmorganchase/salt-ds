@@ -54,7 +54,6 @@ export * from "./menu-button";
 export * from "./metric";
 export * from "./option";
 export * from "./overlay";
-export * from "./parent-child-item";
 export * from "./parent-child-layout";
 export * from "./portal";
 export * from "./query-input";
