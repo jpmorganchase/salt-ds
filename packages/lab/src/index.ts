@@ -56,7 +56,6 @@ export * from "./option";
 export * from "./overlay";
 export * from "./parent-child-layout";
 export * from "./portal";
-export * from "./progress";
 export * from "./query-input";
 export * from "./responsive";
 export * from "./search-input";

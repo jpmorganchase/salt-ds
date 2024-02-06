@@ -1,11 +1,13 @@
 import { ReactElement, useState } from "react";
-import { CircularProgress, LinearProgress } from "@salt-ds/lab";
 import {
   FlexItem,
   FlexLayout,
   FlowLayout,
+  H3,
   RadioButton,
   RadioButtonGroup,
+  CircularProgress,
+  LinearProgress,
 } from "@salt-ds/core";
 
 export const WithMinVal = (): ReactElement => {
@@ -16,9 +18,9 @@ export const WithMinVal = (): ReactElement => {
   const value = 30;
   return (
     <FlexLayout direction="column" style={{ height: "100%" }}>
-      <h3
+      <H3
         style={{ textAlign: "center" }}
-      >{`max = ${max}, min = ${min}, value = ${value}`}</h3>
+      >{`max = ${max}, min = ${min}, value = ${value}`}</H3>
       <FlexItem>
         <FlowLayout justify="center" className="controls" gap={1}>
           <RadioButtonGroup direction="horizontal" defaultChecked>
