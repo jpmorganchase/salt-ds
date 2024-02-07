@@ -39,13 +39,16 @@ h2 {
   margin: 0;
 }
 
-.parent-child-composite-container {
+.parent-child-composite-container .saltParentChildLayout {
   width: 545px;
-  height: 295px;
   padding: var(--salt-spacing-300);
-  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
 .parent-child-composite-container .child {
+  max-width: 338px;
   padding: var(--salt-spacing-200);
+}
+
+.parent-child-composite-container .saltParentChildLayout-child {
+  max-width: 375px;
 }
