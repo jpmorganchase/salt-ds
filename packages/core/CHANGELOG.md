@@ -1,5 +1,21 @@
 # @salt-ds/core
 
+## 1.17.0
+
+### Minor Changes
+
+- 0e031a5c: A progress indicator gives the user an understanding of how long a system
+  operation will take. You should use it when the operation will take more
+  than a second to complete. Two components are available to accommodate
+  different layout constraints: `CircularProgress` and `LinearProgress`.
+
+  ```tsx
+      <LinearProgress aria-label="Download" value={50}/>
+      <CircularProgress aria-label="Download" value={50} />
+  ```
+
+- f266b3c5: Added resizing support to `MutilineInput`. `MultilineInput`s will now resize when typing and can be resized manually.
+
 ## 1.16.1
 
 ### Patch Changes

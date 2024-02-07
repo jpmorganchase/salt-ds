@@ -1,5 +1,77 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.31
+
+### Minor Changes
+
+- de68031a: - Added `min` and `hideLabel` to LinearProgress and CircularProgress.
+  - Removed `unit` from LinearProgress.
+- 0e031a5c: Removed `CircularProgress` and `LinearProgress` from lab and promoted to core.
+- 9d0b2a40: - Refactored `Dialog` to use floating-ui and Salt's `Scrim`.
+
+  - Implement FloatingComponent for Desktop support
+  - Added optional `disableDismiss` prop to prevent a click away dismissing the dialog.
+  - Added a `size` prop which takes `small`, `medium` and `large`.
+
+  ```tsx
+  const AlertDialog = () => {
+    const [open, setOpen] = useState(openProp);
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+          Click to open dialog
+        </Button>
+        <Dialog
+          size={"small"}
+          role="alertdialog"
+          status={"error"}
+          open={open}
+          onOpenChange={onOpenChange}
+          initialFocus={1}
+          disableDismiss
+        >
+          <DialogTitle>Delete Transaction</DialogTitle>
+          <DialogContent>
+            Are you sure you want to permanently delete this transaction
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+- 604a7314: Add support for complex value options to ComboBoxNext and DropdownNext.
+
+### Patch Changes
+
+- bef0d509: Undeprecated `--salt-track-borderColor`, which was incorrectly deprecated in feb80146.
+- 56af744e: Parent Child Layout
+
+  Removed `parent-child-item` component. Replaced by `FlexItem`
+  Renamed `stackedAtBreakpoint` prop to `collapseAtBreakpoint`
+  Renamed `stackedViewElement` prop to `collapsedViewElement`
+  Removed `orientation` prop
+  Added `parentPosition` and `onCollapseChange` props
+
 ## 1.0.0-alpha.30
 
 ### Patch Changes
