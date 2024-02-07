@@ -64,7 +64,7 @@ const displayView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Date format</FormFieldLabel>
-      <RadioButtonGroup direction="horizontal" wrap={false}>
+      <RadioButtonGroup direction="horizontal">
         <RadioButton label="DD/MM/YY" />
         <RadioButton checked label="MM/DD/YY" />
       </RadioButtonGroup>
