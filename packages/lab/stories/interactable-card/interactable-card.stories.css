@@ -1,0 +1,40 @@
+.card-demo-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-demo-inner-content {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: calc(var(--salt-size-unit) * 2);
+  align-items: center;
+  padding: var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit);
+}
+
+.salt-density-high {
+  --card-demo-backgroundImage: url("../assets/exampleImage1x.png");
+}
+.salt-density-medium {
+  --card-demo-backgroundImage: url("../assets/exampleImage2x.png");
+}
+.salt-density-low {
+  --card-demo-backgroundImage: url("../assets/exampleImage3x.png");
+}
+.salt-density-touch {
+  --card-demo-backgroundImage: url("../assets/exampleImage4x.png");
+}
+
+.saltInteractableCard.imageBackground {
+  width: 366px;
+  background-image: var(--card-demo-backgroundImage);
+  background-position: center;
+}
+
+.withImage {
+  --saltCard-padding: 0px;
+  width: 256px;
+}
+
+h3 {
+  margin: 0;
+}

@@ -45,6 +45,7 @@ export {
   type InputLegacyProps as InputProps,
   StaticInputAdornment,
 } from "./input-legacy";
+export * from "./interactable-card";
 export * from "./layer-layout";
 export * from "./link-card";
 export * from "./list";
