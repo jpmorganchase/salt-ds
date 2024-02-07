@@ -28,13 +28,14 @@ export const Error = (): ReactElement => {
         Open error dialog
       </Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
         role="alertdialog"
         status="error"
+        size={"small"}
+        id={"error-dialog"}
       >
-        <DialogTitle>Can't move file</DialogTitle>
+        <DialogTitle>Can`t move file</DialogTitle>
         <DialogContent>
           You don’t have permission to move or delete this file.
         </DialogContent>

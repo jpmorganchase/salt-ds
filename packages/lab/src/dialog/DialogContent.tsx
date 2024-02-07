@@ -1,11 +1,10 @@
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { forwardRef, HTMLAttributes, ReactNode, useState } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import dialogContentCss from "./DialogContent.css";
-import { useDialogContext } from "./DialogContext";
 
 const withBaseName = makePrefixer("saltDialogContent");
 
@@ -19,7 +18,11 @@ export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
     const { children, className, ...rest } = props;
-    const { dialogId } = useDialogContext();
+    const [scrollTop, setScrollTop] = useState(0);
+
+    const handleScroll = (event: React.UIEvent<HTMLElement>) => {
+      setScrollTop(event.currentTarget.scrollTop);
+    };
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -29,14 +32,17 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     });
 
     return (
-      <div
-        id={`${dialogId!}-description`}
-        className={clsx(withBaseName(), className)}
-        {...rest}
-        ref={ref}
-      >
-        {children}
-      </div>
+      <>
+        <div className={clsx({ [withBaseName("scroll")]: scrollTop > 0 })} />
+        <div
+          className={clsx(withBaseName(), className)}
+          onScroll={handleScroll}
+          {...rest}
+          ref={ref}
+        >
+          {children}
+        </div>
+      </>
     );
   }
 );
