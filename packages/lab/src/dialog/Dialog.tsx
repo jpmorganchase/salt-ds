@@ -120,7 +120,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   return (
     <DialogContext.Provider value={contextValue}>
       {showComponent && (
-        <Scrim>
+        <Scrim fixed={true}>
           <FloatingComponent
             open={open}
             role={role}
