@@ -3,6 +3,7 @@
   min-height: var(--salt-text-lineHeight);
   overflow-y: auto;
   background: var(--salt-container-primary-background);
+    padding-bottom: var(--salt-spacing-50);
 
   margin-left: var(--salt-spacing-300);
   margin-right: var(--salt-spacing-300);
