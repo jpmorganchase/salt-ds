@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button, StackLayout, NavigationItem } from "@salt-ds/core";
+import { Button, StackLayout, NavigationItem, H2 } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -8,6 +8,7 @@ import {
   SteppedTracker,
   TrackerStep,
   StepLabel,
+  ParentChildLayout,
 } from "@salt-ds/lab";
 
 const SmallDialog = (): ReactElement => {
@@ -53,11 +54,27 @@ const SmallDialog = (): ReactElement => {
   );
 };
 
+const AccountView = () => {
+  return <>Account View</>;
+};
+
+const GenralView = () => {
+  return <>General View</>;
+};
+
+const GridView = () => {
+  return <>Grid View</>;
+};
+
+const ExportView = () => {
+  return <>Export View</>;
+};
+
 const items = [
-  { heading: "Account", content: "Account" },
-  { heading: "General", content: "General" },
-  { heading: "Grid", content: "Grid" },
-  { heading: "Export", content: "Export" },
+  { label: "Account", view: AccountView },
+  { label: "General", view: GenralView },
+  { label: "Grid", view: GridView },
+  { label: "Export", view: ExportView },
 ];
 
 const MediumDialog = (): ReactElement => {
@@ -77,6 +94,46 @@ const MediumDialog = (): ReactElement => {
 
   const [active, setActive] = useState(items[0]);
 
+  const parent = (
+    <nav
+      style={{
+        borderRight:
+          "var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-border)",
+      }}
+    >
+      <StackLayout
+        as="ul"
+        gap={1}
+        style={{
+          listStyle: "none",
+        }}
+      >
+        {items.map((item) => (
+          <li key={item.label}>
+            <NavigationItem
+              active={active === item}
+              href="#"
+              orientation="vertical"
+              onClick={(event) => {
+                event.preventDefault();
+                setActive(item);
+              }}
+            >
+              {item.label}
+            </NavigationItem>
+          </li>
+        ))}
+      </StackLayout>
+    </nav>
+  );
+
+  const child = (
+    <StackLayout direction="column">
+      <H2>{active.label}</H2>
+      {active.view?.()}
+    </StackLayout>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -91,36 +148,7 @@ const MediumDialog = (): ReactElement => {
         <DialogTitle disableAccent>Preferences</DialogTitle>
         <DialogContent>
           <StackLayout direction={"row"}>
-            <nav
-              style={{
-                borderRight:
-                  "var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-border)",
-              }}
-            >
-              <StackLayout
-                as="ul"
-                gap={1}
-                style={{
-                  listStyle: "none",
-                }}
-              >
-                {items.map((item) => (
-                  <li key={item.heading}>
-                    <NavigationItem
-                      active={active === item}
-                      href="#"
-                      orientation="vertical"
-                      onClick={() => {
-                        setActive(item);
-                      }}
-                    >
-                      {item.heading}
-                    </NavigationItem>
-                  </li>
-                ))}
-              </StackLayout>
-            </nav>
-            {items[0].heading}
+            <ParentChildLayout parent={parent} child={child} />
           </StackLayout>
         </DialogContent>
         <DialogActions>
