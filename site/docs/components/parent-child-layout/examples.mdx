@@ -1,0 +1,46 @@
+---
+# Leave the frontmatter as is
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="parent-child-layout" exampleName="Default">
+
+### Default
+
+A parent-child layout displays the parent component to the left and child component to the right.
+
+</LivePreview>
+
+<LivePreview componentName="parent-child-layout" exampleName="Collapsed">
+
+### Collapsed
+
+The parent-child layout component changes to a collapsed view once it approaches a specified breakpoint. You can customize this with the `collapsedAtBreakpoint` prop.
+
+</LivePreview>
+
+<LivePreview componentName="parent-child-layout" exampleName="ReducedMotion">
+
+### Reduced motion
+
+You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
+
+</LivePreview>
+
+<LivePreview componentName="parent-child-layout" exampleName="PreferencesLayout">
+
+### Preferences Dialog
+
+This is an example of a [Preferences Dialog](../patterns/preferences-dialog) using the parent-child layout.
+
+</LivePreview>
+
+</LivePreviewControls>
