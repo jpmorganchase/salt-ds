@@ -1,20 +1,16 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
-  Button,
   Card,
   H3,
   Text,
-  Link,
   StackLayout,
   RadioButton,
   RadioButtonGroup,
   Label,
 } from "@salt-ds/core";
 
-import { InteractableCard } from "@salt-ds/lab";
-
-import exampleImage from "./../assets/exampleImage1x.png";
+import { InteractableCard, InteractableCardProps } from "@salt-ds/lab";
 
 import "./interactable-card.stories.css";
 
@@ -40,12 +36,6 @@ export const Default: StoryFn<typeof Card> = () => (
 
 export const Disabled: StoryFn<typeof Card> = () => (
   <InteractableCard style={{ width: "256px" }} className="withImage" disabled>
-    <img
-      alt=""
-      src={exampleImage}
-      className="card-demo-image"
-      style={{ width: "-webkit-fill-available" }}
-    />
     <StackLayout gap={1} style={{ padding: "var(--salt-spacing-300)" }}>
       <H3>{exampleData.title}</H3>
       <Text>{exampleData.content}</Text>
@@ -53,31 +43,7 @@ export const Disabled: StoryFn<typeof Card> = () => (
   </InteractableCard>
 );
 
-
-export const Interactable: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }}>
-    <StackLayout gap={1}>
-      <H3>{exampleData.title}</H3>
-      <Text>{exampleData.content}</Text>
-    </StackLayout>
-  </InteractableCard>
-);
-
-export const InteractableDisabled: StoryFn<typeof Card> = () => (
-  <InteractableCard
-    style={{ width: "256px" }}
-    onClick={() => console.log("Clicked")}
-    data-testid="card-disabled-example"
-    disabled
-  >
-    <StackLayout gap={1}>
-      <H3 disabled>{exampleData.title}</H3>
-      <Text disabled>{exampleData.content}</Text>
-    </StackLayout>
-  </InteractableCard>
-);
-
-export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
+export const AccentPlacement: StoryFn<typeof Card> = () => {
   const [placement, setPlacement] =
     useState<InteractableCardProps["accentPlacement"]>("bottom");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -124,33 +90,14 @@ export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
   );
 };
 
-export const InteractableAsBlockLink: StoryFn<typeof Card> = () => {
-  return (
-    <Link style={{ textDecoration: "none" }} href="#" IconComponent={null}>
-      <InteractableCard style={{ width: "266px" }}>
-        <StackLayout gap={1}>
-          <H3>{exampleData.title}</H3>
-          <Text>{exampleData.content}</Text>
-        </StackLayout>
-      </InteractableCard>
-    </Link>
-  );
-};
-
-export const Sizes: StoryFn<typeof Card> = () => {
+export const Size: StoryFn<typeof Card> = () => {
   const sizes = ["small", "medium", "large"] as const;
   return (
-    <StackLayout style={{ width: 600 }}>
+    <StackLayout style={{ width: "266px" }}>
       {sizes.map((size) => {
         return (
           <StackLayout key={size} align="end">
             <StackLayout direction="row">
-              <Card size={size}>
-                <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
-                </StackLayout>
-              </Card>
               <InteractableCard size={size}>
                 <StackLayout gap={1}>
                   <H3>{exampleData.title}</H3>
@@ -166,20 +113,14 @@ export const Sizes: StoryFn<typeof Card> = () => {
   );
 };
 
-export const Variants: StoryFn<typeof Card> = () => {
+export const Variant: StoryFn<typeof Card> = () => {
   const variants = ["primary", "secondary"] as const;
   return (
-    <StackLayout style={{ width: 600 }}>
+    <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {
         return (
           <StackLayout align="end">
             <StackLayout direction="row" key={variant}>
-              <Card variant={variant}>
-                <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
-                </StackLayout>
-              </Card>
               <InteractableCard variant={variant}>
                 <StackLayout gap={1}>
                   <H3>{exampleData.title}</H3>
