@@ -10,10 +10,10 @@
 }
 
 .parent-child-composite-container {
-  width: 545px;
-  height: 295px;
+  max-width: 545px;
+  width: 100%;
+  min-height: 328px;
   padding: var(--salt-spacing-300);
-  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
 .parent-child-composite-container .child {
