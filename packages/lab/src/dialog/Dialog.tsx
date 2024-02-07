@@ -56,7 +56,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableDismiss?: boolean;
   /**
-   * Prevent Scrim from blurring background content, for desktop use only
+   * Prevent Scrim from rendering
    * */
   disableScrim?: boolean;
 }
@@ -91,7 +91,9 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   const [showComponent, setShowComponent] = useState(false);
 
-  const { context, floating } = useFloatingUI({
+  // Floating Ref has been removed due, was causing issues within the conditional wrapper component
+  // What are the impacts of removing this ?
+  const { context } = useFloatingUI({
     open,
     onOpenChange,
   });
@@ -139,12 +141,13 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
       {showComponent && (
         <ConditionalWrapper
           condition={!disableScrim}
-          wrapper={(children: JSX.Element) => <Scrim fixed>{children} </Scrim>}
+          wrapper={(children: JSX.Element) => <Scrim fixed> {children} </Scrim>}
         >
           <FloatingComponent
             open={open}
             role={role}
             aria-modal="true"
+            // ref={useForkRef(ref, floating)}
             ref={ref}
             focusManagerProps={{
               context: context,

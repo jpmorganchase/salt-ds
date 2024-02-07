@@ -22,7 +22,7 @@ function FakeDialog({ children, status }: DialogProps) {
 }
 
 export default {
-  title: "Lab/Dialog/QA",
+  title: "Lab/Dialog/Dialog QA",
   component: Dialog,
   args: {
     title: "Congratulations! You have created a Dialog.",
