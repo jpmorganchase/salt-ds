@@ -1,0 +1,21 @@
+.navigation {
+  position: relative;
+  min-width: 160px;
+}
+
+.navList {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.parent-child-composite-container {
+  width: 545px;
+  height: 295px;
+  padding: var(--salt-spacing-300);
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+}
+
+.parent-child-composite-container .child {
+  padding: var(--salt-spacing-200);
+}

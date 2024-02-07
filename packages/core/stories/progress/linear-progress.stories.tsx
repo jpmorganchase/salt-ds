@@ -1,14 +1,19 @@
 import { Meta, StoryFn } from "@storybook/react";
-import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import { CircularProgress, LinearProgress } from "@salt-ds/lab";
+import {
+  Button,
+  FlowLayout,
+  StackLayout,
+  CircularProgress,
+  LinearProgress,
+} from "@salt-ds/core";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";
 
 export default {
-  title: "Lab/Progress/Circular",
-  component: CircularProgress,
-} as Meta<typeof CircularProgress>;
+  title: "Core/Progress/Linear",
+  component: LinearProgress,
+} as Meta<typeof LinearProgress>;
 
 interface ProgressWithControlsProps {
   ProgressComponent: typeof CircularProgress | typeof LinearProgress;
@@ -21,7 +26,7 @@ const ProgressWithControls = ({
     useProgressingValue();
   return (
     <div className="root">
-      <FlowLayout gap={1} className="controls">
+      <FlowLayout className="controls" gap={1}>
         <Button disabled={isProgressing} onClick={handleStart}>
           Start
         </Button>
@@ -35,23 +40,23 @@ const ProgressWithControls = ({
   );
 };
 
-export const Default: StoryFn<typeof CircularProgress> = (args) => (
-  <CircularProgress aria-label="Download" {...args} />
+export const Default: StoryFn<typeof LinearProgress> = (args) => (
+  <LinearProgress aria-label="Download" {...args} />
 );
 Default.args = {
   value: 38,
 };
-export const HideLabel: StoryFn<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" value={38} hideLabel />
+export const HideLabel: StoryFn<typeof LinearProgress> = () => (
+  <LinearProgress aria-label="Download" value={38} hideLabel />
 );
 
-export const MaxValue: StoryFn<typeof CircularProgress> = () => (
-  <StackLayout align="center">
-    <h3> max = 500, value = 250</h3>
-    <CircularProgress aria-label="Download" value={250} max={500} />
+export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
+  <ProgressWithControls ProgressComponent={LinearProgress} />
+);
+
+export const MaxValue: StoryFn<typeof LinearProgress> = () => (
+  <StackLayout>
+    <h3 style={{ textAlign: "center" }}> max = 500, value = 250</h3>
+    <LinearProgress aria-label="Download" value={250} max={500} />
   </StackLayout>
-);
-
-export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
-  <ProgressWithControls ProgressComponent={CircularProgress} />
 );

@@ -3,16 +3,16 @@ import * as parentChildStories from "@stories/parent-child-layout/parent-child-l
 
 const composedStories = composeStories(parentChildStories);
 
-const { Default, SaltStacked } = composedStories;
+const { Default, Collapsed } = composedStories;
 
 describe("GIVEN a Parent and Child", () => {
   describe("WHEN no gap values are provided", () => {
     it("THEN it should display a gap by default", () => {
       cy.mount(<Default />);
 
-      cy.get(".saltParentChildLayout").should("have.css", "column-gap", "24px");
+      cy.get(".saltParentChildLayout").should("have.css", "column-gap", "0px");
 
-      cy.get(".saltParentChildLayout").should("have.css", "row-gap", "24px");
+      cy.get(".saltParentChildLayout").should("have.css", "row-gap", "0px");
     });
   });
 
@@ -22,9 +22,7 @@ describe("GIVEN a Parent and Child", () => {
     it("THEN it should render as expected", () => {
       cy.mount(<Default parent={parent} />);
 
-      cy.get(".saltParentChildItem")
-        .first()
-        .should("have.text", parent.join(""));
+      cy.get(".saltFlexItem").first().should("have.text", parent.join(""));
     });
   });
 
@@ -35,8 +33,8 @@ describe("GIVEN a Parent and Child", () => {
       cy.mount(<Default child={child} />);
 
       // Make sure both child and parent are rendered before running next test `eq`
-      cy.get(".saltParentChildItem").should("have.length", 2);
-      cy.get(".saltParentChildItem").eq(1).should("have.text", child.join(""));
+      cy.get(".saltFlexItem").should("have.length", 2);
+      cy.get(".saltFlexItem").eq(1).should("have.text", child.join(""));
     });
   });
 
@@ -49,7 +47,7 @@ describe("GIVEN a Parent and Child", () => {
       },
       () => {
         cy.mount(<Default />);
-        cy.get(".saltParentChildItem").should("have.length", 2);
+        cy.get(".saltFlexItem").should("have.length", 2);
       }
     );
 
@@ -61,48 +59,32 @@ describe("GIVEN a Parent and Child", () => {
       },
       () => {
         cy.mount(<Default />);
-        cy.get(".saltParentChildItem").should("have.length", 1);
+        cy.get(".saltFlexItem").should("have.length", 1);
       }
     );
   });
 
   describe("WHEN in stacked view", () => {
     it("THEN it should only display the parent by default", () => {
-      cy.mount(<SaltStacked />);
+      cy.mount(<Collapsed />);
 
-      cy.get(".saltParentChildItem").should("have.length", 1);
+      cy.get(".saltFlexItem").should("have.length", 1);
 
-      cy.get(".saltParentChildItem > div").should(($div) => {
+      cy.get(".saltFlexItem > div").should(($div) => {
         expect($div).to.contain("Parent");
       });
     });
 
     it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<SaltStacked />);
+      cy.mount(<Collapsed />);
 
-      cy.findByRole("button", { name: /Show child/i }).click();
+      cy.findByRole("radio", { name: /Child/i }).click();
 
-      cy.get(".saltParentChildItem").should("have.length", 1);
+      cy.get(".saltFlexItem").should("have.length", 1);
 
-      cy.get(".saltParentChildItem > div").should(($div) => {
+      cy.get(".saltFlexItem > div").should(($div) => {
         expect($div).to.contain("Child");
       });
-    });
-
-    it("THEN it should change the direction of animations", () => {
-      cy.mount(<SaltStacked orientation="vertical" />);
-
-      cy.get(".saltParentChildItem").should(
-        "have.class",
-        "saltParentChildItem-slide-bottom"
-      );
-
-      cy.mount(<SaltStacked orientation="horizontal" />);
-
-      cy.get(".saltParentChildItem").should(
-        "have.class",
-        "saltParentChildItem-slide-left"
-      );
     });
   });
 });
