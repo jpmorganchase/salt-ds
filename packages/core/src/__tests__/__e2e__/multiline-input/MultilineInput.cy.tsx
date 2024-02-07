@@ -1,240 +1,125 @@
-import { ChangeEvent, useState } from "react";
-import {
-  Button,
-  FormField,
-  FormFieldLabel,
-  MultilineInput,
-} from "@salt-ds/core";
+import { composeStories } from "@storybook/react";
+import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
+import { ChangeEvent } from "react";
+
+const { Default, Controlled, Readonly, WithFormField } = composeStories(
+  multilineInputStories
+);
 
 describe("GIVEN an MultilineInput", () => {
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<MultilineInput defaultValue="The default value" />);
-    cy.checkAxeComponent();
+  it("should allow a default value to be set", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      // React 16 backwards compatibility
+      event.persist();
+      changeSpy(event);
+    };
+    cy.mount(<Default onChange={handleChange} />);
+    cy.findByRole("textbox").should("have.value", "Value");
+    cy.findByRole("textbox").clear();
+    cy.findByRole("textbox").realClick();
+    cy.realType("New Value");
+    cy.get("@changeSpy").should("have.been.calledWithMatch", {
+      target: { value: "New Value" },
+    });
+    cy.findByRole("textbox").should("have.value", "New Value");
   });
 
-  describe("WHEN mounted as an uncontrolled component", () => {
-    it("SHOULD have the given default value", () => {
-      cy.mount(<MultilineInput defaultValue="The default value" />);
-      cy.findByRole("textbox").should("have.value", "The default value");
+  it("should support a controlled value", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<Controlled onChange={changeSpy} />);
+    cy.findByRole("textbox").should("have.value", "Value");
+    cy.findByRole("textbox").clear();
+    cy.findByRole("textbox").realClick();
+    cy.realType("New Value");
+    cy.get("@changeSpy").should("have.been.calledWithMatch", {
+      target: { value: "New Value" },
     });
-
-    describe("THEN the input is updated", () => {
-      it("SHOULD call onChange with the new value", () => {
-        const changeSpy = cy.stub().as("changeSpy");
-        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-          // React 16 backwards compatibility
-          event.persist();
-          changeSpy(event);
-        };
-        cy.mount(
-          <MultilineInput
-            defaultValue="The default value"
-            onChange={onChange}
-          />
-        );
-        cy.findByRole("textbox").click().clear().type("new value");
-        cy.get("@changeSpy").should("have.been.calledWithMatch", {
-          target: { value: "new value" },
-        });
-      });
-    });
+    cy.findByRole("textbox").should("have.value", "New Value");
   });
 
-  describe("WHEN mounted as an controlled component", () => {
-    it("THEN have the specified value", () => {
-      cy.mount(<MultilineInput value="text value" />);
-      cy.findByRole("textbox").should("have.value", "text value");
-    });
-
-    describe("THEN the user input is updated", () => {
-      it("SHOULD call onChange with the new value", () => {
-        const changeSpy = cy.stub().as("changeSpy");
-
-        function ControlledMultilineInput() {
-          const [value, setValue] = useState("text value");
-          const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-            // React 16 backwards compatibility
-            event.persist();
-            setValue(event.target.value);
-            changeSpy(event);
-          };
-
-          return <MultilineInput value={value} onChange={onChange} />;
-        }
-
-        cy.mount(<ControlledMultilineInput />);
-        cy.findByRole("textbox").click().clear().type("new value");
-        cy.get("@changeSpy").should("have.been.calledWithMatch", {
-          target: { value: "new value" },
-        });
-      });
-    });
+  it("should allow the value to be set as required", () => {
+    cy.mount(<Default textAreaProps={{ required: true }} />);
+    cy.findByRole("textbox").should("have.attr", "required");
   });
 
-  describe("WHEN an adornment is given", () => {
-    it("THEN should mount with adornment", () => {
-      cy.mount(
-        <MultilineInput startAdornment={<>%</>} defaultValue={"Value"} />
-      );
-      cy.findByText("%").should("be.visible");
-    });
-
-    describe("AND adornment is a Button", () => {
-      it("SHOULD mount with the button", () => {
-        cy.mount(
-          <MultilineInput
-            startAdornment={<Button>Test</Button>}
-            defaultValue={"Value"}
-          />
-        );
-        cy.findByRole("button").should("be.visible");
-        cy.findByRole("button").should("have.class", "saltButton");
-      });
-
-      it("SHOULD have the correct tab order on startAdornment", () => {
-        cy.mount(
-          <FormField>
-            <FormFieldLabel>Label</FormFieldLabel>
-            <MultilineInput
-              startAdornment={<Button>Test</Button>}
-              defaultValue="Value"
-              data-testid="test-id-3"
-            />
-          </FormField>
-        );
-
-        cy.realPress("Tab");
-        cy.findByRole("button").should("be.focused");
-        cy.realPress("Tab");
-        cy.findByRole("textbox").should("be.focused");
-      });
-
-      it("SHOULD have the correct tab order on endAdornment", () => {
-        cy.mount(
-          <FormField>
-            <FormFieldLabel>Label</FormFieldLabel>
-            <MultilineInput
-              defaultValue="Value"
-              endAdornment={<Button>Test</Button>}
-              data-testid="test-id-3"
-            />
-          </FormField>
-        );
-
-        cy.realPress("Tab");
-        cy.findByRole("textbox").should("be.focused");
-        cy.realPress("Tab");
-        cy.findByRole("button").should("be.focused");
-      });
-    });
+  it("should not receive focus when disabled", () => {
+    cy.mount(
+      <div>
+        <button>start</button>
+        <Default disabled />
+        <button>end</button>
+      </div>
+    );
+    cy.findByRole("textbox").should("be.disabled");
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "start" }).should("be.focused");
+    cy.realPress("Tab");
+    cy.findByRole("textbox").should("not.be.focused");
+    cy.findByRole("button", { name: "end" }).should("be.focused");
   });
 
-  describe("WHEN the input is required", () => {
-    it("SHOULD have required attr", () => {
-      cy.mount(
-        <MultilineInput
-          defaultValue="The default value"
-          textAreaProps={{ required: true }}
-        />
-      );
-      cy.findByRole("textbox").should("have.attr", "required");
-    });
+  it("should not allow the value to be changed when it is read-only", () => {
+    cy.mount(<Readonly />);
+    cy.findAllByRole("textbox").eq(0).should("have.attr", "readonly");
+    cy.findAllByRole("textbox").eq(0).should("have.value", "Value");
+    cy.findAllByRole("textbox").eq(0).realClick();
+    cy.findAllByRole("textbox").eq(0).should("be.focused");
+    cy.realType("Update");
+    cy.findAllByRole("textbox").eq(0).should("have.value", "Value");
   });
 
-  describe("WHEN disabled", () => {
-    it("SHOULD mount as disabled", () => {
-      cy.mount(<MultilineInput defaultValue="The default value" disabled />);
-      cy.findByRole("textbox").should("be.disabled");
-    });
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<MultilineInput defaultValue="The default value" disabled />);
-      cy.checkAxeComponent();
-    });
+  it("should have form field support", () => {
+    cy.mount(<WithFormField />);
+    cy.findByRole("textbox").should("have.accessibleName", "Comments");
+    cy.findByRole("textbox").should(
+      "have.accessibleDescription",
+      "Please leave feedback about your experience."
+    );
   });
 
-  describe("WHEN read only", () => {
-    it("SHOULD mount as read only", () => {
-      cy.mount(<MultilineInput defaultValue="The default value" readOnly />);
-      cy.findByRole("textbox").should("have.attr", "readonly");
-    });
-
-    it("SHOULD have no a11y violations on load", () => {
-      cy.mount(<MultilineInput defaultValue="The default value" readOnly />);
-      cy.checkAxeComponent();
-    });
+  it("should be disabled when it's FormField is disabled", () => {
+    cy.mount(<WithFormField disabled />);
+    cy.findByRole("textbox").should("be.disabled");
   });
 
-  describe("WHEN used in Formfield", () => {
-    describe("AND disabled", () => {
-      it("THEN MultilineInput within should be disabled", () => {
-        cy.mount(
-          <FormField disabled>
-            <FormFieldLabel>Disabled form field</FormFieldLabel>
-            <MultilineInput defaultValue="Value" />
-          </FormField>
-        );
-        cy.findByLabelText("Disabled form field").should(
-          "have.attr",
-          "disabled"
-        );
-      });
-    });
+  it("should be required when it's FormField is required", () => {
+    cy.mount(<WithFormField necessity="required" />);
+    cy.findByLabelText("Comments (Required)").should("have.attr", "required");
+  });
 
-    describe("AND is required", () => {
-      it("THEN MultilineInput within should be required", () => {
-        cy.mount(
-          <FormField necessity="required">
-            <FormFieldLabel>Form Field</FormFieldLabel>
-            <MultilineInput defaultValue="Value" />
-          </FormField>
-        );
-        cy.findByLabelText("Form Field (Required)").should(
-          "have.attr",
-          "required"
-        );
-      });
-    });
+  it("should be required when it's FormField is required with an asterisk", () => {
+    cy.mount(<WithFormField necessity="asterisk" />);
+    cy.findByLabelText("Comments *").should("have.attr", "required");
+  });
 
-    describe("AND is required with asterisk", () => {
-      it("THEN MultilineInput within should be required", () => {
-        cy.mount(
-          <FormField necessity="asterisk">
-            <FormFieldLabel>Form Field</FormFieldLabel>
-            <MultilineInput defaultValue="Value" />
-          </FormField>
-        );
-        cy.findByLabelText("Form Field *").should("have.attr", "required");
-      });
-    });
+  it("should not be required when it's FormField is optional", () => {
+    cy.mount(<WithFormField necessity="optional" />);
+    cy.findByLabelText("Comments (Optional)").should(
+      "not.have.attr",
+      "required"
+    );
+  });
 
-    describe("AND is optional", () => {
-      it("THEN MultilineInput within should not be required", () => {
-        cy.mount(
-          <FormField necessity="optional">
-            <FormFieldLabel>Form Field</FormFieldLabel>
-            <MultilineInput defaultValue="Value" />
-          </FormField>
-        );
-        cy.findByLabelText("Form Field (Optional)").should(
-          "not.have.attr",
-          "required"
-        );
-      });
-    });
+  it("should be read-only when it's FormField is read-only", () => {
+    cy.mount(<WithFormField readOnly />);
+    cy.findByLabelText("Comments").should("have.attr", "readonly");
+  });
 
-    describe("AND readonly", () => {
-      it("THEN MultilineInput within should be readonly", () => {
-        cy.mount(
-          <FormField readOnly>
-            <FormFieldLabel>Readonly form field</FormFieldLabel>
-            <MultilineInput defaultValue="Value" />
-          </FormField>
-        );
-        cy.findByLabelText("Readonly form field").should(
-          "have.attr",
-          "readonly"
-        );
+  it("should expand to fit its content", () => {
+    cy.mount(<Default />);
+    cy.findByRole("textbox")
+      .invoke("height")
+      .then((defaultHeight) => {
+        cy.findByRole("textbox").realClick();
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.findByRole("textbox")
+          .invoke("height")
+          .then((newHeight) => {
+            expect(newHeight ?? 0).to.be.greaterThan(defaultHeight ?? 0);
+          });
       });
-    });
   });
 });

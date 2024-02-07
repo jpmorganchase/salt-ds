@@ -1,70 +1,50 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 
-import { ChevronLeftIcon, ThumbsUpIcon } from "@salt-ds/icons";
 import {
-  Tab,
-  Tabstrip,
+  ChevronLeftIcon,
+  ExportIcon,
+  LaptopIcon,
+  UserIcon,
+} from "@salt-ds/icons";
+import {
+  DropdownNext,
+  Option,
   ParentChildLayout,
   StackedViewElement,
-  useIsViewportLargerThanBreakpoint,
 } from "@salt-ds/lab";
 import {
   Button,
-  FlexItem,
   FlexLayout,
-  FlowLayout,
+  FormField,
+  FormFieldLabel,
+  H2,
+  Input,
+  NavigationItem,
+  RadioButton,
+  RadioButtonGroup,
   StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@salt-ds/core";
 
-import "../layout/layout.stories.css";
+import "./parent-child-layout.stories.css";
 
 export default {
   title: "Lab/Layout/Parent Child Layout",
   component: ParentChildLayout,
-  argTypes: {
-    stackedAtBreakpoint: {
-      control: { type: "select" },
-    },
-  },
 } as Meta<typeof ParentChildLayout>;
 
-const parentChildItemStyles = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  height: 500,
-};
+const parent = <div className="parent-content">Parent</div>;
 
-const parent = (
-  <div
-    className="layout-content"
-    style={{ ...parentChildItemStyles, minWidth: 150 }}
-  >
-    Parent
-  </div>
+const child = <div className="child-content">Child</div>;
+
+export const Default: StoryFn<typeof ParentChildLayout> = (args) => (
+  <ParentChildLayout {...args} className="parent-child-layout" />
 );
-
-const child = (
-  <div className="layout-active-content" style={parentChildItemStyles}>
-    Child
-  </div>
-);
-
-const DefaultParentChildLayoutStory: StoryFn<typeof ParentChildLayout> = (
-  args
-) => {
-  return (
-    <div style={{ width: "90vw", maxWidth: 800 }}>
-      <ParentChildLayout {...args} />
-    </div>
-  );
-};
-
-export const Default = DefaultParentChildLayoutStory.bind({});
 Default.args = { parent, child };
 
-const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
+export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
@@ -75,31 +55,31 @@ const Stacked: StoryFn<typeof ParentChildLayout> = (args) => {
   };
 
   return (
-    <>
-      <Button onClick={handleParent} disabled={currentView === "parent"}>
-        Show parent
-      </Button>
-      <Button onClick={handleChild} disabled={currentView === "child"}>
-        Show child
-      </Button>
-      <div style={{ width: "50vw", maxWidth: 800 }}>
-        <ParentChildLayout
-          {...args}
-          stackedViewElement={currentView}
-          parent={parent}
-          child={child}
-        />
-      </div>
-    </>
+    <StackLayout align="center">
+      <ParentChildLayout
+        {...args}
+        className="parent-child-layout"
+        collapsedViewElement={currentView}
+        collapseAtBreakpoint="md"
+      />
+      <ToggleButtonGroup defaultValue="parent">
+        <ToggleButton value="parent" onClick={handleParent}>
+          Parent
+        </ToggleButton>
+        <ToggleButton value="child" onClick={handleChild}>
+          Child
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </StackLayout>
   );
 };
 
-export const SaltStacked = Stacked.bind({});
-SaltStacked.args = {
-  stackedAtBreakpoint: "xl",
+Collapsed.args = {
+  parent,
+  child,
 };
 
-const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
+export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
   const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
 
   const handleParent = () => {
@@ -110,193 +90,265 @@ const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
   };
 
   return (
-    <>
-      <p>In order to test this on MacOS, follow these steps: </p>
-      <p>
-        Go to System Preferences, select the Accessibility category, select the
-        Display tab, and enable the Reduce Motion option.
-      </p>
-      <Button onClick={handleParent} disabled={currentView === "parent"}>
-        Show parent
-      </Button>
-      <Button onClick={handleChild} disabled={currentView === "child"}>
-        Show child
-      </Button>
-      <div style={{ width: "50vw", maxWidth: 800 }}>
-        <ParentChildLayout
-          {...args}
-          className="reduced-motion"
-          stackedViewElement={currentView}
-          parent={parent}
-          child={child}
-        />
+    <StackLayout align="center">
+      <div>
+        <p>In order to test this on MacOS, follow these steps: </p>
+        <p>
+          Go to System Preferences, select the Accessibility category, select
+          the Display tab, and enable the Reduce Motion option.
+        </p>
       </div>
-    </>
+      <ParentChildLayout
+        {...args}
+        className="parent-child-layout"
+        collapsedViewElement={currentView}
+        collapseAtBreakpoint="md"
+      />
+      <ToggleButtonGroup defaultValue="parent">
+        <ToggleButton value="parent" onClick={handleParent}>
+          Parent
+        </ToggleButton>
+        <ToggleButton value="child" onClick={handleChild}>
+          Child
+        </ToggleButton>
+      </ToggleButtonGroup>
+    </StackLayout>
   );
 };
 
-export const SaltReducedMotion = ReducedMotion.bind({});
-SaltReducedMotion.args = {
-  stackedAtBreakpoint: "xl",
+ReducedMotion.args = {
+  collapseAtBreakpoint: "xl",
+  parent,
+  child,
 };
 
-const useTabSelection = (initialValue?: number) => {
-  const [selectedTab, setSelectedTab] = useState(initialValue ?? 0);
-  const handleTabSelection = (tabIndex: number) => {
-    setSelectedTab(tabIndex);
-  };
-  return [selectedTab, handleTabSelection] as const;
-};
+// Preferences layout
 
-const tabs = ["Sint", "Dolor", "Magna"];
+const languages = [
+  "English",
+  "French",
+  "German",
+  "Italian",
+  "Spanish",
+  "Turkish",
+  "Ukranian",
+];
 
-const stackedAtBreakpoint = "xs";
+const displayView = () => (
+  <StackLayout gap={1}>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Language</FormFieldLabel>
+      <DropdownNext>
+        {languages.map((lang) => (
+          <Option value={lang} key={lang}>
+            {lang}
+          </Option>
+        ))}
+      </DropdownNext>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Time format</FormFieldLabel>
+      <RadioButtonGroup direction="horizontal">
+        <RadioButton label="12 hour" />
+        <RadioButton checked label="24 hour" />
+      </RadioButtonGroup>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Link destination</FormFieldLabel>
+      <RadioButtonGroup>
+        <RadioButton label="Same window" />
+        <RadioButton checked label="New window" />
+      </RadioButtonGroup>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Date format</FormFieldLabel>
+      <RadioButtonGroup direction="horizontal">
+        <RadioButton label="DD/MM/YY" />
+        <RadioButton checked label="MM/DD/YY" />
+      </RadioButtonGroup>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Number format</FormFieldLabel>
+      <RadioButtonGroup direction="horizontal">
+        <RadioButton label="1,000.00" />
+        <RadioButton checked label="1.000,00" />
+      </RadioButtonGroup>
+    </FormField>
+  </StackLayout>
+);
 
-const Dashboard: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [selectedTab, handleTabSelection] = useTabSelection();
+const accountView = () => (
+  <StackLayout gap={1}>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Full name</FormFieldLabel>
+      <Input />
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Company ID</FormFieldLabel>
+      <Input />
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Email</FormFieldLabel>
+      <Input />
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Security type</FormFieldLabel>
+      <DropdownNext defaultValue={["Password"]}>
+        <Option value="Password" key="Password">
+          Password
+        </Option>
+        <Option value="Soft token" key="Soft token">
+          Soft token
+        </Option>
+        <Option value="Biometric" key="Biometric">
+          Biometric
+        </Option>
+      </DropdownNext>
+    </FormField>
+  </StackLayout>
+);
 
-  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
+const exportView = () => (
+  <StackLayout gap={1}>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>File type</FormFieldLabel>
+      <DropdownNext defaultValue={["PNG"]}>
+        <Option value="JPG" key="JPG">
+          JPG
+        </Option>
+        <Option value="PDF" key="PDF">
+          PDF
+        </Option>
+        <Option value="PNG" key="PNG">
+          PNG
+        </Option>
+        <Option value="SVG" key="SVG">
+          SVG
+        </Option>
+      </DropdownNext>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Size</FormFieldLabel>
+      <DropdownNext defaultValue={["1x"]}>
+        <Option value="1x" key="1x">
+          1x
+        </Option>
+        <Option value="2x" key="2x">
+          2x
+        </Option>
+        <Option value="3x" key="3x">
+          3x
+        </Option>
+      </DropdownNext>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Suffix</FormFieldLabel>
+      <Input />
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Color profile</FormFieldLabel>
+      <DropdownNext defaultValue={["Same as current (sRGB)"]}>
+        <Option value="Same as current (sRGB)" key="Same as current (sRGB)">
+          Same as current (sRGB)
+        </Option>
+        <Option value="Display P3" key="Display P3">
+          Display P3
+        </Option>
+      </DropdownNext>
+    </FormField>
+  </StackLayout>
+);
 
-  const isStacked = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
+export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
+  const items = [
+    {
+      label: "Display",
+      icon: <LaptopIcon />,
+      view: displayView,
+    },
+    {
+      label: "Account",
+      icon: <UserIcon />,
+      view: accountView,
+    },
+    {
+      label: "Export",
+      icon: <ExportIcon />,
+      view: exportView,
+    },
+  ];
 
-  const handleParent = () => {
+  const [currentView, setCurrentView] = useState<
+    StackedViewElement | undefined
+  >();
+
+  const showParent = () => {
     setCurrentView("parent");
   };
-  const handleChild = () => {
+  const showChild = () => {
     setCurrentView("child");
   };
+
+  const [active, setActive] = useState(items[0]);
 
   const parent = (
-    <Tabstrip
-      onActiveChange={handleTabSelection}
-      orientation="vertical"
-      onClick={() => {
-        if (isStacked) {
-          handleChild();
-        }
-      }}
-      activeTabIndex={selectedTab}
-      style={{ width: "100%", minWidth: 300 }}
-    >
-      {tabs.map((label, index) => (
-        <Tab label={label} key={index} />
-      ))}
-    </Tabstrip>
-  );
-
-  const TitleWithBackButton = ({ text }: { text: string }) => (
-    <FlowLayout
-      align="center"
-      justify="space-between"
-      className="parent-child-composite-title"
-    >
-      <Button onClick={handleParent} variant="secondary" aria-label="Back">
-        <ChevronLeftIcon />
-      </Button>
-      <h2>{text}</h2>
-      <div className="parent-child-composite-empty-container" />
-    </FlowLayout>
-  );
-
-  const Title = ({ text }: { text: string }) => (
-    <FlowLayout align="center" className="parent-child-composite-title">
-      <h2>{text}</h2>
-    </FlowLayout>
-  );
-
-  const ChildTitle = () =>
-    isStacked ? (
-      <TitleWithBackButton text={tabs[selectedTab]} />
-    ) : (
-      <Title text={tabs[selectedTab]} />
-    );
-
-  const renderArticleButtons = (
-    <FlowLayout gap={1}>
-      <Button>Save to reading list</Button>
-      <Button>Share</Button>
-      <Button aria-label="like">
-        <ThumbsUpIcon />
-      </Button>
-    </FlowLayout>
+    <nav>
+      <ul>
+        {items.map((item) => (
+          <li key={item.label}>
+            <NavigationItem
+              active={active.label === item.label}
+              href="#"
+              orientation="vertical"
+              onClick={(event) => {
+                // Prevent default to avoid navigation
+                event.preventDefault();
+                setActive(item);
+                showChild();
+              }}
+            >
+              {item.icon} {item.label}
+            </NavigationItem>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 
   const child = (
-    <>
-      <ChildTitle />
-      <StackLayout>
-        <FlexLayout wrap={{ xs: true, lg: false }}>
-          <FlexItem grow={1} className="flex-blog-image flex-blog-image-one" />
-          <StackLayout>
-            <h3>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            </h3>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-              est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-              velit, sed quia non numquam eius modi tempora incidunt ut labore
-              et dolore magnam aliquam quaerat voluptatem.
-            </p>
-            {renderArticleButtons}
-          </StackLayout>
-        </FlexLayout>
-
-        <FlexLayout wrap={{ xs: true, lg: false }}>
-          <FlexItem grow={1} className="flex-blog-image flex-blog-image-two" />
-          <StackLayout>
-            <h3>Nemo enim ipsam voluptatem quia voluptas sit aspernatur</h3>
-            <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt in culpa qui officia deserunt mollitia
-              animi.
-            </p>
-            {renderArticleButtons}
-          </StackLayout>
-        </FlexLayout>
-
-        <FlexLayout wrap={{ xs: true, lg: false }}>
-          <FlexItem
-            grow={1}
-            className="flex-blog-image flex-blog-image-three"
-          />
-          <StackLayout>
-            <h3>At vero eos et accusamus et iusto odio dignissimos ducimus</h3>
-            <p>
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident, sunt in culpa qui officia deserunt mollit
-              anim id est laborum. Duis aute irure dolor in reprehenderit in
-              voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum.
-            </p>
-            {renderArticleButtons}
-          </StackLayout>
-        </FlexLayout>
-      </StackLayout>
-    </>
+    <FlexLayout direction="column" className="child">
+      <FlexLayout gap={1}>
+        {currentView === "child" && (
+          <Button
+            onClick={showParent}
+            className="back-button"
+            variant="secondary"
+            aria-label="Back"
+          >
+            <ChevronLeftIcon />
+          </Button>
+        )}
+        <H2>{active.label}</H2>
+      </FlexLayout>
+      {active.view?.()}
+    </FlexLayout>
   );
 
   return (
     <div className="parent-child-composite-container">
       <ParentChildLayout
         {...args}
-        stackedViewElement={currentView}
+        collapsedViewElement={currentView}
         parent={parent}
         child={child}
+        onCollapseChange={(isCollapsed) => {
+          if (!isCollapsed) setCurrentView(undefined);
+        }}
       />
     </div>
   );
 };
 
-export const Composite = Dashboard.bind({});
-Composite.args = {
-  stackedAtBreakpoint,
+PreferencesLayout.args = {
+  collapseAtBreakpoint: "sm",
 };

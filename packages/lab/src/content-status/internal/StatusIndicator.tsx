@@ -8,7 +8,7 @@ import {
 import { ReactElement } from "react";
 import { clsx } from "clsx";
 
-import { CircularProgress, CircularProgressProps } from "../../progress";
+import { CircularProgress, CircularProgressProps } from "@salt-ds/core";
 
 export interface StatusIndicatorProps
   extends Pick<SpinnerProps, "disableAnnouncer">,

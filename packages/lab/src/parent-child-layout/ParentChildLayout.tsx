@@ -1,13 +1,13 @@
 import {
   Breakpoints,
   FlexLayout,
+  FlexItem,
   FlexLayoutProps,
   makePrefixer,
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import { ElementType, forwardRef, HTMLAttributes, ReactNode } from "react";
-import { ParentChildItem, SlideDirection } from "../parent-child-item";
+import { forwardRef, ReactNode, useEffect } from "react";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import { useWindow } from "@salt-ds/window";
@@ -17,29 +17,23 @@ import parentChildLayoutCss from "./ParentChildLayout.css";
 
 export type StackedViewElement = "parent" | "child";
 
-type Orientation = "horizontal" | "vertical";
-
-export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
+export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
-  stackedAtBreakpoint?: keyof Breakpoints;
+  collapseAtBreakpoint?: keyof Breakpoints;
   /**
    * Change element that is displayed when in staked view.
    */
-  stackedViewElement?: StackedViewElement;
+  collapsedViewElement?: StackedViewElement;
   /**
    * Disable all animations.
    */
   disableAnimations?: boolean;
   /**
-   * Orientation for slide animations.
+   * Position of the parent component within the layout.
    */
-  orientation?: Orientation;
-  /**
-   * Controls the space between columns.
-   */
-  gap?: FlexLayoutProps<ElementType>["gap"];
+  parentPosition?: "left" | "right";
   /**
    * Parent component to be rendered
    */
@@ -48,45 +42,25 @@ export interface ParentChildLayoutProps extends HTMLAttributes<HTMLDivElement> {
    * Child component to be rendered
    */
   child: ReactNode;
+  onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
 const withBaseName = makePrefixer("saltParentChildLayout");
-
-const getDirection = (
-  orientation: Orientation,
-  stackedViewElement: StackedViewElement
-) => {
-  let direction: SlideDirection = "right";
-
-  if (orientation === "horizontal") {
-    if (stackedViewElement === "parent") {
-      direction = "left";
-    } else {
-      direction = "right";
-    }
-  } else {
-    if (stackedViewElement === "parent") {
-      direction = "bottom";
-    } else {
-      direction = "top";
-    }
-  }
-
-  return direction;
-};
 
 export const ParentChildLayout = forwardRef<
   HTMLDivElement,
   ParentChildLayoutProps
 >(function ParentChildLayout(
   {
-    stackedAtBreakpoint = "sm",
-    stackedViewElement = "parent",
+    collapseAtBreakpoint = "sm",
+    collapsedViewElement = "parent",
     disableAnimations = false,
+    parentPosition = "left",
     parent,
     child,
+    gap = 0,
     className,
-    orientation = "horizontal",
+    onCollapseChange,
     ...rest
   },
   ref
@@ -98,43 +72,53 @@ export const ParentChildLayout = forwardRef<
     window: targetWindow,
   });
 
-  const stackedView = useIsViewportLargerThanBreakpoint(stackedAtBreakpoint);
+  const isCollapsed = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
-  const parentChildDirection = getDirection(orientation, stackedViewElement);
-
-  const stackedViewChildren = {
+  const collapsedViewChildren = {
     parent: (
-      <ParentChildItem
-        disableAnimations={disableAnimations}
-        direction={parentChildDirection}
-        isStacked={stackedView}
+      <FlexItem
+        className={clsx(withBaseName("parent"), {
+          ["saltFlexItem-stacked"]: isCollapsed,
+        })}
       >
         {parent}
-      </ParentChildItem>
+      </FlexItem>
     ),
     child: (
-      <ParentChildItem
-        disableAnimations={disableAnimations}
-        direction={parentChildDirection}
-        isStacked={stackedView}
+      <FlexItem
+        className={clsx(withBaseName("child"), {
+          ["saltFlexItem-stacked"]: isCollapsed,
+        })}
       >
         {child}
-      </ParentChildItem>
+      </FlexItem>
     ),
   };
 
+  useEffect(() => {
+    onCollapseChange?.(isCollapsed);
+  }, [isCollapsed, onCollapseChange]);
+
   return (
-    <FlexLayout className={clsx(withBaseName(), className)} ref={ref} {...rest}>
-      {stackedView ? (
-        stackedViewChildren[stackedViewElement]
+    <FlexLayout
+      ref={ref}
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName(`no-animations`)]: disableAnimations,
+          [withBaseName(`reversed`)]: parentPosition === "right",
+        },
+        className
+      )}
+      gap={gap}
+      {...rest}
+    >
+      {isCollapsed ? (
+        collapsedViewChildren[collapsedViewElement]
       ) : (
         <>
-          <ParentChildItem grow={0} disableAnimations={disableAnimations}>
-            {parent}
-          </ParentChildItem>
-          <ParentChildItem grow={2} disableAnimations={disableAnimations}>
-            {child}
-          </ParentChildItem>
+          <FlexItem grow={0}>{parent}</FlexItem>
+          <FlexItem grow={2}>{child}</FlexItem>
         </>
       )}
     </FlexLayout>
