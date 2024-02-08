@@ -28,20 +28,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
 
-interface ConditionalWrapperProps {
-  condition: boolean;
-  wrapper: unknown;
-  children: JSX.Element;
-}
-
-const ConditionalWrapper = ({
-  condition,
-  wrapper,
-  children,
-}: ConditionalWrapperProps): JSX.Element => {
-  return condition ? wrapper(children) : children;
-};
-
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Display or hide the component.
@@ -75,6 +61,17 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer("saltDialog");
+
+interface ConditionalWrapperProps extends React.PropsWithChildren {
+  condition: boolean;
+}
+
+const ConditionalWrapper = ({
+  condition,
+  children,
+}: ConditionalWrapperProps) => {
+  return condition ? <Scrim fixed> {children} </Scrim> : <>{children} </>;
+};
 
 export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   props,
@@ -139,10 +136,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   return (
     <DialogContext.Provider value={contextValue}>
       {showComponent && (
-        <ConditionalWrapper
-          condition={!disableScrim}
-          wrapper={(children: JSX.Element) => <Scrim fixed> {children} </Scrim>}
-        >
+        <ConditionalWrapper condition={!disableScrim}>
           <FloatingComponent
             open={open}
             role={role}
