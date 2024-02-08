@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import {
   forwardRef,
   HTMLAttributes,
@@ -15,14 +17,14 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
-  useForkRef,
-  ValidationStatus,
-  Scrim,
-  useFloatingUI,
-  useFloatingComponent,
-  useCurrentBreakpoint,
   useId,
-} from "@salt-ds/core";
+  useFloatingComponent,
+  useFloatingUI,
+  useCurrentBreakpoint,
+  useForkRef,
+} from "../utils";
+import { Scrim } from "../scrim";
+import { ValidationStatus } from "../status-indicator";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";

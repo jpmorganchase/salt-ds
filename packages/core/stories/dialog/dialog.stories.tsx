@@ -1,17 +1,18 @@
 import { PropsWithChildren, useState } from "react";
-import { Button, StackLayout } from "@salt-ds/core";
 import {
+  Button,
+  StackLayout,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
   DialogCloseButton,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 import "./dialog.stories.css";
 
 export default {
-  title: "Lab/Dialog",
+  title: "Core/Dialog",
   component: Dialog,
   args: {
     title: "Congratulations! You have created a Dialog.",

@@ -1,14 +1,13 @@
-import { ReactElement, useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from "@salt-ds/core";
+---
+"@salt-ds/core": minor
+---
 
-export const MandatoryAction = (): ReactElement => {
-  const [open, setOpen] = useState(false);
+- Add `Dialog` to Core
+- Added `disableScrim` as an optional component, to prevent the render of the Scrim in Desktop Environments
+
+```tsx
+const DesktopAlertDialog = () => {
+  const [open, setOpen] = useState(openProp);
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -25,19 +24,20 @@ export const MandatoryAction = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open Mandatory Action Dialog
+        Click to open dialog
       </Button>
       <Dialog
+        size={"small"}
+        role="alertdialog"
+        status={"error"}
         open={open}
         onOpenChange={onOpenChange}
-        disableDismiss
-        size={"small"}
-        status={"error"}
-        id={"error-dialog"}
+        initialFocus={1}
+        disableScrim
       >
-        <DialogTitle> Delete Transaction </DialogTitle>
+        <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>
-          Are you sure you want to permenantly delete transaction?
+          Are you sure you want to permanently delete this transaction
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -49,3 +49,4 @@ export const MandatoryAction = (): ReactElement => {
     </>
   );
 };
+```

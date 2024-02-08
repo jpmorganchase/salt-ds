@@ -1,12 +1,14 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout } from "@salt-ds/core";
 import {
+  Button,
+  H3,
+  StackLayout,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
   DialogCloseButton,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
