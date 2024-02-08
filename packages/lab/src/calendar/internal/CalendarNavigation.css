@@ -15,6 +15,7 @@
 .saltCalendarNavigation {
   display: grid;
   grid-template-columns: min-content auto auto min-content;
+  padding-bottom: var(--salt-spacing-100);
   grid-gap: var(--calendar-navigation-gap);
 }
 

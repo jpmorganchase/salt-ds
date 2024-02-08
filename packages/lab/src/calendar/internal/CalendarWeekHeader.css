@@ -1,21 +1,15 @@
 .saltCalendarWeekHeader {
-  --calendar-week-header-underline-color: var(--salt-separable-secondary-borderColor);
-  --calendar-week-header-text-color: var(--salt-content-secondary-foreground);
-  --calendar-week-header-size: var(--salt-size-base);
-  --calendar-week-header-fontSize: var(--saltCalendar-week-header-fontSize, var(--salt-text-label-fontSize));
-}
-
-.saltCalendarWeekHeader {
   display: grid;
+  gap: var(--salt-size-border);
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  box-shadow: inset 0 -1px 0 var(--calendar-week-header-underline-color);
 }
 
 .saltCalendarWeekHeader-dayOfWeek {
-  width: var(--calendar-week-header-size);
-  height: var(--calendar-week-header-size);
-  color: var(--calendar-week-header-text-color);
-  line-height: var(--calendar-week-header-size);
-  font-size: var(--calendar-week-header-fontSize);
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
+  color: var(--salt-content-secondary-foreground);
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
+  font-size: var(--salt-text-fontSize);
 }

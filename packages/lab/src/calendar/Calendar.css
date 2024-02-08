@@ -1,3 +1,9 @@
 .saltCalendar {
   width: min-content;
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-selectable-borderColor-selected);
+  border-width:var(--salt-size-border);
+  border-style:var(--salt-selectable-borderStyle-selected);
+  padding: var(--salt-spacing-100);
+/*  TODO: do we need to add the shadow?*/
 }
