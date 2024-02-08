@@ -1,12 +1,12 @@
 import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
-import { Text } from "../text";
 import { ValidationStatus, StatusIndicator } from "../status-indicator";
 import { makePrefixer } from "../utils";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogTitleCss from "./DialogTitle.css";
+import { H2 } from "../text";
 
 const withBaseName = makePrefixer("saltDialogTitle");
 
@@ -39,7 +39,7 @@ export const DialogTitle = ({
   const status = statusProp ?? (statusContext as ValidationStatus);
 
   return (
-    <Text
+    <H2
       className={clsx(
         withBaseName(),
         {
@@ -52,6 +52,6 @@ export const DialogTitle = ({
     >
       {status && <StatusIndicator status={status} />}
       {children}
-    </Text>
+    </H2>
   );
 };
