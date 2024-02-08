@@ -28,6 +28,20 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
 
+interface ConditionalWrapperProps {
+  condition: boolean;
+  wrapper: unknown;
+  children: JSX.Element;
+}
+
+const ConditionalWrapper = ({
+  condition,
+  wrapper,
+  children,
+}: ConditionalWrapperProps): JSX.Element => {
+  return condition ? wrapper(children) : children;
+};
+
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Display or hide the component.
@@ -122,13 +136,6 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   const contextValue = useMemo(() => ({ status }), [status]);
 
-  const ConditionalWrapper = ({
-    condition,
-    wrapper,
-    children,
-  }: // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-  ConditionalWrapperProps) => (condition ? wrapper(children) : children);
-
   return (
     <DialogContext.Provider value={contextValue}>
       {showComponent && (
@@ -140,7 +147,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
             open={open}
             role={role}
             aria-modal="true"
-            // ref={floatingRef}
+            ref={floatingRef}
             focusManagerProps={{
               context: context,
             }}

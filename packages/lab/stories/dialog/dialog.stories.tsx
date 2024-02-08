@@ -238,7 +238,6 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         onOpenChange={onOpenChange}
         initialFocus={1}
         disableDismiss
-        aria-describedby={`dialog-description`}
       >
         <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>

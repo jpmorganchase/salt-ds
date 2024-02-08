@@ -17,7 +17,7 @@ interface DialogTitleProps extends ComponentPropsWithoutRef<"h2"> {
   /**
    * The status of the Dialog
    * */
-  status?: ValidationStatus | undefined;
+  status?: ValidationStatus;
   /**
    * Displays the accent bar in the Dialog Title
    * */
