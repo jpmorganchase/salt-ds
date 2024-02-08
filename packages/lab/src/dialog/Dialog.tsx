@@ -54,6 +54,10 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * Prevent the dialog closing on click away
    * */
   disableDismiss?: boolean;
+  /**
+   * Prevent Scrim from rendering
+   * */
+  disableScrim?: boolean;
 }
 
 const withBaseName = makePrefixer("saltDialog");
@@ -72,6 +76,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     size = "medium",
     id: idProp,
     role: roleProp,
+    disableScrim,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -117,15 +122,25 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   const contextValue = useMemo(() => ({ status }), [status]);
 
+  const ConditionalWrapper = ({
+    condition,
+    wrapper,
+    children,
+  }: // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+  ConditionalWrapperProps) => (condition ? wrapper(children) : children);
+
   return (
     <DialogContext.Provider value={contextValue}>
       {showComponent && (
-        <Scrim fixed>
+        <ConditionalWrapper
+          condition={!disableScrim}
+          wrapper={(children: JSX.Element) => <Scrim fixed> {children} </Scrim>}
+        >
           <FloatingComponent
             open={open}
             role={role}
             aria-modal="true"
-            ref={floatingRef}
+            // ref={floatingRef}
             focusManagerProps={{
               context: context,
             }}
@@ -150,7 +165,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           >
             {children}
           </FloatingComponent>
-        </Scrim>
+        </ConditionalWrapper>
       )}
     </DialogContext.Provider>
   );
