@@ -20,10 +20,10 @@ import {
   useFloatingUI,
   useCurrentBreakpoint,
   useForkRef,
-  ConditionalScrimWrapper,
 } from "../utils";
 import { ValidationStatus } from "../status-indicator";
 import { useWindow } from "@salt-ds/window";
+import { Scrim } from "../scrim";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
@@ -59,6 +59,17 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * */
   disableScrim?: boolean;
 }
+
+interface ConditionalScrimWrapperProps extends React.PropsWithChildren {
+  condition: boolean;
+}
+
+export const ConditionalScrimWrapper = ({
+  condition,
+  children,
+}: ConditionalScrimWrapperProps) => {
+  return condition ? <Scrim fixed> {children} </Scrim> : <>{children} </>;
+};
 
 const withBaseName = makePrefixer("saltDialog");
 
