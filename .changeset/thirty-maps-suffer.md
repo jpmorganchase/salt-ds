@@ -6,7 +6,7 @@
 - Added `disableScrim` as an optional component, to prevent the render of the Scrim in Desktop Environments
 
 ```tsx
-const DesktopAlertDialog = () => {
+const AlertDialog = () => {
   const [open, setOpen] = useState(openProp);
 
   const handleRequestOpen = () => {
@@ -33,7 +33,7 @@ const DesktopAlertDialog = () => {
         open={open}
         onOpenChange={onOpenChange}
         initialFocus={1}
-        disableScrim
+        disableDismiss
       >
         <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>
