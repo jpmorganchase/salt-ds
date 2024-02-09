@@ -3,16 +3,20 @@
   height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-selectable-background);
-  padding: var(--salt-spacing-50);
   cursor: pointer;
-  border:none;
+  border: none;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.saltCalendarDay-content {
+  margin: var(--salt-spacing-50);
+  width: 100%;
+}
 
 .saltCalendarDay:focus-visible {
-outline: var(--salt-focused-outline);
+  outline: var(--salt-focused-outline);
   outline-offset: calc(0px - var(--salt-focused-outlineWidth));
 }
 
@@ -23,94 +27,44 @@ outline: var(--salt-focused-outline);
 .saltCalendarDay:hover,
 /* Offset*/
 .saltCalendarDay-hoveredOffset,
-.saltCalendarDay-hoveredOffset:hover{
+.saltCalendarDay-hoveredOffset:hover {
   background: var(--salt-selectable-background-hover);
-  color: var(--calendar-day-text-color-hover);
 }
 
-/*.saltCalendarDay-unselectableMedium,*/
-/*.saltCalendarDay-unselectableMedium:hover {*/
-/*  color: var(--calendar-day-blocked-text-color);*/
-/*  cursor: var(--calendar-day-blocked-cursor);*/
-/*  background: var(--calendar-day-blocked-background);*/
-/*}*/
-
-/*.saltCalendarDay-selectedSpan {*/
-/*  background: var(--calendar-day-selectedSpan-background);*/
-/*  color: var(--calendar-day-selectedSpan-text-color);*/
-/*}*/
-
-/*.saltCalendarDay-hoveredSpan,*/
-/*.saltCalendarDay-hoveredSpan:hover {*/
-/*  background: var(--calendar-day-hoveredSpan-background);*/
-/*  color: var(--calendar-day-hoveredSpan-text-color);*/
-/*}*/
+.saltCalendarDay-hoveredSpan,
+.saltCalendarDay-hoveredSpan:hover,
+.saltCalendarDay-selectedSpan,
+.saltCalendarDay-selectedSpan:hover {
+  background: var(--salt-selectable-background-hover);
+  border-block: var(--salt-selectable-borderStyle-selected) var(--salt-size-border) var(--salt-selectable-borderColor-selected);
+}
 
 .saltCalendarDay-selected,
-.saltCalendarDay-selected:hover {
+.saltCalendarDay-selected:hover,
+.saltCalendarDay-selectedStart,
+.saltCalendarDay-selectedStart:hover,
+.saltCalendarDay-selectedEnd,
+.saltCalendarDay-selectedEnd:hover {
   background: var(--salt-selectable-background-selected);
-  border: var(--salt-size-border); var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
-  color: var(--calendar-day-selected-text-color);
+  border: var(--salt-selectable-borderStyle-selected) var(--salt-size-border) var(--salt-selectable-borderColor-selected);
 }
 
-/*.saltCalendarDay-selectedStart,*/
-/*.saltCalendarDay-selectedStart:hover {*/
-/*  background: var(--calendar-day-selectedStart-background);*/
-/*  color: var(--calendar-day-selectedStart-text-color);*/
-/*}*/
+.saltCalendarDay-unselectable,
+.saltCalendarDay-unselectable:hover {
+  background: var(--salt-selectable-background);
+  cursor: var(--salt-selectable-cursor-disabled);
+  position: relative;
+}
+.saltCalendarDay-unselectable:after {
+  content: "";
+  height: var(--salt-size-border);
+  width: calc(100% - var(--salt-spacing-100));
+  background: var(--salt-content-secondary-foreground);
+  position: absolute;
+}
 
-/*.saltCalendarDay-selectedEnd,*/
-/*.saltCalendarDay-selectedEnd:hover {*/
-/*  background: var(--calendar-day-selectedEnd-background);*/
-/*  color: var(--calendar-day-selectedEnd-text-color);*/
-/*}*/
-
-/*.saltCalendarDay-selected:focus-visible {*/
-/*  outline-color: var(--calendar-day-selected-focused-outlineColor);*/
-/*}*/
-
-/*.saltCalendarDay-selectedStart:focus-visible {*/
-/*  outline-color: var(--calendar-day-selectedStart-focused-outlineColor);*/
-/*}*/
-
-/*.saltCalendarDay-selectedEnd:focus-visible {*/
-/*  outline-color: var(--calendar-day-selectedEnd-focused-outlineColor);*/
-/*}*/
-
-/*.saltCalendarDay-unselectableLow,*/
-/*.saltCalendarDay-unselectableLow:hover {*/
-/*  color: var(--calendar-day-unselectable-text-color);*/
-/*  background: var(--calendar-day-unselectable-background);*/
-/*  cursor: var(--calendar-day-unselectable-cursor);*/
-/*  text-decoration: line-through;*/
-/*}*/
-
-/*.salt-density-high {*/
-/*  --calendar-day-blocked-icon-size: 14px;*/
-/*}*/
-
-/*.salt-density-medium {*/
-/*  --calendar-day-blocked-icon-size: 18px;*/
-/*}*/
-
-/*.salt-density-low {*/
-/*  --calendar-day-blocked-icon-size: 24px;*/
-/*}*/
-
-/*.salt-density-touch {*/
-/*  --calendar-day-blocked-icon-size: 28px;*/
-/*}*/
-
-/*.saltCalendarDay-blockedIcon {*/
-/*  fill: var(--calendar-day-blocked-icon-color);*/
-/*  position: absolute;*/
-/*  --icon-size: var(--calendar-day-blocked-icon-size);*/
-/*  pointer-events: none;*/
-/*  line-height: 1.29;*/
-/*}*/
-
-
-.saltCalendarDay-today, .saltCalendarDay-today:hover {
+.saltCalendarDay-today,
+.saltCalendarDay-today:hover {
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-foreground-active);
 }
 

@@ -1,5 +1,4 @@
 import { makePrefixer, Tooltip, TooltipProps } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
@@ -65,26 +64,24 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
             {
               [withBaseName("hidden")]: hidden,
               [withBaseName("outOfRange")]: outOfRange,
-              [withBaseName("today")]: today,
               [withBaseName("unselectable")]: !!unselectable,
-              [withBaseName("unselectableLow")]: unselectable === "low",
-              [withBaseName("unselectableMedium")]: unselectable === "medium",
+              //TODO: remove all low and medium and remove the line below
+              [withBaseName("unselectable")]:
+                unselectable === "low" || unselectable === "medium",
             },
             dayProps.className,
             className
           )}
         >
-          {unselectable === "medium" && (
-            <CloseIcon
-              aria-hidden
-              aria-label={undefined}
-              className={withBaseName("blockedIcon")}
-            />
-          )}
-
-          {renderDayContents
-            ? renderDayContents(day, status)
-            : formatDate(day, { day: "numeric" })}
+          <span
+            className={clsx(withBaseName("content"), {
+              [withBaseName("today")]: today,
+            })}
+          >
+            {renderDayContents
+              ? renderDayContents(day, status)
+              : formatDate(day, { day: "numeric" })}
+          </span>
         </button>
       </Tooltip>
     );
