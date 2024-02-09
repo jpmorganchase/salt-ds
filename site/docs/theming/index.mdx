@@ -7,11 +7,39 @@ sidebar:
 
 The Salt design system enables teams to modify design variables and theme projects to their requirements. Understanding how Salt structures and manages these design variables will help you create consistent themes for your project.
 
-Below we'll explain what a token is, how different token layers interact, and how this structure makes theming more accessible.
+## What a theme is
+
+## When to theme
+
+## How to theme
+
+Salt uses tokens, which store design decisions in a single place. Components can use these tokens to set their style.
 
 <ExampleContainer type="positive" customPillText="Best practice">
-  At this stage in Salt's development, we recommend you only modify
-  characteristic design tokens when theming your project.
+  When theming, we recommend modifying tokens rather than tweaking designs for each individual component.
+</ExampleContainer>
+
+### What a token is
+
+### Benefits of tokens
+
+Tokens offer several benefits:
+
+- Streamlined design changes that automatically apply to related components
+- Increased consistency across all components, improving the overall user experience
+- Simplified, drag-and-drop approach when adding new components or patterns
+- Single reference points for commonly-used values
+
+Salt's tokens are organized into three tiers. From most generalized to most specific, the tiers are:
+
+1. Foundational tokens
+2. Palette tokens
+3. Characteristic tokens
+
+Salt is 
+
+<ExampleContainer type="positive" customPillText="Best practice">
+  At this stage in Salt's development, we recommend modifying characteristic tokens.
 </ExampleContainer>
 
 ## Theming with tokens
@@ -22,10 +50,7 @@ Salt uses tokens to store design decisions. Components can reuse tokens, meaning
 
 Instead of overriding design variables within a single component, we recommend modifying the tokens that the component references. Maintaining this token-based structure offers several benefits:
 
-- Streamlined design changes that automatically apply to related components
-- Increased consistency across all components, improving the overall user experience
-- Simplified, drag-and-drop approach when adding new components or patterns
-- Single reference points for commonly-used values
+
 
 Note that theming will involve an element of maintenance as future versions of Salt may modify the token list.
 
@@ -35,7 +60,7 @@ Salt's tokens are organized into three tiers. From most generalized to most spec
 
 1. Foundational tokens
 2. Palette tokens
-3. Characteristic design tokens
+3. Characteristic tokens
 
 These tokens can reference each other and inherit values from lower tiers.
 
