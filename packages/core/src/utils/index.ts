@@ -1,6 +1,7 @@
 export * from "./capitalize";
 export * from "./createChainedFunction";
 export * from "./createContext";
+export * from "./conditionalScrimWrapper";
 export * from "./debounce";
 export * from "./inferElementType";
 export * from "./makePrefixer";

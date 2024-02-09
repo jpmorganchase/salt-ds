@@ -20,8 +20,8 @@ import {
   useFloatingUI,
   useCurrentBreakpoint,
   useForkRef,
+  ConditionalScrimWrapper,
 } from "../utils";
-import { Scrim } from "../scrim";
 import { ValidationStatus } from "../status-indicator";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -61,17 +61,6 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer("saltDialog");
-
-interface ConditionalWrapperProps extends React.PropsWithChildren {
-  condition: boolean;
-}
-
-const ConditionalWrapper = ({
-  condition,
-  children,
-}: ConditionalWrapperProps) => {
-  return condition ? <Scrim fixed> {children} </Scrim> : <>{children} </>;
-};
 
 export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   props,
@@ -136,7 +125,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   return (
     <DialogContext.Provider value={contextValue}>
       {showComponent && (
-        <ConditionalWrapper condition={!disableScrim}>
+        <ConditionalScrimWrapper condition={!disableScrim}>
           <FloatingComponent
             open={open}
             role={role}
@@ -166,7 +155,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           >
             {children}
           </FloatingComponent>
-        </ConditionalWrapper>
+        </ConditionalScrimWrapper>
       )}
     </DialogContext.Provider>
   );
