@@ -17,6 +17,8 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     onSelectionChange,
     defaultValue,
     value,
+    disabled,
+    readOnly,
   } = props;
 
   const listControl = useListControl<Item>({
@@ -29,25 +31,30 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     onSelectionChange,
     defaultValue,
     value,
+    disabled,
+    readOnly,
   });
 
-  const { selectedState, getOptionsMatching, setValueState, setSelectedState } =
-    listControl;
+  const {
+    selectedState,
+    getOptionsMatching,
+    setValueState,
+    setSelectedState,
+    setOpen,
+  } = listControl;
 
   const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
-    const { disabled, value } = option;
-
-    if (disabled) {
+    if (option.disabled || disabled || readOnly) {
       return;
     }
 
-    let newSelected = [value];
+    let newSelected = [option.value];
 
     if (multiselect) {
-      if (selectedState.includes(value)) {
-        newSelected = selectedState.filter((item) => item !== value);
+      if (selectedState.includes(option.value)) {
+        newSelected = selectedState.filter((item) => item !== option.value);
       } else {
-        newSelected = selectedState.concat([value]);
+        newSelected = selectedState.concat([option.value]);
       }
     }
 
@@ -57,6 +64,10 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     ).map((option) => option.text);
     setValueState(multiselect ? "" : newValue[0]);
     onSelectionChange?.(event, newSelected);
+
+    if (!multiselect) {
+      setOpen(false);
+    }
   };
 
   return { ...listControl, select };

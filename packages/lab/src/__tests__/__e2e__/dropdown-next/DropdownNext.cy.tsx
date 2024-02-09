@@ -107,19 +107,11 @@ describe("Given a Dropdown", () => {
     cy.mount(<Default onOpenChange={openChangeSpy} />);
 
     cy.findByRole("combobox").realClick();
-    cy.get("@openChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      true
-    );
+    cy.get("@openChange").should("have.been.calledWith", true);
     cy.findByRole("listbox").should("exist");
     cy.get("body").click(0, 0);
     cy.findByRole("listbox").should("not.exist");
-    cy.get("@openChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      false
-    );
+    cy.get("@openChange").should("have.been.calledWith", false);
   });
 
   it("should close the list when the escape key is pressed", () => {
@@ -375,6 +367,11 @@ describe("Given a Dropdown", () => {
   it("should not show a list with no options", () => {
     cy.mount(<DropdownNext open />);
     cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("should show a placeholder when the value is empty", () => {
+    cy.mount(<DropdownNext placeholder="Placeholder" value="" />);
+    cy.findByRole("combobox").should("have.text", "Placeholder");
   });
 
   it("should render the custom floating component", () => {

@@ -131,19 +131,11 @@ describe("Given a ComboBox", () => {
     cy.mount(<Default onOpenChange={openChangeSpy} />);
 
     cy.findByRole("combobox").realClick();
-    cy.get("@openChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      true
-    );
+    cy.get("@openChange").should("have.been.calledWith", true);
     cy.findByRole("listbox").should("exist");
     cy.get("body").click(0, 0);
     cy.findByRole("listbox").should("not.exist");
-    cy.get("@openChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      false
-    );
+    cy.get("@openChange").should("have.been.calledWith", false);
   });
 
   it("should close the list when the escape key is pressed", () => {

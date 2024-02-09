@@ -23,8 +23,11 @@ export const CustomFiltering = (): ReactElement => {
     }
   };
 
-  const handleOpenChange: ComboBoxNextProps["onOpenChange"] = (event) => {
-    if (event.type === "click") {
+  const handleOpenChange: ComboBoxNextProps["onOpenChange"] = (
+    newOpen,
+    reason
+  ) => {
+    if (reason === "manual") {
       setShowAll(true);
     }
   };
