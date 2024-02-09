@@ -127,7 +127,9 @@
     "webpack": "5.76.0",
     "recursive-readdir": "2.2.3",
     "@jpmorganchase/mosaic-components@npm:0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch",
-    "@jpmorganchase/mosaic-components@npm:^0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch"
+    "@jpmorganchase/mosaic-components@npm:^0.1.0-beta.60": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch",
+    "@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.60": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.60-b8ae269423.patch",
+    "@jpmorganchase/mosaic-content-editor-plugin@npm:^0.1.0-beta.60": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.60-b8ae269423.patch"
   },
   "browserslist": {
     "production": [

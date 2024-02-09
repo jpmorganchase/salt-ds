@@ -4150,7 +4150,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.60, @jpmorganchase/mosaic-content-editor-plugin@npm:^0.1.0-beta.60":
+"@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.60":
   version: 0.1.0-beta.60
   resolution: "@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.60"
   dependencies:
@@ -4184,6 +4184,43 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
   checksum: 10/3be8acab869b320cc4eaffebfc471a82bcadf042fde7c81e3692d8b983743430500bca537ae1a640961437b9d49f1ccb5445f4f59d94348a5bc87b6fa3cd69e5
+  languageName: node
+  linkType: hard
+
+"@jpmorganchase/mosaic-content-editor-plugin@patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.60-b8ae269423.patch":
+  version: 0.1.0-beta.60
+  resolution: "@jpmorganchase/mosaic-content-editor-plugin@patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.60-b8ae269423.patch::version=0.1.0-beta.60&hash=e08ff0"
+  dependencies:
+    "@floating-ui/react": "npm:^0.23.0"
+    "@jpmorganchase/mosaic-components": "npm:^0.1.0-beta.60"
+    "@jpmorganchase/mosaic-theme": "npm:^0.1.0-beta.60"
+    "@lexical/code": "npm:^0.11.1"
+    "@lexical/link": "npm:^0.11.1"
+    "@lexical/list": "npm:^0.11.1"
+    "@lexical/markdown": "npm:^0.11.1"
+    "@lexical/react": "npm:^0.11.1"
+    "@lexical/rich-text": "npm:^0.11.1"
+    "@lexical/selection": "npm:^0.11.1"
+    "@lexical/table": "npm:^0.11.1"
+    "@lexical/utils": "npm:^0.11.1"
+    "@salt-ds/core": "npm:^1.11.0"
+    "@salt-ds/icons": "npm:^1.7.0"
+    "@salt-ds/lab": "npm:1.0.0-alpha.20"
+    "@salt-ds/theme": "npm:^1.9.0"
+    "@vanilla-extract/css": "npm:^1.6.0"
+    clsx: "npm:^2.0.0"
+    gray-matter: "npm:^4.0.3"
+    lexical: "npm:^0.11.1"
+    lodash-es: "npm:^4.17.21"
+    md5: "npm:*"
+    react-split: "npm:^2.0.14"
+    yup: "npm:^0.32.9"
+    zustand: "npm:^4.1.1"
+  peerDependencies:
+    "@types/react": ^18.0.26
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10/90917545b55e6e6fad615834233f561ac10b6ce8b6e35c1701283e59ec9b0137f6010d5ac127c0dc51b2ed91c518260bc2f8241c0c6d4c7751afa6c55a884f92
   languageName: node
   linkType: hard
 
@@ -6281,7 +6318,7 @@ __metadata:
   dependencies:
     "@jpmorganchase/mosaic-cli": "npm:^0.1.0-beta.60"
     "@jpmorganchase/mosaic-components": "patch:@jpmorganchase/mosaic-components@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-components-npm-0.1.0-beta.60-034892b5cb.patch"
-    "@jpmorganchase/mosaic-content-editor-plugin": "npm:^0.1.0-beta.60"
+    "@jpmorganchase/mosaic-content-editor-plugin": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.60#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.60-b8ae269423.patch"
     "@jpmorganchase/mosaic-layouts": "npm:^0.1.0-beta.60"
     "@jpmorganchase/mosaic-site-components": "npm:^0.1.0-beta.60"
     "@jpmorganchase/mosaic-site-preset-styles": "npm:^0.1.0-beta.60"
