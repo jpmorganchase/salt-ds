@@ -28,11 +28,11 @@ export const Success = (): ReactElement => {
         Open success dialog
       </Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="success"
+        size={"small"}
+        id={"success-dialog"}
       >
         <DialogTitle>File uploaded</DialogTitle>
         <DialogContent>

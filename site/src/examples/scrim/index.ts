@@ -1,4 +1,3 @@
-export * from "./Default";
-export * from "./CloseOnClick";
-export * from "./WithSpinner";
-export * from "./Fixed";
+export * from "./FillContainer";
+export * from "./FillViewport";
+export * from "./WithChild";

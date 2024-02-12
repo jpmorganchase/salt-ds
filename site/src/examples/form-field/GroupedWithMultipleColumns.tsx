@@ -11,7 +11,7 @@ import {
 export const GroupedWithMultipleColumns = (): ReactElement => {
   return (
     <StackLayout
-      style={{ "--formField-label-width": "100px" } as CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
     >
       <FormField>
         <FormFieldLabel>Form Field label left</FormFieldLabel>

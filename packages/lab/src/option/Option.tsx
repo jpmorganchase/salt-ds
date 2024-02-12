@@ -26,7 +26,7 @@ export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The value of the option.
    */
-  value: string;
+  value: unknown;
   /**
    * The text value of the option. If not provided, the text value will be inferred from the children.
    */
@@ -94,7 +94,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
   const selected = selectedState.includes(value);
   const active = activeState?.id === id;
 
-  const optionValue: OptionValue = useMemo(
+  const optionValue: OptionValue<unknown> = useMemo(
     () => ({
       id: String(id),
       disabled: Boolean(disabled),

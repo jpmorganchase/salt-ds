@@ -1,5 +1,86 @@
 # @salt-ds/core
 
+## 1.17.0
+
+### Minor Changes
+
+- 0e031a5c: A progress indicator gives the user an understanding of how long a system
+  operation will take. You should use it when the operation will take more
+  than a second to complete. Two components are available to accommodate
+  different layout constraints: `CircularProgress` and `LinearProgress`.
+
+  ```tsx
+      <LinearProgress aria-label="Download" value={50}/>
+      <CircularProgress aria-label="Download" value={50} />
+  ```
+
+- f266b3c5: Added resizing support to `MutilineInput`. `MultilineInput`s will now resize when typing and can be resized manually.
+
+## 1.16.1
+
+### Patch Changes
+
+- 181afaf3: - Updated indeterminate `Checkbox` and `RadioButton` to use the native indeterminate attribute. This ensures screen readers correctly announce the control.
+  - Fixed `Checkbox` as `RadioButtonGroup` not being announced as read-only by setting `aria-readonly`.
+  - Updated external `Link`'s accessible text to remove the redundant text ("Link").
+  - Fixed `Switch`'s thumb being announced when the switch receives focus.
+  - Changed standalone `ToggleButton`'s role from checkbox to button and updated the necessary aria attributes.
+  - Fixed `Tooltip` being announced as clickable and focusable.
+
+## 1.16.0
+
+### Minor Changes
+
+- 8f0012b7: Added `FileDropZone`, `FileDropZoneIcon` and `FileDropZoneTrigger` to core.
+
+  `FileDropZone` provides a target area for users to drag and drop files, such as documents or images, and automatically uploads them to the web application.
+
+  ```tsx
+  <FileDropZone>
+    <FileDropZoneIcon />
+    <strong>Drop files here or</strong>
+    <FileDropZoneTrigger />
+  </FileDropZone>
+  ```
+
+### Patch Changes
+
+- 455c31dd: Fixed disabled Accordions not showing a disabled cursor.
+- 10ea2ca2: Fixed Card and Panel setting text properties by mistake, impacting content within inheriting wrong values.
+- cfeeb51d: Fixed Tooltips showing without any content.
+
+## 1.15.0
+
+### Minor Changes
+
+- b2dd61d7: Added Pagination
+
+  Pagination helps users navigate easily between content separated into multiple pages.
+
+  ```tsx
+  <Pagination count={5}>
+    <Paginator />
+  </Pagination>
+  ```
+
+- 69549229: Added `Scrim`.
+
+  `Scrim` is a temporary, semi-transparent layer that makes underlying content less prominent.
+
+  ```tsx
+  <Scrim open={open} />
+  ```
+
+- 907397e2: Added NavigationItem
+
+  NavigationItem allows users to navigate between distinct applications and website pages.
+
+  ```tsx
+  <NavigationItem href="#">Label</NavigationItem>
+  ```
+
+- 340ff478: Updated `useToggleButtonGroup` to return the orientation of the group.
+
 ## 1.14.0
 
 ### Minor Changes

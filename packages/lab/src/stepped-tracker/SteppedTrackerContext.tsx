@@ -1,10 +1,10 @@
 import { createContext, useContext, ReactNode, useMemo } from "react";
 
-export type SteppedTrackerContextType = {
+export interface SteppedTrackerContextType {
   activeStep: number;
   totalSteps: number;
   isWithinSteppedTracker: boolean;
-};
+}
 
 const defaultSteppedTrackerContext = {
   activeStep: 0,
@@ -52,15 +52,15 @@ const TrackerStepContext = createContext<TrackerStepNumberContextType>(0);
 
 export const useTrackerStepContext = () => useContext(TrackerStepContext);
 
-type TrackerStepProivderProps = {
+interface TrackerStepProviderProps {
   stepNumber: number;
   children: ReactNode;
-};
+}
 
 export const TrackerStepProvider = ({
   children,
   stepNumber,
-}: TrackerStepProivderProps) => {
+}: TrackerStepProviderProps) => {
   return (
     <TrackerStepContext.Provider value={stepNumber}>
       {children}

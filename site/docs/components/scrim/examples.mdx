@@ -11,39 +11,31 @@ data:
 
 <LivePreviewControls>
 
-<LivePreview componentName="scrim" exampleName="Default">
+<LivePreview componentName="scrim" exampleName="FillViewport">
 
-### Default
+### Fill Viewport
 
-By default, a scrim is bound to its parent container.
+Use the `fixed` prop to make the scrim fill the viewport.
+
+</LivePreview>
+
+<LivePreview componentName="scrim" exampleName="FillContainer">
+
+### Fill Container
+
+A scrim can fill its parent container.
 
 #### Best practices
 
-Ensure you have explicitly set a position attribute for the parent container.
+Ensure you have explicitly set a `position` attribute for the parent container.
 
 </LivePreview>
 
-<LivePreview componentName="scrim" exampleName="WithSpinner">
+<LivePreview componentName="scrim" exampleName="WithChild">
 
-### With Spinner
+### With Child
 
-You can pass children to a scrim, such as a spinner to indicate loading state. You can incorporate other elements as children, to display them above the scrim and draw attention to them.
-
-</LivePreview>
-
-<LivePreview componentName="scrim" exampleName="CloseOnClick">
-
-### Close on click
-
-Pass an `onClick` handler to a scrim to close it on click. This is useful for modals or any floating elements where clicking on the scrim area (outside the main content) should dismiss the view.
-
-</LivePreview>
-
-<LivePreview componentName="scrim" exampleName="Fixed">
-
-### Fixed
-
-A fixed scrim fills the entire viewport, regardless of the parent container.
+You can pass children to a scrim, such as a [`Spinner`](../spinner) to indicate loading state. You can incorporate other elements as children, to display them above the scrim and draw attention to them.
 
 </LivePreview>
 

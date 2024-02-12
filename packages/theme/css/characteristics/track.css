@@ -3,4 +3,6 @@
   --salt-track-borderStyle-active: solid;
   --salt-track-borderStyle-complete: solid;
   --salt-track-borderStyle-incomplete: dotted;
+
+  --salt-track-borderColor: var(--salt-palette-neutral-secondary-border);
 }

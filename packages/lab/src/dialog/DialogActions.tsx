@@ -18,7 +18,6 @@ export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {
 export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
   function DialogActions(props, ref) {
     const { children, className, ...rest } = props;
-
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-dialog-actions",

@@ -15,10 +15,8 @@ import "./dialog.stories.css";
 
 function FakeDialog({ children, status }: DialogProps) {
   return (
-    <DialogContext.Provider value={{ status, dialogId: "1" }}>
-      <div className="saltDialog-overlay">
-        <div className="saltDialog">{children}</div>
-      </div>
+    <DialogContext.Provider value={{ status }}>
+      <div className="fakeDialogWindow">{children}</div>
     </DialogContext.Provider>
   );
 }
@@ -34,51 +32,95 @@ export default {
 
 const DialogTemplate: StoryFn<typeof Dialog> = ({
   open: openProp = true,
+  status,
+  title,
   ...args
 }) => {
   return (
-    <>
-      {/* this is necessary to render the dialog styles, because we are using .saltDialog cn in FakeDialog */}
-      <Dialog open={false} />
-      <StackLayout>
-        <FakeDialog>
-          <DialogTitle accent>This is Dialog title</DialogTitle>
-          <DialogContent>This is dialog content...</DialogContent>
-          <DialogActions>
-            <Button style={{ marginRight: "auto" }} variant="secondary">
-              Cancel
-            </Button>
-            <Button>Previous</Button>
-            <Button variant="cta">Next</Button>
-          </DialogActions>
-          <DialogCloseButton />
-        </FakeDialog>
-        <FakeDialog status="warning">
-          <DialogTitle accent>This is Dialog title</DialogTitle>
-          <DialogContent>This is dialog content...</DialogContent>
-          <DialogActions>
-            <Button style={{ marginRight: "auto" }} variant="secondary">
-              Cancel
-            </Button>
-            <Button>Previous</Button>
-            <Button variant="cta">Next</Button>
-          </DialogActions>
-          <DialogCloseButton />
-        </FakeDialog>
-      </StackLayout>
-    </>
+    <StackLayout>
+      <FakeDialog status={status}>
+        <DialogTitle> {title} </DialogTitle>
+        <DialogContent>This is dialog content...</DialogContent>
+        <DialogActions>
+          <Button style={{ marginRight: "auto" }} variant="secondary">
+            Cancel
+          </Button>
+          <Button>Previous</Button>
+          <Button variant="cta">Next</Button>
+        </DialogActions>
+        <DialogCloseButton />
+      </FakeDialog>
+    </StackLayout>
   );
 };
 
-export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
-  const { className, ...rest } = props;
+type sizes = "small" | "medium" | "large";
+
+const sizes: sizes[] = ["small", "medium", "large"];
+
+export const SizeDialog: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
   return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate />
+    <QAContainer cols={3} height={300} itemPadding={3} width={3000} {...rest}>
+      {sizes.map((size) => {
+        return <DialogTemplate key={size} title={"Info Dialog"} size={size} />;
+      })}
     </QAContainer>
   );
 };
 
-ExamplesGrid.parameters = {
+SizeDialog.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const InfoDialog: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+  return (
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
+      <DialogTemplate status={"info"} title={"Info Dialog"} />
+    </QAContainer>
+  );
+};
+
+InfoDialog.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const SuccessDialog: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+  return (
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
+      <DialogTemplate status={"success"} title={"Success Dialog"} />
+    </QAContainer>
+  );
+};
+
+SuccessDialog.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const WarningDialog: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+  return (
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
+      <DialogTemplate status={"warning"} title={"Warning Dialog"} />
+    </QAContainer>
+  );
+};
+
+WarningDialog.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ErrorDialog: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+  return (
+    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
+      <DialogTemplate status={"error"} title={"Error Dialog"} />
+    </QAContainer>
+  );
+};
+
+ErrorDialog.parameters = {
   chromatic: { disableSnapshot: false },
 };

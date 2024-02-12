@@ -9,20 +9,22 @@ import {
 import { clsx } from "clsx";
 import {
   FloatingFocusManager,
-  FloatingOverlay,
-  FloatingPortal,
+  useClick,
+  useDismiss,
+  useInteractions,
 } from "@floating-ui/react";
 import {
   makePrefixer,
-  SaltProvider,
   useForkRef,
-  useId,
   ValidationStatus,
+  Scrim,
+  useFloatingUI,
+  useFloatingComponent,
+  useCurrentBreakpoint,
+  useId,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-
-import { useDialog } from "./useDialog";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
 
@@ -36,7 +38,7 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Status indicator
+   * The status of the Dialog
    * */
   status?: ValidationStatus;
   /**
@@ -44,6 +46,14 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * Default value is 0 (first tabbable element).
    * */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
+  /**
+   * Size of the Dialog
+   * */
+  size?: "small" | "medium" | "large";
+  /**
+   * Prevent the dialog closing on click away
+   * */
+  disableDismiss?: boolean;
 }
 
 const withBaseName = makePrefixer("saltDialog");
@@ -55,13 +65,15 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   const {
     children,
     className,
-    open = true,
+    open = false,
     onOpenChange,
     status,
-    initialFocus,
+    disableDismiss,
+    size = "medium",
+    id: idProp,
+    role: roleProp,
     ...rest
   } = props;
-  const dialogId = useId() || "dialog";
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dialog",
@@ -69,12 +81,24 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     window: targetWindow,
   });
 
+  const currentbreakpoint = useCurrentBreakpoint();
+
   const [showComponent, setShowComponent] = useState(false);
 
-  const { floating, context, getFloatingProps } = useDialog({
+  const { context, floating } = useFloatingUI({
     open,
     onOpenChange,
   });
+
+  const id = useId(idProp);
+  const role = roleProp ?? "dialog";
+
+  const { getFloatingProps } = useInteractions([
+    useClick(context),
+    useDismiss(context, { enabled: !disableDismiss }),
+  ]);
+
+  const { Component: FloatingComponent } = useFloatingComponent();
 
   const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
@@ -82,56 +106,52 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     if (open && !showComponent) {
       setShowComponent(true);
     }
-  }, [open, showComponent]);
 
-  const contextValue = useMemo(
-    () => ({ dialogId, status }),
-    [dialogId, status]
-  );
+    if (!open && showComponent) {
+      const animate = setTimeout(() => {
+        setShowComponent(false);
+      }, 300); // var(--salt-duration-perceptible)
+      return () => clearTimeout(animate);
+    }
+  }, [open, showComponent, setShowComponent]);
+
+  const contextValue = useMemo(() => ({ status }), [status]);
 
   return (
-    <FloatingPortal>
-      {/* The provider is needed to support the use case where an app has nested modes. The element that is portalled needs to have the same style as the current scope */}
-      <SaltProvider>
-        {showComponent && (
-          <FloatingOverlay className={withBaseName("overlay")} lockScroll>
-            <FloatingFocusManager
-              context={context}
-              modal
-              initialFocus={initialFocus}
-            >
-              <DialogContext.Provider value={contextValue}>
-                <div
-                  id={dialogId}
-                  className={clsx(
-                    withBaseName(),
-                    {
-                      [withBaseName("enterAnimation")]: open,
-                      [withBaseName("exitAnimation")]: !open,
-                      [withBaseName("withStatus")]: status,
-                      [withBaseName(status as string)]: status,
-                    },
-                    className
-                  )}
-                  onAnimationEnd={() => {
-                    if (!open && showComponent) {
-                      setShowComponent(false);
-                    }
-                  }}
-                  ref={floatingRef}
-                  aria-labelledby={`${dialogId}-heading`}
-                  aria-describedby={`${dialogId}-description`}
-                  aria-modal="true"
-                  {...getFloatingProps()}
-                  {...rest}
-                >
-                  {children}
-                </div>
-              </DialogContext.Provider>
-            </FloatingFocusManager>
-          </FloatingOverlay>
-        )}
-      </SaltProvider>
-    </FloatingPortal>
+    <DialogContext.Provider value={contextValue}>
+      {showComponent && (
+        <Scrim fixed>
+          <FloatingComponent
+            open={open}
+            role={role}
+            aria-modal="true"
+            ref={floatingRef}
+            focusManagerProps={{
+              context: context,
+            }}
+            aria-labelledby={`${id}-header`}
+            className={clsx(
+              withBaseName(),
+              withBaseName(size, currentbreakpoint),
+              {
+                [withBaseName("enterAnimation")]: open,
+                [withBaseName("exitAnimation")]: !open,
+                [withBaseName(status as string)]: status,
+              },
+              className
+            )}
+            onAnimationEnd={() => {
+              if (!open && showComponent) {
+                setShowComponent(false);
+              }
+            }}
+            {...getFloatingProps()}
+            {...rest}
+          >
+            {children}
+          </FloatingComponent>
+        </Scrim>
+      )}
+    </DialogContext.Provider>
   );
 });

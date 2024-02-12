@@ -13,6 +13,7 @@ module.exports = {
     "@jpmorganchase/mosaic-layouts",
     "@jpmorganchase/mosaic-open-api-component",
     "@jpmorganchase/mosaic-site-components",
+    "@jpmorganchase/mosaic-sitemap-component",
     "@jpmorganchase/mosaic-site-middleware",
     "@jpmorganchase/mosaic-theme",
     "@jpmorganchase/mosaic-store",
