@@ -7,8 +7,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import scrimCss from "./Scrim.css";
 
-const withBaseName = makePrefixer("saltScrim");
-
 export interface ScrimProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * If `true` the scrim is bound to the document viewport.
@@ -25,6 +23,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   { className, children, fixed = false, open = true, ...rest },
   ref
 ) {
+  const withBaseName = makePrefixer("saltScrim");
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-scrim",
