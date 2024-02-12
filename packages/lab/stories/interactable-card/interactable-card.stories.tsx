@@ -43,6 +43,24 @@ export const Disabled: StoryFn<typeof Card> = () => (
   </InteractableCard>
 );
 
+export const Selected: StoryFn<typeof Card> = () => (
+  <InteractableCard style={{ width: "256px" }} selected>
+    <StackLayout gap={1}>
+      <H3>{exampleData.title}</H3>
+      <Text>{exampleData.content}</Text>
+    </StackLayout>
+  </InteractableCard>
+);
+
+export const SelectedDisabled: StoryFn<typeof Card> = () => (
+  <InteractableCard style={{ width: "256px" }} selected disabled>
+    <StackLayout gap={1}>
+      <H3>{exampleData.title}</H3>
+      <Text>{exampleData.content}</Text>
+    </StackLayout>
+  </InteractableCard>
+);
+
 export const AccentPlacement: StoryFn<typeof Card> = () => {
   const [placement, setPlacement] =
     useState<InteractableCardProps["accentPlacement"]>("bottom");
