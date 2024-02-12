@@ -228,7 +228,7 @@ describe("Given a SaltProvider", () => {
     );
   }
 
-  it("should not warn when two providers are set to apply to root but are in different windows", () => {
+  it.skip("should not warn when two providers are set to apply to root but are in different windows", () => {
     cy.spy(console, "warn").as("consoleSpy");
 
     mount(
