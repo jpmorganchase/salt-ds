@@ -12,6 +12,8 @@ import {
   RadioButton,
   RadioButtonGroup,
   Label,
+  CardProps,
+  ToggleButton,
 } from "@salt-ds/core";
 import exampleImage from "./../assets/exampleImage1x.png";
 
@@ -88,6 +90,66 @@ export const HoverEffect: StoryFn<typeof Card> = () => (
   </Card>
 );
 
+export const AccentVariations: StoryFn<typeof Card> = () => {
+  const [hoverEffect, setHoverEffect] = useState<boolean>(false);
+
+  const [placement, setPlacement] =
+    useState<CardProps["accentPlacement"]>("bottom");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPlacement(event.target.value as CardProps["accentPlacement"]);
+  };
+
+  const handleToggle = () => {
+    setHoverEffect((old) => !old);
+  };
+
+  return (
+    <StackLayout style={{ width: "266px" }}>
+      <Card accentPlacement={placement} hoverEffect={hoverEffect}>
+        <StackLayout gap={1}>
+          <H3>{exampleData.title}</H3>
+          <Text>{exampleData.content}</Text>
+        </StackLayout>
+      </Card>
+      <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
+        <RadioButton
+          key="bottom"
+          label="bottom"
+          value="bottom"
+          onChange={handleChange}
+          checked
+        />
+        <RadioButton
+          key="top"
+          label="top"
+          value="top"
+          onChange={handleChange}
+        />
+        <RadioButton
+          key="left"
+          label="left"
+          value="left"
+          onChange={handleChange}
+        />
+        <RadioButton
+          key="right"
+          label="right"
+          value="right"
+          onChange={handleChange}
+        />
+      </RadioButtonGroup>
+      <ToggleButton
+        value="hoverEffect"
+        selected={hoverEffect}
+        onChange={handleToggle}
+      >
+        hover effect
+      </ToggleButton>
+    </StackLayout>
+  );
+};
+
 export const Sizes: StoryFn<typeof Card> = () => {
   const sizes = ["small", "medium", "large"] as const;
   return (
@@ -125,12 +187,6 @@ export const Variants: StoryFn<typeof Card> = () => {
                   <Text>{exampleData.content}</Text>
                 </StackLayout>
               </Card>
-              <InteractableCard variant={variant}>
-                <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
-                </StackLayout>
-              </InteractableCard>
             </StackLayout>
             <Label>Variant: {variant}</Label>
           </StackLayout>
