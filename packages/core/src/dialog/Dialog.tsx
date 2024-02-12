@@ -20,13 +20,24 @@ import {
   useFloatingUI,
   useCurrentBreakpoint,
   useForkRef,
-  ConditionalScrimWrapper,
 } from "../utils";
 import { ValidationStatus } from "../status-indicator";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
+import { Scrim } from "../scrim";
+
+interface ConditionalScrimWrapperProps extends React.PropsWithChildren {
+  condition: boolean;
+}
+
+export const ConditionalScrimWrapper = ({
+  condition,
+  children,
+}: ConditionalScrimWrapperProps) => {
+  return condition ? <Scrim fixed> {children} </Scrim> : <>{children} </>;
+};
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   /**
