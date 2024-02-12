@@ -90,7 +90,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   const [showComponent, setShowComponent] = useState(false);
 
-  const { context, floating } = useFloatingUI({
+  const { context, floating, x, y, elements } = useFloatingUI({
     open,
     onOpenChange,
   });
@@ -131,6 +131,10 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
             role={role}
             aria-modal="true"
             ref={floatingRef}
+            left={x ?? 0}
+            top={y ?? 0}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
             focusManagerProps={{
               context: context,
             }}
