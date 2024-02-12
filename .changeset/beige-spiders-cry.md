@@ -5,10 +5,12 @@
 Added `--salt-color-gray-50-fade-border`.
 
 ```diff
-+  --salt-color-gray-50-fade-border: rgba(206, 210, 217, var(--salt-palette-opacity-disabled));
++ --salt-color-gray-50-fade-border: rgba(206, 210, 217, var(--salt-palette-opacity-disabled));
 ```
 
 Updated the values of `--salt-palette-neutral-primary-border`, `--salt-palette-neutral-primary-border-disabled`, `--salt-palette-neutral-secondary-border` and `--salt-palette-neutral-secondary-border-disabled`.
+
+This will affect the border color of Card, InteractableCard, FileDropZone, ToggleButtonGroup, Overlay, CircularProgress, LinearProgress and SteppedTracker.
 
 New values in light mode:
 
