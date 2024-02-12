@@ -15,7 +15,6 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
-  useId,
   useFloatingComponent,
   useFloatingUI,
   useCurrentBreakpoint,
@@ -54,10 +53,6 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * Prevent the dialog closing on click away
    * */
   disableDismiss?: boolean;
-  /**
-   * Prevent Scrim from rendering
-   * */
-  disableScrim?: boolean;
 }
 
 interface ConditionalScrimWrapperProps extends React.PropsWithChildren {
@@ -87,7 +82,6 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     size = "medium",
     id: idProp,
     role: roleProp,
-    disableScrim,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -106,7 +100,6 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     onOpenChange,
   });
 
-  const id = useId(idProp);
   const role = roleProp ?? "dialog";
 
   const { getFloatingProps } = useInteractions([
@@ -135,8 +128,8 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   return (
     <DialogContext.Provider value={contextValue}>
-      {showComponent && (
-        <ConditionalScrimWrapper condition={!disableScrim}>
+      <Scrim>
+        {showComponent && (
           <FloatingComponent
             open={open}
             role={role}
@@ -166,8 +159,8 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           >
             {children}
           </FloatingComponent>
-        </ConditionalScrimWrapper>
-      )}
+        )}
+      </Scrim>
     </DialogContext.Provider>
   );
 });

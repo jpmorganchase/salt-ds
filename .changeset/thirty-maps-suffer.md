@@ -3,7 +3,6 @@
 ---
 
 - Add `Dialog` to Core
-- Added `disableScrim` as an optional component, to prevent the render of the Scrim in Desktop Environments
 
 ```tsx
 const AlertDialog = () => {
