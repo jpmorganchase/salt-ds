@@ -24,6 +24,14 @@ const saltConfig = {
       disabled: true,
     },
     {
+      modulePath: "@jpmorganchase/mosaic-plugins/PublicAssetsPlugin",
+      priority: -1,
+      options: {
+        outputDir: "./public",
+        assets: ["sitemap.xml"],
+      },
+    },
+    {
       modulePath: require.resolve(
         "./src/mosaic-plugins/LabsComponentPlugin.mjs"
       ),

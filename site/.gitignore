@@ -9,6 +9,5 @@
 /.next/
 next-env.d.ts
 /snapshots/
-/public/sitemap.xml
 /src/props/*.json
 /src/components/css-display/cssVariables.json
