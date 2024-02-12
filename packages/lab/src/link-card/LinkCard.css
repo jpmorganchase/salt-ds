@@ -1,0 +1,153 @@
+/* Styles applied to LinkCard */
+.saltLinkCard {
+  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
+  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
+  border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
+  border-radius: var(--saltCard-borderRadius, 0);
+  display: block;
+  padding: var(--saltCard-padding, var(--card-padding));
+  position: relative;
+  transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
+  --card-accentColor: var(--saltCard-accentColor, var(--salt-selectable-foreground));
+}
+
+/* Styles applied to LinkCard when variant="primary" */
+.saltLinkCard-primary {
+  background: var(--saltCard-background, var(--salt-container-primary-background));
+  border-color: var(--salt-container-primary-borderColor);
+}
+
+/* Styles applied to LinkCard when variant="secondary" */
+.saltLinkCard-secondary {
+  background: var(--saltCard-background, var(--salt-container-secondary-background));
+  border-color: var(--salt-container-secondary-borderColor);
+}
+
+.saltLinkCard-small {
+  --card-padding: var(--salt-spacing-100);
+}
+
+.saltLinkCard-medium {
+  --card-padding: var(--salt-spacing-200);
+}
+
+.saltLinkCard-large {
+  --card-padding: var(--salt-spacing-300);
+}
+
+/* Styles applied to create accent */
+.saltLinkCard::after {
+  content: "";
+  position: absolute;
+  background-color: var(--card-accentColor);
+}
+
+/* Styles applied to LinkCard if `accentPlacement="bottom"` (default) */
+.saltLinkCard-accentBottom::after {
+  left: calc(-1 * var(--salt-size-border));
+  bottom: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+}
+
+/* Styles applied to LinkCard if `accentPlacement="left"` */
+.saltLinkCard-accentLeft::after {
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+}
+
+/* Styles applied to LinkCard if `accentPlacement="top"` */
+.saltLinkCard-accentTop::after {
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+}
+
+/* Styles applied to LinkCard if `accentPlacement="right"` */
+.saltLinkCard-accentRight::after {
+  right: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+}
+
+/* Styles applied to LinkCard on focus */
+a:focus-visible .saltLinkCard,
+.saltLinkCard:focus-visible {
+  cursor: var(--saltCard-Link-cursor-focus, var(--salt-selectable-cursor-hover));
+  box-shadow: var(--saltCard-Link-shadow-focus, var(--salt-overlayable-shadow-hover));
+  color: var(--saltCard-color-focus, var(--salt-content-primary-foreground));
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
+}
+
+a:link .saltLinkCard * {
+  text-decoration: none;
+}
+
+/* Styles applied on hover state to LinkCard */
+.saltLinkCard:hover {
+  cursor: var(--saltCard-Link-cursor-hover, var(--salt-selectable-cursor-hover));
+  box-shadow: var(--saltCard-Link-shadow-hover, var(--salt-overlayable-shadow-hover));
+  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
+}
+
+/* Styles applied on active state to LinkCard */
+.saltLinkCard:active,
+.saltLinkCard-active {
+  cursor: var(--saltCard-Link-cursor-active, var(--salt-selectable-cursor-active));
+  border-color: var(--salt-selectable-foreground-selected);
+  box-shadow: var(--saltCard-Link-shadow-active, var(--salt-overlayable-shadow));
+  --card-accentColor: var(--saltCard-accentColor-active, var(--salt-selectable-foreground-selected));
+}
+
+/* Styles applied to LinkCard if `disabled={true}` */
+.saltLinkCard-disabled,
+.saltLinkCard-disabled:focus,
+.saltLinkCard-disabled:hover,
+.saltLinkCard-disabled:active {
+  box-shadow: var(--saltCard-Link-shadow, var(--salt-overlayable-shadow));
+  color: var(--saltCard-color-disabled, var(--salt-content-primary-foreground-disabled));
+  cursor: var(--saltCard-Link-cursor-disabled, var(--salt-selectable-cursor-disabled));
+  outline: none;
+  --card-accentColor: var(--saltCard-accentColor-disabled, var(--salt-selectable-foreground-disabled));
+}
+
+/* Styles applied to LinkCard primary variant if `disabled={true}` */
+.saltLinkCard-primary.saltLinkCard-disabled,
+.saltLinkCard-primary.saltLinkCard-disabled:focus,
+.saltLinkCard-primary.saltLinkCard-disabled:hover,
+.saltLinkCard-primary.saltLinkCard-disabled:active {
+  background: var(--saltCard-background-disabled, var(--salt-container-primary-background-disabled));
+  border-color: var(--salt-container-primary-borderColor-disabled);
+}
+
+/* Styles applied to LinkCard secondary variant if `disabled={true}` */
+.saltLinkCard-secondary.saltLinkCard-disabled,
+.saltLinkCard-secondary.saltLinkCard-disabled:focus,
+.saltLinkCard-secondary.saltLinkCard-disabled:hover,
+.saltLinkCard-secondary.saltLinkCard-disabled:active {
+  background: var(--saltCard-background-disabled, var(--salt-container-secondary-background));
+  border-color: var(--salt-container-secondary-borderColor-disabled);
+}
+
+/* Styles applied to nested divs in LinkCard if `disabled={true}` */
+.saltLinkCard-disabled div {
+  pointer-events: none;
+}
+
+/* Class that can be used for anchor tags wrapping LinkCard */
+.saltLinkCard-link {
+  color: var(--saltCard-link-color, var(--salt-content-primary-foreground));
+  inset: var(--salt-focused-outlineInset);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+}
