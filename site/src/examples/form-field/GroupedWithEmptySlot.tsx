@@ -11,7 +11,7 @@ import {
 
 export const GroupedWithEmptySlot = (): ReactElement => (
   <StackLayout
-    style={{ "--formField-label-width": "100px" } as React.CSSProperties}
+    style={{ "--saltFormField-label-width": "100px" } as React.CSSProperties}
     role={"group"}
   >
     <FormField>

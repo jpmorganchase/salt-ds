@@ -835,7 +835,7 @@ export const GroupedWithVariant: StoryFn<typeof FormField> = (props) => {
 export const MultiColumnLayout: StoryFn<typeof FormField> = (props) => {
   return (
     <StackLayout
-      style={{ "--formField-label-width": "100px" } as CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>
@@ -894,7 +894,7 @@ export const MultiColumnLayoutEmptySlot: StoryFn<typeof FormField> = (
 ) => {
   return (
     <StackLayout
-      style={{ "--formField-label-width": "100px" } as React.CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as React.CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>
