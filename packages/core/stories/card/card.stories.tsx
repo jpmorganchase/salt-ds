@@ -32,7 +32,7 @@ const exampleData = {
 };
 
 export const Default: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
+  <Card style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
       <Text>{exampleData.content}</Text>
@@ -41,7 +41,7 @@ export const Default: StoryFn<typeof Card> = () => (
 );
 
 export const DefaultWithImage: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
+  <Card style={{ width: "260px" }}>
     <StackLayout gap={3}>
       <img alt="example image" src={exampleImage} style={{ width: "100%" }} />
       <StackLayout gap={1}>
@@ -53,7 +53,7 @@ export const DefaultWithImage: StoryFn<typeof Card> = () => (
 );
 
 export const DefaultWithLink: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
+  <Card style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
       <StackLayout gap={1}>
@@ -67,7 +67,7 @@ export const DefaultWithLink: StoryFn<typeof Card> = () => (
 );
 
 export const DefaultWithButton: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
+  <Card style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
       <StackLayout gap={2} align="start">
@@ -79,7 +79,7 @@ export const DefaultWithButton: StoryFn<typeof Card> = () => (
 );
 
 export const HoverEffect: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }} hoverEffect>
+  <Card style={{ width: "260px" }} hoverEffect>
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
       <StackLayout gap={2} align="start">
@@ -197,7 +197,7 @@ export const Variants: StoryFn<typeof Card> = () => {
 };
 
 export const Interactable: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }}>
+  <InteractableCard style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
       <Text>{exampleData.content}</Text>
@@ -207,7 +207,7 @@ export const Interactable: StoryFn<typeof Card> = () => (
 
 export const InteractableDisabled: StoryFn<typeof Card> = () => (
   <InteractableCard
-    style={{ width: "256px" }}
+    style={{ width: "260px" }}
     onClick={() => console.log("Clicked")}
     data-testid="card-disabled-example"
     disabled
