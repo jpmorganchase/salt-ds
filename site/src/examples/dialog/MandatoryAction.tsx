@@ -7,7 +7,7 @@ import {
   DialogContent,
 } from "@salt-ds/lab";
 
-export const Success = (): ReactElement => {
+export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -25,23 +25,24 @@ export const Success = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open success dialog
+        Open Mandatory Action Dialog
       </Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        status="success"
+        disableDismiss
         size={"small"}
-        id={"success-dialog"}
+        status={"error"}
+        id={"error-dialog"}
       >
-        <DialogTitle>File uploaded</DialogTitle>
+        <DialogTitle> Delete Transaction </DialogTitle>
         <DialogContent>
-          File has been successfully uploaded to the shared drive.
+          Are you sure you want to permenantly delete transaction?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
-            Go to file
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

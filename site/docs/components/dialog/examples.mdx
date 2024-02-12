@@ -17,7 +17,38 @@ data:
 
     </LivePreview>
 
-        <LivePreview componentName="dialog" exampleName="Accent" >
+     <LivePreview componentName="dialog" exampleName="Sizes" >
+    ### Sizes
+
+Dialog has 3 sizes: `small`, `medium` and `large`. The size at which to display a dialog depends on the amount of content you have. The widths of all three dialog sizes are responsive to the Salt breakpoints. This ensures the dialog remains entirely visible in the viewport and its size is optimized for the viewport size (e.g., dialogs appear larger within smaller viewports for ease of visibility).
+
+    ### Guidance
+
+    Dialog sizes are typically used for different scenarios:
+
+- Small dialogs are used for simple alerts, quick selections or confirmations that require either no or quick action from the user.
+- Medium dialogs contain additional components or layouts such as grouped preferences that require increased user input.
+- Large dialogs usually contain more complex layouts and can display a series of tasks to complete, such as a form within a wizard.
+
+### Size table (width)
+
+| **Breakpoint**                              | **Small (% width)** | **Medium (% width)** | **Large (% width)** |
+| ------------------------------------------- | ------------------- | -------------------- | ------------------- |
+| Extra large (>1920px) / Large (1280-1919px) | 24%                 | 48%                  | 72%                 |
+| Medium (960-1279px)                         | 36%                 | 68%                  | 84%                 |
+| Small (600-959px)                           | 56%                 | 84%                  | 96%                 |
+| Extra small (0-599px)                       | 100%                | 100%                 | 100%                |
+
+### Size table (height)
+
+| **Breakpoint**                | **Small (% width)** | **Medium (% width)** | **Large (% width)** |
+| ----------------------------- | ------------------- | -------------------- | ------------------- |
+| Extra large (>1920px) - Small | 48%                 | 72%                  | 84%                 |
+| Extra small (0-599px)         | 48%                 | 100%                 | 100%                |
+
+    </LivePreview>
+
+        <LivePreview componentName="dialog" exampleName="WithoutAccent" >
     ### Accent
 
     For default dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the dialog. You cannot render the accent bar when a status is also being rendered.
@@ -60,6 +91,13 @@ You can also render the `DialogCloseButton` as a child of the `Dialog` component
 
     - Use the success status to confirm that a user's action has been completed successfully.
     - A success icon displays alongside a title and supporting message.
+    </LivePreview>
+
+     <LivePreview componentName="dialog" exampleName="MandatoryAction" >
+    ### Mandatory Action
+
+    - Use the closeOnBlur prop to prevent a click away dismissing the dialog
+    - This should be used to force a user to action something within the dialog
     </LivePreview>
 
 </LivePreviewControls>

@@ -1,13 +1,18 @@
 .saltDialogContent {
   color: var(--salt-content-primary-foreground);
-  padding-left: var(--salt-spacing-300);
-  padding-right: var(--salt-spacing-300);
-  flex: 1 1 auto;
   min-height: var(--salt-text-lineHeight);
   overflow-y: auto;
+  background: var(--salt-container-primary-background);
+  padding-bottom: var(--salt-spacing-50);
 
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
+  margin-left: var(--salt-spacing-300);
+  margin-right: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
+  box-shadow: none;
+}
+
+.saltDialogContent-scroll {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  box-shadow: var(--salt-overlayable-shadow-scroll);
 }
