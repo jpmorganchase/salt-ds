@@ -34,7 +34,7 @@ const formatDate = (date: DateValue, options?: Intl.DateTimeFormatOptions) => {
   return formatter.format(date.toDate(localTimeZone));
 };
 
-describe("GIVEN a Calendar component", () => {
+describe("GIVEN a Calendar", () => {
   describe("Today's Date", () => {
     it("SHOULD set `aria-current=date` on today's date", () => {
       cy.mount(<Default />);
@@ -74,10 +74,11 @@ describe("GIVEN a Calendar component", () => {
     describe("Dropdowns", () => {
       it("SHOULD navigate to the selected month when using the month dropdown", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
-        cy.findByRole("option", {
-          name: formatDate(testDate, { month: "short" }),
-        }).should("be.visible");
-        cy.findByRole("listbox", {
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          formatDate(testDate, { month: "short" })
+        );
+        cy.findByRole("combobox", {
           name: "Month Dropdown",
         }).realClick();
         cy.findByRole("option", {
@@ -85,9 +86,10 @@ describe("GIVEN a Calendar component", () => {
         })
           .realHover()
           .realClick();
-        cy.findByRole("option", {
-          name: formatDate(testDate.set({ month: 4 }), { month: "short" }),
-        }).should("be.visible");
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          formatDate(testDate.set({ month: 4 }), { month: "short" })
+        );
         cy.findByRole("button", {
           name: formatDate(testDate.set({ month: 4 })),
         }).should("be.visible");
@@ -95,10 +97,11 @@ describe("GIVEN a Calendar component", () => {
 
       it("SHOULD navigate to the selected year when using the year dropdown", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
-        cy.findByRole("option", {
-          name: formatDate(testDate, { year: "numeric" }),
-        }).should("be.visible");
-        cy.findByRole("listbox", {
+        cy.findByRole("combobox", { name: "Year Dropdown" }).should(
+          "have.text",
+          formatDate(testDate, { year: "numeric" })
+        );
+        cy.findByRole("combobox", {
           name: "Year Dropdown",
         }).realClick();
         cy.findByRole("option", {
@@ -106,9 +109,10 @@ describe("GIVEN a Calendar component", () => {
         })
           .realHover()
           .realClick();
-        cy.findByRole("option", {
-          name: formatDate(testDate.add({ years: 1 }), { year: "numeric" }),
-        }).should("be.visible");
+        cy.findByRole("combobox", { name: "Year Dropdown" }).should(
+          "have.text",
+          formatDate(testDate.add({ years: 1 }), { year: "numeric" })
+        );
         cy.findByRole("button", {
           name: formatDate(testDate.add({ years: 1 })),
         }).should("be.visible");
@@ -118,15 +122,17 @@ describe("GIVEN a Calendar component", () => {
     describe("Clicking", () => {
       it("SHOULD navigate to the next month when clicking out of range dates", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
-        cy.findByRole("option", {
-          name: formatDate(testDate, { month: "short" }),
-        }).should("be.visible");
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          formatDate(testDate, { month: "short" })
+        );
         cy.findByRole("button", {
           name: formatDate(endOfMonth(testDate).add({ days: 1 })),
         }).realClick();
-        cy.findByRole("option", {
-          name: formatDate(testDate.add({ months: 1 }), { month: "short" }),
-        }).should("be.visible");
+        cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          "have.text",
+          formatDate(testDate.add({ months: 1 }), { month: "short" })
+        );
       });
     });
 
@@ -519,7 +525,7 @@ describe("GIVEN a Calendar component", () => {
           UnselectableDates.args?.isDayUnselectable?.(
             parseDate("2022-01-17")
             // @ts-ignore
-          )?.tooltip
+          )
         );
       });
     });
@@ -562,14 +568,12 @@ describe("GIVEN a Calendar component", () => {
         "Past dates are out of range"
       );
 
-      cy.findByRole("listbox", { name: "Month Dropdown" }).realClick();
-      cy.findByTestId("dropdown-list")
-        .findAllByRole("option")
+      cy.findByRole("combobox", { name: "Month Dropdown" }).realClick();
+      cy.findAllByRole("option")
         .filter("[aria-disabled=true]")
         .should("have.length", 10);
 
-      cy.findByTestId("dropdown-list")
-        .findAllByRole("option")
+      cy.findAllByRole("option")
         .filter("[aria-disabled=true]")
         .eq(0)
         .realHover();
@@ -602,17 +606,14 @@ describe("GIVEN a Calendar component", () => {
         "Future dates are out of range"
       );
 
-      cy.findByRole("listbox", { name: "Month Dropdown" }).realClick();
-      cy.findByTestId("dropdown-list")
-        .findAllByRole("option")
+      cy.findByRole("combobox", { name: "Month Dropdown" }).realClick();
+      cy.findAllByRole("option")
         .filter("[aria-disabled=true]")
         .should("have.length", 9);
       cy.realPress("Escape");
 
-      cy.findByRole("listbox", { name: "Year Dropdown" }).realClick();
-      cy.findByTestId("dropdown-list")
-        .findAllByRole("option")
-        .should("have.length", 2);
+      cy.findByRole("combobox", { name: "Year Dropdown" }).realClick();
+      cy.findAllByRole("option").should("have.length", 2);
 
       cy.findByRole("button", {
         name: `Previous Month, ${formatDate(testDate.add({ months: 1 }))}`,
@@ -717,3 +718,4 @@ describe("GIVEN a Calendar component", () => {
     });
   });
 });
+//TODO:remove testid for role checks where possible
