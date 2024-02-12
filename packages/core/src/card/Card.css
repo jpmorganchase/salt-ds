@@ -77,7 +77,7 @@
 }
 
 /* Styles applied to accent if `hoverEffect={true}` */
-.saltCard-accent:hover {
+.saltCard-hover.saltCard-accent:hover {
   --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
 
