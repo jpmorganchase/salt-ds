@@ -80,7 +80,6 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     status,
     disableDismiss,
     size = "medium",
-    id: idProp,
     role: roleProp,
     ...rest
   } = props;
@@ -138,7 +137,6 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
             focusManagerProps={{
               context: context,
             }}
-            aria-labelledby={`${id}-header`}
             className={clsx(
               withBaseName(),
               withBaseName(size, currentbreakpoint),
