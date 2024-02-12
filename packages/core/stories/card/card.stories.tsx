@@ -158,7 +158,7 @@ export const Sizes: StoryFn<typeof Card> = () => {
         return (
           <StackLayout key={size} align="end">
             <StackLayout direction="row">
-              <Card size={size}>
+              <Card paddingSize={size}>
                 <StackLayout gap={1}>
                   <H3>{exampleData.title}</H3>
                   <Text>{exampleData.content}</Text>

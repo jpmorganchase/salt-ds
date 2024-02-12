@@ -31,9 +31,9 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   hoverEffect?: boolean;
   /**
-   * Card size; adjusts the padding. Defaults to `large`.
+   * Card padding size; adjusts the padding. Defaults to `large`.
    */
-  size?: "small" | "medium" | "large";
+  paddingSize?: "small" | "medium" | "large";
   /**
    * Styling variant. Defaults to `primary`.
    */
@@ -51,7 +51,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     disabled,
     interactable,
     hoverEffect = false,
-    size = "large",
+    paddingSize = "large",
     variant = "primary",
     ...rest
   } = props;
@@ -67,7 +67,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     <div
       className={clsx(
         withBaseName(),
-        withBaseName(size),
+        withBaseName(paddingSize),
         withBaseName(variant),
         {
           [withBaseName("accent")]: accentPlacement,

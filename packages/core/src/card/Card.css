@@ -76,7 +76,7 @@
   width: var(--salt-size-accent);
 }
 
-/* Styles applied to accent `hoverEffect={true}` */
+/* Styles applied to accent if `hoverEffect={true}` */
 .saltCard-accent:hover {
   --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
