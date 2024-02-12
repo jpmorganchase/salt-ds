@@ -19,9 +19,7 @@ import {
   UseSingleSelectionCalendarProps,
 } from "./useSelection";
 
-export type UnselectableInfo =
-  | { emphasis: "medium"; tooltip: string }
-  | { emphasis: "low"; tooltip?: string };
+export type UnselectableInfo = string;
 
 interface BaseUseCalendarProps {
   defaultVisibleMonth?: DateValue;

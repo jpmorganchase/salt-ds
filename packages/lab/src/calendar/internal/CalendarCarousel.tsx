@@ -26,7 +26,6 @@ function getMonths(month: DateValue) {
 
 function usePreviousMonth(visibleMonth: DateValue) {
   const previous = usePrevious(visibleMonth, [formatDate(visibleMonth)]);
-
   return previous ?? today(getLocalTimeZone());
 }
 

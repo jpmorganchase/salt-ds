@@ -43,19 +43,14 @@ UnselectableDates.args = {
     const nyseHolidays = getHolidays(day.year);
     // Saturday & Sunday
     if (getDayOfWeek(day, currentLocale) >= 5) {
-      return {
-        emphasis: "low",
-      };
+      return "weekend";
     }
 
     const holiday = nyseHolidays.find((h) =>
       isSameDay(parseDate(h.dateString), day)
     );
     if (holiday) {
-      return {
-        emphasis: "medium",
-        tooltip: `This is a NYSE Holiday (${holiday.name})`,
-      };
+      return `This is a NYSE Holiday (${holiday.name})`;
     }
   },
 };

@@ -25,7 +25,6 @@
 }
 
 .saltCalendarDay:hover,
-/* Offset*/
 .saltCalendarDay-hoveredOffset,
 .saltCalendarDay-hoveredOffset:hover {
   background: var(--salt-selectable-background-hover);

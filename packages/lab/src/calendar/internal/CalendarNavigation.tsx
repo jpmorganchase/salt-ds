@@ -13,24 +13,23 @@ import {
   MouseEventHandler,
   SyntheticEvent,
 } from "react";
-import { Dropdown, DropdownProps } from "../../dropdown";
-import { ListItem, ListItemType } from "../../list";
+import { DropdownNext, DropdownNextProps } from "../../dropdown-next";
 
 import { useCalendarContext } from "./CalendarContext";
 
 import calendarNavigationCss from "./CalendarNavigation.css";
 import { DateValue, isSameMonth, isSameYear } from "@internationalized/date";
 import { formatDate, monthDiff, monthsForLocale } from "./utils";
-import { SelectionChangeHandler } from "../../common-hooks";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { Option } from "../../option";
 
-type DropdownItem = {
+interface DropdownItem {
   value: DateValue;
   disabled?: boolean;
-};
+}
 
-type dateDropdownProps = DropdownProps<DropdownItem>;
+type dateDropdownProps = DropdownNextProps<DropdownItem>;
 
 export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   MonthDropdownProps?: dateDropdownProps;
@@ -83,7 +82,7 @@ function useCalendarNavigation() {
     }
   };
 
-  const months = monthsForLocale(visibleMonth).map((month) => {
+  const months: DropdownItem[] = monthsForLocale(visibleMonth).map((month) => {
     return { value: month, disabled: isOutsideAllowedMonths(month) };
   });
 
@@ -91,10 +90,10 @@ function useCalendarNavigation() {
     .map((delta) => ({ value: visibleMonth.add({ years: delta }) }))
     .filter(({ value }) => !isOutsideAllowedYears(value));
 
-  const selectedMonth = months.find((item: DropdownItem) =>
+  const selectedMonth: DropdownItem[] = months.filter((item: DropdownItem) =>
     isSameMonth(item.value, visibleMonth)
   );
-  const selectedYear = years.find((item: DropdownItem) =>
+  const selectedYear: DropdownItem[] = years.filter((item: DropdownItem) =>
     isSameYear(item.value, visibleMonth)
   );
 
@@ -115,17 +114,19 @@ function useCalendarNavigation() {
   };
 }
 
-const ListItemWithTooltip: ListItemType<DropdownItem> = ({
-  item,
-  label,
-  ...props
-}) => (
+const OptionWithTooltip = (
+  item: DropdownItem,
+  itemToString: (item: DropdownItem) => string
+) => (
   <Tooltip
     placement="right"
-    disabled={!item?.disabled}
+    disabled={!item.disabled}
     content="This month is out of range"
+    key={item.value.toString()}
   >
-    <ListItem {...props}>{label}</ListItem>
+    <Option value={item} disabled={item.disabled}>
+      {itemToString(item)}
+    </Option>
   </Tooltip>
 );
 
@@ -171,25 +172,19 @@ export const CalendarNavigation = forwardRef<
     moveToNextMonth(event);
   };
 
-  const handleMonthSelect: SelectionChangeHandler<DropdownItem> = (
-    event,
-    month
-  ) => {
+  const handleMonthSelect = (event: SyntheticEvent, month: DropdownItem[]) => {
     if (month) {
-      moveToMonth(event, month.value);
+      moveToMonth(event, month[0].value);
     }
   };
 
-  const handleYearSelect: SelectionChangeHandler<DropdownItem> = (
-    event,
-    year
-  ) => {
+  const handleYearSelect = (event: SyntheticEvent, year: DropdownItem[]) => {
     if (year) {
-      moveToMonth(event, year.value);
+      moveToMonth(event, year[0].value);
     }
   };
 
-  const monthDropdownId = useId(MonthDropdownProps?.id) || "";
+  const monthDropdownId = useId(MonthDropdownProps?.id) ?? "";
   const monthDropdownLabelledBy = clsx(
     MonthDropdownProps?.["aria-labelledby"],
     // TODO need a prop on Dropdown to allow buttonId to be passed, should not make assumptions about internal
@@ -197,7 +192,7 @@ export const CalendarNavigation = forwardRef<
     `${monthDropdownId}-control`
   );
 
-  const yearDropdownId = useId(YearDropdownProps?.id) || "";
+  const yearDropdownId = useId(YearDropdownProps?.id) ?? "";
   const yearDropdownLabelledBy = clsx(
     YearDropdownProps?.["aria-labelledby"],
     `${yearDropdownId}-control`
@@ -243,31 +238,29 @@ export const CalendarNavigation = forwardRef<
           />
         </Button>
       </Tooltip>
-      <Dropdown<DropdownItem>
-        source={months}
-        id={monthDropdownId}
+      <DropdownNext<DropdownItem>
         aria-labelledby={monthDropdownLabelledBy}
         aria-label="Month Dropdown"
-        {...MonthDropdownProps}
-        ListItem={ListItemWithTooltip}
+        id={monthDropdownId}
         selected={selectedMonth}
-        itemToString={defaultItemToMonth}
+        value={defaultItemToMonth(selectedMonth[0])}
         onSelectionChange={handleMonthSelect}
-        fullWidth
-      />
+        {...MonthDropdownProps}
+      >
+        {months.map((month) => OptionWithTooltip(month, defaultItemToMonth))}
+      </DropdownNext>
       {!hideYearDropdown && (
-        <Dropdown<DropdownItem>
-          source={years}
+        <DropdownNext
           id={yearDropdownId}
           aria-labelledby={yearDropdownLabelledBy}
           aria-label="Year Dropdown"
-          {...YearDropdownProps}
-          ListItem={ListItemWithTooltip}
           selected={selectedYear}
+          value={defaultItemToYear(selectedYear[0])}
           onSelectionChange={handleYearSelect}
-          itemToString={defaultItemToYear}
-          fullWidth
-        />
+          {...YearDropdownProps}
+        >
+          {years.map((year) => OptionWithTooltip(year, defaultItemToYear))}
+        </DropdownNext>
       )}
       <Tooltip
         placement="top"

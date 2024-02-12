@@ -1,8 +1,7 @@
-import { makePrefixer, Tooltip, TooltipProps } from "@salt-ds/core";
+import { makePrefixer, Tooltip, TooltipProps, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
-
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
 import { formatDate } from "./utils";
@@ -35,6 +34,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     });
 
     const dayRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useForkRef(ref, dayRef);
     const { status, dayProps, unselectableReason } = useCalendarDay(
       {
         date: day,
@@ -57,7 +57,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         <button
           aria-label={formatDate(day)}
           {...dayProps}
-          ref={dayRef}
+          ref={buttonRef}
           {...rest}
           className={clsx(
             withBaseName(),
@@ -65,9 +65,6 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
               [withBaseName("hidden")]: hidden,
               [withBaseName("outOfRange")]: outOfRange,
               [withBaseName("unselectable")]: !!unselectable,
-              //TODO: remove all low and medium and remove the line below
-              [withBaseName("unselectable")]:
-                unselectable === "low" || unselectable === "medium",
             },
             dayProps.className,
             className

@@ -17,14 +17,14 @@ import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
 import { useSelectionDay } from "./useSelection";
 
-export type DayStatus = {
+export interface DayStatus {
   outOfRange?: boolean;
   selected?: boolean;
   today?: boolean;
-  unselectable?: "medium" | "low" | false;
+  unselectable?: string | false;
   focused?: boolean;
   hidden?: boolean;
-};
+}
 
 export interface useCalendarDayProps {
   date: DateValue;
@@ -76,13 +76,8 @@ export function useCalendarDay(
   const unselectableResult =
     isDayUnselectable(date) || (outOfRange && isOutsideAllowedMonths(date));
   const unselectableReason =
-    typeof unselectableResult !== "boolean" ? unselectableResult?.tooltip : "";
-  const unselectable =
-    typeof unselectableResult !== "boolean"
-      ? unselectableResult.emphasis
-      : unselectableResult
-      ? "low"
-      : false;
+    typeof unselectableResult !== "boolean" ? unselectableResult : ""; // TODO: check accessibility, should we have a default tooltip message?
+  const unselectable = Boolean(unselectableResult);
   const hidden = hideOutOfRangeDates && outOfRange;
 
   useEffect(() => {
