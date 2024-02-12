@@ -123,7 +123,7 @@
     "@salt-ds/lab": "workspace:*",
     "modular-scripts/rollup": "2.79.1",
     "next": "^14.0.0",
-    "webpack-dev-server": "4.9.3",
+    "webpack-dev-server": "5.0.0",
     "webpack": "5.76.0",
     "recursive-readdir": "2.2.3"
   },
