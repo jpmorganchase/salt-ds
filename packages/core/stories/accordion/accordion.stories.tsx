@@ -17,10 +17,13 @@ import "./accordion.stories.css";
 export default {
   title: "Core/Accordion",
   component: Accordion,
+  // Default is centered, but accordion will jump around when interacting
+  parameters: {
+    layout: 'padded',
+  },
 } as Meta<typeof Accordion>;
 
 export const Default: StoryFn<AccordionProps> = (props) => (
-  <div className="story-root">
     <Accordion {...props}>
       <AccordionHeader>Internal form</AccordionHeader>
       <AccordionPanel>
@@ -41,7 +44,6 @@ export const Default: StoryFn<AccordionProps> = (props) => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-  </div>
 );
 
 Default.args = {
@@ -49,7 +51,6 @@ Default.args = {
 };
 
 export const DefaultGroup: StoryFn<AccordionGroupProps> = (props) => (
-  <div className="story-root">
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion value={`accordion-${i}`} key={`accordion-${i}`}>
@@ -74,7 +75,6 @@ export const DefaultGroup: StoryFn<AccordionGroupProps> = (props) => (
         </Accordion>
       ))}
     </AccordionGroup>
-  </div>
 );
 
 export const ExclusiveGroup: StoryFn<AccordionGroupProps> = (props) => {
@@ -86,7 +86,6 @@ export const ExclusiveGroup: StoryFn<AccordionGroupProps> = (props) => {
   };
 
   return (
-    <div className="story-root">
       <AccordionGroup {...props}>
         {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
           <Accordion
@@ -116,12 +115,10 @@ export const ExclusiveGroup: StoryFn<AccordionGroupProps> = (props) => {
           </Accordion>
         ))}
       </AccordionGroup>
-    </div>
   );
 };
 
 export const Disabled: StoryFn<AccordionGroupProps> = (props) => (
-  <div className="story-root">
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion
@@ -150,7 +147,6 @@ export const Disabled: StoryFn<AccordionGroupProps> = (props) => (
         </Accordion>
       ))}
     </AccordionGroup>
-  </div>
 );
 
 const statuses: AccordionProps["status"][] = [
@@ -161,7 +157,6 @@ const statuses: AccordionProps["status"][] = [
 ];
 
 export const Status: StoryFn<AccordionGroupProps> = (props) => (
-  <div className="story-root">
     <AccordionGroup {...props}>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion
@@ -190,5 +185,4 @@ export const Status: StoryFn<AccordionGroupProps> = (props) => (
         </Accordion>
       ))}
     </AccordionGroup>
-  </div>
 );
