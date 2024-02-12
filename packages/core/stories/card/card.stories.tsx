@@ -76,6 +76,18 @@ export const DefaultWithButton: StoryFn<typeof Card> = () => (
   </Card>
 );
 
+export const HoverEffect: StoryFn<typeof Card> = () => (
+  <Card style={{ width: "256px" }} hoverEffect>
+    <StackLayout gap={1}>
+      <H3>{exampleData.title}</H3>
+      <StackLayout gap={2} align="start">
+        <Text>{exampleData.content}</Text>
+        <Button>View funds</Button>
+      </StackLayout>
+    </StackLayout>
+  </Card>
+);
+
 export const Sizes: StoryFn<typeof Card> = () => {
   const sizes = ["small", "medium", "large"] as const;
   return (

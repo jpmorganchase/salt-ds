@@ -28,6 +28,11 @@
   --card-padding: var(--salt-spacing-300);
 }
 
+/* Styles applied if `hoverEffect={true}` */
+.saltCard-hover:hover {
+  box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+}
+
 /*
  * **Deprecated:** The following styles are deprecated
  *  Use Interactable Card component instead

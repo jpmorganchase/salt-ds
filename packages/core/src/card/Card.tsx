@@ -23,11 +23,15 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   interactable?: boolean;
   /**
-   * Card size; adjusts the padding.
+   * Whether to show hover effect. Defaults to `false`.
+   */
+  hoverEffect?: boolean;
+  /**
+   * Card size; adjusts the padding. Defaults to `large`.
    */
   size?: "small" | "medium" | "large";
   /**
-   * Styling variant; defaults to "primary".
+   * Styling variant. Defaults to `primary`.
    */
   variant?: "primary" | "secondary";
 }
@@ -40,9 +44,10 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     className,
     disabled,
     interactable,
-    children,
+    hoverEffect = false,
     size = "large",
     variant = "primary",
+    children,
     ...rest
   } = props;
 
@@ -62,6 +67,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
         {
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
+          [withBaseName("hover")]: hoverEffect,
           [withBaseName("interactable")]: interactable,
         },
         className
