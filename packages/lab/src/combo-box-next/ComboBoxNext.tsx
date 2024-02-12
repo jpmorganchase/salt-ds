@@ -282,26 +282,41 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
-    if (openState && activeIndex < 0) {
-      if (openKey.current === "ArrowDown") {
-        setActive(getOptionAtIndex(0));
-      } else if (openKey.current === "ArrowUp") {
-        setActive(getOptionAtIndex(options.length - 1));
-      } else {
-        if (selectedState.length > 0) {
-          const selected = getOptionsMatching(
-            (option) => option.value === selectedState[0]
-          ).pop();
-          if (selected) {
-            setActive(selected);
-          }
-        } else {
-          setActive(getOptionAtIndex(0));
-        }
-      }
-    } else if (!openState) {
-      setActive(undefined);
+    let newActive = undefined;
+
+    // If the active item is still in the list, we don't need to do anything
+    if (activeIndex > 0) {
+      return;
     }
+
+    // If the list is closed we should clear the active item
+    if (!openState) {
+      setActive(undefined);
+      return;
+    }
+
+    // If we have selected an item, we should make that the active item
+    if (selectedState.length > 0) {
+      newActive = getOptionsMatching(
+        (option) => option.value === selectedState[0]
+      ).pop();
+    }
+
+    // If we still don't have an active item, we should check if the list has been opened with the keyboard
+    if (!newActive) {
+      if (openKey.current === "ArrowDown") {
+        newActive = getOptionAtIndex(0);
+      } else if (openKey.current === "ArrowUp") {
+        newActive = getOptionAtIndex(options.length - 1);
+      }
+    }
+
+    // If we still don't have an active item, we should just select the first item
+    if (!newActive) {
+      newActive = getOptionAtIndex(0);
+    }
+
+    setActive(newActive);
   }, [openState, children]);
 
   const buttonId = useId();

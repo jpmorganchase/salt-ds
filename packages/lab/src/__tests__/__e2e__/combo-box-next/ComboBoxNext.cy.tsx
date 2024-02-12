@@ -156,7 +156,7 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").should("have.attr", "aria-expanded", "false");
   });
 
-  it("should focus the first item when the down arrow is pressed", () => {
+  it("should focus the first item when the down arrow is pressed and no items are selected", () => {
     cy.mount(<Default />);
 
     cy.realPress("Tab");
@@ -164,14 +164,35 @@ describe("Given a ComboBox", () => {
     cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
   });
 
-  it("should focus the last item when the up arrow is pressed", () => {
+  it("should focus the last item when the up arrow is pressed and no items are selected", () => {
     cy.mount(<Default />);
 
     cy.realPress("Tab");
     cy.realPress("ArrowUp");
     cy.findByRole("option", { name: "Georgia" }).should("be.activeDescendant");
   });
-  ``;
+
+  it("should focus the selected item when the down arrow is pressed and items are selected", () => {
+    cy.mount(<WithDefaultSelected />);
+
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
+  });
+
+  it("should focus the selected item when the up arrow is pressed and items are selected", () => {
+    cy.mount(<WithDefaultSelected />);
+
+    cy.realPress("Tab");
+    cy.realPress("ArrowUp");
+    cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
+  });
 
   it("should support keyboard navigation", () => {
     cy.mount(<Default />);
