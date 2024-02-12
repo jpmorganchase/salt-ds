@@ -1,12 +1,12 @@
 .fakeDialogWindow {
-  border: 1px solid black;
-  width: calc(20 * var(--salt-size-base));
+  padding-top: var(--salt-spacing-300);
   padding-bottom: var(--salt-spacing-300);
-}
-
-.fakeDialogWindowHeader {
-  border-bottom: 1px solid black;
-  padding-top: var(--salt-spacing-200);
-  padding-bottom: var(--salt-spacing-200);
-  margin-bottom: var(--salt-spacing-300);
+  background: var(--salt-container-primary-background);
+  box-shadow: var(--salt-overlayable-shadow-modal);
+  overflow-y: auto;
+  z-index: var(--salt-zIndex-drawer);
+  height: min-content;
+  border-width: var(--salt-size-border);
+  border-style: var(--salt-container-borderStyle);
+  border-color: var(--salt-separable-tertiary-borderColor);
 }

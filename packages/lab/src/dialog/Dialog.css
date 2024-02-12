@@ -1,37 +1,21 @@
 /* Styles applied to Dialog component */
 .saltDialog {
-  position: relative;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   display: flex;
   flex-direction: column;
   padding-top: var(--salt-spacing-300);
   padding-bottom: var(--salt-spacing-300);
   background: var(--salt-container-primary-background);
-  max-height: 100%;
-  max-width: 100%;
   box-shadow: var(--salt-overlayable-shadow-modal);
-  z-index: calc(var(--salt-zIndex-appHeader) - 1);
   overflow-y: auto;
-
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
-}
-
-.salt-density-high {
-  --saltDialog-minWidth: 240px;
-}
-
-.salt-density-medium {
-  --saltDialog-minWidth: 320px;
-}
-
-.salt-density-low {
-  --saltDialog-minWidth: 400px;
-}
-
-.salt-density-touch {
-  --saltDialog-minWidth: 480px;
+  z-index: var(--salt-zIndex-drawer);
+  height: min-content;
+  border: var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-border);
 }
 
 /* Styles applied to Dialog background overlay */
@@ -42,12 +26,6 @@
   justify-content: center;
   padding: var(--salt-spacing-100);
   z-index: var(--salt-zIndex-modal);
-}
-
-/* Styles applied to Dialog when any status prop is applied */
-.saltDialog-withStatus {
-  border-width: var(--salt-size-border);
-  border-style: var(--salt-container-borderStyle);
 }
 
 /* Styles applied to Dialog when a status="info" */
@@ -80,12 +58,78 @@
   animation: var(--salt-animation-fade-out-back);
 }
 
-@media screen and (min-width: 480px) {
-  .saltDialog {
-    min-width: var(--saltDialog-minWidth);
-  }
+/* Pending design decision on heights and widths  */
+.saltDialog-small-xs {
+  width: 100%;
+  max-height: 48%;
+}
 
-  .saltDialog-overlay {
-    padding: var(--salt-spacing-400);
-  }
+.saltDialog-small-sm {
+  width: 56%;
+  max-height: 48%;
+}
+
+.saltDialog-small-md {
+  width: 36%;
+  max-height: 48%;
+}
+
+.saltDialog-small-lg {
+  width: 24%;
+  max-height: 48%;
+}
+
+.saltDialog-small-xl {
+  width: 24%;
+  max-height: 48%;
+}
+
+.saltDialog-medium-xs {
+  width: 100%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-sm {
+  width: 84%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-md {
+  width: 68%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-lg {
+  width: 48%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-xl {
+  width: 48%;
+  max-height: 72%;
+}
+
+.saltDialog-large-xs {
+  width: 100%;
+  max-height: 84%;
+}
+
+.saltDialog-large-sm {
+  width: 96%;
+  max-height: 84%;
+}
+
+.saltDialog-large-md {
+  width: 84%;
+  max-height: 84%;
+}
+
+.saltDialog-large-lg {
+  width: 72%;
+  max-height: 84%;
+}
+
+.saltDialog-large-xl {
+  width: 72%;
+  max-height: 84%;
 }

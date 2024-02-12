@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.11.1
+
+### Patch Changes
+
+- bef0d509: Undeprecated `--salt-track-borderColor`, which was incorrectly deprecated in feb80146.
+
 ## 1.11.0
 
 ### Minor Changes

@@ -7,7 +7,7 @@ import {
   DialogContent,
 } from "@salt-ds/lab";
 
-export const Accent = (): ReactElement => {
+export const WithoutAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -25,10 +25,14 @@ export const Accent = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open dialog with accent
+        Open dialog without accent
       </Button>
-      <Dialog style={{ width: 500 }} open={open} onOpenChange={onOpenChange}>
-        <DialogTitle accent>Terms and conditions</DialogTitle>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        id={"terms-and-conditions-dialog"}
+      >
+        <DialogTitle disableAccent>Terms and conditions</DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>

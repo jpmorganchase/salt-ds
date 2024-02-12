@@ -40,11 +40,11 @@ export interface FloatingComponentProps
   /**
    * Position props for the floating component
    */
-  top: number;
-  left: number;
+  top?: number;
+  left?: number;
   width?: number;
   height?: number;
-  position: Strategy;
+  position?: Strategy;
 }
 
 const DefaultFloatingComponent = forwardRef<
