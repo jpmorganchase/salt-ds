@@ -12,7 +12,7 @@
   border-color: var(--overlay-borderColor);
   border-style: var(--saltOverlay-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltOverlay-borderWidth, var(--salt-size-border));
-  border-radius: var(--saltOverlay-borderRadius, var(--salt-palette-corner-small, 0));
+  border-radius: var(--saltOverlay-borderRadius, var(--salt-palette-corner, 0));
 
   background: var(--overlay-background);
   box-shadow: var(--saltOverlay-boxShadow, var(--salt-overlayable-shadow-popout));
