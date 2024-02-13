@@ -66,7 +66,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
         {
           [withBaseName("accent")]: accent,
           [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
-          [withBaseName("hover")]: hoverable,
+          [withBaseName("hoverable")]: hoverable,
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
           [withBaseName("interactable")]: interactable,

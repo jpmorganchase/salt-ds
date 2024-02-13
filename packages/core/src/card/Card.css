@@ -18,13 +18,13 @@
   border-color: var(--salt-container-secondary-borderColor);
 }
 
-/* Styles applied if `accentPlacement` is set */
-.saltCard-hover:hover {
+/* Styles applied if `accent` is set */
+.saltCard-hoverable:hover {
   cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
 }
 
-/* Styles applied if `accentPlacement` is set */
+/* Styles applied if `accent` is set */
 /* Styles applied to create accent */
 .saltCard-accent::after {
   content: "";
@@ -32,7 +32,7 @@
   background-color: var(--card-accentColor);
 }
 
-/* Styles applied to Card if `accentPlacement="bottom"` (default) */
+/* Styles applied to Card if `accent="bottom"` (default) */
 .saltCard-accentBottom::after {
   left: calc(-1 * var(--salt-size-border));
   bottom: calc(-1 * var(--salt-size-border));
@@ -40,7 +40,7 @@
   width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
-/* Styles applied to Card if `accentPlacement="left"` */
+/* Styles applied to Card if `accent="left"` */
 .saltCard-accentLeft::after {
   left: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
@@ -48,7 +48,7 @@
   width: var(--salt-size-accent);
 }
 
-/* Styles applied to Card if `accentPlacement="top"` */
+/* Styles applied to Card if `accent="top"` */
 .saltCard-accentTop::after {
   left: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
@@ -56,7 +56,7 @@
   width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
-/* Styles applied to Card if `accentPlacement="right"` */
+/* Styles applied to Card if `accent="right"` */
 .saltCard-accentRight::after {
   right: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
@@ -64,8 +64,8 @@
   width: var(--salt-size-accent);
 }
 
-/* Styles applied to accent if `hoverEffect={true}` */
-.saltCard-hover.saltCard-accent:hover {
+/* Styles applied to accent if `hoverable={true}` */
+.saltCard-hoverable.saltCard-accent:hover {
   --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
 
