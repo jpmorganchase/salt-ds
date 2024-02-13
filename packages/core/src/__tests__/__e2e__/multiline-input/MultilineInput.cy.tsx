@@ -122,4 +122,34 @@ describe("GIVEN an MultilineInput", () => {
           });
       });
   });
+
+  it("should collapse back to fit content when content is reduced", () => {
+    cy.mount(<Default />);
+    cy.findByRole("textbox")
+      .invoke("height")
+      .then((defaultHeight) => {
+        cy.findByRole("textbox").realClick();
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.findByRole("textbox")
+          .invoke("height")
+          .then((newHeight) => {
+            expect(newHeight ?? 0).to.be.greaterThan(defaultHeight ?? 0);
+          });
+      });
+    cy.findByRole("textbox")
+      .invoke("height")
+      .then((defaultHeight) => {
+        cy.findByRole("textbox").realClick();
+        cy.realPress("Escape");
+        cy.realPress("Escape");
+        cy.realPress("Escape");
+        cy.findByRole("textbox")
+          .invoke("height")
+          .then((newHeight) => {
+            expect(newHeight ?? 0).to.be.eq(defaultHeight);
+          });
+      });
+  });
 });
