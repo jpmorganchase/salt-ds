@@ -240,6 +240,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         initialFocus={1}
         disableDismiss
       >
+        <DialogCloseButton onClick={handleClose} />
         <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>
           Are you sure you want to permanently delete this transaction

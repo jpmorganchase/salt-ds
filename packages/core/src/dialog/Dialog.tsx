@@ -135,43 +135,41 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   return (
     <DialogContext.Provider value={contextValue}>
-      {showComponent && (
-        <ConditionalScrimWrapper condition={!disableScrim}>
-          <FloatingComponent
-            open={open}
-            role={role}
-            aria-modal="true"
-            ref={floatingRef}
-            left={x ?? 0}
-            top={y ?? 0}
-            width={elements.floating?.offsetWidth}
-            height={elements.floating?.offsetHeight}
-            focusManagerProps={{
-              context: context,
-            }}
-            aria-labelledby={`${id}-header`}
-            className={clsx(
-              withBaseName(),
-              withBaseName(size, currentbreakpoint),
-              {
-                [withBaseName("enterAnimation")]: open,
-                [withBaseName("exitAnimation")]: !open,
-                [withBaseName(status as string)]: status,
-              },
-              className
-            )}
-            onAnimationEnd={() => {
-              if (!open && showComponent) {
-                setShowComponent(false);
-              }
-            }}
-            {...getFloatingProps()}
-            {...rest}
-          >
-            {children}
-          </FloatingComponent>
-        </ConditionalScrimWrapper>
-      )}
+      <ConditionalScrimWrapper condition={open && !disableScrim}>
+        <FloatingComponent
+          open={open}
+          role={role}
+          aria-modal="true"
+          ref={floatingRef}
+          left={x ?? 0}
+          top={y ?? 0}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+          // focusManagerProps={{
+          //   context: context,
+          // }}
+          aria-labelledby={`${id}-header`}
+          className={clsx(
+            withBaseName(),
+            withBaseName(size, currentbreakpoint),
+            {
+              [withBaseName("enterAnimation")]: open,
+              [withBaseName("exitAnimation")]: !open,
+              [withBaseName(status as string)]: status,
+            },
+            className
+          )}
+          onAnimationEnd={() => {
+            if (!open && showComponent) {
+              setShowComponent(false);
+            }
+          }}
+          {...getFloatingProps()}
+          {...rest}
+        >
+          {children}
+        </FloatingComponent>
+      </ConditionalScrimWrapper>
     </DialogContext.Provider>
   );
 });
