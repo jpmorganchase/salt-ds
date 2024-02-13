@@ -17,6 +17,7 @@ import {
   makePrefixer,
   useFloatingComponent,
   useFloatingUI,
+  UseFloatingUIProps,
   useForkRef,
   useFormFieldProps,
   useId,
@@ -24,7 +25,14 @@ import {
 import { ListControlProps } from "../list-control/ListControlState";
 import { ListControlContext } from "../list-control/ListControlContext";
 import { clsx } from "clsx";
-import { flip, size } from "@floating-ui/react";
+import {
+  flip,
+  size,
+  useClick,
+  useDismiss,
+  useFocus,
+  useInteractions,
+} from "@floating-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComboBoxNext } from "./useComboBoxNext";
 import { OptionList } from "../option/OptionList";
@@ -36,6 +44,14 @@ export interface ComboBoxNextProps<Item = string>
    * The options to display in the combo box.
    */
   children?: ReactNode;
+  /**
+   * The default value of the input.
+   */
+  defaultValue?: string | readonly string[] | number | undefined;
+  /**
+   * The value of the input. The component will be controlled if this prop is provided.
+   */
+  value?: string | readonly string[] | number | undefined;
 }
 
 const withBaseName = makePrefixer("saltComboBoxNext");
@@ -77,6 +93,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   const disabled = Boolean(disabledProp) || formFieldDisabled;
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const listControl = useComboBoxNext<Item>({
     open,
@@ -88,6 +105,8 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     onSelectionChange,
     value,
     defaultValue,
+    disabled,
+    readOnly,
   });
 
   const {
@@ -113,30 +132,47 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   const { Component: FloatingComponent } = useFloatingComponent();
 
-  const { x, y, strategy, elements, floating, reference } = useFloatingUI({
-    open,
-    placement: "bottom-start",
-    middleware: [
-      size({
-        apply({ rects, elements, availableHeight }) {
-          Object.assign(elements.floating.style, {
-            minWidth: `${rects.reference.width}px`,
-            maxHeight: `max(calc(${availableHeight}px - var(--salt-spacing-100)), calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5))`,
-          });
-        },
-      }),
-      flip({ fallbackStrategy: "initialPlacement" }),
-    ],
-  });
+  const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
+    newOpen,
+    _event,
+    reason
+  ) => {
+    const focusNotBlur = reason === "focus" && newOpen;
+    if (readOnly || focusNotBlur) return;
+    setOpen(newOpen);
+  };
+
+  const { x, y, strategy, elements, floating, reference, context } =
+    useFloatingUI({
+      open: openState && !readOnly && children != undefined,
+      onOpenChange: handleOpenChange,
+      placement: "bottom-start",
+      middleware: [
+        size({
+          apply({ rects, elements, availableHeight }) {
+            Object.assign(elements.floating.style, {
+              minWidth: `${rects.reference.width}px`,
+              maxHeight: `max(calc(${availableHeight}px - var(--salt-spacing-100)), calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5))`,
+            });
+          },
+        }),
+        flip({ fallbackStrategy: "initialPlacement" }),
+      ],
+    });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useDismiss(context),
+    useFocus(context),
+    useClick(context, { keyboardHandlers: false }),
+  ]);
 
   const handleRef = useForkRef<HTMLDivElement>(reference, ref);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (!readOnly) {
       event.stopPropagation();
       setFocusVisibleState(false);
-      setOpen(event, !openState);
+      setOpen(!openState, "manual");
     }
   };
 
@@ -154,7 +190,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
     if (!openState) {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-        setOpen(event, true);
+        setOpen(true, undefined, event.key);
         return;
       }
     }
@@ -193,12 +229,8 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
         if (!multiselect) {
           event.preventDefault();
-          setOpen(event, false);
         }
 
-        break;
-      case "Escape":
-        setOpen(event, false);
         break;
       case "Tab":
         if (!multiselect && activeState) {
@@ -218,33 +250,17 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
     setFocusedState(true);
-
     onFocus?.(event);
   };
 
-  const ignoreBlur = useRef(false);
-
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    if (!ignoreBlur.current) {
-      setOpen(event, false);
-    }
-    ignoreBlur.current = false;
-
     setFocusedState(false);
     onBlur?.(event);
   };
 
-  const handleClick = (event: MouseEvent<HTMLInputElement>) => {
-    if (!readOnly) {
-      setOpen(event, true);
-    }
-
-    onClick?.(event);
-  };
-
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!openState) {
-      setOpen(event, true);
+      setOpen(true, "input");
     }
 
     if (event.target.value === "" && !multiselect) {
@@ -267,41 +283,48 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     setFocusVisibleState(false);
   };
 
-  const handleListMouseDown = () => {
-    ignoreBlur.current = true;
-  };
-
-  const handleListFocus = () => {
-    inputRef.current?.focus();
-  };
-
-  const handleListClick = () => {
+  const handleFocusInput = () => {
     inputRef.current?.focus();
   };
 
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
-    if (openState && activeIndex < 0) {
-      if (openKey.current.key === "ArrowDown") {
-        setActive(getOptionAtIndex(0));
-      } else if (openKey.current.key === "ArrowUp") {
-        setActive(getOptionAtIndex(options.length - 1));
-      } else {
-        if (selectedState.length > 0) {
-          const selected = getOptionsMatching(
-            (option) => option.value === selectedState[0]
-          ).pop();
-          if (selected) {
-            setActive(selected);
-          }
-        } else {
-          setActive(getOptionAtIndex(0));
-        }
-      }
-    } else if (!openState) {
-      setActive(undefined);
+    let newActive = undefined;
+
+    // If the active item is still in the list, we don't need to do anything
+    if (activeIndex > 0) {
+      return;
     }
+
+    // If the list is closed we should clear the active item
+    if (!openState) {
+      setActive(undefined);
+      return;
+    }
+
+    // If we have selected an item, we should make that the active item
+    if (selectedState.length > 0) {
+      newActive = getOptionsMatching(
+        (option) => option.value === selectedState[0]
+      ).pop();
+    }
+
+    // If we still don't have an active item, we should check if the list has been opened with the keyboard
+    if (!newActive) {
+      if (openKey.current === "ArrowDown") {
+        newActive = getOptionAtIndex(0);
+      } else if (openKey.current === "ArrowUp") {
+        newActive = getOptionAtIndex(options.length - 1);
+      }
+    }
+
+    // If we still don't have an active item, we should just select the first item
+    if (!newActive) {
+      newActive = getOptionAtIndex(0);
+    }
+
+    setActive(newActive);
   }, [openState, children]);
 
   const buttonId = useId();
@@ -336,10 +359,6 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
             ) : undefined}
           </>
         }
-        onClick={handleClick}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        onKeyDown={handleKeyDown}
         onChange={handleChange}
         role="combobox"
         disabled={disabled}
@@ -355,11 +374,17 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         variant={variant}
         inputRef={inputRef}
         value={valueState}
-        {...rest}
         ref={handleRef}
+        {...getReferenceProps({
+          onBlur: handleBlur,
+          onFocus: handleFocus,
+          onKeyDown: handleKeyDown,
+          ...rest,
+        })}
       />
       <FloatingComponent
         open={(openState || focusedState) && !readOnly && children != undefined}
+        {...getFloatingProps()}
         left={x ?? 0}
         top={y ?? 0}
         position={strategy}
@@ -372,9 +397,8 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
           ref={listRef}
           id={listId}
           onMouseOver={handleListMouseOver}
-          onMouseDown={handleListMouseDown}
-          onFocus={handleListFocus}
-          onClick={handleListClick}
+          onFocus={handleFocusInput}
+          onClick={handleFocusInput}
         >
           {children}
         </OptionList>
