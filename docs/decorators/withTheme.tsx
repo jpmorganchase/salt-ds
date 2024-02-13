@@ -5,6 +5,7 @@ import {
   Panel,
   SaltProvider,
   useTheme,
+  UNSTABLE_SaltProviderNext,
 } from "@salt-ds/core";
 import { useEffect } from "react";
 
@@ -64,7 +65,11 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 }
 
 export const withTheme: Decorator = (StoryFn, context) => {
-  const { density, mode, styleInjection } = context.globals;
+  const { density, mode, styleInjection, themeNext, cornerRadius } =
+    context.globals;
+
+  const Provider =
+    themeNext === "enable" ? UNSTABLE_SaltProviderNext : SaltProvider;
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";
@@ -84,31 +89,33 @@ export const withTheme: Decorator = (StoryFn, context) => {
         }}
       >
         {ModeValues.map((mode) => (
-          <SaltProvider
+          <Provider
             applyClassesTo={"child"}
             density={density}
             mode={mode}
             key={`${mode}-${styleInjection}`}
             enableStyleInjection={styleInjection === "enable"}
+            cornerRadius={cornerRadius}
           >
             <Panel>
               <StoryFn />
             </Panel>
-          </SaltProvider>
+          </Provider>
         ))}
       </div>
     );
   }
 
   return (
-    <SaltProvider
+    <Provider
       density={density}
       mode={mode}
       key={`${mode}-${styleInjection}`}
       enableStyleInjection={styleInjection === "enable"}
+      cornerRadius={cornerRadius}
     >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />
-    </SaltProvider>
+    </Provider>
   );
 };

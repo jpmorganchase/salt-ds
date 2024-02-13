@@ -1,6 +1,7 @@
 import type { ArgTypes, Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
 import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/theme-next.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";
@@ -113,6 +114,27 @@ export const globalTypes: GlobalTypes = {
     toolbar: {
       items: ["disable", "enable"],
       title: "Component Style Injection",
+    },
+  },
+  themeNext: {
+    name: "Experimental theme next",
+    description: "Turn on/off theme next",
+    defaultValue: "disable",
+    toolbar: {
+      icon: "beaker",
+      items: ["disable", "enable"],
+      title: "Theme Next",
+    },
+  },
+  cornerRadius: {
+    name: "Experimental corner radius",
+    description: "Turn on/off theme next",
+    defaultValue: "sharp",
+    // if: { global: "themeNext", eq: "enable" }, // if doesn't work?
+    toolbar: {
+      icon: "beaker",
+      items: ["sharp", "rounded"],
+      title: "Corner radius",
     },
   },
 };
