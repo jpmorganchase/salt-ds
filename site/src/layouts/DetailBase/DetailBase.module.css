@@ -74,22 +74,22 @@
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.sidebar aside ul {
+.sidebar aside ul[role="tree"] {
   margin: 0;
   padding: var(--toc-padding-vertical) 0 var(--toc-padding-vertical) var(--toc-padding-horizontal);
   font-size: 0.8rem;
 }
 
-.sidebar li {
+.sidebar ul[role="tree"] li {
   height: 36px;
 }
 
-.sidebar li:hover {
+.sidebar ul[role="tree"] li:hover {
   color: var(--salt-content-foreground-hover);
   text-decoration: underline;
 }
 
-.sidebar li[aria-checked="true"] {
+.sidebar ul[role="tree"] li[aria-checked="true"] {
   color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-navigable-fontWeight-active);
 }
