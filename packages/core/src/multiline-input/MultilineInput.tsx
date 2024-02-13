@@ -7,7 +7,7 @@ import {
   ReactNode,
   Ref,
   TextareaHTMLAttributes,
-  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -153,7 +153,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       onChange?.(event);
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       const input = inputRef.current;
       if (!input) return;
       const hasBeenManuallyResized =

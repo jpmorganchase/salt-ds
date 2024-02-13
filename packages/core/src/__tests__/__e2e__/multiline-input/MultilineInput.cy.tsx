@@ -2,9 +2,13 @@ import { composeStories } from "@storybook/react";
 import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
 import { ChangeEvent } from "react";
 
-const { Default, Controlled, Readonly, WithFormField } = composeStories(
-  multilineInputStories
-);
+const {
+  Default,
+  Controlled,
+  ControlledWithAdornment,
+  Readonly,
+  WithFormField,
+} = composeStories(multilineInputStories);
 
 describe("GIVEN an MultilineInput", () => {
   it("should allow a default value to be set", () => {
@@ -124,7 +128,7 @@ describe("GIVEN an MultilineInput", () => {
   });
 
   it("should collapse back to fit content when content is reduced", () => {
-    cy.mount(<Default />);
+    cy.mount(<Default rows={1} />);
     cy.findByRole("textbox")
       .invoke("height")
       .then((defaultHeight) => {
@@ -132,23 +136,31 @@ describe("GIVEN an MultilineInput", () => {
         cy.realPress("Enter");
         cy.realPress("Enter");
         cy.realPress("Enter");
+        cy.realPress("Backspace");
+        cy.realPress("Backspace");
+        cy.realPress("Backspace");
         cy.findByRole("textbox")
           .invoke("height")
           .then((newHeight) => {
-            expect(newHeight ?? 0).to.be.greaterThan(defaultHeight ?? 0);
+            expect(newHeight ?? 0).to.eq(defaultHeight);
           });
       });
+  });
+
+  it("should collapse back to fit content when value is reset", () => {
+    cy.mount(<ControlledWithAdornment rows={1} />);
     cy.findByRole("textbox")
       .invoke("height")
       .then((defaultHeight) => {
         cy.findByRole("textbox").realClick();
-        cy.realPress("Escape");
-        cy.realPress("Escape");
-        cy.realPress("Escape");
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.realPress("Enter");
+        cy.findAllByRole("button").realClick();
         cy.findByRole("textbox")
           .invoke("height")
           .then((newHeight) => {
-            expect(newHeight ?? 0).to.be.eq(defaultHeight);
+            expect(newHeight ?? 0).to.eq(defaultHeight);
           });
       });
   });
