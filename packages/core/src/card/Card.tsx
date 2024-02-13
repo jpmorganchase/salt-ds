@@ -12,7 +12,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Accent position.
    */
-  accentPlacement?: "bottom" | "top" | "left" | "right";
+  accent?: "bottom" | "top" | "left" | "right";
   /**
    * **Deprecated:** Use the InteractableCard component instead
    *
@@ -20,16 +20,16 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   disabled?: boolean;
   /**
+   * If `true` the card will have hover styling.
+   */
+  hoverable?: boolean;
+  /**
    * **Deprecated:** Use the InteractableCard component instead
    *
    * If `true`, interactive styles will be applied to `Card`. These styles give prominence to certain content
    * on the page.
    */
   interactable?: boolean;
-  /**
-   * Card padding size; adjusts the padding. Defaults to `large`.
-   */
-  paddingSize?: "small" | "medium" | "large";
   /**
    * Styling variant. Defaults to `primary`.
    */
@@ -41,12 +41,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   ref
 ) {
   const {
-    accentPlacement,
+    accent,
     children,
     className,
     disabled,
     interactable,
-    paddingSize = "large",
+    hoverable,
     variant = "primary",
     ...rest
   } = props;
@@ -62,13 +62,11 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     <div
       className={clsx(
         withBaseName(),
-        withBaseName(paddingSize),
         withBaseName(variant),
         {
-          [withBaseName("accent")]: accentPlacement,
-          [withBaseName(`accent${capitalize(accentPlacement || "")}`)]:
-            accentPlacement,
-          [withBaseName("hover")]: accentPlacement,
+          [withBaseName("accent")]: accent,
+          [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+          [withBaseName("hover")]: hoverable,
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
           [withBaseName("interactable")]: interactable,

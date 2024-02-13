@@ -13,7 +13,6 @@ import {
   RadioButtonGroup,
   Label,
   CardProps,
-  ToggleButton,
 } from "@salt-ds/core";
 import exampleImage from "./../assets/exampleImage1x.png";
 
@@ -79,16 +78,15 @@ export const DefaultWithButton: StoryFn<typeof Card> = () => (
 );
 
 export const AccentVariations: StoryFn<typeof Card> = () => {
-  const [placement, setPlacement] =
-    useState<CardProps["accentPlacement"]>("bottom");
+  const [placement, setPlacement] = useState<CardProps["accent"]>("bottom");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlacement(event.target.value as CardProps["accentPlacement"]);
+    setPlacement(event.target.value as CardProps["accent"]);
   };
 
   return (
     <StackLayout style={{ width: "266px" }}>
-      <Card accentPlacement={placement}>
+      <Card accent={placement} hoverable>
         <StackLayout gap={1}>
           <H3>{exampleData.title}</H3>
           <Text>{exampleData.content}</Text>
@@ -121,29 +119,6 @@ export const AccentVariations: StoryFn<typeof Card> = () => {
           onChange={handleChange}
         />
       </RadioButtonGroup>
-    </StackLayout>
-  );
-};
-
-export const Sizes: StoryFn<typeof Card> = () => {
-  const sizes = ["small", "medium", "large"] as const;
-  return (
-    <StackLayout style={{ width: 600 }}>
-      {sizes.map((size) => {
-        return (
-          <StackLayout key={size} align="end">
-            <StackLayout direction="row">
-              <Card paddingSize={size}>
-                <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
-                </StackLayout>
-              </Card>
-            </StackLayout>
-            <Label>Size: {size}</Label>
-          </StackLayout>
-        );
-      })}
     </StackLayout>
   );
 };

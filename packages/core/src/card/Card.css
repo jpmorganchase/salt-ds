@@ -3,7 +3,7 @@
   box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
-  padding: var(--saltCard-padding, var(--card-padding));
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
   position: relative;
   --card-accentColor: var(--saltCard-accentColor, var(--salt-selectable-foreground));
 }
@@ -16,18 +16,6 @@
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-}
-
-.saltCard-small {
-  --card-padding: var(--salt-spacing-100);
-}
-
-.saltCard-medium {
-  --card-padding: var(--salt-spacing-200);
-}
-
-.saltCard-large {
-  --card-padding: var(--salt-spacing-300);
 }
 
 /* Styles applied if `accentPlacement` is set */
