@@ -137,7 +137,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     <DialogContext.Provider value={contextValue}>
       <ConditionalScrimWrapper condition={open && !disableScrim}>
         <FloatingComponent
-          open={open}
+          open={showComponent}
           role={role}
           aria-modal="true"
           ref={floatingRef}
@@ -145,9 +145,9 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           top={y ?? 0}
           width={elements.floating?.offsetWidth}
           height={elements.floating?.offsetHeight}
-          // focusManagerProps={{
-          //   context: context,
-          // }}
+          focusManagerProps={{
+            context: context,
+          }}
           aria-labelledby={`${id}-header`}
           className={clsx(
             withBaseName(),
