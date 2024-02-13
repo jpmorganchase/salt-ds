@@ -62,6 +62,7 @@ import {
   Closable as PillClosable,
   Icon as PillIcon,
 } from "../../../core/stories/pill/pill.stories";
+import { Default as OverlayDefault } from "../../../lab/stories/overlay/overlay.stories";
 
 export default {
   title: "Experimental/Kitchen Sink",
@@ -271,7 +272,7 @@ export const Example1 = () => {
           content="I am a tooltip"
           status="warning"
           open
-          placement="bottom"
+          placement="right"
         >
           <Button>Warning</Button>
         </Tooltip>
@@ -279,10 +280,13 @@ export const Example1 = () => {
           content="I am a tooltip"
           status="success"
           open
-          placement="bottom"
+          placement="right"
         >
           <Button>Success</Button>
         </Tooltip>
+
+        <OverlayDefault open />
+        <OverlayDefault open placement="bottom" />
       </StackLayout>
       <StackLayout direction="row">
         <FlexItem>
