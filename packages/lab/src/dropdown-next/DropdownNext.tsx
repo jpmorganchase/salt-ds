@@ -2,7 +2,6 @@ import {
   ComponentPropsWithoutRef,
   forwardRef,
   ReactNode,
-  MouseEvent,
   KeyboardEvent,
   useEffect,
   FocusEvent,
@@ -20,12 +19,20 @@ import {
   StatusAdornment,
   useFloatingComponent,
   useFloatingUI,
+  UseFloatingUIProps,
   useForkRef,
   useFormFieldProps,
   useId,
   ValidationStatus,
 } from "@salt-ds/core";
-import { flip, size } from "@floating-ui/react";
+import {
+  flip,
+  size,
+  useClick,
+  useDismiss,
+  useFocus,
+  useInteractions,
+} from "@floating-ui/react";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -74,6 +81,14 @@ export interface DropdownNextProps<Item = string>
    */
   variant?: "primary" | "secondary";
   /**
+   * The default content of the dropdown shown in the button.
+   */
+  defaultValue?: string | readonly string[] | number | undefined;
+  /**
+   * The content of the dropdown shown in the button. The component will be controlled if this prop is provided.
+   */
+  value?: string | readonly string[] | number | undefined;
+  /**
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: Exclude<ValidationStatus, "info">;
@@ -111,7 +126,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     required: requiredProp,
     variant = "primary",
     validationStatus: validationStatusProp,
-    onClick,
     onKeyDown,
     onFocus,
     onBlur,
@@ -180,33 +194,43 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
 
   const { Component: FloatingComponent } = useFloatingComponent();
 
-  const { x, y, strategy, elements, floating, reference } = useFloatingUI({
-    open,
-    placement: "bottom-start",
-    middleware: [
-      size({
-        apply({ rects, elements, availableHeight }) {
-          Object.assign(elements.floating.style, {
-            minWidth: `${rects.reference.width}px`,
-            maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
-          });
-        },
-      }),
-      flip({ fallbackStrategy: "initialPlacement" }),
-    ],
-  });
+  const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
+    newOpen,
+    _event,
+    reason
+  ) => {
+    const focusNotBlur = reason === "focus" && newOpen;
+    if (readOnly || focusNotBlur) return;
+    setOpen(newOpen);
+  };
+
+  const { x, y, strategy, elements, floating, reference, context } =
+    useFloatingUI({
+      open: openState && !readOnly && children != undefined,
+      onOpenChange: handleOpenChange,
+      placement: "bottom-start",
+      middleware: [
+        size({
+          apply({ rects, elements, availableHeight }) {
+            Object.assign(elements.floating.style, {
+              minWidth: `${rects.reference.width}px`,
+              maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
+            });
+          },
+        }),
+        flip({ fallbackStrategy: "initialPlacement" }),
+      ],
+    });
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useDismiss(context),
+    useFocus(context),
+    useClick(context),
+  ]);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
   const handleTriggerRef = useForkRef<HTMLButtonElement>(reference, buttonRef);
   const handleButtonRef = useForkRef(handleTriggerRef, ref);
-
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!readOnly) {
-      setFocusVisibleState(false);
-      setOpen(event, !openState);
-    }
-    onClick?.(event);
-  };
 
   const typeaheadString = useRef("");
   const typeaheadTimeout = useRef<number | undefined>();
@@ -221,7 +245,7 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     }, 500);
 
     if (!openState) {
-      setOpen(event, true);
+      setOpen(true, "input");
     }
 
     let newOption = getOptionFromSearch(typeaheadString.current, activeState);
@@ -246,7 +270,7 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
 
     if (!openState) {
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-        setOpen(event, true);
+        setOpen(true, undefined, event.key);
         return;
       }
     }
@@ -299,13 +323,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
         event.preventDefault();
         select(event, activeState);
 
-        if (!multiselect) {
-          setOpen(event, false);
-        }
-
-        break;
-      case "Escape":
-        setOpen(event, false);
         break;
       case "Tab":
         if (!multiselect && activeState) {
@@ -325,18 +342,10 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
     setFocusedState(true);
-
     onFocus?.(event);
   };
 
-  const ignoreBlur = useRef(false);
-
   const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
-    if (!ignoreBlur.current) {
-      setOpen(event, false);
-    }
-    ignoreBlur.current = false;
-
     setFocusedState(false);
     onBlur?.(event);
   };
@@ -345,40 +354,48 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     setFocusVisibleState(false);
   };
 
-  const handleListMouseDown = () => {
-    ignoreBlur.current = true;
-  };
-
-  const handleListFocus = () => {
-    buttonRef.current?.focus();
-  };
-  const handleListClick = () => {
+  const handleFocusButton = () => {
     buttonRef.current?.focus();
   };
 
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
-    if (openState && activeIndex < 0) {
-      if (openKey.current.key === "ArrowDown") {
-        setActive(getOptionAtIndex(0));
-      } else if (openKey.current.key === "ArrowUp") {
-        setActive(getOptionAtIndex(options.length - 1));
-      } else {
-        if (selectedState.length > 0) {
-          const selected = getOptionsMatching(
-            (option) => option.value === selectedState[0]
-          ).pop();
-          if (selected) {
-            setActive(selected);
-          }
-        } else {
-          setActive(getOptionAtIndex(0));
-        }
-      }
-    } else if (!openState) {
-      setActive(undefined);
+    let newActive = undefined;
+
+    // If the active item is still in the list, we don't need to do anything
+    if (activeIndex > 0) {
+      return;
     }
+
+    // If the list is closed we should clear the active item
+    if (!openState) {
+      setActive(undefined);
+      return;
+    }
+
+    // If we have selected an item, we should make that the active item
+    if (selectedState.length > 0) {
+      newActive = getOptionsMatching(
+        (option) => option.value === selectedState[0]
+      ).pop();
+    }
+
+    // If we still don't have an active item, we should check if the list has been opened with the keyboard
+    if (!newActive) {
+      if (openKey.current === "ArrowDown") {
+        newActive = getOptionAtIndex(0);
+      } else if (openKey.current === "ArrowUp") {
+        newActive = getOptionAtIndex(options.length - 1);
+      }
+    }
+
+    // If we still don't have an active item, we should just select the first item
+    if (!newActive) {
+      newActive = getOptionAtIndex(0);
+    }
+
+    setActive(newActive);
   }, [openState, children]);
 
   const listId = useId();
@@ -396,10 +413,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
           className
         )}
         ref={handleButtonRef}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
         role="combobox"
         type="button"
         disabled={disabled}
@@ -413,7 +426,12 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
         }
         aria-multiselectable={multiselect}
         aria-controls={openState ? listId : undefined}
-        {...rest}
+        {...getReferenceProps({
+          onKeyDown: handleKeyDown,
+          onFocus: handleFocus,
+          onBlur: handleBlur,
+          ...rest,
+        })}
       >
         {startAdornment}
         <span
@@ -421,13 +439,14 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
             [withBaseName("placeholder")]: !valueState,
           })}
         >
-          {valueState ?? placeholder}
+          {!valueState ? placeholder : valueState}
         </span>
         {validationStatus && <StatusAdornment status={validationStatus} />}
         {!readOnly && <ExpandIcon open={openState} />}
       </button>
       <FloatingComponent
         open={(openState || focusedState) && !readOnly && children != undefined}
+        {...getFloatingProps()}
         left={x ?? 0}
         top={y ?? 0}
         position={strategy}
@@ -439,9 +458,8 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
           id={listId}
           collapsed={!openState}
           onMouseOver={handleListMouseOver}
-          onMouseDown={handleListMouseDown}
-          onFocus={handleListFocus}
-          onClick={handleListClick}
+          onFocus={handleFocusButton}
+          onClick={handleFocusButton}
           ref={listRef}
         >
           {children}
