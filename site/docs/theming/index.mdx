@@ -9,17 +9,41 @@ The Salt design system enables teams to modify design variables and theme projec
 
 ## What a theme is
 
+A theme is a controlled change (or series of changes) to the design system's default design lanugage. The goal is to change the system's look and feel to better fit with alternative established guidelines.
+
 ## When to theme
+
+Salt offers a consistent design language ready for teams to use in their projects. Theming is not mandatory, but it can help a team meet their project's requirements.
+
+Before theming, consider these three questions:
+
+1. Is the default Salt design language unsuitable for my project?
+2. Do I have a set of alternative design guidelines to follow?
+3. Does my project need to follow those guidelines?
+
+If the answer to all three is "yes," theming may be suitable for your project.
+
+<ExampleContainer type="positive" customPillText="Best practice">
+  When theming, we recommend modifying tokens rather than applying tweaks to each individual component.
+</ExampleContainer>
 
 ## How to theme
 
-Salt uses tokens, which store design decisions in a single place. Components can use these tokens to set their style.
+Theming should aim to maintain a consistent look and feel. Salt is designed to ensure visual consistency, and understanding how Salt achieves this is key to producing consistent themes. 
 
-<ExampleContainer type="positive" customPillText="Best practice">
-  When theming, we recommend modifying tokens rather than tweaking designs for each individual component.
-</ExampleContainer>
+While users can modify individual components to meet their needs, this can create inconsistencies as users have to remember to apply changes where relevant to other components. Salt's tokens make it easier to apply changes while maintaining consistency.
 
 ### What a token is
+
+A token stores design decisions. Multiple components can use the same token to ensure a given design decision applies consistently across the design system.
+
+An example of a token is `--salt-status-error-foreground`. This token is used to set the foreground color when a component communicates an error message. That means both `Dialog` and `Toast` can use this token to set the foreground color when necessary.
+
+While a user could change the status foreground color for `Toast`, this wouldn't change the corresponding color for the `Dialog` component. Changing the color associated with the `--salt-status-error-foreground` token ensures that both componenents, and any others that refer to the token, all use the same color in the given context.
+
+<ExampleContainer type="positive" customPillText="Best practice">
+  When theming, we recommend modifying tokens rather than applying tweaks to each individual component.
+</ExampleContainer>
 
 ### Benefits of tokens
 
@@ -27,8 +51,12 @@ Tokens offer several benefits:
 
 - Streamlined design changes that automatically apply to related components
 - Increased consistency across all components, improving the overall user experience
-- Simplified, drag-and-drop approach when adding new components or patterns
+- Simplified approach when adding new components or patterns
 - Single reference points for commonly-used values
+
+### Which tokens to modify
+
+Salt is under active development, and future versions may modify the token list. Some tokens, however, are less likely to change than others.
 
 Salt's tokens are organized into three tiers. From most generalized to most specific, the tiers are:
 
@@ -36,33 +64,15 @@ Salt's tokens are organized into three tiers. From most generalized to most spec
 2. Palette tokens
 3. Characteristic tokens
 
-Salt is 
+The characteristic tokens are likely to experience the fewest changes.
 
 <ExampleContainer type="positive" customPillText="Best practice">
   At this stage in Salt's development, we recommend modifying characteristic tokens.
 </ExampleContainer>
 
-## Theming with tokens
+## Token tiers explained
 
-Salt's approach to theming enables you to modify design variables, such as color or opacity, in a simple and consistent way.
-
-Salt uses tokens to store design decisions. Components can reuse tokens, meaning they help to define the design rules and aid the cohesiveness of the overall user interface.
-
-Instead of overriding design variables within a single component, we recommend modifying the tokens that the component references. Maintaining this token-based structure offers several benefits:
-
-
-
-Note that theming will involve an element of maintenance as future versions of Salt may modify the token list.
-
-## Token tiers
-
-Salt's tokens are organized into three tiers. From most generalized to most specific, the tiers are:
-
-1. Foundational tokens
-2. Palette tokens
-3. Characteristic tokens
-
-These tokens can reference each other and inherit values from lower tiers.
+Salt's token tiers indicate the purpose of a token and how it is used in the design system. Tokens can reference each other and inherit values, so a token from one tier can provide information to another.
 
 Take the status characteristic tokens as an example. Components like [`Toast`](/salt/components/toast/examples) use these tokens to denote status using color, such as a green foreground color to denote success.
 
@@ -73,11 +83,3 @@ Take the status characteristic tokens as an example. Components like [`Toast`](/
 Characteristics are both light/dark and density sensitive. That means the value the characteristic points to will change according to the values given in the nearest `SaltProvider`.
 
 As an example, `--salt-actionable-primary-background` resolves to `var(--salt-palette-interact-primary-background)`. In the light theme, this palette token has the value `var(--salt-color-gray-60)`. In the dark theme, the value is `var(--salt-color-gray-300)`. Foundational tokens then resolve to their respective RGBA values.
-
-## Using tokens to theme
-
-At this stage in Salt's development, we recommend you only modify the characteristic tokens. Salt is under active development and tokens are subject to change, but the characteristic token layer is likely to experience the fewest changes.
-
-We strongly recommend you don't change the foundational tokens. This can cause unexpected issues, such as breaking contrast levels or changing the size of components.
-
-It's best to store theme changes in a single override file, rather than duplicating the entire project to make changes. This will simplify the development process.
