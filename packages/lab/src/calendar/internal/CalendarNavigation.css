@@ -1,24 +1,11 @@
-.salt-density-medium,
-.salt-density-touch,
-.salt-density-low {
-  --calendar-navigation-gap: calc(var(--salt-size-unit) * 0.5);
-}
-
-.salt-density-high {
-  --calendar-navigation-gap: 0px;
-}
-
-.saltCalendarNavigation-hideYearDropdown {
-  --calendar-navigation-gap: calc(var(--salt-size-unit) * 2);
-}
-
 .saltCalendarNavigation {
   display: grid;
   grid-template-columns: min-content auto auto min-content;
   padding-bottom: var(--salt-spacing-100);
-  grid-gap: var(--calendar-navigation-gap);
+  grid-gap: var(--salt-spacing-50);
 }
 
 .saltCalendarNavigation-hideYearDropdown {
   grid-template-columns: min-content auto min-content;
+  grid-gap: var(--salt-spacing-300);
 }

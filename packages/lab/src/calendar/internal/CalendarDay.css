@@ -1,4 +1,8 @@
 .saltCalendarDay {
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
   width: var(--salt-size-base);
   height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);
@@ -11,7 +15,7 @@
   align-items: center;
 }
 .saltCalendarDay-content {
-  margin: var(--salt-spacing-50);
+  margin: 0 var(--salt-spacing-50);
   width: 100%;
 }
 
@@ -65,6 +69,7 @@
 .saltCalendarDay-today,
 .saltCalendarDay-today:hover {
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-foreground-active);
+  margin-bottom: calc(var(--salt-size-indicator) * -1);
 }
 
 .saltCalendarDay-hidden {

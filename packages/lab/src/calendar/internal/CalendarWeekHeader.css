@@ -12,4 +12,5 @@
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
   font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
 }
