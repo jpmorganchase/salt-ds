@@ -81,6 +81,14 @@ export interface DropdownNextProps<Item = string>
    */
   variant?: "primary" | "secondary";
   /**
+   * The default content of the dropdown shown in the button.
+   */
+  defaultValue?: string | readonly string[] | number | undefined;
+  /**
+   * The content of the dropdown shown in the button. The component will be controlled if this prop is provided.
+   */
+  value?: string | readonly string[] | number | undefined;
+  /**
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: Exclude<ValidationStatus, "info">;

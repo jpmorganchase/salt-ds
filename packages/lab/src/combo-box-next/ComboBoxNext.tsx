@@ -44,6 +44,14 @@ export interface ComboBoxNextProps<Item = string>
    * The options to display in the combo box.
    */
   children?: ReactNode;
+  /**
+   * The default value of the input.
+   */
+  defaultValue?: string | readonly string[] | number | undefined;
+  /**
+   * The value of the input. The component will be controlled if this prop is provided.
+   */
+  value?: string | readonly string[] | number | undefined;
 }
 
 const withBaseName = makePrefixer("saltComboBoxNext");
