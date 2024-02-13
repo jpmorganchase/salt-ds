@@ -13,15 +13,7 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
   /**
    * Accent border position: defaults to "bottom"
    */
-  accentPlacement?: "bottom" | "top" | "left" | "right";
-  /**
-   * If `true`, the card will be disabled.
-   */
-  disabled?: boolean;
-  /**
-   * Card size; adjusts the padding.
-   */
-  size?: "small" | "medium" | "large";
+  accent?: "bottom" | "top" | "left" | "right";
   /**
    * Styling variant; defaults to "primary".
    */
@@ -31,13 +23,11 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
   function LinkCard(props, ref) {
     const {
-      accentPlacement = "bottom",
+      accent = "bottom",
       children,
       className,
       href,
-      size = "large",
       variant = "primary",
-      disabled,
       ...rest
     } = props;
 
@@ -52,12 +42,8 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       <a
         className={clsx(
           withBaseName(),
-          withBaseName(size),
           withBaseName(variant),
-          withBaseName(`accent${capitalize(accentPlacement)}`),
-          {
-            [withBaseName("disabled")]: disabled,
-          },
+          withBaseName(`accent${capitalize(accent)}`),
           className
         )}
         href={href}

@@ -35,24 +35,14 @@ export const Default: StoryFn<typeof Card> = () => (
   </LinkCard>
 );
 
-export const Disabled: StoryFn<typeof Card> = () => (
-  <LinkCard style={{ width: "260px" }} className="withImage" disabled>
-    <StackLayout gap={1} style={{ padding: "var(--salt-spacing-300)" }}>
-      <H3>{exampleData.title}</H3>
-      <Text>{exampleData.content}</Text>
-    </StackLayout>
-  </LinkCard>
-);
-
 export const AccentPlacement: StoryFn<typeof Card> = () => {
-  const [placement, setPlacement] =
-    useState<LinkCardProps["accentPlacement"]>("bottom");
+  const [placement, setPlacement] = useState<LinkCardProps["accent"]>("bottom");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlacement(event.target.value as LinkCardProps["accentPlacement"]);
+    setPlacement(event.target.value as LinkCardProps["accent"]);
   };
   return (
     <StackLayout style={{ width: "266px" }}>
-      <LinkCard accentPlacement={placement}>
+      <LinkCard accent={placement}>
         <StackLayout gap={1}>
           <H3>{exampleData.title}</H3>
           <Text>{exampleData.content}</Text>
@@ -85,29 +75,6 @@ export const AccentPlacement: StoryFn<typeof Card> = () => {
           onChange={handleChange}
         />
       </RadioButtonGroup>
-    </StackLayout>
-  );
-};
-
-export const Size: StoryFn<typeof Card> = () => {
-  const sizes = ["small", "medium", "large"] as const;
-  return (
-    <StackLayout style={{ width: "266px" }}>
-      {sizes.map((size) => {
-        return (
-          <StackLayout key={size} align="end">
-            <StackLayout direction="row">
-              <LinkCard size={size}>
-                <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
-                </StackLayout>
-              </LinkCard>
-            </StackLayout>
-            <Label>Size: {size}</Label>
-          </StackLayout>
-        );
-      })}
     </StackLayout>
   );
 };
