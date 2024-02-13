@@ -30,7 +30,7 @@
   --card-padding: var(--salt-spacing-300);
 }
 
-/* Styles applied if `hoverEffect={true}` */
+/* Styles applied if `accentPlacement` is set */
 .saltCard-hover:hover {
   cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));

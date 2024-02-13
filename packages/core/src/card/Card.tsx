@@ -27,10 +27,6 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   interactable?: boolean;
   /**
-   * Whether to show hover effect. Defaults to `false`.
-   */
-  hoverEffect?: boolean;
-  /**
    * Card padding size; adjusts the padding. Defaults to `large`.
    */
   paddingSize?: "small" | "medium" | "large";
@@ -50,7 +46,6 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
     className,
     disabled,
     interactable,
-    hoverEffect = false,
     paddingSize = "large",
     variant = "primary",
     ...rest
@@ -73,7 +68,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
           [withBaseName("accent")]: accentPlacement,
           [withBaseName(`accent${capitalize(accentPlacement || "")}`)]:
             accentPlacement,
-          [withBaseName("hover")]: hoverEffect,
+          [withBaseName("hover")]: accentPlacement,
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
           [withBaseName("interactable")]: interactable,

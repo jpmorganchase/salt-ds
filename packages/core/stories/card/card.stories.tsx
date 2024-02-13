@@ -78,21 +78,7 @@ export const DefaultWithButton: StoryFn<typeof Card> = () => (
   </Card>
 );
 
-export const HoverEffect: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "260px" }} hoverEffect>
-    <StackLayout gap={1}>
-      <H3>{exampleData.title}</H3>
-      <StackLayout gap={2} align="start">
-        <Text>{exampleData.content}</Text>
-        <Button>View funds</Button>
-      </StackLayout>
-    </StackLayout>
-  </Card>
-);
-
 export const AccentVariations: StoryFn<typeof Card> = () => {
-  const [hoverEffect, setHoverEffect] = useState<boolean>(false);
-
   const [placement, setPlacement] =
     useState<CardProps["accentPlacement"]>("bottom");
 
@@ -100,13 +86,9 @@ export const AccentVariations: StoryFn<typeof Card> = () => {
     setPlacement(event.target.value as CardProps["accentPlacement"]);
   };
 
-  const handleToggle = () => {
-    setHoverEffect((old) => !old);
-  };
-
   return (
     <StackLayout style={{ width: "266px" }}>
-      <Card accentPlacement={placement} hoverEffect={hoverEffect}>
+      <Card accentPlacement={placement}>
         <StackLayout gap={1}>
           <H3>{exampleData.title}</H3>
           <Text>{exampleData.content}</Text>
@@ -139,13 +121,6 @@ export const AccentVariations: StoryFn<typeof Card> = () => {
           onChange={handleChange}
         />
       </RadioButtonGroup>
-      <ToggleButton
-        value="hoverEffect"
-        selected={hoverEffect}
-        onChange={handleToggle}
-      >
-        hover effect
-      </ToggleButton>
     </StackLayout>
   );
 };
