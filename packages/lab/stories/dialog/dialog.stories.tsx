@@ -74,13 +74,14 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
 
 export const Default = DialogTemplate.bind({});
 Default.args = {
-  id: "DialogTestId",
+  id: "Default",
 };
 
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
   title: "Congratulations! You have created a Dialog.",
+  id: "Long Content",
   // @ts-ignore
   content: (
     <StackLayout>
@@ -186,24 +187,28 @@ export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
   title: "Info",
+  id: "Info",
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
   title: "Success",
+  id: "Success",
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
   title: "Warning",
+  id: "Warning",
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
   title: "Error",
+  id: "Error",
 };
 
 export const MandatoryAction: StoryFn<typeof Dialog> = ({
@@ -233,12 +238,12 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
       <Dialog
         size={"small"}
         status={"error"}
+        id={"Mandatory Action"}
         role="alertdialog"
         open={open}
         onOpenChange={onOpenChange}
         initialFocus={1}
         disableDismiss
-        aria-describedby={`dialog-description`}
       >
         <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>

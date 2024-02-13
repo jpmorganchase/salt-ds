@@ -128,7 +128,10 @@ const MediumDialog = (): ReactElement => {
   );
 
   const child = (
-    <StackLayout direction="column">
+    <StackLayout
+      direction="column"
+      style={{ paddingLeft: "var(--salt-spacing-200)" }}
+    >
       <H2>{active.label}</H2>
       {active.view?.()}
     </StackLayout>
