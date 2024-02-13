@@ -1,19 +1,15 @@
 import { Heading4 } from "../../components/mdx/h4";
-import { SiteState, useMeta, useStore } from "@jpmorganchase/mosaic-store";
+import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import styles from "./Resources.module.css";
 import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Link, Text } from "@salt-ds/core";
 
 const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
   <div className={styles.link}>
-    {href.includes("figma.com") && (
-      <Image src="/img/figma_logo.svg" alt=" figma logo" />
-    )}
-    {href.includes("github.com") && (
-      <Image src="/img/github_logo.svg" alt="github logo" />
-    )}
+    {href.includes("figma.com") && <Image src="/img/figma_logo.svg" alt="" />}
+    {href.includes("github.com") && <Image src="/img/github_logo.svg" alt="" />}
     {href.includes("storybook") && (
-      <Image src="/img/storybook_logo.svg" alt="storybook logo" />
+      <Image src="/img/storybook_logo.svg" alt="" />
     )}
     <Link href={href} target="_blank">
       {label}
@@ -21,50 +17,69 @@ const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
   </div>
 );
 
+type Resources = {
+  href: string;
+  label: string;
+  internal?: boolean;
+}[];
+
+function splitResources(resources: Resources) {
+  return resources.reduce(
+    (acc, resource) => {
+      if (resource.internal) {
+        acc.internal.push(resource);
+      } else {
+        acc.external.push(resource);
+      }
+      return acc;
+    },
+    { internal: [], external: [] } as {
+      internal: Resources;
+      external: Resources;
+    }
+  );
+}
+
 type Data = {
-  resources: Array<{
-    href: string;
-    label: string;
-    internal?: boolean;
-  }>;
+  resources: Resources;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
 
 export function Resources() {
-  const {
-    meta: { title },
-  } = useMeta();
-
-  const resources =
+  const resourcesArray =
     useStore((state: CustomSiteState) => state.data?.resources) ?? [];
 
-  const internalResources = resources.filter(({ internal }) => internal);
-  const externalResources = resources.filter(({ internal }) => !internal);
-  if (resources.length) {
+  const { internal, external } = splitResources(resourcesArray);
+
+  if (resourcesArray.length > 0) {
     return (
-      <div className={styles.root}>
-        <Heading4>{title} resources</Heading4>
-        {externalResources.length > 0 && (
-          <div className={styles.list}>
-            {externalResources.map(({ href, label }) => (
-              <LinkWithLogo key={href} href={href} label={label} />
+      <section className={styles.root}>
+        <Heading4>Resources</Heading4>
+        {external.length > 0 && (
+          <ul className={styles.list}>
+            {external.map(({ href, label }) => (
+              <li key={href}>
+                <LinkWithLogo href={href} label={label} />
+              </li>
             ))}
-          </div>
+          </ul>
         )}
-        {internalResources.length > 0 && (
+        {internal.length > 0 && (
           <>
             <Text className={styles.subtitle} styleAs="label">
               JPM employees only:
             </Text>
-            <div className={styles.list}>
-              {internalResources.map(({ href, label }) => (
-                <LinkWithLogo key={href} href={href} label={label} />
+            <ul className={styles.list}>
+              {internal.map(({ href, label }) => (
+                <li key={href}>
+                  <LinkWithLogo href={href} label={label} />
+                </li>
               ))}
-            </div>
+            </ul>
           </>
         )}
-      </div>
+      </section>
     );
   }
   return null;

@@ -4,12 +4,12 @@
 
 .wrapper:not(:last-of-type),
 .tableOfContents {
-  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
 .wrapper {
-  padding-top: var(--salt-size-unit);
-  padding-bottom: var(--salt-size-container-spacing);
+  padding-top: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-300);
 }
 
 .pills,
