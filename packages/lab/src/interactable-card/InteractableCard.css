@@ -5,7 +5,7 @@
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
   border-radius: var(--saltCard-borderRadius, 0);
   display: block;
-  padding: var(--saltCard-padding, var(--card-padding));
+  padding: var(--saltCard-padding, var(--salt-spacing-300));
   position: relative;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
   --card-accentColor: var(--saltCard-accentColor, var(--salt-selectable-foreground));
@@ -23,18 +23,6 @@
   border-color: var(--salt-container-secondary-borderColor);
 }
 
-.saltInteractableCard-small {
-  --card-padding: var(--salt-spacing-100);
-}
-
-.saltInteractableCard-medium {
-  --card-padding: var(--salt-spacing-200);
-}
-
-.saltInteractableCard-large {
-  --card-padding: var(--salt-spacing-300);
-}
-
 /* Styles applied to create accent */
 .saltInteractableCard::after {
   content: "";
@@ -42,7 +30,7 @@
   background-color: var(--card-accentColor);
 }
 
-/* Styles applied to InteractableCard if `accentPlacement="bottom"` (default) */
+/* Styles applied to InteractableCard if `accent="bottom"` (default) */
 .saltInteractableCard-accentBottom::after {
   left: calc(-1 * var(--salt-size-border));
   bottom: calc(-1 * var(--salt-size-border));
@@ -50,7 +38,7 @@
   width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
-/* Styles applied to InteractableCard if `accentPlacement="left"` */
+/* Styles applied to InteractableCard if `accent="left"` */
 .saltInteractableCard-accentLeft::after {
   left: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
@@ -58,7 +46,7 @@
   width: var(--salt-size-accent);
 }
 
-/* Styles applied to InteractableCard if `accentPlacement="top"` */
+/* Styles applied to InteractableCard if `accent="top"` */
 .saltInteractableCard-accentTop::after {
   left: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
@@ -66,7 +54,7 @@
   width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
-/* Styles applied to InteractableCard if `accentPlacement="right"` */
+/* Styles applied to InteractableCard if `accent="right"` */
 .saltInteractableCard-accentRight::after {
   right: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));

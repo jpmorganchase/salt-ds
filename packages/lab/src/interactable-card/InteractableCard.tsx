@@ -15,7 +15,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Accent border position: defaults to "bottom"
    */
-  accentPlacement?: "bottom" | "top" | "left" | "right";
+  accent?: "bottom" | "top" | "left" | "right";
   /**
    * If `true`, the card will be disabled.
    */
@@ -24,10 +24,6 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    * If `true`, the card will have selected styling.
    */
   selected?: boolean;
-  /**
-   * Card size; adjusts the padding.
-   */
-  size?: "small" | "medium" | "large";
   /**
    * Styling variant; defaults to "primary".
    */
@@ -39,12 +35,11 @@ export const InteractableCard = forwardRef<
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
-    accentPlacement = "bottom",
+    accent = "bottom",
     children,
     className,
     disabled,
     selected,
-    size = "large",
     variant = "primary",
     onBlur,
     onClick,
@@ -73,9 +68,8 @@ export const InteractableCard = forwardRef<
       {...cardProps}
       className={clsx(
         withBaseName(),
-        withBaseName(size),
         withBaseName(variant),
-        withBaseName(`accent${capitalize(accentPlacement)}`),
+        withBaseName(`accent${capitalize(accent)}`),
         {
           [withBaseName("active")]: active,
           [withBaseName("disabled")]: disabled,
