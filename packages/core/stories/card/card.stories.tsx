@@ -100,8 +100,8 @@ const exampleData = [
   },
 ];
 
-export const Default: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
+export const Default: StoryFn<typeof Card> = (props) => (
+  <Card style={{ width: "256px" }} {...props}>
     <H1 styleAs="h3">{exampleData[0].title}</H1>
     <Text>{exampleData[0].content}</Text>
   </Card>
@@ -227,8 +227,8 @@ export const InteractableAll: StoryFn<typeof Card> = () => (
   </div>
 );
 
-export const Interactable: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }}>
+export const Interactable: StoryFn<typeof InteractableCard> = (props) => (
+  <InteractableCard style={{ width: "256px" }} {...props}>
     <H1 styleAs="h3">{exampleData[0].title}</H1>
     <Text>{exampleData[0].content}</Text>
   </InteractableCard>
