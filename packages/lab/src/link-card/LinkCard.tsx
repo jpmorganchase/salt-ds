@@ -9,7 +9,7 @@ import linkCardCss from "./LinkCard.css";
 
 const withBaseName = makePrefixer("saltLinkCard");
 
-export interface LinkCardProps extends ComponentPropsWithoutRef<"div"> {
+export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
   /**
    * Accent border position: defaults to "bottom"
    */
@@ -28,19 +28,16 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"div"> {
   variant?: "primary" | "secondary";
 }
 
-export const LinkCard = forwardRef<HTMLDivElement, LinkCardProps>(
+export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
   function LinkCard(props, ref) {
     const {
       accentPlacement = "bottom",
       children,
       className,
+      href,
       size = "large",
       variant = "primary",
       disabled,
-      onBlur,
-      onClick,
-      onKeyUp,
-      onKeyDown,
       ...rest
     } = props;
 
@@ -52,7 +49,7 @@ export const LinkCard = forwardRef<HTMLDivElement, LinkCardProps>(
     });
 
     return (
-      <div
+      <a
         className={clsx(
           withBaseName(),
           withBaseName(size),
@@ -63,11 +60,12 @@ export const LinkCard = forwardRef<HTMLDivElement, LinkCardProps>(
           },
           className
         )}
+        href={href}
         {...rest}
         ref={ref}
       >
         {children}
-      </div>
+      </a>
     );
   }
 );

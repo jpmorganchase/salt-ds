@@ -27,19 +27,12 @@ const exampleData = {
 };
 
 export const Default: StoryFn<typeof Card> = () => (
-  <Link
-    style={{ textDecoration: "none" }}
-    href="#"
-    IconComponent={null}
-    target="_blank"
-  >
-    <LinkCard style={{ width: "260px" }}>
-      <StackLayout gap={1}>
-        <H3>{exampleData.title}</H3>
-        <Text>{exampleData.content}</Text>
-      </StackLayout>
-    </LinkCard>
-  </Link>
+  <LinkCard style={{ width: "260px" }} href="#" target="_blank">
+    <StackLayout gap={1}>
+      <H3>{exampleData.title}</H3>
+      <Text>{exampleData.content}</Text>
+    </StackLayout>
+  </LinkCard>
 );
 
 export const Disabled: StoryFn<typeof Card> = () => (

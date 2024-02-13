@@ -7,6 +7,7 @@
   display: block;
   padding: var(--saltCard-padding, var(--card-padding));
   position: relative;
+  text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
   --card-accentColor: var(--saltCard-accentColor, var(--salt-selectable-foreground));
 }
