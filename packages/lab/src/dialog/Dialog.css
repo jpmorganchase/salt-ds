@@ -16,6 +16,7 @@
   z-index: var(--salt-zIndex-drawer);
   height: min-content;
   border: var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-border);
+  border-radius: var(--salt-palette-corner, 0);
 }
 
 /* Styles applied to Dialog background overlay */
