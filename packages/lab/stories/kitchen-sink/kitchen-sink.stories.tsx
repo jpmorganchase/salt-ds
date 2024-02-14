@@ -15,9 +15,16 @@ import {
   ValidationStatus,
   RadioButton,
   RadioButtonGroup,
+  H3,
+  FlexLayout,
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
-import { NotificationIcon, NotificationSolidIcon } from "@salt-ds/icons";
+import {
+  NotificationIcon,
+  NotificationSolidIcon,
+  SaltShakerIcon,
+  SaltShakerSolidIcon,
+} from "@salt-ds/icons";
 import {
   DefaultGroup as AccordionDefault,
   Status as AccordionStatus,
@@ -63,6 +70,8 @@ import {
   Icon as PillIcon,
 } from "../../../core/stories/pill/pill.stories";
 import { Default as OverlayDefault } from "../../../lab/stories/overlay/overlay.stories";
+import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default";
+import AgGridThemeHDCompact from "../../../ag-grid-theme/stories/examples/HDCompact";
 
 export default {
   title: "Experimental/Kitchen Sink",
@@ -116,6 +125,17 @@ const LaunchStatusDialog = () => {
     </>
   );
 };
+
+const GriActionCellRenderer = () => (
+  <FlexLayout align="center" style={{ height: "100%" }} gap={1}>
+    <Button variant="cta">
+      <SaltShakerSolidIcon />
+    </Button>
+    <Button>
+      <SaltShakerIcon />
+    </Button>
+  </FlexLayout>
+);
 
 export const Example1 = () => {
   return (
@@ -285,8 +305,8 @@ export const Example1 = () => {
           <Button>Success</Button>
         </Tooltip>
 
-        <OverlayDefault open />
-        <OverlayDefault open placement="bottom" />
+        <OverlayDefault />
+        <OverlayDefault placement="bottom" />
       </StackLayout>
       <StackLayout direction="row">
         <FlexItem>
@@ -304,6 +324,55 @@ export const Example1 = () => {
       <StackLayout direction="row">
         <FormFieldValidation />
       </StackLayout>
+      <AgGridThemeDefault
+        columnDefs={[
+          {
+            headerName: "Name",
+            field: "name",
+            filterParams: {
+              buttons: ["reset", "apply"],
+            },
+            editable: false,
+          },
+          {
+            headerName: "Code",
+            field: "code",
+          },
+          {
+            headerName: "Capital",
+            field: "capital",
+          },
+          {
+            headerName: "Action",
+            cellRenderer: GriActionCellRenderer,
+          },
+        ]}
+      />
+      <H3>HD Compact</H3>
+      <AgGridThemeHDCompact
+        columnDefs={[
+          {
+            headerName: "Name",
+            field: "name",
+            filterParams: {
+              buttons: ["reset", "apply"],
+            },
+            editable: false,
+          },
+          {
+            headerName: "Code",
+            field: "code",
+          },
+          {
+            headerName: "Capital",
+            field: "capital",
+          },
+          {
+            headerName: "Action",
+            cellRenderer: GriActionCellRenderer,
+          },
+        ]}
+      />
     </StackLayout>
   );
 };
