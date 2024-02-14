@@ -8,9 +8,11 @@ export interface OptionValue<Item> {
   text: string;
 }
 
+export type OpenChangeReason = "input" | "manual";
+
 export interface ListControlContextValue<Item> {
   openState: boolean;
-  setOpen: (event: SyntheticEvent, newOpen: boolean) => void;
+  setOpen: (newOpen: boolean, openChangeReason?: OpenChangeReason) => void;
   register: (
     optionValue: OptionValue<Item>,
     element: HTMLElement

@@ -392,18 +392,18 @@ export const LongList: StoryFn<ComboBoxNextProps> = (args) => {
       onSelectionChange={handleSelectionChange}
       value={value}
     >
-      {Object.entries(groupedOptions).map(([firstLetter, options]) => (
-        <OptionGroup label={firstLetter} key={firstLetter}>
-          {options.map((country) => (
-            <Option value={country.countryCode} key={country.countryCode}>
-              <Suspense fallback="">
+      <Suspense fallback="">
+        {Object.entries(groupedOptions).map(([firstLetter, options]) => (
+          <OptionGroup label={firstLetter} key={firstLetter}>
+            {options.map((country) => (
+              <Option value={country.countryCode} key={country.countryCode}>
                 <LazyCountrySymbol aria-hidden code={country.countryCode} />
-              </Suspense>
-              {country.countryName}
-            </Option>
-          ))}
-        </OptionGroup>
-      ))}
+                {country.countryName}
+              </Option>
+            ))}
+          </OptionGroup>
+        ))}
+      </Suspense>
     </ComboBoxNext>
   );
 };
@@ -493,8 +493,11 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
     }
   };
 
-  const handleOpenChange: ComboBoxNextProps["onOpenChange"] = (event) => {
-    if (event.type === "click") {
+  const handleOpenChange: ComboBoxNextProps["onOpenChange"] = (
+    _newOpen,
+    reason
+  ) => {
+    if (reason === "manual") {
       setShowAll(true);
     }
   };
