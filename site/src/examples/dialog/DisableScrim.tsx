@@ -30,10 +30,12 @@ export const DisableScrim = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        id={"terms-and-conditions-dialog"}
+        aria-labelledby="terms-and-conditions-dialog"
         disableScrim
       >
-        <DialogTitle disableAccent>Terms and conditions</DialogTitle>
+        <DialogTitle disableAccent id="terms-and-conditions-dialog-heading">
+          Terms and conditions
+        </DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>

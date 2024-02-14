@@ -31,11 +31,13 @@ export const MandatoryAction = (): ReactElement => {
         open={open}
         onOpenChange={onOpenChange}
         disableDismiss
-        size={"small"}
-        status={"error"}
-        id={"error-dialog"}
+        size="small"
+        status="error"
+        aria-labelledby="error-dialog"
       >
-        <DialogTitle> Delete Transaction </DialogTitle>
+        <DialogTitle id="error-dialog-heading">
+          Delete Transaction
+        </DialogTitle>
         <DialogContent>
           Are you sure you want to permenantly delete transaction?
         </DialogContent>

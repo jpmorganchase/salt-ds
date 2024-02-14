@@ -135,7 +135,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
       <ConditionalScrimWrapper condition={open && !disableScrim}>
         <FloatingComponent
           open={showComponent}
-          role={"dialog"}
+          role="dialog"
           aria-modal="true"
           ref={floatingRef}
           width={elements.floating?.offsetWidth}

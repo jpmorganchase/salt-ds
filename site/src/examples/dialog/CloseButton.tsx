@@ -31,9 +31,11 @@ export const CloseButton = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        id={"terms-and-conditions-dialog"}
+        aria-labelledby="terms-and-conditions-dialog"
       >
-        <DialogTitle>Terms and conditions</DialogTitle>
+        <DialogTitle id="terms-and-conditions-dialog-heading">
+          Terms and conditions
+        </DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>
