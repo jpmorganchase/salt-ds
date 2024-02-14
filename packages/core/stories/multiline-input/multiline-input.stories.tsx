@@ -79,8 +79,12 @@ export const ControlledWithAdornment: StoryFn<typeof MultilineInput> = (
       onChange={handleChange}
       style={{ maxWidth: "266px" }}
       endAdornment={
-        <Button onClick={onClear} variant={"secondary"}>
-          <CloseIcon />
+        <Button
+          onClick={onClear}
+          variant={"secondary"}
+          aria-label="Clear input"
+        >
+          <CloseIcon aria-hidden />
         </Button>
       }
     />

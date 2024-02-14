@@ -156,7 +156,7 @@ describe("GIVEN an MultilineInput", () => {
         cy.realPress("Enter");
         cy.realPress("Enter");
         cy.realPress("Enter");
-        cy.findAllByRole("button").realClick();
+        cy.findByRole("button").realClick();
         cy.findByRole("textbox")
           .invoke("height")
           .then((newHeight) => {
