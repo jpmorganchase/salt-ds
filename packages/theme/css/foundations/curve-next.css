@@ -9,8 +9,8 @@
 }
 .salt-density-high {
   --salt-curve-0: 0;
-  --salt-curve-100: 1px;
-  --salt-curve-200: 2px;
+  --salt-curve-100: 2px;
+  --salt-curve-200: 4px;
   --salt-curve-300: 4px;
   --salt-curve-999: 999px;
 }
