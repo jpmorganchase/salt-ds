@@ -1,5 +1,11 @@
-.salt-density-touch,
-.salt-density-low,
+.salt-density-high {
+  --salt-curve-0: 0;
+  --salt-curve-100: 1px;
+  --salt-curve-200: 2px;
+  --salt-curve-300: 4px;
+  --salt-curve-999: 999px;
+}
+
 .salt-density-medium {
   --salt-curve-0: 0;
   --salt-curve-100: 2px;
@@ -7,10 +13,19 @@
   --salt-curve-300: 8px;
   --salt-curve-999: 999px;
 }
-.salt-density-high {
+
+.salt-density-low {
   --salt-curve-0: 0;
-  --salt-curve-100: 2px;
-  --salt-curve-200: 4px;
-  --salt-curve-300: 8px;
+  --salt-curve-100: 3px;
+  --salt-curve-200: 6px;
+  --salt-curve-300: 12px;
+  --salt-curve-999: 999px;
+}
+
+.salt-density-touch {
+  --salt-curve-0: 0;
+  --salt-curve-100: 4px;
+  --salt-curve-200: 8px;
+  --salt-curve-300: 16px;
   --salt-curve-999: 999px;
 }
