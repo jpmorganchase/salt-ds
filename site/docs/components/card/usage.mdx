@@ -8,7 +8,13 @@ data:
   $ref: ./#/data
 ---
 
+Link cards shouldn't contain actionable components (like Buttons or Links), as the card itself is the interactive element.
+
+Interactable cards serve as a Toggle button, Button, Radio button or radio group and Checkbox or checkbox group. They allow the user to embed these elements within for visual affordance.
+
 ### Using the components
+
+Cards may include text, images, or interactive elements. Make sure the content aligns with your use case, keeping it clear and easy to read. Avoid overcrowding cards with excessive content, actions, or links embedded in the text.
 
 #### When to use
 
@@ -24,13 +30,13 @@ data:
 
 ### Card groups
 
-- Group cards together in a layout using similar size and content length. If the content and size differs among cards, consider layout customization such as a grid layout.
+- Group cards together in a layout using similar size and content length.
 - Avoid repeating images or content in a group of cards.
-- Use the same accent placement in a group if interactable.
+- It is recommended to use the same accent placement in a group.
 
 ### Interactable elements
 
-A default card can contain any UI elements, including actionable components such as [buttons](../button) or [links](../link). You can use these, for example, to link to more detailed information.
+A default card can contain any UI elements, including actionable components such as [Buttons](../button) or [Links](../link). You can use these, for example, to link to more detailed information.
 
 Interactable cards shouldn't contain actionable components (like [Buttons](../button) or [Links](../link)), as the card itself is the interactive element.
 
