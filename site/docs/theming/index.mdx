@@ -29,7 +29,7 @@ If the answer to all three is "yes," theming may be suitable for your project.
 
 ## How to theme
 
-Theming should aim to maintain a consistent look and feel. Salt is designed to ensure visual consistency, and understanding how Salt achieves this is key to producing consistent themes. 
+Theming should aim to maintain a consistent look and feel. Salt is designed to ensure visual consistency, and understanding how Salt achieves this is key to producing consistent themes.
 
 While users can modify individual components to meet their needs, this can create inconsistencies as users have to remember to apply changes where relevant to other components. Salt's tokens make it easier to apply changes while maintaining consistency.
 
@@ -42,7 +42,8 @@ An example of a token is `--salt-status-error-foreground`. This token is used to
 While a user could change the status foreground color for `Toast`, this wouldn't change the corresponding color for the `Dialog` component. Changing the color associated with the `--salt-status-error-foreground` token ensures that both componenents, and any others that refer to the token, all use the same color in the given context.
 
 <ExampleContainer type="positive" customPillText="Best practice">
-  When theming, we recommend modifying tokens rather than applying tweaks to each individual component.
+  When theming, we recommend modifying tokens rather than applying tweaks to
+  each individual component.
 </ExampleContainer>
 
 ### Benefits of tokens
@@ -67,7 +68,8 @@ Salt's tokens are organized into three tiers. From most generalized to most spec
 The characteristic tokens are likely to experience the fewest changes.
 
 <ExampleContainer type="positive" customPillText="Best practice">
-  At this stage in Salt's development, we recommend modifying characteristic tokens.
+  At this stage in Salt's development, we recommend modifying characteristic
+  tokens.
 </ExampleContainer>
 
 ## Token tiers explained
