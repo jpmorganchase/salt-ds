@@ -35,9 +35,7 @@ export const MandatoryAction = (): ReactElement => {
         status="error"
         aria-labelledby="error-dialog"
       >
-        <DialogTitle id="error-dialog-heading">
-          Delete Transaction
-        </DialogTitle>
+        <DialogTitle id="error-dialog-heading">Delete Transaction</DialogTitle>
         <DialogContent>
           Are you sure you want to permenantly delete transaction?
         </DialogContent>
