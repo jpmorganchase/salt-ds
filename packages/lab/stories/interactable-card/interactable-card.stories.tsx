@@ -63,15 +63,13 @@ export const SelectedDisabled: StoryFn<typeof Card> = () => (
 
 export const AccentPlacement: StoryFn<typeof Card> = () => {
   const [placement, setPlacement] =
-    useState<InteractableCardProps["accentPlacement"]>("bottom");
+    useState<InteractableCardProps["accent"]>("bottom");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlacement(
-      event.target.value as InteractableCardProps["accentPlacement"]
-    );
+    setPlacement(event.target.value as InteractableCardProps["accent"]);
   };
   return (
     <StackLayout style={{ width: "266px" }}>
-      <InteractableCard accentPlacement={placement}>
+      <InteractableCard accent={placement}>
         <StackLayout gap={1}>
           <H3>{exampleData.title}</H3>
           <Text>{exampleData.content}</Text>
