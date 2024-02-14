@@ -106,29 +106,6 @@ export const AccentPlacement: StoryFn<typeof Card> = () => {
   );
 };
 
-export const Size: StoryFn<typeof Card> = () => {
-  const sizes = ["small", "medium", "large"] as const;
-  return (
-    <StackLayout style={{ width: "266px" }}>
-      {sizes.map((size) => {
-        return (
-          <StackLayout key={size} align="end">
-            <StackLayout direction="row">
-              <InteractableCard size={size}>
-                <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
-                </StackLayout>
-              </InteractableCard>
-            </StackLayout>
-            <Label>Size: {size}</Label>
-          </StackLayout>
-        );
-      })}
-    </StackLayout>
-  );
-};
-
 export const Variant: StoryFn<typeof Card> = () => {
   const variants = ["primary", "secondary"] as const;
   return (
