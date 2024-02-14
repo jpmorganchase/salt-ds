@@ -1,13 +1,13 @@
 # Lab
 
-We do not recommend using the lab package in production as it may contain breaking changes.
+We don't recommend using the lab package in production as it may contain breaking changes.
 
-The lab package consists components in various status:
+We have categorized lab package components into these four statuses:
 
-- pattern: will be removed and replaced by [Pattern design guidance](https://www.saltdesignsystem.com/salt/patterns/index) with example code on Storybook
-- replacement: has been / will be replaced by a separate component being worked on
-- remove: will be deleted
-- component: will be worked on towards core promotion (may contain breaking changes)
+1. Pattern: will be removed and replaced by [pattern design guidance](https://www.saltdesignsystem.com/salt/patterns/index) with example code on Storybook.
+2. Replacement: has been/will be replaced by another component.
+3. Remove: will be deleted.
+4. Component: will be added to the core package once further work is complete, but may contain breaking changes.
 
 | lab                       | status      |
 | ------------------------- | ----------- |
