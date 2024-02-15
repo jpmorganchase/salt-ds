@@ -24,23 +24,24 @@ To use the new Salt Provider, you need to swap any existing `SaltProvider` to us
 and also import a new theme CSS.
 
 ```js static
+// Swap out existing SaltProvider
 import { UNSTABLE_SaltProviderNext } from "@salt-ds/core";
 ```
-
-The new provider adds additional `.salt-theme-next` to either the root or provider element, together with any additional
-data attributes needed for new props.
 
 ```js static
 // Alongside with existing `import "@salt-ds/theme/index.css";`
 import "@salt-ds/theme/css/theme-next.css";
 ```
 
-`theme-next.css` will scope values to `.salt-theme-next` to make sure any new values (like color palettes) could override
-existing values in `.salt-theme`.
+The new provider adds additional `.salt-theme-next` to either the root or provider element, together with
+any additional data attributes (e.g. `data-corner`) needed for new props.
+
+All values within `theme-next.css` will be scoped to `.salt-theme-next` to make sure any replacement values
+(like new color palettes) could override existing values in `.salt-theme`.
 
 ## Corner radius
 
-Although default Salt design language stays sharp to serve our institutional clients,
+Although default Salt design language stays sharp corners to serve our institutional clients,
 rounded corners can be made available to many components to achieve a softer, consumer friendly feel.
 
 The `cornerRadius` prop can be used to toggle between `"sharp"` (default) and `"rounded"`.
@@ -76,7 +77,7 @@ Following components have received corner options, and more components will be a
 
 #### Interactive (inner)
 
-Interactive elements sit within other interactive elements uses `--salt-palette-corner-weaker` token.
+Interactive components sit within other interactive components use `--salt-palette-corner-weaker` token.
 
 - Checkbox
 - Pill
@@ -85,7 +86,7 @@ Interactive elements sit within other interactive elements uses `--salt-palette-
 
 #### Interactive (outer)
 
-These components uses `--salt-palette-corner-weak` token
+Outer interactive components use `--salt-palette-corner-weak` token.
 
 - Button
 - Switch (track)
@@ -94,7 +95,7 @@ These components uses `--salt-palette-corner-weak` token
 
 #### Containers
 
-These components uses `--salt-palette-corner` token
+Container components use `--salt-palette-corner` token.
 
 - Banner
 - Card
@@ -106,7 +107,7 @@ These components uses `--salt-palette-corner` token
 
 #### Primitives
 
-These components uses `--salt-palette-corner-strongest` token
+These components use `--salt-palette-corner-strongest` token
 
 - Avatar
 - Badge
