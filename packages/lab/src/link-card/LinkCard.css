@@ -5,7 +5,7 @@
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
   border-radius: var(--saltCard-borderRadius, 0);
   display: block;
-  padding: var(--saltCard-padding, var(--salt-spacing-300));
+  padding: var(--saltCard-padding, var(--salt-spacing-200));
   position: relative;
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
