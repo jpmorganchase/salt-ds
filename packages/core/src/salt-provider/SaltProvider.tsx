@@ -303,7 +303,6 @@ export function UNSTABLE_SaltProviderNext({
   enableStyleInjection,
   ...restProps
 }: UNSTABLE_SaltProviderNextProps) {
-  console.log("UNSTABLE_SaltProviderNext");
   return (
     <StyleInjectionProvider value={enableStyleInjection}>
       {/* Leveraging InternalSaltProvider being not exported, so we can pass more props than previously supported */}
