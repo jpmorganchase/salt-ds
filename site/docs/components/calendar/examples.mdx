@@ -1,0 +1,61 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="calendar" exampleName="Default">
+
+### Default (single-select)
+
+The default calendar allows the user and navigate months and years and select a single date.
+
+</LivePreview>
+
+<LivePreview componentName="calendar" displayName="Multi selection" exampleName="MultiSelection">
+
+### Multi selection
+
+When `selectionVariant="multiselect"`, users can select multiple items from the calendar dates.
+
+</LivePreview>
+  
+<LivePreview componentName="calendar" displayName="Range selection" exampleName="RangeSelection">
+
+### Range selection
+
+When `selectionVariant="range"`, users can select a range of items from the calendar dates by selecting an initial date and a subsequent date to set the range.
+
+</LivePreview>
+  
+<LivePreview componentName="calendar" displayName="Offset selection" exampleName="OffsetSelection">
+
+### Offset selection
+
+When `selectionVariant="offset"`, users can select a range of a set number of items by passing `endDateOffset`
+
+</LivePreview>
+  
+<LivePreview componentName="calendar" displayName="Unselectable dates" exampleName="UnselectableDates">
+
+### Unselectable days
+
+Unselectable dates are visually distinct from selectable days and will show a tooltip with extra information for the user.
+Use the `isDayUnselectable` prop to pass a function that determines if a day is unselectable and returns the tooltip description.
+
+</LivePreview>
+
+<LivePreview componentName="calendar" displayName="Hidden out of range dates" exampleName="HiddenOutOfRangeDates">
+
+### Hidden out of range dates
+
+By default, out of range dates are visually distinct from selectable days. To hide them you can use `hideOutOfRangeDates`.
+
+</LivePreview>
+
+</LivePreviewControls>
