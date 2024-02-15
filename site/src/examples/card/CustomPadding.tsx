@@ -31,7 +31,8 @@ export const CustomPadding = (): ReactElement => {
         >
           <H3>Sustainable investing products</H3>
           <Text>
-            Investment solutions to align your financial goals with your values.
+            We have a commitment to provide a wide range of investment solutions
+            to enable you to align your financial goals to your values.
           </Text>
         </StackLayout>
       </Card>

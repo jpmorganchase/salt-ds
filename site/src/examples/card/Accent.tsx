@@ -19,8 +19,8 @@ export const Accent = () => {
         <StackLayout gap={1} align="start">
           <H3>Sustainable investing products</H3>
           <Text>
-            We offer a variety of investment solutions that let you align your
-            financial goals with your values.
+            We have a commitment to provide a wide range of investment solutions
+            to enable you to align your financial goals to your values.
           </Text>
           <Link href="#">Learn more</Link>
         </StackLayout>
