@@ -19,7 +19,7 @@ export const CustomPadding = (): ReactElement => {
         }
       >
         <img
-          src="/img/examples/cardExample.jpeg"
+          src="/img/examples/cardExample.jpg"
           style={{ width: "100%", paddingBottom: padding }}
         />
         <StackLayout
