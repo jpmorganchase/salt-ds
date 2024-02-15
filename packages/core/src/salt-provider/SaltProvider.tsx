@@ -19,7 +19,7 @@ import {
   useComponentCssInjection,
   StyleInjectionProvider,
 } from "@salt-ds/styles";
-import { UNSTABLE_CornerRadius } from "../theme/CornerRadius";
+import { UNSTABLE_Corner } from "../theme/Corner";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -27,14 +27,14 @@ const DEFAULT_THEME_NAME = "salt-theme";
 const UNSTABLE_ADDITIONAL_THEME_NAME = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
-const DEFAULT_CORNER: UNSTABLE_CornerRadius = "sharp";
+const DEFAULT_CORNER: UNSTABLE_Corner = "sharp";
 export interface ThemeContextProps {
   theme: ThemeName;
   mode: Mode;
   window?: WindowContextType;
   /** Only available when using SaltProviderNext. */
   themeNext: boolean;
-  UNSTABLE_corner: UNSTABLE_CornerRadius;
+  UNSTABLE_corner: UNSTABLE_Corner;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -77,7 +77,7 @@ const createThemedChildren = ({
   mode,
   applyClassesTo,
   themeNext,
-  cornerRadius,
+  corner,
 }: {
   children: ReactNode;
   themeName: ThemeName;
@@ -88,7 +88,7 @@ const createThemedChildren = ({
   UNSTABLE_SaltProviderNextAdditionalProps) => {
   const themeNames = getThemeNames(themeName, themeNext);
   const themeNextProps = {
-    "data-corner": cornerRadius,
+    "data-corner": corner,
   };
   if (applyClassesTo === "root") {
     return children;
@@ -168,7 +168,7 @@ function InternalSaltProvider({
   mode: modeProp,
   breakpoints: breakpointsProp,
   themeNext,
-  cornerRadius: cornerRadiusProp,
+  corner: cornerProp,
 }: Omit<
   SaltProviderProps & ThemeNextProps & UNSTABLE_SaltProviderNextProps,
   "enableStyleInjection"
@@ -187,7 +187,7 @@ function InternalSaltProvider({
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
-  const corner = cornerRadiusProp ?? inheritedCorner ?? DEFAULT_CORNER;
+  const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
@@ -217,7 +217,7 @@ function InternalSaltProvider({
     mode,
     applyClassesTo,
     themeNext,
-    cornerRadius: corner,
+    corner: corner,
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -293,7 +293,7 @@ export function SaltProvider({
 }
 
 interface UNSTABLE_SaltProviderNextAdditionalProps {
-  cornerRadius?: UNSTABLE_CornerRadius;
+  corner?: UNSTABLE_Corner;
 }
 
 export type UNSTABLE_SaltProviderNextProps = SaltProviderProps &

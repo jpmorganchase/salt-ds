@@ -297,11 +297,7 @@ describe("Given a SaltProviderNext", () => {
   describe("when nested", () => {
     it("should inherit values not passed as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
-          density="high"
-          mode="dark"
-          cornerRadius="rounded"
-        >
+        <UNSTABLE_SaltProviderNext density="high" mode="dark" corner="rounded">
           <TestComponent />
           <UNSTABLE_SaltProviderNext density="medium">
             <TestComponent id="test-2" />
@@ -328,13 +324,9 @@ describe("Given a SaltProviderNext", () => {
     });
     it("should take different values set as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
-          density="high"
-          mode="dark"
-          cornerRadius="rounded"
-        >
+        <UNSTABLE_SaltProviderNext density="high" mode="dark" corner="rounded">
           <TestComponent />
-          <UNSTABLE_SaltProviderNext density="medium" cornerRadius="sharp">
+          <UNSTABLE_SaltProviderNext density="medium" corner="sharp">
             <TestComponent id="test-2" />
           </UNSTABLE_SaltProviderNext>
         </UNSTABLE_SaltProviderNext>
