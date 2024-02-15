@@ -65,8 +65,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 }
 
 export const withTheme: Decorator = (StoryFn, context) => {
-  const { density, mode, styleInjection, themeNext, cornerRadius } =
-    context.globals;
+  const { density, mode, styleInjection, themeNext, corner } = context.globals;
 
   const Provider =
     themeNext === "enable" ? UNSTABLE_SaltProviderNext : SaltProvider;
@@ -95,7 +94,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
             mode={mode}
             key={`${mode}-${styleInjection}`}
             enableStyleInjection={styleInjection === "enable"}
-            cornerRadius={cornerRadius}
+            corner={corner}
           >
             <Panel>
               <StoryFn />
@@ -112,7 +111,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
       mode={mode}
       key={`${mode}-${styleInjection}`}
       enableStyleInjection={styleInjection === "enable"}
-      cornerRadius={cornerRadius}
+      corner={corner}
     >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />

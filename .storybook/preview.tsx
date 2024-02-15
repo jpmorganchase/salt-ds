@@ -126,15 +126,15 @@ export const globalTypes: GlobalTypes = {
       title: "Theme Next",
     },
   },
-  cornerRadius: {
-    name: "Experimental corner radius",
-    description: "Turn on/off theme next",
+  corner: {
+    name: "Experimental corner",
+    description: "Switch corner to sharp / rounded",
     defaultValue: "sharp",
-    // if: { global: "themeNext", eq: "enable" }, // if doesn't work?
+    // if: { global: "themeNext", eq: "enable" }, // todo: why if doesn't work?
     toolbar: {
       icon: "beaker",
       items: ["sharp", "rounded"],
-      title: "Corner radius",
+      title: "Corner",
     },
   },
 };
