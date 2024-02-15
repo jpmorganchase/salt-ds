@@ -7,6 +7,7 @@ import {
   CardProps,
   RadioButton,
   RadioButtonGroup,
+  Link,
 } from "@salt-ds/core";
 
 export const Accent = (): ReactElement => {
@@ -19,12 +20,18 @@ export const Accent = (): ReactElement => {
   return (
     <StackLayout style={{ width: "266px" }} align="center">
       <Card accent={placement} hoverable>
-        <StackLayout gap={1}>
-          <H3>Sustainable investing products</H3>
-          <Text>
-            We have a commitment to provide a wide range of investment solutions
-            to enable you to align your financial goals to your values.
-          </Text>
+        <StackLayout>
+          <StackLayout gap={1}>
+            <H3>Sustainable investing products</H3>
+            <Text>
+              We have a commitment to provide a wide range of investment
+              solutions to enable you to align your financial goals to your
+              values.
+            </Text>
+          </StackLayout>
+          <Link href="#" IconComponent={null}>
+            Learn more
+          </Link>
         </StackLayout>
       </Card>
       <RadioButtonGroup direction={"horizontal"} defaultValue="top">

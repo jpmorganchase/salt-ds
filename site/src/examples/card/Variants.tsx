@@ -2,11 +2,9 @@ import { ReactElement, ChangeEvent, useState } from "react";
 import {
   Card,
   CardProps,
-  H3,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-  Text,
 } from "@salt-ds/core";
 
 export const Variants = (): ReactElement => {
@@ -18,15 +16,11 @@ export const Variants = (): ReactElement => {
 
   return (
     <StackLayout style={{ width: "266px" }} align="center">
-      <Card variant={variant} hoverable>
-        <StackLayout gap={1}>
-          <H3>Sustainable investing products</H3>
-          <Text>
-            We have a commitment to provide a wide range of investment solutions
-            to enable you to align your financial goals to your values.
-          </Text>
-        </StackLayout>
-      </Card>
+      <Card
+        variant={variant}
+        hoverable
+        style={{ width: "260px", height: "144px" }}
+      ></Card>
       <RadioButtonGroup direction={"horizontal"} defaultValue="primary">
         <RadioButton
           key="primary"
