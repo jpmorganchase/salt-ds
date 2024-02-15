@@ -146,20 +146,13 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     });
 
     const previousHeight = useRef<string | undefined>(undefined);
+    const input = inputRef.current;
 
-    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-      const value = event.target.value;
-      setValue(value);
-      onChange?.(event);
-    };
-
-    useLayoutEffect(() => {
-      const input = inputRef.current;
+    const changeHeight = () => {
       if (!input) return;
       const hasBeenManuallyResized =
         previousHeight.current !== undefined &&
-        input.style.height !== previousHeight.current;
-
+        input?.style.height !== previousHeight.current;
       if (!hasBeenManuallyResized) {
         const previousOverflow = input.style.overflow;
         input.style.overflow = "hidden";
@@ -172,6 +165,17 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         previousHeight.current = newHeight;
         input.style.overflow = previousOverflow;
       }
+    };
+
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      const value = event.target.value;
+      setValue(value);
+      onChange?.(event);
+      changeHeight();
+    };
+
+    useLayoutEffect(() => {
+      changeHeight();
     }, [value]);
 
     const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
