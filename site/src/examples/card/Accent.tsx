@@ -16,7 +16,7 @@ export const Accent = () => {
   return (
     <StackLayout style={{ width: "266px" }} align="center">
       <Card accent={placement} hoverable>
-        <StackLayout gap={1}>
+        <StackLayout gap={1} align="start">
           <H3>Sustainable investing products</H3>
           <Text>
             We offer a variety of investment solutions that let you align your

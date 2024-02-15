@@ -18,7 +18,6 @@ export const Variants = (): ReactElement => {
     <StackLayout style={{ width: "266px" }} align="center">
       <Card
         variant={variant}
-        hoverable
         style={{ width: "260px", height: "144px" }}
       ></Card>
       <RadioButtonGroup direction={"horizontal"} defaultValue="primary">

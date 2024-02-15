@@ -18,7 +18,7 @@ export const Actions = (): ReactElement => {
         </StackLayout>
       </Card>
       <Card style={{ width: "260px" }} accent="top" hoverable>
-        <StackLayout>
+        <StackLayout align="start">
           <StackLayout gap={1}>
             <H3>Sustainable investing products</H3>
             <Text>
