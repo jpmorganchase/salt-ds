@@ -9,7 +9,7 @@ import {
 } from "@salt-ds/core";
 
 export const CustomPadding = (): ReactElement => {
-  const [padding, setPadding] = useState<string>("var(--salt-spacing-300)");
+  const [padding, setPadding] = useState<string>("var(--salt-spacing-200)");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPadding(event.target.value);
@@ -27,9 +27,16 @@ export const CustomPadding = (): ReactElement => {
       >
         <img
           src="/img/examples/cardExample.jpeg"
-          style={{ width: "100%", paddingBottom: padding }}
+          style={{
+            paddingBottom: padding,
+            width: "100%",
+          }}
         />
-        <StackLayout gap={1}>
+        <StackLayout
+          gap={1}
+          // Apply padding around the content below the image for a full width image
+          style={{ padding: padding == "0" ? "var(--salt-spacing-200)" : 0 }}
+        >
           <H3>Sustainable investing products</H3>
           <Text>
             We have a commitment to provide a wide range of investment solutions
@@ -39,18 +46,18 @@ export const CustomPadding = (): ReactElement => {
       </Card>
       <RadioButtonGroup
         direction={"horizontal"}
-        defaultValue="var(--salt-spacing-300)"
+        defaultValue="var(--salt-spacing-200)"
       >
         <RadioButton
           key="default"
           label="default"
-          value="var(--salt-spacing-300)"
+          value="var(--salt-spacing-200)"
           onChange={handleChange}
         />
         <RadioButton
-          key="spacing-200"
-          label="spacing-200"
-          value="var(--salt-spacing-200)"
+          key="spacing-300"
+          label="spacing-300"
+          value="var(--salt-spacing-300)"
           onChange={handleChange}
         />
         <RadioButton
@@ -60,8 +67,8 @@ export const CustomPadding = (): ReactElement => {
           onChange={handleChange}
         />
         <RadioButton
-          key="none"
-          label="none"
+          key="fullWidthImage"
+          label="full width image"
           value="0"
           onChange={handleChange}
         />
