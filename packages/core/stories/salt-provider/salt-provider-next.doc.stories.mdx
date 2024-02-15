@@ -53,21 +53,21 @@ The `cornerRadius` prop can be used to toggle between `"sharp"` (default) and `"
 
 A new set of foundation token (curve) is added with below values
 
-| Foundation Token   | HD    | MD/LD/TD |
-| ------------------ | ----- | -------- |
-| `--salt-curve-0`   | 0     | 0        |
-| `--salt-curve-100` | 1px   | 2px      |
-| `--salt-curve-200` | 2px   | 4px      |
-| `--salt-curve-300` | 4px   | 8px      |
-| `--salt-curve-999` | 999px | 999px    |
+| Foundation Token   | HD    | MD    | LD    | TD    |
+| ------------------ | ----- | ----- | ----- | ----- |
+| `--salt-curve-0`   | 0     | 0     | 0     | 0     |
+| `--salt-curve-50`  | 1px   | 2px   | 3px   | 4px   |
+| `--salt-curve-100` | 2px   | 4px   | 6px   | 8px   |
+| `--salt-curve-150` | 3px   | 6px   | 9px   | 12px  |
+| `--salt-curve-999` | 999px | 999px | 999px | 999px |
 
 A new set of palette token (corner) is added with below mapping
 
 | Palette Token                     | Sharp              | Rounded            |
 | --------------------------------- | ------------------ | ------------------ |
-| `--salt-palette-corner-weaker`    | `--salt-curve-0`   | `--salt-curve-100` |
-| `--salt-palette-corner-weak`      | `--salt-curve-0`   | `--salt-curve-200` |
-| `--salt-palette-corner`           | `--salt-curve-0`   | `--salt-curve-300` |
+| `--salt-palette-corner-weaker`    | `--salt-curve-0`   | `--salt-curve-50`  |
+| `--salt-palette-corner-weak`      | `--salt-curve-0`   | `--salt-curve-100` |
+| `--salt-palette-corner`           | `--salt-curve-0`   | `--salt-curve-150` |
 | `--salt-palette-corner-strongest` | `--salt-curve-999` | `--salt-curve-999` |
 
 ### Components
