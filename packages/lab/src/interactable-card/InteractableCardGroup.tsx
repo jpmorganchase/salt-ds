@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { InteractableCardGroupContext } from "./internal/InteractableCardGroupContext";
 import { clsx } from "clsx";
-import { FlexLayout } from "@salt-ds/core";
+import { FlowLayout } from "@salt-ds/core";
 
 interface InteractableCardGroupProps {
   defaultValue?: string;
@@ -38,10 +38,12 @@ export const InteractableCardGroup: React.FC<InteractableCardGroupProps> = ({
   );
 
   return (
+    // TODO: fix type error
     <InteractableCardGroupContext.Provider value={{ select, isSelected }}>
-      <FlexLayout className={clsx("interactableCardGroup", className)}>
+      {/* TODO: update layout options */}
+      <FlowLayout gap={1} className={clsx("interactableCardGroup", className)}>
         {children}
-      </FlexLayout>
+      </FlowLayout>
     </InteractableCardGroupContext.Provider>
   );
 };
