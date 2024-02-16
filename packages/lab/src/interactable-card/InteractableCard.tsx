@@ -9,7 +9,7 @@ import React, {
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { capitalize, makePrefixer } from "@salt-ds/core";
+import { capitalize, makePrefixer, useControlled } from "@salt-ds/core";
 import { useInteractableCard } from "./useInteractableCard";
 import interactableCardCss from "./InteractableCard.css";
 import { useInteractableCardGroup } from "./internal/InteractableCardGroupContext";
@@ -17,7 +17,8 @@ import { useInteractableCardGroup } from "./internal/InteractableCardGroupContex
 const withBaseName = makePrefixer("saltInteractableCard");
 
 // TODO: Remove omissions when Card props deprecated
-export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
+export interface InteractableCardProps
+  extends ComponentPropsWithoutRef<"button"> {
   /**
    * Accent border position: defaults to "bottom"
    */
@@ -30,6 +31,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    * If `true`, the card will have selected styling.
    */
   selected?: boolean;
+  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
    * Styling variant; defaults to "primary".
    */
@@ -39,7 +41,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 export const InteractableCard = forwardRef<
-  HTMLDivElement,
+  HTMLButtonElement,
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
@@ -51,6 +53,7 @@ export const InteractableCard = forwardRef<
     variant = "primary",
     value,
     onBlur,
+    onChange,
     onClick,
     onKeyUp,
     onKeyDown,
@@ -74,40 +77,30 @@ export const InteractableCard = forwardRef<
 
   const interactableCardGroup = useInteractableCardGroup();
 
-  const selected = interactableCardGroup
+  const interactableCardGroupSelected = interactableCardGroup
     ? interactableCardGroup.isSelected(value)
     : selectedProp;
+
+  const [selected, setSelected] = useControlled({
+    controlled: interactableCardGroupSelected,
+    default: Boolean(selectedProp),
+    name: "InteractableCard",
+    state: "selected",
+  });
+
   const role = interactableCardGroup ? "radio" : "button";
 
-  const handleInteraction = () => {
-    if (!disabled && value !== undefined) {
-      interactableCardGroup?.select(value);
-    }
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    interactableCardGroup?.select(event);
+    console.log("selected");
+    setSelected(!selected);
+    onChange?.(event);
+    onClick?.(event);
   };
 
-  const conditionalProps = interactableCardGroup
-    ? {
-        tabIndex: !disabled ? 0 : -1,
-        onClick: (event: MouseEvent<HTMLDivElement>) => {
-          handleInteraction();
-          event.stopPropagation();
-        },
-        onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
-          if (event.key === "Enter" || event.key === " ") {
-            handleInteraction();
-            event.preventDefault();
-          }
-        },
-        "aria-checked": role === "radio" ? selected : undefined,
-        "data-id": value,
-        role: role,
-      }
-    : {};
-
   return (
-    <div
+    <button
       {...cardProps}
-      {...conditionalProps}
       role={role}
       aria-checked={role === "radio" ? selected : undefined}
       data-id={value}
@@ -123,9 +116,11 @@ export const InteractableCard = forwardRef<
         className
       )}
       {...rest}
+      onClick={handleClick}
+      value={value}
       ref={ref}
     >
       {children}
-    </div>
+    </button>
   );
 });

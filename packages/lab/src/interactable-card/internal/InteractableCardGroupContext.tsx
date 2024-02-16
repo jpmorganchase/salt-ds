@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { SyntheticEvent, useContext } from "react";
 import { createContext } from "@salt-ds/core";
 
 export type Value = string | readonly string[] | number | undefined;
 
 export interface InteractableCardGroupContextValue {
-  select: (value: Value) => void;
+  select: (event: SyntheticEvent<HTMLButtonElement>) => void;
   isSelected: (id: Value) => boolean;
 }
 
