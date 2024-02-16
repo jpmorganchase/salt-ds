@@ -128,3 +128,20 @@ export const Variant: StoryFn<typeof Card> = () => {
     </StackLayout>
   );
 };
+
+export const InteractableCardGroup: StoryFn<typeof Card> = () => (
+  <InteractableCardGroup>
+    <InteractableCard style={{ width: "256px" }} selected>
+      <StackLayout gap={1}>
+        <H3>{exampleData.title}</H3>
+        <Text>{exampleData.content}</Text>
+      </StackLayout>
+    </InteractableCard>
+    <InteractableCard style={{ width: "256px" }} selected>
+      <StackLayout gap={1}>
+        <H3>{exampleData.title}</H3>
+        <Text>{exampleData.content}</Text>
+      </StackLayout>
+    </InteractableCard>
+  </InteractableCardGroup>
+);

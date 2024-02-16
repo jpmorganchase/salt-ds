@@ -3,10 +3,9 @@ import { InteractableCardGroupContext } from "./internal/InteractableCardGroupCo
 import { clsx } from "clsx";
 import { FlexLayout } from "@salt-ds/core";
 
-// Define the props for InteractableCardGroup
 interface InteractableCardGroupProps {
-  defaultValue?: string; // Default selected value
-  onChange?: (value: string) => void; // Callback for when selection changes
+  defaultValue?: string;
+  onChange?: (value: string) => void;
   children: React.ReactNode;
   className?: string;
 }
@@ -17,12 +16,10 @@ export const InteractableCardGroup: React.FC<InteractableCardGroupProps> = ({
   children,
   className,
 }) => {
-  // State to track selected value
   const [selectedValue, setSelectedValue] = useState<string | undefined>(
     defaultValue
   );
 
-  // Function to handle selection
   const select = useCallback(
     (value: string | number) => {
       if (value !== selectedValue) {
@@ -33,7 +30,6 @@ export const InteractableCardGroup: React.FC<InteractableCardGroupProps> = ({
     [selectedValue, onChange]
   );
 
-  // Function to check if a card is selected
   const isSelected = useCallback(
     (id: string | undefined) => {
       return selectedValue === id;
@@ -41,7 +37,6 @@ export const InteractableCardGroup: React.FC<InteractableCardGroupProps> = ({
     [selectedValue]
   );
 
-  // Provide context and render children
   return (
     <InteractableCardGroupContext.Provider value={{ select, isSelected }}>
       <FlexLayout className={clsx("interactableCardGroup", className)}>
