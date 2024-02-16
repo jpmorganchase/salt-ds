@@ -6,3 +6,5 @@ export * from "./Default";
 export * from "./FullWidthImage";
 export * from "./LinkCardExample";
 export * from "./Variants";
+export * from "./InteractableCardExample";
+export * from "./DisabledInteractableCard";
