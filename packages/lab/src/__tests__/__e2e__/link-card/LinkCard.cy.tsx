@@ -3,7 +3,7 @@ import * as linkCardStories from "@stories/link-card/link-card.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(linkCardStories);
-const { Default, AccentPlacement } = composedStories;
+const { Default } = composedStories;
 
 describe("Given a Link Card", () => {
   checkAccessibility(composedStories);
