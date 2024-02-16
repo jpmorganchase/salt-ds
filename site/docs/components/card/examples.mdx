@@ -51,8 +51,10 @@ data:
     <LivePreview componentName="card" exampleName="CustomPadding" >
       ### Custom padding
 
-      - Use spacing tokens when needed (--salt-spacing-100 or --salt-spacing-300) to customize the inner padding of any card to fit your application use case.
-      - Set the `--saltCard-padding` CSS property to the desired spacing.
+      - By default, the card components include spacing-200 inner padding.
+      - For very small cards with a limited hit area, customizing the padding to spacing-100 is advisable.
+      - When your cards are intended to occupy a significant portion of your application window, spacing-300 is recommended.
+      - Customize the spacing using the `--saltCard-padding` CSS property.
     </LivePreview>
 
 </LivePreviewControls>
