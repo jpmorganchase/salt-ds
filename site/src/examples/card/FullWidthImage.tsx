@@ -1,10 +1,15 @@
-import { ReactElement, useState, CSSProperties } from "react";
+import { ReactElement, CSSProperties } from "react";
 import { H3, Text, StackLayout, Card } from "@salt-ds/core";
+import { Image } from "@jpmorganchase/mosaic-site-components";
 
 export const FullWidthImage = (): ReactElement => {
   return (
     <Card style={{ "--saltCard-padding": 0, width: "260px" } as CSSProperties}>
-      <img src="/img/examples/cardExample.jpg" style={{ width: "100%" }} />
+      <Image
+        src="/img/examples/cardExample.jpg"
+        alt="placeholder image"
+        style={{ width: "100%" }}
+      />
       <StackLayout
         gap={1}
         // Apply padding around the content below the image for a full width image
