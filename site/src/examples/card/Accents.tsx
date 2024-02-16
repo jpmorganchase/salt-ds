@@ -10,7 +10,7 @@ import {
   Link,
 } from "@salt-ds/core";
 
-export const Accent = () => {
+export const Accents = () => {
   const [placement, setPlacement] = useState<CardProps["accent"]>("top");
 
   return (

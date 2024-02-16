@@ -28,7 +28,7 @@ export const Actions = (): ReactElement => {
             </Text>
           </StackLayout>
           <Link href="#" IconComponent={null}>
-            Learn more
+            Explore our solutions
           </Link>
         </StackLayout>
       </Card>

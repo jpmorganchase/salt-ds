@@ -13,65 +13,46 @@ data:
     <LivePreview componentName="card" exampleName="Default" displayName="Card" >
       ### Card
 
-      By default, the basic Card component does not have any interactive or focusable elements within it. 
+      By default, the Card component does not have any interactive or focusable elements within it. 
+    </LivePreview>
+
+        <LivePreview componentName="card" exampleName="Variants" >
+      ### Variants
+
+      All card components provide both primary and secondary variants, offering flexibility and enabling differentiation based on visual hierarchy within your UI.
     </LivePreview>
 
 
-    <LivePreview componentName="card" exampleName="Accent" >
-      ### Accent
+    <LivePreview componentName="card" exampleName="Accents" >
+      ### Accents
 
     - Use the ‘accent’ prop to place the accent bar at the top, right, bottom or left of any card.
-    - The accent in a basic Card is optional. However, it is consistently used in Link Cards and Interactable Cards to indicate their interaction capability.
-    - When using an accent in a Card component, use the ‘hoverable’ prop to enable the hover effect.
+    - The accent in a Card is optional, however, it can be used to indicate meaning (such as Product or Brand color).
+    - An accent can work well with the hoverable prop, to afford the color when the user's focus is over a specific card.
+    - In contrast, an accent is always visible in Link Cards and Interactable Cards to indicate their interaction capability. The accent ensures the WCAG 2.1 min-contrast requirement of interactive components is met.
     - Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
+
     </LivePreview>
 
     <LivePreview componentName="card" exampleName="Actions" >
       ### Actions
 
-    Use the basic Card to incorporate actions like [Links](../link) or [Buttons](../button). Avoid embedding actions directly into an Interactable Card component.
+    Use the Card to incorporate actions like [Links](../link) or [Buttons](../button). Avoid embedding actions directly into an Interactable Card component.
     </LivePreview>
 
-    <LivePreview componentName="card" exampleName="Variants" >
-      ### Variants
+        <LivePreview componentName="card" exampleName="FullWidthImage" >
+      ### Full width image
 
-      All card components provide both primary and secondary variants, offering flexibility and enabling differentiation based on visual hierarchy within your UI.
+      - When using images within your card components, we recommend having the image span the entire width of the card.
+      - You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
     </LivePreview>
+
 
     <LivePreview componentName="card" exampleName="CustomPadding" >
       ### Custom padding
 
       - Use spacing tokens when needed (--salt-spacing-100 or --salt-spacing-300) to customize the inner padding of any card to fit your application use case.
       - Set the `--saltCard-padding` CSS property to the desired spacing.
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="FullWidthImage" >
-      ### Full width image
-
-      - When using images within your card components, we recommend having the image span the entire width of the card.
-      - You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
-    </LivePreview>
-    <LivePreview componentName="card" exampleName="InteractableCard" >
-      ### Interactable card
-
-      - Use the `InteractableCard` component to make the entire card interactable. Don't use any focusable elements within interactable cards.
-      - To use as a link, wrap `Card` in [`Link`](../link).
-      - Avoid adding too much content to interactable cards. All users should be able to read them easily, and it shouldn't take too long for a screen reader tool to read out the content.
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="SecondaryInteractableCard" >
-      ### Secondary Interactable Card
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="DisabledInteractableCard" >
-      ### Disabled interactable card
-      - Set `disabled={true}` to apply disabled styling to interactable cards.
-      - Make sure to also apply `disabled={true}` to any nested components, such as `Text`, to ensure disabled styling also applies to the content.
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="MultipleCards" >
-      ### Multiple cards
-      You can use layout components to group card components together.
     </LivePreview>
 
 </LivePreviewControls>
