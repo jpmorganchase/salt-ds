@@ -31,12 +31,18 @@ export interface InteractableCardProps
    * If `true`, the card will have selected styling.
    */
   selected?: boolean;
+  /**
+   * Callback fired when the selection changes.
+   * @param event
+   */
   onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
    * Styling variant; defaults to "primary".
    */
   variant?: "primary" | "secondary";
-
+  /**
+   * Value of card (for selectable use case).
+   */
   value?: string | number;
 }
 
@@ -92,7 +98,6 @@ export const InteractableCard = forwardRef<
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     interactableCardGroup?.select(event);
-    console.log("selected");
     setSelected(!selected);
     onChange?.(event);
     onClick?.(event);

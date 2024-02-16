@@ -68,9 +68,7 @@ export const InteractableCardGroup = forwardRef<
 
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {
-      console.log("selectedgroup");
       const newValue = event.currentTarget.value;
-      console.log(newValue);
       setValue(newValue);
       if (value !== newValue) {
         onChange?.(event);
