@@ -11,7 +11,7 @@ import {
 } from "@salt-ds/core";
 
 export const CustomPadding = (): ReactElement => {
-  const [padding, setPadding] = useState("salt-spacing-200");
+  const [padding, setPadding] = useState("spacing-200");
 
   return (
     <StackLayout align="center">
@@ -20,7 +20,7 @@ export const CustomPadding = (): ReactElement => {
           style={
             {
               "--saltCard-padding": "var(--salt-spacing-100)",
-              width: "260px",
+              width: "160px",
             } as CSSProperties
           }
         >
@@ -56,7 +56,7 @@ export const CustomPadding = (): ReactElement => {
           style={
             {
               "--saltCard-padding": "var(--salt-spacing-300)",
-              width: "260px",
+              width: "380px",
             } as CSSProperties
           }
         >
