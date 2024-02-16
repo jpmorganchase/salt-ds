@@ -8,6 +8,9 @@ import {
   RadioButton,
   Link,
   Button,
+  Display3,
+  Display2,
+  FlowLayout,
 } from "@salt-ds/core";
 
 export const CustomPadding = (): ReactElement => {
@@ -23,8 +26,13 @@ export const CustomPadding = (): ReactElement => {
               width: "160px",
             } as CSSProperties
           }
+          accent="top"
+          hoverable
         >
-          <RadioButton label="Pay on another day" />
+          <StackLayout gap={1}>
+            <H3>Pay now</H3>
+            <Text>Your payment will be processed immediately.</Text>
+          </StackLayout>
         </Card>
       )}
       {padding === "spacing-200" && (
@@ -56,21 +64,42 @@ export const CustomPadding = (): ReactElement => {
           style={
             {
               "--saltCard-padding": "var(--salt-spacing-300)",
-              width: "380px",
+              width: "500px",
             } as CSSProperties
           }
+          accent="top"
+          hoverable
         >
-          <StackLayout align="start">
-            <StackLayout gap={1}>
-              <H3>Global dashboard</H3>
-              <Text>
-                A selection of analyses based on supply chain-related news,
-                company and trade data sets. As well as stock level exposure to
-                the supply chain theme using a range of proprietary Natural
-                Language Processing tools.
-              </Text>
+          <StackLayout>
+            <StackLayout direction="row" align="end" gap={1}>
+              <H3>Threshold Summary</H3>
+              <Text variant="secondary">(Projected Revenue)</Text>
             </StackLayout>
-            <Button>Learn more</Button>
+            <StackLayout direction="row" gap={3}>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 1</Text>
+                <Display3>$1,000,000</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 1 & 2</Text>
+                <Display3>$450,000</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 2 & 3</Text>
+                <Display3>$0</Display3>
+              </StackLayout>
+            </StackLayout>
+
+            <StackLayout direction="row">
+              <StackLayout gap={0}>
+                <Text>Below Threshold 3 & 4</Text>
+                <Display3>$0</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Total</Text>
+                <Display3>$1,450,000</Display3>
+              </StackLayout>
+            </StackLayout>
           </StackLayout>
         </Card>
       )}
