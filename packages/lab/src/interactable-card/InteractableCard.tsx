@@ -1,12 +1,18 @@
+import React, {
+  forwardRef,
+  useRef,
+  MouseEvent,
+  KeyboardEvent,
+  ComponentPropsWithoutRef,
+  useContext,
+} from "react";
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-
 import { capitalize, makePrefixer } from "@salt-ds/core";
 import { useInteractableCard } from "./useInteractableCard";
-
 import interactableCardCss from "./InteractableCard.css";
+import { useInteractableCardGroup } from "./internal/InteractableCardGroupContext";
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
@@ -28,6 +34,8 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    * Styling variant; defaults to "primary".
    */
   variant?: "primary" | "secondary";
+
+  value?: string | number;
 }
 
 export const InteractableCard = forwardRef<
@@ -39,8 +47,9 @@ export const InteractableCard = forwardRef<
     children,
     className,
     disabled,
-    selected,
+    selected: selectedProp,
     variant = "primary",
+    value,
     onBlur,
     onClick,
     onKeyUp,
@@ -63,9 +72,45 @@ export const InteractableCard = forwardRef<
     onClick,
   });
 
+  const interactableCardGroup = useInteractableCardGroup();
+
+  const selected = interactableCardGroup
+    ? interactableCardGroup.isSelected(value)
+    : selectedProp;
+  const role = interactableCardGroup ? "radio" : "button";
+
+  const handleInteraction = () => {
+    if (!disabled && value !== undefined) {
+      interactableCardGroup?.select(value);
+    }
+  };
+
+  const conditionalProps = interactableCardGroup
+    ? {
+        tabIndex: !disabled ? 0 : -1,
+        onClick: (event: MouseEvent<HTMLDivElement>) => {
+          handleInteraction();
+          event.stopPropagation();
+        },
+        onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
+          if (event.key === "Enter" || event.key === " ") {
+            handleInteraction();
+            event.preventDefault();
+          }
+        },
+        "aria-checked": role === "radio" ? selected : undefined,
+        "data-id": value,
+        role: role,
+      }
+    : {};
+
   return (
     <div
       {...cardProps}
+      {...conditionalProps}
+      role={role}
+      aria-checked={role === "radio" ? selected : undefined}
+      data-id={value}
       className={clsx(
         withBaseName(),
         withBaseName(variant),
