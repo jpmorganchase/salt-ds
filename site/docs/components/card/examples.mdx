@@ -21,8 +21,9 @@ data:
       ### Accent
 
     - Use the ‘accent’ prop to place the accent bar at the top, right, bottom or left of any card.
-    - The accent is consistently used for Interactable Cards to indicate interaction capability.
-    - When applying an accent to a basic Card component, use the ‘hoverable’ prop to enable a hover effect when needed.
+    - The accent in a basic Card is optional. However, it is consistently used in Link Cards and Interactable Cards to indicate their interaction capability.
+    - When using an accent in a Card component, use the ‘hoverable’ prop to enable the hover effect.
+    - Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
     </LivePreview>
 
     <LivePreview componentName="card" exampleName="Actions" >
@@ -40,9 +41,16 @@ data:
     <LivePreview componentName="card" exampleName="CustomPadding" >
       ### Custom padding
 
-      - Set the `--saltCard-padding` CSS property to adjust the inner padding of any card. By default it is `--salt-spacing-200`.
+      - Use spacing tokens when needed (--salt-spacing-100 or --salt-spacing-300) to customize the inner padding of any card to fit your application use case.
+      - Set the `--saltCard-padding` CSS property to the desired spacing.
     </LivePreview>
 
+    <LivePreview componentName="card" exampleName="FullWidthImage" >
+      ### Full width image
+
+      - When using images within your card components, we recommend having the image span the entire width of the card.
+      - You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
+    </LivePreview>
     <LivePreview componentName="card" exampleName="InteractableCard" >
       ### Interactable card
 

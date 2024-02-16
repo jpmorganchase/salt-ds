@@ -2,6 +2,7 @@ export * from "./Actions";
 export * from "./Accent";
 export * from "./CustomPadding";
 export * from "./Default";
+export * from "./FullWidthImage";
 export * from "./InteractableCard";
 export * from "./DisabledInteractableCard";
 export * from "./MultipleCards";

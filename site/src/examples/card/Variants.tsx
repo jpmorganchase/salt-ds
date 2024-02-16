@@ -23,14 +23,14 @@ export const Variants = (): ReactElement => {
       <RadioButtonGroup direction={"horizontal"} defaultValue="primary">
         <RadioButton
           key="primary"
-          label="primary"
+          label="Primary"
           value="primary"
           onChange={handleChange}
           checked
         />
         <RadioButton
           key="secondary"
-          label="secondary"
+          label="Secondary"
           value="secondary"
           onChange={handleChange}
         />

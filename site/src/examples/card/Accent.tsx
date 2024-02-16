@@ -30,10 +30,10 @@ export const Accent = () => {
         onChange={(e) => setPlacement(e.target.value as CardProps["accent"])}
         direction="horizontal"
       >
-        <RadioButton label="top" value="top" />
-        <RadioButton label="right" value="right" />
-        <RadioButton label="bottom" value="bottom" />
-        <RadioButton label="left" value="left" />
+        <RadioButton label="Top" value="top" key="top" />
+        <RadioButton label="Right" value="right" key="right" />
+        <RadioButton label="Bottom" value="bottom" key="bottom" />
+        <RadioButton label="Left" value="left" key="left" />
       </RadioButtonGroup>
     </StackLayout>
   );
