@@ -69,8 +69,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
     open = false,
     onOpenChange,
     variant = "primary",
-    id: idProp,
-    role: roleProp,
     disableDismiss,
     disableScrim,
     ...rest
@@ -86,14 +84,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   const [showComponent, setShowComponent] = useState(false);
   const { Component: FloatingComponent } = useFloatingComponent();
 
-  const id = useId(idProp);
-
   const { context, floating, elements } = useFloatingUI({
     open,
     onOpenChange,
   });
-
-  const role = roleProp ?? "dialog";
 
   const { getFloatingProps } = useInteractions([
     useClick(context),
@@ -120,11 +114,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
       <FloatingComponent
         open={showComponent}
         ref={handleRef}
-        role={role}
+        role={"dialog"}
         width={elements.floating?.offsetWidth}
         height={elements.floating?.offsetHeight}
         aria-modal="true"
-        aria-labelledby={`${id}-header`}
         focusManagerProps={{
           context: context,
         }}

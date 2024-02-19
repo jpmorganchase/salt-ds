@@ -65,7 +65,7 @@ export const Position = ({ position = "left", ...args }) => {
       <Drawer
         open={openLeft}
         onOpenChange={(newOpen) => setOpenLeft(newOpen)}
-        id="left"
+        id="left-drawer"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenLeft(false)} />
@@ -75,7 +75,7 @@ export const Position = ({ position = "left", ...args }) => {
         open={openRight}
         onOpenChange={(newOpen) => setOpenRight(newOpen)}
         position="right"
-        id="right"
+        id="right-drawer"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenRight(false)} />
@@ -85,7 +85,7 @@ export const Position = ({ position = "left", ...args }) => {
         open={openTop}
         onOpenChange={(newOpen) => setOpenTop(newOpen)}
         position="top"
-        id="top"
+        id="top-drawer"
         style={{ height: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenTop(false)} />
@@ -95,7 +95,7 @@ export const Position = ({ position = "left", ...args }) => {
         open={openBottom}
         onOpenChange={(newOpen) => setOpenBottom(newOpen)}
         position="bottom"
-        id="bottom"
+        id="bottom-drawer"
         style={{ height: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenBottom(false)} />
