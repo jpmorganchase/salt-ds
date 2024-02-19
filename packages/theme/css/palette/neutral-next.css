@@ -1,0 +1,31 @@
+.salt-theme.salt-theme-next[data-mode="light"] {
+  --salt-palette-neutral-default: var(--salt-color-gray-500);
+  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40A);
+  --salt-palette-neutral-readonly: var(--salt-color-gray-500-15A);
+  --salt-palette-neutral-strong: var(--salt-color-gray-600);
+  --salt-palette-neutral-strong-disabled: var(--salt-color-gray-600-40A);
+  --salt-palette-neutral-stronger-primary: var(--salt-color-black-40A);
+  --salt-palette-neutral-stronger-secondary: var(--salt-color-black-25A);
+  --salt-palette-neutral-stronger-tertiary: var(--salt-color-black-15A);
+  --salt-palette-neutral-weak: var(--salt-color-gray-400);
+  --salt-palette-neutral-weaker: var(--salt-color-gray-300);
+  --salt-palette-neutral-weaker-disabled: var(--salt-color-gray-300-40A);
+  --salt-palette-neutral-weaker-readonly: var(--salt-color-gray-300-15A);
+  --salt-palette-neutral-weakest: var(--salt-color-gray-200);
+}
+
+.salt-theme.salt-theme-next[data-mode="dark"] {
+  --salt-palette-neutral-default: var(--salt-color-gray-500);
+  --salt-palette-neutral-disabled: var(--salt-color-gray-500-40A);
+  --salt-palette-neutral-readonly: var(--salt-color-gray-500-15A);
+  --salt-palette-neutral-strong: var(--salt-color-gray-400);
+  --salt-palette-neutral-strong-disabled: var(--salt-color-gray-400-40A);
+  --salt-palette-neutral-stronger-primary: var(--salt-color-white-40A);
+  --salt-palette-neutral-stronger-secondary: var(--salt-color-white-25A);
+  --salt-palette-neutral-stronger-tertiary: var(--salt-color-white-15A);
+  --salt-palette-neutral-weak: var(--salt-color-gray-600);
+  --salt-palette-neutral-weaker: var(--salt-color-gray-700);
+  --salt-palette-neutral-weaker-disabled: var(--salt-color-gray-700-40A);
+  --salt-palette-neutral-weaker-readonly: var(--salt-color-gray-700-15A);
+  --salt-palette-neutral-weakest: var(--salt-color-gray-800);
+}
