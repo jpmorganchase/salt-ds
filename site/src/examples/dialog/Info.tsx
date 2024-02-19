@@ -24,9 +24,7 @@ export const Info = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open info dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open info dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}

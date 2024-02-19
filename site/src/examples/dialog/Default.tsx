@@ -26,9 +26,7 @@ export const Default = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open default dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open default dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}

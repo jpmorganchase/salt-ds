@@ -33,9 +33,7 @@ const SmallDialog = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open Small Dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open Small Dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}

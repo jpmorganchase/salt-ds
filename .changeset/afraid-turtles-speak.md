@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-remove `Dialog` from labs and promote to core
+remove `Dialog`, `DialogTitle`, `DialogContent` and `DialogActions` from labs and promote to core

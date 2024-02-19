@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-- Promote `Dialog` to Core
+- Promote `Dialog`, `DialogTitle`, `DialogContent` and `DialogActions` to Core
 - `Dialog` is a window that opens over the application content, focusing the user’s attention on a particular task or piece of information.
 - It can communicate new information, errors, warnings, or successful completion of a process or task
 
@@ -15,7 +15,7 @@ const AlertDialog = () => {
   };
 
   const onOpenChange = (value: boolean) => {
-    setOpen(value);
+    // setOpen(value)
   };
 
   const handleClose = () => {
@@ -24,9 +24,7 @@ const AlertDialog = () => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Click to open dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Click to open dialog</Button>
       <Dialog
         size={"small"}
         role="alertdialog"
