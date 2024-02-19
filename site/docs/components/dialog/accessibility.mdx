@@ -12,7 +12,7 @@ data:
 
 #### Focus
 
-The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will be returned to the element that was focused before the dialog was opened.
+The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will return to the element that was focused before the dialog was opened.
 
 #### Initial focus
 
@@ -20,8 +20,7 @@ You can control which element receives focus when the dialog is opened by passin
 
 #### Focus sequence
 
-- For dialogs that prompt for user confirmation, the CTA button takes focus first.
-
+- For dialogs that prompt for user confirmation, the call to action button takes focus first.
 - For dialogs with destructive interactions, the cancel button takes focus first.
 
 ### Keyboard interactions
@@ -37,7 +36,6 @@ You can control which element receives focus when the dialog is opened by passin
 <KeyboardControl keyOrCombos="Shift + Tab">
 
 - If focus is in the dialog, this action sets focus to the previous focusable component in the tab order.
-
 - If the first element in the dialog has focus, this action wraps to the last focusable element in the dialog.
 
 </KeyboardControl>
