@@ -9,3 +9,9 @@
   grid-template-columns: min-content auto min-content;
   grid-gap: var(--salt-spacing-300);
 }
+.saltCalendarNavigation-previousButton {
+  --saltButton-margin: 0 var(--salt-spacing-50) 0 0;
+}
+.saltCalendarNavigation-nextButton {
+  --saltButton-margin: 0 0 0 var(--salt-spacing-50);
+}

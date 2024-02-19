@@ -33,13 +33,13 @@ export const CalendarWeekHeader = forwardRef<
       {...rest}
     >
       {weekdaysShort.map((day, index) => (
-        <small
+        <abbr
           aria-hidden="true"
           key={weekdaysLong[index]}
           className={withBaseName("dayOfWeek")}
         >
           {day}
-        </small>
+        </abbr>
       ))}
     </div>
   );

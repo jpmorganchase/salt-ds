@@ -110,7 +110,7 @@ function useCalendarNavigation() {
 
 const OptionWithTooltip = (
   item: DateValue,
-  itemToString: (item: DateValue) => string,
+  dateFormat: (item: DateValue) => string,
   disabled?: boolean
 ) => {
   return (
@@ -118,10 +118,10 @@ const OptionWithTooltip = (
       placement="right"
       disabled={!disabled}
       content="This month is out of range"
-      key={item.toString()}
+      key={dateFormat(item)}
     >
       <Option value={item} disabled={disabled}>
-        {itemToString(item)}
+        {dateFormat(item)}
       </Option>
     </Tooltip>
   );
