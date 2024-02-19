@@ -11,7 +11,7 @@ data:
   components: ["Avatar", "Button", "Flow layout", "Icon", "Stack layout", "Text", "Tooltip"]
 ---
 
-Contact details displays communication information—for a person, company, distribution list or individual channel, such as a name, a phone number or email address.
+Contact details displays communication information for a person, company, distribution list or individual channel. This can include a name, a phone number or email address.
 
  <Diagram
     src="/img/patterns/contact-details/contact-details.png"
@@ -21,24 +21,24 @@ Contact details displays communication information—for a person, company, dist
 
 ## When to use
 
-Use cases for this pattern could include:
+Use this pattern to:
 - Provide details and direct channels of communication for sales or support purposes.
 - Display contact information in a directory or CRM (Customer Relationship Management) system.
-- Allow users to populate form fields in a workflow with details from a list of contacts, e.g. client contact selection for a ticket.
+- Allow users to populate form fields in a workflow with details from a list of contacts, e.g., client contact selection for a ticket.
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Consider a Data Grid when you need to display a large number of contacts with a standardized set of contact information.
+Consider a data grid when you need to display a large number of contacts with a standardized set of contact information.
 </ExampleContainer>
 
 ## How to build
 
-Contact Details is comprised of an avatar and text elements, a title can be used as a name of a contact or a company, optional details can be company names or company ID.
+Contact details is comprised of an avatar and text elements. You can use a title as a name of a contact or a company.  optional details can be company names or company ID.
 Any relevant meta data that you want to communicate can be displayed depending on the requirements of your applications. 
 
 You can define the details as links, making them interactive, to enable immediate communication to a contact from within your application.
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Keep label lengths similar, in order to ensure close proximity to their respective values. If you’re displaying supplementary details, we recommend that you left align their labels.
+Keep label lengths similar, in order to ensure close proximity to their respective values. If you’re displaying supplementary details, we recommend that you left align their labels.
 </ExampleContainer>
 
 ### Contact details
@@ -50,7 +50,7 @@ You can define the details as links, making them interactive, to enable immediat
     border
   />
 
-#### Using Stack Layout
+#### Using a stack layout
 
  <Diagram
     src="/img/patterns/contact-details/using-stack-layout.png"
@@ -72,9 +72,9 @@ You can use icon descriptors as a visually concise alternative to textual labels
 - Refrain from using icon descriptors when you have multiple values for similar channels, such as work and cellphone numbers.
 </ExampleContainer>
 
-### Embedded in a container component
+### In a container
 
-You have the flexibility to embed contact details in a range of container components. 
+You can embed contact details in a range of container components. 
 
 This example demonstrates the component embedded within a [card](/salt/components/card).
 
@@ -85,11 +85,11 @@ This example demonstrates the component embedded within a [card](/salt/component
   />
 
 
-### Quick Actions
+### Quick actions
 
-You can define quick actions, which are one-click shortcuts to specific functions or features—such as launching a new email in Outlook, dialling a contact in Zoom.
+You can define quick actions, one-click shortcuts to specific functions or features. This can include starting a new email in Outlook, or calling a contact in Zoom.
 
-Ensure that quick action buttons have a tooltip displayed as per the [Icon Only Button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
+Ensure that quick action buttons have a tooltip displayed as per the [icon only button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
 
  <Diagram
     src="/img/patterns/contact-details/quick-actions.png"
@@ -115,7 +115,7 @@ Consider making supplementary details collapsible when they contain secondary in
 
 The list version allows you to display a snapshot of key details. It’s ideal when you have restricted real estate, such as in a client picker dropdown menu or a contact directory list.
 
-In order to show as many options as possible, we recommend you keep data points to no more than one line. Prioritize the most important values.
+To show as many options as possible, we recommend you keep data points to no more than one line. Prioritize the most important values.
 
  <Diagram
     src="/img/patterns/contact-details/list.png"
