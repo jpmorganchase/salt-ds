@@ -20,11 +20,9 @@ data:
 
 #### Validation and acceptance criteria
 
-- You can specify acceptable file types with `FileDropZoneTrigger`'s `accept` prop. The prop doesn't validate the selected files' types. Instead, it provides the acceptable types to the browser, which in turn can guide users towards selecting the correct file types.
+- You can specify acceptable file types with `FileDropZoneTrigger`'s `accept` prop. The prop doesn't validate the selected files' types. Instead, it provides the acceptable types to the browser, which can guide users toward selecting the correct file types.
 - Make sure that the acceptance criteria is backed up by appropriate validation. Use `FileDropZone`'s `onDrop` prop to validate the file types.
-
-Inform users when files successfully upload to reassure them that the action has completed.
-
+- Inform users when files successfully upload to reassure them that the action has completed.
 - To inform users of the criteria, you can display custom validation text on the file drop zone. When uploaded files fail to meet the validation criteria, change the `state` prop to `"error"` so the file drop zone displays the error state.
 
 #### When to use
