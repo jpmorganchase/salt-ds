@@ -116,7 +116,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   }, [open, showComponent, setShowComponent]);
 
   return (
-    <ConditionalScrimWrapper condition={!disableScrim}>
+    <ConditionalScrimWrapper condition={open && !disableScrim}>
       <FloatingComponent
         open={showComponent}
         ref={handleRef}
