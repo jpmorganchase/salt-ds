@@ -1,5 +1,6 @@
-import { Button, StackLayout } from "@salt-ds/core";
 import {
+  Button,
+  StackLayout,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -7,7 +8,7 @@ import {
   DialogCloseButton,
   DialogProps,
   DialogContext,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
@@ -22,7 +23,7 @@ function FakeDialog({ children, status }: DialogProps) {
 }
 
 export default {
-  title: "Lab/Dialog/QA",
+  title: "Core/Dialog/QA",
   component: Dialog,
   args: {
     title: "Congratulations! You have created a Dialog.",

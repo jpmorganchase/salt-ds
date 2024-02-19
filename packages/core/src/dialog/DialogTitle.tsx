@@ -1,11 +1,8 @@
 import { ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
-import {
-  H2,
-  StatusIndicator,
-  ValidationStatus,
-  makePrefixer,
-} from "@salt-ds/core";
+import { H2 } from "../text";
+import { ValidationStatus, StatusIndicator } from "../status-indicator";
+import { makePrefixer } from "../utils";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";

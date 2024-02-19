@@ -1,0 +1,481 @@
+diff --git a/dist/chunk-CXTIKD2Y.js b/dist/chunk-CXTIKD2Y.js
+index 99ea36a9ecfd5fb9532400a95637a4eceeb588ef..0f3fe999985ce3a12baacced2330e5a6b5fa8367 100644
+--- a/dist/chunk-CXTIKD2Y.js
++++ b/dist/chunk-CXTIKD2Y.js
+@@ -1 +1 @@
+-import{a as b}from"./chunk-KZXCNQER.js";import{a as I}from"./chunk-YBFKG74H.js";import{a as h}from"./chunk-XSZUCLBY.js";import{a as v}from"./chunk-3QIETKQW.js";import e,{useState as i}from"react";import{useLexicalComposerContext as M}from"@lexical/react/LexicalComposerContext";import{Button as c,Icon as P}from"@jpmorganchase/mosaic-components";import{string as C,object as V}from"yup";import{Input as S,FormField as D,FormFieldLabel as y,FormFieldHelperText as A}from"@salt-ds/core";import{ButtonBar as q,DialogTitle as w,DialogContent as L,DialogActions as N}from"@salt-ds/lab";var B=V({alt:C().required("Alternative Information is a required field").max(100,"Alternative Information must be fewer than 100 characters"),url:C().required("Url is required").url("Must be a valid Url")}),E={url:"https://"},Y=()=>{let[T]=M(),[s,m]=i(!1),[r,u]=i(E),[n,d]=i(),f=t=>{m(t),t||u(E)},x=()=>m(!0),p=()=>{f(!1)},g=t=>{let o=t.inner.reduce((l,{path:a,message:O})=>({...l,[a]:O}),{});d(o)},F=t=>{let{name:o,value:l}=t.target,a={...r,[o]:l};B.validateAt(o,a,{abortEarly:!1}).then(()=>{d({...n,[o]:void 0})},g),u(a)};return e.createElement(e.Fragment,null,e.createElement(v,{active:s,onClick:x,label:"Insert Image"},e.createElement(P,{name:"addDocument"})),e.createElement(h,{onOpenChange:f,open:s},e.createElement("form",{onSubmit:async t=>{t.preventDefault(),B.validate(r,{abortEarly:!1}).then(()=>{let o={alt:r&&r.alt!==void 0?r.alt:null,url:r&&r.url!==void 0?r.url:null};T.dispatchCommand(I,o),p()},g)},noValidate:!0},e.createElement(w,null,"Insert Image"),e.createElement(L,null,e.createElement("div",{className:b.fullWidth},e.createElement(D,{validationStatus:n?.url?"error":void 0},e.createElement(y,null,"Url for image"),e.createElement(S,{value:r?.url,inputProps:{name:"url"},onChange:F}),e.createElement(A,null,n?.url)),e.createElement(D,{validationStatus:n?.alt?"error":void 0},e.createElement(y,null,"Alternative Information (alt)"),e.createElement(S,{value:r?.alt,inputProps:{name:"alt"},onChange:F}),e.createElement(A,null,n?.alt||"Provides alternative information for the image if for some reason it cannot be viewed")))),e.createElement(N,null,e.createElement(q,null,e.createElement(c,{onClick:p},"Cancel"),e.createElement(c,{variant:"cta",type:"submit"},"Insert"))))))};export{Y as a};
++import{a as b}from"./chunk-KZXCNQER.js";import{a as I}from"./chunk-YBFKG74H.js";import{a as h}from"./chunk-XSZUCLBY.js";import{a as v}from"./chunk-3QIETKQW.js";import e,{useState as i}from"react";import{useLexicalComposerContext as M}from"@lexical/react/LexicalComposerContext";import{Button as c,Icon as P}from"@jpmorganchase/mosaic-components";import{string as C,object as V}from"yup";import{Input as S,FormField as D,FormFieldLabel as y,FormFieldHelperText as A, DialogTitle as w,DialogContent as L,DialogActions as N}from"@salt-ds/core";import{ButtonBar as q }from"@salt-ds/lab";var B=V({alt:C().required("Alternative Information is a required field").max(100,"Alternative Information must be fewer than 100 characters"),url:C().required("Url is required").url("Must be a valid Url")}),E={url:"https://"},Y=()=>{let[T]=M(),[s,m]=i(!1),[r,u]=i(E),[n,d]=i(),f=t=>{m(t),t||u(E)},x=()=>m(!0),p=()=>{f(!1)},g=t=>{let o=t.inner.reduce((l,{path:a,message:O})=>({...l,[a]:O}),{});d(o)},F=t=>{let{name:o,value:l}=t.target,a={...r,[o]:l};B.validateAt(o,a,{abortEarly:!1}).then(()=>{d({...n,[o]:void 0})},g),u(a)};return e.createElement(e.Fragment,null,e.createElement(v,{active:s,onClick:x,label:"Insert Image"},e.createElement(P,{name:"addDocument"})),e.createElement(h,{onOpenChange:f,open:s},e.createElement("form",{onSubmit:async t=>{t.preventDefault(),B.validate(r,{abortEarly:!1}).then(()=>{let o={alt:r&&r.alt!==void 0?r.alt:null,url:r&&r.url!==void 0?r.url:null};T.dispatchCommand(I,o),p()},g)},noValidate:!0},e.createElement(w,null,"Insert Image"),e.createElement(L,null,e.createElement("div",{className:b.fullWidth},e.createElement(D,{validationStatus:n?.url?"error":void 0},e.createElement(y,null,"Url for image"),e.createElement(S,{value:r?.url,inputProps:{name:"url"},onChange:F}),e.createElement(A,null,n?.url)),e.createElement(D,{validationStatus:n?.alt?"error":void 0},e.createElement(y,null,"Alternative Information (alt)"),e.createElement(S,{value:r?.alt,inputProps:{name:"alt"},onChange:F}),e.createElement(A,null,n?.alt||"Provides alternative information for the image if for some reason it cannot be viewed")))),e.createElement(N,null,e.createElement(q,null,e.createElement(c,{onClick:p},"Cancel"),e.createElement(c,{variant:"cta",type:"submit"},"Insert"))))))};export{Y as a};
+diff --git a/dist/chunk-EPOQVSZ5.js b/dist/chunk-EPOQVSZ5.js
+index 604121a0a7b13c2ea6b923aed2e4b270cd81d8a9..075731dbde46df4b8896b09f7f49912d45a72aa5 100644
+--- a/dist/chunk-EPOQVSZ5.js
++++ b/dist/chunk-EPOQVSZ5.js
+@@ -1 +1 @@
+-import{a as C}from"./chunk-WZYDYWT3.js";import{a as k}from"./chunk-XSZUCLBY.js";import{a as I}from"./chunk-3QIETKQW.js";import{e as p}from"./chunk-G57W376H.js";import{$createLinkNode as W,TOGGLE_LINK_COMMAND as G}from"@lexical/link";import{useLexicalComposerContext as U}from"@lexical/react/LexicalComposerContext";import{$wrapNodes as j}from"@lexical/selection";import{$createParagraphNode as Y,$createTextNode as z,$getSelection as J,$isRangeSelection as Q,$isTextNode as X,COMMAND_PRIORITY_EDITOR as Z,createCommand as R}from"lexical";import ee,{useCallback as te,useEffect as ne}from"react";import e,{useEffect as O,useState as F}from"react";import{useLexicalComposerContext as B}from"@lexical/react/LexicalComposerContext";import{Button as N,Icon as _}from"@jpmorganchase/mosaic-components";import{string as h,object as A}from"yup";import{Input as T,FormField as D,FormFieldLabel as S,FormFieldHelperText as E}from"@salt-ds/core";import{ButtonBar as $,DialogTitle as w,DialogContent as K,DialogActions as q}from"@salt-ds/lab";import{$getSelection as V,$isRangeSelection as H}from"lexical";var b=A({url:h().required("Url is required"),text:h().required("Text is required").max(100,"Text must be fewer than 100 characters")}),Le=()=>{let{isInsertingLink:t,setIsInsertingLink:r}=p();return e.createElement(I,{active:t,onClick:()=>r(!0),label:"Insert Link"},e.createElement(_,{name:"linked"}))},v={url:"https://",text:""},y=()=>{let[t]=B(),{isInsertingLink:r,setIsInsertingLink:s}=p(),[o,i]=F(v),[a,d]=F(),m=n=>{s(n),n||(d(void 0),i(v))},g=()=>{m(!1)};O(()=>{t.getEditorState().read(()=>{if(r){let n=V();if(H(n)){let l=n.getTextContent();i(u=>({...u,text:l}))}}})},[t,r]);let x=n=>{let l=n.inner.reduce((u,{path:c,message:P})=>({...u,[c]:P}),{});d(l)},L=n=>{let{name:l,value:u}=n.target,c={...o,[l]:u};b.validateAt(l,c,{abortEarly:!1}).then(()=>{d({...a,[l]:void 0})},x),i(c)},M=async()=>{b.validate(o,{abortEarly:!1}).then(()=>{let n={url:o?.url,text:o?.text};t.dispatchCommand(f,n),g()},x)};return e.createElement(k,{onOpenChange:m,open:r},e.createElement(w,null,"Insert Link"),e.createElement(K,null,e.createElement("div",{className:C.fullWidth},e.createElement(D,{validationStatus:a?.url?"error":void 0},e.createElement(S,null,"Image URL text"),e.createElement(T,{value:o?.url,inputProps:{name:"url"},onChange:L}),e.createElement(E,null,a?.url)),e.createElement(D,{validationStatus:a?.text?"error":void 0},e.createElement(S,null,"Link Text"),e.createElement(T,{value:o?.text,inputProps:{name:"text"},onChange:L}),e.createElement(E,null,a?.text)))),e.createElement(q,null,e.createElement($,null,e.createElement(N,{onClick:g},"Cancel"),e.createElement(N,{variant:"cta",onClick:M},"Insert"))))};var f=R();function oe(){let[t]=U(),r=te(({url:s,text:o})=>{t.update(()=>{let i=J();if(Q(i)&&s!==void 0&&o!==void 0){let a=i.focus.getNode();if(X(a))t.dispatchCommand(G,s);else{let d=W(s),m=z(o);m.setFormat(i.focus.getNode().getFormat()),d.append(m),j(i,()=>d,Y())}}})},[t]);ne(()=>t.registerCommand(f,s=>(r(s),!0),Z),[t,r])}function Se(){return oe(),ee.createElement(y,null)}export{f as a,Se as b,Le as c,y as d};
++import{a as C}from"./chunk-WZYDYWT3.js";import{a as k}from"./chunk-XSZUCLBY.js";import{a as I}from"./chunk-3QIETKQW.js";import{e as p}from"./chunk-G57W376H.js";import{$createLinkNode as W,TOGGLE_LINK_COMMAND as G}from"@lexical/link";import{useLexicalComposerContext as U}from"@lexical/react/LexicalComposerContext";import{$wrapNodes as j}from"@lexical/selection";import{$createParagraphNode as Y,$createTextNode as z,$getSelection as J,$isRangeSelection as Q,$isTextNode as X,COMMAND_PRIORITY_EDITOR as Z,createCommand as R}from"lexical";import ee,{useCallback as te,useEffect as ne}from"react";import e,{useEffect as O,useState as F}from"react";import{useLexicalComposerContext as B}from"@lexical/react/LexicalComposerContext";import{Button as N,Icon as _}from"@jpmorganchase/mosaic-components";import{string as h,object as A}from"yup";import{Input as T,FormField as D,FormFieldLabel as S,FormFieldHelperText as E,DialogTitle as w,DialogContent as K,DialogActions as q}from"@salt-ds/core";import{ButtonBar as $}from"@salt-ds/lab";import{$getSelection as V,$isRangeSelection as H}from"lexical";var b=A({url:h().required("Url is required"),text:h().required("Text is required").max(100,"Text must be fewer than 100 characters")}),Le=()=>{let{isInsertingLink:t,setIsInsertingLink:r}=p();return e.createElement(I,{active:t,onClick:()=>r(!0),label:"Insert Link"},e.createElement(_,{name:"linked"}))},v={url:"https://",text:""},y=()=>{let[t]=B(),{isInsertingLink:r,setIsInsertingLink:s}=p(),[o,i]=F(v),[a,d]=F(),m=n=>{s(n),n||(d(void 0),i(v))},g=()=>{m(!1)};O(()=>{t.getEditorState().read(()=>{if(r){let n=V();if(H(n)){let l=n.getTextContent();i(u=>({...u,text:l}))}}})},[t,r]);let x=n=>{let l=n.inner.reduce((u,{path:c,message:P})=>({...u,[c]:P}),{});d(l)},L=n=>{let{name:l,value:u}=n.target,c={...o,[l]:u};b.validateAt(l,c,{abortEarly:!1}).then(()=>{d({...a,[l]:void 0})},x),i(c)},M=async()=>{b.validate(o,{abortEarly:!1}).then(()=>{let n={url:o?.url,text:o?.text};t.dispatchCommand(f,n),g()},x)};return e.createElement(k,{onOpenChange:m,open:r},e.createElement(w,null,"Insert Link"),e.createElement(K,null,e.createElement("div",{className:C.fullWidth},e.createElement(D,{validationStatus:a?.url?"error":void 0},e.createElement(S,null,"Image URL text"),e.createElement(T,{value:o?.url,inputProps:{name:"url"},onChange:L}),e.createElement(E,null,a?.url)),e.createElement(D,{validationStatus:a?.text?"error":void 0},e.createElement(S,null,"Link Text"),e.createElement(T,{value:o?.text,inputProps:{name:"text"},onChange:L}),e.createElement(E,null,a?.text)))),e.createElement(q,null,e.createElement($,null,e.createElement(N,{onClick:g},"Cancel"),e.createElement(N,{variant:"cta",onClick:M},"Insert"))))};var f=R();function oe(){let[t]=U(),r=te(({url:s,text:o})=>{t.update(()=>{let i=J();if(Q(i)&&s!==void 0&&o!==void 0){let a=i.focus.getNode();if(X(a))t.dispatchCommand(G,s);else{let d=W(s),m=z(o);m.setFormat(i.focus.getNode().getFormat()),d.append(m),j(i,()=>d,Y())}}})},[t]);ne(()=>t.registerCommand(f,s=>(r(s),!0),Z),[t,r])}function Se(){return oe(),ee.createElement(y,null)}export{f as a,Se as b,Le as c,y as d};
+diff --git a/dist/chunk-LQBKKB6A.js b/dist/chunk-LQBKKB6A.js
+index a872ecad696aaca107d28071e8d782b130fca59b..fd41bd3bcb750abb116ef05da64b4378530bb8a5 100644
+--- a/dist/chunk-LQBKKB6A.js
++++ b/dist/chunk-LQBKKB6A.js
+@@ -1 +1 @@
+-import{a as k}from"./chunk-VDGHHU3F.js";import{a as y}from"./chunk-R2MEEU32.js";import{a as P}from"./chunk-M4ISRNFD.js";import{a as b}from"./chunk-3LGZ7Z7G.js";import{a as D}from"./chunk-XSZUCLBY.js";import{c as C,d as S}from"./chunk-G57W376H.js";import e,{useState as g}from"react";import F from"md5";import{useLexicalComposerContext as G}from"@lexical/react/LexicalComposerContext";import{$convertToMarkdownString as O}from"@lexical/markdown";import{Link as $,P2 as w,Button as v}from"@jpmorganchase/mosaic-components";import{ButtonBar as J,DialogTitle as U,DialogContent as V,DialogActions as _}from"@salt-ds/lab";var j=({isRaising:f,prHref:l,error:c})=>!f&&!l&&!c?e.createElement(e.Fragment,null,e.createElement(w,null,"The content of this page resides in a Git repository and to update it requires a Pull Request which will be reviewed by the content owners."),e.createElement("br",null),e.createElement(w,null,"Should you decide to stop editing before creating the Pull Request then all changes will be lost.")):null,le=({meta:f,persistUrl:l})=>{let{pageState:c,setPageState:B}=C(),{user:p}=S(),[q]=G(),[s,t]=g(!1),[r,n]=g(null),[i,m]=g(null),[E,a]=g([]),d=c==="SAVING",I=r!==null?"success":"info",h=o=>{t(o),o||(B("EDIT"),n(null),a([]))},M=()=>{h(!1)},x=o=>{m(o||"Sorry - an unexpected error has occurred"),n(null),a([]),t(!1)},T=o=>{n(o.message?.links?.self[0]?.href),t(!1)},A=o=>{a(u=>[...u,o])},{sendWorkflowProgressMessage:H}=b(d,x,A,T),L=()=>{t(!0),n(null),m(null);try{q.update(()=>{let o=O(P);if(o&&p&&l){let{sid:u,displayName:N,email:W}=p;H(JSON.stringify({user:{sid:u,name:N,email:W},route:f.route,markdown:o,name:"save"}),F(`${u.toLowerCase()} - save`))}})}catch{m("Sorry - an unexpected error has occurred"),n(null),t(!1),a([])}};return e.createElement(D,{onOpenChange:h,open:d,status:i?"error":I},e.createElement(U,{className:y.title},r?"Pull Request Created Successfully":"Save Changes"),e.createElement(V,null,(s||i)&&!r&&e.createElement(k,{error:i,progress:E}),e.createElement(j,{isRaising:s,prHref:r,error:i}),!s&&r&&e.createElement($,{href:r,target:"_blank"},"A Pull Request for your changes has been created")),e.createElement(_,null,e.createElement(J,null,e.createElement(v,{disabled:s,onClick:M},r?"Done":"Cancel"),e.createElement(v,{disabled:l===void 0||s||r!==null,onClick:L,variant:"cta"},"Raise Pull Request"))))};export{le as a};
++import{a as k}from"./chunk-VDGHHU3F.js";import{a as y}from"./chunk-R2MEEU32.js";import{a as P}from"./chunk-M4ISRNFD.js";import{a as b}from"./chunk-3LGZ7Z7G.js";import{a as D}from"./chunk-XSZUCLBY.js";import{c as C,d as S}from"./chunk-G57W376H.js";import e,{useState as g}from"react";import F from"md5";import{useLexicalComposerContext as G}from"@lexical/react/LexicalComposerContext";import{$convertToMarkdownString as O}from"@lexical/markdown";import{Link as $,P2 as w,Button as v}from"@jpmorganchase/mosaic-components";import{DialogTitle as U,DialogContent as V,DialogActions as _}from"@salt-ds/core";import{ButtonBar as J}from"@salt-ds/lab";var j=({isRaising:f,prHref:l,error:c})=>!f&&!l&&!c?e.createElement(e.Fragment,null,e.createElement(w,null,"The content of this page resides in a Git repository and to update it requires a Pull Request which will be reviewed by the content owners."),e.createElement("br",null),e.createElement(w,null,"Should you decide to stop editing before creating the Pull Request then all changes will be lost.")):null,le=({meta:f,persistUrl:l})=>{let{pageState:c,setPageState:B}=C(),{user:p}=S(),[q]=G(),[s,t]=g(!1),[r,n]=g(null),[i,m]=g(null),[E,a]=g([]),d=c==="SAVING",I=r!==null?"success":"info",h=o=>{t(o),o||(B("EDIT"),n(null),a([]))},M=()=>{h(!1)},x=o=>{m(o||"Sorry - an unexpected error has occurred"),n(null),a([]),t(!1)},T=o=>{n(o.message?.links?.self[0]?.href),t(!1)},A=o=>{a(u=>[...u,o])},{sendWorkflowProgressMessage:H}=b(d,x,A,T),L=()=>{t(!0),n(null),m(null);try{q.update(()=>{let o=O(P);if(o&&p&&l){let{sid:u,displayName:N,email:W}=p;H(JSON.stringify({user:{sid:u,name:N,email:W},route:f.route,markdown:o,name:"save"}),F(`${u.toLowerCase()} - save`))}})}catch{m("Sorry - an unexpected error has occurred"),n(null),t(!1),a([])}};return e.createElement(D,{onOpenChange:h,open:d,status:i?"error":I},e.createElement(U,{className:y.title},r?"Pull Request Created Successfully":"Save Changes"),e.createElement(V,null,(s||i)&&!r&&e.createElement(k,{error:i,progress:E}),e.createElement(j,{isRaising:s,prHref:r,error:i}),!s&&r&&e.createElement($,{href:r,target:"_blank"},"A Pull Request for your changes has been created")),e.createElement(_,null,e.createElement(J,null,e.createElement(v,{disabled:s,onClick:M},r?"Done":"Cancel"),e.createElement(v,{disabled:l===void 0||s||r!==null,onClick:L,variant:"cta"},"Raise Pull Request"))))};export{le as a};
+diff --git a/dist/chunk-XSZUCLBY.js b/dist/chunk-XSZUCLBY.js
+index 5dd767ac61f2f900c9fcc82099003c455de450a0..164a3acb5d60453fa2345263659c19bf66399f9b 100644
+--- a/dist/chunk-XSZUCLBY.js
++++ b/dist/chunk-XSZUCLBY.js
+@@ -1 +1 @@
+-import{a as o}from"./chunk-OW5SK4AJ.js";import s from"react";import{Dialog as t}from"@salt-ds/lab";import{themeClassName as l}from"@jpmorganchase/mosaic-theme";import i from"clsx";var f=({className:a,...r})=>s.createElement(t,{className:i(l,o.root,a),...r});export{f as a};
++import{a as o}from"./chunk-OW5SK4AJ.js";import s from"react";import{Dialog as t}from"@salt-ds/core";import{themeClassName as l}from"@jpmorganchase/mosaic-theme";import i from"clsx";var f=({className:a,...r})=>s.createElement(t,{className:i(l,o.root,a),...r});export{f as a};
+diff --git a/dist/components/Dialog.d.ts b/dist/components/Dialog.d.ts
+index 30d9d0bb361dc7c0c2472f7c972ad5413749d921..f0c3535c15da044bceda8a268e1768227ef3bd46 100644
+--- a/dist/components/Dialog.d.ts
++++ b/dist/components/Dialog.d.ts
+@@ -1,5 +1,5 @@
+ /// <reference types="react" />
+-import { type DialogProps as SaltDialogProps } from '@salt-ds/lab';
++import { type DialogProps as SaltDialogProps } from '@salt-ds/core';
+ interface DialogProps extends SaltDialogProps {
+ }
+ export declare const Dialog: ({ className, ...props }: DialogProps) => JSX.Element;
+diff --git a/src/components/Dialog.tsx b/src/components/Dialog.tsx
+index 39b695f0bd98135afa1712daffed423a47133b30..3d8c9c3bf252b30235eb5b7a07a1a96c9240a80d 100644
+--- a/src/components/Dialog.tsx
++++ b/src/components/Dialog.tsx
+@@ -1,12 +1,18 @@
+-import React from 'react';
+-import { Dialog as SaltDialog, type DialogProps as SaltDialogProps } from '@salt-ds/lab';
+-import { themeClassName } from '@jpmorganchase/mosaic-theme';
+-import classnames from 'clsx';
++import React from "react";
++import {
++  Dialog as SaltDialog,
++  type DialogProps as SaltDialogProps,
++} from "@salt-ds/core";
++import { themeClassName } from "@jpmorganchase/mosaic-theme";
++import classnames from "clsx";
+ 
+-import style from './Dialog.css';
++import style from "./Dialog.css";
+ 
+ interface DialogProps extends SaltDialogProps {}
+ 
+ export const Dialog = ({ className, ...props }: DialogProps) => (
+-  <SaltDialog className={classnames(themeClassName, style.root, className)} {...props} />
++  <SaltDialog
++    className={classnames(themeClassName, style.root, className)}
++    {...props}
++  />
+ );
+diff --git a/src/components/PersistEditDialog/index.tsx b/src/components/PersistEditDialog/index.tsx
+index de12636b7101a004bf8affbc6afc186d1f95b07e..01288348d35cf716ff911820b824ac1fd202bf2a 100644
+--- a/src/components/PersistEditDialog/index.tsx
++++ b/src/components/PersistEditDialog/index.tsx
+@@ -1,17 +1,18 @@
+-import React, { FC, useState } from 'react';
+-import md5 from 'md5';
+-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+-import { $convertToMarkdownString } from '@lexical/markdown';
+-import { Link, P2, Button } from '@jpmorganchase/mosaic-components';
+-import { ButtonBar, DialogTitle, DialogContent, DialogActions } from '@salt-ds/lab';
+-import { SourceWorkflowMessageEvent } from '@jpmorganchase/mosaic-types';
+-
+-import { useEditorUser, usePageState } from '../../store';
+-import transformers from '../../transformers';
+-import { PersistStatus } from './PersistStatus';
+-import { Dialog } from '../Dialog';
+-import style from './index.css';
+-import useWorkflowFeed from '../../hooks/useWorkflowFeed';
++import React, { FC, useState } from "react";
++import md5 from "md5";
++import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
++import { $convertToMarkdownString } from "@lexical/markdown";
++import { Link, P2, Button } from "@jpmorganchase/mosaic-components";
++import { DialogTitle, DialogContent, DialogActions } from "@salt-ds/core";
++import { ButtonBar } from "@salt-ds/lab";
++import { SourceWorkflowMessageEvent } from "@jpmorganchase/mosaic-types";
++
++import { useEditorUser, usePageState } from "../../store";
++import transformers from "../../transformers";
++import { PersistStatus } from "./PersistStatus";
++import { Dialog } from "../Dialog";
++import style from "./index.css";
++import useWorkflowFeed from "../../hooks/useWorkflowFeed";
+ 
+ interface InfoProps {
+   isRaising: boolean;
+@@ -23,13 +24,13 @@ const Info: FC<InfoProps> = ({ isRaising, prHref, error }) =>
+   !isRaising && !prHref && !error ? (
+     <>
+       <P2>
+-        The content of this page resides in a Git repository and to update it requires a Pull
+-        Request which will be reviewed by the content owners.
++        The content of this page resides in a Git repository and to update it
++        requires a Pull Request which will be reviewed by the content owners.
+       </P2>
+       <br />
+       <P2>
+-        Should you decide to stop editing before creating the Pull Request then all changes will be
+-        lost.
++        Should you decide to stop editing before creating the Pull Request then
++        all changes will be lost.
+       </P2>
+     </>
+   ) : null;
+@@ -48,13 +49,13 @@ export const PersistDialog = ({ meta, persistUrl }: PersistDialogProps) => {
+   const [error, setError] = useState<string | null>(null);
+   const [progress, setProgress] = useState<SourceWorkflowMessageEvent[]>([]);
+ 
+-  const open = pageState === 'SAVING';
+-  const state = prHref !== null ? 'success' : 'info';
++  const open = pageState === "SAVING";
++  const state = prHref !== null ? "success" : "info";
+ 
+   const handleOpenChange = (newOpen: boolean) => {
+     setIsRaising(newOpen);
+     if (!newOpen) {
+-      setPageState('EDIT');
++      setPageState("EDIT");
+       setPrHref(null);
+       setProgress([]);
+     }
+@@ -65,19 +66,21 @@ export const PersistDialog = ({ meta, persistUrl }: PersistDialogProps) => {
+   };
+ 
+   const handleErrorMessage = (errorMessage: string) => {
+-    setError(errorMessage ? errorMessage : 'Sorry - an unexpected error has occurred');
++    setError(
++      errorMessage ? errorMessage : "Sorry - an unexpected error has occurred"
++    );
+     setPrHref(null);
+     setProgress([]);
+     setIsRaising(false);
+   };
+ 
+-  const handleCompleteMessage = message => {
++  const handleCompleteMessage = (message) => {
+     setPrHref(message.message?.links?.self[0]?.href);
+     setIsRaising(false);
+   };
+ 
+-  const handleSuccessMessage = message => {
+-    setProgress(prevState => [...prevState, message]);
++  const handleSuccessMessage = (message) => {
++    setProgress((prevState) => [...prevState, message]);
+   };
+ 
+   const { sendWorkflowProgressMessage } = useWorkflowFeed(
+@@ -103,14 +106,14 @@ export const PersistDialog = ({ meta, persistUrl }: PersistDialogProps) => {
+               user: { sid, name: displayName, email },
+               route: meta.route,
+               markdown,
+-              name: 'save'
++              name: "save",
+             }),
+             md5(`${sid.toLowerCase()} - save`)
+           );
+         }
+       });
+     } catch (e) {
+-      setError('Sorry - an unexpected error has occurred');
++      setError("Sorry - an unexpected error has occurred");
+       setPrHref(null);
+       setIsRaising(false);
+       setProgress([]);
+@@ -118,12 +121,18 @@ export const PersistDialog = ({ meta, persistUrl }: PersistDialogProps) => {
+   };
+ 
+   return (
+-    <Dialog onOpenChange={handleOpenChange} open={open} status={error ? 'error' : state}>
++    <Dialog
++      onOpenChange={handleOpenChange}
++      open={open}
++      status={error ? "error" : state}
++    >
+       <DialogTitle className={style.title}>
+-        {!prHref ? 'Save Changes' : 'Pull Request Created Successfully'}
++        {!prHref ? "Save Changes" : "Pull Request Created Successfully"}
+       </DialogTitle>
+       <DialogContent>
+-        {(isRaising || error) && !prHref && <PersistStatus error={error} progress={progress} />}
++        {(isRaising || error) && !prHref && (
++          <PersistStatus error={error} progress={progress} />
++        )}
+         <Info isRaising={isRaising} prHref={prHref} error={error} />
+         {!isRaising && prHref && (
+           <Link href={prHref} target="_blank">
+@@ -134,7 +143,7 @@ export const PersistDialog = ({ meta, persistUrl }: PersistDialogProps) => {
+       <DialogActions>
+         <ButtonBar>
+           <Button disabled={isRaising} onClick={handleClose}>
+-            {!prHref ? 'Cancel' : 'Done'}
++            {!prHref ? "Cancel" : "Done"}
+           </Button>
+           <Button
+             disabled={persistUrl === undefined || isRaising || prHref !== null}
+diff --git a/src/components/Toolbar/InsertImage.tsx b/src/components/Toolbar/InsertImage.tsx
+index 2b7a651924bc8bfe0a12f445f75a7fc0c213d347..b1c4b20f1124a7c3d55507f4173a6d387e63ece3 100644
+--- a/src/components/Toolbar/InsertImage.tsx
++++ b/src/components/Toolbar/InsertImage.tsx
+@@ -1,27 +1,35 @@
+-import React, { useState } from 'react';
+-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+-import { Button, Icon } from '@jpmorganchase/mosaic-components';
+-import { string, object } from 'yup';
+-import { Input, FormField, FormFieldLabel, FormFieldHelperText } from '@salt-ds/core';
+-import { ButtonBar, DialogTitle, DialogContent, DialogActions } from '@salt-ds/lab';
++import React, { useState } from "react";
++import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
++import { Button, Icon } from "@jpmorganchase/mosaic-components";
++import { string, object } from "yup";
++import {
++  Input,
++  FormField,
++  FormFieldLabel,
++  FormFieldHelperText,
++  DialogTitle,
++  DialogContent,
++  DialogActions,
++} from "@salt-ds/core";
++import { ButtonBar } from "@salt-ds/lab";
+ 
+-import { ToolbarButton } from './ToolbarButton';
+-import { Dialog } from '../Dialog';
++import { ToolbarButton } from "./ToolbarButton";
++import { Dialog } from "../Dialog";
+ import {
+   INSERT_MARKDOWN_IMAGE_COMMAND,
+-  InsertImagePayload
+-} from '../../plugins/MarkdownImagePlugin';
+-import styles from './InsertImage.css';
++  InsertImagePayload,
++} from "../../plugins/MarkdownImagePlugin";
++import styles from "./InsertImage.css";
+ 
+ const validationSchema = object({
+   alt: string()
+-    .required('Alternative Information is a required field')
+-    .max(100, 'Alternative Information must be fewer than 100 characters'),
+-  url: string().required('Url is required').url('Must be a valid Url')
++    .required("Alternative Information is a required field")
++    .max(100, "Alternative Information must be fewer than 100 characters"),
++  url: string().required("Url is required").url("Must be a valid Url"),
+ });
+ 
+ const initialState = {
+-  url: 'https://'
++  url: "https://",
+ };
+ 
+ type FormValueState =
+@@ -57,32 +65,34 @@ export const InsertImage = () => {
+     handleOpenChange(false);
+   };
+ 
+-  const processErrors = validationErrors => {
++  const processErrors = (validationErrors) => {
+     const newErrors = validationErrors.inner.reduce(
+       (acc, { path, message }) => ({
+         ...acc,
+-        [path]: message
++        [path]: message,
+       }),
+       {}
+     );
+     setErrors(newErrors);
+   };
+ 
+-  const handleChange = event => {
++  const handleChange = (event) => {
+     const { name, value } = event.target;
+     const newValues = { ...values, [name]: value };
+-    validationSchema.validateAt(name, newValues, { abortEarly: false }).then(() => {
+-      setErrors({ ...errors, [name]: undefined });
+-    }, processErrors);
++    validationSchema
++      .validateAt(name, newValues, { abortEarly: false })
++      .then(() => {
++        setErrors({ ...errors, [name]: undefined });
++      }, processErrors);
+     setValues(newValues);
+   };
+ 
+-  const handleSubmit = async event => {
++  const handleSubmit = async (event) => {
+     event.preventDefault();
+     validationSchema.validate(values, { abortEarly: false }).then(() => {
+       const payload: InsertImagePayload = {
+         alt: values && values.alt !== undefined ? values.alt : null,
+-        url: values && values.url !== undefined ? values.url : null
++        url: values && values.url !== undefined ? values.url : null,
+       };
+       editor.dispatchCommand(INSERT_MARKDOWN_IMAGE_COMMAND, payload);
+       handleClose();
+@@ -100,17 +110,25 @@ export const InsertImage = () => {
+           <DialogTitle>Insert Image</DialogTitle>
+           <DialogContent>
+             <div className={styles.fullWidth}>
+-              <FormField validationStatus={errors?.url ? 'error' : undefined}>
++              <FormField validationStatus={errors?.url ? "error" : undefined}>
+                 <FormFieldLabel>Url for image</FormFieldLabel>
+-                <Input value={values?.url} inputProps={{ name: 'url' }} onChange={handleChange} />
++                <Input
++                  value={values?.url}
++                  inputProps={{ name: "url" }}
++                  onChange={handleChange}
++                />
+                 <FormFieldHelperText>{errors?.url}</FormFieldHelperText>
+               </FormField>
+-              <FormField validationStatus={errors?.alt ? 'error' : undefined}>
++              <FormField validationStatus={errors?.alt ? "error" : undefined}>
+                 <FormFieldLabel>Alternative Information (alt)</FormFieldLabel>
+-                <Input value={values?.alt} inputProps={{ name: 'alt' }} onChange={handleChange} />
++                <Input
++                  value={values?.alt}
++                  inputProps={{ name: "alt" }}
++                  onChange={handleChange}
++                />
+                 <FormFieldHelperText>
+                   {errors?.alt ||
+-                    'Provides alternative information for the image if for some reason it cannot be viewed'}
++                    "Provides alternative information for the image if for some reason it cannot be viewed"}
+                 </FormFieldHelperText>
+               </FormField>
+             </div>
+diff --git a/src/components/Toolbar/InsertLink.tsx b/src/components/Toolbar/InsertLink.tsx
+index 8dce426e817e28072948cfae2111e0bc1556e4e5..cd47b09adccb766f182b6fd042e86d0bc5f93e86 100644
+--- a/src/components/Toolbar/InsertLink.tsx
++++ b/src/components/Toolbar/InsertLink.tsx
+@@ -1,20 +1,33 @@
+-import React, { useEffect, useState } from 'react';
+-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+-import { Button, Icon } from '@jpmorganchase/mosaic-components';
+-import { string, object } from 'yup';
+-import { Input, FormField, FormFieldLabel, FormFieldHelperText } from '@salt-ds/core';
+-import { ButtonBar, DialogTitle, DialogContent, DialogActions } from '@salt-ds/lab';
+-import { $getSelection, $isRangeSelection } from 'lexical';
++import React, { useEffect, useState } from "react";
++import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
++import { Button, Icon } from "@jpmorganchase/mosaic-components";
++import { string, object } from "yup";
++import {
++  Input,
++  FormField,
++  FormFieldLabel,
++  FormFieldHelperText,
++  DialogTitle,
++  DialogContent,
++  DialogActions,
++} from "@salt-ds/core";
++import { ButtonBar } from "@salt-ds/lab";
++import { $getSelection, $isRangeSelection } from "lexical";
+ 
+-import { ToolbarButton } from './ToolbarButton';
+-import { Dialog } from '../Dialog';
+-import { INSERT_MARKDOWN_LINK_COMMAND, InsertLinkPayload } from '../../plugins/MarkdownLinkPlugin';
+-import { useIsInsertingLink } from '../../store';
+-import styles from './InsertLink.css';
++import { ToolbarButton } from "./ToolbarButton";
++import { Dialog } from "../Dialog";
++import {
++  INSERT_MARKDOWN_LINK_COMMAND,
++  InsertLinkPayload,
++} from "../../plugins/MarkdownLinkPlugin";
++import { useIsInsertingLink } from "../../store";
++import styles from "./InsertLink.css";
+ 
+ const validationSchema = object({
+-  url: string().required('Url is required'),
+-  text: string().required('Text is required').max(100, 'Text must be fewer than 100 characters')
++  url: string().required("Url is required"),
++  text: string()
++    .required("Text is required")
++    .max(100, "Text must be fewer than 100 characters"),
+ });
+ 
+ export const InsertLinkButton = () => {
+@@ -31,8 +44,8 @@ export const InsertLinkButton = () => {
+ };
+ 
+ const initialState = {
+-  url: 'https://',
+-  text: ''
++  url: "https://",
++  text: "",
+ };
+ 
+ type FormValueState =
+@@ -73,29 +86,31 @@ export const InsertLinkDialog = () => {
+         const selection = $getSelection();
+         if ($isRangeSelection(selection)) {
+           const textContent = selection.getTextContent();
+-          setValues(prevState => ({ ...prevState, text: textContent }));
++          setValues((prevState) => ({ ...prevState, text: textContent }));
+         }
+       }
+     });
+   }, [editor, isInsertingLink]);
+ 
+-  const processErrors = validationErrors => {
++  const processErrors = (validationErrors) => {
+     const newErrors = validationErrors.inner.reduce(
+       (acc, { path, message }) => ({
+         ...acc,
+-        [path]: message
++        [path]: message,
+       }),
+       {}
+     );
+     setErrors(newErrors);
+   };
+ 
+-  const handleChange = event => {
++  const handleChange = (event) => {
+     const { name, value } = event.target;
+     const newValues = { ...values, [name]: value };
+-    validationSchema.validateAt(name, newValues, { abortEarly: false }).then(() => {
+-      setErrors({ ...errors, [name]: undefined });
+-    }, processErrors);
++    validationSchema
++      .validateAt(name, newValues, { abortEarly: false })
++      .then(() => {
++        setErrors({ ...errors, [name]: undefined });
++      }, processErrors);
+     setValues(newValues);
+   };
+ 
+@@ -103,7 +118,7 @@ export const InsertLinkDialog = () => {
+     validationSchema.validate(values, { abortEarly: false }).then(() => {
+       const payload: InsertLinkPayload = {
+         url: values?.url,
+-        text: values?.text
++        text: values?.text,
+       };
+       editor.dispatchCommand(INSERT_MARKDOWN_LINK_COMMAND, payload);
+       handleClose();
+@@ -115,14 +130,22 @@ export const InsertLinkDialog = () => {
+       <DialogTitle>Insert Link</DialogTitle>
+       <DialogContent>
+         <div className={styles.fullWidth}>
+-          <FormField validationStatus={errors?.url ? 'error' : undefined}>
++          <FormField validationStatus={errors?.url ? "error" : undefined}>
+             <FormFieldLabel>Image URL text</FormFieldLabel>
+-            <Input value={values?.url} inputProps={{ name: 'url' }} onChange={handleChange} />
++            <Input
++              value={values?.url}
++              inputProps={{ name: "url" }}
++              onChange={handleChange}
++            />
+             <FormFieldHelperText>{errors?.url}</FormFieldHelperText>
+           </FormField>
+-          <FormField validationStatus={errors?.text ? 'error' : undefined}>
++          <FormField validationStatus={errors?.text ? "error" : undefined}>
+             <FormFieldLabel>Link Text</FormFieldLabel>
+-            <Input value={values?.text} inputProps={{ name: 'text' }} onChange={handleChange} />
++            <Input
++              value={values?.text}
++              inputProps={{ name: "text" }}
++              onChange={handleChange}
++            />
+             <FormFieldHelperText>{errors?.text}</FormFieldHelperText>
+           </FormField>
+         </div>

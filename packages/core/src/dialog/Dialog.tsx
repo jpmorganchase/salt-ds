@@ -14,16 +14,15 @@ import {
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
+import { Scrim } from "../scrim";
+import { ValidationStatus } from "../status-indicator";
 import {
   makePrefixer,
-  useId,
   useFloatingComponent,
   useFloatingUI,
   useCurrentBreakpoint,
   useForkRef,
-  ValidationStatus,
-  Scrim,
-} from "@salt-ds/core";
+} from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";

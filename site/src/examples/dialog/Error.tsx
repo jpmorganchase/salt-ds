@@ -1,11 +1,11 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
 import {
+  Button,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Error = (): ReactElement => {
   const [open, setOpen] = useState(false);

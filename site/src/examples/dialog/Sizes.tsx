@@ -1,10 +1,15 @@
 import { ReactElement, useState } from "react";
-import { Button, StackLayout, NavigationItem, H2 } from "@salt-ds/core";
 import {
+  Button,
+  StackLayout,
+  NavigationItem,
+  H2,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
+} from "@salt-ds/core";
+import {
   SteppedTracker,
   TrackerStep,
   StepLabel,

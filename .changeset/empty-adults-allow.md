@@ -1,14 +1,14 @@
-import { ReactElement, useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-} from "@salt-ds/core";
+---
+"@salt-ds/core": minor
+---
 
-export const MandatoryAction = (): ReactElement => {
-  const [open, setOpen] = useState(false);
+- Promote `Dialog` to Core
+- `Dialog` is a window that opens over the application content, focusing the user’s attention on a particular task or piece of information.
+- It can communicate new information, errors, warnings, or successful completion of a process or task
+
+```tsx
+const AlertDialog = () => {
+  const [open, setOpen] = useState(openProp);
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -25,19 +25,20 @@ export const MandatoryAction = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open Mandatory Action Dialog
+        Click to open dialog
       </Button>
       <Dialog
+        size={"small"}
+        role="alertdialog"
+        status={"error"}
         open={open}
         onOpenChange={onOpenChange}
+        initialFocus={1}
         disableDismiss
-        size="small"
-        status="error"
-        aria-labelledby="error-dialog"
       >
-        <DialogTitle id="error-dialog-heading">Delete Transaction</DialogTitle>
+        <DialogTitle>Delete Transaction</DialogTitle>
         <DialogContent>
-          Are you sure you want to permenantly delete transaction?
+          Are you sure you want to permanently delete this transaction
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -49,3 +50,4 @@ export const MandatoryAction = (): ReactElement => {
     </>
   );
 };
+```

@@ -1,11 +1,13 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout } from "@salt-ds/core";
 import {
+  Button,
+  H3,
+  StackLayout,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const WithoutAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
