@@ -21,11 +21,11 @@ This pattern provides practical and visually enriched guidelines for creating fo
 
 Form controls align to a column layout with an even number of columns across breakpoints.
 
-A form control consists of a [Form Field](https://storybook.saltdesignsystem.com/?path=/story/documentation-core-form-field--docs) wrapped around:
-- An Input
-- A Combo Box
-- A Dropdown
-- A Radio Button or Checkbox Group
+A form control consists of a [form field](https://storybook.saltdesignsystem.com/?path=/story/documentation-core-form-field--docs) wrapped around:
+- An input
+- A combo box
+- A dropdown
+- A radio button or checkbox group
 
 <ImageSwitcher
   images={[
@@ -38,8 +38,8 @@ A form control consists of a [Form Field](https://storybook.saltdesignsystem.com
 \*You can find more information on the Salt spacing system [here](../foundations/spacing).
 
 <ExampleContainer type="positive">
-- Align the width of a Form Field to the number of columns that best reflect the length of its expected text.
-- Use the Figma “Salt Layout Grid” style library, which aligns to Salt Breakpoints. Simply pick the style that fits to your density and frame width.
+- Align the width of a form field to the number of columns that best reflect the length of its expected text.
+- Use the Figma “Salt Layout Grid” style library, which aligns to Salt breakpoints. Simply pick the style that fits to your density and frame width.
 - Use “Compact layout” for very data-dense forms.
 </ExampleContainer>
 
@@ -75,7 +75,7 @@ A form control consists of a [Form Field](https://storybook.saltdesignsystem.com
 
 ## Field vs. background fill
 
-Salt provides primary and secondary variants of both Form Field and backgrounds.
+Salt provides primary and secondary variants of both form fields and backgrounds.
 
 To keep busy forms as simple as possible, choose a combination of these fills to achieve visual hierarchy. Rather than adding additional background colours, if further visual separation is required, use:
 1. [Headings](#headings)
@@ -98,8 +98,8 @@ Choose the combination that best fits:
     ### 1a Primary field on primary background
     Effective for a form that:
     - Is 'non-specialist' or infrequently used.
-    - Isn't space constrained/ doesn't need to be entirely visible.
-    - Has minimal sections/ columns.
+    - Isn't space constrained/doesn't need to be entirely visible.
+    - Has minimal sections/columns.
   </Diagram>
   <Diagram
     src="/img/patterns/forms/field_background_2.png"
@@ -117,7 +117,7 @@ Choose the combination that best fits:
   >
     ### 2a Secondary field on primary background
     Effective for a form that:
-    - Is used by experts/ is frequently used.
+    - Is used by experts/is frequently used.
     - Is compact and data-dense.
     - Has multiple sections/columns.
   </Diagram>
@@ -131,13 +131,13 @@ Choose the combination that best fits:
   </Diagram>
 </Diagrams>
 
-<ExampleContainer type="positive">
-  Use a bordered multiline field when Form Field fill matches the background fill.
+<ExampleContainer type="positive" label="Best practices">
+  Use a bordered multiline field when the form field fill matches the background fill.
 </ExampleContainer>
 
 ## Label vs. question
 
-Form fields can be displayed with either:
+You can display form fields with either:
 - A short label
 - A comprehensive question
 
@@ -149,7 +149,7 @@ Form fields can be displayed with either:
     contentPosition="top"
   >
     ### Label
-    - Default choice for form Fields.
+    - Default choice for form fields.
     - Field labels are short and descriptive, with no more than 3-5 words.
     - Uses a secondary ‘Label strong’ type style.
   </Diagram>
@@ -168,8 +168,8 @@ Form fields can be displayed with either:
   </Diagram>
 </Diagrams>
 
-<ExampleContainer type="positive">
-  Labels and questions can be combined in the same form (although not on the same form field). In this case, use top placed labels.
+<ExampleContainer type="positive" label="Best practices">
+  You can combine labels and questions in the same form (although not on the same form field). In this case, use top placed labels.
 </ExampleContainer>
 
 ## Label placement
@@ -256,7 +256,7 @@ Horizontal separators are used to increase visual hierarchy in addition to backg
   label="Show spacing"
 />
 
-<ExampleContainer type="positive">
+<ExampleContainer type="positive" label="Best practices">
   - Break a long form up into sections (or sequential steps) of, ideally, 7 (+/-2) form fields (Miller’s Law).
   - Inset separators so that they don’t extend into the column layout margin.
 </ExampleContainer>
@@ -355,7 +355,7 @@ Checkboxes are commonly used as a mechanism to allow users to opt in to certain 
 
 ## Compact form layout
 
-Occasionally it’s necessary for a data-rich form to be displayed in a small viewport without reducing the component density. In this case, spacing can be reduced or removed to achieve a compact form layout.
+Occasionally it’s necessary to display a data-rich form in a small viewport without reducing the component density. In this case, spacing can be reduced or removed to achieve a compact form layout.
 
 These layouts are often used to display a:
 - Dense editable form, such as trade tickets.

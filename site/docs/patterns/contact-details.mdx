@@ -1,5 +1,5 @@
 ---
-title: Contact Details
+title: Contact details
 layout: DetailPattern
 aliases:
   - /salt/patterns/contact-details
@@ -11,7 +11,7 @@ data:
   components: ["Avatar", "Button", "Flow layout", "Icon", "Stack layout", "Text", "Tooltip"]
 ---
 
-Contact Details is a pattern that displays communication information—for a person, company, distribution list or individual channel, such as a name, a phone number or email address.
+Contact details displays communication information—for a person, company, distribution list or individual channel, such as a name, a phone number or email address.
 
  <Diagram
     src="/img/patterns/contact-details/contact-details.png"
@@ -19,7 +19,7 @@ Contact Details is a pattern that displays communication information—for a per
     border
   />
 
-## When to use it
+## When to use
 
 Use cases for this pattern could include:
 - Provide details and direct channels of communication for sales or support purposes.
@@ -30,7 +30,7 @@ Use cases for this pattern could include:
 - Consider a Data Grid when you need to display a large number of contacts with a standardized set of contact information.
 </ExampleContainer>
 
-## How to build it
+## How to build
 
 Contact Details is comprised of an avatar and text elements, a title can be used as a name of a contact or a company, optional details can be company names or company ID.
 Any relevant meta data that you want to communicate can be displayed depending on the requirements of your applications. 
@@ -41,7 +41,7 @@ You can define the details as links, making them interactive, to enable immediat
 - Keep label lengths similar, in order to ensure close proximity to their respective values. If you’re displaying supplementary details, we recommend that you left align their labels.
 </ExampleContainer>
 
-### Contact Details
+### Contact details
 
 
  <Diagram
@@ -58,7 +58,7 @@ You can define the details as links, making them interactive, to enable immediat
     border
   />
 
-#### Using Icons
+#### Using icons
 
 You can use icon descriptors as a visually concise alternative to textual labels—to help users quickly identify the available communication channels.
 
@@ -74,9 +74,9 @@ You can use icon descriptors as a visually concise alternative to textual labels
 
 ### Embedded in a container component
 
-You have the flexibility to embed Contact Details in a range of container components. 
+You have the flexibility to embed contact details in a range of container components. 
 
-This example demonstrates the component embedded within a [Card](/salt/components/card).
+This example demonstrates the component embedded within a [card](/salt/components/card).
 
  <Diagram
     src="/img/patterns/contact-details/card-embedded.png"
@@ -89,7 +89,7 @@ This example demonstrates the component embedded within a [Card](/salt/component
 
 You can define quick actions, which are one-click shortcuts to specific functions or features—such as launching a new email in Outlook, dialling a contact in Zoom.
 
-Ensure that quick action buttons have Tooltip displayed as per the [Icon Only Button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
+Ensure that quick action buttons have a tooltip displayed as per the [Icon Only Button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
 
  <Diagram
     src="/img/patterns/contact-details/quick-actions.png"
@@ -108,14 +108,14 @@ If you’re displaying supplementary details, you can configure them to be colla
   />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Consider making supplementary details collapsible when they contain secondary information, and don’t need to be on display at all times.
+Consider making supplementary details collapsible when they contain secondary information, and don’t need to be on display at all times.
 </ExampleContainer>
 
-### List Version
+### List version
 
-The List Version allows you to display a snapshot of key details. It’s ideal when you have restricted real estate, such as in a client picker dropdown menu or a contact directory list.
+The list version allows you to display a snapshot of key details. It’s ideal when you have restricted real estate, such as in a client picker dropdown menu or a contact directory list.
 
-In order to show as many options as possible, we recommend to keep data points no more than one line. Prioritise the most important values.
+In order to show as many options as possible, we recommend you keep data points to no more than one line. Prioritize the most important values.
 
  <Diagram
     src="/img/patterns/contact-details/list.png"
