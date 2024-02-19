@@ -31,10 +31,10 @@ export const Warning = (): ReactElement => {
         open={open}
         onOpenChange={onOpenChange}
         status="warning"
-        size={"small"}
-        id={"warning-dialog"}
+        size="small"
+        aria-labelledby="warning-dialog"
       >
-        <DialogTitle>File access</DialogTitle>
+        <DialogTitle id="warning-dialog-heading">File access</DialogTitle>
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give
           access anyway?

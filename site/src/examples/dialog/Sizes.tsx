@@ -39,11 +39,13 @@ const SmallDialog = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        size={"small"}
-        status={"warning"}
-        id={"warning-dialog"}
+        size="small"
+        status="warning"
+        aria-labelledby="warning-dialog"
       >
-        <DialogTitle disableAccent>Reset grid settings?</DialogTitle>
+        <DialogTitle disableAccent id="warning-dialog-heading">
+          Reset grid settings?
+        </DialogTitle>
         <DialogContent>
           Are you sure you want to reset all grid data? Any previous settings
           will not be saved
@@ -150,10 +152,12 @@ const MediumDialog = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        size={"medium"}
-        id={"preferences-dialog"}
+        size="medium"
+        aria-labelledby="preferences-dialog"
       >
-        <DialogTitle disableAccent>Preferences</DialogTitle>
+        <DialogTitle id={"preferences-dialog-heading"} disableAccent>
+          Preferences
+        </DialogTitle>
         <DialogContent>
           <StackLayout direction={"row"}>
             <ParentChildLayout parent={parent} child={child} />
@@ -193,10 +197,10 @@ const LargeDialog = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        size={"medium"}
-        id={"wizard-dialog"}
+        size="medium"
+        aria-labelledby="wizard-dialog"
       >
-        <DialogTitle>
+        <DialogTitle id="wizard-dialog-heading">
           <div style={{ flexGrow: 1 }}>Add a Beneficiary</div>
           <SteppedTracker activeStep={0} style={{ width: "400px" }}>
             <TrackerStep>

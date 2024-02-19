@@ -75,7 +75,7 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
 
 export const Default = DialogTemplate.bind({});
 Default.args = {
-  id: "DialogTestId",
+  id: "Default",
 };
 
 export const LongContent = DialogTemplate.bind({});
@@ -232,15 +232,16 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         Click to open dialog
       </Button>
       <Dialog
-        size={"small"}
-        status={"error"}
+        size="small"
+        status="error"
+        aria-labelledby="mandatory-action"
         role="alertdialog"
         open={open}
         onOpenChange={onOpenChange}
         initialFocus={1}
         disableDismiss
       >
-        <DialogTitle>Delete Transaction</DialogTitle>
+        <DialogTitle id="mandatory-action">Delete Transaction</DialogTitle>
         <DialogContent>
           Are you sure you want to permanently delete this transaction
         </DialogContent>

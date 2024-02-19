@@ -32,10 +32,10 @@ export const Error = (): ReactElement => {
         onOpenChange={onOpenChange}
         role="alertdialog"
         status="error"
-        size={"small"}
-        id={"error-dialog"}
+        size="small"
+        aria-labelledby="error-dialog"
       >
-        <DialogTitle>Can`t move file</DialogTitle>
+        <DialogTitle id="error-dialog-heading">Can`t move file</DialogTitle>
         <DialogContent>
           You don’t have permission to move or delete this file.
         </DialogContent>

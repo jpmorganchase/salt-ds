@@ -1,15 +1,13 @@
 import { ReactElement, useState } from "react";
+import { Button, H3, StackLayout } from "@salt-ds/core";
 import {
-  Button,
-  H3,
-  StackLayout,
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
-} from "@salt-ds/core";
+} from "@salt-ds/lab";
 
-export const Default = (): ReactElement => {
+export const DisableScrim = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -27,14 +25,15 @@ export const Default = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open default dialog
+        Open dialog without Scrim
       </Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
         aria-labelledby="terms-and-conditions-dialog"
+        disableScrim
       >
-        <DialogTitle id="terms-and-conditions-dialog-heading">
+        <DialogTitle disableAccent id="terms-and-conditions-dialog-heading">
           Terms and conditions
         </DialogTitle>
         <DialogContent>

@@ -69,7 +69,7 @@ const DefaultFloatingComponent = forwardRef<
     position,
   };
 
-  if (focusManagerProps) {
+  if (focusManagerProps && open) {
     return (
       <FloatingPortal>
         <SaltProvider>
