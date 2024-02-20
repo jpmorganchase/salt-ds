@@ -40,7 +40,7 @@ export interface MultilineInputProps
    */
   readOnly?: boolean;
   /**
-   * Number of rows. Defaults to 3
+   * The default minimum number of rows. Defaults to 3
    */
   rows?: number;
   /**
