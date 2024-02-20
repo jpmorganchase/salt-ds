@@ -120,7 +120,6 @@ const defaultData = [
 export const BottomDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const { containerProps, agGridProps } = useAgGridHelpers();
-  const id = "bottom-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -142,13 +141,9 @@ export const BottomDrawer = (): ReactElement => {
         onOpenChange={onOpenChange}
         position="bottom"
         style={{ height: "max-content" }}
-        id={id}
       >
         <DrawerCloseButton onClick={handleClose} />
-        <H2
-          id={`${id}-header`}
-          style={{ paddingBottom: "var(--salt-spacing-300)" }}
-        >
+        <H2 style={{ paddingBottom: "var(--salt-spacing-300)" }}>
           Marginal Tiering
         </H2>
         <div

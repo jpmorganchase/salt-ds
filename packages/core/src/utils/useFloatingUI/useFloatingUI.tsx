@@ -38,7 +38,9 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position props for the floating component. `top`, `left`, and `position` are optional for components where their floating elements are not positioned relative to a trigger element, i.e. Drawer, Dialog
+   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relatvely to the trigger. 
+   * `width` and `height` are used to define the size of the floating element.
+   *
    */
   top?: number;
   left?: number;

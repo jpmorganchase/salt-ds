@@ -12,7 +12,6 @@ export const DisableScrim = (): ReactElement => {
       <Drawer
         open={open}
         onOpenChange={(newOpen) => setOpen(newOpen)}
-        id="primary-drawer"
         style={{ width: 200 }}
         disableScrim
       >

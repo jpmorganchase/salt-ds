@@ -13,7 +13,6 @@ export const Default = (): ReactElement => {
       <Drawer
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
-        id="primary-drawer"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
@@ -25,7 +24,6 @@ export const Default = (): ReactElement => {
         open={openSecondary}
         onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
         variant="secondary"
-        id="secondary-drawer"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenSecondary(false)} />

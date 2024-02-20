@@ -22,7 +22,6 @@ const FormFieldExample = () => (
 
 export const RightDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = "right-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -43,12 +42,11 @@ export const RightDrawer = (): ReactElement => {
         open={open}
         onOpenChange={onOpenChange}
         position="right"
-        id={id}
         style={{ width: 500 }}
       >
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <H2 id={`${id}-header`}>Section Title</H2>
+          <H2>Section Title</H2>
           <Text>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur

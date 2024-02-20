@@ -23,7 +23,6 @@ const FormFieldExample = () => (
 
 export const TopDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = "top-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -40,10 +39,10 @@ export const TopDrawer = (): ReactElement => {
   return (
     <>
       <Button onClick={handleRequestOpen}>Open Top Drawer</Button>
-      <Drawer open={open} onOpenChange={onOpenChange} position="top" id={id}>
+      <Drawer open={open} onOpenChange={onOpenChange} position="top">
         <StackLayout>
           <DrawerCloseButton onClick={handleClose} />
-          <H2 id={`${id}-header`}>Section title</H2>
+          <H2>Section title</H2>
           <Text>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur

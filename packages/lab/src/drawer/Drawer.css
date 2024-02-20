@@ -32,12 +32,12 @@
 
 /* Styles applied when position = "top" and the component mounts */
 .saltDrawer-top.saltDrawer-enterAnimation {
-  animation: slide-in-bottom var(--salt-duration-perceptible) ease-in-out;
+  animation: var(--salt-animation-slide-in-bottom);
 }
 
 /* Styles applied when position = "top" and the component unmounts */
 .saltDrawer-top.saltDrawer-exitAnimation {
-  animation: slide-out-bottom var(--salt-duration-perceptible) ease-in-out both;
+    animation: var(--salt-animation-slide-out-bottom)
 }
 
 /* Styles applied when position = "right" */
@@ -49,12 +49,12 @@
 
 /* Styles applied when position = "right" and the component mounts */
 .saltDrawer-right.saltDrawer-enterAnimation {
-  animation: slide-in-right var(--salt-duration-perceptible) ease-in-out;
+  animation: var(--salt-animation-slide-in-right);
 }
 
 /* Styles applied when position = "right" and the component unmounts */
 .saltDrawer-right.saltDrawer-exitAnimation {
-  animation: slide-out-right var(--salt-duration-perceptible) ease-in-out both;
+  animation: var(--salt-animation-slide-out-right)
 }
 
 /* Styles applied when position = "left" */
@@ -66,12 +66,12 @@
 
 /* Styles applied when position = "left" and the component mounts */
 .saltDrawer-left.saltDrawer-enterAnimation {
-  animation: slide-in-left var(--salt-duration-perceptible) ease-in-out;
+  animation: var(--salt-animation-slide-in-left);
 }
 
 /* Styles applied when position = "left" and the component unmounts */
 .saltDrawer-left.saltDrawer-exitAnimation {
-  animation: slide-out-left var(--salt-duration-perceptible) ease-in-out both;
+  animation: var(--salt-animation-slide-out-left);
 }
 
 /* Styles applied when position = "bottom" */
@@ -84,10 +84,10 @@
 
 /* Styles applied when position = "bottom" and the component mounts */
 .saltDrawer-bottom.saltDrawer-enterAnimation {
-  animation: slide-in-top var(--salt-duration-perceptible) ease-in-out;
+ animation: var(--salt-animation-slide-in-top);
 }
 
 /* Styles applied when position = "bottom" and the component unmounts */
 .saltDrawer-bottom.saltDrawer-exitAnimation {
-  animation: slide-out-top var(--salt-duration-perceptible) ease-in-out both;
+animation: var(--salt-animation-slide-out-top);
 }

@@ -17,7 +17,6 @@ export const MandatoryAction = (): ReactElement => {
   const [value, setValue] = useState("");
 
   const postcodes = ["05011", "01050", "03040", "11050"];
-  const id = "right-drawer";
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -51,11 +50,10 @@ export const MandatoryAction = (): ReactElement => {
         onOpenChange={onOpenChange}
         position="right"
         style={{ width: 500 }}
-        id={id}
         disableDismiss
       >
         <StackLayout>
-          <H2 id={`${id}-header`}>Add your delivery details</H2>
+          <H2>Add your delivery details</H2>
           <FormField>
             <FormFieldLabel>House no.</FormFieldLabel>
             <Input />
