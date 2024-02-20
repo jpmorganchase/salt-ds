@@ -9,7 +9,7 @@
 ```tsx
 const AlertDialog = () => {
   const [open, setOpen] = useState(openProp);
-  const id = useId("alertDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
