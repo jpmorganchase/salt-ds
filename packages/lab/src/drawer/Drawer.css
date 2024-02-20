@@ -37,7 +37,7 @@
 
 /* Styles applied when position = "top" and the component unmounts */
 .saltDrawer-top.saltDrawer-exitAnimation {
-    animation: var(--salt-animation-slide-out-bottom)
+  animation: var(--salt-animation-slide-out-bottom);
 }
 
 /* Styles applied when position = "right" */
@@ -54,7 +54,7 @@
 
 /* Styles applied when position = "right" and the component unmounts */
 .saltDrawer-right.saltDrawer-exitAnimation {
-  animation: var(--salt-animation-slide-out-right)
+  animation: var(--salt-animation-slide-out-right);
 }
 
 /* Styles applied when position = "left" */
@@ -84,10 +84,10 @@
 
 /* Styles applied when position = "bottom" and the component mounts */
 .saltDrawer-bottom.saltDrawer-enterAnimation {
- animation: var(--salt-animation-slide-in-top);
+  animation: var(--salt-animation-slide-in-top);
 }
 
 /* Styles applied when position = "bottom" and the component unmounts */
 .saltDrawer-bottom.saltDrawer-exitAnimation {
-animation: var(--salt-animation-slide-out-top);
+  animation: var(--salt-animation-slide-out-top);
 }
