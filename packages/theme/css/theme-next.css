@@ -1,15 +1,18 @@
 @import url(foundations/color-next.css);
 @import url(foundations/curve-next.css);
+@import url(palette/corner-next.css);
+
 @import url(palette/palette-next.css);
 /* 
 TODO: decide whether to use auto gen approach from `palette-next.css`
 @import url(palette/accent-next.css);
 @import url(palette/background-next.css);
-@import url(palette/corner-next.css);
 @import url(palette/foreground-next.css);
 @import url(palette/info-next.css);
 @import url(palette/neutral-next.css);
 */
-@import url(characteristics/characteristics-next.css);
+
 /* @import url(characteristics/accent-next.css);
 @import url(characteristics/actionable-next.css); */
+
+@import url(characteristics/characteristics-next.css);
