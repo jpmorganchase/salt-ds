@@ -5,10 +5,12 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 
 export const Warning = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("wanringDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -30,9 +32,9 @@ export const Warning = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="warning"
         size="small"
-        aria-labelledby="warning-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id="warning-dialog-heading">File access</DialogTitle>
+        <DialogTitle id={id}>File access</DialogTitle>
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give
           access anyway?

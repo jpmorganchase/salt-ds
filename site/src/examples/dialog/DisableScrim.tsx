@@ -7,10 +7,12 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 
 export const DisableScrim = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("termsAndConditionsDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -30,10 +32,10 @@ export const DisableScrim = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        aria-labelledby="terms-and-conditions-dialog"
+        aria-labelledby={id}
         disableScrim
       >
-        <DialogTitle disableAccent id="terms-and-conditions-dialog-heading">
+        <DialogTitle disableAccent id={id}>
           Terms and conditions
         </DialogTitle>
         <DialogContent>

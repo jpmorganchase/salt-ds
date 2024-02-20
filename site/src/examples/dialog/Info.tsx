@@ -5,10 +5,12 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 
 export const Info = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("infoDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -30,9 +32,9 @@ export const Info = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="info"
         size="small"
-        aria-labelledby="info-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id="info-dialog-heading">File update</DialogTitle>
+        <DialogTitle id={id}>File update</DialogTitle>
         <DialogContent>
           A new version of this file is available with 26 updates.
         </DialogContent>

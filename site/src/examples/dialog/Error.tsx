@@ -5,10 +5,12 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 
 export const Error = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("errorDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -31,9 +33,9 @@ export const Error = (): ReactElement => {
         role="alertdialog"
         status="error"
         size="small"
-        aria-labelledby="error-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id="error-dialog-heading">Can`t move file</DialogTitle>
+        <DialogTitle id={id}>Can`t move file</DialogTitle>
         <DialogContent>
           You don’t have permission to move or delete this file.
         </DialogContent>

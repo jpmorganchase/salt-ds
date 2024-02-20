@@ -7,10 +7,12 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 
 export const WithoutAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("termsAndConditionsDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -27,12 +29,8 @@ export const WithoutAccent = (): ReactElement => {
   return (
     <>
       <Button onClick={handleRequestOpen}>Open dialog without accent</Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        aria-labelledby="terms-and-conditions-dialog"
-      >
-        <DialogTitle id="terms-and-conditions-dialog-heading" disableAccent>
+      <Dialog open={open} onOpenChange={onOpenChange} aria-labelledby={id}>
+        <DialogTitle id={id} disableAccent>
           Terms and conditions
         </DialogTitle>
         <DialogContent>

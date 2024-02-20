@@ -8,10 +8,12 @@ import {
   DialogActions,
   DialogContent,
   DialogCloseButton,
+  useId,
 } from "@salt-ds/core";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("termsAndConditionsDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -28,14 +30,8 @@ export const CloseButton = (): ReactElement => {
   return (
     <>
       <Button onClick={handleRequestOpen}>Open dialog with close button</Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        aria-labelledby="terms-and-conditions-dialog"
-      >
-        <DialogTitle id="terms-and-conditions-dialog-heading">
-          Terms and conditions
-        </DialogTitle>
+      <Dialog open={open} onOpenChange={onOpenChange} aria-labelledby={id}>
+        <DialogTitle id={id}>Terms and conditions</DialogTitle>
         <DialogContent>
           <StackLayout>
             <div>

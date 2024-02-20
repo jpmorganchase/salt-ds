@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 import {
   SteppedTracker,
@@ -18,6 +19,7 @@ import {
 
 const SmallDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("warningDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -39,9 +41,9 @@ const SmallDialog = (): ReactElement => {
         onOpenChange={onOpenChange}
         size="small"
         status="warning"
-        aria-labelledby="warning-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle disableAccent id="warning-dialog-heading">
+        <DialogTitle disableAccent id={id}>
           Reset grid settings?
         </DialogTitle>
         <DialogContent>
@@ -84,6 +86,7 @@ const items = [
 
 const MediumDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("preferencesDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -144,16 +147,14 @@ const MediumDialog = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open Medium Dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open Medium Dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
         size="medium"
-        aria-labelledby="preferences-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id={"preferences-dialog-heading"} disableAccent>
+        <DialogTitle id={id} disableAccent>
           Preferences
         </DialogTitle>
         <DialogContent>
@@ -174,6 +175,7 @@ const MediumDialog = (): ReactElement => {
 
 const LargeDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("wizardDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -189,16 +191,14 @@ const LargeDialog = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open Large Dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open Large Dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
         size="medium"
-        aria-labelledby="wizard-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id="wizard-dialog-heading">
+        <DialogTitle id={id}>
           <div style={{ flexGrow: 1 }}>Add a Beneficiary</div>
           <SteppedTracker activeStep={0} style={{ width: "400px" }}>
             <TrackerStep>

@@ -5,10 +5,12 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useId,
 } from "@salt-ds/core";
 
 export const Success = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId("successDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -30,9 +32,9 @@ export const Success = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="success"
         size="small"
-        aria-labelledby="success-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id="success-dialog-heading">File uploaded</DialogTitle>
+        <DialogTitle id={id}>File uploaded</DialogTitle>
         <DialogContent>
           File has been successfully uploaded to the shared drive.
         </DialogContent>

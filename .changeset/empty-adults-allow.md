@@ -9,6 +9,7 @@
 ```tsx
 const AlertDialog = () => {
   const [open, setOpen] = useState(openProp);
+  const id = useId("alertDialog");
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -33,8 +34,9 @@ const AlertDialog = () => {
         onOpenChange={onOpenChange}
         initialFocus={1}
         disableDismiss
+        aria-labelledby={id}
       >
-        <DialogTitle>Delete Transaction</DialogTitle>
+        <DialogTitle id={id}>Delete Transaction</DialogTitle>
         <DialogContent>
           Are you sure you want to permanently delete this transaction
         </DialogContent>
