@@ -1,19 +1,19 @@
 .salt-theme.salt-theme-next[data-mode="light"] {
-  --salt-palette-background-backdrop: var(--salt-color-white-70A);
-  --salt-palette-background-hover: var(--salt-color-black-8A);
+  --salt-palette-background-backdrop: var(--salt-color-white-70a);
+  --salt-palette-background-hover: var(--salt-color-black-8a);
   --salt-palette-background-primary: var(--salt-color-snow);
-  --salt-palette-background-primaryDisabled: var(--salt-color-snow-40A);
+  --salt-palette-background-primaryDisabled: var(--salt-color-snow-40a);
   --salt-palette-background-secondary: var(--salt-color-mist);
-  --salt-palette-background-secondaryDisabled: var(--salt-color-mist-40A);
+  --salt-palette-background-secondaryDisabled: var(--salt-color-mist-40a);
   --salt-palette-background-transparent: var(--salt-color-transparent);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"] {
-  --salt-palette-background-backdrop: var(--salt-color-black-70A);
-  --salt-palette-background-hover: var(--salt-color-white-8A);
+  --salt-palette-background-backdrop: var(--salt-color-black-70a);
+  --salt-palette-background-hover: var(--salt-color-white-8a);
   --salt-palette-background-primary: var(--salt-color-asphalt);
-  --salt-palette-background-primaryDisabled: var(--salt-color-asphalt-40A);
+  --salt-palette-background-primaryDisabled: var(--salt-color-asphalt-40a);
   --salt-palette-background-secondary: var(--salt-color-oil);
-  --salt-palette-background-secondaryDisabled: var(--salt-color-oil-40A);
+  --salt-palette-background-secondaryDisabled: var(--salt-color-oil-40a);
   --salt-palette-background-transparent: var(--salt-color-transparent);
 }
