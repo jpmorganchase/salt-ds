@@ -16,7 +16,7 @@ const AlertDialog = () => {
   };
 
   const onOpenChange = (value: boolean) => {
-    // setOpen(value)
+    setOpen(value);
   };
 
   const handleClose = () => {
