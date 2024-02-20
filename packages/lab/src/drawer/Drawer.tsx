@@ -12,7 +12,6 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
-  useId,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -22,7 +21,7 @@ interface ConditionalScrimWrapperProps extends React.PropsWithChildren {
   condition: boolean;
 }
 
-export const ConditionalScrimWrapper = ({
+const ConditionalScrimWrapper = ({
   condition,
   children,
 }: ConditionalScrimWrapperProps) => {
