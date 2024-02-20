@@ -19,7 +19,7 @@ import {
 
 const SmallDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("warningDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -86,7 +86,7 @@ const items = [
 
 const MediumDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("preferencesDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -175,7 +175,7 @@ const MediumDialog = (): ReactElement => {
 
 const LargeDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("wizardDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);

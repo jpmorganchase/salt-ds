@@ -10,7 +10,7 @@ import {
 
 export const Warning = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("wanringDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);

@@ -10,7 +10,7 @@ import {
 
 export const Error = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("errorDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);

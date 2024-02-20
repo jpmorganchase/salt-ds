@@ -12,7 +12,7 @@ import {
 
 export const WithoutAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("termsAndConditionsDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);

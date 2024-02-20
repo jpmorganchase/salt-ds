@@ -10,7 +10,7 @@ import {
 
 export const Info = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("infoDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);

@@ -10,7 +10,7 @@ import {
 
 export const Success = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId("successDialog");
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
