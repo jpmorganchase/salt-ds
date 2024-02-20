@@ -10,5 +10,6 @@ TODO: decide whether to use auto gen approach from `palette-next.css`
 @import url(palette/info-next.css);
 @import url(palette/neutral-next.css);
 */
-@import url(characteristics/accent-next.css);
-@import url(characteristics/actionable-next.css);
+@import url(characteristics/characteristics-next.css);
+/* @import url(characteristics/accent-next.css);
+@import url(characteristics/actionable-next.css); */
