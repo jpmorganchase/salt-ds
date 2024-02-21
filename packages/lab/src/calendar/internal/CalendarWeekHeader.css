@@ -1,7 +1,7 @@
 .saltCalendarWeekHeader {
   display: grid;
-  gap: var(--salt-size-border);
-  grid-template-columns: repeat(7, 1fr);
+  /*!*gap: var(--salt-size-border);*! TODO: CHECK WITH DESIGN. ALSO GAP FOR MONTH GRID*/
+  grid-template-columns: repeat(7, var(--salt-size-base));
   text-align: center;
 }
 

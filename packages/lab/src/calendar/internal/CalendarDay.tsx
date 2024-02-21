@@ -42,7 +42,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       },
       dayRef
     );
-    const { outOfRange, today, unselectable, hidden } = status;
+    const { outOfRange, today, unselectable, hidden, disabled } = status;
 
     return (
       <Tooltip
@@ -51,7 +51,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         content={unselectableReason || "Date is out of range"}
         disabled={!unselectableReason}
         placement="top"
-        enterDelay={300}
+        enterDelay={0}
         {...TooltipProps}
       >
         <button
@@ -64,6 +64,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
             {
               [withBaseName("hidden")]: hidden,
               [withBaseName("outOfRange")]: outOfRange,
+              [withBaseName("disabled")]: disabled,
               [withBaseName("unselectable")]: !!unselectable,
             },
             dayProps.className,

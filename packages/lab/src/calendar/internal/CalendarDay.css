@@ -52,11 +52,16 @@
   border: var(--salt-selectable-borderStyle-selected) var(--salt-size-border) var(--salt-selectable-borderColor-selected);
 }
 
+.saltCalendarDay-disabled,
+.saltCalendarDay-disabled:hover,
 .saltCalendarDay-unselectable,
 .saltCalendarDay-unselectable:hover {
-  background: var(--salt-selectable-background);
+  background: var(--salt-selectable-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   position: relative;
+}
+.saltCalendarDay-disabled {
+  color: var(--salt-content-secondary-foreground-disabled);
 }
 .saltCalendarDay-unselectable:after {
   content: "";
