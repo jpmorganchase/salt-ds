@@ -1,13 +1,14 @@
 import { ReactElement, useState } from "react";
-import { Button, useId } from "@salt-ds/core";
+import { Button, FormField, FormFieldLabel, Input, useId } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
+  DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const Warning = (): ReactElement => {
+export const Subtitle = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -25,26 +26,24 @@ export const Warning = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open warning dialog
-      </Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        status="warning"
-        size="small"
-        aria-labelledby={id}
-      >
-        <DialogTitle id={id} title="File access" />
+      <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
+      <Dialog open={open} onOpenChange={onOpenChange} size="small">
+        <DialogTitle
+          title="Subscribe"
+          subtitle="Recieve emails about the latest updates"
+        />
+        <DialogCloseButton onClick={handleClose} />
 
         <DialogContent>
-          Users will be able to make edits and modify Trades 2023 file. Give
-          access anyway?
+          <FormField necessity="asterisk">
+            <FormFieldLabel> Email </FormFieldLabel>
+            <Input defaultValue="Email Address" />
+          </FormField>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
-            Give access
+            Subscribe
           </Button>
         </DialogActions>
       </Dialog>

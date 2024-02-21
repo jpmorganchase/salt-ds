@@ -1,5 +1,12 @@
 import { ReactElement, useState } from "react";
-import { Button, StackLayout, NavigationItem, H2 } from "@salt-ds/core";
+import {
+  Button,
+  StackLayout,
+  NavigationItem,
+  H2,
+  SplitLayout,
+  useId,
+} from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -13,6 +20,7 @@ import {
 
 const SmallDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -36,11 +44,9 @@ const SmallDialog = (): ReactElement => {
         onOpenChange={onOpenChange}
         size="small"
         status="warning"
-        aria-labelledby="warning-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle disableAccent id="warning-dialog-heading">
-          Reset grid settings?
-        </DialogTitle>
+        <DialogTitle disableAccent title="Reset grid settings?" id={id} />
         <DialogContent>
           Are you sure you want to reset all grid data? Any previous settings
           will not be saved
@@ -150,11 +156,9 @@ const MediumDialog = (): ReactElement => {
         size="medium"
         aria-labelledby="preferences-dialog"
       >
-        <DialogTitle id={"preferences-dialog-heading"} disableAccent>
-          Preferences
-        </DialogTitle>
+        <DialogTitle title="Preferences" disableAccent />
         <DialogContent>
-          <StackLayout direction={"row"}>
+          <StackLayout direction="row">
             <ParentChildLayout parent={parent} child={child} />
           </StackLayout>
         </DialogContent>
@@ -195,23 +199,31 @@ const LargeDialog = (): ReactElement => {
         size="medium"
         aria-labelledby="wizard-dialog"
       >
-        <DialogTitle id="wizard-dialog-heading">
-          <div style={{ flexGrow: 1 }}>Add a Beneficiary</div>
-          <SteppedTracker activeStep={0} style={{ width: "400px" }}>
-            <TrackerStep>
-              <StepLabel>Beneficiary</StepLabel>
-            </TrackerStep>
-            <TrackerStep>
-              <StepLabel>Amount</StepLabel>
-            </TrackerStep>
-            <TrackerStep>
-              <StepLabel>Account</StepLabel>
-            </TrackerStep>
-            <TrackerStep>
-              <StepLabel>Delivery</StepLabel>
-            </TrackerStep>
-          </SteppedTracker>
-        </DialogTitle>
+        <SplitLayout
+          align="center"
+          startItem={
+            <DialogTitle
+              title="Add a Beneficiary"
+              subtitle="Customize your Experience"
+            />
+          }
+          endItem={
+            <SteppedTracker activeStep={0} style={{ width: "400px" }}>
+              <TrackerStep>
+                <StepLabel>Beneficiary</StepLabel>
+              </TrackerStep>
+              <TrackerStep>
+                <StepLabel>Amount</StepLabel>
+              </TrackerStep>
+              <TrackerStep>
+                <StepLabel>Account</StepLabel>
+              </TrackerStep>
+              <TrackerStep>
+                <StepLabel>Delivery</StepLabel>
+              </TrackerStep>
+            </SteppedTracker>
+          }
+        />
 
         <DialogContent
           style={{

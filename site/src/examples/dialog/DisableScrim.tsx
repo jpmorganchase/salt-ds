@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout } from "@salt-ds/core";
+import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -9,6 +9,7 @@ import {
 
 export const DisableScrim = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -30,12 +31,10 @@ export const DisableScrim = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        aria-labelledby="terms-and-conditions-dialog"
+        aria-labelledby={id}
         disableScrim
       >
-        <DialogTitle disableAccent id="terms-and-conditions-dialog-heading">
-          Terms and conditions
-        </DialogTitle>
+        <DialogTitle title="Terms and conditions" disableAccent id={id} />
         <DialogContent>
           <StackLayout>
             <div>

@@ -3,10 +3,10 @@ import * as dialogStories from "@stories/dialog/dialog.stories";
 
 const composedStories = composeStories(dialogStories);
 
-const { Default } = composedStories;
+const { Default, Subtitle } = composedStories;
 
 describe("GIVEN a Dialog", () => {
-  describe("WHEN no props are provided", () => {
+  describe("WHEN only title is provided", () => {
     it("THEN it should display a dialog by default", () => {
       cy.mount(<Default />);
 
@@ -16,6 +16,15 @@ describe("GIVEN a Dialog", () => {
       cy.get(".saltDialogTitle").should("be.visible");
       cy.get(".saltDialogContent").should("be.visible");
       cy.get(".saltDialogActions").should("be.visible");
+    });
+
+    it("THEN it should display the titile", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("button").click();
+
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltDialogTitle-title").should("be.visible");
     });
 
     it("THEN it should add the accent class to the title component", () => {
@@ -47,6 +56,35 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
       }
     );
+  });
+
+  describe("WHEN subtitle is provided", () => {
+    it("THEN it should display the subtitle", () => {
+      cy.mount(<Subtitle />);
+
+      cy.findByRole("button").click();
+
+      cy.get("label").should("be.visible");
+    });
+  });
+
+  describe("WHEN disableScrim is provided", () => {
+    it("THEN it should not display the scrim", () => {
+      cy.mount(<Default disableScrim />);
+      cy.findByRole("button").click();
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltScrim").should("not.exist");
+    });
+  });
+
+  describe("WHEN disableDismiss is provided", () => {
+    it("THEN it should not close when clicking outside the dialog", () => {
+      cy.mount(<Default disableDismiss />);
+      cy.findByRole("button").click();
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltScrim").click("left", { force: true });
+      cy.findByRole("dialog").should("exist");
+    });
   });
 
   describe("WHEN a size is provided", () => {

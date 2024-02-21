@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
+import { Button, useId } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -9,6 +9,7 @@ import {
 
 export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -33,9 +34,9 @@ export const MandatoryAction = (): ReactElement => {
         disableDismiss
         size="small"
         status="error"
-        aria-labelledby="error-dialog"
+        aria-labelledby={id}
       >
-        <DialogTitle id="error-dialog-heading">Delete Transaction</DialogTitle>
+        <DialogTitle title="Delete Transaction" id={id} />
         <DialogContent>
           Are you sure you want to permenantly delete transaction?
         </DialogContent>

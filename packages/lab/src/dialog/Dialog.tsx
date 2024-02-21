@@ -16,7 +16,6 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
-  useId,
   useFloatingComponent,
   useFloatingUI,
   useCurrentBreakpoint,

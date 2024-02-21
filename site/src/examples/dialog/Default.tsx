@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout } from "@salt-ds/core";
+import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -9,6 +9,7 @@ import {
 
 export const Default = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -27,14 +28,8 @@ export const Default = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open default dialog
       </Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        aria-labelledby="terms-and-conditions-dialog"
-      >
-        <DialogTitle id="terms-and-conditions-dialog-heading">
-          Terms and conditions
-        </DialogTitle>
+      <Dialog open={open} onOpenChange={onOpenChange} aria-labelledby={id}>
+        <DialogTitle title="Terms and conditions" id={id} />
         <DialogContent>
           <StackLayout>
             <div>
