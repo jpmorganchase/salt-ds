@@ -1,6 +1,5 @@
 import {
   Middleware,
-  Placement,
   Platform,
   Strategy,
   autoUpdate,
@@ -24,6 +23,7 @@ import {
 } from "react";
 
 import { SaltProvider } from "../../salt-provider";
+import { UseFloatingOptions } from "@floating-ui/react/dist/floating-ui.react";
 
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -38,7 +38,9 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position props for the floating component
+   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relative to the trigger.
+   * `width` and `height` are used to define the size of the floating element.
+   *
    */
   top?: number;
   left?: number;
@@ -69,7 +71,7 @@ const DefaultFloatingComponent = forwardRef<
     position,
   };
 
-  if (focusManagerProps) {
+  if (focusManagerProps && open) {
     return (
       <FloatingPortal>
         <SaltProvider>
@@ -124,24 +126,15 @@ export function useFloatingComponent() {
   return useContext(FloatingComponentContext);
 }
 
-export interface UseFloatingUIProps {
-  /**
-   * Sets position relative to trigger.
-   */
-  placement?: Placement;
-  strategy?: Strategy;
+export interface UseFloatingUIProps
+  extends Pick<
+    UseFloatingOptions,
+    "placement" | "strategy" | "open" | "onOpenChange"
+  > {
   /**
    * Function to update the default middleware used to extend or replace it
    */
   middleware?: Middleware[];
-  /**
-   * Sets visible state.
-   */
-  open?: boolean;
-  /**
-   * Callback function triggered when open state changes.
-   */
-  onOpenChange?: (open: boolean) => void;
 }
 
 type GetMiddleware = (middleware: Middleware[]) => Middleware[];
@@ -221,9 +214,13 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
     onOpenChange,
   } = props;
 
-  const handleOpenChange = (open: boolean) => {
+  const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
+    open,
+    boolean,
+    reason
+  ) => {
     update();
-    onOpenChange?.(open);
+    onOpenChange?.(open, boolean, reason);
   };
 
   const {

@@ -1,0 +1,38 @@
+---
+"@salt-ds/theme": minor
+---
+
+Added `--salt-color-gray-50-fade-border`.
+
+```diff
++ --salt-color-gray-50-fade-border: rgba(206, 210, 217, var(--salt-palette-opacity-disabled));
+```
+
+Updated the values of `--salt-palette-neutral-primary-border`, `--salt-palette-neutral-primary-border-disabled`, `--salt-palette-neutral-secondary-border` and `--salt-palette-neutral-secondary-border-disabled`.
+
+This will affect the border color of Card, InteractableCard, FileDropZone, ToggleButtonGroup, Overlay, CircularProgress, LinearProgress and SteppedTracker.
+
+New values in light mode:
+
+```diff
+- --salt-palette-neutral-primary-border: var(--salt-color-gray-60);
+- --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-60-fade-border);
++ --salt-palette-neutral-primary-border: var(--salt-color-gray-50);
++ --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-50-fade-border);
+```
+
+```diff
+- --salt-palette-neutral-secondary-border: var(--salt-color-gray-90);
+- --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-90-fade-border);
++ --salt-palette-neutral-secondary-border: var(--salt-color-gray-50);
++ --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-fade-border);
+```
+
+New values in dark mode:
+
+```diff
+- --salt-palette-neutral-secondary-border: var(--salt-color-gray-90);
+- --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-90-fade-border);
++ --salt-palette-neutral-secondary-border: var(--salt-color-gray-300);
++ --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-fade-border);
+```

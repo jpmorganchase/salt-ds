@@ -22,3 +22,7 @@ export const AllExamplesGrid: StoryFn<typeof FileDropZone> = () => {
     </AllRenderer>
   );
 };
+
+AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};

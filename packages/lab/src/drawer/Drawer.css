@@ -8,14 +8,9 @@
   overflow: auto;
   padding: var(--salt-spacing-300);
   box-shadow: var(--salt-overlayable-shadow-modal);
-  z-index: calc(var(--salt-zIndex-appHeader) - 1);
+  z-index: var(--salt-zIndex-drawer);
   position: fixed;
   top: 0;
-}
-
-.saltDrawer-overlay {
-  background: var(--salt-overlayable-background);
-  z-index: var(--salt-zIndex-drawer);
 }
 
 /* Styles applied when variant = "primary" */
@@ -43,12 +38,6 @@
 /* Styles applied when position = "top" and the component unmounts */
 .saltDrawer-top.saltDrawer-exitAnimation {
   animation: var(--salt-animation-slide-out-bottom);
-}
-
-/* Styles applied when position = "right" or position = "left" */
-.saltDrawer-right,
-.saltDrawer-left {
-  width: calc(10 * var(--salt-size-base));
 }
 
 /* Styles applied when position = "right" */

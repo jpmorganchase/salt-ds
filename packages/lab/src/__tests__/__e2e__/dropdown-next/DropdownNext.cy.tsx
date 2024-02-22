@@ -107,19 +107,11 @@ describe("Given a Dropdown", () => {
     cy.mount(<Default onOpenChange={openChangeSpy} />);
 
     cy.findByRole("combobox").realClick();
-    cy.get("@openChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      true
-    );
+    cy.get("@openChange").should("have.been.calledWith", true);
     cy.findByRole("listbox").should("exist");
     cy.get("body").click(0, 0);
     cy.findByRole("listbox").should("not.exist");
-    cy.get("@openChange").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      false
-    );
+    cy.get("@openChange").should("have.been.calledWith", false);
   });
 
   it("should close the list when the escape key is pressed", () => {
@@ -140,7 +132,7 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").should("have.attr", "aria-expanded", "false");
   });
 
-  it("should focus the first item when the down arrow is pressed", () => {
+  it("should focus the first item when the down arrow is pressed and no items are selected", () => {
     cy.mount(<Default />);
 
     cy.realPress("Tab");
@@ -148,12 +140,34 @@ describe("Given a Dropdown", () => {
     cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
   });
 
-  it("should focus the last item when the up arrow is pressed", () => {
+  it("should focus the last item when the up arrow is pressed and no items are selected", () => {
     cy.mount(<Default />);
 
     cy.realPress("Tab");
     cy.realPress("ArrowUp");
     cy.findByRole("option", { name: "Georgia" }).should("be.activeDescendant");
+  });
+
+  it("should focus the selected item when the down arrow is pressed and items are selected", () => {
+    cy.mount(<WithDefaultSelected />);
+
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
+  });
+
+  it("should focus the selected item when the up arrow is pressed and items are selected", () => {
+    cy.mount(<WithDefaultSelected />);
+
+    cy.realPress("Tab");
+    cy.realPress("ArrowUp");
+    cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
   });
 
   it("should support keyboard navigation", () => {
@@ -375,6 +389,11 @@ describe("Given a Dropdown", () => {
   it("should not show a list with no options", () => {
     cy.mount(<DropdownNext open />);
     cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("should show a placeholder when the value is empty", () => {
+    cy.mount(<DropdownNext placeholder="Placeholder" value="" />);
+    cy.findByRole("combobox").should("have.text", "Placeholder");
   });
 
   it("should render the custom floating component", () => {

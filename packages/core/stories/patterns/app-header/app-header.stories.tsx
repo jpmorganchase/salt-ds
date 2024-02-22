@@ -61,7 +61,7 @@ export const AppHeader = () => {
                 inset: "0 0 auto 0",
                 paddingRight: "1em",
                 borderBottom:
-                  "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
+                  "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
               }}
             >
               <FlexItem
@@ -73,7 +73,7 @@ export const AppHeader = () => {
                   width:
                     "calc(var(--salt-size-base) + var(--salt-spacing-200))",
                   borderRight:
-                    "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor)",
+                    "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
                 }}
               >
                 {!drawerOpen && (

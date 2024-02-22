@@ -68,8 +68,8 @@
 
 .saltTabNext-main[aria-selected="true"] {
   background: var(--tabNext-background-active);
-  border-left: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
-  border-right: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
 .saltTabNext[aria-selected="true"]::after {

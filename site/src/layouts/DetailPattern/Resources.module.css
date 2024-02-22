@@ -24,6 +24,8 @@
   display: flex;
   gap: var(--salt-spacing-100);
   flex-direction: column;
+  list-style: none;
+  padding: 0;
 }
 
 .subtitle {

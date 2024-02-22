@@ -8,7 +8,11 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { OptionValue } from "./ListControlContext";
 
+export type OpenChangeReason = "input" | "manual";
+
 export interface ListControlProps<Item> {
+  disabled?: boolean;
+  readOnly?: boolean;
   /**
    * If true, the list will be open by default.
    */
@@ -20,7 +24,7 @@ export interface ListControlProps<Item> {
   /**
    * Callback fired when the open state changes.
    */
-  onOpenChange?: (event: SyntheticEvent, newOpen: boolean) => void;
+  onOpenChange?: (newOpen: boolean, reason?: OpenChangeReason) => void;
   /**
    * The default selected options. If this is provided `defaultValue` should be provided as well.
    */
@@ -58,6 +62,8 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     onSelectionChange,
     defaultValue,
     value,
+    disabled,
+    readOnly,
   } = props;
 
   const [focusedState, setFocusedState] = useState(false);
@@ -89,22 +95,22 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     state: "open",
   });
 
-  const openKey = useRef<{ key: string; altKey: boolean }>({
-    key: "",
-    altKey: false,
-  });
-  const setOpen = (event: SyntheticEvent, newOpen: boolean) => {
-    setOpenState(newOpen);
+  const openKey = useRef<string | undefined>(undefined);
 
-    if (event.nativeEvent instanceof KeyboardEvent) {
-      openKey.current = {
-        key: event.nativeEvent.key,
-        altKey: event.nativeEvent.altKey,
-      };
+  const setOpen = (
+    newOpen: boolean,
+    reason?: OpenChangeReason,
+    key?: string
+  ) => {
+    if (disabled || readOnly) {
+      return;
     }
 
+    setOpenState(newOpen);
+    openKey.current = key;
+
     if (newOpen !== openState) {
-      onOpenChange?.(event, newOpen);
+      onOpenChange?.(newOpen, reason);
     }
   };
 
@@ -116,19 +122,17 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   });
 
   const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
-    const { disabled, value } = option;
-
-    if (disabled) {
+    if (option.disabled || readOnly || disabled) {
       return;
     }
 
-    let newSelected = [value];
+    let newSelected = [option.value];
 
     if (multiselect) {
-      if (selectedState.includes(value)) {
-        newSelected = selectedState.filter((item) => item !== value);
+      if (selectedState.includes(option.value)) {
+        newSelected = selectedState.filter((item) => item !== option.value);
       } else {
-        newSelected = selectedState.concat([value]);
+        newSelected = selectedState.concat([option.value]);
       }
     }
 
@@ -139,12 +143,18 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
         .join(", ")
     );
     onSelectionChange?.(event, newSelected);
+
+    if (!multiselect) {
+      setOpen(false);
+    }
   };
 
   const clear = (event: SyntheticEvent) => {
     setSelectedState([]);
     setValueState("");
-    onSelectionChange?.(event, []);
+    if (selectedState.length !== 0) {
+      onSelectionChange?.(event, []);
+    }
   };
 
   const optionsRef = useRef<

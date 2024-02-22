@@ -3,118 +3,91 @@ import * as drawerStories from "@stories/drawer/drawer.stories";
 
 const composedStories = composeStories(drawerStories);
 
-const { Default, Top, Right, Bottom } = composedStories;
+const { Default, OptionalCloseAction } = composedStories;
 
 describe("GIVEN a Drawer", () => {
-  describe("WHEN no props are provided", () => {
-    it("THEN it should display an overlay by default", () => {
+  describe("WHEN a drawer with close button is open", () => {
+    it("THEN it should close on close button click or outside Drawer click", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer-overlay").should("be.visible");
-    });
-
-    it("THEN it should default to a left position", () => {
-      cy.mount(<Default />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-left");
-    });
-
-    it("THEN it should display animations by default", () => {
-      cy.mount(<Default />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-enterAnimation");
-    });
-
-    it("THEN it should display a primary variant by default", () => {
-      cy.mount(<Default />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-primary");
-    });
-  });
-
-  describe("WHEN a position is provided", () => {
-    it("THEN it should render on the left hand side", () => {
-      cy.mount(<Default position="left" />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-left");
-    });
-
-    it("THEN it should render at the top", () => {
-      cy.mount(<Top />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.css", "top", "0px");
-    });
-
-    it("THEN it should render on the right hand side", () => {
-      cy.mount(<Right />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.css", "right", "0px");
-    });
-
-    it("THEN it should render at the bottom", () => {
-      cy.mount(<Bottom />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
-      cy.get(".saltDrawer").should("have.css", "bottom", "0px");
-    });
-  });
-
-  describe("WHEN a drawer is open", () => {
-    it("THEN it should be able to close", () => {
-      cy.mount(<Default />);
-
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
+      cy.findByRole("button", { name: "Open Primary Drawer" }).realClick();
       cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("button", { name: "Close Drawer" }).click();
+      cy.findByRole("dialog").should("not.exist");
 
-      cy.findByLabelText("close").click();
-
+      cy.findByRole("button", { name: "Open Secondary Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltScrim").realClick();
       cy.findByRole("dialog").should("not.exist");
     });
 
-    it("THEN it should be able to close by clicking outside", () => {
+    it("THEN it should dismiss on Esc key press", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
-
+      cy.findByRole("button", { name: "Open Primary Drawer" }).realClick();
       cy.findByRole("dialog").should("be.visible");
-
-      cy.get(".saltDrawer-overlay").click();
-
+      cy.realPress("Escape");
       cy.findByRole("dialog").should("not.exist");
+    });
+
+    it("THEN it should trap focus within Drawer once opened", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("button", { name: "Open Primary Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("button", { name: "Close Drawer" }).should("be.focused");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.findByRole("button", { name: "Close Drawer" }).should("be.focused");
     });
   });
 
-  describe("WHEN a variant is provided", () => {
-    it("THEN it should display a primary variant", () => {
-      cy.mount(<Default variant="primary" />);
+  describe("WHEN a drawer without close button is open", () => {
+    it("THEN it should close on outside Drawer click or Esc key press", () => {
+      cy.mount(<OptionalCloseAction />);
 
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.get(".saltScrim").realClick();
+      cy.findByRole("dialog").should("not.exist");
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-primary");
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.realPress("Escape");
+      cy.findByRole("dialog").should("not.exist");
     });
 
-    it("THEN it should display a secondary variant", () => {
-      cy.mount(<Default variant="secondary" />);
+    it("THEN it should trap focus within Drawer once opened", () => {
+      cy.mount(<OptionalCloseAction />);
 
-      cy.findByRole("button", { name: /Open Drawer/i }).click();
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.realPress("Tab");
+      cy.findByRole("textbox", { name: "House no." }).should("be.focused");
+    });
 
-      cy.get(".saltDrawer").should("have.class", "saltDrawer-secondary");
+    it("THEN focus goes into the first focusable element within Drawer", () => {
+      cy.mount(<OptionalCloseAction />);
+
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("textbox", { name: "House no." }).should("be.focused");
+    });
+
+    it("THEN it closes Drawer when an element is configured to close it", () => {
+      cy.mount(<OptionalCloseAction />);
+
+      cy.findByRole("button", { name: "Open Drawer" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("button", { name: "Submit" }).click();
+      cy.findByRole("dialog").should("not.be.visible");
     });
   });
 });
