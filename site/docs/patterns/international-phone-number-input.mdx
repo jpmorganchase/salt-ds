@@ -5,13 +5,15 @@ sidebar:
   label: International phone number input
 aliases:
   - /salt/patterns/international-phone-number-input
+data:
+  components: ["Dropdown", "Input"]
 ---
 
 An international phone number input gives users a set of form fields to input phone number information for specific countries.
 
 The pattern is a form that displays a relevant phone number field for a user-selected location. You can use it to provide consistent design when implementing International Phone Number Input interactions across your applications.
 
-We provide design guidance on how you can use Salt form control components to achieve the pattern. Your team can take further steps that fall outside its scope. For example, check with your tech partners if it’s possible to auto-detect user location using data that can support auto-generating number placeholders, or save the entered number when the user changes the country.
+We provide design guidance on how you can use Salt form control components to achieve the pattern. Your team can take further steps that fall outside its scope. For example, check with your tech partners if it’s possible to autodetect user location using data that can support autogenerating number placeholders. You can also check if it's possible to save the entered number when the user changes the country.
 
 ## When to use
 
@@ -20,7 +22,7 @@ Use the pattern when your user needs to enter a phone number for a specific coun
 ## How to build
 
 - The pattern consists of two form controls: a [dropdown](../components/dropdown) that displays country selection (with a country symbol component the user can expand or collapse), and an [input](../components/input) that displays the phone number.
-- When the user selects the country, the text input adornment in the phone number input will display the country code.
+- When the user selects the country, the text input adornment in the phone number input displays the country code.
 
 <ImageSwitcher
   images={[
@@ -78,7 +80,7 @@ A row layout has two form controls as a horizontal row. You can use the row layo
   border
 />
 
-When the country name is wider than the input, it will be truncated. In this case, we suggest using the column layout.
+When the country name is wider than the input, the name is truncated. In this case, we suggest using the column layout.
 
 <ImageSwitcher
   images={[
