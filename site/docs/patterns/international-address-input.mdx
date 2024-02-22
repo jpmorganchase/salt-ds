@@ -28,11 +28,11 @@ The pattern consists of various form controls. For layout guidance, please refer
 
 ### Dynamic format
 
-Dynamic format generates templates based on country or region. The templates only display fields relevant to a specific country in a recognizable order and with familiar labels.
+The dynamic format generates templates based on country or region. The templates only display fields relevant to a specific country in a recognizable order and with familiar labels.
 
 For the initial release, dynamic format supports five countries: France, Germany, Spain, the United Kingdom and the United States.
 
-We recommend using templates in dynamic format with localized language and terms that are more familiar to the user. This will reduce barriers to input and minimize user errors.
+We recommend using templates in a dynamic format with localized language and terms that are more familiar to the user. This will reduce barriers to input and minimize user errors.
 
 <ImageSwitcher
   images={[
@@ -85,9 +85,9 @@ We recommend using templates in dynamic format with localized language and terms
 
 ### Generic format
 
-Generic format provides a single template of international address input for all countries and regions.
+The generic format provides a single template of international address input for all countries and regions.
 
-Sometimes, using templates may be difficult due to requirements or product scope. In these cases, use generic format.
+Sometimes, using templates may be difficult due to requirements or product scope. In these cases, use the generic format.
 
 <Diagram
   src="/img/patterns/international-address-input/generic_format.png"
@@ -97,12 +97,12 @@ Sometimes, using templates may be difficult due to requirements or product scope
 
 <ExampleContainer type="positive" customPillText="Best practices">
   - Choose the format that best fits the technical capabilities of your app, delivery timescales and required locations. 
-  - Combine dynamic format and generic format if users will input international addresses worldwide. You can provide templates using both generic and dynamic formats. 
+  - Combine dynamic formats and generic formats if users input international addresses worldwide. You can provide templates using both generic and dynamic formats. 
 </ExampleContainer>
 
 ## Adding an additional address
 
-There may be cases where an additional address form is needed:
+There may be cases where users will need an additional address form:
 
 - The client's address may be different from the business address. We recommend a checkbox after the first form for users to select if they need the additional form.
 - In some countries, such as China, users must input the address twice: first in English and then in Chinese. Add an additional form in the local language.
@@ -115,10 +115,10 @@ There may be cases where an additional address form is needed:
 
 ## Customized address forms
 
-In some cases, you need to customize the address form while considering other information you're collecting based on the product scope.
+Sometimes, you need to customize the address form while considering other information you're collecting based on the product scope.
 
-- An additional form e.g., House No., may be needed.
-- You can use the address form alongside international phone number, email address, banking details, time zone selection and other fields.
+- You may need an additional form field, e.g., House No..
+- You can use the address form alongside other fields. This may include international phone number, email address, banking details, time zone selection and others.
 
 <Diagram
   src="/img/patterns/international-address-input/customized_address_form.png"
