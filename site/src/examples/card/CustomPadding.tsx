@@ -12,6 +12,7 @@ import {
   Display2,
   FlowLayout,
 } from "@salt-ds/core";
+import { MessageIcon } from "@salt-ds/icons";
 
 export const CustomPadding = (): ReactElement => {
   const [padding, setPadding] = useState("spacing-200");
@@ -26,12 +27,12 @@ export const CustomPadding = (): ReactElement => {
               width: "160px",
             } as CSSProperties
           }
-          accent="top"
-          hoverable
         >
           <StackLayout gap={1}>
-            <H3>Pay now</H3>
-            <Text>Your payment will be processed immediately.</Text>
+            <Text>
+              <MessageIcon size={1} />
+              Contact us
+            </Text>
           </StackLayout>
         </Card>
       )}
@@ -44,18 +45,13 @@ export const CustomPadding = (): ReactElement => {
             } as CSSProperties
           }
         >
-          <StackLayout align="start">
-            <StackLayout gap={1}>
-              <H3>Sustainable investing products</H3>
-              <Text>
-                We have a commitment to provide a wide range of investment
-                solutions to enable you to align your financial goals to your
-                values.
-              </Text>
-            </StackLayout>
-            <Link href="#" IconComponent={null}>
-              Explore
-            </Link>
+          <StackLayout gap={1}>
+            <H3>Sustainable investing products</H3>
+            <Text>
+              We have a commitment to provide a wide range of investment
+              solutions to enable you to align your financial goals to your
+              values.
+            </Text>
           </StackLayout>
         </Card>
       )}
@@ -67,8 +63,6 @@ export const CustomPadding = (): ReactElement => {
               width: "500px",
             } as CSSProperties
           }
-          accent="top"
-          hoverable
         >
           <StackLayout>
             <StackLayout direction="row" align="end" gap={1}>
@@ -90,15 +84,9 @@ export const CustomPadding = (): ReactElement => {
               </StackLayout>
             </StackLayout>
 
-            <StackLayout direction="row">
-              <StackLayout gap={0}>
-                <Text>Below Threshold 3 & 4</Text>
-                <Display3>$0</Display3>
-              </StackLayout>
-              <StackLayout gap={0}>
-                <Text>Total</Text>
-                <Display3>$1,450,000</Display3>
-              </StackLayout>
+            <StackLayout direction="row" gap={1}>
+              <Button>Cancel</Button>
+              <Button variant="cta">Update tier</Button>
             </StackLayout>
           </StackLayout>
         </Card>

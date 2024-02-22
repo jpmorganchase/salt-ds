@@ -20,15 +20,14 @@ export const Actions = (): ReactElement => {
       <Card style={{ width: "260px" }} accent="top" hoverable>
         <StackLayout align="start">
           <StackLayout gap={1}>
-            <H3>Sustainable investing products</H3>
+            <H3>Climate change</H3>
             <Text>
-              We have a commitment to provide a wide range of investment
-              solutions to enable you to align your financial goals to your
-              values.
+              Climate factors represent the biggest source of risk and
+              opportunity for investors in the decades to come.
             </Text>
           </StackLayout>
           <Link href="#" IconComponent={null}>
-            Explore our solutions
+            See our approach
           </Link>
         </StackLayout>
       </Card>

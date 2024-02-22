@@ -1,6 +1,6 @@
 /* Styles applied to the root element */
 .saltCard {
-  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
+  /* box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow)); */
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
   padding: var(--saltCard-padding, var(--salt-spacing-200));
@@ -18,7 +18,7 @@
   border-color: var(--salt-container-secondary-borderColor);
 }
 
-/* Styles applied if `accent` is set */
+/* Styles applied if `hoverable` is set */
 .saltCard-hoverable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
 }

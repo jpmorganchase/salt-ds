@@ -26,10 +26,9 @@ data:
     <LivePreview componentName="card" exampleName="Accents" >
       ### Accents
 
-    - Use the ‘accent’ prop to place the accent bar at the top, right, bottom or left of any card.
     - The accent in a Card is optional, however, it can be used to indicate meaning (such as Product or Brand color).
-    - An accent can work well with the hoverable prop, to afford the color when the user's focus is over a specific card.
-    - In contrast, an accent is always visible in Link Cards and Interactable Cards to indicate their interaction capability. The accent ensures the WCAG 2.1 min-contrast requirement of interactive components is met.
+    - An accent can work well with the hoverable prop, to indicate it is interactive when the user's focus is over a specific card.
+    - The accent ensures the WCAG 2.1 min-contrast requirement of interactive components is met.
     - Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
 
     </LivePreview>
@@ -37,14 +36,16 @@ data:
     <LivePreview componentName="card" exampleName="Actions" >
       ### Actions
 
-    Use the Card to incorporate actions like [Links](../link) or [Buttons](../button). Avoid embedding actions directly into an Interactable Card component.
-    </LivePreview>
+- Use the Card to incorporate actions like [links](../link) or [buttons](../button) within it. Avoid embedding actions into a Link card or an Interactable card.
 
-        <LivePreview componentName="card" exampleName="FullWidthImage" >
-      ### Full width image
+  </LivePreview>
 
-      - When using images within your card components, we recommend having the image span the entire width of the card.
-      - You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
+       <LivePreview componentName="card" exampleName="FullWidthImage" >
+
+  ### Full width image
+
+  - When using images within your card components, we recommend having the image span the entire width of the card.
+  - You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
     </LivePreview>
 
 
