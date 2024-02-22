@@ -102,7 +102,7 @@
   --salt-overlayable-background: var(--salt-palette-background-backdrop);
   --salt-target-background-hover: var(--salt-palette-accent-weakest);
   --salt-target-borderColor-hover: var(--salt-palette-accent);
-  --salt-focused-outline: var(--salt-palette-accent-stronger);
+  --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
   --salt-separable-tertiary-borderColor: var(--salt-palette-neutral-stronger-tertiary);
   --salt-separable-primary-borderColor: var(--salt-palette-neutral-stronger-primary);
   --salt-separable-secondary-borderColor: var(--salt-palette-neutral-stronger-secondary);
