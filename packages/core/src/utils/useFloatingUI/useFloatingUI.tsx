@@ -38,7 +38,7 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relatively to the trigger.
+   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relative to the trigger.
    * `width` and `height` are used to define the size of the floating element.
    *
    */

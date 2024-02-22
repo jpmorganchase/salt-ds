@@ -3,8 +3,8 @@
 ---
 
 - Refactored `Drawer` to use floating-ui and Salt's `Scrim`.
-- Open prop set to false by default
-- Fix to `Floating Components` implementation of focus manager props from Floating UI
+- Fixced open prop to be false by default
+- Fixed `Floating Components` implementation of focus manager props from Floating UI
 - Added optional `DrawerCloseButton`.
 - Added optional props `disableScrim` and `diableDismiss`
 
