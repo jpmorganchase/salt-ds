@@ -108,7 +108,7 @@ export const Tab = forwardRef(function Tab(
     switch (e.key) {
       case "Backspace":
       case "Delete":
-        if (closeable) {
+        if (closeable && !editing) {
           e.stopPropagation();
           onClose && onClose(index);
         }
