@@ -8,9 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
-#### When to use
+### When to use
 
 - When you have multiple levels of navigation in your application or website.
 
@@ -18,21 +18,13 @@ data:
 
 - If you need your items to remain visible on scroll, we recommend displaying navigation items in a fixed app header (or header area).
 
-#### When not to use
+### When not to use
 
 - When you need to show different views of content within the same page. Instead, use [`Tabs`](/salt/components/tabs/).
 
 - When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Instead, use [`InteractableCard`](../card), or [`Link`](../link) within the body of the page.
 
-### Import
-
-To import `NavigationItem` from the core Salt package, use:
-
-```
-import { NavigationItem  } from "@salt-ds/core";
-```
-
-### Content
+## Content
 
 - To make the most of screen real estate, our recommendation is that all description text should be clear and concise.
 
@@ -44,6 +36,14 @@ import { NavigationItem  } from "@salt-ds/core";
 
 - In a vertical navigation item, descriptions can wrap onto multiple lines if necessary, and is preferred over truncation.
 
-### Props
+## Import
+
+To import `NavigationItem` from the core Salt package, use:
+
+```
+import { NavigationItem  } from "@salt-ds/core";
+```
+
+## Props
 
 <PropsTable packageName="core" componentName="NavigationItem" />

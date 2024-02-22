@@ -13,11 +13,11 @@ data:
 
 <LivePreview componentName="flex-layout" exampleName="Default">
 
-### Default
+## Default
 
 By default, `FlexLayout` displays items along the horizontal axis in a row, aligned to the start of the container. The spacing between items is driven by the property `gap`, which is a multiple of the [Salt base unit](/salt/foundations/spacing) and is set to 3. The dimensions of the layout (height or width) are driven by the items contained within it.
 
-#### Best practices
+### Best practices
 
 Set `wrap={true}` to overflow items onto subsequent rows when they no longer fit in the container.
 
@@ -25,7 +25,7 @@ Set `wrap={true}` to overflow items onto subsequent rows when they no longer fit
 
 <LivePreview componentName="flex-layout" exampleName="ColumnDirection">
 
-### Column direction
+## Column direction
 
 The flex layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `column` to display items in a vertical direction.
 
@@ -33,7 +33,7 @@ The flex layout `direction` prop defines the main axis that items are displayed 
 
 <LivePreview componentName="flex-layout" exampleName="LayoutPosition">
 
-### Layout position
+## Layout position
 
 Control the position of the flex layout and its items using the `align` and `justify` props.
 
@@ -45,7 +45,7 @@ If there is additional space available in the cross-axis of the layout (i.e., be
 
 <LivePreview componentName="flex-layout" exampleName="ResponsiveLayout">
 
-### Responsive layout
+## Responsive layout
 
 Flex layouts support responsive props, so you can define different behaviors based on viewport size (e.g., switching `direction` with screen size). You can use the default [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) or pass in your own using `SaltProvider`.
 
@@ -59,7 +59,7 @@ direction={{ xs: "row", sm: "column", lg: "row", md: "column", xl: "row" }}
 
 <LivePreview componentName="flex-layout" exampleName="FlexItemPosition">
 
-### Flex item position
+## Flex item position
 
 Use the flex item's `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to set the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
@@ -67,7 +67,7 @@ Use the flex item's `align` prop to set an alignment for a specific item in the 
 
 <LivePreview componentName="flex-layout" exampleName="FlexItemSize">
 
-### Flex item size
+## Flex item size
 
 The flex item's `grow` prop enables specific items in the layout to grow and fill any remaining space that is available in the layout:
 

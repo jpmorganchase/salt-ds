@@ -12,13 +12,13 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="radio-button" exampleName="Default">
 
-### Radio button group (vertical)
+## Radio button group (vertical)
 
 Radio button groups allow users to select one or more values from a given set of choices. You can align them horizontally or vertically.
 
 When `direction="vertical"`
 
-#### Best practices
+### Best practices
 
 - Keep text short and as concise as possible in the horizontal orientation.
 - Do not truncate text descriptions as this can hide important content relevant to the user’s workflow. Consider shortening or rewording the label if space is limited.
@@ -29,7 +29,7 @@ When `direction="vertical"`
 
 <LivePreview componentName="radio-button" exampleName="Horizontal" >
 
-### Radio button group (horizontal)
+## Radio button group (horizontal)
 
 When `direction="horizontal"`
 
@@ -37,7 +37,7 @@ When `direction="horizontal"`
 
 <LivePreview componentName="radio-button" exampleName="Wrap" >
 
-### Wrapping radio button group
+## Wrapping radio button group
 
 The default behaviour for Radio Button Group in a horizontal alignment allows radio button options to wrap onto the next line as the viewport size changes if they don’t fit within a container.
 
@@ -45,7 +45,7 @@ The default behaviour for Radio Button Group in a horizontal alignment allows ra
 
 <LivePreview componentName="radio-button" exampleName="NoWrap" >
 
-### Text wrapping
+## Text wrapping
 
 You can configure radio button groups to maintain a horizontal alignment but allow text wrapping by setting the prop `wrap=false`.
 
@@ -53,13 +53,13 @@ You can configure radio button groups to maintain a horizontal alignment but all
 
 <LivePreview componentName="radio-button" exampleName="Disabled" >
 
-### Disabled Radio Button
+## Disabled radio button
 
 A disabled radio button isn't interactive or focusable.
 
 You can disable a radio button by setting `disabled={true}`.
 
-#### Best practices
+### Best practices
 
 Use a disabled state for radio buttons that have permissions, dependencies or pre-requisites. For example, a radio button in a [form](/salt/patterns/forms) may be disabled because the user hasn't yet completed an earlier section of the form.
 
@@ -69,13 +69,13 @@ If a disabled radio button's text description contains information that is valua
 
 <LivePreview componentName="radio-button" exampleName="Readonly" >
 
-### Read-only radio button
+## Read-only radio button
 
 A read-only radio button permits the user to only read or copy the value, but not edit the value or change the state of the radio.
 
 A radio button with the prop `readOnly={true}` will suppress all functionality along with displaying read-only styling.
 
-#### Best practices
+### Best practices
 
 Users can interact with read-only radio buttons using keyboard shortcuts. This means that, unlike disabled radio buttons, users can interact with the text description. Use a read-only radio button instead of a disabled radio button when the text description contains information valuable to the user.
 
@@ -83,7 +83,7 @@ Users can interact with read-only radio buttons using keyboard shortcuts. This m
 
 <LivePreview componentName="radio-button" exampleName="Error">
 
-### Validation states: error
+## Validation states: error
 
 You can indicate an error state stylistically by setting the `validationStatus` prop to `"error"`.
 
@@ -91,7 +91,7 @@ You can indicate an error state stylistically by setting the `validationStatus` 
 
 <LivePreview componentName="radio-button" exampleName="Warning">
 
-### Validation states: warning
+## Validation states: warning
 
 You can indicate a warning state stylistically by setting the `validationStatus` prop to `"warning"`.
 
@@ -102,7 +102,7 @@ You can indicate a warning state stylistically by setting the `validationStatus`
 
 <LivePreview componentName="radio-button" exampleName="LongText">
 
-### Long text support
+## Long text support
 
 Radio Button supports long text descriptions. If text wraps to multiple lines, align it to the top of the radio button.
 
@@ -110,7 +110,7 @@ Radio Button supports long text descriptions. If text wraps to multiple lines, a
 
 <LivePreview componentName="radio-button" exampleName="WithFormField" >
 
-### Form field compatibility
+## Form field compatibility
 
 You can wrap `RadioButtonGroup` in a form field when it’s within a form context.
 

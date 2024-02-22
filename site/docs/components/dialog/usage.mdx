@@ -8,25 +8,25 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 Dialogs are interruptive by nature and should be used sparingly. Use dialogs to present or gather critical information that requires immediate action, whether it’s directly or indirectly part of the user’s current task. For example, a warning dialog that appears when a document is closed without being saved—and asks how the user wishes to proceed—is indirectly related to the user’s task.
 
-#### Status
-
-For status dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title and change the border color of the dialog. For accessibility reasons, you should pass a `role="alertdialog"` to the Dialog component when rendering an alert dialog. You should rely on users' acknowledgment of the message by clicking the action button.
-
-#### When to use
+### When to use
 
 - To notify the user of critical information related to their current workflow that requires immediate action.
 - To interrupt the user's flow.
 
-#### When not to use
+### When not to use
 
 - When you don't need to interrupt the user's flow. If the information is part of an event that’s occurred in a peripheral application or workflow, use [`Toast`](../toast) instead. If the information is related to the current workflow, use [`Banner`](../banner) instead.
 - To launch a dialog from another dialog. Users may struggle to dismiss the two dialogs and may not understand which dialog is higher priority. Consider an alternative solution, such as progressively disclosing information in the first dialog.
 
-### Import
+### Status
+
+For status dialogs you can set the `status` prop to `error`, `warning`, `success`, or `info` to render a status icon in the title and change the border color of the dialog. For accessibility reasons, you should pass a `role="alertdialog"` to the Dialog component when rendering an alert dialog. You should rely on users' acknowledgment of the message by clicking the action button.
+
+## Import
 
 To import `Dialog` and related components from the lab Salt package, use:
 
@@ -40,24 +40,24 @@ import {
 } from "@salt-ds/lab";
 ```
 
-### Props
+## Props
 
-#### `Dialog`
+### `Dialog`
 
 <PropsTable packageName="lab" componentName="Dialog" />
 
-#### `DialogTitle`
+### `DialogTitle`
 
 <PropsTable packageName="lab" componentName="DialogTitle" />
 
-#### `DialogActions`
+### `DialogActions`
 
 <PropsTable packageName="lab" componentName="DialogActions" />
 
-#### `DialogContent`
+### `DialogContent`
 
 <PropsTable packageName="lab" componentName="DialogContent" />
 
-#### `DialogCloseButton`
+### `DialogCloseButton`
 
 <PropsTable packageName="lab" componentName="DialogCloseButton" />

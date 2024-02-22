@@ -7,7 +7,7 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 Use title or sentence case when labelling pills. This maintains a visual distinction between `Pill` and `Button`, which always has uppercase labels.
 
@@ -15,18 +15,18 @@ Position any pill you’re using to tag content below or on the right of the rel
 
 Never apply red/amber/green status colors to pills to differentiate between categories. Use [icons](/salt/components/icon) or text instead.
 
-#### When to use
+### When to use
 
 - To organize content mapped to more than one category, providing users with a way of distinguishing different content types and categories.
 - To trigger an immediate action—such as changing the view of currently displayed content or going to a new page contextually related to the pill.
 - To enable an action that could change depending on the context. In a messaging application, you could use pills to display predefined replies that change depending on the received message.
 
-#### When not to use
+### When not to use
 
 - For nonfixed actions that may change depending on the context. Instead, use [`Button`](/salt/components/button).
 - When the content is a system message that doesn't support interaction. Instead, use [`Badge`](/salt/components/badge).
 
-### Import
+## Import
 
 To import `Pill` from the core Salt package, use:
 
@@ -34,6 +34,6 @@ To import `Pill` from the core Salt package, use:
 import { Pill } from “@salt-ds/core”;
 ```
 
-### Props
+## Props
 
 <PropsTable componentName="Pill" packageName="core" />

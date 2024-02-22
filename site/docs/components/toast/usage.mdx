@@ -8,19 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-### Using the components
+## Using the components
 
-#### Positioning
-
-Position the toast where it won’t interfere with navigation or important content in the user interface, for example, in the lower-right corner of the screen or application viewport.
-
-#### Stacking
-
-Stack toasts in chronological order if multiple toasts need to appear on screen at the same time.
-
-When you stack toasts from the top, the newest one should be first. When you stack them from the bottom, the newest toast should be at the bottom.
-
-#### When to use
+### When to use
 
 - To notify users of an event that’s occurred in a peripheral application or workflow. The user should notice the toasts without disrupting their experience or requiring immediate action.
 
@@ -30,13 +20,31 @@ When you stack toasts from the top, the newest one should be first. When you sta
 
 - To show system-generated alerts, independent of the user’s actions. These toasts are persistent and must allow the user to either take action or dismiss them. Toasts can contain customizable content, such as actionable buttons.
 
-#### When not to use
+### When not to use
 
 - To show a notification that applies to the user’s current task. Instead, use [`Banner`](../banner). `Banner` sits either on the top of a page or component or inline and usually addresses issues inside the user’s current content area.
 
 - When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
 
-### Import
+### Positioning
+
+Position the toast where it won’t interfere with navigation or important content in the user interface, for example, in the lower-right corner of the screen or application viewport.
+
+### Stacking
+
+Stack toasts in chronological order if multiple toasts need to appear on screen at the same time.
+
+When you stack toasts from the top, the newest one should be first. When you stack them from the bottom, the newest toast should be at the bottom.
+
+## Content
+
+A toast notification is typically limited in space, so content should be clear, concise, and short, allowing users to quickly scan the notification and understand the situation and/or next steps.
+
+You should configure titles to display the Body Strong typography style and the messaging Body Default typography style across densities.
+
+In addition to text content, toasts can contain any UI elements such as actionable components, like buttons. This allows the user to act on the message without interrupting their current workflow. For example, users can approve or respond to an update without opening a new window. Users should always be able to close or dismiss a toast.
+
+## Import
 
 To import `Toast` and `ToastContent` from the core Salt package, use:
 
@@ -50,24 +58,16 @@ To import `ToastGroup` from the lab Salt package, use:
 import { ToastGroup } from "@salt-ds/lab";
 ```
 
-### Props
+## Props
 
-#### `Toast`
+### `Toast`
 
 <PropsTable componentName="Toast" />
 
-#### `ToastGroup`
+### `ToastGroup`
 
 <PropsTable packageName="lab" componentName="ToastGroup" />
 
-#### `ToastContent`
+### `ToastContent`
 
 <PropsTable componentName="ToastContent" />
-
-### Content
-
-A toast notification is typically limited in space, so content should be clear, concise, and short, allowing users to quickly scan the notification and understand the situation and/or next steps.
-
-You should configure titles to display the Body Strong typography style and the messaging Body Default typography style across densities.
-
-In addition to text content, toasts can contain any UI elements such as actionable components, like buttons. This allows the user to act on the message without interrupting their current workflow. For example, users can approve or respond to an update without opening a new window. Users should always be able to close or dismiss a toast.

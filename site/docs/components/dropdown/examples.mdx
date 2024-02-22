@@ -11,21 +11,21 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="dropdown" exampleName="Default">
 
-### Default (single-select)
+## Default (single-select)
 
-A single item can be selected from the dropdown options.
+Users can select a single item from the dropdown options.
 
 `DropdownNext` contains a button that opens a list on mouse or keyboard interaction.
 
-#### Best practices
+### Best practices
 
-- `DropdownNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+You can wrap `DropdownNext` in a `FormField` when it’s displayed within a form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
 <LivePreview componentName="dropdown" exampleName="Multiselect" displayName="Multi-select" >
 
-### Multi-select
+## Multi-select
 
 When `multiSelect={true}`, users can select multiple items from the dropdown options.
 
@@ -33,7 +33,7 @@ When `multiSelect={true}`, users can select multiple items from the dropdown opt
 
 <LivePreview componentName="dropdown" exampleName="CustomValue" >
 
-### Custom Value
+## Custom Value
 
 The `value` prop can be used to control the value of the dropdown. This is useful to show a different message when multiple options are selected.
 
@@ -41,11 +41,15 @@ The `value` prop can be used to control the value of the dropdown. This is usefu
 
 <LivePreview componentName="dropdown" exampleName="Placeholder" >
 
-### Placeholder
+## Placeholder
 
 You can use a placeholder to prompt user input if no default value is provided.
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+### Best practices
+
+Never use placeholder text to provide the user with contextual help. It will be removed when the user starts typing and it does not meet minimum contrast requirements. Doing so is a WCAG failure. 
+
+Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
 More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 

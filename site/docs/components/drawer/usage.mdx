@@ -7,24 +7,24 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 Drawers are always modal. When open, the drawer displays a visual overlay, a [scrim](/salt/components/scrim) component, over the underlying content.
 
 Always set a logical width suitable for the content inside the drawer. Refer to Salt's [Forms](/salt/patterns/forms) pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
-#### When to use
+### When to use
 
 - To reveal additional functionality or information contextual to on-screen content which the user can close when not required.
 - To display additional relevant functionality or information, such as a form or sidebar navigation, in a specific area of the screen.
 - To allow the user to show and hide additional relevant content.
 
-#### When not to use
+### When not to use
 
 - To provide an inlaid drawer that opens in-line with content. Instead, use [`BorderLayout`](../border-layout).
 - To provide a docked drawer that's fixed in the application layout and always visible. Instead, use [`Panel`](../panel) with styles to expand and collapse a non-modal surface.
 
-### Import
+## Import
 
 To import `Drawer` and related components from the lab Salt package, use:
 
@@ -32,12 +32,12 @@ To import `Drawer` and related components from the lab Salt package, use:
 import { Drawer, DrawerCloseButton } from "@salt-ds/lab";
 ```
 
-### Props
+## Props
 
-#### Drawer
+### Drawer
 
 <PropsTable packageName="lab" componentName="Drawer" />
 
-#### DrawerCloseButton
+### DrawerCloseButton
 
 <PropsTable packageName="lab" componentName="DrawerCloseButton" />

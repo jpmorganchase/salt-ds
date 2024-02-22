@@ -7,18 +7,18 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 Where possible, we recommend using a Salt component that uses `StatusIndicator`, such as [`Banner`](/salt/components/banner), [`Toast`](/salt/components/toast) or [`Tooltip`](/salt/components/tooltip), instead of using `StatusIndicator` directly.
 
-#### When to use
+### When to use
 
 - Use the info indicator when you need to highlight general information.
 - Use the error indicator when communicating a critical issue preventing the user from continuing or completing an action.
 - Use the warning indicator to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task.
 - Use the success indicator to confirm that a user's action is successful.
 
-### Import
+## Import
 
 To import `StatusIndicator` from the core Salt package, use:
 
@@ -26,6 +26,6 @@ To import `StatusIndicator` from the core Salt package, use:
 import { StatusIndicator } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
 <PropsTable componentName="StatusIndicator" />

@@ -7,20 +7,20 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
-#### When to use
+### When to use
 
 - To indicate that content is loading and reassure the user that the system is still working.
 - For actions that you expect will take 1–9 seconds to load or for processes that will take an indeterminate amount of time to complete.
 
-#### When not to use
+### When not to use
 
 - For actions that will run for a determinable length of time. Instead, use [`Progress`](/salt/components/progress).
 
 - For a process that is taking longer than 10 seconds to complete, as this is the point at which any attempt for a system to respond should finish, and a status message should display instead. For further guidance, view the [Salt duration foundation](/salt/foundations/duration).
 
-### Import
+## Import
 
 To import `Spinner` from the core Salt package, use:
 
@@ -28,6 +28,6 @@ To import `Spinner` from the core Salt package, use:
 import { Spinner } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
 <PropsTable componentName="Spinner" />

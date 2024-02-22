@@ -9,9 +9,9 @@ data:
   $ref: ./#/data
 ---
 
-### Using the components
+## Using the components
 
-#### When to use
+### When to use
 
 - When a complex layout cannot first be achieved using flow, stack and split layouts. However, if you are very familiar with [CSS Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/), you may choose to use a flex layout from the start.
 
@@ -19,13 +19,13 @@ data:
 
 - For small-scale layout of components within a container or region within an application or webpage.
 
-#### When not to use
+### When not to use
 
 - When a flow, stack or split layout can achieve your desired layout. These components are optimized for specific use cases in a constant direction.
 - When you need to present content over both rows and columns at the same time, such as a dashboard or multi-column Form, use [`GridLayout`](../grid-layout/).
 - For large-scale, page-level layout. Instead, use [`GridLayout`](../grid-layout/) or [`BorderLayout`](../border-layout/).
 
-### Import
+## Import
 
 To import `FlexLayout` and `FlexItem` from the core Salt package, use:
 
@@ -33,12 +33,12 @@ To import `FlexLayout` and `FlexItem` from the core Salt package, use:
 import { FlexLayout, FlexItem } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
-#### `FlexLayout`
+### `FlexLayout`
 
 <PropsTable packageName="core" componentName="FlexLayout" />
 
-#### `FlexItem`
+### `FlexItem`
 
 <PropsTable packageName="core" componentName="FlexItem" />
