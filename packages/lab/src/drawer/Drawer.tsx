@@ -17,7 +17,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import drawerCss from "./Drawer.css";
 
-interface ConditionalScrimWrapperProps extends React.PropsWithChildren {
+interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
 }
 
