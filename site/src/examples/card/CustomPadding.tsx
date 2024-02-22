@@ -8,6 +8,7 @@ import {
   RadioButton,
   Button,
   Display3,
+  FlowLayout,
 } from "@salt-ds/core";
 import { MessageIcon } from "@salt-ds/icons";
 
@@ -64,7 +65,7 @@ export const CustomPadding = (): ReactElement => {
               <H3>Threshold Summary</H3>
               <Text variant="secondary">(Projected Revenue)</Text>
             </StackLayout>
-            <StackLayout direction="row" gap={3}>
+            <FlowLayout gap={3}>
               <StackLayout gap={0}>
                 <Text>Below Threshold 1</Text>
                 <Display3>$1,000,000</Display3>
@@ -77,7 +78,7 @@ export const CustomPadding = (): ReactElement => {
                 <Text>Below Threshold 2 & 3</Text>
                 <Display3>$0</Display3>
               </StackLayout>
-            </StackLayout>
+            </FlowLayout>
 
             <StackLayout direction="row" gap={1}>
               <Button>Cancel</Button>
