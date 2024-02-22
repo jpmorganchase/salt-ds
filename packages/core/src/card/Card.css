@@ -1,6 +1,5 @@
 /* Styles applied to the root element */
 .saltCard {
-  /* box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow)); */
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
   padding: var(--saltCard-padding, var(--salt-spacing-200));
@@ -24,7 +23,6 @@
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
 }
 
-/* Styles applied if `accent` is set */
 /* Styles applied to create accent */
 .saltCard-accent::after {
   content: "";
