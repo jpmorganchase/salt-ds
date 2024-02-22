@@ -6,11 +6,8 @@ import {
   Card,
   RadioButtonGroup,
   RadioButton,
-  Link,
   Button,
   Display3,
-  Display2,
-  FlowLayout,
 } from "@salt-ds/core";
 import { MessageIcon } from "@salt-ds/icons";
 

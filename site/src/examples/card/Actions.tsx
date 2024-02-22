@@ -4,7 +4,7 @@ import { Card, H3, Text, Link, StackLayout, Button } from "@salt-ds/core";
 export const Actions = (): ReactElement => {
   return (
     <StackLayout direction={"row"} align="start">
-      <Card style={{ width: "260px" }} accent="top" hoverable>
+      <Card style={{ width: "260px" }} accent="top">
         <StackLayout align="start">
           <StackLayout gap={1}>
             <H3>Sustainable investing products</H3>
@@ -17,7 +17,7 @@ export const Actions = (): ReactElement => {
           <Button>Learn more</Button>
         </StackLayout>
       </Card>
-      <Card style={{ width: "260px" }} accent="top" hoverable>
+      <Card style={{ width: "260px" }} accent="top">
         <StackLayout align="start">
           <StackLayout gap={1}>
             <H3>Climate change</H3>

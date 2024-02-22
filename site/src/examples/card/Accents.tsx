@@ -22,7 +22,6 @@ export const Accents = () => {
             We have a commitment to provide a wide range of investment solutions
             to enable you to align your financial goals to your values.
           </Text>
-          <Link href="#">Learn more</Link>
         </StackLayout>
       </Card>
       <RadioButtonGroup
