@@ -5,6 +5,7 @@ import {
   useMemo,
   useState,
   ComponentProps,
+  ReactNode,
 } from "react";
 import { clsx } from "clsx";
 import {
@@ -15,18 +16,30 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
+  useId,
+  useFloatingComponent,
+  useFloatingUI,
+  useCurrentBreakpoint,
   useForkRef,
   ValidationStatus,
   Scrim,
-  useFloatingUI,
-  useFloatingComponent,
-  useCurrentBreakpoint,
-  useId,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
+
+interface ConditionalScrimWrapperProps {
+  children?: ReactNode;
+  condition: boolean;
+}
+
+export const ConditionalScrimWrapper = ({
+  condition,
+  children,
+}: ConditionalScrimWrapperProps) => {
+  return condition ? <Scrim fixed>{children}</Scrim> : <>{children} </>;
+};
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -54,6 +67,10 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * Prevent the dialog closing on click away
    * */
   disableDismiss?: boolean;
+  /**
+   * Prevent Scrim from rendering
+   * */
+  disableScrim?: boolean;
 }
 
 const withBaseName = makePrefixer("saltDialog");
@@ -70,8 +87,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     status,
     disableDismiss,
     size = "medium",
-    id: idProp,
-    role: roleProp,
+    disableScrim,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -85,13 +101,10 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   const [showComponent, setShowComponent] = useState(false);
 
-  const { context, floating } = useFloatingUI({
+  const { context, floating, elements } = useFloatingUI({
     open,
     onOpenChange,
   });
-
-  const id = useId(idProp);
-  const role = roleProp ?? "dialog";
 
   const { getFloatingProps } = useInteractions([
     useClick(context),
@@ -119,39 +132,38 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   return (
     <DialogContext.Provider value={contextValue}>
-      {showComponent && (
-        <Scrim fixed>
-          <FloatingComponent
-            open={open}
-            role={role}
-            aria-modal="true"
-            ref={floatingRef}
-            focusManagerProps={{
-              context: context,
-            }}
-            aria-labelledby={`${id}-header`}
-            className={clsx(
-              withBaseName(),
-              withBaseName(size, currentbreakpoint),
-              {
-                [withBaseName("enterAnimation")]: open,
-                [withBaseName("exitAnimation")]: !open,
-                [withBaseName(status as string)]: status,
-              },
-              className
-            )}
-            onAnimationEnd={() => {
-              if (!open && showComponent) {
-                setShowComponent(false);
-              }
-            }}
-            {...getFloatingProps()}
-            {...rest}
-          >
-            {children}
-          </FloatingComponent>
-        </Scrim>
-      )}
+      <ConditionalScrimWrapper condition={open && !disableScrim}>
+        <FloatingComponent
+          open={showComponent}
+          role="dialog"
+          aria-modal="true"
+          ref={floatingRef}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+          focusManagerProps={{
+            context: context,
+          }}
+          className={clsx(
+            withBaseName(),
+            withBaseName(size, currentbreakpoint),
+            {
+              [withBaseName("enterAnimation")]: open,
+              [withBaseName("exitAnimation")]: !open,
+              [withBaseName(status as string)]: status,
+            },
+            className
+          )}
+          onAnimationEnd={() => {
+            if (!open && showComponent) {
+              setShowComponent(false);
+            }
+          }}
+          {...getFloatingProps()}
+          {...rest}
+        >
+          {children}
+        </FloatingComponent>
+      </ConditionalScrimWrapper>
     </DialogContext.Provider>
   );
 });

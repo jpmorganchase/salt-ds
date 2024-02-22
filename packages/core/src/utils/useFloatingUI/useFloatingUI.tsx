@@ -38,7 +38,9 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position props for the floating component
+   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relative to the trigger.
+   * `width` and `height` are used to define the size of the floating element.
+   *
    */
   top?: number;
   left?: number;
@@ -69,7 +71,7 @@ const DefaultFloatingComponent = forwardRef<
     position,
   };
 
-  if (focusManagerProps) {
+  if (focusManagerProps && open) {
     return (
       <FloatingPortal>
         <SaltProvider>
