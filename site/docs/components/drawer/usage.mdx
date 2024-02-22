@@ -9,28 +9,35 @@ data:
 
 ### Using the component
 
-Use the component by wrapping it around your content and setting the desired position. Provide a mechanism, such as [`Button`](../button), for users to open and close it.
+Drawers are always modal. When open, the drawer displays a visual overlay, a [scrim](/salt/components/scrim) component, over the underlying content.
 
-When open, the drawer displays a visual overlay, also known as a scrim, over the underlying content. It also plays relevant animations when opening and closing that can be visually customized via CSS.
+Always set a logical width suitable for the content inside the drawer. Refer to Salt's [Forms](/salt/patterns/forms) pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
-Use the `useDrawer` hook to handle interactions with the drawer, such as opening and closing it.
+#### When to use
 
-### When to use
+- To reveal additional functionality or information contextual to on-screen content which the user can close when not required.
+- To display additional relevant functionality or information, such as a form or sidebar navigation, in a specific area of the screen.
+- To allow the user to show and hide additional relevant content.
 
-- When you need additional content, such as a form or sidebar navigation, to be displayed in a specific area of the screen.
+#### When not to use
 
-### When not to use
-
-- If you want your content split between pages or tabs. Instead, use [`DeckLayout`](../deck-layout).
+- To provide an inlaid drawer that opens in-line with content. Instead, use [`BorderLayout`](../border-layout).
+- To provide a docked drawer that's fixed in the application layout and always visible. Instead, use [`Panel`](../panel) with styles to expand and collapse a non-modal surface.
 
 ### Import
 
-To import `Drawer` and `useDrawer` from the lab Salt package, use:
+To import `Drawer` and related components from the lab Salt package, use:
 
 ```js
-import { Drawer, useDrawer } from "@salt-ds/lab";
+import { Drawer, DrawerCloseButton } from "@salt-ds/lab";
 ```
 
 ### Props
 
+#### Drawer
+
 <PropsTable packageName="lab" componentName="Drawer" />
+
+#### DrawerCloseButton
+
+<PropsTable packageName="lab" componentName="DrawerCloseButton" />

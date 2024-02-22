@@ -5,10 +5,9 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const CloseButton = (): ReactElement => {
+export const DisableScrim = (): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleRequestOpen = () => {
@@ -26,14 +25,15 @@ export const CloseButton = (): ReactElement => {
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open dialog with close button
+        Open dialog without Scrim
       </Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
         aria-labelledby="terms-and-conditions-dialog"
+        disableScrim
       >
-        <DialogTitle id="terms-and-conditions-dialog-heading">
+        <DialogTitle disableAccent id="terms-and-conditions-dialog-heading">
           Terms and conditions
         </DialogTitle>
         <DialogContent>
@@ -78,7 +78,6 @@ export const CloseButton = (): ReactElement => {
             Accept
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
