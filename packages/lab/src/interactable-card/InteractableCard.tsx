@@ -16,7 +16,6 @@ import { useInteractableCardGroup } from "./internal/InteractableCardGroupContex
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
-// TODO: Remove omissions when Card props deprecated
 export interface InteractableCardProps
   extends ComponentPropsWithoutRef<"button"> {
   /**
@@ -51,7 +50,7 @@ export const InteractableCard = forwardRef<
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
-    accent = "bottom",
+    accent,
     children,
     className,
     disabled,
@@ -112,8 +111,9 @@ export const InteractableCard = forwardRef<
       className={clsx(
         withBaseName(),
         withBaseName(variant),
-        withBaseName(`accent${capitalize(accent)}`),
         {
+          [withBaseName("accent")]: accent,
+          [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
           [withBaseName("active")]: active,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,

@@ -1,6 +1,5 @@
 /* Styles applied to InteractableCard */
 .saltInteractableCard {
-  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
   border-radius: var(--saltCard-borderRadius, 0);
@@ -8,23 +7,24 @@
   padding: var(--saltCard-padding, var(--salt-spacing-200));
   position: relative;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
-  --card-accentColor: var(--saltCard-accentColor, var(--salt-selectable-foreground));
 }
 
 /* Styles applied to InteractableCard when variant="primary" */
 .saltInteractableCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
+  --card-accentColor: var(--saltCard-accentColor, var(--salt-container-primary-borderColor));
 }
 
 /* Styles applied to InteractableCard when variant="secondary" */
 .saltInteractableCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
+  --card-accentColor: var(--saltCard-accentColor, var(--salt-container-secondary-borderColor));
 }
 
 /* Styles applied to create accent */
-.saltInteractableCard::after {
+.saltInteractableCard-accent::after {
   content: "";
   position: absolute;
   background-color: var(--card-accentColor);
