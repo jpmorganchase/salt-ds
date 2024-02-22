@@ -23,7 +23,7 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
   function LinkCard(props, ref) {
     const {
-      accent = "bottom",
+      accent,
       children,
       className,
       href,
@@ -43,7 +43,10 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
         className={clsx(
           withBaseName(),
           withBaseName(variant),
-          withBaseName(`accent${capitalize(accent)}`),
+          {
+            [withBaseName("accent")]: accent,
+            [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+          },
           className
         )}
         href={href}
