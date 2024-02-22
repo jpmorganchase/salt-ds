@@ -16,7 +16,9 @@ export const CustomAccent = (): ReactElement => {
         hoverable
       >
         <StackLayout gap={1}>
-          <H3>Investment Compliance</H3>
+          <H3>
+            <strong>Investment Compliance</strong>
+          </H3>
           <Text>
             Exception-based reporting that highlights potential warnings or
             violations of investment guidelines and regulations.
@@ -35,7 +37,9 @@ export const CustomAccent = (): ReactElement => {
         hoverable
       >
         <StackLayout gap={1}>
-          <H3>S&P Global Market Intelligence</H3>
+          <H3>
+            <strong>S&P Global Market Intelligence</strong>
+          </H3>
           <Text>
             Automate transmission of bank loan settlement instructions.
           </Text>

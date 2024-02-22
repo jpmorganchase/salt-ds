@@ -25,11 +25,9 @@ export const CustomPadding = (): ReactElement => {
             } as CSSProperties
           }
         >
-          <StackLayout gap={1}>
-            <Text>
-              <MessageIcon size={1} />
-              Contact us
-            </Text>
+          <StackLayout gap={1} direction="row" align="center">
+            <MessageIcon size={1} />
+            <Text>Contact us</Text>
           </StackLayout>
         </Card>
       )}
