@@ -11,6 +11,7 @@ data:
 <LivePreviewControls>
 
     <LivePreview componentName="dialog" exampleName="Default" >
+
 ## Default
 
 The dialog displays with a title, content area, and action bar. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button. If the content of the dialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
@@ -18,6 +19,7 @@ The dialog displays with a title, content area, and action bar. The component is
     </LivePreview>
 
      <LivePreview componentName="dialog" exampleName="Sizes" >
+
 ## Sizes
 
 `Dialog` has 3 sizes: `small`, `medium` and `large`. The size you should choose depends on the amount of content you have. The widths of all three dialog sizes are responsive to the Salt breakpoints. This ensures the dialog remains entirely visible in the viewport and its size is optimized for the viewport size (e.g., dialogs appear larger within smaller viewports for ease of visibility).
@@ -47,12 +49,14 @@ Choose the appropriate dialog size for the scenario.
     </LivePreview>
 
         <LivePreview componentName="dialog" exampleName="WithoutAccent" >
+
 ## Accent
 
 For default dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the dialog. You cannot render the accent bar when a status is also being rendered.
-    </LivePreview>
+</LivePreview>
 
     <LivePreview componentName="dialog" exampleName="CloseButton" >
+
 ## Close button
 
 You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
@@ -60,6 +64,7 @@ You can also render the `DialogCloseButton` as a child of the `Dialog` component
 </LivePreview>
 
     <LivePreview componentName="dialog" exampleName="Info" >
+
 ## Info
 
 Use the info status when you need to display general information.
@@ -73,6 +78,7 @@ Don’t use the info dialog when the information concerns a successful action. I
     </LivePreview>
 
     <LivePreview componentName="dialog" exampleName="Error" >
+
 ## Error
 
 Use the error status to communicate a critical issue that prevents the user from continuing or completing it.
@@ -80,9 +86,10 @@ Use the error status to communicate a critical issue that prevents the user from
 An error icon displays alongside a title and supporting message.
 
 Don’t use the error dialog when the issue does not prevent the user from completing their task. Instead, use the warning dialog.
-    </LivePreview>
+</LivePreview>
 
     <LivePreview componentName="dialog" exampleName="Warning" >
+
 ## Warning
 
 Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that does not prevent the user from continuing or completing their task.
@@ -90,25 +97,28 @@ Use the warning status to inform users of an issue or potential issue related to
 A warning icon displays alongside a title and supporting message.
 
 Don’t use the warning dialog when the issue prevents the user from completing their task. Instead, use the error dialog.
-    </LivePreview>
+</LivePreview>
 
     <LivePreview componentName="dialog" exampleName="Success" >
+
 ## Success
 
 Use the success status to confirm that a user's action has been completed successfully.
 
 A success icon displays alongside a title and supporting message.
-    </LivePreview>
+</LivePreview>
 
      <LivePreview componentName="dialog" exampleName="MandatoryAction" >
+
 ## Mandatory action
 
 Use the `closeOnBlur` prop to prevent a click away dismissing the dialog.
 
 Use this to force a user to action something within the dialog.
-    </LivePreview>
+</LivePreview>
 
       <LivePreview componentName="dialog" exampleName="DisableScrim" >
+
 ## Disble scrim
 
 Use the `disableScrim` prop to prevent the scrim from rendering.
