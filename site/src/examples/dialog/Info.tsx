@@ -31,10 +31,10 @@ export const Info = (): ReactElement => {
         open={open}
         onOpenChange={onOpenChange}
         status="info"
-        size={"small"}
-        id={"info-dialog"}
+        size="small"
+        aria-labelledby="info-dialog"
       >
-        <DialogTitle>File update</DialogTitle>
+        <DialogTitle id="info-dialog-heading">File update</DialogTitle>
         <DialogContent>
           A new version of this file is available with 26 updates.
         </DialogContent>
