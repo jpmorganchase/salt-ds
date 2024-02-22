@@ -22,12 +22,12 @@ A button bar displays possible actions for users to take when they reach the end
 
 ## When to use
 
-Use the pattern when the user needs to perform actions after reaching the end of a task in a page or a dialog. Some examples include navigating to previous or next steps, submitting a form and canceling changes.
+Use the pattern when the user needs to perform actions after reaching the end of a task in a page or a dialog. Some examples include going to previous or next steps, submitting a form and canceling changes.
 
 ## How to build
 
 Core actions:
-1. Use the stack layout component to group your buttons together. This will form the core set of actions. 
+1. Use the stack layout component to group your buttons together. This forms the core set of actions. 
 2. Ensure that the stack layout has the direction property set to row.
 
 Secondary actions (optional):
@@ -50,20 +50,20 @@ There are three button variants to choose from. Choosing the correct button depe
 **Call to Action (CTA)**
 - Use for the most desired path you intend the user to take.
 - In almost all cases, your scenario should have one CTA so the desired path is clear.
-- This is commonly an affirmative action allowing users to proceed or complete the task, such as Continue, Save or Submit.
+- This is commonly an affirmative action allowing users to proceed or complete the task, such as **Next**, **Save** or **Submit**.
 
 **Primary**
 - Use for the alternate path you're offering the user.
 - There can be multiple equally weighted paths, resulting in more than one primary button in a scenario.
-- You can use it as a dismissive action alongside the affirmative (CTA) action, such as Cancel or Dismiss.
+- You can use it as a dismissive action alongside the affirmative (CTA) action, such as **Cancel** or **Dismiss**.
 
 **Secondary**
 - Use for the tertiary path you're offering the user.
 - There can be multiple equally weighted tertiary paths resulting in more than one secondary button in a scenario.
-- This is commonly a related task or function that’s lower priority for the task, such as Import or Export.
-- You can also use it to signify a destructive action that may result in a permanent loss of data, commonly followed by user confirmation (e.g., a dialog), such as Delete or Reset.
+- This is commonly a related task or function that’s lower priority for the task, such as **Import** or **Export**.
+- You can also use it to signify a destructive action that may result in a permanent loss of data. This is commonly followed by user confirmation, e.g., a dialog. Examples include **Delete** or **Reset**.
 
-Remember to use hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate path and uses a primary button because there are only two options. However, in Example 2, Cancel uses the secondary button because three actions are available to the user, with this one being tertiary and the least desired option.
+Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate path and uses a primary button because there are only two options. However, in Example 2, Cancel uses the secondary button because three actions are available to the user, with this one being tertiary and the least desired option.
 
 <Diagrams>
   <Diagram
@@ -104,31 +104,31 @@ The container and the type of scenario determine the position of actions (CTA, p
   >
     ### Default/Single-step form
     - Groups core actions on the left.
-    - Follows an F-pattern reading model, allowing users to quickly scan down.
+    - Follows an F-pattern reading model, allowing users to scan down quickly.
   </Diagram>
   <Diagram
     src="/img/patterns/button-bar/multi-step-form.png"
-    alt="Example showing form with button bar underneath, the core actions are grouped on the right."
+    alt="Example showing form with button bar underneath and core actions on the right."
     contentPosition="top"
     border
   >
     ### Multi-step form
-    - Groups core actions on the right
-    - Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps
+    - Groups core actions on the right.
+    - Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps.
   </Diagram>
   <Diagram
     src="/img/patterns/button-bar/dialog.png"
-    alt="Example showing a dialog with a form and button bar underneath, the core actions are grouped on the right."
+    alt="Example showing a dialog with a form and button bar underneath. The core actions are on the right."
     contentPosition="bottom"
     border
   >
     ### Dialog
-    - Always displayes core actions on the right.
+    - Always displays core actions on the right.
     - Follows a Z-pattern reading model, where actions are the last focal point in the dialog.
   </Diagram>
   <Diagram
     src="/img/patterns/button-bar/small-viewport.png"
-    alt="Example showing a form with two buttons that fill the width"
+    alt="Example showing a form with two buttons that fill the width."
     contentPosition="bottom"
     border
   >
@@ -138,7 +138,7 @@ The container and the type of scenario determine the position of actions (CTA, p
 </Diagrams>
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - Group core onward actions for the form to ensure they remain accessible on browser zoom (e.g., Previous, Next, Cancel, or Submit, Cancel).
+  - Group core onward actions for the form to ensure they remain accessible on browser zoom (e.g., **Previous**, **Next**, **Cancel** or **Submit**).
   - You should display secondary actions that aren’t core to the workflow at the opposite end of the button bar.
 </ExampleContainer>
 
@@ -148,11 +148,10 @@ There are two ways to position the button bar:
 
 ### Fixed
 
-The button bar is fixed at the bottom of the viewport when:
+Fix the button bar at the bottom of the viewport when:
 - A user can proceed (or step back) regardless of task completion.
-- If content overflows, button bar has a secondary border style.
 - The task is in a wizard.
-
+If content overflows, the button bar uses a secondary border style.
 <Diagrams>
   <Diagram
     src="/img/patterns/button-bar/fixed-left.png"
@@ -168,7 +167,7 @@ The button bar is fixed at the bottom of the viewport when:
     contentPosition="bottom"
     border
   >
-  Hide the button bar border if content is no longer overflowing (i.e., user has reached the bottom of the form or the form is displayed entirely above the fold).
+  Hide the button bar border if content is no longer overflowing (i.e., the user has reached the bottom of the form or the form is entirely above the fold).
   </Diagram>
 </Diagrams>
 
@@ -193,7 +192,7 @@ The button bar is located at the end of the task when:
     contentPosition="bottom"
     border
   >
-  The button bar will be visible when the user scrolls to the bottom of the task.
+  The button bar is visible when the user scrolls to the bottom of the task.
   </Diagram>
 </Diagrams>
 
@@ -202,16 +201,16 @@ The button bar is located at the end of the task when:
 Buttons can display text or icons (or both) to describe the action. 
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - Always use verbs that emphasize the action the button will carry out.
+  - Always use verbs that emphasize the action the button carries out.
   - Be succinct. Avoid having more than two or three words in a button label.
-  - For example, use **Create** instead of **Ok** to create a profile, or **Save/Discard** instead of **Yes/No** to dave changes.
+  - For example, use **Create** instead of **Ok** to create a profile, or **Save/Discard** instead of **Yes/No** to save changes.
 </ExampleContainer>
 
-## Stacked button bar layout
+## Stacked button bar
 
 For improved usability at smaller screen or app resolutions, we recommend responsively stacking the button bar when it reaches a specific viewport width or application breakpoint. 
 
-We recommend stacking at the xs breakpoint by default. Buttons will expand to fill the full width of the Button Bar when stacked.
+We recommend stacking at the xs breakpoint by default. Buttons will expand to fill the full width of the button bar when stacked.
 
 **Order of stacked buttons**: In a stacked button layout, we recommend buttons stack in order of importance from the top down.
 
@@ -223,21 +222,21 @@ We recommend stacking at the xs breakpoint by default. Buttons will expand to fi
   />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - Enable the stacked layout when you have longer button labels that may not fit within the horizontal layout at smaller Button Bar widths.
+  - Enable the stacked layout when you have longer button labels that may not fit within the horizontal layout at smaller button bar widths.
   - If users will access your application on a mobile device, use a stacked button layout to ensure an adequate touch-area for the buttons.
 </ExampleContainer>
 
 ### Building a stacked button bar
 
 1. Build a button bar following the foundational guidelines provided earlier in the documentation.
-2. Adjust the direction property on both stack layout and split layout (if utilized) to `{{xs: "column", sm: "row"}}`. This responsive setting arranges the buttons into a column for extra-small (xs) screens and a row for small (sm) screens and upwards, ensuring a responsive layout that adapts to the viewport width.
-3. When the button bar has core actions on the right, you will need to configure an alternative stack layout.
-    - Reverse the buttons in this layout to ensure the core actions are at the top.
+2. Adjust the direction property on both stack layout and split layout (if used) to `{{xs: "column", sm: "row"}}`. This responsive setting arranges the buttons into a column for extra small (xs) screens and a row for small (sm) screens and upwards. This ensures a responsive layout that adapts to the viewport width.
+3. When the button bar has core actions on the right, you'll need to configure an alternative stack layout.
+    - Reverse the buttons in this layout to ensure that the core actions are at the top.
     - Employ Salt's responsive design utilities to render this alternative layout at the desired breakpoint. You can find an example of this behaviour [here](https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--responsive-reverse).
 
   <Diagram
     src="/img/patterns/button-bar/build-stacked.png"
-    alt="Diagram showing how stacked button bar is built"
+    alt="Diagram showing how to build a stacked button bar."
     contentPosition="top"
     border
   />
