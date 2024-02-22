@@ -98,7 +98,12 @@ export function useCalendar(props: useCalendarProps) {
 
   const isDaySelectable = useCallback(
     (date?: DateValue) =>
-      !(date && (isDayUnselectable(date) || isDayDisabled(date) || isOutsideAllowedDates(date))),
+      !(
+        date &&
+        (isDayUnselectable(date) ||
+          isDayDisabled(date) ||
+          isOutsideAllowedDates(date))
+      ),
     [isDayUnselectable, isOutsideAllowedDates]
   );
 
