@@ -7,6 +7,7 @@ import {
   ReactNode,
   Ref,
   TextareaHTMLAttributes,
+  useCallback,
   useLayoutEffect,
   useRef,
   useState,
@@ -148,7 +149,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     const previousHeight = useRef<string | undefined>(undefined);
     const input = inputRef.current;
 
-    const changeHeight = () => {
+    const changeHeight = useCallback(() => {
       if (!input) return;
       const hasBeenManuallyResized =
         previousHeight.current !== undefined &&
@@ -165,7 +166,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         previousHeight.current = newHeight;
         input.style.overflow = previousOverflow;
       }
-    };
+    }, [input]);
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       const value = event.target.value;
@@ -176,7 +177,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
 
     useLayoutEffect(() => {
       changeHeight();
-    }, [value]);
+    }, [value, changeHeight]);
 
     const handleBlur = (event: FocusEvent<HTMLTextAreaElement>) => {
       onBlur?.(event);
