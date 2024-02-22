@@ -8,23 +8,23 @@ data:
   $ref: ./#/data
 ---
 
-### Best practices
+## Best practices
 
-#### Focus
+### Focus
 
 The dialog component will trap focus within the dialog when open. This means that the user will not be able to tab out of the dialog and focus will be set to the first focusable element within the dialog. When the dialog is closed, focus will be returned to the element that was focused before the dialog was opened.
 
-#### Initial focus
+### Initial focus
 
 You can control which element receives focus when the dialog is opened by passing an `initialFocus` prop to the dialog component. This prop accepts a number, which indicates the index of the tabbable element within the dialog that should receive focus. If no element is found, focus will be set to the first focusable element within the Dialog. The `initialFocus` can also be a ref to an element within the dialog.
 
-#### Focus sequence
+### Focus sequence
 
 - For dialogs that prompt for user confirmation, the CTA button takes focus first.
 
 - For dialogs with destructive interactions, the cancel button takes focus first.
 
-### Keyboard interactions
+## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">

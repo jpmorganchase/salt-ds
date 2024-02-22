@@ -11,7 +11,7 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="input" exampleName="Primary" >
 
-### Primary
+## Primary
 
 `Input` comprises value text and a focus ring. The component is initially empty; once it has focus, it accepts text on a single line only.
 
@@ -20,7 +20,7 @@ The default variant for Input is "primary."
 </LivePreview>
 <LivePreview componentName="input" exampleName="Secondary" >
 
-### Secondary
+## Secondary
 
 `Input` has a "secondary" variant.
 
@@ -29,14 +29,14 @@ For recommendations on variant choice, see the [forms pattern](salt/patterns/for
 </LivePreview>
 <LivePreview componentName="input" exampleName="Disabled" >
 
-### Disabled
+## Disabled
 
 You can disable the input, resulting in no action when the user interacts with it.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="Readonly" >
 
-### Read-only
+## Read-only
 
 You can set `Input` to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
 
@@ -47,11 +47,11 @@ By default, the marker is an em dash. If your application requires a different m
 </LivePreview>
 <LivePreview componentName="input" exampleName="Placeholder" >
 
-### Placeholder
+## Placeholder
 
 You can use a placeholder to prompt user input if there's no default value.
 
-#### Best practices
+### Best practices
 
 You should never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
@@ -60,14 +60,14 @@ You can find more information [in the W3C form instructions](https://www.w3.org/
 </LivePreview>
 <LivePreview componentName="input" exampleName="Spellcheck" >
 
-### Spellcheck
+## Spellcheck
 
 Turn on automatic spellchecking using `inputProps`.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="StaticAdornments" >
 
-### Static adornments
+## Static adornments
 
 You can add custom adornments at the beginning or end of the Input field using the `startAdornment` and `endAdornment` props.
 
@@ -78,7 +78,7 @@ You can use [text](/salt/components/text) and [icons](/salt/foundations/iconogra
 </LivePreview>
 <LivePreview componentName="input" exampleName="ButtonAdornments" >
 
-### Button adornments
+## Button adornments
 
 You can use [`Button`](/salt/components/button) at the beginning or end of the input field with the `startAdornment` and `endAdornment` props. Buttons can allow for custom interactivity within the input field itself or elsewhere in the app via the input field.
 
@@ -87,11 +87,11 @@ Disable your interactive buttons or make them read-only should they match the st
 </LivePreview>
 <LivePreview componentName="input" exampleName="Validation" >
 
-### Validation
+## Validation
 
 Input can show validation states (warning, success and error) with the prop `validationStatus`.
 
-#### Best practices
+### Best practices
 
 - Use the error state to alert the user of a critical issue related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 
@@ -100,7 +100,7 @@ Input can show validation states (warning, success and error) with the prop `val
 </LivePreview>
 <LivePreview componentName="input" exampleName="TextAlignment" >
 
-### Text alignment
+## Text alignment
 
 Text has left alignment by default. Use the `textAlign` prop to change the alignment to “center” or “right.”
 
