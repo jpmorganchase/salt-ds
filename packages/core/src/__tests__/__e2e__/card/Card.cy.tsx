@@ -1,7 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as cardStories from "@stories/card/card.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { Card } from "packages/core/src/card";
 
 const composedStories = composeStories(cardStories);
 const { Default, AccentVariations } = composedStories;
