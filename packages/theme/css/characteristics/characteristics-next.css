@@ -34,7 +34,7 @@
   --salt-actionable-secondary-foreground-active: var(--salt-palette-foreground-invert);
   --salt-actionable-secondary-background-disabled: var(--salt-palette-background-transparent);
   --salt-actionable-secondary-background-active: var(--salt-palette-neutral-strong);
-  --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-primary);
+  --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-invert);
   --salt-actionable-primary-foreground-disabled: var(--salt-palette-foreground-invert);
   --salt-actionable-primary-foreground-hover: var(--salt-palette-foreground-invert);
   --salt-actionable-primary-background: var(--salt-palette-neutral);
