@@ -27,8 +27,14 @@ export const Subtitle = (): ReactElement => {
   return (
     <>
       <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} size="small">
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        size="small"
+        aria-labelledby={id}
+      >
         <DialogTitle
+          id={id}
           title="Subscribe"
           subtitle="Recieve emails about the latest updates"
         />

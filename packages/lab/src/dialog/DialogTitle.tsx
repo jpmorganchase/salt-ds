@@ -41,6 +41,7 @@ export const DialogTitle = ({
   className,
   title,
   subtitle,
+  id,
   disableAccent,
   status: statusProp,
   ...rest
@@ -74,7 +75,9 @@ export const DialogTitle = ({
             {subtitle}
           </Text>
         )}
-        <H2 className={clsx(withBaseName("title"))}>{title}</H2>
+        <H2 className={clsx(withBaseName("title"))} id={id}>
+          {title}
+        </H2>
       </div>
     </div>
   );
