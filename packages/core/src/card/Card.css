@@ -21,6 +21,7 @@
 /* Styles applied if `hoverable` is set */
 .saltCard-hoverable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
 
 /* Styles applied to create accent */
@@ -60,11 +61,6 @@
   top: calc(-1 * var(--salt-size-border));
   height: calc(100% + calc(2 * var(--salt-size-border)));
   width: var(--salt-size-accent);
-}
-
-/* Styles applied to accent if `hoverable={true}` */
-.saltCard-hoverable.saltCard-accent:hover {
-  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
 
 /*
