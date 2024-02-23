@@ -5,7 +5,7 @@ import {
   ReferenceType,
   Strategy,
 } from "@floating-ui/react";
-import { createContext, useFloatingUI } from "@salt-ds/core";
+import { useFloatingUI, createContext } from "../utils";
 import { SyntheticEvent, useContext } from "react";
 
 type FloatingReturn = ReturnType<typeof useFloatingUI>;

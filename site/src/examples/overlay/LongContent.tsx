@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
+import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/core";
 import { Button, StackLayout } from "@salt-ds/core";
 
 export const LongContent = (): ReactElement => {

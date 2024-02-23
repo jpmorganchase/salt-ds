@@ -4,7 +4,7 @@ import {
   forwardRef,
   HTMLProps,
 } from "react";
-import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
 import { FloatingOverlay } from "@floating-ui/react";

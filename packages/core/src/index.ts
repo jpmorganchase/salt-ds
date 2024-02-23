@@ -21,6 +21,7 @@ export * from "./input";
 export * from "./link";
 export * from "./multiline-input";
 export * from "./navigation-item";
+export * from "./overlay";
 export * from "./pagination";
 export * from "./panel";
 export * from "./pill";
