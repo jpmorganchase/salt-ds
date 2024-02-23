@@ -39,7 +39,7 @@
 .saltCalendarDay-selectedSpan,
 .saltCalendarDay-selectedSpan:hover {
   background: var(--salt-selectable-background-hover);
-  border-block: var(--salt-selectable-borderStyle-selected) var(--salt-size-border) var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 var(--salt-size-border) 0 var(--salt-selectable-borderColor-selected), 0px calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
 .saltCalendarDay-selected,
@@ -49,14 +49,20 @@
 .saltCalendarDay-selectedEnd,
 .saltCalendarDay-selectedEnd:hover {
   background: var(--salt-selectable-background-selected);
-  border: var(--salt-selectable-borderStyle-selected) var(--salt-size-border) var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected);
+  z-index: var(--salt-zIndex-default); /*needed to avoid the right hand border from hiding behind next element */
 }
 
+.saltCalendarDay-disabled,
+.saltCalendarDay-disabled:hover,
 .saltCalendarDay-unselectable,
 .saltCalendarDay-unselectable:hover {
-  background: var(--salt-selectable-background);
+  background: var(--salt-selectable-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   position: relative;
+}
+.saltCalendarDay-disabled {
+  color: var(--salt-content-secondary-foreground-disabled);
 }
 .saltCalendarDay-unselectable:after {
   content: "";

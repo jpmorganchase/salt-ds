@@ -23,6 +23,7 @@ export interface DayStatus {
   today?: boolean;
   unselectable?: string | false;
   focused?: boolean;
+  disabled?: boolean;
   hidden?: boolean;
 }
 
@@ -37,7 +38,7 @@ export function useCalendarDay(
 ) {
   const {
     state: { focusedDate, hideOutOfRangeDates, calendarFocused },
-    helpers: { isDayUnselectable, isOutsideAllowedMonths },
+    helpers: { isDayUnselectable, isDayDisabled, isOutsideAllowedMonths },
   } = useCalendarContext();
   const selectionManager = useSelectionDay({ date });
   const focusManager = useFocusManagement({ date });
@@ -73,10 +74,12 @@ export function useCalendarDay(
   const tabIndex = isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
   const today = isToday(date, getLocalTimeZone());
 
-  const unselectableResult =
-    isDayUnselectable(date) || (outOfRange && isOutsideAllowedMonths(date));
+  const unselectableResult = isDayUnselectable(date);
   const unselectableReason =
     typeof unselectableResult !== "boolean" ? unselectableResult : ""; // TODO: check accessibility, should we have a default tooltip message?
+
+  const disabled =
+    isDayDisabled(date) || (outOfRange && isOutsideAllowedMonths(date));
   const unselectable = Boolean(unselectableResult);
   const hidden = hideOutOfRangeDates && outOfRange;
 
@@ -93,6 +96,7 @@ export function useCalendarDay(
       unselectable,
       focused,
       hidden,
+      disabled,
       ...selectionManager.status,
     } as DayStatus,
     dayProps: {

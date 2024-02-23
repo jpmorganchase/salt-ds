@@ -28,6 +28,7 @@ interface BaseUseCalendarProps {
     visibleMonth: DateValue
   ) => void;
   isDayUnselectable?: (date: DateValue) => UnselectableInfo | boolean | void;
+  isDayDisabled?: (date: DateValue) => boolean;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
   hideYearDropdown?: boolean;
@@ -44,6 +45,7 @@ export type useCalendarProps = (
   BaseUseCalendarProps;
 
 const defaultIsDayUnselectable = (): UnselectableInfo | false => false;
+const defaultIsDayDisabled = (): false => false;
 
 export function useCalendar(props: useCalendarProps) {
   const {
@@ -56,6 +58,7 @@ export function useCalendar(props: useCalendarProps) {
     onSelectedDateChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
+    isDayDisabled = defaultIsDayDisabled,
     minDate = hideYearDropdown
       ? startOfYear(today(getLocalTimeZone()))
       : undefined,
@@ -95,7 +98,12 @@ export function useCalendar(props: useCalendarProps) {
 
   const isDaySelectable = useCallback(
     (date?: DateValue) =>
-      !(date && (isDayUnselectable(date) || isOutsideAllowedDates(date))),
+      !(
+        date &&
+        (isDayUnselectable(date) ||
+          isDayDisabled(date) ||
+          isOutsideAllowedDates(date))
+      ),
     [isDayUnselectable, isOutsideAllowedDates]
   );
 
@@ -196,6 +204,7 @@ export function useCalendar(props: useCalendarProps) {
       setFocusedDate,
       setCalendarFocused,
       isDayUnselectable,
+      isDayDisabled,
       isDayVisible,
       isOutsideAllowedDates,
       isOutsideAllowedMonths,

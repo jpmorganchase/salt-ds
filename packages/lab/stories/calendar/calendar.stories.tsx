@@ -4,8 +4,6 @@ import {
   endOfMonth,
   getDayOfWeek,
   getLocalTimeZone,
-  isSameDay,
-  parseDate,
   startOfMonth,
   today,
 } from "@internationalized/date";
@@ -15,7 +13,6 @@ import {
   UseRangeSelectionCalendarProps,
 } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { getHolidays } from "nyse-holidays";
 import { useState } from "react";
 
 import "./calendar.stories.css";
@@ -40,19 +37,16 @@ export const Default = Template.bind({});
 export const UnselectableDates = Template.bind({});
 UnselectableDates.args = {
   isDayUnselectable: (day) => {
-    const nyseHolidays = getHolidays(day.year);
     // Saturday & Sunday
     if (getDayOfWeek(day, currentLocale) >= 5) {
       return "weekend";
     }
-
-    const holiday = nyseHolidays.find((h) =>
-      isSameDay(parseDate(h.dateString), day)
-    );
-    if (holiday) {
-      return `This is a NYSE Holiday (${holiday.name})`;
-    }
   },
+};
+
+export const DisabledDates = Template.bind({});
+DisabledDates.args = {
+  isDayDisabled: (day) => getDayOfWeek(day, currentLocale) >= 5,
 };
 
 function renderDayContents(day: DateValue) {
@@ -65,8 +59,6 @@ CustomDayRender.args = {
   className: "CustomDayRender",
   renderDayContents,
 };
-
-console.log(today(localTimeZone));
 
 export const FadeMonthAnimation = Template.bind({});
 FadeMonthAnimation.args = {
