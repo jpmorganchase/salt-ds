@@ -1,7 +1,14 @@
 import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
-import { Overlay, OverlayPanel, OverlayTrigger } from "../overlay";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  useOverlayContext,
+} from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
@@ -21,7 +28,6 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import colorChooserCss from "./ColorChooser.css";
-import { useOverlayContext } from "../overlay/OverlayContext";
 
 const withBaseName = makePrefixer("saltColorChooser");
 
