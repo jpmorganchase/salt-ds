@@ -1,10 +1,10 @@
 /* Styles applied to LinkCard */
 .saltLinkCard {
-  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
-  border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
-  border-radius: var(--saltCard-borderRadius, 0);
+  border-width: var(--saltLinkCard-borderWidth, var(--salt-size-border));
+  border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
+  border-radius: var(--saltLinkCard-borderRadius, 0);
   display: block;
-  padding: var(--saltCard-padding, var(--salt-spacing-200));
+  padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
   position: relative;
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
@@ -12,16 +12,16 @@
 
 /* Styles applied to LinkCard when variant="primary" */
 .saltLinkCard-primary {
-  background: var(--saltCard-background, var(--salt-container-primary-background));
+  background: var(--saltLinkCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
-  --card-accentColor: var(--saltCard-accentColor, var(--salt-container-primary-borderColor));
+  --card-accentColor: var(--saltLinkCard-accentColor, var(--salt-container-primary-borderColor));
 }
 
 /* Styles applied to LinkCard when variant="secondary" */
 .saltLinkCard-secondary {
-  background: var(--saltCard-background, var(--salt-container-secondary-background));
+  background: var(--saltLinkCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-  --card-accentColor: var(--saltCard-accentColor, var(--salt-container-secondary-borderColor));
+  --card-accentColor: var(--saltLinkCard-accentColor, var(--salt-container-secondary-borderColor));
 }
 
 /* Styles applied to create accent */
@@ -64,34 +64,31 @@
 }
 
 /* Styles applied to LinkCard on focus */
-a:focus-visible .saltLinkCard,
 .saltLinkCard:focus-visible {
-  cursor: var(--saltCard-Link-cursor-focus, var(--salt-selectable-cursor-hover));
-  box-shadow: var(--saltCard-Link-shadow-focus, var(--salt-overlayable-shadow-hover));
-  color: var(--saltCard-color-focus, var(--salt-content-primary-foreground));
+  cursor: var(--saltLinkCard-Link-cursor-focus, var(--salt-selectable-cursor-hover));
+  box-shadow: var(--saltLinkCard-Link-shadow-focus, var(--salt-overlayable-shadow-hover));
   outline-color: var(--salt-focused-outlineColor);
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-offset: var(--salt-focused-outlineOffset);
-  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
+  --card-accentColor: var(--saltLinkCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
 
-a:link .saltLinkCard * {
+.saltLinkCard * {
   text-decoration: none;
 }
 
 /* Styles applied on hover state to LinkCard */
 .saltLinkCard:hover {
-  cursor: var(--saltCard-Link-cursor-hover, var(--salt-selectable-cursor-hover));
-  box-shadow: var(--saltCard-Link-shadow-hover, var(--salt-overlayable-shadow-hover));
-  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
+  cursor: var(--saltLinkCard-Link-cursor-hover, var(--salt-selectable-cursor-hover));
+  box-shadow: var(--saltLinkCard-Link-shadow-hover, var(--salt-overlayable-shadow-hover));
+  --card-accentColor: var(--saltLinkCard-accentColor-hover, var(--salt-selectable-foreground-hover));
 }
 
 /* Styles applied on active state to LinkCard */
-.saltLinkCard:active,
-.saltLinkCard-active {
-  cursor: var(--saltCard-Link-cursor-active, var(--salt-selectable-cursor-active));
+.saltLinkCard:active {
+  cursor: var(--saltLinkCard-Link-cursor-active, var(--salt-selectable-cursor-active));
   border-color: var(--salt-selectable-borderColor-selected);
-  box-shadow: var(--saltCard-Link-shadow-active, var(--salt-overlayable-shadow));
-  --card-accentColor: var(--saltCard-accentColor-active, var(--salt-selectable-foreground-selected));
+  box-shadow: var(--saltLinkCard-Link-shadow-active, var(--salt-overlayable-shadow));
+  --card-accentColor: var(--saltLinkCard-accentColor-active, var(--salt-selectable-foreground-selected));
 }

@@ -50,30 +50,14 @@ export const AccentPlacement: StoryFn<typeof Card> = () => {
       </LinkCard>
       <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
         <RadioButton
-          key="bottom"
           label="bottom"
           value="bottom"
           onChange={handleChange}
           checked
         />
-        <RadioButton
-          key="top"
-          label="top"
-          value="top"
-          onChange={handleChange}
-        />
-        <RadioButton
-          key="left"
-          label="left"
-          value="left"
-          onChange={handleChange}
-        />
-        <RadioButton
-          key="right"
-          label="right"
-          value="right"
-          onChange={handleChange}
-        />
+        <RadioButton label="top" value="top" onChange={handleChange} />
+        <RadioButton label="left" value="left" onChange={handleChange} />
+        <RadioButton label="right" value="right" onChange={handleChange} />
       </RadioButtonGroup>
     </StackLayout>
   );
@@ -85,8 +69,8 @@ export const Variant: StoryFn<typeof Card> = () => {
     <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {
         return (
-          <StackLayout align="end">
-            <StackLayout direction="row" key={variant}>
+          <StackLayout align="end" key={variant}>
+            <StackLayout direction="row">
               <LinkCard variant={variant}>
                 <StackLayout gap={1}>
                   <H3>{exampleData.title}</H3>
