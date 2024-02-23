@@ -39,7 +39,7 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
 
 interface OptionWithTooltipProps {
   item: DateValue;
-  formatDate: (item: DateValue) => string;
+  dateFormatter: (item: DateValue) => string;
   disabled?: boolean;
   tooltipContent: string;
 }
@@ -119,19 +119,20 @@ function useCalendarNavigation() {
 const OptionWithTooltip = ({
   item,
   disabled,
-  formatDate,
+  dateFormatter,
   tooltipContent,
 }: OptionWithTooltipProps) => {
   const { activeState } = useListControlContext();
   const id = useId();
   const open = activeState?.id === id ? true : undefined;
-  const formattedItem = formatDate(item);
+  const formattedItem = dateFormatter(item);
   return (
     <Tooltip
       placement="right"
       open={open}
       disabled={!disabled}
       content={tooltipContent}
+      enterDelay={0} // --salt-duration-instant
     >
       <Option value={item} disabled={disabled} id={id}>
         {formattedItem}
@@ -229,6 +230,7 @@ export const CalendarNavigation = forwardRef<
         placement="top"
         disabled={canNavigatePrevious}
         content="Past dates are out of range"
+        enterDelay={0} // --salt-duration-instant
       >
         <Button
           disabled={!canNavigatePrevious}
@@ -257,7 +259,7 @@ export const CalendarNavigation = forwardRef<
           <OptionWithTooltip
             key={formatMonth(month)}
             item={month}
-            formatDate={formatMonth}
+            dateFormatter={formatMonth}
             disabled={isOutsideAllowedMonths(month)}
             tooltipContent="This month is out of range"
           />
@@ -277,7 +279,7 @@ export const CalendarNavigation = forwardRef<
             <OptionWithTooltip
               key={formatYear(year)}
               item={year}
-              formatDate={formatYear}
+              dateFormatter={formatYear}
               tooltipContent="This year is out of range"
             />
           ))}
@@ -287,6 +289,7 @@ export const CalendarNavigation = forwardRef<
         placement="top"
         disabled={canNavigateNext}
         content="Future dates are out of range"
+        enterDelay={0} // --salt-duration-instant
       >
         <Button
           disabled={!canNavigateNext}
