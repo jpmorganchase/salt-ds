@@ -23,6 +23,7 @@ import { formatDate, monthDiff, monthsForLocale } from "./utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { Option } from "../../option";
+import { useListControlContext } from "../../list-control/ListControlContext";
 
 type dateDropdownProps = DropdownNextProps<DateValue>;
 
@@ -34,6 +35,13 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   onNavigateNext?: ButtonProps["onClick"];
   onNavigatePrevious?: ButtonProps["onClick"];
   hideYearDropdown?: boolean;
+}
+
+interface OptionWithTooltipProps {
+  item: DateValue;
+  dateFormatter: (item: DateValue) => string;
+  disabled?: boolean;
+  tooltipContent: string;
 }
 
 const withBaseName = makePrefixer("saltCalendarNavigation");
@@ -108,20 +116,26 @@ function useCalendarNavigation() {
   };
 }
 
-const OptionWithTooltip = (
-  item: DateValue,
-  dateFormat: (item: DateValue) => string,
-  disabled?: boolean
-) => {
+const OptionWithTooltip = ({
+  item,
+  disabled,
+  dateFormatter,
+  tooltipContent,
+}: OptionWithTooltipProps) => {
+  const { activeState } = useListControlContext();
+  const id = useId();
+  const open = activeState?.id === id ? true : undefined;
+  const formattedItem = dateFormatter(item);
   return (
     <Tooltip
       placement="right"
+      open={open}
       disabled={!disabled}
-      content="This month is out of range"
-      key={dateFormat(item)}
+      content={tooltipContent}
+      enterDelay={0} // --salt-duration-instant
     >
-      <Option value={item} disabled={disabled}>
-        {dateFormat(item)}
+      <Option value={item} disabled={disabled} id={id}>
+        {formattedItem}
       </Option>
     </Tooltip>
   );
@@ -216,6 +230,7 @@ export const CalendarNavigation = forwardRef<
         placement="top"
         disabled={canNavigatePrevious}
         content="Past dates are out of range"
+        enterDelay={0} // --salt-duration-instant
       >
         <Button
           disabled={!canNavigatePrevious}
@@ -240,9 +255,15 @@ export const CalendarNavigation = forwardRef<
         onSelectionChange={handleMonthSelect}
         {...MonthDropdownProps}
       >
-        {months.map((month) =>
-          OptionWithTooltip(month, formatMonth, isOutsideAllowedMonths(month))
-        )}
+        {months.map((month) => (
+          <OptionWithTooltip
+            key={formatMonth(month)}
+            item={month}
+            dateFormatter={formatMonth}
+            disabled={isOutsideAllowedMonths(month)}
+            tooltipContent="This month is out of range"
+          />
+        ))}
       </DropdownNext>
       {!hideYearDropdown && (
         <DropdownNext
@@ -254,13 +275,21 @@ export const CalendarNavigation = forwardRef<
           onSelectionChange={handleYearSelect}
           {...YearDropdownProps}
         >
-          {years.map((year) => OptionWithTooltip(year, formatYear))}
+          {years.map((year) => (
+            <OptionWithTooltip
+              key={formatYear(year)}
+              item={year}
+              dateFormatter={formatYear}
+              tooltipContent="This year is out of range"
+            />
+          ))}
         </DropdownNext>
       )}
       <Tooltip
         placement="top"
         disabled={canNavigateNext}
         content="Future dates are out of range"
+        enterDelay={0} // --salt-duration-instant
       >
         <Button
           disabled={!canNavigateNext}
