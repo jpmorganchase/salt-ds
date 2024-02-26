@@ -1,6 +1,4 @@
 import { ReactElement, useState } from "react";
-
-import { Drawer, DrawerCloseButton } from "@salt-ds/lab";
 import {
   Button,
   FlexLayout,
@@ -12,6 +10,8 @@ import {
   Input,
   StackLayout,
   useId,
+  Drawer,
+  DrawerCloseButton,
 } from "@salt-ds/core";
 
 const FormFieldExample = () => (
