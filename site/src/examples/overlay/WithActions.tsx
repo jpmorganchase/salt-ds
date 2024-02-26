@@ -114,7 +114,11 @@ const WithActionsContent = ({
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
+<<<<<<< HEAD
   const id = useId()
+=======
+  const id = useId();
+>>>>>>> 9db2605d (add useid to overlay examples)
 
   return (
     <Overlay

@@ -1,7 +1,12 @@
 import { ReactElement } from "react";
-
-import { Overlay, OverlayPanel, OverlayTrigger, useId } from "@salt-ds/core";
-import { Tooltip, Button } from "@salt-ds/core";
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  Tooltip,
+  Button,
+  useId,
+} from "@salt-ds/core";
 
 import styles from "./index.module.css";
 
