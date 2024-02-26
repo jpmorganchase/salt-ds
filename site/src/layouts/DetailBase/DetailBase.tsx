@@ -7,7 +7,7 @@ import {
   PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
 import { SiteState, useMeta, useStore } from "@jpmorganchase/mosaic-store";
-import { SaltProvider, FlexLayout } from "@salt-ds/core";
+import { SaltProvider, FlexLayout, H1 } from "@salt-ds/core";
 import clsx from "clsx";
 import { FC, ReactElement } from "react";
 import { AppHeader } from "../../components/app-header";
@@ -41,7 +41,7 @@ const PageHeadingWithPill: FC<PageHeadingWithPillProps> = ({
     align={isMobileView ? "start" : "center"}
     gap={isMobileView ? 0 : 1}
   >
-    <h1>{title}</h1>
+    <H1>{title}</H1>
     {pageStatus && <StatusPill label={pageStatus} />}
   </FlexLayout>
 );
@@ -58,19 +58,17 @@ export const DetailBase: FC<LayoutProps> = ({
   const Header = <AppHeader />;
 
   const PrimarySidebar = (
-    <SaltProvider mode="light">
-      <div className={styles.primarySidebar}>
-        {BackLinkProps && (
-          <header className={styles.sidebarHeader}>
-            <BackLink {...BackLinkProps} />
-          </header>
-        )}
-        <PageNavigation />
-        {SidebarProps?.helpLinks && (
-          <HelpLinks subTitle="Need help?" {...SidebarProps.helpLinks} />
-        )}
-      </div>
-    </SaltProvider>
+    <div className={styles.primarySidebar}>
+      {BackLinkProps && (
+        <header className={styles.sidebarHeader}>
+          <BackLink {...BackLinkProps} />
+        </header>
+      )}
+      <PageNavigation />
+      {SidebarProps?.helpLinks && (
+        <HelpLinks subTitle="Need help?" {...SidebarProps.helpLinks} />
+      )}
+    </div>
   );
 
   const {
@@ -93,7 +91,9 @@ export const DetailBase: FC<LayoutProps> = ({
               isMobileView={isMobileView}
             />
           ) : (
-            <h1 className={layoutStyles.title}>{pageTitle}</h1>
+            <H1 styleAs="display2" className={layoutStyles.title}>
+              {pageTitle}
+            </H1>
           )}
           <SaltProvider mode="light">
             <div className={layoutStyles.docsPageContainer}>
@@ -105,9 +105,9 @@ export const DetailBase: FC<LayoutProps> = ({
               >
                 {children}
               </div>
-              <div className={styles.sidebar}>
-                <SaltProvider density="medium">{sidebar}</SaltProvider>
-              </div>
+              <SaltProvider density="medium" applyClassesTo="child">
+                <div className={styles.sidebar}>{sidebar}</div>
+              </SaltProvider>
             </div>
           </SaltProvider>
           <div className={styles.docPaginator}>

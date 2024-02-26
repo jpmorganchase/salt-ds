@@ -1,9 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  Sidebar,
-  TableOfContents,
-} from "@jpmorganchase/mosaic-site-components";
+import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import {
   useRoute,
   useStore,
@@ -21,6 +18,7 @@ import useIsMobileView from "../../utils/useIsMobileView";
 import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 import styles from "./DetailComponent.module.css";
 import { code, p, ul } from "../../components";
+import { TableOfContents } from "../../components/toc";
 
 const components = { code, ul, p };
 

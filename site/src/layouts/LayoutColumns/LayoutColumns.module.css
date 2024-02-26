@@ -26,6 +26,7 @@
   top: var(--navbar-height);
   max-width: var(--site-sidebar-width);
   height: 100vh;
+  background: var(--salt-container-primary-background);
 }
 
 .sidebar > aside {
