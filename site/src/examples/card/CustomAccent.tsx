@@ -1,17 +1,23 @@
-import { ReactElement, CSSProperties } from "react";
+import { ReactElement } from "react";
 import { H3, Text, StackLayout, Card } from "@salt-ds/core";
+import styles from "./index.module.css";
 
 export const CustomAccent = (): ReactElement => {
   return (
     <StackLayout direction="row">
+      {/* in your css:
+            .category1 { 
+              --saltCard-accentColor: rgb(70, 118, 191);
+            }
+            .category1:hover {
+              --saltCard-accentColor: rgb(35, 77, 140);
+            }
+              */}
       <Card
-        style={
-          {
-            "--saltCard-accentColor": "rgb(70, 118, 191)",
-            "--saltCard-accentColor-hover": "rgb(35, 77, 140)",
-            width: "240px",
-          } as CSSProperties
-        }
+        className={styles.category1}
+        style={{
+          width: "240px",
+        }}
         accent="top"
         hoverable
       >
@@ -25,14 +31,20 @@ export const CustomAccent = (): ReactElement => {
           </Text>
         </StackLayout>
       </Card>
+      {/* in your css:
+            .category2 {
+              --saltCard-accentColor: rgb(171, 101, 40);
+            }
+
+            .category2:hover {
+              --saltCard-accentColor: rgb(133, 72, 20);
+            }
+              */}
       <Card
-        style={
-          {
-            "--saltCard-accentColor": "rgb(171, 101, 40)",
-            "--saltCard-accentColor-hover": "rgb(133, 72, 20)",
-            width: "240px",
-          } as CSSProperties
-        }
+        className={styles.category2}
+        style={{
+          width: "240px",
+        }}
         accent="top"
         hoverable
       >

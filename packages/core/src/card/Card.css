@@ -9,26 +9,26 @@
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
-  --card-accentColor: var(--saltCard-accentColor, var(--salt-container-primary-borderColor));
+  --card-accentColor: var(--salt-container-primary-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-  --card-accentColor: var(--saltCard-accentColor, var(--salt-container-secondary-borderColor));
+  --card-accentColor: var(--salt-container-secondary-borderColor);
 }
 
 /* Styles applied if `hoverable` is set */
 .saltCard-hoverable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
-  --card-accentColor: var(--saltCard-accentColor-hover, var(--salt-selectable-foreground-hover));
+  --card-accentColor: var(--salt-selectable-foreground-hover);
 }
 
 /* Styles applied to create accent */
 .saltCard-accent::after {
   content: "";
   position: absolute;
-  background-color: var(--card-accentColor);
+  background-color: var(--saltCard-accentColor, var(--card-accentColor));
 }
 
 /* Styles applied to Card if `accent="bottom"` (default) */
