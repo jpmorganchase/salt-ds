@@ -1,10 +1,16 @@
 import { ReactElement } from "react";
 
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/core";
-import { Button, StackLayout } from "@salt-ds/core";
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  Button,
+  StackLayout,
+  useId,
+} from "@salt-ds/core";
 
 export const LongContent = (): ReactElement => {
-  const id = "overlay-long-content";
+  const id = useId();
 
   return (
     <Overlay id={id} placement="right">
