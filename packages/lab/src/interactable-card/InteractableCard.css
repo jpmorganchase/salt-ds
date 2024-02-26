@@ -63,7 +63,6 @@
 }
 
 /* Styles applied to InteractableCard on focus */
-a:focus-visible .saltInteractableCard,
 .saltInteractableCard:focus-visible {
   cursor: var(--saltCard-interactable-cursor-focus, var(--salt-selectable-cursor-hover));
   box-shadow: var(--saltCard-interactable-shadow-focus, var(--salt-overlayable-shadow-hover));
