@@ -23,11 +23,11 @@ describe("Given a Link Card", () => {
 
   it("should apply accent", () => {
     cy.mount(<AccentPlacement />);
-    cy.get(".saltCard").should("have.class", "saltCard-accentBottom");
+    cy.get(".saltCard").should("have.class", "saltLinkCard-accentBottom");
   });
 
   it("should apply hover styling if hoverable", () => {
     cy.mount(<AccentPlacement />);
-    cy.get(".saltCard").should("have.class", "saltCard-hoverable");
+    cy.get(".saltCard").should("have.class", "saltLinkCard-hoverable");
   });
 });
