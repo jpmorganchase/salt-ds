@@ -7,7 +7,7 @@ import {
   Overlay,
   OverlayPanel,
   OverlayTrigger,
-  useId
+  useId,
 } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
@@ -114,7 +114,7 @@ const WithActionsContent = ({
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
-  const id = useId()
+  const id = useId();
 
   return (
     <Overlay
