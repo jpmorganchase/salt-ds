@@ -11,3 +11,73 @@ data:
     ]  
 ---
 
+Vertical navigation provides users with a structured and intuitive way to navigate different pages, sections or features of your website or application. It's often on the left of the viewport and organizes links into a single- or multi-level structure.
+
+## When to use
+
+- To display multiple top-level categories that represent the main sections of your website or application. This improves discoverability.
+- To accommodate for complex navigation structures and indicate content hierarchy. This enables growth and offers support for efficient scanning. A vertical navigation is easier to scale and iterate than a horizontal one, as vertical scrolling enables users to navigate trees of varying lengths. 
+- To label effectively with clear and concise label descriptions or visual cues, such as descriptive icons, to specify the information a navigation item or tab directs users to.
+
+## How to use
+
+### Anatomy
+
+A vertical navigation consists of a stack of navigation items components:
+
+1. Default navigation item: When clicked on, a navigation item links the user to a different section of a website or application. Only one navigation item can be active at a single time.
+2. Parent navigation item: Displayed with a chevron and is expandable only. Upon interaction a parent navigation item doesn’t direct the user anywhere and, instead, reveals reveals nested navigation items inside it. 
+
+You'll typically use vertical navigation menus in a sidebar, on the left side of the screen, within a drawer, or a parent-child layout.  
+
+Best practices
+
+You can use left-aligned icons to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, a function or a configuration setting.  
+
+## Spacing
+
+Vertical navigation uses Stack Layout to display navigation items in a column formation. Use --size-border for spacing between the items. 
+
+## Group (single level)
+
+A single-level vertical navigation group provides a simple, single-level list of links that users can select within an application or website. Use the default navigation item to achieve this. 
+
+## Nested group (multi-level)
+
+Nest navigation items under a parent navigation item to create a multi-level structure. 
+
+Top-level hierarchy items labels use a strong font weight, and nested items use a regular font weight.
+
+Best practices
+
+We recommend surfacing the hierarchy of your application’s information architecture to as few levels as possible, i.e., maintain a wide and flat hierarchy, instead of one that is deep and overwhelming. This makes content easily discoverable when not buried under intervening navigation items. 
+
+Best practices
+
+Clicking a parent item won’t navigate the user but expand the group. If an overview page is necessary it should be the first in the group. Overview pages won’t include a chevron on the right-hand side. 
+
+### Blur active state
+
+When a parent item is collapsed but contains the currently active page, the parent is shown with the active indicator.
+
+## Layout
+
+### Application view
+
+## Secondary navigation
+
+You can use the default navigation items as anchor links within an application view, allowing users to navigate swiftly between various sections on a page. Typically, it functions as a top-level table of contents for the application.
+
+## Vertical navigation within modals
+
+Modals such as preferences dialogs can contain a vertical navigation to allow users to navigate between distinct panels of content within the dialog. 
+
+Refer to the preferences dialog pattern for further guidance on how to manage navigation within application preferences modals. 
+
+## Responsive behvaior
+
+A vertical navigation remains fixed in width when the user resizes the browser. You can set it to the width of your choice. but you should consider the overall label length, theme, density, and screen size you’re designing for when making your decision. 
+
+## Feedback
+
+If you find a need to expand the pattern or have feedback, please reach out to the team to discuss.
