@@ -2,7 +2,7 @@
 "@salt-ds/lab": minor
 ---
 
-Created `LinkCard` component in lab.
+Added `LinkCard` to lab.
 
 Use a Link card when the entire card should be clickable and navigate the user.
 
