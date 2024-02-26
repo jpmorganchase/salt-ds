@@ -62,7 +62,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       elements,
       floating,
       reference,
-      middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
       placement,
     } = useFloatingUI({
       open: openState,
@@ -100,11 +99,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
     const arrowProps = {
       ref: arrowRef,
       context,
-      style: {
-        position: strategy,
-        left: arrowX ?? 0,
-        top: arrowY ?? 0,
-      },
     };
 
     const handleCloseButton = (event: SyntheticEvent) => {
