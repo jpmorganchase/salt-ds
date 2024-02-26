@@ -1,26 +1,42 @@
 import { ReactElement } from "react";
 import { InteractableCard, InteractableCardGroup } from "@salt-ds/lab";
 import { H3, StackLayout, Text } from "@salt-ds/core";
+import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
 
 export const ToggleGroup = (): ReactElement => (
-  <InteractableCardGroup>
-    <InteractableCard value="card" accent="top" style={{ width: "180px" }}>
-      <StackLayout gap={1}>
-        <H3>Card</H3>
-        <Text>Make a payment by credit or debit card.</Text>
-      </StackLayout>
-    </InteractableCard>
-    <InteractableCard value="debit" accent="top" style={{ width: "180px" }}>
-      <StackLayout gap={1}>
-        <H3>Direct Debit</H3>
-        <Text>Set up a direct debit to pay monthly.</Text>
-      </StackLayout>
-    </InteractableCard>
-    <InteractableCard value="crypto" accent="top" style={{ width: "180px" }}>
-      <StackLayout gap={1}>
-        <H3>Cryptocurrency</H3>
-        <Text>Pay with Bitcoin, Ethereum, etc.</Text>
-      </StackLayout>
-    </InteractableCard>
-  </InteractableCardGroup>
+  <StackLayout>
+    <StackLayout gap={1}>
+      <H3>Payment method</H3>
+      <Text>Choose your payment method from the options below.</Text>
+    </StackLayout>
+    <InteractableCardGroup>
+      <InteractableCard value="card" accent="top" style={{ width: "180px" }}>
+        <StackLayout gap={1}>
+          <StackLayout gap={1} direction="row" align="center">
+            <CreditCardIcon size={2} />
+            <H3>Credit Card</H3>
+          </StackLayout>
+          <Text>Link credit card to your payments account.</Text>
+        </StackLayout>
+      </InteractableCard>
+      <InteractableCard value="wire" accent="top" style={{ width: "180px" }}>
+        <StackLayout gap={1}>
+          <StackLayout gap={1} direction="row" align="center">
+            <BankIcon size={2} />
+            <H3>Bank wire</H3>
+          </StackLayout>
+          <Text>Link your bank to your payments account.</Text>
+        </StackLayout>
+      </InteractableCard>
+      <InteractableCard value="crypto" accent="top" style={{ width: "180px" }}>
+        <StackLayout gap={1}>
+          <StackLayout gap={1} direction="row" align="center">
+            <DiamondIcon size={2} />
+            <H3>Cryptocurrency</H3>
+          </StackLayout>
+          <Text>Link your crypto to your payments account.</Text>
+        </StackLayout>
+      </InteractableCard>
+    </InteractableCardGroup>
+  </StackLayout>
 );
