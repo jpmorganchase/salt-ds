@@ -4,6 +4,7 @@ import { createContext } from "@salt-ds/core";
 export type Value = string | readonly string[] | number | undefined;
 
 export interface InteractableCardGroupContextValue {
+  disabled?: boolean;
   select: (event: SyntheticEvent<HTMLButtonElement>) => void;
   isSelected: (id: Value) => boolean;
 }

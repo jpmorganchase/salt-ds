@@ -10,7 +10,13 @@ import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FlexLayoutProps,
+  makePrefixer,
+  useControlled,
+  useForkRef,
+} from "@salt-ds/core";
 import {
   InteractableCardGroupContext,
   Value,
@@ -18,11 +24,15 @@ import {
 import interactableCardGroupCss from "./InteractableCardGroup.css";
 
 export interface InteractableCardGroupProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  extends Omit<FlexLayoutProps<"div">, "onChange"> {
   /**
    * The default value. Use when the component is not controlled.
    */
   defaultValue?: Value;
+  /**
+   * If `true`, the Interactable Card Group will be disabled.
+   */
+  disabled?: boolean;
   /**
    * The value. Use when the component is controlled.
    */
@@ -43,8 +53,10 @@ export const InteractableCardGroup = forwardRef<
   const {
     children,
     className,
+    gap = 2,
     value: valueProp,
     defaultValue,
+    disabled,
     onChange,
     ...rest
   } = props;
@@ -88,20 +100,22 @@ export const InteractableCardGroup = forwardRef<
     () => ({
       select,
       isSelected,
+      disabled,
     }),
-    [select, isSelected]
+    [select, isSelected, disabled]
   );
 
   return (
     <InteractableCardGroupContext.Provider value={contextValue}>
-      <div
+      <FlexLayout
+        gap={gap}
         className={clsx(withBaseName(), className)}
         role="radiogroup"
         ref={handleRef}
         {...rest}
       >
         {children}
-      </div>
+      </FlexLayout>
     </InteractableCardGroupContext.Provider>
   );
 });

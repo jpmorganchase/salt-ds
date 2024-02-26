@@ -53,7 +53,7 @@ export const InteractableCard = forwardRef<
     accent,
     children,
     className,
-    disabled,
+    disabled: disabledProp,
     selected: selectedProp,
     variant = "primary",
     value,
@@ -72,6 +72,14 @@ export const InteractableCard = forwardRef<
     window: targetWindow,
   });
 
+  const interactableCardGroup = useInteractableCardGroup();
+
+  const interactableCardGroupSelected = interactableCardGroup
+    ? interactableCardGroup.isSelected(value)
+    : selectedProp;
+
+  const disabled = interactableCardGroup?.disabled || disabledProp;
+
   const { active, cardProps } = useInteractableCard({
     disabled,
     onKeyUp,
@@ -79,12 +87,6 @@ export const InteractableCard = forwardRef<
     onBlur,
     onClick,
   });
-
-  const interactableCardGroup = useInteractableCardGroup();
-
-  const interactableCardGroupSelected = interactableCardGroup
-    ? interactableCardGroup.isSelected(value)
-    : selectedProp;
 
   const [selected, setSelected] = useControlled({
     controlled: interactableCardGroupSelected,
@@ -106,7 +108,7 @@ export const InteractableCard = forwardRef<
     <button
       {...cardProps}
       role={role}
-      aria-checked={role === "radio" ? selected : undefined}
+      aria-checked={role === "radio" && !disabled ? selected : undefined}
       data-id={value}
       className={clsx(
         withBaseName(),
@@ -120,6 +122,7 @@ export const InteractableCard = forwardRef<
         },
         className
       )}
+      disabled={disabled}
       {...rest}
       onClick={interactableCardGroup ? handleClick : onClick}
       value={value}
