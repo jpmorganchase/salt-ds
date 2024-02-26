@@ -49,7 +49,7 @@ jobs:
         with:
           script: |
             if (context.eventName == 'pull_request') {
-              const previewUrl = "${{ steps.publish.outputs.url }}";
+              const previewUrl = "${{ steps.publish.outputs.alias }}";
               const commentText = `Storybook Preview Link `;
               const {data: comments} = await github.rest.issues.listComments({
                 owner: context.repo.owner,
