@@ -6,9 +6,7 @@ export const DisabledOption = (): ReactElement => {
   return (
     <DropdownNext style={{ width: "266px" }}>
       {shortColorData.map((color) => (
-        <Option disabled={color === "Baby blue"} value={color} key={color}>
-          {color}
-        </Option>
+        <Option disabled={color === "Baby blue"} value={color} key={color} />
       ))}
     </DropdownNext>
   );

@@ -10,8 +10,14 @@ import { OptionValue } from "./ListControlContext";
 
 export type OpenChangeReason = "input" | "manual";
 
-export interface ListControlProps<Item> {
+export type ListControlProps<Item> = {
+  /**
+   * If true, the control will be disabled.
+   */
   disabled?: boolean;
+  /**
+   * If true, the control will be read-only.
+   */
   readOnly?: boolean;
   /**
    * If true, the list will be open by default.
@@ -38,17 +44,17 @@ export interface ListControlProps<Item> {
    */
   onSelectionChange?: (event: SyntheticEvent, newSelected: Item[]) => void;
   /**
-   * The default value.
-   */
-  defaultValue?: string | readonly string[] | number | undefined;
-  /**
-   * The value. The component will be controlled if this prop is provided.
-   */
-  value?: string | readonly string[] | number | undefined;
-  /**
    * If true, multiple options can be selected.
    */
   multiselect?: boolean;
+  /**
+   * Callback used to convert an option's `value` to a string. This is needed when the value is different to the display value or the value is not a string.
+   */
+  valueToString?: (item: Item) => string;
+};
+
+export function defaultValueToString<Item>(item: Item): string {
+  return typeof item === "string" ? item : "";
 }
 
 export function useListControl<Item>(props: ListControlProps<Item>) {
@@ -60,21 +66,13 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     defaultSelected,
     selected: selectedProp,
     onSelectionChange,
-    defaultValue,
-    value,
     disabled,
     readOnly,
+    valueToString = defaultValueToString,
   } = props;
 
   const [focusedState, setFocusedState] = useState(false);
   const [focusVisibleState, setFocusVisibleState] = useState(false);
-
-  const [valueState, setValueState] = useControlled({
-    controlled: value,
-    default: defaultValue,
-    name: "ListControl",
-    state: "value",
-  });
 
   const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
     undefined
@@ -137,11 +135,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     }
 
     setSelectedState(newSelected);
-    setValueState(
-      getOptionsMatching((option) => newSelected.includes(option.value))
-        .map((option) => option.text)
-        .join(", ")
-    );
     onSelectionChange?.(event, newSelected);
 
     if (!multiselect) {
@@ -151,7 +144,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
   const clear = (event: SyntheticEvent) => {
     setSelectedState([]);
-    setValueState("");
     if (selectedState.length !== 0) {
       onSelectionChange?.(event, []);
     }
@@ -219,7 +211,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
     let matches = searchList.filter(
       (option) =>
-        collator.compare(option.text.substring(0, search.length), search) === 0
+        collator.compare(
+          valueToString(option.value).substring(0, search.length),
+          search
+        ) === 0
     );
 
     if (matches.length === 0) {
@@ -230,7 +225,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       if (allSameLetter) {
         matches = searchList.filter(
           (option) =>
-            collator.compare(option.text[0].toLowerCase(), letters[0]) === 0
+            collator.compare(
+              valueToString(option.value)[0].toLowerCase(),
+              letters[0]
+            ) === 0
         );
       }
     }
@@ -276,8 +274,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     setSelectedState,
     select,
     clear,
-    valueState,
-    setValueState,
     focusVisibleState,
     setFocusVisibleState,
     focusedState,
@@ -289,5 +285,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     getIndexOfOption,
     getOptionsMatching,
     getOptionFromSearch,
+    valueToString,
   };
 }

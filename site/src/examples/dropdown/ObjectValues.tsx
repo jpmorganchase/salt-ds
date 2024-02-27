@@ -11,11 +11,12 @@ import { largestCities, LargeCity } from "./exampleData";
 
 export const ObjectValues = (): ReactElement => {
   return (
-    <DropdownNext<LargeCity> style={{ width: "266px" }}>
+    <DropdownNext<LargeCity>
+      style={{ width: "266px" }}
+      valueToString={(city) => city.name}
+    >
       {largestCities.map((city) => (
-        <Option value={city} key={city.name}>
-          {city.name}
-        </Option>
+        <Option value={city} key={city.name} />
       ))}
     </DropdownNext>
   );

@@ -14,6 +14,7 @@ import {
 } from "@salt-ds/core";
 import { GB, US } from "@salt-ds/countries";
 import { SyntheticEvent, useState } from "react";
+import { LocationIcon } from "@salt-ds/icons";
 
 export default {
   title: "Lab/Dropdown Next",
@@ -85,13 +86,11 @@ const longUsStates = [
   "Wyoming",
 ];
 
-const Template: StoryFn<typeof DropdownNext> = (args) => {
+const Template: StoryFn<DropdownNextProps> = (args) => {
   return (
     <DropdownNext {...args}>
       {usStates.map((state) => (
-        <Option value={state} key={state}>
-          {state}
-        </Option>
+        <Option value={state} key={state} />
       ))}
     </DropdownNext>
   );
@@ -107,30 +106,25 @@ Placeholder.args = {
 export const WithDefaultSelected = Template.bind({});
 WithDefaultSelected.args = {
   defaultSelected: ["California"],
-  defaultValue: "California",
 };
 
 export const Readonly = Template.bind({});
 Readonly.args = {
   readOnly: true,
   defaultSelected: ["California"],
-  defaultValue: "California",
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
   defaultSelected: ["California"],
-  defaultValue: "California",
 };
 
 export const DisabledOption: StoryFn<typeof DropdownNext> = (args) => {
   return (
     <DropdownNext {...args}>
       {usStates.map((state) => (
-        <Option value={state} key={state} disabled={state === "California"}>
-          {state}
-        </Option>
+        <Option value={state} key={state} disabled={state === "California"} />
       ))}
     </DropdownNext>
   );
@@ -141,16 +135,12 @@ export const Variants: StoryFn<typeof DropdownNext> = () => {
     <StackLayout>
       <DropdownNext>
         {usStates.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
+          <Option value={state} key={state} />
         ))}
       </DropdownNext>
       <DropdownNext variant="secondary">
         {usStates.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
+          <Option value={state} key={state} />
         ))}
       </DropdownNext>
     </StackLayout>
@@ -168,9 +158,7 @@ export const WithFormField: StoryFn = () => {
       <FormFieldLabel>State</FormFieldLabel>
       <DropdownNext>
         {usStates.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
+          <Option value={state} key={state} />
         ))}
       </DropdownNext>
       <FormFieldHelperText>Pick a US state</FormFieldHelperText>
@@ -182,22 +170,28 @@ export const Grouped: StoryFn<typeof DropdownNext> = (args) => {
   return (
     <DropdownNext {...args}>
       <OptionGroup label="US">
-        <Option value="Chicago">Chicago</Option>
-        <Option value="Miami">Miami</Option>
-        <Option value="New York">New York</Option>
+        <Option value="Chicago" />
+        <Option value="Miami" />
+        <Option value="New York" />
       </OptionGroup>
       <OptionGroup label="UK">
-        <Option value="Liverpool">Liverpool</Option>
-        <Option value="London">London</Option>
-        <Option value="Manchester">Manchester</Option>
+        <Option value="Liverpool" />
+        <Option value="London" />
+        <Option value="Manchester" />
       </OptionGroup>
     </DropdownNext>
   );
 };
 
-const adornmentMap: Record<string, JSX.Element> = {
-  GB: <GB aria-hidden size={0.75} />,
-  US: <US aria-hidden size={0.75} />,
+const countries: Record<string, { icon: JSX.Element; name: string }> = {
+  GB: {
+    icon: <GB aria-hidden size={0.75} />,
+    name: "United Kingdom of Great Britain and Northern Ireland",
+  },
+  US: {
+    icon: <US aria-hidden size={0.75} />,
+    name: "United States of America",
+  },
 };
 
 export const ComplexOption: StoryFn<DropdownNextProps> = (args) => {
@@ -211,7 +205,7 @@ export const ComplexOption: StoryFn<DropdownNextProps> = (args) => {
     args.onSelectionChange?.(event, newSelected);
   };
 
-  const adornment = adornmentMap[selected[0] ?? ""] || null;
+  const adornment = countries[selected[0] ?? ""]?.icon || null;
 
   return (
     <DropdownNext
@@ -219,15 +213,13 @@ export const ComplexOption: StoryFn<DropdownNextProps> = (args) => {
       selected={selected}
       startAdornment={adornment}
       onSelectionChange={handleSelectionChange}
+      valueToString={(item) => countries[item].name}
     >
-      <Option
-        value="GB"
-        textValue="United Kingdom of Great Britain and Northern Ireland"
-      >
+      <Option value="GB">
         <GB size={0.75} aria-hidden /> United Kingdom of Great Britain and
         Northern Ireland
       </Option>
-      <Option value="US" textValue="United States of America">
+      <Option value="US">
         <US size={0.75} aria-hidden /> United States of America
       </Option>
     </DropdownNext>
@@ -238,9 +230,7 @@ export const LongList: StoryFn<typeof DropdownNext> = (args) => {
   return (
     <DropdownNext {...args}>
       {longUsStates.map((state) => (
-        <Option value={state} key={state}>
-          {state}
-        </Option>
+        <Option value={state} key={state} />
       ))}
     </DropdownNext>
   );
@@ -268,9 +258,7 @@ export const CustomValue: StoryFn<DropdownNextProps> = (args) => {
       multiselect
     >
       {usStates.map((state) => (
-        <Option value={state} key={state}>
-          {state}
-        </Option>
+        <Option value={state} key={state} />
       ))}
     </DropdownNext>
   );
@@ -288,20 +276,21 @@ export const Validation = () => {
 
 export const WithStartAdornment = Template.bind({});
 WithStartAdornment.args = {
-  startAdornment: <GB aria-hidden size={0.75} />,
+  startAdornment: <LocationIcon />,
 };
 
 interface Person {
   id: number;
   firstName: string;
   lastName: string;
+  displayName: string;
 }
 
 const people: Person[] = [
-  { id: 1, firstName: "John", lastName: "Doe" },
-  { id: 2, firstName: "Jane", lastName: "Doe" },
-  { id: 3, firstName: "John", lastName: "Smith" },
-  { id: 4, firstName: "Jane", lastName: "Smith" },
+  { id: 1, firstName: "John", lastName: "Doe", displayName: "John Doe" },
+  { id: 2, firstName: "Jane", lastName: "Doe", displayName: "Jane Doe" },
+  { id: 3, firstName: "John", lastName: "Smith", displayName: "John Smith" },
+  { id: 4, firstName: "Jane", lastName: "Smith", displayName: "Jane Smith" },
 ];
 
 export const ObjectValue: StoryFn<DropdownNextProps<Person>> = (args) => {
@@ -315,15 +304,13 @@ export const ObjectValue: StoryFn<DropdownNextProps<Person>> = (args) => {
 
   return (
     <DropdownNext<Person>
-      {...args}
       onSelectionChange={handleSelectionChange}
       selected={selected}
       multiselect
+      valueToString={(person) => person.displayName}
     >
       {people.map((person) => (
-        <Option value={person} key={person.id}>
-          {person.firstName} {person.lastName}
-        </Option>
+        <Option value={person} key={person.id} />
       ))}
     </DropdownNext>
   );
