@@ -25,9 +25,7 @@ export const Success = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>
-        Open success dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open success dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
