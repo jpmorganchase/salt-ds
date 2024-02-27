@@ -19,9 +19,9 @@ import { QAContainer, QAContainerProps } from "docs/components";
 
 import "./dialog.stories.css";
 
-function FakeDialog({ children, status }: DialogProps) {
+function FakeDialog({ children, status, id }: DialogProps) {
   return (
-    <DialogContext.Provider value={{ status }}>
+    <DialogContext.Provider value={{ status, id }}>
       <div className="fakeDialogWindow">{children}</div>
     </DialogContext.Provider>
   );
