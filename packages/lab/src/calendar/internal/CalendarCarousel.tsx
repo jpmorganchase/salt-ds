@@ -65,7 +65,7 @@ export const CalendarCarousel = forwardRef<
   useIsomorphicLayoutEffect(() => {
     if (containerRef.current) {
       containerRef.current.style.transform = `translate3d(${
-        diffIndex(baseIndex, visibleMonth) * 100
+        diffIndex(baseIndex, visibleMonth) * -100
       }%, 0, 0)`;
     }
   });
@@ -116,7 +116,7 @@ export const CalendarCarousel = forwardRef<
             key={formatDate(date)}
             className={withBaseName("slide")}
             style={{
-              transform: `translateX(${diffIndex(date, baseIndex) * 100}%)`,
+              transform: `translateX(${diffIndex(date, baseIndex) * -100}%)`,
             }}
             aria-hidden={index !== 1 ? "true" : undefined}
           >

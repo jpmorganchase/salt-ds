@@ -236,7 +236,6 @@ export const CalendarNavigation = forwardRef<
           disabled={!canNavigatePrevious}
           variant="secondary"
           onClick={handleNavigatePrevious}
-          className={withBaseName("previousButton")}
           focusableWhenDisabled={true}
         >
           <ChevronLeftIcon
@@ -246,6 +245,7 @@ export const CalendarNavigation = forwardRef<
           />
         </Button>
       </Tooltip>
+      <div className={withBaseName("dropdowns")}>
       <DropdownNext
         aria-labelledby={monthDropdownLabelledBy}
         aria-label="Month Dropdown"
@@ -285,6 +285,7 @@ export const CalendarNavigation = forwardRef<
           ))}
         </DropdownNext>
       )}
+      </div>
       <Tooltip
         placement="top"
         disabled={canNavigateNext}
@@ -295,7 +296,6 @@ export const CalendarNavigation = forwardRef<
           disabled={!canNavigateNext}
           variant="secondary"
           onClick={handleNavigateNext}
-          className={withBaseName("nextButton")}
           focusableWhenDisabled={true}
         >
           <ChevronRightIcon

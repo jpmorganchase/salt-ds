@@ -1,7 +1,8 @@
 .saltCalendarMonth-dateGrid {
   display: grid;
-  row-gap: 1px;
+  gap: var(--salt-size-border);
   grid-template-columns: repeat(7, var(--salt-size-base));
   grid-template-rows: repeat(6, var(--salt-size-base));
   text-align: center;
+  margin: var(--salt-size-border);
 }
