@@ -1,4 +1,4 @@
-import { makePrefixer, Mode, SaltProvider } from "@salt-ds/core";
+import { makePrefixer, Mode, UNSTABLE_SaltProviderNext } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   Children,
@@ -55,9 +55,9 @@ const DensityBlock = ({
 }) => (
   <BackgroundBlock background={mode === "light" ? "white" : undefined}>
     {DensityValues.map((d, i) => (
-      <SaltProvider mode={mode} density={d} key={i}>
+      <UNSTABLE_SaltProviderNext mode={mode} density={d} key={i}>
         <div className="background-item-wrapper">{children}</div>
-      </SaltProvider>
+      </UNSTABLE_SaltProviderNext>
     ))}
   </BackgroundBlock>
 );
@@ -109,20 +109,20 @@ export const QAContainer = ({
       ) : (
         DensityValues.map((d, i) => (
           <Fragment key={i}>
-            <SaltProvider
+            <UNSTABLE_SaltProviderNext
               mode="light"
               density={d}
               enableStyleInjection={enableStyleInjection}
             >
               <BackgroundBlock background="white">{children}</BackgroundBlock>
-            </SaltProvider>
-            <SaltProvider
+            </UNSTABLE_SaltProviderNext>
+            <UNSTABLE_SaltProviderNext
               mode="dark"
               density={d}
               enableStyleInjection={enableStyleInjection}
             >
               <BackgroundBlock>{children}</BackgroundBlock>
-            </SaltProvider>
+            </UNSTABLE_SaltProviderNext>
           </Fragment>
         ))
       )}

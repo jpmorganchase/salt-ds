@@ -27,7 +27,7 @@
   min-height: var(--avatar-container-size);
   overflow: hidden;
   user-select: none;
-  border-radius: 50%;
+  border-radius: var(--saltAvatar-borderRadius, var(--salt-palette-corner-strongest, 50%));
 }
 .saltAvatar:has(img),
 .saltAvatar-withImage {

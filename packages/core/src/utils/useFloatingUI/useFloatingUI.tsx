@@ -1,29 +1,31 @@
 import {
+  FloatingFocusManager,
+  FloatingFocusManagerProps,
+  FloatingPortal,
   Middleware,
   Platform,
   Strategy,
+  UseFloatingOptions,
   autoUpdate,
   flip,
   limitShift,
   platform,
   shift,
   useFloating,
-  FloatingPortal,
-  FloatingFocusManager,
-  FloatingFocusManagerProps,
 } from "@floating-ui/react";
-
 import {
-  createContext,
+  ComponentPropsWithoutRef,
   ReactNode,
+  createContext,
+  forwardRef,
   useContext,
   useMemo,
-  forwardRef,
-  ComponentPropsWithoutRef,
 } from "react";
-
-import { SaltProvider } from "../../salt-provider";
-import { UseFloatingOptions } from "@floating-ui/react/dist/floating-ui.react";
+import {
+  SaltProvider,
+  UNSTABLE_SaltProviderNext,
+  useTheme,
+} from "../../salt-provider";
 
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -71,23 +73,29 @@ const DefaultFloatingComponent = forwardRef<
     position,
   };
 
+  const { themeNext } = useTheme();
+
+  const ChosenSaltProvider = themeNext
+    ? UNSTABLE_SaltProviderNext
+    : SaltProvider;
+
   if (focusManagerProps && open) {
     return (
       <FloatingPortal>
-        <SaltProvider>
+        <ChosenSaltProvider>
           <FloatingFocusManager {...focusManagerProps}>
             <div style={style} {...rest} ref={ref} />
           </FloatingFocusManager>
-        </SaltProvider>
+        </ChosenSaltProvider>
       </FloatingPortal>
     );
   }
 
   return open ? (
     <FloatingPortal>
-      <SaltProvider>
+      <ChosenSaltProvider>
         <div style={style} {...rest} ref={ref} />
-      </SaltProvider>
+      </ChosenSaltProvider>
     </FloatingPortal>
   ) : null;
 });
