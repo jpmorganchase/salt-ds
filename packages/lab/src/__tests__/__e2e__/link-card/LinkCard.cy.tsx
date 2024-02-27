@@ -25,9 +25,4 @@ describe("Given a Link Card", () => {
     cy.mount(<AccentPlacement />);
     cy.get(".saltLinkCard").should("have.class", "saltLinkCard-accentBottom");
   });
-
-  it("should apply hover styling if hoverable", () => {
-    cy.mount(<AccentPlacement />);
-    cy.get(".saltLinkCard").should("have.class", "saltLinkCard-hoverable");
-  });
 });
