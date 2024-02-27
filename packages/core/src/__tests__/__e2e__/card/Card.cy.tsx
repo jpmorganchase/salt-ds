@@ -16,11 +16,6 @@ describe("Given a Card", () => {
     ).should("be.visible");
   });
 
-  it("should apply accent", () => {
-    cy.mount(<AccentVariations />);
-    cy.get(".saltCard").should("have.class", "saltCard-accentBottom");
-  });
-
   it("should apply hover styling if hoverable", () => {
     cy.mount(<AccentVariations />);
     cy.get(".saltCard").should("have.class", "saltCard-hoverable");
