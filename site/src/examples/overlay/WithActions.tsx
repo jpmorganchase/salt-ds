@@ -29,7 +29,7 @@ const WithActionsContent = ({
   id,
 }: {
   onClose: () => void;
-  id: string;
+  id: string | undefined;
 }) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
