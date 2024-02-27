@@ -68,7 +68,7 @@ export function Resources() {
         {internal.length > 0 && (
           <>
             <Text className={styles.subtitle} styleAs="label">
-              JPM employees only:
+              J.P. Morgan employees only:
             </Text>
             <ul className={styles.list}>
               {internal.map(({ href, label }) => (

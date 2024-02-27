@@ -10,6 +10,7 @@ import {
   Text,
   Display3,
   Display2,
+  useId,
 } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
 import { useAgGridHelpers } from "../ag-grid-theme/useAgGridHelpers";
@@ -120,6 +121,7 @@ const defaultData = [
 export const BottomDrawer = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const { containerProps, agGridProps } = useAgGridHelpers();
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -141,9 +143,10 @@ export const BottomDrawer = (): ReactElement => {
         onOpenChange={onOpenChange}
         position="bottom"
         style={{ height: "max-content" }}
+        aria-labelledby={id}
       >
         <DrawerCloseButton onClick={handleClose} />
-        <H2 style={{ paddingBottom: "var(--salt-spacing-300)" }}>
+        <H2 id={id} style={{ paddingBottom: "var(--salt-spacing-300)" }}>
           Marginal Tiering
         </H2>
         <div
