@@ -1,4 +1,10 @@
-import { Button, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  StackLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
+} from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -13,9 +19,9 @@ import { QAContainer, QAContainerProps } from "docs/components";
 
 import "./dialog.stories.css";
 
-function FakeDialog({ children, status }: DialogProps) {
+function FakeDialog({ children, status, id }: DialogProps) {
   return (
-    <DialogContext.Provider value={{ status }}>
+    <DialogContext.Provider value={{ status, id }}>
       <div className="fakeDialogWindow">{children}</div>
     </DialogContext.Provider>
   );
@@ -39,7 +45,7 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
   return (
     <StackLayout>
       <FakeDialog status={status}>
-        <DialogTitle> {title} </DialogTitle>
+        <DialogTitle title={title} />
         <DialogContent>This is dialog content...</DialogContent>
         <DialogActions>
           <Button style={{ marginRight: "auto" }} variant="secondary">
@@ -52,6 +58,49 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
       </FakeDialog>
     </StackLayout>
   );
+};
+
+export const Default: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+  return (
+    <QAContainer cols={3} height={300} itemPadding={3} {...rest}>
+      <DialogTemplate title={"Dialog Title"} />
+    </QAContainer>
+  );
+};
+
+Default.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const Subtitle: StoryFn<QAContainerProps> = () => {
+  return (
+    <QAContainer width={1300} itemPadding={3}>
+      <FakeDialog>
+        <DialogTitle
+          title="Subscribe"
+          subtitle="Recieve emails about the latest updates"
+          style={{ width: "500px" }}
+        />
+        <DialogCloseButton />
+
+        <DialogContent>
+          <FormField necessity="asterisk">
+            <FormFieldLabel> Email </FormFieldLabel>
+            <Input defaultValue="Email Address" />
+          </FormField>
+        </DialogContent>
+        <DialogActions>
+          <Button>Cancel</Button>
+          <Button variant="cta">Subscribe</Button>
+        </DialogActions>
+      </FakeDialog>
+    </QAContainer>
+  );
+};
+
+Subtitle.parameters = {
+  chromatic: { disableSnapshot: false },
 };
 
 type sizes = "small" | "medium" | "large";

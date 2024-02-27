@@ -8,3 +8,4 @@ export * from "./CloseButton";
 export * from "./MandatoryAction";
 export * from "./Sizes";
 export * from "./DisableScrim";
+export * from "./Subtitle";
