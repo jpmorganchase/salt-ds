@@ -51,13 +51,11 @@ export const DialogTitle = ({
     window: targetWindow,
   });
 
-  const subtitleId = `${id}-subtitle`;
-  const titleId = `${id}-title`;
-
   const status = statusProp ?? (statusContext as ValidationStatus);
 
   return (
     <div
+      id={id as string}
       className={clsx(
         withBaseName(),
         {
@@ -71,13 +69,11 @@ export const DialogTitle = ({
       {status && <StatusIndicator status={status} />}
       <div>
         {subtitle && (
-          <Text as={"label"} variant="secondary" id={subtitleId}>
+          <Text as={"label"} variant="secondary">
             {subtitle}
           </Text>
         )}
-        <H2 className={clsx(withBaseName("title"))} id={titleId}>
-          {title}
-        </H2>
+        <H2 className={clsx(withBaseName("title"))}>{title}</H2>
       </div>
     </div>
   );
