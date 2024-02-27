@@ -25,9 +25,7 @@ export const Error = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open error dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open error dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}

@@ -25,7 +25,7 @@ export const Success = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+      <Button onClick={handleRequestOpen}>
         Open success dialog
       </Button>
       <Dialog

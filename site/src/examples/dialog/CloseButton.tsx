@@ -26,9 +26,7 @@ export const CloseButton = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open dialog with close button
-      </Button>
+      <Button onClick={handleRequestOpen}>Open dialog with close button</Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
         <DialogTitle title="Terms and conditions" />
         <DialogContent>

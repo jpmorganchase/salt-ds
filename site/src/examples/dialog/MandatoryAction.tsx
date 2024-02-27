@@ -25,9 +25,7 @@ export const MandatoryAction = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open Mandatory Action Dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open Mandatory Action Dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}

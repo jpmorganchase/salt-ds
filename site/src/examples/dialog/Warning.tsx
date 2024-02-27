@@ -25,9 +25,7 @@ export const Warning = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open warning dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open warning dialog</Button>
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
