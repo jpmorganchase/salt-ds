@@ -34,9 +34,9 @@ export const MandatoryAction = (): ReactElement => {
         disableDismiss
         size="small"
         status="error"
-        aria-labelledby={id}
+        id={id}
       >
-        <DialogTitle title="Delete Transaction" id={id} />
+        <DialogTitle title="Delete Transaction" />
         <DialogContent>
           Are you sure you want to permenantly delete transaction?
         </DialogContent>

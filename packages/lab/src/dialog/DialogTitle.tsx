@@ -32,8 +32,6 @@ interface DialogTitleProps
    **/
   subtitle?: ReactNode;
 
-  id?: string;
-
   className?: string;
 }
 
@@ -41,18 +39,20 @@ export const DialogTitle = ({
   className,
   title,
   subtitle,
-  id,
   disableAccent,
   status: statusProp,
   ...rest
 }: DialogTitleProps) => {
-  const { status: statusContext } = useDialogContext();
+  const { status: statusContext, id } = useDialogContext();
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dialog-title",
     css: dialogTitleCss,
     window: targetWindow,
   });
+
+  const subtitleId = `${id}-subtitle`;
+  const titleId = `${id}-title`;
 
   const status = statusProp ?? (statusContext as ValidationStatus);
 
@@ -71,11 +71,11 @@ export const DialogTitle = ({
       {status && <StatusIndicator status={status} />}
       <div>
         {subtitle && (
-          <Text as={"label"} variant="secondary">
+          <Text as={"label"} variant="secondary" id={subtitleId}>
             {subtitle}
           </Text>
         )}
-        <H2 className={clsx(withBaseName("title"))} id={id}>
+        <H2 className={clsx(withBaseName("title"))} id={titleId}>
           {title}
         </H2>
       </div>

@@ -44,9 +44,9 @@ const SmallDialog = (): ReactElement => {
         onOpenChange={onOpenChange}
         size="small"
         status="warning"
-        aria-labelledby={id}
+        id={id}
       >
-        <DialogTitle disableAccent title="Reset grid settings?" id={id} />
+        <DialogTitle disableAccent title="Reset grid settings?" />
         <DialogContent>
           Are you sure you want to reset all grid data? Any previous settings
           will not be saved

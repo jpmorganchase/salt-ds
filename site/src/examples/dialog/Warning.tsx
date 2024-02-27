@@ -33,9 +33,9 @@ export const Warning = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="warning"
         size="small"
-        aria-labelledby={id}
+        id={id}
       >
-        <DialogTitle id={id} title="File access" />
+        <DialogTitle title="File access" />
 
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give

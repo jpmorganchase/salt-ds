@@ -28,8 +28,8 @@ export const Default = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open default dialog
       </Button>
-      <Dialog open={open} onOpenChange={onOpenChange} aria-labelledby={id}>
-        <DialogTitle title="Terms and conditions" id={id} />
+      <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+        <DialogTitle title="Terms and conditions" />
         <DialogContent>
           <StackLayout>
             <div>

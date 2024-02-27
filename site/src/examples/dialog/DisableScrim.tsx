@@ -28,13 +28,8 @@ export const DisableScrim = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open dialog without Scrim
       </Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        aria-labelledby={id}
-        disableScrim
-      >
-        <DialogTitle title="Terms and conditions" disableAccent id={id} />
+      <Dialog open={open} onOpenChange={onOpenChange} disableScrim id={id}>
+        <DialogTitle title="Terms and conditions" disableAccent />
         <DialogContent>
           <StackLayout>
             <div>

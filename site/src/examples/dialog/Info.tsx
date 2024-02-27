@@ -33,9 +33,9 @@ export const Info = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="info"
         size="small"
-        aria-labelledby={id}
+        id={id}
       >
-        <DialogTitle title="File update" id={id} />
+        <DialogTitle title="File update" />
         <DialogContent>
           A new version of this file is available with 26 updates.
         </DialogContent>

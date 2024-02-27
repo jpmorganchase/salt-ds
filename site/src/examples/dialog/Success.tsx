@@ -33,9 +33,9 @@ export const Success = (): ReactElement => {
         onOpenChange={onOpenChange}
         status="success"
         size="small"
-        aria-labelledby={id}
+        id={id}
       >
-        <DialogTitle title="File uploaded" id={id} />
+        <DialogTitle title="File uploaded" />
         <DialogContent>
           File has been successfully uploaded to the shared drive.
         </DialogContent>

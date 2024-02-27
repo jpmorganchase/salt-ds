@@ -28,8 +28,8 @@ export const WithoutAccent = (): ReactElement => {
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Open dialog without accent
       </Button>
-      <Dialog open={open} onOpenChange={onOpenChange} aria-labelledby={id}>
-        <DialogTitle title="Terms and conditions" disableAccent id={id} />
+      <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+        <DialogTitle title="Terms and conditions" disableAccent />
         <DialogContent>
           <StackLayout>
             <div>
