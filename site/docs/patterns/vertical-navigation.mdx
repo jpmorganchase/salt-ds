@@ -41,7 +41,7 @@ You can use left-aligned icons to effectively signify the navigation item’s pu
 </ExampleContainer>
 
 
-## Spacing
+### Layout
 
 Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to display navigation items in a column formation. Use `--size-border` for spacing between the items. 
 
@@ -83,9 +83,7 @@ When a parent item is collapsed but contains the currently active page, the pare
   label="Expand to reveal active nested item"
 />
 
-## Layout
-
-### Application view
+## Application view
 
 <Diagram
   src="/img/patterns/vertical-navigation/application-layout.png"
@@ -103,7 +101,7 @@ You can use the default navigation items as anchor links within an application v
   border
 />
 
-## Vertical navigation within modals
+## Within modals
 
 Modals such as preferences dialogs can contain a vertical navigation to allow users to navigate between distinct panels of content within the dialog. 
 
@@ -115,7 +113,7 @@ Refer to the [preferences dialog](../preferences-dialog) pattern for further gui
   border
 />
 
-## Responsive behvaior
+## Responsive behavior
 
 A vertical navigation remains fixed in width when the user resizes the browser. You can set it to the width of your choice. but you should consider the overall label length, theme, density, and screen size you’re designing for when making your decision. 
 
