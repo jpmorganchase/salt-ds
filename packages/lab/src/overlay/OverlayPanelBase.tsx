@@ -42,10 +42,8 @@ export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {
         strokeWidth={1}
         fill="var(--overlay-background)"
         stroke="var(--overlay-borderColor)"
-        style={{
-          height: "calc(var(--salt-size-adornment) + 6px)", // FIXME: +6px to account for Floating UI's FloatingArrow positioning calculation
-          width: "calc(var(--salt-size-adornment) + 8px)", // FIXME: +8px to account for Floating UI's FloatingArrow positioning calculation
-        }}
+        height={5}
+        width={10}
       />
     </>
   );

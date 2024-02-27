@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 
 import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
-import { Button, CheckboxGroup, Checkbox } from "@salt-ds/core";
+import { Button, CheckboxGroup, Checkbox, useId } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
 
@@ -107,7 +107,7 @@ const WithActionsContent = ({
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
-  const id = "overlay-with-actions";
+  const id = useId();
 
   return (
     <Overlay

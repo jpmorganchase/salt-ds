@@ -23,7 +23,7 @@
 }
 
 .saltOverlayPanelBase-container {
-  animation: fade-in var(--salt-duration-perceptible) ease-in-out;
+  animation: var(--salt-animation-fade-in-center);
   position: relative;
 }
 

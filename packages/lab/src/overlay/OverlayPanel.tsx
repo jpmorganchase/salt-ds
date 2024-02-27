@@ -43,30 +43,26 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       });
     };
 
-    if (!openState) return <></>;
-
     return (
-      <FloatingOverlay>
-        <FloatingComponent
-          open={openState}
-          className={clsx(withBaseName(), className)}
-          aria-modal="true"
-          aria-labelledby={`${id}-header`}
-          aria-describedby={`${id}-content`}
-          {...getOverlayProps()}
-          ref={handleRef}
-          width={width}
-          height={height}
-          top={top}
-          left={left}
-          position={position}
-          focusManagerProps={{
-            context: context,
-          }}
-        >
-          <OverlayPanelBase {...rest} />
-        </FloatingComponent>
-      </FloatingOverlay>
+      <FloatingComponent
+        open={openState}
+        className={clsx(withBaseName(), className)}
+        aria-modal="true"
+        aria-labelledby={`${id}-header`}
+        aria-describedby={`${id}-content`}
+        {...getOverlayProps()}
+        ref={handleRef}
+        width={width}
+        height={height}
+        top={top}
+        left={left}
+        position={position}
+        focusManagerProps={{
+          context: context,
+        }}
+      >
+        <OverlayPanelBase {...rest} />
+      </FloatingComponent>
     );
   }
 );
