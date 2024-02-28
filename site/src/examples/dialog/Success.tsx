@@ -33,7 +33,7 @@ export const Success = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle title="File uploaded" />
+        <DialogTitle header="File uploaded" />
         <DialogContent>
           File has been successfully uploaded to the shared drive.
         </DialogContent>

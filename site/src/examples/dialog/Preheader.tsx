@@ -8,7 +8,7 @@ import {
   DialogCloseButton,
 } from "@salt-ds/lab";
 
-export const Subtitle = (): ReactElement => {
+export const Preheader = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -26,11 +26,11 @@ export const Subtitle = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
+      <Button onClick={handleRequestOpen}>Open dialog with preheader</Button>
       <Dialog open={open} onOpenChange={onOpenChange} size="small" id={id}>
         <DialogTitle
-          title="Subscribe"
-          subtitle="Recieve emails about the latest updates"
+          header="Subscribe"
+          preheader="Recieve emails about the latest updates"
         />
         <DialogCloseButton onClick={handleClose} />
 

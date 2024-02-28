@@ -34,7 +34,7 @@ export const Error = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle title="Can`t move file" />
+        <DialogTitle header="Can`t move file" />
         <DialogContent>
           You don’t have permission to move or delete this file.
         </DialogContent>

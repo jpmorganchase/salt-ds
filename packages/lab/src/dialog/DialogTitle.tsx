@@ -14,8 +14,7 @@ import dialogTitleCss from "./DialogTitle.css";
 
 const withBaseName = makePrefixer("saltDialogTitle");
 
-interface DialogTitleProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "title"> {
+interface DialogTitleProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The status of the Dialog
    */
@@ -26,19 +25,19 @@ interface DialogTitleProps
   /**
    * Displays the Dialog Title in a H2 component
    */
-  title: ReactNode;
+  header: ReactNode;
   /**
    * Displays the Dialog Subtitle in a Label component
    **/
-  subtitle?: ReactNode;
+  preheader?: ReactNode;
 
   className?: string;
 }
 
 export const DialogTitle = ({
   className,
-  title,
-  subtitle,
+  header,
+  preheader,
   disableAccent,
   status: statusProp,
   ...rest
@@ -68,12 +67,12 @@ export const DialogTitle = ({
     >
       {status && <StatusIndicator status={status} />}
       <div>
-        {subtitle && (
+        {preheader && (
           <Text as={"label"} variant="secondary">
-            {subtitle}
+            {preheader}
           </Text>
         )}
-        <H2 className={clsx(withBaseName("title"))}>{title}</H2>
+        <H2 className={clsx(withBaseName("header"))}>{header}</H2>
       </div>
     </div>
   );

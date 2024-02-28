@@ -27,7 +27,7 @@ export const WithoutAccent = (): ReactElement => {
     <>
       <Button onClick={handleRequestOpen}>Open dialog without accent</Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogTitle title="Terms and conditions" disableAccent />
+        <DialogTitle header="Terms and conditions" disableAccent />
         <DialogContent>
           <StackLayout>
             <div>

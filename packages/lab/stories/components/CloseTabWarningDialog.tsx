@@ -29,7 +29,7 @@ export const CloseTabWarningDialog = ({
       }
     }}
   >
-    <DialogTitle title="Do you want to close this tab?" />
+    <DialogTitle header="Do you want to close this tab?" />
 
     <DialogContent>
       {`Closing the tab will cause any changes made to
