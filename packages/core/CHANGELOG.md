@@ -1,5 +1,52 @@
 # @salt-ds/core
 
+## 1.18.0
+
+### Minor Changes
+
+- fb4a0ce7: Updates default padding for Card to `--salt-spacing-200`.
+
+  Added `accent` and `hoverable` props to Card.
+
+  `accent` prop enables positioning of an optional accent.
+  `hoverable` prop enables hover styling.
+
+  ```tsx
+  <Card accent="top" hoverable>
+    {children}
+  </Card>
+  ```
+
+### Patch Changes
+
+- 55749302: Fixed multiline input not collapsing when the input value resets.
+- 511a921e: Fix false positive error when a Salt Provider tries to stop multiple providers being root providers in different windows
+- 92d5ebac: Removed auto scrolIntoView from Toast which caused issues for some users.
+
+  If this is a feature you need, pass a ref to Toast like below
+
+  ```
+    const toastRef = useRef<HTMLDivElement>();
+
+    useLayoutEffect(() => {
+      toastRef.current?.scrollIntoView();
+    }, []);
+
+    return (
+      <Toast ref={toastRef}>
+      // ...
+    )
+  ```
+
+- b769f3e9: Added CSS API variable `--saltFormField-label-width`, replacing deprecated `--formField-label-width`
+
+  Usage should be changed:
+
+  ```diff
+  - style={{ "--formField-label-width": "100px" } as CSSProperties}
+  + style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
+  ```
+
 ## 1.17.0
 
 ### Minor Changes
