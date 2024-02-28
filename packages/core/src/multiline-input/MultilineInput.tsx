@@ -153,7 +153,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       if (!input) return;
       const hasBeenManuallyResized =
         previousHeight.current !== undefined &&
-        input?.style.height !== previousHeight.current;
+        input.style.height !== previousHeight.current;
       if (!hasBeenManuallyResized) {
         const previousOverflow = input.style.overflow;
         input.style.overflow = "hidden";

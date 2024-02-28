@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fixed multiline input not collapsing when its controlled API is used.
+Fixed multiline input not collapsing when the input value resets.
