@@ -7,12 +7,11 @@ import {
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
-import { FloatingOverlay } from "@floating-ui/react";
 import { OverlayPanelBase } from "./OverlayPanelBase";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
 
-export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
+export type OverlayPanelProps = ComponentPropsWithoutRef<"div">;
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
@@ -43,13 +42,13 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       });
     };
 
+    console.log(rest);
+
     return (
       <FloatingComponent
         open={openState}
         className={clsx(withBaseName(), className)}
         aria-modal="true"
-        aria-labelledby={`${id}-header`}
-        aria-describedby={`${id}-content`}
         {...getOverlayProps()}
         ref={handleRef}
         width={width}

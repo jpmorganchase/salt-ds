@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 
 import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
-import { Button, CheckboxGroup, Checkbox, useId } from "@salt-ds/core";
+import { Button, CheckboxGroup, Checkbox } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
 
@@ -24,13 +24,7 @@ const checkboxesData = [
   },
 ];
 
-const WithActionsContent = ({
-  onClose,
-  id,
-}: {
-  onClose: () => void;
-  id: string | undefined;
-}) => {
+const WithActionsContent = ({ onClose }: { onClose: () => void }) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
   ]);
@@ -74,10 +68,8 @@ const WithActionsContent = ({
 
   return (
     <>
-      <h3 id={`${id}-header`} style={{ marginTop: 0, paddingBottom: 10 }}>
-        Export
-      </h3>
-      <div id={`${id}-content`}>
+      <h3 style={{ marginTop: 0, paddingBottom: 10 }}>Export</h3>
+      <div>
         <Checkbox
           indeterminate={indeterminate}
           checked={!indeterminate}
@@ -107,7 +99,6 @@ const WithActionsContent = ({
 
 export const WithActions = () => {
   const [show, setShow] = React.useState(false);
-  const id = useId();
 
   return (
     <Overlay
@@ -119,7 +110,6 @@ export const WithActions = () => {
         event.key === "Escape" && setShow(false);
       }}
       placement="bottom"
-      id={id}
     >
       <OverlayTrigger>
         <Button
@@ -139,7 +129,6 @@ export const WithActions = () => {
           onClose={() => {
             setShow(false);
           }}
-          id={id}
         />
       </OverlayPanel>
     </Overlay>

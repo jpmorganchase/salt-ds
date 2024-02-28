@@ -24,19 +24,16 @@ export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {
   const { children, className, ...rest } = props;
 
   return (
-    <>
-      <div className={clsx(withBaseName("container"), className)} {...rest}>
-        <Button
-          onClick={handleCloseButton}
-          variant="secondary"
-          className={withBaseName("closeButton")}
-          aria-label="Close Overlay"
-        >
-          <CloseIcon aria-hidden />
-        </Button>
-        <div className={withBaseName("content")}>{children}</div>
-      </div>
-
+    <div className={clsx(withBaseName("container"), className)} {...rest}>
+      <Button
+        onClick={handleCloseButton}
+        variant="secondary"
+        className={withBaseName("closeButton")}
+        aria-label="Close Overlay"
+      >
+        <CloseIcon aria-hidden />
+      </Button>
+      <div className={withBaseName("content")}>{children}</div>
       <FloatingArrow
         {...arrowProps}
         strokeWidth={1}
@@ -45,6 +42,6 @@ export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {
         height={5}
         width={10}
       />
-    </>
+    </div>
   );
 };
