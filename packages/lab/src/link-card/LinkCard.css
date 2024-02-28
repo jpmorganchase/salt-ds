@@ -28,7 +28,7 @@
 .saltLinkCard-accent::after {
   content: "";
   position: absolute;
-  background-color: var(--saltLinkCard-accentColor, var(--card-accent-color));
+  background-color: var(--saltLinkCard-accent-color, var(--card-accent-color));
 }
 
 /* Styles applied to LinkCard if `accent="bottom"` (default) */
