@@ -8,12 +8,9 @@ import {
   RadioButton,
   RadioButtonGroup,
   Label,
-  Link,
 } from "@salt-ds/core";
 
 import { LinkCard, LinkCardProps } from "@salt-ds/lab";
-
-import "./link-card.stories.css";
 
 export default {
   title: "Lab/Link Card",

@@ -7,7 +7,7 @@
   padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
   position: relative;
   text-decoration: none;
-  transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow var(--salt-duration-instant) ease-in-out;
 }
 
 /* Styles applied to LinkCard when variant="primary" */
@@ -72,10 +72,6 @@
   outline-width: var(--salt-focused-outlineWidth);
   outline-offset: var(--salt-focused-outlineOffset);
   --card-accent-color: var(--salt-selectable-foreground-hover);
-}
-
-.saltLinkCard * {
-  text-decoration: none;
 }
 
 /* Styles applied on hover state to LinkCard */

@@ -8,6 +8,6 @@ export const LinkCardExample = (): ReactElement => {
       target="_blank"
       style={{ width: "260px", height: "144px" }}
       accent="top"
-    ></LinkCard>
+    >contents<div>contents of contents<text>inside</text></div></LinkCard>
   );
 };
