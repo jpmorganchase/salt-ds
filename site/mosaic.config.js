@@ -35,8 +35,8 @@ const saltConfig = {
       modulePath: "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin",
       options: {
         minRank: 2,
-        maxRank: 2
-      }
+        maxRank: 2,
+      },
     },
     {
       modulePath: require.resolve(
