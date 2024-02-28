@@ -32,6 +32,7 @@ const DialogTemplate: StoryFn<
   DialogProps & { header: string; preheader: string }
 > = ({
   header,
+  preheader,
   // @ts-ignore
   content,
   id,
@@ -65,7 +66,7 @@ const DialogTemplate: StoryFn<
         id={id}
         size={size}
       >
-        <DialogTitle header={header} />
+        <DialogTitle header={header} preheader={preheader} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={handleClose}>
@@ -146,7 +147,7 @@ export const Preheader = DialogTemplate.bind({});
 
 Preheader.args = {
   header: "Congratulations! You have created a Dialog.",
-  preheader: "Add an preheader here",
+  preheader: "I am a preheader",
 };
 
 const AlertDialogTemplate: StoryFn<DialogProps & { header: string }> = ({
@@ -266,50 +267,6 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
             Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-};
-
-export const Subtitle: StoryFn<typeof Dialog> = ({
-  open: openProp = false,
-}) => {
-  const [open, setOpen] = useState(openProp);
-
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (value: boolean) => {
-    setOpen(value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} size="small">
-        <DialogTitle
-          header="Subscribe"
-          preheader="Recieve emails about the latest updates"
-        />
-        <DialogCloseButton onClick={handleClose} />
-
-        <DialogContent>
-          <FormField necessity="asterisk">
-            <FormFieldLabel> Email </FormFieldLabel>
-            <Input defaultValue="Email Address" />
-          </FormField>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
-            Subscribe
           </Button>
         </DialogActions>
       </Dialog>

@@ -3,10 +3,10 @@ import * as dialogStories from "@stories/dialog/dialog.stories";
 
 const composedStories = composeStories(dialogStories);
 
-const { Default, Subtitle } = composedStories;
+const { Default, Preheader } = composedStories;
 
 describe("GIVEN a Dialog", () => {
-  describe("WHEN only title is provided", () => {
+  describe("WHEN only header is provided", () => {
     it("THEN it should display a dialog by default", () => {
       cy.mount(<Default />);
 
@@ -18,13 +18,13 @@ describe("GIVEN a Dialog", () => {
       cy.get(".saltDialogActions").should("be.visible");
     });
 
-    it("THEN it should display the titile", () => {
+    it("THEN it should display the header", () => {
       cy.mount(<Default />);
 
       cy.findByRole("button").click();
 
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle-title").should("be.visible");
+      cy.get(".saltDialogTitle-header").should("be.visible");
     });
 
     it("THEN it should add the accent class to the title component", () => {
@@ -58,9 +58,9 @@ describe("GIVEN a Dialog", () => {
     );
   });
 
-  describe("WHEN subtitle is provided", () => {
-    it("THEN it should display the subtitle", () => {
-      cy.mount(<Subtitle />);
+  describe("WHEN preheader is provided", () => {
+    it("THEN it should display the preheader", () => {
+      cy.mount(<Preheader />);
 
       cy.findByRole("button").click();
 
