@@ -1,11 +1,4 @@
-import {
-  H2,
-  Text,
-  StackLayout,
-  Drawer,
-  DrawerCloseButton,
-  DrawerProps,
-} from "@salt-ds/core";
+import { H2, Text, StackLayout, Drawer, DrawerProps } from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
@@ -19,7 +12,6 @@ function FakeDrawer({ children, ...rest }: DrawerProps) {
     <div
       style={{
         width: 350,
-        height: 300,
       }}
       {...rest}
     >
@@ -32,7 +24,6 @@ const DrawerTemplate: StoryFn<typeof Drawer> = () => {
   return (
     <StackLayout>
       <FakeDrawer>
-        <DrawerCloseButton />
         <H2>Title</H2>
         <Text>
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -54,7 +45,7 @@ export const DrawerExamples: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
 
   return (
-    <QAContainer height={1800} itemPadding={20} width={1000} {...rest}>
+    <QAContainer height={2000} itemPadding={20} width={1000} {...rest}>
       <DrawerTemplate />
     </QAContainer>
   );
