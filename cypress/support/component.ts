@@ -6,12 +6,10 @@ import "./assertions";
 import "./commands";
 import "./cypress.css";
 
-// TODO remove when https://github.com/cypress-io/cypress/issues/21434 is fixed
-global.process = global.process || {};
-global.process.env = global.process.env || {};
-
 setProjectAnnotations(globalStorybookConfig);
 
 beforeEach(() => {
+  // Focus to viewport and reset mouse position before every test.
   cy.window({ log: false }).focus({ log: false });
+  cy.get("body", { log: false }).realHover({ position: "topLeft" });
 });

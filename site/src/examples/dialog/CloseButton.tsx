@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout } from "@salt-ds/core";
+import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -10,6 +10,7 @@ import {
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -25,17 +26,9 @@ export const CloseButton = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open dialog with close button
-      </Button>
-      <Dialog
-        open={open}
-        onOpenChange={onOpenChange}
-        aria-labelledby="terms-and-conditions-dialog"
-      >
-        <DialogTitle id="terms-and-conditions-dialog-heading">
-          Terms and conditions
-        </DialogTitle>
+      <Button onClick={handleRequestOpen}>Open dialog with close button</Button>
+      <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+        <DialogTitle title="Terms and conditions" />
         <DialogContent>
           <StackLayout>
             <div>
