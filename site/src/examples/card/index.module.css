@@ -1,0 +1,23 @@
+.category1 {
+  --saltCard-accentColor: rgb(70, 118, 191);
+}
+
+.category1:hover {
+  --saltCard-accentColor: rgb(35, 77, 140);
+}
+
+.category2 {
+  --saltCard-accentColor: rgb(171, 101, 40);
+}
+
+.category2:hover {
+  --saltCard-accentColor: rgb(133, 72, 20);
+}
+
+.variantCard {
+  width: 260px;
+  height: 144px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
