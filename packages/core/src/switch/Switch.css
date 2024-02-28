@@ -26,6 +26,7 @@
   align-items: center;
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);
+  box-sizing: border-box;
 }
 
 .saltSwitch-label {
@@ -71,6 +72,7 @@
   background: currentColor;
   margin: var(--salt-spacing-25);
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  box-sizing: border-box;
 }
 
 .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,

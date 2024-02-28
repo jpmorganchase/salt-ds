@@ -13,6 +13,7 @@
   font-size: var(--saltFileDropZone-fontSize, var(--salt-text-fontSize));
   font-family: var(--saltFileDropZone-fontFamily, var(--salt-text-fontFamily));
   line-height: var(--saltFileDropZone-lineHeight, var(--salt-text-lineHeight));
+  box-sizing: border-box;
 }
 
 .saltFileDropZone-active {

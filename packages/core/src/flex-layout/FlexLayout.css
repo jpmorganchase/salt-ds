@@ -18,6 +18,7 @@
   flex-wrap: var(--flexLayout-wrap);
   justify-content: var(--flexLayout-justify);
   align-items: var(--flexLayout-align);
+  box-sizing: border-box;
 }
 
 .saltFlexLayout-separator {
