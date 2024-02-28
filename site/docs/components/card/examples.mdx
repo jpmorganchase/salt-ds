@@ -10,61 +10,59 @@ data:
 
 <LivePreviewControls>
 
-    <LivePreview componentName="card" exampleName="Default" >
+<LivePreview componentName="card" exampleName="Default" displayName="Card" >
+### Card
 
-## Default
+By default, the card component does not have any interactive or focusable elements.
 
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="Secondary" >
-
-## Secondary
-
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="Actions" >
-
-## Adding actions
-
-If you intend to add any links or buttons within your card, use a default card rather than interactable card to ensure the component is accessible.
 </LivePreview>
 
-    <LivePreview componentName="card" exampleName="InteractableCard" >
+<LivePreview componentName="card" exampleName="Variants" >
+### Variants
 
-## Interactable card
+All card components provide both primary and secondary variants, offering flexibility and enabling differentiation based on visual hierarchy within your UI.
 
-Use the `InteractableCard` component to make the entire card interactable. Don't use any focusable elements within interactable cards. To use as a link, wrap `Card` in [`Link`](../link).
-
-Avoid adding too much content to interactable cards. All users should be able to read them easily, and it shouldn't take too long for a screen reader tool to read out the content.
 </LivePreview>
 
-    <LivePreview componentName="card" exampleName="SecondaryInteractableCard" >
+<LivePreview componentName="card" exampleName="Accents" >
+### Accents
 
-## Secondary interactable card
+- The accent in a card is optional, but you can use it to indicate meaning (such as product or brand color).
+- When paired with the hoverable prop, an accent can indicate a card is interactive when the user moves focus to the card.
+- Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
 
-    </LivePreview>
-
-    <LivePreview componentName="card" exampleName="DisabledInteractableCard" >
-
-## Disabled interactable card
-
-Set `disabled={true}` to apply disabled styling to interactable cards.
-
-Make sure to also apply `disabled={true}` to any nested components, such as `Text`, to ensure disabled styling also applies to the content.
 </LivePreview>
 
-    <LivePreview componentName="card" exampleName="AccentVariations" >
+<LivePreview componentName="card" exampleName="Actions" >
+### Actions
 
-## Accent variations
+You can incorporate actions like [links](../link) or [buttons](../button) into a card. Don't embed actions into a link card or an interactable card, as the card itself is the interactive element.
 
-Use the `accentPlacement` prop to position the accent bar to the left, right, top or bottom of an interactable card.
 </LivePreview>
 
-    <LivePreview componentName="card" exampleName="MultipleCards" >
+<LivePreview componentName="card" exampleName="FullWidthImage" >
+### Full width image
 
-## Multiple cards
+When using images in cards, set the image to span the card's entire width. You can do this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
 
-You can use layout components to group card components together.
+</LivePreview>
+
+<LivePreview componentName="card" exampleName="CustomPadding" >
+### Custom padding
+
+- By default, the card components include `--salt-spacing-200` inner padding.
+- For very small cards with a limited hit area, customizing the padding to `--salt-spacing-100` is advisable.
+- When your cards are intended to occupy a significant portion of your application window, `--salt-spacing-300` is recommended.
+- Customize the spacing using the `--saltCard-padding` CSS property.
+
+</LivePreview>
+
+<LivePreview componentName="card" exampleName="CustomAccent" >
+### Custom accent
+
+- By default, the card components accent color uses `--salt-container-primary-borderColor` or `--salt-container-secondary-borderColor` depending on the variant.
+- When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accentColor` with the desired color.
+
 </LivePreview>
 
 </LivePreviewControls>

@@ -1,5 +1,11 @@
 import { PropsWithChildren, useState } from "react";
-import { Button, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  StackLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
+} from "@salt-ds/core";
 import {
   Dialog,
   DialogTitle,
@@ -22,10 +28,10 @@ export default {
 
 const DialogTemplate: StoryFn<typeof Dialog> = ({
   title,
-  id,
-  size,
   // @ts-ignore
   content,
+  id,
+  size,
   open: openProp = false,
   ...args
 }) => {
@@ -55,7 +61,8 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
         id={id}
         size={size}
       >
-        <DialogTitle>{title}</DialogTitle>
+        {/* eslint-disable-next-line */}
+        <DialogTitle title={title} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={handleClose}>
@@ -169,7 +176,7 @@ const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle title={title} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -208,8 +215,6 @@ ErrorStatus.args = {
 
 export const MandatoryAction: StoryFn<typeof Dialog> = ({
   open: openProp = false,
-  status = "info",
-  size = "small",
 }) => {
   const [open, setOpen] = useState(openProp);
 
@@ -240,7 +245,8 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         initialFocus={1}
         disableDismiss
       >
-        <DialogTitle id="mandatory-action">Delete Transaction</DialogTitle>
+        <DialogTitle id="mandatory-action" title="Delete Transaction" />
+
         <DialogContent>
           Are you sure you want to permanently delete this transaction
         </DialogContent>
@@ -248,6 +254,50 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
             Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const Subtitle: StoryFn<typeof Dialog> = ({
+  open: openProp = false,
+}) => {
+  const [open, setOpen] = useState(openProp);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
+      <Dialog open={open} onOpenChange={onOpenChange} size="small">
+        <DialogTitle
+          title="Subscribe"
+          subtitle="Recieve emails about the latest updates"
+        />
+        <DialogCloseButton onClick={handleClose} />
+
+        <DialogContent>
+          <FormField necessity="asterisk">
+            <FormFieldLabel> Email </FormFieldLabel>
+            <Input defaultValue="Email Address" />
+          </FormField>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Subscribe
           </Button>
         </DialogActions>
       </Dialog>
@@ -268,7 +318,7 @@ export const DesktopDialog = () => {
   return (
     <StackLayout>
       <FakeWindow>
-        <DialogTitle>Window Dialog</DialogTitle>
+        <DialogTitle title="Window Dialog" />
         <DialogContent>Hello world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
@@ -277,7 +327,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle>Window Dialog</DialogTitle>
+        <DialogTitle title="Window Dialog" />
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
@@ -286,7 +336,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle status="warning">Warning Dialog</DialogTitle>
+        <DialogTitle status="warning" title="Warning Dialog" />
         <DialogContent>Potential issues abound!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
