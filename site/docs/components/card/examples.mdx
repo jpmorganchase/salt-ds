@@ -10,57 +10,57 @@ data:
 
 <LivePreviewControls>
 
-    <LivePreview componentName="card" exampleName="Default" displayName="Card" >
-      ### Card
+<LivePreview componentName="card" exampleName="Default" displayName="Card" >
+### Card
 
-      By default, the Card component does not have any interactive or focusable elements within it. 
-    </LivePreview>
+By default, the Card component does not have any interactive or focusable elements within it.
 
-        <LivePreview componentName="card" exampleName="Variants" >
-      ### Variants
+</LivePreview>
 
-      All card components provide both primary and secondary variants, offering flexibility and enabling differentiation based on visual hierarchy within your UI.
-    </LivePreview>
+<LivePreview componentName="card" exampleName="Variants" >
+### Variants
 
+All card components provide both primary and secondary variants, offering flexibility and enabling differentiation based on visual hierarchy within your UI.
 
-    <LivePreview componentName="card" exampleName="Accents" >
-      ### Accents
+</LivePreview>
 
-    - The accent in a Card is optional, however, it can be used to indicate meaning (such as Product or Brand color).
-    - An accent can work well with the hoverable prop, to indicate it is interactive when the user's focus is over a specific card.
-    - Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
+<LivePreview componentName="card" exampleName="Accents" >
+### Accents
 
-    </LivePreview>
+- The accent in a Card is optional, however, it can be used to indicate meaning (such as Product or Brand color).
+- An accent can work well with the hoverable prop, to indicate it is interactive when the user's focus is over a specific card.
+- Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
 
-    <LivePreview componentName="card" exampleName="Actions" >
-      ### Actions
+</LivePreview>
 
-    Use the Card to incorporate actions like [links](../link) or [buttons](../button) within it. Avoid embedding actions into a Link card or an Interactable card.
+<LivePreview componentName="card" exampleName="Actions" >
+### Actions
 
-   </LivePreview>
+Use the Card to incorporate actions like [links](../link) or [buttons](../button) within it. Avoid embedding actions into a Link card or an Interactable card.
 
-        <LivePreview componentName="card" exampleName="FullWidthImage" >
-      ### Full width image
+</LivePreview>
 
-      - When using images within your card components, we recommend having the image span the entire width of the card.
-      - You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
-    </LivePreview>
+<LivePreview componentName="card" exampleName="FullWidthImage" >
+### Full width image
 
+- When using images within your card components, we recommend having the image span the entire width of the card.
+- You can achieve this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
+  </LivePreview>
 
-    <LivePreview componentName="card" exampleName="CustomPadding" >
-      ### Custom padding
+<LivePreview componentName="card" exampleName="CustomPadding" >
+### Custom padding
 
-      - By default, the card components include spacing-200 inner padding.
-      - For very small cards with a limited hit area, customizing the padding to spacing-100 is advisable.
-      - When your cards are intended to occupy a significant portion of your application window, spacing-300 is recommended.
-      - Customize the spacing using the `--saltCard-padding` CSS property.
-    </LivePreview>
+- By default, the card components include spacing-200 inner padding.
+- For very small cards with a limited hit area, customizing the padding to spacing-100 is advisable.
+- When your cards are intended to occupy a significant portion of your application window, spacing-300 is recommended.
+- Customize the spacing using the `--saltCard-padding` CSS property.
+  </LivePreview>
 
-        <LivePreview componentName="card" exampleName="CustomAccent" >
-      ### Custom accent
+<LivePreview componentName="card" exampleName="CustomAccent" >
+### Custom accent
 
-      - By default, the card components accent color uses the Salt --container-border tokens in both primary and secondary variants.
-      - When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accentColor` to achieve your application needs.
-    </LivePreview>
+- By default, the card components accent color uses `--salt-container-primary-borderColor` or `--salt-container-secondary-borderColor` depending on the variant.
+- When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accentColor` to achieve your application needs.
+  </LivePreview>
 
 </LivePreviewControls>

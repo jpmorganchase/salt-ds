@@ -26,7 +26,9 @@ export const Accents = () => {
       </Card>
       <RadioButtonGroup
         value={placement}
-        onChange={(e) => setPlacement(e.target.value as CardProps["accent"])}
+        onChange={(event) =>
+          setPlacement(event.target.value as CardProps["accent"])
+        }
         direction="horizontal"
       >
         <RadioButton label="Top" value="top" key="top" />

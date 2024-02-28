@@ -24,8 +24,8 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof Card>;
 
-export const Default: StoryFn<typeof Card> = (props) => (
-  <Card {...props} style={{ width: "260px" }}>
+export const Default: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>
@@ -36,8 +36,8 @@ export const Default: StoryFn<typeof Card> = (props) => (
   </Card>
 );
 
-export const DefaultWithImage: StoryFn<typeof Card> = (props) => (
-  <Card {...props} style={{ width: "260px" }}>
+export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
     <StackLayout gap={3}>
       <img alt="example image" src={exampleImage} style={{ width: "100%" }} />
       <StackLayout gap={1}>
@@ -51,8 +51,8 @@ export const DefaultWithImage: StoryFn<typeof Card> = (props) => (
   </Card>
 );
 
-export const DefaultWithLink: StoryFn<typeof Card> = (props) => (
-  <Card {...props} style={{ width: "260px" }}>
+export const DefaultWithLink: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <StackLayout gap={1}>
@@ -68,8 +68,8 @@ export const DefaultWithLink: StoryFn<typeof Card> = (props) => (
   </Card>
 );
 
-export const DefaultWithButton: StoryFn<typeof Card> = (props) => (
-  <Card {...props} style={{ width: "260px" }}>
+export const DefaultWithButton: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <StackLayout gap={2} align="start">
@@ -83,7 +83,7 @@ export const DefaultWithButton: StoryFn<typeof Card> = (props) => (
   </Card>
 );
 
-export const AccentVariations: StoryFn<typeof Card> = (props) => {
+export const AccentVariations: StoryFn<typeof Card> = (args) => {
   const [placement, setPlacement] = useState<CardProps["accent"]>("bottom");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +92,7 @@ export const AccentVariations: StoryFn<typeof Card> = (props) => {
 
   return (
     <StackLayout style={{ width: "266px" }}>
-      <Card {...props} accent={placement} hoverable>
+      <Card {...args} accent={placement} hoverable>
         <StackLayout gap={1}>
           <H3>Sustainable investing products</H3>
           <Text>
@@ -132,7 +132,7 @@ export const AccentVariations: StoryFn<typeof Card> = (props) => {
   );
 };
 
-export const Variants: StoryFn<typeof Card> = (props) => {
+export const Variants: StoryFn<typeof Card> = (args) => {
   const variants = ["primary", "secondary"] as const;
   return (
     <StackLayout style={{ width: 600 }}>
@@ -140,7 +140,7 @@ export const Variants: StoryFn<typeof Card> = (props) => {
         return (
           <StackLayout align="end">
             <StackLayout direction="row" key={variant}>
-              <Card {...props} variant={variant}>
+              <Card {...args} variant={variant}>
                 <StackLayout gap={1}>
                   <H3>Sustainable investing products</H3>
                   <Text>
@@ -159,8 +159,8 @@ export const Variants: StoryFn<typeof Card> = (props) => {
   );
 };
 
-export const Interactable: StoryFn<typeof Card> = (props) => (
-  <InteractableCard {...props} style={{ width: "260px" }}>
+export const Interactable: StoryFn<typeof Card> = (args) => (
+  <InteractableCard {...args} style={{ width: "260px" }}>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>
@@ -171,7 +171,7 @@ export const Interactable: StoryFn<typeof Card> = (props) => (
   </InteractableCard>
 );
 
-export const InteractableDisabled: StoryFn<typeof Card> = (props) => (
+export const InteractableDisabled: StoryFn<typeof Card> = (args) => (
   <InteractableCard
     style={{ width: "260px" }}
     onClick={() => console.log("Clicked")}
@@ -188,7 +188,7 @@ export const InteractableDisabled: StoryFn<typeof Card> = (props) => (
   </InteractableCard>
 );
 
-export const InteractableAccentVariations: StoryFn<typeof Card> = (props) => {
+export const InteractableAccentVariations: StoryFn<typeof Card> = (args) => {
   const [placement, setPlacement] =
     useState<InteractableCardProps["accentPlacement"]>("bottom");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -198,7 +198,7 @@ export const InteractableAccentVariations: StoryFn<typeof Card> = (props) => {
   };
   return (
     <StackLayout style={{ width: "266px" }}>
-      <InteractableCard {...props} accentPlacement={placement}>
+      <InteractableCard {...args} accentPlacement={placement}>
         <StackLayout gap={1}>
           <H3>Sustainable investing products</H3>
           <Text>
@@ -238,10 +238,10 @@ export const InteractableAccentVariations: StoryFn<typeof Card> = (props) => {
   );
 };
 
-export const InteractableAsBlockLink: StoryFn<typeof Card> = (props) => {
+export const InteractableAsBlockLink: StoryFn<typeof Card> = (args) => {
   return (
     <Link style={{ textDecoration: "none" }} href="#" IconComponent={null}>
-      <InteractableCard {...props} style={{ width: "266px" }}>
+      <InteractableCard {...args} style={{ width: "266px" }}>
         <StackLayout gap={1}>
           <H3>Sustainable investing products</H3>
           <Text>

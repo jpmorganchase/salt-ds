@@ -10,7 +10,7 @@ import cardCss from "./Card.css";
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Accent position.
+   * If provided an accent is shown in the specified position.
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
@@ -31,7 +31,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   interactable?: boolean;
   /**
-   * Styling variant. Defaults to `primary`.
+   * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
 }
