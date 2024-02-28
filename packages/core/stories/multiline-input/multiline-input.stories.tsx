@@ -56,6 +56,41 @@ export const Controlled: StoryFn<typeof MultilineInput> = (args) => {
   );
 };
 
+export const ControlledWithAdornment: StoryFn<typeof MultilineInput> = (
+  args
+) => {
+  const [value, setValue] = useState("Value");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    // React 16 backwards compatibility
+    event.persist();
+    setValue(value);
+    args.onChange?.(event);
+  };
+  const onClear = () => {
+    setValue("");
+  };
+
+  return (
+    <MultilineInput
+      {...args}
+      value={value}
+      onChange={handleChange}
+      style={{ maxWidth: "266px" }}
+      endAdornment={
+        <Button
+          onClick={onClear}
+          variant={"secondary"}
+          aria-label="Clear input"
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+    />
+  );
+};
+
 export const NumberOfRows: StoryFn<typeof MultilineInput> = (args) => {
   return (
     <MultilineInput
