@@ -28,7 +28,7 @@
 .saltCard-accent::after {
   content: "";
   position: absolute;
-  background-color: var(--saltCard-accentColor, var(--card-accent-color));
+  background-color: var(--saltCard-accent-color, var(--card-accent-color));
 }
 
 /* Styles applied to Card if `accent="bottom"` (default) */
