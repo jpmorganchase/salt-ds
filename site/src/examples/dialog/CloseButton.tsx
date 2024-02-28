@@ -28,7 +28,7 @@ export const CloseButton = (): ReactElement => {
     <>
       <Button onClick={handleRequestOpen}>Open dialog with close button</Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogTitle title="Terms and conditions" />
+        <DialogTitle header="Terms and conditions" />
         <DialogContent>
           <StackLayout>
             <div>

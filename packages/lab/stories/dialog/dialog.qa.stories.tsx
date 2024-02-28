@@ -30,22 +30,17 @@ function FakeDialog({ children, status, id }: DialogProps) {
 export default {
   title: "Lab/Dialog/QA",
   component: Dialog,
-  args: {
-    title: "Congratulations! You have created a Dialog.",
-    content: "This is the content of the dialog.",
-  },
 } as Meta<typeof Dialog>;
 
-const DialogTemplate: StoryFn<typeof Dialog> = ({
+const DialogTemplate: StoryFn<DialogProps & { header: string }> = ({
   open: openProp = true,
   status,
-  title,
-  ...args
+  header,
 }) => {
   return (
     <StackLayout>
       <FakeDialog status={status}>
-        <DialogTitle title={title} />
+        <DialogTitle header={header} />
         <DialogContent>This is dialog content...</DialogContent>
         <DialogActions>
           <Button style={{ marginRight: "auto" }} variant="secondary">
@@ -64,7 +59,7 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} {...rest}>
-      <DialogTemplate title={"Dialog Title"} />
+      <DialogTemplate header={"Dialog Title"} />
     </QAContainer>
   );
 };
@@ -78,8 +73,8 @@ export const Subtitle: StoryFn<QAContainerProps> = () => {
     <QAContainer width={1300} itemPadding={3}>
       <FakeDialog>
         <DialogTitle
-          title="Subscribe"
-          subtitle="Recieve emails about the latest updates"
+          header="Subscribe"
+          preheader="Recieve emails about the latest updates"
           style={{ width: "500px" }}
         />
         <DialogCloseButton />
@@ -112,7 +107,7 @@ export const SizeDialog: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={3000} {...rest}>
       {sizes.map((size) => {
-        return <DialogTemplate key={size} title={"Info Dialog"} size={size} />;
+        return <DialogTemplate key={size} header={"Info Dialog"} size={size} />;
       })}
     </QAContainer>
   );
@@ -126,7 +121,7 @@ export const InfoDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"info"} title={"Info Dialog"} />
+      <DialogTemplate status={"info"} header={"Info Dialog"} />
     </QAContainer>
   );
 };
@@ -139,7 +134,7 @@ export const SuccessDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"success"} title={"Success Dialog"} />
+      <DialogTemplate status={"success"} header={"Success Dialog"} />
     </QAContainer>
   );
 };
@@ -152,7 +147,7 @@ export const WarningDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"warning"} title={"Warning Dialog"} />
+      <DialogTemplate status={"warning"} header={"Warning Dialog"} />
     </QAContainer>
   );
 };
@@ -165,7 +160,7 @@ export const ErrorDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
     <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"error"} title={"Error Dialog"} />
+      <DialogTemplate status={"error"} header={"Error Dialog"} />
     </QAContainer>
   );
 };

@@ -44,7 +44,7 @@ const SmallDialog = (): ReactElement => {
         status="warning"
         id={id}
       >
-        <DialogTitle disableAccent title="Reset grid settings?" />
+        <DialogTitle disableAccent header="Reset grid settings?" />
         <DialogContent>
           Are you sure you want to reset all grid data? Any previous settings
           will not be saved
@@ -154,7 +154,7 @@ const MediumDialog = (): ReactElement => {
         size="medium"
         aria-labelledby="preferences-dialog"
       >
-        <DialogTitle title="Preferences" disableAccent />
+        <DialogTitle header="Preferences" disableAccent />
         <DialogContent>
           <StackLayout direction="row">
             <ParentChildLayout parent={parent} child={child} />
@@ -201,8 +201,8 @@ const LargeDialog = (): ReactElement => {
           align="center"
           startItem={
             <DialogTitle
-              title="Add a Beneficiary"
-              subtitle="Customize your Experience"
+              header="Add a Beneficiary"
+              preheader="Customize your Experience"
             />
           }
           endItem={

@@ -33,7 +33,7 @@ export const Warning = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle title="File access" />
+        <DialogTitle header="File access" />
 
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give
