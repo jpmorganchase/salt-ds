@@ -34,7 +34,6 @@ export const Warning = (): ReactElement => {
         id={id}
       >
         <DialogHeader header="File access" />
-
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give
           access anyway?

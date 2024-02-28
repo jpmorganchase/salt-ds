@@ -2,11 +2,9 @@ import { ReactNode, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import {
   H2,
-  H3,
   StatusIndicator,
   ValidationStatus,
   makePrefixer,
-  Text,
 } from "@salt-ds/core";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
