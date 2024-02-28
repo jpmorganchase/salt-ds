@@ -52,7 +52,8 @@
 .saltCalendarDay-selectedSpan,
 .saltCalendarDay-selectedSpan:hover {
   background: var(--salt-selectable-background-hover);
-  box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected),0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
+  box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover),
+    calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
 .saltCalendarDay-disabled,

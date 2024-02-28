@@ -5,7 +5,7 @@
   text-align: center;
   align-items: center;
   height: var(--salt-size-base);
-  margin:var(--salt-size-border);
+  margin: var(--salt-size-border);
 }
 
 .saltCalendarWeekHeader-dayOfWeek {

@@ -246,45 +246,45 @@ export const CalendarNavigation = forwardRef<
         </Button>
       </Tooltip>
       <div className={withBaseName("dropdowns")}>
-      <DropdownNext
-        aria-labelledby={monthDropdownLabelledBy}
-        aria-label="Month Dropdown"
-        id={monthDropdownId}
-        selected={selectedMonth ? [selectedMonth] : []}
-        value={formatMonth(selectedMonth)}
-        onSelectionChange={handleMonthSelect}
-        {...MonthDropdownProps}
-      >
-        {months.map((month) => (
-          <OptionWithTooltip
-            key={formatMonth(month)}
-            item={month}
-            dateFormatter={formatMonth}
-            disabled={isOutsideAllowedMonths(month)}
-            tooltipContent="This month is out of range"
-          />
-        ))}
-      </DropdownNext>
-      {!hideYearDropdown && (
         <DropdownNext
-          id={yearDropdownId}
-          aria-labelledby={yearDropdownLabelledBy}
-          aria-label="Year Dropdown"
-          selected={selectedYear ? [selectedYear] : []}
-          value={formatYear(selectedYear)}
-          onSelectionChange={handleYearSelect}
-          {...YearDropdownProps}
+          aria-labelledby={monthDropdownLabelledBy}
+          aria-label="Month Dropdown"
+          id={monthDropdownId}
+          selected={selectedMonth ? [selectedMonth] : []}
+          value={formatMonth(selectedMonth)}
+          onSelectionChange={handleMonthSelect}
+          {...MonthDropdownProps}
         >
-          {years.map((year) => (
+          {months.map((month) => (
             <OptionWithTooltip
-              key={formatYear(year)}
-              item={year}
-              dateFormatter={formatYear}
-              tooltipContent="This year is out of range"
+              key={formatMonth(month)}
+              item={month}
+              dateFormatter={formatMonth}
+              disabled={isOutsideAllowedMonths(month)}
+              tooltipContent="This month is out of range"
             />
           ))}
         </DropdownNext>
-      )}
+        {!hideYearDropdown && (
+          <DropdownNext
+            id={yearDropdownId}
+            aria-labelledby={yearDropdownLabelledBy}
+            aria-label="Year Dropdown"
+            selected={selectedYear ? [selectedYear] : []}
+            value={formatYear(selectedYear)}
+            onSelectionChange={handleYearSelect}
+            {...YearDropdownProps}
+          >
+            {years.map((year) => (
+              <OptionWithTooltip
+                key={formatYear(year)}
+                item={year}
+                dateFormatter={formatYear}
+                tooltipContent="This year is out of range"
+              />
+            ))}
+          </DropdownNext>
+        )}
       </div>
       <Tooltip
         placement="top"
