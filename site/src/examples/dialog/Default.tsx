@@ -29,7 +29,7 @@ export const Default = (): ReactElement => {
         Open default dialog
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogTitle title="Terms and conditions" />
+        <DialogTitle header="Terms and conditions" />
         <DialogContent>
           <StackLayout>
             <div>

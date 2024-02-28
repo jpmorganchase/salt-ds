@@ -33,7 +33,7 @@ export const Info = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle title="File update" />
+        <DialogTitle header="File update" />
         <DialogContent>
           A new version of this file is available with 26 updates.
         </DialogContent>

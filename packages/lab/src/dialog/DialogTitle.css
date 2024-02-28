@@ -9,7 +9,7 @@
   gap: var(--salt-spacing-100);
 }
 
-.saltDialogTitle-title {
+.saltDialogTitle-header {
   margin: 0;
 }
 
