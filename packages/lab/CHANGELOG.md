@@ -1,5 +1,100 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.32
+
+### Minor Changes
+
+- 2771c6de: - Convert `Dialog Title` to accept props instead of a composable api
+
+  - Optional Props `title` and `subtitle` added to `Dialog Title`
+  - `Dialog Title` no longer accepts children
+  - Optional `id` prop added to `Dialog` to announce the `title` and `subtitle` when using a screen reader
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+    const id = useId();
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button onClick={handleRequestOpen}>
+          Open default dialog
+        </Button>
+        <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+          <DialogTitle title="Terms and conditions" />
+          <DialogContent>
+            Dialog Content
+            </StackLayout>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Accept
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+- fc915775: - Refactored `Drawer` to use floating-ui and Salt's `Scrim`.
+
+  - Fixced open prop to be false by default
+  - Fixed `Floating Components` implementation of focus manager props from Floating UI
+  - Added optional `DrawerCloseButton`.
+  - Added optional props `disableScrim` and `diableDismiss`
+
+  ```tsx
+  export const DrawerTemplate = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button onClick={handleRequestOpen}>Open Drawer</Button>
+        <Drawer open={open} onOpenChange={onOpenChange} style={{ width: 300 }}>
+          <DrawerCloseButton onClick={handleClose} />
+          <H2>Title</H2>
+          <Text>Content of drawer</Text>
+        </Drawer>
+      </>
+    );
+  };
+  ```
+
+- 4ab245a7: - Add `disableScrim` as an optional prop preventing the Scrim from being rendered. Use case is for Desktop Environments
+
+### Patch Changes
+
+- 2e36ad0b: `TabstripNext`, `TabNext` and `AppHeader` have bene updated to use separable tokens.
+- d9eaf511: Fixed DropdownNext and ComboBoxNext not working in desktop environemnts.
+  Fixed DropdownNext not showing a placeholder when it's value was an empty string.
+  Fixed DropdownNext and ComboBoxNext's lists not showing over Dialogs.
+
 ## 1.0.0-alpha.31
 
 ### Minor Changes
