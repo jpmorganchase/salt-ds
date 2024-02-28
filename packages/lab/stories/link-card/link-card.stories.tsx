@@ -34,9 +34,7 @@ export const Default: StoryFn<typeof Card> = () => (
 
 export const AccentPlacement: StoryFn<typeof Card> = () => {
   const [placement, setPlacement] = useState<LinkCardProps["accent"]>("bottom");
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlacement(event.target.value as LinkCardProps["accent"]);
-  };
+
   return (
     <StackLayout style={{ width: "266px" }}>
       <LinkCard accent={placement}>
@@ -45,16 +43,17 @@ export const AccentPlacement: StoryFn<typeof Card> = () => {
           <Text>{exampleData.content}</Text>
         </StackLayout>
       </LinkCard>
-      <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
-        <RadioButton
-          label="bottom"
-          value="bottom"
-          onChange={handleChange}
-          checked
-        />
-        <RadioButton label="top" value="top" onChange={handleChange} />
-        <RadioButton label="left" value="left" onChange={handleChange} />
-        <RadioButton label="right" value="right" onChange={handleChange} />
+      <RadioButtonGroup
+        direction={"horizontal"}
+        defaultValue="bottom"
+        onChange={(event) =>
+          setPlacement(event.target.value as LinkCardProps["accent"])
+        }
+      >
+        <RadioButton label="bottom" value="bottom" checked />
+        <RadioButton label="top" value="top" />
+        <RadioButton label="left" value="left" />
+        <RadioButton label="right" value="right" />
       </RadioButtonGroup>
     </StackLayout>
   );
