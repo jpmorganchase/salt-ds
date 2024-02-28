@@ -3,7 +3,6 @@
   padding-bottom: var(--salt-spacing-300);
   background: var(--salt-container-primary-background);
   box-shadow: var(--salt-overlayable-shadow-modal);
-  overflow-y: auto;
   z-index: var(--salt-zIndex-drawer);
   height: min-content;
   border-width: var(--salt-size-border);
