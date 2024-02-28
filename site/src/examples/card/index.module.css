@@ -13,3 +13,11 @@
 .category2:hover {
   --saltCard-accentColor: rgb(133, 72, 20);
 }
+
+.variantCard {
+  width: 260px;
+  height: 144px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

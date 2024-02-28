@@ -26,9 +26,7 @@ export const Actions = (): ReactElement => {
               opportunity for investors in the decades to come.
             </Text>
           </StackLayout>
-          <Link href="#" IconComponent={null}>
-            See our approach
-          </Link>
+          <Link href="#">See our approach</Link>
         </StackLayout>
       </Card>
     </StackLayout>

@@ -1,21 +1,14 @@
 import { ReactElement } from "react";
 import { Card, StackLayout, Text } from "@salt-ds/core";
+import styles from "./index.module.css"
 
 export const Variants = (): ReactElement => {
-  const cardStyle = {
-    width: "260px",
-    height: "144px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
   return (
     <StackLayout direction="row">
-      <Card variant="primary" style={cardStyle}>
+      <Card variant="primary" className={styles.variantCard}>
         <Text style={{ margin: "auto" }}>Primary</Text>
       </Card>
-      <Card variant="secondary" style={cardStyle}>
+      <Card variant="secondary" className={styles.variantCard}>
         Secondary
       </Card>
     </StackLayout>
