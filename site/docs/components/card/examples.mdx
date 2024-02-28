@@ -28,7 +28,7 @@ All card components provide both primary and secondary variants, offering flexib
 ### Accents
 
 - The accent in a card is optional, but you can use it to indicate meaning (such as product or brand color).
-- When paired with the hoverable prop, an accent can indicate a card is interactive when the user moves focus to the card.
+- When paired with the hoverable prop, an accent can indicate a card is interactive when the user moves focus to the card. Interactable cards and link cards are always hoverable.
 - Maintain consistency in accent placement across cards to ensure a coherent visual experience in your UI.
 
 </LivePreview>
@@ -37,6 +37,15 @@ All card components provide both primary and secondary variants, offering flexib
 ### Actions
 
 You can incorporate actions like [links](../link) or [buttons](../button) into a card. Don't embed actions into a link card or an interactable card, as the card itself is the interactive element.
+
+</LivePreview>
+
+<LivePreview componentName="card" exampleName="LinkCardExample" displayName="Link Card 🚧">
+### Link card
+
+- Use a link card when the entire card is clickable and navigates the user within the same tab or to a new tab.
+- Don't use any focusable elements within link cards, only use static content such as text or icons.
+- Avoid adding too much content to link cards. Users should be able to read them easily, and it shouldn't take too long for a screen reader tool to read out the content.
 
 </LivePreview>
 
@@ -53,7 +62,7 @@ When using images in cards, set the image to span the card's entire width. You c
 - By default, the card components include `--salt-spacing-200` inner padding.
 - For very small cards with a limited hit area, customizing the padding to `--salt-spacing-100` is advisable.
 - When your cards are intended to occupy a significant portion of your application window, `--salt-spacing-300` is recommended.
-- Customize the spacing using the `--saltCard-padding` CSS property.
+- Customize the spacing using the `--saltCard-padding` or `--saltLinkCard-padding` CSS properties.
 
 </LivePreview>
 
@@ -61,7 +70,7 @@ When using images in cards, set the image to span the card's entire width. You c
 ### Custom accent
 
 - By default, the card components accent color uses `--salt-container-primary-borderColor` or `--salt-container-secondary-borderColor` depending on the variant.
-- When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accentColor` with the desired color.
+- When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accent-color` or `--saltLinkCard-accent-color` with the desired color.
 
 </LivePreview>
 

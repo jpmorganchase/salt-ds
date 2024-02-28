@@ -11,6 +11,7 @@ import {
   FlowLayout,
 } from "@salt-ds/core";
 import { MessageIcon } from "@salt-ds/icons";
+import { LinkCard } from "@salt-ds/lab";
 
 export const CustomPadding = (): ReactElement => {
   const [padding, setPadding] = useState("spacing-200");
@@ -18,10 +19,10 @@ export const CustomPadding = (): ReactElement => {
   return (
     <StackLayout align="center">
       {padding === "spacing-100" && (
-        <Card
+        <LinkCard
           style={
             {
-              "--saltCard-padding": "var(--salt-spacing-100)",
+              "--saltLinkCard-padding": "var(--salt-spacing-100)",
               width: "160px",
             } as CSSProperties
           }
@@ -30,7 +31,7 @@ export const CustomPadding = (): ReactElement => {
             <MessageIcon size={1} />
             <Text>Contact us</Text>
           </StackLayout>
-        </Card>
+        </LinkCard>
       )}
       {padding === "spacing-200" && (
         <Card
