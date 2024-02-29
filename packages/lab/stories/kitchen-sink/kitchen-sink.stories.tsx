@@ -113,7 +113,7 @@ const LaunchStatusDialog = () => {
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle>{status}</DialogTitle>
+        <DialogTitle title={status} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
