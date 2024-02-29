@@ -10,7 +10,7 @@ import {
 } from "docs/components";
 
 export default {
-  title: "Lab/Link Card/QA",
+  title: "Lab/Link Card/Link Card QA",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
