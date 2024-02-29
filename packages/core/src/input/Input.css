@@ -19,6 +19,7 @@
   padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
   position: relative;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .saltInput:hover {

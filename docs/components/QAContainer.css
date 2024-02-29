@@ -20,6 +20,7 @@
   left: 0;
   top: 0;
   width: var(--qaContainer-width);
+  box-sizing: border-box;
 }
 
 .saltQAContainer-vertical {
@@ -34,6 +35,7 @@
   display: inline-block;
   padding: var(--bgBlock-padding);
   width: var(--bgBlock-outer-width);
+  box-sizing: border-box;
 }
 
 .saltQAContainer-vertical {
@@ -47,8 +49,9 @@
   padding: var(--qaContainer-item-padding, 0);
   vertical-align: top;
   width: var(--qaContainer-item-width, var(--itemWrapper-calculated-item-width));
+  box-sizing: border-box;
 
-  /* 
+  /*
    * This is to make sure Salt components will work ok with UITK
    * https://github.com/jpmorganchase/salt-ds/issues/2671
    */

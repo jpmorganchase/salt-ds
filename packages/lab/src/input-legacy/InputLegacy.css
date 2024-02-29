@@ -34,6 +34,7 @@
   padding: var(--saltInputLegacy-padding, 0 var(--salt-size-unit));
   position: var(--saltInputLegacy-position, relative);
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Reset in the next class */

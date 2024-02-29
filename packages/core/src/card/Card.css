@@ -4,6 +4,7 @@
   border-style: var(--salt-container-borderStyle);
   padding: var(--saltCard-padding, var(--salt-spacing-200));
   position: relative;
+  box-sizing: border-box;
 }
 
 .saltCard-primary {
