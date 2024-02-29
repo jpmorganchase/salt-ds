@@ -12,13 +12,13 @@ data:
 
 <LivePreview componentName="grid-layout" exampleName="Default">
 
-### Default
+## Default
 
 `GridLayout` defaults to a 12-column grid with one row. The spacing between rows and columns depends on the prop `gap`, which is 3 by default.
 
 Content in `GridLayout` is inside `GridItem` components. This helps control the size and position of content.
 
-#### Best practices
+### Best practices
 
 - We recommend `GridItem` components for displaying content in the layout. If the layout is very simple (i.e., doesn't span multiple columns or rows), you can place content (e.g., components, text, divs, etc) directly into the `GridLayout` component.
 - Any items displayed beyond 12 columns (or the number of defined columns) will wrap to a subsequent row.
@@ -28,7 +28,7 @@ Content in `GridLayout` is inside `GridItem` components. This helps control the 
 
 <LivePreview componentName="grid-layout" exampleName="ColumnsAndRows">
 
-### Columns and rows
+## Columns and rows
 
 Use grid layout `column` and `row` properties to control the number of columns and rows in the layout.
 
@@ -36,7 +36,7 @@ Use grid layout `column` and `row` properties to control the number of columns a
 
 <LivePreview componentName="grid-layout" exampleName="ResponsiveLayout">
 
-### Responsive layout
+## Responsive layout
 
 The grid layout’s responsive properties allow you to customize specific properties of the grid (such as the number of columns and rows) per breakpoint.
 
@@ -48,21 +48,20 @@ A responsive property is a property that takes either multiple values (one value
 columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
 ```
 
-#### Best practices
+### Best practices
 
 - Use the grid layout’s responsive properties when the flow of the grid is dependent on the viewport size, such as when a user typically resizes their application or webpage and content needs to remain visible.
-
 - Define specific layout behaviors per breakpoint to optimize the content display across different device sizes.
 
 </LivePreview>
 
 <LivePreview componentName="grid-layout" exampleName="SpanningColumnsAndRows">
 
-### Spanning columns and rows
+## Spanning columns and rows
 
 Although it is possible to use `GridLayout` without using `GridItem`, we strongly recommend that you wrap items with the `GridItem` component. Using a grid item, you can control the size and position of content in the grid. By default, a grid item will span one column and one row. Use the `colSpan` and `rowSpan` props to increase the size of individual items to span multiple rows and columns.
 
-#### Best practices
+### Best practices
 
 Spanning multiple columns and rows is an effective way to drive visual hierarchy in the layout. For example, grid items at the top of an analytical dashboard are typically larger in size to emphasize data visualizations, such as charts or metrics.
 
@@ -70,7 +69,7 @@ Spanning multiple columns and rows is an effective way to drive visual hierarchy
 
 <LivePreview componentName="grid-layout" exampleName="ExpandingAndCollapsingItems">
 
-### Expanding and collapsing items
+## Expanding and collapsing items
 
 Use the `colSpan` and `rowSpan` props to dynamically control the size of an item in the grid to show more or less content to the user. This example shows how to expand a grid item in the layout and reposition surrounding grid items at the same time.
 
@@ -78,7 +77,7 @@ Use the `colSpan` and `rowSpan` props to dynamically control the size of an item
 
 <LivePreview componentName="grid-layout" exampleName="PositioningItems">
 
-### Positioning items
+## Positioning items
 
 Use the `verticalAlignment` and `horizontalAlignment` props to control the position of content in the grid layout.
 
