@@ -35,21 +35,25 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
     const dayRef = useRef<HTMLButtonElement>(null);
     const buttonRef = useForkRef(ref, dayRef);
-    const { status, dayProps, unselectableReason } = useCalendarDay(
-      {
-        date: day,
-        month,
-      },
-      dayRef
-    );
-    const { outOfRange, today, unselectable, hidden, disabled } = status;
+    const { status, dayProps, unselectableReason, highlightedReason } =
+      useCalendarDay(
+        {
+          date: day,
+          month,
+        },
+        dayRef
+      );
+    const { outOfRange, today, unselectable, highlighted, hidden, disabled } =
+      status;
 
     return (
       <Tooltip
         hideIcon
         status="error"
-        content={unselectableReason || "Date is out of range"}
-        disabled={!unselectableReason}
+        content={
+          unselectableReason || highlightedReason || "Date is out of range"
+        }
+        disabled={!unselectableReason && !highlightedReason}
         placement="top"
         enterDelay={0} // --salt-duration-instant
         {...TooltipProps}
@@ -66,6 +70,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
               [withBaseName("outOfRange")]: outOfRange,
               [withBaseName("disabled")]: disabled,
               [withBaseName("unselectable")]: !!unselectable,
+              [withBaseName("highlighted")]: !!highlighted,
             },
             dayProps.className,
             className

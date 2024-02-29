@@ -4,6 +4,7 @@ import {
   endOfMonth,
   getDayOfWeek,
   getLocalTimeZone,
+  isEqualDay,
   startOfMonth,
   today,
 } from "@internationalized/date";
@@ -40,6 +41,17 @@ UnselectableDates.args = {
     // Saturday & Sunday
     if (getDayOfWeek(day, currentLocale) >= 5) {
       return "weekend";
+    }
+  },
+};
+
+export const HighlightedDates = Template.bind({});
+HighlightedDates.args = {
+  isDayHighlighted: (day) => {
+    // Start of month
+    if (isEqualDay(startOfMonth(day), day)) {
+      console.log("here, ", day);
+      return "Start of month reminder";
     }
   },
 };

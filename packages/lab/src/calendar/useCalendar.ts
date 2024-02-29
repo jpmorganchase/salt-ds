@@ -20,6 +20,7 @@ import {
 } from "./useSelection";
 
 export type UnselectableInfo = string;
+export type HighlightedInfo = string;
 
 interface BaseUseCalendarProps {
   defaultVisibleMonth?: DateValue;
@@ -28,6 +29,7 @@ interface BaseUseCalendarProps {
     visibleMonth: DateValue
   ) => void;
   isDayUnselectable?: (date: DateValue) => UnselectableInfo | boolean | void;
+  isDayHighlighted?: (date: DateValue) => HighlightedInfo | boolean | void;
   isDayDisabled?: (date: DateValue) => boolean;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
@@ -45,6 +47,7 @@ export type useCalendarProps = (
   BaseUseCalendarProps;
 
 const defaultIsDayUnselectable = (): UnselectableInfo | false => false;
+const defaultIsDayHighlighted = (): HighlightedInfo | false => false;
 const defaultIsDayDisabled = (): false => false;
 
 export function useCalendar(props: useCalendarProps) {
@@ -58,6 +61,7 @@ export function useCalendar(props: useCalendarProps) {
     onSelectedDateChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
+    isDayHighlighted = defaultIsDayHighlighted,
     isDayDisabled = defaultIsDayDisabled,
     minDate = hideYearDropdown
       ? startOfYear(today(getLocalTimeZone()))
@@ -104,7 +108,7 @@ export function useCalendar(props: useCalendarProps) {
           isDayDisabled(date) ||
           isOutsideAllowedDates(date))
       ),
-    [isDayUnselectable, isOutsideAllowedDates]
+    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates]
   );
 
   const selectionManager = useSelectionCalendar({
@@ -204,6 +208,7 @@ export function useCalendar(props: useCalendarProps) {
       setFocusedDate,
       setCalendarFocused,
       isDayUnselectable,
+      isDayHighlighted,
       isDayDisabled,
       isDayVisible,
       isOutsideAllowedDates,

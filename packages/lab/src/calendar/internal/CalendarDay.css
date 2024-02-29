@@ -64,6 +64,21 @@
   cursor: var(--salt-selectable-cursor-disabled);
   position: relative;
 }
+.saltCalendarDay-highlighted {
+  position: relative;
+  overflow: hidden;
+}
+.saltCalendarDay-highlighted:before {
+  content: "";
+  height: var(--salt-spacing-200);
+  width: var(--salt-spacing-200);
+  top: calc(var(--salt-spacing-100) * -1);
+  right: calc(var(--salt-spacing-100) * -1);
+  transform: rotate(45deg);
+  background: var(--salt-selectable-borderColor-selected);
+  position: absolute;
+}
+
 .saltCalendarDay-disabled {
   color: var(--salt-content-secondary-foreground-disabled);
 }

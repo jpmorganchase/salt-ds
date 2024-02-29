@@ -498,37 +498,6 @@ describe("GIVEN a Calendar", () => {
         }).should("not.have", "aria-pressed", "true");
       });
     });
-
-    describe("Secondary", () => {
-      it("SHOULD apply `aria-disabled=true` to unselectable days", () => {
-        cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
-        cy.findByRole("button", {
-          name: formatDate(parseDate("2022-01-17")),
-        }).should("have.attr", "aria-disabled", "true");
-
-        cy.findByRole("button", {
-          name: formatDate(parseDate("2022-01-17")),
-        }).realClick();
-        cy.findByRole("button", {
-          name: formatDate(parseDate("2022-01-17")),
-        }).should("not.have", "aria-pressed", "true");
-      });
-
-      it("SHOULD allow a tooltip to be shown", () => {
-        cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
-        cy.findByRole("button", {
-          name: formatDate(parseDate("2022-01-17")),
-        }).realHover();
-
-        cy.findByRole("tooltip").should(
-          "have.text",
-          UnselectableDates.args?.isDayUnselectable?.(
-            parseDate("2022-01-17")
-            // @ts-ignore
-          )
-        );
-      });
-    });
   });
 
   describe("Custom Day Render", () => {
