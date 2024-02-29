@@ -11,25 +11,25 @@ data:
 <LivePreviewControls>
   <LivePreview componentName="country-symbol" exampleName="BasicUsage">
     
-    ### Basic usage
+## Basic usage
 
-    You should import and use each country symbol individually.
+You should import and use each country symbol individually.
 
   </LivePreview>
   <LivePreview componentName="country-symbol" exampleName="Size">
 
-    ### Size
+## Size
 
-    You can change the size of each country symbol using the `size` property which acts as a multiplier for the base size, as described in the [scale foundation](/salt/foundations/scale). The base size of the country symbol is based on the active density as described in the [size foundation](/salt/foundations/size).
+You can change the size of each country symbol using the `size` property which acts as a multiplier for the base size, as described in the [scale foundation](/salt/foundations/scale). The base size of the country symbol is based on the active density as described in the [size foundation](/salt/foundations/size).
 
   </LivePreview>
   <LivePreview componentName="country-symbol" exampleName="AllCountrySymbols">
 
-    ### All country symbols
+## All country symbols
 
-    The following example shows all the available country symbols. You can import each component individually using its respective country code.
+The following example shows all the available country symbols. You can import each component individually using its respective country code.
 
-    For example, the country symbol for Belgium has the code BE, which you can import as follows:
+For example, the country symbol for Belgium has the code BE, which you can import as follows:
 
     ```jsx
     import { BE } from '@salt-ds/countries';
@@ -38,16 +38,16 @@ data:
   </LivePreview>
   <LivePreview componentName="country-symbol" exampleName="LazyLoading">
 
-    ### Lazy loading
+## Lazy loading
 
-    When importing many country symbol components at once, such as with a list, you may not want all the components in your initial bundle size. Instead, you can lazily load the country symbol components using [React Suspense](https://react.dev/reference/react/Suspense), alongside the `LazyCountrySymbol` component. `LazyCountrySymbol` takes a `code` prop to load the appropriate country symbol component.
+When importing many country symbol components at once, such as with a list, you may not want all the components in your initial bundle size. Instead, you can lazily load the country symbol components using [React Suspense](https://react.dev/reference/react/Suspense), alongside the `LazyCountrySymbol` component. `LazyCountrySymbol` takes a `code` prop to load the appropriate country symbol component.
 
   </LivePreview>
   <LivePreview componentName="country-symbol" exampleName="CssBackgroundImage">
 
-    ### CSS background image
+## CSS background image
 
-    You can also use country symbol as background image in CSS from `"@salt-ds/countries/saltCountries.css"`, then specify country code prefixed with `saltCountry-`, e.g., `saltCountry-AD`, `saltCountry-GB-SCT`.
+You can also use country symbol as background image in CSS from `"@salt-ds/countries/saltCountries.css"`, then specify country code prefixed with `saltCountry-`, e.g., `saltCountry-AD`, `saltCountry-GB-SCT`.
 
   </LivePreview>
 

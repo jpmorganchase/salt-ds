@@ -11,83 +11,83 @@ data:
 <LivePreviewControls>
 
   <LivePreview componentName="navigation-item" exampleName="Default">
-    ### Default (Horizontal)
+## Default (Horizontal)
 
 By default the navigation item is oriented horizontally.
 
-#### Best practices
+### Best practices
 
 A navigation item hugs its content by default, but you can customize it and adjust its container to fit any preferred width.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="Vertical">
-    ### Vertical
+## Vertical
 
 To change the orientation of the navigation item, you can use the vertical orientation prop.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="WithIcon">
-    ### With icon
+## With icon
 
 Use an icon to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, function, or a configuration setting.
 
-#### Best practices
+### Best practices
 
 Ensure that you use icon descriptors consistently across all items within the same hierarchy level. This helps keep them equally weighted.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="WithBadge">
-    ### With badge
+## With badge
 
 You can add a [badge](../badge) to a navigation item to serve as a visual cue. A badge can inform users of additional context, notifications, signpost new content or indicate a status.
 
-#### Best practices
+### Best practices
 
 You should only place a badge in a navigation item that does not include nested items, i.e., it will not have a chevron.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="WithNestedItems">
-    ### With nested items
+## With nested items
 
 You can use a navigation item as a parent which nests other navigation items inside it. Parent navigation items are displayed with a chevron on the right-hand side. To set a navigation item as a parent, use the `parent` prop.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="HorizontalGroup">
-    ### Horizontal group
+## Horizontal group
 
 Use horizontal navigation items within a horizontal group to establish a consistent and easily accessible pathway for users, while conserving valuable screen estate. This will allow users to easily scan and identify navigation options in a seamless user experience.
 
-#### Best practices
+### Best practices
 
 Use a horizontal group of navigation items when you have fewer than eight items, otherwise consider a vertical group of items.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="VerticalGroup">
-    ### Vertical group
+## Vertical group
 
 A vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="VerticalNestedGroup">
-    ### Vertical group nested
+## Vertical group nested
 
 Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, making it easy to explore the content hierarchy.
 
-#### Best practices
+### Best practices
 
 If a navigation item has nested items within it, it will act as a trigger to show and hide the nested items. A parent item cannot act as a link and navigate to an overview page. If you require an overview page, use the first nested item to achieve this.
 
 </LivePreview>
 
   <LivePreview componentName="navigation-item" exampleName="BlurActive">
-    ### Blur-active
+## Blur-active
 
 When the user collapses a vertical nested group, and there is an active nested item within it, the parent item should be configured with `blurActive={true}`. The indicator will stay on the parent item in the blur-active state. This tells the user that the active item is within this nested structure.
 

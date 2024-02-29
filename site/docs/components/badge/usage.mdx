@@ -8,25 +8,23 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 If a numeric annotation exceeds the max value passed as a prop, there will be a plus (`+`) after the max value stated. If you don't pass a max value to the component, it will truncate the value after three digits displaying 999+ for any values over 999.
 
 We recommend that you avoid using a badge with more than four to six characters. If needed, truncate strings exceeding this count with an ellipsis (…).
 
-#### When to use
+### When to use
 
 - To communicate a non-interactive, system-driven change to the underlying component it anchors to, such as in tabs, pages and containers.
-
 - Typically, if you use a badge to indicate an unread notification, you'd hide the badge once the user addresses the notification. However, badges can remain persistent depending on the context.
 
-#### When not to use
+### When not to use
 
 - To organize content within categories, trigger an immediate action, or enable an action that may change depending on context. Instead, use [`Pill`](../pill).
-
 - To communicate status through color, such as red/amber/green statuses. Instead, use `Pill`. Badges are independent of user action, so avoid using them to communicate something the user can directly influence through a task.
 
-### Import
+## Import
 
 To import `Badge` from the core Salt package, use:
 
@@ -34,6 +32,6 @@ To import `Badge` from the core Salt package, use:
 import { Badge } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
 <PropsTable componentName="Badge" packageName="core" />

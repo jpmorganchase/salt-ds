@@ -8,7 +8,7 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 To avoid misleading users, set the width to correlate to the length of the answer you’re expecting. For example, an input for a three-digit value shouldn't be wide enough to accommodate a sentence worth of characters. See [forms pattern](/salt/patterns/forms) for more information on layout.
 
@@ -16,11 +16,11 @@ To avoid misleading users, set the width to correlate to the length of the answe
 
 - To ask a user a subjective question to which user responses will vary and the length of their answer is likely to be less than a single line.
 
-#### When not to use
+### When not to use
 
 - When the content is likely to exceed a single line. Instead, use [`MultilineInput`](/salt/components/multiline-input). Input field width and height should always reflect the amount of content expected in the field.
 
-### Import
+## Import
 
 To import `Input` from the core Salt package, use:
 
@@ -28,6 +28,6 @@ To import `Input` from the core Salt package, use:
 import { Input } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
 <PropsTable componentName="Input" />

@@ -8,13 +8,12 @@ data:
   $ref: ./#/data
 ---
 
-### Best practices
+## Best practices
 
 - Wrap `MultilineInput` in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
-
 - A multiline input will clip text that extends beyond its visible area. This behavior is common to all states, i.e., default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
 
-### Keyboard interactions
+## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
