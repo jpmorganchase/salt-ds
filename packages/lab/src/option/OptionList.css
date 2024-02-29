@@ -8,6 +8,7 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
   max-height: inherit;
   min-height: inherit;
+  box-sizing: border-box;
 }
 
 .saltOptionList-collapsed {

@@ -47,6 +47,7 @@
   transform: translate(var(--saltFormFieldLegacy-label-transform-x, 0), var(--saltFormFieldLegacy-label-transform-y, var(--formFieldLegacy-label-top)));
   white-space: nowrap;
   width: var(--saltFormFieldLegacy-label-width, var(--formFieldLegacy-label-width, 100%));
+  box-sizing: border-box;
 }
 
 .saltFormLabel ~ * {
@@ -66,7 +67,7 @@
 }
 
 /* Styles applied if `hasStatusIndicator={true}` */
-.saltFormLabel-statusIndicator {
+.saltFormLabel-statusIndicator.saltIcon {
   margin-left: 6px;
   vertical-align: top;
 }

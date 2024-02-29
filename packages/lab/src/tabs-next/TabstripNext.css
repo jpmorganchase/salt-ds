@@ -17,6 +17,7 @@
 .saltTabstripNext-main {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
+  box-sizing: border-box;
 }
 
 .saltTabstripNext-main::before {
@@ -29,4 +30,5 @@
 
 .saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
   padding-right: var(--salt-spacing-100);
+  box-sizing: border-box;
 }
