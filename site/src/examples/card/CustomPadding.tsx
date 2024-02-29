@@ -20,6 +20,7 @@ export const CustomPadding = (): ReactElement => {
     <StackLayout align="center">
       {padding === "spacing-100" && (
         <LinkCard
+          href="#"
           style={
             {
               "--saltLinkCard-padding": "var(--salt-spacing-100)",

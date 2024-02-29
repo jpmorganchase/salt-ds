@@ -65,7 +65,7 @@
 
 /* Styles applied to LinkCard on focus */
 .saltLinkCard:focus-visible {
-  cursor: var(--saltLinkCard-Link-cursor-focus, var(--salt-selectable-cursor-hover));
+  cursor: var(--salt-selectable-cursor-hover);
   box-shadow: var(--saltLinkCard-Link-shadow-focus, var(--salt-overlayable-shadow-hover));
   outline-color: var(--salt-focused-outlineColor);
   outline-style: var(--salt-focused-outlineStyle);
@@ -76,14 +76,14 @@
 
 /* Styles applied on hover state to LinkCard */
 .saltLinkCard:hover {
-  cursor: var(--saltLinkCard-Link-cursor-hover, var(--salt-selectable-cursor-hover));
+  cursor: var(--salt-selectable-cursor-hover);
   box-shadow: var(--saltLinkCard-Link-shadow-hover, var(--salt-overlayable-shadow-hover));
   --linkCard-accent-color: var(--salt-selectable-foreground-hover);
 }
 
 /* Styles applied on active state to LinkCard */
 .saltLinkCard:active {
-  cursor: var(--saltLinkCard-Link-cursor-active, var(--salt-selectable-cursor-active));
+  cursor: var(--salt-selectable-cursor-active);
   border-color: var(--salt-selectable-borderColor-selected);
   box-shadow: var(--saltLinkCard-Link-shadow-active, var(--salt-overlayable-shadow));
   --linkCard-accent-color: var(--salt-selectable-foreground-selected);

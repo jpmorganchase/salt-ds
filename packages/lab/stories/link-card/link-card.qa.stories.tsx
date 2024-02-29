@@ -14,9 +14,7 @@ export default {
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
-export const AllExamplesUsingText: StoryFn<
-  QAContainerProps & { className?: string }
-> = (props) => {
+export const AllExamplesUsingText: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer itemPadding={10} itemWidthAuto {...props}>
       <LinkCard>
@@ -52,6 +50,14 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     </LinkCard>
     <LinkCard variant="secondary">
       <H1>Secondary card with density</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard accent="top">
+      <H1>Card with accent and density</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard variant="secondary" accent="bottom">
+      <H1>Secondary card with accent and density</H1>
       <Text>Content</Text>
     </LinkCard>
   </QAContainerNoStyleInjection>
