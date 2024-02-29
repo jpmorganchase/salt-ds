@@ -3,7 +3,7 @@ import * as linkCardStories from "@stories/link-card/link-card.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(linkCardStories);
-const { Default, AccentPlacement } = composedStories;
+const { Default } = composedStories;
 
 describe("Given a Link Card", () => {
   checkAccessibility(composedStories);
@@ -19,10 +19,5 @@ describe("Given a Link Card", () => {
   it("should navigate to the correct href", () => {
     cy.mount(<Default />);
     cy.get("a").should("have.attr", "href", "#");
-  });
-
-  it("should apply accent", () => {
-    cy.mount(<AccentPlacement />);
-    cy.get(".saltLinkCard").should("have.class", "saltLinkCard-accentBottom");
   });
 });
