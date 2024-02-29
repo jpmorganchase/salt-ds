@@ -4,7 +4,7 @@
   border-width: var(--saltCard-borderWidth, var(--card-borderWidth));
   border-style: var(--saltCard-borderStyle, var(--salt-container-borderStyle));
   border-color: var(--saltCard-borderColor, var(--salt-accent-borderColor));
-  border-radius: var(--saltCard-borderRadius, 0);
+  border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
   display: block;
   transition: box-shadow var(--salt-duration-instant) cubic-bezier(0.4, 0, 0.2, 1);
   padding: var(--saltCard-padding, var(--salt-spacing-300));
