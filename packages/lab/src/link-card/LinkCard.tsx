@@ -11,7 +11,7 @@ const withBaseName = makePrefixer("saltLinkCard");
 
 export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
   /**
-   * Accent border position: defaults to "bottom"
+   * If provided an accent is shown in the specified position.
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**

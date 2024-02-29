@@ -14,21 +14,21 @@
 .saltLinkCard-primary {
   background: var(--saltLinkCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
-  --card-accent-color: var(--salt-container-primary-borderColor);
+  --linkCard-accent-color: var(--salt-container-primary-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="secondary" */
 .saltLinkCard-secondary {
   background: var(--saltLinkCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-  --card-accent-color: var(--salt-container-secondary-borderColor);
+  --linkCard-accent-color: var(--salt-container-secondary-borderColor);
 }
 
 /* Styles applied to create accent */
 .saltLinkCard-accent::after {
   content: "";
   position: absolute;
-  background-color: var(--saltLinkCard-accent-color, var(--card-accent-color));
+  background-color: var(--saltLinkCard-accent-color, var(--linkCard-accent-color));
 }
 
 /* Styles applied to LinkCard if `accent="bottom"` (default) */
@@ -71,14 +71,14 @@
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-offset: var(--salt-focused-outlineOffset);
-  --card-accent-color: var(--salt-selectable-foreground-hover);
+  --linkCard-accent-color: var(--salt-selectable-foreground-hover);
 }
 
 /* Styles applied on hover state to LinkCard */
 .saltLinkCard:hover {
   cursor: var(--saltLinkCard-Link-cursor-hover, var(--salt-selectable-cursor-hover));
   box-shadow: var(--saltLinkCard-Link-shadow-hover, var(--salt-overlayable-shadow-hover));
-  --card-accent-color: var(--salt-selectable-foreground-hover);
+  --linkCard-accent-color: var(--salt-selectable-foreground-hover);
 }
 
 /* Styles applied on active state to LinkCard */
@@ -86,5 +86,5 @@
   cursor: var(--saltLinkCard-Link-cursor-active, var(--salt-selectable-cursor-active));
   border-color: var(--salt-selectable-borderColor-selected);
   box-shadow: var(--saltLinkCard-Link-shadow-active, var(--salt-overlayable-shadow));
-  --card-accent-color: var(--salt-selectable-foreground-selected);
+  --linkCard-accent-color: var(--salt-selectable-foreground-selected);
 }
