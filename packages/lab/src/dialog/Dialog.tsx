@@ -16,13 +16,13 @@ import {
 } from "@floating-ui/react";
 import {
   makePrefixer,
-  useId,
   useFloatingComponent,
   useFloatingUI,
   useCurrentBreakpoint,
   useForkRef,
   ValidationStatus,
   Scrim,
+  useId,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -71,6 +71,11 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    * Prevent Scrim from rendering
    * */
   disableScrim?: boolean;
+  /**
+   * Optional id prop
+   * Used for accessibility purposes to announce the title and subtitle when using a screen reader
+   * */
+  idProp?: string;
 }
 
 const withBaseName = makePrefixer("saltDialog");
@@ -88,6 +93,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     disableDismiss,
     size = "medium",
     disableScrim,
+    idProp,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -96,6 +102,8 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     css: dialogCss,
     window: targetWindow,
   });
+
+  const id = useId(idProp);
 
   const currentbreakpoint = useCurrentBreakpoint();
 
@@ -128,7 +136,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
     }
   }, [open, showComponent, setShowComponent]);
 
-  const contextValue = useMemo(() => ({ status }), [status]);
+  const contextValue = useMemo(() => ({ status, id }), [status, id]);
 
   return (
     <DialogContext.Provider value={contextValue}>
@@ -137,6 +145,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
           open={showComponent}
           role="dialog"
           aria-modal="true"
+          aria-labelledby={id}
           ref={floatingRef}
           width={elements.floating?.offsetWidth}
           height={elements.floating?.offsetHeight}

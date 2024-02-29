@@ -3,8 +3,10 @@ import { ValidationStatus } from "@salt-ds/core";
 
 export const DialogContext = createContext<{
   status?: ValidationStatus;
+  id: string | undefined;
 }>({
   status: undefined,
+  id: "",
 });
 
 export const useDialogContext = () => {

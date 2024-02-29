@@ -1,210 +1,108 @@
-import { useState, MouseEvent } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import {
   Button,
-  FlowLayout,
-  StackLayout,
+  Card,
+  Checkbox,
   FlexItem,
   FlexLayout,
+  FlowLayout,
   FormField,
-  FormFieldLabel,
   FormFieldHelperText,
+  FormFieldLabel,
+  H2,
+  Text,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
-import { Drawer, useDrawer } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
-import "./drawer.stories.css";
+import { ComboBoxNext, Option, Drawer, DrawerCloseButton } from "@salt-ds/lab";
+import { Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Drawer",
   component: Drawer,
 } as Meta<typeof Drawer>;
 
-type DrawerContentExampleProps = {
-  onClick: (evt: MouseEvent) => void;
-};
-
-const DrawerContentExample = ({ onClick }: DrawerContentExampleProps) => (
-  <>
-    <Button
-      onClick={onClick}
-      variant="secondary"
-      className="drawer-close-button"
-    >
-      <CloseIcon />
-    </Button>
-    <h2 id="drawer_label">Lorem ipsum</h2>
-    <p id="drawer_description">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nunc lacus,
-      scelerisque ut elit nec, commodo blandit est. Duis mollis dui at nisl
-      faucibus, id maximus urna pellentesque. Praesent consequat vulputate
-      dolor, a mattis metus suscipit vitae. Donec ullamcorper, neque sit amet
-      laoreet ornare, diam eros posuere metus, id consectetur tellus nisl id
-      ipsum. Fusce sit amet cursus mauris, vel scelerisque enim. Quisque eu
-      dolor tortor. Nulla facilisi. Vestibulum at neque sit amet neque facilisis
-      porttitor a ac risus.Mauris consequat sollicitudin commodo. Vestibulum ac
-      diam vulputate, condimentum purus non, eleifend erat. Nunc auctor iaculis
-      mi eu hendrerit. Suspendisse potenti. Cras tristique vehicula iaculis.
-      Morbi faucibus volutpat tellus, sit amet fringilla dui rhoncus a.
-      Suspendisse nunc nulla, mattis sed commodo ac, cursus ut augue.
-    </p>
-  </>
-);
-
-const DefaultDrawerStory: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const hide = () => setOpen(false);
-
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
+export const Default = ({ position = "left", ...args }) => {
+  const [openPrimary, setOpenPrimary] = useState(false);
+  const [openSecondary, setOpenSecondary] = useState(false);
 
   return (
-    <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
+    <StackLayout>
+      <Button onClick={() => setOpenPrimary(true)}>Open Primary Drawer</Button>
       <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        aria-labelledby="drawer_label"
-        aria-describedby="drawer_description"
-        {...getFloatingProps()}
-        {...args}
+        open={openPrimary}
+        onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
+        id="primary"
+        style={{ width: 200 }}
       >
-        <DrawerContentExample onClick={hide} />
+        <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
       </Drawer>
-    </>
+      <Button onClick={() => setOpenSecondary(true)}>
+        Open Secondary Drawer
+      </Button>
+      <Drawer
+        open={openSecondary}
+        onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
+        variant="secondary"
+        id="secondary"
+        style={{ width: 200 }}
+      >
+        <DrawerCloseButton onClick={() => setOpenSecondary(false)} />
+      </Drawer>
+    </StackLayout>
   );
 };
 
-export const Default = DefaultDrawerStory.bind({});
-Default.args = {
-  position: "left",
-};
-
-const TopTemplate: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const hide = () => setOpen(false);
-
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
+export const Position = ({ position = "left", ...args }) => {
+  const [openLeft, setOpenLeft] = useState(false);
+  const [openRight, setOpenRight] = useState(false);
+  const [openTop, setOpenTop] = useState(false);
+  const [openBottom, setOpenBottom] = useState(false);
 
   return (
-    <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
+    <StackLayout>
+      <Button onClick={() => setOpenLeft(true)}>Open Left Drawer</Button>
       <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        {...getFloatingProps()}
-        {...args}
+        open={openLeft}
+        onOpenChange={(newOpen) => setOpenLeft(newOpen)}
+        id="left-drawer"
+        style={{ width: 200 }}
       >
-        <DrawerContentExample onClick={hide} />
+        <DrawerCloseButton onClick={() => setOpenLeft(false)} />
       </Drawer>
-    </>
+      <Button onClick={() => setOpenRight(true)}>Open Right Drawer</Button>
+      <Drawer
+        open={openRight}
+        onOpenChange={(newOpen) => setOpenRight(newOpen)}
+        position="right"
+        id="right-drawer"
+        style={{ width: 200 }}
+      >
+        <DrawerCloseButton onClick={() => setOpenRight(false)} />
+      </Drawer>
+      <Button onClick={() => setOpenTop(true)}>Open Top Drawer</Button>
+      <Drawer
+        open={openTop}
+        onOpenChange={(newOpen) => setOpenTop(newOpen)}
+        position="top"
+        id="top-drawer"
+        style={{ height: 200 }}
+      >
+        <DrawerCloseButton onClick={() => setOpenTop(false)} />
+      </Drawer>
+      <Button onClick={() => setOpenBottom(true)}>Open Bottom Drawer</Button>
+      <Drawer
+        open={openBottom}
+        onOpenChange={(newOpen) => setOpenBottom(newOpen)}
+        position="bottom"
+        id="bottom-drawer"
+        style={{ height: 200 }}
+      >
+        <DrawerCloseButton onClick={() => setOpenBottom(false)} />
+      </Drawer>
+    </StackLayout>
   );
 };
-
-export const Top = TopTemplate.bind({});
-Top.args = {
-  position: "top",
-};
-
-const RightTemplate: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const hide = () => setOpen(false);
-
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
-
-  return (
-    <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        {...getFloatingProps()}
-        {...args}
-      >
-        <DrawerContentExample onClick={hide} />
-      </Drawer>
-    </>
-  );
-};
-
-export const Right = RightTemplate.bind({});
-Right.args = {
-  position: "right",
-};
-
-const BottomTemplate: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const hide = () => setOpen(false);
-
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
-
-  return (
-    <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        {...getFloatingProps()}
-        {...args}
-      >
-        <DrawerContentExample onClick={hide} />
-      </Drawer>
-    </>
-  );
-};
-
-export const Bottom = BottomTemplate.bind({});
-Bottom.args = {
-  position: "bottom",
-};
-
-const ReducedMotionTemplate: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(false);
-
-  const hide = () => setOpen(false);
-
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
-
-  return (
-    <>
-      <p>In order to test this on MacOS, follow these steps: </p>
-      <p>
-        Go to System Preferences, select the Accessibility category, select the
-        Display tab, and enable the Reduce Motion option.
-      </p>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        className="reduced-motion"
-        {...getFloatingProps()}
-        {...args}
-      >
-        <DrawerContentExample onClick={hide} />
-      </Drawer>
-    </>
-  );
-};
-
-export const ReducedMotion = ReducedMotionTemplate.bind({});
 
 const FormFieldExample = () => (
   <FormField>
@@ -214,196 +112,240 @@ const FormFieldExample = () => (
   </FormField>
 );
 
-const DrawerLeftExample: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(true);
+export const TopDrawerUsageExample = () => {
+  const [open, setOpen] = useState(false);
+  const id = "top-drawer";
 
-  const hide = () => setOpen(false);
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
 
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        aria-labelledby="drawer_label"
-        aria-describedby="drawer_description"
-        {...getFloatingProps()}
-        {...args}
-      >
+      <Button onClick={handleRequestOpen}>Open Top Drawer</Button>
+      <Drawer open={open} onOpenChange={onOpenChange} position="top" id="top">
         <StackLayout>
-          <h2 id="drawer_label">Section title</h2>
-          <p id="drawer_description">
+          <DrawerCloseButton onClick={handleClose} />
+          <H2 id={`${id}-header`}>Section title</H2>
+          <Text>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
-          {Array.from({ length: 7 }, (_, index) => (
-            <FormFieldExample key={index} />
-          ))}
-          <FlexItem align="end">
-            <Button onClick={hide}>Close Drawer</Button>
-          </FlexItem>
-        </StackLayout>
-      </Drawer>
-    </>
-  );
-};
-
-export const LeftSimpleUsage = DrawerLeftExample.bind({});
-LeftSimpleUsage.args = {
-  position: "left",
-};
-
-const DrawerTopExample: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(true);
-
-  const hide = () => setOpen(false);
-
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
-
-  return (
-    <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        {...getFloatingProps()}
-        {...args}
-      >
-        <StackLayout>
-          <h2>Section title</h2>
-          <p>
-            Incididunt adipisicing deserunt nostrud ullamco consequat
-            consectetur magna id do irure labore fugiat. Eiusmod pariatur
-            officia elit ad. Ullamco adipisicing Lorem amet velit in do
-            reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
+          </Text>
           <FlexLayout>
             {Array.from({ length: 4 }, (_, index) => (
               <FormFieldExample key={index} />
             ))}
           </FlexLayout>
-          <FlexItem align="end">
-            <Button onClick={hide}>Close Drawer</Button>
-          </FlexItem>
         </StackLayout>
       </Drawer>
     </>
   );
 };
 
-export const TopSimpleUsage = DrawerTopExample.bind({});
-TopSimpleUsage.args = {
-  position: "top",
-};
+export const RightDrawerUsageExample = () => {
+  const [open, setOpen] = useState(false);
+  const id = "right-drawer";
 
-const DrawerRightExample: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(true);
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
 
-  const hide = () => setOpen(false);
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
 
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Button onClick={handleRequestOpen}>Open Right Drawer</Button>
       <Drawer
         open={open}
-        onOpenChange={setOpen}
-        aria-labelledby="drawer_label"
-        aria-describedby="drawer_description"
-        {...getFloatingProps()}
-        {...args}
+        onOpenChange={onOpenChange}
+        position="right"
+        style={{ width: 500 }}
+        id={id}
       >
         <StackLayout>
-          <h2 id="drawer_label">Section title</h2>
-          <p id="drawer_description">
+          <DrawerCloseButton onClick={handleClose} />
+          <H2 id={`${id}-header`}>Section Title</H2>
+          <Text>
             Incididunt adipisicing deserunt nostrud ullamco consequat
             consectetur magna id do irure labore fugiat. Eiusmod pariatur
             officia elit ad. Ullamco adipisicing Lorem amet velit in do
             reprehenderit nostrud eu aute voluptate quis quis.
-          </p>
+          </Text>
           {Array.from({ length: 7 }, (_, index) => (
             <FormFieldExample key={index} />
           ))}
-          <FlexItem align="end">
-            <Button onClick={hide}>Close Drawer</Button>
-          </FlexItem>
         </StackLayout>
       </Drawer>
     </>
   );
 };
 
-export const RightSimpleUsage = DrawerRightExample.bind({});
-RightSimpleUsage.args = {
-  position: "right",
-};
+export const BottomDrawerUsageExample = () => {
+  const [open, setOpen] = useState(false);
+  const id = "bottom-drawer";
 
-const ArticleExample = () => (
-  <StackLayout className="drawer-article-container">
-    <div className="drawer-article-image"></div>
-    <h3>Laborum in sit officia consecte</h3>
-    <p>
-      Do excepteur id ipsum qui dolor irure dolore commodo labore. Minim sunt
-      aliquip eiusmod excepteur qui sunt commodo ex cillum ullamco. Quis magna
-      deserunt reprehenderit anim elit laboris laboris fugiat Lorem est culpa
-      quis.
-    </p>
-  </StackLayout>
-);
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
 
-const DrawerBottomExample: StoryFn<typeof Drawer> = (args) => {
-  const [open, setOpen] = useState(true);
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
 
-  const hide = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  const { getReferenceProps, getFloatingProps } = useDrawer({
-    open,
-    onOpenChange: setOpen,
-  });
+  const exampleData = [
+    {
+      title: "Sustainable investing products",
+      content:
+        "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
+    },
+    {
+      title: "Our expertise",
+      content:
+        "Our team of more than 200 experts in 28 offices worldwide is on hand to help you with your investment decisions.",
+    },
+    {
+      title: "Market-leading insights",
+      content:
+        "Our award-winning strategists provide unique and regular insights about market events and current trends.",
+    },
+  ];
 
   return (
     <>
-      <Button {...getReferenceProps()}>Open Drawer</Button>
+      <Button onClick={handleRequestOpen}>Open Bottom Drawer</Button>
       <Drawer
         open={open}
-        onOpenChange={setOpen}
-        aria-labelledby="drawer_label"
-        {...getFloatingProps()}
-        {...args}
+        onOpenChange={onOpenChange}
+        position="bottom"
+        style={{ height: 350 }}
+        id={id}
       >
+        <DrawerCloseButton onClick={handleClose} />
         <StackLayout>
-          <h2 id="drawer_label" tabIndex={-1}>
-            Section title
-          </h2>
+          <H2 id={`${id}-header`}>Bottom drawer use case</H2>
           <FlowLayout>
-            {Array.from({ length: 4 }, (_, index) => (
-              <ArticleExample key={index} />
-            ))}
+            <Card style={{ width: "256px" }}>
+              <H2>{exampleData[0].title}</H2>
+              <Text>{exampleData[0].content}</Text>
+            </Card>
+            <Card style={{ width: "256px" }}>
+              <H2>{exampleData[1].title}</H2>
+              <Text>{exampleData[1].content}</Text>
+            </Card>
+            <Card style={{ width: "256px" }}>
+              <H2>{exampleData[2].title}</H2>
+              <Text>{exampleData[2].content}</Text>
+            </Card>
           </FlowLayout>
-          <FlexItem align="end">
-            <Button onClick={hide}>Close Drawer</Button>
-          </FlexItem>
         </StackLayout>
       </Drawer>
     </>
   );
 };
 
-export const BottomSimpleUsage = DrawerBottomExample.bind({});
-BottomSimpleUsage.args = {
-  position: "bottom",
+export const OptionalCloseAction = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+
+  const postcodes = ["05011", "01050", "03040", "11050"];
+  const id = "right-drawer";
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    return newSelected.length === 1 ? setValue(newSelected[0]) : setValue("");
+  };
+
+  return (
+    <>
+      <Button onClick={handleRequestOpen}>Open Drawer</Button>
+      <Drawer
+        open={open}
+        onOpenChange={onOpenChange}
+        position="right"
+        style={{ width: 500 }}
+        id={id}
+      >
+        <StackLayout>
+          <H2 id={`${id}-header`}>Add your delivery details</H2>
+          <FormField>
+            <FormFieldLabel>House no.</FormFieldLabel>
+            <Input />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Street name</FormFieldLabel>
+            <Input />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Postcode</FormFieldLabel>
+            <ComboBoxNext
+              onChange={handleChange}
+              onSelectionChange={handleSelectionChange}
+              value={value}
+              placeholder="Search for your postcode"
+            >
+              {postcodes.map((postcode) => (
+                <Option value={postcode} key={postcode}>
+                  {postcode}
+                </Option>
+              ))}
+            </ComboBoxNext>
+            <FormFieldHelperText>Do not include space</FormFieldHelperText>
+          </FormField>
+          <FormField>
+            <FormFieldLabel>City/Town</FormFieldLabel>
+            <Input />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Country</FormFieldLabel>
+            <Input />
+          </FormField>
+          <FormField>
+            <Checkbox label="Dog(s) present at my property" />
+          </FormField>
+          <FlexItem align="end">
+            <Button onClick={handleClose}>Submit</Button>
+          </FlexItem>
+        </StackLayout>
+      </Drawer>
+    </>
+  );
 };
