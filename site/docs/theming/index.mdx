@@ -39,7 +39,7 @@ A token stores design decisions. Multiple components can use the same token to e
 
 An example of a token is `--salt-status-error-foreground`. This token is used to set the foreground color when a component communicates an error message. That means both `Dialog` and `Toast` can use this token to set the foreground color when necessary.
 
-While a user could change the status foreground color for `Toast`, this wouldn't change the corresponding color for the `Dialog` component. Changing the color associated with the `--salt-status-error-foreground` token ensures that both componenents, and any others that refer to the token, all use the same color in the given context.
+While a user could change the status foreground color for `Toast`, this wouldn't change the corresponding color for the `Dialog` component. Changing the color associated with the `--salt-status-error-foreground` token ensures that both components, and any others that refer to the token, all use the same color in the given context.
 
 <ExampleContainer type="positive" customPillText="Best practice">
   When theming, we recommend modifying tokens rather than applying tweaks to
