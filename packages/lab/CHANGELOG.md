@@ -1,5 +1,25 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.33
+
+### Patch Changes
+
+- 9d23fdce: Added `box-sizing: border-box` to:
+
+  - `Dialog`
+  - `DialogTitle`
+  - `Drawer`
+  - `FormLabel`
+  - `InputLegacy`
+  - `LayerLayout`
+  - `List`
+  - `Option`
+  - `OptionList`
+  - `TabNext`
+  - `TabstripNext`
+  - `TokenizedInputNext`
+  - `TokenizedInput`
+
 ## 1.0.0-alpha.32
 
 ### Minor Changes

@@ -17,6 +17,7 @@
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   position: relative;
   flex-shrink: 0;
+  box-sizing: border-box;
 
   cursor: var(--salt-navigable-cursor-hover);
   color: var(--salt-content-primary-foreground);

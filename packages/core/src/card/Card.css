@@ -5,6 +5,7 @@
   padding: var(--saltCard-padding, var(--salt-spacing-200));
   position: relative;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
+  box-sizing: border-box;
 }
 
 .saltCard-primary {
