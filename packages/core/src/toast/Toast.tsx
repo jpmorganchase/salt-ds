@@ -1,10 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  ComponentPropsWithoutRef,
-  forwardRef
-} from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
 

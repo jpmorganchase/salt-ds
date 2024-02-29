@@ -140,7 +140,6 @@
 
   --salt-color-transparent: rgba(255, 255, 255, 0);
 
-
   --salt-color-aqua-400: rgb(var(--salt-color-aqua-400-base));
   --salt-color-aqua-500: rgb(var(--salt-color-aqua-500-base));
   --salt-color-aqua-600: rgb(var(--salt-color-aqua-600-base));
@@ -270,7 +269,6 @@
   --salt-color-violet-500: rgb(var(--salt-color-violet-500-base));
   --salt-color-violet-600: rgb(var(--salt-color-violet-600-base));
   --salt-color-white: rgb(var(--salt-color-white-base));
-
 
   --salt-color-asphalt-40a: rgba(var(--salt-color-asphalt-base), 0.4);
   --salt-color-black-15a: rgba(var(--salt-color-black-base), 0.15);
