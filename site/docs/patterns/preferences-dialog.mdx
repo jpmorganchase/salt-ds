@@ -1,5 +1,5 @@
 ---
-title: Preferences Dialog
+title: Preferences dialog
 layout: DetailPattern
 aliases:
   - /salt/patterns/preferences-dialog
@@ -20,7 +20,7 @@ A preferences dialog allows you to display, group and navigate application prefe
 
 ## When to use
 
-Any preference settings in your platform or application should ideally be found within a single centralized preferences dialog. These settings could be global, application-wide settings or settings local to a specific window or widget (such as a grid or comments feed). If accessing from a specific window, the relevant settings should immediately be displayed when the preferences dialog opens.
+You should place any preference settings in your platform or application within a single centralized preferences dialog. These settings could be global, application-wide settings or settings local to a specific window or widget (such as a grid or comments feed). If accessing from a specific window, immediately display the relevant settings when the preferences dialog opens.
 
 Furthermore, we recommend implementing consistent behavior around applying preferences, whether applying changes immediately or requiring the user to confirm any changes using the button bar actions. 
 
@@ -58,7 +58,7 @@ A preferences dialog comprises four key features:
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  In the [parent-child layout](../components/parent-child-layout), the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This will enable it to adapt responsively based on the viewport size.
+  In the [parent-child layout](../components/parent-child-layout), the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
 
   To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [Navigation pattern](./navigation).
 
@@ -92,7 +92,7 @@ The visual indicators are the two separator lines above and below the parent-chi
     border
   />
 
-You should display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
+Display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
 
   <Diagram
     src="/img/patterns/preferences-dialog/scrolling-affordance.png"
@@ -107,7 +107,7 @@ You should display scrolling affordance when the content or navigation (or both)
 - Make multiple changes with ease and apply them simultaneously.
 - Easily cancel any unwanted changes.
 
-It's also preferable if it’s technically complex or taxing on performance for affected components in your application to listen for live changes in the preferences dialog and dynamically update themselves.
+It's preferable for affected components in your application to listen for live changes in the preferences dialog and dynamically update themselves.
 
 <Diagram
   src="/img/patterns/preferences-dialog/applying-preferences.png"
@@ -131,7 +131,7 @@ If your application can listen for changes and take immediate effect, you don't 
 
 ## Secondary actions
 
-We recommend configuring the button bar to display secondary actions to the left such as **Import** and **Export** if you need to enable additional actions.
+We recommend configuring the button bar to display secondary actions to the left such as **Import** and **Export** if you need to enable other actions.
 
 <Diagram
   src="/img/patterns/preferences-dialog/secondary-actions.png"
