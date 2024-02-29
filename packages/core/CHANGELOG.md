@@ -1,5 +1,22 @@
 # @salt-ds/core
 
+## 1.18.1
+
+### Patch Changes
+
+- 9d23fdce: Added `box-sizing: border-box` to:
+
+  - `Badge`
+  - `Card`
+  - `Checkbox`
+  - `FileDropZone`
+  - `FlexLayout`
+  - `Input`
+  - `CircularProgress`
+  - `LinearProgress`
+  - `RadioButton`
+  - `Switch`
+
 ## 1.18.0
 
 ### Minor Changes

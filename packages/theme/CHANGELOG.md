@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.12.1
+
+### Patch Changes
+
+- 9d23fdce: Removed `box-sizing: border-box` from global.css. This was causing issues in applications that were built using `box-sizing: content-box`.
+
 ## 1.12.0
 
 ### Minor Changes
