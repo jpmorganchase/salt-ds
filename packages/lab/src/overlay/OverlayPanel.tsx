@@ -42,8 +42,6 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       });
     };
 
-    console.log(rest);
-
     return (
       <FloatingComponent
         open={openState}
