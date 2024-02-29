@@ -1,0 +1,113 @@
+import { Meta } from "@storybook/addon-docs";
+import { Banner, BannerContent } from "@salt-ds/core";
+
+<Meta title="Experimental/Theme Next" />
+
+<Banner>
+  <BannerContent>
+    This page documents early phase of theme evolvement. Only use this when
+    there is a business need.
+  </BannerContent>
+</Banner>
+
+# Salt Provider Next
+
+The new Salt Provider introduces Salt's next phase theming capability with more styling options, including
+rounded corners, balanced color palettes, etc. Features will be introduced gradually over time and we're
+encouraging teams needing this to test to give us feedback.
+
+It extends existing [Salt Provider](/?path=/docs/documentation-core-salt-provider--docs) so existing options
+are still available (e.g. light/dark mode, high/medium/low/touch density). Additional props will be made available
+to switch between different look.
+
+To use the new Salt Provider, you need to swap any existing `SaltProvider` to use the new `UNSTABLE_SaltProviderNext`,
+and also import a new theme CSS.
+
+```js static
+// Swap out existing SaltProvider
+import { UNSTABLE_SaltProviderNext } from "@salt-ds/core";
+```
+
+```js static
+// Alongside with existing `import "@salt-ds/theme/index.css";`
+import "@salt-ds/theme/css/theme-next.css";
+```
+
+The new provider adds additional `.salt-theme-next` to either the root or provider element, together with
+any additional data attributes (e.g. `data-corner`) needed for new props.
+
+All values within `theme-next.css` will be scoped to `.salt-theme-next` to make sure any replacement values
+(like new color palettes) could override existing values in `.salt-theme`.
+
+## Corner radius
+
+Although default Salt design language stays sharp corners to serve our institutional clients,
+rounded corners can be made available to many components to achieve a softer, consumer friendly feel.
+
+The `corner` prop can be used to toggle between `"sharp"` (default) and `"rounded"`.
+
+```tsx
+<UNSTABLE_SaltProviderNext corner="rounded">
+```
+
+### Token Structure
+
+A new set of foundation token (curve) is added with below values
+
+| Foundation Token   | HD    | MD    | LD    | TD    |
+| ------------------ | ----- | ----- | ----- | ----- |
+| `--salt-curve-0`   | 0     | 0     | 0     | 0     |
+| `--salt-curve-50`  | 1px   | 2px   | 3px   | 4px   |
+| `--salt-curve-100` | 2px   | 4px   | 6px   | 8px   |
+| `--salt-curve-150` | 3px   | 6px   | 9px   | 12px  |
+| `--salt-curve-999` | 999px | 999px | 999px | 999px |
+
+A new set of palette token (corner) is added with below mapping
+
+| Palette Token                     | Sharp              | Rounded            |
+| --------------------------------- | ------------------ | ------------------ |
+| `--salt-palette-corner-weaker`    | `--salt-curve-0`   | `--salt-curve-50`  |
+| `--salt-palette-corner-weak`      | `--salt-curve-0`   | `--salt-curve-100` |
+| `--salt-palette-corner`           | `--salt-curve-0`   | `--salt-curve-150` |
+| `--salt-palette-corner-strongest` | `--salt-curve-999` | `--salt-curve-999` |
+
+### Components
+
+Following components have received corner options, and more components will be added from feedback.
+
+#### Interactive (inner)
+
+Interactive components sit within other interactive components use `--salt-palette-corner-weaker` token.
+
+- Checkbox
+- Pill
+- Switch (thumb)
+- Toggle Button
+
+#### Interactive (outer)
+
+Outer interactive components use `--salt-palette-corner-weak` token.
+
+- Button
+- Switch (track)
+- Toggle Button Group
+- Tooltip
+
+#### Containers
+
+Container components use `--salt-palette-corner` token.
+
+- Banner
+- Card
+- Dialog
+- File drop zone
+- Overlay
+- Panel
+- Toast
+
+#### Primitives
+
+These components use `--salt-palette-corner-strongest` token
+
+- Avatar
+- Badge

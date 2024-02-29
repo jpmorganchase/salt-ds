@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   border: var(--saltFileDropZone-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor));
+  border-radius: var(--saltFileDropZone-borderRadius, var(--salt-palette-corner, 0));
   flex-direction: column;
   padding: var(--salt-spacing-200);
   gap: var(--salt-spacing-200);
