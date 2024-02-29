@@ -53,7 +53,9 @@ You can use a placeholder to prompt user input if there's no default value.
 
 ### Best practices
 
-You should never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the field to provide instructions or directions necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+Never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure.
+
+Instead, use helper text beneath the field to provide instructions or directions necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
 You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -73,7 +75,7 @@ You can add custom adornments at the beginning or end of the Input field using t
 
 Start adornments typically describe the purpose of the field (e.g., a phone number input, or a currency), while end adornments typically indicate a reveal of more information (e.g., using an arrow icon) or to trigger a new user interface (such as a date picker).
 
-You can use [text](/salt/components/text) and [icons](/salt/foundations/iconography) to add Salt styled alphanumeric text or symbols as adornments. You should wrap multiple start or end adornments in a parent container and pass them to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
+You can use [text](/salt/components/text) and [icons](/salt/foundations/iconography) to add Salt styled alphanumeric text or symbols as adornments. Wrap multiple start or end adornments in a parent container and pass them to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
 
 </LivePreview>
 <LivePreview componentName="input" exampleName="ButtonAdornments" >

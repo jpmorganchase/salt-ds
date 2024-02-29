@@ -19,7 +19,7 @@ A single item can be selected from the combo box options.
 
 ### Best practices
 
-- `ComboBoxNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+- You can wrap `ComboBoxNext` in a `FormField` when it’s displayed within a form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
   
@@ -37,7 +37,11 @@ When `multiSelect={true}`, users can select multiple items from the combo box op
 
 You can use a placeholder to prompt user input if no default value is provided.
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+### Best practices
+
+Never use placeholder text to provide the user with contextual help. It will be removed when the user starts typing and it does not meet minimum contrast requirements. Doing so is a WCAG failure.
+
+Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
 More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -51,7 +55,9 @@ The component has two variants: `primary` and `secondary`. The primary variant i
 
 The choice between primary and secondary variants should be considered alongside the background color it sits upon.
 
-Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. `ComboBoxNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+### Best practices
+
+The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. You can wrap `ComboBoxNext` in a `FormField` when it’s displayed within a orm context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
@@ -114,7 +120,7 @@ Use the `Option` component to display a message when there are no options availa
 
 ## Complex options
 
-Static content can be supplied as children to the `Option` component. This can be used to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
+You can supply static content as children to the `Option` component. This can be used to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
 If the children are not plain text, then the `textValue` prop must also be set to a plain text representation.
 
 ### Best practices
@@ -150,7 +156,7 @@ Due to its flexible API, you can customize the filtering logic `ComboBoxNext` us
 
 ## Server side data
 
-`ComboBoxNext` can be used to display data from a server. In this example, the data is fetched and filtered on the server side.
+You can use `ComboBoxNext` to display data from a server. In this example, the data is fetched and filtered on the server side.
 
 Note that the data fetching in this example has been made intentionally slow to highlight the loading states.
 
@@ -160,7 +166,7 @@ Note that the data fetching in this example has been made intentionally slow to 
 
 ## Object values
 
-In order to support advanced use-cases, like where the options are fetched from a server. The `value` prop passed to `Option` can be an object.
+In order to support advanced use-cases, like where the options are fetched from a server, the `value` prop passed to `Option` can be an object.
 
 </LivePreview>
 </LivePreviewControls>

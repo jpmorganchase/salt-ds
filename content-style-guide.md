@@ -73,6 +73,8 @@ Use prop, do not use property. Wrap the prop in back ticks. Write out the statem
 
 Outline the simplest possible complete statement. When a user can use a prop with no values, such as `aria-hidden`, recommend the reader use it as-is, rather than passing a Boolean or a string value. When a user can pass a Boolean or string value, prefer Boolean where possible.
 
+Refer to props using the definite article where appropriate, e.g., "Use the `disabled` prop."
+
 ### Salt
 
 The name of the design system is Salt. You can describe Salt as a design system, i.e. "We used the Salt design system in our project."

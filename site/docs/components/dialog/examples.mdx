@@ -17,11 +17,14 @@ The dialog displays with a title, content area, and action bar. The component is
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Sizes" >
+
 ## Sizes
 
-Dialog has 3 sizes: `small`, `medium` and `large`. The size at which to display a dialog depends on the amount of content you have. The widths of all three dialog sizes are responsive to the Salt breakpoints. This ensures the dialog remains entirely visible in the viewport and its size is optimized for the viewport size (e.g., dialogs appear larger within smaller viewports for ease of visibility).
+`Dialog` has 3 sizes: `small`, `medium` and `large`. The size you should choose depends on the amount of content you have. The widths of all three dialog sizes are responsive to the Salt breakpoints. This ensures the dialog remains entirely visible in the viewport and its size is optimized for the viewport size (e.g., dialogs appear larger within smaller viewports for ease of visibility).
 
-### Guidance
+Choose the appropriate dialog size for the scenario.
+
+### Best practices
 
 Dialog sizes are typically used for different scenarios:
 
@@ -48,6 +51,7 @@ Dialog sizes are typically used for different scenarios:
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="WithoutAccent" >
+
 ## Accent
 
 For default dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the dialog. You cannot render the accent bar when a status is also being rendered.
@@ -69,6 +73,7 @@ You can use the optional `subtitle` prop to render a subtitle above the main tit
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Info" >
+
 ## Info
 
 Use the info status when you need to display general information.
@@ -82,6 +87,7 @@ Don’t use the info dialog when the information concerns a successful action. I
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Error" >
+
 ## Error
 
 Use the error status to communicate a critical issue that prevents the user from continuing or completing it.
@@ -93,6 +99,7 @@ Don’t use the error dialog when the issue does not prevent the user from compl
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Warning" >
+
 ## Warning
 
 Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that does not prevent the user from continuing or completing their task.
@@ -104,6 +111,7 @@ Don’t use the warning dialog when the issue prevents the user from completing 
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Success" >
+
 ## Success
 
 Use the success status to confirm that a user's action has been completed successfully.
