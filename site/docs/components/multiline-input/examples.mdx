@@ -17,7 +17,7 @@ Values entered into the multiline input wrap based on the width of the component
 
 If entering more than three rows of text, the height of the input will grow with the content unless resized by the user, that can then review the entered value using keyboard controls.
 
-`MultilineInput` has two variants: primary and secondary. The primary variant is the default. You should consider the choice between primary and secondary variants alongside the background color it sits upon. For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
+`MultilineInput` has two variants: primary and secondary. The primary variant is the default. Consider the choice between primary and secondary variants alongside the background color it sits upon. For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
 
 </LivePreview>
 
@@ -27,7 +27,7 @@ If entering more than three rows of text, the height of the input will grow with
 
 Secondary variant is an effective option if included as part of a data-dense or compact interface or within a form with multiple columns or sections.
 
-You should consider the choice between primary and secondary variants in the context of the background color it sits upon.
+Consider the choice between primary and secondary variants in the context of the background color it sits upon.
 
 For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
 
@@ -93,7 +93,11 @@ Indicate a validation state by setting the `validationStatus` prop.
 
 You can use a placeholder to prompt user input if there's no default value.
 
-You should never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use helper text beneath the input to provide instructions and reserve the placeholder text to support the help message or provide an example of the input.
+### Best practices
+
+Never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure.
+
+Instead, use helper text beneath the input to provide instructions and reserve the placeholder text to support the help message or provide an example of the input.
 
 You can find more information [in this W3 tutorial](https://www.w3.org/WAI/tutorials/forms/instructions/).
 

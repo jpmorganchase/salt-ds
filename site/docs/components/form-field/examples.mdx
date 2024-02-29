@@ -24,7 +24,7 @@ A form field is a wrapper for UI controls typically found in a form (for example
 
 You can disable a form field via the prop `disabled`.
 
-- You should apply the prop to the field, not the control it contains, for expected results.
+- Apply the prop to the field, not the control it contains, for expected results.
 - You'd typically disable a form field if the context or required permissions prevent the user from interacting with a field.
 - Text contrast isn't WCAG AA compliant; an editable field is only in the disabled state if the field isn't relevant at the time.
 
@@ -34,6 +34,8 @@ You can disable a form field via the prop `disabled`.
 ## Helper text
 
 Form Field can display helper text using the `FormFieldHelperText` component:
+
+### Best practices
 
 - Use helper text to provide additional guidance to users, such as an instruction (when it’s not obvious what action the user must take) or if you need to show an example of acceptable formats to increase the likelihood of successful entry.
 - Keep your form label short by moving guidance to the helper text.
@@ -93,7 +95,7 @@ If a field is necessary, you can mark it with a "Required”, “Optional” or 
 
 You can set a form field as read-only via the prop `readOnly`:
 
-- You should apply the prop to the field, not the control it contains, for expected results.
+- Apply the prop to the field, not the control it contains, for expected results.
 - Set the field to read-only if you’re displaying predefined, noneditable values, e.g., entry populated and fixed by template selection.
 - Test must adhere to WCAG AA text contrast for legibility; read-only field content is always relevant to the form, but users cannot change it.
 
@@ -104,7 +106,7 @@ You can set a form field as read-only via the prop `readOnly`:
 
 Form fields can show validation states (warning, success, error) with the prop `validationStatus`:
 
-- You should apply the prop to the field, not the control it contains, for expected results.
+- Apply the prop to the field, not the control it contains, for expected results.
 - Use the error state to alert the user of a critical issue related to the field entry. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve it.
 - Display the warning state when you need to alert the user of a potential issue that won’t prevent them from continuing with the task, but may cause errors if they don't address it.
 
