@@ -23,17 +23,13 @@ When you stack toasts from the top, the newest one should be first. When you sta
 ### When to use
 
 - To notify users of an event that’s occurred in a peripheral application or workflow. The user should notice the toasts without disrupting their experience or requiring immediate action.
-
 - To communicate low-priority information caused by events. Toasts usually don’t require feedback from the user.
-
 - To communicate information from a workflow external to the user’s current task or view. Toasts are in an unintrusive location on an interface.
-
 - To show system-generated alerts, independent of the user’s actions. These toasts are persistent and must allow the user to either take action or dismiss them. Toasts can contain customizable content, such as actionable buttons.
 
 ### When not to use
 
 - To show a notification that applies to the user’s current task. Instead, use [`Banner`](../banner). `Banner` sits either on the top of a page or component or inline and usually addresses issues inside the user’s current content area.
-
 - When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
 
 ## Import

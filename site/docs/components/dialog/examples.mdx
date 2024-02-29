@@ -29,7 +29,7 @@ Dialog sizes are typically used for different scenarios:
 - Medium dialogs contain additional components or layouts such as grouped preferences that require increased user input.
 - Large dialogs usually contain more complex layouts and can display a series of tasks to complete, such as a form within a wizard.
 
-## Size table (width)
+### Size table (width)
 
 | **Breakpoint**                              | **Small (% width)** | **Medium (% width)** | **Large (% width)** |
 | ------------------------------------------- | ------------------- | -------------------- | ------------------- |
@@ -38,7 +38,7 @@ Dialog sizes are typically used for different scenarios:
 | Small (600-959px)                           | 56%                 | 84%                  | 96%                 |
 | Extra small (0-599px)                       | 100%                | 100%                 | 100%                |
 
-## Size table (height)
+### Size table (height)
 
 | **Breakpoint**                | **Small (% width)** | **Medium (% width)** | **Large (% width)** |
 | ----------------------------- | ------------------- | -------------------- | ------------------- |
@@ -51,6 +51,7 @@ Dialog sizes are typically used for different scenarios:
 ## Accent
 
 For default dialogs, you can pass the `accent` prop to `DialogTitle` which accepts a boolean to render an accent bar in the title of the dialog. You cannot render the accent bar when a status is also being rendered.
+
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="CloseButton" >
@@ -88,6 +89,7 @@ Use the error status to communicate a critical issue that prevents the user from
 An error icon displays alongside a title and supporting message.
 
 Don’t use the error dialog when the issue does not prevent the user from completing their task. Instead, use the warning dialog.
+
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Warning" >
@@ -98,6 +100,7 @@ Use the warning status to inform users of an issue or potential issue related to
 A warning icon displays alongside a title and supporting message.
 
 Don’t use the warning dialog when the issue prevents the user from completing their task. Instead, use the error dialog.
+
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="Success" >
@@ -106,6 +109,7 @@ Don’t use the warning dialog when the issue prevents the user from completing 
 Use the success status to confirm that a user's action has been completed successfully.
 
 A success icon displays alongside a title and supporting message.
+
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="MandatoryAction" >
@@ -114,10 +118,11 @@ A success icon displays alongside a title and supporting message.
 Use the `disableDismiss` prop to prevent a click away dismissing the dialog.
 
 This forces a user to action something within the dialog.
+
 </LivePreview>
 
 <LivePreview componentName="dialog" exampleName="DisableScrim" >
-## Disble scrim
+## Disable scrim
 
 Use the `disableScrim` prop to prevent the scrim from rendering.
 
