@@ -11,21 +11,21 @@ data:
 <LivePreviewControls>
 <LivePreview componentName="dropdown" exampleName="Default">
 
-### Default (single-select)
+## Default (single-select)
 
-A single item can be selected from the dropdown options.
+Users can select a single item from the dropdown options.
 
 `DropdownNext` contains a button that opens a list on mouse or keyboard interaction.
 
-#### Best practices
+### Best practices
 
-- `DropdownNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+You can wrap `DropdownNext` in a `FormField` when it’s displayed within a form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
 <LivePreview componentName="dropdown" exampleName="Multiselect" displayName="Multi-select" >
 
-### Multi-select
+## Multi-select
 
 When `multiSelect={true}`, users can select multiple items from the dropdown options.
 
@@ -33,7 +33,7 @@ When `multiSelect={true}`, users can select multiple items from the dropdown opt
 
 <LivePreview componentName="dropdown" exampleName="CustomValue" >
 
-### Custom Value
+## Custom Value
 
 The `value` prop can be used to control the value of the dropdown. This is useful to show a different message when multiple options are selected.
 
@@ -41,11 +41,15 @@ The `value` prop can be used to control the value of the dropdown. This is usefu
 
 <LivePreview componentName="dropdown" exampleName="Placeholder" >
 
-### Placeholder
+## Placeholder
 
 You can use a placeholder to prompt user input if no default value is provided.
 
-- Placeholder text should never be used to provide the user with contextual help since it will be removed when the user starts typing and does not meet minimum contrast requirements. Doing so is a WCAG failure. Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+### Best practices
+
+Never use placeholder text to provide the user with contextual help. It will be removed when the user starts typing and it does not meet minimum contrast requirements. Doing so is a WCAG failure.
+
+Instead, use [`FormFieldHelperText`](/salt/components/form-field/examples#helper-text) beneath the field to provide instructions or directions which are necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
 
 More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -53,7 +57,7 @@ More information can be found [in the W3C form instructions](https://www.w3.org/
 
 <LivePreview componentName="dropdown" exampleName="Variants" >
 
-### Variants
+## Variants
 
 The component has two variants: `primary` and `secondary`. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
 
@@ -65,7 +69,7 @@ Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on prim
 
 <LivePreview componentName="dropdown" exampleName="Disabled" >
 
-### Disabled
+## Disabled
 
 You can disable the dropdown if required, for instance if the access to the options needs to be restricted based on the current context.
 
@@ -77,7 +81,7 @@ When `disabled={true}`, user will not be able to interact with dropdown. It does
 
 <LivePreview componentName="dropdown" exampleName="Readonly" displayName="Read-only" >
 
-### Read-only
+## Read-only
 
 Set the dropdown to read-only to allow values to be displayed that are predefined and not editable, for instance when a user does not have the appropriate permissions to select an option within the dropdown.
 
@@ -88,7 +92,7 @@ Use to indicate that the pre-selected value is valid but changes are not permitt
   
 <LivePreview componentName="dropdown" exampleName="DisabledOption" >
 
-### Disabled option
+## Disabled option
 
 Use the `disabled` prop on the `Option` component to disable an option. Disabled options are not selectable and are visually distinct from selectable options.
 
@@ -96,7 +100,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 <LivePreview componentName="dropdown" exampleName="WithFormField" displayName="FormField support" >
 
-### `FormField` support
+## `FormField` support
 
 Wrap `DropdownNext` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the dropdown with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
@@ -104,7 +108,7 @@ Wrap `DropdownNext` in a [`FormField`](/salt/components/form-field) to make it a
 
 <LivePreview componentName="dropdown" exampleName="Grouped" >
 
-### Grouped options
+## Grouped options
 
 Wrap options in a `OptionGroup` component to group them together. Use the `label` prop to provide a label for the group.
 
@@ -112,12 +116,12 @@ Wrap options in a `OptionGroup` component to group them together. Use the `label
 
 <LivePreview componentName="dropdown" exampleName="ComplexOptions" >
 
-### Complex options
+## Complex options
 
 Static content can be supplied as children to the `Option` component. This can be used to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
 If the children are not plain text, then the `textValue` prop must also be set to a plain text representation.
 
-#### Best practices
+### Best practices
 
 - Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
 - Place any visual support such as icons, country symbols or avatars to the left of the option text.
@@ -127,11 +131,11 @@ If the children are not plain text, then the `textValue` prop must also be set t
 
 <LivePreview componentName="dropdown" exampleName="Validation" >
 
-### Validation
+## Validation
 
 Dropdown can show validation states (warning, success, error) with the prop `validationStatus`.
 
-#### Best practices
+### Best practices
 
 - Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
@@ -140,7 +144,7 @@ Dropdown can show validation states (warning, success, error) with the prop `val
 
 <LivePreview componentName="dropdown" exampleName="StartAdornment" >
 
-### Start adornment
+## Start adornment
 
 You can add custom adornments at the beginning of the Dropdown using the `startAdornment` prop.
 
@@ -150,7 +154,7 @@ Start adornments are typically used to describe the purpose of the field (e.g., 
 
 <LivePreview componentName="dropdown" exampleName="ObjectValues" >
 
-### Object values
+## Object values
 
 In order to support advanced use-cases, like where the options are fetched from a server. The `value` prop passed to `Option` can be an object.
 

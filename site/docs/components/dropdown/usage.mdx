@@ -8,14 +8,14 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
-#### When to use
+### When to use
 
 - When a user needs the ability to choose one value from a set of five to 10 options.
 - When only the selected value from a set of options needs to be visible once the selection is made.
 
-#### When not to use
+### When not to use
 
 - When you have more than 10 options and users would benefit from filtering to narrow down the available options. Instead, use [`ComboBoxNext`](../combo-box).
 - When you have fewer than five options and need to one option to be selected. Instead, use [`RadioButtonGroup`](../button).
@@ -23,12 +23,13 @@ data:
 - If you have a Boolean selection, for instance “on” or “off”. Instead, use [`Switch`](../switch).
 - When you have large number (>100) of list items, to prevent performance issues without virtualization, we strongly recommend adding a filter e.g. use a [`ComboBox`](../combo-box) instead.
 
-#### Controlled/Uncontrolled
+### Controlled/Uncontrolled
 
-Just like native input elements in React, Dropdown can be controlled or uncontrolled. By default Dropdown is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of Dropdown.
-If you want to control the value of Dropdown, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+Just like native input elements in React, dropdowns can be controlled or uncontrolled. By default a dropdown is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of the dropdown.
 
-### Import
+If you want to control the value of the dropdown, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+
+## Import
 
 To import `DropdownNext` from the lab Salt package, use:
 
@@ -36,21 +37,21 @@ To import `DropdownNext` from the lab Salt package, use:
 import { DropdownNext, Option, OptionGroup } from "@salt-ds/lab";
 ```
 
-### Props
+## Props
 
-#### Dropdown Next
+### `DropdownNext`
 
 <PropsTable packageName="lab" componentName="DropdownNext" />
 
-#### Option
+### `Option`
 
 <PropsTable packageName="lab" componentName="Option" />
 
-#### Option Group
+### `OptionGroup`
 
 <PropsTable packageName="lab" componentName="OptionGroup" />
 
-### References
+## References
 
 - Dropdown usability (https://baymard.com/blog/drop-down-usability)
 - Listboxes vs. Dropdown Lists, (https://www.nngroup.com/articles/listbox-dropdown/) NN Group, April 12, 2020

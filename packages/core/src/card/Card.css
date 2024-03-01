@@ -1,19 +1,68 @@
 /* Styles applied to the root element */
 .saltCard {
-  box-shadow: var(--saltCard-boxShadow, var(--salt-overlayable-shadow));
-  border-width: var(--salt-size-border);
+  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
-  padding: var(--saltCard-padding, var(--salt-spacing-300));
+  padding: var(--saltCard-padding, var(--salt-spacing-200));
+  position: relative;
+  box-sizing: border-box;
+  border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
 }
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
+  --card-accent-color: var(--salt-container-primary-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
+  --card-accent-color: var(--salt-container-secondary-borderColor);
+}
+
+/* Styles applied if `hoverable` is set */
+.saltCard-hoverable:hover {
+  box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+  --card-accent-color: var(--salt-selectable-foreground-hover);
+}
+
+/* Styles applied to create accent */
+.saltCard-accent::after {
+  content: "";
+  position: absolute;
+  background-color: var(--saltCard-accent-color, var(--card-accent-color));
+}
+
+/* Styles applied to Card if `accent="bottom"` (default) */
+.saltCard-accentBottom::after {
+  left: calc(-1 * var(--salt-size-border));
+  bottom: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+}
+
+/* Styles applied to Card if `accent="left"` */
+.saltCard-accentLeft::after {
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+}
+
+/* Styles applied to Card if `accent="top"` */
+.saltCard-accentTop::after {
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+}
+
+/* Styles applied to Card if `accent="right"` */
+.saltCard-accentRight::after {
+  right: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
 }
 
 /*

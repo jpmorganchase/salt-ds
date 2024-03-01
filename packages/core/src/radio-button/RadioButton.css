@@ -35,10 +35,12 @@
   padding: 0;
   width: var(--salt-size-selectable);
   z-index: var(--salt-zIndex-default);
+  box-sizing: border-box;
 }
 
 .saltRadioButtonIcon {
   margin-top: var(--radioButton-icon-marginTop);
+  box-sizing: border-box;
 }
 
 .saltRadioButtonIcon > svg {

@@ -11,7 +11,7 @@ data:
   components: ["Navigation item"]
 ---
 
-The app header is a consistently available element that sits on top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions. This pattern introduces guidelines to make the app header consistent and usable. 
+An app header is a consistently available element that sits on top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions. This pattern introduces guidelines to make the app header consistent and usable. 
 
   <Diagram
     src="/img/patterns/app-header/app-header.png"
@@ -29,7 +29,7 @@ The app header serves as the primary element for users to orient themselves with
 
 The app header has three functional areas:
 
-1. **Branding:** Displays a brand logo or mark followed by the application name in text form. This should always link to the product’s home page.
+1. **Branding:** Displays a brand logo or mark followed by the application name in text form. This should always link to the product’s homepage.
 2. **Navigation:** Serves as the container for the primary navigation. Its inclusion is optional if you have single-page applications or use a persistent side navigation.
 3. **Utilities:** Provides access to persistent application-wide utilities, such as external links, search, notifications, help, account details and settings.
 
@@ -52,8 +52,8 @@ The app header has three functional areas:
 
 ### Mobile layout construction
 
-1. Use a stack layout with direction property set to row to position the menu button and the logo. 
-2. The menu button is used to toggle the navigation [drawer](/salt/components/drawer). 
+1. Use a stack layout with the direction property set to row to position the menu button and the logo. 
+2. The menu button opens and closes the navigation [drawer](/salt/components/drawer). 
 3. Use a stack layout to position the [vertical navigation](./navigation) and utilities within the drawer.
 
   <Diagram
@@ -66,7 +66,7 @@ The app header has three functional areas:
 
 ### Header only
 
-In this layout, the app header is globally persistent, and you can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and combined navigation may be required to navigate complex hierarchies.
+In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation to navigate complex hierarchies.
 
   <Diagram
     src="/img/patterns/app-header/header-only.png"
@@ -76,7 +76,7 @@ In this layout, the app header is globally persistent, and you can use it as sta
 
 ### Header with vertical navigation
 
-The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, sub-menus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).  
+The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).  
 
   <Diagram
     src="/img/patterns/app-header/with-vertical-nav.png"
@@ -90,7 +90,7 @@ The app header with vertical navigation offers an additional layer of hierarchy.
 
 The app header is responsive to the width of the application viewport and responds dynamically to the [Salt breakpoints](/salt/foundations/responsiveness#breakpoints). As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience. 
 
-For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to left of the brand logo. The navigation items will sit on top of the utility actions in the hierarchy of the vertical navigation. 
+For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to the left of the brand logo. The navigation items will sit on top of the utility actions in the hierarchy of the vertical navigation. 
 
 #### Desktop
 
@@ -110,7 +110,7 @@ For small viewport experiences, the app logo remains visible, while navigation a
 
 <ExampleContainer type="positive" customPillText="Best practices">
  - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
- - If search utility action is part of the app header, keep search functionality persistently available for small viewports. 
+ - If a search utility action is part of the app header, keep search functionality persistently available for small viewports. 
  - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for desktop experiences. 
  - Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for mobile experiences.
 </ExampleContainer>
@@ -121,7 +121,7 @@ The app header should sit in the north region, above the main, in a sticky posit
 
   <Diagram
     src="/img/patterns/app-header/sticky-header.png"
-    alt="The header stays in place while user scrolls."
+    alt="The header stays in place while the user scrolls."
     border
   />
 
@@ -129,7 +129,7 @@ The app header should sit in the north region, above the main, in a sticky posit
 
 ### Using skip links to bypass the app header
 
-If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This will enable keyboard and screen reader users to quickly shift focus to the main page content, and navigate your application more efficiently.
+If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This enables keyboard and screen reader users to shift focus quickly to the main page content, and navigate your application more efficiently.
 
   <Diagram
     src="/img/patterns/app-header/skip-link.png"

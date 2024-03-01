@@ -1,5 +1,6 @@
 ---
-title: Icon
+title:
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
   exclude: true
@@ -7,17 +8,17 @@ data:
   $ref: ./#/data
 ---
 
-### Using icons
+## Using icons
 
-#### When to use icons
+### When to use
 
-- Use an icon to aid recognition and help users make choices by providing context (e.g., an office phone number vs cell phone number in contact information).
+- To aid recognition and help users make choices by providing context (e.g., an office phone number vs cell phone number in contact information).
 
-#### When not to use icons
+### When not to use icons
 
 - When you need an interactive icon. Instead, use [`Button`](/salt/components/Button) (call to action, primary or secondary variant).
 
-### Import
+## Import
 
 To import an individual icon from the icons package, use:
 
@@ -31,10 +32,10 @@ To import the `Icon` component from the icons package for creating custom SVG ic
 import { Icon } from "@salt-ds/icons";
 ```
 
-### Props
+## Props
 
 <PropsTable componentName="Icon" packageName="icons" />
 
-### References
+## References
 
 Icons have a complementary icon style library for Figma, including icon design principles and creation guidelines. J.P. Morgan employees can enable the Salt Icons library from the Assets panel. External designers can install the library from the [Salt community page](https://www.figma.com/community/file/1184561977727107234/Salt%3A-Icons).

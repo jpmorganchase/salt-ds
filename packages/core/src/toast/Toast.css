@@ -6,6 +6,7 @@
   border-color: var(--saltToast-borderColor, var(--toast-borderColor));
   border-width: var(--saltToast-borderWidth, var(--salt-size-border));
   border-style: var(--saltToast-borderStyle, var(--salt-container-borderStyle));
+  border-radius: var(--saltToast-borderRadius, var(--salt-palette-corner, 0));
 
   box-sizing: border-box;
   box-shadow: var(--salt-overlayable-shadow-popout);
