@@ -1,5 +1,6 @@
 ---
-title: Drawer
+title:
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
   exclude: true
@@ -11,7 +12,7 @@ data:
 
 <LivePreview componentName="drawer" exampleName="Default" >
 
-### Default
+## Default
 
 By default, a drawer anchors to the `left` edge of the screen and has `variant="primary"`.
 
@@ -23,7 +24,7 @@ Set `variant="secondary"` for a secondary drawer.
 
 <LivePreview componentName="drawer" exampleName="RightDrawer" >
 
-### Right drawer usage example
+## Right drawer usage example
 
 Consider using a right-anchored drawer to show supporting information related to the current context, such as recent events, notifications or quick settings. Always set your drawer's width suitable for the content inside it.
 
@@ -31,7 +32,7 @@ Consider using a right-anchored drawer to show supporting information related to
 
 <LivePreview componentName="drawer" exampleName="TopDrawer" >
 
-### Top drawer usage example
+## Top drawer usage example
 
 Anchor your drawer to the top edge if it will display supporting information that’s related to the current context and is best presented in a horizontal format, e.g., complex filters or a summary panel.
 
@@ -39,7 +40,7 @@ Anchor your drawer to the top edge if it will display supporting information tha
 
 <LivePreview componentName="drawer" exampleName="BottomDrawer" >
 
-### Bottom drawer usage example
+## Bottom drawer usage example
 
 Anchor a drawer to the bottom edge of the screen when using a master-detail layout with content, such as graphs, images or comparisons that requires a wider horizontal format.
 
@@ -47,10 +48,9 @@ Anchor a drawer to the bottom edge of the screen when using a master-detail layo
 
 <LivePreview componentName="drawer" exampleName="MandatoryAction" >
 
-### MandatoryAction
+## MandatoryAction
 
-This example uses the `disableDismiss` prop to prevent the drawer closing on click away therefore ensuring the user takes an action within the drawer for it to close.
-This example closes when the user clicks the **Submit** button.
+This example uses the `disableDismiss` prop to prevent the drawer closing on click away therefore ensuring the user takes an action within the drawer for it to close. This example closes when the user clicks the **Submit** button.
 
 When the optional close button is hidden, use the `disableDismiss` prop.
 
@@ -58,9 +58,9 @@ When the optional close button is hidden, use the `disableDismiss` prop.
 
 <LivePreview componentName="drawer" exampleName="DisableScrim" >
 
-### DisableScrim
+## DisableScrim
 
-Use the `disableScrim` prop to prevent the scrim from rendering
+Use the `disableScrim` prop to prevent the scrim from rendering.
 
 </LivePreview>
 </LivePreviewControls>

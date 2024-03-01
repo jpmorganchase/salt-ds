@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   border: var(--saltFileDropZone-border, var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor));
+  border-radius: var(--saltFileDropZone-borderRadius, var(--salt-palette-corner, 0));
   flex-direction: column;
   padding: var(--salt-spacing-200);
   gap: var(--salt-spacing-200);
@@ -13,6 +14,7 @@
   font-size: var(--saltFileDropZone-fontSize, var(--salt-text-fontSize));
   font-family: var(--saltFileDropZone-fontFamily, var(--salt-text-fontFamily));
   line-height: var(--saltFileDropZone-lineHeight, var(--salt-text-lineHeight));
+  box-sizing: border-box;
 }
 
 .saltFileDropZone-active {

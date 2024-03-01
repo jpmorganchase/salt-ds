@@ -39,8 +39,8 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/correct-theme-token-usage";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) =>
-    `No foundation or palette color should be used in component`, // Can encode option in error message if needed
+  expected: (propertyChecked) =>
+    `No foundation or palette variables (${propertyChecked}) should be used in component`, // Can encode option in error message if needed
 });
 
 const meta = {
@@ -92,17 +92,21 @@ const allAllowedKeys = [
   "palette-opacity",
   "palette-neutral",
   "palette-interact",
+  // Corner is approved use case for palette layer (not curve from foundation)
+  "palette-corner",
 ];
 
+const varEndDetector = "(?![\\w-])";
+
 const regexpPattern = new RegExp(
-  `--salt(w+)?-(${allAllowedKeys.join("|")})-.+`
+  `--salt(w+)?-(${allAllowedKeys.join("|")}).*${varEndDetector}`
 );
 
 module.exports = stylelint.createPlugin(
   ruleName,
-  (primary, secondaryOptionObject, context) => {
+  (primaryOption, secondaryOptionObject, context) => {
     return (root, result) => {
-      const verboseLog = primary.logLevel === "verbose";
+      const verboseLog = primaryOption.logLevel === "verbose";
 
       function check(property) {
         const checkResult =
@@ -132,7 +136,8 @@ module.exports = stylelint.createPlugin(
           complain(
             declarationValueIndex(decl) + firstNode.sourceIndex,
             firstNode.value.length,
-            decl
+            decl,
+            firstNode.value
           );
         });
 
@@ -140,14 +145,14 @@ module.exports = stylelint.createPlugin(
 
         if (check(prop)) return;
 
-        complain(0, prop.length, decl);
+        complain(0, prop.length, decl, prop);
       });
 
-      function complain(index, length, decl) {
+      function complain(index, length, decl, propertyChecked) {
         report({
           result,
           ruleName,
-          message: messages.expected(primary),
+          message: messages.expected(propertyChecked),
           node: decl,
           index,
           endIndex: index + length,

@@ -50,7 +50,7 @@ Keep the guidance here short, no more than five sentences. Leave the section bla
 
 ### When to use/when not to use
 
-These are H4 headers that sit underneath the "using the component" header and text (if present).
+These are H3 headers that sit underneath the "using the component" header and text (if present).
 
 Use this section to outline situations where a user may want to use a given component. Be as thorough as possible, and try to cover all scenarios. Try to ensure each "when to use" has an accompanying "when not to use" and vice versa.
 
@@ -59,6 +59,10 @@ Use bullet points, unless there is one point in **both** sections. Use a new bul
 Don't worry about writing "use" and "don't use" at the start of each sentence, as it's implied by the section header. Try to start the sentence with "when" or "to", such as "when the nav item contains more than four items."
 
 For the "when not to use" section, provide an alternative solution for each point where possible. Format as "Instead, use X" or "Instead, use X to Y" where X is a component or alternative solution and Y is a task or outcome. Use back ticks and Pascal case for component names, and link to the relevant documentation.
+
+### Further usage headers
+
+If you have further general usage guidance that doesn't fit in the introductory section, add extra H3s below the when to use/when not to use headers.
 
 ### Import
 
@@ -77,7 +81,7 @@ Props tables are automatically generated using the `PropsTable` component.
 <PropsTable packageName="core" componentName="ComponentName" />
 ```
 
-If there are two or more components, use an H4 header with the name of the component above each props table. Use back ticks and Pascal case for the header. Use the name of the component as it appears in code.
+If there are two or more components, use an H3 header with the name of the component above each props table. Use back ticks and Pascal case for the header. Use the name of the component as it appears in code.
 
 ### Content
 
@@ -95,7 +99,7 @@ Write header titles in sentence case as always.
 
 Example text should describe what is being demonstrated, what it shows about how the component functions, and why it's significant. Why is it different to other examples? Aim for fewer than six sentences, and avoid bullet points.
 
-Where relevant, include a "best practices" H4 section for the given example. While the main example section covers what the component does, this section covers how the component should be used. What sort of usage would you like the encourage or discourage?
+Where relevant, include a "best practices" H3 section for the given example. While the main example section covers what the component does, this section covers how the component should be used. What sort of usage would you like the encourage or discourage?
 
 Use bullet points for each tip. Don't use any bullet points if there is only one tip.
 

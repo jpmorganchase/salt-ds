@@ -29,7 +29,8 @@ export const CloseTabWarningDialog = ({
       }
     }}
   >
-    <DialogTitle>Do you want to close this tab?</DialogTitle>
+    <DialogTitle title="Do you want to close this tab?" />
+
     <DialogContent>
       {`Closing the tab will cause any changes made to
                   '${closedTab.label}' to be lost.`}

@@ -8,28 +8,29 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
-#### When to use
+### When to use
 
 - To display and select from a list of 10 or more options that don't need to be permanently visible to the user without selecting from a dropdown menu.
 - When only the selected value from a set of options needs to be visible once the selection is made.
 - If a workflow benefits from having a filter to quickly narrow down the available options.
 - If there are more than 100 options and you would like to prevent performance issues without virtualization.
 
-#### When not to use
+### When not to use
 
 - To choose one value from a set of five to ten options that does not require filtering. Instead, use [`Dropdown`](../dropdown).
 - To select a single option from fewer than five. Instead, use [`RadioButtonGroup`](../radio-button).
 - To select multiple options from fewer than five. Instead, use [`CheckboxGroup`](../checkbox).
 - To make an instantaneous selection between two binary choices, for example “on” and “off”. Instead, use [`Switch`](../switch).
 
-#### Controlled/Uncontrolled
+### Controlled/Uncontrolled
 
-Just like native input elements in React, Combo Box can be controlled or uncontrolled. By default Combo Box is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of Combo Box.
-If you want to control the value of Combo Box, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+Just like native input elements in React, a combo box can be controlled or uncontrolled. By default a combo box is uncontrolled. Use the `defaultValue` and `defaultSelected` props to control the default value of the combo box.
 
-### Import
+If you want to control the value of the combo box, use the `value` and `selected` props. The `onSelectionChange` prop is required when using the controlled approach.
+
+## Import
 
 To import `ComboBoxNext` from the lab Salt package, use:
 
@@ -37,20 +38,20 @@ To import `ComboBoxNext` from the lab Salt package, use:
 import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/lab";
 ```
 
-### Props
+## Props
 
-#### Combo Box Next
+### `ComboBoxNext`
 
 <PropsTable packageName="lab" componentName="ComboBoxNext" />
 
-#### Option
+### `Option`
 
 <PropsTable packageName="lab" componentName="Option" />
 
-#### Option Group
+### `OptionGroup`
 
 <PropsTable packageName="lab" componentName="OptionGroup" />
 
-### References
+## References
 
 - Combo Box pattern (https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) W3C

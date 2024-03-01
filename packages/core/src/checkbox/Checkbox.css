@@ -26,6 +26,7 @@
 .saltCheckbox-input,
 .saltCheckboxIcon {
   margin-top: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+  box-sizing: border-box;
 }
 
 .saltCheckboxIcon > svg {

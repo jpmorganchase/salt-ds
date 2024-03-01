@@ -1,18 +1,19 @@
-import { ReactNode } from "react";
+import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   Card,
   InteractableCard,
-  SaltProvider,
-  Panel,
-  H1,
+  InteractableCardProps,
+  H3,
   Text,
-  FlexLayout,
-  GridLayout,
   Link,
+  StackLayout,
+  RadioButton,
+  RadioButtonGroup,
+  Label,
+  CardProps,
 } from "@salt-ds/core";
-import { ColumnLayoutContainer, ColumnLayoutItem } from "docs/story-layout";
 import exampleImage from "./../assets/exampleImage1x.png";
 
 import "./card.stories.css";
@@ -23,320 +24,238 @@ export default {
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof Card>;
 
-interface ExampleRowProps {
-  children: ReactNode;
-  name: string;
-}
-
-const ExampleRow = ({ name, children }: ExampleRowProps) => (
-  <Panel style={{ height: "unset", width: 800 }}>
-    <ColumnLayoutContainer>
-      <ColumnLayoutItem>
-        <SaltProvider density="high">{children}</SaltProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        <SaltProvider density="medium">{children}</SaltProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        <SaltProvider density="low">{children}</SaltProvider>
-      </ColumnLayoutItem>
-      <ColumnLayoutItem>
-        <SaltProvider density="touch">{children}</SaltProvider>
-      </ColumnLayoutItem>
-    </ColumnLayoutContainer>
-  </Panel>
-);
-
-const Examples = () => (
-  <ExampleRow name="Sustainable investing products">
-    <Card>
+export const Default: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
+    <StackLayout gap={1}>
+      <H3>Sustainable investing products</H3>
       <Text>
         We have a commitment to provide a wide range of investment solutions to
         enable you to align your financial goals to your values.
       </Text>
-    </Card>
-  </ExampleRow>
-);
-
-const InteractableExamples = () => (
-  <ExampleRow name="Default">
-    <InteractableCard>
-      <Text>{exampleData[0].title}</Text>
-    </InteractableCard>
-  </ExampleRow>
-);
-
-export const AllDefault: StoryFn<typeof Card> = () => (
-  <div>
-    <SaltProvider mode="light">
-      <Examples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <Examples />
-    </SaltProvider>
-  </div>
-);
-
-const exampleData = [
-  {
-    title: "Sustainable investing products",
-    content:
-      "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
-  },
-  {
-    title: "Our expertise",
-    content:
-      "Our team of more than 200 experts in 28 offices worldwide is on hand to help you with your investment decisions.",
-  },
-  {
-    title: "Market-leading insights",
-    content:
-      "Our award-winning strategists provide unique and regular insights about market events and current trends.",
-  },
-  {
-    title: "Events",
-    content:
-      "We have a full calendar of online and in-person events with expert guest speakers for you to attend.",
-  },
-];
-
-export const Default: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
-    <Text>{exampleData[0].content}</Text>
+    </StackLayout>
   </Card>
 );
 
-export const CardsInFlexLayout: StoryFn<typeof Card> = () => (
-  <FlexLayout>
-    {exampleData.map((example, index) => {
-      return (
-        <Card key={index}>
-          <H1 styleAs="h3">{example.title}</H1>
-          <Text>{example.content}</Text>
-        </Card>
-      );
-    })}
-  </FlexLayout>
-);
-
-export const CardsInGridLayout: StoryFn<typeof Card> = () => (
-  <GridLayout style={{ maxWidth: "700px" }} rows={2} columns={2}>
-    {exampleData.map((example, index) => {
-      return (
-        <Card key={index}>
-          <H1 styleAs="h3">{example.title}</H1>
-          <Text>{example.content}</Text>
-        </Card>
-      );
-    })}
-  </GridLayout>
-);
-
-export const DefaultWithImage: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
-    <img
-      alt=""
-      src={exampleImage}
-      className="card-demo-image"
-      style={{ width: "-webkit-fill-available" }}
-    />
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
-    <Text>{exampleData[0].content}</Text>
+export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
+    <StackLayout gap={3}>
+      <img alt="example image" src={exampleImage} style={{ width: "100%" }} />
+      <StackLayout gap={1}>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
-export const DefaultWithLink: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
-    <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-      <H1 styleAs="h3">{exampleData[0].title}</H1>
-      <Text>{exampleData[0].content}</Text>
-    </div>
-    <Link href="#" IconComponent={null} target="_blank">
-      View our range of funds
-    </Link>
+export const DefaultWithLink: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
+    <StackLayout gap={1}>
+      <H3>Sustainable investing products</H3>
+      <StackLayout gap={1}>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
+        <Link href="#" IconComponent={null}>
+          View our range of funds
+        </Link>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
-export const DefaultWithLinkAndImage: StoryFn<typeof Card> = () => (
-  <Card className="withImage">
-    <img
-      aria-label="The Skies by Dominik Schröder"
-      src={exampleImage}
-      className="card-demo-image"
-      style={{ width: "-webkit-fill-available" }}
-    />
-    <div
-      style={{
-        padding:
-          "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
-      }}
-    >
-      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H1 styleAs="h3">{exampleData[0].title}</H1>
-        <Text>{exampleData[0].content}</Text>
-      </div>
-      <Link href="#" IconComponent={null} target="_blank">
-        View our range of funds
-      </Link>
-    </div>
+export const DefaultWithButton: StoryFn<typeof Card> = (args) => (
+  <Card {...args} style={{ width: "260px" }}>
+    <StackLayout gap={1}>
+      <H3>Sustainable investing products</H3>
+      <StackLayout gap={2} align="start">
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
+        <Button>View funds</Button>
+      </StackLayout>
+    </StackLayout>
   </Card>
 );
 
-export const DefaultWithButton: StoryFn<typeof Card> = () => (
-  <Card style={{ width: "256px" }}>
-    <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-      <H1 styleAs="h3">{exampleData[0].title}</H1>
-      <Text>{exampleData[0].content}</Text>
-    </div>
-    <Button onClick={() => window.open("#")}>View funds</Button>
-  </Card>
-);
+export const AccentVariations: StoryFn<typeof Card> = (args) => {
+  const [placement, setPlacement] = useState<CardProps["accent"]>("bottom");
 
-export const DefaultWithButtonAndImage: StoryFn<typeof Card> = () => (
-  <Card className="withImage">
-    <img
-      aria-label="The Skies by Dominik Schröder"
-      src={exampleImage}
-      className="card-demo-image"
-      style={{ width: "-webkit-fill-available" }}
-    />
-    <div
-      style={{
-        padding:
-          "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
-      }}
-    >
-      <div style={{ paddingBottom: "var(--salt-size-unit)" }}>
-        <H1 styleAs="h3">{exampleData[0].title}</H1>
-        <Text>{exampleData[0].content}</Text>
-      </div>
-      <Button onClick={() => window.open("#")}>View funds</Button>
-    </div>
-  </Card>
-);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPlacement(event.target.value as CardProps["accent"]);
+  };
 
-export const InteractableAll: StoryFn<typeof Card> = () => (
-  <div>
-    <SaltProvider mode="light">
-      <InteractableExamples />
-    </SaltProvider>
-    <SaltProvider mode="dark">
-      <InteractableExamples />
-    </SaltProvider>
-  </div>
-);
+  return (
+    <StackLayout style={{ width: "266px" }}>
+      <Card {...args} accent={placement} hoverable>
+        <StackLayout gap={1}>
+          <H3>Sustainable investing products</H3>
+          <Text>
+            We have a commitment to provide a wide range of investment solutions
+            to enable you to align your financial goals to your values.
+          </Text>
+        </StackLayout>
+      </Card>
+      <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
+        <RadioButton
+          key="bottom"
+          label="bottom"
+          value="bottom"
+          onChange={handleChange}
+          checked
+        />
+        <RadioButton
+          key="top"
+          label="top"
+          value="top"
+          onChange={handleChange}
+        />
+        <RadioButton
+          key="left"
+          label="left"
+          value="left"
+          onChange={handleChange}
+        />
+        <RadioButton
+          key="right"
+          label="right"
+          value="right"
+          onChange={handleChange}
+        />
+      </RadioButtonGroup>
+    </StackLayout>
+  );
+};
 
-export const Interactable: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }}>
-    <H1 styleAs="h3">{exampleData[0].title}</H1>
-    <Text>{exampleData[0].content}</Text>
+export const Variants: StoryFn<typeof Card> = (args) => {
+  const variants = ["primary", "secondary"] as const;
+  return (
+    <StackLayout style={{ width: 600 }}>
+      {variants.map((variant) => {
+        return (
+          <StackLayout align="end">
+            <StackLayout direction="row" key={variant}>
+              <Card {...args} variant={variant}>
+                <StackLayout gap={1}>
+                  <H3>Sustainable investing products</H3>
+                  <Text>
+                    We have a commitment to provide a wide range of investment
+                    solutions to enable you to align your financial goals to
+                    your values.
+                  </Text>
+                </StackLayout>
+              </Card>
+            </StackLayout>
+            <Label>Variant: {variant}</Label>
+          </StackLayout>
+        );
+      })}
+    </StackLayout>
+  );
+};
+
+export const Interactable: StoryFn<typeof InteractableCard> = (args) => (
+  <InteractableCard {...args} style={{ width: "260px" }}>
+    <StackLayout gap={1}>
+      <H3>Sustainable investing products</H3>
+      <Text>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
+    </StackLayout>
   </InteractableCard>
 );
 
-export const InteractableDisabled: StoryFn<typeof Card> = () => (
+export const InteractableDisabled: StoryFn<typeof InteractableCard> = (
+  args
+) => (
   <InteractableCard
-    style={{ width: "256px" }}
+    style={{ width: "260px" }}
     onClick={() => console.log("Clicked")}
     data-testid="card-disabled-example"
     disabled
+    {...args}
   >
-    <H1 styleAs="h3" disabled>
-      {exampleData[0].title}
-    </H1>
-    <Text disabled>{exampleData[0].content}</Text>
+    <StackLayout gap={1}>
+      <H3 disabled>Sustainable investing products</H3>
+      <Text disabled>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
+    </StackLayout>
   </InteractableCard>
 );
 
-export const InteractableAccentVariations: StoryFn<typeof Card> = () => {
-  const placements = ["left", "right", "top", "bottom"];
+export const InteractableAccentVariations: StoryFn<typeof InteractableCard> = (
+  args
+) => {
+  const [placement, setPlacement] =
+    useState<InteractableCardProps["accentPlacement"]>("bottom");
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPlacement(
+      event.target.value as InteractableCardProps["accentPlacement"]
+    );
+  };
   return (
-    <div
-      style={{
-        display: "grid",
-        gap: "calc(2 * var(--salt-size-unit))",
-        width: "266px",
-      }}
-    >
-      {exampleData.map((example, index) => {
-        return (
-          <InteractableCard
-            accentPlacement={
-              placements[index] as "left" | "right" | "top" | "bottom"
-            }
-            key={index}
-          >
-            <H1 styleAs="h3">{example.title}</H1>
-            <Text>{example.content}</Text>
-          </InteractableCard>
-        );
-      })}
-    </div>
-  );
-};
-
-export const InteractableAsBlockLink: StoryFn<typeof Card> = () => {
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      href="https://saltdesignsystem.com/"
-      IconComponent={null}
-      target="_blank"
-    >
-      <InteractableCard style={{ width: "266px" }}>
-        <H1 styleAs="h3">{exampleData[0].title}</H1>
-        <Text>{exampleData[0].content}</Text>
+    <StackLayout style={{ width: "266px" }}>
+      <InteractableCard {...args} accentPlacement={placement}>
+        <StackLayout gap={1}>
+          <H3>Sustainable investing products</H3>
+          <Text>
+            We have a commitment to provide a wide range of investment solutions
+            to enable you to align your financial goals to your values.
+          </Text>
+        </StackLayout>
       </InteractableCard>
-    </Link>
-  );
-};
-
-export const InteractableAsBlockLinkWithImage: StoryFn<typeof Card> = () => {
-  return (
-    <Link
-      style={{ textDecoration: "none" }}
-      href="https://saltdesignsystem.com/"
-      IconComponent={null}
-      target="_blank"
-    >
-      <InteractableCard className="withImage">
-        <img
-          aria-label="The Skies by Dominik Schröder"
-          src={exampleImage}
-          className="card-demo-image"
-          style={{ width: "-webkit-fill-available" }}
+      <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
+        <RadioButton
+          key="bottom"
+          label="bottom"
+          value="bottom"
+          onChange={handleChange}
+          checked
         />
-        <div
-          style={{
-            padding:
-              "0px var(--salt-size-container-spacing) var(--salt-size-container-spacing) var(--salt-size-container-spacing)",
-          }}
-        >
-          <H1 styleAs="h3">{exampleData[0].title}</H1>
-          <Text>{exampleData[0].content}</Text>
-        </div>
-      </InteractableCard>
-    </Link>
+        <RadioButton
+          key="top"
+          label="top"
+          value="top"
+          onChange={handleChange}
+        />
+        <RadioButton
+          key="left"
+          label="left"
+          value="left"
+          onChange={handleChange}
+        />
+        <RadioButton
+          key="right"
+          label="right"
+          value="right"
+          onChange={handleChange}
+        />
+      </RadioButtonGroup>
+    </StackLayout>
   );
 };
 
-export const InteractableAsBlockLinkWithImageBackground: StoryFn<
-  typeof Card
-> = () => {
+export const InteractableAsBlockLink: StoryFn<typeof InteractableCard> = (
+  args
+) => {
   return (
-    <Link
-      style={{ textDecoration: "none" }}
-      href="https://saltdesignsystem.com/"
-      IconComponent={null}
-      target="_blank"
-    >
-      <InteractableCard className="imageBackground">
-        <div
-          style={{ paddingTop: "calc(3 * var(--salt-size-container-spacing))" }}
-        >
-          <H1 styleAs="h3">{exampleData[0].title}</H1>
-          <Text>{exampleData[0].content}</Text>
-        </div>
+    <Link style={{ textDecoration: "none" }} href="#" IconComponent={null}>
+      <InteractableCard {...args} style={{ width: "266px" }}>
+        <StackLayout gap={1}>
+          <H3>Sustainable investing products</H3>
+          <Text>
+            We have a commitment to provide a wide range of investment solutions
+            to enable you to align your financial goals to your values.
+          </Text>
+        </StackLayout>
       </InteractableCard>
     </Link>
   );

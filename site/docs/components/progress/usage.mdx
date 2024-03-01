@@ -1,5 +1,4 @@
 ---
-# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -9,20 +8,20 @@ data:
   $ref: ./#/data
 ---
 
-### Using the components
+## Using the components
 
-#### When to use
+### When to use
 
 - When it’s possible to determine the length of time remaining for a task or operation to complete. This will reassure the user that it is being processed.
 - To provide users with a visual indication of the status of an operation, or how much of a process is completed.
 - When the operation will take more than a second to complete, to reassure users that the operation is in progress.
 
-#### When not to use
+### When not to use
 
 - When a task or operation will take an indeterminate length of time to complete. Instead, use [`Spinner`](/salt/components/spinner).
 - To indicate the loading of content on navigation. Instead, use [`Spinner`](/salt/components/spinner).
 
-### Import
+## Import
 
 To import the `CircularProgress` and `LinearProgress` components from the core Salt package, use:
 
@@ -32,12 +31,12 @@ import { CircularProgress } from "@salt-ds/core";
 import { LinearProgress } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
-#### `CircularProgress`
+### `CircularProgress`
 
 <PropsTable packageName="core" componentName="CircularProgress" />
 
-#### `LinearProgress`
+### `LinearProgress`
 
 <PropsTable packageName="core" componentName="LinearProgress" />
