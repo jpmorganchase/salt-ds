@@ -38,4 +38,5 @@
 
 .saltOption[aria-disabled="true"] {
   color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }

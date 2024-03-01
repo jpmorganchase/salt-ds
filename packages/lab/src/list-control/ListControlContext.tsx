@@ -1,5 +1,6 @@
 import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
+import { defaultValueToString } from "./ListControlState";
 
 export interface OptionValue<Item> {
   id: string;
@@ -46,9 +47,7 @@ export const ListControlContext = createContext<ListControlContextValue<any>>(
     },
     multiselect: false,
     focusVisibleState: false,
-    valueToString(item) {
-      return typeof item === "string" ? item : "";
-    },
+    valueToString: defaultValueToString,
   }
 );
 
