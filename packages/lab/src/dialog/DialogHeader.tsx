@@ -2,6 +2,7 @@ import { ReactNode, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import {
   H2,
+  H3,
   StatusIndicator,
   ValidationStatus,
   makePrefixer,

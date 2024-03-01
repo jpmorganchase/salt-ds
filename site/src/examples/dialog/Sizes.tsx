@@ -44,11 +44,7 @@ const SmallDialog = (): ReactElement => {
         status="warning"
         id={id}
       >
-<<<<<<< HEAD
         <DialogHeader disableAccent header="Reset grid settings?" />
-=======
-        <DialogTitle disableAccent header="Reset grid settings?" />
->>>>>>> 2a15f573 (rename title/subtitle to header/preheader)
         <DialogContent>
           Are you sure you want to reset all grid data? Any previous settings
           will not be saved
