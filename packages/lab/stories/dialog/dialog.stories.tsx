@@ -1,15 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { PropsWithChildren, useState } from "react";
-import {
-  Button,
-  StackLayout,
-  FormField,
-  FormFieldLabel,
-  Input,
-} from "@salt-ds/core";
+import { PropsWithChildren, ReactNode, useState } from "react";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
   DialogCloseButton,
@@ -29,11 +23,10 @@ export default {
 } as Meta<typeof Dialog>;
 
 const DialogTemplate: StoryFn<
-  DialogProps & { header: string; preheader: string }
+  DialogProps & { header: string; preheader: string; content: ReactNode }
 > = ({
   header,
   preheader,
-  // @ts-ignore
   content,
   id,
   size,
@@ -66,7 +59,7 @@ const DialogTemplate: StoryFn<
         id={id}
         size={size}
       >
-        <DialogTitle header={header} preheader={preheader} />
+        <DialogHeader header={header} preheader={preheader} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={handleClose}>
@@ -91,9 +84,7 @@ Default.args = {
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
-  // @ts-ignore
   header: "Congratulations! You have created a Dialog.",
-  // @ts-ignore
   content: (
     <StackLayout>
       <div>
@@ -153,10 +144,8 @@ Preheader.args = {
 const AlertDialogTemplate: StoryFn<DialogProps & { header: string }> = ({
   open: openProp = false,
   status,
-  // @ts-ignore
   header,
   size = "small",
-  // @ts-ignore
   content,
   ...args
 }) => {
@@ -189,7 +178,7 @@ const AlertDialogTemplate: StoryFn<DialogProps & { header: string }> = ({
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle header={header} />
+        <DialogHeader header={header} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -258,7 +247,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         initialFocus={1}
         disableDismiss
       >
-        <DialogTitle id="mandatory-action" header="Delete Transaction" />
+        <DialogHeader id="mandatory-action" header="Delete Transaction" />
 
         <DialogContent>
           Are you sure you want to permanently delete this transaction
@@ -287,7 +276,7 @@ export const DesktopDialog = () => {
   return (
     <StackLayout>
       <FakeWindow>
-        <DialogTitle header="Window Dialog" />
+        <DialogHeader header="Window Dialog" />
         <DialogContent>Hello world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
@@ -296,7 +285,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle header="Window Dialog" />
+        <DialogHeader header="Window Dialog" />
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
@@ -305,7 +294,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle status="warning" header="Warning Dialog" />
+        <DialogHeader status="warning" header="Warning Dialog" />
         <DialogContent>Potential issues abound!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>

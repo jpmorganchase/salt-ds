@@ -13,6 +13,14 @@
   margin: 0;
 }
 
+.saltDialogTitle-preheader {
+  margin: 0;
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text);
+  color: var(--salt-content-secondary-foreground)
+
+}
+
 /* Styles applied to the status indicator icon overriding its default size */
 .saltDialogTitle .saltStatusIndicator.saltIcon {
   --icon-size: var(--salt-text-h2-lineHeight);
