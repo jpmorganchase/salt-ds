@@ -9,7 +9,7 @@ import {
 } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
   SteppedTracker,
@@ -44,7 +44,7 @@ const SmallDialog = (): ReactElement => {
         status="warning"
         id={id}
       >
-        <DialogTitle disableAccent header="Reset grid settings?" />
+        <DialogHeader disableAccent header="Reset grid settings?" />
         <DialogContent>
           Are you sure you want to reset all grid data? Any previous settings
           will not be saved
@@ -154,7 +154,7 @@ const MediumDialog = (): ReactElement => {
         size="medium"
         aria-labelledby="preferences-dialog"
       >
-        <DialogTitle header="Preferences" disableAccent />
+        <DialogHeader header="Preferences" disableAccent />
         <DialogContent>
           <StackLayout direction="row">
             <ParentChildLayout parent={parent} child={child} />
@@ -200,7 +200,7 @@ const LargeDialog = (): ReactElement => {
         <SplitLayout
           align="center"
           startItem={
-            <DialogTitle
+            <DialogHeader
               header="Add a Beneficiary"
               preheader="Customize your Experience"
             />

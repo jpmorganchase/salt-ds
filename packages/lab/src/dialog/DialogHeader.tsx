@@ -2,6 +2,7 @@ import { ReactNode, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import {
   H2,
+  H3,
   StatusIndicator,
   ValidationStatus,
   makePrefixer,
@@ -10,7 +11,7 @@ import {
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dialogTitleCss from "./DialogTitle.css";
+import dialogTitleCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogTitle");
 
@@ -23,18 +24,18 @@ interface DialogTitleProps extends ComponentPropsWithoutRef<"div"> {
    * Displays the accent bar in the Dialog Title */
   disableAccent?: boolean;
   /**
-   * Displays the Dialog Title in a H2 component
+   * Displays the header at the top of the Dialog
    */
   header: ReactNode;
   /**
-   * Displays the Dialog Subtitle in a Label component
+   * Displays the preheader just above the header
    **/
   preheader?: ReactNode;
 
   className?: string;
 }
 
-export const DialogTitle = ({
+export const DialogHeader = ({
   className,
   header,
   preheader,
@@ -68,11 +69,9 @@ export const DialogTitle = ({
       {status && <StatusIndicator status={status} />}
       <div>
         {preheader && (
-          <Text as={"label"} variant="secondary">
-            {preheader}
-          </Text>
+          <h3 className={withBaseName("preheader")}>{preheader}</h3>
         )}
-        <H2 className={clsx(withBaseName("header"))}>{header}</H2>
+        <H2 className={withBaseName("header")}>{header}</H2>
       </div>
     </div>
   );

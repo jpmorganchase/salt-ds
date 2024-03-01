@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Button, useId } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
 } from "@salt-ds/lab";
@@ -34,7 +34,7 @@ export const Error = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle header="Can`t move file" />
+        <DialogHeader header="Can`t move file" />
         <DialogContent>
           You don’t have permission to move or delete this file.
         </DialogContent>

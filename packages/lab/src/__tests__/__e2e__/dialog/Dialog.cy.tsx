@@ -64,7 +64,7 @@ describe("GIVEN a Dialog", () => {
 
       cy.findByRole("button").click();
 
-      cy.get("label").should("be.visible");
+      cy.get("h3").should("be.visible");
     });
   });
 

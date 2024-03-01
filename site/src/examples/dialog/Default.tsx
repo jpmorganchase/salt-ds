@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
 } from "@salt-ds/lab";
@@ -29,7 +29,7 @@ export const Default = (): ReactElement => {
         Open default dialog
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogTitle header="Terms and conditions" />
+        <DialogHeader header="Terms and conditions" />
         <DialogContent>
           <StackLayout>
             <div>

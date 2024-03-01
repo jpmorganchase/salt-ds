@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Button, useId } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
 } from "@salt-ds/lab";
@@ -33,7 +33,7 @@ export const Warning = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle header="File access" />
+        <DialogHeader header="File access" />
 
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give

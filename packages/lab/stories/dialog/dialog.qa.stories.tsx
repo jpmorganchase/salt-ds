@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
   DialogCloseButton,
@@ -40,7 +40,7 @@ const DialogTemplate: StoryFn<DialogProps & { header: string }> = ({
   return (
     <StackLayout>
       <FakeDialog status={status}>
-        <DialogTitle header={header} />
+        <DialogHeader header={header} />
         <DialogContent>This is dialog content...</DialogContent>
         <DialogActions>
           <Button style={{ marginRight: "auto" }} variant="secondary">
@@ -72,7 +72,7 @@ export const Subtitle: StoryFn<QAContainerProps> = () => {
   return (
     <QAContainer width={1300} itemPadding={3}>
       <FakeDialog>
-        <DialogTitle
+        <DialogHeader
           header="Subscribe"
           preheader="Recieve emails about the latest updates"
           style={{ width: "500px" }}

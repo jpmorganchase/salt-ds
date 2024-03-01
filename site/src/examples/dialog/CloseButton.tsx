@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
   DialogCloseButton,
@@ -28,7 +28,7 @@ export const CloseButton = (): ReactElement => {
     <>
       <Button onClick={handleRequestOpen}>Open dialog with close button</Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogTitle header="Terms and conditions" />
+        <DialogHeader header="Terms and conditions" />
         <DialogContent>
           <StackLayout>
             <div>

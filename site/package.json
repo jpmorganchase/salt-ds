@@ -24,7 +24,7 @@
   "dependencies": {
     "@jpmorganchase/mosaic-cli": "^0.1.0-beta.65",
     "@jpmorganchase/mosaic-components": "^0.1.0-beta.65",
-    "@jpmorganchase/mosaic-content-editor-plugin": "^0.1.0-beta.65",
+    "@jpmorganchase/mosaic-content-editor-plugin": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch",
     "@jpmorganchase/mosaic-layouts": "^0.1.0-beta.65",
     "@jpmorganchase/mosaic-plugins": "^0.1.0-beta.65",
     "@jpmorganchase/mosaic-site-components": "^0.1.0-beta.65",
