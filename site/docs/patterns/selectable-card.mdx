@@ -1,0 +1,155 @@
+---
+title: Selectable card
+layout: DetailPattern
+aliases:
+  - /salt/patterns/content-status
+data:
+  resources:
+    [
+   ]
+  components: ["Card", "Checkbox", "Radio button", "Stack layout", "Grid layout"]
+---
+
+Selectable card allows users to make selections and interact with content. It’s a visual equivalent to a form control, such as Toggle Button, Radio Button or Checkbox—and you can group selectable cards to support single or multiple selection. 
+
+This pattern allows users to choose or toggle between multiple options presented as cards.
+
+<Diagram
+  src="/img/patterns/content-status/content-status.png"
+  alt="Example showing a content status with an info indicator"
+  border
+/>
+
+## When to use
+
+Use the Selectable Card pattern when you have options that:
+Are the main focus of your UI (and space permits)
+Benefit from an illustration or explanation about the available options
+May need to be selected on a mobile device
+
+Every selectable card can accommodate an inline image and description while offering a large target/hit area for swift interaction, catering to the mentioned use cases.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Consider a more traditional form control, such as a Switch, Radio Button, Checkbox or Dropdown, when you have insufficient space or many options that won’t be visible on screen at the same time.
+Use the Card component instead, if your interactive elements are contained within the card content.
+Use Link Card component instead, to navigate users when clicking on the entire card.
+</ExampleContainer>
+
+## How to build
+
+The selectable card pattern incorporates the Interactable Card component by default, allowing you to customise the structure of elements within the content area, such as imagery, text elements, checkboxes, or radio buttons. Alternatively, it can be used independently as a toggle button.
+
+### Spacing
+
+Cards use Stack Layout to display their content in a column formation. Use --spacing-100 between titles and body text, use --spacing-300 for any embedded components underneath body text.
+
+<Diagram
+  src="/img/patterns/content-status/build.png"
+  alt="Example showing a content status with components and spacing labeled"
+  border
+/>
+
+### Padding
+
+Cards can use custom padding values around their content areas when required. These padding values can be adjusted based on factors such as the size of the card, the amount of content it contains and the desired visual balance within your UI. 
+
+All card components come with a default of spacing-200 inner padding, out-of-the-box. However, if you decide to customize this, it is advisable to:
+
+Use smaller cards when there is limited space in your application, which require less padding to optimize the hit area whilst maintaining a compact layout. In this use case, it is recommended to adjust the padding to spacing-100.
+Use larger cards when you need them to fill a significant portion of the screen, create visual separation within your UI and improve readability. In this case, is advisable to apply the spacing-300 token. 
+
+For more information on using spacing tokens, see the Salt spacing foundation.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+By default, titles and supporting content should be left aligned inside the card when using left-to-right languages, such as English. For text alignment alternatives, reference the Salt typography foundation.
+</ExampleContainer>
+
+## Selection types
+
+For multiple selection, you can embed a Checkbox into the interactable card. If you require users to select one option at a time, i.e., mutually exclusive selection, use the Radio Button equivalent instead—as demonstrated below. We recommend Cards in your group are consistent in height, regardless of where they are positioned, to maintain uniformity. 
+
+To help maintain the size of cards you should:
+Keep images the same size. 
+Use a similar amount of text.
+
+### Single selection
+
+Use radio buttons in selectable cards when your users need to make a single selection from a mutually exclusive set of options. Radio buttons ensure that users can only select one option at a time, preventing conflicting selections.
+
+<Diagram
+  src="/img/patterns/content-status/progress.png"
+  alt="Example showing a content status with a progress indicator"
+  border
+/>
+
+### Multiple selections
+
+Use checkboxes in selectable cards when your users need to make multiple selections from a list of options. Checkboxes allow users to select or deselect multiple items independently.
+
+<Diagram
+  src="/img/patterns/content-status/spinner.png"
+  alt="Example showing a content status with a spinner"
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Be consistent in your use of images across all selectable cards within a group. Either all contain an image, or none do.
+Cards allow for titles and descriptions to inform selection, keep the title and description succinct. We recommend cards always have at least a title, that fits within a single line. 
+For ADA compliance, it is important to provide perceivable and visible form controls to understand the selectable options presented in cards for those who rely on assistive technologies like screen readers.
+</ExampleContainer>
+
+## Layout
+
+We’d recommend always aligning your cards to an underlying layout grid for visual harmony. 
+
+Depending on your application’s use case, context and screen size, you should:
+Adapt the layout of your cards to fit the size and proportion of the screen you are designing for. For smaller screens, you may need to reduce the number of cards per row. For larger screens, you can take advantage of the additional space to display more cards.
+Arrange your cards using containers that are aligned to a grid layout, to create logical groupings and visual hierarchy. I.e., cards representing product categories may be grouped within separate containers to facilitate navigation. 
+
+While there is flexibility in how cards are used, it is advisable to use an underlying grid structure when using multiple cards simultaneously. This grid can span the full width of the UI or be positioned on the left or right side.
+
+<Diagram
+  src="/img/patterns/content-status/info.png"
+  alt="Example showing a content status with an info indicator"
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Use cards that are consistent in their visual hierarchy. Using different styles can create conflicting visual messages, especially when you’re using multiple cards on the same screen.
+We recommend using --spacing-300 by default for horizontal and vertical spacing between cards within a group. For compact UIs, an alternative option would be to use --spacing-100 for vertical spacing between cards.
+</ExampleContainer>
+
+### Grid layout (default spacing)
+
+Cards are most often arranged in a Grid Layout, with each card occupying a defined space. This is ideal for displaying a large number of cards in an orderly manner, such as product listings, catalogues or galleries.
+
+<Diagram
+  src="/img/patterns/content-status/warning.png"
+  alt="Example showing a content status with a warning indicator"
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Using a repetitive format or grid layout informs users of the selectability of cards, promoting understanding of their interactive functionality and improving accessibility, 
+Use consistent horizontal and/or vertical spacing between cards to provide adequate touch/click targets, minimizing the risk of accidental taps or misclicks, while ensuring responsive layout across various viewports.
+</ExampleContainer>
+
+### Stacked layout (compact spacing)
+
+Cards can use Stack Layout to be stacked vertically or horizontally to showcase sequential or related content.
+
+<Diagram
+  src="/img/patterns/content-status/error.png"
+  alt="Example showing a content status with an error indicator"
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Use a stack layout to present sequential or linear information, i.e., a timeline of events. 
+Stack layout is ideal for mobile devices where screen real estate is limited.
+</ExampleContainer>
+
+
+## Feedback
+
+If you would like to expand the pattern or share feedback with us, please contact the team.
