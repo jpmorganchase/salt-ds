@@ -56,6 +56,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         disabled={!unselectableReason && !highlightedReason}
         placement="top"
         enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
         {...TooltipProps}
       >
         <button

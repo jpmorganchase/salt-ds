@@ -80,18 +80,13 @@ export function useCalendarDay(
   const tabIndex = isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
   const today = isToday(date, getLocalTimeZone());
 
-  const unselectableResult = isDayUnselectable(date);
-  const unselectableReason =
-    typeof unselectableResult !== "boolean" ? unselectableResult : ""; // TODO: check accessibility, should we have a default tooltip message?
-
-  const highlightedResult = isDayHighlighted(date);
-  const highlightedReason =
-    typeof highlightedResult !== "boolean" ? highlightedResult : ""; // TODO: check accessibility, should we have a default tooltip message?
+  const unselectableReason = isDayUnselectable(date);
+  const highlightedReason = isDayHighlighted(date);
 
   const disabled =
     isDayDisabled(date) || (outOfRange && isOutsideAllowedMonths(date));
-  const unselectable = Boolean(unselectableResult);
-  const highlighted = Boolean(highlightedResult);
+  const unselectable = Boolean(unselectableReason);
+  const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates && outOfRange;
 
   useEffect(() => {

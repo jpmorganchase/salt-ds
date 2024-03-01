@@ -6,6 +6,7 @@ import {
   getLocalTimeZone,
   isEqualDay,
   startOfMonth,
+  startOfYear,
   today,
 } from "@internationalized/date";
 import {
@@ -50,7 +51,6 @@ HighlightedDates.args = {
   isDayHighlighted: (day) => {
     // Start of month
     if (isEqualDay(startOfMonth(day), day)) {
-      console.log("here, ", day);
       return "Start of month reminder";
     }
   },
@@ -82,6 +82,13 @@ export const NavigationBlocked = Template.bind({});
 NavigationBlocked.args = {
   minDate: startOfMonth(today(localTimeZone)),
   maxDate: endOfMonth(today(localTimeZone)),
+};
+
+export const ExpandedYears = Template.bind({});
+
+ExpandedYears.args = {
+  minDate: startOfYear(today(getLocalTimeZone()).subtract({ years: 5 })),
+  maxDate: startOfYear(today(getLocalTimeZone()).add({ years: 5 })),
 };
 
 export const RangeSelection = Template.bind({});

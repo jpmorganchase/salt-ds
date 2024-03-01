@@ -124,6 +124,7 @@ const OptionWithTooltip = ({
       disabled={!disabled}
       content={tooltipContent}
       enterDelay={0} // --salt-duration-instant
+      leaveDelay={0} // --salt-duration-instant
     >
       <Option value={value} disabled={disabled}>
         {children}
@@ -208,6 +209,7 @@ export const CalendarNavigation = forwardRef<
         disabled={canNavigatePrevious}
         content="Past dates are out of range"
         enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
       >
         <Button
           disabled={!canNavigatePrevious}
@@ -266,6 +268,7 @@ export const CalendarNavigation = forwardRef<
         disabled={canNavigateNext}
         content="Future dates are out of range"
         enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
       >
         <Button
           disabled={!canNavigateNext}

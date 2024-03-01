@@ -6,13 +6,15 @@
   width: var(--salt-size-base);
   height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);
-  background-color: var(--salt-selectable-background);
+  background: var(--salt-selectable-background);
   cursor: pointer;
   border: none;
   padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 .saltCalendarDay-content {
   margin: 0 var(--salt-spacing-50);
@@ -62,12 +64,8 @@
 .saltCalendarDay-unselectable:hover {
   background: var(--salt-selectable-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
-  position: relative;
 }
-.saltCalendarDay-highlighted {
-  position: relative;
-  overflow: hidden;
-}
+
 .saltCalendarDay-highlighted:before {
   content: "";
   height: var(--salt-spacing-200);

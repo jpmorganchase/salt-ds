@@ -12,7 +12,3 @@
 .saltCalendarCarousel-track > :nth-child(2) {
   position: relative;
 }
-
-.saltCalendarCarousel-shouldAnimate {
-  transition: none;
-}

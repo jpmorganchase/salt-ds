@@ -19,17 +19,14 @@ import {
   UseSingleSelectionCalendarProps,
 } from "./useSelection";
 
-export type UnselectableInfo = string;
-export type HighlightedInfo = string;
-
 interface BaseUseCalendarProps {
   defaultVisibleMonth?: DateValue;
   onVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue
   ) => void;
-  isDayUnselectable?: (date: DateValue) => UnselectableInfo | boolean | void;
-  isDayHighlighted?: (date: DateValue) => HighlightedInfo | boolean | void;
+  isDayUnselectable?: (date: DateValue) => string | false | void;
+  isDayHighlighted?: (date: DateValue) => string | false | void;
   isDayDisabled?: (date: DateValue) => boolean;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
@@ -46,8 +43,8 @@ export type useCalendarProps = (
 ) &
   BaseUseCalendarProps;
 
-const defaultIsDayUnselectable = (): UnselectableInfo | false => false;
-const defaultIsDayHighlighted = (): HighlightedInfo | false => false;
+const defaultIsDayUnselectable = (): string | false => false;
+const defaultIsDayHighlighted = (): string | false => false;
 const defaultIsDayDisabled = (): false => false;
 
 export function useCalendar(props: useCalendarProps) {
