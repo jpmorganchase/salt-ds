@@ -3,6 +3,7 @@ title: Theming
 layout: DetailTechnical
 sidebar:
   label: Overview
+  priority: 1
 ---
 
 The Salt design system enables teams to modify design variables and theme projects to their requirements. Understanding how Salt structures and manages these design variables will help you create consistent themes for your project.
@@ -85,3 +86,28 @@ Take the status characteristic tokens as an example. Components like [`Toast`](/
 Characteristics are both light/dark and density sensitive. That means the value the characteristic points to will change according to the values given in the nearest `SaltProvider`.
 
 As an example, `--salt-actionable-primary-background` resolves to `var(--salt-palette-interact-primary-background)`. In the light theme, this palette token has the value `var(--salt-color-gray-60)`. In the dark theme, the value is `var(--salt-color-gray-300)`. Foundational tokens then resolve to their respective RGBA values.
+
+## Choose the right token
+
+Generally, the design team should give the characteristics appropriate for the component. To decide which characteristics to use when styling a new component, ask questions like:
+
+- What can the user do with this component? Can they click it, drag it, etc.
+- What state can this component be in? Can it be focused, disabled, etc.
+- What is the purpose of this component? Will it contain other elements, lead the user to a new page, etc.
+- Should this component give feedback? Can it be submitted, does it have a success state, etc.
+
+Just because you have assigned a characteristic to a component, does not mean it consumes _all_ of those characteristics. You can specify which characteristics you want to apply.
+
+A good example of this is the `focused` characteristic, which offers both border and outline styles. You would use the outline token if setting the outline attribute, and the border token if setting the border attribute.
+
+Think carefully when deciding which characteristics are most appropriate. For example, should your component background come from container because that's its general purpose, or should it come from the selectable, since it can be selected? Many characteristics define the same attribute (e.g., background color), and deciding which characteristic your component should use is important. This will ensure consistent styling across your user interface, especially when different themes are applied.
+
+## Token name convention
+
+When defining characteristic design tokens, use the format `--salt-<characteristic name>-<variant>-<attribute>-<state>`
+
+1. Always begin with `--salt-`.
+2. Follow with the foundation name, e.g., `--salt-actionable-`, `--salt-text-`, `--salt-focused-`.
+3. Append the variant if applicable, e.g., `--salt-actionable-cta-`, `--salt-text-h2-`.
+4. Append the attribute, e.g., `--salt-actionable-cta-background`, `--salt-text-h2-fontSize`, `--salt-focused-outlineColor`.
+5. Append the state if applicable, e.g., `--salt-actionable-cta-background-hover`.
