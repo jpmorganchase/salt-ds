@@ -49,7 +49,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     return (
       <Tooltip
         hideIcon
-        status="error"
+        status={unselectableReason ? "error" : "info"}
         content={
           unselectableReason || highlightedReason || "Date is out of range"
         }

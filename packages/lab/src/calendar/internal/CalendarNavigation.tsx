@@ -1,18 +1,12 @@
 import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  Tooltip,
-  useId,
-} from "@salt-ds/core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
-import {
   ComponentPropsWithRef,
   forwardRef,
   MouseEventHandler,
   SyntheticEvent,
 } from "react";
+import { Button, ButtonProps, makePrefixer, Tooltip } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import { DropdownNext, DropdownNextProps } from "../../dropdown-next";
 
 import { useCalendarContext } from "./CalendarContext";
@@ -22,7 +16,7 @@ import { DateValue, isSameMonth, isSameYear } from "@internationalized/date";
 import { formatDate, monthDiff, monthsForLocale } from "./utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Option } from "../../option";
+import { Option, OptionProps } from "../../option";
 import { useListControlContext } from "../../list-control/ListControlContext";
 
 type dateDropdownProps = DropdownNextProps<DateValue>;
@@ -37,10 +31,8 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   hideYearDropdown?: boolean;
 }
 
-interface OptionWithTooltipProps {
-  item: DateValue;
-  dateFormatter: (item: DateValue) => string;
-  disabled?: boolean;
+interface OptionWithTooltipProps extends OptionProps {
+  value: DateValue;
   tooltipContent: string;
 }
 
@@ -117,25 +109,24 @@ function useCalendarNavigation() {
 }
 
 const OptionWithTooltip = ({
-  item,
+  value,
+  children,
   disabled,
-  dateFormatter,
   tooltipContent,
 }: OptionWithTooltipProps) => {
-  const { activeState } = useListControlContext();
-  const id = useId();
-  const open = activeState?.id === id ? true : undefined;
-  const formattedItem = dateFormatter(item);
+  const { activeState, openState } = useListControlContext();
+  const open = activeState?.value === value ? true : undefined;
+
   return (
     <Tooltip
       placement="right"
-      open={open}
+      open={open && openState}
       disabled={!disabled}
       content={tooltipContent}
       enterDelay={0} // --salt-duration-instant
     >
-      <Option value={item} disabled={disabled} id={id}>
-        {formattedItem}
+      <Option value={value} disabled={disabled}>
+        {children}
       </Option>
     </Tooltip>
   );
@@ -192,20 +183,6 @@ export const CalendarNavigation = forwardRef<
     moveToMonth(event, year[0]);
   };
 
-  const monthDropdownId = useId(MonthDropdownProps?.id) ?? "";
-  const monthDropdownLabelledBy = clsx(
-    MonthDropdownProps?.["aria-labelledby"],
-    // TODO need a prop on Dropdown to allow buttonId to be passed, should not make assumptions about internal
-    // id assignment like this
-    `${monthDropdownId}-control`
-  );
-
-  const yearDropdownId = useId(YearDropdownProps?.id) ?? "";
-  const yearDropdownLabelledBy = clsx(
-    YearDropdownProps?.["aria-labelledby"],
-    `${yearDropdownId}-control`
-  );
-
   const formatMonth = (date?: DateValue) => {
     return !date
       ? ""
@@ -247,9 +224,7 @@ export const CalendarNavigation = forwardRef<
       </Tooltip>
       <div className={withBaseName("dropdowns")}>
         <DropdownNext
-          aria-labelledby={monthDropdownLabelledBy}
           aria-label="Month Dropdown"
-          id={monthDropdownId}
           selected={selectedMonth ? [selectedMonth] : []}
           value={formatMonth(selectedMonth)}
           onSelectionChange={handleMonthSelect}
@@ -258,17 +233,16 @@ export const CalendarNavigation = forwardRef<
           {months.map((month) => (
             <OptionWithTooltip
               key={formatMonth(month)}
-              item={month}
-              dateFormatter={formatMonth}
+              value={month}
               disabled={isOutsideAllowedMonths(month)}
               tooltipContent="This month is out of range"
-            />
+            >
+              {formatMonth(month)}
+            </OptionWithTooltip>
           ))}
         </DropdownNext>
         {!hideYearDropdown && (
           <DropdownNext
-            id={yearDropdownId}
-            aria-labelledby={yearDropdownLabelledBy}
             aria-label="Year Dropdown"
             selected={selectedYear ? [selectedYear] : []}
             value={formatYear(selectedYear)}
@@ -278,10 +252,11 @@ export const CalendarNavigation = forwardRef<
             {years.map((year) => (
               <OptionWithTooltip
                 key={formatYear(year)}
-                item={year}
-                dateFormatter={formatYear}
+                value={year}
                 tooltipContent="This year is out of range"
-              />
+              >
+                {formatYear(year)}
+              </OptionWithTooltip>
             ))}
           </DropdownNext>
         )}

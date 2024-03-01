@@ -63,18 +63,30 @@ export function useCalendar(props: useCalendarProps) {
     isDayUnselectable = defaultIsDayUnselectable,
     isDayHighlighted = defaultIsDayHighlighted,
     isDayDisabled = defaultIsDayDisabled,
-    minDate = hideYearDropdown
-      ? startOfYear(today(getLocalTimeZone()))
-      : undefined,
-    maxDate = hideYearDropdown
-      ? endOfYear(today(getLocalTimeZone()))
-      : undefined,
+    minDate: minDateProp,
+    maxDate: maxDateProp,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
     // startDateOffset,
     // endDateOffset,
   } = props;
+  const [visibleMonth, setVisibleMonthState] = useControlled({
+    controlled: visibleMonthProp ? startOfMonth(visibleMonthProp) : undefined,
+    default: startOfMonth(defaultVisibleMonth),
+    name: "Calendar",
+    state: "visibleMonth",
+  });
+
+  const minDate =
+    minDateProp ?? hideYearDropdown
+      ? startOfYear(today(getLocalTimeZone()))
+      : startOfYear(today(getLocalTimeZone()).subtract({ years: 2 }));
+
+  const maxDate =
+    maxDateProp ?? hideYearDropdown
+      ? endOfYear(today(getLocalTimeZone()))
+      : endOfYear(today(getLocalTimeZone()).add({ years: 2 }));
 
   const isOutsideAllowedDates = useCallback(
     (date: DateValue) => {
@@ -128,13 +140,6 @@ export function useCalendar(props: useCalendarProps) {
     onHoveredDateChange,
     hoveredDate,
   } as useSelectionCalendarProps);
-
-  const [visibleMonth, setVisibleMonthState] = useControlled({
-    controlled: visibleMonthProp ? startOfMonth(visibleMonthProp) : undefined,
-    default: startOfMonth(defaultVisibleMonth),
-    name: "Calendar",
-    state: "visibleMonth",
-  });
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
