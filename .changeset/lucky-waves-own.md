@@ -11,16 +11,17 @@ export const Default = (): ReactElement => {
   const [openSecondary, setOpenSecondary] = useState(false);
 
   return (
+    <>
       <Button onClick={() => setOpenPrimary(true)}>Open Primary Drawer</Button>
       <Drawer
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
         style={{ width: 200 }}
       >
-      Drawer Content
+        Drawer Content
         <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
       </Drawer>
+    </>
   );
 };
-
 ```
