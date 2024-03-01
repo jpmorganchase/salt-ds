@@ -23,9 +23,7 @@ export const CustomValue = (): ReactElement => {
       style={{ width: "266px" }}
     >
       {shortColorData.map((color) => (
-        <Option value={color} key={color}>
-          {color}
-        </Option>
+        <Option value={color} key={color} />
       ))}
     </DropdownNext>
   );

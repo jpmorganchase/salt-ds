@@ -44,9 +44,7 @@ export const Grouped = (): ReactElement => {
       {Object.entries(groupedOptions).map(([country, options]) => (
         <OptionGroup label={country} key={country}>
           {options.map((option) => (
-            <Option value={option.value} key={option.value}>
-              {option.value}
-            </Option>
+            <Option value={option.value} key={option.value} />
           ))}
         </OptionGroup>
       ))}

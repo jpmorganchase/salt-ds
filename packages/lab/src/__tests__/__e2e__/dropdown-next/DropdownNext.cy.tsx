@@ -26,14 +26,17 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").realClick();
     cy.findByRole("combobox").should("be.focused");
 
-    cy.findByRole("option", { name: "Alabama" }).realClick();
+    cy.findByRole("option", { name: "Alaska" }).realHover();
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+
+    cy.findByRole("option", { name: "Alaska" }).realClick();
 
     cy.findByRole("combobox").should("be.focused");
-    cy.findByRole("combobox").should("have.text", "Alabama");
+    cy.findByRole("combobox").should("have.text", "Alaska");
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alaska"])
     );
   });
 
@@ -327,6 +330,8 @@ describe("Given a Dropdown", () => {
     cy.findByRole("option", { name: "United States of America" }).should(
       "exist"
     );
+    cy.findByRole("option", { name: "United States of America" }).realClick();
+    cy.findByRole("combobox").should("have.text", "United States of America");
   });
 
   it("should support object values", () => {
@@ -336,6 +341,7 @@ describe("Given a Dropdown", () => {
     cy.realType("Jane");
     cy.findByRole("option", { name: "Jane Doe" }).realClick();
     cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaSelected");
+    cy.findByRole("combobox").should("have.text", "Jane Doe");
   });
 
   it("should allow value to be controlled", () => {

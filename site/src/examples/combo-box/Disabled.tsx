@@ -7,13 +7,10 @@ export const Disabled = (): ReactElement => {
     <ComboBoxNext
       style={{ width: "266px" }}
       defaultSelected={["Yellow"]}
-      defaultValue={["Yellow"]}
       disabled
     >
       {shortColorData.map((color) => (
-        <Option value={color} key={color}>
-          {color}
-        </Option>
+        <Option value={color} key={color} />
       ))}
     </ComboBoxNext>
   );
