@@ -141,7 +141,9 @@ Preheader.args = {
   preheader: "I am a preheader",
 };
 
-const AlertDialogTemplate: StoryFn<DialogProps & { header: string }> = ({
+const AlertDialogTemplate: StoryFn<
+  DialogProps & { header: string; content: ReactNode }
+> = ({
   open: openProp = false,
   status,
   header,

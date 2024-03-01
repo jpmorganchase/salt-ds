@@ -1,7 +1,7 @@
 import { Button } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogContent,
   DialogActions,
   TabDescriptor,
@@ -29,7 +29,7 @@ export const CloseTabWarningDialog = ({
       }
     }}
   >
-    <DialogTitle header="Do you want to close this tab?" />
+    <DialogHeader header="Do you want to close this tab?" />
 
     <DialogContent>
       {`Closing the tab will cause any changes made to
