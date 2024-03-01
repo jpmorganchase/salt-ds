@@ -1,5 +1,5 @@
 ---
-title: Analytical Dashboard
+title: Analytical dashboard
 layout: DetailPattern
 aliases:
   - /salt/patterns/dashboards/analytical-dashboard
@@ -12,6 +12,8 @@ data:
         internal: true,
       },
     ]
+  components: ["Border layout", "Flow layout", "Stack layout", "Tabs"]
+
 ---
 
 An analytical dashboard enables users to analyze trends, patterns and metrics effectively. You can use this to present data in a hierarchical and intuitive manner.
@@ -23,7 +25,7 @@ The mock-ups displayed in this pattern are available as [templates](https://www.
   alt="Example showing an analytical dashboard"
 />
 
-## When to use an analytical dashboard
+## When to use
 
 Use an analytical dashboard to visually represent data that provide insights and analysis of key metrics and performance indicators. Combine various data sources and present information in a concise and interactive format using charts, graphs, tables and other visual elements.
 
@@ -35,9 +37,17 @@ Using an analytical dashboard helps present complex data in a visually organized
 - Investment analysis.
 - Client reporting.
 
-## Key dashboard features
+## Key features
 
-Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain effective visual hierarchy.
+Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain an effective visual hierarchy.
+
+- **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
+- **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, dropdown menus, checkboxes and search bars.
+- **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
+- **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
+- **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
+- **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
+- **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
 
 ### Layout features
 
@@ -46,26 +56,16 @@ Creating an analytical dashboard user interface involves a careful consideration
 - [`StackLayout`](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
 - `Tabs`: Use to organize and categorize dashboard widgets into local groupings.
 
-### Other key features
+## Additional features
 
-- **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
-- **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, drop-down menus, checkboxes and search bars.
-- **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
-- **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
-- **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
-- **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
-- **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
-
-## Other dashboard features
-
-Below are additional features worth considering depending on the specific use case of the dashboard:
+Below are other features worth considering depending on the specific use case of the dashboard:
 
 - **Multiple dashboards and tabs**: Organize content into multiple dashboards or tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information at once.
 - **Responsive design**: Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Use the [`GridLayout` component](../../components/grid-layout) to manage the layout and responsiveness of the main content area in your dashboard.
 
-## Designing a basic dashboard
+## Basic dashboard
 
-The following guidance explains how to layout your own dashboard using [Salt foundations](/salt/foundations/index). Use this to understand how to apply spacing to create a consistent visual rhythm within your designs.
+The following guidance explains how to lay out your own dashboard using [Salt foundations](/salt/foundations/index). Use this to understand how to apply spacing to create a consistent visual rhythm within your designs.
 
 ## Layout grid
 
@@ -76,13 +76,13 @@ The grid you apply on a dashboard should reflect intent for experience and how y
 1. Partially aligned
 2. Fully aligned
 
-For the purpose of this pattern, the following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
+For this pattern, the following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
 
 ### Partially aligned
 
 The main body of the dashboard aligns to a layout grid and combines with surrounding fixed-width panels.
 
-If your dashboard is responsive, the main body region will dynamically resize at different breakpoints. The fixed panel remains the same when the user resizes the viewport, but it can be set to the width of your choice based on desired outcome. You should consider the different content types, density, and target screen size when making your decision.
+If your dashboard is responsive, the main body region will dynamically resize at different breakpoints. The fixed panel remains the same when the user resizes the viewport, but you can set it to the width of your choice based on desired outcome. Consider the different content types, density and target screen size when making your decision.
 
 <ImageSwitcher
   images={[
@@ -166,7 +166,7 @@ From a high-level overview, the main content regions of an analytical dashboard 
 
 ### F-Pattern reading order
 
-Leverage the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
+Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
 
 <Diagram
   src="/img/patterns/dashboards/f-pattern_reading_order.png"
@@ -184,7 +184,7 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
 <ExampleContainer type="positive" customPillText="Best practices">
 
 - Use the [`BorderLayout`](../../components/border-layout) component to manage the top-level layout of your dashboard.
-- Use the [`Drawer`](../../components/drawer) component to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without navigating to a different screen.
+- Use the [`Drawer`](../../components/drawer) component to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without going to a different screen.
 - Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.
 
 </ExampleContainer>
@@ -217,17 +217,15 @@ Use the [`Card` component](../../components/card) as a container or widget type 
   label="Content spacing"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
-
 #### Spacing
 
 - As default, use `--salt-spacing-300` between content modules such as cards to promote readability.
-- The default padding between modules is spacing-300, but depending on the needs and business context of the dashboard, you can change this spacing token if your dashboard needs to display more or less content. View the [spacing foundation](/salt/foundations/spacing) for further guidance.
+- The default padding between modules is `spacing-300`. Depending on the needs and business context of the dashboard, you can change this spacing token if your dashboard needs to display more or less content. View the [spacing foundation](/salt/foundations/spacing) for further guidance.
 
 #### Context
 
 - Group contextually related content together where possible.
-- Order modules from level of priority—which data is considered primary vs. secondary for the intended user of the dashboard?
+- Order modules from level of priority—which data would the dashboard user consider to be primary vs. secondary?
 - Keep the layout content within individual cards as consistent as possible across the dashboard. This supports scalability, especially if main components anchor to familiar locations within a card.
 
 #### Styling
@@ -235,11 +233,9 @@ Use the [`Card` component](../../components/card) as a container or widget type 
 - We recommend cards are styled with the `--salt-container-primary-background`, and the application with `--salt-container-secondary-background`. This is the most effective presentation of data providing the highest contrast between visualisations and their immediate backgrounds.
 - _(J.P. Morgan employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on data visualization, where you can find further information on presenting data in a visually cohesive manner. We recommend using the categorical color palette within your dashboard design, as it’s ideal for visualizing distinct groups of items.
 
-</ExampleContainer>
-
 #### Alternative card layouts
 
-Depending on the amount of data that needs to be displayed at once, you can arrange content modules in various layouts alongside common dashboard features such as, fixed panels and key metrics. However, it’s important to not overwhelm users with data; otherwise, it will be hard for them to focus and get a clear overview.
+Depending on the amount of data that the user needs to see at once, you can arrange content modules in various layouts alongside common dashboard features, such as fixed panels and key metrics. However, it’s important to not overwhelm users with data; otherwise, it will be hard for them to focus and get a clear overview.
 
 Use the flexibility of the columns in a layout grid to split and arrange cards in various horizontal alignments.
 
@@ -263,7 +259,7 @@ The dashboard header sits at the top of the dashboard body, and its content can 
 
 A metrics bar is a common example of a dashboard module. It’s a flexible structural attribute that allows highlighting broader level metrics to help provide the user with additional context. It's often positioned horizontally higher up on a dashboard to further emphasize the metrics' importance.
 
-Metric bars should remain clean and concise to provide a higher level oversight of information. Try and adhere to the [Law of Proximity](https://lawsofux.com/law-of-proximity/) and avoid overloading this space with excessive information. Aim for no more than 3–6 key metrics on display, and group contextually related metrics together where possible.
+Metric bars should remain clean and concise to provide a higher level oversight of information. Try to adhere to the [Law of Proximity](https://lawsofux.com/law-of-proximity/) and avoid overloading this space with excessive information. Aim for no more than 3–6 key metrics on display, and group contextually related metrics together where possible.
 
 <ImageSwitcher
   images={[
@@ -279,19 +275,15 @@ Metric bars should remain clean and concise to provide a higher level oversight 
   label="Content spacing"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
-
 #### Spacing
 
 - Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
 - Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
 - Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](../../components/stack-layout) or [`FlowLayout`](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
 
-</ExampleContainer>
-
 ### Fixed panel
 
-The fixed panel typically contains functionality for user actions that need to be easily accessible. This varies per dashboard but can include components such as filters, toggles and controls that allows the user to manage the data displayed within the main body or navigate to multiple dashboard pages.
+The fixed panel typically contains functionality for user actions that need to be easily accessible. This varies per dashboard but can include components such as filters, toggles and controls. These allow the user to manage the data displayed within the main body or go to multiple dashboard pages.
 
 You can place fixed panels vertically or horizontally within a dashboard, depending on the context.
 
@@ -316,11 +308,9 @@ You can use a fixed panel to:
   label="Content spacing"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
-
 #### Width
 
-- The width of a fixed panel depends on the content within it. As a general rule of thumb, size the width of the panel to a grid depending on the size of the interactive elements within.
+- The width of a fixed panel depends on the content within it. As a general rule, size the width of the panel to a grid depending on the size of the interactive elements within.
 
 #### Content spacing
 
