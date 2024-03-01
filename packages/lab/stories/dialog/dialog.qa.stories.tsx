@@ -68,7 +68,7 @@ Default.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const Subtitle: StoryFn<QAContainerProps> = () => {
+export const Preheader: StoryFn<QAContainerProps> = () => {
   return (
     <QAContainer width={1300} itemPadding={3}>
       <FakeDialog>
@@ -94,7 +94,7 @@ export const Subtitle: StoryFn<QAContainerProps> = () => {
   );
 };
 
-Subtitle.parameters = {
+Preheader.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
