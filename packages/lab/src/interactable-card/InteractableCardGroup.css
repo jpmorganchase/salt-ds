@@ -1,4 +1,6 @@
 .saltInteractableCardGroup {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  gap: calc(var(--salt-size-unit) * 3);
 }
