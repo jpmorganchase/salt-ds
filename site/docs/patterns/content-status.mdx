@@ -12,7 +12,7 @@ data:
   components: ["Button", "Progress", "Spinner", "Stack layout", "Status indicator", "Text"]
 ---
 
-A content status provides information when content isn’t ready for display in a container component of an application.
+A content status provides information about content in a container component of an application.
 
 It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance.
 
@@ -41,19 +41,19 @@ Content status consists of visual status indicators ([`Progress`](/salt/componen
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Make sure that the solution fills the height and width of the container component.
-- You should horizontally and vertically center titles and supporting messages in the container.
+- Text line length shouldn't exceed 80 characters. See the [typography foundation](/salt/foundations/typography) for more information.
+- You should horizontally and vertically center the pattern in the container.
 </ExampleContainer>
 
 ### Supporting messages
 
-- **Have a clear hierarchy**: Your titles should be stand-alone, revealing key information your users need to know without relying on the supporting message, which users may skim over.
-- **Be helpful**: If it’s possible for your users to resolve or rectify an issue, make sure you state this clearly.
+- **Have a clear hierarchy**: Your titles should be stand-alone, revealing key information your users need to know without relying on the supporting message, which users may skim over, e.g., “Login required.”
+- **Be helpful**: If it’s possible for your users to resolve or rectify an issue, make sure you state this clearly, e.g., “You can log in to access this data.”
 - **Keep it simple**: Try to limit titles to a single line and supporting messages to no more than three lines.
 
 ## Loading content
 
-We've used a [progress](/salt/components/progress) component in this example to help manage user expectations. If you know how long it takes to load or process content, use this to let your users know.
+We've used a [progress](/salt/components/progress) component in this example to help manage user expectations. If you know how much of a current process is complete, use this to communicate that information.
 
 <Diagram
   src="/img/patterns/content-status/progress.png"
@@ -69,7 +69,7 @@ We've used a [spinner](/salt/components/spinner) component to reassure users in 
   border
 />
 
-## Sharing information
+## Info message
 
 Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate that message to let users know why they can't see any content.
 
@@ -79,6 +79,8 @@ Use this variant to communicate useful information. For example, if there’s no
   border
 />
 
+## Warning message
+
 Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. This could include a system status that may cause issues at a later point.
 
 <Diagram
@@ -87,7 +89,7 @@ Use the warning status to inform users of an issue or potential issue related to
   border
 />
 
-## Error messages
+## Error message
 
 Use the error status to communicate a critical issue that prevents the user from continuing or completing the task. This could include missing content or user information required.
 
