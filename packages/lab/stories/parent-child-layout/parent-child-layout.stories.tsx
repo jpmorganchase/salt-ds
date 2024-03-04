@@ -193,7 +193,7 @@ const accountView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Security type</FormFieldLabel>
-      <DropdownNext defaultValue={["Password"]}>
+      <DropdownNext defaultSelected={["Password"]}>
         <Option value="Password" key="Password">
           Password
         </Option>
@@ -212,7 +212,7 @@ const exportView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>File type</FormFieldLabel>
-      <DropdownNext defaultValue={["PNG"]}>
+      <DropdownNext defaultSelected={["PNG"]}>
         <Option value="JPG" key="JPG">
           JPG
         </Option>
@@ -229,7 +229,7 @@ const exportView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Size</FormFieldLabel>
-      <DropdownNext defaultValue={["1x"]}>
+      <DropdownNext defaultSelected={["1x"]}>
         <Option value="1x" key="1x">
           1x
         </Option>
@@ -247,7 +247,7 @@ const exportView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Color profile</FormFieldLabel>
-      <DropdownNext defaultValue={["Same as current (sRGB)"]}>
+      <DropdownNext defaultSelected={["Same as current (sRGB)"]}>
         <Option value="Same as current (sRGB)" key="Same as current (sRGB)">
           Same as current (sRGB)
         </Option>

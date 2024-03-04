@@ -22,7 +22,7 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import { ListControlProps } from "../list-control/ListControlState";
+import { defaultValueToString } from "../list-control/ListControlState";
 import { ListControlContext } from "../list-control/ListControlContext";
 import { clsx } from "clsx";
 import {
@@ -34,25 +34,16 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { useComboBoxNext } from "./useComboBoxNext";
+import { useComboBoxNext, UseComboBoxNextProps } from "./useComboBoxNext";
 import { OptionList } from "../option/OptionList";
 
-export interface ComboBoxNextProps<Item = string>
-  extends InputProps,
-    Omit<ListControlProps<Item>, "value" | "defaultValue"> {
+export type ComboBoxNextProps<Item = string> = {
   /**
    * The options to display in the combo box.
    */
   children?: ReactNode;
-  /**
-   * The default value of the input.
-   */
-  defaultValue?: string | readonly string[] | number | undefined;
-  /**
-   * The value of the input. The component will be controlled if this prop is provided.
-   */
-  value?: string | readonly string[] | number | undefined;
-}
+} & UseComboBoxNextProps<Item> &
+  InputProps;
 
 const withBaseName = makePrefixer("saltComboBoxNext");
 
@@ -82,6 +73,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     onBlur,
     value,
     defaultValue,
+    valueToString = defaultValueToString,
     ...rest
   } = props;
 
@@ -107,6 +99,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     defaultValue,
     disabled,
     readOnly,
+    valueToString,
   });
 
   const {
@@ -122,6 +115,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     selectedState,
     select,
     clear,
+    focusVisibleState,
     setFocusVisibleState,
     focusedState,
     setFocusedState,
@@ -138,8 +132,20 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     reason
   ) => {
     const focusNotBlur = reason === "focus" && newOpen;
+    if (reason == "focus") {
+      setFocusedState(newOpen);
+    }
+
+    if (reason == "focus" && !newOpen) {
+      setFocusVisibleState(false);
+    }
+
     if (readOnly || focusNotBlur) return;
     setOpen(newOpen);
+
+    if (newOpen) {
+      inputRef.current?.focus();
+    }
   };
 
   const { x, y, strategy, elements, floating, reference, context } =
@@ -163,7 +169,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
     useFocus(context),
-    useClick(context, { keyboardHandlers: false }),
+    useClick(context, { keyboardHandlers: false, toggle: false }),
   ]);
 
   const handleRef = useForkRef<HTMLDivElement>(reference, ref);
@@ -239,10 +245,13 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         break;
     }
 
+    if (newActive) {
+      setFocusVisibleState(true);
+    }
+
     if (newActive && newActive?.id != activeState?.id) {
       event.preventDefault();
       setActive(newActive);
-      setFocusVisibleState(true);
     }
 
     onKeyDown?.(event);
@@ -251,11 +260,6 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
     setFocusedState(true);
     onFocus?.(event);
-  };
-
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    setFocusedState(false);
-    onBlur?.(event);
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -271,9 +275,13 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
     // Wait for the filter to happen
     queueMicrotask(() => {
-      const newOption = getOptionAtIndex(0);
-      if (newOption) {
-        setActive(newOption);
+      if (event.target.value !== "") {
+        const newOption = getOptionAtIndex(0);
+        if (newOption) {
+          setActive(newOption);
+        }
+      } else {
+        setActive(undefined);
       }
     });
     onChange?.(event);
@@ -281,6 +289,10 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   const handleListMouseOver = () => {
     setFocusVisibleState(false);
+  };
+
+  const handleListMouseLeave = () => {
+    setActive(undefined);
   };
 
   const handleFocusInput = () => {
@@ -293,7 +305,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     let newActive = undefined;
 
     // If the active item is still in the list, we don't need to do anything
-    if (activeIndex > 0) {
+    if (activeIndex > -1) {
       return;
     }
 
@@ -314,8 +326,10 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     if (!newActive) {
       if (openKey.current === "ArrowDown") {
         newActive = getOptionAtIndex(0);
+        setFocusVisibleState(true);
       } else if (openKey.current === "ArrowUp") {
         newActive = getOptionAtIndex(options.length - 1);
+        setFocusVisibleState(true);
       }
     }
 
@@ -368,6 +382,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
           "aria-expanded": openState,
           "aria-multiselectable": multiselect,
           "aria-controls": openState ? listId : undefined,
+          onKeyDown: handleKeyDown,
           ...inputPropsProp,
         }}
         aria-activedescendant={activeState?.id}
@@ -376,9 +391,8 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         value={valueState}
         ref={handleRef}
         {...getReferenceProps({
-          onBlur: handleBlur,
+          onBlur,
           onFocus: handleFocus,
-          onKeyDown: handleKeyDown,
           ...rest,
         })}
       />
@@ -399,6 +413,8 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
           onMouseOver={handleListMouseOver}
           onFocus={handleFocusInput}
           onClick={handleFocusInput}
+          onMouseLeave={handleListMouseLeave}
+          tabIndex={-1}
         >
           {children}
         </OptionList>

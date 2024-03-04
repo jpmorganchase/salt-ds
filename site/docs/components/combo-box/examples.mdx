@@ -121,7 +121,6 @@ Use the `Option` component to display a message when there are no options availa
 ## Complex options
 
 You can supply static content as children to the `Option` component. This can be used to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
-If the children are not plain text, then the `textValue` prop must also be set to a plain text representation.
 
 ### Best practices
 
@@ -167,6 +166,7 @@ Note that the data fetching in this example has been made intentionally slow to 
 ## Object values
 
 In order to support advanced use-cases, like where the options are fetched from a server, the `value` prop passed to `Option` can be an object.
+When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBoxNext` to specify how to display the option in the input field.
 
 </LivePreview>
 </LivePreviewControls>
