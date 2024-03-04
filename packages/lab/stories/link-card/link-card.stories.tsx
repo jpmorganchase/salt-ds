@@ -17,7 +17,7 @@ export default {
 } as Meta<typeof LinkCard>;
 
 export const Default: StoryFn<typeof LinkCard> = (args) => (
-  <LinkCard {...args} style={{ width: "260px" }} href="#" target="_blank">
+  <LinkCard {...args} style={{ width: "260px" }} href="#">
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>

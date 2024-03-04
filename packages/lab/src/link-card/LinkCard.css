@@ -77,7 +77,7 @@
 /* Styles applied on hover state to LinkCard */
 .saltLinkCard:hover {
   cursor: var(--salt-selectable-cursor-hover);
-  box-shadow: var(--salt-overlayable-shadow-hover));
+  box-shadow: var(--salt-overlayable-shadow-hover);
   --linkCard-accent-color: var(--salt-selectable-foreground-hover);
 }
 

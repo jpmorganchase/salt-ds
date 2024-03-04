@@ -45,7 +45,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
           withBaseName(variant),
           {
             [withBaseName("accent")]: accent,
-            [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+            [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
           },
           className
         )}
