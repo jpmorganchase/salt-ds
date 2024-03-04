@@ -16,7 +16,7 @@ describe("Given a Link Card", () => {
     ).should("be.visible");
   });
 
-  it("should navigate to the correct href", () => {
+  it("should apply the correct href", () => {
     cy.mount(<Default />);
     cy.get("a").should("have.attr", "href", "#");
   });
