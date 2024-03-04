@@ -53,7 +53,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         content={
           unselectableReason || highlightedReason || "Date is out of range"
         }
-        disabled={(!unselectableReason && !highlightedReason)}
+        disabled={!unselectableReason && !highlightedReason}
         placement="top"
         enterDelay={0} // --salt-duration-instant
         leaveDelay={0} // --salt-duration-instant
