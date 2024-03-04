@@ -34,15 +34,14 @@ export const ObjectValues = (): ReactElement => {
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}
+      valueToString={(value) => value.name}
     >
       {largestCities
         .filter((city) =>
           city.name.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((city) => (
-          <Option value={city} key={city.name}>
-            {city.name}
-          </Option>
+          <Option value={city} key={city.name} />
         ))}
     </ComboBoxNext>
   );

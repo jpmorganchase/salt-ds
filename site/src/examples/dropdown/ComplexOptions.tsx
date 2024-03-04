@@ -2,9 +2,15 @@ import { ReactElement, useState } from "react";
 import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
 import { GB, US } from "@salt-ds/countries";
 
-const adornmentMap: Record<string, JSX.Element> = {
-  GB: <GB aria-hidden size={0.75} />,
-  US: <US aria-hidden size={0.75} />,
+const countries: Record<string, { icon: JSX.Element; name: string }> = {
+  GB: {
+    icon: <GB aria-hidden size={0.75} />,
+    name: "United Kingdom of Great Britain and Northern Ireland",
+  },
+  US: {
+    icon: <US aria-hidden size={0.75} />,
+    name: "United States of America",
+  },
 };
 
 export const ComplexOptions = (): ReactElement => {
@@ -17,7 +23,7 @@ export const ComplexOptions = (): ReactElement => {
     setSelected(newSelected);
   };
 
-  const adornment = adornmentMap[selected[0] ?? ""] || null;
+  const adornment = countries[selected[0] ?? ""]?.icon || null;
 
   return (
     <DropdownNext
@@ -25,15 +31,13 @@ export const ComplexOptions = (): ReactElement => {
       startAdornment={adornment}
       onSelectionChange={handleSelectionChange}
       style={{ width: "266px" }}
+      valueToString={(item) => countries[item].name}
     >
-      <Option
-        value="GB"
-        textValue="United Kingdom of Great Britain and Northern Ireland"
-      >
+      <Option value="GB">
         <GB size={0.75} aria-hidden /> United Kingdom of Great Britain and
         Northern Ireland
       </Option>
-      <Option value="US" textValue="United States of America">
+      <Option value="US">
         <US size={0.75} aria-hidden /> United States of America
       </Option>
     </DropdownNext>

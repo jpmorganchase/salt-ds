@@ -1,12 +1,11 @@
 import {
   ComponentPropsWithoutRef,
   forwardRef,
-  ReactNode,
   MouseEvent,
-  useRef,
+  ReactNode,
   useEffect,
   useMemo,
-  Children,
+  useRef,
 } from "react";
 import { Checkbox, makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
@@ -28,31 +27,12 @@ export interface OptionProps extends ComponentPropsWithoutRef<"div"> {
    */
   value: unknown;
   /**
-   * The text value of the option. If not provided, the text value will be inferred from the children.
-   */
-  textValue?: string;
-  /**
    * The content of the option.
    */
   children?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltOption");
-
-function getOptionText(textValue: string | undefined, children: ReactNode) {
-  if (textValue) {
-    return textValue;
-  }
-
-  let textString = "";
-  Children.forEach(children, (child) => {
-    if (typeof child === "string") {
-      textString += child;
-    }
-  });
-
-  return textString;
-}
 
 export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
   props,
@@ -65,7 +45,6 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
     onClick,
     id: idProp,
     value,
-    textValue,
     ...rest
   } = props;
 
@@ -78,7 +57,6 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
 
   const optionRef = useRef(null);
   const id = useId(idProp);
-  const optionText = getOptionText(textValue, children);
 
   const {
     setActive,
@@ -88,6 +66,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
     register,
     selectedState,
     focusVisibleState,
+    valueToString,
   } = useListControlContext();
 
   const selected = selectedState.includes(value);
@@ -98,9 +77,8 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
       id: String(id),
       disabled: Boolean(disabled),
       value,
-      text: optionText,
     }),
-    [id, disabled, value, optionText]
+    [id, disabled, value]
   );
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
@@ -115,6 +93,10 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
     select(event, optionValue);
 
     onClick?.(event);
+  };
+
+  const handleMouseOver = () => {
+    setActive(optionValue);
   };
 
   useEffect(() => {
@@ -141,12 +123,17 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
       role="option"
       id={id}
       onClick={handleClick}
+      onMouseOver={handleMouseOver}
       {...rest}
     >
       {multiselect && (
-        <Checkbox checked={selected} aria-hidden="true" tabIndex={-1} />
+        <Checkbox
+          checked={selected}
+          aria-hidden="true"
+          inputProps={{ tabIndex: -1 }}
+        />
       )}
-      {children}
+      {children ?? valueToString(value)}
     </div>
   );
 });

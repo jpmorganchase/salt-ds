@@ -20,7 +20,7 @@ When you want to use a component that is not related to AG Grid. Instead, use Gr
 
 ## Import
 
-{/* Update the text and code snippet below as needed: */}
+Make sure to install the necessary AG Grid packages. You will need to install `ag-grid-react@28`. You should also install any [packages](https://www.ag-grid.com/react-data-grid/packages/) and [modules](https://www.ag-grid.com/react-data-grid/modules/) that are necessary for your project, such as `ag-grid-community` and `ag-grid-enterprise`.
 
 To install the `@salt-ds/ag-grid-theme` package, run the command appropriate to your environment:
 
@@ -37,10 +37,22 @@ npm install @salt-ds/ag-grid-theme
 To import the Salt AG Grid theme, use:
 
 ```js
+import "ag-grid-community/dist/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 ```
 
-For light mode, use these CSS class names:
+Then wrap your AG Grid with the corresponding class names shown below:
+
+```js
+<div
+  className="REPLACE_ME_WITH_CORRECT_CLASS"
+  style={{ height: 400, width: 600 }}
+>
+  <AgGridReact rowData={rowData} columnDefs={columnDefs} />
+</div>
+```
+
+For light [mode](/salt/foundations/modes), use these CSS class names for each [density](/salt/foundations/density):
 
 ```js
 .ag-theme-salt-high-compact-light
@@ -50,7 +62,7 @@ For light mode, use these CSS class names:
 .ag-theme-salt-touch-light
 ```
 
-For dark mode, use these CSS class names:
+For dark [mode](/salt/foundations/modes), use these CSS class names for each [density](/salt/foundations/density):
 
 ```js
 .ag-theme-salt-high-compact-dark

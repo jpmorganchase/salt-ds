@@ -33,9 +33,7 @@ export const DisabledOption = (): ReactElement => {
           color.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((color) => (
-          <Option disabled={color === "Baby blue"} value={color} key={color}>
-            {color}
-          </Option>
+          <Option disabled={color === "Baby blue"} value={color} key={color} />
         ))}
     </ComboBoxNext>
   );
