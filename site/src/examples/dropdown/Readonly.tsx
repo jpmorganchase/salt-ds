@@ -7,21 +7,16 @@ export const Readonly = (): ReactElement => (
   <StackLayout>
     <DropdownNext
       defaultSelected={["California"]}
-      defaultValue="California"
       readOnly
       style={{ width: "266px" }}
     >
       {shortColorData.map((color) => (
-        <Option value={color} key={color}>
-          {color}
-        </Option>
+        <Option value={color} key={color} />
       ))}
     </DropdownNext>
     <DropdownNext readOnly style={{ width: "266px" }}>
       {shortColorData.map((color) => (
-        <Option value={color} key={color}>
-          {color}
-        </Option>
+        <Option value={color} key={color} />
       ))}
     </DropdownNext>
   </StackLayout>

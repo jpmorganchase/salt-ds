@@ -22,6 +22,7 @@
   border-width: var(--salt-size-bar-small);
   border-radius: calc(var(--salt-size-base) * 3);
   border-color: var(--salt-track-borderColor);
+  box-sizing: border-box;
 }
 
 .saltCircularProgress-bar {
@@ -31,6 +32,7 @@
   border-width: var(--salt-size-bar-strong);
   border-radius: calc(var(--salt-size-base) * 3);
   border-color: var(--salt-accent-background);
+  box-sizing: border-box;
 }
 
 .saltCircularProgress-bars {

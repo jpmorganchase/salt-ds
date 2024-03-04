@@ -39,9 +39,7 @@ export const Multiselect = (): ReactElement => {
             color.toLowerCase().includes(value.trim().toLowerCase())
           )
           .map((color) => (
-            <Option value={color} key={color}>
-              {color}
-            </Option>
+            <Option value={color} key={color} />
           ))}
       </ComboBoxNext>
     </StackLayout>

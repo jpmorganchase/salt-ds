@@ -119,7 +119,7 @@ Wrap options in a `OptionGroup` component to group them together. Use the `label
 ## Complex options
 
 Static content can be supplied as children to the `Option` component. This can be used to visually assist users, for example rendering the flag icons next to the name of countries as seen in this example.
-If the children are not plain text, then the `textValue` prop must also be set to a plain text representation.
+_Note_: The `valueToString` prop is needed here because the `value` prop is different to the displayed option text.
 
 ### Best practices
 
@@ -157,6 +157,7 @@ Start adornments are typically used to describe the purpose of the field (e.g., 
 ## Object values
 
 In order to support advanced use-cases, like where the options are fetched from a server. The `value` prop passed to `Option` can be an object.
+When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBoxNext` to specify how to display the option in the button.
 
 </LivePreview>
 </LivePreviewControls>

@@ -2,7 +2,6 @@ import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import { ComboBoxNext, Option } from "@salt-ds/lab";
 import useSWR from "swr";
 import { Spinner } from "@salt-ds/core";
-import cslx from "clsx";
 import styles from "./index.module.css";
 
 const fetcher = async (url: string, filter: string) => {
@@ -53,11 +52,7 @@ export const ServerSideData = (): ReactElement => {
       endAdornment={loading && <Spinner size="small" />}
     >
       {!loading ? (
-        data?.map((color) => (
-          <Option value={color} key={color}>
-            {color}
-          </Option>
-        ))
+        data?.map((color) => <Option value={color} key={color} />)
       ) : (
         <div
           className={styles.statusOption}

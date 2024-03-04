@@ -41,7 +41,7 @@
   border-color: var(--saltButton-borderColor, transparent);
   border-style: var(--saltButton-borderStyle, solid);
   border-width: var(--saltButton-borderWidth, 0);
-  border-radius: var(--saltButton-borderRadius, 0);
+  border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
   color: var(--saltButton-text-color, var(--button-text-color));
   cursor: var(--saltButton-cursor, pointer);
   display: inline-flex;
