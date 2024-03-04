@@ -8,7 +8,6 @@ Drawer is an expandable panel that displays content and controls over the applic
 ```tsx
 export const Default = (): ReactElement => {
   const [openPrimary, setOpenPrimary] = useState(false);
-  const [openSecondary, setOpenSecondary] = useState(false);
 
   return (
     <>
