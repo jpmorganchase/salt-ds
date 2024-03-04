@@ -47,7 +47,6 @@ export const InteractableCardGroup = forwardRef<
   const {
     children,
     className,
-    gap = 2,
     value: valueProp,
     defaultValue,
     disabled,
