@@ -5,6 +5,7 @@ import {
   StatusIndicator,
   ValidationStatus,
   makePrefixer,
+  Text,
 } from "@salt-ds/core";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
@@ -65,12 +66,10 @@ export const DialogHeader = ({
       {...rest}
     >
       {status && <StatusIndicator status={status} />}
-      <div>
-        {preheader && (
-          <div className={withBaseName("preheader")}>{preheader}</div>
-        )}
-        <H2 className={withBaseName("header")}>{header}</H2>
-      </div>
+      <H2 className={withBaseName("header")}>
+        {preheader && <Text variant="secondary">{preheader}</Text>}
+        <div>{header}</div>
+      </H2>
     </div>
   );
 };
