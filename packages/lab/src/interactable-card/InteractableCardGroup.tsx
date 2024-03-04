@@ -63,7 +63,7 @@ export const InteractableCardGroup = forwardRef<
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-toggle-button-group",
+    testId: "salt-interactable-card-group",
     css: interactableCardGroupCss,
     window: targetWindow,
   });

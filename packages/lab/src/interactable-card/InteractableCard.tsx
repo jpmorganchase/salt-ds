@@ -12,7 +12,10 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { capitalize, makePrefixer, useControlled } from "@salt-ds/core";
 import { useInteractableCard } from "./useInteractableCard";
 import interactableCardCss from "./InteractableCard.css";
-import { useInteractableCardGroup } from "./internal/InteractableCardGroupContext";
+import {
+  Value,
+  useInteractableCardGroup,
+} from "./internal/InteractableCardGroupContext";
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
@@ -42,7 +45,7 @@ export interface InteractableCardProps
   /**
    * Value of card (for selectable use case).
    */
-  value?: string | number;
+  value?: Value;
 }
 
 export const InteractableCard = forwardRef<

@@ -35,8 +35,8 @@ export const Default: StoryFn<typeof Card> = () => (
 );
 
 export const Disabled: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }} className="withImage" disabled>
-    <StackLayout gap={1} style={{ padding: "var(--salt-spacing-300)" }}>
+  <InteractableCard style={{ width: "256px" }} disabled accent="top">
+    <StackLayout gap={1}>
       <H3 disabled>{exampleData.title}</H3>
       <Text disabled>{exampleData.content}</Text>
     </StackLayout>
@@ -44,7 +44,7 @@ export const Disabled: StoryFn<typeof Card> = () => (
 );
 
 export const Selected: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }} selected>
+  <InteractableCard style={{ width: "256px" }} selected accent="top">
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
       <Text>{exampleData.content}</Text>
@@ -53,7 +53,7 @@ export const Selected: StoryFn<typeof Card> = () => (
 );
 
 export const SelectedDisabled: StoryFn<typeof Card> = () => (
-  <InteractableCard style={{ width: "256px" }} selected disabled>
+  <InteractableCard style={{ width: "256px" }} selected disabled accent="top">
     <StackLayout gap={1}>
       <H3 disabled>{exampleData.title}</H3>
       <Text disabled>{exampleData.content}</Text>
@@ -131,13 +131,13 @@ export const Variant: StoryFn<typeof Card> = () => {
 
 export const InteractableCardGroup: StoryFn<typeof Card> = () => (
   <InteractableCardGroup>
-    <InteractableCard style={{ width: "256px" }} selected>
+    <InteractableCard style={{ width: "256px" }}>
       <StackLayout gap={1}>
         <H3>{exampleData.title}</H3>
         <Text>{exampleData.content}</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard style={{ width: "256px" }} selected>
+    <InteractableCard style={{ width: "256px" }}>
       <StackLayout gap={1}>
         <H3>{exampleData.title}</H3>
         <Text>{exampleData.content}</Text>
