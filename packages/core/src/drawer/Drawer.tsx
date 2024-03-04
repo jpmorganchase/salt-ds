@@ -9,11 +9,11 @@ import { clsx } from "clsx";
 import { useClick, useDismiss, useInteractions } from "@floating-ui/react";
 import {
   makePrefixer,
-  Scrim,
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
-} from "@salt-ds/core";
+} from "../utils";
+import { Scrim } from "../scrim";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import drawerCss from "./Drawer.css";
