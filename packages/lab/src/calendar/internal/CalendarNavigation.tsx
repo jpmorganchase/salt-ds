@@ -115,7 +115,7 @@ const OptionWithTooltip = ({
   tooltipContent,
 }: OptionWithTooltipProps) => {
   const { activeState, openState } = useListControlContext();
-  const open = activeState?.value === value ? true : undefined;
+  const open = activeState?.value === value;
 
   return (
     <Tooltip
