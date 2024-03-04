@@ -13,6 +13,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import {
   InteractableCardGroupContext,
+  SelectionVariant,
   Value,
 } from "./internal/InteractableCardGroupContext";
 import interactableCardGroupCss from "./InteractableCardGroup.css";
@@ -32,10 +33,14 @@ export interface InteractableCardGroupProps
    */
   value?: Value;
   /**
+   * The seletion variant.
+   */
+  selectionVariant?: SelectionVariant;
+  /**
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onChange?: (event: SyntheticEvent<HTMLButtonElement>, value: Value) => void;
 }
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
@@ -51,6 +56,7 @@ export const InteractableCardGroup = forwardRef<
     defaultValue,
     disabled,
     onChange,
+    selectionVariant = "single",
     ...rest
   } = props;
 
@@ -74,19 +80,31 @@ export const InteractableCardGroup = forwardRef<
   const select = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>) => {
       const newValue = event.currentTarget.value;
-      setValue(newValue);
-      if (value !== newValue) {
-        onChange?.(event);
+      if (selectionVariant === "multiselect") {
+        setValue((oldValues: Value) => {
+          const currentValues = Array.isArray(oldValues) ? oldValues : [];
+          const isSelected = currentValues.includes(newValue);
+
+          return isSelected
+            ? currentValues.filter((value) => value !== newValue)
+            : [...currentValues, newValue];
+        });
+      } else {
+        setValue(newValue);
+        if (value !== newValue) {
+          onChange?.(event, newValue);
+        }
       }
     },
-    [onChange, value, setValue]
+    [onChange, value, setValue, selectionVariant]
   );
 
   const isSelected = useCallback(
-    (id: Value) => {
-      return value === id;
-    },
-    [value]
+    (id: Value) =>
+      selectionVariant === "multiselect"
+        ? Array.isArray(value) && value.includes(id as any)
+        : value === id,
+    [value, selectionVariant]
   );
 
   const contextValue = useMemo(
@@ -94,15 +112,19 @@ export const InteractableCardGroup = forwardRef<
       select,
       isSelected,
       disabled,
+      selectionVariant,
     }),
-    [select, isSelected, disabled]
+    [select, isSelected, disabled, selectionVariant]
   );
 
   return (
     <InteractableCardGroupContext.Provider value={contextValue}>
       <div
         className={clsx(withBaseName(), className)}
-        role="radiogroup"
+        role={selectionVariant === "multiselect" ? "group" : "radiogroup"}
+        aria-multiselectable={
+          selectionVariant === "multiselect" ? true : undefined
+        }
         ref={handleRef}
         {...rest}
       >

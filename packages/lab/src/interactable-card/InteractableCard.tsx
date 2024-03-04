@@ -98,11 +98,20 @@ export const InteractableCard = forwardRef<
     state: "selected",
   });
 
-  const role = interactableCardGroup ? "radio" : "button";
+  const role = interactableCardGroup
+    ? interactableCardGroup.selectionVariant === "multiselect"
+      ? "checkbox"
+      : "radio"
+    : "button";
+
+  const ariaChecked =
+    role === "radio" || role === "checkbox" ? selected : undefined;
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    interactableCardGroup?.select(event);
-    setSelected(!selected);
+    if (interactableCardGroup) {
+      interactableCardGroup.select(event);
+      setSelected(!selected);
+    }
     onChange?.(event);
     onClick?.(event);
   };
@@ -111,7 +120,7 @@ export const InteractableCard = forwardRef<
     <button
       {...cardProps}
       role={role}
-      aria-checked={role === "radio" && !disabled ? selected : undefined}
+      aria-checked={ariaChecked}
       data-id={value}
       className={clsx(
         withBaseName(),

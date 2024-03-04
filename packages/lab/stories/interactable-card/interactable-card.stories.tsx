@@ -1,7 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
-  Card,
   H3,
   Text,
   StackLayout,
@@ -10,7 +9,11 @@ import {
   Label,
 } from "@salt-ds/core";
 
-import { InteractableCard, InteractableCardProps } from "@salt-ds/lab";
+import {
+  InteractableCard,
+  InteractableCardGroup,
+  InteractableCardProps,
+} from "@salt-ds/lab";
 
 import "./interactable-card.stories.css";
 
@@ -25,7 +28,7 @@ const exampleData = {
     "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
 };
 
-export const Default: StoryFn<typeof Card> = () => (
+export const Default: StoryFn<typeof InteractableCard> = () => (
   <InteractableCard style={{ width: "256px" }}>
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
@@ -34,7 +37,7 @@ export const Default: StoryFn<typeof Card> = () => (
   </InteractableCard>
 );
 
-export const Disabled: StoryFn<typeof Card> = () => (
+export const Disabled: StoryFn<typeof InteractableCard> = () => (
   <InteractableCard style={{ width: "256px" }} disabled accent="top">
     <StackLayout gap={1}>
       <H3 disabled>{exampleData.title}</H3>
@@ -43,7 +46,7 @@ export const Disabled: StoryFn<typeof Card> = () => (
   </InteractableCard>
 );
 
-export const Selected: StoryFn<typeof Card> = () => (
+export const Selected: StoryFn<typeof InteractableCard> = () => (
   <InteractableCard style={{ width: "256px" }} selected accent="top">
     <StackLayout gap={1}>
       <H3>{exampleData.title}</H3>
@@ -52,7 +55,7 @@ export const Selected: StoryFn<typeof Card> = () => (
   </InteractableCard>
 );
 
-export const SelectedDisabled: StoryFn<typeof Card> = () => (
+export const SelectedDisabled: StoryFn<typeof InteractableCard> = () => (
   <InteractableCard style={{ width: "256px" }} selected disabled accent="top">
     <StackLayout gap={1}>
       <H3 disabled>{exampleData.title}</H3>
@@ -61,7 +64,7 @@ export const SelectedDisabled: StoryFn<typeof Card> = () => (
   </InteractableCard>
 );
 
-export const AccentPlacement: StoryFn<typeof Card> = () => {
+export const AccentPlacement: StoryFn<typeof InteractableCard> = () => {
   const [placement, setPlacement] =
     useState<InteractableCardProps["accent"]>("bottom");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +109,7 @@ export const AccentPlacement: StoryFn<typeof Card> = () => {
   );
 };
 
-export const Variant: StoryFn<typeof Card> = () => {
+export const Variant: StoryFn<typeof InteractableCard> = () => {
   const variants = ["primary", "secondary"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
@@ -129,8 +132,29 @@ export const Variant: StoryFn<typeof Card> = () => {
   );
 };
 
-export const InteractableCardGroup: StoryFn<typeof Card> = () => (
+export const InteractableCardGroupSingleSelect: StoryFn<
+  typeof InteractableCard
+> = () => (
   <InteractableCardGroup>
+    <InteractableCard style={{ width: "256px" }}>
+      <StackLayout gap={1}>
+        <H3>{exampleData.title}</H3>
+        <Text>{exampleData.content}</Text>
+      </StackLayout>
+    </InteractableCard>
+    <InteractableCard style={{ width: "256px" }}>
+      <StackLayout gap={1}>
+        <H3>{exampleData.title}</H3>
+        <Text>{exampleData.content}</Text>
+      </StackLayout>
+    </InteractableCard>
+  </InteractableCardGroup>
+);
+
+export const InteractableCardGroupMultiSelect: StoryFn<
+  typeof InteractableCard
+> = () => (
+  <InteractableCardGroup selectionVariant="multiselect">
     <InteractableCard style={{ width: "256px" }}>
       <StackLayout gap={1}>
         <H3>{exampleData.title}</H3>
