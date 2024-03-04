@@ -2,11 +2,9 @@ import { ReactNode, ComponentPropsWithoutRef } from "react";
 import clsx from "clsx";
 import {
   H2,
-  H3,
   StatusIndicator,
   ValidationStatus,
   makePrefixer,
-  Text,
 } from "@salt-ds/core";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
@@ -55,7 +53,7 @@ export const DialogHeader = ({
 
   return (
     <div
-      id={id as string}
+      id={id}
       className={clsx(
         withBaseName(),
         {
@@ -69,7 +67,7 @@ export const DialogHeader = ({
       {status && <StatusIndicator status={status} />}
       <div>
         {preheader && (
-          <h3 className={withBaseName("preheader")}>{preheader}</h3>
+          <div className={withBaseName("preheader")}>{preheader}</div>
         )}
         <H2 className={withBaseName("header")}>{header}</H2>
       </div>
