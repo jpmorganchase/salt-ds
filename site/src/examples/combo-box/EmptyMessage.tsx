@@ -1,5 +1,4 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import cslx from "clsx";
 import { ComboBoxNext, Option } from "@salt-ds/lab";
 import { shortColorData } from "./exampleData";
 import styles from "./index.module.css";
@@ -35,11 +34,7 @@ export const EmptyMessage = (): ReactElement => {
       style={{ width: "266px" }}
     >
       {filteredOptions.length > 0 ? (
-        filteredOptions.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
-        ))
+        filteredOptions.map((state) => <Option value={state} key={state} />)
       ) : (
         <div
           className={styles.statusOption}

@@ -47,9 +47,7 @@ export const CustomFiltering = (): ReactElement => {
       value={value}
     >
       {options.map((color) => (
-        <Option value={color} key={color}>
-          {color}
-        </Option>
+        <Option value={color} key={color} />
       ))}
     </ComboBoxNext>
   );

@@ -9,9 +9,7 @@ export const WithFormField = (): ReactElement => {
       <FormFieldLabel>Color</FormFieldLabel>
       <DropdownNext>
         {shortColorData.map((color) => (
-          <Option value={color} key={color}>
-            {color}
-          </Option>
+          <Option value={color} key={color} />
         ))}
       </DropdownNext>
       <FormFieldHelperText>Pick a color</FormFieldHelperText>

@@ -234,11 +234,7 @@ const formFields = (
     </FormField>
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
-      <Dropdown
-        defaultValue={"Value"}
-        defaultSelected={["Value"]}
-        style={{ width: "100%" }}
-      >
+      <Dropdown defaultSelected={["Value"]} style={{ width: "100%" }}>
         <Option value="Value">Value</Option>
       </Dropdown>
       <FormFieldHelperText>Helper text</FormFieldHelperText>

@@ -7,9 +7,7 @@ export const StartAdornment = (): ReactElement => {
   return (
     <DropdownNext startAdornment={<LocationIcon />} style={{ width: "266px" }}>
       {largestCities.map(({ name }) => (
-        <Option value={name} key={name}>
-          {name}
-        </Option>
+        <Option value={name} key={name} />
       ))}
     </DropdownNext>
   );
