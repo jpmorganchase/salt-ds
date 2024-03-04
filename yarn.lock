@@ -6260,7 +6260,6 @@ __metadata:
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch"
     msw: "npm:^1.2.1"
     msw-storybook-addon: "npm:^1.8.0"
-    nyse-holidays: "npm:^1.2.0"
     prettier: "npm:^2.6.2"
     pretty-quick: "npm:^3.1.3"
     react: "npm:^18.0.0"
@@ -13949,7 +13948,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.10.4, dayjs@npm:^1.11.1":
+"dayjs@npm:^1.10.4":
   version: 1.11.5
   resolution: "dayjs@npm:1.11.5"
   checksum: 10/cee1c2ed5f74ba31eb30ea985e36eb8f0e10c2afedb8d480a316776bd6655c731aa9d21766c44d64c3e04eb30983b40fec9566902af832768e94335306da9485
@@ -23707,15 +23706,6 @@ __metadata:
   bin:
     nyc: bin/nyc.js
   checksum: 10/c987f04f4192dfd94e9e69869c76a54220b3ed555016751f380a413a378cceff8ec346df579e9126035b6acbc60ab893cc65e67729cc427c0171361bcb481e66
-  languageName: node
-  linkType: hard
-
-"nyse-holidays@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "nyse-holidays@npm:1.2.0"
-  dependencies:
-    dayjs: "npm:^1.11.1"
-  checksum: 10/d96eaf5714961004372b06f59c48e774da6e84de866fee38db4bc3bbceb8d0599f87708c75954a82b377d300eae57abf91493796248112e8d61ba97059212350
   languageName: node
   linkType: hard
 
