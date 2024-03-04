@@ -28,14 +28,16 @@ describe("Given a ComboBox", () => {
 
     cy.realType("Ala");
 
-    cy.findByRole("option", { name: "Alabama" }).realClick();
+    cy.findByRole("option", { name: "Alaska" }).realHover();
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+    cy.findByRole("option", { name: "Alaska" }).realClick();
 
     cy.findByRole("combobox").should("be.focused");
-    cy.findByRole("combobox").should("have.value", "Alabama");
+    cy.findByRole("combobox").should("have.value", "Alaska");
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alaska"])
     );
   });
 
@@ -379,6 +381,8 @@ describe("Given a ComboBox", () => {
     cy.findByRole("option", { name: "United States of America" }).should(
       "exist"
     );
+    cy.findByRole("option", { name: "United States of America" }).realClick();
+    cy.findByRole("combobox").should("have.value", "United States of America");
   });
 
   it("should support object values", () => {
@@ -456,6 +460,18 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").clear();
     cy.findByRole("combobox").should("have.value", "");
     cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
+  });
+
+  it("should clear the list of active items when the input is cleared", () => {
+    cy.mount(<Default />);
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.realType("C");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
+    cy.realType("{backspace}");
+    cy.findAllByRole("option").should("not.be.activeDescendant");
   });
 
   it("should render the custom floating component", () => {
