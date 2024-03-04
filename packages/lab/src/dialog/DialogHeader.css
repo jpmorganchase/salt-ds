@@ -16,8 +16,6 @@
 
 .saltDialogTitle-preheader {
   margin: 0;
-  font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text);
   color: var(--salt-content-secondary-foreground);
 }
 
