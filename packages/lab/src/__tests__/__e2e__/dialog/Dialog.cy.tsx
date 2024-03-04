@@ -13,7 +13,7 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("button").click();
 
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle").should("be.visible");
+      cy.get(".saltDialogHeader").should("be.visible");
       cy.get(".saltDialogContent").should("be.visible");
       cy.get(".saltDialogActions").should("be.visible");
     });
@@ -24,14 +24,14 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("button").click();
 
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle-header").should("be.visible");
+      cy.get(".saltDialogHeader-header").should("be.visible");
     });
 
     it("THEN it should add the accent class to the title component", () => {
       cy.mount(<Default />);
       cy.findByRole("button").click();
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle-withAccent").should("exist");
+      cy.get(".saltDialogHeader-withAccent").should("exist");
     });
 
     it("THEN it should display animations by default", () => {
@@ -64,7 +64,7 @@ describe("GIVEN a Dialog", () => {
 
       cy.findByRole("button").click();
 
-      cy.get("h3").should("be.visible");
+      cy.get(".saltDialogHeader-preheader").should("be.visible");
     });
   });
 

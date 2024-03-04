@@ -11,7 +11,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogTitleCss from "./DialogHeader.css";
 
-const withBaseName = makePrefixer("saltDialogTitle");
+const withBaseName = makePrefixer("saltDialogHeader");
 
 interface DialogTitleProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -44,7 +44,7 @@ export const DialogHeader = ({
   const { status: statusContext, id } = useDialogContext();
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-dialog-title",
+    testId: "salt-dialog-header",
     css: dialogTitleCss,
     window: targetWindow,
   });
