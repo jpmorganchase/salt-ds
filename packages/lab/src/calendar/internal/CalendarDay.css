@@ -68,7 +68,7 @@
 
 .saltCalendarDay-highlighted:before {
   content: "";
-  height: var(--salt-spacing-200);
+  height: var(--salt-spacing-200); /* TODO: change for size-modifier when available */
   width: var(--salt-spacing-200);
   top: calc(var(--salt-spacing-100) * -1);
   right: calc(var(--salt-spacing-100) * -1);
