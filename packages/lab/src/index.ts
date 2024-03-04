@@ -53,7 +53,6 @@ export * from "./metric";
 export * from "./option";
 export * from "./overlay";
 export * from "./parent-child-layout";
-export * from "./pill-input";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";
