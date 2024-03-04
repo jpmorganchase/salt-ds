@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Drawer, Option } from "@salt-ds/lab";
+import { ComboBoxNext, Option } from "@salt-ds/lab";
 import {
   Button,
   Checkbox,
@@ -11,6 +11,7 @@ import {
   StackLayout,
   H2,
   useId,
+  Drawer,
 } from "@salt-ds/core";
 
 export const MandatoryAction = (): ReactElement => {
