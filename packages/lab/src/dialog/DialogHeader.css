@@ -14,11 +14,6 @@
   margin: 0;
 }
 
-.saltDialogHeader-preheader {
-  margin: 0;
-  color: var(--salt-content-secondary-foreground);
-}
-
 /* Styles applied to the status indicator icon overriding its default size */
 .saltDialogHeader .saltStatusIndicator.saltIcon {
   --icon-size: var(--salt-text-h2-lineHeight);

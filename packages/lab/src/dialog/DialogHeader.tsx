@@ -67,7 +67,11 @@ export const DialogHeader = ({
     >
       {status && <StatusIndicator status={status} />}
       <H2 className={withBaseName("header")}>
-        {preheader && <Text variant="secondary">{preheader}</Text>}
+        {preheader && (
+          <Text variant="secondary" className={withBaseName("preheader")}>
+            {preheader}
+          </Text>
+        )}
         <div>{header}</div>
       </H2>
     </div>
