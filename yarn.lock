@@ -4177,7 +4177,7 @@ __metadata:
 
 "@jpmorganchase/mosaic-content-editor-plugin@patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch":
   version: 0.1.0-beta.65
-  resolution: "@jpmorganchase/mosaic-content-editor-plugin@patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch::version=0.1.0-beta.65&hash=2b12fa"
+  resolution: "@jpmorganchase/mosaic-content-editor-plugin@patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch::version=0.1.0-beta.65&hash=aa047b"
   dependencies:
     "@floating-ui/react": "npm:^0.26.6"
     "@jpmorganchase/mosaic-components": "npm:^0.1.0-beta.65"
@@ -4208,7 +4208,7 @@ __metadata:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10/cab1642b998262d55f47374bddaca695f80a1dd9a9479f715ffc944081be71c299871132fc8a0b0a9cfa7713d1d1368c22047adeb42c2b2904864fa81d34d536
+  checksum: 10/7a3f29ceac34622f92441c064028e62fb881235025edf533dd16dadfc76d6b89aa37132380951ff02c26a8d844922cfa816d6adda7f77464f54925126f45668a
   languageName: node
   linkType: hard
 

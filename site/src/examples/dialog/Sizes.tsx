@@ -6,12 +6,12 @@ import {
   H2,
   SplitLayout,
   useId,
-} from "@salt-ds/core";
-import {
   Dialog,
   DialogHeader,
   DialogActions,
   DialogContent,
+} from "@salt-ds/core";
+import {
   SteppedTracker,
   TrackerStep,
   StepLabel,

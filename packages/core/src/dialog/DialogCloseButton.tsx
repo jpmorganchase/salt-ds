@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import clsx from "clsx";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { Button, ButtonProps } from "../button";
+import { makePrefixer } from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { CloseIcon } from "@salt-ds/icons";

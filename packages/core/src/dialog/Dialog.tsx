@@ -20,10 +20,10 @@ import {
   useFloatingUI,
   useCurrentBreakpoint,
   useForkRef,
-  ValidationStatus,
-  Scrim,
   useId,
-} from "@salt-ds/core";
+} from "../utils";
+import { Scrim } from "../scrim";
+import { ValidationStatus } from "../status-indicator";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
