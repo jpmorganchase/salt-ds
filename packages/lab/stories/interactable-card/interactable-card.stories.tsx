@@ -220,3 +220,75 @@ export const InteractableCardGroupMultiSelect: StoryFn<
     </InteractableCard>
   </InteractableCardGroup>
 );
+
+export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
+  args
+) => {
+  const [selected, setSelected] = useState("card");
+
+  return (
+    <StackLayout>
+      <StackLayout gap={1}>
+        <H3>Payment method</H3>
+        <Text>Choose your payment method from the options below.</Text>
+      </StackLayout>
+      <InteractableCardGroup defaultValue={"card"}>
+        <InteractableCard
+          {...args}
+          onChange={(event) => setSelected(event.currentTarget.value)}
+          value="card"
+          style={{ width: "180px" }}
+        >
+          <StackLayout gap={1}>
+            <StackLayout gap={1} direction="row" align="center">
+              <CreditCardIcon size={2} />
+              <H3>Credit Card</H3>
+            </StackLayout>
+            <RadioButton
+              aria-hidden
+              inputProps={{ tabIndex: -1 }}
+              checked={selected === "card"}
+              label="Link credit card to your payments account."
+            />
+          </StackLayout>
+        </InteractableCard>
+        <InteractableCard
+          onChange={(event) => setSelected(event.currentTarget.value)}
+          value="wire"
+          style={{ width: "180px" }}
+        >
+          <StackLayout gap={1}>
+            <StackLayout gap={1} direction="row" align="center">
+              <BankIcon size={2} />
+              <H3>Bank wire</H3>
+            </StackLayout>
+            <RadioButton
+              aria-hidden
+              inputProps={{ tabIndex: -1 }}
+              checked={selected === "wire"}
+              label="Link your bank to your payments account."
+            />
+          </StackLayout>
+        </InteractableCard>
+        <InteractableCard
+          onChange={(event) => setSelected(event.currentTarget.value)}
+          value="crypto"
+          style={{ width: "180px" }}
+        >
+          <StackLayout gap={1}>
+            <StackLayout gap={1} direction="row" align="center">
+              <DiamondIcon size={2} />
+              <H3>Cryptocurrency</H3>
+            </StackLayout>
+            <RadioButton
+              aria-hidden
+              inputProps={{ tabIndex: -1 }}
+              checked={selected === "crypto"}
+              label="Link your crypto to your payments account."
+            />
+          </StackLayout>
+        </InteractableCard>
+      </InteractableCardGroup>
+    </StackLayout>
+  );
+};
