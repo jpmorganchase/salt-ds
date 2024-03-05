@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { LinkCard } from "@salt-ds/lab";
+import { LinkCard } from "@salt-ds/core";
 
 export const LinkCardExample = (): ReactElement => {
   return (
