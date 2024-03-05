@@ -3,7 +3,7 @@
 ---
 
 Add `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` to core
-Add patch to update dialog imports in mosaic-content-editor package
+Add patch to update dialog imports and `DialogHeader` renaming in mosaic-content-editor package
 
 ```tsx
 export const Dialog = (): ReactElement => {
