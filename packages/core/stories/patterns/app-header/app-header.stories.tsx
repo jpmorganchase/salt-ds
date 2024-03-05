@@ -9,8 +9,8 @@ import {
   NavigationItem,
   useResponsiveProp,
   Text,
+  Drawer,
 } from "@salt-ds/core";
-import { Drawer } from "@salt-ds/lab";
 import {
   SymphonyIcon,
   StackoverflowIcon,

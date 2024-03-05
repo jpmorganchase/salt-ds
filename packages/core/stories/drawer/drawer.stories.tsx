@@ -13,12 +13,14 @@ import {
   Text,
   Input,
   StackLayout,
+  Drawer,
+  DrawerCloseButton,
 } from "@salt-ds/core";
-import { ComboBoxNext, Option, Drawer, DrawerCloseButton } from "@salt-ds/lab";
+import { ComboBoxNext, Option } from "@salt-ds/lab";
 import { Meta } from "@storybook/react";
 
 export default {
-  title: "Lab/Drawer",
+  title: "Core/Drawer",
   component: Drawer,
 } as Meta<typeof Drawer>;
 
