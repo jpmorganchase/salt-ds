@@ -22,49 +22,61 @@ export default {
   component: InteractableCard,
 } as Meta<typeof InteractableCard>;
 
-const exampleData = {
-  title: "Sustainable investing products",
-  content:
-    "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
-};
-
-export const Default: StoryFn<typeof InteractableCard> = () => (
-  <InteractableCard style={{ width: "256px" }}>
+export const Default: StoryFn<typeof InteractableCard> = (args) => (
+  <InteractableCard {...args} {...args} style={{ width: "256px" }}>
     <StackLayout gap={1}>
-      <H3>{exampleData.title}</H3>
-      <Text>{exampleData.content}</Text>
+      <H3>Sustainable investing products</H3>
+      <Text>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
     </StackLayout>
   </InteractableCard>
 );
 
-export const Disabled: StoryFn<typeof InteractableCard> = () => (
-  <InteractableCard style={{ width: "256px" }} disabled accent="top">
+export const Disabled: StoryFn<typeof InteractableCard> = (args) => (
+  <InteractableCard {...args} style={{ width: "256px" }} disabled accent="top">
     <StackLayout gap={1}>
-      <H3 disabled>{exampleData.title}</H3>
-      <Text disabled>{exampleData.content}</Text>
+      <H3 disabled>Sustainable investing products</H3>
+      <Text disabled>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
     </StackLayout>
   </InteractableCard>
 );
 
-export const Selected: StoryFn<typeof InteractableCard> = () => (
-  <InteractableCard style={{ width: "256px" }} selected accent="top">
+export const Selected: StoryFn<typeof InteractableCard> = (args) => (
+  <InteractableCard {...args} style={{ width: "256px" }} selected accent="top">
     <StackLayout gap={1}>
-      <H3>{exampleData.title}</H3>
-      <Text>{exampleData.content}</Text>
+      <H3>Sustainable investing products</H3>
+      <Text>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
     </StackLayout>
   </InteractableCard>
 );
 
-export const SelectedDisabled: StoryFn<typeof InteractableCard> = () => (
-  <InteractableCard style={{ width: "256px" }} selected disabled accent="top">
+export const SelectedDisabled: StoryFn<typeof InteractableCard> = (args) => (
+  <InteractableCard
+    {...args}
+    style={{ width: "256px" }}
+    selected
+    disabled
+    accent="top"
+  >
     <StackLayout gap={1}>
-      <H3 disabled>{exampleData.title}</H3>
-      <Text disabled>{exampleData.content}</Text>
+      <H3 disabled>Sustainable investing products</H3>
+      <Text disabled>
+        We have a commitment to provide a wide range of investment solutions to
+        enable you to align your financial goals to your values.
+      </Text>
     </StackLayout>
   </InteractableCard>
 );
 
-export const AccentPlacement: StoryFn<typeof InteractableCard> = () => {
+export const AccentPlacement: StoryFn<typeof InteractableCard> = (args) => {
   const [placement, setPlacement] =
     useState<InteractableCardProps["accent"]>("bottom");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -72,10 +84,13 @@ export const AccentPlacement: StoryFn<typeof InteractableCard> = () => {
   };
   return (
     <StackLayout style={{ width: "266px" }}>
-      <InteractableCard accent={placement}>
+      <InteractableCard {...args} accent={placement}>
         <StackLayout gap={1}>
-          <H3>{exampleData.title}</H3>
-          <Text>{exampleData.content}</Text>
+          <H3>Sustainable investing products</H3>
+          <Text>
+            We have a commitment to provide a wide range of investment solutions
+            to enable you to align your financial goals to your values.
+          </Text>
         </StackLayout>
       </InteractableCard>
       <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
@@ -109,7 +124,7 @@ export const AccentPlacement: StoryFn<typeof InteractableCard> = () => {
   );
 };
 
-export const Variant: StoryFn<typeof InteractableCard> = () => {
+export const Variant: StoryFn<typeof InteractableCard> = (args) => {
   const variants = ["primary", "secondary"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
@@ -117,10 +132,14 @@ export const Variant: StoryFn<typeof InteractableCard> = () => {
         return (
           <StackLayout align="end">
             <StackLayout direction="row" key={variant}>
-              <InteractableCard variant={variant}>
+              <InteractableCard {...args} variant={variant}>
                 <StackLayout gap={1}>
-                  <H3>{exampleData.title}</H3>
-                  <Text>{exampleData.content}</Text>
+                  <H3>Sustainable investing products</H3>
+                  <Text>
+                    We have a commitment to provide a wide range of investment
+                    solutions to enable you to align your financial goals to
+                    your values.
+                  </Text>
                 </StackLayout>
               </InteractableCard>
             </StackLayout>
@@ -134,18 +153,24 @@ export const Variant: StoryFn<typeof InteractableCard> = () => {
 
 export const InteractableCardGroupSingleSelect: StoryFn<
   typeof InteractableCard
-> = () => (
+> = (args) => (
   <InteractableCardGroup>
-    <InteractableCard style={{ width: "256px" }}>
+    <InteractableCard {...args} style={{ width: "256px" }}>
       <StackLayout gap={1}>
-        <H3>{exampleData.title}</H3>
-        <Text>{exampleData.content}</Text>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard style={{ width: "256px" }}>
+    <InteractableCard {...args} style={{ width: "256px" }}>
       <StackLayout gap={1}>
-        <H3>{exampleData.title}</H3>
-        <Text>{exampleData.content}</Text>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
       </StackLayout>
     </InteractableCard>
   </InteractableCardGroup>
@@ -153,18 +178,49 @@ export const InteractableCardGroupSingleSelect: StoryFn<
 
 export const InteractableCardGroupMultiSelect: StoryFn<
   typeof InteractableCard
-> = () => (
+> = (args) => (
   <InteractableCardGroup selectionVariant="multiselect">
-    <InteractableCard style={{ width: "256px" }}>
+    <InteractableCard {...args} style={{ width: "256px" }}>
       <StackLayout gap={1}>
-        <H3>{exampleData.title}</H3>
-        <Text>{exampleData.content}</Text>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard style={{ width: "256px" }}>
+    <InteractableCard {...args} style={{ width: "256px" }}>
       <StackLayout gap={1}>
-        <H3>{exampleData.title}</H3>
-        <Text>{exampleData.content}</Text>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
+      </StackLayout>
+    </InteractableCard>
+  </InteractableCardGroup>
+);
+
+export const InteractableCardGroupWithRadio: StoryFn<
+  typeof InteractableCard
+> = (args) => (
+  <InteractableCardGroup>
+    <InteractableCard {...args} style={{ width: "256px" }}>
+      <StackLayout gap={1}>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
+      </StackLayout>
+    </InteractableCard>
+    <InteractableCard {...args} style={{ width: "256px" }}>
+      <StackLayout gap={1}>
+        <H3>Sustainable investing products</H3>
+        <Text>
+          We have a commitment to provide a wide range of investment solutions
+          to enable you to align your financial goals to your values.
+        </Text>
       </StackLayout>
     </InteractableCard>
   </InteractableCardGroup>
