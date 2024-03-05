@@ -19,7 +19,7 @@ import {
 import interactableCardGroupCss from "./InteractableCardGroup.css";
 
 export interface InteractableCardGroupProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
   /**
    * The default value. Use when the component is not controlled.
    */
@@ -40,7 +40,7 @@ export interface InteractableCardGroupProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: SyntheticEvent<HTMLDivElement>, value: Value) => void;
+  onChange?: (event: SyntheticEvent<HTMLButtonElement>, value: Value) => void;
 }
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
@@ -67,7 +67,7 @@ export const InteractableCardGroup = forwardRef<
     window: targetWindow,
   });
 
-  const groupRef = useRef<HTMLDivElement>(null);
+  const groupRef = useRef<HTMLButtonElement>(null);
   const handleRef = useForkRef(ref, groupRef);
 
   const [value, setValue] = useControlled({
@@ -78,8 +78,8 @@ export const InteractableCardGroup = forwardRef<
   });
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLDivElement>) => {
-      const newValue = event.currentTarget.getAttribute("data-value");
+    (event: SyntheticEvent<HTMLButtonElement>) => {
+      const newValue = event.currentTarget.value;
       if (selectionVariant === "multiselect") {
         setValue((oldValues: Value) => {
           const currentValues = Array.isArray(oldValues) ? oldValues : [];

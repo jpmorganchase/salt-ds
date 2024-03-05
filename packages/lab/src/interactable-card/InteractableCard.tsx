@@ -19,7 +19,8 @@ import {
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
-export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
+export interface InteractableCardProps
+  extends ComponentPropsWithoutRef<"button"> {
   /**
    * Accent border position: defaults to "bottom"
    */
@@ -36,7 +37,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: MouseEvent<HTMLDivElement>) => void;
+  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
    * Styling variant; defaults to "primary".
    */
@@ -48,7 +49,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 export const InteractableCard = forwardRef<
-  HTMLDivElement,
+  HTMLButtonElement,
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
@@ -106,7 +107,7 @@ export const InteractableCard = forwardRef<
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
 
-  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (interactableCardGroup) {
       interactableCardGroup.select(event);
       setSelected(!selected);
@@ -116,12 +117,12 @@ export const InteractableCard = forwardRef<
   };
 
   return (
-    <div
+    <button
       {...cardProps}
       role={role}
       aria-checked={ariaChecked}
       data-id={value}
-      data-value={value}
+      disabled={disabled}
       className={clsx(
         withBaseName(),
         withBaseName(variant),
@@ -134,12 +135,12 @@ export const InteractableCard = forwardRef<
         },
         className
       )}
-      disabled={disabled}
       {...rest}
       onClick={interactableCardGroup ? handleClick : onClick}
       ref={ref}
+      value={value}
     >
       {children}
-    </div>
+    </button>
   );
 });
