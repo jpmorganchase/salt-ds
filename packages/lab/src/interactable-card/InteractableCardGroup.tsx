@@ -19,7 +19,7 @@ import {
 import interactableCardGroupCss from "./InteractableCardGroup.css";
 
 export interface InteractableCardGroupProps
-  extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
    * The default value. Use when the component is not controlled.
    */
@@ -67,7 +67,7 @@ export const InteractableCardGroup = forwardRef<
     window: targetWindow,
   });
 
-  const groupRef = useRef<HTMLButtonElement>(null);
+  const groupRef = useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(ref, groupRef);
 
   const [value, setValue] = useControlled({
