@@ -15,6 +15,8 @@ import {
   InteractableCardProps,
 } from "@salt-ds/lab";
 
+import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
+
 import "./interactable-card.stories.css";
 
 export default {
@@ -155,22 +157,31 @@ export const InteractableCardGroupSingleSelect: StoryFn<
   typeof InteractableCard
 > = (args) => (
   <InteractableCardGroup>
-    <InteractableCard {...args} style={{ width: "256px" }}>
+    <InteractableCard value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
-        <H3>Sustainable investing products</H3>
-        <Text>
-          We have a commitment to provide a wide range of investment solutions
-          to enable you to align your financial goals to your values.
-        </Text>
+        <StackLayout gap={1} direction="row" align="center">
+          <CreditCardIcon size={2} />
+          <H3>Credit Card</H3>
+        </StackLayout>
+        <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard {...args} style={{ width: "256px" }}>
+    <InteractableCard value="wire" style={{ width: "180px" }}>
       <StackLayout gap={1}>
-        <H3>Sustainable investing products</H3>
-        <Text>
-          We have a commitment to provide a wide range of investment solutions
-          to enable you to align your financial goals to your values.
-        </Text>
+        <StackLayout gap={1} direction="row" align="center">
+          <BankIcon size={2} />
+          <H3>Bank wire</H3>
+        </StackLayout>
+        <Text>Link your bank to your payments account.</Text>
+      </StackLayout>
+    </InteractableCard>
+    <InteractableCard value="crypto" style={{ width: "180px" }}>
+      <StackLayout gap={1}>
+        <StackLayout gap={1} direction="row" align="center">
+          <DiamondIcon size={2} />
+          <H3>Cryptocurrency</H3>
+        </StackLayout>
+        <Text>Link your crypto to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
   </InteractableCardGroup>
@@ -180,47 +191,31 @@ export const InteractableCardGroupMultiSelect: StoryFn<
   typeof InteractableCard
 > = (args) => (
   <InteractableCardGroup selectionVariant="multiselect">
-    <InteractableCard {...args} style={{ width: "256px" }}>
+    <InteractableCard value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
-        <H3>Sustainable investing products</H3>
-        <Text>
-          We have a commitment to provide a wide range of investment solutions
-          to enable you to align your financial goals to your values.
-        </Text>
+        <StackLayout gap={1} direction="row" align="center">
+          <CreditCardIcon size={2} />
+          <H3>Credit Card</H3>
+        </StackLayout>
+        <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard {...args} style={{ width: "256px" }}>
+    <InteractableCard value="wire" style={{ width: "180px" }}>
       <StackLayout gap={1}>
-        <H3>Sustainable investing products</H3>
-        <Text>
-          We have a commitment to provide a wide range of investment solutions
-          to enable you to align your financial goals to your values.
-        </Text>
+        <StackLayout gap={1} direction="row" align="center">
+          <BankIcon size={2} />
+          <H3>Bank wire</H3>
+        </StackLayout>
+        <Text>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-  </InteractableCardGroup>
-);
-
-export const InteractableCardGroupWithRadio: StoryFn<
-  typeof InteractableCard
-> = (args) => (
-  <InteractableCardGroup>
-    <InteractableCard {...args} style={{ width: "256px" }}>
+    <InteractableCard value="crypto" style={{ width: "180px" }}>
       <StackLayout gap={1}>
-        <H3>Sustainable investing products</H3>
-        <Text>
-          We have a commitment to provide a wide range of investment solutions
-          to enable you to align your financial goals to your values.
-        </Text>
-      </StackLayout>
-    </InteractableCard>
-    <InteractableCard {...args} style={{ width: "256px" }}>
-      <StackLayout gap={1}>
-        <H3>Sustainable investing products</H3>
-        <Text>
-          We have a commitment to provide a wide range of investment solutions
-          to enable you to align your financial goals to your values.
-        </Text>
+        <StackLayout gap={1} direction="row" align="center">
+          <DiamondIcon size={2} />
+          <H3>Cryptocurrency</H3>
+        </StackLayout>
+        <Text>Link your crypto to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
   </InteractableCardGroup>
