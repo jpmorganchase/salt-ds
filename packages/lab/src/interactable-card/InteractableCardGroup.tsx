@@ -125,8 +125,6 @@ export const InteractableCardGroup = forwardRef<
         ref={handleRef}
         {...rest}
       >
-        {defaultValue}
-        {value}
         {children}
       </div>
     </InteractableCardGroupContext.Provider>
