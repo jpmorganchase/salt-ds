@@ -2,7 +2,8 @@ import { composeStories } from "@storybook/react";
 import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
 import { StackLayout } from "@salt-ds/core";
 
-const { DefaultLeftAligned: DefaultTabstrip } = composeStories(tabstripStories);
+const { DefaultLeftAligned: DefaultTabstrip, ControlledTabstrip } =
+  composeStories(tabstripStories);
 
 describe("Given a Tabstrip", () => {
   describe("WHEN uncontrolled", () => {
@@ -70,6 +71,16 @@ describe("Given a Tabstrip", () => {
           .findAllByRole("option")
           .should("have.length", 1);
       });
+    });
+  });
+  describe("WHEN size is not the full width of it's parent", () => {
+    it("THEN should not overflow if it has enough space", () => {
+      cy.mount(<ControlledTabstrip width={500} />);
+      cy.findByRole("combobox").should("not.exist");
+    });
+    it.only("THEN should overflow if it there is not enough space", () => {
+      cy.mount(<ControlledTabstrip width={450} />);
+      cy.findByRole("combobox").should("exist");
     });
   });
 });
