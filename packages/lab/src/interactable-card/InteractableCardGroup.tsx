@@ -21,7 +21,7 @@ import interactableCardGroupCss from "./InteractableCardGroup.css";
 export interface InteractableCardGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * The default value. Use when the component is not controlled.
+   * The default value. Use when the component is not controlled. Should be an array when `selectionVariant` is "multiselect".
    */
   defaultValue?: Value;
   /**
@@ -125,6 +125,8 @@ export const InteractableCardGroup = forwardRef<
         ref={handleRef}
         {...rest}
       >
+        {defaultValue}
+        {value}
         {children}
       </div>
     </InteractableCardGroupContext.Provider>
