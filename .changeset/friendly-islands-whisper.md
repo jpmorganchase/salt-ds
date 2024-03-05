@@ -19,8 +19,6 @@ export const Default = (): ReactElement => {
         </h3>
         <div>
           Content of Overlay
-          <br />
-          <br />
           <Tooltip content={"im a tooltip"}>
             <Button>hover me</Button>
           </Tooltip>
