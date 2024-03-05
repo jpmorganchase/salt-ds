@@ -10,7 +10,7 @@ export const ToggleGroup = (): ReactElement => (
       <Text>Choose your payment method from the options below.</Text>
     </StackLayout>
     <InteractableCardGroup>
-      <InteractableCard value="card" accent="top" style={{ width: "180px" }}>
+      <InteractableCard value="card" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <CreditCardIcon size={2} />
@@ -19,7 +19,7 @@ export const ToggleGroup = (): ReactElement => (
           <Text>Link credit card to your payments account.</Text>
         </StackLayout>
       </InteractableCard>
-      <InteractableCard value="wire" accent="top" style={{ width: "180px" }}>
+      <InteractableCard value="wire" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <BankIcon size={2} />
@@ -28,7 +28,7 @@ export const ToggleGroup = (): ReactElement => (
           <Text>Link your bank to your payments account.</Text>
         </StackLayout>
       </InteractableCard>
-      <InteractableCard value="crypto" accent="top" style={{ width: "180px" }}>
+      <InteractableCard value="crypto" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <DiamondIcon size={2} />
