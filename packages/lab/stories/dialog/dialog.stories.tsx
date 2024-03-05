@@ -1,17 +1,13 @@
-import { PropsWithChildren, useState } from "react";
-import {
-  Button,
-  StackLayout,
-  FormField,
-  FormFieldLabel,
-  Input,
-} from "@salt-ds/core";
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { PropsWithChildren, ReactNode, useState } from "react";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
   DialogCloseButton,
+  DialogProps,
 } from "@salt-ds/lab";
 import { StoryFn, Meta } from "@storybook/react";
 import "./dialog.stories.css";
@@ -20,15 +16,17 @@ export default {
   title: "Lab/Dialog",
   component: Dialog,
   args: {
-    title: "Congratulations! You have created a Dialog.",
+    header: "Congratulations! You have created a Dialog.",
     content:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
   },
 } as Meta<typeof Dialog>;
 
-const DialogTemplate: StoryFn<typeof Dialog> = ({
-  title,
-  // @ts-ignore
+const DialogTemplate: StoryFn<
+  DialogProps & { header: string; preheader: string; content: ReactNode }
+> = ({
+  header,
+  preheader,
   content,
   id,
   size,
@@ -61,8 +59,7 @@ const DialogTemplate: StoryFn<typeof Dialog> = ({
         id={id}
         size={size}
       >
-        {/* eslint-disable-next-line */}
-        <DialogTitle title={title} />
+        <DialogHeader header={header} preheader={preheader} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={handleClose}>
@@ -87,8 +84,7 @@ Default.args = {
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
-  title: "Congratulations! You have created a Dialog.",
-  // @ts-ignore
+  header: "Congratulations! You have created a Dialog.",
   content: (
     <StackLayout>
       <div>
@@ -138,12 +134,20 @@ LongContent.args = {
   ),
 };
 
-const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
+export const Preheader = DialogTemplate.bind({});
+
+Preheader.args = {
+  header: "Congratulations! You have created a Dialog.",
+  preheader: "I am a preheader",
+};
+
+const AlertDialogTemplate: StoryFn<
+  DialogProps & { header: string; content: ReactNode }
+> = ({
   open: openProp = false,
   status,
-  title,
+  header,
   size = "small",
-  // @ts-ignore
   content,
   ...args
 }) => {
@@ -176,7 +180,7 @@ const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle title={title} />
+        <DialogHeader header={header} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
@@ -192,25 +196,25 @@ const AlertDialogTemplate: StoryFn<typeof Dialog> = ({
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
-  title: "Info",
+  header: "Info",
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
-  title: "Success",
+  header: "Success",
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
-  title: "Warning",
+  header: "Warning",
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
-  title: "Error",
+  header: "Error",
 };
 
 export const MandatoryAction: StoryFn<typeof Dialog> = ({
@@ -245,7 +249,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         initialFocus={1}
         disableDismiss
       >
-        <DialogTitle id="mandatory-action" title="Delete Transaction" />
+        <DialogHeader id="mandatory-action" header="Delete Transaction" />
 
         <DialogContent>
           Are you sure you want to permanently delete this transaction
@@ -254,50 +258,6 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="cta" onClick={handleClose}>
             Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-};
-
-export const Subtitle: StoryFn<typeof Dialog> = ({
-  open: openProp = false,
-}) => {
-  const [open, setOpen] = useState(openProp);
-
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (value: boolean) => {
-    setOpen(value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} size="small">
-        <DialogTitle
-          title="Subscribe"
-          subtitle="Recieve emails about the latest updates"
-        />
-        <DialogCloseButton onClick={handleClose} />
-
-        <DialogContent>
-          <FormField necessity="asterisk">
-            <FormFieldLabel> Email </FormFieldLabel>
-            <Input defaultValue="Email Address" />
-          </FormField>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
-            Subscribe
           </Button>
         </DialogActions>
       </Dialog>
@@ -318,7 +278,7 @@ export const DesktopDialog = () => {
   return (
     <StackLayout>
       <FakeWindow>
-        <DialogTitle title="Window Dialog" />
+        <DialogHeader header="Window Dialog" />
         <DialogContent>Hello world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
@@ -327,7 +287,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle title="Window Dialog" />
+        <DialogHeader header="Window Dialog" />
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
@@ -336,7 +296,7 @@ export const DesktopDialog = () => {
       </FakeWindow>
 
       <FakeWindow>
-        <DialogTitle status="warning" title="Warning Dialog" />
+        <DialogHeader status="warning" header="Warning Dialog" />
         <DialogContent>Potential issues abound!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
