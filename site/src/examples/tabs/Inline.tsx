@@ -5,8 +5,12 @@ export const Inline = (): ReactElement => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
   return (
-    <div>
-      <TabstripNext variant="inline" defaultValue={tabs[0]}>
+    <div style={{ width: "100%" }}>
+      <TabstripNext
+        variant="inline"
+        defaultValue={tabs[0]}
+        style={{ maxWidth: "400px", margin: "auto" }}
+      >
         {tabs.map((label) => (
           <TabNext value={label} key={label}>
             {label}
