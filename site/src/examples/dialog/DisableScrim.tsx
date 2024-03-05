@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
 } from "@salt-ds/lab";
@@ -27,7 +27,7 @@ export const DisableScrim = (): ReactElement => {
     <>
       <Button onClick={handleRequestOpen}>Open dialog without Scrim</Button>
       <Dialog open={open} onOpenChange={onOpenChange} disableScrim id={id}>
-        <DialogTitle title="Terms and conditions" disableAccent />
+        <DialogHeader header="Terms and conditions" disableAccent />
         <DialogContent>
           <StackLayout>
             <div>
