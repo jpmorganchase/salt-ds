@@ -3,7 +3,7 @@
 ---
 
 Optional prop `id` is no longer passed down from `Overlay` to aria-labelledby in `OverlayPanel`
-aria-labelledBy should be passed down directly to the `OverlayPanel` via the a11yProps and id attached to the title element
+aria-labelledBy should be passed down directly to the `OverlayPanel` via and id attached to the title element
 
 ```tsx
 export const Default = (): ReactElement => {
@@ -13,7 +13,7 @@ export const Default = (): ReactElement => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel a11yProps={{ "aria-labelledBy": `${id}` }}>
+      <OverlayPanel aria-labelledby={id}>
         <h3 className={styles.contentHeading} id={id}>
           Title
         </h3>
