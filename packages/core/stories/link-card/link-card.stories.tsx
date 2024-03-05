@@ -7,12 +7,12 @@ import {
   RadioButton,
   RadioButtonGroup,
   Label,
+  LinkCard,
+  LinkCardProps,
 } from "@salt-ds/core";
 
-import { LinkCard, LinkCardProps } from "@salt-ds/lab";
-
 export default {
-  title: "Lab/Link Card",
+  title: "Core/Link Card",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 

@@ -1,6 +1,5 @@
-import { H1, Text } from "@salt-ds/core";
+import { H1, Text, LinkCard } from "@salt-ds/core";
 
-import { LinkCard } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -10,7 +9,7 @@ import {
 } from "docs/components";
 
 export default {
-  title: "Lab/Link Card/Link Card QA",
+  title: "Core/Link Card/Link Card QA",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 

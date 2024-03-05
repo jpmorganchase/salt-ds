@@ -20,6 +20,7 @@ export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./input";
 export * from "./link";
+export * from "./link-card";
 export * from "./multiline-input";
 export * from "./navigation-item";
 export * from "./pagination";
