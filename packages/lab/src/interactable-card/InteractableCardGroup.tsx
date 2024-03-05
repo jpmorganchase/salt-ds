@@ -40,7 +40,7 @@ export interface InteractableCardGroupProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: SyntheticEvent<HTMLButtonElement>, value: Value) => void;
+  onChange?: (event: SyntheticEvent<HTMLDivElement>, value: Value) => void;
 }
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
@@ -78,7 +78,7 @@ export const InteractableCardGroup = forwardRef<
   });
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLButtonElement>) => {
+    (event: SyntheticEvent<HTMLDivElement>) => {
       const newValue = event.currentTarget.value;
       if (selectionVariant === "multiselect") {
         setValue((oldValues: Value) => {
@@ -122,9 +122,6 @@ export const InteractableCardGroup = forwardRef<
       <div
         className={clsx(withBaseName(), className)}
         role={selectionVariant === "multiselect" ? "group" : "radiogroup"}
-        aria-multiselectable={
-          selectionVariant === "multiselect" ? true : undefined
-        }
         ref={handleRef}
         {...rest}
       >

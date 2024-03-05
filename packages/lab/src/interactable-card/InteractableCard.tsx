@@ -19,8 +19,7 @@ import {
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
-export interface InteractableCardProps
-  extends ComponentPropsWithoutRef<"button"> {
+export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Accent border position: defaults to "bottom"
    */
@@ -37,7 +36,7 @@ export interface InteractableCardProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onChange?: (event: MouseEvent<HTMLDivElement>) => void;
   /**
    * Styling variant; defaults to "primary".
    */
@@ -49,7 +48,7 @@ export interface InteractableCardProps
 }
 
 export const InteractableCard = forwardRef<
-  HTMLButtonElement,
+  HTMLDivElement,
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
@@ -107,7 +106,7 @@ export const InteractableCard = forwardRef<
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (interactableCardGroup) {
       interactableCardGroup.select(event);
       setSelected(!selected);
@@ -117,7 +116,7 @@ export const InteractableCard = forwardRef<
   };
 
   return (
-    <button
+    <div
       {...cardProps}
       role={role}
       aria-checked={ariaChecked}
@@ -141,6 +140,6 @@ export const InteractableCard = forwardRef<
       ref={ref}
     >
       {children}
-    </button>
+    </div>
   );
 });

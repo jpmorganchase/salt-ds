@@ -6,7 +6,7 @@ export type SelectionVariant = "single" | "multiselect";
 
 export interface InteractableCardGroupContextValue {
   disabled?: boolean;
-  select: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  select: (event: SyntheticEvent<HTMLDivElement>) => void;
   isSelected: (id: Value) => boolean;
   selectionVariant: SelectionVariant;
 }
