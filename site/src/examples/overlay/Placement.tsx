@@ -18,7 +18,7 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
       <OverlayTrigger>
         <Button>{placement}</Button>
       </OverlayTrigger>
-      <OverlayPanel a11yProps={{ "aria-labelledBy": `${id}` }}>
+      <OverlayPanel aria-labelledby={id}>
         <h3 id={id} className={styles.contentHeading}>
           Title
         </h3>

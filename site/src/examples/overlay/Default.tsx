@@ -12,7 +12,7 @@ export const Default = (): ReactElement => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel a11yProps={{ "aria-labelledBy": `${id}` }}>
+      <OverlayPanel aria-labelledby={id}>
         <h3 className={styles.contentHeading} id={id}>
           Title
         </h3>

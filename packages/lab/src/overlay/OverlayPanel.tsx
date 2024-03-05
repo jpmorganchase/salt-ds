@@ -1,4 +1,9 @@
-import { ForwardedRef, forwardRef, HTMLProps, HTMLAttributes } from "react";
+import {
+  ForwardedRef,
+  forwardRef,
+  HTMLProps,
+  ComponentPropsWithoutRef,
+} from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
@@ -6,20 +11,12 @@ import { OverlayPanelBase } from "./OverlayPanelBase";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
 
-export interface A11yValueProps {
-  /**
-   * announced by screen reader when overlay panel is opened
-   */
-  "aria-labelledBy"?: string;
-}
-
-export interface OverlayPanelProps extends HTMLAttributes<HTMLDivElement> {
-  a11yProps?: A11yValueProps;
-}
+export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
-    const { className, a11yProps, ...rest } = props;
+    const { className, ...rest } = props;
+    const ariaLabelledBy: string | undefined = props["aria-labelledby"];
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
@@ -61,7 +58,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         focusManagerProps={{
           context: context,
         }}
-        {...a11yProps}
+        aria-labelledby={ariaLabelledBy}
       >
         <OverlayPanelBase {...rest} />
       </FloatingComponent>
