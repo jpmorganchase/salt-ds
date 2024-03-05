@@ -157,7 +157,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
   typeof InteractableCard
 > = (args) => (
   <InteractableCardGroup>
-    <InteractableCard value="card" style={{ width: "180px" }}>
+    <InteractableCard {...args} value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <CreditCardIcon size={2} />
@@ -166,7 +166,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
         <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard value="wire" style={{ width: "180px" }}>
+    <InteractableCard {...args} value="wire" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon size={2} />
@@ -175,7 +175,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
         <Text>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard value="crypto" style={{ width: "180px" }}>
+    <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <DiamondIcon size={2} />
@@ -191,7 +191,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
   typeof InteractableCard
 > = (args) => (
   <InteractableCardGroup selectionVariant="multiselect">
-    <InteractableCard value="card" style={{ width: "180px" }}>
+    <InteractableCard {...args} value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <CreditCardIcon size={2} />
@@ -200,7 +200,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
         <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard value="wire" style={{ width: "180px" }}>
+    <InteractableCard {...args} value="wire" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon size={2} />
@@ -209,7 +209,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
         <Text>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard value="crypto" style={{ width: "180px" }}>
+    <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <DiamondIcon size={2} />

@@ -79,7 +79,7 @@ export const InteractableCardGroup = forwardRef<
 
   const select = useCallback(
     (event: SyntheticEvent<HTMLDivElement>) => {
-      const newValue = event.currentTarget.value;
+      const newValue = event.currentTarget.getAttribute("data-value");
       if (selectionVariant === "multiselect") {
         setValue((oldValues: Value) => {
           const currentValues = Array.isArray(oldValues) ? oldValues : [];

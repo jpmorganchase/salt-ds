@@ -121,6 +121,7 @@ export const InteractableCard = forwardRef<
       role={role}
       aria-checked={ariaChecked}
       data-id={value}
+      data-value={value}
       className={clsx(
         withBaseName(),
         withBaseName(variant),
@@ -136,7 +137,6 @@ export const InteractableCard = forwardRef<
       disabled={disabled}
       {...rest}
       onClick={interactableCardGroup ? handleClick : onClick}
-      value={value}
       ref={ref}
     >
       {children}
