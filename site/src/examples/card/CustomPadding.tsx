@@ -4,6 +4,7 @@ import {
   Text,
   StackLayout,
   Card,
+  LinkCard,
   RadioButtonGroup,
   RadioButton,
   Button,
@@ -11,7 +12,6 @@ import {
   FlowLayout,
 } from "@salt-ds/core";
 import { MessageIcon } from "@salt-ds/icons";
-import { LinkCard } from "@salt-ds/lab";
 
 export const CustomPadding = (): ReactElement => {
   const [padding, setPadding] = useState("spacing-200");

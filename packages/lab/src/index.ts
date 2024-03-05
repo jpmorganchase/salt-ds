@@ -46,7 +46,6 @@ export {
   StaticInputAdornment,
 } from "./input-legacy";
 export * from "./layer-layout";
-export * from "./link-card";
 export * from "./list";
 export * from "./list-next";
 export * from "./logo";
