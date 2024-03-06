@@ -39,5 +39,6 @@ export {
   VariantSecondaryDark,
   VariantZebra,
   VariantZebraDark,
+  WrappedCell,
   WrappedHeader,
 } from "./examples";

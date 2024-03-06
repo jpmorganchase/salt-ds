@@ -27,4 +27,5 @@ export { default as VariantSecondary } from "./VariantSecondary";
 export { default as VariantSecondaryDark } from "./VariantSecondaryDark";
 export { default as VariantZebra } from "./VariantZebra";
 export { default as VariantZebraDark } from "./VariantZebraDark";
+export { default as WrappedCell } from "./WrappedCell";
 export { default as WrappedHeader } from "./WrappedHeader";
