@@ -124,7 +124,9 @@
     "next": "^14.0.0",
     "webpack-dev-server": "4.9.3",
     "webpack": "5.76.0",
-    "recursive-readdir": "2.2.3"
+    "recursive-readdir": "2.2.3",
+    "@jpmorganchase/mosaic-content-editor-plugin@npm:0.1.0-beta.65": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch",
+    "@jpmorganchase/mosaic-content-editor-plugin@npm:^0.1.0-beta.65": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch"
   },
   "browserslist": {
     "production": [
