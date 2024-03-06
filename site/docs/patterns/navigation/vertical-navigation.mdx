@@ -7,9 +7,18 @@ data:
   components: ["Navigation item"]
   resources:
     [
-      { href: "https://github.com/jpmorganchase/salt-ds/issues?q=is%3Aopen+is%3Aissue+label%3A%22pattern%3A+navigation%22+label%3A%22type%3A+enhancement+%F0%9F%92%A1%22", label: "Navigation enhancements", internal: false, resourceType: "github" },
-      { href: "https://www.figma.com/file/AcRj2QE1ZEiTrx7C3K0O92/Navigation-Pattern-Templates?type=design&node-id=15%3A598&mode=design&t=Bul9WEJNrXM1X2Xv-1", label: "Navigation examples", internal: true },
-    ]  
+      {
+        href: "https://github.com/jpmorganchase/salt-ds/issues?q=is%3Aopen+is%3Aissue+label%3A%22pattern%3A+navigation%22+label%3A%22type%3A+enhancement+%F0%9F%92%A1%22",
+        label: "Navigation enhancements",
+        internal: false,
+        resourceType: "github",
+      },
+      {
+        href: "https://www.figma.com/file/AcRj2QE1ZEiTrx7C3K0O92/Navigation-Pattern-Templates?type=design&node-id=15%3A598&mode=design&t=Bul9WEJNrXM1X2Xv-1",
+        label: "Navigation examples",
+        internal: true,
+      },
+    ]
 ---
 
 Vertical navigation provides users with a structured and intuitive way to navigate different pages, sections or features of your website or application. It's often on the left of the viewport and organizes links into a single- or multi-level structure.
@@ -17,7 +26,7 @@ Vertical navigation provides users with a structured and intuitive way to naviga
 ## When to use
 
 - To display multiple top-level categories that represent the main sections of your website or application. This improves discoverability.
-- To accommodate for complex navigation structures and indicate content hierarchy. This enables growth and offers support for efficient scanning. A vertical navigation is easier to scale and iterate than a horizontal one, as vertical scrolling enables users to navigate trees of varying lengths. 
+- To accommodate for complex navigation structures and indicate content hierarchy. This enables growth and offers support for efficient scanning. A vertical navigation is easier to scale and iterate than a horizontal one, as vertical scrolling enables users to navigate trees of varying lengths.
 - To label effectively with clear and concise label descriptions or visual cues, such as descriptive icons, to specify the information a navigation item or tab directs users to.
 
 ## How to build
@@ -27,9 +36,9 @@ Vertical navigation provides users with a structured and intuitive way to naviga
 A vertical navigation consists of a stack of navigation item components:
 
 1. [Default navigation item](/salt/components/navigation-item/examples#vertical): When clicked on, a navigation item links the user to a different section of a website or application. Only one navigation item can be active at a single time.
-2. [Parent navigation item](/salt/components/navigation-item/examples#vertical-nested-group): Displayed with a chevron and is expandable only. Upon interaction a parent navigation item doesn’t direct the user anywhere and, instead, reveals reveals nested navigation items inside it. 
+2. [Parent navigation item](/salt/components/navigation-item/examples#vertical-nested-group): Displayed with a chevron and is expandable only. Upon interaction a parent navigation item doesn’t direct the user anywhere and, instead, reveals reveals nested navigation items inside it.
 
-You'll typically use vertical navigation in a sidebar, on the left side of the screen, within a [drawer](/salt/components/drawer), or a [parent-child layout](/salt/components/parent-child-layout).  
+You'll typically use vertical navigation in a sidebar, on the left side of the screen, within a [drawer](/salt/components/drawer), or a [parent-child layout](/salt/components/parent-child-layout).
 
 <Diagram
   src="/img/patterns/vertical-navigation/anatomy.png"
@@ -37,13 +46,14 @@ You'll typically use vertical navigation in a sidebar, on the left side of the s
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-You can use left-aligned icons to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, a function or a configuration setting.
+  You can use left-aligned icons to effectively signify the navigation item’s
+  purpose, whether it’s related to a product’s identity, a specific tool, a
+  function or a configuration setting.
 </ExampleContainer>
-
 
 ### Layout
 
-Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to display navigation items in a column formation. Use `--size-border` for spacing between the items. 
+Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to display navigation items in a column formation. Use `--size-border` for spacing between the items.
 
 <Diagram
   src="/img/patterns/vertical-navigation/spacing.png"
@@ -52,7 +62,7 @@ Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to displ
 
 ## Group (single level)
 
-A single-level vertical navigation group provides a simple, single-level list of links that users can select within an application or website. Use the default navigation item to achieve this. 
+A single-level vertical navigation group provides a simple, single-level list of links that users can select within an application or website. Use the default navigation item to achieve this.
 
 <Diagram
   src="/img/patterns/vertical-navigation/group-single-level.png"
@@ -62,7 +72,7 @@ A single-level vertical navigation group provides a simple, single-level list of
 
 ## Nested group (multi-level)
 
-Nest navigation items under a parent navigation item to create a multi-level structure. 
+Nest navigation items under a parent navigation item to create a multi-level structure.
 
 Top-level hierarchy items labels use a strong font weight, and nested items use a regular font weight.
 
@@ -73,8 +83,13 @@ Top-level hierarchy items labels use a strong font weight, and nested items use 
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Surface the hierarchy of your application’s information architecture to as few levels as possible, i.e., maintain a wide and flat hierarchy, instead of one that is deep and overwhelming. This makes content easily discoverable when not buried under intervening navigation items. 
-- Clicking a parent item won’t navigate the user but expand the group. If an overview page is necessary it should be the first in the group. Overview pages won’t include a chevron on the right-hand side.
+  - Surface the hierarchy of your application’s information architecture to as
+  few levels as possible, i.e., maintain a wide and flat hierarchy, instead of
+  one that is deep and overwhelming. This makes content easily discoverable when
+  not buried under intervening navigation items. - Clicking a parent item won’t
+  navigate the user but expand the group. If an overview page is necessary it
+  should be the first in the group. Overview pages won’t include a chevron on
+  the right-hand side.
 </ExampleContainer>
 
 ### Blur active state
@@ -83,8 +98,14 @@ When a parent item is collapsed but contains the currently active page, the pare
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/vertical-navigation/blur-active.png", alt: "Blur active state before it's opened" },
-    { src: "/img/patterns/vertical-navigation/blur-active-nested.png", alt: "Blur active state after it's opened" },
+    {
+      src: "/img/patterns/vertical-navigation/blur-active.png",
+      alt: "Blur active state before it's opened",
+    },
+    {
+      src: "/img/patterns/vertical-navigation/blur-active-nested.png",
+      alt: "Blur active state after it's opened",
+    },
   ]}
   label="Expand to reveal active nested item"
 />
@@ -101,9 +122,9 @@ You can use the default navigation items as anchor links within an application v
 
 ## Within modals
 
-Modals such as preferences dialogs can contain a vertical navigation to allow users to navigate between distinct panels of content within the dialog. 
+Modals such as preferences dialogs can contain a vertical navigation to allow users to navigate between distinct panels of content within the dialog.
 
-Refer to the [preferences dialog](../preferences-dialog) pattern for further guidance on how to manage navigation within application preferences modals. 
+Refer to the [preferences dialog](../preferences-dialog) pattern for further guidance on how to manage navigation within application preferences modals.
 
 <Diagram
   src="/img/patterns/vertical-navigation/within-modals.png"
@@ -113,12 +134,18 @@ Refer to the [preferences dialog](../preferences-dialog) pattern for further gui
 
 ## Responsive behavior
 
-A vertical navigation remains fixed in width when the user resizes the browser. You can set it to the width of your choice. but you should consider the overall label length, theme, density, and screen size you’re designing for when making your decision. 
+A vertical navigation remains fixed in width when the user resizes the browser. You can set it to the width of your choice. but you should consider the overall label length, theme, density, and screen size you’re designing for when making your decision.
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/vertical-navigation/responsive-wide.png", alt: "A responsive layout when it's wide" },
-    { src: "/img/patterns/vertical-navigation/responsive-narrow.png", alt: "A responsive layout when it's narrow" },
+    {
+      src: "/img/patterns/vertical-navigation/responsive-wide.png",
+      alt: "A responsive layout when it's wide",
+    },
+    {
+      src: "/img/patterns/vertical-navigation/responsive-narrow.png",
+      alt: "A responsive layout when it's narrow",
+    },
   ]}
   label="Change viewport size"
 />

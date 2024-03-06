@@ -6,9 +6,18 @@ aliases:
 data:
   resources:
     [
-      { href: "https://github.com/jpmorganchase/salt-ds/issues?q=is%3Aopen+is%3Aissue+label%3A%22pattern%3A+navigation%22+label%3A%22type%3A+enhancement+%F0%9F%92%A1%22", label: "Navigation enhancements", internal: false, resourceType: "github" },
-      { href: "https://www.figma.com/file/AcRj2QE1ZEiTrx7C3K0O92/Navigation-Pattern-Templates?type=design&node-id=15%3A598&mode=design&t=Bul9WEJNrXM1X2Xv-1", label: "Navigation examples", internal: true },
-    ]  
+      {
+        href: "https://github.com/jpmorganchase/salt-ds/issues?q=is%3Aopen+is%3Aissue+label%3A%22pattern%3A+navigation%22+label%3A%22type%3A+enhancement+%F0%9F%92%A1%22",
+        label: "Navigation enhancements",
+        internal: false,
+        resourceType: "github",
+      },
+      {
+        href: "https://www.figma.com/file/AcRj2QE1ZEiTrx7C3K0O92/Navigation-Pattern-Templates?type=design&node-id=15%3A598&mode=design&t=Bul9WEJNrXM1X2Xv-1",
+        label: "Navigation examples",
+        internal: true,
+      },
+    ]
 ---
 
 A navigation provides users with a structured and intuitive way to go to different pages, sections or features of your website or application. It tells users where they are at all times and ensures they can easily get to where they need to go.
@@ -29,41 +38,43 @@ Navigation organizes content by placing it within a hierarchy. Elements at the t
 
 Use one or both of the two navigation structures below:
 
-
 <Diagrams>
   <Diagram
     src="/img/patterns/navigation/horizontal_navigation.png"
     alt="Example showing navigation horizontal structure"
     contentPosition="top"
   >
-    ### Horizontal navigation
-    You would normally use a horizontal navigation within an application header, at the top of a page. Use it when you need a navigation that:
-    - Is always displayed in a prominent and consistent location.
-    - Affords movement from one set of content to another regardless of where the user is in the website or app.
+    ### Horizontal navigation You would normally use a horizontal navigation
+    within an application header, at the top of a page. Use it when you need a
+    navigation that: - Is always displayed in a prominent and consistent
+    location. - Affords movement from one set of content to another regardless
+    of where the user is in the website or app.
   </Diagram>
   <Diagram
     src="/img/patterns/navigation/vertical_navigation.png"
     alt="Example showing navigation vertical structure"
     contentPosition="top"
   >
-    ### Vertical navigation
-    You would normally place a [vertical navigation](/salt/patterns/vertical-navigation) in a sidebar, on the left side of the screen, or within a drawer. It can display many navigation items at once. Use it when:
-    - You need to show many top-level views.
-    - You have deep navigation structures.
+    ### Vertical navigation You would normally place a [vertical
+    navigation](/salt/patterns/vertical-navigation) in a sidebar, on the left
+    side of the screen, or within a drawer. It can display many navigation items
+    at once. Use it when: - You need to show many top-level views. - You have
+    deep navigation structures.
   </Diagram>
   <Diagram
     src="/img/patterns/navigation/combined_navigation.png"
     alt="Example showing navigation combined structure"
     contentPosition="top"
   >
-    ### Combined navigation
-    Combine both horizontal and vertical navigation when users need to:
-    - Navigate between multiple apps with horizontal navigation, and multiple pages within each app with vertical navigation.
-    - Navigate other complex hierarchies.
+    ### Combined navigation Combine both horizontal and vertical navigation when
+    users need to: - Navigate between multiple apps with horizontal navigation,
+    and multiple pages within each app with vertical navigation. - Navigate
+    other complex hierarchies.
   </Diagram>
 </Diagrams>
 
 ## Navigation elements
+
 Navigation item components are navigational landmarks often used in the top or left areas of the user’s screen. The [navigation item](../components/navigation-item) component comes in two orientations: horizontal and vertical.
 
 ## Horizontal navigation
@@ -80,10 +91,11 @@ By default, the navigation item has a horizontal orientation and hugs its conten
 
 <ExampleContainer type="positive">
 
-  - We recommend horizontal navigation when you have fewer than eight items. Otherwise, consider a vertical group of items.
-</ExampleContainer>
+- We recommend horizontal navigation when you have fewer than eight items. Otherwise, consider a vertical group of items.
+  </ExampleContainer>
 
 ### Using a descriptive icon
+
 You can use icon descriptors to signify effectively the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, a function or a configuration setting.
 
 <Diagram
@@ -94,10 +106,11 @@ You can use icon descriptors to signify effectively the navigation item’s purp
 
 <ExampleContainer type="positive">
 
-  - Ensure that icon descriptors are consistent across all items within the same hierarchy level. This helps keep them equally weighted.
-</ExampleContainer>
+- Ensure that icon descriptors are consistent across all items within the same hierarchy level. This helps keep them equally weighted.
+  </ExampleContainer>
 
 ## Vertical navigation
+
 A common navigation practice is to have the primary categories that represent the main sections of your website or application in a vertical layout. This is usually placed on the left side of the screen. These primary categories can expand to reveal secondary categories or subcategories when selected, creating a hierarchical structure.
 
 The number of vertical navigation levels depends on the complexity and depth of your website or application's information architecture (IA). We recommended being specific about your IA groupings to avoid ambiguity. When navigation is limited to two or three levels, it allows users to navigate quickly without overwhelming them with too many choices. However, when your IA requires wider navigation, you can extend it to more levels.
@@ -105,6 +118,7 @@ The number of vertical navigation levels depends on the complexity and depth of 
 Read more in the [vertical navigation pattern](/salt/patterns/vertical-navigation).
 
 ### Single-level group
+
 <Diagram
   src="/img/patterns/navigation/single_level.png"
   alt="Example showing a single level navigation"
@@ -114,17 +128,25 @@ Read more in the [vertical navigation pattern](/salt/patterns/vertical-navigatio
 A single-level vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
 
 ### Multi-level group
+
 You can use a navigation item as a parent, which nests other navigation items inside it. Parent navigation items include a chevron on the right-hand side.
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/navigation/multi_level.png", alt: "Example showing a multi level navigation collapsed" },
-    { src: "/img/patterns/navigation/multi_level_toggle_on.png", alt: "Example showing a multi level navigation expanded" },
+    {
+      src: "/img/patterns/navigation/multi_level.png",
+      alt: "Example showing a multi level navigation collapsed",
+    },
+    {
+      src: "/img/patterns/navigation/multi_level_toggle_on.png",
+      alt: "Example showing a multi level navigation expanded",
+    },
   ]}
   label="Expand multi-level-group"
 />
 
 ### Group overview page
+
 Clicking a parent item won't navigate the user but expand the group. If you need an overview page, it should be the first in the group. Overview pages don't include a chevron on the right-hand side.
 
 <Diagram
@@ -134,12 +156,19 @@ Clicking a parent item won't navigate the user but expand the group. If you need
 />
 
 ## Combined navigation
+
 Combined navigation can be useful in website or application contexts when you want to provide users with a versatile and efficient way to navigate complex content or features. It's ideal when your experience comprises multiple sub-apps, pages or sections, which in turn also require their own navigation.
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/navigation/combined_navigation_example.png", alt: "Example showing a combined navigation" },
-    { src: "/img/patterns/navigation/combined_navigation_toggle_on.png", alt: "Example showing a combined navigation with icons" },
+    {
+      src: "/img/patterns/navigation/combined_navigation_example.png",
+      alt: "Example showing a combined navigation",
+    },
+    {
+      src: "/img/patterns/navigation/combined_navigation_toggle_on.png",
+      alt: "Example showing a combined navigation with icons",
+    },
   ]}
   label="With icons"
 />
@@ -147,6 +176,7 @@ Combined navigation can be useful in website or application contexts when you wa
 ## Layout
 
 ### Fixed navigation pane
+
 Typically, the vertical navigation remains fixed in width when the user resizes the browser. You can set it to the width of your choice. However, you should consider the overall label length, theme, density and screen size you are designing for.
 
 When your application is responsive, the content area should use its own layout grid. As the user adjusts their browser width, the navigation remains fixed until reaching a specified breakpoint, with only the content area adapting responsively based on the viewport.
@@ -158,20 +188,30 @@ When your application is responsive, the content area should use its own layout 
 />
 
 ### Responsive navigation pane
+
 You can configure the vertical navigation component for fully responsive application experiences. Use the underlying layout grid to set a minimum width for your navigation pane and adjust your content area based on your predefined breakpoints.
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/navigation/responsive_navigation_pane.png", alt: "Example showing a responsive navigation" },
-    { src: "/img/patterns/navigation/responsive_navigation_pane_toggle_on.png", alt: "Example showing a responsive navigation with grid" },
+    {
+      src: "/img/patterns/navigation/responsive_navigation_pane.png",
+      alt: "Example showing a responsive navigation",
+    },
+    {
+      src: "/img/patterns/navigation/responsive_navigation_pane_toggle_on.png",
+      alt: "Example showing a responsive navigation with grid",
+    },
   ]}
   label="Show underlying grid"
 />
 
 <ExampleContainer type="positive">
-  - Use a layout grid for the full width of your app’s resolution if it isn't responsive, or just for the content area if it is.
-  - Use [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) to determine how the navigation displays at various viewport sizes.
+  - Use a layout grid for the full width of your app’s resolution if it isn't
+  responsive, or just for the content area if it is. - Use [Salt
+  breakpoints](/salt/foundations/responsiveness#breakpoints) to determine how
+  the navigation displays at various viewport sizes.
 </ExampleContainer>
 
 ## Expanding the pattern
+
 If you find a need to expand the pattern or have feedback, please [reach out to the team](/salt/support-and-contributions/index) to the team to discuss.
