@@ -13,6 +13,7 @@ import {
   Ref,
   useState,
   useRef,
+  useCallback,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -24,10 +25,12 @@ import {
   useId,
   Pill,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 
 import pillInputCss from "./PillInput.css";
-import { CloseIcon } from "@salt-ds/icons";
+import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import { useTruncatePills } from "./useTruncatePills";
 
 const withBaseName = makePrefixer("saltPillInput");
 
@@ -80,6 +83,7 @@ export interface PillInputProps
    */
   variant?: "primary" | "secondary";
   hidePillClose?: boolean;
+  truncate?: boolean;
 }
 
 export const PillInput = forwardRef(function PillInput<Item>(
@@ -107,6 +111,7 @@ export const PillInput = forwardRef(function PillInput<Item>(
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
     validationStatus: validationStatusProp,
     variant = "primary",
+    truncate,
     ...other
   }: PillInputProps,
   ref: ForwardedRef<HTMLDivElement>
@@ -164,6 +169,11 @@ export const PillInput = forwardRef(function PillInput<Item>(
     state: "value",
   });
 
+  const { visiblePills, pillListRef } = useTruncatePills({
+    pills,
+    enable: truncate && pills.length > 0,
+  });
+
   const id = useId(idProp);
   const pillListId = `${id}-optionsList`;
 
@@ -176,14 +186,6 @@ export const PillInput = forwardRef(function PillInput<Item>(
     const value = event.target.value;
     setValue(value);
     onChange?.(event);
-  };
-
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    setFocused(false);
-  };
-
-  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    setFocused(true);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -205,7 +207,6 @@ export const PillInput = forwardRef(function PillInput<Item>(
   };
 
   const handlePillKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    console.log(event);
     const target = event.currentTarget;
     const index = Number(target.dataset.index);
     if (event.key === "ArrowLeft") {
@@ -237,8 +238,12 @@ export const PillInput = forwardRef(function PillInput<Item>(
   const handlePillClick = (event: MouseEvent<HTMLButtonElement>) => {
     const target = event.currentTarget;
     const index = Number(target.dataset.index);
-    console.log("CLICK", event);
     onPillRemove?.(event, index);
+    inputRef.current?.focus();
+  };
+
+  const handleOverflowMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
     inputRef.current?.focus();
   };
 
@@ -256,6 +261,7 @@ export const PillInput = forwardRef(function PillInput<Item>(
           [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
+          [withBaseName("truncate")]: truncate,
           [withBaseName(validationStatus || "")]: validationStatus,
         },
         classNameProp
@@ -269,7 +275,7 @@ export const PillInput = forwardRef(function PillInput<Item>(
           {startAdornment}
         </div>
       )}
-      <div className={withBaseName("inputWrapper")}>
+      <div className={withBaseName("inputWrapper")} ref={pillListRef}>
         <div
           role="list"
           className={withBaseName("pillList")}
@@ -277,7 +283,7 @@ export const PillInput = forwardRef(function PillInput<Item>(
           aria-label="Selected Options"
           id={pillListId}
         >
-          {pills?.map((pill, index) => (
+          {visiblePills?.map((pill, index) => (
             <div role="listitem" key={index}>
               <Pill
                 data-index={index}
@@ -299,6 +305,20 @@ export const PillInput = forwardRef(function PillInput<Item>(
               </Pill>
             </div>
           ))}
+          {visiblePills.length < pills.length && (
+            <div role="listitem">
+              <Pill
+                data-overflowpill
+                disabled={disabled}
+                aria-label={`${
+                  pills.length - visiblePills.length
+                } hidden pills`}
+                onMouseDown={handleOverflowMouseDown}
+              >
+                <OverflowMenuIcon aria-hidden />
+              </Pill>
+            </div>
+          )}
         </div>
         <input
           aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}

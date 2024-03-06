@@ -7,6 +7,7 @@ import {
   MouseEvent,
   ReactNode,
   Ref,
+  SyntheticEvent,
   useEffect,
   useRef,
 } from "react";
@@ -76,6 +77,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     value,
     defaultValue,
     valueToString = defaultValueToString,
+    truncate,
     ...rest
   } = props;
 
@@ -420,6 +422,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         pills={
           multiselect ? selectedState.map((item) => valueToString(item)) : []
         }
+        truncate={truncate && !focusedState}
         onPillRemove={handlePillRemove}
         hidePillClose={!focusedState}
       />

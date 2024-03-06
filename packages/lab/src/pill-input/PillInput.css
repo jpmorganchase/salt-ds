@@ -21,6 +21,14 @@
   box-sizing: border-box;
 }
 
+.saltPillInput-truncate {
+  height: var(--salt-size-base);
+}
+
+.saltPillInput-truncate .saltPillInput-inputWrapper {
+  flex-wrap: nowrap;
+}
+
 .saltPillInput:hover {
   --input-borderStyle: var(--salt-editable-borderStyle-hover);
   --input-borderColor: var(--salt-editable-borderColor-hover);
@@ -222,14 +230,16 @@
   gap: var(--salt-spacing-50);
   align-items: center;
   flex: 1;
-  margin: var(--salt-spacing-75) 0;
+  padding: var(--salt-spacing-25) 0;
   flex-wrap: wrap;
+  max-height: inherit;
+  height: inherit;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .saltPillInput-pillList {
-  display: flex;
-  gap: var(--salt-spacing-50);
-  flex-wrap: wrap;
+  display: contents;
 }
 
 .saltPillInput .saltPill:focus-visible {
@@ -245,4 +255,8 @@
   background: var(--salt-actionable-primary-background-active);
   --saltPill-color: var(--salt-actionable-primary-foreground-active);
   --saltIcon-color: var(--salt-actionable-primary-foreground-active);
+}
+
+div[role="listitem"] {
+  display: inline;
 }
