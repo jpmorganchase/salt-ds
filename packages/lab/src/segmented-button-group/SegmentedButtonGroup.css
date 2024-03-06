@@ -1,0 +1,15 @@
+.saltSegmentedButtonGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.saltSegmentedButtonGroup > *:not(:last-child)::after {
+  content: "";
+  width: var(--salt-size-border);
+  position: absolute;
+  padding-top: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-100);
+  background: var(--salt-palette-neutral-primary-separator);
+  right: calc(var(--salt-size-border) * -0.5);
+  z-index: 1;
+}
