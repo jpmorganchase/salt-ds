@@ -25,14 +25,22 @@
   box-sizing: border-box;
 }
 
+.saltCircularProgress-buffer,
 .saltCircularProgress-bar {
   inline-size: calc(var(--salt-size-base) * 3);
   block-size: calc(var(--salt-size-base) * 3);
   border-style: var(--salt-track-borderStyle);
   border-width: var(--salt-size-bar-strong);
   border-radius: calc(var(--salt-size-base) * 3);
-  border-color: var(--salt-accent-background);
   box-sizing: border-box;
+}
+
+.saltCircularProgress-buffer {
+  border-color: var(--salt-container-secondary-background);
+}
+
+.saltCircularProgress-bar {
+  border-color: var(--salt-accent-background);
 }
 
 .saltCircularProgress-bars {
@@ -43,6 +51,8 @@
   block-size: 100%;
 }
 
+.saltCircularProgress-bufferOverlayRight,
+.saltCircularProgress-bufferOverlayLeft,
 .saltCircularProgress-barOverlayRight,
 .saltCircularProgress-barOverlayLeft {
   inline-size: 50%;
@@ -53,6 +63,8 @@
   position: absolute;
 }
 
+.saltCircularProgress-bufferSubOverlayRight,
+.saltCircularProgress-bufferSubOverlayLeft,
 .saltCircularProgress-barSubOverlayRight,
 .saltCircularProgress-barSubOverlayLeft {
   inline-size: 100%;
@@ -62,6 +74,7 @@
   transform: rotate(-180deg);
 }
 
+.saltCircularProgress-bufferOverlayLeft,
 .saltCircularProgress-barOverlayLeft {
   transform: rotate(0deg);
 }

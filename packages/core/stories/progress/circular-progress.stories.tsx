@@ -46,9 +46,16 @@ export const Default: StoryFn<typeof CircularProgress> = (args) => (
 Default.args = {
   value: 38,
 };
-export const HideLabel: StoryFn<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" value={38} hideLabel />
-);
+export const HideLabel = Default.bind({});
+HideLabel.args = {
+  hideLabel: true,
+  value: 38,
+};
+export const WithBuffer = Default.bind({});
+WithBuffer.args = {
+  value: 38,
+  bufferValue: 60,
+};
 
 export const MaxValue: StoryFn<typeof CircularProgress> = () => (
   <StackLayout align="center">

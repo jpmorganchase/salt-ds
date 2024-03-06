@@ -15,7 +15,8 @@
   height: var(--salt-size-bar-strong);
 }
 
-.saltLinearProgress-bar {
+.saltLinearProgress-bar,
+.saltLinearProgress-buffer {
   width: 100%;
   position: absolute;
   left: 0;
@@ -23,8 +24,16 @@
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
+}
+
+.saltLinearProgress-buffer {
+  background: var(--salt-container-secondary-background);
+  z-index: var(--salt-zIndex-default);
+}
+
+.saltLinearProgress-bar {
   background: var(--salt-accent-background);
-  z-index: 2;
+  z-index: calc(var(--salt-zIndex-default) + var(--salt-zIndex-default));
 }
 
 .saltLinearProgress-track {

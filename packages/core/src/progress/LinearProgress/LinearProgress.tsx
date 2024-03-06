@@ -11,6 +11,11 @@ const withBaseName = makePrefixer("saltLinearProgress");
 
 export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
+   * The value of the buffer indicator.
+   * Value between 0 and max.
+   */
+  bufferValue?: number;
+  /**
    * Whether to hide the text label within the progress. Defaults to `false`.
    */
   hideLabel?: boolean;
@@ -33,7 +38,15 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
 
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
-    { className, hideLabel = false, max = 100, min = 0, value = 0, ...rest },
+    {
+      className,
+      hideLabel = false,
+      max = 100,
+      min = 0,
+      value = 0,
+      bufferValue = 0,
+      ...rest
+    },
     ref
   ) {
     const targetWindow = useWindow();
@@ -44,11 +57,14 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const progress = ((value - min) / (max - min)) * 100;
+    const buffer = ((bufferValue - min) / (max - min)) * 100;
 
     const barStyle: CSSProperties = {};
+    const bufferStyle: CSSProperties = {};
     const trackStyle: CSSProperties = {};
 
     barStyle.transform = `translateX(${progress - 100}%)`;
+    bufferStyle.transform = `translateX(${buffer - 100}%)`;
     trackStyle.transform = `translateX(${progress}%)`;
 
     return (
@@ -63,6 +79,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       >
         <div className={withBaseName("barContainer")}>
           <div className={withBaseName("bar")} style={barStyle} />
+          <div className={withBaseName("buffer")} style={bufferStyle} />
           <div className={withBaseName("track")} style={trackStyle} />
         </div>
         {!hideLabel && (
