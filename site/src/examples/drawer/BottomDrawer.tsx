@@ -1,6 +1,4 @@
 import { ReactElement, useState } from "react";
-
-import { Drawer, DrawerCloseButton } from "@salt-ds/lab";
 import {
   Button,
   FlowLayout,
@@ -11,6 +9,8 @@ import {
   Display3,
   Display2,
   useId,
+  Drawer,
+  DrawerCloseButton,
 } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
 import { useAgGridHelpers } from "../ag-grid-theme/useAgGridHelpers";

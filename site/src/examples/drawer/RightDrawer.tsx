@@ -1,6 +1,4 @@
 import { ReactElement, useState } from "react";
-
-import { Drawer, DrawerCloseButton } from "@salt-ds/lab";
 import {
   Button,
   FormField,
@@ -11,6 +9,8 @@ import {
   H2,
   Text,
   useId,
+  Drawer,
+  DrawerCloseButton,
 } from "@salt-ds/core";
 
 const FormFieldExample = () => (

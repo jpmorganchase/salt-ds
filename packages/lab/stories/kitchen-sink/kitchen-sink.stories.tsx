@@ -54,7 +54,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogHeader,
 } from "@salt-ds/lab";
 import { useState } from "react";
 import {
@@ -113,7 +113,7 @@ const LaunchStatusDialog = () => {
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle title={status} />
+        <DialogHeader header={status} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
