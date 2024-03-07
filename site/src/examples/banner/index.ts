@@ -4,3 +4,4 @@ export * from "./Interactive";
 export * from "./Static";
 export * from "./Success";
 export * from "./Warning";
+export * from "./Variant";
