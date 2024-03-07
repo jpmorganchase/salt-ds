@@ -3,7 +3,7 @@
   background: var(--salt-selectable-background);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) );
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
   display: flex;
@@ -45,7 +45,6 @@
   border-top: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
   border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
 }
-
 
 .saltOption[aria-selected="true"]:first-of-type::before {
   border-top: unset;
