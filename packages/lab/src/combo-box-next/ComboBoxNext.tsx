@@ -422,7 +422,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         pills={
           multiselect ? selectedState.map((item) => valueToString(item)) : []
         }
-        truncate={truncate && !focusedState}
+        truncate={truncate && !focusedState && !openState}
         onPillRemove={handlePillRemove}
         hidePillClose={!focusedState}
       />

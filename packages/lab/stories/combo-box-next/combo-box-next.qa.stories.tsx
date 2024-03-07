@@ -33,6 +33,20 @@ export const OpenExamples: StoryFn<QAContainerProps> = () => (
         ))}
       </ComboBoxNext>
     </FormField>
+    <FormField helperText="This is some help text" label="Multi-select example">
+      <ComboBoxNext
+        disabled
+        multiselect
+        defaultSelected={["Alabama", "Alaska", "Arizona"]}
+        open
+      >
+        {usStateExampleData.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+    </FormField>
   </QAContainer>
 );
 
@@ -53,6 +67,19 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
     </FormField>
     <FormField helperText="This is some help text" label="Disabled example">
       <ComboBoxNext disabled>
+        {usStateExampleData.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+    </FormField>
+    <FormField helperText="This is some help text" label="Multi-select example">
+      <ComboBoxNext
+        disabled
+        multiselect
+        defaultSelected={["Alabama", "Alaska", "Arizona"]}
+      >
         {usStateExampleData.map((state) => (
           <Option value={state} key={state}>
             {state}
