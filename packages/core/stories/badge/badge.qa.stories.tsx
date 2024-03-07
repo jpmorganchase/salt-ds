@@ -31,10 +31,10 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
         <MessageIcon />
       </Button>
     </Badge>
-    <TabstripNext defaultValue="Transactions">
-      <TabNext value="Transactions">
+    <TabstripNext defaultValue="Checks">
+      <TabNext value="Checks">
         <StackLayout direction="row" gap={1}>
-          Transcations
+          Checks
           <Badge value={30} />
         </StackLayout>
       </TabNext>
@@ -49,7 +49,7 @@ AllExamples.parameters = {
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
   props
 ) => (
-  <QAContainerNoStyleInjection height={500} width={1000} cols={4} {...props}>
+  <QAContainerNoStyleInjection height={500} width={1500} cols={4} {...props}>
     <Badge value={9}>
       <Button>
         <NotificationSolidIcon />
@@ -65,10 +65,10 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         <MessageIcon />
       </Button>
     </Badge>
-    <TabstripNext defaultValue="Transactions">
-      <TabNext value="Transactions">
+    <TabstripNext defaultValue="Checks">
+      <TabNext value="Checks">
         <StackLayout direction="row" gap={1}>
-          Transcations
+          Checks
           <Badge value={30} />
         </StackLayout>
       </TabNext>
