@@ -22,14 +22,14 @@ interface BaseUseSelectionCalendarProps<SelectionVariantType> {
 
 type SingleSelectionValueType = DateValue;
 type MultiSelectionValueType = DateValue[];
-type RangeSelectionValueType = {
+interface RangeSelectionValueType {
   startDate?: DateValue;
   endDate?: DateValue;
-};
-type OffsetSelectionValueType = {
+}
+interface OffsetSelectionValueType {
   startDate?: DateValue;
   endDate?: DateValue;
-};
+}
 
 type AllSelectionValueType =
   | SingleSelectionValueType

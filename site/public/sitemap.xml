@@ -325,6 +325,26 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/calendar/accessibility</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/calendar/examples</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/calendar/index</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/calendar/usage</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>https://www.saltdesignsystem.com/salt/components/card/accessibility</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
