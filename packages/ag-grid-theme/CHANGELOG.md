@@ -1,5 +1,12 @@
 # @salt-ds/ag-grid-theme
 
+## 1.3.9
+
+### Patch Changes
+
+- 7bbbab98: Fixed header text color not using correct color token: `--salt-content-secondary-foreground`
+- 09080b27: Fixed columns not displaying correctly with `wrapText` and `autoHeight` turned on.
+
 ## 1.3.8
 
 ### Patch Changes
