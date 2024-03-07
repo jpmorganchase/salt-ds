@@ -4,9 +4,9 @@ import {
   endOfMonth,
   getDayOfWeek,
   getLocalTimeZone,
-  isSameDay,
-  parseDate,
+  isEqualDay,
   startOfMonth,
+  startOfYear,
   today,
 } from "@internationalized/date";
 import {
@@ -15,7 +15,6 @@ import {
   UseRangeSelectionCalendarProps,
 } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { getHolidays } from "nyse-holidays";
 import { useState } from "react";
 
 import "./calendar.stories.css";
@@ -40,24 +39,26 @@ export const Default = Template.bind({});
 export const UnselectableDates = Template.bind({});
 UnselectableDates.args = {
   isDayUnselectable: (day) => {
-    const nyseHolidays = getHolidays(day.year);
     // Saturday & Sunday
     if (getDayOfWeek(day, currentLocale) >= 5) {
-      return {
-        emphasis: "low",
-      };
-    }
-
-    const holiday = nyseHolidays.find((h) =>
-      isSameDay(parseDate(h.dateString), day)
-    );
-    if (holiday) {
-      return {
-        emphasis: "medium",
-        tooltip: `This is a NYSE Holiday (${holiday.name})`,
-      };
+      return "weekend";
     }
   },
+};
+
+export const HighlightedDates = Template.bind({});
+HighlightedDates.args = {
+  isDayHighlighted: (day) => {
+    // Start of month
+    if (isEqualDay(startOfMonth(day), day)) {
+      return "Start of month reminder";
+    }
+  },
+};
+
+export const DisabledDates = Template.bind({});
+DisabledDates.args = {
+  isDayDisabled: (day) => getDayOfWeek(day, currentLocale) >= 5,
 };
 
 function renderDayContents(day: DateValue) {
@@ -71,8 +72,6 @@ CustomDayRender.args = {
   renderDayContents,
 };
 
-console.log(today(localTimeZone));
-
 export const FadeMonthAnimation = Template.bind({});
 FadeMonthAnimation.args = {
   className: "FadeMonthAnimation",
@@ -83,6 +82,13 @@ export const NavigationBlocked = Template.bind({});
 NavigationBlocked.args = {
   minDate: startOfMonth(today(localTimeZone)),
   maxDate: endOfMonth(today(localTimeZone)),
+};
+
+export const ExpandedYears = Template.bind({});
+
+ExpandedYears.args = {
+  minDate: startOfYear(today(getLocalTimeZone()).subtract({ years: 5 })),
+  maxDate: startOfYear(today(getLocalTimeZone()).add({ years: 5 })),
 };
 
 export const RangeSelection = Template.bind({});
