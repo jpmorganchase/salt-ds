@@ -16,7 +16,6 @@ export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
     const { className, ["aria-labelledby"]: ariaLabelledby, ...rest } = props;
-    console.log({ ...rest });
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
