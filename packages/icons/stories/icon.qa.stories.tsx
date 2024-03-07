@@ -3,7 +3,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { allIcons } from "./icon.all";
 
 export default {
-  title: "Icons/Icon/QA",
+  title: "Icons/Icon/Icon QA",
 } as Meta;
 
 const sizes = [1, 2, 3] as const;
@@ -13,6 +13,7 @@ export const AllIcons: StoryFn = () => {
     <>
       {sizes.map((size) => (
         <div
+          key={size}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(15, auto)",
