@@ -1,5 +1,48 @@
 # @salt-ds/core
 
+## 1.19.0
+
+### Minor Changes
+
+- f27ecfa7: Added `UNSTABLE_SaltProviderNext` for early adopters to test incoming theme next features. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+  Implemented corner radius for relevant components when used with theme next.
+- cbe6c522: Added `LinkCard` to core.
+
+  Use a Link card when the entire card should be clickable and navigate the user.
+
+  ```tsx
+  <LinkCard href="https://www.saltdesignsystem.com" target="_blank" />
+  ```
+
+- 8610999f: Add `Drawer` and `DrawerCloseButton` to core
+  Drawer is an expandable panel that displays content and controls over the application content. It provides temporary access to additional or related content without navigating away from the current screen.
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const [openPrimary, setOpenPrimary] = useState(false);
+
+    return (
+      <>
+        <Button onClick={() => setOpenPrimary(true)}>
+          Open Primary Drawer
+        </Button>
+        <Drawer
+          open={openPrimary}
+          onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
+          style={{ width: 200 }}
+        >
+          Drawer Content
+          <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        </Drawer>
+      </>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 76351938: Fixed the external icon shown in Links with `target="_blank"` sometimes being misaligned.
+
 ## 1.18.1
 
 ### Patch Changes
