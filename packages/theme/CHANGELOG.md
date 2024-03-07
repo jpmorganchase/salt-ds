@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.13.0
+
+### Minor Changes
+
+- f27ecfa7: Added `theme-next.css` which includes experimental theme implementation. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+
 ## 1.12.1
 
 ### Patch Changes
