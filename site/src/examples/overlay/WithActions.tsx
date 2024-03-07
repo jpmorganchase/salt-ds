@@ -24,10 +24,12 @@ const checkboxesData = [
   },
 ];
 
-const WithActionsContent = (
-  { onClose }: { onClose: () => void },
-  id: string
-) => {
+interface WithActionsContentProps {
+  id?: string;
+  onClose: () => void;
+}
+
+const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
   ]);
@@ -133,6 +135,7 @@ export const WithActions = () => {
         aria-labelledby={id}
       >
         <WithActionsContent
+          id={id}
           onClose={() => {
             setShow(false);
           }}
