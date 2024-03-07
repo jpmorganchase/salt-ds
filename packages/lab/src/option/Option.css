@@ -3,17 +3,13 @@
   background: var(--salt-selectable-background);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) );
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
   align-items: center;
-  margin-top: var(--salt-size-border);
-  margin-bottom: var(--salt-size-border);
-  border-top: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
-  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
   cursor: var(--salt-selectable-cursor-hover);
   box-sizing: border-box;
 }
@@ -33,7 +29,31 @@
 
 .saltOption[aria-selected="true"] {
   background: var(--salt-selectable-background-selected);
-  border-color: var(--salt-selectable-borderColor-selected);
+}
+
+.saltOption[aria-selected="true"]::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+}
+
+.saltOption[aria-selected="true"]::before {
+  border-top: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+}
+
+
+.saltOption[aria-selected="true"]:first-of-type::before {
+  border-top: unset;
+  top: 0;
+}
+.saltOption[aria-selected="true"]:last-of-type::before {
+  border-bottom: unset;
+  bottom: 0;
 }
 
 .saltOption[aria-disabled="true"] {

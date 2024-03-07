@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useValueEffect } from "../utils/useValueEffect";
 import { useWindow } from "@salt-ds/window";
+import { useResizeObserver } from "../responsive";
 
 export function useTruncatePills({
   pills,
@@ -10,7 +11,7 @@ export function useTruncatePills({
   pills: string[];
   enable?: boolean;
 }) {
-  const [pillList, setPillList] = useState<HTMLElement | null>(null);
+  const pillListRef = useRef<HTMLDivElement>(null);
   const [{ visibleCount }, setVisibleItems] = useValueEffect({
     visibleCount: pills.length,
   });
@@ -22,13 +23,17 @@ export function useTruncatePills({
     }
 
     const computeVisible = (visibleCount: number) => {
+      const pillList = pillListRef.current;
+
       if (pillList && targetWindow) {
         let pillElements = Array.from(
           pillList.querySelectorAll('[role="listitem"]')
         ) as HTMLLIElement[];
         const maxWidth = pillList.getBoundingClientRect().width;
         const listGap = parseInt(targetWindow.getComputedStyle(pillList).gap);
-        let isShowingOverflow = pillList.querySelector("[data-overflowpill]");
+        let isShowingOverflow = pillList.querySelector(
+          "[data-overflowindicator]"
+        );
 
         let currentSize = 0;
         let newVisibleCount = 0;
@@ -80,10 +85,7 @@ export function useTruncatePills({
   }, [pills, setVisibleItems, enable, targetWindow]);
 
   useIsomorphicLayoutEffect(updateOverflow, [updateOverflow, pills]);
-
-  const pillListRef = useCallback((node: HTMLElement | null) => {
-    setPillList(node);
-  }, []);
+  useResizeObserver(pillListRef, ["width"], updateOverflow, true);
 
   return {
     pillListRef,

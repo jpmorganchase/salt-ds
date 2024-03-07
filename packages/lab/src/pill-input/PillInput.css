@@ -14,7 +14,7 @@
   line-height: var(--saltInput-lineHeight, var(--salt-text-lineHeight));
   min-height: var(--saltInput-minHeight, var(--salt-size-base));
   min-width: var(--saltInput-minWidth, 4em);
-  padding-left: var(--saltInput-paddingLeft, var(--salt-spacing-100));
+  padding-left: var(--saltInput-paddingLeft, var(--salt-spacing-50));
   padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
   position: relative;
   width: 100%;
@@ -198,7 +198,9 @@
   align-items: center;
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
+  padding-top: var(--salt-spacing-50);
   column-gap: var(--salt-spacing-100);
+  align-self: flex-start;
 }
 
 .saltPillInput-readOnly .saltPillInput-startAdornmentContainer {
@@ -230,7 +232,7 @@
   gap: var(--salt-spacing-50);
   align-items: center;
   flex: 1;
-  padding: var(--salt-spacing-25) 0;
+  padding: var(--salt-spacing-50) 0;
   flex-wrap: wrap;
   max-height: inherit;
   height: inherit;
@@ -259,4 +261,12 @@
 
 div[role="listitem"] {
   display: inline;
+}
+
+.saltPillInput-overflowIndicator {
+  width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

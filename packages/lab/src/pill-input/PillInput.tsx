@@ -4,7 +4,6 @@ import {
   KeyboardEvent,
   SyntheticEvent,
   ComponentPropsWithoutRef,
-  FocusEvent,
   MouseEvent,
   ForwardedRef,
   forwardRef,
@@ -13,7 +12,6 @@ import {
   Ref,
   useState,
   useRef,
-  useCallback,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -25,7 +23,6 @@ import {
   useId,
   Pill,
   useForkRef,
-  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 
 import pillInputCss from "./PillInput.css";
@@ -144,7 +141,7 @@ export const PillInput = forwardRef(function PillInput<Item>(
   const isReadOnly = readOnlyProp || formFieldReadOnly;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
-  const [focused, setFocused] = useState(false);
+  const [focusedPillIndex, setFocusedPillIndex] = useState(-1);
 
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
   const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
@@ -242,11 +239,6 @@ export const PillInput = forwardRef(function PillInput<Item>(
     inputRef.current?.focus();
   };
 
-  const handleOverflowMouseDown = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    inputRef.current?.focus();
-  };
-
   const inputStyle = {
     "--input-textAlign": textAlign,
     ...style,
@@ -258,7 +250,6 @@ export const PillInput = forwardRef(function PillInput<Item>(
         withBaseName(),
         withBaseName(variant),
         {
-          [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName("truncate")]: truncate,
@@ -297,8 +288,12 @@ export const PillInput = forwardRef(function PillInput<Item>(
                     );
                   }
                 }}
+                onFocus={() => setFocusedPillIndex(index)}
                 onKeyDown={handlePillKeyDown}
                 onClick={handlePillClick}
+                tabIndex={
+                  focusedPillIndex === -1 || focusedPillIndex === index ? 0 : -1
+                }
               >
                 {pill}
                 {!hidePillClose && <CloseIcon aria-label="click to close" />}
@@ -307,16 +302,12 @@ export const PillInput = forwardRef(function PillInput<Item>(
           ))}
           {visiblePills.length < pills.length && (
             <div role="listitem">
-              <Pill
-                data-overflowpill
-                disabled={disabled}
-                aria-label={`${
-                  pills.length - visiblePills.length
-                } hidden pills`}
-                onMouseDown={handleOverflowMouseDown}
+              <div
+                data-overflowindicator
+                className={withBaseName("overflowIndicator")}
               >
                 <OverflowMenuIcon aria-hidden />
-              </Pill>
+              </div>
             </div>
           )}
         </div>
