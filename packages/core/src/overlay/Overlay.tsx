@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { OverlayContext } from "./OverlayContext";
-import { useControlled, useFloatingUI, useId } from "@salt-ds/core";
+import { useControlled, useFloatingUI, useId } from "../utils";
 import {
   flip,
   offset,

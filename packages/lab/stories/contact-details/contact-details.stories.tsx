@@ -1,4 +1,11 @@
-import { Button, Card, Tooltip } from "@salt-ds/core";
+import {
+  Button,
+  Card,
+  Tooltip,
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+} from "@salt-ds/core";
 import {
   CallIcon,
   ChatIcon,
@@ -19,9 +26,6 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   ListItem,
-  Overlay,
-  OverlayPanel,
-  OverlayTrigger,
   ListItemType,
   SelectionChangeHandler,
   ValueComponentProps,

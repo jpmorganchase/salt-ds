@@ -4,21 +4,17 @@ import {
   CheckboxGroup,
   StackLayout,
   Tooltip,
-} from "@salt-ds/core";
-import { Meta } from "@storybook/react";
-import React, { ChangeEvent } from "react";
-
-import {
   Overlay,
   OverlayPanel,
   OverlayProps,
   OverlayTrigger,
-} from "@salt-ds/lab";
-
+} from "@salt-ds/core";
+import { Meta } from "@storybook/react";
+import React, { ChangeEvent } from "react";
 import "./overlay.stories.css";
 
 export default {
-  title: "Lab/Overlay",
+  title: "Core/Overlay",
   component: Overlay,
 } as Meta<typeof Overlay>;
 

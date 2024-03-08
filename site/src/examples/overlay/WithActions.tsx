@@ -1,7 +1,13 @@
 import { ChangeEvent } from "react";
-
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
-import { Button, CheckboxGroup, Checkbox, useId } from "@salt-ds/core";
+import {
+  Button,
+  CheckboxGroup,
+  Checkbox,
+  useId,
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+} from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
 
