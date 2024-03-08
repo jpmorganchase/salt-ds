@@ -20,7 +20,7 @@ export const Truncation = (): ReactElement => {
       value={value}
       multiselect
       truncate
-      defaultSelected={shortColorData.slice(0, 3)}
+      defaultSelected={shortColorData.slice(0, 5)}
       style={{ width: "266px" }}
     >
       {shortColorData
