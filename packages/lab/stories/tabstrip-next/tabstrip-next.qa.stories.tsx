@@ -3,9 +3,10 @@ import { StoryFn } from "@storybook/react";
 import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
 import { QAContainer } from "docs/components";
 import "./tabstrip-next.stories.css";
+import { FlowLayout } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Tabs Next/Tabstrip Next/QA",
+  title: "Lab/Tabs Next/Tabstrip Next/Tabstrip Next QA",
   component: TabstripNext,
 };
 
@@ -46,6 +47,22 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
         <TabstripNext
           {...tabstripProps}
           value={value}
+          onChange={(_, { value }) => {
+            setValue(value);
+          }}
+        >
+          {tabs.map((label) => (
+            <TabNext key={label} value={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabstripNext>
+      </div>
+      <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
+        <TabstripNext
+          {...tabstripProps}
+          value={value}
+          variant="inline"
           onChange={(_, { value }) => {
             setValue(value);
           }}
