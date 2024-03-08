@@ -6,22 +6,23 @@ import {
   OverlayProps,
   OverlayTrigger,
 } from "@salt-ds/lab";
-import { Tooltip, Button } from "@salt-ds/core";
+import { Tooltip, Button, useId } from "@salt-ds/core";
 import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
-  const { id, placement, ...rest } = props;
+  const { placement, ...rest } = props;
+  const id = useId();
 
   return (
-    <Overlay id={id} placement={placement} {...rest}>
+    <Overlay placement={placement} {...rest}>
       <OverlayTrigger>
         <Button>{placement}</Button>
       </OverlayTrigger>
-      <OverlayPanel>
-        <h3 id={`${id}-header`} className={styles.contentHeading}>
+      <OverlayPanel aria-labelledby={id}>
+        <h3 id={id} className={styles.contentHeading}>
           Title
         </h3>
-        <div id={`${id}-content`}>
+        <div>
           Content of Overlay
           <br />
           <br />
@@ -37,14 +38,14 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
 export const Placement = (): ReactElement => (
   <div>
     <div style={{ marginBottom: 10 }}>
-      <OverlayTemplate id="overlay-top" placement="top" />
+      <OverlayTemplate placement="top" />
     </div>
     <div style={{ marginBottom: 40 }}>
-      <OverlayTemplate id="overlay-bottom" placement="bottom" />
+      <OverlayTemplate placement="bottom" />
     </div>
     <div style={{ marginBottom: 10 }}>
-      <OverlayTemplate id="overlay-left" placement="left" />
+      <OverlayTemplate placement="left" />
     </div>
-    <OverlayTemplate id="overlay-right" placement="right" />
+    <OverlayTemplate placement="right" />
   </div>
 );

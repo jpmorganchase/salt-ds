@@ -1,10 +1,11 @@
-import { ReactElement } from "react";
+---
+"@salt-ds/lab": patch
+---
 
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
-import { Tooltip, Button, useId } from "@salt-ds/core";
+Optional prop `id` is no longer passed down from `Overlay` to aria-labelledby in `OverlayPanel`
+aria-labelledBy should be passed down directly to the `OverlayPanel` via and id attached to the title element
 
-import styles from "./index.module.css";
-
+```tsx
 export const Default = (): ReactElement => {
   const id = useId();
   return (
@@ -18,8 +19,6 @@ export const Default = (): ReactElement => {
         </h3>
         <div>
           Content of Overlay
-          <br />
-          <br />
           <Tooltip content={"im a tooltip"}>
             <Button>hover me</Button>
           </Tooltip>
@@ -28,3 +27,4 @@ export const Default = (): ReactElement => {
     </Overlay>
   );
 };
+```
