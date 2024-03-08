@@ -3,7 +3,7 @@ import { StackLayout } from "@salt-ds/core";
 import { MX, countryMetaMap } from "@salt-ds/countries";
 import "@salt-ds/countries/saltCountries.css";
 import "@salt-ds/countries/saltSharpCountries.css";
-import { QAContainer } from "docs/components";
+import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 
 export default {
   title: "Country Symbols/Country Symbol/Country Symbol QA",
@@ -11,17 +11,42 @@ export default {
 
 export const CountrySymbolSizes: StoryFn = () => {
   return (
-    <StackLayout direction="row">
-      <MX size={1} />
-      <MX size={2} />
-      <MX size={3} />
-      <MX size={4} />
-      <MX size={5} />
-    </StackLayout>
+    <QAContainer height={500} width={1000} cols={4}>
+      <StackLayout direction="row">
+        <MX size={1} />
+        <MX size={2} />
+        <MX size={3} />
+        <MX size={4} />
+        <MX size={5} />
+      </StackLayout>
+    </QAContainer>
   );
 };
 
 CountrySymbolSizes.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const NoStyleInjection: StoryFn = () => {
+  return (
+    <QAContainerNoStyleInjection
+      height={500}
+      width={1000}
+      cols={4}
+      enableStyleInjection={false}
+    >
+      <StackLayout direction="row">
+        <MX size={1} />
+        <MX size={2} />
+        <MX size={3} />
+        <MX size={4} />
+        <MX size={5} />
+      </StackLayout>
+    </QAContainerNoStyleInjection>
+  );
+};
+
+NoStyleInjection.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
