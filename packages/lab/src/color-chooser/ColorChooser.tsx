@@ -7,6 +7,7 @@ import {
   Overlay,
   OverlayPanel,
   OverlayTrigger,
+  useOverlayContext,
 } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
@@ -27,7 +28,6 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import colorChooserCss from "./ColorChooser.css";
-import { useOverlayContext } from "@salt-ds/core/src/overlay/OverlayContext";
 
 const withBaseName = makePrefixer("saltColorChooser");
 
