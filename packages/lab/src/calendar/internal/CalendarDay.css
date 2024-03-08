@@ -1,163 +1,97 @@
-/* TODO: Design need to align characteristics for CalendarDay */
 .saltCalendarDay {
-  --calendar-day-text-color: var(--salt-content-primary-foreground);
-  --calendar-day-background: var(--salt-selectable-background);
-  --calendar-day-background-hover: var(--salt-selectable-background-hover);
-  --calendar-day-text-color-hover: var(--salt-content-primary-foreground);
-  --calendar-day-outOfRange-text-color: var(--salt-content-secondary-foreground-disabled);
-  --calendar-day-blocked-text-color: var(--salt-content-primary-foreground);
-  --calendar-day-blocked-cursor: var(--salt-selectable-cursor-disabled);
-  --calendar-day-blocked-icon-color: var(--salt-status-error-foreground);
-  --calendar-day-blocked-background: var(--calendar-day-background);
-  --calendar-day-unselectable-text-color: var(--salt-content-secondary-foreground-disabled);
-  --calendar-day-unselectable-background: var(--calendar-day-background);
-  --calendar-day-unselectable-cursor: var(--salt-selectable-cursor-disabled);
-
-  --calendar-day-selected-background: var(--salt-selectable-background-selected);
-  --calendar-day-selected-text-color: var(--salt-content-primary-foreground);
-  /* --calendar-day-selected-focused-outlineColor: var(--salt-color-white); TODO: Check with design */
-
-  --calendar-day-selectedStart-background: var(--salt-selectable-background-selected);
-  --calendar-day-selectedStart-text-color: var(--salt-content-primary-foreground);
-  /* --calendar-day-selectedStart-focused-outlineColor: var(--salt-color-white);  TODO: Check with design */
-
-  --calendar-day-selectedEnd-background: var(--salt-selectable-background-selected);
-  --calendar-day-selectedEnd-text-color: var(--salt-content-primary-foreground);
-  /* --calendar-day-selectedEnd-focused-outlineColor: var(--salt-color-white);  TODO: Check with design */
-
-  --calendar-day-selectedSpan-background: var(--salt-selectable-background-blurSelected);
-  --calendar-day-selectedSpan-text-color: var(--salt-content-primary-foreground);
-
-  --calendar-day-hoveredSpan-background: var(--salt-selectable-background-hover);
-  --calendar-day-hoveredSpan-text-color: var(--salt-content-primary-foreground);
-
-  --calendar-day-hoveredOffset-background: var(--salt-selectable-background-hover);
-  --calendar-day-hoveredOffset-text-color: var(--salt-content-primary-foreground);
-
-  --calendar-day-currentDay-borderColor: var(--salt-content-primary-foreground); /* TODO should not be foreground color */
-
-  /* Focus */
-  --calendar-day-focused-outline: var(--salt-focused-outline);
-  --calendar-day-size: var(--salt-size-base);
-  --calendar-day-fontSize: var(--salt-text-fontSize);
-}
-
-.saltCalendarDay {
-  width: var(--calendar-day-size);
-  height: var(--calendar-day-size);
-  color: var(--calendar-day-text-color);
-  background-color: var(--calendar-day-background);
-  font-size: var(--calendar-day-fontSize);
-  border: 0;
+  font-family: var(--salt-text-fontFamily);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  font-size: var(--salt-text-fontSize);
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
   cursor: pointer;
-  position: relative;
+  border: none;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.saltCalendarDay-content {
+  margin: 0 var(--salt-spacing-50);
+  width: 100%;
 }
 
 .saltCalendarDay:focus-visible {
-  outline: var(--calendar-day-focused-outline);
+  outline: var(--salt-focused-outline);
   outline-offset: calc(0px - var(--salt-focused-outlineWidth));
 }
 
 .saltCalendarDay-outOfRange {
-  color: var(--calendar-day-outOfRange-text-color);
+  color: var(--salt-content-secondary-foreground);
 }
 
-.saltCalendarDay:hover {
-  background: var(--calendar-day-background-hover);
-  color: var(--calendar-day-text-color-hover);
-}
-
-.saltCalendarDay-unselectableMedium,
-.saltCalendarDay-unselectableMedium:hover {
-  color: var(--calendar-day-blocked-text-color);
-  cursor: var(--calendar-day-blocked-cursor);
-  background: var(--calendar-day-blocked-background);
-}
-
-.saltCalendarDay-today {
-  border: 1px solid var(--calendar-day-currentDay-borderColor);
-}
-
-.saltCalendarDay-selectedSpan {
-  background: var(--calendar-day-selectedSpan-background);
-  color: var(--calendar-day-selectedSpan-text-color);
-}
-
-.saltCalendarDay-hoveredSpan,
-.saltCalendarDay-hoveredSpan:hover {
-  background: var(--calendar-day-hoveredSpan-background);
-  color: var(--calendar-day-hoveredSpan-text-color);
-}
-
+.saltCalendarDay:hover,
 .saltCalendarDay-hoveredOffset,
 .saltCalendarDay-hoveredOffset:hover {
-  background: var(--calendar-day-hoveredOffset-background);
-  color: var(--calendar-day-hoveredOffset-text-color);
+  background: var(--salt-selectable-background-hover);
+}
+.saltCalendarDay-selectedStart {
+  z-index: var(--salt-zIndex-default);
 }
 
 .saltCalendarDay-selected,
-.saltCalendarDay-selected:hover {
-  background: var(--calendar-day-selected-background);
-  color: var(--calendar-day-selected-text-color);
-}
-
+.saltCalendarDay-selected:hover,
 .saltCalendarDay-selectedStart,
-.saltCalendarDay-selectedStart:hover {
-  background: var(--calendar-day-selectedStart-background);
-  color: var(--calendar-day-selectedStart-text-color);
-}
-
+.saltCalendarDay-selectedStart:hover,
 .saltCalendarDay-selectedEnd,
 .saltCalendarDay-selectedEnd:hover {
-  background: var(--calendar-day-selectedEnd-background);
-  color: var(--calendar-day-selectedEnd-text-color);
+  background: var(--salt-selectable-background-selected);
+  box-shadow: 0 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected);
 }
 
-.saltCalendarDay-selected:focus-visible {
-  outline-color: var(--calendar-day-selected-focused-outlineColor);
+.saltCalendarDay-hoveredSpan,
+.saltCalendarDay-hoveredSpan:hover,
+.saltCalendarDay-selectedSpan,
+.saltCalendarDay-selectedSpan:hover {
+  background: var(--salt-selectable-background-hover);
+  box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover),
+    calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
-.saltCalendarDay-selectedStart:focus-visible {
-  outline-color: var(--calendar-day-selectedStart-focused-outlineColor);
+.saltCalendarDay-disabled,
+.saltCalendarDay-disabled:hover,
+.saltCalendarDay-unselectable,
+.saltCalendarDay-unselectable:hover {
+  background: var(--salt-selectable-background-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.saltCalendarDay-selectedEnd:focus-visible {
-  outline-color: var(--calendar-day-selectedEnd-focused-outlineColor);
-}
-
-.saltCalendarDay-unselectableLow,
-.saltCalendarDay-unselectableLow:hover {
-  color: var(--calendar-day-unselectable-text-color);
-  background: var(--calendar-day-unselectable-background);
-  cursor: var(--calendar-day-unselectable-cursor);
-  text-decoration: line-through;
-}
-
-.salt-density-high {
-  --calendar-day-blocked-icon-size: 14px;
-}
-
-.salt-density-medium {
-  --calendar-day-blocked-icon-size: 18px;
-}
-
-.salt-density-low {
-  --calendar-day-blocked-icon-size: 24px;
-}
-
-.salt-density-touch {
-  --calendar-day-blocked-icon-size: 28px;
-}
-
-.saltCalendarDay-blockedIcon {
-  fill: var(--calendar-day-blocked-icon-color);
+.saltCalendarDay-highlighted:before {
+  content: "";
+  height: var(--salt-spacing-200); /* TODO: change for size-modifier when available */
+  width: var(--salt-spacing-200);
+  top: calc(var(--salt-spacing-100) * -1);
+  right: calc(var(--salt-spacing-100) * -1);
+  transform: rotate(45deg);
+  background: var(--salt-selectable-borderColor-selected);
   position: absolute;
-  --icon-size: var(--calendar-day-blocked-icon-size);
-  pointer-events: none;
-  line-height: 1.29;
+}
+
+.saltCalendarDay-disabled {
+  color: var(--salt-content-secondary-foreground-disabled);
+}
+.saltCalendarDay-unselectable:after {
+  content: "";
+  height: var(--salt-size-border);
+  width: calc(100% - var(--salt-spacing-100));
+  background: var(--salt-content-secondary-foreground);
+  position: absolute;
+}
+
+.saltCalendarDay-today,
+.saltCalendarDay-today:hover {
+  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-foreground-active);
+  margin-bottom: calc(var(--salt-size-indicator) * -1);
 }
 
 .saltCalendarDay-hidden {

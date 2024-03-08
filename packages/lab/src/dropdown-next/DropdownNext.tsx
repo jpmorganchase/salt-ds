@@ -12,6 +12,7 @@ import {
 import {
   ListControlProps,
   useListControl,
+  defaultValueToString,
 } from "../list-control/ListControlState";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
@@ -40,9 +41,7 @@ import dropdownCss from "./DropdownNext.css";
 import { ListControlContext } from "../list-control/ListControlContext";
 import { OptionList } from "../option/OptionList";
 
-export interface DropdownNextProps<Item = string>
-  extends Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue">,
-    ListControlProps<Item> {
+export type DropdownNextProps<Item = string> = {
   /**
    * If `true`, the dropdown will be disabled.
    */
@@ -81,18 +80,15 @@ export interface DropdownNextProps<Item = string>
    */
   variant?: "primary" | "secondary";
   /**
-   * The default content of the dropdown shown in the button.
-   */
-  defaultValue?: string | readonly string[] | number | undefined;
-  /**
    * The content of the dropdown shown in the button. The component will be controlled if this prop is provided.
    */
-  value?: string | readonly string[] | number | undefined;
+  value?: string;
   /**
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: Exclude<ValidationStatus, "info">;
-}
+} & Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue"> &
+  ListControlProps<Item>;
 
 function ExpandIcon({ open }: { open: boolean }) {
   return open ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />;
@@ -117,7 +113,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     selected,
     defaultSelected,
     defaultOpen,
-    defaultValue: defaultValueProp,
     value,
     onOpenChange,
     open,
@@ -129,6 +124,7 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     onKeyDown,
     onFocus,
     onBlur,
+    valueToString = defaultValueToString,
     ...rest
   } = props;
 
@@ -156,10 +152,6 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
   const required = formFieldRequired
     ? ["required", "asterisk"].includes(formFieldRequired)
     : undefined ?? requiredProp;
-
-  const isEmptyReadOnly = readOnly && !defaultValueProp && !value;
-  const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
-
   const listControl = useListControl<Item>({
     open,
     defaultOpen,
@@ -168,8 +160,7 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     defaultSelected,
     selected,
     onSelectionChange,
-    defaultValue,
-    value,
+    valueToString,
   });
 
   const {
@@ -185,12 +176,19 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     options,
     selectedState,
     select,
-    valueState,
     setFocusVisibleState,
     focusedState,
     setFocusedState,
     listRef,
   } = listControl;
+
+  const selectedValue = selectedState
+    .map((item) => valueToString(item))
+    .join(", ");
+  const isEmptyReadOnly = readOnly && selectedValue === "";
+  const valueText = isEmptyReadOnly
+    ? emptyReadOnlyMarker
+    : value ?? selectedValue;
 
   const { Component: FloatingComponent } = useFloatingComponent();
 
@@ -436,10 +434,10 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
         {startAdornment}
         <span
           className={clsx(withBaseName("content"), {
-            [withBaseName("placeholder")]: !valueState,
+            [withBaseName("placeholder")]: !valueText,
           })}
         >
-          {!valueState ? placeholder : valueState}
+          {!valueText ? placeholder : valueText}
         </span>
         {validationStatus && <StatusAdornment status={validationStatus} />}
         {!readOnly && <ExpandIcon open={openState} />}

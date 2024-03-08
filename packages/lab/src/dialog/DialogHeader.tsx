@@ -10,12 +10,11 @@ import {
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dialogTitleCss from "./DialogTitle.css";
+import dialogTitleCss from "./DialogHeader.css";
 
-const withBaseName = makePrefixer("saltDialogTitle");
+const withBaseName = makePrefixer("saltDialogHeader");
 
-interface DialogTitleProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "title"> {
+interface DialogTitleProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The status of the Dialog
    */
@@ -24,21 +23,21 @@ interface DialogTitleProps
    * Displays the accent bar in the Dialog Title */
   disableAccent?: boolean;
   /**
-   * Displays the Dialog Title in a H2 component
+   * Displays the header at the top of the Dialog
    */
-  title: ReactNode;
+  header: ReactNode;
   /**
-   * Displays the Dialog Subtitle in a Label component
+   * Displays the preheader just above the header
    **/
-  subtitle?: ReactNode;
+  preheader?: ReactNode;
 
   className?: string;
 }
 
-export const DialogTitle = ({
+export const DialogHeader = ({
   className,
-  title,
-  subtitle,
+  header,
+  preheader,
   disableAccent,
   status: statusProp,
   ...rest
@@ -46,7 +45,7 @@ export const DialogTitle = ({
   const { status: statusContext, id } = useDialogContext();
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-dialog-title",
+    testId: "salt-dialog-header",
     css: dialogTitleCss,
     window: targetWindow,
   });
@@ -55,7 +54,7 @@ export const DialogTitle = ({
 
   return (
     <div
-      id={id as string}
+      id={id}
       className={clsx(
         withBaseName(),
         {
@@ -67,14 +66,14 @@ export const DialogTitle = ({
       {...rest}
     >
       {status && <StatusIndicator status={status} />}
-      <div>
-        {subtitle && (
-          <Text as={"label"} variant="secondary">
-            {subtitle}
+      <H2 className={withBaseName("header")}>
+        {preheader && (
+          <Text variant="secondary" className={withBaseName("preheader")}>
+            {preheader}
           </Text>
         )}
-        <H2 className={clsx(withBaseName("title"))}>{title}</H2>
-      </div>
+        <div>{header}</div>
+      </H2>
     </div>
   );
 };

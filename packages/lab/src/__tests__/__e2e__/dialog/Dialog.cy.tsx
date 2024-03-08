@@ -3,35 +3,35 @@ import * as dialogStories from "@stories/dialog/dialog.stories";
 
 const composedStories = composeStories(dialogStories);
 
-const { Default, Subtitle } = composedStories;
+const { Default, Preheader } = composedStories;
 
 describe("GIVEN a Dialog", () => {
-  describe("WHEN only title is provided", () => {
+  describe("WHEN only header is provided", () => {
     it("THEN it should display a dialog by default", () => {
       cy.mount(<Default />);
 
       cy.findByRole("button").click();
 
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle").should("be.visible");
+      cy.get(".saltDialogHeader").should("be.visible");
       cy.get(".saltDialogContent").should("be.visible");
       cy.get(".saltDialogActions").should("be.visible");
     });
 
-    it("THEN it should display the titile", () => {
+    it("THEN it should display the header", () => {
       cy.mount(<Default />);
 
       cy.findByRole("button").click();
 
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle-title").should("be.visible");
+      cy.get(".saltDialogHeader-header").should("be.visible");
     });
 
     it("THEN it should add the accent class to the title component", () => {
       cy.mount(<Default />);
       cy.findByRole("button").click();
       cy.findByRole("dialog").should("be.visible");
-      cy.get(".saltDialogTitle-withAccent").should("exist");
+      cy.get(".saltDialogHeader-withAccent").should("exist");
     });
 
     it("THEN it should display animations by default", () => {
@@ -58,13 +58,13 @@ describe("GIVEN a Dialog", () => {
     );
   });
 
-  describe("WHEN subtitle is provided", () => {
-    it("THEN it should display the subtitle", () => {
-      cy.mount(<Subtitle />);
+  describe("WHEN preheader is provided", () => {
+    it("THEN it should display the preheader", () => {
+      cy.mount(<Preheader />);
 
       cy.findByRole("button").click();
 
-      cy.get("label").should("be.visible");
+      cy.get(".saltDialogHeader-preheader").should("be.visible");
     });
   });
 

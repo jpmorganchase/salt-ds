@@ -7,10 +7,10 @@ export const CustomAccent = (): ReactElement => {
     <StackLayout direction="row">
       {/* in your css:
             .category1 { 
-              --saltCard-accentColor: rgb(70, 118, 191);
+              --saltCard-accent-color: rgb(70, 118, 191);
             }
             .category1:hover {
-              --saltCard-accentColor: rgb(35, 77, 140);
+              --saltCard-accent-color: rgb(35, 77, 140);
             }
               */}
       <Card
@@ -33,11 +33,11 @@ export const CustomAccent = (): ReactElement => {
       </Card>
       {/* in your css:
             .category2 {
-              --saltCard-accentColor: rgb(171, 101, 40);
+              --saltCard-accent-color: rgb(171, 101, 40);
             }
 
             .category2:hover {
-              --saltCard-accentColor: rgb(133, 72, 20);
+              --saltCard-accent-color: rgb(133, 72, 20);
             }
               */}
       <Card

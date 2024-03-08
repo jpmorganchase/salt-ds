@@ -12,7 +12,13 @@ import {
   FormFieldLabel,
   StackLayout,
 } from "@salt-ds/core";
-import { countryMetaMap, GB, LazyCountrySymbol, US } from "@salt-ds/countries";
+import {
+  CountryCode,
+  countryMetaMap,
+  GB,
+  LazyCountrySymbol,
+  US,
+} from "@salt-ds/countries";
 import { ChangeEvent, Suspense, SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 
@@ -31,9 +37,14 @@ export default {
 const usStates = usStateExampleData.slice(0, 10);
 
 const Template: StoryFn<ComboBoxNextProps> = (args) => {
-  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+  const [value, setValue] = useState(
+    args.defaultValue?.toString() ?? args.defaultSelected?.[0] ?? ""
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
@@ -42,6 +53,9 @@ const Template: StoryFn<ComboBoxNextProps> = (args) => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     args.onSelectionChange?.(event, newSelected);
 
     if (args.multiselect) {
@@ -62,15 +76,14 @@ const Template: StoryFn<ComboBoxNextProps> = (args) => {
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
+      style={{ width: 150 }}
     >
       {usStates
         .filter((state) =>
           state.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
+          <Option value={state} key={state} />
         ))}
     </ComboBoxNext>
   );
@@ -86,14 +99,12 @@ Placeholder.args = {
 export const WithDefaultSelected = Template.bind({});
 WithDefaultSelected.args = {
   defaultSelected: ["California"],
-  defaultValue: "California",
 };
 
 export const Readonly = Template.bind({});
 Readonly.args = {
   readOnly: true,
   defaultSelected: ["California"],
-  defaultValue: "California",
 };
 
 export const ReadonlyEmpty = Template.bind({});
@@ -105,13 +116,15 @@ export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
   defaultSelected: ["California"],
-  defaultValue: "California",
 };
 
 export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
@@ -120,6 +133,9 @@ export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     if (newSelected.length === 1) {
       setValue(newSelected[0]);
     } else {
@@ -139,9 +155,7 @@ export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
           state.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((state) => (
-          <Option value={state} key={state} disabled={state === "California"}>
-            {state}
-          </Option>
+          <Option value={state} key={state} disabled={state === "California"} />
         ))}
     </ComboBoxNext>
   );
@@ -165,6 +179,9 @@ export const WithFormField: StoryFn = () => {
   const [value, setValue] = useState("");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
@@ -173,6 +190,9 @@ export const WithFormField: StoryFn = () => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     if (newSelected.length === 1) {
       setValue(newSelected[0]);
     } else {
@@ -193,9 +213,7 @@ export const WithFormField: StoryFn = () => {
             state.toLowerCase().includes(value.trim().toLowerCase())
           )
           .map((state) => (
-            <Option value={state} key={state}>
-              {state}
-            </Option>
+            <Option value={state} key={state} />
           ))}
       </ComboBoxNext>
       <FormFieldHelperText>Pick a US state</FormFieldHelperText>
@@ -207,6 +225,9 @@ export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
@@ -215,6 +236,9 @@ export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     if (newSelected.length === 1) {
       setValue(newSelected[0]);
     } else {
@@ -272,9 +296,7 @@ export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
       {Object.entries(groupedOptions).map(([country, options]) => (
         <OptionGroup label={country} key={country}>
           {options.map((option) => (
-            <Option value={option.value} key={option.value}>
-              {option.value}
-            </Option>
+            <Option value={option.value} key={option.value} />
           ))}
         </OptionGroup>
       ))}
@@ -282,59 +304,65 @@ export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
   );
 };
 
-export const ComplexOption: StoryFn<ComboBoxNextProps> = (args) => {
-  const options = [
-    {
-      value: "GB",
-      icon: <GB aria-hidden />,
-      textValue: "United Kingdom of Great Britain and Northern Ireland",
-    },
-    {
-      value: "US",
-      icon: <US aria-hidden />,
-      textValue: "United States of America",
-    },
-  ];
+type Country = {
+  value: string;
+  icon: JSX.Element;
+  textValue: string;
+};
 
+const options: Country[] = [
+  {
+    value: "GB",
+    icon: <GB aria-hidden />,
+    textValue: "United Kingdom of Great Britain and Northern Ireland",
+  },
+  {
+    value: "US",
+    icon: <US aria-hidden />,
+    textValue: "United States of America",
+  },
+];
+
+export const ComplexOption: StoryFn<ComboBoxNextProps<Country>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: Country[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     if (newSelected.length === 1) {
-      setValue(
-        options.find((option) => option.value === newSelected[0])?.textValue ??
-          ""
-      );
+      setValue(newSelected[0].textValue);
     } else {
       setValue("");
     }
   };
 
   return (
-    <ComboBoxNext
+    <ComboBoxNext<Country>
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: 200 }}
+      valueToString={(country) => country.textValue}
     >
       {options
         .filter((country) =>
           country.textValue.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((option) => (
-          <Option
-            value={option.value}
-            key={option.value}
-            textValue={option.textValue}
-          >
+          <Option value={option} key={option.value}>
             {option.icon} {option.textValue}
           </Option>
         ))}
@@ -342,18 +370,24 @@ export const ComplexOption: StoryFn<ComboBoxNextProps> = (args) => {
   );
 };
 
-export const LongList: StoryFn<ComboBoxNextProps> = (args) => {
+export const LongList: StoryFn<ComboBoxNextProps<CountryCode>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: CountryCode[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     if (newSelected.length === 1) {
       setValue(
         Object.values(countryMetaMap).find(
@@ -386,11 +420,12 @@ export const LongList: StoryFn<ComboBoxNextProps> = (args) => {
   }, {} as Record<string, typeof options>);
 
   return (
-    <ComboBoxNext
+    <ComboBoxNext<CountryCode>
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
+      valueToString={(countryCode) => countryMetaMap[countryCode].countryName}
     >
       <Suspense fallback="">
         {Object.entries(groupedOptions).map(([firstLetter, options]) => (
@@ -412,6 +447,9 @@ export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
@@ -420,6 +458,9 @@ export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     if (args.multiselect) {
       return;
     }
@@ -443,11 +484,7 @@ export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
       value={value}
     >
       {filteredOptions.length > 0 ? (
-        filteredOptions.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
-        ))
+        filteredOptions.map((state) => <Option value={state} key={state} />)
       ) : (
         <Option value="">No results found for &quot;{value}&quot;</Option>
       )}
@@ -470,6 +507,9 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
   const [showAll, setShowAll] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
     setShowAll(false);
@@ -479,6 +519,9 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     args.onSelectionChange?.(event, newSelected);
 
     if (args.multiselect) {
@@ -517,9 +560,7 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
       value={value}
     >
       {options.map((state) => (
-        <Option value={state} key={state}>
-          {state}
-        </Option>
+        <Option value={state} key={state} />
       ))}
     </ComboBoxNext>
   );
@@ -529,19 +570,23 @@ interface Person {
   id: number;
   firstName: string;
   lastName: string;
+  displayName: string;
 }
 
 const people: Person[] = [
-  { id: 1, firstName: "John", lastName: "Doe" },
-  { id: 2, firstName: "Jane", lastName: "Doe" },
-  { id: 3, firstName: "John", lastName: "Smith" },
-  { id: 4, firstName: "Jane", lastName: "Smith" },
+  { id: 1, firstName: "John", lastName: "Doe", displayName: "John Doe" },
+  { id: 2, firstName: "Jane", lastName: "Doe", displayName: "Jane Doe" },
+  { id: 3, firstName: "John", lastName: "Smith", displayName: "John Smith" },
+  { id: 4, firstName: "Jane", lastName: "Smith", displayName: "Jane Smith" },
 ];
 
 export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
   const [selected, setSelected] = useState<Person[]>([]);
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     const value = event.target.value;
     setValue(value);
   };
@@ -550,6 +595,9 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
     event: SyntheticEvent,
     newSelected: Person[]
   ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
     setSelected(newSelected);
 
     setValue("");
@@ -569,11 +617,10 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
       value={value}
       selected={selected}
       multiselect
+      valueToString={(person) => person.displayName}
     >
       {options.map((person) => (
-        <Option value={person} key={person.id}>
-          {person.firstName} {person.lastName}
-        </Option>
+        <Option value={person} key={person.id} />
       ))}
     </ComboBoxNext>
   );

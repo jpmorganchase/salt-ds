@@ -1,9 +1,7 @@
-import { makePrefixer, Tooltip, TooltipProps } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
+import { makePrefixer, Tooltip, TooltipProps, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";
-
 import { DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
 import { formatDate } from "./utils";
@@ -36,55 +34,59 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
     });
 
     const dayRef = useRef<HTMLButtonElement>(null);
-    const { status, dayProps, unselectableReason } = useCalendarDay(
-      {
-        date: day,
-        month,
-      },
-      dayRef
-    );
-    const { outOfRange, today, unselectable, hidden } = status;
+    const buttonRef = useForkRef(ref, dayRef);
+    const { status, dayProps, unselectableReason, highlightedReason } =
+      useCalendarDay(
+        {
+          date: day,
+          month,
+        },
+        dayRef
+      );
+    const { outOfRange, today, unselectable, highlighted, hidden, disabled } =
+      status;
 
     return (
       <Tooltip
         hideIcon
-        status="error"
-        content={unselectableReason}
-        disabled={!unselectableReason}
+        status={unselectableReason ? "error" : "info"}
+        content={
+          unselectableReason || highlightedReason || "Date is out of range"
+        }
+        disabled={!unselectableReason && !highlightedReason}
         placement="top"
-        enterDelay={300}
+        enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
         {...TooltipProps}
       >
         <button
           aria-label={formatDate(day)}
+          disabled={disabled}
           {...dayProps}
-          ref={dayRef}
+          ref={buttonRef}
           {...rest}
           className={clsx(
             withBaseName(),
             {
               [withBaseName("hidden")]: hidden,
               [withBaseName("outOfRange")]: outOfRange,
-              [withBaseName("today")]: today,
+              [withBaseName("disabled")]: disabled,
               [withBaseName("unselectable")]: !!unselectable,
-              [withBaseName("unselectableLow")]: unselectable === "low",
-              [withBaseName("unselectableMedium")]: unselectable === "medium",
+              [withBaseName("highlighted")]: !!highlighted,
             },
             dayProps.className,
             className
           )}
         >
-          {unselectable === "medium" && (
-            <CloseIcon
-              aria-hidden
-              aria-label={undefined}
-              className={withBaseName("blockedIcon")}
-            />
-          )}
-
-          {renderDayContents
-            ? renderDayContents(day, status)
-            : formatDate(day, { day: "numeric" })}
+          <span
+            className={clsx(withBaseName("content"), {
+              [withBaseName("today")]: today,
+            })}
+          >
+            {renderDayContents
+              ? renderDayContents(day, status)
+              : formatDate(day, { day: "numeric" })}
+          </span>
         </button>
       </Tooltip>
     );

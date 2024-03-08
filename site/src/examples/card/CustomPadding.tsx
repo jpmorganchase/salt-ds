@@ -4,6 +4,7 @@ import {
   Text,
   StackLayout,
   Card,
+  LinkCard,
   RadioButtonGroup,
   RadioButton,
   Button,
@@ -18,10 +19,11 @@ export const CustomPadding = (): ReactElement => {
   return (
     <StackLayout align="center">
       {padding === "spacing-100" && (
-        <Card
+        <LinkCard
+          href="#"
           style={
             {
-              "--saltCard-padding": "var(--salt-spacing-100)",
+              "--saltLinkCard-padding": "var(--salt-spacing-100)",
               width: "160px",
             } as CSSProperties
           }
@@ -30,7 +32,7 @@ export const CustomPadding = (): ReactElement => {
             <MessageIcon size={1} />
             <Text>Contact us</Text>
           </StackLayout>
-        </Card>
+        </LinkCard>
       )}
       {padding === "spacing-200" && (
         <Card

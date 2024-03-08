@@ -3,10 +3,14 @@ import {
   ListControlProps,
 } from "../list-control/ListControlState";
 
-import { SyntheticEvent } from "react";
+import { ComponentPropsWithoutRef, SyntheticEvent } from "react";
 import { OptionValue } from "../list-control/ListControlContext";
+import { useControlled } from "@salt-ds/core";
 
-export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
+export type UseComboBoxNextProps<Item> = ListControlProps<Item> &
+  Pick<ComponentPropsWithoutRef<"input">, "value" | "defaultValue">;
+
+export function useComboBoxNext<Item>(props: UseComboBoxNextProps<Item>) {
   const {
     open,
     defaultOpen,
@@ -15,10 +19,11 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     defaultSelected,
     selected,
     onSelectionChange,
-    defaultValue,
-    value,
     disabled,
     readOnly,
+    valueToString,
+    value,
+    defaultValue,
   } = props;
 
   const listControl = useListControl<Item>({
@@ -29,19 +34,23 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     defaultSelected,
     selected,
     onSelectionChange,
-    defaultValue,
-    value,
     disabled,
     readOnly,
+    valueToString,
   });
 
-  const {
-    selectedState,
-    getOptionsMatching,
-    setValueState,
-    setSelectedState,
-    setOpen,
-  } = listControl;
+  const { selectedState, getOptionsMatching, setSelectedState, setOpen } =
+    listControl;
+
+  const [valueState, setValueState] = useControlled({
+    controlled: value,
+    default:
+      defaultValue ?? selectedState.length === 1
+        ? listControl.valueToString(selectedState[0])
+        : defaultValue,
+    name: "ComboBoxNext",
+    state: "value",
+  });
 
   const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
     if (option.disabled || disabled || readOnly) {
@@ -61,7 +70,7 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     setSelectedState(newSelected);
     const newValue = getOptionsMatching((option) =>
       newSelected.includes(option.value)
-    ).map((option) => option.text);
+    ).map((option) => listControl.valueToString(option.value));
     setValueState(multiselect ? "" : newValue[0]);
     onSelectionChange?.(event, newSelected);
 
@@ -70,5 +79,5 @@ export function useComboBoxNext<Item>(props: ListControlProps<Item>) {
     }
   };
 
-  return { ...listControl, select };
+  return { ...listControl, select, valueState, setValueState };
 }
