@@ -4,8 +4,6 @@ import {
   FormField,
   FormFieldLabel,
   Input,
-} from "@salt-ds/core";
-import {
   Dialog,
   DialogHeader,
   DialogActions,
@@ -13,7 +11,7 @@ import {
   DialogCloseButton,
   DialogProps,
   DialogContext,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 

@@ -17,6 +17,10 @@ import {
   RadioButtonGroup,
   H3,
   FlexLayout,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
 import {
@@ -50,12 +54,6 @@ import {
   Readonly as CheckboxReadonly,
 } from "../../../core/stories/checkbox/checkbox.stories";
 import { Default as SwitchDefault } from "../../../core/stories/switch/switch.stories";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogHeader,
-} from "@salt-ds/lab";
 import { useState } from "react";
 import {
   Default as ToastDefault,
