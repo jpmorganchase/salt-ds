@@ -1,11 +1,14 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
+  Button,
+  H3,
+  StackLayout,
+  useId,
   Dialog,
   DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const DisableScrim = (): ReactElement => {
   const [open, setOpen] = useState(false);

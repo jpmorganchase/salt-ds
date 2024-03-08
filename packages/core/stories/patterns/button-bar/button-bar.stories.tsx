@@ -10,14 +10,11 @@ import {
   SplitLayout,
   StackLayout,
   useResponsiveProp,
-} from "@salt-ds/core";
-import {
   Dialog,
   DialogActions,
   DialogContent,
-  DropdownNext as Dropdown,
-  Option,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { DropdownNext as Dropdown, Option } from "@salt-ds/lab";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
 import { Meta } from "@storybook/react";

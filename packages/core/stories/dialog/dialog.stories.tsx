@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { PropsWithChildren, ReactNode, useState } from "react";
-import { Button, StackLayout } from "@salt-ds/core";
 import {
+  Button,
+  StackLayout,
   Dialog,
   DialogHeader,
   DialogActions,
   DialogContent,
   DialogCloseButton,
   DialogProps,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 import "./dialog.stories.css";
 
 export default {
-  title: "Lab/Dialog",
+  title: "Core/Dialog",
   component: Dialog,
   args: {
     header: "Congratulations! You have created a Dialog.",

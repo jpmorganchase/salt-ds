@@ -1,11 +1,11 @@
-import { Button } from "@salt-ds/core";
 import {
+  Button,
   Dialog,
   DialogHeader,
   DialogContent,
   DialogActions,
-  TabDescriptor,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { TabDescriptor } from "@salt-ds/lab";
 
 export const CloseTabWarningDialog = ({
   closedTab,
