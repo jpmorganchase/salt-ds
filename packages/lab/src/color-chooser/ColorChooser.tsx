@@ -1,11 +1,13 @@
 import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
 import {
+  Button,
+  ButtonProps,
+  makePrefixer,
   Overlay,
   OverlayPanel,
   OverlayTrigger,
-} from "@salt-ds/core/src/overlay";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+} from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
