@@ -7,6 +7,7 @@ import {
   Overlay,
   OverlayPanel,
   OverlayTrigger,
+  H3,
 } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
@@ -79,9 +80,9 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 
   return (
     <>
-      <h3 id={id} style={{ marginTop: 0, paddingBottom: 10 }}>
+      <H3 id={id} style={{ marginTop: 0, paddingBottom: 10 }}>
         Export
-      </h3>
+      </H3>
       <div>
         <Checkbox
           indeterminate={indeterminate}

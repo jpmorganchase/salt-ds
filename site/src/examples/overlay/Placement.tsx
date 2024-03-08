@@ -7,6 +7,7 @@ import {
   OverlayPanel,
   OverlayProps,
   OverlayTrigger,
+  H3,
 } from "@salt-ds/core";
 import styles from "./index.module.css";
 
@@ -20,9 +21,9 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
         <Button>{placement}</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
-        <h3 id={id} className={styles.contentHeading}>
+        <H3 id={id} className={styles.contentHeading}>
           Title
-        </h3>
+        </H3>
         <div>
           Content of Overlay
           <br />
