@@ -1,5 +1,38 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.34
+
+### Minor Changes
+
+- f27ecfa7: Implemented corner radius for relevant components when used with theme next. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+- cba9f9b9: - Rename `DialogTitle` to `DialogHeader`
+  - Change `DialogHeader` optional props `title` and `subtitle` to `header` and `preheader`
+- 245301a9: Added `LinkCard` to lab.
+
+  Use a Link card when the entire card should be clickable and navigate the user.
+
+  ```tsx
+  <LinkCard href="https://www.saltdesignsystem.com" target="_blank"></LinkCard>
+  ```
+
+- 8610999f: Remove `Drawer` and `DrawerCloseButton` from labs and promote to core
+- cbe6c522: Removed `LinkCard` from lab and promoted to core.
+- df15ac98: - Added `valueToString` to `DropdownNext` and `ComboBoxNext`. This replaces the `textValue` prop on `Option`s. This is needed when the value is different to the display value, or the value is not a string.
+  - Removed `defaultValue` from `DropdownNext`.
+  - Mousing over options will now set them to active.
+  - Clearing the input will clear the list of active items.
+  - `Option` will now use the value or the result from `valueToString` as its default children.
+
+### Patch Changes
+
+- 543c9ff2: Updates to calendar
+
+  - Removed animations.
+  - Visual updates to the component.
+  - Updated the delay time for day tooltips.
+  - Added `highlighted` days - characterized by a triangle in the top right corner that attributes an event to that day.
+  - Added `disabled` days and made `unselectable` days focusable.
+
 ## 1.0.0-alpha.33
 
 ### Patch Changes
