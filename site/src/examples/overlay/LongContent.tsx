@@ -4,10 +4,8 @@ import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
 import { Button, StackLayout } from "@salt-ds/core";
 
 export const LongContent = (): ReactElement => {
-  const id = "overlay-long-content";
-
   return (
-    <Overlay id={id} placement="right">
+    <Overlay placement="right">
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
@@ -18,7 +16,7 @@ export const LongContent = (): ReactElement => {
           overflow: "auto",
         }}
       >
-        <StackLayout id={`${id}-content`}>
+        <StackLayout>
           <div>
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industrys standard dummy text

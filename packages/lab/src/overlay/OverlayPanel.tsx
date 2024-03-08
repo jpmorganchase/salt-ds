@@ -1,13 +1,12 @@
 import {
-  ComponentPropsWithoutRef,
   ForwardedRef,
   forwardRef,
   HTMLProps,
+  ComponentPropsWithoutRef,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
-import { FloatingOverlay } from "@floating-ui/react";
 import { OverlayPanelBase } from "./OverlayPanelBase";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
@@ -16,7 +15,7 @@ export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
-    const { className, ...rest } = props;
+    const { className, ["aria-labelledby"]: ariaLabelledby, ...rest } = props;
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
@@ -43,30 +42,25 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       });
     };
 
-    if (!openState) return <></>;
-
     return (
-      <FloatingOverlay>
-        <FloatingComponent
-          open={openState}
-          className={clsx(withBaseName(), className)}
-          aria-modal="true"
-          aria-labelledby={`${id}-header`}
-          aria-describedby={`${id}-content`}
-          {...getOverlayProps()}
-          ref={handleRef}
-          width={width}
-          height={height}
-          top={top}
-          left={left}
-          position={position}
-          focusManagerProps={{
-            context: context,
-          }}
-        >
-          <OverlayPanelBase {...rest} />
-        </FloatingComponent>
-      </FloatingOverlay>
+      <FloatingComponent
+        open={openState}
+        className={clsx(withBaseName(), className)}
+        aria-modal="true"
+        {...getOverlayProps()}
+        ref={handleRef}
+        width={width}
+        height={height}
+        top={top}
+        left={left}
+        position={position}
+        focusManagerProps={{
+          context: context,
+        }}
+        aria-labelledby={ariaLabelledby}
+      >
+        <OverlayPanelBase {...rest} />
+      </FloatingComponent>
     );
   }
 );
