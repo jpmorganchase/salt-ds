@@ -3466,31 +3466,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/core@npm:^1.5.3":
-  version: 1.5.3
-  resolution: "@floating-ui/core@npm:1.5.3"
-  dependencies:
-    "@floating-ui/utils": "npm:^0.2.0"
-  checksum: 10/7d9feaca2565a2a71bf03d23cd292c03def63097d7fde7d62909cdb8ddb84664781f3922086bcf10443f3310cb92381a0ecf745b2774edb917fa74fe61015c56
-  languageName: node
-  linkType: hard
-
 "@floating-ui/core@npm:^1.6.0":
   version: 1.6.0
   resolution: "@floating-ui/core@npm:1.6.0"
   dependencies:
     "@floating-ui/utils": "npm:^0.2.1"
   checksum: 10/d6a47cacde193cd8ccb4c268b91ccc4ca254dffaec6242b07fd9bcde526044cc976d27933a7917f9a671de0a0e27f8d358f46400677dbd0c8199de293e9746e1
-  languageName: node
-  linkType: hard
-
-"@floating-ui/dom@npm:^1.5.4":
-  version: 1.5.4
-  resolution: "@floating-ui/dom@npm:1.5.4"
-  dependencies:
-    "@floating-ui/core": "npm:^1.5.3"
-    "@floating-ui/utils": "npm:^0.2.0"
-  checksum: 10/3ba02ba2b4227c1e18df6ccdd029a1c100058db2e76ca1dac60a593ec72b2d4d995fa5c2d1639a5c38adb17e12398fbfe4f6cf5fd45f2ee6170ed0cf64acea06
   languageName: node
   linkType: hard
 
@@ -3504,19 +3485,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.0.0, @floating-ui/react-dom@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@floating-ui/react-dom@npm:2.0.5"
-  dependencies:
-    "@floating-ui/dom": "npm:^1.5.4"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 10/b4fc008c725149b9565949184d844c914a8fa2687636c3c1166a1d52ca58537b3ba9b0a0e2945cf424662c846e60b173df0d325af7e700a31550e5e0b346070a
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react-dom@npm:^2.0.8":
+"@floating-ui/react-dom@npm:^2.0.0, @floating-ui/react-dom@npm:^2.0.8":
   version: 2.0.8
   resolution: "@floating-ui/react-dom@npm:2.0.8"
   dependencies:
@@ -3528,21 +3497,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.26.5":
-  version: 0.26.5
-  resolution: "@floating-ui/react@npm:0.26.5"
-  dependencies:
-    "@floating-ui/react-dom": "npm:^2.0.5"
-    "@floating-ui/utils": "npm:^0.2.0"
-    tabbable: "npm:^6.0.1"
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: 10/4ccb51233671b79953bf2ff1debc15815f4411914c19e22f04598d633b03e0589d2b9783cf34a3e930d3d124372a9f8d70a80912bac243bb2d54ac34cb624c39
-  languageName: node
-  linkType: hard
-
-"@floating-ui/react@npm:^0.26.6":
+"@floating-ui/react@npm:^0.26.5, @floating-ui/react@npm:^0.26.6":
   version: 0.26.9
   resolution: "@floating-ui/react@npm:0.26.9"
   dependencies:
@@ -3556,7 +3511,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/utils@npm:^0.2.0, @floating-ui/utils@npm:^0.2.1":
+"@floating-ui/utils@npm:^0.2.1":
   version: 0.2.1
   resolution: "@floating-ui/utils@npm:0.2.1"
   checksum: 10/33c9ab346e7b05c5a1e6a95bc902aafcfc2c9d513a147e2491468843bd5607531b06d0b9aa56aa491cbf22a6c2495c18ccfc4c0344baec54a689a7bb8e4898d6
@@ -6343,7 +6298,7 @@ __metadata:
     eslint-config-next: "npm:^14.0.0"
     lodash-es: "npm:^4.17.21"
     next: "npm:^14.0.4"
-    next-auth: "npm:^4.23.1"
+    next-auth: "npm:^4.24.7"
     raw-loader: "npm:^4.0.2"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
@@ -18764,9 +18719,9 @@ __metadata:
   linkType: hard
 
 "ip@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "ip@npm:2.0.0"
-  checksum: 10/1270b11e534a466fb4cf4426cbcc3a907c429389f7f4e4e3b288b42823562e88d6a509ceda8141a507de147ca506141f745005c0aa144569d94cf24a54eb52bc
+  version: 2.0.1
+  resolution: "ip@npm:2.0.1"
+  checksum: 10/d6dd154e1bc5e8725adfdd6fb92218635b9cbe6d873d051bd63b178f009777f751a5eea4c67021723a7056325fc3052f8b6599af0a2d56f042c93e684b4a0349
   languageName: node
   linkType: hard
 
@@ -20328,10 +20283,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:^4.10.0, jose@npm:^4.11.4":
-  version: 4.13.1
-  resolution: "jose@npm:4.13.1"
-  checksum: 10/021020d77c097038be5ee2c23d8769f72f33053d3bae0ffc8e091bb7886a61ce74201b65c94aa16be01b00fdcb0e39c0321da8a6a656d3be09484ba8fbb6a883
+"jose@npm:^4.10.0, jose@npm:^4.15.5":
+  version: 4.15.5
+  resolution: "jose@npm:4.15.5"
+  checksum: 10/17944fcc0d9afa07387eef23127c30ecfcc77eafddc4b4f1a349a8eee0536bee9b08ecd745406eaa0af65d531f738b94d2467976479cbfe8b3b60f8fc8082b8d
   languageName: node
   linkType: hard
 
@@ -23131,14 +23086,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-auth@npm:^4.23.1":
-  version: 4.24.5
-  resolution: "next-auth@npm:4.24.5"
+"next-auth@npm:^4.24.7":
+  version: 4.24.7
+  resolution: "next-auth@npm:4.24.7"
   dependencies:
     "@babel/runtime": "npm:^7.20.13"
     "@panva/hkdf": "npm:^1.0.2"
     cookie: "npm:^0.5.0"
-    jose: "npm:^4.11.4"
+    jose: "npm:^4.15.5"
     oauth: "npm:^0.9.15"
     openid-client: "npm:^5.4.0"
     preact: "npm:^10.6.3"
@@ -23152,7 +23107,7 @@ __metadata:
   peerDependenciesMeta:
     nodemailer:
       optional: true
-  checksum: 10/c9256deaa7a77741be2c8829c290c43c63fd8fa86ace3196910d3fa4389c101d6a610f3c5f4b55000e766a51dd89eafc9b5cd876e373884db3bf90122fdfa6a1
+  checksum: 10/f226254dac02e31dc28589344ca077fc975261242cc8484f2d9b7c5916f29f29877d75a213168403fbf75d0c84b324c19d68c5a3283cbc683d720a6ea6f3872d
   languageName: node
   linkType: hard
 
