@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix tooltip overflow, allowing it to flip direction when space is limited
+Allowed Tooltip to flip to any axis when space is limited. Previously, it was limited to flipping horizontally.
