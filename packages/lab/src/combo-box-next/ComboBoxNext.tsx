@@ -164,6 +164,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
       open: openState && !readOnly && children != undefined,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
+      strategy: "fixed",
       middleware: [
         size({
           apply({ rects, elements, availableHeight }) {
@@ -361,9 +362,12 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   const buttonId = useId();
   const listId = useId();
 
+  console.log(x, y);
+
   return (
     <ListControlContext.Provider value={listControl}>
       <PillInput
+        tabIndex={-1}
         className={clsx(
           withBaseName(),
           {
