@@ -1,3 +1,4 @@
+import { clsx } from "clsx";
 import {
   ownerWindow,
   SaltProvider,
@@ -28,7 +29,7 @@ const TestComponent = ({
       id={id}
       className={className}
       data-density={density}
-      data-theme={theme}
+      data-theme={clsx(theme)}
       data-mode={mode}
       data-announcer={announcerPresent}
       data-corner={UNSTABLE_corner}
@@ -106,7 +107,7 @@ describe("Given a SaltProvider", () => {
         .and("have.attr", "data-announcer", "true");
     });
 
-    it("should apply values specified in props", () => {
+    it("should apply density and mode values specified in props", () => {
       mount(
         <SaltProvider density="high" mode="dark">
           <TestComponent />
@@ -117,6 +118,37 @@ describe("Given a SaltProvider", () => {
         .and("have.attr", "data-density", "high")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-announcer", "true");
+    });
+
+    it("should apply theme (string) prop specified in props", () => {
+      mount(
+        <SaltProvider theme="custom-theme">
+          <TestComponent />
+        </SaltProvider>
+      );
+      cy.get("html")
+        .should("exist")
+        .and("have.class", "salt-theme")
+        .and("have.class", "custom-theme");
+      cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "data-theme", "custom-theme");
+    });
+
+    it("should apply theme (string[]) prop specified in props", () => {
+      mount(
+        <SaltProvider theme={["custom-theme-1", "custom-theme-2"]}>
+          <TestComponent />
+        </SaltProvider>
+      );
+      cy.get("html")
+        .should("exist")
+        .and("have.class", "salt-theme")
+        .and("have.class", "custom-theme-1")
+        .and("have.class", "custom-theme-2");
+      cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "data-theme", "custom-theme-1 custom-theme-2");
     });
   });
 
@@ -135,9 +167,9 @@ describe("Given a SaltProvider", () => {
 
     it("should inherit values not passed as props", () => {
       mount(
-        <SaltProvider density="high" mode="dark">
+        <SaltProvider density="high" mode="dark" theme="custom-theme-1">
           <TestComponent />
-          <SaltProvider density="medium">
+          <SaltProvider density="medium" theme="custom-theme-2">
             <TestComponent id="test-2" />
           </SaltProvider>
         </SaltProvider>
@@ -147,13 +179,14 @@ describe("Given a SaltProvider", () => {
         .should("exist")
         .and("have.attr", "data-density", "high")
         .and("have.attr", "data-mode", "dark")
-        .and("have.attr", "data-announcer", "true");
-
+        .and("have.attr", "data-announcer", "true")
+        .and("have.attr", "data-theme", "custom-theme-1");
       cy.get("#test-2")
         .should("exist")
         .and("have.attr", "data-density", "medium")
         .and("have.attr", "data-mode", "dark")
-        .and("have.attr", "data-announcer", "true");
+        .and("have.attr", "data-announcer", "true")
+        .and("have.attr", "data-theme", "custom-theme-2");
     });
   });
 
@@ -242,7 +275,7 @@ describe("Given a SaltProvider", () => {
     );
   }
 
-  it.skip("should not warn when two providers are set to apply to root but are in different windows", () => {
+  it("should not warn when two providers are set to apply to root but are in different windows", () => {
     cy.spy(console, "warn").as("consoleSpy");
 
     mount(

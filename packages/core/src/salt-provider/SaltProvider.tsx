@@ -52,15 +52,19 @@ export const BreakpointContext =
 /**
  * We're relying `DEFAULT_THEME_NAME` to determine whether the provider is a root.
  */
-const getThemeNames = (themeName: ThemeName, themeNext?: boolean) => {
+const getThemeNames = (themeName: ThemeName, themeNext?: boolean): string[] => {
   if (themeNext) {
     return themeName === DEFAULT_THEME_NAME
       ? [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME]
+      : Array.isArray(themeName)
+      ? [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, ...themeName]
       : [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName];
   } else {
     {
       return themeName === DEFAULT_THEME_NAME
         ? [DEFAULT_THEME_NAME]
+        : Array.isArray(themeName)
+        ? [DEFAULT_THEME_NAME, ...themeName]
         : [DEFAULT_THEME_NAME, themeName];
     }
   }
