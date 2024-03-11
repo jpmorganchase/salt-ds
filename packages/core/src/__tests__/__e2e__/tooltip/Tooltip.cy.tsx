@@ -177,6 +177,19 @@ describe("GIVEN a Tooltip", () => {
       cy.get("ul").should("be.visible");
       cy.get("li").should("be.visible");
     });
+    it("then tooltip flips direction when there is not enough space", () => {
+      cy.mount(<CustomContent open />);
+      cy.viewport(200, 750);
+      cy.findByRole("button")
+        .then(($el) => $el.position().top)
+        .then((pos1) => {
+          cy.findByRole("tooltip")
+            .then(($el) => $el.position().top)
+            .then((pos2) => {
+              expect(pos1).to.be.lt(pos2);
+            });
+        });
+    });
   });
 
   describe("WHEN content is empty", () => {
