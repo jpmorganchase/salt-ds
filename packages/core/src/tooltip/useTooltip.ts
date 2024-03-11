@@ -70,9 +70,11 @@ export function useTooltip(props?: UseTooltipProps) {
       placement: placementProp,
       middleware: [
         offset(8),
-        flip({ fallbackAxisSideDirection: "end" }),
-        flip(),
         shift({ limiter: limitShift() }),
+        flip({
+          fallbackAxisSideDirection: "end",
+          fallbackStrategy: "initialPlacement",
+        }),
         arrow({ element: arrowRef }),
       ],
     });
