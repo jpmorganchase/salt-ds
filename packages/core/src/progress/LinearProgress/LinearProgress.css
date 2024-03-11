@@ -28,6 +28,7 @@
 
 .saltLinearProgress-buffer {
   background: var(--salt-container-secondary-background);
+  border: solid var(--salt-size-bar-small) var(--salt-accent-background);
   z-index: var(--salt-zIndex-default);
 }
 

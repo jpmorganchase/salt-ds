@@ -113,7 +113,7 @@ export const CircularProgress = forwardRef<
         )}
         <div className={withBaseName("barOverlayRight")}>
           <div
-            className={withBaseName("barSubOverlayRight")}
+            className={clsx(withBaseName("bufferSubOverlay"), withBaseName("barSubOverlayRight"))}
             style={barSubOverlayRightStyle}
           >
             <div className={withBaseName("bar")} />
@@ -122,7 +122,7 @@ export const CircularProgress = forwardRef<
         {buffer > 0 && (
           <div className={withBaseName("bufferOverlayLeft")}>
             <div
-              className={withBaseName("bufferSubOverlayLeft")}
+              className={clsx(withBaseName("bufferSubOverlay"), withBaseName("bufferSubOverlayLeft"))}
               style={bufferSubOverlayLeftStyle}
             >
               <div className={withBaseName("buffer")} />

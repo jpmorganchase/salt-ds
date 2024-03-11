@@ -36,7 +36,9 @@
 }
 
 .saltCircularProgress-buffer {
-  border-color: var(--salt-container-secondary-background);
+  border: solid var(--salt-size-bar-small) var(--salt-accent-background);
+  outline: solid var(--salt-size-bar-small) var(--salt-accent-background);
+  outline-offset: calc(var(--salt-size-bar-strong) * -1);
 }
 
 .saltCircularProgress-bar {
@@ -77,4 +79,12 @@
 .saltCircularProgress-bufferOverlayLeft,
 .saltCircularProgress-barOverlayLeft {
   transform: rotate(0deg);
+}
+.saltCircularProgress-bufferSubOverlay:before {
+  content: '';
+  background: var(--salt-accent-background);
+  position: absolute;
+  right: 0;
+  width: var(--salt-size-bar-small);
+  height: var(--salt-size-bar-strong);
 }
