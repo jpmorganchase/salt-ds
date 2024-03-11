@@ -58,6 +58,7 @@ function format(variables) {
     var tokenValue = token[1];
     let type;
     let rawValue;
+    let calculation;
 
     if (tokenName.startsWith("palette")) {
       const semantic = tokenName.split("-")[1];
@@ -70,17 +71,28 @@ function format(variables) {
       }
       const aliasToken = stripVarFunc(tokenValue);
       let rawValue = variables[`${aliasToken}`];
-      if (rawValue && rawValue.includes("palette-opacity")) {
+      if (rawValue && rawValue.includes("opacity")) {
         let opacityToken = rawValue.split(",")[3];
+        let opacityValue = variables[stripVarFunc(opacityToken)];
         rawValue =
           rawValue.split(",").slice(0, 3).join(",") +
           `, ${
-            variables[stripVarFunc(variables[stripVarFunc(opacityToken)])]
+            opacityValue.includes("opacity")
+              ? variables[stripVarFunc(opacityValue)]
+              : opacityValue
           })`;
       }
       jsonTokens["palette"][semantic] = {
         [tokenName]: {
-          $value: formatValue(aliasToken),
+          $value: !rawValue
+            ? "transparent"
+            : `{foundations.${
+                semantic === "corner"
+                  ? "curve"
+                  : semantic === "opacity"
+                  ? "opacity"
+                  : "color"
+              }.${removePrefix(aliasToken)}}`,
           $type: type,
           ...(rawValue && {
             $rawValue: rawValue,
@@ -88,100 +100,103 @@ function format(variables) {
         },
         ...jsonTokens["palette"][semantic],
       };
-    } 
-    // else {
-    //   const semantic = tokenName.split("-")[0];
-    //   if (["curve", "size"].includes(semantic)) {
-    //     type = "dimension";
-    //   } else if (semantic === "spacing") {
-    //     type = "dimension";
-    //     if (tokenValue.includes("calc")) {
-    //       let [multiplier, multipleToken] = tokenValue
-    //         .replace("calc(", "")
-    //         .replace(")", "")
-    //         .split(" * ");
-    //       tokenValue = removePrefix(stripVarFunc(tokenValue))
-    //         .replace("spacing", `{spacing`)
-    //         .replace("100", "100})");
-    //       multipleToken = variables[stripVarFunc(multipleToken)].replace(
-    //         "px",
-    //         ""
-    //       );
-    //       rawValue = `${multiplier * multipleToken}`;
-    //     }
-    //   } else if (["opacity", "zIndex"].includes(semantic)) {
-    //     type = "number";
-    //   } else if (semantic === "duration") {
-    //     type = "duration";
-    //   } else if (semantic === "typography") {
-    //     const attribute = tokenName.split("-")[1];
-    //     type = attribute;
-    //   } else if (semantic === "shadow") {
-    //     if (tokenName.includes("color")) {
-    //       type = "color";
-    //     } else {
-    //       type = "shadow";
-    //       const [offsetX, offsetY, blur, spread, color] = tokenValue.split(" ");
-    //       tokenValue = {
-    //         offsetX: offsetX,
-    //         offsetY: offsetY,
-    //         blur: blur,
-    //         spread: spread,
-    //         color: formatValue(stripVarFunc(color)),
-    //       };
-    //       const rawColor = variables[stripVarFunc(color)];
-    //       rawValue = `${offsetX}, ${offsetY}, ${blur}, ${spread}, ${rawColor}`;
-    //     }
-    //   } else if (semantic === "color") {
-    //     if (tokenName.includes("fade")) {
-    //       type = "color";
+    } else {
+      const semantic = tokenName.split("-")[0];
+      if (["curve", "size"].includes(semantic)) {
+        type = "dimension";
+      } else if (semantic === "spacing") {
+        type = "dimension";
+        if (tokenValue.includes("calc")) {
+          let [multiplier, multipleToken] = tokenValue
+            .replace("calc(", "")
+            .replace(")", "")
+            .split(" * ");
+          multipleToken = variables[stripVarFunc(multipleToken)].replace(
+            "px",
+            ""
+          );
+          calculation = removePrefix(stripVarFunc(tokenValue))
+            .replace("spacing", `{spacing`)
+            .replace("100", "100}")
+            .replace("calc(", "");
+          tokenValue = `${multiplier * multipleToken}`;
+        }
+      } else if (["opacity", "zIndex"].includes(semantic)) {
+        type = "number";
+      } else if (semantic === "duration") {
+        type = "duration";
+      } else if (semantic === "typography") {
+        const attribute = tokenName.split("-")[1];
+        type = attribute;
+      } else if (semantic === "shadow") {
+        if (tokenName.includes("color")) {
+          type = "color";
+        } else {
+          type = "shadow";
+          const [offsetX, offsetY, blur, spread, color] = tokenValue.split(" ");
+          tokenValue = {
+            offsetX: offsetX,
+            offsetY: offsetY,
+            blur: blur,
+            spread: spread,
+            color: `{foundations.color.${removePrefix(stripVarFunc(color))}}`,
+          };
+          const rawColor = variables[stripVarFunc(color)];
+          rawValue = `${offsetX}, ${offsetY}, ${blur}, ${spread}, ${rawColor}`;
+        }
+      } else if (semantic === "color") {
+        if (tokenName.includes("fade")) {
+          type = "color";
 
-    //       const colorToken = `${tokenName.split("-fade")[0]}`;
-    //       const rawColorValue = variables[`--salt-${colorToken}`];
+          const colorToken = `${tokenName.split("-fade")[0]}`;
+          const rawColorValue = variables[`--salt-${colorToken}`];
 
-    //       const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
-    //       const foundationOpacityValue = variables[`${opacityValue}`];
+          const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
+          const foundationOpacityValue = variables[`${opacityValue}`];
 
-    //       // e.g. --salt-palette-opacity-disabled -> --salt-opacity-40
-    //       if (foundationOpacityValue.includes("opacity")) {
-    //         const opacityAlias = stripVarFunc(foundationOpacityValue);
-    //         let rawOpacityValue = variables[`${opacityAlias}`];
-    //         tokenValue = {
-    //           color: formatValue(colorToken),
-    //           opacity: formatValue(opacityAlias),
-    //         };
-    //         rawValue = `${rawColorValue
-    //           .replace("rgb", "rgba")
-    //           .replace(")", "")}, ${rawOpacityValue})`;
-    //       }
-    //       // eg. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover
-    //       else {
-    //         tokenValue = {
-    //           color: formatValue(colorToken),
-    //           opacity: formatValue(opacityValue),
-    //         };
-    //         rawValue = `${rawColorValue
-    //           .replace("rgb", "rgba")
-    //           .replace(")", "")}, ${foundationOpacityValue})`;
-    //       }
-    //     } else {
-    //       type = "color";
-    //     }
-    //   }
+          // e.g. --salt-palette-opacity-disabled -> --salt-opacity-40
+          if (foundationOpacityValue.includes("opacity")) {
+            const opacityAlias = stripVarFunc(foundationOpacityValue);
+            let rawOpacityValue = variables[`${opacityAlias}`];
+            tokenValue = {
+              color: `{foundations.color.${colorToken}}`,
+              opacity: `{foundations.opacity.${removePrefix(opacityAlias)}}`,
+            };
+            rawValue = `${rawColorValue
+              .replace("rgb", "rgba")
+              .replace(")", "")}, ${rawOpacityValue})`;
+          }
+          // eg. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover
+          else {
+            tokenValue = {
+              color: `{foundations.color.${colorToken}}`,
+              opacity: `{foundations.opacity.${removePrefix(opacityValue)}}`,
+            };
+            rawValue = `${rawColorValue
+              .replace("rgb", "rgba")
+              .replace(")", "")}, ${foundationOpacityValue})`;
+          }
+        } else {
+          type = "color";
+        }
+      }
 
-    //   if (type) {
-    //     jsonTokens["foundations"][semantic] = {
-    //       [tokenName]: {
-    //         $value: tokenValue,
-    //         $type: type,
-    //         ...(rawValue && {
-    //           $rawValue: rawValue,
-    //         }),
-    //       },
-    //       ...jsonTokens["foundations"][semantic],
-    //     };
-    //   }
-    // }
+      if (type) {
+        jsonTokens["foundations"][semantic] = {
+          [tokenName]: {
+            $value: tokenValue,
+            $type: type,
+            ...(rawValue && {
+              $rawValue: rawValue,
+            }),
+            ...(calculation && {
+              $calculation: calculation,
+            }),
+          },
+          ...jsonTokens["foundations"][semantic],
+        };
+      }
+    }
   }
 
   console.log(util.inspect(jsonTokens, false, null, true /* enable colors */));
