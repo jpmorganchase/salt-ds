@@ -17,6 +17,10 @@ import {
   RadioButtonGroup,
   H3,
   FlexLayout,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
 import {
@@ -50,12 +54,6 @@ import {
   Readonly as CheckboxReadonly,
 } from "../../../core/stories/checkbox/checkbox.stories";
 import { Default as SwitchDefault } from "../../../core/stories/switch/switch.stories";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@salt-ds/lab";
 import { useState } from "react";
 import {
   Default as ToastDefault,
@@ -113,7 +111,7 @@ const LaunchStatusDialog = () => {
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle title={status} />
+        <DialogHeader header={status} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>

@@ -1,0 +1,51 @@
+/* Styles applied to the root element */
+.saltDialogHeader {
+  padding-bottom: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+}
+
+.saltDialogHeader-header {
+  margin: 0;
+}
+
+/* Styles applied to the status indicator icon overriding its default size */
+.saltDialogHeader .saltStatusIndicator.saltIcon {
+  --icon-size: var(--salt-text-h2-lineHeight);
+}
+
+/* Styles applied to DialogTitle when accent={true} */
+.saltDialogHeader-withAccent {
+  position: relative;
+}
+
+.saltDialogHeader-withAccent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: var(--salt-spacing-100);
+  width: var(--salt-size-accent);
+  background: var(--salt-accent-background);
+}
+
+.saltDialogHeader-error::before {
+  background: var(--salt-status-error-borderColor);
+}
+
+.saltDialogHeader-info::before {
+  background: var(--salt-status-info-borderColor);
+}
+
+.saltDialogHeader-success::before {
+  background: var(--salt-status-success-borderColor);
+}
+
+.saltDialogHeader-warning::before {
+  background: var(--salt-status-warning-borderColor);
+}
