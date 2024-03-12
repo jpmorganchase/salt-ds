@@ -86,13 +86,14 @@ export const InteractableCardGroup = forwardRef<
       newValue: InteractableCardValue
     ) => {
       if (selectionVariant === "multiselect") {
-        const oldValues = value;
-        const currentValues = Array.isArray(oldValues) ? oldValues : [];
+        const currentValues = Array.isArray(value) ? value : [];
         const isSelected = currentValues.includes(newValue);
 
         const next = isSelected
           ? currentValues.filter((value) => value !== newValue)
           : [...currentValues, newValue];
+
+        setValue(next);
         onChange?.(event, next);
       } else {
         setValue(newValue);
