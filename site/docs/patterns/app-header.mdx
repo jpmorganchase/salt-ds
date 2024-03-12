@@ -11,7 +11,7 @@ data:
   components: ["Navigation item"]
 ---
 
-An app header is a consistently available element that sits on top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions. This pattern introduces guidelines to make the app header consistent and usable. 
+An app header is a consistently available element that sits at the top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions.
 
   <Diagram
     src="/img/patterns/app-header/app-header.png"
@@ -21,7 +21,7 @@ An app header is a consistently available element that sits on top of every appl
 
 ## When to use
 
-The app header serves as the primary element for users to orient themselves within the UI. It should be globally persistent, enabling easy navigation and access to utility functions.
+Use as the primary element to orient users within the UI. The app header should be globally persistent, enabling easy navigation and access to utilities.
 
 ## How to build
 
@@ -41,7 +41,7 @@ The app header has three functional areas:
 
 ### Desktop layout
 
-1. Use [navigation item](/salt/components/navigation-item) to build the horizontal page navigation, as explained in the [navigation pattern](./navigation).
+1. Use a [navigation item](/salt/components/navigation-item) to build the horizontal page navigation, as explained in the [navigation pattern](./navigation).
 2. Use the flex layout component with justify set to `space-between` to position the brand logo, navigation and utilities.
 
   <Diagram
@@ -52,9 +52,9 @@ The app header has three functional areas:
 
 ### Mobile layout
 
-1. Use a stack layout with the direction property set to row to position the menu button and the logo. 
+1. Use a [stack layout](/salt/components/stack-layout) with the direction property set to row to position the menu button and the logo. 
 2. The menu button opens and closes the navigation [drawer](/salt/components/drawer). 
-3. Use a stack layout to position the [vertical navigation](./navigation) and utilities within the drawer.
+3. Use a stack layout to position the [vertical navigation](./vertical-navigation) and utilities within the drawer.
 
   <Diagram
     src="/img/patterns/app-header/mobile.png"
@@ -64,7 +64,7 @@ The app header has three functional areas:
 
 ## Header only
 
-In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation to navigate complex hierarchies.
+In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation for complex hierarchies.
 
   <Diagram
     src="/img/patterns/app-header/header-only.png"
@@ -123,7 +123,7 @@ The app header should sit in the north region, above the main, in a sticky posit
 
 ## Bypass app header
 
-If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This enables keyboard and screen reader users to shift focus quickly to the main page content, and navigate your application more efficiently.
+If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This enables keyboard and screen reader users to shift focus quickly to the main page content and navigate your application more efficiently.
 
   <Diagram
     src="/img/patterns/app-header/skip-link.png"
