@@ -1,10 +1,9 @@
-import React, {
+import {
   forwardRef,
-  useRef,
   MouseEvent,
   KeyboardEvent,
   ComponentPropsWithoutRef,
-  useContext,
+  SyntheticEvent,
 } from "react";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
@@ -19,8 +18,7 @@ import {
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
-export interface InteractableCardProps
-  extends ComponentPropsWithoutRef<"button"> {
+export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Accent border position: defaults to "bottom"
    */
@@ -37,7 +35,7 @@ export interface InteractableCardProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
+  onChange?: (event: SyntheticEvent<HTMLDivElement>) => void;
   /**
    * Styling variant; defaults to "primary".
    */
@@ -49,7 +47,7 @@ export interface InteractableCardProps
 }
 
 export const InteractableCard = forwardRef<
-  HTMLButtonElement,
+  HTMLDivElement,
   InteractableCardProps
 >(function InteractableCard(props, ref) {
   const {
@@ -83,14 +81,6 @@ export const InteractableCard = forwardRef<
 
   const disabled = interactableCardGroup?.disabled || disabledProp;
 
-  const { active, cardProps } = useInteractableCard({
-    disabled,
-    onKeyUp,
-    onKeyDown,
-    onBlur,
-    onClick,
-  });
-
   const [selected, setSelected] = useControlled({
     controlled: interactableCardGroupSelected,
     default: Boolean(selectedProp),
@@ -107,22 +97,42 @@ export const InteractableCard = forwardRef<
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
 
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (interactableCardGroup) {
-      interactableCardGroup.select(event);
+      interactableCardGroup.select(event, value);
       setSelected(!selected);
     }
     onChange?.(event);
     onClick?.(event);
   };
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter") {
+      if (interactableCardGroup) {
+        interactableCardGroup.select(event, value);
+        setSelected(!selected);
+      }
+      onChange?.(event);
+      onKeyDown?.(event);
+    }
+  };
+
+  const { active, cardProps } = useInteractableCard({
+    disabled,
+    onKeyUp,
+    onKeyDown: handleKeyDown,
+    onBlur,
+    onClick,
+  });
+
   return (
-    <button
+    <div
       {...cardProps}
       role={role}
       aria-checked={ariaChecked}
       data-id={value}
-      disabled={disabled}
+      aria-disabled={disabled}
+      data-value={value}
       className={clsx(
         withBaseName(),
         withBaseName(variant),
@@ -138,9 +148,8 @@ export const InteractableCard = forwardRef<
       {...rest}
       onClick={interactableCardGroup ? handleClick : onClick}
       ref={ref}
-      value={value}
     >
       {children}
-    </button>
+    </div>
   );
 });

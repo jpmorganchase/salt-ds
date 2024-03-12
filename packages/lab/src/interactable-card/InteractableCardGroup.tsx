@@ -40,7 +40,7 @@ export interface InteractableCardGroupProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: SyntheticEvent<HTMLButtonElement>, value: Value) => void;
+  onChange?: (event: SyntheticEvent<HTMLDivElement>, value: Value) => void;
 }
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
@@ -78,17 +78,16 @@ export const InteractableCardGroup = forwardRef<
   });
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLButtonElement>) => {
-      const newValue = event.currentTarget.value;
+    (event: SyntheticEvent<HTMLDivElement>, newValue: Value) => {
       if (selectionVariant === "multiselect") {
-        setValue((oldValues: Value) => {
-          const currentValues = Array.isArray(oldValues) ? oldValues : [];
-          const isSelected = currentValues.includes(newValue);
+        const oldValues = value;
+        const currentValues = Array.isArray(oldValues) ? oldValues : [];
+        const isSelected = currentValues.includes(newValue);
 
-          return isSelected
-            ? currentValues.filter((value) => value !== newValue)
-            : [...currentValues, newValue];
-        });
+        const next = isSelected
+          ? currentValues.filter((value) => value !== newValue)
+          : [...currentValues, newValue];
+        onChange?.(event, next);
       } else {
         setValue(newValue);
         if (value !== newValue) {
