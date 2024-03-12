@@ -9,6 +9,8 @@ import {
   Label,
   Checkbox,
   Avatar,
+  CheckboxIcon,
+  RadioButtonIcon,
 } from "@salt-ds/core";
 
 import {
@@ -247,12 +249,10 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
               <CreditCardIcon size={2} />
               <H3>Credit Card</H3>
             </StackLayout>
-            <RadioButton
-              aria-hidden
-              inputProps={{ tabIndex: -1 }}
-              checked={selected === "card"}
-              label="Link credit card to your payments account."
-            />
+            <StackLayout direction="row" gap={1}>
+              <RadioButtonIcon checked={selected === "card"} />
+              <Text>Link credit card to your payments account.</Text>
+            </StackLayout>
           </StackLayout>
         </InteractableCard>
         <InteractableCard value="wire" style={{ width: "180px" }}>
@@ -261,12 +261,10 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
               <BankIcon size={2} />
               <H3>Bank wire</H3>
             </StackLayout>
-            <RadioButton
-              aria-hidden
-              inputProps={{ tabIndex: -1 }}
-              checked={selected === "wire"}
-              label="Link your bank to your payments account."
-            />
+            <StackLayout direction="row" gap={1}>
+              <RadioButtonIcon checked={selected === "wire"} />
+              <Text>Link your bank to your payments account.</Text>
+            </StackLayout>
           </StackLayout>
         </InteractableCard>
         <InteractableCard value="crypto" style={{ width: "180px" }}>
@@ -275,12 +273,10 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
               <DiamondIcon size={2} />
               <H3>Cryptocurrency</H3>
             </StackLayout>
-            <RadioButton
-              aria-hidden
-              inputProps={{ tabIndex: -1 }}
-              checked={selected === "crypto"}
-              label="Link your crypto to your payments account."
-            />
+            <StackLayout direction="row" gap={1}>
+              <RadioButtonIcon checked={selected === "crypto"} />
+              <Text>Link your crypto to your payments account.</Text>
+            </StackLayout>
           </StackLayout>
         </InteractableCard>
       </InteractableCardGroup>
@@ -307,12 +303,10 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
             <Avatar size={1} />
             <H3>Jane Doe</H3>
           </StackLayout>
-          <Checkbox
-            aria-hidden
-            inputProps={{ tabIndex: -1 }}
-            checked={selected?.includes("jane-doe")}
-            label="Add as business owner"
-          />
+          <StackLayout direction="row" gap={1}>
+            <CheckboxIcon checked={selected?.includes("jane-doe")} />
+            <Text>Add as business owner</Text>
+          </StackLayout>
         </StackLayout>
       </InteractableCard>
       <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
@@ -321,12 +315,10 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
             <Avatar size={1} />
             <H3>Tom Roberts</H3>
           </StackLayout>
-          <Checkbox
-            aria-hidden
-            inputProps={{ tabIndex: -1 }}
-            checked={selected?.includes("tom-roberts")}
-            label="Add as business owner"
-          />
+          <StackLayout direction="row" gap={1}>
+            <CheckboxIcon checked={selected?.includes("tom-roberts")} />
+            <Text>Add as business owner</Text>
+          </StackLayout>
         </StackLayout>
       </InteractableCard>
       <InteractableCard value="ray-smith" style={{ width: "180px" }}>
@@ -335,12 +327,10 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
             <Avatar size={1} />
             <H3>Ray Smith</H3>
           </StackLayout>
-          <Checkbox
-            aria-hidden
-            inputProps={{ tabIndex: -1 }}
-            checked={selected?.includes("ray-smith")}
-            label="Add as business owner"
-          />
+          <StackLayout direction="row" gap={1}>
+            <CheckboxIcon checked={selected?.includes("ray-smith")} />
+            <Text>Add as business owner</Text>
+          </StackLayout>
         </StackLayout>
       </InteractableCard>
     </InteractableCardGroup>
