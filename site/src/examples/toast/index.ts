@@ -4,3 +4,4 @@ export * from "./Success";
 export * from "./Warning";
 export * from "./ToastGroupBottom";
 export * from "./ToastGroupTop";
+export * from "./CustomIcon";

@@ -7,7 +7,7 @@ import {
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { makePrefixer } from "../utils";
 import { ValidationStatus } from "./ValidationStatus";
 
@@ -27,6 +27,12 @@ export interface StatusIndicatorProps extends IconProps {
    * Status indicator to be displayed.
    */
   status: ValidationStatus;
+  /**
+   * (Optional) if provided, this icon will be used instead of the status icon
+   */
+  icon?: React.ForwardRefExoticComponent<
+    IconProps & React.RefAttributes<SVGSVGElement>
+  >;
 }
 
 const statusToAriaLabelMap: Record<ValidationStatus, string> = {
@@ -40,7 +46,7 @@ const withBaseName = makePrefixer("saltStatusIndicator");
 
 export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
   function StatusIndicator(
-    { className, status, size = DEFAULT_ICON_SIZE, ...restProps },
+    { className, status, size = DEFAULT_ICON_SIZE, icon, ...restProps },
     ref
   ) {
     const targetWindow = useWindow();
@@ -50,7 +56,7 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
       window: targetWindow,
     });
 
-    const IconComponent = icons[status];
+    const IconComponent = icon ?? icons[status];
     const ariaLabel = statusToAriaLabelMap[status];
 
     return (

@@ -7,7 +7,7 @@ import {
   ToastContent,
   ToastProps,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
+import { CloseIcon, GlobeIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Toast",
@@ -147,3 +147,17 @@ export const SingleLine = (args: ToastProps) => (
     </Toast>
   </div>
 );
+
+export const CustomIcon = Template.bind({});
+CustomIcon.args = {
+  status: "success",
+  icon: GlobeIcon,
+  children: (
+    <div>
+      <Text>
+        <strong>Connection established</strong>
+      </Text>
+      <div>A connection has successfully been established.</div>
+    </div>
+  ),
+};

@@ -4,6 +4,7 @@ import {
   FlowLayout,
   VALIDATION_NAMED_STATUS as status,
 } from "@salt-ds/core";
+import { SaltShakerIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Status Indicator",
@@ -38,3 +39,6 @@ const Template: StoryFn<typeof StatusIndicator> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = { status: status[3] };
+
+export const CustomIcon = Template.bind({});
+CustomIcon.args = { icon: SaltShakerIcon, status: status[1] };

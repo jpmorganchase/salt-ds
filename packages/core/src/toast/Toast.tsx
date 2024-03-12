@@ -1,3 +1,4 @@
+import { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -14,13 +15,19 @@ export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
    *  A string to determine the current state of the Toast.
    */
   status?: ValidationStatus;
+  /**
+   * (Optional) if provided, this icon will be used instead of the status icon
+   */
+  icon?: React.ForwardRefExoticComponent<
+    IconProps & React.RefAttributes<SVGSVGElement>
+  >;
 }
 
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   props,
   ref
 ) {
-  const { children, className, status = "info", ...rest } = props;
+  const { children, className, status = "info", icon, ...rest } = props;
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toast",
@@ -35,7 +42,11 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
       {...rest}
       ref={ref}
     >
-      <StatusIndicator status={status} className={withBaseName("icon")} />
+      <StatusIndicator
+        status={status}
+        className={withBaseName("icon")}
+        icon={icon}
+      />
       {children}
     </div>
   );
