@@ -1,13 +1,13 @@
 import { SyntheticEvent, useContext } from "react";
 import { createContext } from "@salt-ds/core";
 
-export type Value = string | readonly string[] | number | undefined;
+export type InteractableCardValue = string | readonly string[] | number | undefined;
 export type SelectionVariant = "single" | "multiselect";
 
 export interface InteractableCardGroupContextValue {
   disabled?: boolean;
-  select: (event: SyntheticEvent<HTMLDivElement>, value: Value) => void;
-  isSelected: (id: Value) => boolean;
+  select: (event: SyntheticEvent<HTMLDivElement>, value: InteractableCardValue) => void;
+  isSelected: (id: InteractableCardValue) => boolean;
   selectionVariant: SelectionVariant;
 }
 

@@ -13,6 +13,7 @@ import {
   InteractableCard,
   InteractableCardGroup,
   InteractableCardProps,
+  InteractableCardValue,
 } from "@salt-ds/lab";
 
 import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
@@ -224,7 +225,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
 export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
   args
 ) => {
-  const [selected, setSelected] = useState("card");
+  const [selected, setSelected] = useState<InteractableCardValue>("card");
 
   return (
     <StackLayout>
@@ -232,13 +233,13 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
         <H3>Payment method</H3>
         <Text>Choose your payment method from the options below.</Text>
       </StackLayout>
-      <InteractableCardGroup defaultValue={"card"}>
-        <InteractableCard
-          {...args}
-          onChange={(event) => setSelected(event.currentTarget.value)}
-          value="card"
-          style={{ width: "180px" }}
-        >
+      <InteractableCardGroup
+        defaultValue={"card"}
+        onChange={(_event, value) => {
+          setSelected(value);
+        }}
+      >
+        <InteractableCard {...args} value="card" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <CreditCardIcon size={2} />
@@ -252,11 +253,7 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
             />
           </StackLayout>
         </InteractableCard>
-        <InteractableCard
-          onChange={(event) => setSelected(event.currentTarget.value)}
-          value="wire"
-          style={{ width: "180px" }}
-        >
+        <InteractableCard value="wire" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <BankIcon size={2} />
@@ -270,11 +267,7 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
             />
           </StackLayout>
         </InteractableCard>
-        <InteractableCard
-          onChange={(event) => setSelected(event.currentTarget.value)}
-          value="crypto"
-          style={{ width: "180px" }}
-        >
+        <InteractableCard value="crypto" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <DiamondIcon size={2} />

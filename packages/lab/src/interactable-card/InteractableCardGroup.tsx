@@ -14,8 +14,8 @@ import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import {
   InteractableCardGroupContext,
   SelectionVariant,
-  Value,
-} from "./internal/InteractableCardGroupContext";
+  InteractableCardValue,
+} from "./InteractableCardGroupContext";
 import interactableCardGroupCss from "./InteractableCardGroup.css";
 
 export interface InteractableCardGroupProps
@@ -23,7 +23,7 @@ export interface InteractableCardGroupProps
   /**
    * The default value. Use when the component is not controlled. Should be an array when `selectionVariant` is "multiselect".
    */
-  defaultValue?: Value;
+  defaultValue?: InteractableCardValue;
   /**
    * If `true`, the Interactable Card Group will be disabled.
    */
@@ -31,7 +31,7 @@ export interface InteractableCardGroupProps
   /**
    * The value. Use when the component is controlled.
    */
-  value?: Value;
+  value?: InteractableCardValue;
   /**
    * The seletion variant.
    */
@@ -40,7 +40,7 @@ export interface InteractableCardGroupProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: SyntheticEvent<HTMLDivElement>, value: Value) => void;
+  onChange?: (event: SyntheticEvent<HTMLDivElement>, value: InteractableCardValue) => void;
 }
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
@@ -78,7 +78,7 @@ export const InteractableCardGroup = forwardRef<
   });
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLDivElement>, newValue: Value) => {
+    (event: SyntheticEvent<HTMLDivElement>, newValue: InteractableCardValue) => {
       if (selectionVariant === "multiselect") {
         const oldValues = value;
         const currentValues = Array.isArray(oldValues) ? oldValues : [];
@@ -99,7 +99,7 @@ export const InteractableCardGroup = forwardRef<
   );
 
   const isSelected = useCallback(
-    (id: Value) =>
+    (id: InteractableCardValue) =>
       selectionVariant === "multiselect"
         ? Array.isArray(value) && value.includes(id as any)
         : value === id,
