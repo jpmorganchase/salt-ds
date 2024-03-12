@@ -38,12 +38,13 @@ export const WithBuffer = (): ReactElement => {
 
       <FlexItem align="center" grow={1}>
         {selectedType === "circular" && (
-          <CircularProgress aria-label="Download" value={38} bufferValue={60}/>
+          <CircularProgress aria-label="Download" value={38} bufferValue={60} />
         )}
         {selectedType === "linear" && (
           <LinearProgress
             aria-label="Download"
-            value={38} bufferValue={60}
+            value={38}
+            bufferValue={60}
             style={{ height: "100%" }}
           />
         )}

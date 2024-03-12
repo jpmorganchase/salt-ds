@@ -58,13 +58,12 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
 
     const progress = ((value - min) / (max - min)) * 100;
     const buffer = ((bufferValue - min) / (max - min)) * 100;
-
     const barStyle: CSSProperties = {};
     const bufferStyle: CSSProperties = {};
     const trackStyle: CSSProperties = {};
 
     barStyle.transform = `translateX(${progress - 100}%)`;
-    bufferStyle.transform = `translateX(${buffer - 100}%)`;
+    bufferStyle.width = `${buffer}%`;
     trackStyle.transform = `translateX(${progress}%)`;
 
     return (

@@ -39,6 +39,26 @@ const ProgressWithControls = ({
     </div>
   );
 };
+const ProgressBufferWithControls = ({
+  ProgressComponent: Progress,
+}: ProgressWithControlsProps) => {
+  const { handleReset, handleStart, handleStop, isProgressing, value } =
+    useProgressingValue();
+  return (
+    <div className="root">
+      <FlowLayout className="controls" gap={1}>
+        <Button disabled={isProgressing} onClick={handleStart}>
+          Start
+        </Button>
+        <Button disabled={!isProgressing} onClick={handleStop}>
+          Stop
+        </Button>
+        <Button onClick={handleReset}>Reset</Button>
+      </FlowLayout>
+      <Progress aria-label="Download" bufferValue={value} />
+    </div>
+  );
+};
 
 export const Default: StoryFn<typeof LinearProgress> = (args) => (
   <LinearProgress aria-label="Download" {...args} />
@@ -66,4 +86,8 @@ export const MaxValue: StoryFn<typeof LinearProgress> = () => (
 
 export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
   <ProgressWithControls ProgressComponent={LinearProgress} />
+);
+
+export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
+  <ProgressBufferWithControls ProgressComponent={LinearProgress} />
 );
