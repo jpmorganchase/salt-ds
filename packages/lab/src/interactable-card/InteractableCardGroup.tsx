@@ -40,7 +40,10 @@ export interface InteractableCardGroupProps
    * Callback fired when the selection changes.
    * @param event
    */
-  onChange?: (event: SyntheticEvent<HTMLDivElement>, value: InteractableCardValue) => void;
+  onChange?: (
+    event: SyntheticEvent<HTMLDivElement>,
+    value: InteractableCardValue
+  ) => void;
 }
 
 const withBaseName = makePrefixer("saltInteractableCardGroup");
@@ -78,7 +81,10 @@ export const InteractableCardGroup = forwardRef<
   });
 
   const select = useCallback(
-    (event: SyntheticEvent<HTMLDivElement>, newValue: InteractableCardValue) => {
+    (
+      event: SyntheticEvent<HTMLDivElement>,
+      newValue: InteractableCardValue
+    ) => {
       if (selectionVariant === "multiselect") {
         const oldValues = value;
         const currentValues = Array.isArray(oldValues) ? oldValues : [];
