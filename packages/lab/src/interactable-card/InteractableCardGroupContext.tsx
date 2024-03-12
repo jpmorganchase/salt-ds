@@ -1,11 +1,7 @@
 import { SyntheticEvent, useContext } from "react";
 import { createContext } from "@salt-ds/core";
 
-export type InteractableCardValue =
-  | string
-  | readonly string[]
-  | number
-  | undefined;
+export type InteractableCardValue = string | readonly string[] | undefined;
 export type SelectionVariant = "single" | "multiselect";
 
 export interface InteractableCardGroupContextValue {

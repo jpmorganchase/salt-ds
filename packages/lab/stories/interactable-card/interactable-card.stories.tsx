@@ -7,6 +7,8 @@ import {
   RadioButton,
   RadioButtonGroup,
   Label,
+  Checkbox,
+  Avatar,
 } from "@salt-ds/core";
 
 import {
@@ -283,5 +285,64 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
         </InteractableCard>
       </InteractableCardGroup>
     </StackLayout>
+  );
+};
+
+export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
+  args
+) => {
+  const [selected, setSelected] = useState<InteractableCardValue>(["jane-doe"]);
+
+  return (
+    <InteractableCardGroup
+      defaultValue={["jane-doe"]}
+      onChange={(_event, value) => {
+        setSelected(value);
+      }}
+      selectionVariant="multiselect"
+    >
+      <InteractableCard {...args} value="jane-doe" style={{ width: "180px" }}>
+        <StackLayout>
+          <StackLayout gap={1} direction="row" align="center">
+            <Avatar size={1} />
+            <H3>Jane Doe</H3>
+          </StackLayout>
+          <Checkbox
+            aria-hidden
+            inputProps={{ tabIndex: -1 }}
+            checked={selected?.includes("jane-doe")}
+            label="Add as business owner"
+          />
+        </StackLayout>
+      </InteractableCard>
+      <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
+        <StackLayout>
+          <StackLayout gap={1} direction="row" align="center">
+            <Avatar size={1} />
+            <H3>Tom Roberts</H3>
+          </StackLayout>
+          <Checkbox
+            aria-hidden
+            inputProps={{ tabIndex: -1 }}
+            checked={selected?.includes("tom-roberts")}
+            label="Add as business owner"
+          />
+        </StackLayout>
+      </InteractableCard>
+      <InteractableCard value="ray-smith" style={{ width: "180px" }}>
+        <StackLayout>
+          <StackLayout gap={1} direction="row" align="center">
+            <Avatar size={1} />
+            <H3>Ray Smith</H3>
+          </StackLayout>
+          <Checkbox
+            aria-hidden
+            inputProps={{ tabIndex: -1 }}
+            checked={selected?.includes("ray-smith")}
+            label="Add as business owner"
+          />
+        </StackLayout>
+      </InteractableCard>
+    </InteractableCardGroup>
   );
 };
