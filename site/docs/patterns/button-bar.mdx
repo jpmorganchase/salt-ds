@@ -26,6 +26,12 @@ Use the pattern when the user needs to perform actions after reaching the end of
 
 ## How to build
 
+### Anatomy
+
+TBD
+
+### Layout
+
 Core actions:
 1. Use the stack layout component to group your buttons together. This forms the core set of actions. 
 2. Ensure that the stack layout has the direction property set to row.
@@ -43,7 +49,7 @@ Secondary actions (optional):
     border
   />
 
-## Button options 
+## Button options
 
 There are three button variants to choose from. Choosing the correct button depends on the context and is ultimately the choice of the application team. However, we recommend following these guidelines for consistent design:
 
@@ -142,11 +148,7 @@ The container and the type of scenario determine the position of actions (CTA, p
   - You should display secondary actions that aren’t core to the workflow at the opposite end of the button bar.
 </ExampleContainer>
 
-## Button bar position
-
-There are two ways to position the button bar:
-
-### Fixed
+## Fixed
 
 Fix the button bar at the bottom of the viewport when:
 - A user can proceed (or step back) regardless of task completion.
@@ -172,7 +174,7 @@ If content overflows, the button bar uses a secondary border style.
   </Diagram>
 </Diagrams>
 
-### In line
+## In line
 
 The button bar is located at the end of the task when:
 - The user needs to complete the entire task before proceeding, for example, if there are mandatory fields in a form.
@@ -227,7 +229,7 @@ We recommend stacking at the xs breakpoint by default. Buttons will expand to fi
   - If users will access your application on a mobile device, use a stacked button layout to ensure an adequate touch-area for the buttons.
 </ExampleContainer>
 
-### Building a stacked button bar
+### How to build
 
 1. Build a button bar following the foundational guidelines provided earlier in the documentation.
 2. Adjust the direction property on both stack layout and split layout (if used) to `{{xs: "column", sm: "row"}}`. This responsive setting arranges the buttons into a column for extra small (xs) screens and a row for small (sm) screens and upwards. This ensures a responsive layout that adapts to the viewport width.
