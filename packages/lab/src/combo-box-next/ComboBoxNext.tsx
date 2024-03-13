@@ -70,7 +70,6 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     open,
     inputProps: inputPropsProp,
     variant = "primary",
-    onClick,
     onKeyDown,
     onFocus,
     onBlur,
@@ -357,12 +356,11 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     }
 
     setActive(newActive);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const buttonId = useId();
   const listId = useId();
-
-  console.log(x, y);
 
   return (
     <ListControlContext.Provider value={listControl}>

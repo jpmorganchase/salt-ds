@@ -12,9 +12,7 @@ export function useTruncatePills({
   enable?: boolean;
 }) {
   const pillListRef = useRef<HTMLDivElement>(null);
-  const [{ visibleCount }, setVisibleItems] = useValueEffect({
-    visibleCount: pills.length,
-  });
+  const [visibleCount, setVisibleItems] = useValueEffect(pills.length);
   const targetWindow = useWindow();
 
   const updateOverflow = useCallback(() => {
@@ -26,12 +24,12 @@ export function useTruncatePills({
       const pillList = pillListRef.current;
 
       if (pillList && targetWindow) {
-        let pillElements = Array.from(
+        const pillElements = Array.from(
           pillList.querySelectorAll('[role="listitem"]')
-        ) as HTMLLIElement[];
+        );
         const maxWidth = pillList.getBoundingClientRect().width;
         const listGap = parseInt(targetWindow.getComputedStyle(pillList).gap);
-        let isShowingOverflow = pillList.querySelector(
+        const isShowingOverflow = pillList.querySelector(
           "[data-overflowindicator]"
         );
 
@@ -39,15 +37,15 @@ export function useTruncatePills({
         let newVisibleCount = 0;
 
         if (isShowingOverflow) {
-          let pill = pillElements.pop();
+          const pill = pillElements.pop();
           if (pill) {
-            let pillWidth = pill.getBoundingClientRect().width;
+            const pillWidth = pill.getBoundingClientRect().width;
             currentSize += pillWidth + listGap;
           }
         }
 
-        for (let pill of pillElements) {
-          let pillWidth = pill.getBoundingClientRect().width;
+        for (const pill of pillElements) {
+          const pillWidth = pill.getBoundingClientRect().width;
           currentSize += pillWidth + listGap;
 
           if (Math.round(currentSize) <= Math.round(maxWidth)) {
@@ -63,23 +61,16 @@ export function useTruncatePills({
 
     setVisibleItems(function* () {
       // Show all
-      yield {
-        visibleCount: pills.length,
-      };
+      yield pills.length;
 
       // Measure the visible count
-      let newVisibleCount = computeVisible(pills.length);
-      let isMeasuring = newVisibleCount < pills.length && newVisibleCount > 0;
-      yield {
-        visibleCount: newVisibleCount,
-      };
+      const newVisibleCount = computeVisible(pills.length);
+      const isMeasuring = newVisibleCount < pills.length && newVisibleCount > 0;
+      yield newVisibleCount;
 
       // ensure the visible count is correct
       if (isMeasuring) {
-        newVisibleCount = computeVisible(visibleCount);
-        yield {
-          visibleCount: newVisibleCount,
-        };
+        yield computeVisible(newVisibleCount);
       }
     });
   }, [pills, setVisibleItems, enable, targetWindow]);
