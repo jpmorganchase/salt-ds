@@ -180,6 +180,11 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/vertical-navigation</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>https://www.saltdesignsystem.com/salt/support-and-contributions/index</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
@@ -1151,6 +1156,11 @@
 	</url>
 	<url>
 		<loc>https://www.saltdesignsystem.com/salt/patterns/dashboards/index</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/fragments/feedback</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>
