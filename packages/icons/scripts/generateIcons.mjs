@@ -50,13 +50,14 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
       const iconName = pascalCase(filenameWithoutExtension);
 
-      return `.saltIcon-${iconName}{background-image:url("data:image/svg+xml,${encodeURIComponent(
+      return `.saltIcon-${iconName}{mask-image:url("data:image/svg+xml,${encodeURIComponent(
         svgString
       )}")}`;
     })
     .join("\n");
 
-  const ALL_CSS = `[class*=' saltIcon-'],[class^='saltIcon-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
+  const ALL_CSS = `[class*=' saltIcon-'],[class^='saltIcon-'] {mask-size: cover;background-color: currentColor;
+  height:max(var(--salt-size-icon, 12px), 12px);width:max(var(--salt-size-icon, 12px), 12px);}\n`;
 
   const formattedResult = prettier.format(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, iconCss),
