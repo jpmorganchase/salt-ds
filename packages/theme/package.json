@@ -11,7 +11,8 @@
   "style": "index.css",
   "files": [
     "/index.css",
-    "/css"
+    "/css",
+    "/json"
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs"
