@@ -32,6 +32,10 @@ const saltConfig = {
       },
     },
     {
+      modulePath: "@jpmorganchase/mosaic-plugins/FragmentPlugin",
+      options: {},
+    },
+    {
       modulePath: "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin",
       options: {
         minRank: 2,
