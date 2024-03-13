@@ -101,10 +101,10 @@ module.exports = function getCssVariablesFromDir(dirPath) {
   return {
     light: lightModeVariables,
     dark: darkModeVariables,
-    hd: hdVariables,
-    md: mdVariables,
-    ld: ldVariables,
-    td: tdVariables,
+    high: hdVariables,
+    medium: mdVariables,
+    low: ldVariables,
+    touch: tdVariables,
     general: cssVariables,
   };
 };

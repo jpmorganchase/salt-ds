@@ -1,6 +1,7 @@
 const util = require("util");
 const path = require("path");
 const getCssVariablesFromDir = require("./getCssVariablesFromDir");
+const colorFormatSwap = require("./colorFormatSwap");
 
 /* Removes surrounding CSS var('...') function from a token */
 function stripVarFunc(cssVar) {
@@ -12,7 +13,12 @@ function removePrefix(cssVar) {
   return cssVar.replace("--salt-", "");
 }
 
-const jsonTokens = { palette: {}, foundations: {} };
+const jsonTokens = {
+  modes: ["$light", "$dark"],
+  densities: ["$high", "$medium", "$low", "$touch"],
+  palette: {},
+  foundations: {},
+};
 /*
  * Adds token to JSON schema
  * @param key - Mode or density the token belongs to, or 'general' if it has the same value in all modes and densities
@@ -20,7 +26,7 @@ const jsonTokens = { palette: {}, foundations: {} };
  * @param semantic - Key within theme level, e.g. 'accent', 'color', 'size', etc
  * @param tokenName - Name of the token
  * @param type - Token type, see https://design-tokens.github.io/community-group/format/#types
- * @tokenValue - Value of token (alias, e.g. {color.white}, or raw value, e.g. '4px')
+ * @tokenValue - Value of token (alias, e.g. {color.white}, or raw value, e.g. '4px', 'transparent')
  **/
 function addToJson(key, themeLevel, semantic, tokenName, type, tokenValue) {
   if (key !== "general") {
@@ -43,6 +49,9 @@ function addToJson(key, themeLevel, semantic, tokenName, type, tokenValue) {
   };
 }
 
+/**
+ * Maps semantic of palette to corresponding semantic of foundation
+ **/
 function formatFoundationValue(semantic, tokenValue) {
   const alias = removePrefix(stripVarFunc(tokenValue));
 
@@ -79,7 +88,7 @@ function format(variables) {
             type = "color";
         }
         tokenValue =
-          !tokenValue !== "transparent"
+          tokenValue !== "transparent"
             ? formatFoundationValue(semantic, tokenValue)
             : tokenValue;
         addToJson(key, "palette", semantic, tokenName, type, tokenValue);
@@ -124,6 +133,7 @@ function format(variables) {
           case "shadow":
             if (tokenName.includes("color")) {
               type = "color";
+              tokenValue = colorFormatSwap("hex", tokenValue);
             } else {
               type = "shadow";
               const [offsetX, offsetY, blur, spread, color] =
@@ -133,7 +143,7 @@ function format(variables) {
                 offsetY: offsetY,
                 blur: blur,
                 spread: spread,
-                color: `{foundations.color.${removePrefix(
+                color: `{foundations.shadow.${removePrefix(
                   stripVarFunc(color)
                 )}}`,
               };
@@ -144,28 +154,17 @@ function format(variables) {
               type = "color";
               const colorToken = `${tokenName.split("-fade")[0]}`;
               const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
-              const foundationOpacityValue =
-                variables["general"][`${opacityValue}`];
-              // e.g. --salt-palette-opacity-disabled -> --salt-opacity-40
-              if (foundationOpacityValue.includes("opacity")) {
-                tokenValue = {
-                  color: `{foundations.color.${colorToken}}`,
-                  opacity: `{foundations.opacity.${removePrefix(
-                    stripVarFunc(foundationOpacityValue)
-                  )}}`,
-                };
-              }
-              // eg. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover
-              else {
-                tokenValue = {
-                  color: `{foundations.color.${colorToken}}`,
-                  opacity: `{foundations.opacity.${removePrefix(
-                    opacityValue
-                  )}}`,
-                };
-              }
+              // the semantic check here is due to e.g. --salt-palette-opacity-disabled used in fade tokens (correct) vs
+              // e.g. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover (this is technically wrong)
+              tokenValue = {
+                color: `{foundations.color.${colorToken}}`,
+                opacity: `{${
+                  opacityValue.includes("palette") ? "palette" : "foundations"
+                }.opacity.${removePrefix(stripVarFunc(opacityValue))}}`,
+              };
             } else {
               type = "color";
+              tokenValue = colorFormatSwap("hex", tokenValue);
             }
             break;
           default:
@@ -179,50 +178,49 @@ function format(variables) {
     }
   }
 
-  console.log(util.inspect(jsonTokens, false, null, true /* enable colors */));
+  // console.log(util.inspect(jsonTokens, false, null, true /* enable colors */));
 }
 
-function themeToJson() {
+module.exports = function themeToJson() {
   const paletteVariables = getCssVariablesFromDir(
     path.resolve(__dirname, "../css/palette")
   );
   const foundationVariables = getCssVariablesFromDir(
     path.resolve(__dirname, "../css/foundations")
   );
-  const characteristicVariables = {};
-  // getCssVariablesFromDir(
-  //   path.resolve(__dirname, "../css/characteristics")
-  // );
+  const characteristicVariables = getCssVariablesFromDir(
+    path.resolve(__dirname, "../css/characteristics")
+  );
   format({
-    light: {
+    $light: {
       ...paletteVariables.light,
       ...foundationVariables.light,
       ...characteristicVariables.light,
     },
-    dark: {
+    $dark: {
       ...paletteVariables.dark,
       ...foundationVariables.dark,
       ...characteristicVariables.dark,
     },
-    hd: {
-      ...paletteVariables.hd,
-      ...foundationVariables.hd,
-      ...characteristicVariables.hd,
+    $high: {
+      ...paletteVariables.high,
+      ...foundationVariables.high,
+      ...characteristicVariables.high,
     },
-    md: {
-      ...paletteVariables.md,
-      ...foundationVariables.md,
-      ...characteristicVariables.md,
+    $medium: {
+      ...paletteVariables.medium,
+      ...foundationVariables.medium,
+      ...characteristicVariables.medium,
     },
-    td: {
-      ...paletteVariables.td,
-      ...foundationVariables.td,
-      ...characteristicVariables.td,
+    $touch: {
+      ...paletteVariables.touch,
+      ...foundationVariables.touch,
+      ...characteristicVariables.touch,
     },
-    ld: {
-      ...paletteVariables.ld,
-      ...foundationVariables.ld,
-      ...characteristicVariables.ld,
+    $low: {
+      ...paletteVariables.low,
+      ...foundationVariables.low,
+      ...characteristicVariables.low,
     },
     general: {
       ...paletteVariables.general,
@@ -230,6 +228,6 @@ function themeToJson() {
       ...characteristicVariables.general,
     },
   });
-}
 
-themeToJson();
+  return jsonTokens;
+};
