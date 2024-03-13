@@ -6,9 +6,10 @@ Add `SegmentedButton` to labs
 
 ```tsx
 const SegmentedButtonGroup = () => (
-  <SegmentedButtonGroup
-    variant="primary"
-    buttons={["Button", "Button", "Button", "Button", "Button"]}
-  />
+  <SegmentedButtonGroup>
+    <Button> Button </Button>
+    <Button> Button </Button>
+    <Button> Button </Button>
+  </SegmentedButtonGroup>
 );
 ```
