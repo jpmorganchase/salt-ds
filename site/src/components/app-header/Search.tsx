@@ -120,7 +120,7 @@ export function Search() {
         )
       }
       value={value}
-      style={{ width: "266px" }}
+      style={{ maxWidth: "266px" }}
     >
       {Object.entries(results).length === 0 && query.length > 2 ? (
         <div

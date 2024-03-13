@@ -14,6 +14,7 @@ import { AppHeaderDrawer } from "@jpmorganchase/mosaic-site-components";
 import styles from "./AppHeader.module.css";
 import { HelpIcon, GithubIcon } from "@salt-ds/icons";
 import { Search } from "./Search";
+import { useRouter } from "next/navigation";
 
 export interface AppHeaderProps {
   homeLink?: string;
@@ -34,6 +35,19 @@ const createDrawerMenu = (menu: TabsMenu): SidebarItem[] =>
     return [...result, parsedItem];
   }, [] as SidebarItem[]);
 
+const actions: TabsMenu = [
+  {
+    title: "Support",
+    link: "/salt/support-and-contributions/index",
+    type: TabMenuItemType.LINK,
+  },
+  {
+    title: "Github repository",
+    link: "https://github.com/salt-ds/github",
+    type: TabMenuItemType.LINK,
+  },
+];
+
 export const AppHeader: FC<AppHeaderProps> = ({
   homeLink,
   logo,
@@ -42,15 +56,21 @@ export const AppHeader: FC<AppHeaderProps> = ({
 }) => {
   const { matchedBreakpoints } = useBreakpoint();
   const { route } = useRoute();
+  const router = useRouter();
 
   const isMobileOrTablet = !matchedBreakpoints.includes("md");
 
   const appHeaderLogo = isMobileOrTablet ? "/img/logo_mobile.svg" : logo;
+
   return (
     <>
       {isMobileOrTablet && (
         <div className={styles.drawer}>
-          <AppHeaderDrawer menu={createDrawerMenu(menu)} />
+          <AppHeaderDrawer
+            menu={createDrawerMenu(
+              menu.concat(isMobileOrTablet ? actions : [])
+            )}
+          />
         </div>
       )}
       <div className={styles.root}>
@@ -79,6 +99,10 @@ export const AppHeader: FC<AppHeaderProps> = ({
                       <NavigationItem
                         active={route?.includes(item.link)}
                         href={item.link}
+                        onClick={(event) => {
+                          event.preventDefault();
+                          router.push(item.link);
+                        }}
                       >
                         {item.title}
                       </NavigationItem>
@@ -92,26 +116,30 @@ export const AppHeader: FC<AppHeaderProps> = ({
         )}
         <StackLayout direction="row" align="center" gap={1}>
           <Search />
-          <Tooltip content="Github repository" placement="bottom">
-            <Link
-              href="https://github.com/jpmorganchase/salt-ds"
-              aria-label="GitHub repository"
-              variant="component"
-              className={styles.appHeaderLink}
-            >
-              <GithubIcon aria-hidden />
-            </Link>
-          </Tooltip>
-          <Tooltip content="Support" placement="bottom">
-            <Link
-              href="/salt/support-and-contributions/index"
-              aria-label="Support"
-              variant="component"
-              className={styles.appHeaderLink}
-            >
-              <HelpIcon aria-hidden />
-            </Link>
-          </Tooltip>
+          {!isMobileOrTablet && (
+            <>
+              <Tooltip content="Github repository" placement="bottom">
+                <Link
+                  href="https://github.com/jpmorganchase/salt-ds"
+                  aria-label="GitHub repository"
+                  variant="component"
+                  className={styles.appHeaderLink}
+                >
+                  <GithubIcon aria-hidden />
+                </Link>
+              </Tooltip>
+              <Tooltip content="Support" placement="bottom">
+                <Link
+                  href="/salt/support-and-contributions/index"
+                  aria-label="Support"
+                  variant="component"
+                  className={styles.appHeaderLink}
+                >
+                  <HelpIcon aria-hidden />
+                </Link>
+              </Tooltip>
+            </>
+          )}
         </StackLayout>
       </div>
     </>
