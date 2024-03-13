@@ -229,7 +229,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
 export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
   args
 ) => {
-  const [selected, setSelected] = useState<InteractableCardValue>("card");
+  const [selected, setSelected] = useState<InteractableCardValue>();
 
   return (
     <StackLayout>
@@ -238,7 +238,6 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
         <Text>Choose your payment method from the options below.</Text>
       </StackLayout>
       <InteractableCardGroup
-        defaultValue={"card"}
         onChange={(_event, value) => {
           setSelected(value);
         }}
@@ -287,11 +286,10 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
 export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
   args
 ) => {
-  const [selected, setSelected] = useState<InteractableCardValue>(["jane-doe"]);
+  const [selected, setSelected] = useState<InteractableCardValue>();
 
   return (
     <InteractableCardGroup
-      defaultValue={["jane-doe"]}
       onChange={(_event, value) => {
         setSelected(value);
       }}
