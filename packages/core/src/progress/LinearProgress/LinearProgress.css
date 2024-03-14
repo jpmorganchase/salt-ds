@@ -45,6 +45,7 @@
   height: var(--salt-size-bar);
   position: absolute;
   top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
+  right: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
 }

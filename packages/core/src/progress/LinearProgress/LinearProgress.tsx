@@ -60,11 +60,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     const buffer = ((bufferValue - min) / (max - min)) * 100;
     const barStyle: CSSProperties = {};
     const bufferStyle: CSSProperties = {};
-    const trackStyle: CSSProperties = {};
 
-    barStyle.transform = `translateX(${progress - 100}%)`;
+    barStyle.width = `${progress}%`;
     bufferStyle.width = `${buffer}%`;
-    trackStyle.transform = `translateX(${progress}%)`;
 
     return (
       <div
@@ -78,8 +76,10 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       >
         <div className={withBaseName("barContainer")}>
           <div className={withBaseName("bar")} style={barStyle} />
-          <div className={withBaseName("buffer")} style={bufferStyle} />
-          <div className={withBaseName("track")} style={trackStyle} />
+          {bufferValue && (
+            <div className={withBaseName("buffer")} style={bufferStyle} />
+          )}
+          <div className={withBaseName("track")} />
         </div>
         {!hideLabel && (
           <Text styleAs="h2" className={withBaseName("progressLabel")}>
