@@ -7,13 +7,12 @@ import {
   MouseEvent,
   ReactNode,
   Ref,
+  SyntheticEvent,
   useEffect,
   useRef,
 } from "react";
 import {
   Button,
-  Input,
-  InputProps,
   makePrefixer,
   useFloatingComponent,
   useFloatingUI,
@@ -36,6 +35,10 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComboBoxNext, UseComboBoxNextProps } from "./useComboBoxNext";
 import { OptionList } from "../option/OptionList";
+import { PillInput, PillInputProps } from "../pill-input";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import comboBoxNextCss from "./ComboBoxNext.css";
 
 export type ComboBoxNextProps<Item = string> = {
   /**
@@ -43,7 +46,7 @@ export type ComboBoxNextProps<Item = string> = {
    */
   children?: ReactNode;
 } & UseComboBoxNextProps<Item> &
-  InputProps;
+  PillInputProps;
 
 const withBaseName = makePrefixer("saltComboBoxNext");
 
@@ -74,8 +77,16 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     value,
     defaultValue,
     valueToString = defaultValueToString,
+    truncate,
     ...rest
   } = props;
+
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-combo-box-next",
+    css: comboBoxNextCss,
+    window: targetWindow,
+  });
 
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
@@ -287,6 +298,12 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     onChange?.(event);
   };
 
+  const handlePillRemove = (event: SyntheticEvent, index: number) => {
+    event.stopPropagation();
+    const removed = selectedState[index];
+    select(event, getOptionsMatching((option) => option.value === removed)[0]);
+  };
+
   const handleListMouseOver = () => {
     setFocusVisibleState(false);
   };
@@ -346,8 +363,15 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   return (
     <ListControlContext.Provider value={listControl}>
-      <Input
-        className={clsx(withBaseName(), className)}
+      <PillInput
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("focused")]: focusedState,
+            [withBaseName("focusVisible")]: focusVisibleState,
+          },
+          className
+        )}
         endAdornment={
           <>
             {endAdornment}
@@ -395,6 +419,15 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
           onFocus: handleFocus,
           ...rest,
         })}
+        pills={
+          multiselect ? selectedState.map((item) => valueToString(item)) : []
+        }
+        truncate={truncate && !focusedState && !openState}
+        onPillRemove={handlePillRemove}
+        hidePillClose={!focusedState || readOnly}
+        emptyReadOnlyMarker={
+          readOnly && selectedState.length > 0 ? "" : undefined
+        }
       />
       <FloatingComponent
         open={(openState || focusedState) && !readOnly && children != undefined}

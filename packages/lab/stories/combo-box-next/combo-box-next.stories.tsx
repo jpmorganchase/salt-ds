@@ -36,10 +36,27 @@ export default {
 
 const usStates = usStateExampleData.slice(0, 10);
 
+function getTemplateDefaultValue({
+  defaultValue,
+  defaultSelected,
+  multiselect,
+}: Pick<
+  ComboBoxNextProps,
+  "defaultValue" | "defaultSelected" | "multiselect"
+>): string {
+  if (multiselect) {
+    return "";
+  }
+
+  if (defaultValue) {
+    return String(defaultValue);
+  }
+
+  return defaultSelected?.[0] ?? "";
+}
+
 const Template: StoryFn<ComboBoxNextProps> = (args) => {
-  const [value, setValue] = useState(
-    args.defaultValue?.toString() ?? args.defaultSelected?.[0] ?? ""
-  );
+  const [value, setValue] = useState(getTemplateDefaultValue(args));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     // React 16 backwards compatibility
@@ -624,4 +641,17 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
       ))}
     </ComboBoxNext>
   );
+};
+
+export const MultiplePills = Template.bind({});
+MultiplePills.args = {
+  defaultSelected: ["Alabama", "Alaska", "Arizona"],
+  multiselect: true,
+};
+
+export const MultiplePillsTruncated = Template.bind({});
+MultiplePillsTruncated.args = {
+  defaultSelected: ["Alabama", "Alaska", "Arizona"],
+  multiselect: true,
+  truncate: true,
 };
