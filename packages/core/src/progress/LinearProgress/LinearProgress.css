@@ -36,7 +36,7 @@
 .saltLinearProgress-bar {
   width: 100%;
   background: var(--salt-accent-background);
-  z-index: calc(var(--salt-zIndex-default) + var(--salt-zIndex-default));
+  z-index: calc(var(--salt-zIndex-default) * 2);
 }
 
 .saltLinearProgress-track {
