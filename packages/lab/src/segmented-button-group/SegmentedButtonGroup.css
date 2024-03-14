@@ -5,16 +5,16 @@
   gap: var(--salt-size-border);
 }
 
-.saltSegmentedButtonGroup>*:not(:last-child)::after {
+.saltSegmentedButtonGroup > *:not(:last-child)::after {
   content: "";
   width: var(--salt-size-border);
   position: absolute;
   background: var(--button-background);
   right: calc(var(--salt-size-border) * -1);
-  height: 100%
+  height: 100%;
 }
 
-.saltSegmentedButtonGroup>*:not(:first-child):before {
+.saltSegmentedButtonGroup > *:not(:first-child):before {
   content: "";
   width: var(--salt-size-border);
   position: absolute;
