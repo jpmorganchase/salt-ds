@@ -5,8 +5,8 @@ import {
   StackLayout,
   Tooltip,
 } from "@salt-ds/core";
-import { Meta } from "@storybook/react";
 import React, { ChangeEvent } from "react";
+import { StoryFn, Meta } from "@storybook/react";
 
 import {
   Overlay,
@@ -40,39 +40,35 @@ const OverlayContent = ({ id }: { id: string }) => {
   );
 };
 
-const OverlayTemplate = (props: OverlayProps) => {
-  const { style, id, ...rest } = props;
-
+export const Default: StoryFn<OverlayProps> = ({ id, ...args }) => {
   return (
-    <Overlay id={id} {...rest}>
+    <Overlay id={id} {...args}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel style={style}>
+      <OverlayPanel>
         <OverlayContent id={id ?? ""} />
       </OverlayPanel>
     </Overlay>
   );
 };
 
-export const Default = (props: OverlayProps) => {
-  return OverlayTemplate({ id: "overlay-default", ...props });
+export const Bottom = Default.bind({});
+Bottom.args = {
+  id: "overlay-bottom",
+  placement: "bottom",
 };
 
-export const Bottom = (props: OverlayProps) => {
-  return OverlayTemplate({
-    id: "overlay-bottom",
-    placement: "bottom",
-    ...props,
-  });
+export const Left = Default.bind({});
+Left.args = {
+  id: "overlay-left",
+  placement: "left",
 };
 
-export const Left = (props: OverlayProps) => {
-  return OverlayTemplate({ id: "overlay-left", placement: "left", ...props });
-};
-
-export const Right = (props: OverlayProps) => {
-  return OverlayTemplate({ id: "overlay-right", placement: "right", ...props });
+export const Right = Default.bind({});
+Right.args = {
+  id: "overlay-right",
+  placement: "right",
 };
 
 export const LongContent = () => {
@@ -211,26 +207,21 @@ const WithActionsContent = ({
   );
 };
 
-export const WithActions = () => {
-  const [show, setShow] = React.useState(false);
+export const WithActions = ({ onOpenChange }: OverlayProps) => {
+  const [open, setOpen] = React.useState(false);
   const id = "overlay-with-actions";
 
+  const onChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
+
   return (
-    <Overlay
-      open={show}
-      onClose={() => {
-        setShow(false);
-      }}
-      onKeyDown={(event) => {
-        event.key === "Escape" && setShow(false);
-      }}
-      placement="bottom"
-      id={id}
-    >
+    <Overlay open={open} onOpenChange={onChange} placement="bottom" id={id}>
       <OverlayTrigger>
         <Button
           onClick={() => {
-            setShow(true);
+            setOpen(true);
           }}
         >
           Show Overlay
@@ -243,7 +234,7 @@ export const WithActions = () => {
       >
         <WithActionsContent
           onClose={() => {
-            setShow(false);
+            setOpen(false);
           }}
           id={id}
         />
