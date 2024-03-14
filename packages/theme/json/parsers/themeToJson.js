@@ -1,5 +1,5 @@
-const util = require("util");
 const path = require("path");
+const fs = require("fs");
 const getCssVariablesFromDir = require("./getCssVariablesFromDir");
 const colorFormatSwap = require("./colorFormatSwap");
 
@@ -177,19 +177,17 @@ function format(variables) {
       }
     }
   }
-
-  // console.log(util.inspect(jsonTokens, false, null, true /* enable colors */));
 }
 
-module.exports = function themeToJson() {
+function themeToJson() {
   const paletteVariables = getCssVariablesFromDir(
-    path.resolve(__dirname, "../css/palette")
+    path.resolve(__dirname, "../../css/palette")
   );
   const foundationVariables = getCssVariablesFromDir(
-    path.resolve(__dirname, "../css/foundations")
+    path.resolve(__dirname, "../../css/foundations")
   );
   const characteristicVariables = getCssVariablesFromDir(
-    path.resolve(__dirname, "../css/characteristics")
+    path.resolve(__dirname, "../../css/characteristics")
   );
   format({
     $light: {
@@ -230,4 +228,18 @@ module.exports = function themeToJson() {
   });
 
   return jsonTokens;
+}
+
+module.exports = function getJson() {
+  return themeToJson();
 };
+
+const themeJson = themeToJson();
+const jsonData = JSON.stringify(themeJson, null, 2);
+const outputPath = path.join(__dirname, "../theme.json");
+
+try {
+  fs.writeFileSync(outputPath, jsonData, "utf8");
+} catch (err) {
+  console.error("Error writing JSON file:", err);
+}

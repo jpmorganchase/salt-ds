@@ -1,8 +1,7 @@
-const util = require("util");
-const themeToJson = require("./themeToJson");
+const path = require("path");
+const fs = require("fs");
+const getJson = require("./themeToJson");
 const colorFormatSwap = require("./colorFormatSwap");
-
-const themeJson = themeToJson();
 
 var hexRegex = /^#[0-9A-F]{6}[0-9a-f]{0,2}$/i;
 
@@ -12,7 +11,7 @@ function convertToRgb(alias) {
   return colorFormatSwap("rgb", color);
 }
 
-function getActualColor(alias, mode) {
+function getActualColor(alias, themeJson) {
   const pathByGrouping = alias.slice(1, -1).split(".");
 
   let x = 0;
@@ -27,7 +26,7 @@ function getActualColor(alias, mode) {
     return undefined;
   }
 
-  const hex = mode ? p["$value"][mode] : p["$value"];
+  const hex = p["$value"];
   return convertToRgb(hex);
 }
 
@@ -56,7 +55,7 @@ function getValue(alias) {
   return `var(--salt-${p})`;
 }
 
-function toCSS() {
+function toCSS(themeJson) {
   const classes = {
     ...themeJson.modes.reduce(
       (a, mode) => ({
@@ -122,7 +121,7 @@ function toCSS() {
         ];
       }
       if (token[1]["$value"]["opacity"] && token[1]["$value"]["color"]) {
-        const color = getActualColor(token[1]["$value"]["color"]);
+        const color = getActualColor(token[1]["$value"]["color"], themeJson);
         const opacity = getValue(token[1]["$value"]["opacity"]);
         classes["general"].variables = [
           ...classes["general"].variables,
@@ -171,8 +170,6 @@ function toCSS() {
     }
   }
 
-  // console.log(util.inspect(classes, false, null, true /* enable colors */));
-
   let CSS = "";
 
   for (const c of Object.entries(classes)) {
@@ -180,7 +177,14 @@ function toCSS() {
     CSS += "\t" + c[1].variables.join("\n\t") + " \n}\n\n";
   }
 
-  console.log(CSS);
+  return CSS;
 }
 
-toCSS();
+const themeCss = toCSS(getJson());
+const outputPath = path.join(__dirname, "../theme.css");
+
+try {
+  fs.writeFileSync(outputPath, themeCss, "utf8");
+} catch (err) {
+  console.error("Error writing CSS file:", err);
+}
