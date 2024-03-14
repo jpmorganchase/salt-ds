@@ -18,9 +18,9 @@ export const Default: StoryFn<SegmentedButtonGroupProps> = () => {
       {variants.map((variant) => {
         return (
           <SegmentedButtonGroup key={variant}>
-            <Button variant={variant}> Button </Button>
-            <Button variant={variant}> Button </Button>
-            <Button variant={variant}> Button </Button>
+            <Button variant={variant}>Button</Button>
+            <Button variant={variant}>Button</Button>
+            <Button variant={variant}>Button</Button>
           </SegmentedButtonGroup>
         );
       })}
