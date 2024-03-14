@@ -17,6 +17,7 @@ esbuild
       "css/theme.css",
       "css/global.css",
       "css/theme-next.css",
+      "json/index.js",
     ],
     assetNames: "[dir]/[name]",
     outdir: buildFolder,
