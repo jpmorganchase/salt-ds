@@ -1,4 +1,4 @@
-export default {
+export const json = {
   modes: ["$light", "$dark"],
   densities: ["$high", "$medium", "$low", "$touch"],
   palette: {
