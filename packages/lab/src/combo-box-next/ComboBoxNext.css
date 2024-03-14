@@ -1,0 +1,3 @@
+.saltComboBoxNext-focused {
+  outline: var(--salt-focused-outline);
+}

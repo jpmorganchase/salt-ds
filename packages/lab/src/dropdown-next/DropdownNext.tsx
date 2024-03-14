@@ -37,7 +37,7 @@ import {
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dropdownCss from "./DropdownNext.css";
+import dropdownNextCss from "./DropdownNext.css";
 import { ListControlContext } from "../list-control/ListControlContext";
 import { OptionList } from "../option/OptionList";
 
@@ -130,8 +130,8 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-DropdownNext",
-    css: dropdownCss,
+    testId: "salt-dropdown-next",
+    css: dropdownNextCss,
     window: targetWindow,
   });
 

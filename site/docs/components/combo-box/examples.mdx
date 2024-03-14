@@ -27,7 +27,7 @@ A single item can be selected from the combo box options.
 
 ## Multi-select
 
-When `multiSelect={true}`, users can select multiple items from the combo box options.
+When `multiSelect={true}`, users can select multiple items from the combo box options. Selected options are displayed as pills in the input field.
 
 </LivePreview>
   
@@ -167,6 +167,14 @@ Note that the data fetching in this example has been made intentionally slow to 
 
 In order to support advanced use-cases, like where the options are fetched from a server, the `value` prop passed to `Option` can be an object.
 When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBoxNext` to specify how to display the option in the input field.
+
+</LivePreview>
+
+<LivePreview componentName="combo-box" exampleName="Truncation" >
+
+## Truncation
+
+Use the `truncate` prop when you are limited on space and want to prevent the multi-select combobox from spanning multiple lines.
 
 </LivePreview>
 </LivePreviewControls>
