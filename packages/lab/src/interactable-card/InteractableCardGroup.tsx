@@ -33,7 +33,7 @@ export interface InteractableCardGroupProps
    */
   value?: InteractableCardValue;
   /**
-   * The seletion variant.
+   * The selection variant.
    */
   selectionVariant?: SelectionVariant;
   /**
@@ -59,6 +59,7 @@ export const InteractableCardGroup = forwardRef<
     defaultValue,
     disabled,
     onChange,
+    onKeyDown,
     selectionVariant = "single",
     ...rest
   } = props;
@@ -89,12 +90,11 @@ export const InteractableCardGroup = forwardRef<
         const currentValues = Array.isArray(value) ? value : [];
         const isSelected = currentValues.includes(newValue);
 
-        const next = isSelected
-          ? currentValues.filter((value) => value !== newValue)
+        const nextValues = isSelected
+          ? currentValues.filter((val) => val !== newValue)
           : [...currentValues, newValue];
-
-        setValue(next);
-        onChange?.(event, next);
+        setValue(nextValues);
+        onChange?.(event, nextValues);
       } else {
         setValue(newValue);
         if (value !== newValue) {
@@ -108,26 +108,124 @@ export const InteractableCardGroup = forwardRef<
   const isSelected = useCallback(
     (id: InteractableCardValue) =>
       selectionVariant === "multiselect"
-        ? Array.isArray(value) && value.includes(id as any)
+        ? Array.isArray(value) && value.includes(id)
         : value === id,
     [value, selectionVariant]
+  );
+
+  const isFirstChild = useCallback(
+    (id: InteractableCardValue) => {
+      const elements: HTMLElement[] = Array.from(
+        groupRef.current?.querySelectorAll(
+          ".saltInteractableCard:not([disabled])"
+        ) ?? []
+      );
+
+      console.log({ elements, value });
+      // console.log(elements[0].getAttribute("data-value"));
+      console.log(
+        elements.findIndex(
+          (element) => element.getAttribute("data-value") === value
+        ) === 0
+      );
+      return (
+        elements.findIndex(
+          (element) => element.getAttribute("data-value") === value
+        ) === 0
+      );
+    },
+    [value]
   );
 
   const contextValue = useMemo(
     () => ({
       select,
       isSelected,
+      isFirstChild,
       disabled,
       selectionVariant,
+      value,
     }),
     [select, isSelected, disabled, selectionVariant]
   );
+
+  const handleKeyDownSingle = (event: KeyboardEvent<HTMLDivElement>) => {
+    const elements: HTMLElement[] = Array.from(
+      groupRef.current?.querySelectorAll(
+        ".saltInteractableCard:not([disabled])"
+      ) ?? []
+    );
+
+    console.log({ elements });
+    const currentIndex = elements.findIndex(
+      (element) => element === document.activeElement
+    );
+    const nextIndex = (currentIndex + 1) % elements.length;
+    const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
+
+    const toggleSelect = () => {
+      event.preventDefault();
+      select(event, elements[currentIndex].getAttribute("data-value"));
+    };
+
+    switch (event.key) {
+      case " ":
+        toggleSelect();
+        break;
+      case "ArrowDown":
+      case "ArrowRight":
+        // Select the next element
+        const nextValue = elements[nextIndex].getAttribute("data-value");
+        select(event, nextValue); // Ensure your select method can handle this value appropriately
+        elements[nextIndex]?.focus();
+        break;
+      case "ArrowUp":
+      case "ArrowLeft":
+        // Select the previous element
+        const prevValue = elements[prevIndex].getAttribute("data-value");
+        select(event, prevValue); // Adjust select method accordingly
+        elements[prevIndex]?.focus();
+        break;
+    }
+
+    onKeyDown?.(event);
+  };
+
+  const handleKeyDownMulti = (event: KeyboardEvent<HTMLDivElement>) => {
+    const elements: HTMLElement[] = Array.from(
+      groupRef.current?.querySelectorAll(
+        ".saltInteractableCard:not([disabled])"
+      ) ?? []
+    );
+
+    console.log({ elements });
+    const currentIndex = elements.findIndex(
+      (element) => element === document.activeElement
+    );
+    const toggleSelect = () => {
+      event.preventDefault();
+      select(event, elements[currentIndex].getAttribute("data-value"));
+    };
+
+    switch (event.key) {
+      case " ":
+        toggleSelect();
+        break;
+    }
+
+    onKeyDown?.(event);
+  };
 
   return (
     <InteractableCardGroupContext.Provider value={contextValue}>
       <div
         className={clsx(withBaseName(), className)}
         role={selectionVariant === "multiselect" ? "group" : "radiogroup"}
+        onKeyDown={
+          selectionVariant === "single"
+            ? handleKeyDownSingle
+            : handleKeyDownMulti
+        }
         ref={handleRef}
         {...rest}
       >

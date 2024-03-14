@@ -171,7 +171,12 @@ export const InteractableCardGroupSingleSelect: StoryFn<
         <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard {...args} value="wire" style={{ width: "180px" }}>
+    <InteractableCard
+      {...args}
+      value="wire"
+      style={{ width: "180px" }}
+      disabled
+    >
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon size={2} />
@@ -205,7 +210,12 @@ export const InteractableCardGroupMultiSelect: StoryFn<
         <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard {...args} value="wire" style={{ width: "180px" }}>
+    <InteractableCard
+      {...args}
+      value="wire"
+      style={{ width: "180px" }}
+      disabled
+    >
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon size={2} />
