@@ -424,7 +424,10 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
         }
         truncate={truncate && !focusedState && !openState}
         onPillRemove={handlePillRemove}
-        hidePillClose={!focusedState}
+        hidePillClose={!focusedState || readOnly}
+        emptyReadOnlyMarker={
+          readOnly && selectedState.length > 0 ? "" : undefined
+        }
       />
       <FloatingComponent
         open={(openState || focusedState) && !readOnly && children != undefined}

@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { ComboBoxNext, FormField, Option, OptionGroup } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
+import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/lab";
 
 import { usStateExampleData } from "../assets/exampleData";
 
@@ -18,9 +19,12 @@ const groupedOptions = usStateExampleData.slice(0, 5).reduce((acc, option) => {
   return acc;
 }, {} as Record<string, typeof usStateExampleData>);
 
+const first5States = usStateExampleData.slice(0, 5);
+
 export const OpenExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity>
-    <FormField helperText="This is some help text" label="Default example">
+    <FormField>
+      <FormFieldLabel>Default example</FormFieldLabel>
       <ComboBoxNext placeholder="State" open>
         {Object.entries(groupedOptions).map(([firstLetter, options]) => (
           <OptionGroup label={firstLetter} key={firstLetter}>
@@ -32,20 +36,7 @@ export const OpenExamples: StoryFn<QAContainerProps> = () => (
           </OptionGroup>
         ))}
       </ComboBoxNext>
-    </FormField>
-    <FormField helperText="This is some help text" label="Multi-select example">
-      <ComboBoxNext
-        disabled
-        multiselect
-        defaultSelected={["Alabama", "Alaska", "Arizona"]}
-        open
-      >
-        {usStateExampleData.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
-        ))}
-      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
   </QAContainer>
 );
@@ -54,38 +45,120 @@ OpenExamples.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
+export const OpenMultiselectExamples: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={4} itemPadding={12} transposeDensity>
+    <FormField>
+      <FormFieldLabel>Multi-select example</FormFieldLabel>
+      <ComboBoxNext multiselect defaultSelected={first5States.slice(0, 3)} open>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+  </QAContainer>
+);
+
+OpenMultiselectExamples.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const ClosedExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity vertical width={1200}>
-    <FormField helperText="This is some help text" label="Read-only example">
+    <FormField>
+      <FormFieldLabel>Default example</FormFieldLabel>
+      <ComboBoxNext>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Read-only example</FormFieldLabel>
       <ComboBoxNext readOnly>
-        {usStateExampleData.map((state) => (
+        {first5States.map((state) => (
           <Option value={state} key={state}>
             {state}
           </Option>
         ))}
       </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
-    <FormField helperText="This is some help text" label="Disabled example">
+    <FormField>
+      <FormFieldLabel>Disabled example</FormFieldLabel>
       <ComboBoxNext disabled>
-        {usStateExampleData.map((state) => (
+        {first5States.map((state) => (
           <Option value={state} key={state}>
             {state}
           </Option>
         ))}
       </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
-    <FormField helperText="This is some help text" label="Multi-select example">
-      <ComboBoxNext
-        disabled
-        multiselect
-        defaultSelected={["Alabama", "Alaska", "Arizona"]}
-      >
-        {usStateExampleData.map((state) => (
+    <FormField>
+      <FormFieldLabel>Disabled multi-select example</FormFieldLabel>
+      <ComboBoxNext disabled multiselect defaultSelected={first5States}>
+        {first5States.map((state) => (
           <Option value={state} key={state}>
             {state}
           </Option>
         ))}
       </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Read-only multi-select example</FormFieldLabel>
+      <ComboBoxNext readOnly multiselect defaultSelected={first5States}>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Read-only truncated multi-select example</FormFieldLabel>
+      <ComboBoxNext
+        readOnly
+        multiselect
+        defaultSelected={first5States}
+        truncate
+      >
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Multi-select example</FormFieldLabel>
+      <ComboBoxNext multiselect defaultSelected={first5States}>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Truncated multi-select example</FormFieldLabel>
+      <ComboBoxNext multiselect defaultSelected={first5States} truncate>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBoxNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
   </QAContainer>
 );
