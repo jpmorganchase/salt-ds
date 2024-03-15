@@ -1,5 +1,16 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.36
+
+### Minor Changes
+
+- 7d9436e0: Added pills to multi-select ComboBoxNext.
+  Added `truncate` to ComboBoxNext which collapsing the ComboBoxNext to one line.
+
+### Patch Changes
+
+- 7d9436e0: Fixed DropdownNext and ComboBoxNext's list design.
+
 ## 1.0.0-alpha.35
 
 ### Minor Changes
