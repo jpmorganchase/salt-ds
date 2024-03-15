@@ -16,6 +16,8 @@ const {
   EmptyMessage,
   ComplexOption,
   ObjectValue,
+  MultiplePills,
+  MultiplePillsTruncated,
 } = composeStories(comboBoxNextStories);
 
 describe("Given a ComboBox", () => {
@@ -299,6 +301,7 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true"
     );
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
@@ -310,6 +313,8 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true"
     );
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.value", "");
   });
@@ -330,6 +335,7 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true"
     );
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.realPress("ArrowDown");
     cy.realPress("Enter");
     cy.get("@selectionChange").should(
@@ -342,6 +348,8 @@ describe("Given a ComboBox", () => {
       "aria-selected",
       "true"
     );
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.value", "");
   });
@@ -472,6 +480,46 @@ describe("Given a ComboBox", () => {
     );
     cy.realType("{backspace}");
     cy.findAllByRole("option").should("not.be.activeDescendant");
+  });
+
+  it("should wrap pills by default", () => {
+    cy.mount(<MultiplePills />);
+    cy.findAllByRole("button").should("have.length", 4).should("be.visible");
+  });
+
+  it("should truncate pills when `truncate=true` and expand them on focus", () => {
+    cy.mount(<MultiplePillsTruncated />);
+    cy.findAllByRole("button").should("have.length", 2).should("be.visible");
+    cy.findByTestId(/OverflowMenuIcon/i).should("be.visible");
+    cy.findByRole("combobox").realClick();
+    cy.findAllByRole("button").should("have.length", 4).should("be.visible");
+  });
+
+  it("should focus the pills first and on tab focus the input", () => {
+    cy.mount(<MultiplePills />);
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
+    cy.realPress("Tab");
+    cy.findByRole("combobox").should("be.focused");
+  });
+
+  it("should support arrow key navigation between pills and input", () => {
+    cy.mount(<MultiplePills />);
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: /^Alaska/ }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("button", { name: /^Arizona/ }).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findByRole("combobox").should("be.focused");
+
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: /^Arizona/ }).should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: /^Alaska/ }).should("be.focused");
+    cy.realPress("ArrowLeft");
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
   });
 
   it("should render the custom floating component", () => {

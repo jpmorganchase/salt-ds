@@ -21,6 +21,7 @@
   padding-right: var(--salt-spacing-100);
   position: relative;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Style applied on hover */

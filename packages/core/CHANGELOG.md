@@ -1,5 +1,58 @@
 # @salt-ds/core
 
+## 1.20.0
+
+### Minor Changes
+
+- ff69de19: Add `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` to core
+
+  ```tsx
+  export const Dialog = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+    const id = useId();
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+          Open default dialog
+        </Button>
+        <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+          <DialogHeader header="Terms and conditions" />
+          <DialogContent>Dialog Content</DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Accept
+            </Button>
+          </DialogActions>
+          <DialogCloseButton onClick={handleClose} />
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 6c414eae: Allowed Tooltip to flip to any axis when space is limited. Previously, it was limited to flipping horizontally.
+- 2d3fb09e: Add `box-sizing: border-box` to:
+
+  - Multiline input
+  - Navigation item
+  - Panel
+
 ## 1.19.0
 
 ### Minor Changes
