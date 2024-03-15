@@ -7,8 +7,8 @@
     "README.md"
   ],
   "dependencies": {
-    "@storybook/components": "^7.4.5",
-    "@storybook/theming": "^7.4.5",
+    "@storybook/components": "^8.0.0",
+    "@storybook/theming": "^8.0.0",
     "css-tree": "^2.0.4",
     "glob": "^8.0.0",
     "glob-promise": "^6.0.0",
