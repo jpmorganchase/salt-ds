@@ -1,11 +1,11 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { DropdownNext, FormField, Option, OptionGroup } from "@salt-ds/lab";
+import { DropdownNext, FormField, FormFieldLabel, FormFieldHelperText, Option, OptionGroup } from "@salt-ds/core";
 
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
-  title: "Lab/Dropdown Next/Dropdown Next QA",
+  title: "Core/Dropdown Next/Dropdown Next QA",
   component: DropdownNext,
 } as Meta<typeof DropdownNext>;
 
@@ -20,7 +20,8 @@ const groupedOptions = usStateExampleData.slice(0, 5).reduce((acc, option) => {
 
 export const OpenExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity>
-    <FormField helperText="This is some help text" label="Default example">
+    <FormField>
+      <FormFieldLabel>Default example</FormFieldLabel>
       <DropdownNext placeholder="State" open>
         {Object.entries(groupedOptions).map(([firstLetter, options]) => (
           <OptionGroup label={firstLetter} key={firstLetter}>
@@ -32,6 +33,7 @@ export const OpenExamples: StoryFn<QAContainerProps> = () => (
           </OptionGroup>
         ))}
       </DropdownNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
   </QAContainer>
 );
@@ -42,7 +44,8 @@ OpenExamples.parameters = {
 
 export const ClosedExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity vertical width={1200}>
-    <FormField helperText="This is some help text" label="Read-only example">
+    <FormField>
+      <FormFieldLabel>Read-only example</FormFieldLabel>
       <DropdownNext readOnly>
         {usStateExampleData.map((state) => (
           <Option value={state} key={state}>
@@ -50,8 +53,10 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
           </Option>
         ))}
       </DropdownNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
-    <FormField helperText="This is some help text" label="Disabled example">
+    <FormField>
+      <FormFieldLabel>Disabled example</FormFieldLabel>
       <DropdownNext disabled>
         {usStateExampleData.map((state) => (
           <Option value={state} key={state}>
@@ -59,6 +64,7 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
           </Option>
         ))}
       </DropdownNext>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
   </QAContainer>
 );

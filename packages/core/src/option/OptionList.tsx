@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "../utils";
 import optionListCss from "./OptionList.css";
 
 export interface OptionListProps extends ComponentPropsWithoutRef<"div"> {

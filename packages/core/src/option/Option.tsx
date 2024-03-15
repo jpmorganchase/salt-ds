@@ -7,14 +7,15 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { Checkbox, makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer, useForkRef, useId } from "../utils";
+import { Checkbox } from "../checkbox";
 import {
   OptionValue,
   useListControlContext,
 } from "../list-control/ListControlContext";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import optionCss from "./Option.css";
 
 export interface OptionProps extends ComponentPropsWithoutRef<"div"> {

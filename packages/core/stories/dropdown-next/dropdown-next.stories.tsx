@@ -3,21 +3,19 @@ import {
   DropdownNextProps,
   Option,
   OptionGroup,
-} from "@salt-ds/lab";
-
-import { Meta, StoryFn } from "@storybook/react";
-import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
 } from "@salt-ds/core";
+
+import { Meta, StoryFn } from "@storybook/react";
 import { GB, US } from "@salt-ds/countries";
 import { SyntheticEvent, useState } from "react";
 import { LocationIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Dropdown Next",
+  title: "Core/Dropdown Next",
   component: DropdownNext,
 } as Meta<typeof DropdownNext>;
 

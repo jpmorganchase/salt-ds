@@ -1,4 +1,4 @@
-import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/lab";
+import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/core";
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import { shortColorData } from "./exampleData";
 

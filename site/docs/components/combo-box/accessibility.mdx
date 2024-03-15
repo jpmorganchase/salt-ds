@@ -12,15 +12,18 @@ data:
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
-
-- If focus is above the combo box, Tab sets focus on the component. When focused, combo box has a visible text cursor and the list is opened.
-- If focus is on combo box, Tab moves focus to the next focusable element in the tab order and selects the current active option.
+  
+- If the combo box is single-select and if focus is above the combo box, Tab sets focus on the component. When focused, combo box has a visible text cursor and the list is opened.
+- If the combo box is multi-select and if the focus is above the combo box, Tab sets focus on the pill list if pills are present. If no pills are present then focus is set on the input. 
+- If the list is open, Tab moves focus to the next focusable element in the tab order and selects the current active option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- If focus is below the combo box, this action sets focus on the component.
-- If focus is on combo box, this action moves focus to the previous focusable element in the tab order.
+- If the combo box is single-select and focus is below the combo box, this action sets focus on the input. 
+- If the combo box is multi-select and focus is below the combo box, this action sets focus on the input. 
+- If the combo box is multi-select and focus is on the input, this action sets focus on the pill list if pills are present. If no pills are present the previous focusable element in the tab order is focused.
+- If the list is open, Tab moves focus to the previous focusable element in the tab order and selects the current active option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
@@ -52,6 +55,11 @@ data:
 - If the list is open, moves visual focus to the next option in the list. Focus does not wrap.
 - If the list is closed, opens the list and moves visual focus to the first option in the list.
 
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Left arrow / Right arrow">
+  
+- This action moves focus between the input and the pill list in a multi-select combo box.
+  
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Home">
 

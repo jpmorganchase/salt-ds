@@ -1,11 +1,10 @@
+import { ComponentPropsWithoutRef, SyntheticEvent } from "react";
 import {
   useListControl,
   ListControlProps,
 } from "../list-control/ListControlState";
-
-import { ComponentPropsWithoutRef, SyntheticEvent } from "react";
 import { OptionValue } from "../list-control/ListControlContext";
-import { useControlled } from "@salt-ds/core";
+import { useControlled } from "../utils";
 
 export type UseComboBoxNextProps<Item> = ListControlProps<Item> &
   Pick<ComponentPropsWithoutRef<"input">, "value" | "defaultValue">;

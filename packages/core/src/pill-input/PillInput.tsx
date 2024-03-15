@@ -15,19 +15,19 @@ import {
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import {
   makePrefixer,
   useControlled,
-  useFormFieldProps,
-  StatusAdornment,
   useId,
-  Pill,
   useForkRef,
-} from "@salt-ds/core";
+} from "../utils";
+import { useFormFieldProps } from "../form-field-context";
+import { StatusAdornment } from "../status-adornment";
+import { Pill } from "../pill";
+import { useTruncatePills } from "./useTruncatePills";
 
 import pillInputCss from "./PillInput.css";
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
-import { useTruncatePills } from "./useTruncatePills";
 
 const withBaseName = makePrefixer("saltPillInput");
 

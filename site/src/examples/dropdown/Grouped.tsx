@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option, OptionGroup } from "@salt-ds/lab";
+import { DropdownNext, Option, OptionGroup } from "@salt-ds/core";
 import { citiesWithCountries } from "./exampleData";
 
 export const Grouped = (): ReactElement => {

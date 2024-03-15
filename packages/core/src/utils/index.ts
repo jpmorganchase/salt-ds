@@ -18,3 +18,5 @@ export * from "./useIsomorphicLayoutEffect";
 export * from "./usePrevious";
 export * from "./useResponsiveProp";
 export * from "./mergeProps";
+export * from "./useValueEffect";
+export * from "./useResizeObserver";

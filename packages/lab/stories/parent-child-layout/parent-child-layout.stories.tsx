@@ -8,8 +8,6 @@ import {
   UserIcon,
 } from "@salt-ds/icons";
 import {
-  DropdownNext,
-  Option,
   ParentChildLayout,
   StackedViewElement,
 } from "@salt-ds/lab";
@@ -26,6 +24,8 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
+  DropdownNext,
+  Option,
 } from "@salt-ds/core";
 
 import "./parent-child-layout.stories.css";

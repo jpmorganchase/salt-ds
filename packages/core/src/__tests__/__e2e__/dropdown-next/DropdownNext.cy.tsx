@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
-import { DropdownNext } from "@salt-ds/lab";
+import { DropdownNext } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

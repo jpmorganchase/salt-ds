@@ -1,16 +1,13 @@
-import {
-  ComboBoxNext,
-  ComboBoxNextProps,
-  Option,
-  OptionGroup,
-} from "@salt-ds/lab";
-
 import { Meta, StoryFn } from "@storybook/react";
 import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
+  ComboBoxNext,
+  ComboBoxNextProps,
+  Option,
+  OptionGroup,
 } from "@salt-ds/core";
 import {
   CountryCode,
@@ -23,7 +20,7 @@ import { ChangeEvent, Suspense, SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
-  title: "Lab/Combo Box Next",
+  title: "Core/Combo Box Next",
   component: ComboBoxNext,
   parameters: {
     docs: {

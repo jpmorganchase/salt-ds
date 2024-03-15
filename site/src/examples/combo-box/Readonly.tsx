@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBoxNext, Option, StackLayout } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
-import { StackLayout } from "@salt-ds/core";
 
 export const Readonly = (): ReactElement => {
   return (

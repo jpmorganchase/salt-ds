@@ -20,8 +20,8 @@ import {
   H3,
   FloatingComponentProvider,
   FloatingComponentProps,
+  ComboBoxNext, DropdownNext, Option
 } from "@salt-ds/core";
-import { ComboBoxNext, DropdownNext, Option } from "@salt-ds/lab";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 

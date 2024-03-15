@@ -8,8 +8,8 @@ import {
   FlexLayout,
   FlowLayout,
   SplitLayout,
+  DropdownNext, DropdownNextProps, Option
 } from "@salt-ds/core";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
 import {
   MessageIcon,
   LocationIcon,

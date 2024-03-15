@@ -1,8 +1,6 @@
 import { useCallback, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { useValueEffect } from "../utils/useValueEffect";
+import { useIsomorphicLayoutEffect, useValueEffect, useResizeObserver } from "../utils";
 import { useWindow } from "@salt-ds/window";
-import { useResizeObserver } from "../responsive";
 
 export function useTruncatePills({
   pills,
@@ -76,7 +74,10 @@ export function useTruncatePills({
   }, [pills, setVisibleItems, enable, targetWindow]);
 
   useIsomorphicLayoutEffect(updateOverflow, [updateOverflow, pills]);
-  useResizeObserver(pillListRef, ["width"], updateOverflow, true);
+  useResizeObserver({
+    ref: pillListRef,
+    onResize: updateOverflow,
+  });
 
   return {
     pillListRef,

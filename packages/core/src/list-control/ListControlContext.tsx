@@ -1,5 +1,5 @@
-import { createContext } from "@salt-ds/core";
 import { SyntheticEvent, useContext } from "react";
+import { createContext } from "../utils";
 import { defaultValueToString } from "./ListControlState";
 
 export interface OptionValue<Item> {

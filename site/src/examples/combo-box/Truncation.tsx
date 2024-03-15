@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, useState } from "react";
-import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/lab";
+import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Truncation = (): ReactElement => {

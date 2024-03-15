@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option } from "@salt-ds/lab";
+import { DropdownNext, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Disabled = (): ReactElement => (

@@ -15,8 +15,9 @@ import {
   StackLayout,
   Drawer,
   DrawerCloseButton,
+  ComboBoxNext,
+  Option
 } from "@salt-ds/core";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
 import { Meta } from "@storybook/react";
 
 export default {

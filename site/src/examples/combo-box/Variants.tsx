@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
-import { StackLayout } from "@salt-ds/core";
+import { ComboBoxNext, Option, StackLayout } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Variants = (): ReactElement => (

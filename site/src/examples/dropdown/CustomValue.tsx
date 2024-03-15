@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
+import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const CustomValue = (): ReactElement => {

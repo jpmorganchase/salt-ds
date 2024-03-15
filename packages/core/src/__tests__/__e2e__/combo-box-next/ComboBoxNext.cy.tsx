@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as comboBoxNextStories from "@stories/combo-box-next/combo-box-next.stories";
-import { ComboBoxNext } from "@salt-ds/lab";
+import { ComboBoxNext } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

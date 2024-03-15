@@ -1,6 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { FormFieldHelperText, FormFieldLabel, FormField } from "@salt-ds/core";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { FormFieldHelperText, FormFieldLabel, FormField, ComboBoxNext, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const WithFormField = (): ReactElement => {

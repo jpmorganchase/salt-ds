@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/lab";
+import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/core";
 import { citiesWithCountries } from "./exampleData";
 
 export const Grouped = (): ReactElement => {

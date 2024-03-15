@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBoxNext, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 import styles from "./index.module.css";
 

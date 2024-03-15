@@ -11,8 +11,8 @@
  */
 
 import { Dispatch, MutableRefObject, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { useEventCallback } from "./useEventCallback";
+import { useIsomorphicLayoutEffect } from "../index";
+import { useEventCallback } from "@salt-ds/lab/src/utils/useEventCallback";
 
 type SetValueAction<S> = (prev: S) => Generator<any, void, unknown>;
 

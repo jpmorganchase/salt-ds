@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
+import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/core";
 import { GB, US } from "@salt-ds/countries";
 
 const countries: Record<string, { icon: JSX.Element; name: string }> = {

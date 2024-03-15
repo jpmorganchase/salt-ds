@@ -11,18 +11,6 @@ import {
   useEffect,
   useRef,
 } from "react";
-import {
-  Button,
-  makePrefixer,
-  useFloatingComponent,
-  useFloatingUI,
-  UseFloatingUIProps,
-  useForkRef,
-  useFormFieldProps,
-  useId,
-} from "@salt-ds/core";
-import { defaultValueToString } from "../list-control/ListControlState";
-import { ListControlContext } from "../list-control/ListControlContext";
 import { clsx } from "clsx";
 import {
   flip,
@@ -33,11 +21,23 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  makePrefixer,
+  useFloatingComponent,
+  useFloatingUI,
+  UseFloatingUIProps,
+  useForkRef,
+  useId,
+} from "../utils";
+import { Button } from "../button";
+import { useFormFieldProps } from "../form-field-context";
+import { defaultValueToString } from "../list-control/ListControlState";
+import { ListControlContext } from "../list-control/ListControlContext";
 import { useComboBoxNext, UseComboBoxNextProps } from "./useComboBoxNext";
 import { OptionList } from "../option/OptionList";
 import { PillInput, PillInputProps } from "../pill-input";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import comboBoxNextCss from "./ComboBoxNext.css";
 
 export type ComboBoxNextProps<Item = string> = {

@@ -1,8 +1,8 @@
 import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
-import { makePrefixer, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer, useId } from "../utils";
 import optionGroupCss from "./OptionGroup.css";
 
 export interface OptionGroupProps extends ComponentPropsWithoutRef<"div"> {

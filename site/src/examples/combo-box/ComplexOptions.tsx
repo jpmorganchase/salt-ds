@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, Suspense, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBoxNext, Option } from "@salt-ds/core";
 import { LargeCity, largestCities } from "./exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
 

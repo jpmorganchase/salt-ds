@@ -9,23 +9,23 @@ import {
   ForwardedRef,
   Ref,
 } from "react";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
   ListControlProps,
   useListControl,
   defaultValueToString,
 } from "../list-control/ListControlState";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import {
   makePrefixer,
-  StatusAdornment,
   useFloatingComponent,
   useFloatingUI,
   UseFloatingUIProps,
   useForkRef,
-  useFormFieldProps,
   useId,
-  ValidationStatus,
-} from "@salt-ds/core";
+} from "../utils";
+import { StatusAdornment } from "../status-adornment";
+import { ValidationStatus } from "../status-indicator";
+import { useFormFieldProps, } from "../form-field-context";
 import {
   flip,
   size,

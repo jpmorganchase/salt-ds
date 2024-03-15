@@ -5,7 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { useControlled } from "@salt-ds/core";
+import { useControlled } from "../utils";
 import { OptionValue } from "./ListControlContext";
 
 export type OpenChangeReason = "input" | "manual";

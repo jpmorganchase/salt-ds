@@ -4,10 +4,9 @@ import {
   MouseEventHandler,
   SyntheticEvent,
 } from "react";
-import { Button, ButtonProps, makePrefixer, Tooltip } from "@salt-ds/core";
+import { Button, ButtonProps, makePrefixer, Tooltip, DropdownNext, DropdownNextProps, Option, OptionProps, useListControlContext } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { DropdownNext, DropdownNextProps } from "../../dropdown-next";
 
 import { useCalendarContext } from "./CalendarContext";
 
@@ -16,8 +15,6 @@ import { DateValue, isSameMonth, isSameYear } from "@internationalized/date";
 import { formatDate, monthDiff, monthsForLocale } from "./utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Option, OptionProps } from "../../option";
-import { useListControlContext } from "../../list-control/ListControlContext";
 
 type dateDropdownProps = DropdownNextProps<DateValue>;
 

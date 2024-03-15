@@ -1,12 +1,11 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
-import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, FormFieldHelperText, ComboBoxNext, Option, OptionGroup } from "@salt-ds/core";
 
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
-  title: "Lab/Combo Box Next/Combo Box Next QA",
+  title: "Core/Combo Box Next/Combo Box Next QA",
   component: ComboBoxNext,
 } as Meta<typeof ComboBoxNext>;
 
