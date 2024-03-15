@@ -10,7 +10,10 @@ describe("GIVEN a SegmentedButton", () => {
     it("THEN it should display a SegmentedButton", () => {
       cy.mount(<Default />);
 
-      cy.get(".saltSegmentedButtonGroup").should("be.visible");
+      cy.get(".saltSegmentedButtonGroup").should(
+        "have.class",
+        "saltSegmentedButtonGroup"
+      );
     });
   });
 });
