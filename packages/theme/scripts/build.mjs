@@ -17,8 +17,6 @@ esbuild
       "css/theme.css",
       "css/global.css",
       "css/theme-next.css",
-      "json/theme.mjs",
-      // "json/theme.json",
     ],
     assetNames: "[dir]/[name]",
     outdir: buildFolder,
@@ -30,6 +28,23 @@ esbuild
     logLevel: "info",
   })
   .then(() => {
+    // copy json
+    fs.copyFile(
+      path.resolve(__dirname, "../json/theme.json"),
+      path.join(buildFolder, "theme.json"),
+      (err) => {
+        if (err) throw err;
+        console.log(
+          `${path.relative(
+            process.cwd(),
+            path.resolve(__dirname, "../json/theme.json")
+          )} copied to ${path.relative(
+            process.cwd(),
+            path.join(buildFolder, "theme.json")
+          )}`
+        );
+      }
+    );
     // File destination.txt will be created or overwritten by default.
     fs.copyFile(
       path.resolve(__dirname, "../package.json"),
