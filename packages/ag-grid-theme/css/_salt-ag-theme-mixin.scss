@@ -287,11 +287,17 @@
   }
 
   /** Move sort arrow towards menu icon */
-  .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container {
+  .ag-ltr
+    .ag-header-cell:not(.ag-right-aligned-header)
+    .ag-header-label-icon.ag-hidden
+    + .ag-sort-indicator-container {
     margin-left: auto;
   }
-  
-  .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container {
+
+  .ag-ltr
+    .ag-header-cell.ag-right-aligned-header
+    .ag-header-label-icon.ag-hidden
+    + .ag-sort-indicator-container {
     margin-right: auto;
   }
 
@@ -303,7 +309,9 @@
     padding-left: var(--salt-spacing-100);
   }
 
-  .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon {
+  .ag-ltr
+    .ag-header-cell:not(.ag-right-aligned-header)
+    .ag-sort-indicator-icon {
     padding-right: var(--salt-spacing-100);
   }
 
