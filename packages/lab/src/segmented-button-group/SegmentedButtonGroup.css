@@ -9,17 +9,7 @@
   content: "";
   width: var(--salt-size-border);
   position: absolute;
-  background: var(--button-background);
+  background: var(--salt-separable-primary-borderColor);
   right: calc(var(--salt-size-border) * -1);
   height: 100%;
-}
-
-.saltSegmentedButtonGroup > *:not(:first-child):before {
-  content: "";
-  width: var(--salt-size-border);
-  position: absolute;
-  background: var(--salt-separable-primary-borderColor);
-  left: calc(var(--salt-size-border) * -1);
-  padding-top: var(--salt-spacing-100);
-  padding-bottom: var(--salt-spacing-100);
 }
