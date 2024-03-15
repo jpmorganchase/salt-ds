@@ -1,5 +1,9 @@
 import { useCallback, useRef } from "react";
-import { useIsomorphicLayoutEffect, useValueEffect, useResizeObserver } from "../utils";
+import {
+  useIsomorphicLayoutEffect,
+  useValueEffect,
+  useResizeObserver,
+} from "../utils";
 import { useWindow } from "@salt-ds/window";
 
 export function useTruncatePills({

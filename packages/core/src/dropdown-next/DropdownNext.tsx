@@ -25,7 +25,7 @@ import {
 } from "../utils";
 import { StatusAdornment } from "../status-adornment";
 import { ValidationStatus } from "../status-indicator";
-import { useFormFieldProps, } from "../form-field-context";
+import { useFormFieldProps } from "../form-field-context";
 import {
   flip,
   size,

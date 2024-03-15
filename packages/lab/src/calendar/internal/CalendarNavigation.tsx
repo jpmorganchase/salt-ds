@@ -4,7 +4,17 @@ import {
   MouseEventHandler,
   SyntheticEvent,
 } from "react";
-import { Button, ButtonProps, makePrefixer, Tooltip, DropdownNext, DropdownNextProps, Option, OptionProps, useListControlContext } from "@salt-ds/core";
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  Tooltip,
+  DropdownNext,
+  DropdownNextProps,
+  Option,
+  OptionProps,
+  useListControlContext,
+} from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 

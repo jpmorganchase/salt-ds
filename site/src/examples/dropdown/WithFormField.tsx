@@ -1,5 +1,11 @@
 import { ReactElement } from "react";
-import { FormFieldHelperText, FormFieldLabel, FormField, DropdownNext, Option } from "@salt-ds/core";
+import {
+  FormFieldHelperText,
+  FormFieldLabel,
+  FormField,
+  DropdownNext,
+  Option,
+} from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const WithFormField = (): ReactElement => {

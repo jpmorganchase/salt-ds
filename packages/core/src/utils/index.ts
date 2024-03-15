@@ -20,3 +20,4 @@ export * from "./useResponsiveProp";
 export * from "./mergeProps";
 export * from "./useValueEffect";
 export * from "./useResizeObserver";
+export * from "./useEventCallback";

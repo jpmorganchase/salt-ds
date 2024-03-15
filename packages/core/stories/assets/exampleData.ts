@@ -12,7 +12,6 @@ export const shortColorData = [
   "Yellow",
 ];
 
-
 export const usStateExampleData = [
   "Alabama",
   "Alaska",

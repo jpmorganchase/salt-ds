@@ -8,7 +8,9 @@ import {
   FlexLayout,
   FlowLayout,
   SplitLayout,
-  DropdownNext, DropdownNextProps, Option
+  DropdownNext,
+  DropdownNextProps,
+  Option,
 } from "@salt-ds/core";
 import {
   MessageIcon,

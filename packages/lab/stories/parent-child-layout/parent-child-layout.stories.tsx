@@ -7,10 +7,7 @@ import {
   LaptopIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import {
-  ParentChildLayout,
-  StackedViewElement,
-} from "@salt-ds/lab";
+import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 import {
   Button,
   FlexLayout,

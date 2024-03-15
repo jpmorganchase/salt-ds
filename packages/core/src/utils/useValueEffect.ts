@@ -12,8 +12,9 @@
 
 import { Dispatch, MutableRefObject, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../index";
-import { useEventCallback } from "@salt-ds/lab/src/utils/useEventCallback";
+import { useEventCallback } from "./useEventCallback";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SetValueAction<S> = (prev: S) => Generator<any, void, unknown>;
 
 // This hook works like `useState`, but when setting the value, you pass a generator function
@@ -23,18 +24,18 @@ type SetValueAction<S> = (prev: S) => Generator<any, void, unknown>;
 export function useValueEffect<S>(
   defaultValue: S | (() => S)
 ): [S, Dispatch<SetValueAction<S>>] {
-  let [value, setValue] = useState(defaultValue);
-  let effect: MutableRefObject<Generator<S> | null> =
+  const [value, setValue] = useState(defaultValue);
+  const effect: MutableRefObject<Generator<S> | null> =
     useRef<Generator<S> | null>(null);
 
   // Store the function in a ref so we can always access the current version
   // which has the proper `value` in scope.
-  let nextRef = useEventCallback(() => {
+  const nextRef = useEventCallback(() => {
     if (!effect.current) {
       return;
     }
     // Run the generator to the next yield.
-    let newValue = effect.current.next();
+    const newValue = effect.current.next();
 
     // If the generator is done, reset the effect.
     if (newValue.done) {
@@ -59,7 +60,7 @@ export function useValueEffect<S>(
     }
   });
 
-  let queue: Dispatch<SetValueAction<S>> = useEventCallback((fn) => {
+  const queue: Dispatch<SetValueAction<S>> = useEventCallback((fn) => {
     effect.current = fn(value);
     nextRef();
   });
