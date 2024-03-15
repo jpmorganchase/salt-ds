@@ -1,5 +1,54 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.36
+
+### Minor Changes
+
+- 7d9436e0: Added pills to multi-select ComboBoxNext.
+  Added `truncate` to ComboBoxNext which collapsing the ComboBoxNext to one line.
+
+### Patch Changes
+
+- 7d9436e0: Fixed DropdownNext and ComboBoxNext's list design.
+
+## 1.0.0-alpha.35
+
+### Minor Changes
+
+- ff69de19: Remove `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` from labs and promote to core
+
+### Patch Changes
+
+- 517ce28b: Optional prop `id` is no longer passed down from `Overlay` to aria-labelledby in `OverlayPanel`
+  aria-labelledBy should be passed down directly to the `OverlayPanel` via and id attached to the title element
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const id = useId();
+    return (
+      <Overlay>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel aria-labelledby={id}>
+          <h3 className={styles.contentHeading} id={id}>
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <Tooltip content={"im a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- 0c4d186d: Fix tabstrip not collapsing when sharing parent with other items
+- 54b8e1a9: Fixed Tab being deleted whilst editing Tab label and pressing backspace or delete
+
 ## 1.0.0-alpha.34
 
 ### Minor Changes
