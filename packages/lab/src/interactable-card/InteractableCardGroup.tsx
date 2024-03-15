@@ -3,8 +3,10 @@ import {
   forwardRef,
   SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
@@ -81,6 +83,18 @@ export const InteractableCardGroup = forwardRef<
     state: "value",
   });
 
+  const [elements, setElements] = useState<HTMLElement[]>([]);
+
+  useEffect(() => {
+    const childElements: HTMLElement[] = Array.from(
+      groupRef.current?.querySelectorAll(
+        ".saltInteractableCard:not([disabled])"
+      ) ?? []
+    );
+    setElements(childElements);
+    console.log({ childElements });
+  }, [children]);
+
   const select = useCallback(
     (
       event: SyntheticEvent<HTMLDivElement>,
@@ -114,27 +128,25 @@ export const InteractableCardGroup = forwardRef<
   );
 
   const isFirstChild = useCallback(
-    (id: InteractableCardValue) => {
-      const elements: HTMLElement[] = Array.from(
-        groupRef.current?.querySelectorAll(
-          ".saltInteractableCard:not([disabled])"
-        ) ?? []
-      );
+    (cardValue: InteractableCardValue) => {
+      // const elements: HTMLElement[] = Array.from(
+      //   groupRef.current?.querySelectorAll(
+      //     ".saltInteractableCard:not([disabled])"
+      //   ) ?? []
+      // );
 
-      console.log({ elements, value });
+      console.log("Group isFirstChild", { elements, cardValue });
       // console.log(elements[0].getAttribute("data-value"));
-      console.log(
-        elements.findIndex(
-          (element) => element.getAttribute("data-value") === value
-        ) === 0
+      elements.forEach((element) =>
+        console.log(element.getAttribute("data-value"))
       );
       return (
         elements.findIndex(
-          (element) => element.getAttribute("data-value") === value
+          (element) => element.getAttribute("data-value") === cardValue
         ) === 0
       );
     },
-    [value]
+    [elements]
   );
 
   const contextValue = useMemo(
@@ -146,15 +158,15 @@ export const InteractableCardGroup = forwardRef<
       selectionVariant,
       value,
     }),
-    [select, isSelected, disabled, selectionVariant]
+    [select, isSelected, disabled, selectionVariant, isFirstChild, value]
   );
 
   const handleKeyDownSingle = (event: KeyboardEvent<HTMLDivElement>) => {
-    const elements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll(
-        ".saltInteractableCard:not([disabled])"
-      ) ?? []
-    );
+    // const elements: HTMLElement[] = Array.from(
+    //   groupRef.current?.querySelectorAll(
+    //     ".saltInteractableCard:not([disabled])"
+    //   ) ?? []
+    // );
 
     console.log({ elements });
     const currentIndex = elements.findIndex(
@@ -192,11 +204,11 @@ export const InteractableCardGroup = forwardRef<
   };
 
   const handleKeyDownMulti = (event: KeyboardEvent<HTMLDivElement>) => {
-    const elements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll(
-        ".saltInteractableCard:not([disabled])"
-      ) ?? []
-    );
+    // const elements: HTMLElement[] = Array.from(
+    //   groupRef.current?.querySelectorAll(
+    //     ".saltInteractableCard:not([disabled])"
+    //   ) ?? []
+    // );
 
     console.log({ elements });
     const currentIndex = elements.findIndex(

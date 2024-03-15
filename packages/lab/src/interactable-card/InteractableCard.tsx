@@ -108,7 +108,7 @@ export const InteractableCard = forwardRef<
   const isFirstChild =
     interactableCardGroup && interactableCardGroup.isFirstChild(value);
 
-  console.log({ value, isFirstChild });
+  console.log("Interactableard rendering", { value, isFirstChild });
 
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
