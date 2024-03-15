@@ -10,8 +10,6 @@ export interface InteractableCardGroupContextValue {
     event: SyntheticEvent<HTMLDivElement>,
     value: InteractableCardValue
   ) => void;
-  selectPrevious: () => void;
-  selectNext: () => void;
   isSelected: (id: InteractableCardValue) => boolean;
   isFirstChild: (value: InteractableCardValue) => boolean;
   selectionVariant: SelectionVariant;

@@ -1,7 +1,6 @@
 import {
   forwardRef,
   MouseEvent,
-  KeyboardEvent,
   ComponentPropsWithoutRef,
   SyntheticEvent,
   useRef,
@@ -108,13 +107,11 @@ export const InteractableCard = forwardRef<
   const isFirstChild =
     interactableCardGroup && interactableCardGroup.isFirstChild(value);
 
-  console.log("Interactableard rendering", { value, isFirstChild });
-
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (interactableCardGroup) {
+    if (interactableCardGroup && !disabled) {
       interactableCardGroup.select(event, value);
       setSelected(!selected);
     }
@@ -127,14 +124,11 @@ export const InteractableCard = forwardRef<
   if (disabled) {
     tabIndex = -1;
   } else if (isMultiselect) {
-    tabIndex = 0; // All items focusable in multi-sselect
+    tabIndex = 0; // All items focusable in multi-select
   } else {
     // Single select: Only selected or first item (if none are selected) is focusable
     tabIndex = selected ? 0 : -1;
-    if (
-      !interactableCardGroup?.value &&
-      isFirstChild // is first card
-    ) {
+    if (!interactableCardGroup?.value && isFirstChild) {
       tabIndex = 0;
     }
   }
@@ -147,38 +141,6 @@ export const InteractableCard = forwardRef<
       cardRef.current.focus();
     }
   }, [selected]);
-
-  // const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-  //   console.log("in group");
-  //   const navigate = (direction: "previous" | "next") => {
-  //     direction === "previous"
-  //       ? interactableCardGroup?.selectPrevious()
-  //       : interactableCardGroup?.selectNext();
-  //     // focusCard();
-  //     event.preventDefault();
-  //   };
-
-  //   const toggleSelect = () => {
-  //     event.preventDefault();
-  //     interactableCardGroup?.select(event, value);
-  //     setSelected(!selected);
-  //     onChange?.(event);
-  //   };
-
-  //   const keyActionMap: Record<string, () => void> = {
-  //     " ": toggleSelect,
-  //     ArrowLeft: () => !isMultiselect && navigate("previous"),
-  //     ArrowRight: () => !isMultiselect && navigate("next"),
-  //     ArrowUp: () => !isMultiselect && navigate("previous"),
-  //     ArrowDown: () => !isMultiselect && navigate("next"),
-  //   };
-
-  //   const action = keyActionMap[event.key];
-  //   if (action) {
-  //     action();
-  //     onKeyDown?.(event);
-  //   }
-  // };
 
   const { active, cardProps } = useInteractableCard({
     disabled,

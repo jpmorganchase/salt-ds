@@ -171,18 +171,13 @@ export const InteractableCardGroupSingleSelect: StoryFn<
         <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard
-      {...args}
-      value="wire"
-      style={{ width: "180px" }}
-      disabled
-    >
+    <InteractableCard {...args} style={{ width: "180px" }} disabled>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon size={2} />
-          <H3>Bank wire</H3>
+          <H3 disabled>Bank wire</H3>
         </StackLayout>
-        <Text>Link your bank to your payments account.</Text>
+        <Text disabled>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
     <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
@@ -210,18 +205,13 @@ export const InteractableCardGroupMultiSelect: StoryFn<
         <Text>Link credit card to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
-    <InteractableCard
-      {...args}
-      value="wire"
-      style={{ width: "180px" }}
-      disabled
-    >
+    <InteractableCard {...args} style={{ width: "180px" }} disabled>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
           <BankIcon size={2} />
-          <H3>Bank wire</H3>
+          <H3 disabled>Bank wire</H3>
         </StackLayout>
-        <Text>Link your bank to your payments account.</Text>
+        <Text disabled>Link your bank to your payments account.</Text>
       </StackLayout>
     </InteractableCard>
     <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
@@ -306,7 +296,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       selectionVariant="multiselect"
     >
       <InteractableCard {...args} value="jane-doe" style={{ width: "180px" }}>
-        <StackLayout>
+        <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar size={1} />
             <H3>Jane Doe</H3>
@@ -318,7 +308,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
         </StackLayout>
       </InteractableCard>
       <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
-        <StackLayout>
+        <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar size={1} />
             <H3>Tom Roberts</H3>
@@ -330,7 +320,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
         </StackLayout>
       </InteractableCard>
       <InteractableCard value="ray-smith" style={{ width: "180px" }}>
-        <StackLayout>
+        <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar size={1} />
             <H3>Ray Smith</H3>

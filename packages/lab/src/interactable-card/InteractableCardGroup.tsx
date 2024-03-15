@@ -1,6 +1,7 @@
 import {
   ComponentPropsWithoutRef,
   forwardRef,
+  KeyboardEvent,
   SyntheticEvent,
   useCallback,
   useEffect,
@@ -92,7 +93,6 @@ export const InteractableCardGroup = forwardRef<
       ) ?? []
     );
     setElements(childElements);
-    console.log({ childElements });
   }, [children]);
 
   const select = useCallback(
@@ -120,26 +120,15 @@ export const InteractableCardGroup = forwardRef<
   );
 
   const isSelected = useCallback(
-    (id: InteractableCardValue) =>
+    (cardValue: InteractableCardValue) =>
       selectionVariant === "multiselect"
-        ? Array.isArray(value) && value.includes(id)
-        : value === id,
+        ? Array.isArray(value) && value.includes(cardValue)
+        : cardValue !== undefined && value === cardValue,
     [value, selectionVariant]
   );
 
   const isFirstChild = useCallback(
     (cardValue: InteractableCardValue) => {
-      // const elements: HTMLElement[] = Array.from(
-      //   groupRef.current?.querySelectorAll(
-      //     ".saltInteractableCard:not([disabled])"
-      //   ) ?? []
-      // );
-
-      console.log("Group isFirstChild", { elements, cardValue });
-      // console.log(elements[0].getAttribute("data-value"));
-      elements.forEach((element) =>
-        console.log(element.getAttribute("data-value"))
-      );
       return (
         elements.findIndex(
           (element) => element.getAttribute("data-value") === cardValue
@@ -161,70 +150,43 @@ export const InteractableCardGroup = forwardRef<
     [select, isSelected, disabled, selectionVariant, isFirstChild, value]
   );
 
-  const handleKeyDownSingle = (event: KeyboardEvent<HTMLDivElement>) => {
-    // const elements: HTMLElement[] = Array.from(
-    //   groupRef.current?.querySelectorAll(
-    //     ".saltInteractableCard:not([disabled])"
-    //   ) ?? []
-    // );
-
-    console.log({ elements });
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const currentIndex = elements.findIndex(
       (element) => element === document.activeElement
     );
     const nextIndex = (currentIndex + 1) % elements.length;
     const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
 
-    const toggleSelect = () => {
+    if (event.key == " ") {
       event.preventDefault();
-      select(event, elements[currentIndex].getAttribute("data-value"));
-    };
-
-    switch (event.key) {
-      case " ":
-        toggleSelect();
-        break;
-      case "ArrowDown":
-      case "ArrowRight":
-        // Select the next element
-        const nextValue = elements[nextIndex].getAttribute("data-value");
-        select(event, nextValue); // Ensure your select method can handle this value appropriately
-        elements[nextIndex]?.focus();
-        break;
-      case "ArrowUp":
-      case "ArrowLeft":
-        // Select the previous element
-        const prevValue = elements[prevIndex].getAttribute("data-value");
-        select(event, prevValue); // Adjust select method accordingly
-        elements[prevIndex]?.focus();
-        break;
+      select(
+        event,
+        elements[currentIndex].getAttribute(
+          "data-value"
+        ) as InteractableCardValue
+      );
     }
 
-    onKeyDown?.(event);
-  };
-
-  const handleKeyDownMulti = (event: KeyboardEvent<HTMLDivElement>) => {
-    // const elements: HTMLElement[] = Array.from(
-    //   groupRef.current?.querySelectorAll(
-    //     ".saltInteractableCard:not([disabled])"
-    //   ) ?? []
-    // );
-
-    console.log({ elements });
-    const currentIndex = elements.findIndex(
-      (element) => element === document.activeElement
-    );
-    const toggleSelect = () => {
-      event.preventDefault();
-      select(event, elements[currentIndex].getAttribute("data-value"));
-    };
-
-    switch (event.key) {
-      case " ":
-        toggleSelect();
-        break;
+    if (selectionVariant === "single") {
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          const nextValue = elements[nextIndex].getAttribute(
+            "data-value"
+          ) as InteractableCardValue;
+          select(event, nextValue);
+          elements[nextIndex]?.focus();
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          const prevValue = elements[prevIndex].getAttribute(
+            "data-value"
+          ) as InteractableCardValue;
+          select(event, prevValue);
+          elements[prevIndex]?.focus();
+          break;
+      }
     }
-
     onKeyDown?.(event);
   };
 
@@ -233,11 +195,7 @@ export const InteractableCardGroup = forwardRef<
       <div
         className={clsx(withBaseName(), className)}
         role={selectionVariant === "multiselect" ? "group" : "radiogroup"}
-        onKeyDown={
-          selectionVariant === "single"
-            ? handleKeyDownSingle
-            : handleKeyDownMulti
-        }
+        onKeyDown={handleKeyDown}
         ref={handleRef}
         {...rest}
       >
