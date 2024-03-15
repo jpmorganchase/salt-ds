@@ -52,11 +52,13 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
       return `.saltIcon-${iconName}{mask-image:url("data:image/svg+xml,${encodeURIComponent(
         svgString
-      )}")}`;
+      )}");-webkit-mask-image:url("data:image/svg+xml,${encodeURIComponent(
+        svgString
+      )}");}`;
     })
     .join("\n");
 
-  const ALL_CSS = `[class*=' saltIcon-'],[class^='saltIcon-'] {mask-size: cover;background-color: currentColor;
+  const ALL_CSS = `[class*=' saltIcon-'],[class^='saltIcon-'] {mask-size: cover;-webkit-mask-size: cover;background-color: currentColor;
   height:max(var(--salt-size-icon, 12px), 12px);width:max(var(--salt-size-icon, 12px), 12px);}\n`;
 
   const formattedResult = prettier.format(
