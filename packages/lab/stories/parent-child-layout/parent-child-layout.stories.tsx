@@ -21,7 +21,7 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  DropdownNext,
+  Dropdown,
   Option,
 } from "@salt-ds/core";
 
@@ -135,13 +135,13 @@ const displayView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>Language</FormFieldLabel>
-      <DropdownNext>
+      <Dropdown>
         {languages.map((lang) => (
           <Option value={lang} key={lang}>
             {lang}
           </Option>
         ))}
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Time format</FormFieldLabel>
@@ -190,7 +190,7 @@ const accountView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Security type</FormFieldLabel>
-      <DropdownNext defaultSelected={["Password"]}>
+      <Dropdown defaultSelected={["Password"]}>
         <Option value="Password" key="Password">
           Password
         </Option>
@@ -200,7 +200,7 @@ const accountView = () => (
         <Option value="Biometric" key="Biometric">
           Biometric
         </Option>
-      </DropdownNext>
+      </Dropdown>
     </FormField>
   </StackLayout>
 );
@@ -209,7 +209,7 @@ const exportView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>File type</FormFieldLabel>
-      <DropdownNext defaultSelected={["PNG"]}>
+      <Dropdown defaultSelected={["PNG"]}>
         <Option value="JPG" key="JPG">
           JPG
         </Option>
@@ -222,11 +222,11 @@ const exportView = () => (
         <Option value="SVG" key="SVG">
           SVG
         </Option>
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Size</FormFieldLabel>
-      <DropdownNext defaultSelected={["1x"]}>
+      <Dropdown defaultSelected={["1x"]}>
         <Option value="1x" key="1x">
           1x
         </Option>
@@ -236,7 +236,7 @@ const exportView = () => (
         <Option value="3x" key="3x">
           3x
         </Option>
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Suffix</FormFieldLabel>
@@ -244,14 +244,14 @@ const exportView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Color profile</FormFieldLabel>
-      <DropdownNext defaultSelected={["Same as current (sRGB)"]}>
+      <Dropdown defaultSelected={["Same as current (sRGB)"]}>
         <Option value="Same as current (sRGB)" key="Same as current (sRGB)">
           Same as current (sRGB)
         </Option>
         <Option value="Display P3" key="Display P3">
           Display P3
         </Option>
-      </DropdownNext>
+      </Dropdown>
     </FormField>
   </StackLayout>
 );

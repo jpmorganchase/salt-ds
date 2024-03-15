@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option, Spinner } from "@salt-ds/core";
+import { ComboBox, Option, Spinner } from "@salt-ds/core";
 import useSWR from "swr";
 import styles from "./index.module.css";
 
@@ -43,7 +43,7 @@ export const ServerSideData = (): ReactElement => {
   };
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -61,6 +61,6 @@ export const ServerSideData = (): ReactElement => {
           Loading...
         </div>
       )}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

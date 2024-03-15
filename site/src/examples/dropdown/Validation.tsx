@@ -1,23 +1,23 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option, StackLayout } from "@salt-ds/core";
+import { Dropdown, Option, StackLayout } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Validation = (): ReactElement => (
   <StackLayout style={{ width: "266px" }}>
-    <DropdownNext validationStatus="error">
+    <Dropdown validationStatus="error">
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </DropdownNext>
-    <DropdownNext validationStatus="warning">
+    </Dropdown>
+    <Dropdown validationStatus="warning">
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </DropdownNext>
-    <DropdownNext validationStatus="success">
+    </Dropdown>
+    <Dropdown validationStatus="success">
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </DropdownNext>
+    </Dropdown>
   </StackLayout>
 );

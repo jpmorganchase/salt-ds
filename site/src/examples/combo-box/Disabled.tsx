@@ -1,17 +1,13 @@
 import { ReactElement } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/core";
+import { ComboBox, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Disabled = (): ReactElement => {
   return (
-    <ComboBoxNext
-      style={{ width: "266px" }}
-      defaultSelected={["Yellow"]}
-      disabled
-    >
+    <ComboBox style={{ width: "266px" }} defaultSelected={["Yellow"]} disabled>
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

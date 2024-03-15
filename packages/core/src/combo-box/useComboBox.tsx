@@ -6,10 +6,10 @@ import {
 import { OptionValue } from "../list-control/ListControlContext";
 import { useControlled } from "../utils";
 
-export type UseComboBoxNextProps<Item> = ListControlProps<Item> &
+export type UseComboBoxProps<Item> = ListControlProps<Item> &
   Pick<ComponentPropsWithoutRef<"input">, "value" | "defaultValue">;
 
-export function useComboBoxNext<Item>(props: UseComboBoxNextProps<Item>) {
+export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
   const {
     open,
     defaultOpen,
@@ -47,7 +47,7 @@ export function useComboBoxNext<Item>(props: UseComboBoxNextProps<Item>) {
       defaultValue ?? selectedState.length === 1
         ? listControl.valueToString(selectedState[0])
         : defaultValue,
-    name: "ComboBoxNext",
+    name: "ComboBox",
     state: "value",
   });
 

@@ -35,23 +35,23 @@ import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
 import { defaultValueToString } from "../list-control/ListControlState";
 import { ListControlContext } from "../list-control/ListControlContext";
-import { useComboBoxNext, UseComboBoxNextProps } from "./useComboBoxNext";
+import { useComboBox, UseComboBoxProps } from "./useComboBox";
 import { OptionList } from "../option/OptionList";
 import { PillInput, PillInputProps } from "../pill-input";
-import comboBoxNextCss from "./ComboBoxNext.css";
+import comboBoxCss from "./ComboBox.css";
 
-export type ComboBoxNextProps<Item = string> = {
+export type ComboBoxProps<Item = string> = {
   /**
    * The options to display in the combo box.
    */
   children?: ReactNode;
-} & UseComboBoxNextProps<Item> &
+} & UseComboBoxProps<Item> &
   PillInputProps;
 
-const withBaseName = makePrefixer("saltComboBoxNext");
+const withBaseName = makePrefixer("saltComboBox");
 
-export const ComboBoxNext = forwardRef(function ComboBox<Item>(
-  props: ComboBoxNextProps<Item>,
+export const ComboBox = forwardRef(function ComboBox<Item>(
+  props: ComboBoxProps<Item>,
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const {
@@ -82,8 +82,8 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-combo-box-next",
-    css: comboBoxNextCss,
+    testId: "salt-combo-box",
+    css: comboBoxCss,
     window: targetWindow,
   });
 
@@ -97,7 +97,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const listControl = useComboBoxNext<Item>({
+  const listControl = useComboBox<Item>({
     open,
     defaultOpen,
     onOpenChange,
@@ -457,5 +457,5 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: ComboBoxNextProps<Item> & { ref?: Ref<HTMLDivElement> }
+  props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> }
 ) => JSX.Element;

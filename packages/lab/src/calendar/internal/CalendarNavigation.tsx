@@ -9,8 +9,8 @@ import {
   ButtonProps,
   makePrefixer,
   Tooltip,
-  DropdownNext,
-  DropdownNextProps,
+  Dropdown,
+  DropdownProps,
   Option,
   OptionProps,
   useListControlContext,
@@ -26,7 +26,7 @@ import { formatDate, monthDiff, monthsForLocale } from "./utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-type dateDropdownProps = DropdownNextProps<DateValue>;
+type dateDropdownProps = DropdownProps<DateValue>;
 
 export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   MonthDropdownProps?: dateDropdownProps;
@@ -232,7 +232,7 @@ export const CalendarNavigation = forwardRef<
         </Button>
       </Tooltip>
       <div className={withBaseName("dropdowns")}>
-        <DropdownNext
+        <Dropdown
           aria-label="Month Dropdown"
           selected={selectedMonth ? [selectedMonth] : []}
           value={formatMonth(selectedMonth)}
@@ -249,9 +249,9 @@ export const CalendarNavigation = forwardRef<
               {formatMonth(month)}
             </OptionWithTooltip>
           ))}
-        </DropdownNext>
+        </Dropdown>
         {!hideYearDropdown && (
-          <DropdownNext
+          <Dropdown
             aria-label="Year Dropdown"
             selected={selectedYear ? [selectedYear] : []}
             value={formatYear(selectedYear)}
@@ -267,7 +267,7 @@ export const CalendarNavigation = forwardRef<
                 {formatYear(year)}
               </OptionWithTooltip>
             ))}
-          </DropdownNext>
+          </Dropdown>
         )}
       </div>
       <Tooltip

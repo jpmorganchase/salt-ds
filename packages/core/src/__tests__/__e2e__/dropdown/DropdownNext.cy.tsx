@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
-import * as dropdownNextStories from "@stories/dropdown-next/dropdown-next.stories";
-import { DropdownNext } from "@salt-ds/core";
+import * as dropdownStories from "@stories/dropdown/dropdown.stories";
+import { Dropdown } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -16,7 +16,7 @@ const {
   CustomValue,
   WithDefaultSelected,
   ObjectValue,
-} = composeStories(dropdownNextStories);
+} = composeStories(dropdownStories);
 
 describe("Given a Dropdown", () => {
   it("should be able to select an option with a mouse", () => {
@@ -393,12 +393,12 @@ describe("Given a Dropdown", () => {
   });
 
   it("should not show a list with no options", () => {
-    cy.mount(<DropdownNext open />);
+    cy.mount(<Dropdown open />);
     cy.findByRole("listbox").should("not.exist");
   });
 
   it("should show a placeholder when the value is empty", () => {
-    cy.mount(<DropdownNext placeholder="Placeholder" value="" />);
+    cy.mount(<Dropdown placeholder="Placeholder" value="" />);
     cy.findByRole("combobox").should("have.text", "Placeholder");
   });
 

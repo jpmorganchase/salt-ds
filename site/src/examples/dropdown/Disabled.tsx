@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option } from "@salt-ds/core";
+import { Dropdown, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Disabled = (): ReactElement => (
-  <DropdownNext
+  <Dropdown
     defaultSelected={["California"]}
     disabled
     style={{ width: "266px" }}
@@ -11,5 +11,5 @@ export const Disabled = (): ReactElement => (
     {shortColorData.map((color) => (
       <Option value={color} key={color} />
     ))}
-  </DropdownNext>
+  </Dropdown>
 );

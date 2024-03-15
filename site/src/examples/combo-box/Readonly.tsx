@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
-import { ComboBoxNext, Option, StackLayout } from "@salt-ds/core";
+import { ComboBox, Option, StackLayout } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Readonly = (): ReactElement => {
   return (
     <StackLayout>
-      <ComboBoxNext
+      <ComboBox
         defaultValue="Yellow"
         defaultSelected={["Yellow"]}
         readOnly
@@ -14,12 +14,12 @@ export const Readonly = (): ReactElement => {
         {shortColorData.map((color) => (
           <Option value={color} key={color} />
         ))}
-      </ComboBoxNext>
-      <ComboBoxNext readOnly style={{ width: "266px" }}>
+      </ComboBox>
+      <ComboBox readOnly style={{ width: "266px" }}>
         {shortColorData.map((color) => (
           <Option value={color} key={color} />
         ))}
-      </ComboBoxNext>
+      </ComboBox>
     </StackLayout>
   );
 };

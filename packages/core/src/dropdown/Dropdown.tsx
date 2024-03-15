@@ -37,11 +37,11 @@ import {
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dropdownNextCss from "./DropdownNext.css";
+import dropdownCss from "./Dropdown.css";
 import { ListControlContext } from "../list-control/ListControlContext";
 import { OptionList } from "../option/OptionList";
 
-export type DropdownNextProps<Item = string> = {
+export type DropdownProps<Item = string> = {
   /**
    * If `true`, the dropdown will be disabled.
    */
@@ -94,10 +94,10 @@ function ExpandIcon({ open }: { open: boolean }) {
   return open ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />;
 }
 
-const withBaseName = makePrefixer("saltDropdownNext");
+const withBaseName = makePrefixer("saltDropdown");
 
-export const DropdownNext = forwardRef(function DropdownNext<Item>(
-  props: DropdownNextProps<Item>,
+export const Dropdown = forwardRef(function Dropdown<Item>(
+  props: DropdownProps<Item>,
   ref: ForwardedRef<HTMLButtonElement>
 ) {
   const {
@@ -130,8 +130,8 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-dropdown-next",
-    css: dropdownNextCss,
+    testId: "salt-dropdown",
+    css: dropdownCss,
     window: targetWindow,
   });
 
@@ -467,5 +467,5 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: DropdownNextProps<Item> & { ref?: Ref<HTMLButtonElement> }
+  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> }
 ) => JSX.Element;

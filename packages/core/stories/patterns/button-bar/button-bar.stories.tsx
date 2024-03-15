@@ -13,7 +13,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DropdownNext as Dropdown,
+  Dropdown,
   Option,
 } from "@salt-ds/core";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";

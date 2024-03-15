@@ -4,8 +4,8 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
-  ComboBoxNext,
-  ComboBoxNextProps,
+  ComboBox,
+  ComboBoxProps,
   Option,
   OptionGroup,
 } from "@salt-ds/core";
@@ -20,8 +20,8 @@ import { ChangeEvent, Suspense, SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
-  title: "Core/Combo Box Next",
-  component: ComboBoxNext,
+  title: "Core/Combo Box",
+  component: ComboBox,
   parameters: {
     docs: {
       source: {
@@ -29,7 +29,7 @@ export default {
       },
     },
   },
-} as Meta<typeof ComboBoxNext>;
+} as Meta<typeof ComboBox>;
 
 const usStates = usStateExampleData.slice(0, 10);
 
@@ -38,7 +38,7 @@ function getTemplateDefaultValue({
   defaultSelected,
   multiselect,
 }: Pick<
-  ComboBoxNextProps,
+  ComboBoxProps,
   "defaultValue" | "defaultSelected" | "multiselect"
 >): string {
   if (multiselect) {
@@ -52,7 +52,7 @@ function getTemplateDefaultValue({
   return defaultSelected?.[0] ?? "";
 }
 
-const Template: StoryFn<ComboBoxNextProps> = (args) => {
+const Template: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +85,7 @@ const Template: StoryFn<ComboBoxNextProps> = (args) => {
   };
 
   return (
-    <ComboBoxNext
+    <ComboBox
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -99,7 +99,7 @@ const Template: StoryFn<ComboBoxNextProps> = (args) => {
         .map((state) => (
           <Option value={state} key={state} />
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
@@ -132,7 +132,7 @@ Disabled.args = {
   defaultSelected: ["California"],
 };
 
-export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
+export const DisabledOption: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -158,7 +158,7 @@ export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
   };
 
   return (
-    <ComboBoxNext
+    <ComboBox
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -171,11 +171,11 @@ export const DisabledOption: StoryFn<ComboBoxNextProps> = (args) => {
         .map((state) => (
           <Option value={state} key={state} disabled={state === "California"} />
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
-export const Variants: StoryFn<typeof ComboBoxNext> = () => {
+export const Variants: StoryFn<typeof ComboBox> = () => {
   return (
     <StackLayout>
       <Template variant="primary" />
@@ -217,7 +217,7 @@ export const WithFormField: StoryFn = () => {
   return (
     <FormField>
       <FormFieldLabel>State</FormFieldLabel>
-      <ComboBoxNext
+      <ComboBox
         onChange={handleChange}
         onSelectionChange={handleSelectionChange}
         value={value}
@@ -229,13 +229,13 @@ export const WithFormField: StoryFn = () => {
           .map((state) => (
             <Option value={state} key={state} />
           ))}
-      </ComboBoxNext>
+      </ComboBox>
       <FormFieldHelperText>Pick a US state</FormFieldHelperText>
     </FormField>
   );
 };
 
-export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
+export const Grouped: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -301,7 +301,7 @@ export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
     }, {} as Record<string, typeof options>);
 
   return (
-    <ComboBoxNext
+    <ComboBox
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -314,7 +314,7 @@ export const Grouped: StoryFn<ComboBoxNextProps> = (args) => {
           ))}
         </OptionGroup>
       ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
@@ -337,7 +337,7 @@ const options: Country[] = [
   },
 ];
 
-export const ComplexOption: StoryFn<ComboBoxNextProps<Country>> = (args) => {
+export const ComplexOption: StoryFn<ComboBoxProps<Country>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -363,7 +363,7 @@ export const ComplexOption: StoryFn<ComboBoxNextProps<Country>> = (args) => {
   };
 
   return (
-    <ComboBoxNext<Country>
+    <ComboBox<Country>
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -380,11 +380,11 @@ export const ComplexOption: StoryFn<ComboBoxNextProps<Country>> = (args) => {
             {option.icon} {option.textValue}
           </Option>
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
-export const LongList: StoryFn<ComboBoxNextProps<CountryCode>> = (args) => {
+export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -434,7 +434,7 @@ export const LongList: StoryFn<ComboBoxNextProps<CountryCode>> = (args) => {
   }, {} as Record<string, typeof options>);
 
   return (
-    <ComboBoxNext<CountryCode>
+    <ComboBox<CountryCode>
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -453,11 +453,11 @@ export const LongList: StoryFn<ComboBoxNextProps<CountryCode>> = (args) => {
           </OptionGroup>
         ))}
       </Suspense>
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
-export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
+export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -491,7 +491,7 @@ export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
   );
 
   return (
-    <ComboBoxNext
+    <ComboBox
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -502,7 +502,7 @@ export const EmptyMessage: StoryFn<ComboBoxNextProps> = (args) => {
       ) : (
         <Option value="">No results found for &quot;{value}&quot;</Option>
       )}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
@@ -516,7 +516,7 @@ export const Validation = () => {
   );
 };
 
-export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
+export const CustomFiltering: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
   const [showAll, setShowAll] = useState(false);
 
@@ -550,7 +550,7 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
     }
   };
 
-  const handleOpenChange: ComboBoxNextProps["onOpenChange"] = (
+  const handleOpenChange: ComboBoxProps["onOpenChange"] = (
     _newOpen,
     reason
   ) => {
@@ -566,7 +566,7 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
   const options = showAll ? usStates : filteredOptions;
 
   return (
-    <ComboBoxNext
+    <ComboBox
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -576,7 +576,7 @@ export const CustomFiltering: StoryFn<ComboBoxNextProps> = (args) => {
       {options.map((state) => (
         <Option value={state} key={state} />
       ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 
@@ -594,7 +594,7 @@ const people: Person[] = [
   { id: 4, firstName: "Jane", lastName: "Smith", displayName: "Jane Smith" },
 ];
 
-export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
+export const ObjectValue: StoryFn<ComboBoxProps<Person>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
   const [selected, setSelected] = useState<Person[]>([]);
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -624,7 +624,7 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
   );
 
   return (
-    <ComboBoxNext<Person>
+    <ComboBox<Person>
       {...args}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -636,7 +636,7 @@ export const ObjectValue: StoryFn<ComboBoxNextProps<Person>> = (args) => {
       {options.map((person) => (
         <Option value={person} key={person.id} />
       ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
 

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option } from "@salt-ds/core";
+import { Dropdown, Option } from "@salt-ds/core";
 import { largestCities, LargeCity } from "./exampleData";
 
 /**
@@ -11,13 +11,13 @@ import { largestCities, LargeCity } from "./exampleData";
 
 export const ObjectValues = (): ReactElement => {
   return (
-    <DropdownNext<LargeCity>
+    <Dropdown<LargeCity>
       style={{ width: "266px" }}
       valueToString={(city) => city.name}
     >
       {largestCities.map((city) => (
         <Option value={city} key={city.name} />
       ))}
-    </DropdownNext>
+    </Dropdown>
   );
 };

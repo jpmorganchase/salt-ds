@@ -2,10 +2,10 @@
 "@salt-ds/core": minor
 ---
 
-Added `DropdownNext`, `Option`, `OptionGroup` and `ComboBoxNext`.
+Added `Dropdown`, `Option`, `OptionGroup` and `ComboBox`.
 
 ```tsx
-<DropdownNext aria-label="Colors">
+<Dropdown aria-label="Colors">
   <OptionGroup label="Primary">
     <Option value="Red" />
     <Option value="Blue" />
@@ -13,11 +13,11 @@ Added `DropdownNext`, `Option`, `OptionGroup` and `ComboBoxNext`.
   <OptionGroup label="Other">
     <Option value="Pink" />
   </OptionGroup>
-</DropdownNext>
+</Dropdown>
 ```
 
 ```tsx
-<ComboBoxNext aria-label="Colors">
+<ComboBox aria-label="Colors">
   <OptionGroup label="Primary">
     <Option value="Red" />
     <Option value="Blue" />
@@ -25,5 +25,5 @@ Added `DropdownNext`, `Option`, `OptionGroup` and `ComboBoxNext`.
   <OptionGroup label="Other">
     <Option value="Pink" />
   </OptionGroup>
-</ComboBoxNext>
+</ComboBox>
 ```

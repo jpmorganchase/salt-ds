@@ -3,7 +3,7 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   FormField,
-  ComboBoxNext,
+  ComboBox,
   Option,
 } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
@@ -30,7 +30,7 @@ export const WithFormField = (): ReactElement => {
   return (
     <FormField style={{ width: "266px" }}>
       <FormFieldLabel>Color</FormFieldLabel>
-      <ComboBoxNext
+      <ComboBox
         onChange={handleChange}
         onSelectionChange={handleSelectionChange}
         value={value}
@@ -42,7 +42,7 @@ export const WithFormField = (): ReactElement => {
           .map((color) => (
             <Option value={color} key={color} />
           ))}
-      </ComboBoxNext>
+      </ComboBox>
       <FormFieldHelperText>Pick a color</FormFieldHelperText>
     </FormField>
   );

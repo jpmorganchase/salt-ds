@@ -1,10 +1,10 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option, StackLayout } from "@salt-ds/core";
+import { Dropdown, Option, StackLayout } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Readonly = (): ReactElement => (
   <StackLayout>
-    <DropdownNext
+    <Dropdown
       defaultSelected={["California"]}
       readOnly
       style={{ width: "266px" }}
@@ -12,11 +12,11 @@ export const Readonly = (): ReactElement => (
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </DropdownNext>
-    <DropdownNext readOnly style={{ width: "266px" }}>
+    </Dropdown>
+    <Dropdown readOnly style={{ width: "266px" }}>
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </DropdownNext>
+    </Dropdown>
   </StackLayout>
 );

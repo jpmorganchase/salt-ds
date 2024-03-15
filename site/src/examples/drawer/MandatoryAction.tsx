@@ -11,7 +11,7 @@ import {
   H2,
   useId,
   Drawer,
-  ComboBoxNext,
+  ComboBox,
   Option,
 } from "@salt-ds/core";
 
@@ -69,7 +69,7 @@ export const MandatoryAction = (): ReactElement => {
           </FormField>
           <FormField>
             <FormFieldLabel>Postcode</FormFieldLabel>
-            <ComboBoxNext
+            <ComboBox
               onChange={handleChange}
               onSelectionChange={handleSelectionChange}
               value={value}
@@ -80,7 +80,7 @@ export const MandatoryAction = (): ReactElement => {
                   {postcode}
                 </Option>
               ))}
-            </ComboBoxNext>
+            </ComboBox>
             <FormFieldHelperText>Do not include space</FormFieldHelperText>
           </FormField>
           <FormField>

@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
-import * as comboBoxNextStories from "@stories/combo-box-next/combo-box-next.stories";
-import { ComboBoxNext } from "@salt-ds/core";
+import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
+import { ComboBox } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -18,7 +18,7 @@ const {
   ObjectValue,
   MultiplePills,
   MultiplePillsTruncated,
-} = composeStories(comboBoxNextStories);
+} = composeStories(comboBoxStories);
 
 describe("Given a ComboBox", () => {
   it("should be able to filter and select an option with a mouse", () => {
@@ -444,7 +444,7 @@ describe("Given a ComboBox", () => {
   });
 
   it("should not show a list with no options", () => {
-    cy.mount(<ComboBoxNext open />);
+    cy.mount(<ComboBox open />);
     cy.findByRole("listbox").should("not.exist");
   });
 

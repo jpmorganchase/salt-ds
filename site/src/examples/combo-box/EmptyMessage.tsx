@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/core";
+import { ComboBox, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 import styles from "./index.module.css";
 
@@ -27,7 +27,7 @@ export const EmptyMessage = (): ReactElement => {
   );
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -44,6 +44,6 @@ export const EmptyMessage = (): ReactElement => {
           No results found for &quot;{value}&quot;
         </div>
       )}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

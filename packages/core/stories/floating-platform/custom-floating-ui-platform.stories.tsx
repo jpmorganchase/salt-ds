@@ -20,8 +20,8 @@ import {
   H3,
   FloatingComponentProvider,
   FloatingComponentProps,
-  ComboBoxNext,
-  DropdownNext,
+  ComboBox,
+  Dropdown,
   Option,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
@@ -189,7 +189,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                   Click to show extra content
                 </Button>
               </Tooltip>
-              <ComboBoxNext disabled={false} onChange={handleChange}>
+              <ComboBox disabled={false} onChange={handleChange}>
                 {source
                   .filter((item) =>
                     item.toLowerCase().includes(value.trim().toLowerCase())
@@ -199,14 +199,14 @@ const NewWindowTest = (props: NewWindowTestProps) => {
                       {item}
                     </Option>
                   ))}
-              </ComboBoxNext>
-              <DropdownNext>
+              </ComboBox>
+              <Dropdown>
                 {source.map((item) => (
                   <Option key={item} value={item}>
                     {item}
                   </Option>
                 ))}
-              </DropdownNext>
+              </Dropdown>
             </FloatingComponentProvider>
           </FloatingPlatformProvider>
         </StackLayout>
@@ -247,20 +247,20 @@ export const AnimationFrame: StoryFn = () => {
             <Button>I am a moving button</Button>
           </Tooltip>
           <div style={{ width: 200, position: "relative" }}>
-            <ComboBoxNext disabled={false}>
+            <ComboBox disabled={false}>
               {source.map((item) => (
                 <Option key={item} value={item}>
                   {item}
                 </Option>
               ))}
-            </ComboBoxNext>
-            <DropdownNext>
+            </ComboBox>
+            <Dropdown>
               {source.map((item) => (
                 <Option key={item} value={item}>
                   {item}
                 </Option>
               ))}
-            </DropdownNext>
+            </Dropdown>
           </div>
         </StackLayout>
       </FloatingPlatformProvider>
@@ -278,20 +278,20 @@ export const CustomMiddleware: StoryFn = () => {
     >
       <StackLayout align="start" direction={"column"}>
         <div style={{ width: 200, position: "relative" }}>
-          <ComboBoxNext disabled={false}>
+          <ComboBox disabled={false}>
             {source.map((item) => (
               <Option key={item} value={item}>
                 {item}
               </Option>
             ))}
-          </ComboBoxNext>
-          <DropdownNext>
+          </ComboBox>
+          <Dropdown>
             {source.map((item) => (
               <Option key={item} value={item}>
                 {item}
               </Option>
             ))}
-          </DropdownNext>
+          </Dropdown>
         </div>
         <Tooltip content="I am offset due to custom middleware" open>
           <Button>I am a button</Button>

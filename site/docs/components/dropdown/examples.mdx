@@ -15,11 +15,11 @@ data:
 
 Users can select a single item from the dropdown options.
 
-`DropdownNext` contains a button that opens a list on mouse or keyboard interaction.
+`Dropdown` contains a button that opens a list on mouse or keyboard interaction.
 
 ### Best practices
 
-You can wrap `DropdownNext` in a `FormField` when it’s displayed within a form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+You can wrap `Dropdown` in a `FormField` when it’s displayed within a form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
@@ -63,7 +63,7 @@ The component has two variants: `primary` and `secondary`. The primary variant i
 
 The choice between primary and secondary variants should be considered alongside the background color it sits upon.
 
-Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. `DropdownNext` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+Tip: The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. `Dropdown` can be wrapped in a `FormField` when it’s displayed within a Form context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
@@ -102,7 +102,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 ## `FormField` support
 
-Wrap `DropdownNext` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the dropdown with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+Wrap `Dropdown` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the dropdown with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
 </LivePreview>
 
@@ -157,7 +157,7 @@ Start adornments are typically used to describe the purpose of the field (e.g., 
 ## Object values
 
 In order to support advanced use-cases, like where the options are fetched from a server. The `value` prop passed to `Option` can be an object.
-When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBoxNext` to specify how to display the option in the button.
+When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBox` to specify how to display the option in the button.
 
 </LivePreview>
 </LivePreviewControls>

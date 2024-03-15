@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/core";
+import { Dropdown, DropdownProps, Option } from "@salt-ds/core";
 import { GB, US } from "@salt-ds/countries";
 
 const countries: Record<string, { icon: JSX.Element; name: string }> = {
@@ -16,7 +16,7 @@ const countries: Record<string, { icon: JSX.Element; name: string }> = {
 export const ComplexOptions = (): ReactElement => {
   const [selected, setSelected] = useState<string[]>([]);
 
-  const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
+  const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
     newSelected
   ) => {
@@ -26,7 +26,7 @@ export const ComplexOptions = (): ReactElement => {
   const adornment = countries[selected[0] ?? ""]?.icon || null;
 
   return (
-    <DropdownNext
+    <Dropdown
       selected={selected}
       startAdornment={adornment}
       onSelectionChange={handleSelectionChange}
@@ -40,6 +40,6 @@ export const ComplexOptions = (): ReactElement => {
       <Option value="US">
         <US size={0.75} aria-hidden /> United States of America
       </Option>
-    </DropdownNext>
+    </Dropdown>
   );
 };

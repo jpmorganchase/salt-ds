@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option, OptionGroup } from "@salt-ds/core";
+import { ComboBox, Option, OptionGroup } from "@salt-ds/core";
 import { citiesWithCountries } from "./exampleData";
 
 export const Grouped = (): ReactElement => {
@@ -35,7 +35,7 @@ export const Grouped = (): ReactElement => {
     }, {} as Record<string, typeof citiesWithCountries>);
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -48,6 +48,6 @@ export const Grouped = (): ReactElement => {
           ))}
         </OptionGroup>
       ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
