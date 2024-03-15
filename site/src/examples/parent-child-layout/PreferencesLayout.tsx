@@ -10,13 +10,10 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-} from "@salt-ds/core";
-import {
   DropdownNext,
   Option,
-  ParentChildLayout,
-  StackedViewElement,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 import {
   ChevronLeftIcon,
   ExportIcon,
