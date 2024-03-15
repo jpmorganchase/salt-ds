@@ -1,5 +1,5 @@
 import { SegmentedButtonGroup, SegmentedButtonGroupProps } from "@salt-ds/lab";
-import { StackLayout, Button } from "@salt-ds/core";
+import { StackLayout, Button, Tooltip } from "@salt-ds/core";
 import { MessageIcon, ChatGroupIcon, CallIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 
@@ -34,14 +34,20 @@ export const Icons: StoryFn<SegmentedButtonGroupProps> = () => {
       {variants.map((variant) => {
         return (
           <SegmentedButtonGroup key={variant}>
-            <Button variant={variant}>
-              <MessageIcon />
+            <Button variant={variant} aria-label="Message">
+              <Tooltip content="Message">
+                <MessageIcon aria-hidden />
+              </Tooltip>
             </Button>
-            <Button variant={variant}>
-              <ChatGroupIcon />
+            <Button variant={variant} aria-label="Chat">
+              <Tooltip content="Chat">
+                <ChatGroupIcon aria-hidden />
+              </Tooltip>
             </Button>
-            <Button variant={variant}>
-              <CallIcon />
+            <Button variant={variant} aria-label="Call">
+              <Tooltip content="Call">
+                <CallIcon aria-hidden />
+              </Tooltip>
             </Button>
           </SegmentedButtonGroup>
         );

@@ -2,7 +2,7 @@
 "@salt-ds/lab": minor
 ---
 
-Add `SegmentedButton` to labs
+Add `SegmentedButtonGroup` to labs
 
 ```tsx
 const SegmentedButtonGroup = () => (

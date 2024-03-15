@@ -1,13 +1,8 @@
-import { StackLayout, Button, Tooltip } from "@salt-ds/core";
+import { StackLayout, Button } from "@salt-ds/core";
 import { SegmentedButtonGroup, SegmentedButtonGroupProps } from "@salt-ds/lab";
-import {
-  MessageIcon,
-  ChatGroupIcon,
-  CallIcon,
-  FavoriteIcon,
-} from "@salt-ds/icons";
+import { MessageIcon, ChatGroupIcon, CallIcon } from "@salt-ds/icons";
 import { StoryFn, Meta } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { QAContainer } from "docs/components";
 
 export default {
   title: "Lab/Segmented Button Group/Segmented Button Group QA",
@@ -20,19 +15,21 @@ const variants: variants[] = ["primary", "secondary", "cta"];
 
 export const Default: StoryFn<SegmentedButtonGroupProps> = () => {
   return (
-    <StackLayout>
+    <QAContainer>
       <StackLayout>
-        {variants.map((variant) => {
-          return (
-            <SegmentedButtonGroup key={variant}>
-              <Button variant={variant}> Button </Button>
-              <Button variant={variant}> Button </Button>
-              <Button variant={variant}> Button </Button>
-            </SegmentedButtonGroup>
-          );
-        })}
+        <StackLayout>
+          {variants.map((variant) => {
+            return (
+              <SegmentedButtonGroup key={variant}>
+                <Button variant={variant}> Button </Button>
+                <Button variant={variant}> Button </Button>
+                <Button variant={variant}> Button </Button>
+              </SegmentedButtonGroup>
+            );
+          })}
+        </StackLayout>
       </StackLayout>
-    </StackLayout>
+    </QAContainer>
   );
 };
 
@@ -42,29 +39,25 @@ Default.parameters = {
 
 export const Icons: StoryFn<SegmentedButtonGroupProps> = () => {
   return (
-    <StackLayout>
-      {variants.map((variant) => {
-        return (
-          <SegmentedButtonGroup key={variant}>
-            <Button variant={variant}>
-              <Tooltip content="Message">
+    <QAContainer>
+      <StackLayout>
+        {variants.map((variant) => {
+          return (
+            <SegmentedButtonGroup key={variant}>
+              <Button variant={variant}>
                 <MessageIcon />
-              </Tooltip>
-            </Button>
-            <Button variant={variant}>
-              <Tooltip content="Chat">
+              </Button>
+              <Button variant={variant}>
                 <ChatGroupIcon />
-              </Tooltip>
-            </Button>
-            <Button variant={variant}>
-              <Tooltip content="Call">
+              </Button>
+              <Button variant={variant}>
                 <CallIcon />
-              </Tooltip>
-            </Button>
-          </SegmentedButtonGroup>
-        );
-      })}
-    </StackLayout>
+              </Button>
+            </SegmentedButtonGroup>
+          );
+        })}
+      </StackLayout>
+    </QAContainer>
   );
 };
 

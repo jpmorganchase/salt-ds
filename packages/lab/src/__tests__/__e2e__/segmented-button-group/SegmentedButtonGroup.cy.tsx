@@ -1,7 +1,7 @@
 import { composeStories } from "@storybook/react";
-import * as dialogStories from "@stories/segmented-button-group/segmented-button-group.stories";
+import * as segmentedButtonStories from "@stories/segmented-button-group/segmented-button-group.stories";
 
-const composedStories = composeStories(dialogStories);
+const composedStories = composeStories(segmentedButtonStories);
 
 const { Default } = composedStories;
 
