@@ -9,7 +9,7 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "index.css",
-  "main": "json/theme.js",
+  "main": "json/theme.mjs",
   "files": [
     "/index.css",
     "/css",
