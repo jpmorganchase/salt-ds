@@ -10,9 +10,11 @@ const config: StorybookConfig = {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
-  stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+  stories: ["../packages/*/stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"],
   staticDirs: ["../docs/public"],
-
+  typescript: {
+    reactDocgen: "react-docgen-typescript",
+  },
   addons: [
     {
       name: "@storybook/addon-essentials",
@@ -28,8 +30,14 @@ const config: StorybookConfig = {
     "@storybook/addon-storysource",
   ],
   async viteFinal(config, { configType }) {
-    const { mergeConfig } = await import("vite");
-    // customize the Vite config here
+    // https://github.com/storybookjs/storybook/issues/26532 - package-deduplication breaks ag-grid-react.
+    const fixedConfig = {
+      ...config,
+      plugins: config.plugins?.filter(
+        // @ts-ignore
+        (plugin) => plugin?.name !== "storybook:package-deduplication"
+      ),
+    };
 
     const customConfig: UserConfig = {
       plugins: [cssInline(), cssVariableDocgen()],
@@ -41,7 +49,7 @@ const config: StorybookConfig = {
       );
     }
 
-    return mergeConfig(customConfig, config);
+    return mergeConfig(customConfig, fixedConfig);
   },
 };
 

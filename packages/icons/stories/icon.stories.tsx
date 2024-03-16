@@ -42,7 +42,7 @@ const IconGrid = ({
       }}
     >
       {sizes.map((size) => (
-        <IconComponent size={size} />
+        <IconComponent size={size} key={size} />
       ))}
     </div>
   );
@@ -122,7 +122,12 @@ export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
           .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
           .map(({ name, icon }, i) => {
             return (
-              <StackLayout style={{ width: "150px" }} gap={1} align="center">
+              <StackLayout
+                style={{ width: "150px" }}
+                gap={1}
+                align="center"
+                key={icon}
+              >
                 {createElement(icon, {
                   key: i,
                   size: 2,

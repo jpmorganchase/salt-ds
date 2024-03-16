@@ -1,0 +1,23 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as ToolbarStories from "./toolbar.stories";
+
+<Meta title="Documentation/Lab/Toolbar" />
+
+# Toolbar
+
+Toolbar is a flexible container for controls.
+
+<br />
+
+Simple `Toolbar` with 10 `Buttons`. Note that Button text is not displayed if Button
+contains an Icon.
+
+<Canvas of={ToolbarStories.Simple} />
+
+<br />
+
+##### Instant Collapse
+
+Example 1, use CSS alone to style compact state
+
+<Canvas of={ToolbarStories.SimpleWithCollapsibleItems} />

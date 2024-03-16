@@ -1,18 +1,7 @@
-import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Button, Text, Tooltip } from "@salt-ds/core";
-import {
-  CharacteristicUsage,
-  CSSClassTable,
-} from "css-variable-docgen-components";
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import { Canvas, Meta } from "@storybook/addon-docs";
+import * as CustomFloatingUiPlatformStories from "./custom-floating-ui-platform.stories";
 
-<Meta
-  title="Documentation/Desktop Support"
-  component={Tooltip}
-  parameters={{
-    viewMode: "docs",
-  }}
-/>
+<Meta title="Documentation/Desktop Support" />
 
 ## Custom Floating UI Platform
 
@@ -131,22 +120,16 @@ The example uses the `FloatingComponentProvider` to trigger creating the new win
 
 It also uses the `FloatingPlatformProvider` to customize the positioning of the Tooltip based on the global coordinates of the anchor, rather than the position within it's own window.
 
-<Canvas>
-  <Story id="core-floating-platform--custom-floating-ui-platform" />
-</Canvas>
+<Canvas of={CustomFloatingUiPlatformStories.CustomFloatingUiPlatform} />
 
 ### Custom Middleware Example
 
 In the following example custom `offset` middleware has been added to offset the tooltip by an additional amount on top of the default
 
-<Canvas>
-  <Story id="core-floating-platform--custom-middleware" />
-</Canvas>
+<Canvas of={CustomFloatingUiPlatformStories.CustomMiddleware} />
 
 ### Animation Frame autoUpdate
 
 In the following example the Tooltip is being positioned on animation frame, allowing it to remain anchored to a component suring an animation
 
-<Canvas>
-  <Story id="core-floating-platform--animation-frame" />
-</Canvas>
+<Canvas of={CustomFloatingUiPlatformStories.AnimationFrame} />
