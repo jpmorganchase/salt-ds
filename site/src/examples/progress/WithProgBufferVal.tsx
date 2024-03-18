@@ -11,7 +11,7 @@ import {
 } from "@salt-ds/core";
 
 function useProgressingValue(updateInterval = 100) {
-  const [value, setValue] = useState(0);
+  const [bufferValue, setBufferValue] = useState(0);
   const [isProgressing, setIsProgressing] = useState(false);
 
   const handleStop = useCallback(() => {
@@ -22,14 +22,14 @@ function useProgressingValue(updateInterval = 100) {
   };
 
   const handleReset = () => {
-    setValue(0);
+    setBufferValue(0);
     setIsProgressing(false);
   };
 
   useEffect(() => {
     if (isProgressing) {
       const id = setInterval(() => {
-        setValue((preValue) => preValue + 1);
+        setBufferValue((preValue) => preValue + 1);
       }, updateInterval);
 
       return () => {
@@ -41,11 +41,11 @@ function useProgressingValue(updateInterval = 100) {
 
   useEffect(
     function stopWhenComplete() {
-      if (value === 100) {
+      if (bufferValue === 100) {
         handleStop();
       }
     },
-    [handleStop, value]
+    [bufferValue]
   );
 
   return {
@@ -53,12 +53,12 @@ function useProgressingValue(updateInterval = 100) {
     handleStart,
     handleStop,
     isProgressing,
-    value,
+    bufferValue,
   };
 }
 
-export const WithProgVal = (): ReactElement => {
-  const { handleReset, handleStart, handleStop, isProgressing, value } =
+export const WithProgBufferVal = (): ReactElement => {
+  const { handleReset, handleStart, handleStop, isProgressing, bufferValue } =
     useProgressingValue();
   const [selectedType, setSelectedType] = useState("circular");
 
@@ -88,10 +88,10 @@ export const WithProgVal = (): ReactElement => {
 
       <FlexItem style={{ margin: "auto" }}>
         {selectedType === "circular" && (
-          <CircularProgress aria-label="Download" value={value} />
+          <CircularProgress aria-label="Download" bufferValue={bufferValue} />
         )}
         {selectedType === "linear" && (
-          <LinearProgress aria-label="Download" value={value} />
+          <LinearProgress aria-label="Download" bufferValue={bufferValue} />
         )}
       </FlexItem>
     </FlexLayout>
