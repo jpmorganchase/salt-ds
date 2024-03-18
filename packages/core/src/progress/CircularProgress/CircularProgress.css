@@ -18,21 +18,38 @@
 .saltCircularProgress-track {
   inline-size: calc(var(--salt-size-base) * 3);
   block-size: calc(var(--salt-size-base) * 3);
-  border-style: var(--salt-track-borderStyle);
-  border-width: var(--salt-size-bar-small);
+  outline-style: var(--salt-track-borderStyle);
+  outline-width: var(--salt-size-bar);
+  outline-offset: calc(var(--salt-size-bar) * -1.5);
   border-radius: calc(var(--salt-size-base) * 3);
-  border-color: var(--salt-track-borderColor);
+  outline-color: var(--salt-track-borderColor);
   box-sizing: border-box;
 }
 
-.saltCircularProgress-bar {
+.saltCircularProgress-bar,
+.saltCircularProgress-bufferBorder,
+.saltCircularProgress-bufferBackground {
   inline-size: calc(var(--salt-size-base) * 3);
   block-size: calc(var(--salt-size-base) * 3);
+  border-radius: calc(var(--salt-size-base) * 3);
+  box-sizing: border-box;
+}
+.saltCircularProgress-bar {
+  border-color: var(--salt-accent-background);
   border-style: var(--salt-track-borderStyle);
   border-width: var(--salt-size-bar-strong);
-  border-radius: calc(var(--salt-size-base) * 3);
-  border-color: var(--salt-accent-background);
-  box-sizing: border-box;
+}
+.saltCircularProgress-bufferBorder {
+  border: solid var(--salt-size-border) var(--salt-accent-background);
+  outline: solid var(--salt-size-border) var(--salt-accent-background);
+  outline-offset: calc(var(--salt-size-bar-strong) * -1);
+}
+
+.saltCircularProgress-bufferBackground {
+  border: solid var(--salt-size-bar-strong) var(--salt-container-primary-background);
+  position: absolute;
+  bottom: 0;
+  z-index: calc(var(--salt-zIndex-default) * -1);
 }
 
 .saltCircularProgress-bars {
@@ -43,25 +60,51 @@
   block-size: 100%;
 }
 
+.saltCircularProgress-bufferOverlayRight,
+.saltCircularProgress-bufferOverlayLeft,
+.saltCircularProgress-barOverlayRight,
+.saltCircularProgress-barOverlayLeft,
+.saltCircularProgress-bufferSubOverlayRight,
+.saltCircularProgress-bufferSubOverlayLeft,
+.saltCircularProgress-barSubOverlayRight,
+.saltCircularProgress-barSubOverlayLeft {
+  block-size: 100%;
+  transform-origin: 100% center;
+  overflow: hidden;
+}
+
+.saltCircularProgress-bufferOverlayRight,
+.saltCircularProgress-bufferOverlayLeft,
 .saltCircularProgress-barOverlayRight,
 .saltCircularProgress-barOverlayLeft {
   inline-size: 50%;
-  block-size: 100%;
-  transform-origin: 100% center;
   transform: rotate(180deg);
-  overflow: hidden;
   position: absolute;
 }
 
+.saltCircularProgress-bufferSubOverlayRight,
+.saltCircularProgress-bufferSubOverlayLeft,
 .saltCircularProgress-barSubOverlayRight,
 .saltCircularProgress-barSubOverlayLeft {
   inline-size: 100%;
-  block-size: 100%;
-  transform-origin: 100% center;
-  overflow: hidden;
   transform: rotate(-180deg);
 }
 
+.saltCircularProgress-bufferOverlayLeft,
 .saltCircularProgress-barOverlayLeft {
   transform: rotate(0deg);
+}
+
+.saltCircularProgress-bufferOverlayRight:before,
+.saltCircularProgress-bufferSubOverlay:before {
+  content: "";
+  background: var(--salt-accent-background);
+  position: absolute;
+  right: 0;
+  width: var(--salt-size-border);
+  height: var(--salt-size-bar-strong);
+}
+.saltCircularProgress-bufferOverlayRight:before {
+  bottom: 0;
+  z-index: var(--salt-zIndex-default);
 }
