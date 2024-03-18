@@ -18,6 +18,7 @@ const jsonTokens = {
   densities: ["$high", "$medium", "$low", "$touch"],
   palette: {},
   foundations: {},
+  characteristics: {},
 };
 /*
  * Adds token to JSON schema
@@ -50,7 +51,7 @@ function addToJson(key, themeLevel, semantic, tokenName, type, tokenValue) {
 }
 
 /**
- * Maps semantic of palette to corresponding semantic of foundation
+ * Maps semantic of palette to corresponding foundation reference
  **/
 function formatFoundationValue(semantic, tokenValue) {
   const alias = removePrefix(stripVarFunc(tokenValue));
@@ -68,14 +69,48 @@ function formatFoundationValue(semantic, tokenValue) {
   return `{foundations.${foundationSemantic}.${alias}}`;
 }
 
+/**
+ * Maps semantic of characteristic color token to corresponding palette or foundation reference
+ * Caveat: we have a shortcut in CSS for --salt-focused-outline that refs back to the individual parts
+ **/
+function formatCharacteristicValue(tokenValue) {
+  const alias = removePrefix(stripVarFunc(tokenValue));
+
+  if (alias.includes("palette")) {
+    const semantic = alias.split("-")[1];
+    return `{palette.${semantic}.${alias}}`;
+  }
+
+  if (alias.includes("outline")) {
+    const semantic = alias.split("-")[0];
+    return `{characteristics.${semantic}.${alias}}`;
+  }
+
+  const semantic = alias.split("-")[0];
+  return `{foundations.${semantic}.${alias}}`;
+}
+
+const foundations = [
+  "color",
+  "curve",
+  "duration",
+  "opacity",
+  "shadow",
+  "size",
+  "spacing",
+  "typography",
+  "zIndex",
+];
+
 function format(variables) {
   for (const key in variables) {
     for (const token of Object.entries(variables[key])) {
       var tokenName = removePrefix(token[0]);
       var tokenValue = token[1];
-      let type;
+      var grouping = tokenName.split("-")[0];
+      let type = undefined;
 
-      if (tokenName.startsWith("palette")) {
+      if (grouping === "palette") {
         const semantic = tokenName.split("-")[1];
         switch (semantic) {
           case "corner":
@@ -92,87 +127,113 @@ function format(variables) {
             ? formatFoundationValue(semantic, tokenValue)
             : tokenValue;
         addToJson(key, "palette", semantic, tokenName, type, tokenValue);
-      } else {
+      } else if (foundations.includes(grouping)) {
         const semantic = tokenName.split("-")[0];
         switch (semantic) {
-          case "curve":
+          case "corner":
             type = "dimension";
-            break;
-          case "size":
-            type = "dimension";
-            break;
-          case "spacing":
-            type = "dimension";
-            if (tokenValue.includes("calc")) {
-              let [multiplier, multipleToken] = tokenValue
-                .replace("calc(", "")
-                .replace(")", "")
-                .split(" * ");
-              multipleToken = variables["general"][
-                stripVarFunc(multipleToken)
-              ].replace("px", "");
-              tokenValue = removePrefix(stripVarFunc(tokenValue))
-                .replace("spacing", `{spacing`)
-                .replace("100", "100}")
-                .replace("calc(", "");
-            }
             break;
           case "opacity":
             type = "number";
             break;
-          case "zIndex":
-            type = "number";
-            break;
-          case "duration":
-            type = "duration";
-            break;
-          case "typography":
-            const attribute = tokenName.split("-")[1];
-            type = attribute;
-            break;
-          case "shadow":
-            if (tokenName.includes("color")) {
-              type = "color";
-              tokenValue = colorFormatSwap("hex", tokenValue);
-            } else {
-              type = "shadow";
-              const [offsetX, offsetY, blur, spread, color] =
-                tokenValue.split(" ");
-              tokenValue = {
-                offsetX: offsetX,
-                offsetY: offsetY,
-                blur: blur,
-                spread: spread,
-                color: `{foundations.shadow.${removePrefix(
-                  stripVarFunc(color)
-                )}}`,
-              };
-            }
-            break;
-          case "color":
-            if (tokenName.includes("fade")) {
-              type = "color";
-              const colorToken = `${tokenName.split("-fade")[0]}`;
-              const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
-              // the semantic check here is due to e.g. --salt-palette-opacity-disabled used in fade tokens (correct) vs
-              // e.g. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover (this is technically wrong)
-              tokenValue = {
-                color: `{foundations.color.${colorToken}}`,
-                opacity: `{${
-                  opacityValue.includes("palette") ? "palette" : "foundations"
-                }.opacity.${removePrefix(stripVarFunc(opacityValue))}}`,
-              };
-            } else {
-              type = "color";
-              tokenValue = colorFormatSwap("hex", tokenValue);
-            }
-            break;
           default:
-            type = "undefined";
+            type = "color";
+        }
+        tokenValue !== "transparent"
+          ? formatFoundationValue(semantic, tokenValue)
+          : tokenValue;
+        addToJson(key, "foundations", semantic, tokenName, type, tokenValue);
+      } else {
+        const semantic = tokenName.split("-")[0];
+        const tokenParts = tokenName.split("-");
+        if (
+          tokenParts.find((part) =>
+            [
+              "borderColor",
+              "foreground",
+              "background",
+              "outlineColor",
+              "indicator",
+            ].includes(part)
+          )
+        ) {
+          type = "color";
+          tokenValue = formatCharacteristicValue(tokenValue);
+        }
+        if (tokenParts.find((part) => part === "cursor")) {
+          type = "cursor";
+        }
+        if (tokenParts.find((part) => part === "borderStyle")) {
+          type = "borderStyle";
+        }
+        if (tokenParts.find((part) => part === "borderWidth")) {
+          type = "borderWidth";
+        }
+        if (tokenParts.find((part) => part === "outlineStyle")) {
+          type = "outlineStyle";
+        }
+        if (tokenParts.find((part) => part === "outlineWidth")) {
+          type = "outlineWidth";
+        }
+        if (tokenParts.find((part) => part === "outlineInset")) {
+          type = "outlineInset";
+        }
+        if (tokenParts.find((part) => part === "outlineOffset")) {
+          type = "outlineOffset";
+        }
+        if (tokenParts.find((part) => part === "outline")) {
+          const [outlineWidth, outlineStyle, outlineColor] =
+            tokenValue.split(" ");
+          tokenValue = {
+            $outlineWidth: formatCharacteristicValue(outlineWidth),
+            $outlineStyle: formatCharacteristicValue(outlineStyle),
+            $outlineColor: formatCharacteristicValue(outlineColor),
+          };
+          type = "outline";
+        }
+        if (tokenParts.find((part) => part === "letterSpacing")) {
+          type = "letterSpacing";
+        }
+        if (tokenParts.find((part) => part === "textAlign")) {
+          type = "textAlign";
+        }
+        if (tokenParts.find((part) => part === "textTransform")) {
+          type = "textTransform";
+        }
+        if (tokenParts.find((part) => part === "fontStyle")) {
+          type = "fontStyle";
+        }
+        if (tokenParts.find((part) => part === "fontWeight")) {
+          // Do we want to group text e.g. h1, h2?
+          type = "fontWeight";
+        }
+        if (tokenParts.find((part) => part === "fontFamily")) {
+          type = "fontFamily";
+        }
+        if (tokenParts.find((part) => part === "fontSize")) {
+          type = "fontSize";
+        }
+        if (tokenParts.find((part) => part === "lineHeight")) {
+          type = "lineHeight";
+        }
+        if (tokenParts.find((part) => part === "minHeight")) {
+          // Valid?
+          type = "minHeight";
+        }
+        if (tokenParts.find((part) => part === "shadow")) {
+          type = "shadow";
+          tokenValue = formatCharacteristicValue(tokenValue);
         }
 
-        if (type !== "undefined") {
-          addToJson(key, "foundations", semantic, tokenName, type, tokenValue);
+        if (type) {
+          addToJson(
+            key,
+            "characteristics",
+            semantic,
+            tokenName,
+            type,
+            tokenValue
+          );
         }
       }
     }
