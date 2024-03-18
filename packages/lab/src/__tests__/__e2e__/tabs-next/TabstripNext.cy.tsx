@@ -252,12 +252,12 @@ describe("Navigation, Given a Tabstrip", () => {
   });
   describe("WHEN overflow is opened", () => {
     it("THEN overflow menu can be navigated up and down", () => {
-      cy.mount(<DefaultTabstrip width={100} />);
+      cy.mount(<DefaultTabstrip width={150} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox");
       cy.focused().realPress("ArrowDown");
       cy.findAllByRole("option")
-        .should("have.length", 5)
+        .should("have.length", 4)
         .eq(1)
         .should("have.class", "saltHighlighted");
       cy.focused().then(($container) => {
@@ -277,14 +277,14 @@ describe("Navigation, Given a Tabstrip", () => {
         .should("have.class", "saltHighlighted");
     });
     it("THEN overflow menu can be closed with Escape", () => {
-      cy.mount(<DefaultTabstrip width={100} />);
+      cy.mount(<DefaultTabstrip width={150} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox").should("exist");
       cy.focused().realPress("Escape");
       cy.findByRole("listbox").should("not.exist");
     });
     it("THEN overflow menu item can be selected with Enter and focus is moved to the active tab", () => {
-      cy.mount(<DefaultTabstrip width={120} />);
+      cy.mount(<DefaultTabstrip width={150} />);
       cy.findByRole("combobox").click();
       cy.findByRole("listbox").should("exist");
       cy.focused().realPress("ArrowDown").realPress("Enter");
