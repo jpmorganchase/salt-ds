@@ -75,7 +75,7 @@ describe("Given a Tabstrip", () => {
   });
   describe("WHEN size is not the full width of it's parent", () => {
     it("THEN should not overflow if it has enough space", () => {
-      cy.mount(<ControlledTabstrip width={500} />);
+      cy.mount(<ControlledTabstrip width={550} />);
       cy.findByRole("combobox").should("not.exist");
     });
     it("THEN should overflow if it there is not enough space", () => {
