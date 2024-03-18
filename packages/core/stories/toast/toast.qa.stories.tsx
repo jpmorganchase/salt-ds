@@ -6,7 +6,7 @@ import {
   QAContainerNoStyleInjectionProps,
   QAContainerProps,
 } from "docs/components";
-import { CloseIcon } from "@salt-ds/icons";
+import { CloseIcon, GlobeIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Toast/Toast QA",
@@ -41,6 +41,30 @@ const UI = () => (
     </Toast>
     <Toast status="success">
       <ToastContent>This is a toast</ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast Icon={GlobeIcon}>
+      <ToastContent>Custom icon toast</ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast Icon={GlobeIcon} status="error">
+      <ToastContent>Custom icon toast</ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast Icon={GlobeIcon} status="warning">
+      <ToastContent>Custom icon toast</ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
+    <Toast Icon={GlobeIcon} status="success">
+      <ToastContent>Custom icon toast</ToastContent>
       <Button variant="secondary">
         <CloseIcon />
       </Button>
