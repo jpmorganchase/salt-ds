@@ -1,6 +1,12 @@
-require("dotenv").config();
 import { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
+import { Organization, PageInfo } from "@octokit/graphql-schema";
+
+interface GitHubResponse {
+  data: {
+    organization: Organization;
+  };
+}
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -71,7 +77,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     `;
 
     let hasNextPage = true;
-    let endCursor = "null";
+    let endCursor: PageInfo["endCursor"] = "null";
     const allProjectItems = [];
 
     while (hasNextPage) {
@@ -87,14 +93,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }),
       });
 
-      const responseData = await response.json();
+      const responseData = (await response.json()) as GitHubResponse;
       const projectItems =
-        responseData.data.organization.repository.projectV2.items;
+        responseData?.data?.organization?.repository?.projectV2?.items;
 
-      hasNextPage = projectItems.pageInfo.hasNextPage;
-      endCursor = projectItems.pageInfo.endCursor;
+      if (projectItems) {
+        hasNextPage = projectItems.pageInfo.hasNextPage;
+        endCursor = projectItems.pageInfo.endCursor;
 
-      allProjectItems.push(...projectItems.nodes);
+        allProjectItems.push(...(projectItems.nodes ?? []));
+      }
     }
 
     const response = { nodes: allProjectItems };

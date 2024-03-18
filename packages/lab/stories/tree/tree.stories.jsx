@@ -1,3 +1,4 @@
+import React from "react";
 import { Tree as Tree } from "@salt-ds/lab";
 import { groupByInitialLetter, usa_states_cities } from "../list/list.data";
 import { folderData } from "./tree.data";

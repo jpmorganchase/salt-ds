@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import Markdown from "markdown-to-jsx";
+import { Markdown } from "@storybook/blocks";
 import { characteristic, getCharacteristicValue } from "@salt-ds/core";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { Name, Description, StyledTd } from "./common";
@@ -41,11 +41,18 @@ const TokenInfo = (props: { token: string }) => {
   const characteristicName = token
     .split("--salt-")[1]
     .split("-")[0] as characteristic;
+
+  const provider = document.querySelector<HTMLElement>(".salt-theme");
+
+  if (!provider) {
+    return null;
+  }
+
   const value = getCharacteristicValue(
     "salt-theme",
     characteristicName,
     token.split(`${characteristicName}-`)[1],
-    document.querySelector(".salt-theme") as HTMLElement
+    provider
   );
 
   return (
@@ -64,18 +71,16 @@ export const CharacteristicUsageRow = (props: CharacteristicUsageRowProps) => {
         <Name>{name}</Name>
       </StyledTd>
       <td>
-        {tokens &&
-          tokens.map((token) => (
-            <Description key={token}>
-              <Markdown className="characteristicTokenDoc">{token}</Markdown>
-            </Description>
-          ))}
+        {tokens?.map((token) => (
+          <Description key={token}>
+            <Markdown className="characteristicTokenDoc">{token}</Markdown>
+          </Description>
+        ))}
       </td>
       <td>
-        {tokens &&
-          tokens.map((token, i) => (
-            <TokenInfo token={token} key={`${token}-${i}`} />
-          ))}
+        {tokens?.map((token, i) => (
+          <TokenInfo token={token} key={`${token}-${i}`} />
+        ))}
       </td>
     </tr>
   );

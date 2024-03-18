@@ -1,5 +1,5 @@
-import Markdown from "markdown-to-jsx";
-import { ClassName } from "./CSSClassTable";
+import { Markdown } from "@storybook/blocks";
+import { ClassName } from "./utils";
 import { Name, Description, StyledTd } from "./common";
 
 interface ClassNameRowProps {

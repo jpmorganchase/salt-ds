@@ -1,12 +1,5 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { ColorItem, ColorPalette, Meta } from "@storybook/blocks";
 import { ColorContainer } from "docs/components/ColorContainer";
-import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Accent" />
 
@@ -26,6 +19,7 @@ Colors used to provide a consistent brand detail throughout the component librar
           "var(--salt-palette-accent-background)",
       }}
     />
+
     <ColorItem
       title="Border"
       subtitle="--salt-palette-accent-border"
@@ -33,6 +27,7 @@ Colors used to provide a consistent brand detail throughout the component librar
         "--salt-palette-accent-border": "var(--salt-palette-accent-border)",
       }}
     />
+
     <ColorItem
       title="Foreground"
       subtitle="--salt-palette-accent-foreground"
@@ -41,5 +36,6 @@ Colors used to provide a consistent brand detail throughout the component librar
           "var(--salt-palette-accent-foreground)",
       }}
     />
+
   </ColorPalette>
 </ColorContainer>

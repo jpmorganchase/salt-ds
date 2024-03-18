@@ -1,16 +1,8 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { LayerLayout } from "@salt-ds/lab";
-import { CSSClassTable } from "css-variable-docgen-components";
-import { Default } from "./layer-layout.stories";
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import { ArgTypes, Canvas, Meta } from "@storybook/blocks";
+import * as LayerLayoutStories from "./layer-layout.stories";
+import HelpAndSupport from "docs/blocks/help-and-support.mdx";
 
-<Meta
-  title="Documentation/Lab/Layout/Layer Layout"
-  component={LayerLayout}
-  parameters={{
-    viewMode: "docs",
-  }}
-/>
+<Meta title="Documentation/Lab/Layout/Layer Layout" />
 
 # Layer Layout
 
@@ -18,9 +10,7 @@ The Layer Layout defines a layer above the existing layout structure for UI elem
 
 It can be used to build dialog or drawer components and it can be positioned in different parts of the screen.
 
-<Canvas>
-  <Story id="lab-layout-layer-layout--default" />
-</Canvas>
+<Canvas of={LayerLayoutStories.Default} />
 
 ## Use Layer Layout when...
 
@@ -42,35 +32,25 @@ The component will be displayed in the center position by default but you can cu
 
 ##### Top positioned
 
-<Canvas>
-  <Story id="lab-layout-layer-layout--top" />
-</Canvas>
+<Canvas of={LayerLayoutStories.Top} />
 
 ##### Right positioned
 
-<Canvas>
-  <Story id="lab-layout-layer-layout--right" />
-</Canvas>
+<Canvas of={LayerLayoutStories.Right} />
 
 ##### Left positioned
 
-<Canvas>
-  <Story id="lab-layout-layer-layout--left" />
-</Canvas>
+<Canvas of={LayerLayoutStories.Left} />
 
 ##### Bottom positioned
 
-<Canvas>
-  <Story id="lab-layout-layer-layout--bottom" />
-</Canvas>
+<Canvas of={LayerLayoutStories.Bottom} />
 
 #### Reduced motion
 
 You can customize or disable the animations using the `prefers-reduced-motion` CSS media feature.
 
-<Canvas>
-  <Story id="lab-layout-layer-layout--reduced-motion" />
-</Canvas>
+<Canvas of={LayerLayoutStories.ReducedMotion} />
 
 ## Configuring Layer Layout
 
@@ -82,6 +62,6 @@ import { LayerLayout } from "@salt-ds/lab";
 
 ### Props
 
-<ArgsTable of={LayerLayout} />
+<ArgTypes of={LayerLayoutStories} />
 
 <HelpAndSupport />

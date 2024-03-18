@@ -7,7 +7,6 @@ export const LazyStoryCanvas = ({ children }: PropsWithChildren) => {
     if (!ref.current) return;
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        console.log(entry.isIntersecting);
         setVisible(true);
       }
     });

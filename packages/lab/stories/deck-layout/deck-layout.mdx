@@ -1,14 +1,8 @@
-import { Meta, Story, Canvas, ArgsTable } from "@storybook/addon-docs";
-import { DeckLayout, DeckItem } from "@salt-ds/lab";
-import { CSSClassTable } from "css-variable-docgen-components";
-import { Default } from "./deck-layout.stories";
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import { ArgTypes, Canvas, Meta } from "@storybook/blocks";
+import HelpAndSupport from "docs/blocks/help-and-support.mdx";
+import * as DeckLayoutStories from "./deck-layout.stories";
 
-<Meta
-  title="Documentation/Lab/Layout/Deck Layout"
-  component={DeckLayout}
-  subcomponents={{ DeckItem }}
-/>
+<Meta title="Documentation/Lab/Layout/Deck Layout" />
 
 # Deck Layout
 
@@ -18,9 +12,7 @@ It allows motion customization (`slide` or `fade`) and a custom direction for th
 
 This layout component also allows you to assign the initial page to be rendered via the `activeIndex` prop.
 
-<Canvas>
-  <Story id="lab-layout-deck-layout--default" />
-</Canvas>
+<Canvas of={DeckLayoutStories.Default} />
 
 ## Use Deck Layout when...
 
@@ -36,9 +28,7 @@ Instead you want your content to be displayed in a layer above the existing page
 
 This example shows how the Deck Layout can be used in conjunction with `Tabstrip`. You can enable animations by setting the `animation` prop.
 
-<Canvas>
-  <Story id="lab-layout-deck-layout--deck-in-tabstrip" />
-</Canvas>
+<Canvas of={DeckLayoutStories.DeckInTabstrip} />
 
 ## Configuring Deck Layout
 
@@ -50,6 +40,6 @@ import { DeckLayout } from "@salt-ds/lab";
 
 ### Props
 
-<ArgsTable of={DeckLayout} />
+<ArgTypes of={DeckLayoutStories} />
 
 <HelpAndSupport />

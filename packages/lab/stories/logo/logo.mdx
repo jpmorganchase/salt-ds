@@ -1,19 +1,13 @@
-import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
-import { Text } from "@salt-ds/core";
+import { Canvas, Meta, ArgTypes } from "@storybook/blocks";
 import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import HelpAndSupport from "docs/blocks/help-and-support.mdx";
+import * as LogoStories from "./logo.stories";
 
-<Meta
-  title="Documentation/Lab/Logo"
-  component={Logo}
-  parameters={{
-    viewMode: "docs",
-  }}
-/>
+<Meta title="Documentation/Lab/Logo" />
 
 # Logo
 
@@ -45,41 +39,29 @@ Refer to the [J.P. Morgan Brand Toolbox](https://www.jpmcbrandtoolbox.com/) to c
 
 ### Logo containing a LogoImage
 
-<Canvas>
-  <Story id="lab-logo--logo-with-image" />
-</Canvas>
+<Canvas of={LogoStories.LogoWithImage} />
 
 ### Logo containing a LogoImage and Text
 
-<Canvas>
-  <Story id="lab-logo--image-and-text" />
-</Canvas>
+<Canvas of={LogoStories.ImageAndText} />
 
 ### Logo containing a LogoImage, Text and LogoSeparator
 
-<Canvas>
-  <Story id="lab-logo--image-and-text-with-separator" />
-</Canvas>
+<Canvas of={LogoStories.ImageAndTextWithSeparator} />
 
 ### Link wrapping Logo
 
-<Canvas>
-  <Story id="lab-logo--link-logo" />
-</Canvas>
+<Canvas of={LogoStories.LinkLogo} />
 
 ### Link wrapping LogoImage only
 
-<Canvas>
-  <Story id="lab-logo--link-on-image" />
-</Canvas>
+<Canvas of={LogoStories.LinkOnImage} />
 
 ### Compact Logo
 
 Here's an example of a regular versus a compact version of Logo which now you can create yourself.
 
-<Canvas>
-  <Story id="lab-logo--regular-vs-compact" />
-</Canvas>
+<Canvas of={LogoStories.RegularVsCompact} />
 
 ## Configuring Logo
 
@@ -89,17 +71,7 @@ import { Logo, LogoImage, LogoSeparator } from '@salt-ds/lab';
 
 ### Props
 
-#### Logo
-
-<ArgsTable of={Logo} />
-
-#### LogoImage
-
-<ArgsTable of={LogoImage} />
-
-#### LogoSeparator
-
-<ArgsTable of={LogoSeparator} />
+<ArgTypes of={LogoStories} />
 
 ### CSS Class
 

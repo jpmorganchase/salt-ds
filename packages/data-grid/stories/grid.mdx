@@ -1,21 +1,26 @@
-import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { ArgTypes, Canvas, Meta } from "@storybook/addon-docs";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
-import { withFlexGap } from "docs/decorators/withFlexGap";
 import { Banner, BannerContent } from "@salt-ds/core";
 import { LazyStoryCanvas } from "./LazyStoryCanvas";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
-import HelpAndSupport from "docs/blocks/help-and-support.doc.mdx";
+import HelpAndSupport from "docs/blocks/help-and-support.mdx";
+import * as DataGridStories from "./grid.stories";
+import * as DataGridVariantStories from "./grid-variants.stories";
+import * as DataGridColumnGroupStories from "./grid-columnGroups.stories";
+import * as DataGridServerSideDataStories from "./grid-serverSideData.stories";
+import * as DataGridRowSelectionModesStories from "./grid-rowSelectionModes.stories";
+import * as DataGridRowSelectionControlledStories from "./grid-rowSelectionControlled.stories";
+import * as DataGridCellCustomizationStories from "./grid-cellCustomization.stories";
+import * as DataGridHeaderCustomizationStories from "./grid-headerCustomization.stories";
+import * as DataGridEditableCellsStories from "./grid-editableCells.stories";
+import * as DataGridSortColumnsStories from "./grid-sortColumns.stories";
+import * as DataGridCellValidationStories from "./grid-cellValidation.stories";
+import * as DataGridPaginationStories from "./grid-pagination.stories";
 
-<Meta
-  title="Documentation/Lab/Data Grid"
-  component={Grid}
-  parameters={{
-    viewMode: "docs",
-  }}
-/>
+<Meta title="Documentation/Lab/Data Grid" />
 
 # Grid
 
@@ -48,7 +53,7 @@ To import the grid into your application, use the following import:
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 ```
 
-<Banner disableAnnouncer>
+<Banner>
   <BannerContent>
     Note: ensure the CSS `height` property for the grid element has been set
     appropriately to see grid on screen. You can do so by passing a custom class
@@ -58,14 +63,12 @@ import { Grid, GridColumn } from "@salt-ds/data-grid";
 </Banner>
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story id="data-grid-data-grid--simple-grid" decorators={[withFlexGap]} />
-  </Canvas>
+  <Canvas of={DataGridStories.SimpleGrid} />
 </LazyStoryCanvas>
 
 ### Props
 
-<ArgsTable of={Grid} />
+<ArgTypes of={Grid} />
 
 ## Grid variants
 
@@ -77,9 +80,7 @@ The grid contains two variants:
 Column separators can be enabled using the `columnSeparators` property.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story id="data-grid-data-grid--grid-variants" decorators={[withFlexGap]} />
-  </Canvas>
+  <Canvas of={DataGridVariantStories.GridVariants} />
 </LazyStoryCanvas>
 
 ### Columns
@@ -97,7 +98,7 @@ You can easily create any project-specific column types tailored to your needs u
 
 #### GridColumn props
 
-<ArgsTable of={GridColumn} />
+<ArgTypes of={GridColumn} />
 
 ### Column groups
 
@@ -106,9 +107,7 @@ Columns can be grouped using the `ColumnGroup` component.
 Note: whenever a `ColumnGroup` component is present, all other grids' children will also need to be wrapped within a `ColumnGroup` component.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story id="data-grid-data-grid--column-groups" decorators={[withFlexGap]} />
-  </Canvas>
+  <Canvas of={DataGridColumnGroupStories.ColumnGroups} />
 </LazyStoryCanvas>
 
 ### Rows
@@ -120,9 +119,7 @@ When used in combination with the `onVisibleRowRangeChange` callback this allows
 [Here's an example](https://saltdesignsystem-storybook.pages.dev/?path=/story/data-grid-data-grid--server-side-data) that details using sparse array and `onVisibleRowRangeChange` callback.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story id="data-grid-data-grid--server-side-data" />
-  </Canvas>
+  <Canvas of={DataGridServerSideDataStories.ServerSideData} />
 </LazyStoryCanvas>
 
 ### Row selection
@@ -141,12 +138,7 @@ Both are optional.
 In [uncontrolled mode](https://reactjs.org/docs/uncontrolled-components.html) you can provide `defaultSelectedRowIdxs` and the grid maintains the selection state. It accepts `number[]`, and works only when `rowSelectionMode` is `single` or `multi`.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story
-      id="data-grid-data-grid--row-selection-modes"
-      decorators={[withFlexGap]}
-    />
-  </Canvas>
+  <Canvas of={DataGridRowSelectionModesStories.RowSelectionModes} />
 </LazyStoryCanvas>
 
 #### Controlled mode
@@ -155,12 +147,7 @@ In [controlled mode](https://reactjs.org/docs/forms.html#controlled-components) 
 Below is an example of how to use controlled selection mode to synchronize selection in two grids.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story
-      id="data-grid-data-grid--row-selection-controlled"
-      decorators={[withFlexGap]}
-    />
-  </Canvas>
+  <Canvas of={DataGridRowSelectionControlledStories.RowSelectionControlled} />
 </LazyStoryCanvas>
 
 ### Cell customization
@@ -174,12 +161,7 @@ The `cellValueComponent` property of `GridColumn` component is the most convenie
 Below is an example of custom components applied to `cellValueComponent` of "Bid/Ask", "Percentage" and "Buttons" columns, [more details here](https://saltdesignsystem-storybook.pages.dev/?path=/story/data-grid-data-grid--cell-customization).
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story
-      id="data-grid-data-grid--cell-customization"
-      decorators={[withFlexGap]}
-    />
-  </Canvas>
+  <Canvas of={DataGridCellCustomizationStories.CellCustomization} />
 </LazyStoryCanvas>
 
 The second way to customize cell appearance is the `cellComponent` property. Unlike
@@ -200,12 +182,7 @@ Column headers and column group headers can be customized using the `headerValue
 This grid also shows an example of a custom cell displaying a basic chart. Switch the "Items sold" column to "summary" mode to see it.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story
-      id="data-grid-data-grid--header-customization"
-      decorators={[withFlexGap]}
-    />
-  </Canvas>
+  <Canvas of={DataGridHeaderCustomizationStories.HeaderCustomization} />
 </LazyStoryCanvas>
 
 ### Editable cells
@@ -223,12 +200,7 @@ i.e. `TextCellEditor` and `NumericCellEditor`.
 You can easily create any components tailored to your needs using the same approach.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story
-      id="data-grid-data-grid--editable-cells"
-      decorators={[withFlexGap]}
-    />
-  </Canvas>
+  <Canvas of={DataGridEditableCellsStories.EditableCells} />
 </LazyStoryCanvas>
 
 To trigger edit mode on cells on your:
@@ -245,15 +217,11 @@ For client side sorting, user could use inbuilt default sort, or provide a custo
 For server side sorting, we expose sort order (`asc | desc | none`) through `onSortOrderChange`, see "Amount" column for example.
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story id="data-grid-data-grid--client-side-sort" />
-  </Canvas>
+  <Canvas of={DataGridSortColumnsStories.ClientSideSort} />
 </LazyStoryCanvas>
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story id="data-grid-data-grid--server-side-sort" />
-  </Canvas>
+  <Canvas of={DataGridSortColumnsStories.ServerSideSort} />
 </LazyStoryCanvas>
 
 ### Cell Validation
@@ -267,25 +235,16 @@ while the second type "strong" additionally displays a status icon. Light valida
 
 If you are validating editable cells, for the business logic, we recommend you use a 3rd party library like [yup](https://www.npmjs.com/package/yup) or [zod](https://www.npmjs.com/package/zod).
 
-<Canvas>
-  <Story id="data-grid-data-grid--cell-validation" decorators={[withFlexGap]} />
-</Canvas>
+<Canvas of={DataGridCellValidationStories.CellValidation} />
 
 ### Row Validation
 
 Grid provides an api for row-level validation with the prop `getRowValidationStatus`. This function provides the row data as the argument, and expects a return value that is one of the cell validation states, "error", "warning", and "success".
 In most cases, it should be used together with the `RowValidationColumn` component to give the user a visual indicator of the validation state besides background color. This is important for accessibility.
 
-<Canvas>
-  <Story id="data-grid-data-grid--row-validation" decorators={[withFlexGap]} />
-</Canvas>
+<Canvas of={DataGridCellValidationStories.RowValidation} />
 
-<Canvas>
-  <Story
-    id="data-grid-data-grid--cell-and-row-validation"
-    decorators={[withFlexGap]}
-  />
-</Canvas>
+<Canvas of={DataGridCellValidationStories.CellAndRowValidation} />
 
 ### Pagination
 
@@ -312,12 +271,7 @@ interface PaginatorProps {
 ```
 
 <LazyStoryCanvas>
-  <Canvas>
-    <Story
-      id="data-grid-data-grid--grid-pagination"
-      decorators={[withFlexGap]}
-    />
-  </Canvas>
+  <Canvas of={DataGridPaginationStories.GridPagination} />
 </LazyStoryCanvas>
 
 ### Writing tests for Grid component

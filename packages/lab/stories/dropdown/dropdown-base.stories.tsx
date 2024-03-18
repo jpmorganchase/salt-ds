@@ -15,7 +15,9 @@ export const Default: StoryFn<DropdownBaseProps> = () => {
   };
 
   const callbackRef = (el: HTMLButtonElement) => {
-    console.log(`ref on Button set to ${el.className}`);
+    if (el) {
+      console.log(`ref on Button set to ${el.className}`);
+    }
   };
   return (
     <div style={{ display: "flex", gap: 20 }}>

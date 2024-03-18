@@ -1,12 +1,5 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { ColorItem, ColorPalette, Meta } from "@storybook/blocks";
 import { ColorContainer } from "docs/components/ColorContainer";
-import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Navigate" />
 
@@ -30,6 +23,7 @@ Colors used to signify navigation or navigable items.
           "var(--salt-palette-navigate-foreground-visited)",
       }}
     />
+
     <ColorItem
       title="Indicator"
       subtitle="--salt-palette-navigate-indicator"
@@ -40,6 +34,7 @@ Colors used to signify navigation or navigable items.
           "var(--salt-palette-navigate-indicator-active)",
       }}
     />
+
   </ColorPalette>
 </ColorContainer>
 

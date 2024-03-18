@@ -21,13 +21,6 @@ export default {
       type: "number",
     },
   },
-  parameters: {
-    docs: {
-      source: {
-        code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
-      },
-    },
-  },
 } as Meta<typeof LazyCountrySymbolComponent>;
 
 export const LazyCountrySymbol: StoryFn<typeof LazyCountrySymbolComponent> = (

@@ -13,7 +13,10 @@ export interface Options {
 // vite's own style injection used in storybook
 export function cssInline(options: Options = {}): Plugin {
   const {
-    exclude = ["**/**.stories.tsx"],
+    exclude = [
+      "**/**.stories.tsx",
+      "!**/stories/floating-platform/*.stories.tsx",
+    ],
     include = ["**/packages/**/*.{tsx,jsx}"],
   } = options;
   const filter = createFilter(include, exclude);

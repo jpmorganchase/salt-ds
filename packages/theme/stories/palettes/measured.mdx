@@ -1,13 +1,6 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { ColorItem, ColorPalette, Meta } from "@storybook/blocks";
 import { Banner, BannerContent } from "@salt-ds/core";
 import { ColorContainer } from "docs/components/ColorContainer";
-import { DocGrid } from "docs/components/DocGrid";
 
 <Meta title="Theme/Palettes/Measured" />
 
@@ -35,6 +28,7 @@ Colors used to represent a measurement, value or progression.
           "var(--salt-palette-measured-border-background)",
       }}
     />
+
     <ColorItem
       title="Border"
       subtitle="**Deprecated:** --salt-palette-measured-border"
@@ -44,6 +38,7 @@ Colors used to represent a measurement, value or progression.
           "var(--salt-palette-measured-border-disabled)",
       }}
     />
+
     <ColorItem
       title="Fill"
       subtitle="**Deprecated:** --salt-palette-measured-fill"
@@ -53,6 +48,7 @@ Colors used to represent a measurement, value or progression.
           "var(--salt-palette-measured-fill-disabled)",
       }}
     />
+
     <ColorItem
       title="Foreground"
       subtitle="**Deprecated:** --salt-palette-measured-foreground"
@@ -67,5 +63,6 @@ Colors used to represent a measurement, value or progression.
           "var(--salt-palette-measured-foreground-activeDisabled)",
       }}
     />
+
   </ColorPalette>
 </ColorContainer>

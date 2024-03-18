@@ -1,17 +1,12 @@
-import { ArgsTable, Canvas, Meta, Story } from "@storybook/addon-docs";
+import { Canvas, Meta, ArgTypes } from "@storybook/blocks";
 import { StepperInput } from "@salt-ds/lab";
 import {
   CharacteristicUsage,
   CSSClassTable,
 } from "css-variable-docgen-components";
+import * as StepperInputStories from "./stepper-input.stories";
 
-<Meta
-  title="Documentation/Lab/Stepper Input"
-  component={StepperInput}
-  parameters={{
-    viewMode: "docs",
-  }}
-/>
+<Meta title="Documentation/Lab/Stepper Input" />
 
 # Stepper Input
 
@@ -32,17 +27,13 @@ The user can adjust the default value using the controls—or simply type in a n
 
 The out-of-the-box Stepper Input has a default value of 0, an increment value of 1 and a block value of 10, and you can only use it to accept numeric characters.
 
-<Canvas>
-  <Story id="lab-stepper-input--default" />
-</Canvas>
+<Canvas of={StepperInputStories.Default} />
 
 ## Custom Values
 
 You are able to customize the default, increment and block values to suit your use case.
 
-<Canvas>
-  <Story id="lab-stepper-input--custom-values" />
-</Canvas>
+<Canvas of={StepperInputStories.CustomValues} />
 
 ## Decimal
 
@@ -52,9 +43,7 @@ If the user enters a value that doesn’t match the decimal places you have set,
 
 The component will round the value up or down, as required, to display the specified number of decimal places.
 
-<Canvas>
-  <Story id="lab-stepper-input--decimals" />
-</Canvas>
+<Canvas of={StepperInputStories.Decimals} />
 
 ## Live default value
 
@@ -62,9 +51,7 @@ You can use the Stepper Input to pull the live value from a source that’s cons
 
 The component's value doesn't automatically update when the live value changes, however. In this case, the Refresh button automatically appears when the displayed value and live value don’t match.
 
-<Canvas>
-  <Story id="lab-stepper-input--live-default-value" />
-</Canvas>
+<Canvas of={StepperInputStories.LiveDefaultValue} />
 
 ## Refresh
 
@@ -72,9 +59,7 @@ This button gives you the option of resetting the component to its default value
 
 If you have set a live value, however, the prop is no longer optional. Once the component's displayed value and live value no longer match, the Refresh button will be visible. You can click it to reset the component to the latest live value.
 
-<Canvas>
-  <Story id="lab-stepper-input--refresh-button" />
-</Canvas>
+<Canvas of={StepperInputStories.RefreshButton} />
 
 ## Numeric Limits
 
@@ -82,9 +67,7 @@ The default limits for the input's number value are set to the safest representa
 
 If you need to limit the range of accepted values, you’re able to set a maximum or minimum (or both).
 
-<Canvas>
-  <Story id="lab-stepper-input--numeric-limits" />
-</Canvas>
+<Canvas of={StepperInputStories.NumericLimits} />
 
 # API
 
@@ -94,7 +77,7 @@ import { StepperInput } from "@salt-ds/lab";
 
 ## Props
 
-<ArgsTable of={StepperInput} />
+<ArgTypes of={StepperInputStories} />
 
 ## CSS Class
 

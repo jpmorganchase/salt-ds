@@ -25,13 +25,6 @@ import { usStateExampleData } from "../assets/exampleData";
 export default {
   title: "Lab/Combo Box Next",
   component: ComboBoxNext,
-  parameters: {
-    docs: {
-      source: {
-        code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
-      },
-    },
-  },
 } as Meta<typeof ComboBoxNext>;
 
 const usStates = usStateExampleData.slice(0, 10);
