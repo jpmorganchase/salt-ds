@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { forwardRef, ReactElement, ElementType } from "react";
 import { clsx } from "clsx";
 
@@ -20,11 +21,11 @@ export type GridLayoutProps<T extends ElementType> =
       /**
        * Number of columns to be displayed. Defaults to 12
        */
-      columns?: ResponsiveProp<number>;
+      columns?: ResponsiveProp<number> | ResponsiveProp<(number | string)[]>;
       /**
        * Number of rows to be displayed. Defaults to 1
        */
-      rows?: ResponsiveProp<number>;
+      rows?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
        */
@@ -68,11 +69,28 @@ export const GridLayout: GridLayoutComponent = forwardRef(
       css: gridLayoutCss,
       window: targetWindow,
     });
-    const Component = as || "div";
+    const Component = as ?? "div";
 
-    const gridColumns = useResponsiveProp(columns, 12);
+    const gridColumns = useResponsiveProp<number | string>(
+      !Array.isArray(columns)
+        ? Number(columns)
+        : columns
+            .map((column) =>
+              typeof column === "number" ? `${column}fr` : column
+            )
+            .join(" "),
+      12
+    );
 
-    const gridRows = useResponsiveProp(rows, 1);
+    const gridRows = useResponsiveProp(
+      typeof rows === "number" ? rows : undefined,
+      1
+    );
+
+    const gridAutoRows = useResponsiveProp(
+      typeof rows === "string" ? rows : undefined,
+      "auto"
+    );
 
     const gridGap = useResponsiveProp(gap, 3);
 
@@ -82,8 +100,11 @@ export const GridLayout: GridLayoutComponent = forwardRef(
 
     const gridLayoutStyles = {
       ...style,
-      "--gridLayout-columns": gridColumns,
+      [!Array.isArray(columns)
+        ? "--gridLayout-columns"
+        : "--gridLayout-columnTemplate"]: gridColumns,
       "--gridLayout-rows": gridRows,
+      "--gridLayout-autoRows": gridAutoRows,
       "--gridLayout-columnGap": gridColumnGap ?? gridGap,
       "--gridLayout-rowGap": gridRowGap ?? gridGap,
     };

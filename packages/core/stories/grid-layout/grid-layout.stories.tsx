@@ -228,3 +228,31 @@ const GridLayoutNestedExample: StoryFn<typeof GridLayout> = () => {
 };
 export const Nested = GridLayoutNestedExample.bind({});
 Nested.args = {};
+
+const ColumnTemplateAndAutoRowsExample: StoryFn<typeof GridLayout> = () => {
+  return (
+    <>
+      <GridLayout columns={["10vw", 1, 1]} rows="100px" className="grid">
+        <GridItem rowSpan={2}></GridItem>
+        <GridItem></GridItem>
+        <GridItem></GridItem>
+        <GridItem></GridItem>
+        <GridItem></GridItem>
+      </GridLayout>
+
+      <style>{`
+      .grid {
+        width: 50vw;
+      }
+      .grid > * {
+        background-color: #FFA07A;
+        border-radius: 6px;
+      }
+    `}</style>
+    </>
+  );
+};
+export const ColumnTemplateAndAutoRows = ColumnTemplateAndAutoRowsExample.bind(
+  {}
+);
+ColumnTemplateAndAutoRows.args = {};
