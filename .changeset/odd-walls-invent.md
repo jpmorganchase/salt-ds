@@ -4,6 +4,8 @@
 
 Added `Dropdown`, `Option`, `OptionGroup` and `ComboBox`.
 
+**Note:** These were `DropdownNext` and `ComboBoxNext` in lab.
+
 ```tsx
 <Dropdown aria-label="Colors">
   <OptionGroup label="Primary">
