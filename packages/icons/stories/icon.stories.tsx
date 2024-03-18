@@ -126,7 +126,7 @@ export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
                 style={{ width: "150px" }}
                 gap={1}
                 align="center"
-                key={icon}
+                key={name}
               >
                 {createElement(icon, {
                   key: i,
