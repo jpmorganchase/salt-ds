@@ -3,6 +3,7 @@
 ---
 
 Add `SegmentedButtonGroup` to labs
+`SegmentedButtonGroup` should be used to display a list of actionable buttons, flush with separators
 
 ```tsx
 const SegmentedButtonGroup = () => (
