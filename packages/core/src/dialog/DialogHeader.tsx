@@ -10,7 +10,7 @@ import dialogTitleCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogHeader");
 
-interface DialogTitleProps extends ComponentPropsWithoutRef<"div"> {
+export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The status of the Dialog
    */
@@ -26,8 +26,6 @@ interface DialogTitleProps extends ComponentPropsWithoutRef<"div"> {
    * Displays the preheader just above the header
    **/
   preheader?: ReactNode;
-
-  className?: string;
 }
 
 export const DialogHeader = ({
@@ -37,7 +35,7 @@ export const DialogHeader = ({
   disableAccent,
   status: statusProp,
   ...rest
-}: DialogTitleProps) => {
+}: DialogHeaderProps) => {
   const { status: statusContext, id } = useDialogContext();
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -46,7 +44,7 @@ export const DialogHeader = ({
     window: targetWindow,
   });
 
-  const status = statusProp ?? (statusContext as ValidationStatus);
+  const status = statusProp ?? statusContext;
 
   return (
     <div
@@ -55,7 +53,7 @@ export const DialogHeader = ({
         withBaseName(),
         {
           [withBaseName("withAccent")]: !disableAccent && !status,
-          [withBaseName(status)]: !!status,
+          [withBaseName(status ?? "")]: !!status,
         },
         className
       )}
