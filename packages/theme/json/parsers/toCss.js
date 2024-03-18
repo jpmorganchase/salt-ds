@@ -170,6 +170,8 @@ function toCSS(themeJson) {
     }
   }
 
+  // TODO: characteristics
+
   let CSS = "";
 
   for (const c of Object.entries(classes)) {

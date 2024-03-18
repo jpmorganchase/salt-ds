@@ -9,6 +9,7 @@
   --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
   --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
 
+  /* arguably should be -background- ? or how do we know this is a color */
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
 
