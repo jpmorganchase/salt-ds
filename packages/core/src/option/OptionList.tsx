@@ -1,11 +1,13 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { forwardRef } from "react";
 import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer } from "../utils";
-import optionListCss from "./OptionList.css";
+import {
+  FloatingComponentProps,
+  makePrefixer,
+  useFloatingComponent,
+} from "../utils";
+import { OptionListBase } from "./OptionListBase";
 
-export interface OptionListProps extends ComponentPropsWithoutRef<"div"> {
+export interface OptionListProps extends FloatingComponentProps {
   collapsed?: boolean;
 }
 
@@ -13,18 +15,12 @@ const withBaseName = makePrefixer("saltOptionList");
 
 export const OptionList = forwardRef<HTMLDivElement, OptionListProps>(
   function OptionList(props, ref) {
-    const { children, className, collapsed, ...rest } = props;
+    const { children, className, collapsed, open, ...rest } = props;
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-option-list",
-      css: optionListCss,
-      window: targetWindow,
-    });
+    const { Component: FloatingComponent } = useFloatingComponent();
 
     return (
-      <div
-        role="listbox"
+      <FloatingComponent
         className={clsx(
           withBaseName(),
           {
@@ -32,11 +28,13 @@ export const OptionList = forwardRef<HTMLDivElement, OptionListProps>(
           },
           className
         )}
-        ref={ref}
+        role="listbox"
+        open={open}
         {...rest}
+        ref={ref}
       >
-        {children}
-      </div>
+        <OptionListBase>{children}</OptionListBase>
+      </FloatingComponent>
     );
   }
 );

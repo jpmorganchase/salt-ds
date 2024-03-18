@@ -25,7 +25,6 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import {
   makePrefixer,
-  useFloatingComponent,
   useFloatingUI,
   UseFloatingUIProps,
   useForkRef,
@@ -133,8 +132,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     valueState,
     setValueState,
   } = listControl;
-
-  const { Component: FloatingComponent } = useFloatingComponent();
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
@@ -362,6 +359,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const buttonId = useId();
   const listId = useId();
 
+  const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
+
   return (
     <ListControlContext.Provider value={listControl}>
       <PillInput
@@ -431,29 +430,26 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           readOnly && selectedState.length > 0 ? "" : undefined
         }
       />
-      <FloatingComponent
+      <OptionList
         open={(openState || focusedState) && !readOnly && children != undefined}
-        {...getFloatingProps()}
+        collapsed={!openState}
+        ref={handleListRef}
+        id={listId}
+        tabIndex={-1}
+        {...getFloatingProps({
+          onMouseOver: handleListMouseOver,
+          onFocus: handleFocusInput,
+          onClick: handleFocusInput,
+          onMouseLeave: handleListMouseLeave,
+        })}
         left={x ?? 0}
         top={y ?? 0}
         position={strategy}
         width={elements.floating?.offsetWidth}
         height={elements.floating?.offsetHeight}
-        ref={floating}
       >
-        <OptionList
-          collapsed={!openState}
-          ref={listRef}
-          id={listId}
-          onMouseOver={handleListMouseOver}
-          onFocus={handleFocusInput}
-          onClick={handleFocusInput}
-          onMouseLeave={handleListMouseLeave}
-          tabIndex={-1}
-        >
-          {children}
-        </OptionList>
-      </FloatingComponent>
+        {children}
+      </OptionList>
     </ListControlContext.Provider>
   );
 }) as <Item = string>(

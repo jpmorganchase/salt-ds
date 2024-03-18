@@ -399,6 +399,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const listId = useId();
 
+  const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
+
   return (
     <ListControlContext.Provider value={listControl}>
       <button
@@ -443,27 +445,24 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         {validationStatus && <StatusAdornment status={validationStatus} />}
         {!readOnly && <ExpandIcon open={openState} />}
       </button>
-      <FloatingComponent
+      <OptionList
         open={(openState || focusedState) && !readOnly && children != undefined}
-        {...getFloatingProps()}
+        {...getFloatingProps({
+          onMouseOver: handleListMouseOver,
+          onFocus: handleFocusButton,
+          onClick: handleFocusButton,
+        })}
         left={x ?? 0}
         top={y ?? 0}
         position={strategy}
         width={elements.floating?.offsetWidth}
         height={elements.floating?.offsetHeight}
-        ref={floating}
+        ref={handleListRef}
+        id={listId}
+        collapsed={!openState}
       >
-        <OptionList
-          id={listId}
-          collapsed={!openState}
-          onMouseOver={handleListMouseOver}
-          onFocus={handleFocusButton}
-          onClick={handleFocusButton}
-          ref={listRef}
-        >
-          {children}
-        </OptionList>
-      </FloatingComponent>
+        {children}
+      </OptionList>
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
