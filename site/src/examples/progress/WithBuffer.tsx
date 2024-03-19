@@ -10,15 +10,12 @@ import {
   LinearProgress,
 } from "@salt-ds/core";
 
-export const WithMinVal = (): ReactElement => {
+export const WithBuffer = (): ReactElement => {
   const [selectedType, setSelectedType] = useState("circular");
 
-  const max = 40;
-  const min = 20;
-  const value = 30;
   return (
     <FlexLayout direction="column" align="center" style={{ height: "100%" }}>
-      <H3>{`max = ${max}, min = ${min}, value = ${value}`}</H3>
+      <H3> value = 38, buffer value = 60</H3>
       <FlowLayout justify="center" gap={1}>
         <RadioButtonGroup
           direction="horizontal"
@@ -33,20 +30,10 @@ export const WithMinVal = (): ReactElement => {
 
       <FlexItem style={{ margin: "auto" }}>
         {selectedType === "circular" && (
-          <CircularProgress
-            aria-label="Download"
-            value={value}
-            min={min}
-            max={max}
-          />
+          <CircularProgress aria-label="Download" value={38} bufferValue={60} />
         )}
         {selectedType === "linear" && (
-          <LinearProgress
-            aria-label="Download"
-            value={value}
-            min={min}
-            max={max}
-          />
+          <LinearProgress aria-label="Download" value={38} bufferValue={60} />
         )}
       </FlexItem>
     </FlexLayout>

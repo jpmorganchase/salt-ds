@@ -61,7 +61,7 @@ export interface PillInputProps
   /**
    * The tokens to display in the input.
    */
-  pills?: any[];
+  pills?: string[];
   onPillRemove?: (event: SyntheticEvent, index: number) => void;
   /**
    * Start adornment component
@@ -83,7 +83,7 @@ export interface PillInputProps
   truncate?: boolean;
 }
 
-export const PillInput = forwardRef(function PillInput<Item>(
+export const PillInput = forwardRef(function PillInput(
   {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
@@ -253,7 +253,7 @@ export const PillInput = forwardRef(function PillInput<Item>(
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName("truncate")]: truncate,
-          [withBaseName(validationStatus || "")]: validationStatus,
+          [withBaseName(validationStatus ?? "")]: validationStatus,
         },
         classNameProp
       )}

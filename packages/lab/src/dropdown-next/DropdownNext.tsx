@@ -394,6 +394,7 @@ export const DropdownNext = forwardRef(function DropdownNext<Item>(
     }
 
     setActive(newActive);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const listId = useId();

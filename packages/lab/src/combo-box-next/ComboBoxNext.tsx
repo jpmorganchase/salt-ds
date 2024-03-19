@@ -70,7 +70,6 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     open,
     inputProps: inputPropsProp,
     variant = "primary",
-    onClick,
     onKeyDown,
     onFocus,
     onBlur,
@@ -164,6 +163,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
       open: openState && !readOnly && children != undefined,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
+      strategy: "fixed",
       middleware: [
         size({
           apply({ rects, elements, availableHeight }) {
@@ -356,6 +356,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
     }
 
     setActive(newActive);
+    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const buttonId = useId();
@@ -364,6 +365,7 @@ export const ComboBoxNext = forwardRef(function ComboBox<Item>(
   return (
     <ListControlContext.Provider value={listControl}>
       <PillInput
+        tabIndex={-1}
         className={clsx(
           withBaseName(),
           {
