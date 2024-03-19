@@ -1,14 +1,6 @@
 {
-  "modes": [
-    "$light",
-    "$dark"
-  ],
-  "densities": [
-    "$high",
-    "$medium",
-    "$low",
-    "$touch"
-  ],
+  "modes": ["$light", "$dark"],
+  "densities": ["$high", "$medium", "$low", "$touch"],
   "palette": {
     "accent": {
       "palette-accent-background": {

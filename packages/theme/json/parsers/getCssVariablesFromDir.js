@@ -11,6 +11,12 @@ const lowDensityRegex = /\.salt-density-low.*?\{(.*?)\}.*?/s;
 const touchDensityRegex = /\.salt-density-touch.*?\{(.*?)\}.*?/s;
 const generalThemeRegex = /\.salt-theme.\{(.*?)\}.*?/s;
 
+const lightModeNextRegex =
+  /\.salt-theme-next\[data-mode="light"\].*?\{(.*?)\}.*?/s;
+const darkModeNextRegex =
+  /\.salt-theme-next\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
+const generalThemeNextRegex = /\.salt-theme-next.\{(.*?)\}.*?/s;
+
 const cssVariables = {};
 const lightModeVariables = {};
 const darkModeVariables = {};
@@ -24,13 +30,26 @@ function processFile(filePath) {
   const cssContent = fs.readFileSync(filePath, "utf8");
 
   let match;
-  let lightContent = cssContent.match(lightModeRegex);
-  let darkContent = cssContent.match(darkModeRegex);
-  let generalContent = cssContent.match(generalThemeRegex);
   let hdContent = cssContent.match(highDensityRegex);
   let mdContent = cssContent.match(mediumDensityRegex);
   let ldContent = cssContent.match(lowDensityRegex);
   let tdContent = cssContent.match(touchDensityRegex);
+  let lightContent;
+  let darkContent;
+  let generalContent;
+
+  if (
+    filePath.includes("palette-next") ||
+    filePath.includes("characteristics-next")
+  ) {
+    lightContent = cssContent.match(lightModeNextRegex);
+    darkContent = cssContent.match(darkModeNextRegex);
+    generalContent = cssContent.match(generalThemeNextRegex);
+  } else {
+    lightContent = cssContent.match(lightModeRegex);
+    darkContent = cssContent.match(darkModeRegex);
+    generalContent = cssContent.match(generalThemeRegex);
+  }
 
   if (lightContent) {
     while ((match = cssVariableRegex.exec(lightContent[0])) !== null) {
@@ -83,40 +102,52 @@ function processFile(filePath) {
   }
 }
 
-module.exports = function getCssVariablesFromFile(filePath) {
-  const filePath = path.join("", file);
-  const stats = fs.statSync(filePath);
-  if (stats.isFile() && path.extname(file) === ".css") {
-    processFile(filePath);
-  }
-};
-
-module.exports = function getCssVariablesFromDir(dirPath) {
-  const files = fs.readdirSync(dirPath);
-
-  files.forEach((file) => {
-    const filePath = path.join(dirPath, file);
+module.exports = {
+  fromFile: function getCssVariablesFromFile(filePath) {
     const stats = fs.statSync(filePath);
-
-    if (stats.isDirectory()) {
-      // Recursively process subdirectories
-      Object.assign(cssVariables, getCssVariablesFromDir(filePath));
-    } else if (
-      stats.isFile() &&
-      path.extname(file) === ".css" &&
-      !filePath.includes("animation")
-    ) {
+    if (stats.isFile() && path.extname(filePath) === ".css") {
       processFile(filePath);
     }
-  });
 
-  return {
-    light: lightModeVariables,
-    dark: darkModeVariables,
-    high: hdVariables,
-    medium: mdVariables,
-    low: ldVariables,
-    touch: tdVariables,
-    general: cssVariables,
-  };
+    return {
+      light: lightModeVariables,
+      dark: darkModeVariables,
+      high: hdVariables,
+      medium: mdVariables,
+      low: ldVariables,
+      touch: tdVariables,
+      general: cssVariables,
+    };
+  },
+  fromDir: function getCssVariablesFromDir(dirPath) {
+    const files = fs.readdirSync(dirPath);
+    const foundations = files.map((file) => file.replace(".css", ""));
+    files.forEach((file) => {
+      const filePath = path.join(dirPath, file);
+      const fileName = file.replace(".css", "");
+      const stats = fs.statSync(filePath);
+
+      if (stats.isDirectory()) {
+        // Recursively process subdirectories
+        Object.assign(cssVariables, getCssVariablesFromDir(filePath));
+      } else if (
+        stats.isFile() &&
+        path.extname(file) === ".css" &&
+        !foundations.includes(`${fileName}-next`) &&
+        fileName !== "fade"
+      ) {
+        processFile(filePath);
+      }
+    });
+
+    return {
+      light: lightModeVariables,
+      dark: darkModeVariables,
+      high: hdVariables,
+      medium: mdVariables,
+      low: ldVariables,
+      touch: tdVariables,
+      general: cssVariables,
+    };
+  },
 };

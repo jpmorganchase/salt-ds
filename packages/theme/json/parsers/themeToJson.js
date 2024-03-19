@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const getCssVariablesFromDir = require("./getCssVariablesFromDir");
+const { fromDir, fromFile } = require("./getCssVariablesFromDir");
 const colorFormatSwap = require("./colorFormatSwap");
 
 /* Removes surrounding CSS var('...') function from a token */
@@ -55,7 +55,7 @@ function addToJson(key, themeLevel, semantic, tokenName, type, tokenValue) {
  **/
 function formatFoundationValue(semantic, tokenValue) {
   const alias = removePrefix(stripVarFunc(tokenValue));
-
+  console.log(semantic, alias);
   let foundationSemantic;
   switch (semantic) {
     case "corner":
@@ -308,14 +308,17 @@ function format(variables) {
 }
 
 function themeToJson() {
-  const paletteVariables = getCssVariablesFromDir(
-    path.resolve(__dirname, "../../css/palette")
+  const paletteVariables = fromFile(
+    path.resolve(__dirname, "../../css/palette/palette-next.css")
   );
-  const foundationVariables = getCssVariablesFromDir(
+  const foundationVariables = fromDir(
     path.resolve(__dirname, "../../css/foundations")
   );
-  const characteristicVariables = getCssVariablesFromDir(
-    path.resolve(__dirname, "../../css/characteristics")
+  const characteristicVariables = fromFile(
+    path.resolve(
+      __dirname,
+      "../../css/characteristics/characteristics-next.css"
+    )
   );
   format({
     $light: {
