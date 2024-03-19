@@ -1,0 +1,92 @@
+---
+title: List filtering
+layout: DetailPattern
+aliases:
+  - /salt/patterns/list-filtering
+data:
+  resources:
+  components: ["Input", "List", "Spinner]
+---
+
+When searching through a list, a filter reduces finite, visible options to help users locate items that have matching criteria. This pattern introduces the expected filter behaviour applied to Salt components where a list is used.
+
+  <Diagram
+    src="/img/patterns/list-filtering/image.png"
+    alt="A list filter."
+    contentPosition="top"
+    border
+  />
+
+## When to use
+
+Use filtering in a list when you have a lengthy, scrolling list with items that can’t all be viewed at once. The pattern typically comprises of input and list based components that use a string filter to help narrow down items for quick selection.
+
+Filtered lists are commonly used in the following components and patterns:
+* Combo box
+* Dropdown
+* List builder
+* Tree builder
+* Pivot table
+
+## Interactions and behaviours
+
+### Highlighted characters
+
+When a filtered list is displayed, characters in the list item labels that match the filter criteria are highlighted—so they’re easy to identify. This behaviour facilitates quick selection, allowing users to avoid navigating directly into the list. Instead, they can simply type their query and press enter to select the matching item.
+
+  <Diagram
+    src="/img/patterns/list-filtering/highlighted-characters.png"
+    alt="An example of filtering a list in a combo box."
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Make sure that the first letter in the filtered list is displayed in `--salt-text-body-strong font weight`.
+</ExampleContainer>
+
+### No matches
+
+When there are no items matching the filter text, an explanatory message is displayed instead of the list.
+
+  <Diagram
+    src="/img/patterns/list-filtering/no-matches.png"
+    alt="An example of no matches in the list."
+    contentPosition="top"
+    border
+  />
+
+### Filter logic 
+
+You can implement bespoke logic for the filtering any list. The logic we recommend for a simple list of data include:
+
+* Case-insensitive matching, i.e., Alabama, alabama, ALAbama, will all return the same result.
+* Matching only the first character(s) of the beginning of any word in the item labels to the filter string.
+
+  <Diagram
+    src="/img/patterns/list-filtering/filter-logic.png"
+    alt="An example of filter logic."
+    contentPosition="top"
+    border
+  />
+
+  <ExampleContainer type="positive" customPillText="Best practices">
+Increase the number of characters required to filter the list if there are a large number of items and results are slow to load. You could, for example, fetch results on input of the first character but only display them on input of the third, to improve perceived performance.
+</ExampleContainer>
+
+## Asychronus loading
+
+When filter matches take longer to be returned—for example in Combo box, when data needs to be fetched asynchronously from the server side—a loading message is displayed and Spinner can be displayed in the field.
+
+  <Diagram
+    src="/img/patterns/list-filtering/filter-logic.png"
+    alt="An example of asychronus loading."
+    contentPosition="top"
+    border
+  />
+
+    <ExampleContainer type="positive" customPillText="Best practices">
+Configure the input to cease loading if the user edits or removes filter text. The component will be able to respond right away, and users won’t have to wait for the previous filter to complete.
+</ExampleContainer>
+
+:fragment{src="./fragments/feedback.mdx"}
