@@ -1,11 +1,11 @@
 import { ReactElement, useState } from "react";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
+import { Dropdown, DropdownProps, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const CustomValue = (): ReactElement => {
   const [selected, setSelected] = useState<string[]>([]);
 
-  const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
+  const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
     newSelected
   ) => {
@@ -13,7 +13,7 @@ export const CustomValue = (): ReactElement => {
   };
 
   return (
-    <DropdownNext
+    <Dropdown
       selected={selected}
       value={
         selected.length < 2 ? selected[0] : `${selected.length} items selected`
@@ -25,6 +25,6 @@ export const CustomValue = (): ReactElement => {
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
-    </DropdownNext>
+    </Dropdown>
   );
 };

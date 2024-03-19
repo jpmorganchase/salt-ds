@@ -8,8 +8,10 @@ import {
   FlexLayout,
   FlowLayout,
   SplitLayout,
+  Dropdown,
+  DropdownProps,
+  Option,
 } from "@salt-ds/core";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
 import {
   MessageIcon,
   LocationIcon,
@@ -363,13 +365,15 @@ export const List = () => {
     contactList[0],
   ]);
 
-  const handleSelectionChange: DropdownNextProps<Contact>["onSelectionChange"] =
-    (event, newSelected) => {
-      setSelectedContact(newSelected);
-    };
+  const handleSelectionChange: DropdownProps<Contact>["onSelectionChange"] = (
+    event,
+    newSelected
+  ) => {
+    setSelectedContact(newSelected);
+  };
 
   return (
-    <DropdownNext<Contact>
+    <Dropdown<Contact>
       style={{ width: "266px" }}
       startAdornment={
         selectedContact.length === 1 && (
@@ -416,6 +420,6 @@ export const List = () => {
           </StackLayout>
         </Option>
       ))}
-    </DropdownNext>
+    </Dropdown>
   );
 };

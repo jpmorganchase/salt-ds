@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, useState } from "react";
-import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/lab";
+import { ComboBox, ComboBoxProps, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Truncation = (): ReactElement => {
@@ -9,12 +9,12 @@ export const Truncation = (): ReactElement => {
     setValue(value);
   };
 
-  const handleSelectionChange: ComboBoxNextProps["onSelectionChange"] = () => {
+  const handleSelectionChange: ComboBoxProps["onSelectionChange"] = () => {
     setValue("");
   };
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -30,6 +30,6 @@ export const Truncation = (): ReactElement => {
         .map((color) => (
           <Option value={color} key={color} />
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

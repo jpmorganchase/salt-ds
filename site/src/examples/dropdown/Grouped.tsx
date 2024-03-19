@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { DropdownNext, Option, OptionGroup } from "@salt-ds/lab";
+import { Dropdown, Option, OptionGroup } from "@salt-ds/core";
 import { citiesWithCountries } from "./exampleData";
 
 export const Grouped = (): ReactElement => {
@@ -13,7 +13,7 @@ export const Grouped = (): ReactElement => {
   }, {} as Record<string, typeof citiesWithCountries>);
 
   return (
-    <DropdownNext style={{ width: "266px" }}>
+    <Dropdown style={{ width: "266px" }}>
       {Object.entries(groupedOptions).map(([country, options]) => (
         <OptionGroup label={country} key={country}>
           {options.map((option) => (
@@ -21,6 +21,6 @@ export const Grouped = (): ReactElement => {
           ))}
         </OptionGroup>
       ))}
-    </DropdownNext>
+    </Dropdown>
   );
 };
