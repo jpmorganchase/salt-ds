@@ -132,18 +132,81 @@ function format(variables) {
       } else if (foundations.includes(grouping)) {
         const semantic = tokenName.split("-")[0];
         switch (semantic) {
-          case "corner":
+          case "curve":
             type = "dimension";
+            break;
+          case "size":
+            type = "dimension";
+            break;
+          case "spacing":
+            type = "dimension";
+            if (tokenValue.includes("calc")) {
+              let [multiplier, multipleToken] = tokenValue
+                .replace("calc(", "")
+                .replace(")", "")
+                .split(" * ");
+              multipleToken = variables["general"][
+                stripVarFunc(multipleToken)
+              ].replace("px", "");
+              tokenValue = removePrefix(stripVarFunc(tokenValue))
+                .replace("spacing", `{spacing`)
+                .replace("100", "100}")
+                .replace("calc(", "");
+            }
             break;
           case "opacity":
             type = "number";
             break;
+          case "zIndex":
+            type = "number";
+            break;
+          case "duration":
+            type = "duration";
+            break;
+          case "typography":
+            const attribute = tokenName.split("-")[1];
+            type = attribute;
+            break;
+          case "shadow":
+            if (tokenName.includes("color")) {
+              type = "color";
+              tokenValue = colorFormatSwap("hex", tokenValue);
+            } else {
+              type = "shadow";
+              const [offsetX, offsetY, blur, spread, color] =
+                tokenValue.split(" ");
+              tokenValue = {
+                offsetX: offsetX,
+                offsetY: offsetY,
+                blur: blur,
+                spread: spread,
+                color: `{foundations.shadow.${removePrefix(
+                  stripVarFunc(color)
+                )}}`,
+              };
+            }
+            break;
+          case "color":
+            if (tokenName.includes("fade")) {
+              type = "color";
+              const colorToken = `${tokenName.split("-fade")[0]}`;
+              const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
+              // the semantic check here is due to e.g. --salt-palette-opacity-disabled used in fade tokens (correct) vs
+              // e.g. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover (this is technically wrong)
+              tokenValue = {
+                color: `{foundations.color.${colorToken}}`,
+                opacity: `{${
+                  opacityValue.includes("palette") ? "palette" : "foundations"
+                }.opacity.${removePrefix(stripVarFunc(opacityValue))}}`,
+              };
+            } else {
+              type = "color";
+              tokenValue = colorFormatSwap("hex", tokenValue);
+            }
+            break;
           default:
-            type = "color";
+            type = undefined;
         }
-        tokenValue !== "transparent"
-          ? formatFoundationValue(semantic, tokenValue)
-          : tokenValue;
         addToJson(key, "foundations", semantic, tokenName, type, tokenValue);
       } else {
         const semantic = tokenName.split("-")[0];
