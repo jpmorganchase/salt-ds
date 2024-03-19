@@ -13,7 +13,7 @@
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
 
-  --salt-navigable-background-hover: var(--salt-palette-navigate-primary-background-hover);
+  --salt-navigable-background-hover: var(--salt-palette-navigate-background-hover);
 
   /* Link */
   --salt-navigable-textDecoration: underline;

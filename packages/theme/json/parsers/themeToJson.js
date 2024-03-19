@@ -60,8 +60,10 @@ function formatFoundationValue(semantic, tokenValue) {
   switch (semantic) {
     case "corner":
       foundationSemantic = "curve";
+      break;
     case "opacity":
       foundationSemantic = "opacity";
+      break;
     default:
       foundationSemantic = "color";
   }
