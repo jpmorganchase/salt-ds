@@ -10,13 +10,10 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-} from "@salt-ds/core";
-import {
-  DropdownNext,
+  Dropdown,
   Option,
-  ParentChildLayout,
-  StackedViewElement,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 import {
   ChevronLeftIcon,
   ExportIcon,
@@ -40,11 +37,11 @@ const displayView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>Language</FormFieldLabel>
-      <DropdownNext>
+      <Dropdown>
         {languages.map((lang) => (
           <Option value={lang} key={lang} />
         ))}
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Time format</FormFieldLabel>
@@ -93,11 +90,11 @@ const accountView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Security type</FormFieldLabel>
-      <DropdownNext defaultSelected={["Password"]}>
+      <Dropdown defaultSelected={["Password"]}>
         <Option value="Password" key="Password" />
         <Option value="Soft token" key="Soft token" />
         <Option value="Biometric" key="Biometric" />
-      </DropdownNext>
+      </Dropdown>
     </FormField>
   </StackLayout>
 );
@@ -106,20 +103,20 @@ const exportView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>File type</FormFieldLabel>
-      <DropdownNext defaultSelected={["PNG"]}>
+      <Dropdown defaultSelected={["PNG"]}>
         <Option value="JPG" />
         <Option value="PDF" />
         <Option value="PNG" />
         <Option value="SVG" />
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Size</FormFieldLabel>
-      <DropdownNext defaultSelected={["1x"]}>
+      <Dropdown defaultSelected={["1x"]}>
         <Option value="1x" />
         <Option value="2x" />
         <Option value="3x" />
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Suffix</FormFieldLabel>
@@ -127,10 +124,10 @@ const exportView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Color profile</FormFieldLabel>
-      <DropdownNext defaultSelected={["Same as current (sRGB)"]}>
+      <Dropdown defaultSelected={["Same as current (sRGB)"]}>
         <Option value="Same as current (sRGB)" />
         <Option value="Display P3" />
-      </DropdownNext>
+      </Dropdown>
     </FormField>
   </StackLayout>
 );

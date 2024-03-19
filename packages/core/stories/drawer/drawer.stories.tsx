@@ -15,8 +15,9 @@ import {
   StackLayout,
   Drawer,
   DrawerCloseButton,
+  ComboBox,
+  Option,
 } from "@salt-ds/core";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
 import { Meta } from "@storybook/react";
 
 export default {
@@ -318,7 +319,7 @@ export const OptionalCloseAction = () => {
           </FormField>
           <FormField>
             <FormFieldLabel>Postcode</FormFieldLabel>
-            <ComboBoxNext
+            <ComboBox
               onChange={handleChange}
               onSelectionChange={handleSelectionChange}
               value={value}
@@ -329,7 +330,7 @@ export const OptionalCloseAction = () => {
                   {postcode}
                 </Option>
               ))}
-            </ComboBoxNext>
+            </ComboBox>
             <FormFieldHelperText>Do not include space</FormFieldHelperText>
           </FormField>
           <FormField>
