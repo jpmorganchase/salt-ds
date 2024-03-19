@@ -5,9 +5,8 @@ import "../uitk-ag-theme.css";
 import "../salt-ag-theme.css";
 
 export default {
-  title: "Data Grid/Ag Grid Theme",
+  title: "Ag Grid/Ag Grid Theme",
   component: AgGridReact,
-  // decorators: [withFixedWidthWrapper, withRowStripsKnob]
 };
 
 export {
@@ -33,6 +32,7 @@ export {
   RowGrouping,
   RowGroupPanel,
   PinnedRows,
+  SortAndFilter,
   StatusBar,
   StatusBarDark,
   VariantSecondary,
