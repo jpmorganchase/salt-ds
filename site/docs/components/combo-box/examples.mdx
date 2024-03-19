@@ -15,11 +15,11 @@ data:
 
 A single item can be selected from the combo box options.
 
-`ComboBoxNext` contains an input field that opens a list. As users type, the list displays all filtered options based on their input.
+`ComboBox` contains an input field that opens a list. As users type, the list displays all filtered options based on their input.
 
 ### Best practices
 
-- You can wrap `ComboBoxNext` in a `FormField` when it’s displayed within a form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+- You can wrap `ComboBox` in a `FormField` when it’s displayed within a form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
   
@@ -57,7 +57,7 @@ The choice between primary and secondary variants should be considered alongside
 
 ### Best practices
 
-The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. You can wrap `ComboBoxNext` in a `FormField` when it’s displayed within a orm context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+The [forms pattern](/salt/patterns/forms) provides further guidance on primary versus secondary control selection. You can wrap `ComboBox` in a `FormField` when it’s displayed within a orm context. This provides functionality built into `FormField` for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
 
 </LivePreview>
 
@@ -96,7 +96,7 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 ## `FormField` support
 
-Wrap `ComboBoxNext` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the combo box with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+Wrap `ComboBox` in a [`FormField`](/salt/components/form-field) to make it accessible within a form. This will provide the combo box with a visible label, help text and a status message for validation feedback. More information can be found [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
 </LivePreview>
 
@@ -134,7 +134,7 @@ You can supply static content as children to the `Option` component. This can be
 
 ## Validation
 
-`ComboBoxNext` can show validation states (warning, success, error) with the prop `validationStatus`.
+`ComboBox` can show validation states (warning, success, error) with the prop `validationStatus`.
 
 ### Best practices
 
@@ -147,7 +147,7 @@ You can supply static content as children to the `Option` component. This can be
 
 ## Custom filtering
 
-Due to its flexible API, you can customize the filtering logic `ComboBoxNext` uses to suit your needs. In this example it displays the entire list of options when the combo box opens due to a mouse click.
+Due to its flexible API, you can customize the filtering logic `ComboBox` uses to suit your needs. In this example it displays the entire list of options when the combo box opens due to a mouse click.
 
 </LivePreview>
 
@@ -155,7 +155,7 @@ Due to its flexible API, you can customize the filtering logic `ComboBoxNext` us
 
 ## Server side data
 
-You can use `ComboBoxNext` to display data from a server. In this example, the data is fetched and filtered on the server side.
+You can use `ComboBox` to display data from a server. In this example, the data is fetched and filtered on the server side.
 
 Note that the data fetching in this example has been made intentionally slow to highlight the loading states.
 
@@ -166,7 +166,7 @@ Note that the data fetching in this example has been made intentionally slow to 
 ## Object values
 
 In order to support advanced use-cases, like where the options are fetched from a server, the `value` prop passed to `Option` can be an object.
-When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBoxNext` to specify how to display the option in the input field.
+When the `value` prop is an object, the `valueToString` prop must be provided to `ComboBox` to specify how to display the option in the input field.
 
 </LivePreview>
 

@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBox, Option } from "@salt-ds/core";
 import { largestCities, LargeCity } from "./exampleData";
 
 /**
@@ -29,7 +29,7 @@ export const ObjectValues = (): ReactElement => {
   };
 
   return (
-    <ComboBoxNext<LargeCity>
+    <ComboBox<LargeCity>
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -43,6 +43,6 @@ export const ObjectValues = (): ReactElement => {
         .map((city) => (
           <Option value={city} key={city.name} />
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };
