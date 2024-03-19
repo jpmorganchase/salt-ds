@@ -17,15 +17,33 @@ const darkModeNextRegex =
   /\.salt-theme-next\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
 const generalThemeNextRegex = /\.salt-theme-next.\{(.*?)\}.*?/s;
 
-const cssVariables = {};
-const lightModeVariables = {};
-const darkModeVariables = {};
-const hdVariables = {};
-const mdVariables = {};
-const ldVariables = {};
-const tdVariables = {};
+function isNonColor(token) {
+  const tokenParts = token.split("-");
+  const isColor = tokenParts.find((part) =>
+    [
+      "borderColor",
+      "foreground",
+      "background",
+      "outlineColor",
+      "indicator",
+    ].includes(part)
+  );
+  return !isColor;
+}
 
-function processFile(filePath) {
+function processFile(
+  filePath,
+  {
+    cssVariables,
+    lightModeVariables,
+    darkModeVariables,
+    hdVariables,
+    mdVariables,
+    ldVariables,
+    tdVariables,
+  },
+  nonColors
+) {
   // Process CSS files
   const cssContent = fs.readFileSync(filePath, "utf8");
 
@@ -54,59 +72,124 @@ function processFile(filePath) {
   if (lightContent) {
     while ((match = cssVariableRegex.exec(lightContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      lightModeVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          lightModeVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        lightModeVariables[variableName] = variableValue;
+      }
     }
   }
   if (darkContent) {
     while ((match = cssVariableRegex.exec(darkContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      darkModeVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          darkModeVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        darkModeVariables[variableName] = variableValue;
+      }
     }
   }
   if (hdContent) {
     while ((match = cssVariableRegex.exec(hdContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      hdVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          hdVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        hdVariables[variableName] = variableValue;
+      }
     }
   }
   if (mdContent) {
     while ((match = cssVariableRegex.exec(mdContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      mdVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          mdVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        mdVariables[variableName] = variableValue;
+      }
     }
   }
   if (ldContent) {
     while ((match = cssVariableRegex.exec(ldContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      ldVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          ldVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        ldVariables[variableName] = variableValue;
+      }
     }
   }
   if (tdContent) {
     while ((match = cssVariableRegex.exec(tdContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      tdVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          tdVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        tdVariables[variableName] = variableValue;
+      }
     }
   }
   if (generalContent) {
     while ((match = cssVariableRegex.exec(generalContent[0])) !== null) {
       const variableName = match[1];
-      const variableValue = match[2].trim();
-      cssVariables[variableName] = variableValue;
+      if (nonColors) {
+        if (isNonColor(variableName)) {
+          const variableValue = match[2].trim();
+          cssVariables[variableName] = variableValue;
+        }
+      } else {
+        const variableValue = match[2].trim();
+        cssVariables[variableName] = variableValue;
+      }
     }
   }
 }
 
 module.exports = {
   fromFile: function getCssVariablesFromFile(filePath) {
+    const cssVariables = {};
+    const lightModeVariables = {};
+    const darkModeVariables = {};
+    const hdVariables = {};
+    const mdVariables = {};
+    const ldVariables = {};
+    const tdVariables = {};
+
     const stats = fs.statSync(filePath);
     if (stats.isFile() && path.extname(filePath) === ".css") {
-      processFile(filePath);
+      processFile(filePath, {
+        cssVariables,
+        lightModeVariables,
+        darkModeVariables,
+        hdVariables,
+        mdVariables,
+        ldVariables,
+        tdVariables,
+      });
     }
 
     return {
@@ -119,7 +202,14 @@ module.exports = {
       general: cssVariables,
     };
   },
-  fromDir: function getCssVariablesFromDir(dirPath) {
+  fromDir: function getCssVariablesFromDir(dirPath, nonColors) {
+    const cssVariables = {};
+    const lightModeVariables = {};
+    const darkModeVariables = {};
+    const hdVariables = {};
+    const mdVariables = {};
+    const ldVariables = {};
+    const tdVariables = {};
     const files = fs.readdirSync(dirPath);
     const foundations = files.map((file) => file.replace(".css", ""));
     files.forEach((file) => {
@@ -136,7 +226,19 @@ module.exports = {
         !foundations.includes(`${fileName}-next`) &&
         fileName !== "fade"
       ) {
-        processFile(filePath);
+        processFile(
+          filePath,
+          {
+            cssVariables,
+            lightModeVariables,
+            darkModeVariables,
+            hdVariables,
+            mdVariables,
+            ldVariables,
+            tdVariables,
+          },
+          nonColors
+        );
       }
     });
 

@@ -25,7 +25,7 @@ module.exports = function colorFormatSwap(swapTo, color) {
         .replace("rgba(", "")
         .replace(")", "")
         .split(",")
-        .map((x) => parseInt(x.trim()));
+        .map((x) => parseFloat(x.trim()));
       a = ((a * 255) | (1 << 8)).toString(16).slice(1).trim();
       return rgbToHex(r, g, b) + a;
     } else {
