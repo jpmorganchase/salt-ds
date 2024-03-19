@@ -1,9 +1,10 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { StackLayout } from "@salt-ds/core";
-import { MX, countryMetaMap } from "@salt-ds/countries";
+import { MX, AD, GB, US, countryMetaMap } from "@salt-ds/countries";
+import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
+
 import "@salt-ds/countries/saltCountries.css";
 import "@salt-ds/countries/saltSharpCountries.css";
-import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 
 export default {
   title: "Country Symbols/Country Symbol/Country Symbol QA",
@@ -11,15 +12,13 @@ export default {
 
 export const CountrySymbolSizes: StoryFn = () => {
   return (
-    <QAContainer height={500} width={1000} cols={4}>
-      <StackLayout direction="row">
-        <MX size={1} />
-        <MX size={2} />
-        <MX size={3} />
-        <MX size={4} />
-        <MX size={5} />
-      </StackLayout>
-    </QAContainer>
+    <StackLayout direction="row">
+      <MX size={1} />
+      <MX size={2} />
+      <MX size={3} />
+      <MX size={4} />
+      <MX size={5} />
+    </StackLayout>
   );
 };
 
@@ -31,17 +30,14 @@ export const NoStyleInjection: StoryFn = () => {
   return (
     <QAContainerNoStyleInjection
       height={500}
-      width={1000}
+      width={1500}
       cols={4}
       enableStyleInjection={false}
     >
-      <StackLayout direction="row">
-        <MX size={1} />
-        <MX size={2} />
-        <MX size={3} />
-        <MX size={4} />
-        <MX size={5} />
-      </StackLayout>
+      <AD size={1} />
+      <GB size={2} />
+      <MX size={3} />
+      <US size={4} />
     </QAContainerNoStyleInjection>
   );
 };

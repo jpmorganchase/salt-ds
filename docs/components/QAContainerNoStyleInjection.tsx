@@ -19,7 +19,7 @@ import labCss from "../css/salt-lab.css?inline";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
-import countriesCss from "../../packages/countries/src/country-symbol/CountrySymbol.css?inline";
+import countriesCss from "../css/salt-countries.css?inline";
 
 export const useDynamicStyleSheet = (styleSheet: string, id: string): void => {
   useEffect(() => {
