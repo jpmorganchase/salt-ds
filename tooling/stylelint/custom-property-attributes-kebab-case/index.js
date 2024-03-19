@@ -1,12 +1,6 @@
 "use strict";
 
-const allProperties = require("known-css-properties").all;
-
-/* excluding `accent-color` property so `--card-accent-color` is allowed */
-const properties = allProperties.filter(
-  (property) => property !== "accent-color"
-);
-
+const properties = require("known-css-properties").all;
 const stylelint = require("stylelint");
 const valueParser = require("postcss-value-parser");
 
