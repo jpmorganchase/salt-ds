@@ -2,7 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 import { allIcons } from "./icon.all";
 import { AddDocumentIcon } from "@salt-ds/icons";
-import "@salt-ds/icons/src/saltIcons.css";
+import "@salt-ds/icons/saltIcons.css";
 export default {
   title: "Icons/Icon/Icon QA",
 } as Meta;
