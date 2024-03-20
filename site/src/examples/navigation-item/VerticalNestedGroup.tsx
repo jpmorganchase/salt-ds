@@ -25,7 +25,6 @@ export const VerticalNestedGroup = (): ReactElement => {
     <nav>
       <StackLayout
         as="ul"
-        gap={1}
         style={{
           width: 250,
           listStyle: "none",
@@ -73,7 +72,6 @@ export const VerticalNestedGroup = (): ReactElement => {
             {expanded.includes(name) && (
               <StackLayout
                 as="ul"
-                gap={1}
                 style={{
                   width: 250,
                   listStyle: "none",
@@ -125,7 +123,6 @@ export const VerticalNestedGroup = (): ReactElement => {
                       {expanded.includes(item.name) && (
                         <StackLayout
                           as="ul"
-                          gap={1}
                           style={{
                             width: 250,
                             listStyle: "none",
