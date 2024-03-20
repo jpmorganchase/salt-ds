@@ -127,3 +127,7 @@
 .salt-density-high .saltSwitch-thumb {
   border: 0;
 }
+
+.saltFormField-labelLeft .saltSwitch {
+  padding-top: var(--salt-spacing-75);
+}
