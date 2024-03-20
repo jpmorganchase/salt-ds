@@ -7,7 +7,7 @@ data:
   components: ["Input", "List", "Spinner"]
 ---
 
-When searching through a list, a filter reduces finite, visible options to help users locate items that have matching criteria. This pattern introduces the expected filter behaviour applied to Salt components where a list is used.
+When searching through a list, a filter enables users to specify criteria and only show relevant options. This pattern introduces the expected filter behavior applied to Salt components where a list is used.
 
   <Diagram
     src="/img/patterns/list-filtering/image.png"
@@ -18,20 +18,17 @@ When searching through a list, a filter reduces finite, visible options to help 
 
 ## When to use
 
-Use filtering in a list when you have a lengthy, scrolling list with items that can’t all be viewed at once. The pattern typically comprises of input and list based components that use a string filter to help narrow down items for quick selection.
+Use filtering when you have a lengthy list that users have to scroll to view all available options. The pattern typically comprises input and list based components to use a string to filter items for quick selection.
 
-Filtered lists are commonly used in the following components and patterns:
-* Combo box
-* Dropdown
+List filtering is a common behavior found in:
+* Combobox
 * List builder
-* Tree builder
 * Pivot table
+* Tree builder
 
-## Interactions and behaviours
+## Highlighted characters
 
-### Highlighted characters
-
-When a filtered list is displayed, characters in the list item labels that match the filter criteria are highlighted—so they’re easy to identify. This behaviour facilitates quick selection, allowing users to avoid navigating directly into the list. Instead, they can simply type their query and press enter to select the matching item.
+When filtering, highlight matching characters in item labels that match the filter criteria. This tells a user why the filter returned a given item. This behavior facilitates quick selection, allowing users to avoid navigating directly into the list. Instead, they can simply type their query and press enter to select the matching item.
 
   <Diagram
     src="/img/patterns/list-filtering/highlighted-characters.png"
@@ -41,7 +38,7 @@ When a filtered list is displayed, characters in the list item labels that match
   />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-Make sure that the first letter in the filtered list is displayed in `--salt-text-body-strong font weight`.
+Make sure that the first letter in the filtered list is displayed in `--salt-text-body-strong` font weight.
 </ExampleContainer>
 
 ### No matches
