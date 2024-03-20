@@ -22,7 +22,7 @@ export const FlipAndShift = (): ReactElement => {
           width: "1100px",
         }}
       >
-        <Tooltip content="I am a tooltip" placement="top" open>
+        <Tooltip status="info" content="I am a tooltip" placement="top" open>
           <Button
             style={{ marginTop: "400px", marginLeft: "500px" }}
             ref={handleScrollButton}

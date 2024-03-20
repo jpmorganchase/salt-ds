@@ -77,7 +77,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       hideIcon = false,
       open: openProp,
       content,
-      status: statusProp = "info",
+      status: statusProp,
       placement = "right",
       enterDelay = 300,
       leaveDelay = 0,

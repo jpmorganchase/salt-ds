@@ -17,7 +17,7 @@ const IconWithTooltip = (props: {
   status?: TooltipProps["status"];
   content?: TooltipProps["content"];
 }) => {
-  const { content = "hello", status, ...rest } = props;
+  const { content = "hello", status = "info", ...rest } = props;
 
   return (
     <Tooltip content={content} status={status} {...rest} open>

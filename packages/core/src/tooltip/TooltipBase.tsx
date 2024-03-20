@@ -15,7 +15,7 @@ interface TooltipBaseProps extends Omit<TooltipProps, "children"> {
   /**
    * A string to determine the status of the Tooltip. Defaults to `info`.
    */
-  status: ValidationStatus;
+  status?: ValidationStatus;
 }
 
 export const TooltipBase = (props: TooltipBaseProps) => {
@@ -29,10 +29,11 @@ export const TooltipBase = (props: TooltipBaseProps) => {
   const { a11yProps } = useFormFieldProps();
 
   const { arrowProps, content, hideArrow, hideIcon, status } = props;
+  console.log(status);
   return (
     <>
       <div className={withBaseName("container")}>
-        {!hideIcon && (
+        {!hideIcon && status && (
           <StatusIndicator
             status={status}
             size={1}
