@@ -6,7 +6,7 @@ import { makePrefixer } from "../utils";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dialogTitleCss from "./DialogHeader.css";
+import dialogHeaderCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogHeader");
 
@@ -40,7 +40,7 @@ export const DialogHeader = ({
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-dialog-header",
-    css: dialogTitleCss,
+    css: dialogHeaderCss,
     window: targetWindow,
   });
 
