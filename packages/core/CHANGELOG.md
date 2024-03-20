@@ -1,5 +1,50 @@
 # @salt-ds/core
 
+## 1.21.0
+
+### Minor Changes
+
+- 53a7f22c: Added `Dropdown`, `Option`, `OptionGroup` and `ComboBox`.
+
+  **Note:** These were `DropdownNext` and `ComboBoxNext` in lab.
+
+  ```tsx
+  <Dropdown aria-label="Colors">
+    <OptionGroup label="Primary">
+      <Option value="Red" />
+      <Option value="Blue" />
+    </OptionGroup>
+    <OptionGroup label="Other">
+      <Option value="Pink" />
+    </OptionGroup>
+  </Dropdown>
+  ```
+
+  ```tsx
+  <ComboBox aria-label="Colors">
+    <OptionGroup label="Primary">
+      <Option value="Red" />
+      <Option value="Blue" />
+    </OptionGroup>
+    <OptionGroup label="Other">
+      <Option value="Pink" />
+    </OptionGroup>
+  </ComboBox>
+  ```
+
+- 9960fe8a: Added `bufferValue` to linear and circular progress.
+  Updated linear and circular progress track token to use `--salt-size-bar` in order to improve density scale.
+
+### Patch Changes
+
+- d1e4f78a: Added export for DialogHeaderProps
+
+  ```ts
+  import { DialogHeaderProps } from "@salt-ds/core";
+  ```
+
+- 53a7f22c: Fix ComboBox and Dropdown's list appearing below other elements.
+
 ## 1.20.0
 
 ### Minor Changes
