@@ -271,9 +271,11 @@ function format(variables) {
         if (tokenParts.find((part) => part === "fontWeight")) {
           // Do we want to group text e.g. h1, h2?
           type = "fontWeight";
+          tokenValue = formatCharacteristicValue(tokenValue);
         }
         if (tokenParts.find((part) => part === "fontFamily")) {
           type = "fontFamily";
+          tokenValue = formatCharacteristicValue(tokenValue);
         }
         if (tokenParts.find((part) => part === "fontSize")) {
           type = "fontSize";

@@ -2107,171 +2107,171 @@
         "$type": "textAlign"
       },
       "text-action-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-light)",
+        "$value": "{foundations.typography.typography-fontWeight-light}",
         "$type": "fontWeight"
       },
       "text-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-notation-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-notation-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-notation-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-notation-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-h1-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h1-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-h1-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-medium)",
+        "$value": "{foundations.typography.typography-fontWeight-medium}",
         "$type": "fontWeight"
       },
       "text-h1-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-extraBold)",
+        "$value": "{foundations.typography.typography-fontWeight-extraBold}",
         "$type": "fontWeight"
       },
       "text-h2-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h2-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-h2-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-h2-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-h3-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h3-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-h3-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-h3-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-h4-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h4-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-h4-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-h4-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-label-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-label-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-label-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-light)",
+        "$value": "{foundations.typography.typography-fontWeight-light}",
         "$type": "fontWeight"
       },
       "text-label-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-display1-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-display1-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-display1-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-display1-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-display2-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-display2-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-display2-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-display2-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-display3-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily)",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-display3-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "text-display3-fontWeight-strong": {
-        "$value": "var(--salt-typography-fontWeight-bold)",
+        "$value": "{foundations.typography.typography-fontWeight-bold}",
         "$type": "fontWeight"
       },
       "text-display3-fontWeight-small": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "text-code-fontFamily": {
-        "$value": "var(--salt-typography-fontFamily-code)",
+        "$value": "{foundations.typography.typography-fontFamily-code}",
         "$type": "fontFamily"
       }
     },
@@ -2651,19 +2651,19 @@
         "$type": "cursor"
       },
       "navigable-fontWeight": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "navigable-fontWeight-hover": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "navigable-fontWeight-active": {
-        "$value": "var(--salt-typography-fontWeight-semiBold)",
+        "$value": "{foundations.typography.typography-fontWeight-semiBold}",
         "$type": "fontWeight"
       },
       "navigable-fontWeight-edit": {
-        "$value": "var(--salt-typography-fontWeight-regular)",
+        "$value": "{foundations.typography.typography-fontWeight-regular}",
         "$type": "fontWeight"
       },
       "navigable-indicator-hover": {
