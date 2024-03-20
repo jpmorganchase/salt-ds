@@ -30,8 +30,16 @@
   box-sizing: border-box;
 }
 
-.saltSwitch-label {
+.saltSwitch-label,
+.saltFormField-labelLeft .saltFormFieldLabel.saltText.saltSwitch-label {
   padding-top: var(--salt-spacing-25);
+}
+
+.saltFormField-labelLeft .saltFormFieldLabel.saltSwitch-label {
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  --text-color: var(--salt-content-primary-foreground);
 }
 
 /* Styles applied to the icon component if focused */

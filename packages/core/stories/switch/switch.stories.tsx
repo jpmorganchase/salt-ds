@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { Switch } from "@salt-ds/core";
+import { FormField, FormFieldLabel, Switch } from "@salt-ds/core";
 
 export default {
   title: "Core/Switch",
@@ -51,4 +51,15 @@ export const Controlled: StoryFn<typeof Switch> = (args) => {
 
 Controlled.args = {
   label: "Controlled",
+};
+
+export const LeftAlignedLabel: StoryFn<typeof Switch> = (args) => {
+  return (
+    <>
+      <FormField labelPlacement="left">
+        <FormFieldLabel className="saltSwitch-label">Active</FormFieldLabel>
+        <Switch {...args} />
+      </FormField>
+    </>
+  );
 };
