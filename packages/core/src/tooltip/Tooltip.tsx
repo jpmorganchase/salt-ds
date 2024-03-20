@@ -42,7 +42,7 @@ export interface TooltipProps
    */
   content: ReactNode;
   /**
-   * A string to determine the status of the Tooltip. Defaults to `info`.
+   * Optional string to determine the status of the Tooltip.
    */
   status?: ValidationStatus;
   /**

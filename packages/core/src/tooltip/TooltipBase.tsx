@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltTooltip");
 interface TooltipBaseProps extends Omit<TooltipProps, "children"> {
   arrowProps: FloatingArrowProps;
   /**
-   * A string to determine the status of the Tooltip. Defaults to `info`.
+   * Optional string to determine the status of the Tooltip.
    */
   status?: ValidationStatus;
 }
