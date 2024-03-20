@@ -75,7 +75,7 @@
   letter-spacing: var(--salt-text-action-letterSpacing);
   text-transform: var(--salt-text-action-textTransform);
   text-align: var(--salt-text-action-textAlign);
-  font-family: var(--salt-text-action-fontWeight);
+  font-weight: var(--salt-text-action-fontWeight);
 }
 
 /* Code */
