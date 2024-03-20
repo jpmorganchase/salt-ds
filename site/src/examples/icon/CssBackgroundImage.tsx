@@ -1,4 +1,4 @@
-import "@salt-ds/icons/saltIcons.css";
+import "@salt-ds/icons/css/salt-icons.css";
 
 const name = "AddDocument";
 

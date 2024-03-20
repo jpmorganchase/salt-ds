@@ -14,7 +14,7 @@ try {
     path.join(cssFolder, "/salt-icon.css")
   );
   await copyFile(
-    path.join(srcFolder, "/icon/saltIcons.css"),
+    path.join(srcFolder, "/saltIcons.css"),
     path.join(cssFolder, "/salt-icons.css")
   );
   console.log(`Icon.css copied to: ${cssFolder} `);

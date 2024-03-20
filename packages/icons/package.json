@@ -39,7 +39,6 @@
     "provenance": true
   },
   "files": [
-    "css",
-    "saltIcons.css"
+    "css"
   ]
 }

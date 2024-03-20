@@ -261,7 +261,7 @@ const generateIconAll = async ({ icons, allPath }) => {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
 const componentsPath = path.join(basePath, "./components/");
-const cssOutputPath = path.join(__dirname, "../saltIcons.css");
+const cssOutputPath = path.join(__dirname, "../src/saltIcons.css");
 const fileArg = process.argv.splice(2).join("|");
 const templatePath = path.join(__dirname, "./templateIcon.mustache");
 const allPath = path.join(basePath, "../stories/icon.all.ts");
