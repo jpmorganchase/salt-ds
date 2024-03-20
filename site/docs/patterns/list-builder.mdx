@@ -15,6 +15,7 @@ A list builder allows users to create a bespoke list of items from an original l
     src="/img/patterns/list-builder/image.png"
     alt="An example of a list builder"
     contentPosition="top"
+    border
   />
 
 ## When to use
@@ -48,6 +49,7 @@ The list builder has three functional areas:
     src="/img/patterns/list-builder/anatomy.png"
     alt="Anatomy of a list builder"
     contentPosition="top"
+    border
   />
 
 ### Layout
@@ -60,13 +62,14 @@ The list builder has three functional areas:
     src="/img/patterns/list-builder/layout.png"
     alt="Layout for a list builder."
     contentPosition="top"
+    border
   />
 
-### Position of added items
+## Position of added items
 
 There are two common behaviors for positioning added items within the list:
 
-1. **Automatic end positioning**: When a user moves an item from the pick list, it’s automatically placed at the end of the added list. In a large list where scrolling is necessary, always adjust the view to display the newly added item.
+1. **Automatic end positioning**: When a user moves an item from the pick list, it’s automatically placed at the end of the added list. In a large list where scrolling is necessary, always adjust the view to display the newly added item.=
 2. **Relative positioning**: If a user has an item selected in the added list, moving an item from the pick list to the added list will position it after the selected item, maintaining the relative order within the added list.
 
 When moving items from the added list back to the pick list, we suggest adding them in their natural sorted order, such as alphabetical, to make items in potentially large pick lists as quick and easy to find as possible.
@@ -91,7 +94,7 @@ By default, users can move multiple items in a single action between the pick li
 
 ## Single selection
 
-You can customize your List builder for single selection, allowing users to move only one item at a time.
+You can customize your list builder for single selection, allowing users to move only one item at a time.
 
   <Diagram
     src="/img/patterns/list-builder/single-select.png"
@@ -143,7 +146,7 @@ Use a minimum width of 8ems and ensure the list builder spans the full width of 
 
 ## Filter and sort
 
-In both the pick list and the added list, users can use the input field to apply filters, enabling real-time filtration from a large data set. The list dynamically refreshes, to display only the items that match the search criteria.
+In both the pick list and the added list, users can apply filters with the input field, enabling real-time filtration from a large data set. The list dynamically refreshes to display only the items that match the search criteria.
 
   <Diagram
     src="/img/patterns/list-builder/filter-and-sort.png"
