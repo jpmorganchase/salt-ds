@@ -24,7 +24,7 @@ export function RelatedPatterns() {
   if (relatedPatterns.length > 0) {
     return (
       <section className={styles.root}>
-        <Heading4>Related Patterns</Heading4>
+        <Heading4>Related patterns</Heading4>
         <ul className={styles.list}>
           {relatedPatterns
             .sort((a, b) => a.localeCompare(b))
