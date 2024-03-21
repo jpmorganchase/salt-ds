@@ -168,7 +168,7 @@ export const InteractableCard = forwardRef<
         {
           [withBaseName("accent")]: accentPlacement ?? accent,
           [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
-          [withBaseName("active")]: active,
+          [withBaseName("active")]: role === "button" && active,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
         },
