@@ -19,7 +19,7 @@
   --icon-size: var(--salt-text-h2-lineHeight);
 }
 
-/* Styles applied to DialogTitle when accent={true} */
+/* Styles applied to DialogHeader when accent={true} */
 .saltDialogHeader-withAccent {
   position: relative;
 }

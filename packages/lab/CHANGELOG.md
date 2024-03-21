@@ -1,5 +1,34 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.38
+
+### Patch Changes
+
+- 4adacc6b: Fix SegmentedButtonGroup's display name.
+  Fix SegmentedButtonGroup's ref being applied incorrectly.
+
+## 1.0.0-alpha.37
+
+### Minor Changes
+
+- 53a7f22c: Removed `DropdownNext`, `Option`, `OptionGroup` and `ComboBoxNext` from labs and promoted to core.
+- 6cdfe94e: Add `SegmentedButtonGroup` to labs
+  `SegmentedButtonGroup` should be used to display a list of actionable buttons, flush with separators
+
+  ```tsx
+  const SegmentedButtonGroup = () => (
+    <SegmentedButtonGroup>
+      <Button> Button </Button>
+      <Button> Button </Button>
+      <Button> Button </Button>
+    </SegmentedButtonGroup>
+  );
+  ```
+
+### Patch Changes
+
+- 91074aa2: - Fixed tabs container height to fit its contents and display as block so it can take 100% width without an extra wrapper.
+
 ## 1.0.0-alpha.36
 
 ### Minor Changes

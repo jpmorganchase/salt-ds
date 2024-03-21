@@ -1,0 +1,151 @@
+---
+title: Selectable card
+layout: DetailPattern
+aliases:
+  - /salt/patterns/content-status
+data:
+  resources:
+    [
+   ]
+  components: ["Card", "Checkbox", "Radio button", "Stack layout", "Grid layout"]
+---
+
+A selectable card allows users to make selections by clicking anywhere within the card. It’s functionally equivalent to a form control, such as [`ToggleButton`](salt/components/toggle-button), [`RadioButton`](/salt/components/radio-button) or [`Checkbox`](/salt/components/checkbox). You can group selectable cards to support single or multiple selection.
+
+<Diagram
+  src="/img/patterns/selectable-card/selectable-card.png"
+  alt="Example showing a series of selectable cards."
+/>
+
+## When to use
+
+Use the selectable card pattern when you have options that:
+- Are the main focus of your UI (and space permits).
+- Benefit from an illustration or explanation.
+- Users may need to select on a mobile device, offering a large target/hit area for swift interaction.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Consider a more traditional form control, such as [`Switch`](/salt/components/switch), [`RadioButton`](/salt/components/radio-button), [`Checkbox`](/salt/components/checkbox) or [`Dropdown`](/salt/components/dropdown), when you have insufficient space or many options that won’t be visible on screen at the same time.
+- Use [`Card`](/salt/components/card) instead if your interactive elements are contained within the card content, such as a button or a link.
+- Use [`LinkCard`](/salt/components/card/examples#link-card) instead to navigate users when clicking on the entire card.
+</ExampleContainer>
+
+## How to build
+
+### Anatomy
+
+The following elements are commonly found in a selectable card:
+
+1. **Interactable card**: The whole card is interactive and allows the user to make selections by clicking anywhere on the card.
+2. **Image**: Images are optional and should span the full width of the card. Refer to [`Card`](/salt/components/card) documentation for more guidance on using images.
+3. **Title**: The title can be accompanied by an optional icon or thumbnail.
+4. **Supporting content**: A summary of information related to the card subject. You can use a radio button/checkbox for added visual affordance. Read more on this below.
+
+<Diagram
+  src="/img/patterns/selectable-card/anatomy.png"
+  alt="Selectable card using a title, an image and radio button."
+  border
+/>
+
+### Card layout
+
+- Use a stack layout to display the card’s content in a column formation.
+- We recommend using radio buttons or checkboxes for single or multiple selection accordingly.
+- Update the padding if you need a small or a large card. Refer to [`Card`](/salt/components/card) documentation for more guidance on custom padding.
+
+<Diagram
+  src="/img/patterns/selectable-card/layout-spacing.png"
+  alt="Showing spacing tokens applied to a regular size selectable card."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Be consistent in your use of images across all selectable cards within a group. Either all contain an image, or none do.
+- Keep your cards' titles and descriptions succinct, using similar amounts of text in each card.
+- By default, titles and supporting content are left aligned inside the card when using left-to-right languages like English. For text alignment alternatives, refer to the [typography foundation](/salt/foundations/typography).
+</ExampleContainer>
+
+## Single selection
+
+Use radio buttons in selectable cards when your users need to make a single selection from a mutually exclusive set of options. Radio buttons ensure that users can only select one option at a time, preventing conflicting selections.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/selectable-card/single-radio.png",
+      alt: "Mutually exclusive selection."
+    },
+    {
+      src: "/img/patterns/selectable-card/single-no-radio.png",
+      alt: "Mutually exclusive selection without radio button."
+    },
+  ]}
+  label="Hide radio button"
+/>
+
+## Multiple selection
+
+Use checkboxes in selectable cards when your users need to make multiple selections from a list of options. Checkboxes allow users to select or deselect multiple items independently.
+
+<Diagram
+  src="/img/patterns/selectable-card/multiple.png"
+  alt="Multiple selection."
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+For ADA compliance, we recommend you display form controls. These help visually impaired users understand the selectable options presented to them.
+</ExampleContainer>
+
+## Viewport
+
+Adapt the layout of your cards to fit the size and proportion of the intended user's screen. For smaller screens, you may need to reduce the number of cards per row. For larger screens, you can use the extra space to display more cards.
+
+## Grid layout
+
+Cards are most often arranged using a [grid layout](/salt/components/grid-layout), which is ideal for larger amounts of screen real estate. Use a grid layout to display a large number of cards in an orderly manner, such as product listings, catalogues or galleries.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/selectable-card/grid-no-spacing.png",
+      alt: "Cards arranged in a grid layout",
+    },
+    {
+      src: "/img/patterns/selectable-card/grid-spacing.png",
+      alt: "Cards arranged in a grid layout with spacing",
+    },
+  ]}
+  label="Show spacing"
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Using a repetitive format or grid layout informs users of the selectability of cards, promoting understanding of their interactive functionality and improving accessibility, 
+- Keep cards in your group consistent in height, regardless of where they are positioned, to maintain uniformity.
+- Use consistent horizontal and/or vertical spacing between cards to provide adequate touch/click targets, minimizing the risk of accidental taps or misclicks, while ensuring responsive layout across various viewports.
+- On larger breakpoints, we recommend setting the gap property to `3` (`--salt-spacing-300`).
+</ExampleContainer>
+
+## Stack layout
+
+Use a [stack layout](/salt/components/stack-layout) to compose cards vertically and in a single column, to showcase sequential or related content in a list format. This is ideal for interfaces with limited viewport width, such as mobile devices.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/selectable-card/stack-no-spacing.png",
+      alt: "Cards arranged in a stack layout",
+    },
+    {
+      src: "/img/patterns/selectable-card/stack-spacing.png",
+      alt: "Cards arranged in a stack layout with spacing",
+    },
+  ]}
+  label="Show spacing"
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- For small viewports or mobile, we recommend setting the gap property to `1` (`--salt-spacing-100`).
+- Refer to the [spacing foundation](/salt/foundations/spacing) for more guidance on spacing between cards.
+</ExampleContainer>
+
+:fragment{src="./fragments/feedback.mdx"}
