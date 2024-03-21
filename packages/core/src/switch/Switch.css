@@ -30,8 +30,7 @@
   box-sizing: border-box;
 }
 
-.saltSwitch-label,
-.saltFormField-labelLeft .saltFormFieldLabel.saltText.saltSwitch-label {
+.saltFormField-labelLeft .saltFormFieldLabel {
   padding-top: var(--salt-spacing-25);
 }
 

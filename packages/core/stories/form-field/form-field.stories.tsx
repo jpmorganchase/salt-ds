@@ -524,6 +524,7 @@ export const WithControls: StoryFn<typeof FormField> = (props) => {
       <FormField {...props}>
         <FormLabel>Draft</FormLabel>
         <Switch />
+        <FormHelperText>Publishes immediately when unchecked</FormHelperText>
       </FormField>
     </FlowLayout>
   );

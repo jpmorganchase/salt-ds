@@ -4,7 +4,7 @@ import { FormField, FormFieldLabel, Switch } from "@salt-ds/core";
 export const LeftAlignedLabel = (): ReactElement => (
   <>
     <FormField labelPlacement="left">
-      <FormFieldLabel className="saltSwitch-label">Active</FormFieldLabel>
+      <FormFieldLabel>Active</FormFieldLabel>
       <Switch />
     </FormField>
   </>

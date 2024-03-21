@@ -52,14 +52,3 @@ export const Controlled: StoryFn<typeof Switch> = (args) => {
 Controlled.args = {
   label: "Controlled",
 };
-
-export const LeftAlignedLabel: StoryFn<typeof Switch> = (args) => {
-  return (
-    <>
-      <FormField labelPlacement="left">
-        <FormFieldLabel className="saltSwitch-label">Active</FormFieldLabel>
-        <Switch {...args} />
-      </FormField>
-    </>
-  );
-};
