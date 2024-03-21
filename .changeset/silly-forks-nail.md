@@ -10,3 +10,4 @@
   <Text as="code">Text styled as code</Text>
   <Text styleAs="code">Text styled as code</Text>
 </>
+```
