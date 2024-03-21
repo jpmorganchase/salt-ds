@@ -5,11 +5,44 @@ import {
   InteractableCardGroup,
   InteractableCard,
   InteractableCardValue,
+  InteractableCardGroupProps,
+  FormField,
 } from "@salt-ds/lab";
-import { ChangeEvent, SyntheticEvent } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { FormFieldLabel } from "packages/core/src";
 
 const composedStories = composeStories(interactableCardStories);
 const { Default } = composedStories;
+
+const ControlledGroup = ({
+  onChange,
+  disabled,
+  selectionVariant,
+}: InteractableCardGroupProps) => {
+  const [controlledValues, setControlledValues] =
+    useState<InteractableCardValue>();
+
+  const handleChange = (
+    event: SyntheticEvent<HTMLDivElement>,
+    value: InteractableCardValue
+  ) => {
+    setControlledValues(value);
+    onChange?.(event, value);
+  };
+  return (
+    <InteractableCardGroup
+      disabled={disabled}
+      value={controlledValues}
+      defaultChecked
+      onChange={handleChange}
+      selectionVariant={selectionVariant}
+    >
+      <InteractableCard value="one">One</InteractableCard>
+      <InteractableCard value="two">Two</InteractableCard>
+      <InteractableCard value="three">Three</InteractableCard>
+    </InteractableCardGroup>
+  );
+};
 
 describe("Given an Interactable Card", () => {
   // checkAccessibility(composedStories);
@@ -23,26 +56,554 @@ describe("Given an Interactable Card", () => {
   });
 });
 
-describe("GIVEN a multiselect InteractableCardGroup", () => {
+// describe("GIVEN a multiselect InteractableCardGroup", () => {
+//   it("THEN should render InteractableCards", () => {
+//     cy.mount(
+//       <InteractableCardGroup selectionVariant="multiselect">
+//         <InteractableCard value="one">One</InteractableCard>
+//         <InteractableCard value="two">Two</InteractableCard>
+//         <InteractableCard value="three">Three</InteractableCard>
+//       </InteractableCardGroup>
+//     );
+
+//     cy.findAllByRole("checkbox").should("have.length", 3);
+//     cy.get('[role="checkbox"][data-value="one"]').should("exist");
+//     cy.get('[role="checkbox"][data-value="two"]').should("exist");
+//     cy.get('[role="checkbox"][data-value="three"]').should("exist");
+//   });
+
+//   describe("WHEN using Tab to navigate", () => {
+//     it("SHOULD focus the first InteractableCard when none are checked", () => {
+//       cy.mount(
+//         <InteractableCardGroup selectionVariant="multiselect">
+//           <InteractableCard value="one">One</InteractableCard>
+//           <InteractableCard value="two">Two</InteractableCard>
+//           <InteractableCard value="three">Three</InteractableCard>
+//         </InteractableCardGroup>
+//       );
+
+//       cy.realPress("Tab");
+//       cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
+//     });
+
+//     it("SHOULD focus the next InteractableCard when one is checked", () => {
+//       cy.mount(
+//         <InteractableCardGroup
+//           selectionVariant="multiselect"
+//           defaultValue={["one"]}
+//         >
+//           <InteractableCard value="one">One</InteractableCard>
+//           <InteractableCard value="two">Two</InteractableCard>
+//           <InteractableCard value="three">Three</InteractableCard>
+//         </InteractableCardGroup>
+//       );
+
+//       cy.realPress("Tab");
+//       cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
+//     });
+
+//     it("SHOULD move focus when pressing Tab and not wrap", () => {
+//       cy.mount(
+//         <>
+//           <InteractableCardGroup selectionVariant="multiselect">
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//           <button>end</button>
+//         </>
+//       );
+
+//       cy.realPress("Tab");
+//       cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
+//       cy.realPress("Tab");
+//       cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
+//       cy.realPress("Tab");
+//       cy.get('[role="checkbox"][data-value="three"]').should("be.focused");
+//       cy.realPress("Tab");
+//       cy.findByRole("button", { name: "end" }).should("be.focused");
+//     });
+
+//     it("SHOULD move focus backwards when pressing Shift+Tab and not wrap", () => {
+//       cy.mount(
+//         <>
+//           <button>start</button>
+//           <InteractableCardGroup selectionVariant="multiselect">
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//           <button>end</button>
+//         </>
+//       );
+
+//       cy.findByRole("button", { name: "end" }).realClick();
+//       cy.findByRole("button", { name: "end" }).should("be.focused");
+//       cy.realPress(["Shift", "Tab"]);
+//       cy.get('[role="checkbox"][data-value="three"]').should("be.focused");
+//       cy.realPress(["Shift", "Tab"]);
+//       cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
+//       cy.realPress(["Shift", "Tab"]);
+//       cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
+//       cy.realPress(["Shift", "Tab"]);
+//       cy.findByRole("button", { name: "start" }).should("be.focused");
+//     });
+
+//     it("SHOULD skip disabled InteractableCards", () => {
+//       cy.mount(
+//         <InteractableCardGroup selectionVariant="multiselect">
+//           <InteractableCard value="one" disabled />
+//           <InteractableCard value="two">Two</InteractableCard>
+//           <InteractableCard value="three">Three</InteractableCard>
+//         </InteractableCardGroup>
+//       );
+
+//       cy.realPress("Tab");
+//       cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
+//     });
+//   });
+
+//   describe("WHEN mounted as an uncontrolled component", () => {
+//     it("THEN should respect defaultValue", () => {
+//       cy.mount(
+//         <InteractableCardGroup
+//           selectionVariant="multiselect"
+//           defaultValue={["one"]}
+//         >
+//           <InteractableCard value="one">One</InteractableCard>
+//           <InteractableCard value="two">Two</InteractableCard>
+//           <InteractableCard value="three">Three</InteractableCard>
+//         </InteractableCardGroup>
+//       );
+//       cy.get('[role="checkbox"][data-value="one"]').should(
+//         "have.attr",
+//         "aria-checked",
+//         "true"
+//       );
+//       cy.get('[role="checkbox"][data-value="two"]').should(
+//         "have.attr",
+//         "aria-checked",
+//         "false"
+//       );
+//       cy.get('[role="checkbox"][data-value="three"]').should(
+//         "have.attr",
+//         "aria-checked",
+//         "false"
+//       );
+//     });
+
+//     describe("AND using a mouse", () => {
+//       it("SHOULD toggle InteractableCards", () => {
+//         cy.mount(
+//           <InteractableCardGroup selectionVariant="multiselect">
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "not.be.checked"
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').realClick();
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').realClick();
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').realClick();
+//         cy.get('[role="checkbox"][data-value="two"]').realClick();
+//         cy.get('[role="checkbox"][data-value="three"]').realClick();
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//       });
+
+//       it("SHOULD call onChange", () => {
+//         const changeSpy = cy.stub().as("changeSpy");
+
+//         const handleChange = (
+//           event: SyntheticEvent<HTMLDivElement>,
+//           value: InteractableCardValue
+//         ) => {
+//           event.persist();
+//           changeSpy(value);
+//         };
+
+//         cy.mount(
+//           <InteractableCardGroup
+//             selectionVariant="multiselect"
+//             onChange={handleChange}
+//           >
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//         );
+
+//         cy.get('[role="checkbox"][data-value="two"]').realClick();
+
+//         cy.get("@changeSpy").should("have.been.calledWith", ["two"]);
+//       });
+
+//       describe("AND an InteractableCard is disabled", () => {
+//         it("SHOULD not toggle the InteractableCard", () => {
+//           const changeSpy = cy.stub().as("changeSpy");
+
+//           cy.mount(
+//             <InteractableCardGroup
+//               selectionVariant="multiselect"
+//               onChange={changeSpy}
+//             >
+//               <InteractableCard value="one" disabled />
+//               <InteractableCard value="two">Two</InteractableCard>
+//               <InteractableCard value="three">Three</InteractableCard>
+//             </InteractableCardGroup>
+//           );
+
+//           cy.get('[role="checkbox"][data-value="one"]')
+//             .should("have.attr", "aria-disabled", "true")
+//             .and("have.attr", "aria-checked", "false");
+//           cy.get('[role="checkbox"][data-value="one"]').realClick();
+//           cy.get("@changeSpy").should("not.be.called");
+//         });
+//       });
+//     });
+
+//     describe("AND using a keyboard", () => {
+//       it("SHOULD toggle InteractableCards when using the Space key", () => {
+//         cy.mount(
+//           <InteractableCardGroup selectionVariant="multiselect">
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "not.be.checked"
+//         );
+
+//         cy.realPress("Tab");
+//         cy.realPress("Space");
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.realPress("Space");
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+
+//         cy.realPress("Space");
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+
+//         cy.realPress("Tab");
+//         cy.realPress("Space");
+
+//         cy.realPress("Tab");
+//         cy.realPress("Space");
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//       });
+
+//       it("SHOULD call onChange", () => {
+//         const changeSpy = cy.stub().as("changeSpy");
+//         const handleChange = (
+//           event: SyntheticEvent<HTMLDivElement>,
+//           value: InteractableCardValue
+//         ) => {
+//           event.persist();
+//           changeSpy(value);
+//         };
+
+//         cy.mount(
+//           <InteractableCardGroup
+//             selectionVariant="multiselect"
+//             onChange={handleChange}
+//           >
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//         );
+
+//         cy.realPress("Tab");
+//         cy.realPress("Tab");
+
+//         cy.realPress("Space");
+//         cy.get("@changeSpy").should("have.been.calledWith", ["two"]);
+//       });
+
+//       it("SHOULD not toggle InteractableCards using the Enter key", () => {
+//         cy.mount(
+//           <InteractableCardGroup selectionVariant="multiselect">
+//             <InteractableCard value="one">One</InteractableCard>
+//             <InteractableCard value="two">Two</InteractableCard>
+//             <InteractableCard value="three">Three</InteractableCard>
+//           </InteractableCardGroup>
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.realPress("Tab");
+//         cy.realPress("Enter");
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//       });
+//     });
+//   });
+
+//   describe("WHEN mounted as a controlled component", () => {
+//     describe("THEN using a mouse", () => {
+//       it("SHOULD toggle InteractableCards", () => {
+//         cy.mount(<ControlledGroup selectionVariant="multiselect" />);
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').realClick();
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').realClick();
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+
+//         cy.get('[role="checkbox"][data-value="one"]').realClick();
+//         cy.get('[role="checkbox"][data-value="two"]').realClick();
+//         cy.get('[role="checkbox"][data-value="three"]').realClick();
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//       });
+
+//       describe("AND an InteractableCardGroup is disabled", () => {
+//         it("SHOULD not toggle the InteractableCard", () => {
+//           const changeSpy = cy.stub().as("changeSpy");
+
+//           cy.mount(
+//             <ControlledGroup
+//               onChange={changeSpy}
+//               disabled
+//               selectionVariant="multiselect"
+//             />
+//           );
+
+//           cy.get('[role="checkbox"][data-value="one"]')
+//             .should("have.attr", "aria-disabled", "true")
+//             .and("have.attr", "aria-checked", "false");
+//           cy.get('[role="checkbox"][data-value="one"]').realClick();
+//           cy.get("@changeSpy").should("not.be.called");
+//         });
+//       });
+//     });
+
+//     describe("AND using a keyboard", () => {
+//       it("SHOULD toggle InteractableCards when using the Space key", () => {
+//         cy.mount(<ControlledGroup selectionVariant="multiselect" />);
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "not.be.checked"
+//         );
+
+//         cy.realPress("Tab");
+//         cy.realPress("Space");
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.realPress("Space");
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+
+//         cy.realPress("Space");
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+
+//         cy.realPress("Tab");
+//         cy.realPress("Space");
+
+//         cy.realPress("Tab");
+//         cy.realPress("Space");
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="two"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//         cy.get('[role="checkbox"][data-value="three"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "true"
+//         );
+//       });
+
+//       it("SHOULD not toggle InteractableCards using the Enter key", () => {
+//         cy.mount(<ControlledGroup selectionVariant="multiselect" />);
+
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//         cy.realPress("Tab");
+//         cy.realPress("Enter");
+//         cy.get('[role="checkbox"][data-value="one"]').should(
+//           "have.attr",
+//           "aria-checked",
+//           "false"
+//         );
+//       });
+//     });
+//   });
+// });
+
+describe("GIVEN a single selection InteractableCardGroup", () => {
   it("THEN should render InteractableCards", () => {
     cy.mount(
-      <InteractableCardGroup selectionVariant="multiselect">
+      <InteractableCardGroup selectionVariant="single">
         <InteractableCard value="one">One</InteractableCard>
         <InteractableCard value="two">Two</InteractableCard>
         <InteractableCard value="three">Three</InteractableCard>
       </InteractableCardGroup>
     );
 
-    cy.findAllByRole("checkbox").should("have.length", 3);
-    cy.get('[role="checkbox"][data-value="one"]').should("exist");
-    cy.get('[role="checkbox"][data-value="two"]').should("exist");
-    cy.get('[role="checkbox"][data-value="three"]').should("exist");
+    cy.findAllByRole("radio").should("have.length", 3);
+    cy.get('[role="radio"][data-value="one"]').should("exist");
+    cy.get('[role="radio"][data-value="two"]').should("exist");
+    cy.get('[role="radio"][data-value="three"]').should("exist");
   });
 
   describe("WHEN using Tab to navigate", () => {
     it("SHOULD focus the first InteractableCard when none are checked", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="multiselect">
+        <InteractableCardGroup selectionVariant="single">
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -50,29 +611,13 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
+      cy.get('[role="radio"][data-value="one"]').should("be.focused");
     });
 
-    it("SHOULD focus the next InteractableCard when one is checked", () => {
-      cy.mount(
-        <InteractableCardGroup
-          selectionVariant="multiselect"
-          defaultValue={["one"]}
-        >
-          <InteractableCard value="one">One</InteractableCard>
-          <InteractableCard value="two">Two</InteractableCard>
-          <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
-      );
-
-      cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
-    });
-
-    it("SHOULD move focus when pressing Tab and not wrap", () => {
+    it("SHOULD move focus out of group when pressing Tab", () => {
       cy.mount(
         <>
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup selectionVariant="single">
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -82,20 +627,16 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
-      cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
-      cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="three"]').should("be.focused");
+      cy.get('[role="radio"][data-value="one"]').should("be.focused");
       cy.realPress("Tab");
       cy.findByRole("button", { name: "end" }).should("be.focused");
     });
 
-    it("SHOULD move focus backwards when pressing Shift+Tab and not wrap", () => {
+    it("SHOULD move focus backwards out of group when pressing Shift+Tab", () => {
       cy.mount(
         <>
           <button>start</button>
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup selectionVariant="single">
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -107,18 +648,14 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       cy.findByRole("button", { name: "end" }).realClick();
       cy.findByRole("button", { name: "end" }).should("be.focused");
       cy.realPress(["Shift", "Tab"]);
-      cy.get('[role="checkbox"][data-value="three"]').should("be.focused");
-      cy.realPress(["Shift", "Tab"]);
-      cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
-      cy.realPress(["Shift", "Tab"]);
-      cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
+      cy.get('[role="radio"][data-value="one"]').should("be.focused");
       cy.realPress(["Shift", "Tab"]);
       cy.findByRole("button", { name: "start" }).should("be.focused");
     });
 
     it("SHOULD skip disabled InteractableCards", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="multiselect">
+        <InteractableCardGroup selectionVariant="single">
           <InteractableCard value="one" disabled />
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -126,33 +663,79 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       );
 
       cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
+      cy.get('[role="radio"][data-value="two"]').should("be.focused");
+    });
+  });
+
+  describe("WHEN using arrow keys to navigate", () => {
+    it("SHOULD focus and select the next or previous InteractableCard with arrow keys", () => {
+      cy.mount(
+        <InteractableCardGroup selectionVariant="single">
+          <InteractableCard value="one">One</InteractableCard>
+          <InteractableCard value="two">Two</InteractableCard>
+          <InteractableCard value="three">Three</InteractableCard>
+        </InteractableCardGroup>
+      );
+
+      cy.realPress("Tab");
+      cy.realPress("ArrowDown");
+      cy.get('[role="radio"][data-value="two"]')
+        .should("be.focused")
+        .and("have.attr", "aria-checked", "true");
+
+      cy.realPress("ArrowUp");
+      cy.get('[role="radio"][data-value="one"]')
+        .should("be.focused")
+        .and("have.attr", "aria-checked", "true");
+
+      cy.realPress("ArrowRight");
+      cy.get('[role="radio"][data-value="two"]')
+        .should("be.focused")
+        .and("have.attr", "aria-checked", "true");
+
+      cy.realPress("ArrowLeft");
+      cy.get('[role="radio"][data-value="one"]')
+        .should("be.focused")
+        .and("have.attr", "aria-checked", "true");
+    });
+
+    it("SHOULD select an InteractableCard on Space when none is selected initially", () => {
+      cy.mount(
+        <InteractableCardGroup selectionVariant="single">
+          <InteractableCard value="one">One</InteractableCard>
+          <InteractableCard value="two">Two</InteractableCard>
+          <InteractableCard value="three">Three</InteractableCard>
+        </InteractableCardGroup>
+      );
+
+      cy.realPress("Tab");
+      cy.realPress("Space");
+      cy.get('[role="radio"][data-value="one"]')
+        .should("be.focused")
+        .and("have.attr", "aria-checked", "true");
     });
   });
 
   describe("WHEN mounted as an uncontrolled component", () => {
     it("THEN should respect defaultValue", () => {
       cy.mount(
-        <InteractableCardGroup
-          selectionVariant="multiselect"
-          defaultValue={["one"]}
-        >
+        <InteractableCardGroup selectionVariant="single" defaultValue={"one"}>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
         </InteractableCardGroup>
       );
-      cy.get('[role="checkbox"][data-value="one"]').should(
+      cy.get('[role="radio"][data-value="one"]').should(
         "have.attr",
         "aria-checked",
         "true"
       );
-      cy.get('[role="checkbox"][data-value="two"]').should(
+      cy.get('[role="radio"][data-value="two"]').should(
         "have.attr",
         "aria-checked",
         "false"
       );
-      cy.get('[role="checkbox"][data-value="three"]').should(
+      cy.get('[role="radio"][data-value="three"]').should(
         "have.attr",
         "aria-checked",
         "false"
@@ -160,60 +743,48 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     });
 
     describe("AND using a mouse", () => {
-      it("SHOULD toggle InteractableCards", () => {
+      it("SHOULD select InteractableCards and unselect the others", () => {
         cy.mount(
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup selectionVariant="single">
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
           </InteractableCardGroup>
         );
 
-        cy.get('[role="checkbox"][data-value="one"]').should(
+        cy.get('[role="radio"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
           "false"
         );
-        cy.get('[role="checkbox"][data-value="two"]').should(
+        cy.get('[role="radio"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
           "false"
         );
-        cy.get('[role="checkbox"][data-value="three"]').should(
-          "not.be.checked"
-        );
-
-        cy.get('[role="checkbox"][data-value="one"]').realClick();
-        cy.get('[role="checkbox"][data-value="one"]').should(
-          "have.attr",
-          "aria-checked",
-          "true"
-        );
-
-        cy.get('[role="checkbox"][data-value="one"]').realClick();
-        cy.get('[role="checkbox"][data-value="one"]').should(
+        cy.get('[role="radio"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
           "false"
         );
 
-        cy.get('[role="checkbox"][data-value="one"]').realClick();
-        cy.get('[role="checkbox"][data-value="two"]').realClick();
-        cy.get('[role="checkbox"][data-value="three"]').realClick();
-        cy.get('[role="checkbox"][data-value="one"]').should(
+        cy.get('[role="radio"][data-value="one"]').realClick();
+        cy.get('[role="radio"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
           "true"
         );
-        cy.get('[role="checkbox"][data-value="two"]').should(
+
+        cy.get('[role="radio"][data-value="two"]').realClick();
+        cy.get('[role="radio"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
           "true"
         );
-        cy.get('[role="checkbox"][data-value="three"]').should(
+        cy.get('[role="radio"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "false"
         );
       });
 
@@ -230,7 +801,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
         cy.mount(
           <InteractableCardGroup
-            selectionVariant="multiselect"
+            selectionVariant="single"
             onChange={handleChange}
           >
             <InteractableCard value="one">One</InteractableCard>
@@ -239,18 +810,18 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           </InteractableCardGroup>
         );
 
-        cy.get('[role="checkbox"][data-value="two"]').realClick();
+        cy.get('[role="radio"][data-value="two"]').realClick();
 
-        cy.get("@changeSpy").should("have.been.calledWith", ["two"]);
+        cy.get("@changeSpy").should("have.been.calledWith", "two");
       });
 
       describe("AND an InteractableCard is disabled", () => {
-        it("SHOULD not toggle the InteractableCard", () => {
+        it("SHOULD not select the InteractableCard", () => {
           const changeSpy = cy.stub().as("changeSpy");
 
           cy.mount(
             <InteractableCardGroup
-              selectionVariant="multiselect"
+              selectionVariant="single"
               onChange={changeSpy}
             >
               <InteractableCard value="one" disabled />
@@ -259,274 +830,78 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             </InteractableCardGroup>
           );
 
-          cy.get('[role="checkbox"][data-value="one"]')
+          cy.get('[role="radio"][data-value="one"]')
             .should("have.attr", "aria-disabled", "true")
-            .and("not.be.checked");
-          cy.get('[role="checkbox"][data-value="one"]').realClick();
+            .and("have.attr", "aria-checked", "false");
+          cy.get('[role="radio"][data-value="one"]').realClick();
           cy.get("@changeSpy").should("not.be.called");
         });
       });
     });
 
-    //   describe("AND using a keyboard", () => {
-    //     it("SHOULD toggle InteractableCards when using the Space key", () => {
-    //       cy.mount(
-    //     <InteractableCardGroup selectionVariant="multiselect">
-    //           <InteractableCard value="one">One</InteractableCard>
-    //           <InteractableCard value="two">Two</InteractableCard>
-    //           <InteractableCard value="three">Three</InteractableCard>
-    //         </InteractableCardGroup>
-    //       );
+    describe("WHEN mounted as a controlled component", () => {
+      describe("THEN using a mouse", () => {
+        it("SHOULD select InteractableCards", () => {
+          cy.mount(<ControlledGroup selectionVariant="single" />);
 
-    //      cy.get('[role="checkbox"][data-value="one"]').should(
-    //         "not.be.checked"
-    //       );
-    //      cy.get('[role="checkbox"][data-value="two"]').should(
-    //         "not.be.checked"
-    //       );
-    //      cy.get('[role="checkbox"][data-value="three"]').should(
-    //         "not.be.checked"
-    //       );
+          cy.get('[role="radio"][data-value="one"]').should(
+            "have.attr",
+            "aria-checked",
+            "false"
+          );
+          cy.get('[role="radio"][data-value="two"]').should(
+            "have.attr",
+            "aria-checked",
+            "false"
+          );
+          cy.get('[role="radio"][data-value="three"]').should(
+            "have.attr",
+            "aria-checked",
+            "false"
+          );
 
-    //       cy.realPress("Tab");
-    //       cy.realPress("Space");
+          cy.get('[role="radio"][data-value="one"]').realClick();
+          cy.get('[role="radio"][data-value="one"]').should(
+            "have.attr",
+            "aria-checked",
+            "true"
+          );
 
-    //      cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-    //       cy.realPress("Space");
+          cy.get('[role="radio"][data-value="two"]').realClick();
+          cy.get('[role="radio"][data-value="one"]').should(
+            "have.attr",
+            "aria-checked",
+            "false"
+          );
 
-    //      cy.get('[role="checkbox"][data-value="one"]').should(
-    //         "not.be.checked"
-    //       );
+          cy.get('[role="radio"][data-value="one"]').realClick();
+          cy.get('[role="radio"][data-value="one"]').should(
+            "have.attr",
+            "aria-checked",
+            "true"
+          );
+        });
 
-    //       cy.realPress("Space");
-    //      cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
+        describe("AND an InteractableCardGroup is disabled", () => {
+          it("SHOULD not select the InteractableCard", () => {
+            const changeSpy = cy.stub().as("changeSpy");
 
-    //       cy.realPress("Tab");
-    //       cy.realPress("Space");
+            cy.mount(
+              <ControlledGroup
+                onChange={changeSpy}
+                disabled
+                selectionVariant="single"
+              />
+            );
 
-    //       cy.realPress("Tab");
-    //       cy.realPress("Space");
-
-    //      cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-    //      cy.get('[role="checkbox"][data-value="two"]').should('have.attr', 'aria-checked', 'true');
-    //      cy.get('[role="checkbox"][data-value="three"]').should(
-    //         "be.checked"
-    //       );
-    //     });
-
-    //     it("SHOULD call onChange", () => {
-    //       const changeSpy = cy.stub().as("changeSpy");
-
-    //       const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //         // React 16 backwards compatibility
-    //         event.persist();
-    //         changeSpy(event);
-    //       };
-
-    //       cy.mount(
-    //         <InteractableCardGroup selectionVariant="multiselect" onChange={handleChange}>
-    //           <InteractableCard value="one">One</InteractableCard>
-    //           <InteractableCard value="two">Two</InteractableCard>
-    //           <InteractableCard value="three">Three</InteractableCard>
-    //         </InteractableCardGroup>
-    //       );
-
-    //       cy.realPress("Tab");
-    //       cy.realPress("Tab");
-
-    //       cy.realPress("Space");
-    //       cy.get("@changeSpy").should("be.calledWithMatch", {
-    //         target: { value: "two" },
-    //       });
-    //     });
-
-    //     it("SHOULD not toggle InteractableCards using the Enter key", () => {
-    //       cy.mount(
-    //     <InteractableCardGroup selectionVariant="multiselect">
-    //           <InteractableCard value="one">One</InteractableCard>
-    //           <InteractableCard value="two">Two</InteractableCard>
-    //           <InteractableCard value="three">Three</InteractableCard>
-    //         </InteractableCardGroup>
-    //       );
-
-    //      cy.get('[role="checkbox"][data-value="one"]').should(
-    //         "not.be.checked"
-    //       );
-    //       cy.realPress("Tab");
-    //       cy.realPress("Enter");
-    //      cy.get('[role="checkbox"][data-value="one"]').should(
-    //         "not.be.checked"
-    //       );
-    //     });
-    //   });
-  });
-
-  describe("WHEN mounted as a controlled component", () => {
-    it("THEN should respect defaultValue", () => {
-      cy.mount(
-        <InteractableCardGroup  selectionVariant="multiselect" defaultValue={["one"]}>
-          <InteractableCard value="one">One</InteractableCard>
-          <InteractableCard value="two">Two</InteractableCard>
-          <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
-      );
-     cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-     cy.get('[role="checkbox"][data-value="two"]').should(
-        "not.be.checked"
-      );
-     cy.get('[role="checkbox"][data-value="three"]').should(
-        "not.be.checked"
-      );
-    });
-
-    describe("AND using a mouse", () => {
-      it("SHOULD toggle InteractableCards", () => {
-        cy.mount(<ControlledGroup />);
-
-       cy.get('[role="checkbox"][data-value="one"]').should(
-          "not.be.checked"
-        );
-       cy.get('[role="checkbox"][data-value="two"]').should(
-          "not.be.checked"
-        );
-       cy.get('[role="checkbox"][data-value="three"]').should(
-          "not.be.checked"
-        );
-
-       cy.get('[role="checkbox"][data-value="one"]').realClick();
-       cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-
-       cy.get('[role="checkbox"][data-value="one"]').realClick();
-       cy.get('[role="checkbox"][data-value="one"]').should(
-          "not.be.checked"
-        );
-
-       cy.get('[role="checkbox"][data-value="one"]').realClick();
-       cy.get('[role="checkbox"][data-value="two"]').realClick();
-       cy.get('[role="checkbox"][data-value="three"]').realClick();
-       cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-       cy.get('[role="checkbox"][data-value="two"]').should('have.attr', 'aria-checked', 'true');
-       cy.get('[role="checkbox"][data-value="three"]').should(
-          "be.checked"
-        );
-      });
-
-      describe("AND an InteractableCard is disabled", () => {
-        it("SHOULD not toggle the InteractableCard", () => {
-          const changeSpy = cy.stub().as("changeSpy");
-
-          cy.mount(<ControlledGroup onChange={changeSpy} disabled />);
-
-         cy.get('[role="checkbox"][data-value="one"]')
-            .should('have.attr', 'aria-disabled', 'true')
-            .and("not.be.checked");
-         cy.get('[role="checkbox"][data-value="one"]').realClick();
-          cy.get("@changeSpy").should("not.be.called");
+            cy.get('[role="radio"][data-value="one"]')
+              .should("have.attr", "aria-disabled", "true")
+              .and("have.attr", "aria-checked", "false");
+            cy.get('[role="radio"][data-value="one"]').realClick();
+            cy.get("@changeSpy").should("not.be.called");
+          });
         });
       });
-    });
-
-    describe("AND using a keyboard", () => {
-      it("SHOULD toggle InteractableCards when using the Space key", () => {
-        cy.mount(<ControlledGroup />);
-
-       cy.get('[role="checkbox"][data-value="one"]').should(
-          "not.be.checked"
-        );
-       cy.get('[role="checkbox"][data-value="two"]').should(
-          "not.be.checked"
-        );
-       cy.get('[role="checkbox"][data-value="three"]').should(
-          "not.be.checked"
-        );
-
-        cy.realPress("Tab");
-        cy.realPress("Space");
-
-       cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-        cy.realPress("Space");
-
-       cy.get('[role="checkbox"][data-value="one"]').should(
-          "not.be.checked"
-        );
-
-        cy.realPress("Space");
-       cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-
-        cy.realPress("Tab");
-        cy.realPress("Space");
-
-        cy.realPress("Tab");
-        cy.realPress("Space");
-
-       cy.get('[role="checkbox"][data-value="one"]').should('have.attr', 'aria-checked', 'true');
-       cy.get('[role="checkbox"][data-value="two"]').should('have.attr', 'aria-checked', 'true');
-       cy.get('[role="checkbox"][data-value="three"]').should(
-          "be.checked"
-        );
-      });
-
-      it("SHOULD not toggle InteractableCards using the Enter key", () => {
-        cy.mount(<ControlledGroup />);
-
-       cy.get('[role="checkbox"][data-value="one"]').should(
-          "not.be.checked"
-        );
-        cy.realPress("Tab");
-        cy.realPress("Enter");
-       cy.get('[role="checkbox"][data-value="one"]').should(
-          "not.be.checked"
-        );
-      });
-    });
-  });
-
-  describe("WHEN wrapped in a FormField", () => {
-    it("THEN should respect the context when disabled", () => {
-      cy.mount(
-        <FormField disabled>
-          <FormFieldLabel>Label</FormFieldLabel>
-          <InteractableCardGroup  selectionVariant="multiselect" defaultValue={["one"]}>
-            <InteractableCard value="one">One</InteractableCard>
-            <InteractableCard value="two" disabled />
-            <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
-        </FormField>
-      );
-
-      cy.findAllByRole("checkbox").should("have.attr", "disabled");
-    });
-
-    it("THEN should respect the context when read-only", () => {
-      cy.mount(
-        <FormField readOnly>
-          <FormFieldLabel>Label</FormFieldLabel>
-          <InteractableCardGroup  selectionVariant="multiselect" defaultValue={["one"]}>
-            <InteractableCard value="one">One</InteractableCard>
-            <InteractableCard value="two" readOnly />
-            <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
-        </FormField>
-      );
-
-      cy.findAllByRole("checkbox").should("have.attr", "readonly");
-    });
-
-    it("THEN should have the correct aria labelling", () => {
-      cy.mount(
-        <FormField>
-          <FormFieldLabel>Label</FormFieldLabel>
-          <InteractableCardGroup  selectionVariant="multiselect" defaultValue={["one"]}>
-            <InteractableCard value="one">One</InteractableCard>
-            <InteractableCard value="two" readOnly />
-            <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
-        </FormField>
-      );
-
-      cy.findAllByRole("InteractableCard")
-        .eq(0)
-        .should("have.accessibleName", "one");
     });
   });
 });
