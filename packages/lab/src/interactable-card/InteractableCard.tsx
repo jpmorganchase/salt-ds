@@ -155,7 +155,6 @@ export const InteractableCard = forwardRef<
       {...cardProps}
       role={role}
       aria-checked={ariaChecked}
-      data-id={value}
       aria-disabled={disabled}
       data-value={value}
       className={clsx(
@@ -163,7 +162,7 @@ export const InteractableCard = forwardRef<
         withBaseName(variant),
         {
           [withBaseName("accent")]: accent,
-          [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+          [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
           [withBaseName("active")]: active,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
