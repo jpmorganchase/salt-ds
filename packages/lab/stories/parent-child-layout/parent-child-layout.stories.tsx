@@ -77,13 +77,15 @@ Collapsed.args = {
 };
 
 export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
+  const [collapseChildElement, setCollapseChildElement] = useState(false);
 
-  const handleParent = () => {
-    setCurrentView("parent");
-  };
-  const handleChild = () => {
-    setCurrentView("child");
+  const onCollapseChange = () => console.log("testing");
+
+  const handleCollapsableElementChange = () => {
+    console.log(collapseChildElement);
+    //Why isn't this toggle working ?
+
+    setCollapseChildElement(!collapseChildElement);
   };
 
   return (
@@ -98,14 +100,15 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         {...args}
         className="parent-child-layout"
-        collapsedViewElement={currentView}
+        collapseChildElement
         collapseAtBreakpoint="md"
+        onCollapseChange={onCollapseChange}
       />
       <ToggleButtonGroup defaultValue="parent">
-        <ToggleButton value="parent" onClick={handleParent}>
+        <ToggleButton value="parent" onClick={handleCollapsableElementChange}>
           Parent
         </ToggleButton>
-        <ToggleButton value="child" onClick={handleChild}>
+        <ToggleButton value="child" onClick={handleCollapsableElementChange}>
           Child
         </ToggleButton>
       </ToggleButtonGroup>

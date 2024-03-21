@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import { forwardRef, ReactNode, useEffect } from "react";
+import { forwardRef, ReactNode, useCallback, useEffect } from "react";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import { useWindow } from "@salt-ds/window";
@@ -25,7 +25,7 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
   /**
    * Change element that is displayed when in staked view.
    */
-  collapsedViewElement?: StackedViewElement;
+  collapseChildElement?: boolean;
   /**
    * Disable all animations.
    */
@@ -42,6 +42,9 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
    * Child component to be rendered
    */
   child: ReactNode;
+  /**
+   * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable
+   */
   onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
@@ -53,8 +56,8 @@ export const ParentChildLayout = forwardRef<
 >(function ParentChildLayout(
   {
     collapseAtBreakpoint = "sm",
-    collapsedViewElement = "parent",
-    disableAnimations = false,
+    collapseChildElement,
+    disableAnimations,
     parentPosition = "left",
     parent,
     child,
@@ -74,27 +77,31 @@ export const ParentChildLayout = forwardRef<
 
   const isCollapsed = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
-  const collapsedViewChildren = {
-    parent: (
-      <FlexItem
-        className={clsx(withBaseName("parent"), {
-          ["saltFlexItem-stacked"]: isCollapsed,
-        })}
-      >
-        {parent}
-      </FlexItem>
-    ),
-    child: (
-      <FlexItem
-        className={clsx(withBaseName("child"), {
-          ["saltFlexItem-stacked"]: isCollapsed,
-        })}
-      >
-        {child}
-      </FlexItem>
-    ),
-  };
+  console.log(collapseChildElement);
 
+  // const collapsedViewChildren = {
+  //   parent: (
+  //     <FlexItem
+  //       style={{ background: "pink" }}
+  //       className={clsx(withBaseName("parent"), {
+  //         ["saltFlexItem-stacked"]: isCollapsed,
+  //       })}
+  //     >
+  //       {parent}
+  //     </FlexItem>
+  //   ),
+  //   child: (
+  //     <FlexItem
+  //       className={clsx(withBaseName("child"), {
+  //         ["saltFlexItem-stacked"]: isCollapsed,
+  //       })}
+  //     >
+  //       {child}
+  //     </FlexItem>
+  //   ),
+  // };
+
+  // This is being called every time the componet gets mounted
   useEffect(() => {
     onCollapseChange?.(isCollapsed);
   }, [isCollapsed, onCollapseChange]);
@@ -114,7 +121,18 @@ export const ParentChildLayout = forwardRef<
       {...rest}
     >
       {isCollapsed ? (
-        collapsedViewChildren[collapsedViewElement]
+        <FlexItem
+          style={{ background: "pink" }}
+          className={clsx(
+            // { [withBaseName("parent")]: collapseChildElement },
+            // { [withBaseName("child")]: !collapseChildElement },
+            {
+              ["saltFlexItem-stacked"]: isCollapsed,
+            }
+          )}
+        >
+          {isCollapsed && collapseChildElement ? parent : child}
+        </FlexItem>
       ) : (
         <>
           <FlexItem grow={0}>{parent}</FlexItem>
