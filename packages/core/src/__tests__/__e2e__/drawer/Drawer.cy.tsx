@@ -15,10 +15,16 @@ describe("GIVEN a Drawer", () => {
       cy.findByRole("button", { name: "Open Primary Drawer" }).realClick();
       cy.findByTestId("scrim").should("exist");
       cy.findByRole("dialog").should("be.visible");
-      cy.get("@consoleSpy").should("have.callCount", 1); // Strict mode unmounting
-      cy.findByRole("button", { name: "Close Drawer" }).click();
-      cy.findByRole("dialog").should("not.exist");
-      cy.get("@consoleSpy").should("have.callCount", 2); // Test unmount regression #3153
+
+      cy.get("@consoleSpy").then((spy) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        const callCount = (spy as any).callCount;
+
+        cy.findByRole("button", { name: "Close Drawer" }).click();
+        cy.findByRole("dialog").should("not.exist");
+
+        cy.get("@consoleSpy").should("have.callCount", callCount + 1); // Test unmount regression #3153
+      });
 
       cy.findByRole("button", { name: "Open Secondary Drawer" }).realClick();
       cy.findByRole("dialog").should("be.visible");
