@@ -12,10 +12,7 @@ export const ControlledOverlay = () => {
   return (
     <Overlay open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
-        <Button
-        >
-          Show Overlay
-        </Button>
+        <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel>Overlay Content</OverlayPanel>
     </Overlay>

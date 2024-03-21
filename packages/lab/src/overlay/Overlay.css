@@ -1,9 +1,6 @@
-.saltOverlayPanel {
+.saltOverlay {
   --overlay-borderColor: var(--saltOverlay-borderColor, var(--salt-container-primary-borderColor));
   --overlay-background: var(--saltOverlay-background, var(--salt-container-primary-background));
-}
-
-.saltOverlayPanel {
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltOverlay-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltOverlay-fontWeight, var(--salt-text-fontWeight));
@@ -22,17 +19,17 @@
   width: max-content;
 }
 
-.saltOverlayPanelBase-container {
+.saltOverlay-container {
   animation: var(--salt-animation-fade-in-center);
   position: relative;
 }
 
-.saltOverlayPanelBase-content {
+.saltOverlay-content {
   overflow: auto;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100) 0 var(--salt-spacing-100) var(--salt-spacing-100));
 }
 
-.saltButton-secondary.saltOverlayPanelBase-closeButton {
+.saltButton-secondary.saltOverlay-closeButton {
   position: sticky;
   top: 0;
   float: right;
