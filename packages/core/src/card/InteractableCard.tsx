@@ -133,6 +133,8 @@ export const InteractableCard = forwardRef<
         tabIndex = 0;
       }
     }
+  } else {
+    tabIndex = disabled ? -1 : 0;
   }
 
   const cardRef = useRef<HTMLDivElement>(null);

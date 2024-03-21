@@ -168,7 +168,7 @@ export const Variants: StoryFn<typeof Card> = (args) => {
 export const DefaultInteractableCard: StoryFn<typeof InteractableCard> = (
   args
 ) => (
-  <InteractableCard {...args} {...args} style={{ width: "256px" }}>
+  <InteractableCard {...args} style={{ width: "256px" }}>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>
@@ -226,85 +226,6 @@ export const SelectedDisabledInteractableCard: StoryFn<
     </StackLayout>
   </InteractableCard>
 );
-
-export const AccentPlacementInteractableCard: StoryFn<
-  typeof InteractableCard
-> = (args) => {
-  const [placement, setPlacement] =
-    useState<InteractableCardProps["accent"]>("bottom");
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPlacement(event.target.value as InteractableCardProps["accent"]);
-  };
-  return (
-    <StackLayout style={{ width: "266px" }}>
-      <InteractableCard {...args} accent={placement}>
-        <StackLayout gap={1}>
-          <H3>Sustainable investing products</H3>
-          <Text>
-            We have a commitment to provide a wide range of investment solutions
-            to enable you to align your financial goals to your values.
-          </Text>
-        </StackLayout>
-      </InteractableCard>
-      <RadioButtonGroup direction={"horizontal"} defaultValue="bottom">
-        <RadioButton
-          key="bottom"
-          label="bottom"
-          value="bottom"
-          onChange={handleChange}
-          checked
-        />
-        <RadioButton
-          key="top"
-          label="top"
-          value="top"
-          onChange={handleChange}
-        />
-        <RadioButton
-          key="left"
-          label="left"
-          value="left"
-          onChange={handleChange}
-        />
-        <RadioButton
-          key="right"
-          label="right"
-          value="right"
-          onChange={handleChange}
-        />
-      </RadioButtonGroup>
-    </StackLayout>
-  );
-};
-
-export const InteractableCardVariant: StoryFn<typeof InteractableCard> = (
-  args
-) => {
-  const variants = ["primary", "secondary"] as const;
-  return (
-    <StackLayout style={{ width: "266px" }}>
-      {variants.map((variant) => {
-        return (
-          <StackLayout align="end">
-            <StackLayout direction="row" key={variant}>
-              <InteractableCard {...args} variant={variant}>
-                <StackLayout gap={1}>
-                  <H3>Sustainable investing products</H3>
-                  <Text>
-                    We have a commitment to provide a wide range of investment
-                    solutions to enable you to align your financial goals to
-                    your values.
-                  </Text>
-                </StackLayout>
-              </InteractableCard>
-            </StackLayout>
-            <Label>Variant: {variant}</Label>
-          </StackLayout>
-        );
-      })}
-    </StackLayout>
-  );
-};
 
 export const InteractableCardGroupSingleSelect: StoryFn<
   typeof InteractableCard
