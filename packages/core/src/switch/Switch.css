@@ -30,17 +30,6 @@
   box-sizing: border-box;
 }
 
-.saltFormField-labelLeft .saltFormFieldLabel {
-  padding-top: var(--salt-spacing-25);
-}
-
-.saltFormField-labelLeft .saltFormFieldLabel.saltSwitch-label {
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
-  --text-color: var(--salt-content-primary-foreground);
-}
-
 /* Styles applied to the icon component if focused */
 .saltSwitch-input:focus-visible + .saltSwitch-track {
   outline-offset: var(--salt-focused-outlineOffset);
