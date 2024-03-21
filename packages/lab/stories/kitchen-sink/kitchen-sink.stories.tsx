@@ -46,7 +46,7 @@ import {
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
 import {
   Default as CardDefault,
-  Interactable as InteractableCardStory,
+  DefaultInteractableCard as InteractableCardStory,
 } from "../../../core/stories/card/card.stories";
 import {
   HorizontalGroup as CheckboxHorizontalGroup,
