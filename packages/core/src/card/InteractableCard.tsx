@@ -25,6 +25,11 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
+   * **Deprecated:** Use the `accent` prop instead
+   *
+   */
+  accentPlacement?: "bottom" | "top" | "left" | "right";
+  /**
    * If `true`, the card will be disabled.
    */
   disabled?: boolean;
@@ -53,6 +58,7 @@ export const InteractableCard = forwardRef<
 >(function InteractableCard(props, ref) {
   const {
     accent,
+    accentPlacement,
     children,
     className,
     disabled: disabledProp,
@@ -160,7 +166,7 @@ export const InteractableCard = forwardRef<
         withBaseName(),
         withBaseName(variant),
         {
-          [withBaseName("accent")]: accent,
+          [withBaseName("accent")]: accentPlacement ?? accent,
           [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
           [withBaseName("active")]: active,
           [withBaseName("disabled")]: disabled,
