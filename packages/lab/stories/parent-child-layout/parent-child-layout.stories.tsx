@@ -55,7 +55,7 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
         collapsedView={collapsedView}
       />
       <StackLayout gap={0} align="center">
-        Collapsable View:
+        Collapsed View:
         <ToggleButtonGroup defaultValue="child">
           <ToggleButton
             value="parent"
@@ -98,7 +98,7 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
         collapseAtBreakpoint="md"
       />
       <StackLayout gap={0} align="center">
-        Collapsable View:
+        Collapsed View:
         <ToggleButtonGroup defaultValue="child">
           <ToggleButton
             value="parent"

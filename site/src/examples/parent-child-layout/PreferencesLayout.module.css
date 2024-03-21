@@ -1,9 +1,10 @@
-.navigation {
+.preferencesDialog-navigation {
   position: relative;
   min-width: 160px;
+  --testing: "hello";
 }
 
-.navList {
+.preferencesDialog-navList {
   list-style: none;
   padding-left: 0;
   margin: 0;
@@ -12,7 +13,6 @@
 .container {
   width: 545px;
   justify-content: center;
-  width: 100%
 }
 
 .parentView {
