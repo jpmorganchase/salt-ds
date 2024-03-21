@@ -219,13 +219,7 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
   return (
     <Overlay open={open} onOpenChange={onChange} placement="bottom" id={id}>
       <OverlayTrigger>
-        <Button
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Show Overlay
-        </Button>
+        <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel
         style={{
