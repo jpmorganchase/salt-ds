@@ -1,5 +1,5 @@
-import "@salt-ds/icons/css/salt-icons.css";
+import "@salt-ds/icons/saltIcons.css";
 
 const name = "AddDocument";
 
-export const CssBackgroundImage = () => <div className={`saltIcon-${name}`} />;
+export const CssBackgroundImage = () => <div className={`saltIcons-${name}`} />;

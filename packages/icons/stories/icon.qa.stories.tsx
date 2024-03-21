@@ -68,7 +68,7 @@ NoStyleInjection.parameters = {
 export const CssBackground: StoryFn = () => {
   return (
     <QAContainer height={500} width={350}>
-      <div className="saltIcon-AddDocument" />
+      <div className="saltIcons-AddDocument" />
     </QAContainer>
   );
 };
