@@ -13,9 +13,6 @@ export const ControlledOverlay = () => {
     <Overlay open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
         <Button
-          onClick={() => {
-            setShow(true);
-          }}
         >
           Show Overlay
         </Button>
