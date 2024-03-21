@@ -9,12 +9,7 @@ import {
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import {
-  capitalize,
-  makePrefixer,
-  useControlled,
-  useForkRef,
-} from "@salt-ds/core";
+import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
 import { useInteractableCard } from "./useInteractableCard";
 import interactableCardCss from "./InteractableCard.css";
 import {

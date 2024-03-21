@@ -1,5 +1,5 @@
 import { SyntheticEvent, useContext } from "react";
-import { createContext } from "@salt-ds/core";
+import { createContext } from "../utils";
 
 export type InteractableCardValue = string | readonly string[] | undefined;
 export type SelectionVariant = "single" | "multiselect";
