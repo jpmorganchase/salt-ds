@@ -8,7 +8,7 @@ data:
   relatedpatterns: ["List builder"]
 ---
 
-When searching through a list, a filter enables users to specify criteria and only show relevant options. This pattern introduces the expected filter behavior applied to Salt components where a list is used.
+When searching through a list, a filter enables users to specify criteria and only show relevant options. This pattern introduces the filter behavior of Salt components where a list is used.
 
   <Diagram
     src="/img/patterns/list-filtering/image.png"
@@ -47,7 +47,7 @@ Increase the number of characters required to filter the list if there are a lar
 
 ## Highlighted characters
 
-When filtering, highlight matching characters in item labels that match the filter criteria. This tells a user why the filter returned a given item. This behavior facilitates quick selection, allowing users to avoid navigating directly into the list. Instead, they can simply type their query and press enter to select the matching item.
+When filtering, highlight matching characters in item labels that match the filter criteria. This tells a user why the filter returned a given item.
 
   <Diagram
     src="/img/patterns/list-filtering/highlighted-characters.png"
@@ -57,7 +57,7 @@ When filtering, highlight matching characters in item labels that match the filt
   />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-Make sure that the first letter in the filtered list is displayed in `--salt-text-body-strong` font weight.
+Make sure that the first letter in the filtered list is displayed in `--salt-text-fontweight-strong` font weight.
 </ExampleContainer>
 
 ## No matches
