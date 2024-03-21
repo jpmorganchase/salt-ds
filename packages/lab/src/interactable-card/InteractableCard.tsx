@@ -83,7 +83,7 @@ export const InteractableCard = forwardRef<
 
   const interactableCardGroupSelected = interactableCardGroup
     ? interactableCardGroup.isSelected(value)
-    : false;
+    : selectedProp;
 
   const disabled = interactableCardGroup?.disabled || disabledProp;
 
@@ -121,15 +121,17 @@ export const InteractableCard = forwardRef<
 
   let tabIndex;
 
-  if (disabled) {
-    tabIndex = -1;
-  } else if (isMultiselect) {
-    tabIndex = 0; // All items focusable in multi-select
-  } else {
-    // Single select: Only selected or first item (if none are selected) is focusable
-    tabIndex = selected ? 0 : -1;
-    if (!interactableCardGroup?.value && isFirstChild) {
-      tabIndex = 0;
+  if (interactableCardGroup) {
+    if (disabled) {
+      tabIndex = -1;
+    } else if (isMultiselect) {
+      tabIndex = 0; // All items focusable in multi-select
+    } else {
+      // Single select: Only selected or first item (if none are selected) is focusable
+      tabIndex = selected ? 0 : -1;
+      if (!interactableCardGroup?.value && isFirstChild) {
+        tabIndex = 0;
+      }
     }
   }
 
