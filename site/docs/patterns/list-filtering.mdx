@@ -11,7 +11,7 @@ data:
 When searching through a list, a filter enables users to specify criteria and only show relevant options. This pattern introduces the filter behavior of Salt components where a list is used.
 
   <Diagram
-    src="/img/patterns/list-filtering/image.png"
+    src="/img/patterns/list-filtering/list-filter.png"
     alt="A list filter."
     contentPosition="top"
     border
@@ -35,7 +35,7 @@ When filtering results, we recommend:
 * Matching only the first character(s) of the beginning of any word in the item labels to the filter string.
 
   <Diagram
-    src="/img/patterns/list-filtering/filter-logic.png"
+    src="/img/patterns/list-filtering/list-filter-logic.png"
     alt="An example of filter logic."
     contentPosition="top"
     border
@@ -45,12 +45,23 @@ When filtering results, we recommend:
 Increase the number of characters required to filter the list if there are a large number of items and results are slow to load. You could, for example, fetch results on input of the first character but only display them on input of the third. This would improve perceived performance.
 </ExampleContainer>
 
+## No matches
+
+When there are no items matching the filter text, display an explanatory message instead of the list.
+
+  <Diagram
+    src="/img/patterns/list-filtering/list-filter-no-matches.png"
+    alt="An example of no matches in the list."
+    contentPosition="top"
+    border
+  />
+
 ## Highlighted characters
 
 When filtering, highlight matching characters in item labels that match the filter criteria. This tells a user why the filter returned a given item.
 
   <Diagram
-    src="/img/patterns/list-filtering/highlighted-characters.png"
+    src="/img/patterns/list-filtering/list-filtering-combobox.png"
     alt="An example of filtering a list in a combo box."
     contentPosition="top"
     border
@@ -60,23 +71,12 @@ When filtering, highlight matching characters in item labels that match the filt
 Make sure that the text in the list that matches the filter string is displayed in `--salt-text-fontweight-strong` font weight.
 </ExampleContainer>
 
-## No matches
-
-When there are no items matching the filter text, display an explanatory message instead of the list.
-
-  <Diagram
-    src="/img/patterns/list-filtering/no-matches.png"
-    alt="An example of no matches in the list."
-    contentPosition="top"
-    border
-  />
-
 ## Loading
 
 When filter matches take longer to return, display a loading message and a [spinner](/salt/components/spinner) in the field. An example is when the system needs to fetch data from a server.
 
   <Diagram
-    src="/img/patterns/list-filtering/filter-loading.png"
+    src="/img/patterns/list-filtering/list-filter-slow-loading.png"
     alt="An example of asychronus loading."
     contentPosition="top"
     border
