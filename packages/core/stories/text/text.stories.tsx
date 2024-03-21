@@ -12,7 +12,7 @@ import {
   Label as LabelText,
   TextAction,
   TextNotation,
-  TextCode,
+  Code as CodeText,
 } from "@salt-ds/core";
 
 export default {
@@ -203,24 +203,24 @@ export const Action = TextActionComponent.bind({});
 
 //********** Code ***********/
 
-const TextCodeComponent: StoryFn<typeof Text> = () => {
+const CodeComponent: StoryFn<typeof Text> = () => {
   return (
     <>
-      <TextCode>
+      <CodeText>
         Code text - code - His seasons Shall without form fourth seed so.
-      </TextCode>
+      </CodeText>
       <br />
-      <TextCode>
+      <CodeText>
         Code text
         <strong> emphasis high</strong>
-      </TextCode>
+      </CodeText>
       <br />
-      <TextCode>
+      <CodeText>
         Code text
         <small> emphasis low</small>
-      </TextCode>
+      </CodeText>
     </>
   );
 };
 
-export const Code = TextCodeComponent.bind({});
+export const Code = CodeComponent.bind({});

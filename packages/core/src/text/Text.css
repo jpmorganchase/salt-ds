@@ -79,6 +79,7 @@
 }
 
 /* Code */
+code.saltText,
 .saltText-code.saltText {
   font-family: var(--salt-text-code-fontFamily);
 }

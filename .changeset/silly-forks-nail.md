@@ -6,7 +6,7 @@ Added "code" option to Text 'styleAs' prop
 
 ```tsx
 <>
-  <TextCode>Code text</TextCode>
+  <Code>Code text</Code>
   <Text styleAs="code">Text styled as code</Text>
 </>
 ```
