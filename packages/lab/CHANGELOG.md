@@ -1,5 +1,12 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.38
+
+### Patch Changes
+
+- 4adacc6b: Fix SegmentedButtonGroup's display name.
+  Fix SegmentedButtonGroup's ref being applied incorrectly.
+
 ## 1.0.0-alpha.37
 
 ### Minor Changes
