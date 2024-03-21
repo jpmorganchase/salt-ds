@@ -1,6 +1,11 @@
 import { ReactElement } from "react";
-import { InteractableCard, InteractableCardGroup } from "@salt-ds/lab";
-import { H3, StackLayout, Text } from "@salt-ds/core";
+import {
+  H3,
+  StackLayout,
+  Text,
+  InteractableCard,
+  InteractableCardGroup,
+} from "@salt-ds/core";
 import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
 
 export const DisabledToggleGroup = (): ReactElement => (
