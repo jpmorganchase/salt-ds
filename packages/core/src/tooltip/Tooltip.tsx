@@ -35,6 +35,7 @@ export interface TooltipProps
   hideArrow?: boolean;
   /**
    * Whether to hide the status icon within the Tooltip. Defaults to `false`.
+   * If no status is provided, icon will also be hidden.
    */
   hideIcon?: boolean;
   /**

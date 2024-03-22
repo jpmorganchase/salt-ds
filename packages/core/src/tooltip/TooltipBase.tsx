@@ -29,7 +29,7 @@ export const TooltipBase = (props: TooltipBaseProps) => {
   const { a11yProps } = useFormFieldProps();
 
   const { arrowProps, content, hideArrow, hideIcon, status } = props;
-  console.log(status);
+
   return (
     <>
       <div className={withBaseName("container")}>

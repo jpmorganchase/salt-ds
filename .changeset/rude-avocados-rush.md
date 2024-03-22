@@ -1,8 +1,9 @@
 ---
-"@salt-ds/core": major
+"@salt-ds/core": patch
 ---
 
-Made `status` prop optional in Tooltip. Prop default changed from `"info"` to `undefined`, causing the default Tooltip to have status-less styling.
+Made `status` prop optional in Tooltip, allowing for Tooltip to have no status.
+The default for the `status` prop changed from `"info"` to `undefined`. Tooltips intended to have "info" status must refactor as below.
 
 Before:
 
