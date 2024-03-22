@@ -58,7 +58,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     })
     .join("\n");
 
-  const ALL_CSS = `[class*=' saltIcons-'],[class^='saltIcons-'] {mask-size: cover;-webkit-mask-size: cover;background-color: currentColor;
+  const ALL_CSS = `[class^='saltIcons-'] {mask-size: cover;-webkit-mask-size: cover;background-color: currentColor;
   height:max(var(--salt-size-icon, 12px), 12px);width:max(var(--salt-size-icon, 12px), 12px);}\n`;
 
   const formattedResult = prettier.format(
