@@ -1,8 +1,8 @@
-import { Heading4 } from "../../components/mdx/h4";
 import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import styles from "./Resources.module.css";
 import { Image } from "@jpmorganchase/mosaic-site-components";
-import { Link, Text } from "@salt-ds/core";
+import { Link } from "@salt-ds/core";
+import { LinkList } from "../../components/link-list/LinkList";
 
 const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
   <div className={styles.link}>
@@ -55,30 +55,8 @@ export function Resources() {
   if (resourcesArray.length > 0) {
     return (
       <section className={styles.root}>
-        <Heading4>Resources</Heading4>
-        {external.length > 0 && (
-          <ul className={styles.list}>
-            {external.map(({ href, label }) => (
-              <li key={href}>
-                <LinkWithLogo href={href} label={label} />
-              </li>
-            ))}
-          </ul>
-        )}
-        {internal.length > 0 && (
-          <>
-            <Text className={styles.subtitle} styleAs="label">
-              J.P. Morgan employees only:
-            </Text>
-            <ul className={styles.list}>
-              {internal.map(({ href, label }) => (
-                <li key={href}>
-                  <LinkWithLogo href={href} label={label} />
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
+        <LinkList heading="Resources" links={external} />
+        <LinkList subheader="J.P. Morgan employees only:" links={internal} />
       </section>
     );
   }
