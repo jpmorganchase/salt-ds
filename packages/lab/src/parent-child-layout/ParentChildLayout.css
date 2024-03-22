@@ -1,22 +1,19 @@
 .saltParentChildLayout {
-  overflow: hidden;
+  /* overflow: hidden; */
+  display: flex;
+  background-color: pink;
 }
 
-.saltParentChildLayout-parent {
-  animation: var(--salt-animation-slide-in-left);
+.saltParentChildLayout-collapsed {
+  flex-grow: 2;
 }
 
 .saltParentChildLayout-child {
   animation: var(--salt-animation-slide-in-right);
 }
 
-.saltParentChildLayout-reversed.saltFlexLayout {
-  --flexLayout-direction: row-reverse;
-}
-
-.saltParentChildLayout-no-animations .saltParentChildLayout-parent,
-.saltParentChildLayout-no-animations .saltParentChildLayout-child {
-  animation: none;
+.saltParentChildLayout-parent {
+  animation: var(--salt-animation-slide-in-left);
 }
 
 @media (prefers-reduced-motion) {

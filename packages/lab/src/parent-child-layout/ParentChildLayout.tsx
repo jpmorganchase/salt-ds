@@ -1,15 +1,7 @@
-import {
-  Breakpoints,
-  FlexLayout,
-  FlexItem,
-  FlexLayoutProps,
-  makePrefixer,
-} from "@salt-ds/core";
-
+import { Breakpoints, FlexLayoutProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, ReactNode, useCallback, useEffect } from "react";
+import { forwardRef, ReactNode, useEffect } from "react";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
-
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -31,10 +23,6 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
    */
   disableAnimations?: boolean;
   /**
-   * Position of the parent component within the layout.
-   */
-  parentPosition?: "left" | "right";
-  /**
    * Parent component to be rendered
    */
   parent: ReactNode;
@@ -45,6 +33,7 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
   /**
    * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable
    */
+  // What is the use case for this ??
   onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
@@ -57,11 +46,8 @@ export const ParentChildLayout = forwardRef<
   {
     collapseAtBreakpoint = "sm",
     collapseChildElement,
-    disableAnimations,
-    parentPosition = "left",
     parent,
     child,
-    gap = 0,
     className,
     onCollapseChange,
     ...rest
@@ -77,68 +63,45 @@ export const ParentChildLayout = forwardRef<
 
   const isCollapsed = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
-  console.log(collapseChildElement);
-
-  // const collapsedViewChildren = {
-  //   parent: (
-  //     <FlexItem
-  //       style={{ background: "pink" }}
-  //       className={clsx(withBaseName("parent"), {
-  //         ["saltFlexItem-stacked"]: isCollapsed,
-  //       })}
-  //     >
-  //       {parent}
-  //     </FlexItem>
-  //   ),
-  //   child: (
-  //     <FlexItem
-  //       className={clsx(withBaseName("child"), {
-  //         ["saltFlexItem-stacked"]: isCollapsed,
-  //       })}
-  //     >
-  //       {child}
-  //     </FlexItem>
-  //   ),
-  // };
-
-  // This is being called every time the componet gets mounted
   useEffect(() => {
     onCollapseChange?.(isCollapsed);
   }, [isCollapsed, onCollapseChange]);
 
   return (
-    <FlexLayout
-      ref={ref}
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName(`no-animations`)]: disableAnimations,
-          [withBaseName(`reversed`)]: parentPosition === "right",
-        },
-        className
-      )}
-      gap={gap}
-      {...rest}
-    >
+    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
       {isCollapsed ? (
-        <FlexItem
-          style={{ background: "pink" }}
+        <div
           className={clsx(
-            // { [withBaseName("parent")]: collapseChildElement },
-            // { [withBaseName("child")]: !collapseChildElement },
             {
-              ["saltFlexItem-stacked"]: isCollapsed,
-            }
+              [withBaseName("parent")]: collapseChildElement,
+            },
+            { [withBaseName("child")]: !collapseChildElement },
+            { [withBaseName("collapsed")]: isCollapsed }
           )}
         >
           {isCollapsed && collapseChildElement ? parent : child}
-        </FlexItem>
+        </div>
       ) : (
-        <>
-          <FlexItem grow={0}>{parent}</FlexItem>
-          <FlexItem grow={2}>{child}</FlexItem>
-        </>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            flexFlow: "row wrap",
+            alignItems: "stretch",
+            width: "100%",
+            // height: "100%",
+          }}
+        >
+          <div style={{ flexGrow: 1 }}>{parent}</div>
+          <div
+            style={{
+              flexGrow: 2,
+            }}
+          >
+            {child}
+          </div>
+        </div>
       )}
-    </FlexLayout>
+    </div>
   );
 });

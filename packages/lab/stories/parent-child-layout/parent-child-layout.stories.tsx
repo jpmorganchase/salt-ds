@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 
 import {
@@ -42,28 +42,27 @@ export const Default: StoryFn<typeof ParentChildLayout> = (args) => (
 Default.args = { parent, child };
 
 export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
-
-  const handleParent = () => {
-    setCurrentView("parent");
-  };
-  const handleChild = () => {
-    setCurrentView("child");
-  };
+  const [collapseChildElement, setCollapseChildElement] = useState(false);
 
   return (
     <StackLayout align="center">
       <ParentChildLayout
         {...args}
         className="parent-child-layout"
-        collapsedViewElement={currentView}
         collapseAtBreakpoint="md"
+        collapseChildElement={collapseChildElement}
       />
       <ToggleButtonGroup defaultValue="parent">
-        <ToggleButton value="parent" onClick={handleParent}>
+        <ToggleButton
+          value="parent"
+          onClick={() => setCollapseChildElement(false)}
+        >
           Parent
         </ToggleButton>
-        <ToggleButton value="child" onClick={handleChild}>
+        <ToggleButton
+          value="child"
+          onClick={() => setCollapseChildElement(true)}
+        >
           Child
         </ToggleButton>
       </ToggleButtonGroup>
@@ -77,17 +76,16 @@ Collapsed.args = {
 };
 
 export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [collapseChildElement, setCollapseChildElement] = useState(false);
+  let collapsedChildElement = false;
 
   const onCollapseChange = () => console.log("testing");
 
-  const handleCollapsableElementChange = () => {
-    console.log(collapseChildElement);
-    //Why isn't this toggle working ?
+  function handleCollapsableElementChange() {
+    collapsedChildElement = !collapsedChildElement;
+    console.log(collapsedChildElement);
+  }
 
-    setCollapseChildElement(!collapseChildElement);
-  };
-
+  console.log(collapsedChildElement);
   return (
     <StackLayout align="center">
       <div>

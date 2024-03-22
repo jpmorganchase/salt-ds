@@ -2,6 +2,7 @@
   width: 20vw;
   max-width: 250px;
   height: 200px;
+  background-color: orange;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
@@ -24,7 +25,7 @@
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
-nav {
+/* nav {
   position: relative;
   min-width: 160px;
 }
@@ -37,9 +38,9 @@ ul {
 
 h2 {
   margin: 0;
-}
+} */
 
-.parent-child-composite-container .saltParentChildLayout {
+/* .parent-child-composite-container .saltParentChildLayout {
   width: 545px;
   padding: var(--salt-spacing-300);
 }
@@ -51,4 +52,4 @@ h2 {
 
 .parent-child-composite-container .saltParentChildLayout-child {
   max-width: 375px;
-}
+} */
