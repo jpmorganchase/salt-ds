@@ -8,7 +8,7 @@ Added `saltIcons.css` with all icons SVG as background image.
 import "@salt-ds/icons/saltIcons.css";
 
 const Example = () => {
-  const iconName = `AddDocument`;
+  const iconName = "AddDocument";
   return <div className={`saltIcon-${iconName}`} />;
 };
 ```
