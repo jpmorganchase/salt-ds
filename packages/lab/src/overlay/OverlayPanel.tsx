@@ -9,7 +9,7 @@ import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
 import { OverlayPanelBase } from "./OverlayPanelBase";
 
-const withBaseName = makePrefixer("saltOverlay");
+const withBaseName = makePrefixer("saltOverlayPanel");
 
 export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
 

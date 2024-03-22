@@ -9,7 +9,7 @@ import { ComponentPropsWithoutRef } from "react";
 import { useOverlayContext } from "./OverlayContext";
 import clsx from "clsx";
 
-const withBaseName = makePrefixer("saltOverlay");
+const withBaseName = makePrefixer("saltOverlayPanel");
 
 // OverlayPanelBase component needed for CSS style injection
 export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {

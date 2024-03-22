@@ -1,4 +1,4 @@
-.saltOverlay {
+.saltOverlayPanel {
   --overlay-borderColor: var(--saltOverlay-borderColor, var(--salt-container-primary-borderColor));
   --overlay-background: var(--saltOverlay-background, var(--salt-container-primary-background));
   font-family: var(--salt-text-fontFamily);
@@ -19,17 +19,17 @@
   width: max-content;
 }
 
-.saltOverlay-container {
+.saltOverlayPanel-container {
   animation: var(--salt-animation-fade-in-center);
   position: relative;
 }
 
-.saltOverlay-content {
+.saltOverlayPanel-content {
   overflow: auto;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100) 0 var(--salt-spacing-100) var(--salt-spacing-100));
 }
 
-.saltButton-secondary.saltOverlay-closeButton {
+.saltButton-secondary.saltOverlayPanel-closeButton {
   position: sticky;
   top: 0;
   float: right;
