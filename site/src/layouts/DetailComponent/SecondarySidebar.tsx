@@ -1,27 +1,13 @@
 import React, { FC, ReactNode } from "react";
-import { Image } from "@jpmorganchase/mosaic-site-components";
-import { Link, Pill } from "@salt-ds/core";
-import { Heading4 } from "../../components/mdx/h4";
-import { Data, Relationship } from "./DetailComponent";
-import { useAllExamplesView } from "../../utils/useAllExamplesView";
-
-import styles from "./SecondarySidebar.module.css";
 import { useRoute } from "@jpmorganchase/mosaic-store";
 
-type LinkWithLogoProps = {
-  href: string;
-  label: string;
-  logo: "github" | "figma";
-};
+import { Heading4 } from "../../components/mdx/h4";
+import { useAllExamplesView } from "../../utils/useAllExamplesView";
+import { LinkList } from "../../components/link-list/LinkList";
+import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 
-const LinkWithLogo: FC<LinkWithLogoProps> = ({ href, label, logo }) => (
-  <div className={styles.link}>
-    <Image src={`/img/${logo}_logo.svg`} alt={`${logo} logo`} />
-    <Link href={href} target="_blank">
-      {label}
-    </Link>
-  </div>
-);
+import { Data, Relationship } from "./DetailComponent";
+import styles from "./SecondarySidebar.module.css";
 
 type SecondarySidebarProps = {
   additionalData?: Data;
@@ -30,105 +16,38 @@ type SecondarySidebarProps = {
 
 const examplesTabRoute = /\/examples$/;
 
+function getRelatedComponentLinks(
+  relatedComponents: Data["relatedComponents"],
+  relationship: Relationship
+) {
+  return relatedComponents
+    .filter((component) => component.relationship === relationship)
+    .map((component) => ({
+      href: getHrefFromComponent(component.name),
+      label: component.name,
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label));
+}
+
 const SecondarySidebar: FC<SecondarySidebarProps> = ({
   additionalData,
   tableOfContents,
 }) => {
   const {
-    alsoKnownAs,
-    relatedComponents,
-    sourceCodeUrl,
-    stickerSheet,
-    bugReport,
-    featureRequest,
-    askQuestion,
+    alsoKnownAs = [],
+    relatedComponents = [],
+    sourceCodeUrl = "",
+    bugReport = "",
+    featureRequest = "",
   } = additionalData || {};
 
   const { route = "" } = useRoute();
   const { allExamplesView } = useAllExamplesView();
-
-  const alsoKnownAsPills = alsoKnownAs && alsoKnownAs.length > 0 && (
-    <>
-      <Heading4>Also known as</Heading4>
-      <div className={styles.pills}>
-        {alsoKnownAs.map((name) => (
-          <Pill key={name}>{name}</Pill>
-        ))}
-      </div>
-    </>
+  const similarToLinks = getRelatedComponentLinks(
+    relatedComponents,
+    "similarTo"
   );
-
-  const relatedComponentsPills = (
-    relationshipName: Relationship,
-    heading: string
-  ) => {
-    const components =
-      (relatedComponents &&
-        relatedComponents.filter(
-          ({ relationship }) => relationship === relationshipName
-        )) ||
-      [];
-
-    return (
-      components.length > 0 && (
-        <>
-          <Heading4>{heading}</Heading4>
-          <div className={styles.pills}>
-            {components.map(({ name }) => (
-              <Pill key={name}>{name}</Pill>
-            ))}
-          </div>
-        </>
-      )
-    );
-  };
-
-  const componentResourcesList = (
-    <>
-      <Heading4>Resources</Heading4>
-      <div className={styles.list}>
-        {sourceCodeUrl && (
-          <LinkWithLogo
-            href={sourceCodeUrl}
-            label="View source code"
-            logo="github"
-          />
-        )}
-        {stickerSheet && (
-          <LinkWithLogo
-            href={stickerSheet}
-            label="Figma sticker sheet"
-            logo="figma"
-          />
-        )}
-      </div>
-    </>
-  );
-
-  const supportList = (
-    <>
-      <Heading4>Support</Heading4>
-      <div className={styles.list}>
-        {bugReport && (
-          <LinkWithLogo href={bugReport} label="Report a bug" logo="github" />
-        )}
-        {featureRequest && (
-          <LinkWithLogo
-            href={featureRequest}
-            label="Request a feature"
-            logo="github"
-          />
-        )}
-        {askQuestion && (
-          <LinkWithLogo
-            href={askQuestion}
-            label="Ask a question"
-            logo="github"
-          />
-        )}
-      </div>
-    </>
-  );
+  const containsList = getRelatedComponentLinks(relatedComponents, "contains");
 
   return (
     <div className={styles.sidebar}>
@@ -137,12 +56,41 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
           <div className={styles.tableOfContents}>{tableOfContents}</div>
         )}
       <div className={styles.wrapper}>
-        {alsoKnownAsPills}
-        {relatedComponentsPills("similarTo", "Similar to")}
-        {relatedComponentsPills("contains", "Contains")}
+        {alsoKnownAs.length > 0 && (
+          <>
+            <Heading4>Also known as</Heading4>
+            <div>{alsoKnownAs.join(", ")}</div>
+          </>
+        )}
+        <LinkList heading="Similar to" links={similarToLinks} />
+        <LinkList heading="Contains" links={containsList} />
       </div>
-      <div className={styles.wrapper}>{componentResourcesList}</div>
-      <div className={styles.wrapper}>{supportList}</div>
+      <div className={styles.wrapper}>
+        <LinkList
+          heading="Resources"
+          links={[
+            {
+              href: sourceCodeUrl,
+              label: "View source code",
+            },
+          ]}
+        />
+      </div>
+      <div className={styles.wrapper}>
+        <LinkList
+          heading="Support"
+          links={[
+            {
+              href: bugReport,
+              label: "Report a bug",
+            },
+            {
+              href: featureRequest,
+              label: "Request a feature",
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 };

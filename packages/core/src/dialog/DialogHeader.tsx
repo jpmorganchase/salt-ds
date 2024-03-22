@@ -1,4 +1,4 @@
-import { ReactNode, ComponentPropsWithoutRef } from "react";
+import { ReactNode, ComponentPropsWithoutRef, forwardRef } from "react";
 import clsx from "clsx";
 import { ValidationStatus, StatusIndicator } from "../status-indicator";
 import { H2, Text } from "../text";
@@ -6,7 +6,7 @@ import { makePrefixer } from "../utils";
 import { useDialogContext } from "./DialogContext";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dialogTitleCss from "./DialogHeader.css";
+import dialogHeaderCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogHeader");
 
@@ -28,46 +28,51 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
   preheader?: ReactNode;
 }
 
-export const DialogHeader = ({
-  className,
-  header,
-  preheader,
-  disableAccent,
-  status: statusProp,
-  ...rest
-}: DialogHeaderProps) => {
-  const { status: statusContext, id } = useDialogContext();
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-dialog-header",
-    css: dialogTitleCss,
-    window: targetWindow,
-  });
+export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
+  function DialogHeader(props, ref) {
+    const {
+      className,
+      header,
+      preheader,
+      disableAccent,
+      status: statusProp,
+      ...rest
+    } = props;
+    const { status: statusContext, id } = useDialogContext();
 
-  const status = statusProp ?? statusContext;
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-dialog-header",
+      css: dialogHeaderCss,
+      window: targetWindow,
+    });
 
-  return (
-    <div
-      id={id}
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("withAccent")]: !disableAccent && !status,
-          [withBaseName(status ?? "")]: !!status,
-        },
-        className
-      )}
-      {...rest}
-    >
-      {status && <StatusIndicator status={status} />}
-      <H2 className={withBaseName("header")}>
-        {preheader && (
-          <Text variant="secondary" className={withBaseName("preheader")}>
-            {preheader}
-          </Text>
+    const status = statusProp ?? statusContext;
+
+    return (
+      <div
+        id={id}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("withAccent")]: !disableAccent && !status,
+            [withBaseName(status ?? "")]: !!status,
+          },
+          className
         )}
-        <div>{header}</div>
-      </H2>
-    </div>
-  );
-};
+        ref={ref}
+        {...rest}
+      >
+        {status && <StatusIndicator status={status} />}
+        <H2 className={withBaseName("header")}>
+          {preheader && (
+            <Text variant="secondary" className={withBaseName("preheader")}>
+              {preheader}
+            </Text>
+          )}
+          <div>{header}</div>
+        </H2>
+      </div>
+    );
+  }
+);

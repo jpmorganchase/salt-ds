@@ -12,6 +12,7 @@ import {
   StackLayout,
   TextNotation,
   TextAction,
+  Code,
 } from "@salt-ds/core";
 
 export const Styles = (): ReactElement => (
@@ -25,6 +26,7 @@ export const Styles = (): ReactElement => (
     <H4>H4</H4>
     <Text>Text</Text>
     <Label>Label</Label>
+    <Code>Code</Code>
     <TextNotation>Notation</TextNotation>
     <TextAction>Action</TextAction>
   </StackLayout>
