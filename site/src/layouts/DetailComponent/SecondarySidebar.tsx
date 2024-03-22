@@ -6,7 +6,7 @@ import { Data, Relationship } from "./DetailComponent";
 import { useAllExamplesView } from "../../utils/useAllExamplesView";
 
 import styles from "./SecondarySidebar.module.css";
-import { useRoute } from "@jpmorganchase/mosaic-store";
+import { useRoute, SiteState, useStore } from "@jpmorganchase/mosaic-store";
 
 type LinkWithLogoProps = {
   href: string;
@@ -37,6 +37,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
   const {
     alsoKnownAs,
     relatedComponents,
+    relatedPatterns,
     sourceCodeUrl,
     stickerSheet,
     bugReport,
@@ -82,6 +83,33 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
       )
     );
   };
+
+  type CustomSiteState = SiteState & { data?: Data };
+
+  function getHrefFromComponent(component: string) {
+    // Multiline Input -> multiline-input
+    // Input -> input
+    // File Drop Zone => file-drop-zone
+    const tag = component.replaceAll(/ /g, "-").toLowerCase();
+    return `/salt/patterns/${tag}`;
+  }
+
+  if (Array.isArray(relatedPatterns) && relatedPatterns.length > 0) {
+    return (
+      <section className={styles.list}>
+        <Heading4>Related patterns</Heading4>
+        <ul className={styles.list}>
+          {relatedPatterns
+            .sort((a, b) => a.localeCompare(b))
+            .map((pattern) => (
+              <li key={pattern}>
+                <Link href={getHrefFromComponent(pattern)}>{pattern}</Link>
+              </li>
+            ))}
+        </ul>
+      </section>
+    );
+  }
 
   const componentResourcesList = (
     <>
