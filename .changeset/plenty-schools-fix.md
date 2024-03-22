@@ -2,7 +2,7 @@
 "@salt-ds/lab": minor
 ---
 
-Removed `onClose` prop from `Overlay`, onOpenChange is called for events that open/close the overlay.
+Removed the `onClose` prop from `Overlay`, `onOpenChange` is now called for events that open/close the overlay.
 
 ```tsx
 export const ControlledOverlay = () => {
