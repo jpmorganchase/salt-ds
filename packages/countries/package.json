@@ -14,11 +14,13 @@
   },
   "sideEffects": false,
   "files": [
-    "saltCountries.css"
+    "saltCountries.css",
+    "salt-countries.css"
   ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
-    "clean": "rimraf ./src/components"
+    "clean": "rimraf ./src/components",
+    "copy:css": "yarn node ./scripts/copyCss.mjs"
   },
   "dependencies": {
     "clsx": "^2.0.0"

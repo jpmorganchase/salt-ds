@@ -1,6 +1,7 @@
+import { AD, GB, MX, US } from "@salt-ds/countries";
 import { Meta, StoryFn } from "@storybook/react";
-import { StackLayout } from "@salt-ds/core";
-import { MX } from "@salt-ds/countries";
+import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
+
 import "@salt-ds/countries/saltCountries.css";
 
 export default {
@@ -9,13 +10,12 @@ export default {
 
 export const CountrySymbolSizes: StoryFn = () => {
   return (
-    <StackLayout direction="row">
-      <MX size={1} />
-      <MX size={2} />
+    <QAContainer height={500} width={1500} cols={4}>
+      <AD size={1} />
+      <GB size={2} />
       <MX size={3} />
-      <MX size={4} />
-      <MX size={5} />
-    </StackLayout>
+      <US size={4} />
+    </QAContainer>
   );
 };
 
@@ -23,13 +23,34 @@ CountrySymbolSizes.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
+export const NoStyleInjection: StoryFn = () => {
+  return (
+    <QAContainerNoStyleInjection
+      height={500}
+      width={1500}
+      cols={4}
+      enableStyleInjection={false}
+    >
+      <AD size={1} />
+      <GB size={2} />
+      <MX size={3} />
+      <US size={4} />
+    </QAContainerNoStyleInjection>
+  );
+};
+
+NoStyleInjection.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const CssBackground: StoryFn = () => {
   return (
-    <StackLayout direction="row">
+    <QAContainer height={500} width={1000} cols={4}>
       <div className="saltCountry-AD" />
       <div className="saltCountry-MX" />
       <div className="saltCountry-GB-SCT" />
-    </StackLayout>
+      <div className="saltCountry-US" />
+    </QAContainer>
   );
 };
 
