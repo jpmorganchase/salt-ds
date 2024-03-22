@@ -1,7 +1,6 @@
-import { Heading4 } from "../../components/mdx/h4";
 import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import styles from "./RelatedPatterns.module.css";
-import { Link } from "@salt-ds/core";
+import { LinkList } from "../../components/link-list/LinkList";
 
 type Data = {
   relatedPatterns: string[];
@@ -21,19 +20,15 @@ export function RelatedPatterns() {
   const relatedPatterns =
     useStore((state: CustomSiteState) => state.data?.relatedPatterns) ?? [];
 
+  const relatedPatternLinks = relatedPatterns.map((pattern) => ({
+    href: getHrefFromComponent(pattern),
+    label: pattern,
+  }));
+
   if (relatedPatterns.length > 0) {
     return (
       <section className={styles.root}>
-        <Heading4>Related patterns</Heading4>
-        <ul className={styles.list}>
-          {relatedPatterns
-            .sort((a, b) => a.localeCompare(b))
-            .map((pattern) => (
-              <li key={pattern}>
-                <Link href={getHrefFromComponent(pattern)}>{pattern}</Link>
-              </li>
-            ))}
-        </ul>
+        <LinkList heading="Related patterns" links={relatedPatternLinks} />
       </section>
     );
   }
