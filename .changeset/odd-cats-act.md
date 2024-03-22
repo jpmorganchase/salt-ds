@@ -2,7 +2,7 @@
 "@salt-ds/icons": minor
 ---
 
-Added `saltIcons.css` with all icons SVG as background image.
+Added `saltIcons.css` with all icon SVGs as background images.
 
 ```js
 import "@salt-ds/icons/saltIcons.css";
