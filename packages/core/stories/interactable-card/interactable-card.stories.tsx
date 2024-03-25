@@ -189,7 +189,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
 export const InteractableCardGroupMultiSelect: StoryFn<
   typeof InteractableCard
 > = (args) => (
-  <InteractableCardGroup selectionVariant="multiselect">
+  <InteractableCardGroup multiSelect>
     <InteractableCard {...args} value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
@@ -287,7 +287,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       onChange={(_event, value) => {
         setSelected(value);
       }}
-      selectionVariant="multiselect"
+      multiSelect
     >
       <InteractableCard {...args} value="jane-doe" style={{ width: "180px" }}>
         <StackLayout gap={1}>

@@ -96,14 +96,14 @@ export const InteractableCard = forwardRef<
   });
 
   const role = interactableCardGroup
-    ? interactableCardGroup.selectionVariant === "multiselect"
+    ? interactableCardGroup.multiSelect
       ? "checkbox"
       : "radio"
     : "button";
 
   const isMultiselect =
     interactableCardGroup &&
-    interactableCardGroup.selectionVariant === "multiselect";
+    interactableCardGroup.multiSelect;
 
   const isFirstChild =
     interactableCardGroup && interactableCardGroup.isFirstChild(value);

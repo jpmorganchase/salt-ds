@@ -15,7 +15,7 @@ const { Default, AccentVariations } = composedStories;
 const ControlledGroup = ({
   onChange,
   disabled,
-  selectionVariant,
+  multiSelect,
 }: InteractableCardGroupProps) => {
   const [controlledValues, setControlledValues] =
     useState<InteractableCardValue>();
@@ -33,7 +33,7 @@ const ControlledGroup = ({
       value={controlledValues}
       defaultChecked
       onChange={handleChange}
-      selectionVariant={selectionVariant}
+      multiSelect={multiSelect}
     >
       <InteractableCard value="one">One</InteractableCard>
       <InteractableCard value="two">Two</InteractableCard>
@@ -57,7 +57,7 @@ describe("Given an Interactable Card", () => {
 describe("GIVEN a multiselect InteractableCardGroup", () => {
   it("THEN should render InteractableCards", () => {
     cy.mount(
-      <InteractableCardGroup selectionVariant="multiselect">
+      <InteractableCardGroup multiSelect>
         <InteractableCard value="one">One</InteractableCard>
         <InteractableCard value="two">Two</InteractableCard>
         <InteractableCard value="three">Three</InteractableCard>
@@ -73,7 +73,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
   describe("WHEN using Tab to navigate", () => {
     it("SHOULD focus the first InteractableCard when none are checked", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="multiselect">
+        <InteractableCardGroup multiSelect>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -87,7 +87,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     it("SHOULD focus the next InteractableCard when one is checked", () => {
       cy.mount(
         <InteractableCardGroup
-          selectionVariant="multiselect"
+          multiSelect
           defaultValue={["one"]}
         >
           <InteractableCard value="one">One</InteractableCard>
@@ -103,7 +103,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     it("SHOULD move focus when pressing Tab and not wrap", () => {
       cy.mount(
         <>
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup multiSelect>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -126,7 +126,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       cy.mount(
         <>
           <button>start</button>
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup multiSelect>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -149,7 +149,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
     it("SHOULD skip disabled InteractableCards", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="multiselect">
+        <InteractableCardGroup multiSelect>
           <InteractableCard value="one" disabled />
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -165,7 +165,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     it("THEN should respect defaultValue", () => {
       cy.mount(
         <InteractableCardGroup
-          selectionVariant="multiselect"
+          multiSelect
           defaultValue={["one"]}
         >
           <InteractableCard value="one">One</InteractableCard>
@@ -193,7 +193,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     describe("AND using a mouse", () => {
       it("SHOULD toggle InteractableCards", () => {
         cy.mount(
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup multiSelect>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -261,7 +261,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
         cy.mount(
           <InteractableCardGroup
-            selectionVariant="multiselect"
+            multiSelect
             onChange={handleChange}
           >
             <InteractableCard value="one">One</InteractableCard>
@@ -281,7 +281,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
           cy.mount(
             <InteractableCardGroup
-              selectionVariant="multiselect"
+              multiSelect
               onChange={changeSpy}
             >
               <InteractableCard value="one" disabled />
@@ -302,7 +302,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
     describe("AND using a keyboard", () => {
       it("SHOULD toggle InteractableCards when using the Space key", () => {
         cy.mount(
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup multiSelect>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -381,7 +381,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
         cy.mount(
           <InteractableCardGroup
-            selectionVariant="multiselect"
+            multiSelect
             onChange={handleChange}
           >
             <InteractableCard value="one">One</InteractableCard>
@@ -399,7 +399,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
       it("SHOULD not toggle InteractableCards using the Enter key", () => {
         cy.mount(
-          <InteractableCardGroup selectionVariant="multiselect">
+          <InteractableCardGroup multiSelect>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -425,7 +425,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
   describe("WHEN mounted as a controlled component", () => {
     describe("THEN using a mouse", () => {
       it("SHOULD toggle InteractableCards", () => {
-        cy.mount(<ControlledGroup selectionVariant="multiselect" />);
+        cy.mount(<ControlledGroup multiSelect />);
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
@@ -485,7 +485,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <ControlledGroup
               onChange={changeSpy}
               disabled
-              selectionVariant="multiselect"
+              multiSelect
             />
           );
 
@@ -500,7 +500,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
     describe("AND using a keyboard", () => {
       it("SHOULD toggle InteractableCards when using the Space key", () => {
-        cy.mount(<ControlledGroup selectionVariant="multiselect" />);
+        cy.mount(<ControlledGroup multiSelect />);
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
@@ -563,7 +563,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       });
 
       it("SHOULD not toggle InteractableCards using the Enter key", () => {
-        cy.mount(<ControlledGroup selectionVariant="multiselect" />);
+        cy.mount(<ControlledGroup multiSelect />);
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
@@ -585,7 +585,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 describe("GIVEN a single selection InteractableCardGroup", () => {
   it("THEN should render InteractableCards", () => {
     cy.mount(
-      <InteractableCardGroup selectionVariant="single">
+      <InteractableCardGroup >
         <InteractableCard value="one">One</InteractableCard>
         <InteractableCard value="two">Two</InteractableCard>
         <InteractableCard value="three">Three</InteractableCard>
@@ -601,7 +601,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
   describe("WHEN using Tab to navigate", () => {
     it("SHOULD focus the first InteractableCard when none are checked", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="single">
+        <InteractableCardGroup >
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -615,7 +615,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
     it("SHOULD move focus out of group when pressing Tab", () => {
       cy.mount(
         <>
-          <InteractableCardGroup selectionVariant="single">
+          <InteractableCardGroup >
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -634,7 +634,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
       cy.mount(
         <>
           <button>start</button>
-          <InteractableCardGroup selectionVariant="single">
+          <InteractableCardGroup >
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -653,7 +653,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
     it("SHOULD skip disabled InteractableCards", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="single">
+        <InteractableCardGroup >
           <InteractableCard value="one" disabled />
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -668,7 +668,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
   describe("WHEN using arrow keys to navigate", () => {
     it("SHOULD focus and select the next or previous InteractableCard with arrow keys", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="single">
+        <InteractableCardGroup >
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -699,7 +699,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
     it("SHOULD select an InteractableCard on Space when none is selected initially", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="single">
+        <InteractableCardGroup >
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -717,7 +717,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
   describe("WHEN mounted as an uncontrolled component", () => {
     it("THEN should respect defaultValue", () => {
       cy.mount(
-        <InteractableCardGroup selectionVariant="single" defaultValue={"one"}>
+        <InteractableCardGroup defaultValue={"one"}>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -743,7 +743,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
     describe("AND using a mouse", () => {
       it("SHOULD select InteractableCards and unselect the others", () => {
         cy.mount(
-          <InteractableCardGroup selectionVariant="single">
+          <InteractableCardGroup >
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -799,7 +799,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
         cy.mount(
           <InteractableCardGroup
-            selectionVariant="single"
+
             onChange={handleChange}
           >
             <InteractableCard value="one">One</InteractableCard>
@@ -819,7 +819,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
           cy.mount(
             <InteractableCardGroup
-              selectionVariant="single"
+
               onChange={changeSpy}
             >
               <InteractableCard value="one" disabled />
@@ -840,7 +840,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
     describe("WHEN mounted as a controlled component", () => {
       describe("THEN using a mouse", () => {
         it("SHOULD select InteractableCards", () => {
-          cy.mount(<ControlledGroup selectionVariant="single" />);
+          cy.mount(<ControlledGroup />);
 
           cy.get('[role="radio"][data-value="one"]').should(
             "have.attr",
@@ -888,7 +888,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
               <ControlledGroup
                 onChange={changeSpy}
                 disabled
-                selectionVariant="single"
+
               />
             );
 

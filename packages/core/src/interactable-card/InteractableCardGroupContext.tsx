@@ -2,7 +2,6 @@ import { SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 
 export type InteractableCardValue = string | readonly string[] | undefined;
-export type SelectionVariant = "single" | "multiselect";
 
 export interface InteractableCardGroupContextValue {
   disabled?: boolean;
@@ -12,7 +11,7 @@ export interface InteractableCardGroupContextValue {
   ) => void;
   isSelected: (id: InteractableCardValue) => boolean;
   isFirstChild: (value: InteractableCardValue) => boolean;
-  selectionVariant: SelectionVariant;
+  multiSelect?: boolean;
   value: InteractableCardValue;
 }
 

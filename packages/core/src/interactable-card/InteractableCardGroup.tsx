@@ -16,7 +16,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
 import {
   InteractableCardGroupContext,
-  SelectionVariant,
   InteractableCardValue,
 } from "./InteractableCardGroupContext";
 import interactableCardGroupCss from "./InteractableCardGroup.css";
@@ -24,7 +23,7 @@ import interactableCardGroupCss from "./InteractableCardGroup.css";
 export interface InteractableCardGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * The default value. Use when the component is not controlled. Should be an array when `selectionVariant` is "multiselect".
+   * The default value. Use when the component is not controlled. Should be an array when `multiSelect` is true.
    */
   defaultValue?: InteractableCardValue;
   /**
@@ -32,13 +31,13 @@ export interface InteractableCardGroupProps
    */
   disabled?: boolean;
   /**
-   * The value. Use when the component is controlled.
+   * The value. Use when the component is controlled. Should be an array when `multiSelect` is true.
    */
   value?: InteractableCardValue;
   /**
-   * The selection variant.
+   * If `true` the Interactable Card Group will have multi select functionality.
    */
-  selectionVariant?: SelectionVariant;
+  multiSelect?: boolean
   /**
    * Callback fired when the selection changes.
    * @param event
@@ -63,7 +62,7 @@ export const InteractableCardGroup = forwardRef<
     disabled,
     onChange,
     onKeyDown,
-    selectionVariant = "single",
+    multiSelect,
     ...rest
   } = props;
 
@@ -100,7 +99,7 @@ export const InteractableCardGroup = forwardRef<
       event: SyntheticEvent<HTMLDivElement>,
       newValue: InteractableCardValue
     ) => {
-      if (selectionVariant === "multiselect") {
+      if (multiSelect) {
         const currentValues = Array.isArray(value) ? value : [];
         const isSelected = currentValues.includes(newValue);
 
@@ -116,15 +115,15 @@ export const InteractableCardGroup = forwardRef<
         }
       }
     },
-    [onChange, value, setValue, selectionVariant]
+    [onChange, value, setValue, multiSelect]
   );
 
   const isSelected = useCallback(
     (cardValue: InteractableCardValue) =>
-      selectionVariant === "multiselect"
+      multiSelect
         ? Array.isArray(value) && value.includes(cardValue)
         : cardValue !== undefined && value === cardValue,
-    [value, selectionVariant]
+    [value, multiSelect]
   );
 
   const isFirstChild = useCallback(
@@ -144,10 +143,10 @@ export const InteractableCardGroup = forwardRef<
       isSelected,
       isFirstChild,
       disabled,
-      selectionVariant,
+      multiSelect,
       value,
     }),
-    [select, isSelected, disabled, selectionVariant, isFirstChild, value]
+    [select, isSelected, disabled, multiSelect, isFirstChild, value]
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -167,7 +166,7 @@ export const InteractableCardGroup = forwardRef<
       );
     }
 
-    if (selectionVariant === "single") {
+    if (!multiSelect) {
       switch (event.key) {
         case "ArrowDown":
         case "ArrowRight":
@@ -194,7 +193,7 @@ export const InteractableCardGroup = forwardRef<
     <InteractableCardGroupContext.Provider value={contextValue}>
       <div
         className={clsx(withBaseName(), className)}
-        role={selectionVariant === "multiselect" ? "group" : "radiogroup"}
+        role={multiSelect ? "group" : "radiogroup"}
         onKeyDown={handleKeyDown}
         ref={handleRef}
         {...rest}
