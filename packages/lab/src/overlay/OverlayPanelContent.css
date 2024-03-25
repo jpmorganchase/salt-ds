@@ -1,0 +1,7 @@
+.saltOverlayPanelContent {
+  animation: var(--salt-animation-fade-in-center);
+  position: relative;
+  overflow: auto;
+  padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
+  padding-right: var(--salt-spacing-400);
+}

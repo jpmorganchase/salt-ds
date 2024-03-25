@@ -18,19 +18,3 @@
   z-index: var(--saltOverlay-zIndex, var(--salt-zIndex-flyover));
   width: max-content;
 }
-
-.saltOverlayPanel-container {
-  animation: var(--salt-animation-fade-in-center);
-  position: relative;
-}
-
-.saltOverlayPanel-content {
-  overflow: auto;
-  padding: var(--saltOverlay-content-padding, var(--salt-spacing-100) 0 var(--salt-spacing-100) var(--salt-spacing-100));
-}
-
-.saltButton-secondary.saltOverlayPanel-closeButton {
-  position: sticky;
-  top: 0;
-  float: right;
-}

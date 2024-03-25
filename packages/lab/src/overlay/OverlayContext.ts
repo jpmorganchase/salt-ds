@@ -6,7 +6,7 @@ import {
   Strategy,
 } from "@floating-ui/react";
 import { createContext, useFloatingUI } from "@salt-ds/core";
-import { useContext } from "react";
+import { ReactNode, useContext } from "react";
 
 type FloatingReturn = ReturnType<typeof useFloatingUI>;
 type FloatingStyleProps = {
@@ -26,7 +26,6 @@ export interface OverlayContextValue {
   context: FloatingContext;
   reference?: (node: ReferenceType | null) => void;
   floating?: (node: HTMLElement | null) => void;
-  handleCloseButtonClick: () => void;
   getFloatingProps: (
     userProps?: React.HTMLProps<HTMLElement> | undefined
   ) => Record<string, unknown>;
@@ -48,9 +47,6 @@ export const OverlayContext = createContext<OverlayContextValue>(
     placement: "" as Placement,
     context: {} as FloatingContext,
     arrowProps: {} as FloatingArrowProps,
-    handleCloseButtonClick() {
-      return undefined;
-    },
     reference: {} as FloatingReturn["reference"],
     floating: {} as FloatingReturn["floating"],
     getFloatingProps() {

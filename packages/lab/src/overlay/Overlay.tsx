@@ -96,10 +96,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       context,
     };
 
-    const handleCloseButtonClick = () => {
-      handleOpenChange(false);
-    };
-
     return (
       <OverlayContext.Provider
         value={{
@@ -111,14 +107,13 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
           arrowProps,
           floating,
           reference,
-          handleCloseButtonClick,
           getFloatingProps,
           getReferenceProps,
         }}
+        ref={ref}
+        {...rest}
       >
-        <div ref={ref} {...rest}>
-          {children}
-        </div>
+        {children}
       </OverlayContext.Provider>
     );
   }

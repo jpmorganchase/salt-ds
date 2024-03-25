@@ -4,8 +4,9 @@ import {
   CheckboxGroup,
   StackLayout,
   Tooltip,
+  useId,
 } from "@salt-ds/core";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { StoryFn, Meta } from "@storybook/react";
 
 import {
@@ -13,41 +14,45 @@ import {
   OverlayPanel,
   OverlayProps,
   OverlayTrigger,
+  OverlayPanelCloseButton,
+  OverlayPanelContent,
 } from "@salt-ds/lab";
 
 import "./overlay.stories.css";
 
 export default {
   title: "Lab/Overlay",
-  component: Overlay,
 } as Meta<typeof Overlay>;
 
-const OverlayContent = ({ id }: { id: string }) => {
-  return (
-    <>
-      <h3 id={`${id}-header`} className="content-heading">
-        Title
-      </h3>
-      <div id={`${id}-content`}>
-        Content of Overlay
-        <br />
-        <br />
-        <Tooltip content={"im a tooltip"}>
-          <Button>hover me</Button>
-        </Tooltip>
-      </div>
-    </>
-  );
-};
+export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
+  const [open, setOpen] = useState(false);
+  const id = useId();
 
-export const Default: StoryFn<OverlayProps> = ({ id, ...args }) => {
+  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
+
+  const handleClose = () => setOpen(false);
+
   return (
-    <Overlay id={id} {...args}>
+    <Overlay open={open} onOpenChange={onOpenChange} {...args}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel>
-        <OverlayContent id={id ?? ""} />
+
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelCloseButton onClick={handleClose} />
+        <OverlayPanelContent>
+          <h3 id={id} className="content-heading">
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <br />
+            <br />
+            <Tooltip content={"im a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );
@@ -55,27 +60,48 @@ export const Default: StoryFn<OverlayProps> = ({ id, ...args }) => {
 
 export const Bottom = Default.bind({});
 Bottom.args = {
-  id: "overlay-bottom",
   placement: "bottom",
 };
 
 export const Left = Default.bind({});
 Left.args = {
-  id: "overlay-left",
   placement: "left",
 };
 
 export const Right = Default.bind({});
 Right.args = {
-  id: "overlay-right",
   placement: "right",
 };
 
-export const LongContent = () => {
-  const id = "overlay-long-content";
-
+export const WithoutCloseButton = () => {
+  const id = useId();
   return (
-    <Overlay id={id} placement="right">
+    <Overlay placement="right">
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelContent>
+          <h3 id={id} className="content-heading">
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <br />
+            <br />
+            <Tooltip content={"im a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanelContent>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
+export const LongContent = () => {
+  return (
+    <Overlay placement="right">
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
@@ -86,22 +112,25 @@ export const LongContent = () => {
           overflow: "auto",
         }}
       >
-        <StackLayout id={`${id}-content`}>
-          <div>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </div>
-          <div>
-            It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was
-            popularised in the 1960s with the release of Letraset sheets
-            containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem
-            Ipsum.
-          </div>
-        </StackLayout>
+        <OverlayPanelCloseButton />
+        <OverlayPanelContent>
+          <StackLayout>
+            <div>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
+            </div>
+            <div>
+              It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </div>
+          </StackLayout>
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );
@@ -131,7 +160,7 @@ const WithActionsContent = ({
   id,
 }: {
   onClose: () => void;
-  id: string;
+  id: string | undefined;
 }) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
@@ -176,10 +205,10 @@ const WithActionsContent = ({
 
   return (
     <>
-      <h3 id={`${id}-header`} style={{ marginTop: 0 }}>
+      <h3 id={id} style={{ marginTop: 0 }}>
         Export
       </h3>
-      <div id={`${id}-content`}>
+      <div>
         <Checkbox
           indeterminate={indeterminate}
           checked={!indeterminate}
@@ -209,7 +238,7 @@ const WithActionsContent = ({
 
 export const WithActions = ({ onOpenChange }: OverlayProps) => {
   const [open, setOpen] = React.useState(false);
-  const id = "overlay-with-actions";
+  const id = useId();
 
   const onChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -217,7 +246,7 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
   };
 
   return (
-    <Overlay open={open} onOpenChange={onChange} placement="bottom" id={id}>
+    <Overlay open={open} onOpenChange={onChange} placement="bottom">
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
@@ -225,13 +254,17 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
         style={{
           width: 246,
         }}
+        aria-labelledby={id}
       >
-        <WithActionsContent
-          onClose={() => {
-            setOpen(false);
-          }}
-          id={id}
-        />
+        <OverlayPanelCloseButton />
+        <OverlayPanelContent>
+          <WithActionsContent
+            onClose={() => {
+              setOpen(false);
+            }}
+            id={id}
+          />
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

@@ -3,7 +3,8 @@ import * as overlayStories from "@stories/overlay/overlay.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, WithActions } = composedStories;
+const { Default, Right, Bottom, Left, WithActions, WithoutCloseButton } =
+  composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -31,9 +32,11 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("button", { name: /Show Overlay/i }).should("be.focused");
     });
 
+    //Think about what you're trying to test ?
+
     it("THEN it should remain open until outside Overlay click or close button click", () => {
       const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
-      cy.mount(<Default onOpenChange={onOpenChangeSpy} />);
+      cy.mount(<WithoutCloseButton onOpenChange={onOpenChangeSpy} />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
