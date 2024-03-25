@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added `SegmentedButtonGroup` to core
+Added `SegmentedButtonGroup` to core.
 `SegmentedButtonGroup` shows a list of actionable buttons, flush with separators between them.
 
 ```tsx
