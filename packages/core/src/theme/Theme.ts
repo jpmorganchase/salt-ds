@@ -16,7 +16,7 @@ export type characteristic =
   | "text"
   | "differential" /* **deprecated** */;
 
-export type ThemeName = string;
+export type ThemeName = string | string[];
 
 export const getCharacteristicValue = (
   themeName: ThemeName,
@@ -26,7 +26,12 @@ export const getCharacteristicValue = (
 ): string | null => {
   const cssVariableName = `--salt-${characteristicName}-${variant}`;
   const scopeTarget =
-    scopeElement || document.body.querySelector(`.${themeName}`);
+    scopeElement ??
+    document.body.querySelector(
+      Array.isArray(themeName)
+        ? themeName.map((t) => "." + t).join()
+        : `.${themeName}`
+    );
   if (scopeTarget) {
     const style = getComputedStyle(scopeTarget);
     const variableValue = style.getPropertyValue(cssVariableName);

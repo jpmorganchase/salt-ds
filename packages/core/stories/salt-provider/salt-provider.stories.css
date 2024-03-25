@@ -1,0 +1,7 @@
+.custom-font.salt-theme {
+  --salt-typography-fontFamily: "Times New Roman";
+}
+
+.no-spacing.salt-theme {
+  --salt-spacing-100: 0px;
+}
