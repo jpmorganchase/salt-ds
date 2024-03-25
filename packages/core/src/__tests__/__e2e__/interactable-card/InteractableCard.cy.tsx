@@ -84,19 +84,6 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
       cy.get('[role="checkbox"][data-value="one"]').should("be.focused");
     });
 
-    it("SHOULD focus the next InteractableCard when one is checked", () => {
-      cy.mount(
-        <InteractableCardGroup multiSelect defaultValue={["one"]}>
-          <InteractableCard value="one">One</InteractableCard>
-          <InteractableCard value="two">Two</InteractableCard>
-          <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
-      );
-
-      cy.realPress("Tab");
-      cy.get('[role="checkbox"][data-value="two"]').should("be.focused");
-    });
-
     it("SHOULD move focus when pressing Tab and not wrap", () => {
       cy.mount(
         <>

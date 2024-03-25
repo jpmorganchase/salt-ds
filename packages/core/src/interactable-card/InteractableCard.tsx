@@ -140,12 +140,6 @@ export const InteractableCard = forwardRef<
   const cardRef = useRef<HTMLDivElement>(null);
   const handleRef = useForkRef(ref, cardRef);
 
-  useLayoutEffect(() => {
-    if (selected && cardRef.current) {
-      cardRef.current.focus();
-    }
-  }, [selected]);
-
   const { active, cardProps } = useInteractableCard({
     disabled,
     onKeyUp,
