@@ -16,7 +16,8 @@ Cards may include text, images, or interactive elements. Make sure the content a
 
 - To group related information with the same visual hierarchy.
 - To present a summary of a larger idea.
-- To link to more detailed information.
+- **Link cards:** to link to more detailed information.
+- **Interactable cards:** when you need a card to act as a button or when a group of cards needs to behave like a set of checkboxes or radio buttons.
 
 ### When not to use
 
@@ -43,7 +44,12 @@ Interactable cards serve as a [toggle button](../toggle-button), [button](../but
 To import `Card`, `InteractableCard` and `LinkCard` from the core Salt package, use:
 
 ```js
-import { Card, InteractableCard, LinkCard } from "@salt-ds/core";
+import {
+  Card,
+  InteractableCard,
+  InteractableCardGroup,
+  LinkCard,
+} from "@salt-ds/core";
 ```
 
 ## Props
