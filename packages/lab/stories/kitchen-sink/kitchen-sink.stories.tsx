@@ -47,7 +47,7 @@ import {
 import {
   Default as CardDefault,
   DefaultInteractableCard as InteractableCardStory,
-} from "../../../core/stories/card/card.stories";
+} from "../../../core/stories/interactable-card/interactable-card.stories";
 import {
   HorizontalGroup as CheckboxHorizontalGroup,
   Error as CheckboxError,
