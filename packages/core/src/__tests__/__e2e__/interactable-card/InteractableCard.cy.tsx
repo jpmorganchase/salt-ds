@@ -10,7 +10,7 @@ import {
 import { useState, SyntheticEvent } from "react";
 
 const composedStories = composeStories(cardStories);
-const { Default, AccentVariations } = composedStories;
+const { Default } = composedStories;
 
 const ControlledGroup = ({
   onChange,
