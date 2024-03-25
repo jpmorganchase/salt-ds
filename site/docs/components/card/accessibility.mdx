@@ -23,19 +23,39 @@ Salt provides layout components that can help achieve this.
 ## Keyboard interactions
 
 <KeyboardControls>
+
 <KeyboardControl keyOrCombos="Tab">
 
-Tab moves focus to a target element in the correct tabbing order on a page.
+- Tab moves focus to a link card or an interactable card.
+- In a single-select group, moves focus to the next focusable element on the page. This is consistent with radio button.
+- In a multi-select group, moves focus to the next card within the group. This is consistent with checkbox.
 
 </KeyboardControl>
+
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-When focus is on a target element, this action moves focus to the previous interactive element within the tab order.
+- Tab moves focus to a link card or an interactable card.
+- In a single-select group, moves focus to the previous focusable element on the page.
+- In a multi-select group, moves focus to the previous card within the group.
 
 </KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- In a single-select group, selects an unselected interactable card.
+- In a multi-select group, selects or deselects an interactable card.
+
+</KeyboardControl>
+
 <KeyboardControl keyOrCombos="Enter">
 
-If the target element has focus, Enter activates the target element.
+- In a link card, Enter navigates the user.
+- In an interactable card outside of a group, if the card has focus Enter activates it.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
+
+- In a single-select group, moves focus between the available card options, and simultaneously selects an option.
 
 </KeyboardControl>
 </KeyboardControls>
