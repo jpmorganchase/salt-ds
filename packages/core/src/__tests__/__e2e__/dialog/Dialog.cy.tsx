@@ -121,15 +121,23 @@ describe("GIVEN a Dialog", () => {
 
   describe("WHEN a Dialog is open", () => {
     it("THEN it should close when the close button is clicked", () => {
+      cy.spy(console, "log").as("consoleSpy");
+
       cy.mount(<Default />);
 
       cy.findByRole("button").click();
 
       cy.findByRole("dialog").should("be.visible");
 
-      cy.findByLabelText("Close dialog").click();
+      cy.get("@consoleSpy").then((spy) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        const callCount = (spy as any).callCount;
 
-      cy.findByRole("dialog").should("not.exist");
+        cy.findByLabelText("Close dialog").click();
+        cy.findByRole("dialog").should("not.exist");
+
+        cy.get("@consoleSpy").should("have.callCount", callCount + 1); // Test unmount regression #3153
+      });
     });
 
     it("THEN it should close when the ESC key is pressed", () => {

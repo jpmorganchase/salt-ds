@@ -1,0 +1,29 @@
+.link {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.list {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.heading {
+  margin-bottom: var(--salt-spacing-100);
+}
+
+.root {
+  margin-top: var(--salt-spacing-200);
+  margin-bottom: var(--salt-spacing-200);
+}
+
+.subheader {
+  font-style: var(--salt-editable-help-fontStyle);
+  margin-top: var(--salt-spacing-300);
+  margin-bottom: var(--salt-spacing-200);
+}

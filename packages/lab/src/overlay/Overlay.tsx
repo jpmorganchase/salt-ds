@@ -1,10 +1,4 @@
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  SyntheticEvent,
-  useMemo,
-  useRef,
-} from "react";
+import { ComponentPropsWithoutRef, forwardRef, useMemo, useRef } from "react";
 import { OverlayContext } from "./OverlayContext";
 import { useControlled, useFloatingUI, useId } from "@salt-ds/core";
 import {
@@ -20,16 +14,18 @@ import {
 } from "@floating-ui/react";
 
 export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Display or hide the component.
+   */
   open?: boolean;
-  onOpenChange?: (event: SyntheticEvent, newOpen: boolean) => void;
+  /**
+   * Callback function triggered when open state changes.
+   */
+  onOpenChange?: (open: boolean) => void;
   /*
    * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
   placement?: "top" | "bottom" | "left" | "right";
-  /*
-   * Use in controlled version to close Overlay.
-   */
-  onClose?: (event: SyntheticEvent) => void;
 }
 
 export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
@@ -40,7 +36,6 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       onOpenChange,
       placement: placementProp = "top",
       id: idProp,
-      onClose,
       ...rest
     } = props;
 
@@ -54,6 +49,11 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       state: "open",
     });
 
+    const handleOpenChange = (newOpen: boolean) => {
+      setOpenState(newOpen);
+      onOpenChange?.(newOpen);
+    };
+
     const {
       x,
       y,
@@ -65,7 +65,7 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       placement,
     } = useFloatingUI({
       open: openState,
-      onOpenChange: setOpenState,
+      onOpenChange: handleOpenChange,
       placement: placementProp,
       middleware: [
         offset(11),
@@ -91,19 +91,13 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       };
     }, [elements.floating, strategy, x, y]);
 
-    const setOpen = (event: SyntheticEvent, newOpen: boolean) => {
-      setOpenState(newOpen);
-      onOpenChange?.(event, newOpen);
-    };
-
     const arrowProps = {
       ref: arrowRef,
       context,
     };
 
-    const handleCloseButton = (event: SyntheticEvent) => {
-      setOpen(event, false);
-      onClose?.(event);
+    const handleCloseButtonClick = () => {
+      handleOpenChange(false);
     };
 
     return (
@@ -111,14 +105,13 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
         value={{
           id: id ?? "",
           openState,
-          setOpen,
           floatingStyles,
           placement,
           context,
           arrowProps,
           floating,
           reference,
-          handleCloseButton,
+          handleCloseButtonClick,
           getFloatingProps,
           getReferenceProps,
         }}

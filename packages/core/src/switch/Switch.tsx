@@ -168,6 +168,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
         onChange={handleChange}
         onFocus={onFocus}
         type="checkbox"
+        role="switch"
         {...restInputProps}
       />
       <span className={withBaseName("track")}>

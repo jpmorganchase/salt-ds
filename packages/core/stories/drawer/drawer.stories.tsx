@@ -26,13 +26,13 @@ export default {
   component: Drawer,
 } as Meta<typeof Drawer>;
 
-const DummyContent = () => {
+const UnmountLogger = () => {
   useEffect(() => {
     return () => {
       console.log(new Date().getTime(), "Dummy unmount");
     };
   }, []);
-  return <Text>Dummy</Text>;
+  return null;
 };
 
 export const Default: StoryFn<DrawerProps> = (args) => {
@@ -50,7 +50,7 @@ export const Default: StoryFn<DrawerProps> = (args) => {
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
-        <DummyContent />
+        <UnmountLogger />
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
         Open Secondary Drawer
