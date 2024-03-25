@@ -86,10 +86,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
     it("SHOULD focus the next InteractableCard when one is checked", () => {
       cy.mount(
-        <InteractableCardGroup
-          multiSelect
-          defaultValue={["one"]}
-        >
+        <InteractableCardGroup multiSelect defaultValue={["one"]}>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -164,10 +161,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
   describe("WHEN mounted as an uncontrolled component", () => {
     it("THEN should respect defaultValue", () => {
       cy.mount(
-        <InteractableCardGroup
-          multiSelect
-          defaultValue={["one"]}
-        >
+        <InteractableCardGroup multiSelect defaultValue={["one"]}>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -260,10 +254,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         };
 
         cy.mount(
-          <InteractableCardGroup
-            multiSelect
-            onChange={handleChange}
-          >
+          <InteractableCardGroup multiSelect onChange={handleChange}>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -280,10 +271,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           const changeSpy = cy.stub().as("changeSpy");
 
           cy.mount(
-            <InteractableCardGroup
-              multiSelect
-              onChange={changeSpy}
-            >
+            <InteractableCardGroup multiSelect onChange={changeSpy}>
               <InteractableCard value="one" disabled />
               <InteractableCard value="two">Two</InteractableCard>
               <InteractableCard value="three">Three</InteractableCard>
@@ -380,10 +368,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         };
 
         cy.mount(
-          <InteractableCardGroup
-            multiSelect
-            onChange={handleChange}
-          >
+          <InteractableCardGroup multiSelect onChange={handleChange}>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -482,11 +467,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           const changeSpy = cy.stub().as("changeSpy");
 
           cy.mount(
-            <ControlledGroup
-              onChange={changeSpy}
-              disabled
-              multiSelect
-            />
+            <ControlledGroup onChange={changeSpy} disabled multiSelect />
           );
 
           cy.get('[role="checkbox"][data-value="one"]')
@@ -585,7 +566,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 describe("GIVEN a single selection InteractableCardGroup", () => {
   it("THEN should render InteractableCards", () => {
     cy.mount(
-      <InteractableCardGroup >
+      <InteractableCardGroup>
         <InteractableCard value="one">One</InteractableCard>
         <InteractableCard value="two">Two</InteractableCard>
         <InteractableCard value="three">Three</InteractableCard>
@@ -601,7 +582,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
   describe("WHEN using Tab to navigate", () => {
     it("SHOULD focus the first InteractableCard when none are checked", () => {
       cy.mount(
-        <InteractableCardGroup >
+        <InteractableCardGroup>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -615,7 +596,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
     it("SHOULD move focus out of group when pressing Tab", () => {
       cy.mount(
         <>
-          <InteractableCardGroup >
+          <InteractableCardGroup>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -634,7 +615,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
       cy.mount(
         <>
           <button>start</button>
-          <InteractableCardGroup >
+          <InteractableCardGroup>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -653,7 +634,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
     it("SHOULD skip disabled InteractableCards", () => {
       cy.mount(
-        <InteractableCardGroup >
+        <InteractableCardGroup>
           <InteractableCard value="one" disabled />
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -668,7 +649,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
   describe("WHEN using arrow keys to navigate", () => {
     it("SHOULD focus and select the next or previous InteractableCard with arrow keys", () => {
       cy.mount(
-        <InteractableCardGroup >
+        <InteractableCardGroup>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -699,7 +680,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
     it("SHOULD select an InteractableCard on Space when none is selected initially", () => {
       cy.mount(
-        <InteractableCardGroup >
+        <InteractableCardGroup>
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
@@ -743,7 +724,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
     describe("AND using a mouse", () => {
       it("SHOULD select InteractableCards and unselect the others", () => {
         cy.mount(
-          <InteractableCardGroup >
+          <InteractableCardGroup>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -798,10 +779,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
         };
 
         cy.mount(
-          <InteractableCardGroup
-
-            onChange={handleChange}
-          >
+          <InteractableCardGroup onChange={handleChange}>
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
@@ -818,10 +796,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           const changeSpy = cy.stub().as("changeSpy");
 
           cy.mount(
-            <InteractableCardGroup
-
-              onChange={changeSpy}
-            >
+            <InteractableCardGroup onChange={changeSpy}>
               <InteractableCard value="one" disabled />
               <InteractableCard value="two">Two</InteractableCard>
               <InteractableCard value="three">Three</InteractableCard>
@@ -884,13 +859,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           it("SHOULD not select the InteractableCard", () => {
             const changeSpy = cy.stub().as("changeSpy");
 
-            cy.mount(
-              <ControlledGroup
-                onChange={changeSpy}
-                disabled
-
-              />
-            );
+            cy.mount(<ControlledGroup onChange={changeSpy} disabled />);
 
             cy.get('[role="radio"][data-value="one"]')
               .should("have.attr", "aria-disabled", "true")

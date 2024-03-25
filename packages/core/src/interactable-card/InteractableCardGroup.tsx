@@ -37,7 +37,7 @@ export interface InteractableCardGroupProps
   /**
    * If `true` the Interactable Card Group will have multi select functionality.
    */
-  multiSelect?: boolean
+  multiSelect?: boolean;
   /**
    * Callback fired when the selection changes.
    * @param event

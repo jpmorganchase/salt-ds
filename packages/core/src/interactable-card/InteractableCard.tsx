@@ -102,8 +102,7 @@ export const InteractableCard = forwardRef<
     : "button";
 
   const isMultiselect =
-    interactableCardGroup &&
-    interactableCardGroup.multiSelect;
+    interactableCardGroup && interactableCardGroup.multiSelect;
 
   const isFirstChild =
     interactableCardGroup && interactableCardGroup.isFirstChild(value);

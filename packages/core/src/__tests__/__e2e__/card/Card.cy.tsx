@@ -5,7 +5,6 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 const composedStories = composeStories(cardStories);
 const { Default, AccentVariations } = composedStories;
 
-
 describe("Given a Card", () => {
   checkAccessibility(composedStories);
 
