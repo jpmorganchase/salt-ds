@@ -4,7 +4,6 @@ import {
   ComponentPropsWithoutRef,
   SyntheticEvent,
   useRef,
-  useLayoutEffect,
 } from "react";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
@@ -110,6 +109,8 @@ export const InteractableCard = forwardRef<
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
 
+  const accentValue = accent || accentPlacement
+
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (interactableCardGroup && !disabled) {
       interactableCardGroup.select(event, value);
@@ -129,7 +130,7 @@ export const InteractableCard = forwardRef<
     } else {
       // Single select: Only selected or first item (if none are selected) is focusable
       tabIndex = selected ? 0 : -1;
-      if (!interactableCardGroup?.value && isFirstChild) {
+      if (!interactableCardGroup.value && isFirstChild) {
         tabIndex = 0;
       }
     }
@@ -159,8 +160,8 @@ export const InteractableCard = forwardRef<
         withBaseName(),
         withBaseName(variant),
         {
-          [withBaseName("accent")]: accentPlacement ?? accent,
-          [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
+          [withBaseName("accent")]: accentValue,
+          [withBaseName(`accent${capitalize(accentValue ?? "")}`)]: accentValue,
           [withBaseName("active")]: role === "button" && active,
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
