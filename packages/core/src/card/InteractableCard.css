@@ -3,8 +3,6 @@
   border-width: var(--saltInteractableCard-borderWidth, var(--salt-size-border));
   border-style: var(--saltInteractableCard-borderStyle, var(--salt-container-borderStyle));
   border-radius: var(--saltInteractableCard-borderRadius, 0);
-  /* TODO: remove when moving to core (currently clashing with existing interactable card on site) */
-  box-shadow: none;
   display: block;
   padding: var(--saltInteractableCard-padding, var(--salt-spacing-200));
   position: relative;
