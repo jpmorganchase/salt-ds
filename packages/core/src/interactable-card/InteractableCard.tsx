@@ -109,7 +109,7 @@ export const InteractableCard = forwardRef<
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
 
-  const accentValue = accent || accentPlacement
+  const accentValue = accent || accentPlacement;
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (interactableCardGroup && !disabled) {
