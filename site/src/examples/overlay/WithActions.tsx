@@ -105,24 +105,17 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 };
 
 export const WithActions = () => {
-  const [show, setShow] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const id = useId();
 
+  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
+
   return (
-    <Overlay
-      open={show}
-      onClose={() => {
-        setShow(false);
-      }}
-      onKeyDown={(event) => {
-        event.key === "Escape" && setShow(false);
-      }}
-      placement="bottom"
-    >
+    <Overlay open={open} onOpenChange={onOpenChange} placement="bottom">
       <OverlayTrigger>
         <Button
           onClick={() => {
-            setShow(true);
+            setOpen(true);
           }}
         >
           Show Overlay
@@ -137,7 +130,7 @@ export const WithActions = () => {
         <WithActionsContent
           id={id}
           onClose={() => {
-            setShow(false);
+            setOpen(false);
           }}
         />
       </OverlayPanel>
