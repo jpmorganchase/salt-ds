@@ -110,7 +110,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
   const [showComponent, setShowComponent] = useState(false);
 
   const { context, floating, elements } = useFloatingUI({
-    open,
+    open: showComponent,
     onOpenChange,
   });
 
@@ -140,7 +140,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
 
   return (
     <DialogContext.Provider value={contextValue}>
-      <ConditionalScrimWrapper condition={open && !disableScrim}>
+      <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
         <FloatingComponent
           open={showComponent}
           role="dialog"
