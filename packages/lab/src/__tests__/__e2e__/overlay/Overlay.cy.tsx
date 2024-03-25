@@ -3,7 +3,7 @@ import * as overlayStories from "@stories/overlay/overlay.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left } = composedStories;
+const { Default, Right, Bottom, Left, WithActions } = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -32,26 +32,28 @@ describe("GIVEN an Overlay", () => {
     });
 
     it("THEN it should remain open until outside Overlay click or close button click", () => {
-      const closeSpy = cy.stub().as("closeSpy");
-      cy.mount(<Default onClose={closeSpy} />);
+      const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
+      cy.mount(<Default onOpenChange={onOpenChangeSpy} />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
+      cy.get("@onOpenChangeSpy").should("have.callCount", 1);
       cy.findByRole("button", { name: /Close Overlay/i }).realClick();
-      cy.get("@closeSpy").should("have.callCount", 1);
       cy.findByRole("dialog").should("not.exist");
+      cy.get("@onOpenChangeSpy").should("have.callCount", 2);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      // dbl click to trigger outside of Overlay click, see SOF post
-      // https://stackoverflow.com/questions/51254946/cypress-does-not-always-executes-click-on-element/58302240#58302240
-      cy.get("body").dblclick(0, 0);
+      cy.get("@onOpenChangeSpy").should("have.callCount", 3);
+      cy.get("body").realClick();
       cy.findByRole("dialog").should("not.exist");
+      cy.get("@onOpenChangeSpy").should("have.callCount", 4);
     });
 
     it("THEN it should trap focus within Overlay once opened", () => {
-      cy.mount(<Default open />);
+      cy.mount(<Default />);
 
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
       cy.realPress("Tab");
@@ -63,8 +65,9 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted top", () => {
     it("THEN it should appear on top of trigger element", () => {
-      cy.mount(<Default open />);
+      cy.mount(<Default />);
 
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().y;
         cy.findByText(/Show Overlay/i).should(($el) => {
@@ -76,8 +79,9 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted right", () => {
     it("THEN it should appear on right of trigger element", () => {
-      cy.mount(<Right open />);
+      cy.mount(<Right />);
 
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().x;
         cy.findByText(/Show Overlay/i).should(($el) => {
@@ -89,8 +93,9 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted bottom", () => {
     it("THEN it should appear on bottom of trigger element", () => {
-      cy.mount(<Bottom open />);
+      cy.mount(<Bottom />);
 
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").then(($el) => {
         const position = $el[0].getBoundingClientRect().y;
         cy.findByText(/Show Overlay/i).should(($el) => {
@@ -102,14 +107,34 @@ describe("GIVEN an Overlay", () => {
 
   describe("WHEN mounted left", () => {
     it("THEN it should appear on left of trigger element", () => {
-      cy.mount(<Left open />);
+      cy.mount(<Left />);
 
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").then(($el) => {
         const textPosition = $el[0].getBoundingClientRect().x;
         cy.findByText(/Show Overlay/i).should(($el) => {
           expect($el[0].getBoundingClientRect().x).greaterThan(textPosition);
         });
       });
+    });
+  });
+
+  describe("WHEN controlled", () => {
+    it("THEN it should remain open until outside Overlay click or close button click", () => {
+      const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
+      cy.mount(<WithActions onOpenChange={onOpenChangeSpy} />);
+
+      cy.realPress("Tab");
+      cy.realPress("Enter");
+      cy.findByRole("dialog").should("be.visible");
+      cy.get("@onOpenChangeSpy").should("have.callCount", 1);
+
+      cy.findByRole("button", { name: /Close Overlay/i }).realClick();
+      cy.get("@onOpenChangeSpy").should("have.callCount", 2);
+
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.get("body").realClick();
+      cy.get("@onOpenChangeSpy").should("have.callCount", 4);
     });
   });
 });
