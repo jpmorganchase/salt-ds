@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, ReactNode, MouseEvent } from "react";
+import { cloneElement, isValidElement, ReactNode } from "react";
 import { mergeProps, useForkRef } from "@salt-ds/core";
 import { useOverlayContext } from "./OverlayContext";
 
@@ -9,7 +9,7 @@ export interface OverlayTriggerProps {
 export function OverlayTrigger(props: OverlayTriggerProps) {
   const { children } = props;
 
-  const { setOpen, reference, getReferenceProps, id } = useOverlayContext();
+  const { reference, getReferenceProps, id } = useOverlayContext();
 
   const triggerRef = useForkRef(
     // @ts-ignore error TS2339 missing property ref
@@ -20,14 +20,10 @@ export function OverlayTrigger(props: OverlayTriggerProps) {
   if (!children || !isValidElement(children)) {
     return <>{children}</>;
   }
-  const handleClick = (event: MouseEvent) => {
-    setOpen(event, true);
-  };
 
   const getTriggerProps = () =>
     getReferenceProps({
       ref: reference,
-      onClick: handleClick,
       id: `${id}-trigger`,
       "aria-controls": `${id}-panel`,
     });

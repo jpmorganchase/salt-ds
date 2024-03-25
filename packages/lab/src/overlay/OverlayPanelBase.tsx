@@ -9,7 +9,7 @@ import { ComponentPropsWithoutRef } from "react";
 import { useOverlayContext } from "./OverlayContext";
 import clsx from "clsx";
 
-const withBaseName = makePrefixer("saltOverlayPanelBase");
+const withBaseName = makePrefixer("saltOverlayPanel");
 
 // OverlayPanelBase component needed for CSS style injection
 export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {
@@ -20,14 +20,14 @@ export const OverlayPanelBase = (props: ComponentPropsWithoutRef<"div">) => {
     window: targetWindow,
   });
 
-  const { arrowProps, handleCloseButton } = useOverlayContext();
+  const { arrowProps, handleCloseButtonClick } = useOverlayContext();
   const { children, className, ...rest } = props;
 
   return (
     <>
       <div className={clsx(withBaseName("container"), className)} {...rest}>
         <Button
-          onClick={handleCloseButton}
+          onClick={handleCloseButtonClick}
           variant="secondary"
           className={withBaseName("closeButton")}
           aria-label="Close Overlay"

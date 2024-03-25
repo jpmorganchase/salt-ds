@@ -1,0 +1,167 @@
+---
+title: List builder
+layout: DetailPattern
+aliases:
+  - /salt/patterns/list-builder
+data:
+  resources:
+    []
+  components: ["List", "Input", "Button", "Text", "Stack layout"]
+sidebar:
+  exclude: true
+---
+
+A list builder allows users to create a bespoke list of items from an original list, also known as a pick list, adding or removing items as required. Users can filter the items by using the filter input field.
+
+  <Diagram
+    src="/img/patterns/list-builder/image.png"
+    alt="An example of a list builder."
+    contentPosition="top"
+    border
+  />
+
+## When to use
+
+Use this pattern when users need to customize a list from a selection of options. 
+
+List builders are useful when you want to distinguish selected items from a larger list of available items. This is particularly useful when the initial list is so large that it's difficult to see which items the user has selected. With the two lists side-by-side, users can easily view or compare selected and available options.
+
+Typical use cases for using a list builder include:
+- Choosing visible columns or chart series from a dataset.
+- Customizing a client, account or research list in a CRM (customer relationship management system).
+- Creating a distribution list.
+- Creating a list of accounts for use in transactions.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Only use a list builder when there are at least five items to choose from. If you have fewer items, use a single reorderable list.
+</ExampleContainer>
+
+## How to build
+
+### Anatomy
+
+The list builder has three functional areas:
+
+1. **Header**: Contains a list label (with optional item count), a button bar and a [filter](/salt/patterns/list-filtering).
+2. **List**: Serves as the container for the list items (multi-select or single-select).
+3. **Move buttons**: Provides functionality to move items between the two lists.
+
+  <Diagram
+    src="/img/patterns/list-builder/anatomy.png"
+    alt="Anatomy of a list builder"
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Apply a consistent logic to the order of displayed items. Display pick list items chronologically or in alphabetical order, provided there are no predefined requirements.
+</ExampleContainer>
+
+### Layout
+
+- Use [`StackLayout`](/salt/components/stack-layout) to display the two lists and move buttons that make up the list builder in a row formation.
+- Use [`Text`](/salt/components/text), [`Button`](/salt/components/button) and [`Input`](/salt/components/input) to assemble the header area.
+- Use `StackLayout` to orient the move buttons between the two lists in a column formation.
+
+  <Diagram
+    src="/img/patterns/list-builder/layout.png"
+    alt="Layout for a list builder."
+    contentPosition="top"
+    border
+  />
+
+## Position of added items
+
+There are two common behaviors for positioning selected items within the list:
+
+1. **Automatic end positioning**: Moving an item from the pick list automatically places it at the end of the selected item list. In a large list where scrolling is necessary, always adjust the view to display the newly added item.
+2. **Relative positioning**: If a user has an item selected in the added list, moving an item from the pick list to the selected item list positions it after the selected item. This maintains the relative order within the added list.
+
+When moving items from the selected item list back to the pick list, position them according to the pick list's existing sort order. This makes items in large pick lists as quick and easy to find as possible.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Change list labels based on your use case. Make sure to keep them clear and concise.
+- Always display a label for ADA compliance and to help users identify the purpose of the list, for example, a list of available/picked columns within a grid.
+- Show a count in brackets to help users keep track of the number of items in the list.
+- Incorporate more buttons into the button bar according to your use case. Examples include “move to top” and “move to bottom” functionalities.
+</ExampleContainer>
+
+## Multiple selection
+
+Users can move multiple items in a single action between the pick list and the selected item list using the list builder, allowing movement in both directions.
+
+  <Diagram
+    src="/img/patterns/list-builder/multi-select.png"
+    alt="Multiple selections with a list builder."
+    contentPosition="top"
+    border
+  />
+
+## Single selection
+
+Single selection allows users to move only one item at a time between the pick list and the selected item list.
+
+  <Diagram
+    src="/img/patterns/list-builder/single-select.png"
+    alt="Single selection with a list builder."
+    contentPosition="top"
+    border
+  />
+
+## Non-reorderable
+
+If users don’t need to reorder items in the new list, remove this feature.
+
+  <Diagram
+    src="/img/patterns/list-builder/non-reorderable.png"
+    alt="Single selection with a list builder."
+    contentPosition="top"
+    border
+  />
+
+## Empty state message
+
+Display a message to prompt or instruct the user when a list is empty. You can customize this message. Make sure that the text is concise, descriptive and clearly understood. Use the [content status pattern](/salt/patterns/content-status) to display empty state messages.
+
+  <Diagram
+    src="/img/patterns/list-builder/empty-state.png"
+    alt="An empty state message."
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Horizontally and vertically center the empty state message in the container.
+</ExampleContainer>
+
+## Stack layout
+
+Use a stack layout to compose the list builder vertically for interfaces with limited viewport width, such as mobile devices. 
+
+  <Diagram
+    src="/img/patterns/list-builder/stack-layout.png"
+    alt="A vertically aligned list builder."
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Use a minimum width of 8ems and ensure that the list builder spans the full width of the screen or its parent container.
+</ExampleContainer>
+
+## Filter and sort
+
+In both the pick list and the selected item list, users can [apply filters](/salt/patterns/list-filtering) with the input field, enabling real-time filtration from a large data set. The list dynamically refreshes to display only the items that match the search criteria.
+
+  <Diagram
+    src="/img/patterns/list-builder/filter-and-sort.png"
+    alt="Filter and sort behaviors for a list builder."
+    contentPosition="top"
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Include a sort button within the pick list, enabling users to organize the list in either ascending or descending order.
+</ExampleContainer>
+
+:fragment{src="./fragments/feedback.mdx"}

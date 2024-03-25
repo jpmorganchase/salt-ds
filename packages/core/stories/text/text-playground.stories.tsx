@@ -40,6 +40,7 @@ export default {
         "display3",
         "notation",
         "action",
+        "code",
       ],
       control: { type: "select" },
     },
