@@ -48,7 +48,7 @@ export const Overlay = ({
     onOpenChange?.(newOpen);
   };
 
-  const { x, y, strategy, context, elements, floating, reference, placement } =
+  const { x, y, strategy, context, elements, floating, reference } =
     useFloatingUI({
       open: openState,
       onOpenChange: handleOpenChange,
@@ -87,7 +87,6 @@ export const Overlay = ({
       value={{
         openState,
         floatingStyles,
-        placement,
         context,
         arrowProps,
         floating,

@@ -20,7 +20,6 @@ type FloatingStyleProps = {
 export interface OverlayContextValue {
   openState: boolean;
   floatingStyles: FloatingStyleProps;
-  placement: Placement;
   arrowProps: FloatingArrowProps;
   context: FloatingContext;
   reference?: (node: ReferenceType | null) => void;
@@ -42,7 +41,6 @@ export const OverlayContext = createContext<OverlayContextValue>(
       left: 0,
       position: "" as Strategy,
     },
-    placement: "" as Placement,
     context: {} as FloatingContext,
     arrowProps: {} as FloatingArrowProps,
     reference: {} as FloatingReturn["reference"],
