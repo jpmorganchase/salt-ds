@@ -3,6 +3,4 @@
   position: relative;
   overflow: auto;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
-  /* padding to make space for the close button on the right  */
-  padding-right: var(--salt-spacing-400);
 }
