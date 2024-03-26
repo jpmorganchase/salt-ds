@@ -3,8 +3,7 @@ import * as overlayStories from "@stories/overlay/overlay.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, CloseButton, WithTooltip } =
-  composedStories;
+const { Default, Right, Bottom, Left, CloseButton } = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -25,14 +24,13 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       cy.realPress("Escape");
-      cy.realPress("Escape");
       cy.findByRole("dialog").should("not.exist");
       // focus goes back to trigger element after Overlay is closed
       cy.findByRole("button", { name: /Show Overlay/i }).should("be.focused");
     });
 
     it("THEN it should focus into the overlay when opened", () => {
-      cy.mount(<WithTooltip />);
+      cy.mount(<CloseButton />);
 
       cy.realPress("Tab");
       cy.realPress("Enter");
@@ -111,7 +109,7 @@ describe("GIVEN an Overlay", () => {
     });
   });
 
-  describe("WHEN no Close Button is used", () => {
+  describe("WHEN a Close Button is used", () => {
     it("THEN it should remain open until outside Overlay click or close button click", () => {
       const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
       cy.mount(<CloseButton onOpenChange={onOpenChangeSpy} />);

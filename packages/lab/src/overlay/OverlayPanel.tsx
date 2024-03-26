@@ -22,7 +22,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
 
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-overlay-panel-close-button",
+      testId: "salt-overlay-panel",
       css: overlayPanelCss,
       window: targetWindow,
     });

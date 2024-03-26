@@ -7,11 +7,10 @@ import {
   OverlayPanelCloseButton,
   OverlayPanelContent,
 } from "@salt-ds/lab";
-import { Button, StackLayout, useId } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 
 export const LongContent = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
@@ -28,7 +27,6 @@ export const LongContent = (): ReactElement => {
           height: 200,
           overflow: "auto",
         }}
-        aria-labelledby={id}
       >
         <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>

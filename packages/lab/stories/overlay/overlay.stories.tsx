@@ -96,42 +96,6 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
   );
 };
 
-export const WithTooltip = () => {
-  const id = useId();
-
-  const [open, setOpen] = useState(false);
-
-  const onOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-  };
-
-  const handleClose = () => setOpen(false);
-
-  return (
-    <Overlay open={open} onOpenChange={onOpenChange}>
-      <OverlayTrigger>
-        <Button>Show Overlay</Button>
-      </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayPanelCloseButton onClick={handleClose} />
-        <OverlayPanelContent>
-          <h3 id={id} className="content-heading">
-            Title
-          </h3>
-          <div>
-            Content of Overlay
-            <br />
-            <br />
-            <Tooltip content={"im a tooltip"}>
-              <Button>hover me</Button>
-            </Tooltip>
-          </div>
-        </OverlayPanelContent>
-      </OverlayPanel>
-    </Overlay>
-  );
-};
-
 export const LongContent = () => {
   const [open, setOpen] = useState(false);
 
