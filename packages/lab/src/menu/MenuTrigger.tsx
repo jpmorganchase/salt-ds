@@ -1,7 +1,8 @@
-import { cloneElement, isValidElement, ReactNode, MouseEvent } from "react";
+import { cloneElement, isValidElement, ReactNode } from "react";
 import { mergeProps, useForkRef } from "@salt-ds/core";
 import { useMenuContext } from "./MenuContext";
 import { MenuTriggerContext } from "./MenuTriggerContext";
+import { useMenuPanelContext } from "./MenuPanelContext";
 
 export interface MenuTriggerProps {
   children?: ReactNode;
@@ -10,38 +11,36 @@ export interface MenuTriggerProps {
 export function MenuTrigger(props: MenuTriggerProps) {
   const { children } = props;
 
-  const { refs, setOpen, openState, submenu, activeState } = useMenuContext();
+  const { getReferenceProps, refs, setFocusInside, focusInside, openState } =
+    useMenuContext();
+  const { setFocusInside: setFocusInsideParent } = useMenuPanelContext();
 
-  const triggerRef = useForkRef(
-    // @ts-ignore
+  const handleRef = useForkRef(
+    // @ts-expect-error error TS2339 missing property ref
     isValidElement(children) ? children.ref : null,
-    refs.setReference
+    refs?.setReference
   );
 
   if (!children || !isValidElement(children)) {
     // Should we log or throw error?
-    return children;
+    return <>{children}</>;
   }
 
-  const handleClick = (event: MouseEvent) => {
-    setOpen(event, !openState);
-  };
-
-  const handleHover = (event: MouseEvent) => {
-    setOpen(event, true);
-  };
-
   return (
-    <MenuTriggerContext.Provider value={submenu}>
+    <MenuTriggerContext.Provider
+      value={{ triggersSubmenu: true, blurActive: focusInside && openState }}
+    >
       {cloneElement(children, {
         ...mergeProps(
-          {
-            onClick: !submenu ? handleClick : undefined,
-            onMouseOver: submenu ? handleHover : undefined,
-          },
+          getReferenceProps({
+            onFocus() {
+              setFocusInsideParent(true);
+              setFocusInside(false);
+            },
+          }),
           children.props
         ),
-        ref: triggerRef,
+        ref: handleRef,
       })}
     </MenuTriggerContext.Provider>
   );

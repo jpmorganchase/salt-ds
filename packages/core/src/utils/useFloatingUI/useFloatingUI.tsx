@@ -137,7 +137,7 @@ export function useFloatingComponent() {
 export interface UseFloatingUIProps
   extends Pick<
     UseFloatingOptions,
-    "placement" | "strategy" | "open" | "onOpenChange"
+    "placement" | "strategy" | "open" | "onOpenChange" | "nodeId"
   > {
   /**
    * Function to update the default middleware used to extend or replace it
@@ -215,11 +215,10 @@ export interface UseFloatingUIReturn extends ReturnType<typeof useFloating> {
 
 export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   const {
-    placement,
-    strategy,
     middleware = DEFAULT_FLOATING_UI_MIDDLEWARE,
     open = false,
     onOpenChange,
+    ...other
   } = props;
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
@@ -238,8 +237,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   } = useFloatingPlatform();
 
   const { refs, update, ...rest } = useFloating({
-    placement,
-    strategy,
+    ...other,
     middleware: contextMiddleware(middleware),
     open,
     onOpenChange: handleOpenChange,

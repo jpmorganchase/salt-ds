@@ -1,11 +1,16 @@
 import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 
-export const MenuTriggerContext = createContext<boolean>(
+export interface MenuTriggerContextValue {
+  triggersSubmenu: boolean;
+  blurActive: boolean;
+}
+
+export const MenuTriggerContext = createContext<MenuTriggerContextValue>(
   "MenuTriggerContext",
-  false
+  { triggersSubmenu: false, blurActive: false }
 );
 
-export function useMenuTriggerContext() {
+export function useIsMenuTrigger() {
   return useContext(MenuTriggerContext);
 }

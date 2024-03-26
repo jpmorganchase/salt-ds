@@ -1,37 +1,35 @@
-import { createContext, useFloatingUI } from "@salt-ds/core";
-import { CSSProperties, SyntheticEvent, useContext } from "react";
+import { createContext, UseFloatingUIReturn } from "@salt-ds/core";
+import { Dispatch, MutableRefObject, SetStateAction, useContext } from "react";
+import { useInteractions } from "@floating-ui/react";
 
-type FloatingReturn = ReturnType<typeof useFloatingUI>;
+type UseInteractionsReturn = ReturnType<typeof useInteractions>;
 
-export interface MenuContextValue {
+export interface MenuContextValue
+  extends Pick<
+      UseInteractionsReturn,
+      "getItemProps" | "getReferenceProps" | "getFloatingProps"
+    >,
+    Partial<Pick<UseFloatingUIReturn, "context" | "refs">> {
   openState: boolean;
-  setOpen: (event: SyntheticEvent, newOpen: boolean) => void;
-  floatingStyles: CSSProperties;
-  refs: FloatingReturn["refs"];
-  submenu: boolean | undefined;
-  activeState?: string;
-  setActive: (option?: string) => void;
+  activeIndex: number | null;
+  getPanelPosition: () => Record<string, unknown>;
+  elementsRef: MutableRefObject<(HTMLDivElement | null)[]>;
+  focusInside: boolean;
+  setFocusInside: Dispatch<SetStateAction<boolean>>;
 }
 
 export const MenuContext = createContext<MenuContextValue>("MenuContext", {
   openState: false,
-  setOpen() {
-    return undefined;
-  },
-  floatingStyles: {},
-  refs: {} as FloatingReturn["refs"],
-  submenu: undefined,
-  activeState: undefined,
-  setActive() {
-    return undefined;
-  },
+  getReferenceProps: () => ({}),
+  getFloatingProps: () => ({}),
+  getPanelPosition: () => ({}),
+  getItemProps: () => ({}),
+  activeIndex: null,
+  elementsRef: { current: [] },
+  focusInside: false,
+  setFocusInside: () => undefined,
 });
 
 export function useMenuContext() {
   return useContext(MenuContext);
-}
-
-export function useIsSubmenu() {
-  const context = useMenuContext();
-  return context.submenu === true;
 }
