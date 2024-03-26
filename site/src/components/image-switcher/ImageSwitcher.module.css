@@ -4,7 +4,6 @@
   gap: var(--salt-spacing-300);
   display: flex;
   flex-direction: column;
-  margin-block: var(--salt-spacing-300);
 }
 
 @media screen and (max-width: 996px) {
@@ -26,3 +25,19 @@
   display: flex;
   justify-content: center;
 }
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  margin-inline: 0;
+  margin-block: var(--salt-spacing-300);
+}
+
+.caption {
+  font-style: var(--salt-editable-help-fontStyle);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  color: var(--salt-content-primary-foreground);
+}
+
