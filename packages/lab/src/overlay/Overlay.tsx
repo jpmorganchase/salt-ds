@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useMemo, useRef } from "react";
+import { ComponentPropsWithoutRef, useMemo, useRef } from "react";
 import { OverlayContext } from "./OverlayContext";
 import { useControlled, useFloatingUI } from "@salt-ds/core";
 import {
