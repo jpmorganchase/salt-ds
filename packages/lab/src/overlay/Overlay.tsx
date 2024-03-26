@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, useMemo, useRef } from "react";
 import { OverlayContext } from "./OverlayContext";
-import { useControlled, useFloatingUI, useId } from "@salt-ds/core";
+import { useControlled, useFloatingUI } from "@salt-ds/core";
 import {
   flip,
   offset,
@@ -28,42 +28,28 @@ export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
   placement?: "top" | "bottom" | "left" | "right";
 }
 
-export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
-  function Overlay(props, ref) {
-    const {
-      children,
-      open,
-      onOpenChange,
-      placement: placementProp = "top",
-      id: idProp,
-      ...rest
-    } = props;
+export const Overlay = ({
+  children,
+  open,
+  onOpenChange,
+  placement: placementProp = "top",
+}: OverlayProps) => {
+  const arrowRef = useRef<SVGSVGElement | null>(null);
 
-    const id = useId(idProp);
-    const arrowRef = useRef<SVGSVGElement | null>(null);
+  const [openState, setOpenState] = useControlled({
+    controlled: open,
+    default: false,
+    name: "Overlay",
+    state: "open",
+  });
 
-    const [openState, setOpenState] = useControlled({
-      controlled: open,
-      default: false,
-      name: "Overlay",
-      state: "open",
-    });
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpenState(newOpen);
+    onOpenChange?.(newOpen);
+  };
 
-    const handleOpenChange = (newOpen: boolean) => {
-      setOpenState(newOpen);
-      onOpenChange?.(newOpen);
-    };
-
-    const {
-      x,
-      y,
-      strategy,
-      context,
-      elements,
-      floating,
-      reference,
-      placement,
-    } = useFloatingUI({
+  const { x, y, strategy, context, elements, floating, reference, placement } =
+    useFloatingUI({
       open: openState,
       onOpenChange: handleOpenChange,
       placement: placementProp,
@@ -75,46 +61,42 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       ],
     });
 
-    const { getReferenceProps, getFloatingProps } = useInteractions([
-      useRole(context, { role: "dialog" }),
-      useClick(context),
-      useDismiss(context),
-    ]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useRole(context, { role: "dialog" }),
+    useClick(context),
+    useDismiss(context),
+  ]);
 
-    const floatingStyles = useMemo(() => {
-      return {
-        top: y ?? 0,
-        left: x ?? 0,
-        position: strategy,
-        width: elements.floating?.offsetWidth,
-        height: elements.floating?.offsetHeight,
-      };
-    }, [elements.floating, strategy, x, y]);
-
-    const arrowProps = {
-      ref: arrowRef,
-      context,
+  const floatingStyles = useMemo(() => {
+    return {
+      top: y ?? 0,
+      left: x ?? 0,
+      position: strategy,
+      width: elements.floating?.offsetWidth,
+      height: elements.floating?.offsetHeight,
     };
+  }, [elements.floating, strategy, x, y]);
 
-    return (
-      <OverlayContext.Provider
-        value={{
-          id: id ?? "",
-          openState,
-          floatingStyles,
-          placement,
-          context,
-          arrowProps,
-          floating,
-          reference,
-          getFloatingProps,
-          getReferenceProps,
-        }}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </OverlayContext.Provider>
-    );
-  }
-);
+  const arrowProps = {
+    ref: arrowRef,
+    context,
+  };
+
+  return (
+    <OverlayContext.Provider
+      value={{
+        openState,
+        floatingStyles,
+        placement,
+        context,
+        arrowProps,
+        floating,
+        reference,
+        getFloatingProps,
+        getReferenceProps,
+      }}
+    >
+      {children}
+    </OverlayContext.Provider>
+  );
+};
