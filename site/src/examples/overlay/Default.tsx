@@ -26,7 +26,7 @@ export const Default = (): ReactElement => {
             Content of Overlay
             <br />
             <br />
-            <Tooltip content={"im a tooltip"}>
+            <Tooltip content={"I'm a tooltip"}>
               <Button>hover me</Button>
             </Tooltip>
           </div>
