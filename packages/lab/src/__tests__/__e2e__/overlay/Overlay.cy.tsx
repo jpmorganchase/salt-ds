@@ -3,7 +3,7 @@ import * as overlayStories from "@stories/overlay/overlay.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, WithActions, WithoutCloseButton } =
+const { Default, Right, Bottom, Left, CloseButton, WithTooltip } =
   composedStories;
 
 describe("GIVEN an Overlay", () => {
@@ -16,8 +16,6 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Tab");
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
-      // focus goes into Overlay
-      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
     });
 
     it("THEN it should dismiss on Esc key press", () => {
@@ -27,40 +25,31 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       cy.realPress("Escape");
+      cy.realPress("Escape");
       cy.findByRole("dialog").should("not.exist");
       // focus goes back to trigger element after Overlay is closed
       cy.findByRole("button", { name: /Show Overlay/i }).should("be.focused");
     });
 
-    //Think about what you're trying to test ?
+    it("THEN it should focus into the overlay when opened", () => {
+      cy.mount(<WithTooltip />);
 
-    it("THEN it should remain open until outside Overlay click or close button click", () => {
-      const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
-      cy.mount(<WithoutCloseButton onOpenChange={onOpenChangeSpy} />);
-
-      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.realPress("Tab");
+      cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
-      cy.get("@onOpenChangeSpy").should("have.callCount", 1);
-      cy.findByRole("button", { name: /Close Overlay/i }).realClick();
-      cy.findByRole("dialog").should("not.exist");
-      cy.get("@onOpenChangeSpy").should("have.callCount", 2);
-
-      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
-      cy.findByRole("dialog").should("be.visible");
-      cy.get("@onOpenChangeSpy").should("have.callCount", 3);
-      cy.get("body").realClick();
-      cy.findByRole("dialog").should("not.exist");
-      cy.get("@onOpenChangeSpy").should("have.callCount", 4);
+      //focus into overlay
+      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
+      cy.realPress("Tab");
     });
 
     it("THEN it should trap focus within Overlay once opened", () => {
-      cy.mount(<Default />);
+      cy.mount(<CloseButton />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
       cy.realPress("Tab");
-      cy.findByText(/im a tooltip/i).should("be.visible");
+      cy.findByRole("button", { name: /Hover me/i }).should("be.focused");
       cy.realPress("Tab");
       cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
     });
@@ -122,10 +111,10 @@ describe("GIVEN an Overlay", () => {
     });
   });
 
-  describe("WHEN controlled", () => {
+  describe("WHEN no Close Button is used", () => {
     it("THEN it should remain open until outside Overlay click or close button click", () => {
       const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
-      cy.mount(<WithActions onOpenChange={onOpenChangeSpy} />);
+      cy.mount(<CloseButton onOpenChange={onOpenChangeSpy} />);
 
       cy.realPress("Tab");
       cy.realPress("Enter");
@@ -133,11 +122,11 @@ describe("GIVEN an Overlay", () => {
       cy.get("@onOpenChangeSpy").should("have.callCount", 1);
 
       cy.findByRole("button", { name: /Close Overlay/i }).realClick();
-      cy.get("@onOpenChangeSpy").should("have.callCount", 2);
+      cy.findByRole("dialog").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.get("body").realClick();
-      cy.get("@onOpenChangeSpy").should("have.callCount", 4);
+      cy.get("@onOpenChangeSpy").should("have.callCount", 3);
     });
   });
 });

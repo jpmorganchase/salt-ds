@@ -1,9 +1,4 @@
-import {
-  ForwardedRef,
-  forwardRef,
-  HTMLProps,
-  ComponentPropsWithoutRef,
-} from "react";
+import { ForwardedRef, forwardRef, ComponentPropsWithoutRef } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
@@ -40,7 +35,6 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       context,
       getFloatingProps,
       floating,
-      placement,
       arrowProps,
     } = useOverlayContext();
 
@@ -48,20 +42,12 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
 
     const { top, left, width, height, position } = floatingStyles;
 
-    const getOverlayProps = (): HTMLProps<HTMLDivElement> => {
-      return getFloatingProps({
-        // @ts-ignore data-placement does not exist
-        "data-placement": placement,
-        ref: floating,
-      });
-    };
-
     return (
       <FloatingComponent
         open={openState}
         className={clsx(withBaseName(), className)}
         aria-modal="true"
-        {...getOverlayProps()}
+        {...getFloatingProps()}
         ref={handleRef}
         width={width}
         height={height}

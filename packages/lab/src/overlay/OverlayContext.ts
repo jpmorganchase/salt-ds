@@ -6,7 +6,7 @@ import {
   Strategy,
 } from "@floating-ui/react";
 import { createContext, useFloatingUI } from "@salt-ds/core";
-import { ReactNode, useContext } from "react";
+import { useContext } from "react";
 
 type FloatingReturn = ReturnType<typeof useFloatingUI>;
 type FloatingStyleProps = {
@@ -18,7 +18,6 @@ type FloatingStyleProps = {
 };
 
 export interface OverlayContextValue {
-  id: string;
   openState: boolean;
   floatingStyles: FloatingStyleProps;
   placement: Placement;
@@ -37,7 +36,6 @@ export interface OverlayContextValue {
 export const OverlayContext = createContext<OverlayContextValue>(
   "OverlayContext",
   {
-    id: "",
     openState: false,
     floatingStyles: {
       top: 0,

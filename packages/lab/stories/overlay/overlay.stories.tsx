@@ -25,33 +25,20 @@ export default {
 } as Meta<typeof Overlay>;
 
 export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
-  const [open, setOpen] = useState(false);
   const id = useId();
 
-  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
-
-  const handleClose = () => setOpen(false);
-
   return (
-    <Overlay open={open} onOpenChange={onOpenChange} {...args}>
+    <Overlay {...args}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
 
       <OverlayPanel aria-labelledby={id}>
-        <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>
           <h3 id={id} className="content-heading">
             Title
           </h3>
-          <div>
-            Content of Overlay
-            <br />
-            <br />
-            <Tooltip content={"im a tooltip"}>
-              <Button>hover me</Button>
-            </Tooltip>
-          </div>
+          <div>Content of Overlay</div>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -73,14 +60,60 @@ Right.args = {
   placement: "right",
 };
 
-export const WithoutCloseButton = () => {
+export const CloseButton = ({ onOpenChange }: OverlayProps) => {
+  const [open, setOpen] = useState(false);
   const id = useId();
+
+  const onChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
+
+  const handleClose = () => setOpen(false);
+
   return (
-    <Overlay placement="right">
+    <Overlay open={open} onOpenChange={onChange}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelCloseButton onClick={handleClose} />
+        <OverlayPanelContent>
+          <h3 id={id} className="content-heading">
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <br />
+            <br />
+            <Tooltip content={"im a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanelContent>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
+export const WithTooltip = () => {
+  const id = useId();
+
+  const [open, setOpen] = useState(false);
+
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  return (
+    <Overlay open={open} onOpenChange={onOpenChange}>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>
           <h3 id={id} className="content-heading">
             Title
@@ -100,8 +133,15 @@ export const WithoutCloseButton = () => {
 };
 
 export const LongContent = () => {
+  const [open, setOpen] = useState(false);
+
+  const onOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+
+  const handleClose = () => setOpen(false);
   return (
-    <Overlay placement="right">
+    <Overlay placement="right" open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
@@ -112,7 +152,7 @@ export const LongContent = () => {
           overflow: "auto",
         }}
       >
-        <OverlayPanelCloseButton />
+        <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>
           <StackLayout>
             <div>
@@ -256,7 +296,6 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
         }}
         aria-labelledby={id}
       >
-        <OverlayPanelCloseButton />
         <OverlayPanelContent>
           <WithActionsContent
             onClose={() => {
