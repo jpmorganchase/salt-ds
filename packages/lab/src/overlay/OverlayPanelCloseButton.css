@@ -11,5 +11,5 @@
 }
 
 .saltOverlayPanelContent {
-  padding-right: var(--salt-spacing-400);
+  padding-right: var(--salt-spacing-400) !important
 }

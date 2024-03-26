@@ -1,7 +1,6 @@
 import {
   FloatingArrowProps,
   FloatingContext,
-  Placement,
   ReferenceType,
   Strategy,
 } from "@floating-ui/react";
