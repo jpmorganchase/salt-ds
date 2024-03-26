@@ -6,6 +6,6 @@ export const MenuTriggerContext = createContext<boolean>(
   false
 );
 
-export function useMenuTriggerContext() {
+export function useIsMenuTrigger() {
   return useContext(MenuTriggerContext);
 }
