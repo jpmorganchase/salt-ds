@@ -31,7 +31,6 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
-          <OverlayPanelCloseButton />
           <OverlayPanelContent>
             <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
@@ -46,7 +45,7 @@ Default.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-export const WithoutCloseButton: StoryFn<QAContainerProps> = (props) => {
+export const CloseButton: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
       height={800}
@@ -61,6 +60,7 @@ export const WithoutCloseButton: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
+          <OverlayPanelCloseButton />
           <OverlayPanelContent>
             <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
@@ -71,6 +71,6 @@ export const WithoutCloseButton: StoryFn<QAContainerProps> = (props) => {
   );
 };
 
-WithoutCloseButton.parameters = {
+CloseButton.parameters = {
   chromatic: { disableSnapshot: false },
 };
