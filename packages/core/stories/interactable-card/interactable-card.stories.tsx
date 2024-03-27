@@ -298,7 +298,10 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
             <H3>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon aria-hidden checked={selected?.includes("jane-doe")} />
+            <CheckboxIcon
+              aria-hidden
+              checked={selected?.includes("jane-doe")}
+            />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -310,7 +313,10 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
             <H3>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon aria-hidden checked={selected?.includes("tom-roberts")} />
+            <CheckboxIcon
+              aria-hidden
+              checked={selected?.includes("tom-roberts")}
+            />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -322,7 +328,10 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
             <H3>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon aria-hidden checked={selected?.includes("ray-smith")} />
+            <CheckboxIcon
+              aria-hidden
+              checked={selected?.includes("ray-smith")}
+            />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
