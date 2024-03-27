@@ -1,0 +1,15 @@
+.saltOverlayPanelCloseButton {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+}
+
+.saltOverlayPanelCloseButton-button.saltButton-secondary {
+  position: sticky;
+  right: 0;
+  top: 0;
+}
+
+.saltOverlayPanelCloseButton ~ .saltOverlayPanelContent {
+  padding-right: var(--salt-spacing-400);
+}
