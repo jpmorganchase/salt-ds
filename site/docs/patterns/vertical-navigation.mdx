@@ -5,6 +5,7 @@ aliases:
   - /salt/patterns/vertical-navigation
 data:
   components: ["Navigation item"]
+  relatedPatterns: ["Navigation"]
   resources:
     [
       {
@@ -22,6 +23,11 @@ data:
 ---
 
 Vertical navigation provides users with a structured and intuitive way to navigate different pages, sections or features of your website or application. It's often on the left of the viewport and organizes links into a single- or multi-level structure.
+
+<Diagram
+  src="/img/patterns/vertical-navigation/vertical_navigation_hero_shot.png"
+  alt="A vertical navigation."
+/>
 
 ## When to use
 
@@ -41,14 +47,12 @@ A vertical navigation consists of a stack of navigation item components:
 You'll typically use vertical navigation in a sidebar, on the left side of the screen, within a [drawer](/salt/components/drawer), or a [parent-child layout](/salt/components/parent-child-layout).
 
 <Diagram
-  src="/img/patterns/vertical-navigation/anatomy.png"
-  alt="Annotated image of a vertical navigation"
+  src="/img/patterns/vertical-navigation/vertical_navigation_anatomy.png"
+  alt="Annotated image of a vertical navigation."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  You can use left-aligned icons to effectively signify the navigation item’s
-  purpose, whether it’s related to a product’s identity, a specific tool, a
-  function or a configuration setting.
+  You can use left-aligned icons to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, a function or a configuration setting.
 </ExampleContainer>
 
 ### Layout
@@ -56,7 +60,7 @@ You'll typically use vertical navigation in a sidebar, on the left side of the s
 Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to display navigation items in a column formation. Use `--size-border` for spacing between the items.
 
 <Diagram
-  src="/img/patterns/vertical-navigation/spacing.png"
+  src="/img/patterns/vertical-navigation/vert_nav_layout.png"
   alt="Spacing for a vertical navigation"
 />
 
@@ -65,9 +69,10 @@ Vertical navigation uses [`StackLayout`](/salt/components/stack-layout) to displ
 A single-level vertical navigation group provides a simple, single-level list of links that users can select within an application or website. Use the default navigation item to achieve this.
 
 <Diagram
-  src="/img/patterns/vertical-navigation/group-single-level.png"
+  src="/img/patterns/vertical-navigation/vert_nav_default_group.png"
   alt="A single-level vertical navigation group"
   border
+  caption="A single-level vertical navigation group."
 />
 
 ## Nested group (multi-level)
@@ -77,20 +82,15 @@ Nest navigation items under a parent navigation item to create a multi-level str
 Top-level hierarchy items labels use a strong font weight, and nested items use a regular font weight.
 
 <Diagram
-  src="/img/patterns/vertical-navigation/group-multi-level.png"
+  src="/img/patterns/vertical-navigation/vert_nav_nested.png"
   alt="A multi-level vertical navigation group"
   border
+  alt="A multi-level vertical navigation group."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Surface the hierarchy of your application’s information architecture to as
-  few levels as possible, i.e., maintain a wide and flat hierarchy, instead of
-  one that is deep and overwhelming. This makes content easily discoverable when
-  not buried under intervening navigation items. 
-- Clicking a parent item won’t
-  navigate the user but expand the group. If an overview page is necessary it
-  should be the first in the group. Overview pages won’t include a chevron on
-  the right-hand side.
+- Surface the hierarchy of your application’s information architecture to as few levels as possible, i.e., maintain a wide and flat hierarchy, instead of one that is deep and overwhelming. This makes content easily discoverable when not buried under intervening navigation items. 
+- Clicking a parent item won’t navigate the user but expand the group. If an overview page is necessary it should be the first in the group. Overview pages won’t include a chevron on the right-hand side.
 </ExampleContainer>
 
 ### Blur active state
@@ -100,15 +100,16 @@ When a parent item is collapsed but contains the currently active page, the pare
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/vertical-navigation/blur-active.png",
+      src: "/img/patterns/vertical-navigation/blur_active_state_collapsed.png",
       alt: "Blur active state before it's opened",
     },
     {
-      src: "/img/patterns/vertical-navigation/blur-active-nested.png",
+      src: "/img/patterns/vertical-navigation/blur_active_state_expanded.png",
       alt: "Blur active state after it's opened",
     },
   ]}
   label="Expand to reveal active nested item"
+  caption="This example demonstrates the blur-active state."
 />
 
 ## Secondary navigation
@@ -116,9 +117,10 @@ When a parent item is collapsed but contains the currently active page, the pare
 You can use the default navigation items as anchor links within an application view, allowing users to navigate swiftly between various sections on a page. Typically, it functions as a top-level table of contents for the application.
 
 <Diagram
-  src="/img/patterns/vertical-navigation/secondary-navigation.png"
+  src="/img/patterns/vertical-navigation/secondary_navigation.png"
   alt="The secondary navigation demonstrated"
   border
+  caption="Vertical navigation placed on the right of an application for secondary navigation."
 />
 
 ## Within modals
@@ -128,9 +130,10 @@ Modals such as preferences dialogs can contain a vertical navigation to allow us
 Refer to the [preferences dialog](../preferences-dialog) pattern for further guidance on how to manage navigation within application preferences modals.
 
 <Diagram
-  src="/img/patterns/vertical-navigation/within-modals.png"
+  src="/img/patterns/vertical-navigation/modal_vertical_navigation.png"
   alt="The vertical navigation within modals"
   border
+  caption="Vertical navigation within a preferences dialog."
 />
 
 ## Responsive behavior
@@ -140,15 +143,16 @@ A vertical navigation remains fixed in width when the user resizes the browser. 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/vertical-navigation/responsive-wide.png",
+      src: "/img/patterns/vertical-navigation/vert_nav_responsive_behavior.png",
       alt: "A responsive layout when it's wide",
     },
     {
-      src: "/img/patterns/vertical-navigation/responsive-narrow.png",
+      src: "/img/patterns/vertical-navigation/vert_nav_viewport_change.png",
       alt: "A responsive layout when it's narrow",
     },
   ]}
   label="Change viewport size"
+  caption="A vertical navigation responding to changes in viewport size."
 />
 
 :fragment{src="./fragments/feedback.mdx"}
