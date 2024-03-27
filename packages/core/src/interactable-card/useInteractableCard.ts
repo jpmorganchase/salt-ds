@@ -75,6 +75,7 @@ export const useInteractableCard = <T extends Element>({
       setkeyIsDown(event.key);
       event.preventDefault();
       setActive(true);
+      onClick?.(event as unknown as MouseEvent<T>);
     }
     onKeyDown?.(event);
   };
