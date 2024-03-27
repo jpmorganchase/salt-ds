@@ -146,7 +146,7 @@ export const ColorChooser = ({
     setActiveTab(index);
   };
 
-  const OverlayData = () => {
+  const OverlayContent = () => {
     return (
       <div
         className={clsx(withBaseName("overlayContent"))}
@@ -206,7 +206,7 @@ export const ColorChooser = ({
       </OverlayTrigger>
       <OverlayPanel>
         <OverlayPanelContent>
-          <OverlayData />
+          <OverlayContent />
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
