@@ -9,7 +9,7 @@ export interface OverlayTriggerProps {
 export function OverlayTrigger(props: OverlayTriggerProps) {
   const { children } = props;
 
-  const { reference, getReferenceProps, id } = useOverlayContext();
+  const { reference, getReferenceProps } = useOverlayContext();
 
   const triggerRef = useForkRef(
     // @ts-ignore error TS2339 missing property ref
@@ -21,17 +21,10 @@ export function OverlayTrigger(props: OverlayTriggerProps) {
     return <>{children}</>;
   }
 
-  const getTriggerProps = () =>
-    getReferenceProps({
-      ref: reference,
-      id: `${id}-trigger`,
-      "aria-controls": `${id}-panel`,
-    });
-
   return (
     <>
       {cloneElement(children, {
-        ...mergeProps(getTriggerProps(), children.props),
+        ...mergeProps(getReferenceProps(), children.props),
         ref: triggerRef,
       })}
     </>
