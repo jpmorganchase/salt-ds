@@ -1,8 +1,5 @@
 import { DateInput, DateInputProps } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { ChangeEvent, useState } from "react";
-import { getLocalTimeZone, today } from "@internationalized/date";
-const localTimeZone = getLocalTimeZone();
 
 export default {
   title: "Lab/Date Input",

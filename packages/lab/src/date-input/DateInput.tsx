@@ -28,10 +28,10 @@ const defaultDateFormatter = (input: string): string => {
   return isInvalidDate(date.toLocaleDateString())
     ? input
     : new DateFormatter(currentLocale, {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(new Date(input));
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }).format(new Date(input));
 };
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
@@ -137,7 +137,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       state: "value",
     });
 
-    const getDateValidationStatus = (value: string) => isInvalidDate(value) ? 'error' : undefined;
+    const getDateValidationStatus = (value: string) =>
+      isInvalidDate(value) ? "error" : undefined;
 
     const [dateStatus, setDateStatus] = useState<"error" | undefined>(
       getDateValidationStatus(value as string)
