@@ -1,4 +1,4 @@
-import { GridLayout, Panel } from "@salt-ds/core";
+import { GridLayout, Panel, SaltProvider, Text } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
@@ -58,3 +58,35 @@ export const PanelInGridLayout: StoryFn<typeof Panel> = () => (
     </Panel>
   </GridLayout>
 );
+
+export const NestedProvider: StoryFn<typeof Panel> = () => {
+  return (
+    <SaltProvider>
+      <Panel
+        style={{
+          border: "1px solid var(--salt-container-primary-borderColor)",
+        }}
+      >
+        <p>Paragraph in panel</p>
+        <Text>Text component in panel</Text>
+        Normal text in panel
+        <Panel
+          style={{
+            border: "1px solid var(--salt-container-secondary-borderColor)",
+          }}
+        >
+          <p>Paragraph in nested panel</p>
+          <Text>Text component in nested panel</Text>
+          Normal text in nested panel
+        </Panel>
+        <SaltProvider mode="dark">
+          <Panel>
+            <p>Paragraph in nested provider panel</p>
+            <Text>Text component in nested provider panel</Text>
+            Normal text in nested provider panel
+          </Panel>
+        </SaltProvider>
+      </Panel>
+    </SaltProvider>
+  );
+};
