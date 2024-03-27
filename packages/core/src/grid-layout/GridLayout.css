@@ -14,10 +14,10 @@
   display: grid;
   column-gap: calc(var(--salt-size-unit) * var(--gridLayout-columnGap));
   row-gap: calc(var(--salt-size-unit) * var(--gridLayout-rowGap));
-  grid-template-columns: repeat(var(--gridLayout-columns), var(--gridLayout-space));
+  grid-template-columns: var(--gridLayout-columnTemplate, repeat(var(--gridLayout-columns), var(--gridLayout-space)));
   grid-template-rows: repeat(var(--gridLayout-rows), var(--gridLayout-space));
   grid-auto-columns: auto;
-  grid-auto-rows: auto;
+  grid-auto-rows: var(--gridLayout-autoRows);
 }
 
 .saltGridLayout-area {
