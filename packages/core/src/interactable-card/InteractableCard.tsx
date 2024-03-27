@@ -24,7 +24,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
-   * **Deprecated:** Use the `accent` prop instead
+   * @deprecated Use the `accent` prop instead
    *
    */
   accentPlacement?: "bottom" | "top" | "left" | "right";

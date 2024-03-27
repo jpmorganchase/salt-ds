@@ -161,7 +161,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
     <InteractableCard {...args} value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
-          <CreditCardIcon size={2} />
+          <CreditCardIcon aria-hidden size={2} />
           <H3>Credit Card</H3>
         </StackLayout>
         <Text>Link credit card to your payments account.</Text>
@@ -170,7 +170,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
     <InteractableCard {...args} style={{ width: "180px" }} disabled>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
-          <BankIcon size={2} />
+          <BankIcon aria-hidden size={2} />
           <H3 disabled>Bank wire</H3>
         </StackLayout>
         <Text disabled>Link your bank to your payments account.</Text>
@@ -179,7 +179,7 @@ export const InteractableCardGroupSingleSelect: StoryFn<
     <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
-          <DiamondIcon size={2} />
+          <DiamondIcon aria-hidden size={2} />
           <H3>Cryptocurrency</H3>
         </StackLayout>
         <Text>Link your crypto to your payments account.</Text>
@@ -195,7 +195,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
     <InteractableCard {...args} value="card" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
-          <CreditCardIcon size={2} />
+          <CreditCardIcon aria-hidden size={2} />
           <H3>Credit Card</H3>
         </StackLayout>
         <Text>Link credit card to your payments account.</Text>
@@ -204,7 +204,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
     <InteractableCard {...args} style={{ width: "180px" }} disabled>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
-          <BankIcon size={2} />
+          <BankIcon aria-hidden size={2} />
           <H3 disabled>Bank wire</H3>
         </StackLayout>
         <Text disabled>Link your bank to your payments account.</Text>
@@ -213,7 +213,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
     <InteractableCard {...args} value="crypto" style={{ width: "180px" }}>
       <StackLayout gap={1}>
         <StackLayout gap={1} direction="row" align="center">
-          <DiamondIcon size={2} />
+          <DiamondIcon aria-hidden size={2} />
           <H3>Cryptocurrency</H3>
         </StackLayout>
         <Text>Link your crypto to your payments account.</Text>
@@ -241,11 +241,11 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
         <InteractableCard {...args} value="card" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
-              <CreditCardIcon size={2} />
+              <CreditCardIcon aria-hidden size={2} />
               <H3>Credit Card</H3>
             </StackLayout>
             <StackLayout direction="row" gap={1}>
-              <RadioButtonIcon checked={selected === "card"} />
+              <RadioButtonIcon aria-hidden checked={selected === "card"} />
               <Text>Link credit card to your payments account.</Text>
             </StackLayout>
           </StackLayout>
@@ -253,11 +253,11 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
         <InteractableCard value="wire" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
-              <BankIcon size={2} />
+              <BankIcon aria-hidden size={2} />
               <H3>Bank wire</H3>
             </StackLayout>
             <StackLayout direction="row" gap={1}>
-              <RadioButtonIcon checked={selected === "wire"} />
+              <RadioButtonIcon aria-hidden checked={selected === "wire"} />
               <Text>Link your bank to your payments account.</Text>
             </StackLayout>
           </StackLayout>
@@ -265,11 +265,11 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
         <InteractableCard value="crypto" style={{ width: "180px" }}>
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
-              <DiamondIcon size={2} />
+              <DiamondIcon aria-hidden size={2} />
               <H3>Cryptocurrency</H3>
             </StackLayout>
             <StackLayout direction="row" gap={1}>
-              <RadioButtonIcon checked={selected === "crypto"} />
+              <RadioButtonIcon aria-hidden checked={selected === "crypto"} />
               <Text>Link your crypto to your payments account.</Text>
             </StackLayout>
           </StackLayout>
@@ -294,11 +294,11 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       <InteractableCard {...args} value="jane-doe" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar size={1} />
+            <Avatar aria-hidden size={1} />
             <H3>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon checked={selected?.includes("jane-doe")} />
+            <CheckboxIcon aria-hidden checked={selected?.includes("jane-doe")} />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -306,11 +306,11 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar size={1} />
+            <Avatar aria-hidden size={1} />
             <H3>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon checked={selected?.includes("tom-roberts")} />
+            <CheckboxIcon aria-hidden checked={selected?.includes("tom-roberts")} />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -318,11 +318,11 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       <InteractableCard value="ray-smith" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar size={1} />
+            <Avatar aria-hidden size={1} />
             <H3>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon checked={selected?.includes("ray-smith")} />
+            <CheckboxIcon aria-hidden checked={selected?.includes("ray-smith")} />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
