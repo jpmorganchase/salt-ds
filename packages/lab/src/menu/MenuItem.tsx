@@ -1,4 +1,9 @@
-import {ComponentPropsWithoutRef, forwardRef, MouseEvent} from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  MouseEvent,
+  FocusEvent,
+} from "react";
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
@@ -6,9 +11,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import menuItemCss from "./MenuItem.css";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { useIsMenuTrigger } from "./MenuTriggerContext";
-import {useFloatingTree, useListItem} from "@floating-ui/react";
+import { useFloatingTree, useListItem } from "@floating-ui/react";
 import { useMenuPanelContext } from "./MenuPanelContext";
-import {useMenuContext} from "./MenuContext";
+import { useMenuContext } from "./MenuContext";
 
 export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
   disabled?: boolean;
@@ -18,11 +23,11 @@ const withBaseName = makePrefixer("saltMenuItem");
 
 export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
   function MenuItem(props, ref) {
-    const { children, className, disabled, onClick, ...rest } = props;
+    const { children, className, disabled, onClick, onFocus, ...rest } = props;
 
-    const triggersSubmenu = useIsMenuTrigger();
-    const { activeIndex, getItemProps } = useMenuPanelContext();
-    const { openState, elementsRef } = useMenuContext();
+    const { triggersSubmenu, blurActive } = useIsMenuTrigger();
+    const { activeIndex, getItemProps, setFocusInside } = useMenuPanelContext();
+    const { elementsRef } = useMenuContext();
     const item = useListItem();
     const tree = useFloatingTree();
     const active = item.index === activeIndex;
@@ -39,21 +44,26 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("blurActive")]:
-              triggersSubmenu && openState && !active,
+            [withBaseName("blurActive")]: blurActive,
             [withBaseName("first")]: item.index === 0,
-            [withBaseName("last")]: item.index === elementsRef.current.length - 1,
+            [withBaseName("last")]:
+              item.index === elementsRef.current.length - 1,
           },
           className
         )}
         role="menuitem"
-        aria-disabled={disabled}
+        aria-disabled={disabled || undefined}
         tabIndex={active ? 0 : -1}
         {...getItemProps({
           onClick(event: MouseEvent<HTMLDivElement>) {
             onClick?.(event);
             tree?.events.emit("click");
           },
+          onFocus(event: FocusEvent<HTMLDivElement>) {
+            onFocus?.(event);
+            setFocusInside(true);
+          },
+          ...rest,
         })}
         ref={handleRef}
       >

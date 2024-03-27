@@ -1,7 +1,8 @@
 import { cloneElement, isValidElement, ReactNode } from "react";
-import {mergeProps, useForkRef} from "@salt-ds/core";
+import { mergeProps, useForkRef } from "@salt-ds/core";
 import { useMenuContext } from "./MenuContext";
 import { MenuTriggerContext } from "./MenuTriggerContext";
+import { useMenuPanelContext } from "./MenuPanelContext";
 
 export interface MenuTriggerProps {
   children?: ReactNode;
@@ -10,14 +11,15 @@ export interface MenuTriggerProps {
 export function MenuTrigger(props: MenuTriggerProps) {
   const { children } = props;
 
-  const { getReferenceProps, refs } = useMenuContext();
+  const { getReferenceProps, refs, setFocusInside, focusInside, openState } =
+    useMenuContext();
+  const { setFocusInside: setFocusInsideParent } = useMenuPanelContext();
 
   const handleRef = useForkRef(
     // @ts-expect-error error TS2339 missing property ref
     isValidElement(children) ? children.ref : null,
-    refs.setReference
+    refs?.setReference
   );
-
 
   if (!children || !isValidElement(children)) {
     // Should we log or throw error?
@@ -25,10 +27,17 @@ export function MenuTrigger(props: MenuTriggerProps) {
   }
 
   return (
-    <MenuTriggerContext.Provider value={true}>
+    <MenuTriggerContext.Provider
+      value={{ triggersSubmenu: true, blurActive: focusInside && openState }}
+    >
       {cloneElement(children, {
         ...mergeProps(
-          getReferenceProps(),
+          getReferenceProps({
+            onFocus() {
+              setFocusInsideParent(true);
+              setFocusInside(false);
+            },
+          }),
           children.props
         ),
         ref: handleRef,

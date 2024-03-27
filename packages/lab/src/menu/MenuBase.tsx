@@ -1,10 +1,10 @@
-import {
-  ReactNode, useEffect,
-  useRef,
-  useState,
-} from "react";
+import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { MenuContext } from "./MenuContext";
-import {useControlled, useFloatingUI, UseFloatingUIProps} from "@salt-ds/core";
+import {
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+} from "@salt-ds/core";
 import {
   flip,
   offset,
@@ -19,7 +19,8 @@ import {
   FloatingNode,
   useFloatingParentNodeId,
   useFloatingNodeId,
-  useListNavigation, useFloatingTree,
+  useListNavigation,
+  useFloatingTree,
 } from "@floating-ui/react";
 
 export interface MenuBaseProps {
@@ -27,15 +28,13 @@ export interface MenuBaseProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (newOpen: boolean) => void;
-
+  placement?: UseFloatingUIProps["placement"];
 }
 
-export function MenuBase(
-  props: MenuBaseProps
-) {
-  const { children, defaultOpen, open, onOpenChange } = props;
+export function MenuBase(props: MenuBaseProps) {
+  const { children, defaultOpen, open, onOpenChange, placement } = props;
   const parentId = useFloatingParentNodeId();
-  const nodeId =  useFloatingNodeId();
+  const nodeId = useFloatingNodeId();
   const tree = useFloatingTree();
   const elementsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -46,12 +45,16 @@ export function MenuBase(
     state: "open",
   });
 
-  const setOpen = (newOpen: boolean) => {
-    setOpenState(newOpen);
-    onOpenChange?.(newOpen);
-  };
+  const setOpen = useCallback(
+    (newOpen: boolean) => {
+      setOpenState(newOpen);
+      onOpenChange?.(newOpen);
+    },
+    [setOpenState, onOpenChange]
+  );
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [focusInside, setFocusInside] = useState(false);
 
   const isNested = parentId != null;
 
@@ -59,25 +62,35 @@ export function MenuBase(
     nodeId,
     open: openState,
     onOpenChange: setOpen,
-    placement: isNested ? "right-start" : "bottom-start",
-    middleware: [offset(isNested ? { crossAxis: -1 } : {}), flip({}), shift({ limiter: limitShift() })],
+    placement: placement ?? isNested ? "right-start" : "bottom-start",
+    middleware: [
+      offset(isNested ? { crossAxis: -1 } : {}),
+      flip({}),
+      shift({ limiter: limitShift() }),
+    ],
   });
 
-  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
-    useHover(context, {
-      enabled: isNested,
-      handleClose: safePolygon({ blockPointerEvents: true }),
-    }),
-    useClick(context, { event: "mousedown", toggle: !isNested, ignoreMouse: isNested }),
-    useRole(context, { role: "menu" }),
-    useDismiss(context, { bubbles: true }),
-    useListNavigation(context, {
-      listRef: elementsRef,
-      activeIndex,
-      nested: isNested,
-      onNavigate: setActiveIndex
-    })
-  ]);
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
+    [
+      useHover(context, {
+        enabled: isNested,
+        handleClose: safePolygon({ blockPointerEvents: true }),
+      }),
+      useClick(context, {
+        event: "mousedown",
+        toggle: !isNested,
+        ignoreMouse: isNested,
+      }),
+      useRole(context, { role: "menu" }),
+      useDismiss(context, { bubbles: true }),
+      useListNavigation(context, {
+        listRef: elementsRef,
+        activeIndex,
+        nested: isNested,
+        onNavigate: setActiveIndex,
+      }),
+    ]
+  );
 
   const getPanelPosition = () => ({
     top: y ?? 0,
@@ -88,20 +101,18 @@ export function MenuBase(
   });
 
   useEffect(() => {
-    if(!tree) return;
+    if (!tree) return;
 
-    function handleItemClick(){
+    function handleItemClick() {
       setOpen(false);
     }
 
     tree.events.on("click", handleItemClick);
 
     return () => {
-      tree.events.off("click", handleItemClick)
-    }
-
+      tree.events.off("click", handleItemClick);
+    };
   }, [tree, setOpen]);
-
 
   return (
     <FloatingNode id={nodeId}>
@@ -115,10 +126,12 @@ export function MenuBase(
           getItemProps,
           activeIndex,
           context,
-          elementsRef
+          elementsRef,
+          focusInside,
+          setFocusInside,
         }}
       >
-          {children}
+        {children}
       </MenuContext.Provider>
     </FloatingNode>
   );

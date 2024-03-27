@@ -39,11 +39,11 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
         ref={ref}
         {...rest}
       >
-        {label &&
+        {label && (
           <div aria-hidden className={withBaseName("label")} id={labelId}>
             {label}
           </div>
-        }
+        )}
         {children}
       </div>
     );

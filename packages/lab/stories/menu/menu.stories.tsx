@@ -1,8 +1,20 @@
 import { Button } from "@salt-ds/core";
-import {Menu, MenuGroup, MenuItem, MenuPanel, MenuTrigger} from "@salt-ds/lab";
+import {
+  Menu,
+  MenuGroup,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+} from "@salt-ds/lab";
 
 import { Meta } from "@storybook/react";
-import { MicroMenuIcon } from "@salt-ds/icons";
+import {
+  CopyIcon,
+  ExportIcon,
+  MicroMenuIcon,
+  PasteIcon,
+  SettingsIcon,
+} from "@salt-ds/icons";
 
 export default {
   title: "Lab/Menu",
@@ -13,7 +25,9 @@ export const SingleLevel = () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu" ><MicroMenuIcon aria-hidden /></Button>
+        <Button variant="secondary" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
       </MenuTrigger>
       <MenuPanel>
         <MenuItem>Copy</MenuItem>
@@ -25,7 +39,7 @@ export const SingleLevel = () => {
   );
 };
 
-function EditStylingMenu(){
+function EditStylingMenu() {
   return (
     <Menu>
       <MenuTrigger>
@@ -40,7 +54,7 @@ function EditStylingMenu(){
   );
 }
 
-function ClearStylingMenu(){
+function ClearStylingMenu() {
   return (
     <Menu>
       <MenuTrigger>
@@ -55,12 +69,13 @@ function ClearStylingMenu(){
   );
 }
 
-
 export const MultiLevel = () => {
   return (
-    <Menu  >
+    <Menu>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu" ><MicroMenuIcon aria-hidden /></Button>
+        <Button variant="secondary" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
       </MenuTrigger>
       <MenuPanel>
         <MenuItem>Copy</MenuItem>
@@ -74,45 +89,117 @@ export const MultiLevel = () => {
 };
 
 export const GroupedItems = () => {
-  return <Menu>
-    <MenuTrigger>
-      <Button variant="secondary" aria-label="Open Menu" ><MicroMenuIcon aria-hidden /></Button>
-    </MenuTrigger>
-    <MenuPanel>
-      <MenuGroup>
-        <MenuItem>Copy</MenuItem>
-        <MenuItem>Paste</MenuItem>
-      </MenuGroup>
-      <MenuGroup label="Styling" >
-        <EditStylingMenu />
-        <ClearStylingMenu />
-      </MenuGroup>
-      <MenuGroup label="Configurations" >
-        <MenuItem>Export</MenuItem>
-        <MenuItem>Settings</MenuItem>
-      </MenuGroup>
-    </MenuPanel>
-  </Menu>
-}
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button variant="secondary" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup>
+          <MenuItem>Copy</MenuItem>
+          <MenuItem>Paste</MenuItem>
+        </MenuGroup>
+        <MenuGroup label="Styling">
+          <EditStylingMenu />
+          <ClearStylingMenu />
+        </MenuGroup>
+        <MenuGroup label="Configurations">
+          <MenuItem>Export</MenuItem>
+          <MenuItem>Settings</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
 
 export const SeparatorOnly = () => {
-  return <Menu>
-    <MenuTrigger>
-      <Button variant="secondary" aria-label="Open Menu" ><MicroMenuIcon aria-hidden /></Button>
-    </MenuTrigger>
-    <MenuPanel>
-      <MenuGroup>
-        <MenuItem>Copy</MenuItem>
-        <MenuItem>Paste</MenuItem>
-      </MenuGroup>
-      <MenuGroup >
-        <EditStylingMenu />
-        <ClearStylingMenu />
-      </MenuGroup>
-      <MenuGroup >
-        <MenuItem>Export</MenuItem>
-        <MenuItem>Settings</MenuItem>
-      </MenuGroup>
-    </MenuPanel>
-  </Menu>
-}
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button variant="secondary" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup>
+          <MenuItem>Copy</MenuItem>
+          <MenuItem>Paste</MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <EditStylingMenu />
+          <ClearStylingMenu />
+        </MenuGroup>
+        <MenuGroup>
+          <MenuItem>Export</MenuItem>
+          <MenuItem>Settings</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const Icons = () => {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button variant="secondary" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem>
+          <CopyIcon aria-hidden />
+          Copy
+        </MenuItem>
+        <MenuItem>
+          <ExportIcon aria-hidden />
+          Export
+        </MenuItem>
+        <MenuItem>
+          <SettingsIcon aria-hidden />
+          Settings
+        </MenuItem>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const IconWithGroups = () => {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <Button variant="secondary" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup>
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem disabled>
+            <PasteIcon aria-hidden />
+            Paste
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup label="Styling">
+          <EditStylingMenu />
+          <ClearStylingMenu />
+        </MenuGroup>
+        <MenuGroup label="Configurations">
+          <MenuItem>
+            <ExportIcon aria-hidden />
+            Export
+          </MenuItem>
+          <MenuItem>
+            <SettingsIcon aria-hidden />
+            Settings
+          </MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
