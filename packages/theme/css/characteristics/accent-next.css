@@ -1,0 +1,5 @@
+.salt-theme.salt-theme-next {
+  --salt-accent-background: var(--salt-palette-accent);
+  --salt-accent-borderColor: var(--salt-palette-accent);
+  --salt-accent-foreground: var(--salt-palette-foreground-invert);
+}
