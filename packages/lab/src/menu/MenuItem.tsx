@@ -13,7 +13,6 @@ import { ChevronRightIcon } from "@salt-ds/icons";
 import { useIsMenuTrigger } from "./MenuTriggerContext";
 import { useFloatingTree, useListItem } from "@floating-ui/react";
 import { useMenuPanelContext } from "./MenuPanelContext";
-import { useMenuContext } from "./MenuContext";
 
 export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
   disabled?: boolean;
@@ -27,7 +26,6 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 
     const { triggersSubmenu, blurActive } = useIsMenuTrigger();
     const { activeIndex, getItemProps, setFocusInside } = useMenuPanelContext();
-    const { elementsRef } = useMenuContext();
     const item = useListItem();
     const tree = useFloatingTree();
     const active = item.index === activeIndex;
@@ -45,9 +43,6 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           withBaseName(),
           {
             [withBaseName("blurActive")]: blurActive,
-            [withBaseName("first")]: item.index === 0,
-            [withBaseName("last")]:
-              item.index === elementsRef.current.length - 1,
           },
           className
         )}
