@@ -169,7 +169,7 @@ export const InteractableCard = forwardRef<
         className
       )}
       {...rest}
-      onClick={interactableCardGroup ? handleClick : onClick}
+      onClick={handleClick}
       ref={handleRef}
       tabIndex={tabIndex}
     >
