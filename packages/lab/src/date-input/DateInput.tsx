@@ -13,9 +13,26 @@ import { useWindow } from "@salt-ds/window";
 
 import dateInputCss from "./DateInput.css";
 import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
+import { DateFormatter } from "@internationalized/date";
 
 const withBaseName = makePrefixer("saltDateInput");
 
+const isInvalidDate = (value: string) =>
+  // @ts-ignore evaluating validity of date
+  value && isNaN(new Date(value));
+
+const defaultDateFormatter = (input: string): string => {
+  const date = new Date(input);
+  const currentLocale = navigator.languages[0];
+
+  return isInvalidDate(date.toLocaleDateString())
+    ? input
+    : new DateFormatter(currentLocale, {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(new Date(input));
+};
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
@@ -52,23 +69,11 @@ export interface DateInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * Parser to format the input as date.
+   * Function to format the input as date.
    */
-  dateParser?: (input: string) => string;
+  dateFormatter?: (input: string) => string;
 }
 
-const defaultDateParser = (input: string): string => {
-  const date = new Date(input);
-
-  // @ts-ignore evaluating validity of date
-  return isNaN(date)
-    ? input
-    : new Intl.DateTimeFormat("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }).format(new Date(input));
-};
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   function DateInput(
     {
@@ -90,7 +95,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         : undefined,
       validationStatus: validationStatusProp,
       variant = "primary",
-      dateParser = defaultDateParser,
+      dateFormatter = defaultDateFormatter,
       placeholder = "dd mmm yyyy",
       ...other
     },
@@ -120,16 +125,29 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       "aria-owns": ariaOwns,
     };
 
-    const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-
-    const [focused, setFocused] = useState(false);
-
     const isEmptyReadOnly = isReadOnly && !defaultStartDateProp && !valueProp;
     const defaultValue = isEmptyReadOnly
       ? emptyReadOnlyMarker
       : defaultStartDateProp;
+    const [value, setValue] = useControlled({
+      controlled: valueProp,
+      default: defaultValue,
+      name: "DateInput",
+      state: "value",
+    });
+
+    const getDateValidationStatus = (value: string) => isInvalidDate(value) ? 'error' : undefined;
+
+    const [dateStatus, setDateStatus] = useState<"error" | undefined>(
+      getDateValidationStatus(value as string)
+    );
+
+    const isDisabled = disabled || formFieldDisabled;
+    const validationStatus =
+      dateStatus ?? formFieldValidationStatus ?? validationStatusProp;
+
+    const [focused, setFocused] = useState(false);
 
     const {
       "aria-describedby": dateInputDescribedBy,
@@ -145,15 +163,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
 
-    const [value, setValue] = useControlled({
-      controlled: valueProp,
-      default: defaultValue,
-      name: "DateInput",
-      state: "value",
-    });
-
     const format = (date: string) => {
-      const formattedDate = dateParser(date);
+      const formattedDate = dateFormatter(date);
       setValue(formattedDate);
     };
     const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -162,8 +173,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      value && format(value as string);
+      const stringDate = value as string;
+      value && format(stringDate);
       onBlur?.(event);
+      setDateStatus(getDateValidationStatus(stringDate));
       setFocused(false);
     };
 
