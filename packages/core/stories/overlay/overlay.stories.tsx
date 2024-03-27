@@ -5,23 +5,20 @@ import {
   StackLayout,
   Tooltip,
   useId,
-} from "@salt-ds/core";
-import React, { ChangeEvent, useState } from "react";
-import { StoryFn, Meta } from "@storybook/react";
-
-import {
   Overlay,
   OverlayPanel,
   OverlayProps,
   OverlayTrigger,
   OverlayPanelCloseButton,
   OverlayPanelContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import React, { ChangeEvent, useState } from "react";
+import { StoryFn, Meta } from "@storybook/react";
 
 import "./overlay.stories.css";
 
 export default {
-  title: "Lab/Overlay",
+  title: "Core/Overlay",
 } as Meta<typeof Overlay>;
 
 export const Default: StoryFn<OverlayProps> = ({ ...args }) => {

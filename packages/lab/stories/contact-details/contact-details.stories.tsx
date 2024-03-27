@@ -1,4 +1,13 @@
-import { Button, Card, Tooltip } from "@salt-ds/core";
+import {
+  Button,
+  Card,
+  Tooltip,
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  OverlayPanelCloseButton,
+  OverlayPanelContent,
+} from "@salt-ds/core";
 import {
   CallIcon,
   ChatIcon,
@@ -19,9 +28,6 @@ import {
   ContactSecondaryInfo,
   ContactTertiaryInfo,
   ListItem,
-  Overlay,
-  OverlayPanel,
-  OverlayTrigger,
   ListItemType,
   SelectionChangeHandler,
   ValueComponentProps,
@@ -474,7 +480,7 @@ const WithinTileTemplate: StoryFn = () => {
 };
 
 const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
-  const OverlayContent = () => (
+  const OverlayData = () => (
     <ContactDetails className={"withinOverlay"} embedded={true}>
       <ContactFavoriteToggle />
       <ContactAvatar />
@@ -514,7 +520,10 @@ const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
         <Button>view contact details</Button>
       </OverlayTrigger>
       <OverlayPanel>
-        <OverlayContent />
+        <OverlayPanelCloseButton />
+        <OverlayPanelContent>
+          <OverlayData />
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, useMemo, useRef } from "react";
 import { OverlayContext } from "./OverlayContext";
-import { useControlled, useFloatingUI } from "@salt-ds/core";
+import { useControlled, useFloatingUI } from "../utils";
 import {
   flip,
   offset,

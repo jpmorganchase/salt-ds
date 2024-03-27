@@ -48,7 +48,6 @@ export * from "./list-next";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
-export * from "./overlay";
 export * from "./parent-child-layout";
 export * from "./portal";
 export * from "./query-input";
