@@ -14,7 +14,7 @@ sidebar:
 A list builder allows users to create a bespoke list of items from an original list, also known as a pick list, adding or removing items as required. Users can filter the items by using the filter input field.
 
   <Diagram
-    src="/img/patterns/list-builder/image.png"
+    src="/img/patterns/list-builder/list-builder.png"
     alt="An example of a list builder."
     contentPosition="top"
     border
@@ -47,7 +47,7 @@ The list builder has three functional areas:
 3. **Move buttons**: Provides functionality to move items between the two lists.
 
   <Diagram
-    src="/img/patterns/list-builder/anatomy.png"
+    src="/img/patterns/list-builder/list-builder-anatomy.png"
     alt="Anatomy of a list builder"
     contentPosition="top"
     border
@@ -64,7 +64,7 @@ Apply a consistent logic to the order of displayed items. Display pick list item
 - Use `StackLayout` to orient the move buttons between the two lists in a column formation.
 
   <Diagram
-    src="/img/patterns/list-builder/layout.png"
+    src="/img/patterns/list-builder/list-builder-layout.png"
     alt="Layout for a list builder."
     contentPosition="top"
     border
@@ -91,7 +91,7 @@ When moving items from the selected item list back to the pick list, position th
 Users can move multiple items in a single action between the pick list and the selected item list using the list builder, allowing movement in both directions.
 
   <Diagram
-    src="/img/patterns/list-builder/multi-select.png"
+    src="/img/patterns/list-builder/multi-select-list-builder.png"
     alt="Multiple selections with a list builder."
     contentPosition="top"
     border
@@ -102,7 +102,7 @@ Users can move multiple items in a single action between the pick list and the s
 Single selection allows users to move only one item at a time between the pick list and the selected item list.
 
   <Diagram
-    src="/img/patterns/list-builder/single-select.png"
+    src="/img/patterns/list-builder/single-select-list-builder.png"
     alt="Single selection with a list builder."
     contentPosition="top"
     border
@@ -113,7 +113,7 @@ Single selection allows users to move only one item at a time between the pick l
 If users don’t need to reorder items in the new list, remove this feature.
 
   <Diagram
-    src="/img/patterns/list-builder/non-reorderable.png"
+    src="/img/patterns/list-builder/non-reorderable-list-builder.png"
     alt="Single selection with a list builder."
     contentPosition="top"
     border
@@ -124,7 +124,7 @@ If users don’t need to reorder items in the new list, remove this feature.
 Display a message to prompt or instruct the user when a list is empty. You can customize this message. Make sure that the text is concise, descriptive and clearly understood. Use the [content status pattern](/salt/patterns/content-status) to display empty state messages.
 
   <Diagram
-    src="/img/patterns/list-builder/empty-state.png"
+    src="/img/patterns/list-builder/empty-list.png"
     alt="An empty state message."
     contentPosition="top"
     border
@@ -139,7 +139,7 @@ Horizontally and vertically center the empty state message in the container.
 Use a stack layout to compose the list builder vertically for interfaces with limited viewport width, such as mobile devices. 
 
   <Diagram
-    src="/img/patterns/list-builder/stack-layout.png"
+    src="/img/patterns/list-builder/stack-layout-list-builder.png"
     alt="A vertically aligned list builder."
     contentPosition="top"
     border
@@ -154,7 +154,7 @@ Use a minimum width of 8ems and ensure that the list builder spans the full widt
 In both the pick list and the selected item list, users can [apply filters](/salt/patterns/list-filtering) with the input field, enabling real-time filtration from a large data set. The list dynamically refreshes to display only the items that match the search criteria.
 
   <Diagram
-    src="/img/patterns/list-builder/filter-and-sort.png"
+    src="/img/patterns/list-builder/filtering-list.png"
     alt="Filter and sort behaviors for a list builder."
     contentPosition="top"
     border
