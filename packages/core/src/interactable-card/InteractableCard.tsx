@@ -33,10 +33,6 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   disabled?: boolean;
   /**
-   * If `true`, the card will have selected styling.
-   */
-  selected?: boolean;
-  /**
    * Callback fired when the selection changes.
    * @param event
    */
@@ -61,7 +57,6 @@ export const InteractableCard = forwardRef<
     children,
     className,
     disabled: disabledProp,
-    selected: selectedProp,
     variant = "primary",
     value,
     onBlur,
@@ -81,15 +76,13 @@ export const InteractableCard = forwardRef<
 
   const interactableCardGroup = useInteractableCardGroup();
 
-  const interactableCardGroupSelected = interactableCardGroup
-    ? interactableCardGroup.isSelected(value)
-    : selectedProp;
+  const interactableCardGroupSelected = interactableCardGroup?.isSelected(value);
 
   const disabled = interactableCardGroup?.disabled || disabledProp;
 
   const [selected, setSelected] = useControlled({
     controlled: interactableCardGroupSelected,
-    default: Boolean(selectedProp),
+    default: Boolean(false),
     name: "InteractableCard",
     state: "selected",
   });
