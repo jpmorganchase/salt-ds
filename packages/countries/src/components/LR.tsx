@@ -9,35 +9,66 @@ export type LRProps = CountrySymbolProps;
 const LR = forwardRef<SVGSVGElement, LRProps>(function LR(props: LRProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="LR"
       aria-label="Liberia"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-LR-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-LR-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#DD2033"
-          d="M72 18V9H0v9h72Zm0 9v9H0v-9h72Zm0 27v-9H0v9h72Zm0 18v-9H0v9h72Z"
-        />
-        <path fill="#004692" d="M.4 36V0h36v36z" />
-        <path
-          fill="#F5F7F8"
-          d="m22.2 10-2.98 6.742-7.02.897 5.177 5.064L16.02 30l6.18-4.167L28.38 30l-1.357-7.297L32.2 17.64l-7.02-.897L22.2 10Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-LR-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#DD2033"
+              d="M72 18V9H0v9h72Zm0 9v9H0v-9h72Zm0 27v-9H0v9h72Zm0 18v-9H0v9h72Z"
+            />
+            <path fill="#004692" d="M.4 36V0h36v36z" />
+            <path
+              fill="#F5F7F8"
+              d="m22.2 10-2.98 6.742-7.02.897 5.177 5.064L16.02 30l6.18-4.167L28.38 30l-1.357-7.297L32.2 17.64l-7.02-.897L22.2 10Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-LR-a)`}>
+            <path fill="#F5F7F8" d="M0 59V-4h72v63z" />
+            <path
+              fill="#DD2033"
+              d="M36 14V5h36v9zm0 18v-9h36v9zM0 50v-9h72v9z"
+            />
+            <path fill="#004692" d="M0 32V0h36v32z" />
+            <path
+              fill="#F5F7F8"
+              d="m18 6-2.98 6.742L8 13.64l5.177 5.064L11.82 26 18 21.833 24.18 26l-1.357-7.297L28 13.64l-7.02-.897L18 6Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

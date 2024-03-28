@@ -9,28 +9,55 @@ export type MTProps = CountrySymbolProps;
 const MT = forwardRef<SVGSVGElement, MTProps>(function MT(props: MTProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="MT"
       aria-label="Malta"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-MT-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-MT-a)`}>
-        <path fill="#DD2033" d="M71.6 72h-36V0h36z" />
-        <path fill="#F5F7F8" d="M35.6 72h-36V0h36z" />
-        <path fill="#C1C3C3" d="M22.8 13.6h-6v7h-7v6h7v7h6v-7h7v-6h-7v-7Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MT-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-MT-a)`}>
+            <path fill="#DD2033" d="M71.6 72h-36V0h36z" />
+            <path fill="#F5F7F8" d="M35.6 72h-36V0h36z" />
+            <path
+              fill="#C1C3C3"
+              d="M22.8 13.6h-6v7h-7v6h7v7h6v-7h7v-6h-7v-7Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MT-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-MT-a)`}>
+            <path fill="#DD2033" d="M72 50H36V0h36z" />
+            <path fill="#F5F7F8" d="M36 50H0V0h36z" />
+            <path fill="#C1C3C3" d="M23 6h-6v7h-7v6h7v7h6v-7h7v-6h-7V6Z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

@@ -9,43 +9,82 @@ export type TFProps = CountrySymbolProps;
 const TF = forwardRef<SVGSVGElement, TFProps>(function TF(props: TFProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="TF"
       aria-label="French Southern Territories (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-TF-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-TF-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 0h38v38H0z" />
-        <path fill="#004692" d="M0 36h12V0H0z" />
-        <path fill="#DD2033" d="M24 36h12V0H24z" />
-        <path
-          fill="#F5F7F8"
-          d="m38 44-1.788 4.045-4.212.539 3.106 3.038L34.292 56 38 53.5l3.708 2.5-.814-4.378L44 48.584l-4.212-.539L38 44Z"
-        />
-        <path
-          fill="#F5F7F8"
-          fillRule="evenodd"
-          d="m44.763 44 2.364 3.844h6.755V61.25l-5.066-8.063L42 64.25h3.316l.669-1.219h5.653l2.566 4.688h3.592l2.566-4.688h5.653l.67 1.219H70l-6.816-11.063-5.066 8.063v-7.406h3.04l2.256-3.657h-5.296v-2.343h6.755L67.237 44H44.763Zm5.438 16.406-1.385-2.531-1.39 2.531h2.775Zm14.373 0h-2.775l1.385-2.531 1.39 2.531Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="#F5F7F8"
-          d="M42.212 71.045 44 67l1.788 4.045 4.212.539-3.106 3.038.814 4.378L44 76.5 40.292 79l.814-4.378L38 71.584l4.212-.539Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-TF-a)`}>
+            <path fill="#004692" d="M0 0h72v72H0z" />
+            <path fill="#F5F7F8" d="M0 0h38v38H0z" />
+            <path fill="#004692" d="M0 36h12V0H0z" />
+            <path fill="#DD2033" d="M24 36h12V0H24z" />
+            <path
+              fill="#F5F7F8"
+              d="m38 44-1.788 4.045-4.212.539 3.106 3.038L34.292 56 38 53.5l3.708 2.5-.814-4.378L44 48.584l-4.212-.539L38 44Z"
+            />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="m44.763 44 2.364 3.844h6.755V61.25l-5.066-8.063L42 64.25h3.316l.669-1.219h5.653l2.566 4.688h3.592l2.566-4.688h5.653l.67 1.219H70l-6.816-11.063-5.066 8.063v-7.406h3.04l2.256-3.657h-5.296v-2.343h6.755L67.237 44H44.763Zm5.438 16.406-1.385-2.531-1.39 2.531h2.775Zm14.373 0h-2.775l1.385-2.531 1.39 2.531Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F5F7F8"
+              d="M42.212 71.045 44 67l1.788 4.045 4.212.539-3.106 3.038.814 4.378L44 76.5 40.292 79l.814-4.378L38 71.584l4.212-.539Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-TF-a)`}>
+            <path fill="#004692" d="M0-11h72v72H0z" />
+            <path fill="#F5F7F8" d="M0-9h35v38H0z" />
+            <path fill="#004692" d="M0 27h11V0H0z" />
+            <path fill="#DD2033" d="M22 27h11V0H22z" />
+            <path
+              fill="#F5F7F8"
+              d="m42.579 19-1.365 3.12-3.214.416 2.37 2.344-.621 3.377 2.83-1.928 2.83 1.928-.622-3.377 2.37-2.344-3.213-.415L42.579 19Z"
+            />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="m47.74 19 1.804 2.965H54.7v10.342l-3.866-6.22-5.201 8.534h2.53l.51-.94h4.315l1.958 3.616h2.742l1.958-3.616h4.314l.51.94H67l-5.202-8.534-3.866 6.22v-5.713h2.32l1.722-2.82h-4.041v-1.809h5.154L64.891 19h-17.15Zm4.15 12.656-1.057-1.952-1.06 1.952h2.117Zm10.969 0h-2.118l1.057-1.952 1.061 1.952Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F5F7F8"
+              d="m45.793 39.864 1.365-3.121 1.365 3.12 3.214.416-2.37 2.344.62 3.377-2.83-1.929L44.328 46l.623-3.377-2.371-2.344 3.214-.416Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

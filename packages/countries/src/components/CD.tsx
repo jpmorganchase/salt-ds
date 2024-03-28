@@ -9,38 +9,72 @@ export type CDProps = CountrySymbolProps;
 const CD = forwardRef<SVGSVGElement, CDProps>(function CD(props: CDProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CD"
       aria-label="Congo (the Democratic Republic of the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CD-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-CD-a)`}>
-        <path fill="#0091DA" d="M0 0h72v72H0z" />
-        <path
-          fill="#FBD381"
-          d="m5.2 57.326 17.678 17.678 52.326-52.326L57.526 5z"
-        />
-        <path
-          fill="#DD2033"
-          d="M20.062 70.974 9.455 60.367 60.367 9.456l10.607 10.606z"
-        />
-        <path
-          fill="#FBD381"
-          d="m20 10-2.98 6.742-7.02.897 5.177 5.064L13.82 30 20 25.833 26.18 30l-1.357-7.297L30 17.64l-7.02-.897L20 10Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CD-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-CD-a)`}>
+            <path fill="#0091DA" d="M0 0h72v72H0z" />
+            <path
+              fill="#FBD381"
+              d="m5.2 57.326 17.678 17.678 52.326-52.326L57.526 5z"
+            />
+            <path
+              fill="#DD2033"
+              d="M20.062 70.974 9.455 60.367 60.367 9.456l10.607 10.606z"
+            />
+            <path
+              fill="#FBD381"
+              d="m20 10-2.98 6.742-7.02.897 5.177 5.064L13.82 30 20 25.833 26.18 30l-1.357-7.297L30 17.64l-7.02-.897L20 10Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CD-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CD-a)`}>
+            <path fill="#0091DA" d="M0 0h72v50H0z" />
+            <path
+              fill="#FBD381"
+              d="m-.1 51.627 17.677 17.677L79.62 7.263 61.94-10.415z"
+            />
+            <path
+              fill="#DD2033"
+              d="M15.975 64.062 5.368 53.456 66.682-7.858 77.288 2.748z"
+            />
+            <path
+              fill="#FBD381"
+              d="m15 5-2.98 6.742L5 12.64l5.177 5.064L8.82 25 15 20.833 21.18 25l-1.357-7.297L25 12.64l-7.02-.897L15 5Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

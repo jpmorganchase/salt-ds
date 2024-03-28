@@ -9,28 +9,52 @@ export type BSProps = CountrySymbolProps;
 const BS = forwardRef<SVGSVGElement, BSProps>(function BS(props: BSProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="BS"
       aria-label="Bahamas (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-BS-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-BS-a)`}>
-        <path fill="#3CCBDA" d="M0 72V0h72v72z" />
-        <path fill="#FBD381" d="M0 48V24h72v24z" />
-        <path fill="#31373D" d="M48 36 0 0v72l48-36Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-BS-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-BS-a)`}>
+            <path fill="#3CCBDA" d="M0 72V0h72v72z" />
+            <path fill="#FBD381" d="M0 48V24h72v24z" />
+            <path fill="#31373D" d="M48 36 0 0v72l48-36Z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-BS-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-BS-a)`}>
+            <path fill="#3CCBDA" d="M0 50V0h72v50z" />
+            <path fill="#FBD381" d="M0 37V13h72v24z" />
+            <path fill="#31373D" d="m33 25-48-36v72l48-36Z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

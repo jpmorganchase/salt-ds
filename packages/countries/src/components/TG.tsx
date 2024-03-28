@@ -9,32 +9,60 @@ export type TGProps = CountrySymbolProps;
 const TG = forwardRef<SVGSVGElement, TGProps>(function TG(props: TGProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="TG"
       aria-label="Togo"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-TG-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-TG-a)`}>
-        <path fill="#009B77" d="M0 72V0h72v72z" />
-        <path fill="#F1B434" d="M0 28V14h72v14zm0 30V44h72v14z" />
-        <path fill="#DD2033" d="M0 44V0h44v44z" />
-        <path
-          fill="#F5F7F8"
-          d="m24 14-2.98 6.742-7.02.897 5.177 5.064L17.82 34 24 29.833 30.18 34l-1.357-7.297L34 21.64l-7.02-.897L24 14Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TG-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-TG-a)`}>
+            <path fill="#009B77" d="M0 72V0h72v72z" />
+            <path fill="#F1B434" d="M0 28V14h72v14zm0 30V44h72v14z" />
+            <path fill="#DD2033" d="M0 44V0h44v44z" />
+            <path
+              fill="#F5F7F8"
+              d="m24 14-2.98 6.742-7.02.897 5.177 5.064L17.82 34 24 29.833 30.18 34l-1.357-7.297L34 21.64l-7.02-.897L24 14Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TG-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-TG-a)`}>
+            <path fill="#009B77" d="M0 50V0h72v50z" />
+            <path fill="#F1B434" d="M0 21V10h72v11zm0 21V32h72v10z" />
+            <path fill="#DD2033" d="M0 32V0h36v32z" />
+            <path
+              fill="#F5F7F8"
+              d="m18 6-2.98 6.742L8 13.64l5.177 5.064L11.82 26 18 21.833 24.18 26l-1.357-7.297L28 13.64l-7.02-.897L18 6Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

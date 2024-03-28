@@ -9,37 +9,70 @@ export type CGProps = CountrySymbolProps;
 const CG = forwardRef<SVGSVGElement, CGProps>(function CG(props: CGProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CG"
       aria-label="Congo (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CG-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-CG-a)`}>
-        <path
-          fill="#DD2033"
-          d="m36 86.912-16.97-16.97 50.912-50.913L86.912 36z"
-        />
-        <path
-          fill="#FBD381"
-          d="M19.03 69.941 2.06 52.971 52.97 2.059l16.97 16.97z"
-        />
-        <path
-          fill="#009B77"
-          d="M2.059 52.97-14.911 36 36-14.912l16.97 16.97z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CG-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-CG-a)`}>
+            <path
+              fill="#DD2033"
+              d="m36 86.912-16.97-16.97 50.912-50.913L86.912 36z"
+            />
+            <path
+              fill="#FBD381"
+              d="M19.03 69.941 2.06 52.971 52.97 2.059l16.97 16.97z"
+            />
+            <path
+              fill="#009B77"
+              d="M2.059 52.97-14.911 36 36-14.912l16.97 16.97z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CG-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CG-a)`}>
+            <path
+              fill="#DD2033"
+              d="M49.32 74.665 26.311 51.658 74.487 3.483 97.495 26.49z"
+            />
+            <path
+              fill="#FBD381"
+              d="m13.797 64.174-16.97-16.97 62.575-62.577 16.971 16.97z"
+            />
+            <path
+              fill="#009B77"
+              d="M-2.316 46.345-24.4 24.261l55.286-55.287L52.971-8.94z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

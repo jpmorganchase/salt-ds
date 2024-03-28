@@ -9,31 +9,58 @@ export type JMProps = CountrySymbolProps;
 const JM = forwardRef<SVGSVGElement, JMProps>(function JM(props: JMProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="JM"
       aria-label="Jamaica"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-JM-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-JM-a)`}>
-        <path fill="#31373D" d="M0 0h72v72H0z" />
-        <path fill="#009B77" d="m0 72 35-36L0 0h72L35 36l37 36H0Z" />
-        <path
-          fill="#F1B434"
-          d="m57.92 64.991 7.071-7.07L43.071 36l21.92-21.92-7.07-7.071L36 28.929 14.08 7.009l-7.071 7.07L28.929 36 7.009 57.92l7.07 7.071L36 43.071l21.92 21.92Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JM-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-JM-a)`}>
+            <path fill="#31373D" d="M0 0h72v72H0z" />
+            <path fill="#009B77" d="m0 72 35-36L0 0h72L35 36l37 36H0Z" />
+            <path
+              fill="#F1B434"
+              d="m57.92 64.991 7.071-7.07L43.071 36l21.92-21.92-7.07-7.071L36 28.929 14.08 7.009l-7.071 7.07L28.929 36 7.009 57.92l7.07 7.071L36 43.071l21.92 21.92Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JM-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-JM-a)`}>
+            <path fill="#31373D" d="M0 0h72v50H0z" />
+            <path fill="#009B77" d="m0 61 35-36L0-11h72L35 25l37 36H0Z" />
+            <path
+              fill="#F1B434"
+              d="M65.471 56 72 50.378 42.529 25 72-.378 65.472-6 36 19.378 6.529-6 0-.378 29.471 25 .002 50.378 6.528 56 36 30.622 65.471 56Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

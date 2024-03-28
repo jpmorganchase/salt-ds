@@ -1,0 +1,19 @@
+<svg width="72" height="50" viewBox="0 0 72 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_784_2672" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="50">
+<rect width="72" height="50" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_784_2672)">
+<rect width="72" height="50" fill="#F1B434"/>
+<mask id="mask1_784_2672" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="36" height="30">
+<path d="M0 30L-1.31134e-06 0L36 -1.57361e-06L36 30L0 30Z" fill="#002F6C"/>
+</mask>
+<g mask="url(#mask1_784_2672)">
+<rect width="36" height="36" fill="#004692"/>
+<path d="M12.7908 1.00463L10.6695 3.12595L36.8665 29.323L38.9878 27.2017L12.7908 1.00463Z" fill="#F5F7F8"/>
+<path d="M7.13393 6.66148L3.59839 10.197L29.7954 36.394L33.3309 32.8585L7.13393 6.66148Z" fill="#F5F7F8"/>
+<path d="M7.13393 6.66148L10.6695 3.12595L36.8665 29.323L33.3309 32.8585L7.13393 6.66148Z" fill="#DD2033"/>
+<path d="M6 35H10.0017L10.0017 8.99997H36V5L6 5L6 35Z" fill="#F5F7F8"/>
+<path d="M0 35.0001H6.00171L6.00171 4.99996H36.0017V4.58956e-06L1.90735e-06 0L0 35.0001Z" fill="#DD2033"/>
+</g>
+</g>
+</svg>

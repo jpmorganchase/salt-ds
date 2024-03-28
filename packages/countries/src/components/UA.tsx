@@ -9,27 +9,50 @@ export type UAProps = CountrySymbolProps;
 const UA = forwardRef<SVGSVGElement, UAProps>(function UA(props: UAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="UA"
       aria-label="Ukraine"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-UA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-UA-a)`}>
-        <path fill="#005EB8" d="M72 0v36H0V0z" />
-        <path fill="#F1B434" d="M72 36v36H0V36z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-UA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-UA-a)`}>
+            <path fill="#005EB8" d="M72 0v36H0V0z" />
+            <path fill="#F1B434" d="M72 36v36H0V36z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-UA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-UA-a)`}>
+            <path fill="#005EB8" d="M72 0v25H0V0z" />
+            <path fill="#F1B434" d="M72 25v25H0V25z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

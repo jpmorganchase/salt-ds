@@ -9,35 +9,66 @@ export type TZProps = CountrySymbolProps;
 const TZ = forwardRef<SVGSVGElement, TZProps>(function TZ(props: TZProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="TZ"
       aria-label="Tanzania (the United Republic of)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-TZ-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-TZ-a)`}>
-        <path fill="#009B77" d="M72 0H0v72L72 0Z" />
-        <path fill="#0091DA" d="M72 72V0L0 72h72Z" />
-        <path
-          fill="#FBD381"
-          d="M50.85-.063 72.062 21.15 21.15 72.062-.062 50.849z"
-        />
-        <path
-          fill="#31373D"
-          d="M67.82 16.908 55.092 4.18 4.18 55.092 16.908 67.82z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TZ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-TZ-a)`}>
+            <path fill="#009B77" d="M72 0H0v72L72 0Z" />
+            <path fill="#0091DA" d="M72 72V0L0 72h72Z" />
+            <path
+              fill="#FBD381"
+              d="M50.85-.063 72.062 21.15 21.15 72.062-.062 50.849z"
+            />
+            <path
+              fill="#31373D"
+              d="M67.82 16.908 55.092 4.18 4.18 55.092 16.908 67.82z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TZ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-TZ-a)`}>
+            <path fill="#009B77" d="M72-11H0v72l72-72Z" />
+            <path fill="#0091DA" d="M72 61v-72L0 61h72Z" />
+            <path
+              fill="#FBD381"
+              d="M57.803-18.016 79.016 3.197 15.479 66.734-5.734 45.521z"
+            />
+            <path
+              fill="#31373D"
+              d="M73.436.292 60.708-12.436-1.938 50.21 10.79 62.937z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

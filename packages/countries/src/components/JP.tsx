@@ -9,27 +9,50 @@ export type JPProps = CountrySymbolProps;
 const JP = forwardRef<SVGSVGElement, JPProps>(function JP(props: JPProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="JP"
       aria-label="Japan"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-JP-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-JP-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <circle cx="36" cy="36" r="16" fill="#DD2033" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JP-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-JP-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <circle cx="36" cy="36" r="16" fill="#DD2033" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JP-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-JP-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+            <circle cx="36" cy="25" r="16" fill="#DD2033" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

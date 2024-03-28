@@ -9,31 +9,58 @@ export type CWProps = CountrySymbolProps;
 const CW = forwardRef<SVGSVGElement, CWProps>(function CW(props: CWProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CW"
       aria-label="Curaçao"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CW-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-CW-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#FBD381" d="M.4 48v-6h72v6z" />
-        <path
-          fill="#F5F7F8"
-          d="M17.615 13.394 20 8l2.385 5.394L28 14.11l-4.142 4.052L24.944 24 20 20.667 15.056 24l1.086-5.837L12 14.11l5.615-.717ZM34.02 23.742 37 17l2.98 6.742 7.02.897-5.177 5.064L43.18 37 37 32.833 30.82 37l1.357-7.297L27 24.64l7.02-.897Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CW-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-CW-a)`}>
+            <path fill="#004692" d="M0 0h72v72H0z" />
+            <path fill="#FBD381" d="M.4 48v-6h72v6z" />
+            <path
+              fill="#F5F7F8"
+              d="M17.615 13.394 20 8l2.385 5.394L28 14.11l-4.142 4.052L24.944 24 20 20.667 15.056 24l1.086-5.837L12 14.11l5.615-.717ZM34.02 23.742 37 17l2.98 6.742 7.02.897-5.177 5.064L43.18 37 37 32.833 30.82 37l1.357-7.297L27 24.64l7.02-.897Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CW-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CW-a)`}>
+            <path fill="#004692" d="M0 0h72v50H0z" />
+            <path fill="#FBD381" d="M0 42v-6h72v6z" />
+            <path
+              fill="#F5F7F8"
+              d="M17.615 9.394 20 4l2.385 5.394L28 10.11l-4.142 4.052L24.944 20 20 16.667 15.056 20l1.086-5.837L12 10.11l5.615-.717ZM34.02 19.742 37 13l2.98 6.742 7.02.897-5.177 5.064L43.18 33 37 28.833 30.82 33l1.357-7.297L27 20.64l7.02-.897Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

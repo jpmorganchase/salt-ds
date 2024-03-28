@@ -9,31 +9,58 @@ export type NRProps = CountrySymbolProps;
 const NR = forwardRef<SVGSVGElement, NRProps>(function NR(props: NRProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="NR"
       aria-label="Nauru"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-NR-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-NR-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#F1B434" d="M0 41V31h72v10z" />
-        <path
-          fill="#F5F7F8"
-          d="m32.4 54-3.678 1.819 1.959 3.743-3.994-.803L26.181 63 23.4 59.881 20.618 63l-.506-4.24-3.993.802 1.958-3.744L14.4 54l3.678-1.819-1.959-3.743 3.993.803L20.62 45l2.78 3.119L26.182 45l.506 4.24 3.994-.802-1.959 3.744L32.4 54Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-NR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-NR-a)`}>
+            <path fill="#004692" d="M0 0h72v72H0z" />
+            <path fill="#F1B434" d="M0 41V31h72v10z" />
+            <path
+              fill="#F5F7F8"
+              d="m32.4 54-3.678 1.819 1.959 3.743-3.994-.803L26.181 63 23.4 59.881 20.618 63l-.506-4.24-3.993.802 1.958-3.744L14.4 54l3.678-1.819-1.959-3.743 3.993.803L20.62 45l2.78 3.119L26.182 45l.506 4.24 3.994-.802-1.959 3.744L32.4 54Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-NR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-NR-a)`}>
+            <path fill="#004692" d="M0 0h72v50H0z" />
+            <path fill="#F1B434" d="M0 28V18h72v10z" />
+            <path
+              fill="#F5F7F8"
+              d="m28 39-2.86 1.414 1.523 2.912-3.106-.624L23.163 46 21 43.574 18.837 46l-.394-3.298-3.106.624 1.523-2.912L14 39l2.86-1.414-1.523-2.912 3.106.624.394-3.298L21 34.426 23.163 32l.394 3.298 3.106-.624-1.523 2.912L28 39Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

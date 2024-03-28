@@ -9,31 +9,64 @@ export type AXProps = CountrySymbolProps;
 const AX = forwardRef<SVGSVGElement, AXProps>(function AX(props: AXProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="AX"
       aria-label="Åland Islands"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-AX-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-AX-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path
-          fill="#FBD381"
-          d="M20.4 72h-6V47.7H.4v-6h20V72Zm-6-41.7H.4v-6h14V0h6v30.3h-6Zm17.4-6V0h6v24.3h34.6v6H31.8v-6Zm6 17.4h34.6v6H37.8V72h-6V41.7h6Z"
-        />
-        <path fill="#DD2033" d="M20 72h12V42h40V30H32V0H20v30H0v12h20v30Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-AX-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-AX-a)`}>
+            <path fill="#005EB8" d="M0 0h72v72H0z" />
+            <path
+              fill="#FBD381"
+              d="M20.4 72h-6V47.7H.4v-6h20V72Zm-6-41.7H.4v-6h14V0h6v30.3h-6Zm17.4-6V0h6v24.3h34.6v6H31.8v-6Zm6 17.4h34.6v6H37.8V72h-6V41.7h6Z"
+            />
+            <path
+              fill="#DD2033"
+              d="M20 72h12V42h40V30H32V0H20v30H0v12h20v30Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-AX-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-AX-a)`}>
+            <path fill="#005EB8" d="M0 0h72v50H0z" />
+            <path
+              fill="#FBD381"
+              d="M14 50V36.7H0V13.3h14V0h23.4v13.3H72v23.4H37.4V50H14Z"
+            />
+            <path
+              fill="#DD2033"
+              d="M20 50h12V31h40V19H32V0H20v19H0v12h20v19Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

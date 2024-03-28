@@ -9,38 +9,69 @@ export type LCProps = CountrySymbolProps;
 const LC = forwardRef<SVGSVGElement, LCProps>(function LC(props: LCProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="LC"
       aria-label="Saint Lucia"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-LC-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
-        />
-      </mask>
-      <g mask={`url(#${uid}-LC-a)`}>
-        <path fill="#0091DA" d="M72 72H0V0h72z" />
-        <path
-          fill="#F5F7F8"
-          d="m35.9 12-21 46h-3.298L35.9 4.776 60.198 58H56.9l-21-46Z"
-        />
-        <path fill="#31373D" d="m35.9 12 21 46h-42l21-46Z" />
-        <path fill="#F1B434" d="m36 34 24.5 24h-49L36 34Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LC-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle
+              cx="36"
+              cy="36"
+              r="36"
+              fill="#D9D9D9"
+              transform="rotate(-90 36 36)"
+            />
+          </mask>
+          <g mask={`url(#${uid}-LC-a)`}>
+            <path fill="#0091DA" d="M72 72H0V0h72z" />
+            <path
+              fill="#F5F7F8"
+              d="m35.9 12-21 46h-3.298L35.9 4.776 60.198 58H56.9l-21-46Z"
+            />
+            <path fill="#31373D" d="m35.9 12 21 46h-42l21-46Z" />
+            <path fill="#F1B434" d="m36 34 24.5 24h-49L36 34Z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LC-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-LC-a)`}>
+            <path fill="#0091DA" d="M72 50H0V0h72z" />
+            <path
+              fill="#F5F7F8"
+              d="M35.93 11.158 21.36 44h-2.29L35.93 6l16.86 38h-2.288L35.931 11.158Z"
+            />
+            <path
+              fill="#31373D"
+              d="M35.93 11.158 50.503 44H21.359l14.572-32.842Z"
+            />
+            <path fill="#F1B434" d="M36 26.865 53 44H19l17-17.135Z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

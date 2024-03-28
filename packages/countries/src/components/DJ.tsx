@@ -9,32 +9,60 @@ export type DJProps = CountrySymbolProps;
 const DJ = forwardRef<SVGSVGElement, DJProps>(function DJ(props: DJProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="DJ"
       aria-label="Djibouti"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-DJ-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-DJ-a)`}>
-        <path fill="#009B77" d="M0 72V36h72v36z" />
-        <path fill="#86C5FA" d="M0 36V0h72v36z" />
-        <path fill="#F5F7F8" d="M48 36 0 0v72l48-36Z" />
-        <path
-          fill="#DD2033"
-          d="m20 26-2.98 6.742-7.02.897 5.177 5.064L13.82 46 20 41.833 26.18 46l-1.357-7.297L30 33.64l-7.02-.897L20 26Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DJ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-DJ-a)`}>
+            <path fill="#009B77" d="M0 72V36h72v36z" />
+            <path fill="#86C5FA" d="M0 36V0h72v36z" />
+            <path fill="#F5F7F8" d="M48 36 0 0v72l48-36Z" />
+            <path
+              fill="#DD2033"
+              d="m20 26-2.98 6.742-7.02.897 5.177 5.064L13.82 46 20 41.833 26.18 46l-1.357-7.297L30 33.64l-7.02-.897L20 26Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DJ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-DJ-a)`}>
+            <path fill="#009B77" d="M0 50V25h72v25z" />
+            <path fill="#86C5FA" d="M0 25V0h72v25z" />
+            <path fill="#F5F7F8" d="M42 25-6-11v72l48-36Z" />
+            <path
+              fill="#DD2033"
+              d="m16 15-2.98 6.742L6 22.64l5.177 5.064L9.82 35 16 30.833 22.18 35l-1.357-7.297L26 22.64l-7.02-.897L16 15Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

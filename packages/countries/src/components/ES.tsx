@@ -9,61 +9,115 @@ export type ESProps = CountrySymbolProps;
 const ES = forwardRef<SVGSVGElement, ESProps>(function ES(props: ESProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="ES"
       aria-label="Spain"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-ES-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(180 36 36)"
-        />
-      </mask>
-      <g mask={`url(#${uid}-ES-a)`}>
-        <path fill="#A00009" d="M0 0h72v72H0z" />
-        <path fill="#F1B434" d="M72 18v36H0V18z" />
-        <path
-          fill="#E26E00"
-          fillRule="evenodd"
-          d="M22.6 19.667h2V21h2v2h-2v1.869a4 4 0 0 1 4.667 6.446V33H17.933v-1.685a4 4 0 0 1 4.667-6.446V23h-2v-2h2v-1.333Zm1 6.02-.018-.02h.037l-.019.02ZM23.582 31l.018-.02.019.02h-.037Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="#F5F7F8"
-          d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
-        />
-        <mask
-          id={`${uid}-ES-b`}
-          x="14"
-          y="33"
-          maskUnits="userSpaceOnUse"
-          style={{ maskType: "alpha" }}
-        >
-          <path
-            fill="#F5F7F8"
-            d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
-          />
-        </mask>
-        <g mask={`url(#${uid}-ES-b)`}>
-          <path fill="#DD2033" d="M14.6 33h9v10h-9z" />
-          <path fill="#E26E00" d="M14.6 43h9v10h-9z" />
-          <path fill="#DD2033" d="M23.6 43h9v10h-9z" />
-        </g>
-        <path fill="#F5F7F8" d="M34.6 33h3v19h-3V33Zm-25 0h3v19h-3V33Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-ES-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle
+              cx="36"
+              cy="36"
+              r="36"
+              fill="#D9D9D9"
+              transform="rotate(180 36 36)"
+            />
+          </mask>
+          <g mask={`url(#${uid}-ES-a)`}>
+            <path fill="#A00009" d="M0 0h72v72H0z" />
+            <path fill="#F1B434" d="M72 18v36H0V18z" />
+            <path
+              fill="#E26E00"
+              fillRule="evenodd"
+              d="M22.6 19.667h2V21h2v2h-2v1.869a4 4 0 0 1 4.667 6.446V33H17.933v-1.685a4 4 0 0 1 4.667-6.446V23h-2v-2h2v-1.333Zm1 6.02-.018-.02h.037l-.019.02ZM23.582 31l.018-.02.019.02h-.037Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F5F7F8"
+              d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
+            />
+            <mask
+              id={`${uid}-ES-b`}
+              x="14"
+              y="33"
+              maskUnits="userSpaceOnUse"
+              style={{ maskType: "alpha" }}
+            >
+              <path
+                fill="#F5F7F8"
+                d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
+              />
+            </mask>
+            <g mask={`url(#${uid}-ES-b)`}>
+              <path fill="#DD2033" d="M14.6 33h9v10h-9z" />
+              <path fill="#E26E00" d="M14.6 43h9v10h-9z" />
+              <path fill="#DD2033" d="M23.6 43h9v10h-9z" />
+            </g>
+            <path fill="#F5F7F8" d="M34.6 33h3v19h-3V33Zm-25 0h3v19h-3V33Z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-ES-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-ES-a)`}>
+            <path fill="#A00009" d="M0 0h72v50H0z" />
+            <path fill="#F1B434" d="M72 10v30H0V10z" />
+            <path
+              fill="#E26E00"
+              fillRule="evenodd"
+              d="M19.74 12h1.56v1.04h1.56v1.56H21.3v1.457a3.12 3.12 0 0 1 3.64 5.028V22.4H16.1v-1.314a3.12 3.12 0 0 1 3.64-5.028V14.6h-1.56v-1.56h1.56V12Zm.78 4.696-.014-.016h.028l-.014.016Zm-.014 4.144.014-.016.014.016h-.028Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F5F7F8"
+              d="M13.5 22.4h14.04v7.661a7.565 7.565 0 0 1-4.731 7.014 6.11 6.11 0 0 1-4.578 0 7.565 7.565 0 0 1-4.731-7.014V22.4Z"
+            />
+            <mask
+              id={`${uid}-ES-b`}
+              x="13"
+              y="22"
+              maskUnits="userSpaceOnUse"
+              style={{ maskType: "alpha" }}
+            >
+              <path
+                fill="#F5F7F8"
+                d="M13.5 22.4h14.04v7.661a7.565 7.565 0 0 1-4.731 7.014 6.11 6.11 0 0 1-4.578 0 7.565 7.565 0 0 1-4.731-7.014V22.4Z"
+              />
+            </mask>
+            <g mask={`url(#${uid}-ES-b)`}>
+              <path fill="#DD2033" d="M13.5 22.4h7.02v7.8H13.5z" />
+              <path fill="#E26E00" d="M13.5 30.2h7.02V38H13.5z" />
+              <path fill="#DD2033" d="M20.52 30.2h7.02V38h-7.02z" />
+            </g>
+            <path
+              fill="#F5F7F8"
+              d="M29.1 22.4h2.34v14.82H29.1V22.4Zm-19.5 0h2.34v14.82H9.6V22.4Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

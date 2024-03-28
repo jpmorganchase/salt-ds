@@ -9,34 +9,64 @@ export type KPProps = CountrySymbolProps;
 const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="KP"
       aria-label="Korea (the Democratic People&#39;s Republic of)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-KP-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-KP-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 60V12h72v48z" />
-        <path fill="#DD2033" d="M0 54V18h72v36z" />
-        <path
-          fill="#F5F7F8"
-          fillRule="evenodd"
-          d="M23 23c-7.18 0-13 5.82-13 13s5.82 13 13 13 13-5.82 13-13-5.82-13-13-13Zm-2.98 9.742L23 26l2.98 6.742 7.02.897-5.177 5.064L29.18 46 23 41.833 16.82 46l1.357-7.297L13 33.64l7.02-.897Z"
-          clipRule="evenodd"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-KP-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-KP-a)`}>
+            <path fill="#004692" d="M0 0h72v72H0z" />
+            <path fill="#F5F7F8" d="M0 60V12h72v48z" />
+            <path fill="#DD2033" d="M0 54V18h72v36z" />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="M23 23c-7.18 0-13 5.82-13 13s5.82 13 13 13 13-5.82 13-13-5.82-13-13-13Zm-2.98 9.742L23 26l2.98 6.742 7.02.897-5.177 5.064L29.18 46 23 41.833 16.82 46l1.357-7.297L13 33.64l7.02-.897Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-KP-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-KP-a)`}>
+            <path fill="#004692" d="M0 0h72v50H0z" />
+            <path fill="#F5F7F8" d="M0 45V5h72v40z" />
+            <path fill="#DD2033" d="M0 40V10h72v30z" />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="M22 13c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12Zm-2.751 8.993L22 15.769l2.752 6.224 6.479.828-4.78 4.674 1.254 6.736L22 30.385l-5.705 3.846 1.253-6.736-4.779-4.674 6.48-.828Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

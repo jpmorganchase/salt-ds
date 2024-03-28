@@ -9,41 +9,72 @@ export type PAProps = CountrySymbolProps;
 const PA = forwardRef<SVGSVGElement, PAProps>(function PA(props: PAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="PA"
       aria-label="Panama"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-PA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(180 36 36)"
-        />
-      </mask>
-      <g mask={`url(#${uid}-PA-a)`}>
-        <path fill="#F5F7F8" d="M0 72h72V0H0z" />
-        <path fill="#DD2033" d="M36 0h36v36H36z" />
-        <path
-          fill="#004692"
-          d="M0 72h36V36H0zm21-60-2.683 6.068-6.317.807 4.66 4.558L15.438 30 21 26.25 26.562 30l-1.222-6.567L30 18.875l-6.317-.807L21 12Z"
-        />
-        <path
-          fill="#DD2033"
-          d="m51 42-2.683 6.068-6.317.807 4.66 4.558L45.438 60 51 56.25 56.562 60l-1.221-6.567L60 48.875l-6.317-.807L51 42Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-PA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle
+              cx="36"
+              cy="36"
+              r="36"
+              fill="#D9D9D9"
+              transform="rotate(180 36 36)"
+            />
+          </mask>
+          <g mask={`url(#${uid}-PA-a)`}>
+            <path fill="#F5F7F8" d="M0 72h72V0H0z" />
+            <path fill="#DD2033" d="M36 0h36v36H36z" />
+            <path
+              fill="#004692"
+              d="M0 72h36V36H0zm21-60-2.683 6.068-6.317.807 4.66 4.558L15.438 30 21 26.25 26.562 30l-1.222-6.567L30 18.875l-6.317-.807L21 12Z"
+            />
+            <path
+              fill="#DD2033"
+              d="m51 42-2.683 6.068-6.317.807 4.66 4.558L45.438 60 51 56.25 56.562 60l-1.221-6.567L60 48.875l-6.317-.807L51 42Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-PA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-PA-a)`}>
+            <path fill="#F5F7F8" d="M0 50h72V0H0z" />
+            <path fill="#DD2033" d="M36 0h36v25H36z" />
+            <path
+              fill="#004692"
+              d="M0 50h36V25H0zM18 4l-2.683 6.068L9 10.875l4.66 4.558L12.438 22 18 18.25 23.562 22l-1.222-6.567L27 10.875l-6.317-.807L18 4Z"
+            />
+            <path
+              fill="#DD2033"
+              d="m54 28-2.683 6.068-6.317.807 4.66 4.558L48.438 46 54 42.25 59.562 46l-1.221-6.567L63 34.875l-6.317-.807L54 28Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

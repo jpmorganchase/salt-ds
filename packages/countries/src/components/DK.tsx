@@ -9,27 +9,56 @@ export type DKProps = CountrySymbolProps;
 const DK = forwardRef<SVGSVGElement, DKProps>(function DK(props: DKProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="DK"
       aria-label="Denmark"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-DK-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-DK-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M14 72h14V43h44V29H28V0H14v29H0v14h14v29Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DK-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-DK-a)`}>
+            <path fill="#DD2033" d="M0 0h72v72H0z" />
+            <path
+              fill="#F5F7F8"
+              d="M14 72h14V43h44V29H28V0H14v29H0v14h14v29Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DK-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-DK-a)`}>
+            <path fill="#DD2033" d="M0 0h72v50H0z" />
+            <path
+              fill="#F5F7F8"
+              d="M14 61h14V32h44V18H28v-29H14v29H0v14h14v29Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

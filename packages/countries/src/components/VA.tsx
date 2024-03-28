@@ -9,42 +9,80 @@ export type VAProps = CountrySymbolProps;
 const VA = forwardRef<SVGSVGElement, VAProps>(function VA(props: VAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="VA"
       aria-label="Holy See (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-VA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-VA-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#F1B434"
-          d="M-.2 72V0h36v72zm48.5-50v3h3.5v6h3v-6h3.5v-3h-3.5v-3h-3v3h-3.5Z"
-        />
-        <path
-          fill="#F1B434"
-          fillRule="evenodd"
-          d="m63.846 26.333 2.121 2.121-.881.882 3.613 3.614-4.95 4.95-3.613-3.614-8.5 8.499a6.5 6.5 0 1 1-2.051-2.191l14.261-14.261ZM43.517 48.486a3.5 3.5 0 1 0 4.95-4.95 3.5 3.5 0 0 0-4.95 4.95Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="#C1C3C3"
-          fillRule="evenodd"
-          d="m42.535 26-2.121 2.122 1.048 1.048-3.78 3.78 4.95 4.95 3.78-3.78 8.457 8.457a6.5 6.5 0 1 0 2.13-2.113L42.534 26Zm20.329 22.486a3.5 3.5 0 1 1-4.95-4.95 3.5 3.5 0 0 1 4.95 4.95Z"
-          clipRule="evenodd"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-VA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-VA-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#F1B434"
+              d="M-.2 72V0h36v72zm48.5-50v3h3.5v6h3v-6h3.5v-3h-3.5v-3h-3v3h-3.5Z"
+            />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="m63.846 26.333 2.121 2.121-.881.882 3.613 3.614-4.95 4.95-3.613-3.614-8.5 8.499a6.5 6.5 0 1 1-2.051-2.191l14.261-14.261ZM43.517 48.486a3.5 3.5 0 1 0 4.95-4.95 3.5 3.5 0 0 0-4.95 4.95Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#C1C3C3"
+              fillRule="evenodd"
+              d="m42.535 26-2.121 2.122 1.048 1.048-3.78 3.78 4.95 4.95 3.78-3.78 8.457 8.457a6.5 6.5 0 1 0 2.13-2.113L42.534 26Zm20.329 22.486a3.5 3.5 0 1 1-4.95-4.95 3.5 3.5 0 0 1 4.95 4.95Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-VA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-VA-a)`}>
+            <path fill="#F5F7F8" d="M0-11h72v72H0z" />
+            <path
+              fill="#F1B434"
+              d="M0 50V0h36v50zm48.618-39v3h3.5v6h3v-6h3.5v-3h-3.5V8h-3v3h-3.5Z"
+            />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="m64.164 15.333 2.122 2.121-.882.882 3.614 3.614-4.95 4.95-3.614-3.614-8.499 8.499a6.5 6.5 0 1 1-2.051-2.191l14.26-14.261ZM43.836 37.486a3.5 3.5 0 1 0 4.95-4.95 3.5 3.5 0 0 0-4.95 4.95Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#C1C3C3"
+              fillRule="evenodd"
+              d="m42.853 15-2.12 2.121 1.047 1.048L38 21.95l4.95 4.95 3.78-3.78 8.457 8.457a6.5 6.5 0 1 0 2.13-2.113L42.853 15Zm20.33 22.486a3.5 3.5 0 1 1-4.95-4.95 3.5 3.5 0 0 1 4.95 4.95Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

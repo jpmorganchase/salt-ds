@@ -9,32 +9,60 @@ export type CLProps = CountrySymbolProps;
 const CL = forwardRef<SVGSVGElement, CLProps>(function CL(props: CLProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CL"
       aria-label="Chile"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CL-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-CL-a)`}>
-        <path fill="#DD2033" d="M-.4 72V36h72v36z" />
-        <path fill="#F5F7F8" d="M-.4 36V0h72v36z" />
-        <path fill="#004692" d="M0 0h36v36H0z" />
-        <path
-          fill="#F5F7F8"
-          d="m22 14-2.385 5.394L14 20.11l4.142 4.052L17.056 30 22 26.667 26.944 30l-1.086-5.837L30 20.11l-5.615-.717L22 14Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CL-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-CL-a)`}>
+            <path fill="#DD2033" d="M-.4 72V36h72v36z" />
+            <path fill="#F5F7F8" d="M-.4 36V0h72v36z" />
+            <path fill="#004692" d="M0 0h36v36H0z" />
+            <path
+              fill="#F5F7F8"
+              d="m22 14-2.385 5.394L14 20.11l4.142 4.052L17.056 30 22 26.667 26.944 30l-1.086-5.837L30 20.11l-5.615-.717L22 14Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CL-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CL-a)`}>
+            <path fill="#DD2033" d="M0 50V25h72v25z" />
+            <path fill="#F5F7F8" d="M0 25V0h72v25z" />
+            <path fill="#004692" d="M0 0h36v25H0z" />
+            <path
+              fill="#F5F7F8"
+              d="m20 4-2.385 5.394L12 10.11l4.142 4.052L15.056 20 20 16.667 24.944 20l-1.086-5.837L28 10.11l-5.615-.717L20 4Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

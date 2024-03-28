@@ -9,28 +9,52 @@ export type LAProps = CountrySymbolProps;
 const LA = forwardRef<SVGSVGElement, LAProps>(function LA(props: LAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="LA"
       aria-label="Lao People&#39;s Democratic Republic (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-LA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-LA-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#004692" d="M0 54V18h72v36z" />
-        <circle cx="36" cy="36" r="15" fill="#F5F7F8" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-LA-a)`}>
+            <path fill="#DD2033" d="M0 0h72v72H0z" />
+            <path fill="#004692" d="M0 54V18h72v36z" />
+            <circle cx="36" cy="36" r="15" fill="#F5F7F8" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-LA-a)`}>
+            <path fill="#DD2033" d="M0 0h72v50H0z" />
+            <path fill="#004692" d="M0 41V9h72v32z" />
+            <circle cx="36" cy="25" r="12" fill="#F5F7F8" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

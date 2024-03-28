@@ -9,34 +9,64 @@ export type CFProps = CountrySymbolProps;
 const CF = forwardRef<SVGSVGElement, CFProps>(function CF(props: CFProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CF"
       aria-label="Central African Republic (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CF-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-CF-a)`}>
-        <path fill="#FBD381" d="M0 72V56h72v16z" />
-        <path fill="#F5F7F8" d="M0 38V20h72v18z" />
-        <path fill="#004692" d="M0 20V0h72v20z" />
-        <path fill="#008259" d="M0 56V38h72v18z" />
-        <path fill="#DD2033" d="M49 72H31V0h18z" />
-        <path
-          fill="#FBD381"
-          d="m21 4-2.087 4.72L14 9.347l3.624 3.545-.95 5.108L21 15.083 25.326 18l-.95-5.108L28 9.347l-4.913-.627L21 4Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-CF-a)`}>
+            <path fill="#FBD381" d="M0 72V56h72v16z" />
+            <path fill="#F5F7F8" d="M0 38V20h72v18z" />
+            <path fill="#004692" d="M0 20V0h72v20z" />
+            <path fill="#008259" d="M0 56V38h72v18z" />
+            <path fill="#DD2033" d="M49 72H31V0h18z" />
+            <path
+              fill="#FBD381"
+              d="m21 4-2.087 4.72L14 9.347l3.624 3.545-.95 5.108L21 15.083 25.326 18l-.95-5.108L28 9.347l-4.913-.627L21 4Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CF-a)`}>
+            <path fill="#FBD381" d="M0 50V38h72v12z" />
+            <path fill="#F5F7F8" d="M0 26V14h72v12z" />
+            <path fill="#004692" d="M0 14V0h72v14z" />
+            <path fill="#008259" d="M0 38V26h72v12z" />
+            <path fill="#DD2033" d="M54 50H40V0h14z" />
+            <path
+              fill="#FBD381"
+              d="m14 2-1.49 3.371L9 5.82l2.589 2.532-.68 3.648L14 9.917 17.09 12l-.679-3.648L19 5.82l-3.51-.449L14 2Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

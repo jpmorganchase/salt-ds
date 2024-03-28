@@ -9,32 +9,60 @@ export type IQProps = CountrySymbolProps;
 const IQ = forwardRef<SVGSVGElement, IQProps>(function IQ(props: IQProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="IQ"
       aria-label="Iraq"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-IQ-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-IQ-a)`}>
-        <path fill="#31373D" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#DD2033" d="M0 24V0h72v24z" />
-        <path
-          fill="#008259"
-          d="m30 32-6 2.001L29.423 34C31.947 34 34 36.093 34 38.667V44H14v-4h16.077v-1.333a.661.661 0 0 0-.654-.667H18v-6l12-4v4Zm10 8V28h-4v16h8v-4h-4Zm16-12v12h2v4H46v-8h4v4h2V28h4Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-IQ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-IQ-a)`}>
+            <path fill="#31373D" d="M0 72V48h72v24z" />
+            <path fill="#F5F7F8" d="M0 48V24h72v24z" />
+            <path fill="#DD2033" d="M0 24V0h72v24z" />
+            <path
+              fill="#008259"
+              d="m30 32-6 2.001L29.423 34C31.947 34 34 36.093 34 38.667V44H14v-4h16.077v-1.333a.661.661 0 0 0-.654-.667H18v-6l12-4v4Zm10 8V28h-4v16h8v-4h-4Zm16-12v12h2v4H46v-8h4v4h2V28h4Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-IQ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-IQ-a)`}>
+            <path fill="#31373D" d="M0 50V37h72v13z" />
+            <path fill="#F5F7F8" d="M0 37V13h72v24z" />
+            <path fill="#DD2033" d="M0 13V0h72v13z" />
+            <path
+              fill="#008259"
+              d="m30 21-6 2.001L29.423 23C31.947 23 34 25.093 34 27.667V33H14v-4h16.077v-1.333a.661.661 0 0 0-.654-.667H18v-6l12-4v4Zm10 8V17h-4v16h8v-4h-4Zm16-12v12h2v4H46v-8h4v4h2V17h4Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

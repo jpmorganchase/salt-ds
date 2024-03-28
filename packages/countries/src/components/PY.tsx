@@ -9,38 +9,72 @@ export type PYProps = CountrySymbolProps;
 const PY = forwardRef<SVGSVGElement, PYProps>(function PY(props: PYProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="PY"
       aria-label="Paraguay"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-PY-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-PY-a)`}>
-        <path fill="#004692" d="M0 72V52h72v20z" />
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
-        <path fill="#DD2033" d="M0 20V0h72v20z" />
-        <path
-          fill="#009B77"
-          fillRule="evenodd"
-          d="M20 23.746A17.922 17.922 0 0 0 18 32c0 9.941 8.059 18 18 18s18-8.059 18-18c0-2.975-.722-5.782-2-8.254v.411l-5.202 2.601A11.951 11.951 0 0 1 48 32c0 6.627-5.373 12-12 12s-12-5.373-12-12c0-1.88.432-3.658 1.202-5.242L20 24.157v-.411Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="#F1B434"
-          d="m36 23-2.385 5.394L28 29.11l4.142 4.052L31.056 39 36 35.667 40.944 39l-1.086-5.837L44 29.11l-5.615-.717L36 23Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-PY-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-PY-a)`}>
+            <path fill="#004692" d="M0 72V52h72v20z" />
+            <path fill="#F5F7F8" d="M0 52V20h72v32z" />
+            <path fill="#DD2033" d="M0 20V0h72v20z" />
+            <path
+              fill="#009B77"
+              fillRule="evenodd"
+              d="M20 23.746A17.922 17.922 0 0 0 18 32c0 9.941 8.059 18 18 18s18-8.059 18-18c0-2.975-.722-5.782-2-8.254v.411l-5.202 2.601A11.951 11.951 0 0 1 48 32c0 6.627-5.373 12-12 12s-12-5.373-12-12c0-1.88.432-3.658 1.202-5.242L20 24.157v-.411Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F1B434"
+              d="m36 23-2.385 5.394L28 29.11l4.142 4.052L31.056 39 36 35.667 40.944 39l-1.086-5.837L44 29.11l-5.615-.717L36 23Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-PY-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-PY-a)`}>
+            <path fill="#004692" d="M0 50V40h72v10z" />
+            <path fill="#F5F7F8" d="M0 40V10h72v30z" />
+            <path fill="#DD2033" d="M0 10V0h72v10z" />
+            <path
+              fill="#009B77"
+              fillRule="evenodd"
+              d="M20.889 12.69A16.334 16.334 0 0 0 19 20.333C19 29.538 26.611 37 36 37s17-7.462 17-16.667c0-2.754-.682-5.353-1.889-7.642v.38l-4.913 2.409a10.888 10.888 0 0 1 1.135 4.854c0 6.136-5.074 11.11-11.333 11.11-6.26 0-11.333-4.974-11.333-11.11 0-1.74.408-3.388 1.135-4.854l-4.913-2.409v-.38Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F1B434"
+              d="m36 12-2.385 4.957-5.615.66 4.142 3.724-1.086 5.365L36 23.642l4.944 3.064-1.086-5.365L44 17.617l-5.615-.66L36 12Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

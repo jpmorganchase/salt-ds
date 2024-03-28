@@ -9,33 +9,62 @@ export type LIProps = CountrySymbolProps;
 const LI = forwardRef<SVGSVGElement, LIProps>(function LI(props: LIProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="LI"
       aria-label="Liechtenstein"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-LI-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-LI-a)`}>
-        <path fill="#DD2033" d="M-.4 72V36h72v36z" />
-        <path fill="#004692" d="M-.4 36V0h72v36z" />
-        <path
-          fill="#F1B434"
-          fillRule="evenodd"
-          d="M24.4 8h3v2h3v3h-3v2.803a6 6 0 0 1 7 9.67V28h-17v-2.528a6 6 0 0 1 7-9.67V13h-3v-3h3V8Zm1.5 9.031L25.872 17h.056l-.028.031ZM25.872 25l.028-.031.028.031h-.056Z"
-          clipRule="evenodd"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LI-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-LI-a)`}>
+            <path fill="#DD2033" d="M-.4 72V36h72v36z" />
+            <path fill="#004692" d="M-.4 36V0h72v36z" />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="M24.4 8h3v2h3v3h-3v2.803a6 6 0 0 1 7 9.67V28h-17v-2.528a6 6 0 0 1 7-9.67V13h-3v-3h3V8Zm1.5 9.031L25.872 17h.056l-.028.031ZM25.872 25l.028-.031.028.031h-.056Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LI-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-LI-a)`}>
+            <path fill="#DD2033" d="M0 50V25h72v25z" />
+            <path fill="#004692" d="M0 25V0h72v25z" />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="M21.286 5h2.428v1.6h2.429V9h-2.429v2.242a4.878 4.878 0 0 1 2.429-.642c2.682 0 4.857 2.149 4.857 4.8a4.764 4.764 0 0 1-1.619 3.578V21H15.619v-2.022A4.764 4.764 0 0 1 14 15.4c0-2.651 2.175-4.8 4.857-4.8.885 0 1.714.234 2.429.642V9h-2.429V6.6h2.429V5Zm1.214 7.225-.023-.025h.046l-.023.025Zm-.023 6.375.023-.025.023.025h-.046Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

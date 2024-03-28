@@ -9,28 +9,58 @@ export type DOProps = CountrySymbolProps;
 const DO = forwardRef<SVGSVGElement, DOProps>(function DO(props: DOProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="DO"
       aria-label="Dominican Republic (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-DO-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-DO-a)`}>
-        <path fill="#DD2033" d="M0 36h36v36H0V36ZM36 0h36v36H36V0Z" />
-        <path fill="#004692" d="M36 0v36H0V0h36Zm36 36v36H36V36h36Z" />
-        <path fill="#F5F7F8" d="M29 72h14V43h29V29H43V0H29v29H0v14h29v29Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-DO-a)`}>
+            <path fill="#DD2033" d="M0 36h36v36H0V36ZM36 0h36v36H36V0Z" />
+            <path fill="#004692" d="M36 0v36H0V0h36Zm36 36v36H36V36h36Z" />
+            <path
+              fill="#F5F7F8"
+              d="M29 72h14V43h29V29H43V0H29v29H0v14h29v29Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-DO-a)`}>
+            <path fill="#DD2033" d="M0 25h36v25H0V25ZM36 0h36v25H36V0Z" />
+            <path fill="#004692" d="M36 0v25H0V0h36Zm36 25v25H36V25h36Z" />
+            <path
+              fill="#F5F7F8"
+              d="M29 50h14V32h29V18H43V0H29v18H0v14h29v18Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

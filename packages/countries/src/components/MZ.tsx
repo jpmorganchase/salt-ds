@@ -9,34 +9,64 @@ export type MZProps = CountrySymbolProps;
 const MZ = forwardRef<SVGSVGElement, MZProps>(function MZ(props: MZProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="MZ"
       aria-label="Mozambique"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-MZ-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-MZ-a)`}>
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
-        <path fill="#31373D" d="M.2 46V26h72v20z" />
-        <path fill="#009B77" d="M0 20V0h72v20z" />
-        <path fill="#FBD381" d="M0 72V52h72v20z" />
-        <path fill="#DD2033" d="M48 36 0 0v72l48-36Z" />
-        <path
-          fill="#FBD381"
-          d="m18.6 26-2.683 6.068-6.317.807 4.66 4.558L13.037 44l5.562-3.75L24.162 44l-1.222-6.567 4.66-4.558-6.317-.807L18.6 26Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MZ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-MZ-a)`}>
+            <path fill="#F5F7F8" d="M0 52V20h72v32z" />
+            <path fill="#31373D" d="M.2 46V26h72v20z" />
+            <path fill="#009B77" d="M0 20V0h72v20z" />
+            <path fill="#FBD381" d="M0 72V52h72v20z" />
+            <path fill="#DD2033" d="M48 36 0 0v72l48-36Z" />
+            <path
+              fill="#FBD381"
+              d="m18.6 26-2.683 6.068-6.317.807 4.66 4.558L13.037 44l5.562-3.75L24.162 44l-1.222-6.567 4.66-4.558-6.317-.807L18.6 26Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MZ-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-MZ-a)`}>
+            <path fill="#F5F7F8" d="M0 41V9h72v32z" />
+            <path fill="#31373D" d="M0 35V15h72v20z" />
+            <path fill="#009B77" d="M0 9V0h72v9z" />
+            <path fill="#FBD381" d="M0 50v-9h72v9z" />
+            <path fill="#DD2033" d="M45 25 0-11v72l45-36Z" />
+            <path
+              fill="#FBD381"
+              d="m19 15-2.683 6.068-6.317.807 4.66 4.558L13.438 33 19 29.25 24.562 33l-1.222-6.567L28 21.875l-6.317-.807L19 15Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

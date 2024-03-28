@@ -9,33 +9,62 @@ export type JOProps = CountrySymbolProps;
 const JO = forwardRef<SVGSVGElement, JOProps>(function JO(props: JOProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="JO"
       aria-label="Jordan"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-JO-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-JO-a)`}>
-        <path fill="#008259" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#31373D" d="M0 24V0h72v24z" />
-        <path fill="#DD2033" d="M48 36 0 0v72l48-36Z" />
-        <path
-          fill="#F5F7F8"
-          d="m19 25 2.707 5.807 6.114-1.45-2.738 5.792 4.917 4-6.122 1.414.017 6.437L19 42.973 14.104 47l.018-6.437L8 39.148l4.917-3.999-2.738-5.791 6.114 1.449L19 25Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-JO-a)`}>
+            <path fill="#008259" d="M0 72V48h72v24z" />
+            <path fill="#F5F7F8" d="M0 48V24h72v24z" />
+            <path fill="#31373D" d="M0 24V0h72v24z" />
+            <path fill="#DD2033" d="M48 36 0 0v72l48-36Z" />
+            <path
+              fill="#F5F7F8"
+              d="m19 25 2.707 5.807 6.114-1.45-2.738 5.792 4.917 4-6.122 1.414.017 6.437L19 42.973 14.104 47l.018-6.437L8 39.148l4.917-3.999-2.738-5.791 6.114 1.449L19 25Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-JO-a)`}>
+            <path fill="#008259" d="M0 50V34h72v16z" />
+            <path fill="#F5F7F8" d="M0 34V16h72v18z" />
+            <path fill="#31373D" d="M0 16V0h72v16z" />
+            <path fill="#DD2033" d="M40 25-8-11v72l48-36Z" />
+            <path
+              fill="#F5F7F8"
+              d="m15 14 2.707 5.807 6.114-1.45-2.738 5.792 4.917 4-6.122 1.415.017 6.436L15 31.973 10.104 36l.018-6.436L4 28.148l4.917-3.999-2.738-5.791 6.114 1.449L15 14Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

@@ -9,29 +9,54 @@ export type NEProps = CountrySymbolProps;
 const NE = forwardRef<SVGSVGElement, NEProps>(function NE(props: NEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="NE"
       aria-label="Niger (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-NE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-NE-a)`}>
-        <path fill="#009B77" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#FF9E42" d="M0 24V0h72v24z" />
-        <circle cx="36" cy="36" r="9" fill="#FF9E42" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-NE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-NE-a)`}>
+            <path fill="#009B77" d="M0 72V48h72v24z" />
+            <path fill="#F5F7F8" d="M0 48V24h72v24z" />
+            <path fill="#FF9E42" d="M0 24V0h72v24z" />
+            <circle cx="36" cy="36" r="9" fill="#FF9E42" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-NE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-NE-a)`}>
+            <path fill="#009B77" d="M0 50V37h72v13z" />
+            <path fill="#F5F7F8" d="M0 37V13h72v24z" />
+            <path fill="#FF9E42" d="M0 13V0h72v13z" />
+            <circle cx="36" cy="25" r="9" fill="#FF9E42" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

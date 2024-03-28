@@ -9,32 +9,60 @@ export type ZMProps = CountrySymbolProps;
 const ZM = forwardRef<SVGSVGElement, ZMProps>(function ZM(props: ZMProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="ZM"
       aria-label="Zambia"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-ZM-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-ZM-a)`}>
-        <path fill="#008259" d="M0 0h72v72H0z" />
-        <path
-          fill="#FF9E42"
-          d="M60 34h12v38H60zm-16-8a8 8 0 0 1-8-8h24a8 8 0 0 1-8 8h-8Z"
-        />
-        <path fill="#31373D" d="M48 34h12v38H48z" />
-        <path fill="#DD2033" d="M36 34h12v38H36z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-ZM-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-ZM-a)`}>
+            <path fill="#008259" d="M0 0h72v72H0z" />
+            <path
+              fill="#FF9E42"
+              d="M60 34h12v38H60zm-16-8a8 8 0 0 1-8-8h24a8 8 0 0 1-8 8h-8Z"
+            />
+            <path fill="#31373D" d="M48 34h12v38H48z" />
+            <path fill="#DD2033" d="M36 34h12v38H36z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-ZM-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-ZM-a)`}>
+            <path fill="#008259" d="M0 0h72v50H0z" />
+            <path
+              fill="#FF9E42"
+              d="M60 23h12v38H60zm-16-8a8 8 0 0 1-8-8h24a8 8 0 0 1-8 8h-8Z"
+            />
+            <path fill="#31373D" d="M48 23h12v38H48z" />
+            <path fill="#DD2033" d="M36 23h12v38H36z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

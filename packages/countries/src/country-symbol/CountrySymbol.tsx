@@ -18,6 +18,10 @@ export interface CountrySymbolProps extends SVGAttributes<SVGSVGElement> {
    * Multiplier for the base Country Symbol size. Should be a positive integer to conform to the rest of the design system.
    */
   size?: number;
+  /**
+   * Variant of the Country Symbol. Default is the circular version, sharp is the rectangular version.
+   */
+  variant?: "default" | "sharp";
 }
 
 export const DEFAULT_COUNTRY_SYMBOL_SIZE = 1;
@@ -29,6 +33,7 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
       className,
       size = DEFAULT_COUNTRY_SYMBOL_SIZE,
       style: styleProp,
+      variant = "default",
       ...rest
     },
     ref
@@ -43,6 +48,7 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
     const style = {
       ...styleProp,
       "--saltCountrySymbol-size-multiplier": `${size}`,
+      borderRadius: variant === "sharp" ? 0 : "50%",
     };
 
     return (

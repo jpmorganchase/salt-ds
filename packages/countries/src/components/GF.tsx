@@ -9,31 +9,58 @@ export type GFProps = CountrySymbolProps;
 const GF = forwardRef<SVGSVGElement, GFProps>(function GF(props: GFProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="GF"
       aria-label="French Guiana"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-GF-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-GF-a)`}>
-        <path fill="#FBD381" d="M0 72h72V0H0z" />
-        <path fill="#009B77" d="M72 0v72L0 0h72Z" />
-        <path
-          fill="#DD2033"
-          d="m36 24-3.577 8.09L24 33.168l6.213 6.077L28.583 48 36 43l7.416 5-1.629-8.756L48 33.167l-8.423-1.076L36 24Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-GF-a)`}>
+            <path fill="#FBD381" d="M0 72h72V0H0z" />
+            <path fill="#009B77" d="M72 0v72L0 0h72Z" />
+            <path
+              fill="#DD2033"
+              d="m36 24-3.577 8.09L24 33.168l6.213 6.077L28.583 48 36 43l7.416 5-1.629-8.756L48 33.167l-8.423-1.076L36 24Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-GF-a)`}>
+            <path fill="#FBD381" d="M0 50h72V0H0z" />
+            <path fill="#009B77" d="M72-11v72L0-11h72Z" />
+            <path
+              fill="#DD2033"
+              d="m36 13-3.577 8.09L24 22.168l6.213 6.077L28.583 37 36 32l7.416 5-1.629-8.756L48 22.167l-8.423-1.076L36 13Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

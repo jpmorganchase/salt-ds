@@ -9,32 +9,60 @@ export type TOProps = CountrySymbolProps;
 const TO = forwardRef<SVGSVGElement, TOProps>(function TO(props: TOProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="TO"
       aria-label="Tonga"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-TO-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-TO-a)`}>
-        <path fill="#DD2033" d="M0 72V0h72v72z" />
-        <path
-          fill="#F5F7F8"
-          fillRule="evenodd"
-          d="M-.2 0v44h44V0h-44ZM21 14h6v7h7v6h-7v7h-6v-7h-7v-6h7v-7Z"
-          clipRule="evenodd"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-TO-a)`}>
+            <path fill="#DD2033" d="M0 72V0h72v72z" />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="M-.2 0v44h44V0h-44ZM21 14h6v7h7v6h-7v7h-6v-7h-7v-6h7v-7Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-TO-a)`}>
+            <path fill="#DD2033" d="M0 50V0h72v50z" />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="M0 0v34h44V0H0Zm19 7h6v7h7v6h-7v7h-6v-7h-7v-6h7V7Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

@@ -9,30 +9,56 @@ export type QAProps = CountrySymbolProps;
 const QA = forwardRef<SVGSVGElement, QAProps>(function QA(props: QAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="QA"
       aria-label="Qatar"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-QA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-QA-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#85001F"
-          d="M20 0h52v72H20l10-9-10-9 10-9-10-9 10-9-10-9 10-9-10-9Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-QA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-QA-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#85001F"
+              d="M20 0h52v72H20l10-9-10-9 10-9-10-9 10-9-10-9 10-9-10-9Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-QA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-QA-a)`}>
+            <path fill="#F5F7F8" d="M0-11h72v72H0z" />
+            <path
+              fill="#85001F"
+              d="M20-11h52v72H20l10-9-10-9 10-9-10-9 10-9-10-9 10-9-10-9Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });
