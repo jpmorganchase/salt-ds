@@ -1,7 +1,6 @@
 import {
   FloatingArrowProps,
   FloatingContext,
-  Placement,
   ReferenceType,
   Strategy,
 } from "@floating-ui/react";
@@ -18,15 +17,12 @@ type FloatingStyleProps = {
 };
 
 export interface OverlayContextValue {
-  id: string;
   openState: boolean;
   floatingStyles: FloatingStyleProps;
-  placement: Placement;
   arrowProps: FloatingArrowProps;
   context: FloatingContext;
   reference?: (node: ReferenceType | null) => void;
   floating?: (node: HTMLElement | null) => void;
-  handleCloseButtonClick: () => void;
   getFloatingProps: (
     userProps?: React.HTMLProps<HTMLElement> | undefined
   ) => Record<string, unknown>;
@@ -38,19 +34,14 @@ export interface OverlayContextValue {
 export const OverlayContext = createContext<OverlayContextValue>(
   "OverlayContext",
   {
-    id: "",
     openState: false,
     floatingStyles: {
       top: 0,
       left: 0,
       position: "" as Strategy,
     },
-    placement: "" as Placement,
     context: {} as FloatingContext,
     arrowProps: {} as FloatingArrowProps,
-    handleCloseButtonClick() {
-      return undefined;
-    },
     reference: {} as FloatingReturn["reference"],
     floating: {} as FloatingReturn["floating"],
     getFloatingProps() {
