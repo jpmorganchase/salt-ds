@@ -13,17 +13,15 @@ import { CreditCardIcon, BankIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
-import persona1 from "../assets/avatar.png";
-import persona2 from "../assets/avatar2.png";
-import persona3 from "../assets/avatar3.png";
+import persona1 from "../../assets/avatar.png";
+import persona2 from "../../assets/avatar2.png";
+import persona3 from "../../assets/avatar3.png";
 
 export default {
   title: "Patterns/Selectable Card",
 } as Meta;
 
-export const SingleSelection: StoryFn<typeof InteractableCard> = (
-  args
-) => {
+export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
 
   return (
@@ -66,9 +64,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (
   );
 };
 
-export const MultipleSelection: StoryFn<typeof InteractableCard> = (
-  args
-) => {
+export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
 
   return (
