@@ -43,7 +43,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
             </StackLayout>
             <StackLayout direction="row" gap={1}>
               <RadioButtonIcon aria-hidden checked={selected === "card"} />
-              <Text>Link credit card to your payments account.</Text>
+              <Text>Make a payment by credit or debit card</Text>
             </StackLayout>
           </StackLayout>
         </InteractableCard>
@@ -55,7 +55,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
             </StackLayout>
             <StackLayout direction="row" gap={1}>
               <RadioButtonIcon aria-hidden checked={selected === "wire"} />
-              <Text>Link your bank to your payments account.</Text>
+              <Text>Make a payment by wire transfer</Text>
             </StackLayout>
           </StackLayout>
         </InteractableCard>
