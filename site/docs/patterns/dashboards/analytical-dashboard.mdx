@@ -54,14 +54,17 @@ ANATOMY IMAGE
 
 ### Analytical dashboard layout
 
-Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
+Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
 
 The following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
 
 - [`BorderLayout`](../../components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
 - [`FlowLayout`](../../components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
 - [`StackLayout`](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
-- `Tabs`: Use to organize and categorize dashboard widgets into local groupings.
+- `Tabs`: Use to organize and categorize dashboard widgets into local groupings. You can also organize content into multiple dashboards using tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information.
+- [`GridLayout`](../../components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard.
+
+LAYOUT IMAGE
 
 Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
 
@@ -79,11 +82,8 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
 4. Data grids or tables
 
 <ExampleContainer type="positive" customPillText="Best practices">
-
-- Use [`BorderLayout`](../../components/border-layout) to manage the top-level layout of your dashboard.
 - Use [`Drawer`](../../components/drawer) to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without going to a different screen.
 - Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.
-
 </ExampleContainer>
 
 ### Partially aligned layout
@@ -249,21 +249,18 @@ Use [`Card`](../../components/card) as a container or widget type to position an
   label="Content spacing"
 />
 
-#### Spacing
+<ExampleContainer type="positive" customPillText="Best practices">
+Keep the content layout within individual cards as consistent as possible across the dashboard. This supports scalability, especially if main components anchor to familiar locations within a card.
+</ExampleContainer>
 
-- As default, use `--salt-spacing-300` between content modules such as cards to promote readability.
-- The default padding between modules is `spacing-300`. Depending on the needs and business context of the dashboard, you can change this spacing token if your dashboard needs to display more or less content. View the [spacing foundation](/salt/foundations/spacing) for further guidance.
-
-#### Context
-
-- Group contextually related content together where possible.
-- Order modules from level of priority—which data would the dashboard user consider to be primary vs. secondary?
-- Keep the layout content within individual cards as consistent as possible across the dashboard. This supports scalability, especially if main components anchor to familiar locations within a card.
-
-#### Styling
+#### Layout and style
 
 - We recommend you style cards with the `--salt-container-primary-background` token, and the application with the `--salt-container-secondary-background` token. This is the most effective way to present data, as it provides the highest contrast between visualizations and their immediate backgrounds.
 - _(J.P. Morgan employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on data visualization, where you can find further information on presenting data in a visually cohesive manner. We recommend using the categorical color palette within your dashboard design, as it’s ideal for visualizing distinct groups of items.
+- As default, use `--salt-spacing-300` between content modules such as cards to promote readability.
+- The default padding between modules is `spacing-300`. Depending on the needs and business context of the dashboard, you can change this spacing token if your dashboard needs to display more or less content. View the [spacing foundation](/salt/foundations/spacing) for further guidance.
+- Group contextually related content together where possible.
+- Order modules from level of priority—which data would the dashboard user consider to be primary vs. secondary?
 
 #### Alternative card layouts
 
@@ -302,17 +299,5 @@ Metric bars should remain clean and concise to provide a higher level oversight 
 - Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
 - Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
 - Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](../../components/stack-layout) or [`FlowLayout`](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
-
-## Multiple dashboards and tabs
-
-Organize content into multiple dashboards or tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information at once.
-
-EXAMPLE IMAGE
-
-## Responsive behavior
-
-Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Use [`GridLayout`](../../components/grid-layout) to manage the layout and responsiveness of the main content area in your dashboard.
-
-EXAMPLE IMAGE
 
 :fragment{src="../fragments/feedback.mdx"}
