@@ -6,7 +6,7 @@ import {
   InteractableCardGroup,
   InteractableCardValue,
   Avatar,
-  CheckboxIcon, Î
+  CheckboxIcon,
   RadioButtonIcon,
 } from "@salt-ds/core";
 import { CreditCardIcon, BankIcon } from "@salt-ds/icons";
