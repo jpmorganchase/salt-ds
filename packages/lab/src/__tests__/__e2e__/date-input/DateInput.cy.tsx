@@ -1,7 +1,7 @@
 import { DateInput } from "@salt-ds/lab";
 import { ChangeEvent } from "react";
 
-describe("GIVEN an DateInput", () => {
+describe("GIVEN a DateInput", () => {
   it("SHOULD have no a11y violations on load", () => {
     cy.mount(<DateInput defaultValue="01 Feb 2000" />);
     cy.checkAxeComponent();
