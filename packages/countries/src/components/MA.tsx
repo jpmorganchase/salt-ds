@@ -9,30 +9,56 @@ export type MAProps = CountrySymbolProps;
 const MA = forwardRef<SVGSVGElement, MAProps>(function MA(props: MAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="MA"
       aria-label="Morocco"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-MA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-MA-a)`}>
-        <path fill="#DD2033" d="M0 72V0h72v72z" />
-        <path
-          fill="#005B33"
-          d="M62 28.862H42.138L36 9l-6.138 19.862H10l16.069 12.275L19.93 61 36 48.724 52.069 61l-6.138-19.862L62 28.862ZM30.566 39.6l2.076-6.717h6.716l2.076 6.717L36 43.751l-5.434-4.15Zm7.55-10.74h-4.231L36 22.018l2.115 6.845Zm6.572 8.254-1.307-4.23h6.844l-5.537 4.23Zm-16.069-4.23-1.307 4.23-5.538-4.23h6.845Zm-1.411 17.584 2.115-6.845 3.423 2.614-5.538 4.23Zm12.046-4.23 3.423-2.615 2.115 6.845-5.538-4.23Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-MA-a)`}>
+            <path fill="#DD2033" d="M0 72V0h72v72z" />
+            <path
+              fill="#005B33"
+              d="M62 28.862H42.138L36 9l-6.138 19.862H10l16.069 12.275L19.93 61 36 48.724 52.069 61l-6.138-19.862L62 28.862ZM30.566 39.6l2.076-6.717h6.716l2.076 6.717L36 43.751l-5.434-4.15Zm7.55-10.74h-4.231L36 22.018l2.115 6.845Zm6.572 8.254-1.307-4.23h6.844l-5.537 4.23Zm-16.069-4.23-1.307 4.23-5.538-4.23h6.845Zm-1.411 17.584 2.115-6.845 3.423 2.614-5.538 4.23Zm12.046-4.23 3.423-2.615 2.115 6.845-5.538-4.23Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-MA-a)`}>
+            <path fill="#DD2033" d="M0 50V0h72v50z" />
+            <path
+              fill="#005B33"
+              d="M56 20.278H40.721L36 5l-4.721 15.278H16l12.36 9.443L23.64 45 36 35.557 48.36 45l-4.72-15.279L56 20.278ZM31.82 28.54l1.597-5.166h5.166l1.597 5.166L36 31.732l-4.18-3.193Zm5.807-8.26h-3.254L36 15.012l1.627 5.265Zm5.056 6.348-1.006-3.254h5.266l-4.26 3.254Zm-12.36-3.254-1.006 3.254-4.26-3.254h5.266ZM29.237 36.9l1.627-5.265 2.633 2.01-4.26 3.255Zm9.266-3.254 2.633-2.011 1.627 5.265-4.26-3.254Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

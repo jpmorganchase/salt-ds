@@ -9,39 +9,74 @@ export type SCProps = CountrySymbolProps;
 const SC = forwardRef<SVGSVGElement, SCProps>(function SC(props: SCProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="SC"
       aria-label="Seychelles"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-SC-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-SC-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#009B77" d="M71.8 72V20l-62 52h62Z" />
-        <path
-          fill="#FBD381"
-          d="m13.671 64.983-1.97-1.971L37.51-3l27.072 7.071L13.67 64.983Z"
-        />
-        <path
-          fill="#DD2033"
-          d="m15.688 67-2.017-2.017L65.201 2.5l12.453 23.642L15.689 67Z"
-        />
-        <path
-          fill="#F5F7F8"
-          d="M16.627 69.47 15.2 67l62.354-41 5 13.66-65.927 29.81Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-SC-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-SC-a)`}>
+            <path fill="#004692" d="M0 0h72v72H0z" />
+            <path fill="#009B77" d="M71.8 72V20l-62 52h62Z" />
+            <path
+              fill="#FBD381"
+              d="m13.671 64.983-1.97-1.971L37.51-3l27.072 7.071L13.67 64.983Z"
+            />
+            <path
+              fill="#DD2033"
+              d="m15.688 67-2.017-2.017L65.201 2.5l12.453 23.642L15.689 67Z"
+            />
+            <path
+              fill="#F5F7F8"
+              d="M16.627 69.47 15.2 67l62.354-41 5 13.66-65.927 29.81Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-SC-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-SC-a)`}>
+            <path fill="#004692" d="M0-11h72v72H0z" />
+            <path fill="#009B77" d="M77 63V11L-3 63h80Z" />
+            <path
+              fill="#FBD381"
+              d="m.278 53.766-1.374-2.986 52.59-61.103L77.901 8.86.278 53.766Z"
+            />
+            <path
+              fill="#DD2033"
+              d="m3.138 54.301-2.11-2.553L72.056-7l4.081 23.456-73 37.845Z"
+            />
+            <path
+              fill="#F5F7F8"
+              d="m7.95 52.766-1.174-2.6 67.398-35.152 3.571 14.11L7.949 52.766Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

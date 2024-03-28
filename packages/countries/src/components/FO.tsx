@@ -9,33 +9,68 @@ export type FOProps = CountrySymbolProps;
 const FO = forwardRef<SVGSVGElement, FOProps>(function FO(props: FOProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="FO"
       aria-label="Faroe Islands (the)"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-FO-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-FO-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#004692"
-          fillRule="evenodd"
-          d="M20 72h-6V47.7H0v-6h14V30.3H0v-6h14V0h6v24.3h11.4V0h6v24.3H72v6H37.4v11.4H72v6H37.4V72h-6V47.7H20V72Zm11.4-41.7H20v11.4h11.4V30.3Z"
-          clipRule="evenodd"
-        />
-        <path fill="#DD2033" d="M20 72h12V42h40V30H32V0H20v30H0v12h20v30Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-FO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-FO-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#004692"
+              fillRule="evenodd"
+              d="M20 72h-6V47.7H0v-6h14V30.3H0v-6h14V0h6v24.3h11.4V0h6v24.3H72v6H37.4v11.4H72v6H37.4V72h-6V47.7H20V72Zm11.4-41.7H20v11.4h11.4V30.3Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#DD2033"
+              d="M20 72h12V42h40V30H32V0H20v30H0v12h20v30Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-FO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-FO-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+            <path
+              fill="#004692"
+              fillRule="evenodd"
+              d="M20 50h-6V36.7H0v-6h14V19.3H0v-6h14V0h6v13.3h11.4V0h6v13.3H72v6H37.4v11.4H72v6H37.4V50h-6V36.7H20V50Zm11.4-30.7H20v11.4h11.4V19.3Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#DD2033"
+              d="M20 50h12V31h40V19H32V0H20v19H0v12h20v19Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

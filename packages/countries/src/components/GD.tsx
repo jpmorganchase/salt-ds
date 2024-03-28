@@ -9,62 +9,103 @@ export type GDProps = CountrySymbolProps;
 const GD = forwardRef<SVGSVGElement, GDProps>(function GD(props: GDProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="GD"
       aria-label="Grenada"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-GD-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
-        />
-      </mask>
-      <g mask={`url(#${uid}-GD-a)`}>
-        <path fill="#A00009" d="M0 0h72v72H0z" />
-        <mask
-          id={`${uid}-GD-b`}
-          x="8"
-          y="8"
-          maskUnits="userSpaceOnUse"
-          style={{ maskType: "alpha" }}
-        >
-          <circle cx="36" cy="36" r="28" fill="#DD2033" />
-        </mask>
-        <g mask={`url(#${uid}-GD-b)`}>
-          <path fill="#008259" d="M68.516 68.516H3.484V3.484h65.032z" />
-          <path
-            fill="#F1B434"
-            d="M3.303 68.516 34.916 36 3.303 3.484h65.033L34.916 36l33.42 32.516H3.302Z"
-          />
-        </g>
-        <path
-          fill="#A00009"
-          d="M22.6 36c0-7.18 5.82-13 13-13s13 5.82 13 13-5.82 13-13 13-13-5.82-13-13Z"
-        />
-        <path
-          fill="#F1B434"
-          d="m35.6 23-3.577 8.09-8.423 1.077 6.213 6.077L28.183 47l7.417-5 7.417 5-1.63-8.756 6.213-6.077-8.423-1.076L35.6 23Z"
-        />
-        <path
-          fill="#F1B434"
-          fillRule="evenodd"
-          d="M35.6 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm-15 4.02a2 2 0 1 0-2-3.465 2 2 0 0 0 2 3.464Zm32.732-.733a2 2 0 1 1-3.464-2 2 2 0 0 1 3.464 2ZM35.6 70a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm17.732-7.287a2 2 0 1 1-3.464 2 2 2 0 0 1 3.464-2ZM18.6 65.445a2 2 0 1 0 2-3.464 2 2 0 0 0-2 3.464Z"
-          clipRule="evenodd"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GD-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle
+              cx="36"
+              cy="36"
+              r="36"
+              fill="#D9D9D9"
+              transform="rotate(-90 36 36)"
+            />
+          </mask>
+          <g mask={`url(#${uid}-GD-a)`}>
+            <path fill="#A00009" d="M0 0h72v72H0z" />
+            <mask
+              id={`${uid}-GD-b`}
+              x="8"
+              y="8"
+              maskUnits="userSpaceOnUse"
+              style={{ maskType: "alpha" }}
+            >
+              <circle cx="36" cy="36" r="28" fill="#DD2033" />
+            </mask>
+            <g mask={`url(#${uid}-GD-b)`}>
+              <path fill="#008259" d="M68.516 68.516H3.484V3.484h65.032z" />
+              <path
+                fill="#F1B434"
+                d="M3.303 68.516 34.916 36 3.303 3.484h65.033L34.916 36l33.42 32.516H3.302Z"
+              />
+            </g>
+            <path
+              fill="#A00009"
+              d="M22.6 36c0-7.18 5.82-13 13-13s13 5.82 13 13-5.82 13-13 13-13-5.82-13-13Z"
+            />
+            <path
+              fill="#F1B434"
+              d="m35.6 23-3.577 8.09-8.423 1.077 6.213 6.077L28.183 47l7.417-5 7.417 5-1.63-8.756 6.213-6.077-8.423-1.076L35.6 23Z"
+            />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="M35.6 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm-15 4.02a2 2 0 1 0-2-3.465 2 2 0 0 0 2 3.464Zm32.732-.733a2 2 0 1 1-3.464-2 2 2 0 0 1 3.464 2ZM35.6 70a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm17.732-7.287a2 2 0 1 1-3.464 2 2 2 0 0 1 3.464-2ZM18.6 65.445a2 2 0 1 0 2-3.464 2 2 0 0 0-2 3.464Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GD-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-GD-a)`}>
+            <path fill="#A00009" d="M0 0h72v50H0z" />
+            <path fill="#008259" d="M65 43H7V7h58z" />
+            <path
+              fill="#F1B434"
+              d="m7 43 28.194-18L7 7h58L35.194 25 65 43H7Z"
+            />
+            <path
+              fill="#A00009"
+              d="M26 25c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10Z"
+            />
+            <path
+              fill="#F1B434"
+              d="m36 15-2.751 6.224-6.48.828 4.78 4.674-1.254 6.736L36 29.614l5.705 3.847-1.253-6.736 4.779-4.674-6.48-.828L36.002 15Z"
+            />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="M19.5 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm18-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm16.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM19.5 48a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm18-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm16.5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

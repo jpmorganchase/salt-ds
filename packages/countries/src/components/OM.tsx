@@ -9,31 +9,58 @@ export type OMProps = CountrySymbolProps;
 const OM = forwardRef<SVGSVGElement, OMProps>(function OM(props: OMProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="OM"
       aria-label="Oman"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-OM-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-OM-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#005B33" d="M37 72V48h35v24z" />
-        <path
-          fill="#F5F7F8"
-          d="M37 24V0h35v24zm-21.55-9.192-4.242 4.242 4.95 4.95-4.95 4.95 4.242 4.242 4.95-4.95 4.95 4.95 4.242-4.242-4.95-4.95 4.95-4.95-4.242-4.242-4.95 4.95-4.95-4.95Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-OM-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-OM-a)`}>
+            <path fill="#DD2033" d="M0 0h72v72H0z" />
+            <path fill="#005B33" d="M37 72V48h35v24z" />
+            <path
+              fill="#F5F7F8"
+              d="M37 24V0h35v24zm-21.55-9.192-4.242 4.242 4.95 4.95-4.95 4.95 4.242 4.242 4.95-4.95 4.95 4.95 4.242-4.242-4.95-4.95 4.95-4.95-4.242-4.242-4.95 4.95-4.95-4.95Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-OM-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-OM-a)`}>
+            <path fill="#DD2033" d="M0 0h72v50H0z" />
+            <path fill="#005B33" d="M34 50V34h38v16z" />
+            <path
+              fill="#F5F7F8"
+              d="M34 16V0h38v16zM12.154 6 8 10.154 12.846 15 8 19.846 12.154 24 17 19.154 21.846 24 26 19.846 21.154 15 26 10.154 21.846 6 17 10.846 12.154 6Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

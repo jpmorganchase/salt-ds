@@ -9,30 +9,60 @@ export type GRProps = CountrySymbolProps;
 const GR = forwardRef<SVGSVGElement, GRProps>(function GR(props: GRProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="GR"
       aria-label="Greece"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-GR-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-GR-a)`}>
-        <path fill="#005EB8" d="M0 72V0h72v72z" />
-        <path
-          fill="#F5F7F8"
-          d="M36 9v9h36V9H36Zm0 18v9h36v-9H36ZM0 54v-9h72v9H0Zm0 9v9h72v-9H0ZM22 0h-9v18H0v9h13v18h9V27h14v-9H22V0Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-GR-a)`}>
+            <path fill="#005EB8" d="M0 72V0h72v72z" />
+            <path
+              fill="#F5F7F8"
+              d="M36 9v9h36V9H36Zm0 18v9h36v-9H36ZM0 54v-9h72v9H0Zm0 9v9h72v-9H0ZM22 0h-9v18H0v9h13v18h9V27h14v-9H22V0Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-GR-a)`}>
+            <path fill="#F5F7F8" d="M0 42v-7h72v7H0Z" />
+            <path fill="#005EB8" d="M0 35v-7h72v7H0Z" />
+            <path fill="#F5F7F8" d="M0 28v-7h72v7H0Z" />
+            <path fill="#005EB8" d="M0 21v-7h72v7H0Z" />
+            <path fill="#F5F7F8" d="M0 14V7h72v7H0Z" />
+            <path fill="#005EB8" d="M0 7V0h72v7H0Zm0 43v-8h72v8H0Z" />
+            <path fill="#005EB8" d="M0 0h36v35H0z" />
+            <path fill="#F5F7F8" d="M0 21v-7h36v7H0Z" />
+            <path fill="#F5F7F8" d="M14 0h8v35h-8V0Z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

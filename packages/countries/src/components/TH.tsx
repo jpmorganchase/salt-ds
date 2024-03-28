@@ -9,28 +9,52 @@ export type THProps = CountrySymbolProps;
 const TH = forwardRef<SVGSVGElement, THProps>(function TH(props: THProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="TH"
       aria-label="Thailand"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-TH-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-TH-a)`}>
-        <path fill="#A00009" d="M0 72V0h72v72z" />
-        <path fill="#F5F7F8" d="M0 58V14h72v44z" />
-        <path fill="#004692" d="M0 46V26h72v20z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TH-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-TH-a)`}>
+            <path fill="#A00009" d="M0 72V0h72v72z" />
+            <path fill="#F5F7F8" d="M0 58V14h72v44z" />
+            <path fill="#004692" d="M0 46V26h72v20z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-TH-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-TH-a)`}>
+            <path fill="#A00009" d="M0 50V0h72v50z" />
+            <path fill="#F5F7F8" d="M0 43V7h72v36z" />
+            <path fill="#004692" d="M0 33V17h72v16z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

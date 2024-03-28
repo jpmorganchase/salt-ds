@@ -9,34 +9,64 @@ export type JEProps = CountrySymbolProps;
 const JE = forwardRef<SVGSVGElement, JEProps>(function JE(props: JEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="JE"
       aria-label="Jersey"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-JE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-JE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#DD2033"
-          d="m57.496 65.416 8.485-8.486-21.213-21.213 20.93-20.93-8.485-8.485-20.93 20.93L15.069 6.019l-8.485 8.485 21.213 21.213L6.302 57.213l8.485 8.485 21.496-21.495 21.213 21.213Z"
-        />
-        <path
-          fill="#F1B434"
-          d="M26 11h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36 33l-.66-.264A14.857 14.857 0 0 1 26 18.94V11Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-JE-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#DD2033"
+              d="m57.496 65.416 8.485-8.486-21.213-21.213 20.93-20.93-8.485-8.485-20.93 20.93L15.069 6.019l-8.485 8.485 21.213 21.213L6.302 57.213l8.485 8.485 21.496-21.495 21.213 21.213Z"
+            />
+            <path
+              fill="#F1B434"
+              d="M26 11h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36 33l-.66-.264A14.857 14.857 0 0 1 26 18.94V11Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-JE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-JE-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+            <path
+              fill="#DD2033"
+              d="M65.471 56 72 50.378 42.529 25 72-.378 65.472-6 36 19.378 6.529-6 0-.378 29.471 25 .002 50.378 6.528 56 36 30.622 65.471 56Z"
+            />
+            <path
+              fill="#F1B434"
+              d="M28 5h16v6.084c0 5.228-3.161 9.936-8 11.916-4.839-1.98-8-6.688-8-11.916V5Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

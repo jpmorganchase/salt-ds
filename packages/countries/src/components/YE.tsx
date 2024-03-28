@@ -9,28 +9,52 @@ export type YEProps = CountrySymbolProps;
 const YE = forwardRef<SVGSVGElement, YEProps>(function YE(props: YEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="YE"
       aria-label="Yemen"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-YE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-YE-a)`}>
-        <path fill="#31373D" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#DD2033" d="M0 24V0h72v24z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-YE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-YE-a)`}>
+            <path fill="#31373D" d="M0 72V48h72v24z" />
+            <path fill="#F5F7F8" d="M0 48V24h72v24z" />
+            <path fill="#DD2033" d="M0 24V0h72v24z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-YE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-YE-a)`}>
+            <path fill="#31373D" d="M0 50V34h72v16z" />
+            <path fill="#F5F7F8" d="M0 34V16h72v18z" />
+            <path fill="#DD2033" d="M0 16V0h72v16z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

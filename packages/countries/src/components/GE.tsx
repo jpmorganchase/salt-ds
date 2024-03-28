@@ -9,34 +9,62 @@ export type GEProps = CountrySymbolProps;
 const GE = forwardRef<SVGSVGElement, GEProps>(function GE(props: GEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="GE"
       aria-label="Georgia"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-GE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-GE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#DD2033"
-          d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
-        />
-        <path
-          fill="#DD2033"
-          d="M10.4 20v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm36 0v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm-36 36v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm36 0v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-GE-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#DD2033"
+              d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
+            />
+            <path
+              fill="#DD2033"
+              d="M10.4 20v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm36 0v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm-36 36v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm36 0v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-GE-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+            <path
+              fill="#DD2033"
+              d="M9 12.75v-3.5h5.25V4h3.5v5.25H23v3.5h-5.25V18h-3.5v-5.25H9Zm40 0v-3.5h5.25V4h3.5v5.25H63v3.5h-5.25V18h-3.5v-5.25H49Zm-40 28v-3.5h5.25V32h3.5v5.25H23v3.5h-5.25V46h-3.5v-5.25H9Zm40 0v-3.5h5.25V32h3.5v5.25H63v3.5h-5.25V46h-3.5v-5.25H49Z"
+            />
+          </g>
+          <path fill="#DD2033" d="M32 0h8v50h-8z" />
+          <path fill="#DD2033" d="M0 29v-8h72v8z" />
+        </>
+      )}
     </CountrySymbol>
   );
 });

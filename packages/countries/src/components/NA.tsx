@@ -9,39 +9,74 @@ export type NAProps = CountrySymbolProps;
 const NA = forwardRef<SVGSVGElement, NAProps>(function NA(props: NAProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="NA"
       aria-label="Namibia"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-NA-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-NA-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path fill="#009B77" d="M72 72H0L72 0v72Z" />
-        <path
-          fill="#F5F7F8"
-          d="M2.2 54.326 20.585 72.71l52.326-52.326L54.526 2z"
-        />
-        <path
-          fill="#DD2033"
-          d="M17.062 67.974 6.455 57.367 57.367 6.456l10.607 10.606z"
-        />
-        <path
-          fill="#FBD381"
-          d="m25.4 21-3.269 1.616 1.74 3.328-3.549-.713-.45 3.769-2.472-2.772L14.928 29l-.45-3.77-3.55.714 1.74-3.328L9.4 21l3.269-1.616-1.741-3.328 3.55.713.45-3.769 2.472 2.772L19.872 13l.45 3.77 3.55-.714-1.74 3.328L25.4 21Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-NA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-NA-a)`}>
+            <path fill="#005EB8" d="M0 0h72v72H0z" />
+            <path fill="#009B77" d="M72 72H0L72 0v72Z" />
+            <path
+              fill="#F5F7F8"
+              d="M2.2 54.326 20.585 72.71l52.326-52.326L54.526 2z"
+            />
+            <path
+              fill="#DD2033"
+              d="M17.062 67.974 6.455 57.367 57.367 6.456l10.607 10.606z"
+            />
+            <path
+              fill="#FBD381"
+              d="m25.4 21-3.269 1.616 1.74 3.328-3.549-.713-.45 3.769-2.472-2.772L14.928 29l-.45-3.77-3.55.714 1.74-3.328L9.4 21l3.269-1.616-1.741-3.328 3.55.713.45-3.769 2.472 2.772L19.872 13l.45 3.77 3.55-.714-1.74 3.328L25.4 21Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-NA-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-NA-a)`}>
+            <path fill="#005EB8" d="M0-11h72v72H0z" />
+            <path fill="#009B77" d="M72 61H0l72-72v72Z" />
+            <path
+              fill="#F5F7F8"
+              d="M-6 43.044 8.052 63.338l76.34-49.935L70.34-6.891z"
+            />
+            <path
+              fill="#DD2033"
+              d="m5.721 58.24-8.107-11.708L71.787-1.985l8.107 11.708z"
+            />
+            <path
+              fill="#FBD381"
+              d="m23 13-3.269 1.616 1.74 3.328-3.549-.713-.45 3.769L15 18.228 12.528 21l-.45-3.77-3.55.714 1.74-3.328L7 13l3.269-1.616-1.74-3.328 3.549.713.45-3.769L15 7.772 17.473 5l.45 3.77 3.549-.714-1.74 3.328L23 13Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

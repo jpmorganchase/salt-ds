@@ -9,29 +9,54 @@ export type MUProps = CountrySymbolProps;
 const MU = forwardRef<SVGSVGElement, MUProps>(function MU(props: MUProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="MU"
       aria-label="Mauritius"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-MU-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-MU-a)`}>
-        <path fill="#009B77" d="M0 72V54h72v18z" />
-        <path fill="#004692" d="M0 36V18h72v18z" />
-        <path fill="#DD2033" d="M0 18V0h72v18z" />
-        <path fill="#FBD381" d="M0 54V36h72v18z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MU-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-MU-a)`}>
+            <path fill="#009B77" d="M0 72V54h72v18z" />
+            <path fill="#004692" d="M0 36V18h72v18z" />
+            <path fill="#DD2033" d="M0 18V0h72v18z" />
+            <path fill="#FBD381" d="M0 54V36h72v18z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MU-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-MU-a)`}>
+            <path fill="#009B77" d="M0 50V38h72v12z" />
+            <path fill="#004692" d="M0 25V12h72v13z" />
+            <path fill="#DD2033" d="M0 12V0h72v12z" />
+            <path fill="#FBD381" d="M0 38V25h72v13z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

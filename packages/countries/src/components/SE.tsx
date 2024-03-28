@@ -9,27 +9,56 @@ export type SEProps = CountrySymbolProps;
 const SE = forwardRef<SVGSVGElement, SEProps>(function SE(props: SEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="SE"
       aria-label="Sweden"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-SE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-SE-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path fill="#FBD381" d="M14 72h14V43h44V29H28V0H14v29H0v14h14v29Z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-SE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-SE-a)`}>
+            <path fill="#005EB8" d="M0 0h72v72H0z" />
+            <path
+              fill="#FBD381"
+              d="M14 72h14V43h44V29H28V0H14v29H0v14h14v29Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-SE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-SE-a)`}>
+            <path fill="#005EB8" d="M0 0h72v50H0z" />
+            <path
+              fill="#FBD381"
+              d="M14 61h14V32h44V18H28v-29H14v29H0v14h14v29Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

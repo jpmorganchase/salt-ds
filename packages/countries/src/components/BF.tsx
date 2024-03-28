@@ -9,31 +9,58 @@ export type BFProps = CountrySymbolProps;
 const BF = forwardRef<SVGSVGElement, BFProps>(function BF(props: BFProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="BF"
       aria-label="Burkina Faso"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-BF-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-BF-a)`}>
-        <path fill="#008259" d="M0 72V36h72v36z" />
-        <path fill="#DD2033" d="M0 36V0h72v36z" />
-        <path
-          fill="#FBD381"
-          d="m36 19.286-4.982 11.269-11.732 1.5 8.653 8.464-2.27 12.195L36 45.75l10.33 6.964-2.27-12.195 8.654-8.465-11.732-1.5L36 19.287Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-BF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-BF-a)`}>
+            <path fill="#008259" d="M0 72V36h72v36z" />
+            <path fill="#DD2033" d="M0 36V0h72v36z" />
+            <path
+              fill="#FBD381"
+              d="m36 19.286-4.982 11.269-11.732 1.5 8.653 8.464-2.27 12.195L36 45.75l10.33 6.964-2.27-12.195 8.654-8.465-11.732-1.5L36 19.287Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-BF-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-BF-a)`}>
+            <path fill="#008259" d="M0 50V25h72v25z" />
+            <path fill="#DD2033" d="M0 25V0h72v25z" />
+            <path
+              fill="#FBD381"
+              d="m36 8.286-4.982 11.269-11.732 1.5 8.653 8.464-2.27 12.195L36 34.75l10.331 6.964-2.27-12.195 8.654-8.465-11.732-1.5L36 8.287Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

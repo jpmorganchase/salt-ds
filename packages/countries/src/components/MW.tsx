@@ -9,32 +9,60 @@ export type MWProps = CountrySymbolProps;
 const MW = forwardRef<SVGSVGElement, MWProps>(function MW(props: MWProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="MW"
       aria-label="Malawi"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-MW-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-MW-a)`}>
-        <path fill="#009B77" d="M0 72V48h72v24z" />
-        <path fill="#DD2033" d="M0 48V24h72v24z" />
-        <path fill="#31373D" d="M0 24V0h72v24z" />
-        <path
-          fill="#DD2033"
-          d="M49 20H23l5.312-2.627-2.829-5.407 5.768 1.16L31.983 7 36 11.505 40.018 7l.73 6.125 5.769-1.16-2.829 5.409L49 20Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MW-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-MW-a)`}>
+            <path fill="#009B77" d="M0 72V48h72v24z" />
+            <path fill="#DD2033" d="M0 48V24h72v24z" />
+            <path fill="#31373D" d="M0 24V0h72v24z" />
+            <path
+              fill="#DD2033"
+              d="M49 20H23l5.312-2.627-2.829-5.407 5.768 1.16L31.983 7 36 11.505 40.018 7l.73 6.125 5.769-1.16-2.829 5.409L49 20Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-MW-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-MW-a)`}>
+            <path fill="#009B77" d="M0 50V34h72v16z" />
+            <path fill="#DD2033" d="M0 34V18h72v16z" />
+            <path fill="#31373D" d="M0 18V0h72v18z" />
+            <path
+              fill="#DD2033"
+              d="M48 16H22l5.312-2.627-2.829-5.407 5.768 1.16L30.983 3 35 7.505 39.018 3l.73 6.125 5.769-1.16-2.829 5.409L48 16Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

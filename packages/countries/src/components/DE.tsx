@@ -9,28 +9,52 @@ export type DEProps = CountrySymbolProps;
 const DE = forwardRef<SVGSVGElement, DEProps>(function DE(props: DEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="DE"
       aria-label="Germany"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-DE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-DE-a)`}>
-        <path fill="#F1B434" d="M0 72V48h72v24z" />
-        <path fill="#DD2033" d="M0 48V24h72v24z" />
-        <path fill="#31373D" d="M0 24V0h72v24z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-DE-a)`}>
+            <path fill="#F1B434" d="M0 72V48h72v24z" />
+            <path fill="#DD2033" d="M0 48V24h72v24z" />
+            <path fill="#31373D" d="M0 24V0h72v24z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-DE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-DE-a)`}>
+            <path fill="#F1B434" d="M0 50V34h72v16z" />
+            <path fill="#DD2033" d="M0 34V16h72v18z" />
+            <path fill="#31373D" d="M0 16V0h72v16z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

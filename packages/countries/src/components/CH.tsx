@@ -9,36 +9,62 @@ export type CHProps = CountrySymbolProps;
 const CH = forwardRef<SVGSVGElement, CHProps>(function CH(props: CHProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CH"
       aria-label="Switzerland"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CH-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
-        />
-      </mask>
-      <g mask={`url(#${uid}-CH-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path
-          fill="#F5F7F8"
-          d="M59.6 43V29h-17V12h-14v17h-17v14h17v17h14V43h17Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CH-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle
+              cx="36"
+              cy="36"
+              r="36"
+              fill="#D9D9D9"
+              transform="rotate(-90 36 36)"
+            />
+          </mask>
+          <g mask={`url(#${uid}-CH-a)`}>
+            <path fill="#DD2033" d="M0 0h72v72H0z" />
+            <path
+              fill="#F5F7F8"
+              d="M59.6 43V29h-17V12h-14v17h-17v14h17v17h14V43h17Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CH-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CH-a)`}>
+            <path fill="#DD2033" d="M0 0h72v50H0z" />
+            <path
+              fill="#F5F7F8"
+              d="M55 30.542V19.458H41.542V6H30.458v13.458H17v11.084h13.458V44h11.084V30.542H55Z"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

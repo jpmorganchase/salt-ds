@@ -9,37 +9,68 @@ export type AWProps = CountrySymbolProps;
 const AW = forwardRef<SVGSVGElement, AWProps>(function AW(props: AWProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="AW"
       aria-label="Aruba"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-AW-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-AW-a)`}>
-        <path fill="#0091DA" d="M0 0h72v72H0z" />
-        <path
-          fill="#DD2033"
-          d="m24 14 3.674 8.326L36 26l-8.326 3.674L24 38l-3.674-8.326L12 26l8.326-3.674L24 14Z"
-        />
-        <path
-          fill="#F5F7F8"
-          fillRule="evenodd"
-          d="m24 7.631 5.624 12.744L42.37 26l-12.745 5.625L24 44.368l-5.625-12.744L5.631 26l12.744-5.625L24 7.631Zm-3.674 14.695L12 26l8.326 3.674L24 38l3.674-8.326L36 26l-8.326-3.674L24 14l-3.674 8.326Z"
-          clipRule="evenodd"
-        />
-        <path fill="#FBD381" d="M0 48h72v6H0zm0 12h72v6H0z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-AW-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-AW-a)`}>
+            <path fill="#0091DA" d="M0 0h72v72H0z" />
+            <path
+              fill="#DD2033"
+              d="m24 14 3.674 8.326L36 26l-8.326 3.674L24 38l-3.674-8.326L12 26l8.326-3.674L24 14Z"
+            />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="m24 7.631 5.624 12.744L42.37 26l-12.745 5.625L24 44.368l-5.625-12.744L5.631 26l12.744-5.625L24 7.631Zm-3.674 14.695L12 26l8.326 3.674L24 38l3.674-8.326L36 26l-8.326-3.674L24 14l-3.674 8.326Z"
+              clipRule="evenodd"
+            />
+            <path fill="#FBD381" d="M0 48h72v6H0zm0 12h72v6H0z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-AW-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-AW-a)`}>
+            <path fill="#0091DA" d="M0-11h72v72H0z" />
+            <path
+              fill="#F5F7F8"
+              d="m21 2 4.593 10.407L36 17l-10.407 4.593L21 32l-4.593-10.407L6 17l10.407-4.593L21 2Z"
+            />
+            <path
+              fill="#DD2033"
+              d="m21 8 2.756 6.244L30 17l-6.244 2.756L21 26l-2.756-6.244L12 17l6.244-2.756L21 8Z"
+            />
+            <path fill="#FBD381" d="M0 34h72v4H0zm0 8h72v4H0z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

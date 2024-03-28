@@ -12,46 +12,84 @@ const GB_NIR = forwardRef<SVGSVGElement, GB_NIRProps>(function GB_NIR(
 ) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="GB_NIR"
       aria-label="Northern Ireland"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-GB-NIR-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-GB-NIR-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path
-          fill="#DD2033"
-          d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
-        />
-        <path
-          fill="#F5F7F8"
-          fillRule="evenodd"
-          d="M32.623 29.09 36.2 21l3.577 8.09 8.423 1.077-6.213 6.077L43.617 45 36.2 40l-7.416 5 1.629-8.756-6.213-6.077 8.423-1.076ZM38.2 30h-3v2h-2v7h5v-2h2v-3h-2v-4Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="#F1B434"
-          fillRule="evenodd"
-          d="M34.2 4h3v2h3v3h-3v2.803a6 6 0 0 1 7 9.67V24h-17v-2.528a6 6 0 0 1 7-9.67V9h-3V6h3V4Zm1.5 9.031L35.672 13h.056l-.028.031ZM35.672 21l.028-.031.028.031h-.056Z"
-          clipRule="evenodd"
-        />
-        <path
-          fill="#DD2033"
-          d="M28.2 17a3 3 0 0 0 3 3h3v-3a3 3 0 0 0-6 0Zm12 3a3 3 0 1 0-3-3v3h3Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GB-NIR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-GB-NIR-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+            <path
+              fill="#DD2033"
+              d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
+            />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="M32.623 29.09 36.2 21l3.577 8.09 8.423 1.077-6.213 6.077L43.617 45 36.2 40l-7.416 5 1.629-8.756-6.213-6.077 8.423-1.076ZM38.2 30h-3v2h-2v7h5v-2h2v-3h-2v-4Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="M34.2 4h3v2h3v3h-3v2.803a6 6 0 0 1 7 9.67V24h-17v-2.528a6 6 0 0 1 7-9.67V9h-3V6h3V4Zm1.5 9.031L35.672 13h.056l-.028.031ZM35.672 21l.028-.031.028.031h-.056Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#DD2033"
+              d="M28.2 17a3 3 0 0 0 3 3h3v-3a3 3 0 0 0-6 0Zm12 3a3 3 0 1 0-3-3v3h3Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-GB-NIR-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-GB-NIR-a)`}>
+            <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+            <path
+              fill="#DD2033"
+              d="M30.4 50h12V31H72V19H42.4V0h-12v19H0v12h30.4v19Z"
+            />
+            <path
+              fill="#F5F7F8"
+              fillRule="evenodd"
+              d="M33.37 19.742 36.5 13l3.13 6.742 7.37.897-5.436 5.064L42.989 33 36.5 28.833 30.01 33l1.426-7.297L26 20.64l7.37-.897Zm4.88.758h-2.625v1.667h-1.75V28h4.375v-1.667H40v-2.5h-1.75V20.5Z"
+              clipRule="evenodd"
+            />
+            <path
+              fill="#F1B434"
+              fillRule="evenodd"
+              d="M35.429 1h2.142v1.5h2.143v2.25h-2.143v2.102a4.112 4.112 0 0 1 2.143-.602c2.367 0 4.286 2.015 4.286 4.5a4.59 4.59 0 0 1-1.429 3.354V16H30.43v-1.896A4.59 4.59 0 0 1 29 10.75c0-2.485 1.919-4.5 4.286-4.5.78 0 1.512.22 2.143.602V4.75h-2.143V2.5h2.143V1ZM36.5 7.773l-.02-.023h.04l-.02.023Zm-.02 5.977.02-.023.02.023h-.04Z"
+              clipRule="evenodd"
+            />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

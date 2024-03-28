@@ -9,28 +9,52 @@ export type COProps = CountrySymbolProps;
 const CO = forwardRef<SVGSVGElement, COProps>(function CO(props: COProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="CO"
       aria-label="Colombia"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-CO-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-CO-a)`}>
-        <path fill="#DD2033" d="M0 72V54h72v18z" />
-        <path fill="#F1B434" d="M0 36V0h72v36z" />
-        <path fill="#004692" d="M0 54V36h72v18z" />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-CO-a)`}>
+            <path fill="#DD2033" d="M0 72V54h72v18z" />
+            <path fill="#F1B434" d="M0 36V0h72v36z" />
+            <path fill="#004692" d="M0 54V36h72v18z" />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-CO-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-CO-a)`}>
+            <path fill="#DD2033" d="M0 61V43h72v18z" />
+            <path fill="#F1B434" d="M0 25V0h72v25z" />
+            <path fill="#004692" d="M0 43V25h72v18z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

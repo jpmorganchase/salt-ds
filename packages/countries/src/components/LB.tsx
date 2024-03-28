@@ -9,31 +9,55 @@ export type LBProps = CountrySymbolProps;
 const LB = forwardRef<SVGSVGElement, LBProps>(function LB(props: LBProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="LB"
       aria-label="Lebanon"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-LB-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-LB-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 54V18h72v36z" />
-        <path
-          fill="#008259"
-          d="M45 44.167 36 22l-9 22.167h6.75V50h4.5v-5.833H45Z"
-        />
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LB-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-LB-a)`}>
+            <path fill="#DD2033" d="M0 0h72v72H0z" />
+            <path fill="#F5F7F8" d="M0 54V18h72v36z" />
+            <path
+              fill="#008259"
+              d="M45 44.167 36 22l-9 22.167h6.75V50h4.5v-5.833H45Z"
+            />
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-LB-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-LB-a)`}>
+            <path fill="#DD2033" d="M0-11h72v72H0z" />
+            <path fill="#F5F7F8" d="M0 41V9h72v32z" />
+            <path fill="#008259" d="m44 32-8-19-8 19h6v5h4v-5h6Z" />
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });

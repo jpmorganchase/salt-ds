@@ -9,53 +9,102 @@ export type KEProps = CountrySymbolProps;
 const KE = forwardRef<SVGSVGElement, KEProps>(function KE(props: KEProps, ref) {
   const uid = useId(props.id);
 
+  const viewBoxValue = props.variant === "sharp" ? "0 0 72 50" : "0 0 72 72";
+
   return (
     <CountrySymbol
       data-testid="KE"
       aria-label="Kenya"
-      viewBox="0 0 72 72"
+      viewBox={viewBoxValue}
       ref={ref}
       {...props}
     >
-      <mask
-        id={`${uid}-KE-a`}
-        x="0"
-        y="0"
-        maskUnits="userSpaceOnUse"
-        style={{ maskType: "alpha" }}
-      >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
-      </mask>
-      <g mask={`url(#${uid}-KE-a)`}>
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
-        <path fill="#DD2033" d="M0 46V26h72v20z" />
-        <path fill="#31373D" d="M0 20V0h72v20z" />
-        <path fill="#009B77" d="M0 72V52h72v20z" />
-        <path
-          fill="#F5F7F8"
-          d="m22.2 15 3.464-2 10.768 18.65L47.2 13l3.464 2-11.922 20.65 11.922 20.651-3.464 2-10.768-18.65L25.664 58.3l-3.464-2 11.923-20.65L22.2 15Z"
-        />
-        <path
-          fill="#DD2033"
-          d="M36.107 18c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
-        />
-        <mask
-          id={`${uid}-KE-b`}
-          x="25"
-          y="18"
-          maskUnits="userSpaceOnUse"
-          style={{ maskType: "alpha" }}
-        >
-          <path
-            fill="#DD2033"
-            d="M36.107 18c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
-          />
-        </mask>
-        <g mask={`url(#${uid}-KE-b)`}>
-          <path fill="#31373D" d="M25 18h4v36h-4zm18 0h4v36h-4z" />
-          <path fill="#F5F7F8" d="M34.2 18h4v36h-4z" />
-        </g>
-      </g>
+      {props.variant !== "sharp" && (
+        <>
+          <mask
+            id={`${uid}-KE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+          </mask>
+          <g mask={`url(#${uid}-KE-a)`}>
+            <path fill="#F5F7F8" d="M0 52V20h72v32z" />
+            <path fill="#DD2033" d="M0 46V26h72v20z" />
+            <path fill="#31373D" d="M0 20V0h72v20z" />
+            <path fill="#009B77" d="M0 72V52h72v20z" />
+            <path
+              fill="#F5F7F8"
+              d="m22.2 15 3.464-2 10.768 18.65L47.2 13l3.464 2-11.922 20.65 11.922 20.651-3.464 2-10.768-18.65L25.664 58.3l-3.464-2 11.923-20.65L22.2 15Z"
+            />
+            <path
+              fill="#DD2033"
+              d="M36.107 18c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
+            />
+            <mask
+              id={`${uid}-KE-b`}
+              x="25"
+              y="18"
+              maskUnits="userSpaceOnUse"
+              style={{ maskType: "alpha" }}
+            >
+              <path
+                fill="#DD2033"
+                d="M36.107 18c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
+              />
+            </mask>
+            <g mask={`url(#${uid}-KE-b)`}>
+              <path fill="#31373D" d="M25 18h4v36h-4zm18 0h4v36h-4z" />
+              <path fill="#F5F7F8" d="M34.2 18h4v36h-4z" />
+            </g>
+          </g>
+        </>
+      )}
+      {props.variant === "sharp" && (
+        <>
+          <mask
+            id={`${uid}-KE-a`}
+            x="0"
+            y="0"
+            maskUnits="userSpaceOnUse"
+            style={{ maskType: "alpha" }}
+          >
+            <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          </mask>
+          <g mask={`url(#${uid}-KE-a)`}>
+            <path fill="#F5F7F8" d="M0 41V9h72v32z" />
+            <path fill="#DD2033" d="M0 35V15h72v20z" />
+            <path fill="#31373D" d="M0 9V0h72v9z" />
+            <path fill="#009B77" d="M0 50v-9h72v9z" />
+            <path
+              fill="#F5F7F8"
+              d="m22.2 4 3.464-2 10.768 18.65L47.2 2l3.464 2-11.922 20.65 11.922 20.651-3.464 2-10.768-18.65L25.664 47.3l-3.464-2 11.923-20.65L22.2 4Z"
+            />
+            <path
+              fill="#DD2033"
+              d="M36.107 7c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
+            />
+            <mask
+              id={`${uid}-KE-b`}
+              x="25"
+              y="7"
+              maskUnits="userSpaceOnUse"
+              style={{ maskType: "alpha" }}
+            >
+              <path
+                fill="#DD2033"
+                d="M36.107 7c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
+              />
+            </mask>
+            <g mask={`url(#${uid}-KE-b)`}>
+              <path fill="#31373D" d="M25 7h4v36h-4zm18 0h4v36h-4z" />
+              <path fill="#F5F7F8" d="M34.2 7h4v36h-4z" />
+            </g>
+          </g>
+        </>
+      )}
     </CountrySymbol>
   );
 });
