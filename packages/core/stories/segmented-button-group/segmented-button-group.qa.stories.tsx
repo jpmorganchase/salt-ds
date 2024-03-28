@@ -1,11 +1,15 @@
-import { StackLayout, Button } from "@salt-ds/core";
-import { SegmentedButtonGroup, SegmentedButtonGroupProps } from "@salt-ds/lab";
+import {
+  StackLayout,
+  Button,
+  SegmentedButtonGroup,
+  SegmentedButtonGroupProps,
+} from "@salt-ds/core";
 import { MessageIcon, ChatGroupIcon, CallIcon } from "@salt-ds/icons";
 import { StoryFn, Meta } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
 export default {
-  title: "Lab/Segmented Button Group/Segmented Button Group QA",
+  title: "Core/Segmented Button Group/Segmented Button Group QA",
   component: SegmentedButtonGroup,
 } as Meta<typeof SegmentedButtonGroup>;
 

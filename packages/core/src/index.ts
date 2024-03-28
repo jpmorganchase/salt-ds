@@ -34,6 +34,7 @@ export * from "./pill";
 export * from "./progress";
 export * from "./radio-button";
 export * from "./scrim";
+export * from "./segmented-button-group";
 export * from "./spinner";
 export * from "./stack-layout";
 export * from "./status-adornment";

@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Button, StackLayout } from "@salt-ds/core";
-import { SegmentedButtonGroup } from "@salt-ds/lab";
+import { Button, StackLayout, SegmentedButtonGroup } from "@salt-ds/core";
 import { CallIcon, MessageIcon, ChatGroupIcon } from "@salt-ds/icons";
 
 export const Variants = (): ReactElement => (
