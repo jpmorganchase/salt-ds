@@ -24,6 +24,20 @@ The mock-ups displayed in this pattern are available as [templates](https://www.
   alt="Example showing an analytical dashboard"
 />
 
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/hero_shot_light.png",
+      alt: "Example showing an analytical dashboard",
+    },
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/hero_shot_dark.png",
+      alt: "Example showing an analytical dashboard",
+    },
+  ]}
+  label="Dark mode"
+/>
+
 ## When to use
 
 Use an analytical dashboard to visually represent data that provide insights and analysis of key metrics and performance indicators. Combine various data sources and present information in a concise and interactive format using charts, graphs, tables and other visual elements.
@@ -53,7 +67,11 @@ Other features typically found in an analytical dashboard include:
 - **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
 - **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
 
-ANATOMY IMAGE
+<Diagram
+  src="/img/patterns/dashboards/analytical-dashboard/dashboard_anatomy.png"
+  alt="Dashboard anatomy"
+  border
+/>
 
 ### Dashboard layout
 
@@ -67,12 +85,16 @@ The following examples use a desktop screen size of 1440 x 1024px and a large, e
 - `Tabs`: Use to organize and categorize dashboard widgets into local groupings. You can also organize content into multiple dashboards using tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information.
 - [`GridLayout`](../../components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard.
 
-LAYOUT IMAGE
+<Diagram
+  src="/img/patterns/dashboards/analytical-dashboard/dashboard_layout.png"
+  alt="Dashboard layout"
+  border
+/>
 
 Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/fpattern-reading-order.png"
+  src="/img/patterns/dashboards/analytical-dashboard/f-pattern_reading_order.png"
   alt="F-Pattern reading order"
   border
 />
@@ -105,11 +127,11 @@ If your dashboard is responsive, the main body region will dynamically resize at
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-partially-aligned.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_partially_aligned.png",
       alt: "Partially aligned dashboard without layout grid in main body region",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-partially-aligned-layout-grid.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_partially_aligned_layout_grid.png",
       alt: "Partially aligned dashboard with layout grid in main body region",
     },
   ]}
@@ -117,19 +139,7 @@ If your dashboard is responsive, the main body region will dynamically resize at
 />
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/responsive-main-body-1.png"
-  alt="Example showing a responsive main body"
-  border
-/>
-
-<Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/responsive-main-body-2.png"
-  alt="Example showing a responsive main body"
-  border
-/>
-
-<Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/responsive-main-body-3.png"
+  src="/img/patterns/dashboards/analytical-dashboard/responsive_main_body.png"
   alt="Example showing a responsive main body"
   border
 />
@@ -147,11 +157,11 @@ In the following example, the panel width aligns to the first two columns of the
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-fully-aligned.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_fully_aligned.png",
       alt: "Fully aligned dashboard without layout grid",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-fully-aligned-layout-grid.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_fully_aligned_layout_grid.png",
       alt: "Fully aligned dashboard with layout grid",
     },
   ]}
@@ -169,11 +179,11 @@ From a high-level overview, the main content regions of an analytical dashboard 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-regions.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_regions.png",
       alt: "Dashboard regions",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-regions-breakdown.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_regions_breakdown.png",
       alt: "Dashboard regions with visual hierarchy breakdown",
     },
   ]}
@@ -186,7 +196,7 @@ From a high-level overview, the main content regions of an analytical dashboard 
 The main body region contains dashboard modules/widgets and their content.
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/main-body-region.png"
+  src="/img/patterns/dashboards/analytical-dashboard/main_body_region.png"
   alt="Main body region"
   border
   caption="The main body region of the dashboard."
@@ -197,7 +207,7 @@ The main body region contains dashboard modules/widgets and their content.
 The dashboard header sits at the top of the dashboard body, and its content can be flexible in use. For example, a header can introduce the context of the dashboard, contain information about the latest dashboard update or display personalized user information.
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/dashboard-header.png"
+  src="/img/patterns/dashboards/analytical-dashboard/dashboard_header.png"
   alt="Dashboard header"
   border
   caption="The header region of the dashboard."
@@ -219,11 +229,11 @@ You can use a fixed panel to:
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/fixed-panel.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/fixed_panel.png",
       alt: "Fixed panel",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/fixed-panel-with-spacing.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/fixed_panel_with_spacing.png",
       alt: "Fixed panel with spacing",
     },
   ]}
@@ -251,16 +261,16 @@ Use [`Card`](../../components/card) as a container or widget type to position an
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/content-modules.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/content_modules.png",
       alt: "Content modules",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/content-modules-with-spacing.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/content_modules_with_spacing.png",
       alt: "Content modules with spacing",
     },
   ]}
   label="Content spacing"
-  caption="Cards are a good choice for enablling responsive design."
+  caption="Cards are a good choice for enabling responsive design."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
@@ -285,7 +295,7 @@ Depending on the amount of data that the user needs to see at once, you can arra
 Use the flexibility of the columns in a layout grid to split and arrange cards in various horizontal alignments.
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/alternative-card-layouts.png"
+  src="/img/patterns/dashboards/analytical-dashboard/alternative_card_layouts.png"
   alt="Alternative card layouts"
   border
   caption="Alternative card layouts in action."
@@ -300,11 +310,11 @@ Metric bars should remain clean and concise to provide a higher level oversight 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/key-metrics.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/key_metrics.png",
       alt: "Key metrics",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/key-metrics-with-spacing.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/key_metrics_with_spacing.png",
       alt: "Key metrics with spacing",
     },
   ]}
