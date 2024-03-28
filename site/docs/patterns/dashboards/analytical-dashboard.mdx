@@ -45,14 +45,17 @@ Creating an analytical dashboard user interface involves a careful consideration
 1. **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
 2. **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, dropdown menus, checkboxes and search bars.
 3. **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
-4. **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
-5. **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
-6. **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
-7. **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
+4. **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
+
+Other features typically found in an analytical dashboard include:
+
+- **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
+- **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
+- **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
 
 ANATOMY IMAGE
 
-### Analytical dashboard layout
+### Dashboard layout
 
 Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
 
@@ -82,8 +85,12 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
 4. Data grids or tables
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Use [`Drawer`](../../components/drawer) to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without going to a different screen.
-- Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.
+  - Use [`Drawer`](../../components/drawer) to display an expandable panel
+  overlaid above a region of your dashboard rather than embedded within the
+  existing layout. Users can view additional content without going to a
+  different screen. - Persistently displayed panels should use the west region
+  of the border layout instead of a drawer, which can hinder the dashboard user
+  experience by hiding key interactive components.
 </ExampleContainer>
 
 ### Partially aligned layout
@@ -250,7 +257,9 @@ Use [`Card`](../../components/card) as a container or widget type to position an
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-Keep the content layout within individual cards as consistent as possible across the dashboard. This supports scalability, especially if main components anchor to familiar locations within a card.
+  Keep the content layout within individual cards as consistent as possible
+  across the dashboard. This supports scalability, especially if main components
+  anchor to familiar locations within a card.
 </ExampleContainer>
 
 #### Layout and style
