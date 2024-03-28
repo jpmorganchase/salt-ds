@@ -34,21 +34,21 @@ export const Icons: StoryFn<SegmentedButtonGroupProps> = () => {
       {variants.map((variant) => {
         return (
           <SegmentedButtonGroup key={variant}>
-            <Button variant={variant} aria-label="Message">
-              <Tooltip content="Message">
+            <Tooltip content="Message">
+              <Button variant={variant} aria-label="Message">
                 <MessageIcon aria-hidden />
-              </Tooltip>
-            </Button>
-            <Button variant={variant} aria-label="Chat">
-              <Tooltip content="Chat">
+              </Button>
+            </Tooltip>
+            <Tooltip content="Chat">
+              <Button variant={variant} aria-label="Chat">
                 <ChatGroupIcon aria-hidden />
-              </Tooltip>
-            </Button>
-            <Button variant={variant} aria-label="Call">
-              <Tooltip content="Call">
+              </Button>
+            </Tooltip>
+            <Tooltip content="Call">
+              <Button variant={variant} aria-label="Call">
                 <CallIcon aria-hidden />
-              </Tooltip>
-            </Button>
+              </Button>
+            </Tooltip>
           </SegmentedButtonGroup>
         );
       })}
