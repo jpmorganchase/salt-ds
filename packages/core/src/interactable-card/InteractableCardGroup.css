@@ -1,0 +1,6 @@
+.saltInteractableCardGroup {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-200);
+}

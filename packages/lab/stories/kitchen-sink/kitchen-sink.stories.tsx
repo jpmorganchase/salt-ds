@@ -44,10 +44,8 @@ import {
   HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
   HorizontalTextOnly as ToggleButtonGroupHorizontalText,
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
-import {
-  Default as CardDefault,
-  Interactable as InteractableCardStory,
-} from "../../../core/stories/card/card.stories";
+import { Default as CardDefault } from "../../../core/stories/card/card.stories";
+import { Default as InteractableCardStory } from "../../../core/stories/interactable-card/interactable-card.stories";
 import {
   HorizontalGroup as CheckboxHorizontalGroup,
   Error as CheckboxError,
