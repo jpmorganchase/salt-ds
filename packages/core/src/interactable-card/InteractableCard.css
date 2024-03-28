@@ -86,7 +86,7 @@
 .saltInteractableCard-selected,
 .saltInteractableCard:active,
 .saltInteractableCard-active {
-  cursor: var(--salt-selectable-cursor-active);
+  cursor: var(--salt-selectable-cursor-hover);
   border-color: var(--salt-selectable-borderColor-selected);
   --card-accent-color: var(--salt-selectable-foreground-selected);
 }
