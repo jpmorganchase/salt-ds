@@ -13,9 +13,9 @@ const withBaseName = makePrefixer("saltTooltip");
 interface TooltipBaseProps extends Omit<TooltipProps, "children"> {
   arrowProps: FloatingArrowProps;
   /**
-   * A string to determine the status of the Tooltip. Defaults to `info`.
+   * Optional string to determine the status of the Tooltip.
    */
-  status: ValidationStatus;
+  status?: ValidationStatus;
 }
 
 export const TooltipBase = (props: TooltipBaseProps) => {
@@ -29,10 +29,11 @@ export const TooltipBase = (props: TooltipBaseProps) => {
   const { a11yProps } = useFormFieldProps();
 
   const { arrowProps, content, hideArrow, hideIcon, status } = props;
+
   return (
     <>
       <div className={withBaseName("container")}>
-        {!hideIcon && (
+        {!hideIcon && status && (
           <StatusIndicator
             status={status}
             size={1}
