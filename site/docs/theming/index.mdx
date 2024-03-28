@@ -1,0 +1,113 @@
+---
+title: Theming
+layout: DetailTechnical
+sidebar:
+  label: Overview
+  priority: 1
+---
+
+The Salt design system provides styling options to cater for the needs of specific users or use cases. Understanding how Salt structures and manages these styling options will enable you to create a look-and-feel that is compatible with the Salt system.
+
+## What a theme is
+
+A theme is a controlled change (or series of changes) to the design system's default design language. The goal is to change the system's look and feel to better fit with alternative established guidelines.
+
+## When to theme
+
+You can use Salt out-the-box to build digital applications. Theming is not mandatory, but it can help a team to meet project requirements.
+
+Before theming, consider these three questions:
+
+1. Is the default Salt design language unsuitable for my project?
+2. Do I have a set of alternative design guidelines to follow?
+3. Does my project need to follow those guidelines?
+
+If the answer to all three is "yes," theming may be suitable for your project.
+
+<ExampleContainer type="positive" customPillText="Best practice">
+  Use theming when your project needs to follow alternative design guidelines.
+</ExampleContainer>
+
+## How to theme
+
+Theming should aim to maintain a consistent look and feel. Salt is designed to ensure visual consistency, and understanding how Salt achieves this is key to producing consistent themes.
+
+While users can modify individual components to meet their needs, this can create inconsistencies as users have to remember to apply changes where relevant to other components. Salt's tokens make it easier to apply changes while maintaining consistency.
+
+### What a token is
+
+A token stores design decisions. Multiple components can use the same token to ensure a given design decision applies consistently across the design system.
+
+An example of a token is `--salt-status-error-foreground`. This token is used to set the foreground color when a component communicates an error message. That means both `Dialog` and `Toast` can use this token to set the foreground color when necessary.
+
+While a user could change the status foreground color for `Toast`, this wouldn't change the corresponding color for the `Dialog` component. Changing the color associated with the `--salt-status-error-foreground` token ensures that both components, and any others that refer to the token, all use the same color in the given context.
+
+<ExampleContainer type="positive" customPillText="Best practice">
+  When theming, we recommend modifying tokens rather than applying tweaks to
+  each individual component.
+</ExampleContainer>
+
+### Benefits of tokens
+
+Tokens offer several benefits:
+
+- Streamlined design changes that automatically apply to related components
+- Increased consistency across all components, improving the overall user experience
+- Simplified approach when adding new components or patterns
+- Single reference points for commonly-used values
+
+### Which tokens to modify
+
+Salt is under active development, and future versions may modify the token list. Some tokens, however, are less likely to change than others.
+
+Salt's tokens are organized into three tiers. From most generalized to most specific, the tiers are:
+
+1. Foundational tokens
+2. Palette tokens
+3. Characteristic tokens
+
+The characteristic tokens are likely to experience the fewest changes.
+
+<ExampleContainer type="positive" customPillText="Best practice">
+  At this stage in Salt's development, we recommend modifying characteristic
+  tokens.
+</ExampleContainer>
+
+## Token tiers explained
+
+Salt's token tiers indicate the purpose of a token and how it is used in the design system. Tokens can reference each other and inherit values, so a token from one tier can provide information to another.
+
+Take the status characteristic tokens as an example. Components like [`Toast`](/salt/components/toast/examples) use these tokens to denote status using color, such as a green foreground color to denote success.
+
+1. The component uses the `--salt-status-success-foreground` characteristic token. This token has the default value `var(--salt-palette-success-foreground)`.
+2. The characteristic token references the palette token `--salt-palette-success-foreground`. This token has the default value `var(--salt-color-green-400)`.
+3. The palette token references the foundational token `--salt-color-green-400`. This token has the default value `rgb(48, 156, 90)`.
+
+Characteristics are both light/dark and density sensitive. That means the value the characteristic points to will change according to the values given in the nearest `SaltProvider`.
+
+As an example, `--salt-actionable-primary-background` resolves to `var(--salt-palette-interact-primary-background)`. In the light theme, this palette token has the value `var(--salt-color-gray-60)`. In the dark theme, the value is `var(--salt-color-gray-300)`. Foundational tokens then resolve to their respective RGBA values.
+
+## Choose the right token
+
+Generally, the design team should give the characteristics appropriate for the component. To decide which characteristics to use when styling a new component, ask questions like:
+
+- What can the user do with this component? Can they click it, drag it, etc.
+- What state can this component be in? Can it be focused, disabled, etc.
+- What is the purpose of this component? Will it contain other elements, lead the user to a new page, etc.
+- Should this component give feedback? Can it be submitted, does it have a success state, etc.
+
+Just because you have assigned a characteristic to a component, does not mean it consumes _all_ of those characteristics. You can specify which characteristics you want to apply.
+
+A good example of this is the `focused` characteristic, which offers both border and outline styles. You would use the outline token if setting the outline attribute, and the border token if setting the border attribute.
+
+Think carefully when deciding which characteristics are most appropriate. For example, should your component background come from container because that's its general purpose, or should it come from the selectable, since it can be selected? Many characteristics define the same attribute (e.g., background color), and deciding which characteristic your component should use is important. This will ensure consistent styling across your user interface, especially when different themes are applied.
+
+## Token name convention
+
+When defining characteristic design tokens, use the format `--salt-<characteristic name>-<variant>-<attribute>-<state>`
+
+1. Always begin with `--salt-`.
+2. Follow with the foundation name, e.g., `--salt-actionable-`, `--salt-text-`, `--salt-focused-`.
+3. Append the variant if applicable, e.g., `--salt-actionable-cta-`, `--salt-text-h2-`.
+4. Append the attribute, e.g., `--salt-actionable-cta-background`, `--salt-text-h2-fontSize`, `--salt-focused-outlineColor`.
+5. Append the state if applicable, e.g., `--salt-actionable-cta-background-hover`.
