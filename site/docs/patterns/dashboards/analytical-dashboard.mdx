@@ -85,12 +85,15 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
 4. Data grids or tables
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - Use [`Drawer`](../../components/drawer) to display an expandable panel
+
+- Use [`Drawer`](../../components/drawer) to display an expandable panel
   overlaid above a region of your dashboard rather than embedded within the
   existing layout. Users can view additional content without going to a
-  different screen. - Persistently displayed panels should use the west region
+  different screen.
+- Persistently displayed panels should use the west region
   of the border layout instead of a drawer, which can hinder the dashboard user
   experience by hiding key interactive components.
+
 </ExampleContainer>
 
 ### Partially aligned layout
@@ -186,6 +189,7 @@ The main body region contains dashboard modules/widgets and their content.
   src="/img/patterns/dashboards/analytical-dashboard/main-body-region.png"
   alt="Main body region"
   border
+  caption="The main body region of the dashboard."
 />
 
 ### Header region
@@ -196,6 +200,7 @@ The dashboard header sits at the top of the dashboard body, and its content can 
   src="/img/patterns/dashboards/analytical-dashboard/dashboard-header.png"
   alt="Dashboard header"
   border
+  caption="The header region of the dashboard."
 />
 
 ### Fixed panel
@@ -223,6 +228,7 @@ You can use a fixed panel to:
     },
   ]}
   label="Content spacing"
+  caption="A fixed panel with and without spacing."
 />
 
 #### Width
@@ -254,6 +260,7 @@ Use [`Card`](../../components/card) as a container or widget type to position an
     },
   ]}
   label="Content spacing"
+  caption="Cards are a good choice for enablling responsive design."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
@@ -281,6 +288,7 @@ Use the flexibility of the columns in a layout grid to split and arrange cards i
   src="/img/patterns/dashboards/analytical-dashboard/alternative-card-layouts.png"
   alt="Alternative card layouts"
   border
+  caption="Alternative card layouts in action."
 />
 
 ### Key metrics
@@ -301,6 +309,7 @@ Metric bars should remain clean and concise to provide a higher level oversight 
     },
   ]}
   label="Content spacing"
+  caption="A metrics bar within a dashboard."
 />
 
 #### Spacing
