@@ -9,15 +9,19 @@ import {
   CheckboxIcon, Î
   RadioButtonIcon,
 } from "@salt-ds/core";
-import { CreditCardIcon, DiamondIcon, BankIcon } from "@salt-ds/icons";
+import { CreditCardIcon, BankIcon } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
+
+import persona1 from "../assets/avatar.png";
+import persona2 from "../assets/avatar2.png";
+import persona3 from "../assets/avatar3.png";
 
 export default {
   title: "Patterns/Selectable Card",
 } as Meta;
 
-export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
+export const SingleSelection: StoryFn<typeof InteractableCard> = (
   args
 ) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
@@ -57,24 +61,12 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
             </StackLayout>
           </StackLayout>
         </InteractableCard>
-        <InteractableCard value="crypto" style={{ width: "180px" }}>
-          <StackLayout gap={1}>
-            <StackLayout gap={1} direction="row" align="center">
-              <DiamondIcon aria-hidden size={2} />
-              <H3>Cryptocurrency</H3>
-            </StackLayout>
-            <StackLayout direction="row" gap={1}>
-              <RadioButtonIcon aria-hidden checked={selected === "crypto"} />
-              <Text>Link your crypto to your payments account.</Text>
-            </StackLayout>
-          </StackLayout>
-        </InteractableCard>
       </InteractableCardGroup>
     </StackLayout>
   );
 };
 
-export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
+export const MultipleSelection: StoryFn<typeof InteractableCard> = (
   args
 ) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
@@ -89,7 +81,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       <InteractableCard {...args} value="jane-doe" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} />
+            <Avatar aria-hidden size={1} src={persona1} />
             <H3>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -104,7 +96,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       <InteractableCard value="tom-roberts" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} />
+            <Avatar aria-hidden size={1} src={persona2} />
             <H3>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -119,7 +111,7 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
       <InteractableCard value="ray-smith" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <Avatar aria-hidden size={1} />
+            <Avatar aria-hidden size={1} src={persona3} />
             <H3>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
