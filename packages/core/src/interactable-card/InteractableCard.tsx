@@ -25,7 +25,6 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   accent?: "bottom" | "top" | "left" | "right";
   /**
    * @deprecated Use the `accent` prop instead
-   *
    */
   accentPlacement?: "bottom" | "top" | "left" | "right";
   /**
@@ -76,7 +75,8 @@ export const InteractableCard = forwardRef<
 
   const interactableCardGroup = useInteractableCardGroup();
 
-  const interactableCardGroupSelected = interactableCardGroup?.isSelected(value);
+  const interactableCardGroupSelected =
+    interactableCardGroup?.isSelected(value);
 
   const disabled = interactableCardGroup?.disabled || disabledProp;
 
