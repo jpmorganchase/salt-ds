@@ -25,13 +25,13 @@ const defaultDateFormatter = (input: string): string => {
   const date = new Date(input);
   const currentLocale = navigator.languages[0];
 
-  return isInvalidDate(date.toLocaleDateString())
+  return isInvalidDate(input)
     ? input
     : new DateFormatter(currentLocale, {
         day: "2-digit",
         month: "short",
         year: "numeric",
-      }).format(new Date(input));
+      }).format(date);
 };
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
@@ -69,7 +69,7 @@ export interface DateInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * Function to format the input as date.
+   * Function to format the input value.
    */
   dateFormatter?: (input: string) => string;
 }
