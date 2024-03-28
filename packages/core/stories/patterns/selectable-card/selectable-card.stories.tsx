@@ -27,7 +27,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
   return (
     <StackLayout>
       <StackLayout gap={1}>
-        <H3>Payment method</H3>
+        <H3 style={{ margin: 0 }}>Payment method</H3>
         <Text>Choose your payment method from the options below.</Text>
       </StackLayout>
       <InteractableCardGroup
@@ -39,7 +39,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <CreditCardIcon aria-hidden size={2} />
-              <H3>Credit Card</H3>
+              <H3 style={{ margin: 0 }}>Credit Card</H3>
             </StackLayout>
             <StackLayout direction="row" gap={1}>
               <RadioButtonIcon aria-hidden checked={selected === "card"} />
@@ -51,7 +51,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
           <StackLayout gap={1}>
             <StackLayout gap={1} direction="row" align="center">
               <BankIcon aria-hidden size={2} />
-              <H3>Bank wire</H3>
+              <H3 style={{ margin: 0 }}>Bank wire</H3>
             </StackLayout>
             <StackLayout direction="row" gap={1}>
               <RadioButtonIcon aria-hidden checked={selected === "wire"} />
@@ -78,7 +78,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar aria-hidden size={1} src={persona1} />
-            <H3>Jane Doe</H3>
+            <H3 style={{ margin: 0 }}>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <CheckboxIcon
@@ -93,7 +93,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar aria-hidden size={1} src={persona2} />
-            <H3>Tom Roberts</H3>
+            <H3 style={{ margin: 0 }}>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <CheckboxIcon
@@ -108,7 +108,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
             <Avatar aria-hidden size={1} src={persona3} />
-            <H3>Ray Smith</H3>
+            <H3 style={{ margin: 0 }}>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <CheckboxIcon
