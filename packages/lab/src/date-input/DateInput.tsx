@@ -23,11 +23,10 @@ const isInvalidDate = (value: string) =>
 
 const defaultDateFormatter = (input: string): string => {
   const date = new Date(input);
-  const currentLocale = navigator.languages[0];
 
   return isInvalidDate(input)
     ? input
-    : new DateFormatter(currentLocale, {
+    : new DateFormatter('EN-GB', {
         day: "2-digit",
         month: "short",
         year: "numeric",
