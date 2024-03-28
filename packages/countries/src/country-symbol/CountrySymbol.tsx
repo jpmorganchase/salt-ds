@@ -33,6 +33,7 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
       className,
       size = DEFAULT_COUNTRY_SYMBOL_SIZE,
       style: styleProp,
+      variant = "default",
       ...rest
     },
     ref
@@ -47,6 +48,7 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
     const style = {
       ...styleProp,
       "--saltCountrySymbol-size-multiplier": `${size}`,
+      borderRadius: variant === "sharp" ? 0 : "50%",
     };
 
     return (
