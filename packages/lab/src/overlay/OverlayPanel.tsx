@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, ComponentPropsWithoutRef } from "react";
+import { ForwardedRef, forwardRef, HTMLAttributes, ReactNode } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
@@ -8,8 +8,12 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import overlayPanelCss from "./OverlayPanel.css";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
-
-export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
+export interface OverlayPanelProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * The content of Overlay Panel
+   */
+  children?: ReactNode;
+}
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
