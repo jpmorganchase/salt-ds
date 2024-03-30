@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -15,16 +15,27 @@ import {
   StackLayout,
   Drawer,
   DrawerCloseButton,
+  ComboBox,
+  Option,
+  DrawerProps,
 } from "@salt-ds/core";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
-import { Meta } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Drawer",
   component: Drawer,
 } as Meta<typeof Drawer>;
 
-export const Default = ({ position = "left", ...args }) => {
+const UnmountLogger = () => {
+  useEffect(() => {
+    return () => {
+      console.log(new Date().getTime(), "Dummy unmount");
+    };
+  }, []);
+  return null;
+};
+
+export const Default: StoryFn<DrawerProps> = (args) => {
   const [openPrimary, setOpenPrimary] = useState(false);
   const [openSecondary, setOpenSecondary] = useState(false);
 
@@ -32,17 +43,20 @@ export const Default = ({ position = "left", ...args }) => {
     <StackLayout>
       <Button onClick={() => setOpenPrimary(true)}>Open Primary Drawer</Button>
       <Drawer
+        {...args}
         open={openPrimary}
         onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
         id="primary"
         style={{ width: 200 }}
       >
         <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        <UnmountLogger />
       </Drawer>
       <Button onClick={() => setOpenSecondary(true)}>
         Open Secondary Drawer
       </Button>
       <Drawer
+        {...args}
         open={openSecondary}
         onOpenChange={(newOpen) => setOpenSecondary(newOpen)}
         variant="secondary"
@@ -55,7 +69,7 @@ export const Default = ({ position = "left", ...args }) => {
   );
 };
 
-export const Position = ({ position = "left", ...args }) => {
+export const Position: StoryFn<DrawerProps> = (args) => {
   const [openLeft, setOpenLeft] = useState(false);
   const [openRight, setOpenRight] = useState(false);
   const [openTop, setOpenTop] = useState(false);
@@ -65,6 +79,7 @@ export const Position = ({ position = "left", ...args }) => {
     <StackLayout>
       <Button onClick={() => setOpenLeft(true)}>Open Left Drawer</Button>
       <Drawer
+        {...args}
         open={openLeft}
         onOpenChange={(newOpen) => setOpenLeft(newOpen)}
         id="left-drawer"
@@ -74,6 +89,7 @@ export const Position = ({ position = "left", ...args }) => {
       </Drawer>
       <Button onClick={() => setOpenRight(true)}>Open Right Drawer</Button>
       <Drawer
+        {...args}
         open={openRight}
         onOpenChange={(newOpen) => setOpenRight(newOpen)}
         position="right"
@@ -84,6 +100,7 @@ export const Position = ({ position = "left", ...args }) => {
       </Drawer>
       <Button onClick={() => setOpenTop(true)}>Open Top Drawer</Button>
       <Drawer
+        {...args}
         open={openTop}
         onOpenChange={(newOpen) => setOpenTop(newOpen)}
         position="top"
@@ -94,6 +111,7 @@ export const Position = ({ position = "left", ...args }) => {
       </Drawer>
       <Button onClick={() => setOpenBottom(true)}>Open Bottom Drawer</Button>
       <Drawer
+        {...args}
         open={openBottom}
         onOpenChange={(newOpen) => setOpenBottom(newOpen)}
         position="bottom"
@@ -318,7 +336,7 @@ export const OptionalCloseAction = () => {
           </FormField>
           <FormField>
             <FormFieldLabel>Postcode</FormFieldLabel>
-            <ComboBoxNext
+            <ComboBox
               onChange={handleChange}
               onSelectionChange={handleSelectionChange}
               value={value}
@@ -329,7 +347,7 @@ export const OptionalCloseAction = () => {
                   {postcode}
                 </Option>
               ))}
-            </ComboBoxNext>
+            </ComboBox>
             <FormFieldHelperText>Do not include space</FormFieldHelperText>
           </FormField>
           <FormField>

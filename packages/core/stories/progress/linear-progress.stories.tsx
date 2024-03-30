@@ -39,6 +39,26 @@ const ProgressWithControls = ({
     </div>
   );
 };
+const ProgressBufferWithControls = ({
+  ProgressComponent: Progress,
+}: ProgressWithControlsProps) => {
+  const { handleReset, handleStart, handleStop, isProgressing, value } =
+    useProgressingValue();
+  return (
+    <div className="root">
+      <FlowLayout className="controls" gap={1}>
+        <Button disabled={isProgressing} onClick={handleStart}>
+          Start
+        </Button>
+        <Button disabled={!isProgressing} onClick={handleStop}>
+          Stop
+        </Button>
+        <Button onClick={handleReset}>Reset</Button>
+      </FlowLayout>
+      <Progress aria-label="Download" bufferValue={value} />
+    </div>
+  );
+};
 
 export const Default: StoryFn<typeof LinearProgress> = (args) => (
   <LinearProgress aria-label="Download" {...args} />
@@ -46,17 +66,28 @@ export const Default: StoryFn<typeof LinearProgress> = (args) => (
 Default.args = {
   value: 38,
 };
-export const HideLabel: StoryFn<typeof LinearProgress> = () => (
-  <LinearProgress aria-label="Download" value={38} hideLabel />
-);
-
-export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
-  <ProgressWithControls ProgressComponent={LinearProgress} />
-);
+export const HideLabel = Default.bind({});
+HideLabel.args = {
+  hideLabel: true,
+  value: 38,
+};
+export const WithBuffer = Default.bind({});
+WithBuffer.args = {
+  value: 38,
+  bufferValue: 60,
+};
 
 export const MaxValue: StoryFn<typeof LinearProgress> = () => (
   <StackLayout>
     <h3 style={{ textAlign: "center" }}> max = 500, value = 250</h3>
     <LinearProgress aria-label="Download" value={250} max={500} />
   </StackLayout>
+);
+
+export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
+  <ProgressWithControls ProgressComponent={LinearProgress} />
+);
+
+export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
+  <ProgressBufferWithControls ProgressComponent={LinearProgress} />
 );

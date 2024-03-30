@@ -1,6 +1,11 @@
 import { ChangeEvent } from "react";
 
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  OverlayPanelContent,
+} from "@salt-ds/lab";
 import { Button, CheckboxGroup, Checkbox, useId } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
@@ -105,24 +110,17 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 };
 
 export const WithActions = () => {
-  const [show, setShow] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const id = useId();
 
+  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
+
   return (
-    <Overlay
-      open={show}
-      onClose={() => {
-        setShow(false);
-      }}
-      onKeyDown={(event) => {
-        event.key === "Escape" && setShow(false);
-      }}
-      placement="bottom"
-    >
+    <Overlay open={open} onOpenChange={onOpenChange} placement="bottom">
       <OverlayTrigger>
         <Button
           onClick={() => {
-            setShow(true);
+            setOpen(true);
           }}
         >
           Show Overlay
@@ -134,12 +132,14 @@ export const WithActions = () => {
         }}
         aria-labelledby={id}
       >
-        <WithActionsContent
-          id={id}
-          onClose={() => {
-            setShow(false);
-          }}
-        />
+        <OverlayPanelContent>
+          <WithActionsContent
+            id={id}
+            onClose={() => {
+              setOpen(false);
+            }}
+          />
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

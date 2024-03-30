@@ -1,5 +1,122 @@
 # @salt-ds/core
 
+## 1.22.0
+
+### Minor Changes
+
+- 04743a73: `Text` has a new variant: `Code`. See [Text component](/salt/components/text) for more information.
+
+  ```tsx
+  <>
+    <Code>Code text</Code>
+    <Text as="code">Text styled as code</Text>
+    <Text styleAs="code">Text styled as code</Text>
+  </>
+  ```
+
+### Patch Changes
+
+- 871585ac: Fixed `DialogHeader` not forwarding refs.
+- 1b3e393a: Fixed Drawer children being unmounted twice unexpectedly when closing
+
+## 1.21.0
+
+### Minor Changes
+
+- 53a7f22c: Added `Dropdown`, `Option`, `OptionGroup` and `ComboBox`.
+
+  **Note:** These were `DropdownNext` and `ComboBoxNext` in lab.
+
+  ```tsx
+  <Dropdown aria-label="Colors">
+    <OptionGroup label="Primary">
+      <Option value="Red" />
+      <Option value="Blue" />
+    </OptionGroup>
+    <OptionGroup label="Other">
+      <Option value="Pink" />
+    </OptionGroup>
+  </Dropdown>
+  ```
+
+  ```tsx
+  <ComboBox aria-label="Colors">
+    <OptionGroup label="Primary">
+      <Option value="Red" />
+      <Option value="Blue" />
+    </OptionGroup>
+    <OptionGroup label="Other">
+      <Option value="Pink" />
+    </OptionGroup>
+  </ComboBox>
+  ```
+
+- 9960fe8a: Added `bufferValue` to linear and circular progress.
+  Updated linear and circular progress track token to use `--salt-size-bar` in order to improve density scale.
+
+### Patch Changes
+
+- d1e4f78a: Added export for DialogHeaderProps
+
+  ```ts
+  import { DialogHeaderProps } from "@salt-ds/core";
+  ```
+
+- 53a7f22c: Fix ComboBox and Dropdown's list appearing below other elements.
+
+## 1.20.0
+
+### Minor Changes
+
+- ff69de19: Add `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` to core
+
+  ```tsx
+  export const Dialog = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+    const id = useId();
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+          Open default dialog
+        </Button>
+        <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+          <DialogHeader header="Terms and conditions" />
+          <DialogContent>Dialog Content</DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Accept
+            </Button>
+          </DialogActions>
+          <DialogCloseButton onClick={handleClose} />
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 6c414eae: Allowed Tooltip to flip to any axis when space is limited. Previously, it was limited to flipping horizontally.
+- 2d3fb09e: Add `box-sizing: border-box` to:
+
+  - Multiline input
+  - Navigation item
+  - Panel
+
 ## 1.19.0
 
 ### Minor Changes

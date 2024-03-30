@@ -1,0 +1,22 @@
+.saltOptionList {
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  overflow: hidden;
+  overflow-y: auto;
+  position: relative;
+  z-index: var(--salt-zIndex-flyover);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
+}
+
+.saltOptionList-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-border);
+  max-height: inherit;
+  min-height: inherit;
+}
+
+.saltOptionList-collapsed {
+  display: none;
+}

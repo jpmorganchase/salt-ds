@@ -165,6 +165,11 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/list-builder</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>https://www.saltdesignsystem.com/salt/patterns/metric</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
@@ -176,6 +181,16 @@
 	</url>
 	<url>
 		<loc>https://www.saltdesignsystem.com/salt/patterns/preferences-dialog</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/selectable-card</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/vertical-navigation</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>
@@ -1135,6 +1150,11 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>https://www.saltdesignsystem.com/salt/foundations/fragments/feedback</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>https://www.saltdesignsystem.com/salt/getting-started/designing/index</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
@@ -1151,6 +1171,11 @@
 	</url>
 	<url>
 		<loc>https://www.saltdesignsystem.com/salt/patterns/dashboards/index</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/fragments/feedback</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>

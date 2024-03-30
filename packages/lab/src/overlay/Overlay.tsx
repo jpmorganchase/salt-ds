@@ -1,12 +1,6 @@
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  SyntheticEvent,
-  useMemo,
-  useRef,
-} from "react";
+import { ComponentPropsWithoutRef, useMemo, useRef } from "react";
 import { OverlayContext } from "./OverlayContext";
-import { useControlled, useFloatingUI, useId } from "@salt-ds/core";
+import { useControlled, useFloatingUI } from "@salt-ds/core";
 import {
   flip,
   offset,
@@ -20,52 +14,44 @@ import {
 } from "@floating-ui/react";
 
 export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Display or hide the component.
+   */
   open?: boolean;
-  onOpenChange?: (event: SyntheticEvent, newOpen: boolean) => void;
+  /**
+   * Callback function triggered when open state changes.
+   */
+  onOpenChange?: (open: boolean) => void;
   /*
    * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
    */
   placement?: "top" | "bottom" | "left" | "right";
-  /*
-   * Use in controlled version to close Overlay.
-   */
-  onClose?: (event: SyntheticEvent) => void;
 }
 
-export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
-  function Overlay(props, ref) {
-    const {
-      children,
-      open,
-      onOpenChange,
-      placement: placementProp = "top",
-      id: idProp,
-      onClose,
-      ...rest
-    } = props;
+export const Overlay = ({
+  children,
+  open,
+  onOpenChange,
+  placement: placementProp = "top",
+}: OverlayProps) => {
+  const arrowRef = useRef<SVGSVGElement | null>(null);
 
-    const id = useId(idProp);
-    const arrowRef = useRef<SVGSVGElement | null>(null);
+  const [openState, setOpenState] = useControlled({
+    controlled: open,
+    default: false,
+    name: "Overlay",
+    state: "open",
+  });
 
-    const [openState, setOpenState] = useControlled({
-      controlled: open,
-      default: false,
-      name: "Overlay",
-      state: "open",
-    });
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpenState(newOpen);
+    onOpenChange?.(newOpen);
+  };
 
-    const {
-      x,
-      y,
-      strategy,
-      context,
-      elements,
-      floating,
-      reference,
-      placement,
-    } = useFloatingUI({
+  const { x, y, strategy, context, elements, floating, reference } =
+    useFloatingUI({
       open: openState,
-      onOpenChange: setOpenState,
+      onOpenChange: handleOpenChange,
       placement: placementProp,
       middleware: [
         offset(11),
@@ -75,58 +61,41 @@ export const Overlay = forwardRef<HTMLDivElement, OverlayProps>(
       ],
     });
 
-    const { getReferenceProps, getFloatingProps } = useInteractions([
-      useRole(context, { role: "dialog" }),
-      useClick(context),
-      useDismiss(context),
-    ]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useRole(context, { role: "dialog" }),
+    useClick(context),
+    useDismiss(context),
+  ]);
 
-    const floatingStyles = useMemo(() => {
-      return {
-        top: y ?? 0,
-        left: x ?? 0,
-        position: strategy,
-        width: elements.floating?.offsetWidth,
-        height: elements.floating?.offsetHeight,
-      };
-    }, [elements.floating, strategy, x, y]);
-
-    const setOpen = (event: SyntheticEvent, newOpen: boolean) => {
-      setOpenState(newOpen);
-      onOpenChange?.(event, newOpen);
+  const floatingStyles = useMemo(() => {
+    return {
+      top: y ?? 0,
+      left: x ?? 0,
+      position: strategy,
+      width: elements.floating?.offsetWidth,
+      height: elements.floating?.offsetHeight,
     };
+  }, [elements.floating, strategy, x, y]);
 
-    const arrowProps = {
-      ref: arrowRef,
-      context,
-    };
+  const arrowProps = {
+    ref: arrowRef,
+    context,
+  };
 
-    const handleCloseButton = (event: SyntheticEvent) => {
-      setOpen(event, false);
-      onClose?.(event);
-    };
-
-    return (
-      <OverlayContext.Provider
-        value={{
-          id: id ?? "",
-          openState,
-          setOpen,
-          floatingStyles,
-          placement,
-          context,
-          arrowProps,
-          floating,
-          reference,
-          handleCloseButton,
-          getFloatingProps,
-          getReferenceProps,
-        }}
-      >
-        <div ref={ref} {...rest}>
-          {children}
-        </div>
-      </OverlayContext.Provider>
-    );
-  }
-);
+  return (
+    <OverlayContext.Provider
+      value={{
+        openState,
+        floatingStyles,
+        context,
+        arrowProps,
+        floating,
+        reference,
+        getFloatingProps,
+        getReferenceProps,
+      }}
+    >
+      {children}
+    </OverlayContext.Provider>
+  );
+};
