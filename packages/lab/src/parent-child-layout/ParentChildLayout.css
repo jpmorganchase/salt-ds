@@ -1,21 +1,28 @@
 .saltParentChildLayout {
-  /* overflow: hidden; */
   display: flex;
-  background-color: pink;
-}
-
-.saltParentChildLayout-collapsed {
-  flex-grow: 2;
 }
 
 .saltParentChildLayout-child {
+  flex-grow: 1
+}
+
+
+.saltParentChildLayout-collapsed {
+  width: 100%;
+}
+
+
+.saltParentChildLayout-childAnimation {
   animation: var(--salt-animation-slide-in-right);
 }
 
-.saltParentChildLayout-parent {
+.saltParentChildLayout-parentAnimation {
   animation: var(--salt-animation-slide-in-left);
 }
 
+
+/* Check that this is working  */
+/* I think reduce animation should be fade in not disableing animation  */
 @media (prefers-reduced-motion) {
   .reduced-motion .saltParentChildLayout-parent {
     animation: none;

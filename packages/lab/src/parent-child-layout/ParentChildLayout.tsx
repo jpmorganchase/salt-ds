@@ -48,6 +48,7 @@ export const ParentChildLayout = forwardRef<
     collapseChildElement,
     parent,
     child,
+    disableAnimations,
     className,
     onCollapseChange,
     ...rest
@@ -71,36 +72,21 @@ export const ParentChildLayout = forwardRef<
     <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
       {isCollapsed ? (
         <div
-          className={clsx(
-            {
-              [withBaseName("parent")]: collapseChildElement,
-            },
-            { [withBaseName("child")]: !collapseChildElement },
-            { [withBaseName("collapsed")]: isCollapsed }
-          )}
+          className={clsx({
+            [withBaseName("collapsed")]: isCollapsed,
+            [withBaseName("childAnimation")]:
+              !collapseChildElement && !disableAnimations,
+            [withBaseName("parentAnimation")]:
+              collapseChildElement && !disableAnimations,
+          })}
         >
           {isCollapsed && collapseChildElement ? parent : child}
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            flexFlow: "row wrap",
-            alignItems: "stretch",
-            width: "100%",
-            // height: "100%",
-          }}
-        >
-          <div style={{ flexGrow: 1 }}>{parent}</div>
-          <div
-            style={{
-              flexGrow: 2,
-            }}
-          >
-            {child}
-          </div>
-        </div>
+        <>
+          <div>{parent}</div>
+          <div className={withBaseName("child")}>{child}</div>
+        </>
       )}
     </div>
   );

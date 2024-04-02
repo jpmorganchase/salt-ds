@@ -1,8 +1,5 @@
 .parent-child-layout {
-  width: 20vw;
-  max-width: 250px;
-  height: 200px;
-  background-color: orange;
+  width: 500px;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
@@ -12,7 +9,6 @@
   justify-content: center;
   align-items: center;
   min-width: 85px;
-  height: 100%;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
@@ -21,11 +17,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
-/* nav {
+ nav {
   position: relative;
   min-width: 160px;
 }
@@ -38,7 +33,7 @@ ul {
 
 h2 {
   margin: 0;
-} */
+} 
 
 /* .parent-child-composite-container .saltParentChildLayout {
   width: 545px;
