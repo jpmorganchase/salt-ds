@@ -4,55 +4,72 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import IstanbulPlugin from "vite-plugin-istanbul";
 import { isCI } from "ci-info";
 import path from "path";
-import { mergeConfig, UserConfig } from "vite";
+import { UserConfig } from "vite";
 import { version as reactVersion } from "react";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
 import { cssInline } from "css-inline-plugin";
 
-let viteConfig: UserConfig = {
-  plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
-  define: {
-    "process.env": {},
-  },
-  server: {
-    watch: {
-      ignored: ["**/coverage"],
+async function getViteConfig(config: UserConfig) {
+  const { mergeConfig } = await import("vite");
+  let viteConfig: UserConfig = {
+    plugins: [react(), tsconfigPaths(), IstanbulPlugin(), cssInline()],
+    define: {
+      "process.env": {},
     },
-  },
-  build: {
-    sourcemap: true,
-  },
-  resolve: {
-    alias: {
-      "cypress/react18": reactVersion.startsWith("18")
-        ? "cypress/react18"
-        : "cypress/react",
-    },
-  },
-};
-if (isCI) {
-  viteConfig = mergeConfig(viteConfig, {
-    resolve: {
-      alias: {
-        "@salt-ds/core": path.resolve(__dirname, "./dist/salt-ds-core"),
-        "@salt-ds/data-grid": path.resolve(
-          __dirname,
-          "./dist/salt-ds-data-grid"
-        ),
-        "@salt-ds/lab": path.resolve(__dirname, "./dist/salt-ds-lab"),
-        "@salt-ds/icons": path.resolve(__dirname, "./dist/salt-ds-icons"),
+    server: {
+      watch: {
+        ignored: ["**/coverage"],
       },
     },
-    optimizeDeps: {
-      include: [
-        "@salt-ds/core",
-        "@salt-ds/data-grid",
-        "@salt-ds/lab",
-        "@salt-ds/icons",
-      ],
+    build: {
+      sourcemap: true,
     },
-  } as UserConfig);
+    resolve: {
+      alias: {
+        "cypress/react18": reactVersion.startsWith("18")
+          ? "cypress/react18"
+          : "cypress/react",
+      },
+    },
+  };
+
+  if (reactVersion.startsWith("16") || reactVersion.startsWith("17")) {
+    viteConfig = mergeConfig(viteConfig, {
+      resolve: {
+        alias: {
+          "@storybook/react-dom-shim":
+            "@storybook/react-dom-shim/dist/react-16",
+        },
+      },
+    });
+  }
+
+  if (isCI) {
+    viteConfig = mergeConfig(viteConfig, {
+      resolve: {
+        alias: {
+          "@salt-ds/core": path.resolve(__dirname, "./dist/salt-ds-core"),
+          "@salt-ds/data-grid": path.resolve(
+            __dirname,
+            "./dist/salt-ds-data-grid"
+          ),
+          "@salt-ds/lab": path.resolve(__dirname, "./dist/salt-ds-lab"),
+          "@salt-ds/icons": path.resolve(__dirname, "./dist/salt-ds-icons"),
+        },
+      },
+      optimizeDeps: {
+        include: [
+          "@salt-ds/core",
+          "@salt-ds/data-grid",
+          "@salt-ds/lab",
+          "@salt-ds/icons",
+        ],
+      },
+    } as UserConfig);
+  }
+
+  return mergeConfig(config, viteConfig);
 }
 
 export default defineConfig({
@@ -75,7 +92,7 @@ export default defineConfig({
     devServer: {
       framework: "react",
       bundler: "vite",
-      viteConfig,
+      viteConfig: getViteConfig,
     },
     specPattern: "packages/**/src/**/*.cy.{js,ts,jsx,tsx}",
   },
