@@ -4,7 +4,7 @@
   --salt-size-base: 20px;
   --salt-size-border: 1px;
   --salt-size-icon: 10px;
-  --salt-size-indicator: 1px;
+  --salt-size-indicator: 2px;
   --salt-size-selectable: 12px;
   --salt-size-bar-strong: 4px;
   --salt-size-bar-small: 2px;
@@ -17,7 +17,7 @@
   --salt-size-base: 28px;
   --salt-size-border: 1px;
   --salt-size-icon: 12px;
-  --salt-size-indicator: 2px;
+  --salt-size-indicator: 3px;
   --salt-size-selectable: 14px;
   --salt-size-bar-strong: 8px;
   --salt-size-bar-small: 2px;
@@ -30,7 +30,7 @@
   --salt-size-base: 36px;
   --salt-size-border: 1px;
   --salt-size-icon: 14px;
-  --salt-size-indicator: 3px;
+  --salt-size-indicator: 4px;
   --salt-size-selectable: 16px;
   --salt-size-bar-strong: 12px;
   --salt-size-bar-small: 2px;
@@ -43,7 +43,7 @@
   --salt-size-base: 44px;
   --salt-size-border: 1px;
   --salt-size-icon: 16px;
-  --salt-size-indicator: 4px;
+  --salt-size-indicator: 5px;
   --salt-size-selectable: 18px;
   --salt-size-bar-strong: 16px;
   --salt-size-bar-small: 2px;
