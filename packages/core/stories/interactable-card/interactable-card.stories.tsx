@@ -26,7 +26,7 @@ export default {
 } as Meta<typeof InteractableCard>;
 
 export const Default: StoryFn<typeof InteractableCard> = (args) => (
-  <InteractableCard {...args} {...args} style={{ width: "256px" }}>
+  <InteractableCard {...args} style={{ width: "256px" }}>
     <StackLayout gap={1}>
       <H3>Sustainable investing products</H3>
       <Text>
