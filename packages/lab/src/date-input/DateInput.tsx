@@ -26,7 +26,7 @@ const defaultDateFormatter = (input: string): string => {
 
   return isInvalidDate(input)
     ? input
-    : new DateFormatter('EN-GB', {
+    : new DateFormatter("EN-GB", {
         day: "2-digit",
         month: "short",
         year: "numeric",
