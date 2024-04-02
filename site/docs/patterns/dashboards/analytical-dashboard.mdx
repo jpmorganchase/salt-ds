@@ -24,6 +24,20 @@ The mock-ups displayed in this pattern are available as [templates](https://www.
   alt="Example showing an analytical dashboard"
 />
 
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/hero_shot_light.png",
+      alt: "Example showing an analytical dashboard",
+    },
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/hero_shot_dark.png",
+      alt: "Example showing an analytical dashboard",
+    },
+  ]}
+  label="Dark mode"
+/>
+
 ## When to use
 
 Use an analytical dashboard to visually represent data that provide insights and analysis of key metrics and performance indicators. Combine various data sources and present information in a concise and interactive format using charts, graphs, tables and other visual elements.
@@ -36,90 +50,103 @@ Using an analytical dashboard helps present complex data in a visually organized
 - Investment analysis.
 - Client reporting.
 
-## Key features
+## How to build
+
+### Anatomy
 
 Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain an effective visual hierarchy.
 
-- **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
-- **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, dropdown menus, checkboxes and search bars.
-- **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
+1. **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
+2. **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, dropdown menus, checkboxes and search bars.
+3. **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
+4. **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
+
+Other features typically found in an analytical dashboard include:
+
 - **Data grid**: Provide tabular views of data for more detailed analysis. Allow users to sort, search and paginate through the data efficiently.
 - **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
-- **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
 - **Text**: Clearly display information about the data sources, update frequency and any disclaimers related to data accuracy.
 
-### Layout features
+<Diagram
+  src="/img/patterns/dashboards/analytical-dashboard/dashboard_anatomy.png"
+  alt="Dashboard anatomy"
+  border
+/>
+
+### Dashboard layout
+
+Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
+
+The following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
 
 - [`BorderLayout`](../../components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
 - [`FlowLayout`](../../components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
 - [`StackLayout`](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
-- `Tabs`: Use to organize and categorize dashboard widgets into local groupings.
+- [`Tabs`](../../components/tabs): Use to organize and categorize dashboard widgets into local groupings. You can also organize content into multiple dashboards using tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information.
+- [`GridLayout`](../../components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard.
 
-## Additional features
+<Diagram
+  src="/img/patterns/dashboards/analytical-dashboard/dashboard_layout.png"
+  alt="Dashboard layout"
+  border
+/>
 
-Below are other features worth considering depending on the specific use case of the dashboard:
+Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
 
-- **Multiple dashboards and tabs**: Organize content into multiple dashboards or tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information at once.
-- **Responsive design**: Ensure that the dashboard is responsive and can adapt to different viewport sizes and devices. Use the [`GridLayout` component](../../components/grid-layout) to manage the layout and responsiveness of the main content area in your dashboard.
+<Diagram
+  src="/img/patterns/dashboards/analytical-dashboard/f-pattern_reading_order.png"
+  alt="F-Pattern reading order"
+  border
+/>
 
-## Basic dashboard
+When considering the visual hierarchy of an analytical dashboard, ensure the most important widgets on the page draw the user's attention. This varies per dashboard but can include the following:
 
-The following guidance explains how to lay out your own dashboard using [Salt foundations](/salt/foundations/index). Use this to understand how to apply spacing to create a consistent visual rhythm within your designs.
+1. Header
+2. Key metrics
+3. Charts and graphs
+4. Data grids or tables
 
-## Layout grid
+<ExampleContainer type="positive" customPillText="Best practices">
 
-Salt provides layout grids as a starting point for designing any user interface that achieves effective alignment and consistency for your dashboard design. View the [Salt Layout Grid library](<https://www.figma.com/file/Qun1kdSvMhq3gk9Bo6dOrC/Salt%3A-Layout-Grid-(Community)?type=design&node-id=16-3068&mode=design&t=l9ZRR3WVCS4BuHZA-0>) for grid templates across different densities.
+- Use [`Drawer`](../../components/drawer) to display an expandable panel
+  overlaid above a region of your dashboard rather than embedded within the
+  existing layout. Users can view additional content without going to a
+  different screen.
+- Persistently displayed panels should use the west region
+  of the border layout instead of a drawer, which can hinder the dashboard user
+  experience by hiding key interactive components.
 
-The grid you apply on a dashboard should reflect intent for experience and how you expect the application to behave. It’s the designers’ responsibility to decide which regions should align to the grid:
+</ExampleContainer>
 
-1. Partially aligned
-2. Fully aligned
+### Partially aligned layout
 
-For this pattern, the following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
-
-### Partially aligned
-
-The main body of the dashboard aligns to a layout grid and combines with surrounding fixed-width panels.
+In a partially aligned layout, the main body of the dashboard aligns to a layout grid and combines with surrounding fixed-width panels.
 
 If your dashboard is responsive, the main body region will dynamically resize at different breakpoints. The fixed panel remains the same when the user resizes the viewport, but you can set it to the width of your choice based on desired outcome. Consider the different content types, density and target screen size when making your decision.
 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-partially-aligned.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_partially_aligned.png",
       alt: "Partially aligned dashboard without layout grid in main body region",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-partially-aligned-layout-grid.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_partially_aligned_layout_grid.png",
       alt: "Partially aligned dashboard with layout grid in main body region",
     },
   ]}
   label="Layout grid"
 />
 
-#### Example of a responsive main body
-
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/responsive-main-body-1.png"
+  src="/img/patterns/dashboards/analytical-dashboard/responsive_main_body.png"
   alt="Example showing a responsive main body"
   border
 />
 
-<Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/responsive-main-body-2.png"
-  alt="Example showing a responsive main body"
-  border
-/>
+### Fully aligned layout
 
-<Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/responsive-main-body-3.png"
-  alt="Example showing a responsive main body"
-  border
-/>
-
-### Fully aligned
-
-The main body of the dashboard and surrounding panels all align to a layout grid.
+In a fully aligned layout, the main body of the dashboard and surrounding panels all align to a layout grid.
 
 If your experience is responsive, use the underlying layout grid to set a minimum width for your surrounding panels and adjust your content area based on your predefined breakpoints.
 
@@ -130,11 +157,11 @@ In the following example, the panel width aligns to the first two columns of the
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-fully-aligned.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_fully_aligned.png",
       alt: "Fully aligned dashboard without layout grid",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-fully-aligned-layout-grid.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_fully_aligned_layout_grid.png",
       alt: "Fully aligned dashboard with layout grid",
     },
   ]}
@@ -152,133 +179,39 @@ From a high-level overview, the main content regions of an analytical dashboard 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-regions.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_regions.png",
       alt: "Dashboard regions",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/dashboard-regions-breakdown.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/dashboard_regions_breakdown.png",
       alt: "Dashboard regions with visual hierarchy breakdown",
     },
   ]}
   label="Visual hierarchy breakdown"
+  caption="Dashboard regions."
 />
-
-### F-Pattern reading order
-
-Use the F-shaped pattern to guide the user’s focus through the most important widgets on the dashboard. This supports efficient discoverability of elements such as the dashboard’s global controls.
-
-<Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/fpattern-reading-order.png"
-  alt="F-Pattern reading order"
-  border
-/>
-
-When considering the visual hierarchy of an analytical dashboard, ensure the most important widgets on the page draw the user's attention. This varies per dashboard but can include the following:
-
-1. Header
-2. Key metrics
-3. Charts and graphs
-4. Data grids or tables
-
-<ExampleContainer type="positive" customPillText="Best practices">
-
-- Use the [`BorderLayout`](../../components/border-layout) component to manage the top-level layout of your dashboard.
-- Use the [`Drawer`](../../components/drawer) component to display an expandable panel overlaid above a region of your dashboard rather than embedded within the existing layout. Users can view additional content without going to a different screen.
-- Persistently displayed panels should use the west region of the border layout instead of a drawer, which can hinder the dashboard user experience by hiding key interactive components.
-
-</ExampleContainer>
 
 ### Main body region
 
 The main body region contains dashboard modules/widgets and their content.
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/main-body-region.png"
+  src="/img/patterns/dashboards/analytical-dashboard/main_body_region.png"
   alt="Main body region"
   border
+  caption="The main body region of the dashboard."
 />
 
-### Content modules
-
-Use the [`Card` component](../../components/card) as a container or widget type to position and convey forms of data, such as charts and grids, within the main body of the dashboard. You can easily arrange and manipulate Cards—they're a good choice for a responsive design as you can easily scale them.
-
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/dashboards/analytical-dashboard/content-modules.png",
-      alt: "Content modules",
-    },
-    {
-      src: "/img/patterns/dashboards/analytical-dashboard/content-modules-with-spacing.png",
-      alt: "Content modules with spacing",
-    },
-  ]}
-  label="Content spacing"
-/>
-
-#### Spacing
-
-- As default, use `--salt-spacing-300` between content modules such as cards to promote readability.
-- The default padding between modules is `spacing-300`. Depending on the needs and business context of the dashboard, you can change this spacing token if your dashboard needs to display more or less content. View the [spacing foundation](/salt/foundations/spacing) for further guidance.
-
-#### Context
-
-- Group contextually related content together where possible.
-- Order modules from level of priority—which data would the dashboard user consider to be primary vs. secondary?
-- Keep the layout content within individual cards as consistent as possible across the dashboard. This supports scalability, especially if main components anchor to familiar locations within a card.
-
-#### Styling
-
-- We recommend you style cards with the `--salt-container-primary-background` token, and the application with the `--salt-container-secondary-background` token. This is the most effective way to present data, as it provides the highest contrast between visualizations and their immediate backgrounds.
-- _(J.P. Morgan employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on data visualization, where you can find further information on presenting data in a visually cohesive manner. We recommend using the categorical color palette within your dashboard design, as it’s ideal for visualizing distinct groups of items.
-
-#### Alternative card layouts
-
-Depending on the amount of data that the user needs to see at once, you can arrange content modules in various layouts alongside common dashboard features, such as fixed panels and key metrics. However, it’s important to not overwhelm users with data; otherwise, it will be hard for them to focus and get a clear overview.
-
-Use the flexibility of the columns in a layout grid to split and arrange cards in various horizontal alignments.
-
-<Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/alternative-card-layouts.png"
-  alt="Alternative card layouts"
-  border
-/>
-
-### Dashboard header
+### Header region
 
 The dashboard header sits at the top of the dashboard body, and its content can be flexible in use. For example, a header can introduce the context of the dashboard, contain information about the latest dashboard update or display personalized user information.
 
 <Diagram
-  src="/img/patterns/dashboards/analytical-dashboard/dashboard-header.png"
+  src="/img/patterns/dashboards/analytical-dashboard/dashboard_header.png"
   alt="Dashboard header"
   border
+  caption="The header region of the dashboard."
 />
-
-### Key metrics
-
-A metrics bar is a common example of a dashboard module. It’s a flexible structural attribute that allows highlighting broader level metrics to help provide the user with additional context. It's often positioned horizontally higher up on a dashboard to further emphasize the metrics' importance.
-
-Metric bars should remain clean and concise to provide a higher level oversight of information. Try to adhere to the [Law of Proximity](https://lawsofux.com/law-of-proximity/) and avoid overloading this space with excessive information. Aim for no more than 3–6 key metrics on display, and group contextually related metrics together where possible.
-
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/dashboards/analytical-dashboard/key-metrics.png",
-      alt: "Key metrics",
-    },
-    {
-      src: "/img/patterns/dashboards/analytical-dashboard/key-metrics-with-spacing.png",
-      alt: "Key metrics with spacing",
-    },
-  ]}
-  label="Content spacing"
-/>
-
-#### Spacing
-
-- Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
-- Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
-- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](../../components/stack-layout) or [`FlowLayout`](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
 
 ### Fixed panel
 
@@ -296,15 +229,16 @@ You can use a fixed panel to:
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/fixed-panel.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/fixed_panel.png",
       alt: "Fixed panel",
     },
     {
-      src: "/img/patterns/dashboards/analytical-dashboard/fixed-panel-with-spacing.png",
+      src: "/img/patterns/dashboards/analytical-dashboard/fixed_panel_with_spacing.png",
       alt: "Fixed panel with spacing",
     },
   ]}
   label="Content spacing"
+  caption="A fixed panel with and without spacing."
 />
 
 #### Width
@@ -319,5 +253,79 @@ You can use a fixed panel to:
 #### Scrolling
 
 - Fixed panels should remain fixed in position while scrolling the dashboard.
+
+### Content modules
+
+Use [`Card`](../../components/card) as a container or widget type to position and convey forms of data, such as charts and grids, within the main body of the dashboard. You can easily arrange and manipulate cards—they're a good choice for a responsive design as you can easily scale them.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/content_modules.png",
+      alt: "Content modules",
+    },
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/content_modules_with_spacing.png",
+      alt: "Content modules with spacing",
+    },
+  ]}
+  label="Content spacing"
+  caption="Cards are a good choice for enabling responsive design."
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  Keep the content layout within individual cards as consistent as possible
+  across the dashboard. This supports scalability, especially if main components
+  anchor to familiar locations within a card.
+</ExampleContainer>
+
+#### Layout and style
+
+- We recommend you style cards with the `--salt-container-primary-background` token, and the application with the `--salt-container-secondary-background` token. This is the most effective way to present data, as it provides the highest contrast between visualizations and their immediate backgrounds.
+- _(J.P. Morgan employees only)_ For styling data visualizations such as charts, follow the UITK guidelines on data visualization, where you can find further information on presenting data in a visually cohesive manner. We recommend using the categorical color palette within your dashboard design, as it’s ideal for visualizing distinct groups of items.
+- As default, use `--salt-spacing-300` between content modules such as cards to promote readability.
+- The default padding between modules is `spacing-300`. Depending on the needs and business context of the dashboard, you can change this spacing token if your dashboard needs to display more or less content. View the [spacing foundation](/salt/foundations/spacing) for further guidance.
+- Group contextually related content together where possible.
+- Order modules from level of priority—which data would the dashboard user consider to be primary vs. secondary?
+
+#### Alternative card layouts
+
+Depending on the amount of data that the user needs to see at once, you can arrange content modules in various layouts alongside common dashboard features, such as fixed panels and key metrics. However, it’s important to not overwhelm users with data; otherwise, it will be hard for them to focus and get a clear overview.
+
+Use the flexibility of the columns in a layout grid to split and arrange cards in various horizontal alignments.
+
+<Diagram
+  src="/img/patterns/dashboards/analytical-dashboard/alternative_card_layouts.png"
+  alt="Alternative card layouts"
+  border
+  caption="Alternative card layouts in action."
+/>
+
+### Key metrics
+
+A metrics bar is a common example of a dashboard module. It’s a flexible structural attribute that allows highlighting broader level metrics to help provide the user with additional context. It's often positioned horizontally higher up on a dashboard to further emphasize the metrics' importance.
+
+Metric bars should remain clean and concise to provide a higher level oversight of information. Try to adhere to the [Law of Proximity](https://lawsofux.com/law-of-proximity/) and avoid overloading this space with excessive information. Aim for no more than 3–6 key metrics on display, and group contextually related metrics together where possible.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/key_metrics.png",
+      alt: "Key metrics",
+    },
+    {
+      src: "/img/patterns/dashboards/analytical-dashboard/key_metrics_with_spacing.png",
+      alt: "Key metrics with spacing",
+    },
+  ]}
+  label="Content spacing"
+  caption="A metrics bar within a dashboard."
+/>
+
+#### Spacing
+
+- Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
+- Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
+- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](../../components/stack-layout) or [`FlowLayout`](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
 
 :fragment{src="../fragments/feedback.mdx"}
