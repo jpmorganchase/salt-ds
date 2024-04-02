@@ -1,14 +1,16 @@
-import { DateInput } from "@salt-ds/lab";
+import { composeStories } from "@storybook/react";
 import { ChangeEvent } from "react";
+import * as dateInputStories from "@stories/date-input/date-input.stories";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+const composedStories = composeStories(dateInputStories);
+const { Default } = composedStories;
 
 describe("GIVEN a DateInput", () => {
-  it("SHOULD have no a11y violations on load", () => {
-    cy.mount(<DateInput defaultValue="01 Feb 2000" />);
-    cy.checkAxeComponent();
-  });
+  checkAccessibility(composedStories);
+
   describe("WHEN cy.mounted as an uncontrolled component", () => {
     it("THEN it should cy.mount with the specified defaultValue", () => {
-      cy.mount(<DateInput defaultValue="01 Feb 2000" />);
+      cy.mount(<Default defaultValue="01 Feb 2000" />);
       cy.findByRole("textbox").should("have.value", "01 Feb 2000");
     });
 
@@ -20,7 +22,7 @@ describe("GIVEN a DateInput", () => {
           event.persist();
           changeSpy(event);
         };
-        cy.mount(<DateInput defaultValue="01 Feb 2000" onChange={onChange} />);
+        cy.mount(<Default defaultValue="01 Feb 2000" onChange={onChange} />);
         cy.findByRole("textbox").click().clear().type("02-feb-2000");
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: "02-feb-2000" },
@@ -31,7 +33,7 @@ describe("GIVEN a DateInput", () => {
           // React 16 backwards compatibility
           event.persist();
         };
-        cy.mount(<DateInput defaultValue="01 jan 2000" onChange={onChange} />);
+        cy.mount(<Default defaultValue="01 jan 2000" onChange={onChange} />);
         cy.findByRole("textbox").click().clear().type("02-feb-2000");
         cy.findByRole("textbox").blur();
         cy.findByRole("textbox").should("have.value", "02 Feb 2000");
@@ -41,7 +43,7 @@ describe("GIVEN a DateInput", () => {
           // React 16 backwards compatibility
           event.persist();
         };
-        cy.mount(<DateInput defaultValue="01 jan 2000" onChange={onChange} />);
+        cy.mount(<Default defaultValue="01 jan 2000" onChange={onChange} />);
         cy.findByRole("textbox").click().clear().type("01 0ct 2000");
         cy.findByRole("textbox").blur();
         cy.findByRole("textbox").should("have.value", "01 0ct 2000");
