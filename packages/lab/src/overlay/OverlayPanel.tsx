@@ -1,13 +1,11 @@
-import {
-  ForwardedRef,
-  forwardRef,
-  HTMLProps,
-  ComponentPropsWithoutRef,
-} from "react";
+import { ForwardedRef, forwardRef, ComponentPropsWithoutRef } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
-import { OverlayPanelBase } from "./OverlayPanelBase";
+import { FloatingArrow } from "@floating-ui/react";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import overlayPanelCss from "./OverlayPanel.css";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
 
@@ -15,39 +13,41 @@ export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {}
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
-    const { className, ["aria-labelledby"]: ariaLabelledby, ...rest } = props;
+    const {
+      className,
+      ["aria-labelledby"]: ariaLabelledby,
+      children,
+      ...rest
+    } = props;
+
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-overlay-panel",
+      css: overlayPanelCss,
+      window: targetWindow,
+    });
 
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const {
-      id,
       openState,
       floatingStyles,
-      placement,
       context,
       getFloatingProps,
       floating,
+      arrowProps,
     } = useOverlayContext();
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
     const { top, left, width, height, position } = floatingStyles;
 
-    const getOverlayProps = (): HTMLProps<HTMLDivElement> => {
-      return getFloatingProps({
-        // @ts-ignore data-placement does not exist
-        "data-placement": placement,
-        ref: floating,
-        id: `${id}-panel`,
-      });
-    };
-
     return (
       <FloatingComponent
         open={openState}
         className={clsx(withBaseName(), className)}
         aria-modal="true"
-        {...getOverlayProps()}
+        {...getFloatingProps()}
         ref={handleRef}
         width={width}
         height={height}
@@ -59,7 +59,15 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         }}
         aria-labelledby={ariaLabelledby}
       >
-        <OverlayPanelBase {...rest} />
+        <div {...rest}> {children} </div>
+        <FloatingArrow
+          {...arrowProps}
+          strokeWidth={1}
+          fill="var(--overlay-background)"
+          stroke="var(--overlay-borderColor)"
+          height={5}
+          width={10}
+        />
       </FloatingComponent>
     );
   }

@@ -1,6 +1,11 @@
 import { ChangeEvent } from "react";
 
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
+import {
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  OverlayPanelContent,
+} from "@salt-ds/lab";
 import { Button, CheckboxGroup, Checkbox, useId } from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
@@ -127,12 +132,14 @@ export const WithActions = () => {
         }}
         aria-labelledby={id}
       >
-        <WithActionsContent
-          id={id}
-          onClose={() => {
-            setOpen(false);
-          }}
-        />
+        <OverlayPanelContent>
+          <WithActionsContent
+            id={id}
+            onClose={() => {
+              setOpen(false);
+            }}
+          />
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

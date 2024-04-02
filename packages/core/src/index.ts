@@ -22,6 +22,7 @@ export * from "./form-field-context";
 export * from "./grid-item";
 export * from "./grid-layout";
 export * from "./input";
+export * from "./interactable-card";
 export * from "./link";
 export * from "./link-card";
 export { useListControlContext } from "./list-control";
