@@ -12,7 +12,7 @@ import {
 } from "@salt-ds/core";
 
 export default {
-  title: "Core/Link Card",
+  title: "Core/Card/Link Card",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
