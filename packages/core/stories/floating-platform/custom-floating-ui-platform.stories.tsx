@@ -27,7 +27,7 @@ import {
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import floatingCss from "./floating-platform.css";
+import floatingCss from "./floating-platform.css?inline";
 
 import { NewWindow, FloatingComponentWindow } from "./NewWindow";
 
