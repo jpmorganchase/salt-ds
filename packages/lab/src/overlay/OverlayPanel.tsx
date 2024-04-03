@@ -1,9 +1,4 @@
-import {
-  ForwardedRef,
-  forwardRef,
-  ComponentPropsWithoutRef,
-  ReactNode,
-} from "react";
+import { forwardRef, ComponentPropsWithoutRef, ReactNode } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useOverlayContext } from "./OverlayContext";
@@ -15,13 +10,13 @@ import overlayPanelCss from "./OverlayPanel.css";
 const withBaseName = makePrefixer("saltOverlayPanel");
 export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of Overlay Panel
+   * OverlayPanelContent and OverlayPanelCloseButton
    */
   children?: ReactNode;
 }
 
 export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
-  function OverlayPanel(props, ref: ForwardedRef<HTMLDivElement>) {
+  function OverlayPanel(props, ref) {
     const {
       className,
       ["aria-labelledby"]: ariaLabelledby,
