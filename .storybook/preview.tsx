@@ -23,6 +23,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
 import { withScaffold } from "docs/decorators/withScaffold";
+import { withDateMock } from "docs/decorators/withDateMock";
 import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 import { initialize, mswLoader } from "msw-storybook-addon";
@@ -202,6 +203,7 @@ export const decorators = [
   withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
+  withDateMock,
 ];
 
 export const loaders = [mswLoader];
