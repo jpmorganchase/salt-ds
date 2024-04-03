@@ -1,13 +1,13 @@
 import { ReactElement, useState } from "react";
-
 import {
+  Button,
+  StackLayout,
   Overlay,
   OverlayPanel,
   OverlayTrigger,
   OverlayPanelCloseButton,
   OverlayPanelContent,
-} from "@salt-ds/lab";
-import { Button, StackLayout } from "@salt-ds/core";
+} from "@salt-ds/core";
 
 export const LongContent = (): ReactElement => {
   const [open, setOpen] = useState(false);

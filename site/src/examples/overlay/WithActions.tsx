@@ -1,12 +1,14 @@
 import { ChangeEvent } from "react";
-
 import {
+  Button,
+  CheckboxGroup,
+  Checkbox,
+  useId,
   Overlay,
   OverlayPanel,
   OverlayTrigger,
   OverlayPanelContent,
-} from "@salt-ds/lab";
-import { Button, CheckboxGroup, Checkbox, useId } from "@salt-ds/core";
+} from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
 
