@@ -56,10 +56,6 @@ export interface DateInputProps
    */
   readOnly?: boolean;
   /**
-   * Alignment of text within container. Defaults to "left"
-   */
-  textAlign?: "left" | "center" | "right";
-  /**
    * Validation status.
    */
   validationStatus?: "error" | "warning" | "success";
@@ -79,15 +75,13 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
       "aria-owns": ariaOwns,
-      className: classNameProp,
+      className,
       disabled,
       emptyReadOnlyMarker = "—",
       inputProps = {},
       inputRef,
       readOnly: readOnlyProp,
       role,
-      style,
-      textAlign = "left",
       value: valueProp,
       defaultValue: defaultStartDateProp = valueProp === undefined
         ? ""
@@ -96,7 +90,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       variant = "primary",
       dateFormatter = defaultDateFormatter,
       placeholder = "dd mmm yyyy",
-      ...other
+      ...rest
     },
     ref
   ) {
@@ -185,11 +179,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       setFocused(true);
     };
 
-    const dateInputStyle = {
-      "--dateInput-textAlign": textAlign,
-      ...style,
-    };
-
     return (
       <div
         className={clsx(
@@ -201,11 +190,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus ?? "")]: validationStatus,
           },
-          classNameProp
+          className
         )}
         ref={ref}
-        style={dateInputStyle}
-        {...other}
+        {...rest}
       >
         <input
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
