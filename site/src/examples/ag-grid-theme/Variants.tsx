@@ -1,19 +1,15 @@
-import {
-  FlexItem,
-  FlexLayout,
-  StackLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
+import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
 import { SyntheticEvent, useState } from "react";
+// refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const Variants = (props: AgGridReactProps) => {
   const [selected, setSelected] = useState("primary");
-  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
+  // We've created a local custom hook to set the rows and column sizes.
+  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -22,19 +18,12 @@ export const Variants = (props: AgGridReactProps) => {
 
   return (
     <StackLayout style={{ width: "100%" }}>
-      <FlexItem>
-        <FlexLayout direction="row">
-          <FlexItem>
-            <ToggleButtonGroup onChange={onChange} value={selected}>
-              <ToggleButton value="primary">Primary</ToggleButton>
-              <ToggleButton value="secondary">Secondary</ToggleButton>
-              <ToggleButton value="zebra">Zebra</ToggleButton>
-            </ToggleButtonGroup>
-          </FlexItem>
-        </FlexLayout>
-      </FlexItem>
+      <ToggleButtonGroup onChange={onChange} value={selected}>
+        <ToggleButton value="primary">Primary</ToggleButton>
+        <ToggleButton value="secondary">Secondary</ToggleButton>
+        <ToggleButton value="zebra">Zebra</ToggleButton>
+      </ToggleButtonGroup>
       <div
-        style={{ height: 500, marginTop: 25 }}
         {...containerProps}
         className={clsx(containerProps.className, {
           "ag-theme-salt-variant-secondary": selected === "secondary",

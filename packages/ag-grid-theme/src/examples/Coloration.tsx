@@ -1,14 +1,10 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleColumnsColoration";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const Coloration = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
     <div {...containerProps}>
@@ -20,10 +16,6 @@ const Coloration = (props: AgGridReactProps) => {
       />
     </div>
   );
-};
-
-Coloration.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default Coloration;

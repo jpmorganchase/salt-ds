@@ -1,6 +1,5 @@
 import { GetContextMenuItemsParams } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import mac from "../dependencies/mac.png";
@@ -8,10 +7,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import windows from "../dependencies/windows.png";
 
 const ContextMenu = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   const getContextMenuItems = (params: GetContextMenuItemsParams) => {
     const result = [
@@ -146,19 +142,15 @@ const ContextMenu = (props: AgGridReactProps) => {
   return (
     <div {...containerProps}>
       <AgGridReact
+        {...agGridProps}
+        {...props}
         allowContextMenuWithControlKey
         getContextMenuItems={getContextMenuItems}
         columnDefs={dataGridExampleColumns}
         rowData={dataGridExampleData}
-        {...agGridProps}
-        {...props}
       />
     </div>
   );
-};
-
-ContextMenu.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default ContextMenu;

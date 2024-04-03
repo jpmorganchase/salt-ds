@@ -8,7 +8,7 @@ export const wrappedColumns: ColDef[] = [
     checkboxSelection: true,
     headerCheckboxSelection: true,
     pinned: "right",
-    suppressMenu: true,
+    suppressHeaderMenuButton: true,
   },
   {
     headerName: "Name of State",
@@ -19,7 +19,7 @@ export const wrappedColumns: ColDef[] = [
     },
     editable: false,
     pinned: "left",
-    suppressMenu: true,
+    suppressHeaderMenuButton: true,
   },
   {
     headerName: "State code",
@@ -42,7 +42,6 @@ export const wrappedColumns: ColDef[] = [
   },
   {
     headerName: "Date",
-    type: "dateColumn",
     field: "date",
     filter: "agDateColumnFilter",
     width: 160,

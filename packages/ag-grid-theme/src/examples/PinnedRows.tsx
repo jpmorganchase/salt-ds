@@ -1,5 +1,4 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -33,7 +32,6 @@ const headerRow: any[] = [
 ];
 
 type PinnedRowsExampleProps = AgGridReactProps & {
-  defaultTheme?: string;
   aggregateColumn: string;
   aggregate: "sum" | "min" | "max";
   showFooter: boolean;
@@ -41,7 +39,6 @@ type PinnedRowsExampleProps = AgGridReactProps & {
 };
 
 const PinnedRowsExample = function PinnedRowsExample({
-  defaultTheme = "salt",
   aggregate = "sum",
   aggregateColumn = "population",
   columnDefs = dataGridExampleColumns,
@@ -50,15 +47,12 @@ const PinnedRowsExample = function PinnedRowsExample({
   showHeader = true,
   ...rest
 }: PinnedRowsExampleProps) {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   const getColumnData = () => {
     return fields(aggregateColumn, rowData!).filter(
       (field) => typeof field === "number"
-    );
+    ) as number[];
   };
 
   const footerRow = () => {
@@ -75,12 +69,8 @@ const PinnedRowsExample = function PinnedRowsExample({
     ];
   };
 
-  const getHeaderRow = () => {
-    return headerRow;
-  };
-
   const pinnedBottomRowData = showFooter ? footerRow() : undefined;
-  const pinnedTopRowData = showHeader ? getHeaderRow() : undefined;
+  const pinnedTopRowData = showHeader ? headerRow : undefined;
   return (
     <div {...containerProps}>
       <AgGridReact
@@ -98,7 +88,3 @@ const PinnedRowsExample = function PinnedRowsExample({
 export default function PinnedRows(props: PinnedRowsExampleProps) {
   return <PinnedRowsExample {...props} />;
 }
-
-PinnedRows.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};

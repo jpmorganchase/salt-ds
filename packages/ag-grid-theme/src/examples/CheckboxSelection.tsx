@@ -1,14 +1,10 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const CheckboxSelection = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
     <div {...containerProps}>
@@ -18,13 +14,18 @@ const CheckboxSelection = (props: AgGridReactProps) => {
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}
         rowSelection="multiple"
+        onFirstDataRendered={(params) => {
+          params.api.forEachNode((node, index) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (node.data && index < 7 && index > 2) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+              node.setSelected(true);
+            }
+          });
+        }}
       />
     </div>
   );
-};
-
-CheckboxSelection.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default CheckboxSelection;

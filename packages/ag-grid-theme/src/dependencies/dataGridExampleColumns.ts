@@ -9,7 +9,7 @@ const dataGridExampleColumns: ColDef[] = [
     checkboxSelection: true,
     headerCheckboxSelection: true,
     pinned: "left",
-    suppressMenu: true,
+    suppressHeaderMenuButton: true,
     resizable: false,
     suppressColumnsToolPanel: true,
   },
@@ -56,7 +56,6 @@ const dataGridExampleColumns: ColDef[] = [
   },
   {
     headerName: "Date",
-    type: "dateColumn",
     field: "date",
     filter: "agDateColumnFilter",
   },

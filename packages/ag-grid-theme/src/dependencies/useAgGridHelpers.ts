@@ -1,21 +1,13 @@
-import {
-  HTMLAttributes,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { AgGridReactProps } from "ag-grid-react";
-import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { useDensity, useTheme } from "@salt-ds/core";
+import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
+import { AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
+import { HTMLAttributes, useCallback, useMemo, useRef, useState } from "react";
 
 LicenseManager.setLicenseKey("your license key");
 
 interface AgGridHelpersProps {
-  agThemeName: string;
   compact?: boolean;
   mode?: string;
   density?: string;
@@ -24,7 +16,6 @@ interface AgGridHelpersProps {
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
 export function useAgGridHelpers({
-  agThemeName = "ag-theme-uitk",
   compact = false,
   mode: modeProp,
   density: densityProp,
@@ -34,6 +25,9 @@ export function useAgGridHelpers({
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
   api?: GridApi;
+  /**
+   * @deprecated — Use methods via the grid api instead.
+   */
   columnApi?: ColumnApi;
   compact?: boolean;
 } {
@@ -46,33 +40,25 @@ export function useAgGridHelpers({
   const density = densityProp ?? contextDensity;
 
   const [rowHeight, listItemHeight] = useMemo(() => {
-    switch ([agThemeName, density].join("-")) {
-      case "ag-theme-uitk-high":
-        return [20, 24];
-      case "ag-theme-uitk-medium":
-        return [24, 36];
-      case "ag-theme-uitk-low":
-        return [32, 48];
-      case "ag-theme-uitk-touch":
-        return [32, 60];
-      case compact && "ag-theme-salt-high":
+    switch (density) {
+      case compact && "high":
         return [20, 20];
-      case "ag-theme-salt-high":
-        return [24, 24];
-      case "ag-theme-salt-medium":
-        return [36, 36];
-      case "ag-theme-salt-low":
-        return [48, 48];
-      case "ag-theme-salt-touch":
-        return [60, 60];
+      case "high":
+        return [24, 24]; // 20 + 4
+      case "medium":
+        return [36, 36]; // 28 + 8
+      case "low":
+        return [48, 48]; // 36 + 12
+      case "touch":
+        return [60, 60]; // 44 + 16
       default:
-        return [20, 24];
+        return [24, 24];
     }
-  }, [density, agThemeName, compact]);
+  }, [density, compact]);
 
   const className = clsx(
     containerClassName,
-    `${agThemeName}${compact && density === "high" ? `-compact` : ``}-${mode}`
+    `ag-theme-salt${compact && density === "high" ? `-compact` : ``}-${mode}`
   );
 
   const onGridReady = useCallback(({ api, columnApi }: GridReadyEvent) => {
@@ -80,18 +66,6 @@ export function useAgGridHelpers({
     api.sizeColumnsToFit();
     setGridReady(true);
   }, []);
-
-  useEffect(() => {
-    // setHeaderHeight doesn't work if not in setTimeout
-    setTimeout(() => {
-      if (isGridReady) {
-        apiRef.current!.api.resetRowHeights();
-        apiRef.current!.api.setHeaderHeight(rowHeight);
-        apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
-        // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
-      }
-    });
-  }, [rowHeight, isGridReady, apiRef]);
 
   return {
     containerProps: {

@@ -3,6 +3,7 @@ import path from "node:path";
 import { deleteSync } from "del";
 import fs from "node:fs";
 import { fileURLToPath } from "node:url";
+import { argv } from "node:process";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildFolder = path.join(__dirname, "../../../dist/salt-ds-ag-grid-theme");
@@ -12,7 +13,7 @@ deleteSync([buildFolder], { force: true });
 esbuild
   .build({
     absWorkingDir: path.resolve(__dirname, ".."),
-    entryPoints: ["salt.css", "uitk.css"],
+    entryPoints: ["salt-ag-theme.css"],
     assetNames: "[dir]/[name]",
     outdir: buildFolder,
     loader: {
@@ -21,6 +22,7 @@ esbuild
     write: true,
     bundle: true,
     logLevel: "info",
+    watch: argv.includes("--watch"),
   })
   .then(() => {
     // File destination.txt will be created or overwritten by default.

@@ -5,7 +5,6 @@ import {
   DialogHeader,
 } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -31,10 +30,7 @@ const CustomDialog = () => {
 };
 
 const NoDataOverlay = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
     <div style={{ height: 800, width: 800 }} {...containerProps}>
@@ -47,10 +43,6 @@ const NoDataOverlay = (props: AgGridReactProps) => {
       />
     </div>
   );
-};
-
-NoDataOverlay.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default NoDataOverlay;

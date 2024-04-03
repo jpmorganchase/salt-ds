@@ -1,41 +1,58 @@
 div[class*="ag-theme-salt"] {
   --ag-background-color: var(--salt-palette-neutral-primary-background);
+  --ag-border-color: var(--salt-separable-secondary-borderColor);
   --ag-borders-secondary: var(--salt-size-border) var(--salt-separable-borderStyle);
+  --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
-  --ag-checkbox-checked-color: var(--salt-selectable-primary-foreground-selected);
   --ag-checkbox-border-radius: 0;
-  --ag-checkbox-indeterminate-color: var(--salt-content-primary-foreground);
+  --ag-checkbox-checked-color: var(--salt-selectable-foreground-selected);
+  --ag-checkbox-indeterminate-color: var(--salt-selectable-foreground);
+  --ag-checkbox-unchecked-color: var(--salt-selectable-borderColor);
   --ag-chip-background-color: var(--salt-taggable-background);
   --ag-data-color: var(--salt-content-primary-foreground);
-  --ag-font-size: var(--salt-text-fontSize);
+  --ag-disabled-foreground-color: var(--salt-content-primary-foreground-disabled);
   --ag-font-family: var(--salt-typography-fontFamily);
+  --ag-font-size: var(--salt-text-fontSize);
   --ag-foreground-color: var(--salt-content-primary-foreground);
   --ag-grid-size: var(--salt-spacing-50);
   --ag-header-background-color: var(--salt-container-primary-background);
   --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
-  --ag-header-column-separator-color: var(--salt-palette-neutral-secondary-separator);
+  --ag-header-column-separator-color: var(--salt-separable-secondary-borderColor);
   --ag-header-column-separator-display: block;
   --ag-header-column-separator-height: var(--salt-text-fontSize);
   --ag-header-column-separator-width: var(--salt-size-border);
-  --ag-header-foreground-color: var(--salt-content-primary-foreground);
+  --ag-header-foreground-color: var(--salt-content-secondary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-icon-size: var(--salt-icon-size-base);
   --ag-input-focus-border-color: var(--salt-editable-borderColor-hover);
   --ag-input-focus-box-shadow: none;
+  --ag-invalid-color: var(--salt-status-error-foreground);
   --ag-list-item-height: var(--salt-size-base);
   --ag-material-primary-color: var(--salt-editable-borderColor);
-  --ag-range-selection-border-style: var(--salt-focused-outlineStyle);
-  --ag-range-selection-border-width: var(--salt-focused-outlineWidth);
-  --ag-row-group-indent-size: calc(var(--ag-grid-size) * 3 + var(--salt-spacing-100));
+  --ag-modal-overlay-background-color: var(--salt-overlayable-background);
+  --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
+  --ag-range-selection-background-color: var(--salt-overlayable-rangeSelection);
+  --ag-range-selection-border-style: none;
+  --ag-row-group-indent-size: calc(var(--ag-grid-size) * 4 + var(--salt-spacing-100));
   --ag-row-hover-color: var(--salt-selectable-background-hover);
-  --ag-secondary-border-color: var(--salt-palette-neutral-tertiary-separator);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
   --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
   --ag-selected-row-background-color: var(--salt-selectable-background-selected);
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
   --ag-selected-tab-underline-width: 2px;
   --ag-subheader-background-color: var(--salt-palette-neutral-primary-background);
+  --ag-toggle-button-off-background-color: var(--salt-selectable-foreground);
+  --ag-toggle-button-off-border-color: var(--salt-selectable-borderColor);
+  --ag-toggle-button-on-background-color: var(--salt-selectable-foreground-selected);
+  --ag-toggle-button-on-border-color: var(--salt-selectable-borderColor-selected);
   --ag-tooltip-background-color: var(--salt-container-primary-background);
+  --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
+  --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
+  /* 
+    Use categorical color for below tokens when available
+    --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
+   */
 }
 
 div[class*="ag-theme-salt"] .ag-root-wrapper {
@@ -43,6 +60,11 @@ div[class*="ag-theme-salt"] .ag-root-wrapper {
 }
 
 /* HEADER */
+
+div[class*="ag-theme-salt"] .ag-header {
+  /* Header icon should be the same as text color, aka secondary color */
+  --ag-icon-font-color: var(--ag-header-foreground-color);
+}
 
 div[class*="ag-theme-salt"] .ag-advanced-filter-header,
 div[class*="ag-theme-salt"] .ag-header {
@@ -57,6 +79,7 @@ div[class*="ag-theme-salt"] .ag-header-row {
 div[class*="ag-theme-salt"] .ag-pinned-left-header {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
+
 div[class*="ag-theme-salt"] .ag-pinned-right-header {
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
@@ -70,19 +93,67 @@ div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-group-ce
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
+/** Move sort arrow towards menu icon */
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container {
+  margin-left: auto;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container {
+  margin-right: auto;
+}
+
+div[class*="ag-theme-salt"] .ag-sort-indicator-container {
+  align-items: center;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon {
+  padding-left: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon {
+  padding-right: var(--salt-spacing-100);
+}
+
 div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
   margin-left: auto;
+  padding-right: var(--salt-spacing-100);
 }
 
 div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
   margin-right: auto;
+  padding-left: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter::before {
+  /* Remove half height border in most header cells */
+  background-color: transparent;
+}
+
+div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number"] {
+  /* Avoid floating filter's input clips focus ring */
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 4px);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
+  /* When menu is visible, change bg and fg */
+  background: var(--salt-actionable-secondary-background-active);
+  color: var(--salt-actionable-secondary-foreground-active);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
+  color: var(--salt-actionable-secondary-foreground-active);
 }
 
 /* MENU */
 
 div[class*="ag-theme-salt"] .ag-menu {
   padding: var(--salt-spacing-100);
-  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-palette-neutral-primary-border);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
+}
+
+div[class*="ag-theme-salt"] .ag-popup-child:not(.ag-tooltip-custom) {
+  box-shadow: var(--agGrid-menu-shadow);
 }
 
 div[class*="ag-theme-salt"] .ag-menu-header {
@@ -143,11 +214,12 @@ div[class*="ag-theme-salt"] .ag-row-selected:before {
 div[class*="ag-theme-salt"] .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
+
 div[class*="ag-theme-salt"] .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
+div[class*="ag-theme-salt"] .ag-cell {
   border: none;
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
@@ -158,16 +230,15 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-cell {
 
 div[class*="ag-theme-salt"] .ag-cell.editable-cell,
 div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell {
-  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
+  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
+  outline-offset: -1px;
   justify-content: flex-end;
 }
+
 div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
   justify-content: flex-end;
 }
-div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.editable-cell:focus,
-div[class*="ag-theme-salt"] .ag-has-focus .editable-numeric-cell:focus {
-  border: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
-}
+
 div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
 div[class*="ag-theme-salt"] .ag-context-menu-open .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
 div[class*="ag-theme-salt"] .ag-cell-range-single-cell,
@@ -175,7 +246,7 @@ div[class*="ag-theme-salt"] .ag-cell-range-single-cell.ag-cell-range-handle,
 div[class*="ag-theme-salt"] .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
-  border: var(--salt-size-border) var(--salt-container-borderStyle) transparent !important;
+  border-width: 0;
 }
 
 div[class*="ag-theme-salt"] .ag-cell-wrapper.ag-row-group {
@@ -200,12 +271,12 @@ div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:before {
   position: absolute;
   top: 0px;
   z-index: 2;
-  transform: translate(-1px, -1px);
 }
 
 div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing {
   padding: 0;
 }
+
 div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:focus-within {
   background: var(--salt-container-primary-background);
 }
@@ -215,10 +286,51 @@ div[class*="ag-theme-salt"] input[class^="ag-"][type="number"] {
   padding: 0 var(--salt-spacing-100);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
+
 div[class*="ag-theme-salt"] .editable-cell input,
 div[class*="ag-theme-salt"] .editable-numeric-cell input {
   border: none;
   background-color: transparent;
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-left: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
 /* INPUT */
@@ -257,14 +369,11 @@ div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="
 /* CHECKBOX */
 
 div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper {
-  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  /* border-radius doesn't work given border is part of the font glyph */
   height: var(--salt-size-selectable);
   width: var(--salt-size-selectable);
-}
-
-div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked {
-  background: var(--salt-selectable-borderColor-selected);
-  border-color: var(--salt-selectable-borderColor-selected);
+  font-size: var(--salt-size-selectable);
+  line-height: var(--salt-size-selectable);
 }
 
 /* BUTTON */
@@ -363,14 +472,17 @@ div[class*="ag-theme-salt"] .ag-status-bar {
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-label-fontWeight);
-  line-height: var(--salt-text-label-lineHeight);
+  /* Center align text vertically, matching height */
+  line-height: var(--salt-size-base);
   height: var(--salt-size-base);
   padding: 0 var(--salt-spacing-100);
 }
+
 div[class*="ag-theme-salt"] .ag-status-name-value {
-  padding: var(--salt-spacing-100) 0;
+  padding: 0;
   margin: 0 var(--salt-spacing-100);
 }
+
 div[class*="ag-theme-salt"] .ag-status-name-value-value {
   font-weight: var(--salt-text-fontWeight-strong);
   color: var(--salt-content-primary-foreground);
@@ -408,4 +520,10 @@ div[class*="ag-theme-salt"] .ag-column-drop-cell {
 
 .ag-theme-salt-variant-zebra .ag-row {
   border-color: var(--salt-palette-neutral-tertiary-separator);
+}
+
+/* Tool Panel */
+
+div[class*="ag-theme-salt"] .ag-tool-panel-wrapper > .ag-react-container {
+  width: inherit;
 }

@@ -38,7 +38,7 @@ To import the Salt AG Grid theme, use:
 
 ```js
 import "ag-grid-community/styles/ag-grid.css";
-import "@salt-ds/ag-grid-theme/salt.css";
+import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 ```
 
 Then wrap your AG Grid with the corresponding class names shown below:
@@ -73,24 +73,3 @@ For variants, which are available only on salt theme, use these CSS class names:
 For editable fields, add the class name `.editable-cell` to the `cellClass` array in your column definition.
 
 For fields displaying numeric values, add the class name `.numeric-cell` to the `cellClass` array in your column definition.
-
-#### Import UITK AG Grid theme
-
-UITK AG Grid theme contains CSS files with a theme that resembles the Toolkit V1 Data Grid component; use this when you would like to keep the Toolkit V1 theme.
-
-To import the UITK AG Grid theme, use:
-
-```js
-import "@salt-ds/ag-grid-theme/uitk.css";
-```
-
-For light mode, use these CSS class name `.ag-theme-uitk-light`.
-
-For dark mode, use these CSS class name `.ag-theme-uitk-dark`.
-
-For `compact` version, use these CSS class names:
-
-```js
-.ag-theme-uitk-compact-light
-.ag-theme-uitk-compact-dark
-```

@@ -1,5 +1,4 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -7,15 +6,15 @@ const Default = ({
   containerClassName,
   ...agProps
 }: AgGridReactProps & { containerClassName?: string }) => {
-  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
     containerClassName,
   });
 
   return (
     <div {...containerProps}>
       <AgGridReact
+        {...agGridProps}
+        {...agProps}
         columnDefs={[
           {
             headerName: "Name",
@@ -32,20 +31,16 @@ const Default = ({
           {
             headerName: "Capital",
             field: "capital",
+            tooltipField: "capital",
+            headerTooltip: "Capital",
           },
         ]}
         rowData={dataGridExampleData}
         rowSelection="single"
         enableRangeSelection={true}
-        {...agGridProps}
-        {...agProps}
       />
     </div>
   );
-};
-
-Default.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default Default;

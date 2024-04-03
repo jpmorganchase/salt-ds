@@ -1,14 +1,12 @@
 import { Banner, BannerContent, FlexLayout } from "@salt-ds/core";
-import { clsx } from "clsx";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { clsx } from "clsx";
+import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 
 const VariantSecondary = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-salt`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
   const { className } = containerProps;
 
   return (
@@ -31,10 +29,6 @@ const VariantSecondary = (props: AgGridReactProps) => {
       </div>
     </FlexLayout>
   );
-};
-
-VariantSecondary.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default VariantSecondary;

@@ -4,7 +4,6 @@ import {
   useTheme,
 } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -23,9 +22,7 @@ const statusBar = {
 
 const HDCompact = (props: AgGridReactProps) => {
   const { themeNext } = useTheme();
-  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
     compact: true,
     density: "high",
   });
@@ -58,14 +55,4 @@ const HDCompact = (props: AgGridReactProps) => {
   );
 };
 
-HDCompact.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};
-
 export default HDCompact;
-
-export const HDCompactUITK = () => <HDCompact defaultTheme="uitk" />;
-
-HDCompactUITK.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};

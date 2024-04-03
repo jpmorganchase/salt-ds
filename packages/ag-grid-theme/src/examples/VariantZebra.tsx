@@ -6,9 +6,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 
 const VariantZebra = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-salt`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers({});
   const { className } = containerProps;
 
   return (
@@ -31,10 +29,6 @@ const VariantZebra = (props: AgGridReactProps) => {
       </div>
     </FlexLayout>
   );
-};
-
-VariantZebra.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default VariantZebra;

@@ -3,6 +3,8 @@ const dataGridExampleRowGrouping = [
     headerName: "Name",
     field: "name",
     filter: "agTextColumnFilter",
+    rowGroup: true,
+    hide: true,
   },
   {
     headerName: "Code",

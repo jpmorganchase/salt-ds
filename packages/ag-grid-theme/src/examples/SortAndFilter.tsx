@@ -1,6 +1,5 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useEffect } from "react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import rowData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -28,27 +27,27 @@ const colDef = [
 ];
 
 const SortAndFilter = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers();
 
   useEffect(() => {
-    if (isGridReady) {
-      // set filter model and update
+    async function setFilter() {
+      if (isGridReady) {
+        // set filter model and update
 
-      api?.getFilterInstance("name")?.setModel({
-        values: ["Alabama", "Alaska", "Arizona"],
-      });
+        await api?.setColumnFilterModel("name", {
+          values: ["Alabama", "Alaska", "Arizona"],
+        });
+        await api?.setColumnFilterModel("rating", {
+          type: "lessThan",
+          filter: 50,
+        });
 
-      api?.getFilterInstance("rating")?.setModel({
-        type: "lessThan",
-        filter: 50,
-      });
-
-      // refresh rows based on the filter (not automatic to allow for batching multiple filters)
-      api?.onFilterChanged();
+        // refresh rows based on the filter (not automatic to allow for batching multiple filters)
+        api?.onFilterChanged();
+      }
     }
+
+    void setFilter();
   }, [api, isGridReady]);
 
   return (
@@ -61,10 +60,6 @@ const SortAndFilter = (props: AgGridReactProps) => {
       />
     </div>
   );
-};
-
-SortAndFilter.parameters = {
-  chromatic: { disableSnapshot: false },
 };
 
 export default SortAndFilter;

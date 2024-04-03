@@ -10,7 +10,7 @@ export const groupedColumns = (
     headerCheckboxSelection: true,
     width: 38,
     pinned: "left",
-    suppressMenu: true,
+    suppressHeaderMenuButton: true,
   },
   {
     headerName: groupName,

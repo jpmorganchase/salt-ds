@@ -1,10 +1,10 @@
 import { AgGridReact } from "ag-grid-react";
 import { userEvent, within, expect } from "@storybook/test";
 import type { StoryObj } from "@storybook/react";
-import { Default } from "./examples";
+import { Default, ToolPanel } from "../src/examples";
+
 import "ag-grid-community/styles/ag-grid.css";
-import "../salt.css";
-import "../uitk.css";
+import "../salt-ag-theme.css";
 
 export default {
   title: "Ag Grid/Ag Grid Theme",
@@ -59,15 +59,33 @@ export {
   RowGrouping,
   RowGroupPanel,
   PinnedRows,
+  RangeSelection,
   SortAndFilter,
   StatusBar,
+  ToolPanel,
   VariantSecondary,
   VariantZebra,
   WrappedCell,
   WrappedHeader,
-} from "./examples";
+} from "../src/examples";
 
 // Regression of #3351, icon should match Default
 export const WithExtraContainerClass = () => {
   return <Default containerClassName="foo" />;
+};
+
+export const ToolPanelColumns: StoryObj<typeof AgGridReact> = () => {
+  return <ToolPanel />;
+};
+ToolPanelColumns.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const columnsTabs = await canvas.findAllByRole("tab", { name: "Columns" });
+
+  for (const tab of columnsTabs) {
+    await userEvent.click(tab);
+
+    await expect(tab).toHaveAttribute("aria-expanded", "true");
+  }
 };

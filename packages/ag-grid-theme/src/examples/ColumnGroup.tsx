@@ -1,14 +1,10 @@
 import { ColDef, ColGroupDef } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const ColumnGroup = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
     <div {...containerProps}>
@@ -30,7 +26,7 @@ const columnsWithGrouping = (groupName: string): (ColGroupDef | ColDef)[] => [
     headerCheckboxSelection: true,
     width: 38,
     pinned: "left",
-    suppressMenu: true,
+    suppressHeaderMenuButton: true,
   },
   {
     headerName: groupName,
@@ -63,9 +59,5 @@ const columnsWithGrouping = (groupName: string): (ColGroupDef | ColDef)[] => [
     ],
   },
 ];
-
-ColumnGroup.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};
 
 export default ColumnGroup;

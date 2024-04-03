@@ -1,6 +1,5 @@
 import { Card, Spinner, StackLayout, Text } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -16,26 +15,23 @@ const CustomOverlay = () => (
 );
 
 const LoadingOverlay = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
-    <div {...containerProps} tabIndex={-1}>
-      <AgGridReact
-        {...agGridProps}
-        {...props}
-        columnDefs={dataGridExampleColumns}
-        rowData={null}
-        loadingOverlayComponent={CustomOverlay}
-      />
-    </div>
+    <StackLayout gap={4}>
+      <div style={{ position: "relative" }}>
+        <div {...containerProps} tabIndex={-1}>
+          <AgGridReact
+            {...agGridProps}
+            {...props}
+            columnDefs={dataGridExampleColumns}
+            loadingOverlayComponent={CustomOverlay}
+            rowData={undefined}
+          />
+        </div>
+      </div>
+    </StackLayout>
   );
-};
-
-LoadingOverlay.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default LoadingOverlay;

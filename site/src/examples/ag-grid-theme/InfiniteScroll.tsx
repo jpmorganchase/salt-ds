@@ -1,7 +1,8 @@
-import { useEffect } from "react";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { Spinner } from "@salt-ds/core";
-import { infiniteScrollColumns, defaultData } from "./data";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { useEffect } from "react";
+// refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
+import { defaultData, infiniteScrollColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const generateData = function generateData<T extends { name: string }>(
@@ -21,14 +22,13 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(defaultData);
 
 export const InfiniteScroll = (props: AgGridReactProps) => {
-  // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
+  // We've created a local custom hook to set the rows and column sizes.
+  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
 
   useEffect(() => {
     if (isGridReady) {
-      api!.sizeColumnsToFit();
-
-      api!.setDatasource({
+      api!.setGridOption("datasource", {
         getRows: ({ startRow, endRow, successCallback }) => {
           setTimeout(() => {
             successCallback(

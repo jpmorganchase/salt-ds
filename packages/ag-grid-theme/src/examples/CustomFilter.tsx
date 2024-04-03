@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { useEffect, useState } from "react";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
-import { AgGridReact } from "ag-grid-react";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const CustomFilter = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-
   const [hasSavedState, setHasSavedState] = useState(true);
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
 
   useEffect(() => {
     if (isGridReady) {
@@ -67,7 +62,7 @@ const CustomFilter = (props: AgGridReactProps) => {
   };
 
   const restoreState = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     api!.setFilterModel((window as any).filterState);
     setHasSavedState(true);
   };
@@ -94,18 +89,15 @@ const CustomFilter = (props: AgGridReactProps) => {
 
       <div {...containerProps}>
         <AgGridReact
+          {...agGridProps}
+          {...props}
           defaultColDef={{ floatingFilter: true, filter: true }}
           columnDefs={customFilterExampleColumns}
           rowData={dataGridExampleData}
-          {...agGridProps}
         />
       </div>
     </StackLayout>
   );
-};
-
-CustomFilter.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default CustomFilter;

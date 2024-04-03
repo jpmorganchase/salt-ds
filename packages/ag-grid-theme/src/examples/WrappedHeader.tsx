@@ -1,7 +1,6 @@
-import { Checkbox, FlexItem, StackLayout, useDensity } from "@salt-ds/core";
+import { Checkbox, StackLayout, useDensity } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumnsWrap from "../dependencies/dataGridExampleColumnsWrap";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -18,11 +17,9 @@ const statusBar = {
   ],
 };
 
-const WrappedHeader = (props: { defaultTheme: string }) => {
+const WrappedHeader = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
-  const { themeName } = useAgGridThemeSwitcher();
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
     compact,
   });
   const { defaultColDef: propsColDefs, ...restAgGridProps } = agGridProps;
@@ -41,16 +38,16 @@ const WrappedHeader = (props: { defaultTheme: string }) => {
 
   return (
     <StackLayout gap={4}>
-      <FlexItem>
-        <Checkbox
-          checked={compact && density === "high"}
-          label="Compact (for high density only)"
-          onChange={handleCompactChange}
-          disabled={density !== "high"}
-        />
-      </FlexItem>
+      <Checkbox
+        checked={compact && density === "high"}
+        label="Compact (for high density only)"
+        onChange={handleCompactChange}
+        disabled={density !== "high"}
+      />
       <div {...containerProps} style={{ height: "400px", width: "500px" }}>
         <AgGridReact
+          {...restAgGridProps}
+          {...props}
           columnDefs={dataGridExampleColumnsWrap}
           rowData={dataGridExampleData}
           statusBar={statusBar}
@@ -60,15 +57,10 @@ const WrappedHeader = (props: { defaultTheme: string }) => {
             autoHeaderHeight: true,
             wrapHeaderText: true,
           }}
-          {...restAgGridProps}
         />
       </div>
     </StackLayout>
   );
-};
-
-WrappedHeader.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 export default WrappedHeader;

@@ -1,15 +1,11 @@
-import { AgGridReact } from "ag-grid-react";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useCallback, useRef } from "react";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import rowData from "../dependencies/dataGridExampleData";
 import columnDefs from "../dependencies/masterDetailExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const MasterDetail = (props: AgGridReactProps) => {
-  const { themeName } = useAgGridThemeSwitcher();
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    agThemeName: `ag-theme-${themeName}`,
-  });
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   const gridRef = useRef<AgGridReact>(null);
 
@@ -38,8 +34,11 @@ const MasterDetail = (props: AgGridReactProps) => {
   return (
     <div {...containerProps}>
       <AgGridReact
+        {...agGridProps}
+        {...props}
         ref={gridRef}
         columnDefs={columnDefs}
+        detailCellRenderer={detailCellRenderer}
         detailCellRendererParams={{
           detailGridOptions: { columnDefs },
           // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
@@ -48,22 +47,10 @@ const MasterDetail = (props: AgGridReactProps) => {
         masterDetail={true}
         detailRowHeight={300}
         rowData={rowData}
-        {...agGridProps}
-        {...props}
         onFirstDataRendered={onFirstDataRendered}
       />
     </div>
   );
 };
 
-MasterDetail.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};
-
 export default MasterDetail;
-
-export const MasterDetailUITK = () => <MasterDetail defaultTheme="uitk" />;
-
-MasterDetailUITK.parameters = {
-  chromatic: { disableSnapshot: false, delay: 200 },
-};
