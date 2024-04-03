@@ -1,14 +1,14 @@
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer } from "@salt-ds/core";
-import { ReactNode, HTMLAttributes, forwardRef } from "react";
+import { ReactNode, ComponentPropsWithoutRef, forwardRef } from "react";
 import clsx from "clsx";
 import overlayPanelContentCss from "./OverlayPanelContent.css";
 
 const withBaseName = makePrefixer("saltOverlayPanelContent");
 
 export interface OverlayPanelContentProps
-  extends HTMLAttributes<HTMLDivElement> {
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of Overlay Panel
    */
