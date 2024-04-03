@@ -10,7 +10,7 @@ import overlayPanelCss from "./OverlayPanel.css";
 const withBaseName = makePrefixer("saltOverlayPanel");
 export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * OverlayPanelContent and OverlayPanelCloseButton
+   * The content of Overlay Panel
    */
   children?: ReactNode;
 }
