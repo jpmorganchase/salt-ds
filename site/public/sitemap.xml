@@ -170,6 +170,11 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>https://www.saltdesignsystem.com/salt/patterns/list-filtering</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>https://www.saltdesignsystem.com/salt/patterns/metric</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
@@ -896,6 +901,26 @@
 	</url>
 	<url>
 		<loc>https://www.saltdesignsystem.com/salt/components/scrim/usage</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/segmented-button-group/accessibility</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/segmented-button-group/examples</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/segmented-button-group/index</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/segmented-button-group/usage</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
 	</url>
