@@ -55,7 +55,10 @@ const HDCompact = (props: AgGridReactProps) => {
 };
 
 HDCompact.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: { dual: { mode: "side-by-side" } },
+  },
 };
 
 export default HDCompact;
