@@ -97,7 +97,7 @@ export const GroupedItems = () => {
         </Button>
       </MenuTrigger>
       <MenuPanel>
-        <MenuGroup>
+        <MenuGroup label="Actions">
           <MenuItem>Copy</MenuItem>
           <MenuItem>Paste</MenuItem>
         </MenuGroup>

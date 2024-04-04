@@ -1,0 +1,79 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="menu" exampleName="SingleLevel" >
+
+## Single level
+  
+Clicking on the menu trigger will display a list of actions that the user can take.
+
+</LivePreview>
+
+<LivePreview componentName="menu" exampleName="MultiLevel" >
+
+## Multi level
+
+Menus can contain submenus which present the user with a set of items to interact with, creating a cascading effect.
+
+### Best practices
+
+- Creating submenus as separate components will allow you to reuse them in different parts of your application and make your code more maintainable.
+- Limit the number of levels in your menu to avoid overwhelming users.
+
+</LivePreview>
+
+<LivePreview componentName="menu" exampleName="GroupedItems" >
+
+## Grouped items
+  
+Menu items can optionally be grouped together to organize related actions using a group label and separator.
+
+</LivePreview>
+
+<LivePreview componentName="menu" exampleName="SeparatorOnly" >
+
+## Separator only
+  
+A `MenuGroup` can be used without a `label` prop to visually separate groups of menu items.
+  
+</LivePreview>
+
+<LivePreview componentName="menu" exampleName="WithIcon" >
+
+## With icon
+
+Icons can be used to help users quickly identify the type of action they can take.
+
+### Best practices
+  
+Icons should be displayed before a menu item label.
+  
+</LivePreview>
+
+<LivePreview componentName="menu" exampleName="Placement" >
+
+## Placement
+  
+Placement of the menu can be specified using `placement` prop. The menu will be positioned relative to child of the `MenuTrigger` component.
+By default, the root menu is aligned to the "bottom-start" of the trigger element and submenus to the "right-start" of the parent menu item.
+
+</LivePreview>
+
+<LivePreview componentName="menu" exampleName="Scrolling" >
+
+## Scrolling
+
+When a menu extends beyond the application window, the menu defaults to spa the maximum height of the viewport and scroll.
+
+</LivePreview>
+  
+</LivePreviewControls>
