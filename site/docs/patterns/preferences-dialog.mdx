@@ -22,21 +22,20 @@ A preferences dialog allows you to display, group and navigate application prefe
 
 ## When to use
 
-You should place any preference settings in your platform or application within a single centralized preferences dialog. These settings could be global, application-wide settings or settings local to a specific window or widget (such as a grid or comments feed). If accessing from a specific window, immediately display the relevant settings when the preferences dialog opens.
+Place any preference settings in your platform or application within a single centralized preferences dialog. These settings could be global, application-wide settings or settings local to a specific window or widget (such as a grid or comments feed). If accessing from a specific window, immediately display the relevant settings when the preferences dialog opens.
 
-Furthermore, we recommend implementing consistent behavior around applying preferences, whether applying changes immediately or requiring the user to confirm any changes using the button bar actions. 
+We also recommend implementing consistent behavior around applying preferences, whether applying changes immediately or requiring the user to confirm any changes using the button bar actions.
 
 ## How to build
 
 ### Anatomy
 
-A preferences dialog comprises four key features: 
+A preferences dialog comprises three key features: 
 
-1. [Dialog](../components/dialog): a window with a content area that opens over the application content, focusing the user’s attention on a particular task or piece of information
-2. [Navigation item](../components/navigation-item): a link that allows users to navigate to distinct panel of content
-3. [Button bar](./button-bar): displays possible actions for users to take when they reach the end of a task. Use the [button bar pattern](./button-bar) to understand how to implement actionable interactions within dialogs across your applications
-4. [Parent-child layout](../components/parent-child-layout): positions the navigation and content within a preference dialog
-
+1. **Content area**: opens over the application content, focusing the user’s attention on a particular task or piece of information.
+2. **Navigation**: a list of links that allows users to navigate between distinct panels of content. 
+3. **Buttons**: possible actions for users to take. See the [applying preferences](#applying-preferences) section to learn more.
+  
   <Diagram
     src="/img/patterns/preferences-dialog/blotter_grid_anatomy.png"
     alt="Preferences Dialog navigation and content."
@@ -44,6 +43,11 @@ A preferences dialog comprises four key features:
   />
 
 ### Layout
+
+- Use the [dialog](../components/dialog) components as the base structure of the preferences dialog.
+- Use a [navigation item](../components/navigation-item) component to display the left-hand [vertical navigation](../vertical-navigation).
+- Use a [button bar](./button-bar) to display any actions at the bottom of the dialog. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
+- Use a [parent-child layout](../components/parent-child-layout) component to position the navigation and content within a preferences dialog. 
 
 <ImageSwitcher
   images={[
@@ -60,7 +64,8 @@ A preferences dialog comprises four key features:
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  In the [parent-child layout](../components/parent-child-layout), the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
+  - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
+  - Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
 
   To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
 
@@ -90,12 +95,16 @@ Display scrolling affordance when the content or navigation (or both) exceeds th
 
 ## Applying preferences
 
+Display either a button bar at the bottom of the dialog, or a close button in the top-right. Use the same solution consistently across the dialog.
+
+### Button bar
+
 **Cancel** and **Save** button bar actions allow the user to manually apply preferences in the application. We recommend this when the user wants to:
 
 - Make multiple changes with ease and apply them simultaneously.
 - Easily cancel any unwanted changes.
-
-It's preferable for affected components in your application to listen for live changes in the preferences dialog and dynamically update themselves.
+- Change technically complex or performance-intensive preferences.
+- Change preferences that can't take immediate effect for any other reason.
 
 <Diagram
   src="/img/patterns/preferences-dialog/actions_manually_applied_preferences.png"
@@ -108,12 +117,12 @@ It's preferable for affected components in your application to listen for live c
   Display core actions to the right of a dialog. Refer to the [button bar pattern](./button-bar) for further guidance on how to display user actions within dialogs. 
 </ExampleContainer>
 
-## Live updates
+### Close button
 
-If your application can listen for changes and take immediate effect, you don't need to display a button bar across a preferences dialog. A close button in the top-right corner of the dialog should be on display instead to allow the user to close the dialog after editing any preferences.
+If your preferences dialog does not need a button bar, instead display a close button in the top-right corner of the dialog. This allows the user to close the dialog after editing any preferences. Changes should take effect as soon as the user changes a preference.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/live-updating_dialog.png"
+  src="/img/patterns/preferences-dialog/live_updating_dialog.png"
   alt="Live updates."
   caption="Updating preferences automatically within a dialog negates the need for a button bar."
   border
