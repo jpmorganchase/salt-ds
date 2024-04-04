@@ -12,8 +12,19 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import dateInputCss from "./DateInput.css";
-import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
+import {
+  Button,
+  makePrefixer,
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+  useForkRef,
+  useFormFieldProps,
+} from "@salt-ds/core";
 import { DateFormatter } from "@internationalized/date";
+import { InputCalendar } from "./InputCalendar";
+import { CalendarIcon } from "@salt-ds/icons";
+import { flip, size } from "@floating-ui/react";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -32,6 +43,7 @@ const defaultDateFormatter = (input: string): string => {
         year: "numeric",
       }).format(date);
 };
+
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
@@ -81,7 +93,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       inputProps = {},
       inputRef,
       readOnly: readOnlyProp,
-      role,
       value: valueProp,
       defaultValue: defaultStartDateProp = valueProp === undefined
         ? ""
@@ -130,6 +141,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       state: "value",
     });
 
+    const [open, setOpen] = useState<boolean>(false);
+
     const getDateValidationStatus = (value: string) =>
       isInvalidDate(value) ? "error" : undefined;
 
@@ -153,6 +166,33 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ...restDateInputProps
     } = inputProps;
 
+    const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
+      newOpen,
+      _event,
+      reason
+    ) => {
+      const focusNotBlur = reason === "focus" && newOpen;
+      if (readOnly || focusNotBlur) return;
+      setOpen(newOpen);
+    };
+
+    const { x, y, strategy, elements, floating, reference, context } =
+      useFloatingUI({
+        open: true,
+        onOpenChange: handleOpenChange,
+        placement: "bottom-start",
+        middleware: [
+          size({
+            apply({ rects, elements, availableHeight }) {
+              Object.assign(elements.floating.style, {
+                minWidth: `${rects.reference.width}px`,
+                maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
+              });
+            },
+          }),
+          flip({ fallbackStrategy: "initialPlacement" }),
+        ],
+      });
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
@@ -180,41 +220,60 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     return (
-      <div
-        className={clsx(
-          withBaseName(),
-          withBaseName(variant),
+      <>
+        <div
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("focused")]: !isDisabled && focused,
+              [withBaseName("disabled")]: isDisabled,
+              [withBaseName("readOnly")]: isReadOnly,
+              [withBaseName(validationStatus ?? "")]: validationStatus,
+            },
+            className
+          )}
+          ref={useForkRef(ref, reference)}
+          {...rest}
+        >
+          <input
+            aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
+            aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+            className={clsx(withBaseName("input"), inputProps?.className)}
+            disabled={isDisabled}
+            readOnly={isReadOnly}
+            ref={inputRef}
+            tabIndex={isDisabled ? -1 : 0}
+            onBlur={handleStartDateBlur}
+            onChange={handleStartDateChange}
+            onFocus={!isDisabled ? handleFocus : undefined}
+            placeholder={placeholder}
+            value={value}
+            {...restA11yProps}
+            {...restDateInputProps}
+            required={isRequired}
+          />
+          {/*// TODO: add condition to show calendar*/}
           {
-            [withBaseName("focused")]: !isDisabled && focused,
-            [withBaseName("disabled")]: isDisabled,
-            [withBaseName("readOnly")]: isReadOnly,
-            [withBaseName(validationStatus ?? "")]: validationStatus,
-          },
-          className
-        )}
-        ref={ref}
-        {...rest}
-      >
-        <input
-          aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
-          className={clsx(withBaseName("input"), inputProps?.className)}
-          disabled={isDisabled}
-          readOnly={isReadOnly}
-          ref={inputRef}
-          role={role}
-          tabIndex={isDisabled ? -1 : 0}
-          onBlur={handleStartDateBlur}
-          onChange={handleStartDateChange}
-          onFocus={!isDisabled ? handleFocus : undefined}
-          placeholder={placeholder}
+            <div className={withBaseName("endAdornmentContainer")}>
+              <Button variant="secondary" onClick={() => setOpen(!open)}>
+                <CalendarIcon />
+              </Button>
+            </div>
+          }
+          <div className={withBaseName("activationIndicator")} />
+        </div>
+        <InputCalendar
+          open={open}
           value={value}
-          {...restA11yProps}
-          {...restDateInputProps}
-          required={isRequired}
+          left={x ?? 0}
+          top={y ?? 0}
+          position={strategy}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+          ref={floating}
         />
-        <div className={withBaseName("activationIndicator")} />
-      </div>
+      </>
     );
   }
 );
