@@ -10,13 +10,13 @@ const child = <div className={styles.childContent}>Child</div>;
 
 export const Collapsed = (): ReactElement => {
   const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
-    "child"
+    "parent"
   );
 
   return (
     <StackLayout align="center">
       <ParentChildLayout
-        collapsableView={collapsedView}
+        collapsedView={collapsedView}
         collapseAtBreakpoint="xl"
         parent={parent}
         child={child}

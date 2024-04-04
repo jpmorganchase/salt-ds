@@ -52,7 +52,7 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
         {...args}
         className="parent-child-layout"
         collapseAtBreakpoint="md"
-        collapsableView={collapsedView}
+        collapsedView={collapsedView}
       />
       <StackLayout gap={0} align="center">
         Collapsable View:
@@ -94,7 +94,7 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         {...args}
         className="parent-child-layout"
-        collapsableView={collapsedView}
+        collapsedView={collapsedView}
         collapseAtBreakpoint="md"
       />
       <StackLayout gap={0} align="center">
@@ -279,14 +279,16 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
 
   const [active, setActive] = useState(items[0]);
 
-  const [currentView, setCurrentView] = useState<"child" | "parent">("child");
+  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
+    "parent"
+  );
   const [collapsed, setCollapsed] = useState<boolean>();
 
   const showParent = () => {
-    setCurrentView("parent");
+    setCollapsedView("child");
   };
   const showChild = () => {
-    setCurrentView("child");
+    setCollapsedView("parent");
   };
 
   const parent = (
@@ -315,7 +317,7 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
   const child = (
     <FlexLayout direction="column" className="preferences-layout-child-view">
       <FlexLayout gap={1}>
-        {currentView === "child" && collapsed && (
+        {collapsedView === "parent" && collapsed && (
           <Button onClick={showParent} variant="secondary" aria-label="Back">
             <ChevronLeftIcon />
           </Button>
@@ -334,7 +336,7 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
     <div className="preferences-layout-container">
       <ParentChildLayout
         {...args}
-        collapsableView={currentView}
+        collapsedView={collapsedView}
         parent={parent}
         child={child}
         onCollapseChange={handleCollapsed}
