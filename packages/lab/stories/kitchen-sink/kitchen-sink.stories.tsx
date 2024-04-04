@@ -65,7 +65,7 @@ import {
   Closable as PillClosable,
   Icon as PillIcon,
 } from "../../../core/stories/pill/pill.stories";
-import { Default as OverlayDefault } from "../../../lab/stories/overlay/overlay.stories";
+import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
 import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/stories/examples/HDCompact";
 

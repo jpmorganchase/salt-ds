@@ -1,13 +1,13 @@
 import { ReactElement, useState } from "react";
-
 import {
+  Button,
+  useId,
   Overlay,
   OverlayPanel,
   OverlayTrigger,
   OverlayPanelCloseButton,
   OverlayPanelContent,
-} from "@salt-ds/lab";
-import { Button, useId } from "@salt-ds/core";
+} from "@salt-ds/core";
 
 import styles from "./index.module.css";
 

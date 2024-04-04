@@ -1,18 +1,18 @@
-import { Button } from "@salt-ds/core";
 import {
+  Button,
   Overlay,
   OverlayPanel,
   OverlayTrigger,
   OverlayPanelContent,
   OverlayPanelCloseButton,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
 import "./overlay.stories.css";
 
 export default {
-  title: "Lab/Overlay/Overlay QA",
+  title: "Core/Overlay/Overlay QA",
   component: Overlay,
 } as Meta<typeof Overlay>;
 

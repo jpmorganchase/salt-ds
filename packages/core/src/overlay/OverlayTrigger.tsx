@@ -1,5 +1,5 @@
 import { cloneElement, isValidElement, ReactNode } from "react";
-import { mergeProps, useForkRef } from "@salt-ds/core";
+import { mergeProps, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 
 export interface OverlayTriggerProps {
