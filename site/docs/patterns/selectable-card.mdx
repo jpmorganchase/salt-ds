@@ -13,8 +13,9 @@ data:
 A selectable card allows users to make selections by clicking anywhere within the card. It’s functionally equivalent to a form control, such as [`ToggleButton`](salt/components/toggle-button), [`RadioButton`](/salt/components/radio-button) or [`Checkbox`](/salt/components/checkbox). You can group selectable cards to support single or multiple selection.
 
 <Diagram
-  src="/img/patterns/selectable-card/selectable-card.png"
+  src="/img/patterns/selectable-card/selectable-card-group.png"
   alt="Example showing a series of selectable cards."
+  border
 />
 
 ## When to use
@@ -42,19 +43,19 @@ The following elements are commonly found in a selectable card:
 4. **Supporting content**: A summary of information related to the card subject. You can use a radio button/checkbox for added visual affordance. Read more on this below.
 
 <Diagram
-  src="/img/patterns/selectable-card/anatomy.png"
+  src="/img/patterns/selectable-card/selectable-card-anatomy.png"
   alt="Selectable card using a title, an image and radio button."
   border
 />
 
 ### Card layout
 
-- Use a stack layout to display the card’s content in a column formation.
+- Use a stack layout to display the card’s content in a column.
 - We recommend using radio buttons or checkboxes for single or multiple selection accordingly.
 - Update the padding if you need a small or a large card. Refer to [`Card`](/salt/components/card) documentation for more guidance on custom padding.
 
 <Diagram
-  src="/img/patterns/selectable-card/layout-spacing.png"
+  src="/img/patterns/selectable-card/selectable-card-spacing.png"
   alt="Showing spacing tokens applied to a regular size selectable card."
   border
 />
@@ -72,15 +73,16 @@ Use radio buttons in selectable cards when your users need to make a single sele
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/selectable-card/single-radio.png",
+      src: "/img/patterns/selectable-card/radio-button.png",
       alt: "Mutually exclusive selection."
     },
     {
-      src: "/img/patterns/selectable-card/single-no-radio.png",
+      src: "/img/patterns/selectable-card/hide-radio-button.png",
       alt: "Mutually exclusive selection without radio button."
     },
   ]}
   label="Hide radio button"
+  caption="Selectable cards with radio buttons."
 />
 
 ## Multiple selection
@@ -88,8 +90,9 @@ Use radio buttons in selectable cards when your users need to make a single sele
 Use checkboxes in selectable cards when your users need to make multiple selections from a list of options. Checkboxes allow users to select or deselect multiple items independently.
 
 <Diagram
-  src="/img/patterns/selectable-card/multiple.png"
+  src="/img/patterns/selectable-card/checkbox.png"
   alt="Multiple selection."
+  border
   caption="Use checkboxes for multiple selection."
 />
 
@@ -108,11 +111,11 @@ Cards are most often arranged using a [grid layout](/salt/components/grid-layout
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/selectable-card/grid-no-spacing.png",
+      src: "/img/patterns/selectable-card/cards-grid-layout.png",
       alt: "Cards arranged in a grid layout",
     },
     {
-      src: "/img/patterns/selectable-card/grid-spacing.png",
+      src: "/img/patterns/selectable-card/cards-grid-layout-spacing.png",
       alt: "Cards arranged in a grid layout with spacing",
     },
   ]}
@@ -134,15 +137,16 @@ Use a [stack layout](/salt/components/stack-layout) to compose cards vertically 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/selectable-card/stack-no-spacing.png",
+      src: "/img/patterns/selectable-card/cards-stack-layout-mobile.png",
       alt: "Cards arranged in a stack layout",
     },
     {
-      src: "/img/patterns/selectable-card/stack-spacing.png",
+      src: "/img/patterns/selectable-card/cards-stack-layout-mobile-spacing.png",
       alt: "Cards arranged in a stack layout with spacing",
     },
   ]}
   label="Show spacing"
+  caption="Cards arranged in a stack layout."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
