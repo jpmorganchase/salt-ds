@@ -1,5 +1,5 @@
 ---
-"@salt-ds/theme": patch
+"@salt-ds/theme": minor
 ---
 
 Updated `--salt-size-indicator`.
