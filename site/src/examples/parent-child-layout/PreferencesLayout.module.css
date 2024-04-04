@@ -9,13 +9,13 @@
   margin: 0;
 }
 
-.parent-child-composite-container {
-  max-width: 545px;
-  width: 100%;
-  min-height: 328px;
-  padding: var(--salt-spacing-300);
+.container {
+  width: 545px;
+  justify-content: center;
+  width: 100%
 }
 
-.parent-child-composite-container .child {
-  padding: var(--salt-spacing-200);
+.parentView {
+  width: 160px;
 }
+

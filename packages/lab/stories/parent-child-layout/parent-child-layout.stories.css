@@ -1,7 +1,5 @@
 .parent-child-layout {
-  width: 20vw;
-  max-width: 250px;
-  height: 200px;
+  width: 500px;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
@@ -11,7 +9,6 @@
   justify-content: center;
   align-items: center;
   min-width: 85px;
-  height: 100%;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
@@ -20,7 +17,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
@@ -39,16 +35,14 @@ h2 {
   margin: 0;
 }
 
-.parent-child-composite-container .saltParentChildLayout {
+.preferences-layout-container {
   width: 545px;
-  padding: var(--salt-spacing-300);
 }
 
-.parent-child-composite-container .child {
-  max-width: 338px;
-  padding: var(--salt-spacing-200);
+.preferences-layout-parent-view {
+  width: 160px;
 }
 
-.parent-child-composite-container .saltParentChildLayout-child {
-  max-width: 375px;
+.preferences-layout-child-view {
+  padding-right: var(--salt-spacing-300);
 }

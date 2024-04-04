@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
+import { ParentChildLayout } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
 import clsx from "clsx";
@@ -10,15 +10,9 @@ const parent = <div className={styles.parentContent}>Parent</div>;
 const child = <div className={styles.childContent}>Child</div>;
 
 export const ReducedMotion = (): ReactElement => {
-  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
-
-  const handleParent = () => {
-    setCurrentView("parent");
-  };
-  const handleChild = () => {
-    setCurrentView("child");
-  };
-
+  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
+    "parent"
+  );
   return (
     <StackLayout align="center">
       <div>
@@ -29,7 +23,7 @@ export const ReducedMotion = (): ReactElement => {
         </p>
       </div>
       <ParentChildLayout
-        collapsedViewElement={currentView}
+        collapsedView={collapsedView}
         collapseAtBreakpoint="xl"
         parent={parent}
         child={child}
@@ -39,10 +33,10 @@ export const ReducedMotion = (): ReactElement => {
         )}
       />
       <ToggleButtonGroup defaultValue="parent">
-        <ToggleButton value="parent" onClick={handleParent}>
+        <ToggleButton value="parent" onClick={() => setCollapsedView("parent")}>
           Parent
         </ToggleButton>
-        <ToggleButton value="child" onClick={handleChild}>
+        <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
           Child
         </ToggleButton>
       </ToggleButtonGroup>

@@ -3,88 +3,58 @@ import * as parentChildStories from "@stories/parent-child-layout/parent-child-l
 
 const composedStories = composeStories(parentChildStories);
 
-const { Default, Collapsed } = composedStories;
+const { Default } = composedStories;
 
-describe("GIVEN a Parent and Child", () => {
-  describe("WHEN no gap values are provided", () => {
-    it("THEN it should display a gap by default", () => {
+describe("WHEN no gap values are provided", () => {
+  it("THEN it should display a gap by default", () => {
+    cy.mount(<Default />);
+
+    cy.get(".saltParentChildLayout").should("have.css", "gap", "0px");
+  });
+});
+
+describe("WHEN collapsableAtbreakpoint is provided", () => {
+  it(
+    "THEN it should be uncollapsed when the current breakpoint is greater than the target breakpoint",
+    { viewportHeight: 900, viewportWidth: 1920 },
+    () => {
+      cy.mount(<Default collapseAtBreakpoint="lg" />);
+      cy.get(".saltParentChildLayout-collapsed").should("not.be.visible");
+    }
+  );
+
+  it(
+    "THEN it should be collapsed when the current breakpoint less than or equal to the target breakpoint",
+    { viewportHeight: 900, viewportWidth: 1280 },
+    () => {
+      cy.mount(<Default collapseAtBreakpoint="lg" />);
+      cy.get(".saltParentChildLayout-collapsed").should("be.visible");
+    }
+  );
+});
+
+describe("WHEN collapsable", () => {
+  it(
+    "THEN it should display the Child by default",
+    { viewportHeight: 900, viewportWidth: 600 },
+    () => {
       cy.mount(<Default />);
 
-      cy.get(".saltParentChildLayout").should("have.css", "column-gap", "0px");
-
-      cy.get(".saltParentChildLayout").should("have.css", "row-gap", "0px");
-    });
-  });
-
-  describe("WHEN passing an array as a parent", () => {
-    const parent = ["a", "b", "c", "d", "e"];
-
-    it("THEN it should render as expected", () => {
-      cy.mount(<Default parent={parent} />);
-
-      cy.get(".saltFlexItem").first().should("have.text", parent.join(""));
-    });
-  });
-
-  describe("WHEN passing an array as a child", () => {
-    const child = ["a", "b", "c", "d", "e"];
-
-    it("THEN it should render as expected", () => {
-      cy.mount(<Default child={child} />);
-
-      // Make sure both child and parent are rendered before running next test `eq`
-      cy.get(".saltFlexItem").should("have.length", 2);
-      cy.get(".saltFlexItem").eq(1).should("have.text", child.join(""));
-    });
-  });
-
-  describe("WHEN no stackedAtBreakpoint value is provided", () => {
-    it(
-      "THEN it should render both components on larger viewports",
-      {
-        viewportHeight: 900,
-        viewportWidth: 1921,
-      },
-      () => {
-        cy.mount(<Default />);
-        cy.get(".saltFlexItem").should("have.length", 2);
-      }
-    );
-
-    it(
-      "THEN it should render only one component on small viewports",
-      {
-        viewportHeight: 900,
-        viewportWidth: 700,
-      },
-      () => {
-        cy.mount(<Default />);
-        cy.get(".saltFlexItem").should("have.length", 1);
-      }
-    );
-  });
-
-  describe("WHEN in stacked view", () => {
-    it("THEN it should only display the parent by default", () => {
-      cy.mount(<Collapsed />);
-
-      cy.get(".saltFlexItem").should("have.length", 1);
-
-      cy.get(".saltFlexItem > div").should(($div) => {
-        expect($div).to.contain("Parent");
-      });
-    });
-
-    it("THEN it should change to the child view when the button is clicked", () => {
-      cy.mount(<Collapsed />);
-
-      cy.findByRole("radio", { name: /Child/i }).click();
-
-      cy.get(".saltFlexItem").should("have.length", 1);
-
-      cy.get(".saltFlexItem > div").should(($div) => {
+      cy.get(".saltParentChildLayout-collapsed").should(($div) => {
         expect($div).to.contain("Child");
       });
-    });
-  });
+    }
+  );
+
+  it(
+    "THEN it should display the Parent component when passed as the collapsedViewProp",
+    { viewportHeight: 900, viewportWidth: 600 },
+    () => {
+      cy.mount(<Default collapsedView="parent" />);
+
+      cy.get(".saltParentChildLayout-collapsed").should(($div) => {
+        expect($div).to.contain("Parent");
+      });
+    }
+  );
 });
