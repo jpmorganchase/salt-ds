@@ -75,13 +75,6 @@
   --card-accent-color: var(--salt-selectable-foreground-hover);
 }
 
-/* Styles applied on hover state to InteractableCard */
-.saltInteractableCard:hover {
-  cursor: var(--salt-selectable-cursor-hover);
-  box-shadow: var(--salt-overlayable-shadow-hover);
-  --card-accent-color: var(--salt-selectable-foreground-hover);
-}
-
 /* Styles applied on active state to InteractableCard and if `selected={true}` */
 .saltInteractableCard-selected,
 .saltInteractableCard:active,
@@ -133,4 +126,13 @@
 /* Styles applied to nested divs in InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled div {
   pointer-events: none;
+}
+
+/* Styles applied on hover state to InteractableCard */
+@media (hover: hover) {
+  .saltInteractableCard:hover {
+    cursor: var(--salt-selectable-cursor-hover);
+    box-shadow: var(--salt-overlayable-shadow-hover);
+    --card-accent-color: var(--salt-selectable-foreground-hover);
+  }
 }

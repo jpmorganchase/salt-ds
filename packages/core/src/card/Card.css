@@ -21,12 +21,6 @@
   --card-accent-color: var(--salt-container-secondary-borderColor);
 }
 
-/* Styles applied if `hoverable` is set */
-.saltCard-hoverable:hover {
-  box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
-  --card-accent-color: var(--salt-selectable-foreground-hover);
-}
-
 /* Styles applied to create accent */
 .saltCard-accent::after {
   content: "";
@@ -113,4 +107,12 @@ a:focus .saltCard-interactable.saltCard-disabled {
 /* **Deprecated:** Styles applied to nested divs if `disabled={true}` */
 .saltCard-disabled div {
   pointer-events: none;
+}
+
+/* Styles applied if `hoverable` is set */
+@media (hover: hover) {
+  .saltCard-hoverable:hover {
+    box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+    --card-accent-color: var(--salt-selectable-foreground-hover);
+  }
 }

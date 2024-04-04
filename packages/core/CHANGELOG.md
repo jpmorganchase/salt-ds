@@ -1,5 +1,52 @@
 # @salt-ds/core
 
+## 1.23.0
+
+### Minor Changes
+
+- ada5af31: Updates to `InteractableCard`:
+
+  - Added `accent` prop for border positioning, deprecating `accentPlacement`.
+  - Added `selected` prop for selected styling.
+  - Added `value` prop for selectable use cases.
+
+- ada5af31: Added `InteractableCardGroup` component to support selectable cards in a group. It allows users to select one or multiple values from a set of interactable cards.
+
+  ```tsx
+  <InteractableCardGroup multiSelect>
+    <InteractableCard value="one">One</InteractableCard>
+    <InteractableCard value="two">Two</InteractableCard>
+    <InteractableCard value="three">Three</InteractableCard>
+  </InteractableCardGroup>
+  ```
+
+- 96c2ca62: Added `SegmentedButtonGroup` to core.
+  `SegmentedButtonGroup` shows a list of actionable buttons, flush with separators between them.
+
+  ```tsx
+  return (
+    <SegmentedButtonGroup>
+      <Button variant={variant}>Button</Button>
+      <Button variant={variant}>Button</Button>
+      <Button variant={variant}>Button</Button>
+    </SegmentedButtonGroup>
+  );
+  ```
+
+### Patch Changes
+
+- 3e4e819c: `Card`, `LinkCard` and `InteractableCard` updated to only apply hover effects on non-touch devices.
+- f6202615: Visual updates to Navigation item's active indicator due to `--salt-size-indicator` being updated.
+- 8ffdfae1: Fixed Dialog children being unmounted twice unexpectedly when closing
+- a726afcf: Improved the accessibility of Switch by applying `role="switch"`.
+
+  **Note:** This might affect tests where you are targeting Switch by its role. For example, using React Testing Library-based selectors, tests will have to be updated like the following:
+
+  ```diff
+  - getByRole("checkbox")
+  + getByRole("switch")
+  ```
+
 ## 1.22.0
 
 ### Minor Changes
