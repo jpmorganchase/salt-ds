@@ -47,10 +47,10 @@ describe("WHEN collapsable", () => {
   );
 
   it(
-    "THEN it should display the Parent component when passed as the collapsableViewProp",
+    "THEN it should display the Parent component when passed as the collapsedViewProp",
     { viewportHeight: 900, viewportWidth: 600 },
     () => {
-      cy.mount(<Default collapsableView="parent" />);
+      cy.mount(<Default collapsedView="parent" />);
 
       cy.get(".saltParentChildLayout-collapsed").should(($div) => {
         expect($div).to.contain("Parent");
