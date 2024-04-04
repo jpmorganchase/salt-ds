@@ -1,6 +1,11 @@
-import { Breakpoints, FlexLayoutProps, makePrefixer } from "@salt-ds/core";
+import { Breakpoints, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, ReactNode, useEffect } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ReactNode,
+  useEffect,
+} from "react";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -9,7 +14,8 @@ import parentChildLayoutCss from "./ParentChildLayout.css";
 
 export type StackedViewElement = "parent" | "child";
 
-export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
+export interface ParentChildLayoutProps
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
@@ -17,11 +23,11 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
   /**
    * Change element that is displayed when in staked view.
    */
-  collapseChildElement?: boolean;
+  collapsableView?: "child" | "parent";
   /**
-   * Disable all animations.
+   * Controls the space between parent and child components, default is 0.
    */
-  disableAnimations?: boolean;
+  gap: number;
   /**
    * Parent component to be rendered
    */
@@ -33,7 +39,6 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
   /**
    * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable
    */
-  // What is the use case for this ??
   onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
@@ -45,12 +50,13 @@ export const ParentChildLayout = forwardRef<
 >(function ParentChildLayout(
   {
     collapseAtBreakpoint = "sm",
-    collapseChildElement,
+    collapsableView = "child",
     parent,
     child,
-    disableAnimations,
     className,
+    gap = 0,
     onCollapseChange,
+    style,
     ...rest
   },
   ref
@@ -66,25 +72,34 @@ export const ParentChildLayout = forwardRef<
 
   useEffect(() => {
     onCollapseChange?.(isCollapsed);
+    console.log("useEffect");
   }, [isCollapsed, onCollapseChange]);
 
+  const parentChildLayoutStyles = {
+    ...style,
+    "--parentChildLayout-gap": `calc(var(--salt-spacing-100) * ${gap})`,
+  };
+
   return (
-    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+    <div
+      ref={ref}
+      className={clsx(withBaseName(), className)}
+      style={parentChildLayoutStyles}
+      {...rest}
+    >
       {isCollapsed ? (
         <div
           className={clsx({
             [withBaseName("collapsed")]: isCollapsed,
-            [withBaseName("childAnimation")]:
-              !collapseChildElement && !disableAnimations,
-            [withBaseName("parentAnimation")]:
-              collapseChildElement && !disableAnimations,
+            [withBaseName("childAnimation")]: collapsableView === "child",
+            [withBaseName("parentAnimation")]: collapsableView === "parent",
           })}
         >
-          {isCollapsed && collapseChildElement ? parent : child}
+          {isCollapsed && collapsableView === "parent" ? parent : child}
         </div>
       ) : (
         <>
-          <div>{parent}</div>
+          <div className={withBaseName("parent")}>{parent}</div>
           <div className={withBaseName("child")}>{child}</div>
         </>
       )}

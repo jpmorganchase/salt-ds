@@ -35,16 +35,14 @@ h2 {
   margin: 0;
 } 
 
-/* .parent-child-composite-container .saltParentChildLayout {
+.preferences-layout-container {
   width: 545px;
-  padding: var(--salt-spacing-300);
 }
 
-.parent-child-composite-container .child {
-  max-width: 338px;
-  padding: var(--salt-spacing-200);
+.preferences-layout-parent-view {
+  width: 160px;
 }
 
-.parent-child-composite-container .saltParentChildLayout-child {
-  max-width: 375px;
-} */
+.preferences-layout-child-view { 
+  padding-right: var(--salt-spacing-300);
+}
