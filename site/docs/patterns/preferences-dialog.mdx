@@ -13,7 +13,7 @@ data:
 A preferences dialog allows you to display, group and navigate application preferences within a responsive modal dialog window. This pattern introduces guidelines to make the preferences dialog consistent and usable.
   
   <Diagram
-    src="/img/patterns/preferences-dialog/preferences-dialog.png"
+    src="/img/patterns/preferences-dialog/blotter_grid_settings.png"
     alt="Preferences Dialog example"
     border
   />
@@ -36,22 +36,22 @@ A preferences dialog comprises four key features:
 4. [Parent-child layout](../components/parent-child-layout): positions the navigation and content within a preference dialog
 
   <Diagram
-    src="/img/patterns/preferences-dialog/anatomy.png"
+    src="/img/patterns/preferences-dialog/blotter_grid_anatomy.png"
     alt="Preferences Dialog navigation and content."
     border
   />
 
-### Layout construction
+### Layout
 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/preferences-dialog/layout.png",
-      alt: "Example showing Preferences Dialog's layout construction.",
+      src: "/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_off.png",
+      alt: "Example showing a preferences dialog's layout construction.",
     },
     {
-      src: "/img/patterns/preferences-dialog/layout-grid.png",
-      alt: "Example showing Preferences Dialog's layout construction with grid.",
+      src: "/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_on.png",
+      alt: "Example showing a preferences dialog's layout construction with grid.",
     },
   ]}
   label="Layout grid"
@@ -60,43 +60,29 @@ A preferences dialog comprises four key features:
 <ExampleContainer type="positive" customPillText="Best practices">
   In the [parent-child layout](../components/parent-child-layout), the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
 
-  To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [Navigation pattern](./navigation).
+  To implement a responsive experience for preferences dialogs, refer to the layout guidance in the [navigation pattern](./navigation).
 
 </ExampleContainer>
 
-## Compositions
-
-### Navigation
-
-You can use navigation items to switch between pages of grouped preferences. 
-
-  <Diagram
-    src="/img/patterns/preferences-dialog/navigation.png"
-    alt="Example of vertical navigation items and content section."
-    border
-  />
-
-<ExampleContainer type="positive" customPillText="Best practices">
-  Limit nesting to no more than two levels, if possible. A deep hierarchy can make it difficult for users to discover or locate specific preferences.
-</ExampleContainer>
-
-### Scrolling
+## Content area scrolling
 
 We recommend that scrolling affordance should only take effect if content in the parent-child layout exceeds the visible content area.
 
-The visual indicators are the two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow. 
+This is visually indicated by two separator lines above and below the parent-child layout. Apply the shadow-scroll token for the container shadow. 
 
   <Diagram
-    src="/img/patterns/preferences-dialog/scrolling.png"
+    src="/img/patterns/preferences-dialog/scrolling_content_area.png"
     alt="Example of content section scrolling."
+    caption="A preferences dialog with scrolling content area."
     border
   />
 
 Display scrolling affordance when the content or navigation (or both) exceeds the visible area of the parent-child layout.
 
   <Diagram
-    src="/img/patterns/preferences-dialog/scrolling-affordance.png"
+    src="/img/patterns/preferences-dialog/scrollable_navigation_and_content.png"
     alt="Example of scrolling affordance."
+    caption="A preferences dialog with scrollable navigation and content area."
     border
   />
 
@@ -110,8 +96,9 @@ Display scrolling affordance when the content or navigation (or both) exceeds th
 It's preferable for affected components in your application to listen for live changes in the preferences dialog and dynamically update themselves.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/applying-preferences.png"
+  src="/img/patterns/preferences-dialog/actions_manually_applied_preferences.png"
   alt="Applying preferences."
+  caption="This preferences dialog has Cancel and Save actions for applying preferences."
   border
 />
 
@@ -119,13 +106,14 @@ It's preferable for affected components in your application to listen for live c
   Display core actions to the right of a dialog. Refer to the [button bar pattern](./button-bar) for further guidance on how to display user actions within dialogs. 
 </ExampleContainer>
 
-### Live updates
+## Live updates
 
 If your application can listen for changes and take immediate effect, you don't need to display a button bar across a preferences dialog. A close button in the top-right corner of the dialog should be on display instead to allow the user to close the dialog after editing any preferences.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/live-updates.png"
+  src="/img/patterns/preferences-dialog/live-updating_dialog.png"
   alt="Live updates."
+  caption="Updating preferences automatically within a dialog negates the need for a button bar."
   border
 />
 
@@ -134,12 +122,13 @@ If your application can listen for changes and take immediate effect, you don't 
 We recommend configuring the button bar to display secondary actions to the left such as **Import** and **Export** if you need to enable other actions.
 
 <Diagram
-  src="/img/patterns/preferences-dialog/secondary-actions.png"
+  src="/img/patterns/preferences-dialog/preferences_dialog_secondary_action.png"
   alt="Secondary actions displayed to the left."
+  caption="A preferences dialog with secondary actions displayed to the left."
   border
 />
 
-## Responsiveness
+## Responsive behavior
 
 The preferences dialog is responsive to the width of the application viewport and responds dynamically to the Salt breakpoints. 
 
@@ -153,8 +142,9 @@ Once a preference dialog hits a certain breakpoint, you can configure the layout
 When the navigation collapses, the preferences content spans the entire width of the dialog. To select and view alternative preference types, users should use the back chevron button to navigate back to the vertical navigation. The vertical navigation view also spans the dialog width. A collapsed layout ensures improved usability of dialog content in smaller screen sizes or application resolutions.
 
   <Diagram
-    src="/img/patterns/preferences-dialog/collapsed-navigation.png"
+    src="/img/patterns/preferences-dialog/preferences_dialog_collapsed_navigation.png"
     alt="Collapsed navigation."
+    caption="A preferences dialog with a collapsed navigation."
     border
   />
 
@@ -167,8 +157,9 @@ For smaller viewports (i.e. devices with limited screen sizes), it's preferable 
 </ExampleContainer>
 
   <Diagram
-    src="/img/patterns/preferences-dialog/stacked-button-bar.png"
+    src="/img/patterns/preferences-dialog/preferences_dialog_stacked_button_bar.png"
     alt="Stacked button bar."
+    caption="A preferences dialog with a stacked button bar."
     border
   />
 
