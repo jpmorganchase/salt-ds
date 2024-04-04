@@ -20,7 +20,7 @@
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
 }
 
- nav {
+nav {
   position: relative;
   min-width: 160px;
 }
@@ -33,7 +33,7 @@ ul {
 
 h2 {
   margin: 0;
-} 
+}
 
 .preferences-layout-container {
   width: 545px;
@@ -43,6 +43,6 @@ h2 {
   width: 160px;
 }
 
-.preferences-layout-child-view { 
+.preferences-layout-child-view {
   padding-right: var(--salt-spacing-300);
 }

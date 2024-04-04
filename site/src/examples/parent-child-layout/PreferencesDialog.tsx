@@ -12,6 +12,9 @@ import {
   StackLayout,
   Dropdown,
   Option,
+  Dialog,
+  DialogContent,
+  DialogCloseButton,
 } from "@salt-ds/core";
 import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 import {
@@ -132,7 +135,7 @@ const exportView = () => (
   </StackLayout>
 );
 
-export const PreferencesLayout = () => {
+export const PreferencesDialog = () => {
   const items = [
     {
       label: "Display",
@@ -154,9 +157,7 @@ export const PreferencesLayout = () => {
     },
   ];
 
-  const [currentView, setCurrentView] = useState<
-    StackedViewElement | undefined
-  >();
+  const [currentView, setCurrentView] = useState<"child" | "parent">("child");
 
   const showParent = () => {
     collapsed && setCurrentView("parent");
@@ -167,9 +168,10 @@ export const PreferencesLayout = () => {
 
   const [active, setActive] = useState(items[0]);
   const [collapsed, setCollapsed] = useState<boolean>();
+  const [open, setOpen] = useState<boolean>(false);
 
   const parent = (
-    <nav className={styles.navigation}>
+    <nav className={styles.parentView}>
       <ul className={styles.navList}>
         {items.map((item) => (
           <li key={item.label}>
@@ -193,9 +195,9 @@ export const PreferencesLayout = () => {
   );
 
   const child = (
-    <FlexLayout direction="column" className={styles.child}>
+    <FlexLayout direction="column" className={styles.childView}>
       <FlexLayout gap={1}>
-        {currentView === "child" && (
+        {currentView === "child" && collapsed && (
           <Button onClick={showParent} variant="secondary" aria-label="Back">
             <ChevronLeftIcon />
           </Button>
@@ -207,19 +209,43 @@ export const PreferencesLayout = () => {
   );
 
   const handleCollapsed = (isCollapsed: boolean) => {
-    if (!isCollapsed) setCurrentView(undefined);
     setCollapsed(isCollapsed);
   };
 
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <div className={styles["parent-child-composite-container"]}>
-      <ParentChildLayout
-        collapsedViewElement={currentView}
-        collapseAtBreakpoint="lg"
-        parent={parent}
-        child={child}
-        onCollapseChange={handleCollapsed}
-      />
-    </div>
+    <>
+      <Button onClick={handleRequestOpen}>Open Preferences Dialog</Button>
+      <Dialog
+        size={"small"}
+        open={open}
+        onOpenChange={onOpenChange}
+        className={styles.dialog}
+      >
+        <DialogCloseButton onClick={handleClose} />
+        <DialogContent>
+          <ParentChildLayout
+            gap={1}
+            collapsableView={currentView}
+            collapseAtBreakpoint="lg"
+            parent={parent}
+            child={child}
+            onCollapseChange={handleCollapsed}
+            className={styles.container}
+          />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };

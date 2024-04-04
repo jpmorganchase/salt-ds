@@ -27,7 +27,7 @@ export interface ParentChildLayoutProps
   /**
    * Controls the space between parent and child components, default is 0.
    */
-  gap: number;
+  gap?: number;
   /**
    * Parent component to be rendered
    */
@@ -72,7 +72,6 @@ export const ParentChildLayout = forwardRef<
 
   useEffect(() => {
     onCollapseChange?.(isCollapsed);
-    console.log("useEffect");
   }, [isCollapsed, onCollapseChange]);
 
   const parentChildLayoutStyles = {

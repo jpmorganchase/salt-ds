@@ -42,9 +42,9 @@ export const Default: StoryFn<typeof ParentChildLayout> = (args) => (
 Default.args = { parent, child };
 
 export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [collapseChildElement, setCollapseChildElement] = useState<
-    "child" | "parent"
-  >("child");
+  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
+    "child"
+  );
 
   return (
     <StackLayout align="center">
@@ -52,21 +52,18 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
         {...args}
         className="parent-child-layout"
         collapseAtBreakpoint="md"
-        collapsableView={collapseChildElement}
+        collapsableView={collapsedView}
       />
       <StackLayout gap={0} align="center">
         Collapsable View:
         <ToggleButtonGroup defaultValue="child">
           <ToggleButton
             value="parent"
-            onClick={() => setCollapseChildElement("parent")}
+            onClick={() => setCollapsedView("parent")}
           >
             Parent
           </ToggleButton>
-          <ToggleButton
-            value="child"
-            onClick={() => setCollapseChildElement("child")}
-          >
+          <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
             Child
           </ToggleButton>
         </ToggleButtonGroup>
@@ -81,9 +78,9 @@ Collapsed.args = {
 };
 
 export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [collapseChildElement, setCollapseChildElement] = useState<
-    "child" | "parent"
-  >("child");
+  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
+    "child"
+  );
 
   return (
     <StackLayout align="center">
@@ -97,7 +94,7 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         {...args}
         className="parent-child-layout"
-        collapsableView={collapseChildElement}
+        collapsableView={collapsedView}
         collapseAtBreakpoint="md"
       />
       <StackLayout gap={0} align="center">
@@ -105,14 +102,11 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
         <ToggleButtonGroup defaultValue="child">
           <ToggleButton
             value="parent"
-            onClick={() => setCollapseChildElement("parent")}
+            onClick={() => setCollapsedView("parent")}
           >
             Parent
           </ToggleButton>
-          <ToggleButton
-            value="child"
-            onClick={() => setCollapseChildElement("child")}
-          >
+          <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
             Child
           </ToggleButton>
         </ToggleButtonGroup>
@@ -285,6 +279,16 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
 
   const [active, setActive] = useState(items[0]);
 
+  const [currentView, setCurrentView] = useState<"child" | "parent">("child");
+  const [collapsed, setCollapsed] = useState<boolean>();
+
+  const showParent = () => {
+    setCurrentView("parent");
+  };
+  const showChild = () => {
+    setCurrentView("child");
+  };
+
   const parent = (
     <nav className="preferences-layout-parent-view">
       <ul>
@@ -297,6 +301,7 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
               onClick={(event) => {
                 event.preventDefault();
                 setActive(item);
+                showChild();
               }}
             >
               {item.icon} {item.label}
@@ -310,18 +315,31 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
   const child = (
     <FlexLayout direction="column" className="preferences-layout-child-view">
       <FlexLayout gap={1}>
-        <Button className="back-button" variant="secondary" aria-label="Back">
-          <ChevronLeftIcon />
-        </Button>
+        {currentView === "child" && collapsed && (
+          <Button onClick={showParent} variant="secondary" aria-label="Back">
+            <ChevronLeftIcon />
+          </Button>
+        )}
         <H2>{active.label}</H2>
       </FlexLayout>
       {active.view?.()}
     </FlexLayout>
   );
 
+  const handleCollapsed = (isCollapsed: boolean) => {
+    setCollapsed(isCollapsed);
+  };
+
   return (
     <div className="preferences-layout-container">
-      <ParentChildLayout {...args} parent={parent} child={child} gap={1} />
+      <ParentChildLayout
+        {...args}
+        collapsableView={currentView}
+        parent={parent}
+        child={child}
+        onCollapseChange={handleCollapsed}
+        gap={1}
+      />
     </div>
   );
 };

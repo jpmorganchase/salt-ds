@@ -1,10 +1,10 @@
 .saltParentChildLayout {
   display: flex;
-  gap: calc(var(--parentChildLayout-gap) * 3)
+  gap: calc(var(--parentChildLayout-gap) * 3);
 }
 
 .saltParentChildLayout-child {
-  flex-grow: 1
+  flex-grow: 1;
 }
 
 .saltParentChildLayout-collapsed {
@@ -20,8 +20,8 @@
 }
 
 @media (prefers-reduced-motion) {
-  .saltParentChildLayout-parentAnimation  {
-    animation: var(--salt-animation-fade-in-center);;
+  .saltParentChildLayout-parentAnimation {
+    animation: var(--salt-animation-fade-in-center);
   }
 
   .saltParentChildLayout-childAnimation {
