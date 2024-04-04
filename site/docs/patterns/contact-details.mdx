@@ -32,39 +32,74 @@ Consider a data grid when you need to display many contacts with a standardized 
 
 ## How to build
 
-Contact details are comprised of an avatar and text elements. You can use a title as a name of a contact or a company. Optional details can be company names or company ID.
-You can display any relevant meta data that you want to communicate depending on the requirements of your applications. 
+### Anatomy
 
-You can define the details as links, making them interactive, to enable immediate communication to a contact from within your application.
+The contact details pattern comprises an avatar and text elements:
+
+1. **Avatar**: A visual representation of the contact that provides a point of reference at glance.
+2. **Header**: Contains the name of the contact. Optionally, use text to display further information such as company names or company ID.
+3. **Additional details**: Relevant meta data, e.g., role, location, phone number or email. You can define the details as links, making them interactive, to enable immediate communication to a contact from within your application.
+
+<Diagram
+    src="/img/patterns/contact-details/contact-details-anatomy.png"
+    alt="Contact details with component annotations"
+    border
+/>
 
 <ExampleContainer type="positive" customPillText="Best practices">
 Keep label lengths similar to ensure close proximity to their respective values. If you’re displaying supplementary details, we recommend that you left align their labels.
 </ExampleContainer>
 
-### Contact details
+### Layout
 
+Use [`StackLayout`](/salt/components/stack-layout) to display the avatar and all text elements that make up contact details in a row.
 
  <Diagram
-    src="/img/patterns/contact-details/how-to-build.png"
-    alt="Contact Details with component annotations"
+    src="/img/patterns/contact-details/contact-details-layout-1.png"
+    alt="Contact Details with layout annotations"
     border
   />
 
-#### Using a stack layout
+Use `StackLayout` to display the additional details in a row.
 
  <Diagram
-    src="/img/patterns/contact-details/using-stack-layout.png"
-    alt="Contact Details with spacing annotations for Stack Layout"
+    src="/img/patterns/contact-details/contact-details-layout-2.png"
+    alt="Contact Details with layout annotations"
     border
   />
 
-#### Using icons
+Use `StackLayout` to display the header and additional details section in a column.
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details-layout-3.png"
+    alt="Contact Details with layout annotations"
+    border
+  />
+
+Use `StackLayout` to display the header and further information (if there is any) in a column.
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details-layout-4.png"
+    alt="Contact Details with layout annotations"
+    border
+  />
+
+Use `StackLayout` to display further information (if there is any) in a column.
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details-layout-5.png"
+    alt="Contact Details with layout annotations"
+    border
+  />
+
+## Using icons
 
 You can use icon descriptors as a visually concise alternative to textual labels—to help users quickly identify the available communication channels.
 
  <Diagram
-    src="/img/patterns/contact-details/using-icons.png"
+    src="/img/patterns/contact-details/contact-details-icons.png"
     alt="Contact Details using Icon Descriptors"
+    caption="An example of contact details using descriptive icons."
     border
   />
 
@@ -72,38 +107,52 @@ You can use icon descriptors as a visually concise alternative to textual labels
 Refrain from using icon descriptors when you have multiple values for similar channels, such as work and cellphone numbers.
 </ExampleContainer>
 
-### In a container
+## Using links
+
+You can define contact details as links, making them interactive. This enables immediate communication to a contact from within your application.
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details-links.png"
+    alt="Contact Details using Icon Descriptors"
+    caption="An example of contact details using links."
+    border
+  />
+
+## In a container
 
 You can embed contact details in a range of container components. 
 
 This example demonstrates the component embedded within a [card](/salt/components/card).
 
  <Diagram
-    src="/img/patterns/contact-details/card-embedded.png"
+    src="/img/patterns/contact-details/contact-details-card.png"
     alt="Contact Details Embedded in a Card"
+    caption="Contact details embedded within a card."
     border
   />
 
 
-### Quick actions
+## Quick actions
 
 You can define quick actions, one-click shortcuts to specific functions or features. This can include starting a new email in Outlook, or calling a contact in Zoom.
 
 Ensure that quick action buttons have a tooltip displayed as per the [icon only button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
 
  <Diagram
-    src="/img/patterns/contact-details/quick-actions.png"
+    src="/img/patterns/contact-details/contact-details-actions.png"
     alt="Contact Details with quick actions button bar"
+    caption="Contact details with a quick actions button bar."
     border
   />
 
-### Collapsible
+## Collapsible
 
 If you’re displaying supplementary details, you can configure them to be collapsible.
 
  <Diagram
-    src="/img/patterns/contact-details/collapsible.png"
+    src="/img/patterns/contact-details/contact-details-collapsible.png"
     alt="Contact Details with collapsible details"
+    caption="Contact details with collapsible details."
     border
   />
 
@@ -111,15 +160,32 @@ If you’re displaying supplementary details, you can configure them to be colla
 Consider making supplementary details collapsible when they contain secondary information, and don’t need to be always on display.
 </ExampleContainer>
 
-### List version
+## List version
 
 The list version allows you to display a snapshot of key details. It’s ideal when you have restricted real estate, such as in a client picker dropdown menu or a contact directory list.
 
 To show as many options as possible, we recommend you keep data points to no more than one line. Prioritize the most important values.
 
  <Diagram
-    src="/img/patterns/contact-details/list.png"
+    src="/img/patterns/contact-details/contact-details-list.png"
     alt="Contact Details in list"
+    caption="Contact details in a list."
+    border
+  />
+
+### Layout
+
+Use `StackLayout` to display the text elements underneath the header in a row.
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details-layout-1-list.png"
+    alt="Contact Details in list using stack layout."
+    border
+  />
+
+ <Diagram
+    src="/img/patterns/contact-details/contact-details-layout-2-list.png"
+    alt="Contact Details in list using stack layout."
     border
   />
 
