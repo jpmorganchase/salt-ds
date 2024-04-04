@@ -76,9 +76,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       >
         <div className={withBaseName("barContainer")}>
           <div className={withBaseName("bar")} style={barStyle} />
-          {bufferValue && (
+          {bufferValue > 0 ? (
             <div className={withBaseName("buffer")} style={bufferStyle} />
-          )}
+          ) : null}
           <div className={withBaseName("track")} />
         </div>
         {!hideLabel && (
