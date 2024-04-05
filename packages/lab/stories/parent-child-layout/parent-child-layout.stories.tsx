@@ -23,6 +23,10 @@ import {
   ToggleButtonGroup,
   Dropdown,
   Option,
+  Label,
+  Dialog,
+  DialogContent,
+  DialogCloseButton,
 } from "@salt-ds/core";
 
 import "./parent-child-layout.stories.css";
@@ -54,9 +58,9 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
         collapseAtBreakpoint="md"
         collapsedView={collapsedView}
       />
-      <StackLayout gap={0} align="center">
-        Collapsable View:
-        <ToggleButtonGroup defaultValue="child">
+      <StackLayout align="center" gap={1}>
+        <Label>Collapsed View: </Label>
+        <ToggleButtonGroup defaultValue="parent">
           <ToggleButton
             value="parent"
             onClick={() => setCollapsedView("parent")}
@@ -97,9 +101,9 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
         collapsedView={collapsedView}
         collapseAtBreakpoint="md"
       />
-      <StackLayout gap={0} align="center">
-        Collapsable View:
-        <ToggleButtonGroup defaultValue="child">
+      <StackLayout align="center" gap={1}>
+        <Label>Collapsed View: </Label>
+        <ToggleButtonGroup defaultValue="parent">
           <ToggleButton
             value="parent"
             onClick={() => setCollapsedView("parent")}
@@ -283,6 +287,7 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
     "parent"
   );
   const [collapsed, setCollapsed] = useState<boolean>();
+  const [open, setOpen] = useState<boolean>(false);
 
   const showParent = () => {
     setCollapsedView("child");
@@ -332,17 +337,36 @@ export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
     setCollapsed(isCollapsed);
   };
 
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <div className="preferences-layout-container">
-      <ParentChildLayout
-        {...args}
-        collapsedView={collapsedView}
-        parent={parent}
-        child={child}
-        onCollapseChange={handleCollapsed}
-        gap={1}
-      />
-    </div>
+    <>
+      <Button onClick={handleRequestOpen}>Open Preferences Dialog</Button>
+      <Dialog size={"medium"} open={open} onOpenChange={onOpenChange}>
+        <DialogCloseButton onClick={handleClose} />
+        <DialogContent>
+          <ParentChildLayout
+            {...args}
+            collapsedView={collapsedView}
+            parent={parent}
+            child={child}
+            onCollapseChange={handleCollapsed}
+            gap={1}
+            className="preferences-layout-container"
+          />
+        </DialogContent>
+      </Dialog>
+    </>
   );
 };
 

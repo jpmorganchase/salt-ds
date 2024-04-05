@@ -1,5 +1,10 @@
 import { ReactElement, useState } from "react";
-import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import {
+  StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+  Label,
+} from "@salt-ds/core";
 import { ParentChildLayout } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
@@ -32,14 +37,21 @@ export const ReducedMotion = (): ReactElement => {
           styles["reduced-motion"]
         )}
       />
-      <ToggleButtonGroup defaultValue="parent">
-        <ToggleButton value="parent" onClick={() => setCollapsedView("parent")}>
-          Parent
-        </ToggleButton>
-        <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
-          Child
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <StackLayout align="center" gap={1}>
+        <Label>Collapsed View: </Label>
+
+        <ToggleButtonGroup defaultValue="parent">
+          <ToggleButton
+            value="parent"
+            onClick={() => setCollapsedView("parent")}
+          >
+            Parent
+          </ToggleButton>
+          <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
+            Child
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </StackLayout>
     </StackLayout>
   );
 };

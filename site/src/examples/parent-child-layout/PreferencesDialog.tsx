@@ -16,7 +16,7 @@ import {
   DialogContent,
   DialogCloseButton,
 } from "@salt-ds/core";
-import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
+import { ParentChildLayout } from "@salt-ds/lab";
 import {
   ChevronLeftIcon,
   ExportIcon,
@@ -24,7 +24,7 @@ import {
   UserIcon,
 } from "@salt-ds/icons";
 
-import styles from "./PreferencesLayout.module.css";
+import styles from "./PreferencesDialog.module.css";
 
 const languages = [
   "English",
@@ -230,7 +230,7 @@ export const PreferencesDialog = () => {
     <>
       <Button onClick={handleRequestOpen}>Open Preferences Dialog</Button>
       <Dialog
-        size={"small"}
+        size={"medium"}
         open={open}
         onOpenChange={onOpenChange}
         className={styles.dialog}
@@ -240,7 +240,7 @@ export const PreferencesDialog = () => {
           <ParentChildLayout
             gap={1}
             collapsedView={collapsedView}
-            collapseAtBreakpoint="lg"
+            // collapseAtBreakpoint="sm"
             parent={parent}
             child={child}
             onCollapseChange={handleCollapsed}

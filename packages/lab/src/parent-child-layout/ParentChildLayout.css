@@ -1,6 +1,6 @@
 .saltParentChildLayout {
   display: flex;
-  gap: calc(var(--parentChildLayout-gap) * 3);
+  gap: var(--parentChildLayout-gap);
 }
 
 .saltParentChildLayout-child {

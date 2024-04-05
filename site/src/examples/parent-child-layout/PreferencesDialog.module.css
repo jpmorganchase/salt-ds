@@ -11,11 +11,9 @@
 
 .container {
   width: 545px;
-  justify-content: center;
-  width: 100%
+  width: 100%;
 }
 
 .parentView {
   width: 160px;
 }
-
