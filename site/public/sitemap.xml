@@ -445,6 +445,26 @@
 		<priority>0.5</priority>
 	</url>
 	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/date-input/accessibility</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/date-input/examples</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/date-input/index</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
+		<loc>https://www.saltdesignsystem.com/salt/components/date-input/usage</loc>
+		<changefreq>weekly</changefreq>
+		<priority>0.5</priority>
+	</url>
+	<url>
 		<loc>https://www.saltdesignsystem.com/salt/components/dialog/accessibility</loc>
 		<changefreq>weekly</changefreq>
 		<priority>0.5</priority>
