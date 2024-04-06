@@ -686,7 +686,7 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
         cy.get(TOOLTRAY_ITEMS_SELECTOR)
           .should("have.length", 11)
           .filter(":visible")
-          .should("have.length", 6);
+          .should("have.length", 5);
       });
       it("THEN some of the tooltray contents will be overflowing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);

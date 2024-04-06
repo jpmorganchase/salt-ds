@@ -79,12 +79,8 @@ export function LinkList({
         {links
           .filter((link) => isValid(link))
           .map((link) => (
-            <li>
-              <LinkWithLogo
-                href={link.href}
-                label={link.label}
-                key={link.label}
-              />
+            <li key={link.label}>
+              <LinkWithLogo href={link.href} label={link.label} />
             </li>
           ))}
       </ul>

@@ -1,5 +1,20 @@
 # @salt-ds/icons
 
+## 1.10.0
+
+### Minor Changes
+
+- 1bff6291: Added `saltIcons.css` with all icon SVGs as background images.
+
+  ```js
+  import "@salt-ds/icons/saltIcons.css";
+
+  const Example = () => {
+    const iconName = "AddDocument";
+    return <div className={`saltIcon-${iconName}`} />;
+  };
+  ```
+
 ## 1.9.1
 
 ### Patch Changes
