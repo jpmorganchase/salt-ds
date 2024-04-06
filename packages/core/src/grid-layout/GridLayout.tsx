@@ -47,14 +47,18 @@ type GridLayoutComponent = <T extends ElementType = "div">(
 
 const withBaseName = makePrefixer("saltGridLayout");
 
+export const DEFAULT_GRID_COLUMNS = 12;
+export const DEFAULT_GRID_ROWS = 1;
+export const DEFAULT_GRID_AUTOROWS = "auto";
+
 export const GridLayout: GridLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
     {
       as,
       children,
       className,
-      columns = 12,
-      rows = 1,
+      columns = DEFAULT_GRID_COLUMNS,
+      rows = DEFAULT_GRID_ROWS,
       gap,
       columnGap,
       rowGap,
@@ -71,26 +75,24 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     });
     const Component = as ?? "div";
 
-    const gridColumns = useResponsiveProp<number | string>(
-      !Array.isArray(columns)
-        ? Number(columns)
-        : columns
-            .map((column) =>
-              typeof column === "number" ? `${column}fr` : column
-            )
-            .join(" "),
-      12
-    );
+    let gridColumns: number | (number | string)[] | string = useResponsiveProp<
+      number | (number | string)[]
+    >(columns, DEFAULT_GRID_COLUMNS);
 
-    const gridRows = useResponsiveProp(
-      typeof rows === "number" ? rows : undefined,
-      1
-    );
+    gridColumns = !Array.isArray(gridColumns)
+      ? Number(gridColumns)
+      : gridColumns
+          .map((column) =>
+            typeof column === "number" ? `${column}fr` : column
+          )
+          .join(" ");
 
-    const gridAutoRows = useResponsiveProp(
-      typeof rows === "string" ? rows : undefined,
-      "auto"
-    );
+    let gridRows = useResponsiveProp(rows, DEFAULT_GRID_ROWS);
+    gridRows = typeof gridRows === "number" ? gridRows : DEFAULT_GRID_ROWS;
+
+    let gridAutoRows = useResponsiveProp(rows, DEFAULT_GRID_AUTOROWS);
+    gridAutoRows =
+      typeof gridAutoRows === "string" ? gridAutoRows : DEFAULT_GRID_AUTOROWS;
 
     const gridGap = useResponsiveProp(gap, 3);
 
