@@ -233,21 +233,25 @@ const ColumnTemplateAndAutoRowsExample: StoryFn<typeof GridLayout> = () => {
   return (
     <>
       <GridLayout columns={["10vw", 1, 1]} rows="100px" className="grid">
-        <GridItem rowSpan={2}></GridItem>
-        <GridItem></GridItem>
-        <GridItem></GridItem>
-        <GridItem></GridItem>
-        <GridItem></GridItem>
+        <GridItem rowSpan={2}>1</GridItem>
+        <GridItem>2</GridItem>
+        <GridItem>3</GridItem>
+        <GridItem>4</GridItem>
+        <GridItem>5</GridItem>
       </GridLayout>
 
       <style>{`
-      .grid {
-        width: 50vw;
-      }
-      .grid > * {
-        background-color: #FFA07A;
-        border-radius: 6px;
-      }
+        .grid {
+          width: 50vw;
+        }
+        .grid > * {
+          border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+          font-weight: var(--salt-text-fontWeight-small);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: var(--salt-spacing-200);
+        }
     `}</style>
     </>
   );
