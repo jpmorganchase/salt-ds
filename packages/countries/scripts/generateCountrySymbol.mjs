@@ -130,6 +130,10 @@ const generateCountrySymbolComponents = ({
     let sharpViewBox;
 
     const newFilePath = path.join(componentsPath, countryCode + ".tsx");
+    const newSharpFilePath = path.join(
+      componentsPath,
+      countryCode + "_Sharp.tsx"
+    );
 
     countryMetaMap[countryCode] = {
       countryCode,
@@ -284,14 +288,24 @@ const generateCountrySymbolComponents = ({
 
     const fileContents = Mustache.render(template, {
       svgElements: svgPaths.data,
-      sharpSvgElements: sharpSvgPaths.data,
       componentName: countryCodeToComponentName(countryCode),
       ariaLabel: countryName,
       viewBox: viewBox ?? "0 0 72 72",
-      sharpViewBox: sharpViewBox ?? "0 0 72 50",
+      borderRadius: "50%",
+    });
+    const sharpFileContents = Mustache.render(template, {
+      svgElements: sharpSvgPaths.data,
+      componentName: countryCodeToComponentName(countryCode) + "_Sharp",
+      ariaLabel: countryName,
+      viewBox: sharpViewBox ?? "0 0 72 50",
+      borderRadius: "0",
     });
 
     const replacedText = fileContents
+      .replaceAll(`"${REPLACE_START}`, "")
+      .replaceAll(`${REPLACE_END}"`, "");
+
+    const replacedSharpText = sharpFileContents
       .replaceAll(`"${REPLACE_START}`, "")
       .replaceAll(`${REPLACE_END}"`, "");
 
@@ -300,7 +314,15 @@ const generateCountrySymbolComponents = ({
       PRETTIER_SETTINGS
     );
 
+    const formattedSharpResult = prettier.format(
+      GENERATED_WARNING_COMMENT.concat(replacedSharpText),
+      PRETTIER_SETTINGS
+    );
+
     fs.writeFileSync(newFilePath, formattedResult, {
+      encoding: "utf8",
+    });
+    fs.writeFileSync(newSharpFilePath, formattedSharpResult, {
       encoding: "utf8",
     });
   });
@@ -316,7 +338,9 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
     .sort((a, b) => a.fileName - b.fileName)
     .map((countryMeta) => {
       const componentName = countryCodeToComponentName(countryMeta.countryCode);
-      return `export { default as ${componentName} } from './${countryMeta.countryCode}';`;
+      const defaultExport = `export { default as ${componentName} } from './${countryMeta.countryCode}';`;
+      const sharpExport = `export { default as ${componentName}_Sharp } from './${countryMeta.countryCode}_Sharp';`;
+      return [defaultExport, sharpExport].join("\n");
     });
 
   const contentWithMetaExport = [...content];
@@ -398,20 +422,21 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
     import { lazy } from "react";
   `;
 
-  let laztMapText = ["export const lazyMap = {"];
+  let lazyMapText = ["export const lazyMap = {"];
 
   for (const code in countryMetaMap) {
     const entryText = `"${code}": lazy(() => import("../components/${code}")),`;
+    const sharpEntryText = `"${code}_Sharp": lazy(() => import("../components/${code}_Sharp")),`;
 
-    laztMapText.push(entryText);
+    lazyMapText = [...lazyMapText, entryText, sharpEntryText];
   }
 
-  laztMapText.push("} as const");
+  lazyMapText.push("} as const");
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,
     importText,
-    laztMapText.join("\n"),
+    lazyMapText.join("\n"),
   ].join("\n");
 
   const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);

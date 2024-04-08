@@ -10,12 +10,16 @@ const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
 
     const uid = useId(props.id);
 
-    const viewBoxValue = props.variant === "sharp" ? "{{sharpViewBox}}" : "{{viewBox}}";
+    const { style: styleProp, ...rest } = props;
+
+    const style = {
+      ...styleProp,
+      borderRadius: "{{borderRadius}}",
+    };
 
     return (
-      <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox={viewBoxValue} ref={ref} {...props}>
-        {props.variant !== "sharp" && <>{{{svgElements}}}</>}
-        {props.variant === "sharp" && <>{{{sharpSvgElements}}}</>}
+      <CountrySymbol data-testid="{{componentName}}" style={style} aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {...rest}>
+        {{{svgElements}}}
       </CountrySymbol>
     );
   }
