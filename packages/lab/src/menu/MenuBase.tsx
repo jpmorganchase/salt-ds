@@ -21,6 +21,7 @@ import {
   useFloatingNodeId,
   useListNavigation,
   useFloatingTree,
+  size,
 } from "@floating-ui/react";
 
 export interface MenuBaseProps {
@@ -67,6 +68,13 @@ export function MenuBase(props: MenuBaseProps) {
       offset(isNested ? { crossAxis: -1 } : {}),
       flip({}),
       shift({ limiter: limitShift() }),
+      size({
+        apply({ elements, availableHeight }) {
+          Object.assign(elements.floating.style, {
+            maxHeight: `${availableHeight}px`,
+          });
+        },
+      }),
     ],
   });
 

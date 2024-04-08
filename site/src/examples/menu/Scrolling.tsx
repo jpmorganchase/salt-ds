@@ -12,8 +12,8 @@ export const Scrolling = (): ReactElement => {
         </Button>
       </MenuTrigger>
       <MenuPanel>
-        {Array.from({ length: 20 }, (_, i) => (
-          <MenuItem key={i}>Item {i}</MenuItem>
+        {Array.from({ length: 30 }, (_, i) => (
+          <MenuItem key={i}>Item {i + 1}</MenuItem>
         ))}
       </MenuPanel>
     </Menu>
