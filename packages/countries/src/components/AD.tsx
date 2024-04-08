@@ -9,13 +9,21 @@ export type ADProps = CountrySymbolProps;
 const AD = forwardRef<SVGSVGElement, ADProps>(function AD(props: ADProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AD"
+      style={style}
       aria-label="Andorra"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AD-a`}

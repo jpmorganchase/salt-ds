@@ -9,13 +9,21 @@ export type KPProps = CountrySymbolProps;
 const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="KP"
+      style={style}
       aria-label="Korea (the Democratic People&#39;s Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-KP-a`}

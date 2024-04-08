@@ -9,13 +9,21 @@ export type TLProps = CountrySymbolProps;
 const TL = forwardRef<SVGSVGElement, TLProps>(function TL(props: TLProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="TL"
+      style={style}
       aria-label="Timor-Leste"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-TL-a`}

@@ -9,13 +9,21 @@ export type VAProps = CountrySymbolProps;
 const VA = forwardRef<SVGSVGElement, VAProps>(function VA(props: VAProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="VA"
+      style={style}
       aria-label="Holy See (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-VA-a`}

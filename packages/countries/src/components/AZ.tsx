@@ -9,13 +9,21 @@ export type AZProps = CountrySymbolProps;
 const AZ = forwardRef<SVGSVGElement, AZProps>(function AZ(props: AZProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AZ"
+      style={style}
       aria-label="Azerbaijan"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AZ-a`}

@@ -9,13 +9,21 @@ export type CYProps = CountrySymbolProps;
 const CY = forwardRef<SVGSVGElement, CYProps>(function CY(props: CYProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="CY"
+      style={style}
       aria-label="Cyprus"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-CY-a`}

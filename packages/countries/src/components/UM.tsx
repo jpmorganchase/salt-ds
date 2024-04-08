@@ -9,13 +9,21 @@ export type UMProps = CountrySymbolProps;
 const UM = forwardRef<SVGSVGElement, UMProps>(function UM(props: UMProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="UM"
+      style={style}
       aria-label="United States Minor Outlying Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-UM-a`}

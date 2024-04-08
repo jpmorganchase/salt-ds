@@ -9,13 +9,21 @@ export type PSProps = CountrySymbolProps;
 const PS = forwardRef<SVGSVGElement, PSProps>(function PS(props: PSProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="PS"
+      style={style}
       aria-label="Palestine (State of)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-PS-a`}

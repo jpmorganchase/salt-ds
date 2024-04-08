@@ -9,13 +9,21 @@ export type AFProps = CountrySymbolProps;
 const AF = forwardRef<SVGSVGElement, AFProps>(function AF(props: AFProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AF"
+      style={style}
       aria-label="Afghanistan"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AF-a`}

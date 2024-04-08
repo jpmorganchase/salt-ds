@@ -9,13 +9,21 @@ export type GRProps = CountrySymbolProps;
 const GR = forwardRef<SVGSVGElement, GRProps>(function GR(props: GRProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="GR"
+      style={style}
       aria-label="Greece"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-GR-a`}

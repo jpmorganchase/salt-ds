@@ -9,13 +9,21 @@ export type BYProps = CountrySymbolProps;
 const BY = forwardRef<SVGSVGElement, BYProps>(function BY(props: BYProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BY"
+      style={style}
       aria-label="Belarus"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BY-a`}

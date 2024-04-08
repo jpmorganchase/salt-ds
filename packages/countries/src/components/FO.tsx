@@ -9,13 +9,21 @@ export type FOProps = CountrySymbolProps;
 const FO = forwardRef<SVGSVGElement, FOProps>(function FO(props: FOProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="FO"
+      style={style}
       aria-label="Faroe Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-FO-a`}

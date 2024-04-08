@@ -9,13 +9,21 @@ export type PGProps = CountrySymbolProps;
 const PG = forwardRef<SVGSVGElement, PGProps>(function PG(props: PGProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="PG"
+      style={style}
       aria-label="Papua New Guinea"
       viewBox="0 0 73 73"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-PG-a`}

@@ -9,13 +9,21 @@ export type YEProps = CountrySymbolProps;
 const YE = forwardRef<SVGSVGElement, YEProps>(function YE(props: YEProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="YE"
+      style={style}
       aria-label="Yemen"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-YE-a`}

@@ -9,13 +9,21 @@ export type CNProps = CountrySymbolProps;
 const CN = forwardRef<SVGSVGElement, CNProps>(function CN(props: CNProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="CN"
+      style={style}
       aria-label="China"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-CN-a`}

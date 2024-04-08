@@ -9,13 +9,21 @@ export type BFProps = CountrySymbolProps;
 const BF = forwardRef<SVGSVGElement, BFProps>(function BF(props: BFProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BF"
+      style={style}
       aria-label="Burkina Faso"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BF-a`}

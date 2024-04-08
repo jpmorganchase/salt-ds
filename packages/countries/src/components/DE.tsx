@@ -9,13 +9,21 @@ export type DEProps = CountrySymbolProps;
 const DE = forwardRef<SVGSVGElement, DEProps>(function DE(props: DEProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="DE"
+      style={style}
       aria-label="Germany"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-DE-a`}

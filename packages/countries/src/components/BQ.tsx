@@ -9,13 +9,21 @@ export type BQProps = CountrySymbolProps;
 const BQ = forwardRef<SVGSVGElement, BQProps>(function BQ(props: BQProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BQ"
+      style={style}
       aria-label="Bonaire Sint Eustatius and Saba"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BQ-a`}

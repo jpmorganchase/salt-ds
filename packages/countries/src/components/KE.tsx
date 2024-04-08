@@ -9,13 +9,21 @@ export type KEProps = CountrySymbolProps;
 const KE = forwardRef<SVGSVGElement, KEProps>(function KE(props: KEProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="KE"
+      style={style}
       aria-label="Kenya"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-KE-a`}

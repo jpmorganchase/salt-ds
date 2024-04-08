@@ -9,13 +9,21 @@ export type SEProps = CountrySymbolProps;
 const SE = forwardRef<SVGSVGElement, SEProps>(function SE(props: SEProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="SE"
+      style={style}
       aria-label="Sweden"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-SE-a`}

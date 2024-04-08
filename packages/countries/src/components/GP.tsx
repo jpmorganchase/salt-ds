@@ -9,13 +9,21 @@ export type GPProps = CountrySymbolProps;
 const GP = forwardRef<SVGSVGElement, GPProps>(function GP(props: GPProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="GP"
+      style={style}
       aria-label="Guadeloupe"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-GP-a`}

@@ -9,13 +9,21 @@ export type YTProps = CountrySymbolProps;
 const YT = forwardRef<SVGSVGElement, YTProps>(function YT(props: YTProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="YT"
+      style={style}
       aria-label="Mayotte"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-YT-a`}

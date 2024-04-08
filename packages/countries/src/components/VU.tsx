@@ -9,13 +9,21 @@ export type VUProps = CountrySymbolProps;
 const VU = forwardRef<SVGSVGElement, VUProps>(function VU(props: VUProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="VU"
+      style={style}
       aria-label="Vanuatu"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-VU-a`}

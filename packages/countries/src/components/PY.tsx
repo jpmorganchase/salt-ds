@@ -9,13 +9,21 @@ export type PYProps = CountrySymbolProps;
 const PY = forwardRef<SVGSVGElement, PYProps>(function PY(props: PYProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="PY"
+      style={style}
       aria-label="Paraguay"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-PY-a`}

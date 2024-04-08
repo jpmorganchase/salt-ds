@@ -9,13 +9,21 @@ export type CLProps = CountrySymbolProps;
 const CL = forwardRef<SVGSVGElement, CLProps>(function CL(props: CLProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="CL"
+      style={style}
       aria-label="Chile"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-CL-a`}

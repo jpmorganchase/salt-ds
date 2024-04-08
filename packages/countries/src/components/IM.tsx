@@ -9,13 +9,21 @@ export type IMProps = CountrySymbolProps;
 const IM = forwardRef<SVGSVGElement, IMProps>(function IM(props: IMProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="IM"
+      style={style}
       aria-label="Isle of Man"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-IM-a`}

@@ -9,13 +9,21 @@ export type RUProps = CountrySymbolProps;
 const RU = forwardRef<SVGSVGElement, RUProps>(function RU(props: RUProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="RU"
+      style={style}
       aria-label="Russian Federation (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-RU-a`}

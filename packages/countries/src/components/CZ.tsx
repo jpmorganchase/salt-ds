@@ -9,13 +9,21 @@ export type CZProps = CountrySymbolProps;
 const CZ = forwardRef<SVGSVGElement, CZProps>(function CZ(props: CZProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="CZ"
+      style={style}
       aria-label="Czechia"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-CZ-a`}

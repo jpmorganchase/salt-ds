@@ -9,13 +9,21 @@ export type UNProps = CountrySymbolProps;
 const UN = forwardRef<SVGSVGElement, UNProps>(function UN(props: UNProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="UN"
+      style={style}
       aria-label="United Nations"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-UN-a`}

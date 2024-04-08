@@ -9,13 +9,21 @@ export type KNProps = CountrySymbolProps;
 const KN = forwardRef<SVGSVGElement, KNProps>(function KN(props: KNProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="KN"
+      style={style}
       aria-label="Saint Kitts and Nevis"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-KN-a`}

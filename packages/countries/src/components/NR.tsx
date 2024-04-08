@@ -9,13 +9,21 @@ export type NRProps = CountrySymbolProps;
 const NR = forwardRef<SVGSVGElement, NRProps>(function NR(props: NRProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="NR"
+      style={style}
       aria-label="Nauru"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-NR-a`}

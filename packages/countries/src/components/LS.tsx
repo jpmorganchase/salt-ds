@@ -9,13 +9,21 @@ export type LSProps = CountrySymbolProps;
 const LS = forwardRef<SVGSVGElement, LSProps>(function LS(props: LSProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="LS"
+      style={style}
       aria-label="Lesotho"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-LS-a`}

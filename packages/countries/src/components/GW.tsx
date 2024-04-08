@@ -9,13 +9,21 @@ export type GWProps = CountrySymbolProps;
 const GW = forwardRef<SVGSVGElement, GWProps>(function GW(props: GWProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="GW"
+      style={style}
       aria-label="Guinea-Bissau"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-GW-a`}

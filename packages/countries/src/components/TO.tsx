@@ -9,13 +9,21 @@ export type TOProps = CountrySymbolProps;
 const TO = forwardRef<SVGSVGElement, TOProps>(function TO(props: TOProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="TO"
+      style={style}
       aria-label="Tonga"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-TO-a`}

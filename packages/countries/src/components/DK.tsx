@@ -9,13 +9,21 @@ export type DKProps = CountrySymbolProps;
 const DK = forwardRef<SVGSVGElement, DKProps>(function DK(props: DKProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="DK"
+      style={style}
       aria-label="Denmark"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-DK-a`}

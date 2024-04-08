@@ -9,13 +9,21 @@ export type ARProps = CountrySymbolProps;
 const AR = forwardRef<SVGSVGElement, ARProps>(function AR(props: ARProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AR"
+      style={style}
       aria-label="Argentina"
       viewBox="0 0 73 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AR-a`}

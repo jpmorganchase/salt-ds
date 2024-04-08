@@ -9,13 +9,21 @@ export type PHProps = CountrySymbolProps;
 const PH = forwardRef<SVGSVGElement, PHProps>(function PH(props: PHProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="PH"
+      style={style}
       aria-label="Philippines (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-PH-a`}

@@ -9,13 +9,21 @@ export type GBProps = CountrySymbolProps;
 const GB = forwardRef<SVGSVGElement, GBProps>(function GB(props: GBProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="GB"
+      style={style}
       aria-label="United Kingdom of Great Britain and Northern Ireland (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-GB-a`}

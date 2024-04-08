@@ -9,13 +9,21 @@ export type PRProps = CountrySymbolProps;
 const PR = forwardRef<SVGSVGElement, PRProps>(function PR(props: PRProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="PR"
+      style={style}
       aria-label="Puerto Rico"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-PR-a`}

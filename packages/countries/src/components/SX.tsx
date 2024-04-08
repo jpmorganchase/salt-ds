@@ -9,13 +9,21 @@ export type SXProps = CountrySymbolProps;
 const SX = forwardRef<SVGSVGElement, SXProps>(function SX(props: SXProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="SX"
+      style={style}
       aria-label="Sint Maarten (Dutch part)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-SX-a`}

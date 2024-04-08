@@ -9,13 +9,21 @@ export type ETProps = CountrySymbolProps;
 const ET = forwardRef<SVGSVGElement, ETProps>(function ET(props: ETProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="ET"
+      style={style}
       aria-label="Ethiopia"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-ET-a`}

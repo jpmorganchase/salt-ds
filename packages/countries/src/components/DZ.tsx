@@ -9,13 +9,21 @@ export type DZProps = CountrySymbolProps;
 const DZ = forwardRef<SVGSVGElement, DZProps>(function DZ(props: DZProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="DZ"
+      style={style}
       aria-label="Algeria"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-DZ-a`}

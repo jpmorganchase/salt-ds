@@ -5,7 +5,15 @@ export const countryMetaMap = {
     countryCode: "AD",
     countryName: "Andorra",
   },
+  AD_Sharp: {
+    countryCode: "AD",
+    countryName: "Andorra",
+  },
   AE: {
+    countryCode: "AE",
+    countryName: "United Arab Emirates (the)",
+  },
+  AE_Sharp: {
     countryCode: "AE",
     countryName: "United Arab Emirates (the)",
   },
@@ -13,7 +21,15 @@ export const countryMetaMap = {
     countryCode: "AF",
     countryName: "Afghanistan",
   },
+  AF_Sharp: {
+    countryCode: "AF",
+    countryName: "Afghanistan",
+  },
   AG: {
+    countryCode: "AG",
+    countryName: "Antigua and Barbuda",
+  },
+  AG_Sharp: {
     countryCode: "AG",
     countryName: "Antigua and Barbuda",
   },
@@ -21,7 +37,15 @@ export const countryMetaMap = {
     countryCode: "AI",
     countryName: "Anguilla",
   },
+  AI_Sharp: {
+    countryCode: "AI",
+    countryName: "Anguilla",
+  },
   AL: {
+    countryCode: "AL",
+    countryName: "Albania",
+  },
+  AL_Sharp: {
     countryCode: "AL",
     countryName: "Albania",
   },
@@ -29,7 +53,15 @@ export const countryMetaMap = {
     countryCode: "AM",
     countryName: "Armenia",
   },
+  AM_Sharp: {
+    countryCode: "AM",
+    countryName: "Armenia",
+  },
   AO: {
+    countryCode: "AO",
+    countryName: "Angola",
+  },
+  AO_Sharp: {
     countryCode: "AO",
     countryName: "Angola",
   },
@@ -37,7 +69,15 @@ export const countryMetaMap = {
     countryCode: "AQ",
     countryName: "Antarctica",
   },
+  AQ_Sharp: {
+    countryCode: "AQ",
+    countryName: "Antarctica",
+  },
   AR: {
+    countryCode: "AR",
+    countryName: "Argentina",
+  },
+  AR_Sharp: {
     countryCode: "AR",
     countryName: "Argentina",
   },
@@ -45,7 +85,15 @@ export const countryMetaMap = {
     countryCode: "AS",
     countryName: "American Samoa",
   },
+  AS_Sharp: {
+    countryCode: "AS",
+    countryName: "American Samoa",
+  },
   AT: {
+    countryCode: "AT",
+    countryName: "Austria",
+  },
+  AT_Sharp: {
     countryCode: "AT",
     countryName: "Austria",
   },
@@ -53,7 +101,15 @@ export const countryMetaMap = {
     countryCode: "AU",
     countryName: "Australia",
   },
+  AU_Sharp: {
+    countryCode: "AU",
+    countryName: "Australia",
+  },
   AW: {
+    countryCode: "AW",
+    countryName: "Aruba",
+  },
+  AW_Sharp: {
     countryCode: "AW",
     countryName: "Aruba",
   },
@@ -61,7 +117,15 @@ export const countryMetaMap = {
     countryCode: "AX",
     countryName: "Åland Islands",
   },
+  AX_Sharp: {
+    countryCode: "AX",
+    countryName: "Åland Islands",
+  },
   AZ: {
+    countryCode: "AZ",
+    countryName: "Azerbaijan",
+  },
+  AZ_Sharp: {
     countryCode: "AZ",
     countryName: "Azerbaijan",
   },
@@ -69,7 +133,15 @@ export const countryMetaMap = {
     countryCode: "BA",
     countryName: "Bosnia and Herzegovina",
   },
+  BA_Sharp: {
+    countryCode: "BA",
+    countryName: "Bosnia and Herzegovina",
+  },
   BB: {
+    countryCode: "BB",
+    countryName: "Barbados",
+  },
+  BB_Sharp: {
     countryCode: "BB",
     countryName: "Barbados",
   },
@@ -77,7 +149,15 @@ export const countryMetaMap = {
     countryCode: "BD",
     countryName: "Bangladesh",
   },
+  BD_Sharp: {
+    countryCode: "BD",
+    countryName: "Bangladesh",
+  },
   BE: {
+    countryCode: "BE",
+    countryName: "Belgium",
+  },
+  BE_Sharp: {
     countryCode: "BE",
     countryName: "Belgium",
   },
@@ -85,7 +165,15 @@ export const countryMetaMap = {
     countryCode: "BF",
     countryName: "Burkina Faso",
   },
+  BF_Sharp: {
+    countryCode: "BF",
+    countryName: "Burkina Faso",
+  },
   BG: {
+    countryCode: "BG",
+    countryName: "Bulgaria",
+  },
+  BG_Sharp: {
     countryCode: "BG",
     countryName: "Bulgaria",
   },
@@ -93,7 +181,15 @@ export const countryMetaMap = {
     countryCode: "BH",
     countryName: "Bahrain",
   },
+  BH_Sharp: {
+    countryCode: "BH",
+    countryName: "Bahrain",
+  },
   BI: {
+    countryCode: "BI",
+    countryName: "Burundi",
+  },
+  BI_Sharp: {
     countryCode: "BI",
     countryName: "Burundi",
   },
@@ -101,7 +197,15 @@ export const countryMetaMap = {
     countryCode: "BJ",
     countryName: "Benin",
   },
+  BJ_Sharp: {
+    countryCode: "BJ",
+    countryName: "Benin",
+  },
   BL: {
+    countryCode: "BL",
+    countryName: "Saint Barthélemy",
+  },
+  BL_Sharp: {
     countryCode: "BL",
     countryName: "Saint Barthélemy",
   },
@@ -109,7 +213,15 @@ export const countryMetaMap = {
     countryCode: "BM",
     countryName: "Bermuda",
   },
+  BM_Sharp: {
+    countryCode: "BM",
+    countryName: "Bermuda",
+  },
   BN: {
+    countryCode: "BN",
+    countryName: "Brunei Darussalam",
+  },
+  BN_Sharp: {
     countryCode: "BN",
     countryName: "Brunei Darussalam",
   },
@@ -117,7 +229,15 @@ export const countryMetaMap = {
     countryCode: "BO",
     countryName: "Bolivia (Plurinational State of)",
   },
+  BO_Sharp: {
+    countryCode: "BO",
+    countryName: "Bolivia (Plurinational State of)",
+  },
   BQ: {
+    countryCode: "BQ",
+    countryName: "Bonaire Sint Eustatius and Saba",
+  },
+  BQ_Sharp: {
     countryCode: "BQ",
     countryName: "Bonaire Sint Eustatius and Saba",
   },
@@ -125,7 +245,15 @@ export const countryMetaMap = {
     countryCode: "BR",
     countryName: "Brazil",
   },
+  BR_Sharp: {
+    countryCode: "BR",
+    countryName: "Brazil",
+  },
   BS: {
+    countryCode: "BS",
+    countryName: "Bahamas (the)",
+  },
+  BS_Sharp: {
     countryCode: "BS",
     countryName: "Bahamas (the)",
   },
@@ -133,7 +261,15 @@ export const countryMetaMap = {
     countryCode: "BT",
     countryName: "Bhutan",
   },
+  BT_Sharp: {
+    countryCode: "BT",
+    countryName: "Bhutan",
+  },
   BV: {
+    countryCode: "BV",
+    countryName: "Bouvet Island",
+  },
+  BV_Sharp: {
     countryCode: "BV",
     countryName: "Bouvet Island",
   },
@@ -141,7 +277,15 @@ export const countryMetaMap = {
     countryCode: "BW",
     countryName: "Botswana",
   },
+  BW_Sharp: {
+    countryCode: "BW",
+    countryName: "Botswana",
+  },
   BY: {
+    countryCode: "BY",
+    countryName: "Belarus",
+  },
+  BY_Sharp: {
     countryCode: "BY",
     countryName: "Belarus",
   },
@@ -149,7 +293,15 @@ export const countryMetaMap = {
     countryCode: "BZ",
     countryName: "Belize",
   },
+  BZ_Sharp: {
+    countryCode: "BZ",
+    countryName: "Belize",
+  },
   CA: {
+    countryCode: "CA",
+    countryName: "Canada",
+  },
+  CA_Sharp: {
     countryCode: "CA",
     countryName: "Canada",
   },
@@ -157,7 +309,15 @@ export const countryMetaMap = {
     countryCode: "CC",
     countryName: "Cocos (Keeling) Islands (the)",
   },
+  CC_Sharp: {
+    countryCode: "CC",
+    countryName: "Cocos (Keeling) Islands (the)",
+  },
   CD: {
+    countryCode: "CD",
+    countryName: "Congo (the Democratic Republic of the)",
+  },
+  CD_Sharp: {
     countryCode: "CD",
     countryName: "Congo (the Democratic Republic of the)",
   },
@@ -165,7 +325,15 @@ export const countryMetaMap = {
     countryCode: "CF",
     countryName: "Central African Republic (the)",
   },
+  CF_Sharp: {
+    countryCode: "CF",
+    countryName: "Central African Republic (the)",
+  },
   CG: {
+    countryCode: "CG",
+    countryName: "Congo (the)",
+  },
+  CG_Sharp: {
     countryCode: "CG",
     countryName: "Congo (the)",
   },
@@ -173,7 +341,15 @@ export const countryMetaMap = {
     countryCode: "CH",
     countryName: "Switzerland",
   },
+  CH_Sharp: {
+    countryCode: "CH",
+    countryName: "Switzerland",
+  },
   CI: {
+    countryCode: "CI",
+    countryName: "Côte d'Ivoire",
+  },
+  CI_Sharp: {
     countryCode: "CI",
     countryName: "Côte d'Ivoire",
   },
@@ -181,7 +357,15 @@ export const countryMetaMap = {
     countryCode: "CK",
     countryName: "Cook Islands (the)",
   },
+  CK_Sharp: {
+    countryCode: "CK",
+    countryName: "Cook Islands (the)",
+  },
   CL: {
+    countryCode: "CL",
+    countryName: "Chile",
+  },
+  CL_Sharp: {
     countryCode: "CL",
     countryName: "Chile",
   },
@@ -189,7 +373,15 @@ export const countryMetaMap = {
     countryCode: "CM",
     countryName: "Cameroon",
   },
+  CM_Sharp: {
+    countryCode: "CM",
+    countryName: "Cameroon",
+  },
   CN: {
+    countryCode: "CN",
+    countryName: "China",
+  },
+  CN_Sharp: {
     countryCode: "CN",
     countryName: "China",
   },
@@ -197,7 +389,15 @@ export const countryMetaMap = {
     countryCode: "CO",
     countryName: "Colombia",
   },
+  CO_Sharp: {
+    countryCode: "CO",
+    countryName: "Colombia",
+  },
   CR: {
+    countryCode: "CR",
+    countryName: "Costa Rica",
+  },
+  CR_Sharp: {
     countryCode: "CR",
     countryName: "Costa Rica",
   },
@@ -205,7 +405,15 @@ export const countryMetaMap = {
     countryCode: "CU",
     countryName: "Cuba",
   },
+  CU_Sharp: {
+    countryCode: "CU",
+    countryName: "Cuba",
+  },
   CV: {
+    countryCode: "CV",
+    countryName: "Cabo Verde",
+  },
+  CV_Sharp: {
     countryCode: "CV",
     countryName: "Cabo Verde",
   },
@@ -213,7 +421,15 @@ export const countryMetaMap = {
     countryCode: "CW",
     countryName: "Curaçao",
   },
+  CW_Sharp: {
+    countryCode: "CW",
+    countryName: "Curaçao",
+  },
   CX: {
+    countryCode: "CX",
+    countryName: "Christmas Island",
+  },
+  CX_Sharp: {
     countryCode: "CX",
     countryName: "Christmas Island",
   },
@@ -221,7 +437,15 @@ export const countryMetaMap = {
     countryCode: "CY",
     countryName: "Cyprus",
   },
+  CY_Sharp: {
+    countryCode: "CY",
+    countryName: "Cyprus",
+  },
   CZ: {
+    countryCode: "CZ",
+    countryName: "Czechia",
+  },
+  CZ_Sharp: {
     countryCode: "CZ",
     countryName: "Czechia",
   },
@@ -229,7 +453,15 @@ export const countryMetaMap = {
     countryCode: "DE",
     countryName: "Germany",
   },
+  DE_Sharp: {
+    countryCode: "DE",
+    countryName: "Germany",
+  },
   DJ: {
+    countryCode: "DJ",
+    countryName: "Djibouti",
+  },
+  DJ_Sharp: {
     countryCode: "DJ",
     countryName: "Djibouti",
   },
@@ -237,7 +469,15 @@ export const countryMetaMap = {
     countryCode: "DK",
     countryName: "Denmark",
   },
+  DK_Sharp: {
+    countryCode: "DK",
+    countryName: "Denmark",
+  },
   DM: {
+    countryCode: "DM",
+    countryName: "Dominica",
+  },
+  DM_Sharp: {
     countryCode: "DM",
     countryName: "Dominica",
   },
@@ -245,7 +485,15 @@ export const countryMetaMap = {
     countryCode: "DO",
     countryName: "Dominican Republic (the)",
   },
+  DO_Sharp: {
+    countryCode: "DO",
+    countryName: "Dominican Republic (the)",
+  },
   DZ: {
+    countryCode: "DZ",
+    countryName: "Algeria",
+  },
+  DZ_Sharp: {
     countryCode: "DZ",
     countryName: "Algeria",
   },
@@ -253,7 +501,15 @@ export const countryMetaMap = {
     countryCode: "EC",
     countryName: "Ecuador",
   },
+  EC_Sharp: {
+    countryCode: "EC",
+    countryName: "Ecuador",
+  },
   EE: {
+    countryCode: "EE",
+    countryName: "Estonia",
+  },
+  EE_Sharp: {
     countryCode: "EE",
     countryName: "Estonia",
   },
@@ -261,7 +517,15 @@ export const countryMetaMap = {
     countryCode: "EG",
     countryName: "Egypt",
   },
+  EG_Sharp: {
+    countryCode: "EG",
+    countryName: "Egypt",
+  },
   EH: {
+    countryCode: "EH",
+    countryName: "Western Sahara",
+  },
+  EH_Sharp: {
     countryCode: "EH",
     countryName: "Western Sahara",
   },
@@ -269,7 +533,15 @@ export const countryMetaMap = {
     countryCode: "ER",
     countryName: "Eritrea",
   },
+  ER_Sharp: {
+    countryCode: "ER",
+    countryName: "Eritrea",
+  },
   ES: {
+    countryCode: "ES",
+    countryName: "Spain",
+  },
+  ES_Sharp: {
     countryCode: "ES",
     countryName: "Spain",
   },
@@ -277,7 +549,15 @@ export const countryMetaMap = {
     countryCode: "ET",
     countryName: "Ethiopia",
   },
+  ET_Sharp: {
+    countryCode: "ET",
+    countryName: "Ethiopia",
+  },
   EU: {
+    countryCode: "EU",
+    countryName: "European Union",
+  },
+  EU_Sharp: {
     countryCode: "EU",
     countryName: "European Union",
   },
@@ -285,7 +565,15 @@ export const countryMetaMap = {
     countryCode: "FI",
     countryName: "Finland",
   },
+  FI_Sharp: {
+    countryCode: "FI",
+    countryName: "Finland",
+  },
   FJ: {
+    countryCode: "FJ",
+    countryName: "Fiji",
+  },
+  FJ_Sharp: {
     countryCode: "FJ",
     countryName: "Fiji",
   },
@@ -293,7 +581,15 @@ export const countryMetaMap = {
     countryCode: "FK",
     countryName: "Falkland Islands (the) [Malvinas]",
   },
+  FK_Sharp: {
+    countryCode: "FK",
+    countryName: "Falkland Islands (the) [Malvinas]",
+  },
   FM: {
+    countryCode: "FM",
+    countryName: "Micronesia (Federated States of)",
+  },
+  FM_Sharp: {
     countryCode: "FM",
     countryName: "Micronesia (Federated States of)",
   },
@@ -301,7 +597,15 @@ export const countryMetaMap = {
     countryCode: "FO",
     countryName: "Faroe Islands (the)",
   },
+  FO_Sharp: {
+    countryCode: "FO",
+    countryName: "Faroe Islands (the)",
+  },
   FR: {
+    countryCode: "FR",
+    countryName: "France",
+  },
+  FR_Sharp: {
     countryCode: "FR",
     countryName: "France",
   },
@@ -309,7 +613,15 @@ export const countryMetaMap = {
     countryCode: "GA",
     countryName: "Gabon",
   },
+  GA_Sharp: {
+    countryCode: "GA",
+    countryName: "Gabon",
+  },
   GB: {
+    countryCode: "GB",
+    countryName: "United Kingdom of Great Britain and Northern Ireland (the)",
+  },
+  GB_Sharp: {
     countryCode: "GB",
     countryName: "United Kingdom of Great Britain and Northern Ireland (the)",
   },
@@ -317,7 +629,15 @@ export const countryMetaMap = {
     countryCode: "GB-ENG",
     countryName: "England",
   },
+  "GB-ENG_Sharp": {
+    countryCode: "GB-ENG",
+    countryName: "England",
+  },
   "GB-NIR": {
+    countryCode: "GB-NIR",
+    countryName: "Northern Ireland",
+  },
+  "GB-NIR_Sharp": {
     countryCode: "GB-NIR",
     countryName: "Northern Ireland",
   },
@@ -325,7 +645,15 @@ export const countryMetaMap = {
     countryCode: "GB-SCT",
     countryName: "Scotland",
   },
+  "GB-SCT_Sharp": {
+    countryCode: "GB-SCT",
+    countryName: "Scotland",
+  },
   "GB-WLS": {
+    countryCode: "GB-WLS",
+    countryName: "Wales",
+  },
+  "GB-WLS_Sharp": {
     countryCode: "GB-WLS",
     countryName: "Wales",
   },
@@ -333,7 +661,15 @@ export const countryMetaMap = {
     countryCode: "GD",
     countryName: "Grenada",
   },
+  GD_Sharp: {
+    countryCode: "GD",
+    countryName: "Grenada",
+  },
   GE: {
+    countryCode: "GE",
+    countryName: "Georgia",
+  },
+  GE_Sharp: {
     countryCode: "GE",
     countryName: "Georgia",
   },
@@ -341,7 +677,15 @@ export const countryMetaMap = {
     countryCode: "GF",
     countryName: "French Guiana",
   },
+  GF_Sharp: {
+    countryCode: "GF",
+    countryName: "French Guiana",
+  },
   GG: {
+    countryCode: "GG",
+    countryName: "Guernsey",
+  },
+  GG_Sharp: {
     countryCode: "GG",
     countryName: "Guernsey",
   },
@@ -349,7 +693,15 @@ export const countryMetaMap = {
     countryCode: "GH",
     countryName: "Ghana",
   },
+  GH_Sharp: {
+    countryCode: "GH",
+    countryName: "Ghana",
+  },
   GI: {
+    countryCode: "GI",
+    countryName: "Gibraltar",
+  },
+  GI_Sharp: {
     countryCode: "GI",
     countryName: "Gibraltar",
   },
@@ -357,7 +709,15 @@ export const countryMetaMap = {
     countryCode: "GL",
     countryName: "Greenland",
   },
+  GL_Sharp: {
+    countryCode: "GL",
+    countryName: "Greenland",
+  },
   GM: {
+    countryCode: "GM",
+    countryName: "Gambia (the)",
+  },
+  GM_Sharp: {
     countryCode: "GM",
     countryName: "Gambia (the)",
   },
@@ -365,7 +725,15 @@ export const countryMetaMap = {
     countryCode: "GN",
     countryName: "Guinea",
   },
+  GN_Sharp: {
+    countryCode: "GN",
+    countryName: "Guinea",
+  },
   GP: {
+    countryCode: "GP",
+    countryName: "Guadeloupe",
+  },
+  GP_Sharp: {
     countryCode: "GP",
     countryName: "Guadeloupe",
   },
@@ -373,7 +741,15 @@ export const countryMetaMap = {
     countryCode: "GQ",
     countryName: "Equatorial Guinea",
   },
+  GQ_Sharp: {
+    countryCode: "GQ",
+    countryName: "Equatorial Guinea",
+  },
   GR: {
+    countryCode: "GR",
+    countryName: "Greece",
+  },
+  GR_Sharp: {
     countryCode: "GR",
     countryName: "Greece",
   },
@@ -381,7 +757,15 @@ export const countryMetaMap = {
     countryCode: "GS",
     countryName: "South Georgia and the South Sandwich Islands",
   },
+  GS_Sharp: {
+    countryCode: "GS",
+    countryName: "South Georgia and the South Sandwich Islands",
+  },
   GT: {
+    countryCode: "GT",
+    countryName: "Guatemala",
+  },
+  GT_Sharp: {
     countryCode: "GT",
     countryName: "Guatemala",
   },
@@ -389,7 +773,15 @@ export const countryMetaMap = {
     countryCode: "GU",
     countryName: "Guam",
   },
+  GU_Sharp: {
+    countryCode: "GU",
+    countryName: "Guam",
+  },
   GW: {
+    countryCode: "GW",
+    countryName: "Guinea-Bissau",
+  },
+  GW_Sharp: {
     countryCode: "GW",
     countryName: "Guinea-Bissau",
   },
@@ -397,7 +789,15 @@ export const countryMetaMap = {
     countryCode: "GY",
     countryName: "Guyana",
   },
+  GY_Sharp: {
+    countryCode: "GY",
+    countryName: "Guyana",
+  },
   HK: {
+    countryCode: "HK",
+    countryName: "Hong Kong",
+  },
+  HK_Sharp: {
     countryCode: "HK",
     countryName: "Hong Kong",
   },
@@ -405,7 +805,15 @@ export const countryMetaMap = {
     countryCode: "HM",
     countryName: "Heard Island and McDonald Islands",
   },
+  HM_Sharp: {
+    countryCode: "HM",
+    countryName: "Heard Island and McDonald Islands",
+  },
   HN: {
+    countryCode: "HN",
+    countryName: "Honduras",
+  },
+  HN_Sharp: {
     countryCode: "HN",
     countryName: "Honduras",
   },
@@ -413,7 +821,15 @@ export const countryMetaMap = {
     countryCode: "HR",
     countryName: "Croatia",
   },
+  HR_Sharp: {
+    countryCode: "HR",
+    countryName: "Croatia",
+  },
   HT: {
+    countryCode: "HT",
+    countryName: "Haiti",
+  },
+  HT_Sharp: {
     countryCode: "HT",
     countryName: "Haiti",
   },
@@ -421,7 +837,15 @@ export const countryMetaMap = {
     countryCode: "HU",
     countryName: "Hungary",
   },
+  HU_Sharp: {
+    countryCode: "HU",
+    countryName: "Hungary",
+  },
   ID: {
+    countryCode: "ID",
+    countryName: "Indonesia",
+  },
+  ID_Sharp: {
     countryCode: "ID",
     countryName: "Indonesia",
   },
@@ -429,7 +853,15 @@ export const countryMetaMap = {
     countryCode: "IE",
     countryName: "Ireland",
   },
+  IE_Sharp: {
+    countryCode: "IE",
+    countryName: "Ireland",
+  },
   IL: {
+    countryCode: "IL",
+    countryName: "Israel",
+  },
+  IL_Sharp: {
     countryCode: "IL",
     countryName: "Israel",
   },
@@ -437,7 +869,15 @@ export const countryMetaMap = {
     countryCode: "IM",
     countryName: "Isle of Man",
   },
+  IM_Sharp: {
+    countryCode: "IM",
+    countryName: "Isle of Man",
+  },
   IN: {
+    countryCode: "IN",
+    countryName: "India",
+  },
+  IN_Sharp: {
     countryCode: "IN",
     countryName: "India",
   },
@@ -445,7 +885,15 @@ export const countryMetaMap = {
     countryCode: "IO",
     countryName: "British Indian Ocean Territory (the)",
   },
+  IO_Sharp: {
+    countryCode: "IO",
+    countryName: "British Indian Ocean Territory (the)",
+  },
   IQ: {
+    countryCode: "IQ",
+    countryName: "Iraq",
+  },
+  IQ_Sharp: {
     countryCode: "IQ",
     countryName: "Iraq",
   },
@@ -453,7 +901,15 @@ export const countryMetaMap = {
     countryCode: "IR",
     countryName: "Iran (Islamic Republic of)",
   },
+  IR_Sharp: {
+    countryCode: "IR",
+    countryName: "Iran (Islamic Republic of)",
+  },
   IS: {
+    countryCode: "IS",
+    countryName: "Iceland",
+  },
+  IS_Sharp: {
     countryCode: "IS",
     countryName: "Iceland",
   },
@@ -461,7 +917,15 @@ export const countryMetaMap = {
     countryCode: "IT",
     countryName: "Italy",
   },
+  IT_Sharp: {
+    countryCode: "IT",
+    countryName: "Italy",
+  },
   JE: {
+    countryCode: "JE",
+    countryName: "Jersey",
+  },
+  JE_Sharp: {
     countryCode: "JE",
     countryName: "Jersey",
   },
@@ -469,7 +933,15 @@ export const countryMetaMap = {
     countryCode: "JM",
     countryName: "Jamaica",
   },
+  JM_Sharp: {
+    countryCode: "JM",
+    countryName: "Jamaica",
+  },
   JO: {
+    countryCode: "JO",
+    countryName: "Jordan",
+  },
+  JO_Sharp: {
     countryCode: "JO",
     countryName: "Jordan",
   },
@@ -477,7 +949,15 @@ export const countryMetaMap = {
     countryCode: "JP",
     countryName: "Japan",
   },
+  JP_Sharp: {
+    countryCode: "JP",
+    countryName: "Japan",
+  },
   KE: {
+    countryCode: "KE",
+    countryName: "Kenya",
+  },
+  KE_Sharp: {
     countryCode: "KE",
     countryName: "Kenya",
   },
@@ -485,7 +965,15 @@ export const countryMetaMap = {
     countryCode: "KG",
     countryName: "Kyrgyzstan",
   },
+  KG_Sharp: {
+    countryCode: "KG",
+    countryName: "Kyrgyzstan",
+  },
   KH: {
+    countryCode: "KH",
+    countryName: "Cambodia",
+  },
+  KH_Sharp: {
     countryCode: "KH",
     countryName: "Cambodia",
   },
@@ -493,7 +981,15 @@ export const countryMetaMap = {
     countryCode: "KI",
     countryName: "Kiribati",
   },
+  KI_Sharp: {
+    countryCode: "KI",
+    countryName: "Kiribati",
+  },
   KM: {
+    countryCode: "KM",
+    countryName: "Comoros (the)",
+  },
+  KM_Sharp: {
     countryCode: "KM",
     countryName: "Comoros (the)",
   },
@@ -501,7 +997,15 @@ export const countryMetaMap = {
     countryCode: "KN",
     countryName: "Saint Kitts and Nevis",
   },
+  KN_Sharp: {
+    countryCode: "KN",
+    countryName: "Saint Kitts and Nevis",
+  },
   KP: {
+    countryCode: "KP",
+    countryName: "Korea (the Democratic People's Republic of)",
+  },
+  KP_Sharp: {
     countryCode: "KP",
     countryName: "Korea (the Democratic People's Republic of)",
   },
@@ -509,7 +1013,15 @@ export const countryMetaMap = {
     countryCode: "KR",
     countryName: "Korea (the Republic of)",
   },
+  KR_Sharp: {
+    countryCode: "KR",
+    countryName: "Korea (the Republic of)",
+  },
   KW: {
+    countryCode: "KW",
+    countryName: "Kuwait",
+  },
+  KW_Sharp: {
     countryCode: "KW",
     countryName: "Kuwait",
   },
@@ -517,7 +1029,15 @@ export const countryMetaMap = {
     countryCode: "KY",
     countryName: "Cayman Islands (the)",
   },
+  KY_Sharp: {
+    countryCode: "KY",
+    countryName: "Cayman Islands (the)",
+  },
   KZ: {
+    countryCode: "KZ",
+    countryName: "Kazakhstan",
+  },
+  KZ_Sharp: {
     countryCode: "KZ",
     countryName: "Kazakhstan",
   },
@@ -525,7 +1045,15 @@ export const countryMetaMap = {
     countryCode: "LA",
     countryName: "Lao People's Democratic Republic (the)",
   },
+  LA_Sharp: {
+    countryCode: "LA",
+    countryName: "Lao People's Democratic Republic (the)",
+  },
   LB: {
+    countryCode: "LB",
+    countryName: "Lebanon",
+  },
+  LB_Sharp: {
     countryCode: "LB",
     countryName: "Lebanon",
   },
@@ -533,7 +1061,15 @@ export const countryMetaMap = {
     countryCode: "LC",
     countryName: "Saint Lucia",
   },
+  LC_Sharp: {
+    countryCode: "LC",
+    countryName: "Saint Lucia",
+  },
   LI: {
+    countryCode: "LI",
+    countryName: "Liechtenstein",
+  },
+  LI_Sharp: {
     countryCode: "LI",
     countryName: "Liechtenstein",
   },
@@ -541,7 +1077,15 @@ export const countryMetaMap = {
     countryCode: "LK",
     countryName: "Sri Lanka",
   },
+  LK_Sharp: {
+    countryCode: "LK",
+    countryName: "Sri Lanka",
+  },
   LR: {
+    countryCode: "LR",
+    countryName: "Liberia",
+  },
+  LR_Sharp: {
     countryCode: "LR",
     countryName: "Liberia",
   },
@@ -549,7 +1093,15 @@ export const countryMetaMap = {
     countryCode: "LS",
     countryName: "Lesotho",
   },
+  LS_Sharp: {
+    countryCode: "LS",
+    countryName: "Lesotho",
+  },
   LT: {
+    countryCode: "LT",
+    countryName: "Lithuania",
+  },
+  LT_Sharp: {
     countryCode: "LT",
     countryName: "Lithuania",
   },
@@ -557,7 +1109,15 @@ export const countryMetaMap = {
     countryCode: "LU",
     countryName: "Luxembourg",
   },
+  LU_Sharp: {
+    countryCode: "LU",
+    countryName: "Luxembourg",
+  },
   LV: {
+    countryCode: "LV",
+    countryName: "Latvia",
+  },
+  LV_Sharp: {
     countryCode: "LV",
     countryName: "Latvia",
   },
@@ -565,7 +1125,15 @@ export const countryMetaMap = {
     countryCode: "LY",
     countryName: "Libya",
   },
+  LY_Sharp: {
+    countryCode: "LY",
+    countryName: "Libya",
+  },
   MA: {
+    countryCode: "MA",
+    countryName: "Morocco",
+  },
+  MA_Sharp: {
     countryCode: "MA",
     countryName: "Morocco",
   },
@@ -573,7 +1141,15 @@ export const countryMetaMap = {
     countryCode: "MC",
     countryName: "Monaco",
   },
+  MC_Sharp: {
+    countryCode: "MC",
+    countryName: "Monaco",
+  },
   MD: {
+    countryCode: "MD",
+    countryName: "Moldova (the Republic of)",
+  },
+  MD_Sharp: {
     countryCode: "MD",
     countryName: "Moldova (the Republic of)",
   },
@@ -581,7 +1157,15 @@ export const countryMetaMap = {
     countryCode: "ME",
     countryName: "Montenegro",
   },
+  ME_Sharp: {
+    countryCode: "ME",
+    countryName: "Montenegro",
+  },
   MF: {
+    countryCode: "MF",
+    countryName: "Saint Martin (French part)",
+  },
+  MF_Sharp: {
     countryCode: "MF",
     countryName: "Saint Martin (French part)",
   },
@@ -589,7 +1173,15 @@ export const countryMetaMap = {
     countryCode: "MG",
     countryName: "Madagascar",
   },
+  MG_Sharp: {
+    countryCode: "MG",
+    countryName: "Madagascar",
+  },
   MH: {
+    countryCode: "MH",
+    countryName: "Marshall Islands (the)",
+  },
+  MH_Sharp: {
     countryCode: "MH",
     countryName: "Marshall Islands (the)",
   },
@@ -597,7 +1189,15 @@ export const countryMetaMap = {
     countryCode: "MK",
     countryName: "North Macedonia",
   },
+  MK_Sharp: {
+    countryCode: "MK",
+    countryName: "North Macedonia",
+  },
   ML: {
+    countryCode: "ML",
+    countryName: "Mali",
+  },
+  ML_Sharp: {
     countryCode: "ML",
     countryName: "Mali",
   },
@@ -605,7 +1205,15 @@ export const countryMetaMap = {
     countryCode: "MM",
     countryName: "Myanmar",
   },
+  MM_Sharp: {
+    countryCode: "MM",
+    countryName: "Myanmar",
+  },
   MN: {
+    countryCode: "MN",
+    countryName: "Mongolia",
+  },
+  MN_Sharp: {
     countryCode: "MN",
     countryName: "Mongolia",
   },
@@ -613,7 +1221,15 @@ export const countryMetaMap = {
     countryCode: "MO",
     countryName: "Macao",
   },
+  MO_Sharp: {
+    countryCode: "MO",
+    countryName: "Macao",
+  },
   MP: {
+    countryCode: "MP",
+    countryName: "Northern Mariana Islands (the)",
+  },
+  MP_Sharp: {
     countryCode: "MP",
     countryName: "Northern Mariana Islands (the)",
   },
@@ -621,7 +1237,15 @@ export const countryMetaMap = {
     countryCode: "MQ",
     countryName: "Martinique",
   },
+  MQ_Sharp: {
+    countryCode: "MQ",
+    countryName: "Martinique",
+  },
   MR: {
+    countryCode: "MR",
+    countryName: "Mauritania",
+  },
+  MR_Sharp: {
     countryCode: "MR",
     countryName: "Mauritania",
   },
@@ -629,7 +1253,15 @@ export const countryMetaMap = {
     countryCode: "MS",
     countryName: "Montserrat",
   },
+  MS_Sharp: {
+    countryCode: "MS",
+    countryName: "Montserrat",
+  },
   MT: {
+    countryCode: "MT",
+    countryName: "Malta",
+  },
+  MT_Sharp: {
     countryCode: "MT",
     countryName: "Malta",
   },
@@ -637,7 +1269,15 @@ export const countryMetaMap = {
     countryCode: "MU",
     countryName: "Mauritius",
   },
+  MU_Sharp: {
+    countryCode: "MU",
+    countryName: "Mauritius",
+  },
   MV: {
+    countryCode: "MV",
+    countryName: "Maldives",
+  },
+  MV_Sharp: {
     countryCode: "MV",
     countryName: "Maldives",
   },
@@ -645,7 +1285,15 @@ export const countryMetaMap = {
     countryCode: "MW",
     countryName: "Malawi",
   },
+  MW_Sharp: {
+    countryCode: "MW",
+    countryName: "Malawi",
+  },
   MX: {
+    countryCode: "MX",
+    countryName: "Mexico",
+  },
+  MX_Sharp: {
     countryCode: "MX",
     countryName: "Mexico",
   },
@@ -653,7 +1301,15 @@ export const countryMetaMap = {
     countryCode: "MY",
     countryName: "Malaysia",
   },
+  MY_Sharp: {
+    countryCode: "MY",
+    countryName: "Malaysia",
+  },
   MZ: {
+    countryCode: "MZ",
+    countryName: "Mozambique",
+  },
+  MZ_Sharp: {
     countryCode: "MZ",
     countryName: "Mozambique",
   },
@@ -661,7 +1317,15 @@ export const countryMetaMap = {
     countryCode: "NA",
     countryName: "Namibia",
   },
+  NA_Sharp: {
+    countryCode: "NA",
+    countryName: "Namibia",
+  },
   NC: {
+    countryCode: "NC",
+    countryName: "New Caledonia",
+  },
+  NC_Sharp: {
     countryCode: "NC",
     countryName: "New Caledonia",
   },
@@ -669,7 +1333,15 @@ export const countryMetaMap = {
     countryCode: "NE",
     countryName: "Niger (the)",
   },
+  NE_Sharp: {
+    countryCode: "NE",
+    countryName: "Niger (the)",
+  },
   NF: {
+    countryCode: "NF",
+    countryName: "Norfolk Island",
+  },
+  NF_Sharp: {
     countryCode: "NF",
     countryName: "Norfolk Island",
   },
@@ -677,7 +1349,15 @@ export const countryMetaMap = {
     countryCode: "NG",
     countryName: "Nigeria",
   },
+  NG_Sharp: {
+    countryCode: "NG",
+    countryName: "Nigeria",
+  },
   NI: {
+    countryCode: "NI",
+    countryName: "Nicaragua",
+  },
+  NI_Sharp: {
     countryCode: "NI",
     countryName: "Nicaragua",
   },
@@ -685,7 +1365,15 @@ export const countryMetaMap = {
     countryCode: "NL",
     countryName: "Netherlands (the)",
   },
+  NL_Sharp: {
+    countryCode: "NL",
+    countryName: "Netherlands (the)",
+  },
   NO: {
+    countryCode: "NO",
+    countryName: "Norway",
+  },
+  NO_Sharp: {
     countryCode: "NO",
     countryName: "Norway",
   },
@@ -693,7 +1381,15 @@ export const countryMetaMap = {
     countryCode: "NP",
     countryName: "Nepal",
   },
+  NP_Sharp: {
+    countryCode: "NP",
+    countryName: "Nepal",
+  },
   NR: {
+    countryCode: "NR",
+    countryName: "Nauru",
+  },
+  NR_Sharp: {
     countryCode: "NR",
     countryName: "Nauru",
   },
@@ -701,7 +1397,15 @@ export const countryMetaMap = {
     countryCode: "NU",
     countryName: "Niue",
   },
+  NU_Sharp: {
+    countryCode: "NU",
+    countryName: "Niue",
+  },
   NZ: {
+    countryCode: "NZ",
+    countryName: "New Zealand",
+  },
+  NZ_Sharp: {
     countryCode: "NZ",
     countryName: "New Zealand",
   },
@@ -709,7 +1413,15 @@ export const countryMetaMap = {
     countryCode: "OM",
     countryName: "Oman",
   },
+  OM_Sharp: {
+    countryCode: "OM",
+    countryName: "Oman",
+  },
   PA: {
+    countryCode: "PA",
+    countryName: "Panama",
+  },
+  PA_Sharp: {
     countryCode: "PA",
     countryName: "Panama",
   },
@@ -717,7 +1429,15 @@ export const countryMetaMap = {
     countryCode: "PE",
     countryName: "Peru",
   },
+  PE_Sharp: {
+    countryCode: "PE",
+    countryName: "Peru",
+  },
   PF: {
+    countryCode: "PF",
+    countryName: "French Polynesia",
+  },
+  PF_Sharp: {
     countryCode: "PF",
     countryName: "French Polynesia",
   },
@@ -725,7 +1445,15 @@ export const countryMetaMap = {
     countryCode: "PG",
     countryName: "Papua New Guinea",
   },
+  PG_Sharp: {
+    countryCode: "PG",
+    countryName: "Papua New Guinea",
+  },
   PH: {
+    countryCode: "PH",
+    countryName: "Philippines (the)",
+  },
+  PH_Sharp: {
     countryCode: "PH",
     countryName: "Philippines (the)",
   },
@@ -733,7 +1461,15 @@ export const countryMetaMap = {
     countryCode: "PK",
     countryName: "Pakistan",
   },
+  PK_Sharp: {
+    countryCode: "PK",
+    countryName: "Pakistan",
+  },
   PL: {
+    countryCode: "PL",
+    countryName: "Poland",
+  },
+  PL_Sharp: {
     countryCode: "PL",
     countryName: "Poland",
   },
@@ -741,7 +1477,15 @@ export const countryMetaMap = {
     countryCode: "PM",
     countryName: "Saint Pierre and Miquelon",
   },
+  PM_Sharp: {
+    countryCode: "PM",
+    countryName: "Saint Pierre and Miquelon",
+  },
   PN: {
+    countryCode: "PN",
+    countryName: "Pitcairn",
+  },
+  PN_Sharp: {
     countryCode: "PN",
     countryName: "Pitcairn",
   },
@@ -749,7 +1493,15 @@ export const countryMetaMap = {
     countryCode: "PR",
     countryName: "Puerto Rico",
   },
+  PR_Sharp: {
+    countryCode: "PR",
+    countryName: "Puerto Rico",
+  },
   PS: {
+    countryCode: "PS",
+    countryName: "Palestine (State of)",
+  },
+  PS_Sharp: {
     countryCode: "PS",
     countryName: "Palestine (State of)",
   },
@@ -757,7 +1509,15 @@ export const countryMetaMap = {
     countryCode: "PT",
     countryName: "Portugal",
   },
+  PT_Sharp: {
+    countryCode: "PT",
+    countryName: "Portugal",
+  },
   PW: {
+    countryCode: "PW",
+    countryName: "Palau",
+  },
+  PW_Sharp: {
     countryCode: "PW",
     countryName: "Palau",
   },
@@ -765,7 +1525,15 @@ export const countryMetaMap = {
     countryCode: "PY",
     countryName: "Paraguay",
   },
+  PY_Sharp: {
+    countryCode: "PY",
+    countryName: "Paraguay",
+  },
   QA: {
+    countryCode: "QA",
+    countryName: "Qatar",
+  },
+  QA_Sharp: {
     countryCode: "QA",
     countryName: "Qatar",
   },
@@ -773,7 +1541,15 @@ export const countryMetaMap = {
     countryCode: "RE",
     countryName: "Réunion",
   },
+  RE_Sharp: {
+    countryCode: "RE",
+    countryName: "Réunion",
+  },
   RO: {
+    countryCode: "RO",
+    countryName: "Romania",
+  },
+  RO_Sharp: {
     countryCode: "RO",
     countryName: "Romania",
   },
@@ -781,7 +1557,15 @@ export const countryMetaMap = {
     countryCode: "RS",
     countryName: "Serbia",
   },
+  RS_Sharp: {
+    countryCode: "RS",
+    countryName: "Serbia",
+  },
   RU: {
+    countryCode: "RU",
+    countryName: "Russian Federation (the)",
+  },
+  RU_Sharp: {
     countryCode: "RU",
     countryName: "Russian Federation (the)",
   },
@@ -789,7 +1573,15 @@ export const countryMetaMap = {
     countryCode: "RW",
     countryName: "Rwanda",
   },
+  RW_Sharp: {
+    countryCode: "RW",
+    countryName: "Rwanda",
+  },
   SA: {
+    countryCode: "SA",
+    countryName: "Saudi Arabia",
+  },
+  SA_Sharp: {
     countryCode: "SA",
     countryName: "Saudi Arabia",
   },
@@ -797,7 +1589,15 @@ export const countryMetaMap = {
     countryCode: "SB",
     countryName: "Solomon Islands",
   },
+  SB_Sharp: {
+    countryCode: "SB",
+    countryName: "Solomon Islands",
+  },
   SC: {
+    countryCode: "SC",
+    countryName: "Seychelles",
+  },
+  SC_Sharp: {
     countryCode: "SC",
     countryName: "Seychelles",
   },
@@ -805,7 +1605,15 @@ export const countryMetaMap = {
     countryCode: "SD",
     countryName: "Sudan (the)",
   },
+  SD_Sharp: {
+    countryCode: "SD",
+    countryName: "Sudan (the)",
+  },
   SE: {
+    countryCode: "SE",
+    countryName: "Sweden",
+  },
+  SE_Sharp: {
     countryCode: "SE",
     countryName: "Sweden",
   },
@@ -813,7 +1621,15 @@ export const countryMetaMap = {
     countryCode: "SG",
     countryName: "Singapore",
   },
+  SG_Sharp: {
+    countryCode: "SG",
+    countryName: "Singapore",
+  },
   SH: {
+    countryCode: "SH",
+    countryName: "Saint Helena, Ascension and Tristan da Cunha",
+  },
+  SH_Sharp: {
     countryCode: "SH",
     countryName: "Saint Helena, Ascension and Tristan da Cunha",
   },
@@ -821,7 +1637,15 @@ export const countryMetaMap = {
     countryCode: "SI",
     countryName: "Slovenia",
   },
+  SI_Sharp: {
+    countryCode: "SI",
+    countryName: "Slovenia",
+  },
   SJ: {
+    countryCode: "SJ",
+    countryName: "Svalbard and Jan Mayen",
+  },
+  SJ_Sharp: {
     countryCode: "SJ",
     countryName: "Svalbard and Jan Mayen",
   },
@@ -829,7 +1653,15 @@ export const countryMetaMap = {
     countryCode: "SK",
     countryName: "Slovakia",
   },
+  SK_Sharp: {
+    countryCode: "SK",
+    countryName: "Slovakia",
+  },
   SL: {
+    countryCode: "SL",
+    countryName: "Sierra Leone",
+  },
+  SL_Sharp: {
     countryCode: "SL",
     countryName: "Sierra Leone",
   },
@@ -837,7 +1669,15 @@ export const countryMetaMap = {
     countryCode: "SM",
     countryName: "San Marino",
   },
+  SM_Sharp: {
+    countryCode: "SM",
+    countryName: "San Marino",
+  },
   SN: {
+    countryCode: "SN",
+    countryName: "Senegal",
+  },
+  SN_Sharp: {
     countryCode: "SN",
     countryName: "Senegal",
   },
@@ -845,7 +1685,15 @@ export const countryMetaMap = {
     countryCode: "SO",
     countryName: "Somalia",
   },
+  SO_Sharp: {
+    countryCode: "SO",
+    countryName: "Somalia",
+  },
   SR: {
+    countryCode: "SR",
+    countryName: "Suriname",
+  },
+  SR_Sharp: {
     countryCode: "SR",
     countryName: "Suriname",
   },
@@ -853,7 +1701,15 @@ export const countryMetaMap = {
     countryCode: "SS",
     countryName: "South Sudan",
   },
+  SS_Sharp: {
+    countryCode: "SS",
+    countryName: "South Sudan",
+  },
   ST: {
+    countryCode: "ST",
+    countryName: "Sao Tome and Principe",
+  },
+  ST_Sharp: {
     countryCode: "ST",
     countryName: "Sao Tome and Principe",
   },
@@ -861,7 +1717,15 @@ export const countryMetaMap = {
     countryCode: "SV",
     countryName: "El Salvador",
   },
+  SV_Sharp: {
+    countryCode: "SV",
+    countryName: "El Salvador",
+  },
   SX: {
+    countryCode: "SX",
+    countryName: "Sint Maarten (Dutch part)",
+  },
+  SX_Sharp: {
     countryCode: "SX",
     countryName: "Sint Maarten (Dutch part)",
   },
@@ -869,7 +1733,15 @@ export const countryMetaMap = {
     countryCode: "SY",
     countryName: "Syrian Arab Republic (the)",
   },
+  SY_Sharp: {
+    countryCode: "SY",
+    countryName: "Syrian Arab Republic (the)",
+  },
   SZ: {
+    countryCode: "SZ",
+    countryName: "Eswatini",
+  },
+  SZ_Sharp: {
     countryCode: "SZ",
     countryName: "Eswatini",
   },
@@ -877,7 +1749,15 @@ export const countryMetaMap = {
     countryCode: "TC",
     countryName: "Turks and Caicos Islands (the)",
   },
+  TC_Sharp: {
+    countryCode: "TC",
+    countryName: "Turks and Caicos Islands (the)",
+  },
   TD: {
+    countryCode: "TD",
+    countryName: "Chad",
+  },
+  TD_Sharp: {
     countryCode: "TD",
     countryName: "Chad",
   },
@@ -885,7 +1765,15 @@ export const countryMetaMap = {
     countryCode: "TF",
     countryName: "French Southern Territories (the)",
   },
+  TF_Sharp: {
+    countryCode: "TF",
+    countryName: "French Southern Territories (the)",
+  },
   TG: {
+    countryCode: "TG",
+    countryName: "Togo",
+  },
+  TG_Sharp: {
     countryCode: "TG",
     countryName: "Togo",
   },
@@ -893,7 +1781,15 @@ export const countryMetaMap = {
     countryCode: "TH",
     countryName: "Thailand",
   },
+  TH_Sharp: {
+    countryCode: "TH",
+    countryName: "Thailand",
+  },
   TJ: {
+    countryCode: "TJ",
+    countryName: "Tajikistan",
+  },
+  TJ_Sharp: {
     countryCode: "TJ",
     countryName: "Tajikistan",
   },
@@ -901,7 +1797,15 @@ export const countryMetaMap = {
     countryCode: "TK",
     countryName: "Tokelau",
   },
+  TK_Sharp: {
+    countryCode: "TK",
+    countryName: "Tokelau",
+  },
   TL: {
+    countryCode: "TL",
+    countryName: "Timor-Leste",
+  },
+  TL_Sharp: {
     countryCode: "TL",
     countryName: "Timor-Leste",
   },
@@ -909,7 +1813,15 @@ export const countryMetaMap = {
     countryCode: "TM",
     countryName: "Turkmenistan",
   },
+  TM_Sharp: {
+    countryCode: "TM",
+    countryName: "Turkmenistan",
+  },
   TN: {
+    countryCode: "TN",
+    countryName: "Tunisia",
+  },
+  TN_Sharp: {
     countryCode: "TN",
     countryName: "Tunisia",
   },
@@ -917,7 +1829,15 @@ export const countryMetaMap = {
     countryCode: "TO",
     countryName: "Tonga",
   },
+  TO_Sharp: {
+    countryCode: "TO",
+    countryName: "Tonga",
+  },
   TR: {
+    countryCode: "TR",
+    countryName: "Türkiye",
+  },
+  TR_Sharp: {
     countryCode: "TR",
     countryName: "Türkiye",
   },
@@ -925,7 +1845,15 @@ export const countryMetaMap = {
     countryCode: "TT",
     countryName: "Trinidad and Tobago",
   },
+  TT_Sharp: {
+    countryCode: "TT",
+    countryName: "Trinidad and Tobago",
+  },
   TV: {
+    countryCode: "TV",
+    countryName: "Tuvalu",
+  },
+  TV_Sharp: {
     countryCode: "TV",
     countryName: "Tuvalu",
   },
@@ -933,7 +1861,15 @@ export const countryMetaMap = {
     countryCode: "TW",
     countryName: "Taiwan (Province of China)",
   },
+  TW_Sharp: {
+    countryCode: "TW",
+    countryName: "Taiwan (Province of China)",
+  },
   TZ: {
+    countryCode: "TZ",
+    countryName: "Tanzania (the United Republic of)",
+  },
+  TZ_Sharp: {
     countryCode: "TZ",
     countryName: "Tanzania (the United Republic of)",
   },
@@ -941,7 +1877,15 @@ export const countryMetaMap = {
     countryCode: "UA",
     countryName: "Ukraine",
   },
+  UA_Sharp: {
+    countryCode: "UA",
+    countryName: "Ukraine",
+  },
   UG: {
+    countryCode: "UG",
+    countryName: "Uganda",
+  },
+  UG_Sharp: {
     countryCode: "UG",
     countryName: "Uganda",
   },
@@ -949,7 +1893,15 @@ export const countryMetaMap = {
     countryCode: "UM",
     countryName: "United States Minor Outlying Islands (the)",
   },
+  UM_Sharp: {
+    countryCode: "UM",
+    countryName: "United States Minor Outlying Islands (the)",
+  },
   UN: {
+    countryCode: "UN",
+    countryName: "United Nations",
+  },
+  UN_Sharp: {
     countryCode: "UN",
     countryName: "United Nations",
   },
@@ -957,7 +1909,15 @@ export const countryMetaMap = {
     countryCode: "US",
     countryName: "United States of America (the)",
   },
+  US_Sharp: {
+    countryCode: "US",
+    countryName: "United States of America (the)",
+  },
   UY: {
+    countryCode: "UY",
+    countryName: "Uruguay",
+  },
+  UY_Sharp: {
     countryCode: "UY",
     countryName: "Uruguay",
   },
@@ -965,7 +1925,15 @@ export const countryMetaMap = {
     countryCode: "UZ",
     countryName: "Uzbekistan",
   },
+  UZ_Sharp: {
+    countryCode: "UZ",
+    countryName: "Uzbekistan",
+  },
   VA: {
+    countryCode: "VA",
+    countryName: "Holy See (the)",
+  },
+  VA_Sharp: {
     countryCode: "VA",
     countryName: "Holy See (the)",
   },
@@ -973,7 +1941,15 @@ export const countryMetaMap = {
     countryCode: "VC",
     countryName: "Saint Vincent and the Grenadines",
   },
+  VC_Sharp: {
+    countryCode: "VC",
+    countryName: "Saint Vincent and the Grenadines",
+  },
   VE: {
+    countryCode: "VE",
+    countryName: "Venezuela (Bolivarian Republic of)",
+  },
+  VE_Sharp: {
     countryCode: "VE",
     countryName: "Venezuela (Bolivarian Republic of)",
   },
@@ -981,7 +1957,15 @@ export const countryMetaMap = {
     countryCode: "VG",
     countryName: "Virgin Islands (British)",
   },
+  VG_Sharp: {
+    countryCode: "VG",
+    countryName: "Virgin Islands (British)",
+  },
   VI: {
+    countryCode: "VI",
+    countryName: "Virgin Islands (U.S.)",
+  },
+  VI_Sharp: {
     countryCode: "VI",
     countryName: "Virgin Islands (U.S.)",
   },
@@ -989,7 +1973,15 @@ export const countryMetaMap = {
     countryCode: "VN",
     countryName: "Viet Nam",
   },
+  VN_Sharp: {
+    countryCode: "VN",
+    countryName: "Viet Nam",
+  },
   VU: {
+    countryCode: "VU",
+    countryName: "Vanuatu",
+  },
+  VU_Sharp: {
     countryCode: "VU",
     countryName: "Vanuatu",
   },
@@ -997,7 +1989,15 @@ export const countryMetaMap = {
     countryCode: "WF",
     countryName: "Wallis and Futuna",
   },
+  WF_Sharp: {
+    countryCode: "WF",
+    countryName: "Wallis and Futuna",
+  },
   WS: {
+    countryCode: "WS",
+    countryName: "Samoa",
+  },
+  WS_Sharp: {
     countryCode: "WS",
     countryName: "Samoa",
   },
@@ -1005,7 +2005,15 @@ export const countryMetaMap = {
     countryCode: "XK",
     countryName: "Kosovo (the Republic of)",
   },
+  XK_Sharp: {
+    countryCode: "XK",
+    countryName: "Kosovo (the Republic of)",
+  },
   YE: {
+    countryCode: "YE",
+    countryName: "Yemen",
+  },
+  YE_Sharp: {
     countryCode: "YE",
     countryName: "Yemen",
   },
@@ -1013,7 +2021,15 @@ export const countryMetaMap = {
     countryCode: "YT",
     countryName: "Mayotte",
   },
+  YT_Sharp: {
+    countryCode: "YT",
+    countryName: "Mayotte",
+  },
   ZA: {
+    countryCode: "ZA",
+    countryName: "South Africa",
+  },
+  ZA_Sharp: {
     countryCode: "ZA",
     countryName: "South Africa",
   },
@@ -1021,7 +2037,15 @@ export const countryMetaMap = {
     countryCode: "ZM",
     countryName: "Zambia",
   },
+  ZM_Sharp: {
+    countryCode: "ZM",
+    countryName: "Zambia",
+  },
   ZW: {
+    countryCode: "ZW",
+    countryName: "Zimbabwe",
+  },
+  ZW_Sharp: {
     countryCode: "ZW",
     countryName: "Zimbabwe",
   },

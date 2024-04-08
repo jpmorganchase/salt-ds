@@ -9,13 +9,21 @@ export type HTProps = CountrySymbolProps;
 const HT = forwardRef<SVGSVGElement, HTProps>(function HT(props: HTProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="HT"
+      style={style}
       aria-label="Haiti"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-HT-a`}

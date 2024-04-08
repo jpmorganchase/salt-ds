@@ -9,13 +9,21 @@ export type MOProps = CountrySymbolProps;
 const MO = forwardRef<SVGSVGElement, MOProps>(function MO(props: MOProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="MO"
+      style={style}
       aria-label="Macao"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-MO-a`}

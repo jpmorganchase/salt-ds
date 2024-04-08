@@ -9,13 +9,21 @@ export type BMProps = CountrySymbolProps;
 const BM = forwardRef<SVGSVGElement, BMProps>(function BM(props: BMProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BM"
+      style={style}
       aria-label="Bermuda"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BM-a`}

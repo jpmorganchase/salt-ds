@@ -9,13 +9,21 @@ export type AOProps = CountrySymbolProps;
 const AO = forwardRef<SVGSVGElement, AOProps>(function AO(props: AOProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AO"
+      style={style}
       aria-label="Angola"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AO-a`}

@@ -9,13 +9,21 @@ export type NUProps = CountrySymbolProps;
 const NU = forwardRef<SVGSVGElement, NUProps>(function NU(props: NUProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="NU"
+      style={style}
       aria-label="Niue"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-NU-a`}

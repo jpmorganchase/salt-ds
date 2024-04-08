@@ -9,13 +9,21 @@ export type TRProps = CountrySymbolProps;
 const TR = forwardRef<SVGSVGElement, TRProps>(function TR(props: TRProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="TR"
+      style={style}
       aria-label="Türkiye"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-TR-a`}

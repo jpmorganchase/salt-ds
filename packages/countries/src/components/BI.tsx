@@ -9,13 +9,21 @@ export type BIProps = CountrySymbolProps;
 const BI = forwardRef<SVGSVGElement, BIProps>(function BI(props: BIProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BI"
+      style={style}
       aria-label="Burundi"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BI-a`}

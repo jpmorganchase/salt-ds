@@ -9,13 +9,21 @@ export type JOProps = CountrySymbolProps;
 const JO = forwardRef<SVGSVGElement, JOProps>(function JO(props: JOProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="JO"
+      style={style}
       aria-label="Jordan"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-JO-a`}

@@ -9,13 +9,21 @@ export type SMProps = CountrySymbolProps;
 const SM = forwardRef<SVGSVGElement, SMProps>(function SM(props: SMProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="SM"
+      style={style}
       aria-label="San Marino"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-SM-a`}

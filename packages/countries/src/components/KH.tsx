@@ -9,13 +9,21 @@ export type KHProps = CountrySymbolProps;
 const KH = forwardRef<SVGSVGElement, KHProps>(function KH(props: KHProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="KH"
+      style={style}
       aria-label="Cambodia"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-KH-a`}

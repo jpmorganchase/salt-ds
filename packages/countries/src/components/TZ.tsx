@@ -9,13 +9,21 @@ export type TZProps = CountrySymbolProps;
 const TZ = forwardRef<SVGSVGElement, TZProps>(function TZ(props: TZProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="TZ"
+      style={style}
       aria-label="Tanzania (the United Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-TZ-a`}

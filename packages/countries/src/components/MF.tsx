@@ -9,13 +9,21 @@ export type MFProps = CountrySymbolProps;
 const MF = forwardRef<SVGSVGElement, MFProps>(function MF(props: MFProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="MF"
+      style={style}
       aria-label="Saint Martin (French part)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-MF-a`}

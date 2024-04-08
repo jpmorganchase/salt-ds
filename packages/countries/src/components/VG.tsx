@@ -9,13 +9,21 @@ export type VGProps = CountrySymbolProps;
 const VG = forwardRef<SVGSVGElement, VGProps>(function VG(props: VGProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="VG"
+      style={style}
       aria-label="Virgin Islands (British)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-VG-a`}

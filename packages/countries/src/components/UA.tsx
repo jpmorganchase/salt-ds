@@ -9,13 +9,21 @@ export type UAProps = CountrySymbolProps;
 const UA = forwardRef<SVGSVGElement, UAProps>(function UA(props: UAProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="UA"
+      style={style}
       aria-label="Ukraine"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-UA-a`}

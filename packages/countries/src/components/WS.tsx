@@ -9,13 +9,21 @@ export type WSProps = CountrySymbolProps;
 const WS = forwardRef<SVGSVGElement, WSProps>(function WS(props: WSProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="WS"
+      style={style}
       aria-label="Samoa"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-WS-a`}

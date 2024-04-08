@@ -9,13 +9,21 @@ export type FMProps = CountrySymbolProps;
 const FM = forwardRef<SVGSVGElement, FMProps>(function FM(props: FMProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="FM"
+      style={style}
       aria-label="Micronesia (Federated States of)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-FM-a`}

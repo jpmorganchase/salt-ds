@@ -9,13 +9,21 @@ export type BGProps = CountrySymbolProps;
 const BG = forwardRef<SVGSVGElement, BGProps>(function BG(props: BGProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BG"
+      style={style}
       aria-label="Bulgaria"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BG-a`}

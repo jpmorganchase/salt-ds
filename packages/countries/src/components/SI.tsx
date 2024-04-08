@@ -9,13 +9,21 @@ export type SIProps = CountrySymbolProps;
 const SI = forwardRef<SVGSVGElement, SIProps>(function SI(props: SIProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="SI"
+      style={style}
       aria-label="Slovenia"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-SI-a`}

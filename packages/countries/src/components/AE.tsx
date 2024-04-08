@@ -9,13 +9,21 @@ export type AEProps = CountrySymbolProps;
 const AE = forwardRef<SVGSVGElement, AEProps>(function AE(props: AEProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AE"
+      style={style}
       aria-label="United Arab Emirates (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AE-a`}

@@ -9,13 +9,21 @@ export type LTProps = CountrySymbolProps;
 const LT = forwardRef<SVGSVGElement, LTProps>(function LT(props: LTProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="LT"
+      style={style}
       aria-label="Lithuania"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-LT-a`}

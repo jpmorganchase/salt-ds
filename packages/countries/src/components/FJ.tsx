@@ -9,13 +9,21 @@ export type FJProps = CountrySymbolProps;
 const FJ = forwardRef<SVGSVGElement, FJProps>(function FJ(props: FJProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="FJ"
+      style={style}
       aria-label="Fiji"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-FJ-a`}

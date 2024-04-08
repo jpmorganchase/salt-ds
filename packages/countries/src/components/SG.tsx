@@ -9,13 +9,21 @@ export type SGProps = CountrySymbolProps;
 const SG = forwardRef<SVGSVGElement, SGProps>(function SG(props: SGProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="SG"
+      style={style}
       aria-label="Singapore"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-SG-a`}

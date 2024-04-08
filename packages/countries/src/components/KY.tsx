@@ -9,13 +9,21 @@ export type KYProps = CountrySymbolProps;
 const KY = forwardRef<SVGSVGElement, KYProps>(function KY(props: KYProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="KY"
+      style={style}
       aria-label="Cayman Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-KY-a`}

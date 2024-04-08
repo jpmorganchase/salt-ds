@@ -9,13 +9,21 @@ export type AUProps = CountrySymbolProps;
 const AU = forwardRef<SVGSVGElement, AUProps>(function AU(props: AUProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="AU"
+      style={style}
       aria-label="Australia"
       viewBox="0 0 73 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-AU-a`}

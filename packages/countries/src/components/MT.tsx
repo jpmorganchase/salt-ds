@@ -9,13 +9,21 @@ export type MTProps = CountrySymbolProps;
 const MT = forwardRef<SVGSVGElement, MTProps>(function MT(props: MTProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="MT"
+      style={style}
       aria-label="Malta"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-MT-a`}

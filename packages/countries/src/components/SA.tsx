@@ -9,13 +9,21 @@ export type SAProps = CountrySymbolProps;
 const SA = forwardRef<SVGSVGElement, SAProps>(function SA(props: SAProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="SA"
+      style={style}
       aria-label="Saudi Arabia"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-SA-a`}

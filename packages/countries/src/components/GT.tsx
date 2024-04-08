@@ -9,13 +9,21 @@ export type GTProps = CountrySymbolProps;
 const GT = forwardRef<SVGSVGElement, GTProps>(function GT(props: GTProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="GT"
+      style={style}
       aria-label="Guatemala"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-GT-a`}

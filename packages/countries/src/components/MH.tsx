@@ -9,13 +9,21 @@ export type MHProps = CountrySymbolProps;
 const MH = forwardRef<SVGSVGElement, MHProps>(function MH(props: MHProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="MH"
+      style={style}
       aria-label="Marshall Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-MH-a`}

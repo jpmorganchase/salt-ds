@@ -9,13 +9,21 @@ export type NIProps = CountrySymbolProps;
 const NI = forwardRef<SVGSVGElement, NIProps>(function NI(props: NIProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="NI"
+      style={style}
       aria-label="Nicaragua"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-NI-a`}

@@ -9,13 +9,21 @@ export type ZMProps = CountrySymbolProps;
 const ZM = forwardRef<SVGSVGElement, ZMProps>(function ZM(props: ZMProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="ZM"
+      style={style}
       aria-label="Zambia"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-ZM-a`}

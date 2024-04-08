@@ -9,13 +9,21 @@ export type BOProps = CountrySymbolProps;
 const BO = forwardRef<SVGSVGElement, BOProps>(function BO(props: BOProps, ref) {
   const uid = useId(props.id);
 
+  const { style: styleProp, ...rest } = props;
+
+  const style = {
+    ...styleProp,
+    borderRadius: "50%",
+  };
+
   return (
     <CountrySymbol
       data-testid="BO"
+      style={style}
       aria-label="Bolivia (Plurinational State of)"
       viewBox="0 0 72 72"
       ref={ref}
-      {...props}
+      {...rest}
     >
       <mask
         id={`${uid}-BO-a`}
