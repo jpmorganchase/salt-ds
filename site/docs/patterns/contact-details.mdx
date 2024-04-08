@@ -112,7 +112,7 @@ Refrain from using icon descriptors when you have multiple values for similar ch
 You can define contact details as links, making them interactive. This enables immediate communication to a contact from within your application.
 
  <Diagram
-    src="/img/patterns/contact-details/contact-details-links.png"
+    src="/img/patterns/contact-details/contact-details-using-links.png"
     alt="Contact Details using Icon Descriptors"
     caption="An example of contact details using links."
     border
@@ -136,7 +136,9 @@ This example demonstrates the component embedded within a [card](/salt/component
 
 You can define quick actions, one-click shortcuts to specific functions or features. This can include starting a new email in Outlook, or calling a contact in Zoom.
 
-Ensure that quick action buttons have a tooltip displayed as per the [icon only button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only)
+Ensure that quick action buttons have a tooltip displayed as per the [icon only button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only).
+
+For layout guidance, refer to the [button bar pattern](/salt/patterns/button-bar).
 
  <Diagram
     src="/img/patterns/contact-details/contact-details-actions.png"
@@ -150,9 +152,16 @@ Ensure that quick action buttons have a tooltip displayed as per the [icon only 
 If you’re displaying supplementary details, you can configure them to be collapsible.
 
  <Diagram
-    src="/img/patterns/contact-details/contact-details-collapsible.png"
+    src="/img/patterns/contact-details/contact-details-collapsible-spacing.png"
     alt="Contact Details with collapsible details"
     caption="Contact details with collapsible details."
+    border
+  />
+
+   <Diagram
+    src="/img/patterns/contact-details/contact-details-collapsible-layout.png"
+    alt="Collapsible detail layout"
+    caption="Use a split layout between quick actions and the collapsible button."
     border
   />
 
@@ -173,18 +182,16 @@ To show as many options as possible, we recommend you keep data points to no mor
     border
   />
 
-### Layout
-
 Use `StackLayout` to display the text elements underneath the header in a row.
 
  <Diagram
-    src="/img/patterns/contact-details/contact-details-layout-1-list.png"
+    src="/img/patterns/contact-details/contact-details-list-layout-1.png"
     alt="Contact Details in list using stack layout."
     border
   />
 
  <Diagram
-    src="/img/patterns/contact-details/contact-details-layout-2-list.png"
+    src="/img/patterns/contact-details/contact-details-list-layout-2.png"
     alt="Contact Details in list using stack layout."
     border
   />
