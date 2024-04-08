@@ -125,7 +125,7 @@ ReducedMotion.args = {
   child,
 };
 
-// Preferences layout
+// Preferences Dialog
 
 const languages = [
   "English",
@@ -262,7 +262,7 @@ const exportView = () => (
   </StackLayout>
 );
 
-export const PreferencesLayout: StoryFn<typeof ParentChildLayout> = (args) => {
+export const PreferencesDialog: StoryFn<typeof ParentChildLayout> = (args) => {
   const items = [
     {
       label: "Display",
