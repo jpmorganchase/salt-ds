@@ -370,6 +370,6 @@ export const PreferencesDialog: StoryFn<typeof ParentChildLayout> = (args) => {
   );
 };
 
-PreferencesLayout.args = {
+PreferencesDialog.args = {
   collapseAtBreakpoint: "sm",
 };
