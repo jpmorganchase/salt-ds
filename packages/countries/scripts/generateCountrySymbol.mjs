@@ -381,7 +381,12 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
       countryName: "${countryMeta.countryName}",
     },`;
 
-    metaText.push(entryText);
+    const sharpEntryText = `"${code}_Sharp": {
+      countryCode: "${countryMeta.countryCode}",
+      countryName: "${countryMeta.countryName}",
+    },`;
+
+    metaText = [...metaText, entryText, sharpEntryText];
   }
 
   const endText = `
