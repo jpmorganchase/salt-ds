@@ -68,7 +68,7 @@
     "@storybook/theming": "^7.4.5",
     "@tanstack/react-query": "^4.28.0",
     "@testing-library/cypress": "^10.0.0",
-    "@testing-library/dom": "^9.0.0",
+    "@testing-library/dom": "^10.0.0",
     "@testing-library/react": "^12.1.0",
     "@types/no-scroll": "^2.1.0",
     "@types/node": "^20.0.0",
