@@ -35,10 +35,12 @@
     calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
-.saltMenuItem[aria-disabled="true"] {
+.saltMenuItem[aria-disabled="true"],
+.saltMenuItem[aria-disabled="true"]:active {
   background: var(--salt-selectable-background-disabled);
   color: var(--salt-text-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
+  box-shadow: none;
 }
 
 .saltMenuItem-blurActive {

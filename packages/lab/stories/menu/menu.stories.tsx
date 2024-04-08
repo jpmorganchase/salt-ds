@@ -7,7 +7,7 @@ import {
   MenuTrigger,
 } from "@salt-ds/lab";
 
-import { Meta } from "@storybook/react";
+import { Meta, StoryFn } from "@storybook/react";
 import {
   CopyIcon,
   ExportIcon,
@@ -21,19 +21,43 @@ export default {
   component: Menu,
 } as Meta<typeof Menu>;
 
-export const SingleLevel = () => {
+export const SingleLevel: StoryFn<typeof Menu> = (args) => {
   return (
-    <Menu>
+    <Menu {...args}>
       <MenuTrigger>
         <Button variant="secondary" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
       <MenuPanel>
-        <MenuItem>Copy</MenuItem>
-        <MenuItem>Paste</MenuItem>
-        <MenuItem>Export</MenuItem>
-        <MenuItem>Settings</MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Copy");
+          }}
+        >
+          Copy
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Paste");
+          }}
+        >
+          Paste
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Export");
+          }}
+        >
+          Export
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Settings");
+          }}
+        >
+          Settings
+        </MenuItem>
       </MenuPanel>
     </Menu>
   );
@@ -46,9 +70,27 @@ function EditStylingMenu() {
         <MenuItem>Edit styling</MenuItem>
       </MenuTrigger>
       <MenuPanel>
-        <MenuItem>Column</MenuItem>
-        <MenuItem>Cell</MenuItem>
-        <MenuItem>Row</MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Column");
+          }}
+        >
+          Column
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Cell");
+          }}
+        >
+          Cell
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Row");
+          }}
+        >
+          Row
+        </MenuItem>
       </MenuPanel>
     </Menu>
   );
@@ -61,36 +103,72 @@ function ClearStylingMenu() {
         <MenuItem>Clear styling</MenuItem>
       </MenuTrigger>
       <MenuPanel>
-        <MenuItem>Column</MenuItem>
-        <MenuItem>Cell</MenuItem>
-        <MenuItem>Row</MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Column");
+          }}
+        >
+          Column
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Cell");
+          }}
+        >
+          Cell
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Row");
+          }}
+        >
+          Row
+        </MenuItem>
       </MenuPanel>
     </Menu>
   );
 }
 
-export const MultiLevel = () => {
+export const MultiLevel: StoryFn<typeof Menu> = (args) => {
   return (
-    <Menu>
+    <Menu {...args}>
       <MenuTrigger>
         <Button variant="secondary" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
       <MenuPanel>
-        <MenuItem>Copy</MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Copy");
+          }}
+        >
+          Copy
+        </MenuItem>
         <EditStylingMenu />
         <ClearStylingMenu />
-        <MenuItem>Export</MenuItem>
-        <MenuItem>Settings</MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Export");
+          }}
+        >
+          Export
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Settings");
+          }}
+        >
+          Settings
+        </MenuItem>
       </MenuPanel>
     </Menu>
   );
 };
 
-export const GroupedItems = () => {
+export const GroupedItems: StoryFn<typeof Menu> = (args) => {
   return (
-    <Menu>
+    <Menu {...args}>
       <MenuTrigger>
         <Button variant="secondary" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
@@ -114,9 +192,9 @@ export const GroupedItems = () => {
   );
 };
 
-export const SeparatorOnly = () => {
+export const SeparatorOnly: StoryFn<typeof Menu> = (args) => {
   return (
-    <Menu>
+    <Menu {...args}>
       <MenuTrigger>
         <Button variant="secondary" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
@@ -140,9 +218,9 @@ export const SeparatorOnly = () => {
   );
 };
 
-export const Icons = () => {
+export const Icons: StoryFn<typeof Menu> = (args) => {
   return (
-    <Menu>
+    <Menu {...args}>
       <MenuTrigger>
         <Button variant="secondary" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
@@ -166,9 +244,9 @@ export const Icons = () => {
   );
 };
 
-export const IconWithGroups = () => {
+export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
   return (
-    <Menu>
+    <Menu {...args}>
       <MenuTrigger>
         <Button variant="secondary" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />

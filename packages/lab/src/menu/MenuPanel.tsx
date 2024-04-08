@@ -3,7 +3,7 @@ import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useMenuContext } from "./MenuContext";
 import { MenuPanelBase } from "./MenuPanelBase";
-import { FloatingList, useFloatingParentNodeId } from "@floating-ui/react";
+import { FloatingList } from "@floating-ui/react";
 import { MenuPanelContext } from "./MenuPanelContext";
 
 export interface MenuPanelProps extends ComponentPropsWithoutRef<"div"> {}
@@ -15,7 +15,6 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
     const { children, className, ...rest } = props;
     const { Component: FloatingComponent } = useFloatingComponent();
 
-    const parentId = useFloatingParentNodeId();
     const {
       getItemProps,
       openState,
@@ -26,6 +25,7 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
       elementsRef,
       activeIndex,
       setFocusInside,
+      isNested,
     } = useMenuContext();
 
     const handleRef = useForkRef<HTMLDivElement>(ref, refs?.setFloating);
@@ -45,8 +45,8 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
               context
                 ? {
                     context,
-                    initialFocus: parentId ? -1 : 0,
-                    returnFocus: !parentId,
+                    initialFocus: isNested ? -1 : 0,
+                    returnFocus: !isNested,
                     modal: false,
                   }
                 : undefined

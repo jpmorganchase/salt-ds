@@ -137,6 +137,7 @@ export function MenuBase(props: MenuBaseProps) {
           elementsRef,
           focusInside,
           setFocusInside,
+          isNested,
         }}
       >
         {children}

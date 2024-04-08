@@ -16,6 +16,7 @@ export interface MenuContextValue
   elementsRef: MutableRefObject<(HTMLDivElement | null)[]>;
   focusInside: boolean;
   setFocusInside: Dispatch<SetStateAction<boolean>>;
+  isNested: boolean;
 }
 
 export const MenuContext = createContext<MenuContextValue>("MenuContext", {
@@ -28,6 +29,7 @@ export const MenuContext = createContext<MenuContextValue>("MenuContext", {
   elementsRef: { current: [] },
   focusInside: false,
   setFocusInside: () => undefined,
+  isNested: false,
 });
 
 export function useMenuContext() {

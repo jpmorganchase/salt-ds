@@ -57,20 +57,30 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         )}
         role="menuitem"
         aria-disabled={disabled || undefined}
-        tabIndex={active ? 0 : -1}
         {...getItemProps({
+          tabIndex: disabled ? undefined : active ? 0 : -1,
           onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+            const element = event.currentTarget;
             onKeyDown?.(event);
             if (
-              event.key == " " ||
-              (event.key == "Enter" && !triggersSubmenu)
+              (event.key == " " || event.key == "Enter") &&
+              !triggersSubmenu &&
+              !disabled
             ) {
+              event.preventDefault();
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars -- view is unused.
+              const { view, ...eventInit } = event;
+              queueMicrotask(() => {
+                element.dispatchEvent(
+                  new window.MouseEvent("click", eventInit)
+                );
+              });
               tree?.events.emit("click");
             }
           },
           onClick(event: MouseEvent<HTMLDivElement>) {
             onClick?.(event);
-            if (!triggersSubmenu) {
+            if (!triggersSubmenu && !disabled) {
               tree?.events.emit("click");
             }
           },
@@ -84,7 +94,10 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       >
         {children}
         {triggersSubmenu && (
-          <ChevronRightIcon className={withBaseName("expandIcon")} />
+          <ChevronRightIcon
+            className={withBaseName("expandIcon")}
+            aria-hidden
+          />
         )}
       </div>
     );
