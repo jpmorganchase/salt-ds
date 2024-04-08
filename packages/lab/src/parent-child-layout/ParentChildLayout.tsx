@@ -11,9 +11,6 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import parentChildLayoutCss from "./ParentChildLayout.css";
-
-export type StackedViewElement = "parent" | "child";
-
 export interface ParentChildLayoutProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
