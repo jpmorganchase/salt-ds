@@ -14,6 +14,7 @@ const CU = forwardRef<SVGSVGElement, CUProps>(function CU(props: CUProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

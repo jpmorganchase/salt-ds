@@ -17,6 +17,7 @@ const PY_Sharp = forwardRef<SVGSVGElement, PY_SharpProps>(function PY_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

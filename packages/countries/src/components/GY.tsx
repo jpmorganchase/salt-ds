@@ -14,6 +14,7 @@ const GY = forwardRef<SVGSVGElement, GYProps>(function GY(props: GYProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

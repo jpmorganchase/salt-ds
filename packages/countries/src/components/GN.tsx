@@ -14,6 +14,7 @@ const GN = forwardRef<SVGSVGElement, GNProps>(function GN(props: GNProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

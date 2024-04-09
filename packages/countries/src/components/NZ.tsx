@@ -14,6 +14,7 @@ const NZ = forwardRef<SVGSVGElement, NZProps>(function NZ(props: NZProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

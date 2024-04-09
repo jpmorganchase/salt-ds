@@ -14,6 +14,7 @@ const HU = forwardRef<SVGSVGElement, HUProps>(function HU(props: HUProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

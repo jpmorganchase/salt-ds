@@ -14,6 +14,7 @@ const IE = forwardRef<SVGSVGElement, IEProps>(function IE(props: IEProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

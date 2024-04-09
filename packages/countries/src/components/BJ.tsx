@@ -14,6 +14,7 @@ const BJ = forwardRef<SVGSVGElement, BJProps>(function BJ(props: BJProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

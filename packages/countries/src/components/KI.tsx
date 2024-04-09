@@ -14,6 +14,7 @@ const KI = forwardRef<SVGSVGElement, KIProps>(function KI(props: KIProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

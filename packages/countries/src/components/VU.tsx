@@ -14,6 +14,7 @@ const VU = forwardRef<SVGSVGElement, VUProps>(function VU(props: VUProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

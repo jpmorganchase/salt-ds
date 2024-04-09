@@ -14,6 +14,7 @@ const ET = forwardRef<SVGSVGElement, ETProps>(function ET(props: ETProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

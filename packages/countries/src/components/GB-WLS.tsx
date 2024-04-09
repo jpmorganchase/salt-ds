@@ -17,6 +17,7 @@ const GB_WLS = forwardRef<SVGSVGElement, GB_WLSProps>(function GB_WLS(
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

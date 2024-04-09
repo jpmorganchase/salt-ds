@@ -17,6 +17,7 @@ const MZ_Sharp = forwardRef<SVGSVGElement, MZ_SharpProps>(function MZ_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

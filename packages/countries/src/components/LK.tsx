@@ -14,6 +14,7 @@ const LK = forwardRef<SVGSVGElement, LKProps>(function LK(props: LKProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

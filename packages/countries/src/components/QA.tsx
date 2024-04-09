@@ -14,6 +14,7 @@ const QA = forwardRef<SVGSVGElement, QAProps>(function QA(props: QAProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

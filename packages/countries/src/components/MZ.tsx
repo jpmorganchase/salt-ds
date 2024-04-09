@@ -14,6 +14,7 @@ const MZ = forwardRef<SVGSVGElement, MZProps>(function MZ(props: MZProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

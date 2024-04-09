@@ -14,6 +14,7 @@ const NP = forwardRef<SVGSVGElement, NPProps>(function NP(props: NPProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

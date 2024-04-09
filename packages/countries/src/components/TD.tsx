@@ -14,6 +14,7 @@ const TD = forwardRef<SVGSVGElement, TDProps>(function TD(props: TDProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

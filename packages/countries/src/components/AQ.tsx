@@ -14,6 +14,7 @@ const AQ = forwardRef<SVGSVGElement, AQProps>(function AQ(props: AQProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

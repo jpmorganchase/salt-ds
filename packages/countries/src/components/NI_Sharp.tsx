@@ -17,6 +17,7 @@ const NI_Sharp = forwardRef<SVGSVGElement, NI_SharpProps>(function NI_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

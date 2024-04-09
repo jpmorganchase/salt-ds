@@ -14,6 +14,7 @@ const XK = forwardRef<SVGSVGElement, XKProps>(function XK(props: XKProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

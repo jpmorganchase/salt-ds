@@ -14,6 +14,7 @@ const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

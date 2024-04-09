@@ -14,6 +14,7 @@ const SI = forwardRef<SVGSVGElement, SIProps>(function SI(props: SIProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

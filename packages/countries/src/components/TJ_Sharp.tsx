@@ -17,6 +17,7 @@ const TJ_Sharp = forwardRef<SVGSVGElement, TJ_SharpProps>(function TJ_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

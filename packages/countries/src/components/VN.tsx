@@ -14,6 +14,7 @@ const VN = forwardRef<SVGSVGElement, VNProps>(function VN(props: VNProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

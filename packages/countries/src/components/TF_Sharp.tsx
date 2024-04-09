@@ -17,6 +17,7 @@ const TF_Sharp = forwardRef<SVGSVGElement, TF_SharpProps>(function TF_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

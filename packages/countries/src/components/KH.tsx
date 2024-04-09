@@ -14,6 +14,7 @@ const KH = forwardRef<SVGSVGElement, KHProps>(function KH(props: KHProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

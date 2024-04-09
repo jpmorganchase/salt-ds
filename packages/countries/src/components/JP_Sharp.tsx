@@ -17,6 +17,7 @@ const JP_Sharp = forwardRef<SVGSVGElement, JP_SharpProps>(function JP_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

@@ -14,6 +14,7 @@ const MK = forwardRef<SVGSVGElement, MKProps>(function MK(props: MKProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

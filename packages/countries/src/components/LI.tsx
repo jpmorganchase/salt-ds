@@ -14,6 +14,7 @@ const LI = forwardRef<SVGSVGElement, LIProps>(function LI(props: LIProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

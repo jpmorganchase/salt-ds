@@ -15,6 +15,7 @@ const GB_NIR_Sharp = forwardRef<SVGSVGElement, GB_NIR_SharpProps>(
     const style = {
       ...styleProp,
       borderRadius: "0",
+      "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
     };
 
     return (

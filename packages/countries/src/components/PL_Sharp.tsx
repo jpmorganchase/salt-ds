@@ -17,6 +17,7 @@ const PL_Sharp = forwardRef<SVGSVGElement, PL_SharpProps>(function PL_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

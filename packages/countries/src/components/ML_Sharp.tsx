@@ -17,6 +17,7 @@ const ML_Sharp = forwardRef<SVGSVGElement, ML_SharpProps>(function ML_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

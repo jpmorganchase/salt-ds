@@ -17,6 +17,7 @@ const LY_Sharp = forwardRef<SVGSVGElement, LY_SharpProps>(function LY_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

@@ -14,6 +14,7 @@ const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

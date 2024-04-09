@@ -17,6 +17,7 @@ const NE_Sharp = forwardRef<SVGSVGElement, NE_SharpProps>(function NE_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

@@ -14,6 +14,7 @@ const PW = forwardRef<SVGSVGElement, PWProps>(function PW(props: PWProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

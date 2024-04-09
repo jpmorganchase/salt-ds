@@ -17,6 +17,7 @@ const GA_Sharp = forwardRef<SVGSVGElement, GA_SharpProps>(function GA_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

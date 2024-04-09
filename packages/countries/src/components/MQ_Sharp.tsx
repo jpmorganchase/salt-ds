@@ -17,6 +17,7 @@ const MQ_Sharp = forwardRef<SVGSVGElement, MQ_SharpProps>(function MQ_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

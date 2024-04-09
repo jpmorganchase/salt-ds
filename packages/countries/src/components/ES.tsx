@@ -14,6 +14,7 @@ const ES = forwardRef<SVGSVGElement, ESProps>(function ES(props: ESProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

@@ -14,6 +14,7 @@ const PA = forwardRef<SVGSVGElement, PAProps>(function PA(props: PAProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

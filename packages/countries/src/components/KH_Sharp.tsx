@@ -17,6 +17,7 @@ const KH_Sharp = forwardRef<SVGSVGElement, KH_SharpProps>(function KH_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

@@ -14,6 +14,7 @@ const EH = forwardRef<SVGSVGElement, EHProps>(function EH(props: EHProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

@@ -14,6 +14,7 @@ const GI = forwardRef<SVGSVGElement, GIProps>(function GI(props: GIProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

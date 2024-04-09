@@ -14,6 +14,7 @@ const IR = forwardRef<SVGSVGElement, IRProps>(function IR(props: IRProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

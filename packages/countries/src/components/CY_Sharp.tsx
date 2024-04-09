@@ -17,6 +17,7 @@ const CY_Sharp = forwardRef<SVGSVGElement, CY_SharpProps>(function CY_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

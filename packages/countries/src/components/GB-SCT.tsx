@@ -17,6 +17,7 @@ const GB_SCT = forwardRef<SVGSVGElement, GB_SCTProps>(function GB_SCT(
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

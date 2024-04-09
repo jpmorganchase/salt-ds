@@ -14,6 +14,7 @@ const LB = forwardRef<SVGSVGElement, LBProps>(function LB(props: LBProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

@@ -14,6 +14,7 @@ const KY = forwardRef<SVGSVGElement, KYProps>(function KY(props: KYProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

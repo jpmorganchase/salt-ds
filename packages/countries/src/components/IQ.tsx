@@ -14,6 +14,7 @@ const IQ = forwardRef<SVGSVGElement, IQProps>(function IQ(props: IQProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

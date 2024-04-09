@@ -17,6 +17,7 @@ const JE_Sharp = forwardRef<SVGSVGElement, JE_SharpProps>(function JE_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

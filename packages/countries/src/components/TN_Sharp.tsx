@@ -17,6 +17,7 @@ const TN_Sharp = forwardRef<SVGSVGElement, TN_SharpProps>(function TN_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

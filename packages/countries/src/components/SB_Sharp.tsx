@@ -17,6 +17,7 @@ const SB_Sharp = forwardRef<SVGSVGElement, SB_SharpProps>(function SB_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

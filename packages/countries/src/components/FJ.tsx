@@ -14,6 +14,7 @@ const FJ = forwardRef<SVGSVGElement, FJProps>(function FJ(props: FJProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

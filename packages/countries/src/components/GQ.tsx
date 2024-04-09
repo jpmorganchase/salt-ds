@@ -14,6 +14,7 @@ const GQ = forwardRef<SVGSVGElement, GQProps>(function GQ(props: GQProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

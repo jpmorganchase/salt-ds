@@ -17,6 +17,7 @@ const OM_Sharp = forwardRef<SVGSVGElement, OM_SharpProps>(function OM_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

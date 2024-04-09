@@ -14,6 +14,7 @@ const WS = forwardRef<SVGSVGElement, WSProps>(function WS(props: WSProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

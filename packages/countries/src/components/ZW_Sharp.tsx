@@ -17,6 +17,7 @@ const ZW_Sharp = forwardRef<SVGSVGElement, ZW_SharpProps>(function ZW_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

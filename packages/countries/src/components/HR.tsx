@@ -14,6 +14,7 @@ const HR = forwardRef<SVGSVGElement, HRProps>(function HR(props: HRProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

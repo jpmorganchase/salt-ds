@@ -14,6 +14,7 @@ const ZM = forwardRef<SVGSVGElement, ZMProps>(function ZM(props: ZMProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

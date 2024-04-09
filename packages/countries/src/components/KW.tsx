@@ -14,6 +14,7 @@ const KW = forwardRef<SVGSVGElement, KWProps>(function KW(props: KWProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

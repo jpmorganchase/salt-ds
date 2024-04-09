@@ -17,6 +17,7 @@ const GH_Sharp = forwardRef<SVGSVGElement, GH_SharpProps>(function GH_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

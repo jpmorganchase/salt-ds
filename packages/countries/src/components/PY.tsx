@@ -14,6 +14,7 @@ const PY = forwardRef<SVGSVGElement, PYProps>(function PY(props: PYProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

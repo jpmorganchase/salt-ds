@@ -14,6 +14,7 @@ const BI = forwardRef<SVGSVGElement, BIProps>(function BI(props: BIProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

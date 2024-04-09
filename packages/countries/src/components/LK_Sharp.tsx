@@ -17,6 +17,7 @@ const LK_Sharp = forwardRef<SVGSVGElement, LK_SharpProps>(function LK_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

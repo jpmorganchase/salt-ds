@@ -17,6 +17,7 @@ const GB_ENG = forwardRef<SVGSVGElement, GB_ENGProps>(function GB_ENG(
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

@@ -14,6 +14,7 @@ const TT = forwardRef<SVGSVGElement, TTProps>(function TT(props: TTProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

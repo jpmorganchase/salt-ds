@@ -14,6 +14,7 @@ const CK = forwardRef<SVGSVGElement, CKProps>(function CK(props: CKProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

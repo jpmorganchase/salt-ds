@@ -14,6 +14,7 @@ const GH = forwardRef<SVGSVGElement, GHProps>(function GH(props: GHProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

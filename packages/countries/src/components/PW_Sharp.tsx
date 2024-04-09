@@ -17,6 +17,7 @@ const PW_Sharp = forwardRef<SVGSVGElement, PW_SharpProps>(function PW_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

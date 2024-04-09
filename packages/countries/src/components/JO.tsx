@@ -14,6 +14,7 @@ const JO = forwardRef<SVGSVGElement, JOProps>(function JO(props: JOProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

@@ -14,6 +14,7 @@ const ZA = forwardRef<SVGSVGElement, ZAProps>(function ZA(props: ZAProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

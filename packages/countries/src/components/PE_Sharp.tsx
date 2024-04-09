@@ -17,6 +17,7 @@ const PE_Sharp = forwardRef<SVGSVGElement, PE_SharpProps>(function PE_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

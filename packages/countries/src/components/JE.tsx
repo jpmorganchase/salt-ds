@@ -14,6 +14,7 @@ const JE = forwardRef<SVGSVGElement, JEProps>(function JE(props: JEProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

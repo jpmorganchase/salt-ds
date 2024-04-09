@@ -17,6 +17,7 @@ const YT_Sharp = forwardRef<SVGSVGElement, YT_SharpProps>(function YT_Sharp(
   const style = {
     ...styleProp,
     borderRadius: "0",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1.44",
   };
 
   return (

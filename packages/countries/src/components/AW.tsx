@@ -14,6 +14,7 @@ const AW = forwardRef<SVGSVGElement, AWProps>(function AW(props: AWProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

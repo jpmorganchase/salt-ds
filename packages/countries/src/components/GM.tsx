@@ -14,6 +14,7 @@ const GM = forwardRef<SVGSVGElement, GMProps>(function GM(props: GMProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (

@@ -14,6 +14,7 @@ const MO = forwardRef<SVGSVGElement, MOProps>(function MO(props: MOProps, ref) {
   const style = {
     ...styleProp,
     borderRadius: "50%",
+    "--saltCountrySymbol-aspect-ratio-multiplier": "1",
   };
 
   return (
