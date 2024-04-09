@@ -46,14 +46,14 @@ export const Status: StoryFn<typeof Tooltip> = (props: TooltipProps) => (
 Status.args = defaultArgs;
 
 export const WithoutArrow: StoryFn<TooltipProps> = (props) => (
-  <Tooltip {...props} hideArrow status="info">
+  <Tooltip {...props} hideArrow>
     <Button>Without Arrow</Button>
   </Tooltip>
 );
 WithoutArrow.args = defaultArgs;
 
 export const WithoutIcon: StoryFn<TooltipProps> = (props) => (
-  <Tooltip {...props} hideIcon status="info">
+  <Tooltip {...props} hideIcon>
     <Button>Without Icon</Button>
   </Tooltip>
 );
@@ -73,7 +73,7 @@ export const FlipAndShiftTooltip: StoryFn<TooltipProps> = (props) => {
         width: "300vw",
       }}
     >
-      <Tooltip status="info" {...props}>
+      <Tooltip {...props}>
         <Button
           style={{ marginTop: "100vh", marginLeft: "100vw" }}
           ref={handleScrollButton}
@@ -93,7 +93,6 @@ FlipAndShiftTooltip.args = {
 export const CustomContent: StoryFn<TooltipProps> = (props) => (
   <Tooltip
     {...props}
-    status="info"
     content={
       <>
         <Text styleAs="h3">Persona B</Text>
@@ -115,41 +114,21 @@ CustomContent.args = { ...defaultArgs, hideIcon: true };
 export const Placement: StoryFn<TooltipProps> = (props) => (
   <>
     <div style={{ marginBottom: 10 }}>
-      <Tooltip
-        {...props}
-        content="I am a tooltip"
-        placement={"top"}
-        status="info"
-      >
+      <Tooltip {...props} content="I am a tooltip" placement={"top"}>
         <Button>Top</Button>
       </Tooltip>
     </div>
     <div style={{ marginBottom: 40 }}>
-      <Tooltip
-        {...props}
-        content="I am a tooltip"
-        placement={"bottom"}
-        status="info"
-      >
+      <Tooltip {...props} content="I am a tooltip" placement={"bottom"}>
         <Button>Bottom</Button>
       </Tooltip>
     </div>
     <div style={{ marginBottom: 10 }}>
-      <Tooltip
-        {...props}
-        content="I am a tooltip"
-        placement={"left"}
-        status="info"
-      >
+      <Tooltip {...props} content="I am a tooltip" placement={"left"}>
         <Button>Left</Button>
       </Tooltip>
     </div>
-    <Tooltip
-      {...props}
-      content="I am a tooltip"
-      placement={"right"}
-      status="info"
-    >
+    <Tooltip {...props} content="I am a tooltip" placement={"right"}>
       <Button>Right</Button>
     </Tooltip>
   </>
@@ -159,21 +138,16 @@ Placement.args = defaultArgs;
 export const Delay: StoryFn<TooltipProps> = (props) => (
   <>
     <div style={{ marginBottom: 10 }}>
-      <Tooltip
-        {...props}
-        content="I am a tooltip"
-        enterDelay={100}
-        status="info"
-      >
+      <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
         <Button>100ms</Button>
       </Tooltip>
     </div>
     <div style={{ marginBottom: 10 }}>
-      <Tooltip {...props} content="I am a tooltip" status="info">
+      <Tooltip {...props} content="I am a tooltip">
         <Button>300ms</Button>
       </Tooltip>
     </div>
-    <Tooltip {...props} content="I am a tooltip" enterDelay={500} status="info">
+    <Tooltip {...props} content="I am a tooltip" enterDelay={500}>
       <Button>500ms</Button>
     </Tooltip>
   </>

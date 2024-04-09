@@ -17,7 +17,7 @@ const IconWithTooltip = (props: {
   status?: TooltipProps["status"];
   content?: TooltipProps["content"];
 }) => {
-  const { content = "hello", status = "info", ...rest } = props;
+  const { content = "hello", status, ...rest } = props;
 
   return (
     <Tooltip content={content} status={status} {...rest} open>
@@ -30,6 +30,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer height={500} itemPadding={45} width={1200} {...props}>
       <IconWithTooltip content="Hello, World" />
+      <IconWithTooltip status="info" content="Hello, World" />
       <IconWithTooltip status="error" content="Uh oh, world" />
       <IconWithTooltip
         content={
@@ -70,6 +71,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     {...props}
   >
     <IconWithTooltip content="Hello, World" />
+    <IconWithTooltip status="info" content="Hello, World" />
     <IconWithTooltip status="error" content="Uh oh, world" />
     <IconWithTooltip
       content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
