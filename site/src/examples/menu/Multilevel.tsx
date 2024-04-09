@@ -33,7 +33,7 @@ function ClearStylingMenu() {
   );
 }
 
-export const MultiLevel = (): ReactElement => {
+export const Multilevel = (): ReactElement => {
   return (
     <Menu>
       <MenuTrigger>
