@@ -149,13 +149,13 @@ describe("GIVEN a Tooltip", () => {
 
   describe("WHEN hideIcon", () => {
     it("shows icon by default", () => {
-      cy.mount(<Open />);
+      cy.mount(<Open status="info" />);
 
       cy.get(".saltIcon").should("be.visible");
     });
 
     it('icon is not displayed when "hideIcon=true"', () => {
-      cy.mount(<Open hideIcon />);
+      cy.mount(<Open hideIcon status="info" />);
 
       cy.get(".saltIcon").should("not.exist");
     });
