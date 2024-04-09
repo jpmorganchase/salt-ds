@@ -90,6 +90,7 @@ export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
           onClick={handleClick}
           onFocus={handleFocus}
           tabIndex={focusable && !disabled ? 0 : -1}
+          type="button"
           {...rest}
         >
           {children}
