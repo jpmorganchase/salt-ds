@@ -1,5 +1,30 @@
 # @salt-ds/theme
 
+## 1.14.0
+
+### Minor Changes
+
+- f6202615: Updated `--salt-size-indicator`.
+
+  | Density | Before (px) | After (px) |
+  | ------- | ----------- | ---------- |
+  | High    | 1           | 2          |
+  | Medium  | 2           | 3          |
+  | Low     | 3           | 4          |
+  | Touch   | 4           | 5          |
+
+## 1.13.1
+
+### Patch Changes
+
+- 4f925b41: Fix `--salt-navigable-background-hover` referencing deprecated value `--salt-palette-navigate-primary-background-hover`, change to reference correct value `--salt-palette-navigate-background-hover`
+
+## 1.13.0
+
+### Minor Changes
+
+- f27ecfa7: Added `theme-next.css` which includes experimental theme implementation. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+
 ## 1.12.1
 
 ### Patch Changes

@@ -1,0 +1,92 @@
+/* Styles applied to LinkCard */
+.saltLinkCard {
+  border-width: var(--saltLinkCard-borderWidth, var(--salt-size-border));
+  border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
+  border-radius: var(--saltLinkCard-borderRadius, 0);
+  display: block;
+  padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
+  position: relative;
+  text-decoration: none;
+  transition: box-shadow var(--salt-duration-instant) ease-in-out;
+}
+
+/* Styles applied to LinkCard when variant="primary" */
+.saltLinkCard-primary {
+  background: var(--saltLinkCard-background, var(--salt-container-primary-background));
+  border-color: var(--salt-container-primary-borderColor);
+  --linkCard-accent-color: var(--salt-container-primary-borderColor);
+}
+
+/* Styles applied to LinkCard when variant="secondary" */
+.saltLinkCard-secondary {
+  background: var(--saltLinkCard-background, var(--salt-container-secondary-background));
+  border-color: var(--salt-container-secondary-borderColor);
+  --linkCard-accent-color: var(--salt-container-secondary-borderColor);
+}
+
+/* Styles applied to create accent */
+.saltLinkCard-accent::after {
+  content: "";
+  position: absolute;
+  background-color: var(--saltLinkCard-accent-color, var(--linkCard-accent-color));
+}
+
+/* Styles applied to LinkCard if `accent="bottom"` (default) */
+.saltLinkCard-accentBottom::after {
+  left: calc(-1 * var(--salt-size-border));
+  bottom: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+}
+
+/* Styles applied to LinkCard if `accent="left"` */
+.saltLinkCard-accentLeft::after {
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+}
+
+/* Styles applied to LinkCard if `accent="top"` */
+.saltLinkCard-accentTop::after {
+  left: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: var(--salt-size-accent);
+  width: calc(100% + calc(2 * var(--salt-size-border)));
+}
+
+/* Styles applied to LinkCard if `accent="right"` */
+.saltLinkCard-accentRight::after {
+  right: calc(-1 * var(--salt-size-border));
+  top: calc(-1 * var(--salt-size-border));
+  height: calc(100% + calc(2 * var(--salt-size-border)));
+  width: var(--salt-size-accent);
+}
+
+/* Styles applied to LinkCard on focus */
+.saltLinkCard:focus-visible {
+  cursor: var(--salt-selectable-cursor-hover);
+  box-shadow: var(--salt-overlayable-shadow-hover);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  --linkCard-accent-color: var(--salt-selectable-foreground-hover);
+}
+
+/* Styles applied on active state to LinkCard */
+.saltLinkCard:active {
+  cursor: var(--salt-selectable-cursor-active);
+  border-color: var(--salt-selectable-borderColor-selected);
+  box-shadow: var(--salt-overlayable-shadow);
+  --linkCard-accent-color: var(--salt-selectable-foreground-selected);
+}
+
+/* Styles applied on hover state to LinkCard */
+@media (hover: hover) {
+  .saltLinkCard:hover {
+    cursor: var(--salt-selectable-cursor-hover);
+    box-shadow: var(--salt-overlayable-shadow-hover);
+    --linkCard-accent-color: var(--salt-selectable-foreground-hover);
+  }
+}

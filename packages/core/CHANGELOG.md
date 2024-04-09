@@ -1,5 +1,212 @@
 # @salt-ds/core
 
+## 1.23.0
+
+### Minor Changes
+
+- ada5af31: Updates to `InteractableCard`:
+
+  - Added `accent` prop for border positioning, deprecating `accentPlacement`.
+  - Added `selected` prop for selected styling.
+  - Added `value` prop for selectable use cases.
+
+- ada5af31: Added `InteractableCardGroup` component to support selectable cards in a group. It allows users to select one or multiple values from a set of interactable cards.
+
+  ```tsx
+  <InteractableCardGroup multiSelect>
+    <InteractableCard value="one">One</InteractableCard>
+    <InteractableCard value="two">Two</InteractableCard>
+    <InteractableCard value="three">Three</InteractableCard>
+  </InteractableCardGroup>
+  ```
+
+- 96c2ca62: Added `SegmentedButtonGroup` to core.
+  `SegmentedButtonGroup` shows a list of actionable buttons, flush with separators between them.
+
+  ```tsx
+  return (
+    <SegmentedButtonGroup>
+      <Button variant={variant}>Button</Button>
+      <Button variant={variant}>Button</Button>
+      <Button variant={variant}>Button</Button>
+    </SegmentedButtonGroup>
+  );
+  ```
+
+### Patch Changes
+
+- 3e4e819c: `Card`, `LinkCard` and `InteractableCard` updated to only apply hover effects on non-touch devices.
+- f6202615: Visual updates to Navigation item's active indicator due to `--salt-size-indicator` being updated.
+- 8ffdfae1: Fixed Dialog children being unmounted twice unexpectedly when closing
+- a726afcf: Improved the accessibility of Switch by applying `role="switch"`.
+
+  **Note:** This might affect tests where you are targeting Switch by its role. For example, using React Testing Library-based selectors, tests will have to be updated like the following:
+
+  ```diff
+  - getByRole("checkbox")
+  + getByRole("switch")
+  ```
+
+## 1.22.0
+
+### Minor Changes
+
+- 04743a73: `Text` has a new variant: `Code`. See [Text component](/salt/components/text) for more information.
+
+  ```tsx
+  <>
+    <Code>Code text</Code>
+    <Text as="code">Text styled as code</Text>
+    <Text styleAs="code">Text styled as code</Text>
+  </>
+  ```
+
+### Patch Changes
+
+- 871585ac: Fixed `DialogHeader` not forwarding refs.
+- 1b3e393a: Fixed Drawer children being unmounted twice unexpectedly when closing
+
+## 1.21.0
+
+### Minor Changes
+
+- 53a7f22c: Added `Dropdown`, `Option`, `OptionGroup` and `ComboBox`.
+
+  **Note:** These were `DropdownNext` and `ComboBoxNext` in lab.
+
+  ```tsx
+  <Dropdown aria-label="Colors">
+    <OptionGroup label="Primary">
+      <Option value="Red" />
+      <Option value="Blue" />
+    </OptionGroup>
+    <OptionGroup label="Other">
+      <Option value="Pink" />
+    </OptionGroup>
+  </Dropdown>
+  ```
+
+  ```tsx
+  <ComboBox aria-label="Colors">
+    <OptionGroup label="Primary">
+      <Option value="Red" />
+      <Option value="Blue" />
+    </OptionGroup>
+    <OptionGroup label="Other">
+      <Option value="Pink" />
+    </OptionGroup>
+  </ComboBox>
+  ```
+
+- 9960fe8a: Added `bufferValue` to linear and circular progress.
+  Updated linear and circular progress track token to use `--salt-size-bar` in order to improve density scale.
+
+### Patch Changes
+
+- d1e4f78a: Added export for DialogHeaderProps
+
+  ```ts
+  import { DialogHeaderProps } from "@salt-ds/core";
+  ```
+
+- 53a7f22c: Fix ComboBox and Dropdown's list appearing below other elements.
+
+## 1.20.0
+
+### Minor Changes
+
+- ff69de19: Add `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` to core
+
+  ```tsx
+  export const Dialog = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+    const id = useId();
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+          Open default dialog
+        </Button>
+        <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+          <DialogHeader header="Terms and conditions" />
+          <DialogContent>Dialog Content</DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Accept
+            </Button>
+          </DialogActions>
+          <DialogCloseButton onClick={handleClose} />
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 6c414eae: Allowed Tooltip to flip to any axis when space is limited. Previously, it was limited to flipping horizontally.
+- 2d3fb09e: Add `box-sizing: border-box` to:
+
+  - Multiline input
+  - Navigation item
+  - Panel
+
+## 1.19.0
+
+### Minor Changes
+
+- f27ecfa7: Added `UNSTABLE_SaltProviderNext` for early adopters to test incoming theme next features. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+  Implemented corner radius for relevant components when used with theme next.
+- cbe6c522: Added `LinkCard` to core.
+
+  Use a Link card when the entire card should be clickable and navigate the user.
+
+  ```tsx
+  <LinkCard href="https://www.saltdesignsystem.com" target="_blank" />
+  ```
+
+- 8610999f: Add `Drawer` and `DrawerCloseButton` to core
+  Drawer is an expandable panel that displays content and controls over the application content. It provides temporary access to additional or related content without navigating away from the current screen.
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const [openPrimary, setOpenPrimary] = useState(false);
+
+    return (
+      <>
+        <Button onClick={() => setOpenPrimary(true)}>
+          Open Primary Drawer
+        </Button>
+        <Drawer
+          open={openPrimary}
+          onOpenChange={(newOpen) => setOpenPrimary(newOpen)}
+          style={{ width: 200 }}
+        >
+          Drawer Content
+          <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        </Drawer>
+      </>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 76351938: Fixed the external icon shown in Links with `target="_blank"` sometimes being misaligned.
+
 ## 1.18.1
 
 ### Patch Changes

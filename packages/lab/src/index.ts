@@ -22,16 +22,13 @@ export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";
-export * from "./combo-box-next";
 export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
+export * from "./date-input";
 export * from "./deck-item";
 export * from "./deck-layout";
-export * from "./dialog";
-export * from "./drawer";
 export * from "./dropdown";
-export * from "./dropdown-next";
 export * from "./editable-label";
 export {
   FormFieldLegacy as FormField,
@@ -52,8 +49,6 @@ export * from "./list-next";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
-export * from "./option";
-export * from "./overlay";
 export * from "./parent-child-layout";
 export * from "./portal";
 export * from "./query-input";

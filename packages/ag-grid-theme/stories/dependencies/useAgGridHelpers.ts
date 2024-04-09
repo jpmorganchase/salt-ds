@@ -1,4 +1,11 @@
-import { HTMLAttributes, useEffect, useMemo, useRef, useState } from "react";
+import {
+  HTMLAttributes,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { AgGridReactProps } from "ag-grid-react";
 import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { useDensity, useTheme } from "@salt-ds/core";
@@ -64,11 +71,11 @@ export function useAgGridHelpers({
     compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 
-  const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
+  const onGridReady = useCallback(({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
     api.sizeColumnsToFit();
     setGridReady(true);
-  };
+  }, []);
 
   useEffect(() => {
     // setHeaderHeight doesn't work if not in setTimeout

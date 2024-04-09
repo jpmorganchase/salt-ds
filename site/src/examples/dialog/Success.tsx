@@ -1,11 +1,12 @@
 import { ReactElement, useState } from "react";
-import { Button, useId } from "@salt-ds/core";
 import {
+  Button,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Success = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -33,7 +34,7 @@ export const Success = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle title="File uploaded" />
+        <DialogHeader header="File uploaded" />
         <DialogContent>
           File has been successfully uploaded to the shared drive.
         </DialogContent>

@@ -8,8 +8,10 @@ import {
   FlexLayout,
   FlowLayout,
   SplitLayout,
+  Dropdown,
+  DropdownProps,
+  Option,
 } from "@salt-ds/core";
-import { DropdownNext, DropdownNextProps, Option } from "@salt-ds/lab";
 import {
   MessageIcon,
   LocationIcon,
@@ -326,7 +328,15 @@ export const CollapsibleDetails = () => {
   );
 };
 
-const contactList = [
+type Contact = {
+  primary: string;
+  sid: string;
+  avatarImage: string;
+  number: string;
+  email: string;
+};
+
+const contactList: Contact[] = [
   {
     primary: "Jane Doe",
     sid: "O12",
@@ -350,39 +360,32 @@ const contactList = [
   },
 ];
 
-const adornmentMap: Record<string, JSX.Element> = {
-  O12: <Avatar src={persona} size={1} />,
-  U34: <Avatar src={persona2} size={1} />,
-  L56: <Avatar src={persona3} size={1} />,
-};
-
 export const List = () => {
-  const [selectedContactId, setSelectedContactId] = useState<string[]>([
-    contactList[0].sid,
+  const [selectedContact, setSelectedContact] = useState<Contact[]>([
+    contactList[0],
   ]);
 
-  const handleSelectionChange: DropdownNextProps["onSelectionChange"] = (
+  const handleSelectionChange: DropdownProps<Contact>["onSelectionChange"] = (
     event,
     newSelected
   ) => {
-    setSelectedContactId(newSelected);
+    setSelectedContact(newSelected);
   };
 
-  const adornment: JSX.Element = adornmentMap[selectedContactId[0] ?? ""];
-
   return (
-    <DropdownNext
+    <Dropdown<Contact>
       style={{ width: "266px" }}
-      startAdornment={adornment}
+      startAdornment={
+        selectedContact.length === 1 && (
+          <Avatar src={selectedContact[0].avatarImage} size={1} />
+        )
+      }
       onSelectionChange={handleSelectionChange}
-      defaultValue={contactList[0].primary}
+      selected={selectedContact}
+      valueToString={(contact) => contact.primary}
     >
       {contactList.map((contact) => (
-        <Option
-          key={contact.primary}
-          value={contact.sid}
-          textValue={contact.primary}
-        >
+        <Option key={contact.sid} value={contact}>
           <StackLayout
             direction={"row"}
             gap={1}
@@ -417,6 +420,6 @@ export const List = () => {
           </StackLayout>
         </Option>
       ))}
-    </DropdownNext>
+    </Dropdown>
   );
 };

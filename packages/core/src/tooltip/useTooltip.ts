@@ -48,7 +48,7 @@ export function useTooltip(props?: UseTooltipProps) {
     placement: placementProp,
     disableHoverListener,
     disableFocusListener,
-  } = props || {};
+  } = props ?? {};
 
   const arrowRef = useRef<SVGSVGElement | null>(null);
 
@@ -70,8 +70,11 @@ export function useTooltip(props?: UseTooltipProps) {
       placement: placementProp,
       middleware: [
         offset(8),
-        flip(),
         shift({ limiter: limitShift() }),
+        flip({
+          fallbackAxisSideDirection: "end",
+          fallbackStrategy: "initialPlacement",
+        }),
         arrow({ element: arrowRef }),
       ],
     });

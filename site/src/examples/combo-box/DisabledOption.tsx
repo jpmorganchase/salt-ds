@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBox, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const DisabledOption = (): ReactElement => {
@@ -22,7 +22,7 @@ export const DisabledOption = (): ReactElement => {
   };
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -33,10 +33,8 @@ export const DisabledOption = (): ReactElement => {
           color.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((color) => (
-          <Option disabled={color === "Baby blue"} value={color} key={color}>
-            {color}
-          </Option>
+          <Option disabled={color === "Baby blue"} value={color} key={color} />
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

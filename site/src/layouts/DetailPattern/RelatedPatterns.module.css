@@ -1,0 +1,26 @@
+.root {
+  position: relative;
+  padding-block: var(--salt-spacing-200);
+}
+
+.root::before {
+  content: "";
+  height: var(--salt-size-border);
+  background: var(--salt-separable-tertiary-borderColor);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: var(--salt-spacing-300);
+}
+
+.list {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+}
+
+.root h4 {
+  margin-bottom: var(--salt-spacing-200);
+}

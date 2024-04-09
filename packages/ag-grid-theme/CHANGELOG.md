@@ -1,5 +1,21 @@
 # @salt-ds/ag-grid-theme
 
+## 1.4.0
+
+### Minor Changes
+
+- e53138c2: Updated column header active state to actionable secondary style, to better associate relevant column header with the open menu.
+  Aligned menu to selected selectable border color and popout overlayable shadow.
+  Fixed filter icon not aligned to secondary content color in the last update.
+  Fixed sort indicator position to be next to the menu icon, and its spacing between filter and menu icon.
+
+## 1.3.9
+
+### Patch Changes
+
+- 7bbbab98: Fixed header text color not using correct color token: `--salt-content-secondary-foreground`
+- 09080b27: Fixed columns not displaying correctly with `wrapText` and `autoHeight` turned on.
+
 ## 1.3.8
 
 ### Patch Changes

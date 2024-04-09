@@ -1,6 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import cslx from "clsx";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBox, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 import styles from "./index.module.css";
 
@@ -28,18 +27,14 @@ export const EmptyMessage = (): ReactElement => {
   );
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}
     >
       {filteredOptions.length > 0 ? (
-        filteredOptions.map((state) => (
-          <Option value={state} key={state}>
-            {state}
-          </Option>
-        ))
+        filteredOptions.map((state) => <Option value={state} key={state} />)
       ) : (
         <div
           className={styles.statusOption}
@@ -49,6 +44,6 @@ export const EmptyMessage = (): ReactElement => {
           No results found for &quot;{value}&quot;
         </div>
       )}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

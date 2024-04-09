@@ -244,7 +244,7 @@ describe("Given a floating component in a FloatingPlaformProvider", () => {
 
 describe("Given a floating component with a FloatingPlatformProvider and custom floating platform", () => {
   const customPlatform: Platform = {
-    // ...platform,
+    ...platform,
     async getElementRects({ ...data }) {
       const result = await platform.getElementRects({
         ...data,

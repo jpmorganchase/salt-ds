@@ -10,13 +10,10 @@ import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-} from "@salt-ds/core";
-import {
-  DropdownNext,
+  Dropdown,
   Option,
-  ParentChildLayout,
-  StackedViewElement,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
 import {
   ChevronLeftIcon,
   ExportIcon,
@@ -40,13 +37,11 @@ const displayView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>Language</FormFieldLabel>
-      <DropdownNext>
+      <Dropdown>
         {languages.map((lang) => (
-          <Option value={lang} key={lang}>
-            {lang}
-          </Option>
+          <Option value={lang} key={lang} />
         ))}
-      </DropdownNext>
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Time format</FormFieldLabel>
@@ -95,17 +90,11 @@ const accountView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Security type</FormFieldLabel>
-      <DropdownNext defaultValue={["Password"]}>
-        <Option value="Password" key="Password">
-          Password
-        </Option>
-        <Option value="Soft token" key="Soft token">
-          Soft token
-        </Option>
-        <Option value="Biometric" key="Biometric">
-          Biometric
-        </Option>
-      </DropdownNext>
+      <Dropdown defaultSelected={["Password"]}>
+        <Option value="Password" key="Password" />
+        <Option value="Soft token" key="Soft token" />
+        <Option value="Biometric" key="Biometric" />
+      </Dropdown>
     </FormField>
   </StackLayout>
 );
@@ -114,34 +103,20 @@ const exportView = () => (
   <StackLayout gap={1}>
     <FormField labelPlacement="left">
       <FormFieldLabel>File type</FormFieldLabel>
-      <DropdownNext defaultValue={["PNG"]}>
-        <Option value="JPG" key="JPG">
-          JPG
-        </Option>
-        <Option value="PDF" key="PDF">
-          PDF
-        </Option>
-        <Option value="PNG" key="PNG">
-          PNG
-        </Option>
-        <Option value="SVG" key="SVG">
-          SVG
-        </Option>
-      </DropdownNext>
+      <Dropdown defaultSelected={["PNG"]}>
+        <Option value="JPG" />
+        <Option value="PDF" />
+        <Option value="PNG" />
+        <Option value="SVG" />
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Size</FormFieldLabel>
-      <DropdownNext defaultValue={["1x"]}>
-        <Option value="1x" key="1x">
-          1x
-        </Option>
-        <Option value="2x" key="2x">
-          2x
-        </Option>
-        <Option value="3x" key="3x">
-          3x
-        </Option>
-      </DropdownNext>
+      <Dropdown defaultSelected={["1x"]}>
+        <Option value="1x" />
+        <Option value="2x" />
+        <Option value="3x" />
+      </Dropdown>
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Suffix</FormFieldLabel>
@@ -149,14 +124,10 @@ const exportView = () => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Color profile</FormFieldLabel>
-      <DropdownNext defaultValue={["Same as current (sRGB)"]}>
-        <Option value="Same as current (sRGB)" key="Same as current (sRGB)">
-          Same as current (sRGB)
-        </Option>
-        <Option value="Display P3" key="Display P3">
-          Display P3
-        </Option>
-      </DropdownNext>
+      <Dropdown defaultSelected={["Same as current (sRGB)"]}>
+        <Option value="Same as current (sRGB)" />
+        <Option value="Display P3" />
+      </Dropdown>
     </FormField>
   </StackLayout>
 );

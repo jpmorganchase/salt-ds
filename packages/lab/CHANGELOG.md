@@ -1,5 +1,169 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.39
+
+### Minor Changes
+
+- 96c2ca62: Removed `SegmentedButtonGroup` from labs and promoted to core.
+- 8ed621bc: Removed the `onClose` prop from `Overlay`, `onOpenChange` is now called for events that open/close the overlay.
+
+  ```tsx
+  export const ControlledOverlay = () => {
+    const [open, setOpen] = useState(false);
+    const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
+
+    return (
+      <Overlay open={open} onOpenChange={onOpenChange}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>Overlay Content</OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- ebe59171: Added `OverlayPanelCloseButton` and `OverlayPanelContent` components as children of `OverlayPanel`
+
+  ```tsx
+  export const OverlayWithCloseButton = ({ onOpenChange }: OverlayProps) => {
+    const [open, setOpen] = useState(false);
+
+    const onChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+    };
+
+    const handleClose = () => setOpen(false);
+
+    return (
+      <Overlay open={open} onOpenChange={onChange}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>
+          <OverlayPanelCloseButton onClick={handleClose} />
+          <OverlayPanelContent>Overlay Content</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- f6202615: Visual updates to Calendar's "today" indicator and Tab's active indicator due to `--salt-size-indicator` being updated.
+
+## 1.0.0-alpha.38
+
+### Patch Changes
+
+- 4adacc6b: Fix SegmentedButtonGroup's display name.
+  Fix SegmentedButtonGroup's ref being applied incorrectly.
+
+## 1.0.0-alpha.37
+
+### Minor Changes
+
+- 53a7f22c: Removed `DropdownNext`, `Option`, `OptionGroup` and `ComboBoxNext` from labs and promoted to core.
+- 6cdfe94e: Add `SegmentedButtonGroup` to labs
+  `SegmentedButtonGroup` should be used to display a list of actionable buttons, flush with separators
+
+  ```tsx
+  const SegmentedButtonGroup = () => (
+    <SegmentedButtonGroup>
+      <Button> Button </Button>
+      <Button> Button </Button>
+      <Button> Button </Button>
+    </SegmentedButtonGroup>
+  );
+  ```
+
+### Patch Changes
+
+- 91074aa2: - Fixed tabs container height to fit its contents and display as block so it can take 100% width without an extra wrapper.
+
+## 1.0.0-alpha.36
+
+### Minor Changes
+
+- 7d9436e0: Added pills to multi-select ComboBoxNext.
+  Added `truncate` to ComboBoxNext which collapsing the ComboBoxNext to one line.
+
+### Patch Changes
+
+- 7d9436e0: Fixed DropdownNext and ComboBoxNext's list design.
+
+## 1.0.0-alpha.35
+
+### Minor Changes
+
+- ff69de19: Remove `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` from labs and promote to core
+
+### Patch Changes
+
+- 517ce28b: Optional prop `id` is no longer passed down from `Overlay` to aria-labelledby in `OverlayPanel`
+  aria-labelledBy should be passed down directly to the `OverlayPanel` via and id attached to the title element
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const id = useId();
+    return (
+      <Overlay>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel aria-labelledby={id}>
+          <h3 className={styles.contentHeading} id={id}>
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <Tooltip content={"im a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- 0c4d186d: Fix tabstrip not collapsing when sharing parent with other items
+- 54b8e1a9: Fixed Tab being deleted whilst editing Tab label and pressing backspace or delete
+
+## 1.0.0-alpha.34
+
+### Minor Changes
+
+- f27ecfa7: Implemented corner radius for relevant components when used with theme next. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+- cba9f9b9: - Rename `DialogTitle` to `DialogHeader`
+  - Change `DialogHeader` optional props `title` and `subtitle` to `header` and `preheader`
+- 245301a9: Added `LinkCard` to lab.
+
+  Use a Link card when the entire card should be clickable and navigate the user.
+
+  ```tsx
+  <LinkCard href="https://www.saltdesignsystem.com" target="_blank"></LinkCard>
+  ```
+
+- 8610999f: Remove `Drawer` and `DrawerCloseButton` from labs and promote to core
+- cbe6c522: Removed `LinkCard` from lab and promoted to core.
+- df15ac98: - Added `valueToString` to `DropdownNext` and `ComboBoxNext`. This replaces the `textValue` prop on `Option`s. This is needed when the value is different to the display value, or the value is not a string.
+  - Removed `defaultValue` from `DropdownNext`.
+  - Mousing over options will now set them to active.
+  - Clearing the input will clear the list of active items.
+  - `Option` will now use the value or the result from `valueToString` as its default children.
+
+### Patch Changes
+
+- 543c9ff2: Updates to calendar
+
+  - Removed animations.
+  - Visual updates to the component.
+  - Updated the delay time for day tooltips.
+  - Added `highlighted` days - characterized by a triangle in the top right corner that attributes an event to that day.
+  - Added `disabled` days and made `unselectable` days focusable.
+
 ## 1.0.0-alpha.33
 
 ### Patch Changes

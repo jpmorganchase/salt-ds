@@ -1,11 +1,12 @@
 import { ReactElement, useState } from "react";
-import { Button, useId } from "@salt-ds/core";
 import {
+  Button,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Info = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -33,7 +34,7 @@ export const Info = (): ReactElement => {
         size="small"
         id={id}
       >
-        <DialogTitle title="File update" />
+        <DialogHeader header="File update" />
         <DialogContent>
           A new version of this file is available with 26 updates.
         </DialogContent>

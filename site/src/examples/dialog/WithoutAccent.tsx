@@ -1,11 +1,14 @@
 import { ReactElement, useState } from "react";
-import { Button, H3, StackLayout, useId } from "@salt-ds/core";
 import {
+  Button,
+  H3,
+  StackLayout,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const WithoutAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -27,7 +30,7 @@ export const WithoutAccent = (): ReactElement => {
     <>
       <Button onClick={handleRequestOpen}>Open dialog without accent</Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogTitle title="Terms and conditions" disableAccent />
+        <DialogHeader header="Terms and conditions" disableAccent />
         <DialogContent>
           <StackLayout>
             <div>

@@ -5,7 +5,7 @@ import { QAContainer } from "docs/components";
 import "./tabstrip-next.stories.css";
 
 export default {
-  title: "Lab/Tabs Next/Tabstrip Next/QA",
+  title: "Lab/Tabs Next/Tabstrip Next/Tabstrip Next QA",
   component: TabstripNext,
 };
 
@@ -41,22 +41,34 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
 }) => {
   const [value, setValue] = useState<string | undefined>("Home");
   return (
-    <QAContainer itemPadding={10} itemWidthAuto>
-      <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-        <TabstripNext
-          {...tabstripProps}
-          value={value}
-          onChange={(_, { value }) => {
-            setValue(value);
-          }}
-        >
-          {tabs.map((label) => (
-            <TabNext key={label} value={label}>
-              {label}
-            </TabNext>
-          ))}
-        </TabstripNext>
-      </div>
+    <QAContainer itemPadding={10} cols={2}>
+      <TabstripNext
+        {...tabstripProps}
+        value={value}
+        onChange={(_, { value }) => {
+          setValue(value);
+        }}
+      >
+        {tabs.map((label) => (
+          <TabNext key={label} value={label}>
+            {label}
+          </TabNext>
+        ))}
+      </TabstripNext>
+      <TabstripNext
+        {...tabstripProps}
+        value={value}
+        variant="inline"
+        onChange={(_, { value }) => {
+          setValue(value);
+        }}
+      >
+        {tabs.map((label) => (
+          <TabNext key={label} value={label}>
+            {label}
+          </TabNext>
+        ))}
+      </TabstripNext>
     </QAContainer>
   );
 };

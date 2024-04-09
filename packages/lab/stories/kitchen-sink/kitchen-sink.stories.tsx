@@ -17,6 +17,10 @@ import {
   RadioButtonGroup,
   H3,
   FlexLayout,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
 import {
@@ -40,22 +44,14 @@ import {
   HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
   HorizontalTextOnly as ToggleButtonGroupHorizontalText,
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
-import {
-  Default as CardDefault,
-  Interactable as InteractableCardStory,
-} from "../../../core/stories/card/card.stories";
+import { Default as CardDefault } from "../../../core/stories/card/card.stories";
+import { Default as InteractableCardStory } from "../../../core/stories/interactable-card/interactable-card.stories";
 import {
   HorizontalGroup as CheckboxHorizontalGroup,
   Error as CheckboxError,
   Readonly as CheckboxReadonly,
 } from "../../../core/stories/checkbox/checkbox.stories";
 import { Default as SwitchDefault } from "../../../core/stories/switch/switch.stories";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@salt-ds/lab";
 import { useState } from "react";
 import {
   Default as ToastDefault,
@@ -69,7 +65,7 @@ import {
   Closable as PillClosable,
   Icon as PillIcon,
 } from "../../../core/stories/pill/pill.stories";
-import { Default as OverlayDefault } from "../../../lab/stories/overlay/overlay.stories";
+import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
 import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/stories/examples/HDCompact";
 
@@ -113,7 +109,7 @@ const LaunchStatusDialog = () => {
         // focus the ok instead of the cancel button
         initialFocus={1}
       >
-        <DialogTitle title={status} />
+        <DialogHeader header={status} />
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
