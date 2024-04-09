@@ -62,7 +62,7 @@ describe("GIVEN a ParentChildLAyout", () => {
     );
 
     it(
-      "THEN it should be collapsed when the current breakpoint is greater than the target breakpoint",
+      "THEN it should be collapsed when the current less than or equal to the target breakpoint",
       { viewportHeight: 900, viewportWidth: 1800 },
       () => {
         cy.mount(

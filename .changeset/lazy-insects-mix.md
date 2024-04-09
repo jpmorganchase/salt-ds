@@ -5,5 +5,5 @@
 Refactor of `ParentChildLayout`:
 
 - removes parentPosition and disableAnimation props
-- collapsedViewElement renamed to collapsedView
-- reduced motion changes animation to fade in, instead of slide in
+- collapsedViewElement renamed to visibleView
+- reduced motion animation changed to fade in

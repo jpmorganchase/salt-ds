@@ -160,10 +160,10 @@ export const PreferencesDialog = () => {
   const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
 
   const showParent = () => {
-    collapsed && setVisibleView("parent");
+    setVisibleView("parent");
   };
   const showChild = () => {
-    collapsed && setVisibleView("child");
+    setVisibleView("child");
   };
 
   const [active, setActive] = useState(items[0]);
