@@ -9,7 +9,8 @@ sidebar:
 The Salt design system provides styling options to cater for the needs of specific users or use cases. Understanding how Salt structures and manages these styling options will enable you to create a look-and-feel that is compatible with the Salt system.
 
 <ExampleContainer type="negative">
-Salt is under active development. At this stage, we don't recommend theming unless absolutely necessary.
+  Salt is under active development. At this stage, we don't recommend theming
+  unless absolutely necessary.
 </ExampleContainer>
 
 ## What a theme is
@@ -28,10 +29,10 @@ Use theming for:
 
 This provides efficiency savings for teams:
 
- - For existing projects, teams can migrate faster by temporarily matching the existing look-and-feel.
- - For new projects, teams can use one design system to build for multiple languages.
- 
- If your project doesn't have design requirements similar to those listed above, we recommend using Salt as-is.
+- For existing projects, teams can migrate faster by temporarily matching the existing look-and-feel.
+- For new projects, teams can use one design system to build for multiple languages.
+
+If your project doesn't have design requirements similar to those listed above, we recommend using Salt as-is.
 
 <ExampleContainer type="positive" customPillText="Best practice">
   Use theming when your project needs to follow alternative design guidelines.
@@ -48,6 +49,7 @@ We recommend using Salt's tokens to style the system holistically. This helps to
 A token stores design decisions. Multiple components can use the same token to ensure a given design decision applies consistently across the design system.
 
 Tokens can store decisions like:
+
 - The depth of a shadow.
 - The duration of an animation.
 - The color of an icon.
@@ -72,13 +74,11 @@ Tokens offer several benefits:
 
 ### Token tiers explained
 
-
 Salt's tokens are organized into three layers. From most generalized to most specific, the layers are:
 
 1. Foundation layer: The full ramps available to the theme.
 2. Palette layer: A subset of foundation tokens defining the theme and used across characteristics.
 3. Characteristic layer: Groups of tokens applied to components with common semantic meaning (such as `actionable` and `status`).
-
 
 Salt's token tiers indicate the purpose of a token and how it is used in the design system. Tokens can reference each other and inherit values, so a token from one tier can provide information to another.
 
