@@ -58,6 +58,7 @@ export const AccordionHeader = forwardRef<
       id={`${id}-header`}
       aria-controls={`${id}-panel`}
       value={value}
+      type="button"
       {...rest}
     >
       <ChevronRightIcon aria-hidden="true" className={withBaseName("icon")} />
