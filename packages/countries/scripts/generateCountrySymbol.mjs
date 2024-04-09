@@ -292,6 +292,7 @@ const generateCountrySymbolComponents = ({
       ariaLabel: countryName,
       viewBox: viewBox ?? "0 0 72 72",
       borderRadius: "50%",
+      aspectRatioMultiplier: "1",
     });
     const sharpFileContents = Mustache.render(template, {
       svgElements: sharpSvgPaths.data,
@@ -299,6 +300,7 @@ const generateCountrySymbolComponents = ({
       ariaLabel: countryName,
       viewBox: sharpViewBox ?? "0 0 72 50",
       borderRadius: "0",
+      aspectRatioMultiplier: "1.44",
     });
 
     const replacedText = fileContents
