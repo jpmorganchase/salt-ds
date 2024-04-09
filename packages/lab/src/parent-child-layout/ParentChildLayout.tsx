@@ -20,7 +20,7 @@ export interface ParentChildLayoutProps
   /**
    * Change element that is displayed when in staked view.
    */
-  collapsedView?: "child" | "parent";
+  visibleView?: "child" | "parent";
   /**
    * Controls the space between parent and child components, default is 0.
    */
@@ -47,7 +47,7 @@ export const ParentChildLayout = forwardRef<
 >(function ParentChildLayout(
   {
     collapseAtBreakpoint = "sm",
-    collapsedView = "parent",
+    visibleView = "child",
     parent,
     child,
     className,
@@ -87,11 +87,11 @@ export const ParentChildLayout = forwardRef<
         <div
           className={clsx({
             [withBaseName("collapsed")]: isCollapsed,
-            [withBaseName("childAnimation")]: collapsedView === "child",
-            [withBaseName("parentAnimation")]: collapsedView === "parent",
+            [withBaseName("childAnimation")]: visibleView === "child",
+            [withBaseName("parentAnimation")]: visibleView === "parent",
           })}
         >
-          {isCollapsed && collapsedView === "parent" ? child : parent}
+          {isCollapsed && visibleView === "child" ? child : parent}
         </div>
       ) : (
         <>

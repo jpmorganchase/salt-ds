@@ -14,32 +14,29 @@ const parent = <div className={styles.parentContent}>Parent</div>;
 const child = <div className={styles.childContent}>Child</div>;
 
 export const Collapsed = (): ReactElement => {
-  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
-    "parent"
-  );
+  const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
+
+  const handleChange = () => {
+    visibleView === "child"
+      ? setVisibleView("parent")
+      : setVisibleView("child");
+  };
 
   return (
     <StackLayout align="center">
       <ParentChildLayout
-        collapsedView={collapsedView}
+        visibleView={visibleView}
         collapseAtBreakpoint="xl"
         parent={parent}
         child={child}
         className={styles["parent-child-layout"]}
       />
       <StackLayout align="center" gap={1}>
-        <Label>Collapsed View: </Label>
+        <Label>Visible View: </Label>
 
-        <ToggleButtonGroup defaultValue="parent">
-          <ToggleButton
-            value="parent"
-            onClick={() => setCollapsedView("parent")}
-          >
-            Parent
-          </ToggleButton>
-          <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
-            Child
-          </ToggleButton>
+        <ToggleButtonGroup defaultValue="child" onChange={handleChange}>
+          <ToggleButton value="parent">Parent</ToggleButton>
+          <ToggleButton value="child">Child</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
     </StackLayout>

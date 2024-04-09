@@ -46,9 +46,13 @@ export const Default: StoryFn<typeof ParentChildLayout> = (args) => (
 Default.args = { parent, child };
 
 export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
-    "child"
-  );
+  const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
+
+  const handleChange = () => {
+    visibleView === "child"
+      ? setVisibleView("parent")
+      : setVisibleView("child");
+  };
 
   return (
     <StackLayout align="center">
@@ -56,20 +60,13 @@ export const Collapsed: StoryFn<typeof ParentChildLayout> = (args) => {
         {...args}
         className="parent-child-layout"
         collapseAtBreakpoint="md"
-        collapsedView={collapsedView}
+        visibleView={visibleView}
       />
       <StackLayout align="center" gap={1}>
-        <Label>Collapsed View: </Label>
-        <ToggleButtonGroup defaultValue="parent">
-          <ToggleButton
-            value="parent"
-            onClick={() => setCollapsedView("parent")}
-          >
-            Parent
-          </ToggleButton>
-          <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
-            Child
-          </ToggleButton>
+        <Label>Visible View: </Label>
+        <ToggleButtonGroup defaultValue="child" onChange={handleChange}>
+          <ToggleButton value="parent">Parent</ToggleButton>
+          <ToggleButton value="child">Child</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
     </StackLayout>
@@ -82,9 +79,13 @@ Collapsed.args = {
 };
 
 export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
-  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
-    "child"
-  );
+  const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
+
+  const handleChange = () => {
+    visibleView === "child"
+      ? setVisibleView("parent")
+      : setVisibleView("child");
+  };
 
   return (
     <StackLayout align="center">
@@ -98,21 +99,14 @@ export const ReducedMotion: StoryFn<typeof ParentChildLayout> = (args) => {
       <ParentChildLayout
         {...args}
         className="parent-child-layout"
-        collapsedView={collapsedView}
+        visibleView={visibleView}
         collapseAtBreakpoint="md"
       />
       <StackLayout align="center" gap={1}>
-        <Label>Collapsed View: </Label>
-        <ToggleButtonGroup defaultValue="parent">
-          <ToggleButton
-            value="parent"
-            onClick={() => setCollapsedView("parent")}
-          >
-            Parent
-          </ToggleButton>
-          <ToggleButton value="child" onClick={() => setCollapsedView("child")}>
-            Child
-          </ToggleButton>
+        <Label>Visible View: </Label>
+        <ToggleButtonGroup defaultValue="child" onChange={handleChange}>
+          <ToggleButton value="parent">Parent</ToggleButton>
+          <ToggleButton value="child">Child</ToggleButton>
         </ToggleButtonGroup>
       </StackLayout>
     </StackLayout>
@@ -283,17 +277,15 @@ export const PreferencesDialog: StoryFn<typeof ParentChildLayout> = (args) => {
 
   const [active, setActive] = useState(items[0]);
 
-  const [collapsedView, setCollapsedView] = useState<"child" | "parent">(
-    "parent"
-  );
+  const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
   const [collapsed, setCollapsed] = useState<boolean>();
   const [open, setOpen] = useState<boolean>(false);
 
   const showParent = () => {
-    setCollapsedView("child");
+    setVisibleView("parent");
   };
   const showChild = () => {
-    setCollapsedView("parent");
+    setVisibleView("child");
   };
 
   const parent = (
@@ -322,7 +314,7 @@ export const PreferencesDialog: StoryFn<typeof ParentChildLayout> = (args) => {
   const child = (
     <FlexLayout direction="column" className="preferences-layout-child-view">
       <FlexLayout gap={1}>
-        {collapsedView === "parent" && collapsed && (
+        {visibleView === "child" && collapsed && (
           <Button onClick={showParent} variant="secondary" aria-label="Back">
             <ChevronLeftIcon />
           </Button>
@@ -357,7 +349,7 @@ export const PreferencesDialog: StoryFn<typeof ParentChildLayout> = (args) => {
         <DialogContent>
           <ParentChildLayout
             {...args}
-            collapsedView={collapsedView}
+            visibleView={visibleView}
             parent={parent}
             child={child}
             onCollapseChange={handleCollapsed}

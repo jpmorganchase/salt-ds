@@ -157,15 +157,13 @@ export const PreferencesDialog = () => {
     },
   ];
 
-  const [collapsedView, setcollapsedView] = useState<"child" | "parent">(
-    "parent"
-  );
+  const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
 
   const showParent = () => {
-    collapsed && setcollapsedView("child");
+    collapsed && setVisibleView("parent");
   };
   const showChild = () => {
-    collapsed && setcollapsedView("parent");
+    collapsed && setVisibleView("child");
   };
 
   const [active, setActive] = useState(items[0]);
@@ -199,7 +197,7 @@ export const PreferencesDialog = () => {
   const child = (
     <FlexLayout direction="column" className={styles.childView}>
       <FlexLayout gap={1}>
-        {collapsedView === "parent" && collapsed && (
+        {visibleView === "child" && collapsed && (
           <Button onClick={showParent} variant="secondary" aria-label="Back">
             <ChevronLeftIcon />
           </Button>
@@ -239,8 +237,7 @@ export const PreferencesDialog = () => {
         <DialogContent>
           <ParentChildLayout
             gap={1}
-            collapsedView={collapsedView}
-            // collapseAtBreakpoint="sm"
+            visibleView={visibleView}
             parent={parent}
             child={child}
             onCollapseChange={handleCollapsed}
