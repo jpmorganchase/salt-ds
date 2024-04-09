@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, SegmentedButtonGroup } from "@salt-ds/core";
 import {
   Menu,
   MenuGroup,
@@ -9,6 +9,7 @@ import {
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
+  ChevronDownIcon,
   CopyIcon,
   ExportIcon,
   MicroMenuIcon,
@@ -279,5 +280,25 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
         </MenuGroup>
       </MenuPanel>
     </Menu>
+  );
+};
+
+export const SplitButton: StoryFn = () => {
+  return (
+    <SegmentedButtonGroup>
+      <Button variant="cta">Edit</Button>
+      <Menu placement="bottom-end">
+        <MenuTrigger>
+          <Button variant="cta">
+            <ChevronDownIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>Copy</MenuItem>
+          <MenuItem>Move</MenuItem>
+          <MenuItem>Delete</MenuItem>
+        </MenuPanel>
+      </Menu>
+    </SegmentedButtonGroup>
   );
 };

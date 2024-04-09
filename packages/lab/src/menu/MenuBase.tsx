@@ -63,7 +63,7 @@ export function MenuBase(props: MenuBaseProps) {
     nodeId,
     open: openState,
     onOpenChange: setOpen,
-    placement: placement ?? isNested ? "right-start" : "bottom-start",
+    placement: placement ?? (isNested ? "right-start" : "bottom-start"),
     middleware: [
       offset(isNested ? { crossAxis: -1 } : {}),
       flip({}),
