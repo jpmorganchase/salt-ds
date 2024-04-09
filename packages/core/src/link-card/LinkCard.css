@@ -2,7 +2,7 @@
 .saltLinkCard {
   border-width: var(--saltLinkCard-borderWidth, var(--salt-size-border));
   border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
-  border-radius: var(--saltLinkCard-borderRadius, 0);
+  border-radius: var(--saltLinkCard-borderRadius, var(--salt-palette-corner, 0));
   display: block;
   padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
   position: relative;
