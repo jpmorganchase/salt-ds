@@ -15,7 +15,7 @@ export const RedoIcon = forwardRef<SVGSVGElement, RedoIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4.063 1a4 4 0 0 0 0 8H8v2l4-2.5L8 6v2H4.063a3 3 0 0 1 0-6H12V1H4.063Z" />
+        <path d="M4.706 10.83A5 5 0 1 1 10.33 3.5H8v1h4v-4h-1v2.183A6.034 6.034 0 0 0 9.744 1.31a6 6 0 1 0-5.296 10.486l.258-.965Z" />
       </Icon>
     );
   }

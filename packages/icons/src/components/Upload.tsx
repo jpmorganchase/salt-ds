@@ -15,7 +15,7 @@ export const UploadIcon = forwardRef<SVGSVGElement, UploadIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M9 4H7v5H5V4H3l3-4 3 4zm3 8v-1H0v1h12z" />
+        <path d="M6.5 9.028h-1V1.914L2.818 4.596l-.707-.707L6 0l3.889 3.89-.707.706L6.5 1.914v7.114ZM12 11v1H0v-1h12Z" />
       </Icon>
     );
   }

@@ -15,7 +15,7 @@ export const RefreshIcon = forwardRef<SVGSVGElement, RefreshIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5 4 3 2a5.002 5.002 0 0 0 2 8.9v1.017a6.001 6.001 0 0 1-2.713-10.63L1 0h4v4zm2 4 2 2a5.002 5.002 0 0 0-2-8.9V.083a6.001 6.001 0 0 1 2.713 10.63L11 12H7V8z" />
+        <path d="M4.706 10.83A5 5 0 1 1 10.33 3.5H8v1h4v-4h-1v2.183A6.034 6.034 0 0 0 9.744 1.31a6 6 0 1 0 2.052 6.244l-.966-.259a5 5 0 0 1-6.124 3.536Z" />
       </Icon>
     );
   }
