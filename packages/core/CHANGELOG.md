@@ -1,5 +1,53 @@
 # @salt-ds/core
 
+## 1.24.0
+
+### Minor Changes
+
+- ae971d21: Add `Overlay`, `OverlayTrigger`, `OverlayPanel`, `OverlayPanelCloseButton`, and `OverlayPanelContent` to core.
+
+  ```tsx
+  export const DefaultOverlay = (): ReactElement => {
+    return (
+      <Overlay>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>
+          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 6a9f8a9f: Fixed LinearProgress rendering unwanted 0 in DOM.
+- 27536263: - Fixed uncontrolled `CheckboxGroup` throwing an uncontrolled to controlled error.
+  - Fixed uncontrolled `RadioButtonGroup` throwing an uncontrolled to controlled error.
+- 2b44227a: Updated `InteractableCard` to prevent hover effects from being applied while in a disabled state.
+- 2bbdb790: Made `status` prop optional in Tooltip, allowing for Tooltip to have no status.
+  The default for the `status` prop changed from `"info"` to `undefined`. Tooltips intended to have "info" status must refactor as below.
+
+  **Note:** This change is a bug fix but a breaking change for Tooltips that were intended to have "info" status, but did not explicitly set the `status` prop.
+
+  Before:
+
+  ```tsx
+  <Tooltip>Information</Tooltip>
+  ```
+
+  After:
+
+  ```tsx
+  <Tooltip status="info">Information</Tooltip>
+  ```
+
+- ca48936b: Fixed the gap between Tooltip's label and status icon not being affected by density.
+- d3a7a753: Updated InteractableCard and LinkCard to support the new corner palette
+- 0fe48b4f: Added `type="button"` to button elements to prevent some components submitting forms.
+
 ## 1.23.0
 
 ### Minor Changes
