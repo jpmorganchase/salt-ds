@@ -1,39 +1,30 @@
-import {
-  Breakpoints,
-  FlexLayout,
-  FlexItem,
-  FlexLayoutProps,
-  makePrefixer,
-} from "@salt-ds/core";
-
+import { Breakpoints, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, ReactNode, useEffect } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  ReactNode,
+  useEffect,
+} from "react";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
-
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import parentChildLayoutCss from "./ParentChildLayout.css";
-
-export type StackedViewElement = "parent" | "child";
-
-export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
+export interface ParentChildLayoutProps
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * Breakpoint at which the parent and child will stack.
    */
   collapseAtBreakpoint?: keyof Breakpoints;
   /**
-   * Change element that is displayed when in staked view.
+   * View that is displayed when in a collapsed state.
    */
-  collapsedViewElement?: StackedViewElement;
+  visibleView?: "child" | "parent";
   /**
-   * Disable all animations.
+   * Controls the space between parent and child components, default is 0.
    */
-  disableAnimations?: boolean;
-  /**
-   * Position of the parent component within the layout.
-   */
-  parentPosition?: "left" | "right";
+  gap?: number;
   /**
    * Parent component to be rendered
    */
@@ -42,6 +33,9 @@ export interface ParentChildLayoutProps extends FlexLayoutProps<"div"> {
    * Child component to be rendered
    */
   child: ReactNode;
+  /**
+   * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable
+   */
   onCollapseChange?: (isCollapsed: boolean) => void;
 }
 
@@ -53,14 +47,13 @@ export const ParentChildLayout = forwardRef<
 >(function ParentChildLayout(
   {
     collapseAtBreakpoint = "sm",
-    collapsedViewElement = "parent",
-    disableAnimations = false,
-    parentPosition = "left",
+    visibleView = "child",
     parent,
     child,
-    gap = 0,
     className,
+    gap = 0,
     onCollapseChange,
+    style,
     ...rest
   },
   ref
@@ -74,53 +67,38 @@ export const ParentChildLayout = forwardRef<
 
   const isCollapsed = useIsViewportLargerThanBreakpoint(collapseAtBreakpoint);
 
-  const collapsedViewChildren = {
-    parent: (
-      <FlexItem
-        className={clsx(withBaseName("parent"), {
-          ["saltFlexItem-stacked"]: isCollapsed,
-        })}
-      >
-        {parent}
-      </FlexItem>
-    ),
-    child: (
-      <FlexItem
-        className={clsx(withBaseName("child"), {
-          ["saltFlexItem-stacked"]: isCollapsed,
-        })}
-      >
-        {child}
-      </FlexItem>
-    ),
-  };
-
   useEffect(() => {
     onCollapseChange?.(isCollapsed);
   }, [isCollapsed, onCollapseChange]);
 
+  const parentChildLayoutStyles = {
+    ...style,
+    "--parentChildLayout-gap": `calc(var(--salt-spacing-100) * ${gap})`,
+  };
+
   return (
-    <FlexLayout
+    <div
       ref={ref}
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName(`no-animations`)]: disableAnimations,
-          [withBaseName(`reversed`)]: parentPosition === "right",
-        },
-        className
-      )}
-      gap={gap}
+      className={clsx(withBaseName(), className)}
+      style={parentChildLayoutStyles}
       {...rest}
     >
       {isCollapsed ? (
-        collapsedViewChildren[collapsedViewElement]
+        <div
+          className={clsx({
+            [withBaseName("collapsed")]: isCollapsed,
+            [withBaseName("childAnimation")]: visibleView === "child",
+            [withBaseName("parentAnimation")]: visibleView === "parent",
+          })}
+        >
+          {isCollapsed && visibleView === "child" ? child : parent}
+        </div>
       ) : (
         <>
-          <FlexItem grow={0}>{parent}</FlexItem>
-          <FlexItem grow={2}>{child}</FlexItem>
+          <div className={withBaseName("parent")}>{parent}</div>
+          <div className={withBaseName("child")}>{child}</div>
         </>
       )}
-    </FlexLayout>
+    </div>
   );
 });

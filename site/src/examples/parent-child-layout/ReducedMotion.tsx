@@ -1,6 +1,11 @@
 import { ReactElement, useState } from "react";
-import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { ParentChildLayout, StackedViewElement } from "@salt-ds/lab";
+import {
+  StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+  Label,
+} from "@salt-ds/core";
+import { ParentChildLayout } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
 import clsx from "clsx";
@@ -10,15 +15,13 @@ const parent = <div className={styles.parentContent}>Parent</div>;
 const child = <div className={styles.childContent}>Child</div>;
 
 export const ReducedMotion = (): ReactElement => {
-  const [currentView, setCurrentView] = useState<StackedViewElement>("parent");
+  const [visibleView, setVisibleView] = useState<"child" | "parent">("child");
 
-  const handleParent = () => {
-    setCurrentView("parent");
+  const handleChange = () => {
+    visibleView === "child"
+      ? setVisibleView("parent")
+      : setVisibleView("child");
   };
-  const handleChild = () => {
-    setCurrentView("child");
-  };
-
   return (
     <StackLayout align="center">
       <div>
@@ -29,7 +32,7 @@ export const ReducedMotion = (): ReactElement => {
         </p>
       </div>
       <ParentChildLayout
-        collapsedViewElement={currentView}
+        visibleView={visibleView}
         collapseAtBreakpoint="xl"
         parent={parent}
         child={child}
@@ -38,14 +41,14 @@ export const ReducedMotion = (): ReactElement => {
           styles["reduced-motion"]
         )}
       />
-      <ToggleButtonGroup defaultValue="parent">
-        <ToggleButton value="parent" onClick={handleParent}>
-          Parent
-        </ToggleButton>
-        <ToggleButton value="child" onClick={handleChild}>
-          Child
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <StackLayout align="center" gap={1}>
+        <Label>Visible View: </Label>
+
+        <ToggleButtonGroup defaultValue="child" onChange={handleChange}>
+          <ToggleButton value="parent">Parent</ToggleButton>
+          <ToggleButton value="child">Child</ToggleButton>
+        </ToggleButtonGroup>
+      </StackLayout>
     </StackLayout>
   );
 };
