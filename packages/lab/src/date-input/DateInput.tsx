@@ -9,19 +9,19 @@ import {
   Ref,
   useState,
 } from "react";
-import {useComponentCssInjection} from "@salt-ds/styles";
-import {useWindow} from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import dateInputCss from "./DateInput.css";
 import {
   Button,
   makePrefixer,
   useControlled,
-  useFormFieldProps
+  useFormFieldProps,
 } from "@salt-ds/core";
-import {DateFormatter} from "@internationalized/date";
-import {CalendarIcon} from "@salt-ds/icons";
-import {useDatePickerContext} from "../date-picker/DatePickerContext";
+import { DateFormatter } from "@internationalized/date";
+import { CalendarIcon } from "@salt-ds/icons";
+import { useDatePickerContext } from "../date-picker/DatePickerContext";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -35,18 +35,15 @@ const defaultDateFormatter = (input: string): string => {
   return isInvalidDate(input)
     ? input
     : new DateFormatter("EN-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    }).format(date);
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }).format(date);
 };
 
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
-    Pick<
-      ComponentPropsWithoutRef<"input">,
-      "disabled" | "placeholder"
-    > {
+    Pick<ComponentPropsWithoutRef<"input">, "disabled" | "placeholder"> {
   /**
    * The marker to use in an empty read only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
@@ -76,8 +73,8 @@ export interface DateInputProps
    * Function to format the input value.
    */
   dateFormatter?: (input: string) => string;
-  startDate?: string,
-  defaultStartDate?: string,
+  startDate?: string;
+  defaultStartDate?: string;
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -130,7 +127,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const isEmptyReadOnly = isReadOnly && !defaultStartDateProp && !startDateProp;
+    const isEmptyReadOnly =
+      isReadOnly && !defaultStartDateProp && !startDateProp;
     const defaultStartDate = isEmptyReadOnly
       ? emptyReadOnlyMarker
       : defaultStartDateProp;
@@ -169,8 +167,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
 
-    const {openState, setOpen, selectionVariant} =
-      useDatePickerContext();
+    const { openState, setOpen, selectionVariant } = useDatePickerContext();
 
     const format = (date: string) => {
       const formattedDate = dateFormatter(date);

@@ -8,14 +8,13 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { Calendar } from "../calendar";
 import { DateValue } from "@internationalized/date";
 
-export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
-}
+export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {}
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, context , ...rest } = props;
+    const { className, context, ...rest } = props;
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-date-input-panel",

@@ -11,7 +11,7 @@ export interface DatePickerContextValue {
   setStartDate: (newStartDate: DateValue) => void;
   endDate: DateValue | null;
   setEndDate: (newStartDate: DateValue) => void;
-  selectionVariant: "default" | "range"
+  selectionVariant: "default" | "range";
 }
 
 export const DatePickerContext = createContext<DatePickerContextValue>(
@@ -24,7 +24,7 @@ export const DatePickerContext = createContext<DatePickerContextValue>(
     setStartDate: () => undefined,
     endDate: null,
     setEndDate: () => undefined,
-    selectionVariant: "default"
+    selectionVariant: "default",
   }
 );
 
