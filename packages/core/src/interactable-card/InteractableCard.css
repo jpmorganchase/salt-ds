@@ -2,7 +2,7 @@
 .saltInteractableCard {
   border-width: var(--saltInteractableCard-borderWidth, var(--salt-size-border));
   border-style: var(--saltInteractableCard-borderStyle, var(--salt-container-borderStyle));
-  border-radius: var(--saltInteractableCard-borderRadius, 0);
+  border-radius: var(--saltInteractableCard-borderRadius, var(--salt-palette-corner, 0));
   display: block;
   padding: var(--saltInteractableCard-padding, var(--salt-spacing-200));
   position: relative;
@@ -87,7 +87,6 @@
 /* Styles applied to InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled,
 .saltInteractableCard-disabled:focus,
-.saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
   box-shadow: none;
   color: var(--salt-content-primary-foreground-disabled);
@@ -99,7 +98,6 @@
 /* Styles applied to InteractableCard primary variant if `disabled={true}` */
 .saltInteractableCard-primary.saltInteractableCard-disabled,
 .saltInteractableCard-primary.saltInteractableCard-disabled:focus,
-.saltInteractableCard-primary.saltInteractableCard-disabled:hover,
 .saltInteractableCard-primary.saltInteractableCard-disabled:active {
   background: var(--salt-container-primary-background-disabled);
   border-color: var(--salt-container-primary-borderColor-disabled);
@@ -108,7 +106,6 @@
 /* Styles applied to InteractableCard secondary variant if `disabled={true}` */
 .saltInteractableCard-secondary.saltInteractableCard-disabled,
 .saltInteractableCard-secondary.saltInteractableCard-disabled:focus,
-.saltInteractableCard-secondary.saltInteractableCard-disabled:hover,
 .saltInteractableCard-secondary.saltInteractableCard-disabled:active {
   background: var(--saltInteractableCard-background-disabled, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor-disabled);
@@ -134,5 +131,11 @@
     cursor: var(--salt-selectable-cursor-hover);
     box-shadow: var(--salt-overlayable-shadow-hover);
     --card-accent-color: var(--salt-selectable-foreground-hover);
+  }
+
+  .saltInteractableCard-disabled:hover {
+    cursor: var(--salt-selectable-cursor-disabled);
+    box-shadow: none;
+    --card-accent-color: var(--salt-selectable-foreground-disabled);
   }
 }

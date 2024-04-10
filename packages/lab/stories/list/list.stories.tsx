@@ -15,12 +15,13 @@ import {
   FlexItem,
   FlexLayout,
   StackLayout,
+  StatusIndicator,
+  Text,
   useDensity,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 
 import {
-  ContentStatus,
   List,
   ListItem,
   ListItemGroup,
@@ -587,7 +588,13 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
 };
 
 const ListPlaceholder = () => (
-  <ContentStatus message="Did you hide it somewhere?" title="No source found" />
+  <StackLayout gap={1} align="center">
+    <StatusIndicator status="info" size={2} />
+    <Text>
+      <strong>No source found</strong>
+    </Text>
+    <Text>Did you hide it somewhere?</Text>
+  </StackLayout>
 );
 
 export const WithPlaceholder: StoryFn<ListProps> = (props) => {

@@ -29,6 +29,7 @@ export { useListControlContext } from "./list-control";
 export * from "./multiline-input";
 export * from "./navigation-item";
 export * from "./option";
+export * from "./overlay";
 export * from "./pagination";
 export * from "./panel";
 export * from "./pill";

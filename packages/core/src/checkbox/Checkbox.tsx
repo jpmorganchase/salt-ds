@@ -125,9 +125,10 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     } = inputProps;
 
     const checkboxGroupChecked =
-      checkboxGroup?.checkedValues != null && value != null
+      checkedProp ??
+      (checkboxGroup?.checkedValues && value
         ? checkboxGroup.checkedValues.includes(value)
-        : checkedProp;
+        : checkedProp);
 
     const [checked, setChecked] = useControlled({
       controlled: checkboxGroupChecked,

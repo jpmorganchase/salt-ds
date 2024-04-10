@@ -1,12 +1,15 @@
 import { ChangeEvent, useState } from "react";
 import { clsx } from "clsx";
 import {
+  Button,
+  ButtonProps,
+  makePrefixer,
   Overlay,
   OverlayPanel,
   OverlayTrigger,
   OverlayPanelContent,
-} from "../overlay";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+  OverlayPanelCloseButton,
+} from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
@@ -144,7 +147,7 @@ export const ColorChooser = ({
     setActiveTab(index);
   };
 
-  const OverlayData = () => {
+  const OverlayContent = () => {
     return (
       <div
         className={clsx(withBaseName("overlayContent"))}
@@ -203,8 +206,9 @@ export const ColorChooser = ({
         </Button>
       </OverlayTrigger>
       <OverlayPanel>
+        <OverlayPanelCloseButton />
         <OverlayPanelContent>
-          <OverlayData />
+          <OverlayContent />
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
