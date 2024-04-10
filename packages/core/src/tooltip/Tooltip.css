@@ -39,7 +39,7 @@
 
 /* Styles applied to status indicator */
 .saltTooltip-icon {
-  --saltIcon-margin: var(--tooltip-icon-marginTop) var(--saltTooltip-icon-marginRight, 6px) 0 0;
+  --saltIcon-margin: var(--tooltip-icon-marginTop) var(--salt-spacing-75) 0 0;
   vertical-align: top;
   align-self: flex-start;
 }
