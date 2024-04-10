@@ -1,5 +1,21 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.40
+
+### Minor Changes
+
+- ae971d21: Remove `Overlay`, `OverlayTrigger`, `OverlayPanel`, `OverlayPanelCloseButton`, and `OverlayPanelContent` from labs and promote to core.
+- ed32f6e0: Refactor of `ParentChildLayout`:
+
+  - removes parentPosition and disableAnimation props
+  - collapsedViewElement renamed to visibleView
+  - reduced motion animation changed to fade in
+
+### Patch Changes
+
+- 0fe48b4f: Added `type="button"` to button elements to prevent some components submitting forms.
+- a1dace8d: CarouselSlide's ButtonBar prop is now less strict and accepts more components
+
 ## 1.0.0-alpha.39
 
 ### Minor Changes
