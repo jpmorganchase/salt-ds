@@ -107,6 +107,10 @@
   text-align: left;
   width: min-content;
 }
+/* todo: styles to apply when calendar is open and focus is on first calendar / there is no startDate selected*/
+.saltDateInput-active::first-line {
+  background: var(--salt-content-foreground-highlight);
+}
 
 /* Reset in the  class */
 .saltDateInput-input:focus {
@@ -179,14 +183,6 @@
   border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
 }
 
-/* Style applied to start adornments */
-.saltDateInput-startAdornmentContainer {
-  align-items: center;
-  display: inline-flex;
-  padding-right: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
-}
-
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
   align-items: center;
@@ -195,25 +191,14 @@
   column-gap: var(--salt-spacing-100);
 }
 
-.saltDateInput-readOnly .saltDateInput-startAdornmentContainer {
-  margin-left: var(--salt-spacing-50);
-}
-
-.saltDateInput-startAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
-}
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
-.saltDateInput-startAdornmentContainer .saltButton:first-child {
-  margin-left: calc(var(--salt-spacing-50) * -1);
-}
 .saltDateInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
-.saltDateInput-startAdornmentContainer > .saltButton,
 .saltDateInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: var(--salt-spacing-50);
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
