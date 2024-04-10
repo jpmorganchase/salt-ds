@@ -35,7 +35,7 @@ You can display a form as a dedicated page, within a dialog, nested into drawers
 
 For more details on button bar layout, visit the [button bar pattern](/salt/patterns/button-bar). 
 
-## Layout
+### Standard layout
 
 Form controls align to a column layout with an even number of columns across breakpoints.
 
@@ -88,6 +88,313 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
   label="Show spacing"
 />
 
+<ExampleContainer type="positive" label="Best practices">
+- Break a long form up into sections (or sequential steps) of, ideally, 7 (+/-2) form fields (Miller’s Law).
+- Inset separators so that they don’t extend into the column layout margin.
+</ExampleContainer>
 
+### Compact form layout
+
+Occasionally it’s necessary to  display a data-rich form in a small viewport without reducing the  component density. In this case, you can reduce or remove spacing to  achieve a compact form layout.
+
+Use these layouts to display a:
+
+- Dense editable form, such as trade tickets.
+- (Read-only) summary of a form (on their own page or an accompanying left summary column).
+
+#### Editable form
+
+<Diagram
+  src="/img/patterns/forms/editable.png"
+  alt="Example showing an editable form."
+  border
+/>
+
+If a compact form is editable, display it with:
+
+- Secondary fields.
+- Primary background.
+- Right-aligned labels (see “Label placement”).
+
+#### Read-only summary
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+If a compact form is for reference (e.g., a summary/comparison), you should display it with:
+
+- Primary fields.
+- Primary background.
+- Read-only state.
+- Left-aligned labels (see “Label placement”).
+</ExampleContainer>
+
+### Button bar layout
+
+A button bar provides next steps when a user reaches the end of the form, such as navigating to previous or next steps, submitting their form or cancelling changes. See more guidance in the [button bar pattern](/salt/patterns/button-bar).
+
+## Multiple columns
+
+You can display form fields across multiple columns. This is best:
+
+- For experienced users or routine user tasks, where the form is familiar to the user.
+- When vertical space is at a premium and you need to reduce scrolling.
+- When you need an additional “summary” column (typically the left column) for comparison.
+
+### Top-down reading order
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/forms/form_layout_1.png", alt: "" },
+    { src: "/img/patterns/forms/form_layout_2.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+- Use top-placed labels with columns to maintain a clear relationship between field and label.
+- For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between  content to remain clear at 400% zoom. Use a top-down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
+</ExampleContainer>
+
+### Unrelated columns
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+In this case, align each column to its own layout grid, with the  separator attached to the right margin of the preceding column. This  ensures adequate separation between columns and separators.
+</ExampleContainer>
+
+## Full page
+
+Embed your form in the application layout when the form is:
+
+- Long and complex, or requires multiple columns.
+- A self-contained workflow, such as a log-in page—which may include an element of background branding.
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+## Overlay (dialog/drawer)
+
+Typically displays smaller forms that:
+
+- Collect information to inform a larger workflow.
+- Display on application boot (i.e., as the app loads).
+- Enable access/feedback (i.e., credentials input, reviews).
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+## Field and background fill
+
+Salt provides primary and secondary variants of both form fields and backgrounds.
+To keep busy forms as simple as  possible, choose a combination of these fills to achieve a visual  hierarchy. Rather than adding background colors, if you need further  visual separation, use:
+
+- Headings
+- Sections and separators
+- Progressive disclosure
+- Multiple columns
+
+Choose the combination that best fits:
+
+- The visual priority of the form (i.e., is it the primary focus?).
+- The volume and type of data the form is collecting.
+- The user familiarity with the form.
+
+### Primary field on primary and secondary backgrounds
+
+Primary field on primary background is effective for a form that:
+
+- Is "non-specialist" or infrequently used.
+- Isn't space constrained/doesn't need to be entirely visible.
+- Has minimal sections/columns.
+
+Use primary field on secondary background to display the form as a secondary priority.
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+### Secondary field on primary and secondary backgrounds
+
+Secondary field on primary background is effective for a form that:
+
+- Is used by experts/is frequently used.
+- Is compact and data-dense.
+- Has multiple sections/columns.
+
+Use secondary field on secondary background as an alternate option, but not a common combination.
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+Use a bordered multiline field when Form Field fill matches the background fill.
+</ExampleContainer>
+
+## Label or question
+
+You can display form fields with either:
+
+- A short label.
+- A comprehensive question.
+
+<Diagrams>
+  <Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+  >
+    ### Label
+    - Default choice for form fields.
+    - Field labels should be short and descriptive, with no more than 3-5 words.
+    - Uses a secondary "Label strong" type style.
+  </Diagram>
+  <Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+  >
+    ### Question
+    - Label with "sentence" intent
+    - Generally no limit to the word count of a field question (it wraps over multiple lines).
+    - Brings emphasis to the question, over the field content.
+    - Commonly used to create questionnaires and surveys.
+    - Uses a primary Body strong type style.
+  </Diagram>
+</Diagrams>
+
+## Label placement
+
+Forms support either a top or left label placement.
+
+### Top placement
+
+The default label placement for form fields. Top placement offers:
+
+- The most scannable solution, allowing users to traverse the left edge of the form through labels, fields and onward actions.
+- The fastest completion times.
+- The best label placement across varying devices and viewport sizes.
+- The most accessible/compatible with browser zoom.
+
+<Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+/>
+
+### Left placement
+
+- You can align labels on the left of the form control to the left or right.
+- Often used in very dense,  “compact” forms, where the quantity of visible fields is more important  than completion time and viewport size.
+
+<Diagrams>
+  <Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+  >
+    #### Right aligned
+    - Default alignment for left placement.
+    - Maintains proximity of labels to fields.
+    - Often used for dense, editable forms, such as tickets.
+  </Diagram>
+  <Diagram
+  src="/img/patterns/forms/readonly-summary.png"
+  alt="Example showing a read-only summary."
+  border
+  >
+    #### Left aligned
+    - Commonly when users need to review, or take care entering form information.
+    - Generally slower completion time (due to variable label proximity to field).
+    - Use cases include form summaries or to collect sensitive information.
+  </Diagram>
+</Diagrams>
+
+<ExampleContainer type="positive">
+- Ensure both top and left placed labels align to the same layout grid configuration.
+- All left placement labels in the form should have the same width (determined by the field with the longest label).
+- Avoid left placement when the form is displayed in different languages, or on mobile/smaller viewports.
+</ExampleContainer>
+
+<ExampleContainer type="negative">
+- We don’t recommend mixing label placements across the same form.
+</ExampleContainer>
+
+## Progressive disclosure
+
+Progressive disclosure is the reveal of content (i.e., fields or information) at the right time for your user. It helps to avoid overwhelming users by hiding sections of fields until they need to see them.
+
+You may use this to:
+
+- Display a long form in a single page.
+- Vary the fields displayed depending on a user selection or change in context.
+- Ask the user to opt in to sections, or fields, before completing them.
+
+### Expandable sections
+
+These use accordions to progressively reveal fields in long, dense forms. Sections aren't mutually exclusive: users can expand multiple to compare.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/forms/form_layout_1.png", alt: "" },
+    { src: "/img/patterns/forms/form_layout_2.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+- Expand the first section on displaying the form.
+- Align the left edge of fields to the accordion label and the right edge to the underlying layout grid.
+</ExampleContainer>
+
+### Combining nonexpandable and expandable sections
+
+You can combine nonexpandable and expandable sections within a single form, aligning to the same underlying layout grid.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/forms/form_layout_1.png", alt: "" },
+    { src: "/img/patterns/forms/form_layout_2.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+### Opt-in sections
+
+Use checkboxes to allow users to opt in to certain sections of the form to reveal more information.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/forms/form_layout_1.png", alt: "" },
+    { src: "/img/patterns/forms/form_layout_2.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
 
 :fragment{src="./fragments/feedback.mdx"}
