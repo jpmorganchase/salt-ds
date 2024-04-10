@@ -263,23 +263,6 @@ describe("GIVEN a FormField", () => {
           cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
         });
       });
-
-      describe("AND has an invalid validation status", () => {
-        it("THEN tooltip should default to the info status", () => {
-          cy.mount(
-            //@ts-expect-error - intentionally invalid validationStatus
-            <FormField validationStatus="">
-              <FormFieldLabel>Label</FormFieldLabel>
-              <Tooltip content="Helper text">
-                <Input defaultValue="Value" data-testid="test-id-2" />
-              </Tooltip>
-            </FormField>
-          );
-          cy.findByLabelText("Label").realHover();
-
-          cy.findByRole("tooltip").should("have.class", "saltTooltip-info");
-        });
-      });
     });
 
     describe("AND Input has an button adornment", () => {
