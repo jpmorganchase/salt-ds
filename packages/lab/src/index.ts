@@ -47,6 +47,7 @@ export * from "./layer-layout";
 export * from "./list";
 export * from "./list-next";
 export * from "./logo";
+export * from "./menu";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./parent-child-layout";
