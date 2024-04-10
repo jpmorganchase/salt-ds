@@ -6,7 +6,7 @@ const composedStories = composeStories(parentChildStories);
 
 const { Default } = composedStories;
 
-describe("GIVEN a ParentChildLAyout", () => {
+describe("GIVEN a ParentChildLayout", () => {
   describe("WHEN no gap values are provided", () => {
     it("THEN it should display no gap by default", () => {
       cy.mount(<Default />);
@@ -31,7 +31,7 @@ describe("GIVEN a ParentChildLAyout", () => {
 
     it(
       "THEN it should be collapsed when the current breakpoint less than or equal to the target breakpoint",
-      { viewportHeight: 900, viewportWidth: 1280 },
+      { viewportHeight: 900, viewportWidth: 1920 },
       () => {
         cy.mount(<Default collapseAtBreakpoint="lg" />);
         cy.get(".saltParentChildLayout").should(($div) => {
@@ -63,7 +63,7 @@ describe("GIVEN a ParentChildLAyout", () => {
 
     it(
       "THEN it should be collapsed when the current less than or equal to the target breakpoint",
-      { viewportHeight: 900, viewportWidth: 1800 },
+      { viewportHeight: 900, viewportWidth: 1920 },
       () => {
         cy.mount(
           <SaltProvider
