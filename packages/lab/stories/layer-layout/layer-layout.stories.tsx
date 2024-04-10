@@ -1,12 +1,5 @@
 import { useState, MouseEvent } from "react";
-import {
-  ContentStatus,
-  ContentStatusProps,
-  FormField,
-  Input,
-  LayerLayout,
-  LAYER_POSITIONS,
-} from "@salt-ds/lab";
+import { FormField, Input, LayerLayout, LAYER_POSITIONS } from "@salt-ds/lab";
 import {
   Button,
   FlowLayout,
@@ -270,14 +263,6 @@ const LayerLayoutCenterExample: StoryFn<typeof LayerLayout> = (args) => {
 
   const hide = () => setOpen(false);
 
-  const errorProps: ContentStatusProps = {
-    status: "error",
-    title: "There's been a system error",
-    message: "It should be temporary, so please try again.",
-    actionLabel: "CLOSE LAYER",
-    onActionClick: hide,
-  };
-
   return (
     <>
       <Button onClick={show}>Open Layer</Button>
@@ -288,7 +273,19 @@ const LayerLayoutCenterExample: StoryFn<typeof LayerLayout> = (args) => {
         {...args}
       >
         <FlowLayout justify="center">
-          <ContentStatus {...errorProps} />
+          <StackLayout gap={1} align="center">
+            <StatusIndicator status="error" size={2} />
+            <Text>
+              <strong>There's been a system error</strong>
+            </Text>
+            <Text>It should be temporary, so please try again.</Text>
+            <Button
+              style={{ marginTop: "var(--salt-spacing-100)" }}
+              onClick={hide}
+            >
+              Close Layer
+            </Button>
+          </StackLayout>
         </FlowLayout>
       </LayerLayout>
     </>

@@ -14,17 +14,12 @@ export {
   useListItem as useListItemDeprecated,
 } from "./list-deprecated";
 
-export * from "./app-header";
 export * from "./breadcrumbs";
-export * from "./button-bar";
 export * from "./calendar";
 export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
-export * from "./combo-box";
-export * from "./combo-box-deprecated";
 export * from "./contact-details";
-export * from "./content-status";
 export * from "./date-input";
 export * from "./deck-item";
 export * from "./deck-layout";
@@ -48,12 +43,10 @@ export * from "./list";
 export * from "./list-next";
 export * from "./logo";
 export * from "./menu-button";
-export * from "./metric";
 export * from "./parent-child-layout";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";
-export * from "./search-input";
 export * from "./skip-link";
 export * from "./slider";
 export * from "./stepped-tracker";
