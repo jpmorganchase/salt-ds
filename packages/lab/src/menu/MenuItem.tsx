@@ -17,6 +17,9 @@ import { useIsMenuTrigger } from "./MenuTriggerContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
 
 export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * If `true`, the item will be disabled.
+   */
   disabled?: boolean;
 }
 

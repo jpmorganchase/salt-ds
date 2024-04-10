@@ -5,6 +5,9 @@ import { MenuTriggerContext } from "./MenuTriggerContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
 
 export interface MenuTriggerProps {
+  /**
+   * The trigger element for the menu. This should be a single child element and accept a ref.
+   */
   children?: ReactNode;
 }
 

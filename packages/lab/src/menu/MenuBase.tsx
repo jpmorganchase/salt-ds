@@ -26,9 +26,21 @@ import {
 
 export interface MenuBaseProps {
   children?: ReactNode;
+  /**
+   * Display or hide the component.
+   */
   open?: boolean;
+  /**
+   * If true, the menu will be open by default.
+   */
   defaultOpen?: boolean;
+  /**
+   * Callback function triggered when open state changes.
+   */
   onOpenChange?: (newOpen: boolean) => void;
+  /**
+   * Set the placement of the Menu component relative to the trigger element. Defaults to `bottom-start` if it's the root menu or `right-start` if it's nested.
+   */
   placement?: UseFloatingUIProps["placement"];
 }
 

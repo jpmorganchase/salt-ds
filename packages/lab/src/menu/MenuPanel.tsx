@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useMenuContext } from "./MenuContext";
@@ -6,7 +6,12 @@ import { MenuPanelBase } from "./MenuPanelBase";
 import { FloatingList } from "@floating-ui/react";
 import { MenuPanelContext } from "./MenuPanelContext";
 
-export interface MenuPanelProps extends ComponentPropsWithoutRef<"div"> {}
+export interface MenuPanelProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The content of the menu panel.
+   */
+  children?: ReactNode;
+}
 
 const withBaseName = makePrefixer("saltMenuPanel");
 

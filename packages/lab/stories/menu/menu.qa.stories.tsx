@@ -47,7 +47,7 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
     <QAContainer
       itemWidthAuto
       height={500}
-      width={1380}
+      width={1200}
       transposeDensity
       vertical
       {...props}
