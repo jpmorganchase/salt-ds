@@ -10,6 +10,12 @@ data:
 
 A navigation provides users with a structured and intuitive way to go to different pages, sections or features of your website or application. It tells users where they are at all times and ensures they can easily get to where they need to go. Use this pattern to provide consistency that helps users navigate your website or application easily and efficiently.
 
+<Diagram
+  src="/img/patterns/navigation/navigation-example.png"
+  alt="Example showing combined navigation"
+  border
+/>
+
 ## When to use
 
 Use the pattern to indicate the structure and hierarchy of your site or application content. When deciding on your application’s navigation, it’s important to:
@@ -29,13 +35,23 @@ Navigation consists of horizontal and vertical variants. You can use them on the
 1. **Horizontal navigation**: Consists of navigation items arranged in a horizontal layout, that link the user to a different section of a website or application.
 2. **Vertical navigation**: Consists of navigation items and parent navigation items arranged in a vertical layout. Parent navigation items do not direct the user anywhere and, instead, reveals nested navigation items inside it. 
 
+<Diagram
+  src="/img/patterns/navigation/navigation_anatomy.png"
+  alt="Anatomy of a navigation."
+  border
+/>
+
 ### Layout
 
 Horizontal navigation uses `StackLayout` with `gap={0}` to display navigation items in a row formation.
 
+<Diagram
+  src="/img/patterns/navigation/nav_layout.png"
+  alt="Horizontal navigation layout"
+  border
+/>
 
-
-For vertical navigation layout guidance, refer to the vertical navigation pattern.
+For vertical navigation layout guidance, refer to the [vertical navigation pattern](/salt/patterns/vertical-navigation).
 
 ## Horizontal navigation
 
@@ -45,8 +61,9 @@ You would normally use a horizontal navigation within an application header, at 
 - Affords movement from one set of content to another regardless of where the user is in the website or app.
 
 <Diagram
-  src="/img/patterns/navigation/horizontal_nav.png"
-  alt="Example showing horizontal navigation"
+  src="/img/patterns/navigation/horizontal-nav-behaviour.png"
+  alt="Example showing horizontal navigation."
+  caption="An example of a horizontal navigation."
   border
 />
 
@@ -60,7 +77,7 @@ You would normally use a horizontal navigation within an application header, at 
 By default, the navigation item has a horizontal orientation and hugs its content, but you can customize it so that its container can fit any preferred width.
 
 <Diagram
-  src="/img/patterns/navigation/horizontal_nav.png"
+  src="/img/patterns/navigation/horizontal-navigation.png"
   alt="Example showing horizontal navigation"
   caption="An example showing horizontal navigation."
   border
@@ -71,8 +88,8 @@ By default, the navigation item has a horizontal orientation and hugs its conten
 You can use icon descriptors to signify effectively the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, a function or a configuration setting.
 
 <Diagram
-  src="/img/patterns/navigation/horizontal_nav_with_icons.png"
-  alt="Example showing horizontal navigation with icons"
+  src="/img/patterns/navigation/horizontal-navigation-icons.png"
+  alt="Example showing horizontal navigation"
   caption="An example showing horizontal navigation with icons."
   border
 />
@@ -91,6 +108,13 @@ A common navigation practice is to have the primary categories that represent th
 
 Read more in the [vertical navigation pattern](/salt/patterns/vertical-navigation).
 
+<Diagram
+  src="/img/patterns/navigation/vertical-nav-behaviour.png"
+  alt="A vertical navigation."
+  caption="An example showing vertical navigation."
+  border
+/>
+
 ### Fixed navigation pane
 
 Typically, the vertical navigation remains fixed in width when the user resizes the browser. You can set it to the width of your choice. However, you should consider the overall label length, theme, density and screen size you are designing for.
@@ -98,8 +122,9 @@ Typically, the vertical navigation remains fixed in width when the user resizes 
 When your application is responsive, the content area should use its own layout grid. As the user adjusts their browser width, the navigation remains fixed until reaching a specified breakpoint, with only the content area adapting responsively based on the viewport.
 
 <Diagram
-  src="/img/patterns/navigation/fixed_navigation_pane.png"
-  alt="Example showing a fixed navigation pane"
+  src="/img/patterns/navigation/navigation-layout.png"
+  alt="Example showing a fixed navigation pane."
+  caption="Example showing a fixed navigation pane."
   border
 />
 
@@ -112,15 +137,16 @@ Use the underlying layout grid to set a minimum width for your navigation pane a
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/navigation/responsive_navigation_pane.png",
+      src: "/img/patterns/navigation/responsive-navigation-layout.png",
       alt: "Example showing a responsive navigation",
     },
     {
-      src: "/img/patterns/navigation/responsive_navigation_pane_toggle_on.png",
+      src: "/img/patterns/navigation/responsive-navigation-layout-grid.png",
       alt: "Example showing a responsive navigation with grid",
     },
   ]}
   label="Show underlying grid"
+  caption="Example showing a responsive navigation."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
@@ -139,16 +165,18 @@ Combine both horizontal and vertical navigation when users need to:
 - Navigate other complex hierarchies.
 
 <Diagram
-  src="/img/patterns/navigation/fixed_navigation_pane.png"
-  alt="Example showing a fixed navigation pane"
+  src="/img/patterns/navigation/combined-nav-behaviour.png"
+  alt="Example showing a combined navigation pane."
+  caption="Example showing a combined navigation pane."
   border
 />
 
 Combined navigation can be useful in website or application contexts when you want to provide users with a versatile and efficient way to navigate complex content or features. It's ideal when your experience comprises multiple sub-apps, pages or sections, which in turn also require their own navigation.
 
 <Diagram
-  src="/img/patterns/navigation/fixed_navigation_pane.png"
-  alt="Example showing a fixed navigation pane"
+  src="/img/patterns/navigation/combined-navigation-icons.png"
+  alt="Example showing a combined navigation pane."
+  caption="Example showing a combined navigation pane with descriptive icons."
   border
 />
 
