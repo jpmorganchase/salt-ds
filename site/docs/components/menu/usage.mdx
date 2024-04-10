@@ -1,0 +1,60 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- When you need to display a list of actions or options.
+
+### When not to use
+
+- Inside a form. Instead, use [`ComboBox`](../combo-box) or [`Dropdown`]("../dropdown).
+
+## Content
+
+- Always use sentence case for menu item labels.
+- Keep menu item labels short and concise.
+
+## Import
+
+To import `Menu` and related components from the lab Salt package, use:
+
+```js
+import {
+  Menu,
+  MenuItem,
+  MenuTrigger,
+  MenuPanel,
+  MenuGroup,
+} from "@salt-ds/lab";
+```
+
+## Props
+
+### `Menu`
+
+<PropsTable packageName="lab" componentName="Menu" />
+
+### `MenuItem`
+
+<PropsTable packageName="lab" componentName="MenuItem" />
+
+### `MenuTrigger`
+
+<PropsTable packageName="lab" componentName="MenuTrigger" />
+
+### `MenuPanel`
+
+<PropsTable packageName="lab" componentName="MenuPanel" />
+
+### `MenuGroup`
+
+<PropsTable packageName="lab" componentName="MenuGroup" />
