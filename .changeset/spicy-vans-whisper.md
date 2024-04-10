@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Added missing link to corner palette in InteractableCard and LinkCard
+Updated InteractableCard and LinkCard to support the new corner palette
