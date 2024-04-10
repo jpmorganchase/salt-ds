@@ -6,6 +6,8 @@ import { type WindowContextType, useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type HTMLAttributes,
+  type Dispatch,
+  type SetStateAction,
   type ReactElement,
   type ReactNode,
   cloneElement,
@@ -13,6 +15,7 @@ import {
   isValidElement,
   useContext,
   useMemo,
+  useState,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
@@ -62,6 +65,14 @@ export interface ThemeContextProps {
   actionFont: ActionFont;
   /** @deprecated use `actionFont` */
   UNSTABLE_actionFont: ActionFont;
+}
+
+export const invertMode = (mode: string): "light" | "dark" =>
+  mode === "light" ? "dark" : "light";
+
+export interface ThemeContextValue extends ThemeContextProps {
+  setMode: Dispatch<SetStateAction<Mode>>;
+  invertMode: () => void;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -262,7 +273,6 @@ function InternalSaltProvider({
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
-  const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
   const headingFont =
@@ -270,6 +280,11 @@ function InternalSaltProvider({
   const accent = accentProp ?? inheritedAccent ?? DEFAULT_ACCENT;
   const actionFont =
     actionFontProp ?? inheritedActionFont ?? DEFAULT_ACTION_FONT;
+  const [modeFromState, setMode] = useState<Mode>(
+    modeProp ?? (inheritedMode ?? DEFAULT_MODE)
+  );
+
+  const mode = modeProp || modeFromState;
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
@@ -281,7 +296,7 @@ function InternalSaltProvider({
     window: targetWindow,
   });
 
-  const themeContextValue = useMemo(
+  const themeContextValue = useMemo<ThemeContextValue>(
     () => ({
       theme: themeName,
       mode,
@@ -291,6 +306,8 @@ function InternalSaltProvider({
       headingFont: headingFont,
       accent: accent,
       actionFont: actionFont,
+      setMode,
+      invertMode: () => setMode((prevState) => invertMode(prevState)),
       // Backward compatibility
       UNSTABLE_corner: corner,
       UNSTABLE_headingFont: headingFont,
@@ -454,7 +471,7 @@ export function SaltProviderNext({
 /** @deprecated use `SaltProviderNext` */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
-export const useTheme = (): ThemeContextProps => {
+export const useTheme = (): Omit<ThemeContextValue, "window"> => {
   const { window, ...contextWithoutWindow } = useContext(ThemeContext);
 
   return contextWithoutWindow;
