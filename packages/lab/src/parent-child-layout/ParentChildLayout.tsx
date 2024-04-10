@@ -18,7 +18,7 @@ export interface ParentChildLayoutProps
    */
   collapseAtBreakpoint?: keyof Breakpoints;
   /**
-   * Change element that is displayed when in stacked view.
+   * View that is displayed when in a collapsed state.
    */
   visibleView?: "child" | "parent";
   /**
