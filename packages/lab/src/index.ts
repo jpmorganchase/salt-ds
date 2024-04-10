@@ -26,6 +26,7 @@ export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
 export * from "./date-input";
+export * from "./date-picker";
 export * from "./deck-item";
 export * from "./deck-layout";
 export * from "./dropdown";

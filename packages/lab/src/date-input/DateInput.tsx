@@ -5,15 +5,23 @@ import {
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
+  KeyboardEvent,
   Ref,
   useState,
 } from "react";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
+import {useWindow} from "@salt-ds/window";
 
 import dateInputCss from "./DateInput.css";
-import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
-import { DateFormatter } from "@internationalized/date";
+import {
+  Button,
+  makePrefixer,
+  useControlled,
+  useFormFieldProps
+} from "@salt-ds/core";
+import {DateFormatter} from "@internationalized/date";
+import {CalendarIcon} from "@salt-ds/icons";
+import {useDatePickerContext} from "../date-picker/DatePickerContext";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -27,16 +35,17 @@ const defaultDateFormatter = (input: string): string => {
   return isInvalidDate(input)
     ? input
     : new DateFormatter("EN-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }).format(date);
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(date);
 };
+
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
-      "disabled" | "value" | "defaultValue" | "placeholder"
+      "disabled" | "placeholder"
     > {
   /**
    * The marker to use in an empty read only DateInput.
@@ -67,6 +76,8 @@ export interface DateInputProps
    * Function to format the input value.
    */
   dateFormatter?: (input: string) => string;
+  startDate?: string,
+  defaultStartDate?: string,
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -82,8 +93,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       inputRef,
       readOnly: readOnlyProp,
       role,
-      value: valueProp,
-      defaultValue: defaultStartDateProp = valueProp === undefined
+      startDate: startDateProp,
+      defaultStartDate: defaultStartDateProp = startDateProp === undefined
         ? ""
         : undefined,
       validationStatus: validationStatusProp,
@@ -119,22 +130,22 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const isEmptyReadOnly = isReadOnly && !defaultStartDateProp && !valueProp;
-    const defaultValue = isEmptyReadOnly
+    const isEmptyReadOnly = isReadOnly && !defaultStartDateProp && !startDateProp;
+    const defaultStartDate = isEmptyReadOnly
       ? emptyReadOnlyMarker
       : defaultStartDateProp;
-    const [value, setValue] = useControlled({
-      controlled: valueProp,
-      default: defaultValue,
+    const [startDate, setStartDate] = useControlled({
+      controlled: startDateProp,
+      default: defaultStartDate,
       name: "DateInput",
       state: "value",
     });
 
-    const getDateValidationStatus = (value: string) =>
-      isInvalidDate(value) ? "error" : undefined;
+    const getDateValidationStatus = (value: string | undefined) =>
+      value && isInvalidDate(value) ? "error" : undefined;
 
     const [dateStatus, setDateStatus] = useState<"error" | undefined>(
-      getDateValidationStatus(value as string)
+      getDateValidationStatus(startDate)
     );
 
     const isDisabled = disabled || formFieldDisabled;
@@ -149,6 +160,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       onBlur,
       onChange,
       onFocus,
+      onKeyDown,
       required: dateInputPropsRequired,
       ...restDateInputProps
     } = inputProps;
@@ -157,27 +169,39 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
 
+    const {openState, setOpen, selectionVariant} =
+      useDatePickerContext();
+
     const format = (date: string) => {
       const formattedDate = dateFormatter(date);
-      setValue(formattedDate);
+      setStartDate(formattedDate);
     };
     const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value);
+      setStartDate(event.target.value);
       onChange?.(event);
     };
 
     const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      const stringDate = value as string;
-      value && format(stringDate);
+      startDate && format(startDate);
       onBlur?.(event);
-      setDateStatus(getDateValidationStatus(stringDate));
+      setDateStatus(getDateValidationStatus(startDate));
       setFocused(false);
     };
 
     const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
       onFocus?.(event);
       setFocused(true);
+      setOpen(true);
     };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Tab" && event.shiftKey) {
+        setOpen(false);
+      }
+      onKeyDown?.(event);
+    };
+
+    const activeInput = selectionVariant === "default" && openState;
 
     return (
       <div
@@ -198,7 +222,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         <input
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
           aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
-          className={clsx(withBaseName("input"), inputProps?.className)}
+          className={clsx(withBaseName("input"), {
+            [withBaseName("active")]: activeInput,
+          })}
           disabled={isDisabled}
           readOnly={isReadOnly}
           ref={inputRef}
@@ -206,13 +232,21 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           tabIndex={isDisabled ? -1 : 0}
           onBlur={handleStartDateBlur}
           onChange={handleStartDateChange}
+          onKeyDown={handleKeyDown}
           onFocus={!isDisabled ? handleFocus : undefined}
           placeholder={placeholder}
-          value={value}
+          value={startDate ?? ""}
           {...restA11yProps}
           {...restDateInputProps}
           required={isRequired}
         />
+        {
+          <div className={withBaseName("endAdornmentContainer")}>
+            <Button variant="secondary" onClick={() => setOpen(!openState)}>
+              <CalendarIcon />
+            </Button>
+          </div>
+        }
         <div className={withBaseName("activationIndicator")} />
       </div>
     );
