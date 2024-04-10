@@ -1,5 +1,18 @@
 # @salt-ds/theme
 
+## 1.14.0
+
+### Minor Changes
+
+- f6202615: Updated `--salt-size-indicator`.
+
+  | Density | Before (px) | After (px) |
+  | ------- | ----------- | ---------- |
+  | High    | 1           | 2          |
+  | Medium  | 2           | 3          |
+  | Low     | 3           | 4          |
+  | Touch   | 4           | 5          |
+
 ## 1.13.1
 
 ### Patch Changes

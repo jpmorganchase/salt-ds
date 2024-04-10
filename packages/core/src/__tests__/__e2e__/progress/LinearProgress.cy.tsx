@@ -12,9 +12,10 @@ describe("GIVEN a LinearProgress", () => {
   });
 
   it("SHOULD render progress bar with correct min-max values", () => {
-    cy.mount(<Default min={20} max={40} value={30} />);
+    cy.mount(<Default min={20} max={40} value={35} />);
     cy.findByRole("progressbar").should("have.attr", "aria-valuemax", "40");
     cy.findByRole("progressbar").should("have.attr", "aria-valuemin", "20");
-    cy.findByRole("progressbar").contains("50 %");
+    cy.findByRole("progressbar").contains("75 %");
+    cy.findByRole("progressbar").should("not.contain.text", "0"); // test regression #3202
   });
 });

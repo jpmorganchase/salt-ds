@@ -1,5 +1,100 @@
 # @salt-ds/core
 
+## 1.24.0
+
+### Minor Changes
+
+- ae971d21: Add `Overlay`, `OverlayTrigger`, `OverlayPanel`, `OverlayPanelCloseButton`, and `OverlayPanelContent` to core.
+
+  ```tsx
+  export const DefaultOverlay = (): ReactElement => {
+    return (
+      <Overlay>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>
+          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- 6a9f8a9f: Fixed LinearProgress rendering unwanted 0 in DOM.
+- 27536263: - Fixed uncontrolled `CheckboxGroup` throwing an uncontrolled to controlled error.
+  - Fixed uncontrolled `RadioButtonGroup` throwing an uncontrolled to controlled error.
+- 2b44227a: Updated `InteractableCard` to prevent hover effects from being applied while in a disabled state.
+- 2bbdb790: Made `status` prop optional in Tooltip, allowing for Tooltip to have no status.
+  The default for the `status` prop changed from `"info"` to `undefined`. Tooltips intended to have "info" status must refactor as below.
+
+  **Note:** This change is a bug fix but a breaking change for Tooltips that were intended to have "info" status, but did not explicitly set the `status` prop.
+
+  Before:
+
+  ```tsx
+  <Tooltip>Information</Tooltip>
+  ```
+
+  After:
+
+  ```tsx
+  <Tooltip status="info">Information</Tooltip>
+  ```
+
+- ca48936b: Fixed the gap between Tooltip's label and status icon not being affected by density.
+- d3a7a753: Updated InteractableCard and LinkCard to support the new corner palette
+- 0fe48b4f: Added `type="button"` to button elements to prevent some components submitting forms.
+
+## 1.23.0
+
+### Minor Changes
+
+- ada5af31: Updates to `InteractableCard`:
+
+  - Added `accent` prop for border positioning, deprecating `accentPlacement`.
+  - Added `selected` prop for selected styling.
+  - Added `value` prop for selectable use cases.
+
+- ada5af31: Added `InteractableCardGroup` component to support selectable cards in a group. It allows users to select one or multiple values from a set of interactable cards.
+
+  ```tsx
+  <InteractableCardGroup multiSelect>
+    <InteractableCard value="one">One</InteractableCard>
+    <InteractableCard value="two">Two</InteractableCard>
+    <InteractableCard value="three">Three</InteractableCard>
+  </InteractableCardGroup>
+  ```
+
+- 96c2ca62: Added `SegmentedButtonGroup` to core.
+  `SegmentedButtonGroup` shows a list of actionable buttons, flush with separators between them.
+
+  ```tsx
+  return (
+    <SegmentedButtonGroup>
+      <Button variant={variant}>Button</Button>
+      <Button variant={variant}>Button</Button>
+      <Button variant={variant}>Button</Button>
+    </SegmentedButtonGroup>
+  );
+  ```
+
+### Patch Changes
+
+- 3e4e819c: `Card`, `LinkCard` and `InteractableCard` updated to only apply hover effects on non-touch devices.
+- f6202615: Visual updates to Navigation item's active indicator due to `--salt-size-indicator` being updated.
+- 8ffdfae1: Fixed Dialog children being unmounted twice unexpectedly when closing
+- a726afcf: Improved the accessibility of Switch by applying `role="switch"`.
+
+  **Note:** This might affect tests where you are targeting Switch by its role. For example, using React Testing Library-based selectors, tests will have to be updated like the following:
+
+  ```diff
+  - getByRole("checkbox")
+  + getByRole("switch")
+  ```
+
 ## 1.22.0
 
 ### Minor Changes

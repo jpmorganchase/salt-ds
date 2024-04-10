@@ -44,10 +44,8 @@ import {
   HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
   HorizontalTextOnly as ToggleButtonGroupHorizontalText,
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
-import {
-  Default as CardDefault,
-  Interactable as InteractableCardStory,
-} from "../../../core/stories/card/card.stories";
+import { Default as CardDefault } from "../../../core/stories/card/card.stories";
+import { Default as InteractableCardStory } from "../../../core/stories/interactable-card/interactable-card.stories";
 import {
   HorizontalGroup as CheckboxHorizontalGroup,
   Error as CheckboxError,
@@ -67,7 +65,7 @@ import {
   Closable as PillClosable,
   Icon as PillIcon,
 } from "../../../core/stories/pill/pill.stories";
-import { Default as OverlayDefault } from "../../../lab/stories/overlay/overlay.stories";
+import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
 import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/stories/examples/HDCompact";
 

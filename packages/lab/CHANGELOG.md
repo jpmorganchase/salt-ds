@@ -1,5 +1,74 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.40
+
+### Minor Changes
+
+- ae971d21: Remove `Overlay`, `OverlayTrigger`, `OverlayPanel`, `OverlayPanelCloseButton`, and `OverlayPanelContent` from labs and promote to core.
+- ed32f6e0: Refactor of `ParentChildLayout`:
+
+  - removes parentPosition and disableAnimation props
+  - collapsedViewElement renamed to visibleView
+  - reduced motion animation changed to fade in
+
+### Patch Changes
+
+- 0fe48b4f: Added `type="button"` to button elements to prevent some components submitting forms.
+- a1dace8d: CarouselSlide's ButtonBar prop is now less strict and accepts more components
+
+## 1.0.0-alpha.39
+
+### Minor Changes
+
+- 96c2ca62: Removed `SegmentedButtonGroup` from labs and promoted to core.
+- 8ed621bc: Removed the `onClose` prop from `Overlay`, `onOpenChange` is now called for events that open/close the overlay.
+
+  ```tsx
+  export const ControlledOverlay = () => {
+    const [open, setOpen] = useState(false);
+    const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
+
+    return (
+      <Overlay open={open} onOpenChange={onOpenChange}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>Overlay Content</OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- ebe59171: Added `OverlayPanelCloseButton` and `OverlayPanelContent` components as children of `OverlayPanel`
+
+  ```tsx
+  export const OverlayWithCloseButton = ({ onOpenChange }: OverlayProps) => {
+    const [open, setOpen] = useState(false);
+
+    const onChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+    };
+
+    const handleClose = () => setOpen(false);
+
+    return (
+      <Overlay open={open} onOpenChange={onChange}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>
+          <OverlayPanelCloseButton onClick={handleClose} />
+          <OverlayPanelContent>Overlay Content</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- f6202615: Visual updates to Calendar's "today" indicator and Tab's active indicator due to `--salt-size-indicator` being updated.
+
 ## 1.0.0-alpha.38
 
 ### Patch Changes
