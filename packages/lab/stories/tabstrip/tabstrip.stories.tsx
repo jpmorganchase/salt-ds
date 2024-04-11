@@ -1,12 +1,13 @@
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Button, FlexLayout, Link, SaltProvider, Text } from "@salt-ds/core";
 import {
-  EditableLabel,
-  Tab,
-  TabDescriptor,
-  Tabstrip,
+  Button,
+  FlexLayout,
+  Link,
+  SaltProvider,
+  Text,
   ParentChildLayout,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { EditableLabel, Tab, TabDescriptor, Tabstrip } from "@salt-ds/lab";
 import { AdjustableFlexbox, CloseTabWarningDialog } from "../components";
 
 export default {
