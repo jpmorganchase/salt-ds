@@ -2,7 +2,7 @@ import { Breakpoints } from "../breakpoints";
 import {
   useCurrentBreakpoint,
   useOrderedBreakpoints,
-} from "./useResponsiveProp";
+} from "../utils";
 
 export const useIsViewportLargerThanBreakpoint = (
   targetedBreakpoint: keyof Breakpoints

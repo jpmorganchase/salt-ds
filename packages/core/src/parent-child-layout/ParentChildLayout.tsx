@@ -6,7 +6,8 @@ import {
   useEffect,
 } from "react";
 import { Breakpoints } from "../breakpoints";
-import { useIsViewportLargerThanBreakpoint, makePrefixer } from "../utils";
+import { makePrefixer } from "../utils";
+import { useIsViewportLargerThanBreakpoint } from "./useIsViewportLargerThanBreakpoint";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
