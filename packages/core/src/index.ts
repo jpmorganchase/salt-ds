@@ -32,6 +32,7 @@ export * from "./option";
 export * from "./overlay";
 export * from "./pagination";
 export * from "./panel";
+export * from "./parent-child-layout";
 export * from "./pill";
 export * from "./progress";
 export * from "./radio-button";

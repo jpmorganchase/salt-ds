@@ -50,7 +50,6 @@ export * from "./logo";
 export * from "./menu";
 export * from "./menu-button";
 export * from "./metric";
-export * from "./parent-child-layout";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";

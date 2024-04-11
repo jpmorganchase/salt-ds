@@ -1,4 +1,3 @@
-import { Breakpoints, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   ComponentPropsWithoutRef,
@@ -6,7 +5,8 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { useIsViewportLargerThanBreakpoint } from "../utils";
+import { Breakpoints } from "../breakpoints";
+import { useIsViewportLargerThanBreakpoint, makePrefixer } from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
