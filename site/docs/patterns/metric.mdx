@@ -12,9 +12,7 @@ data:
   components: ["Icon", "Link", "Stack layout", "Text"]
 ---
 
-Metric is a pattern that displays an important number value prominently. Indicators or labels can be added to help provide context to the presented value.
-
-We provide design guidance for using Salt Icon, Link, Stack Layout and Text components to achieve the pattern. You can also find implementation examples in Storybook.
+A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value.
 
   <Diagram
     src="/img/patterns/metric/metric-hero-shot.png"
@@ -25,22 +23,22 @@ We provide design guidance for using Salt Icon, Link, Stack Layout and Text comp
 
 ## When to use
 
-Use the pattern to give more prominence to a key measure. Metrics are often used as building blocks in dashboards. They effectively direct users to key information that may otherwise be lost within the content, particularly when multiple numerical values are displayed.
+Use the pattern to give more prominence to key measurements. Metrics often serve as building blocks in dashboards. They effectively direct users to key information that they may otherwise overlook, particularly when multiple numerical values are visible.
 
-Multiple metrics can be included in your UI, and you can indicate hierarchy if necessary.
+You can add multiple metrics to your UI if needed. Visual differences, like size and positioning, can help users understand which metrics are most important.
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - Consider placing metric pattern higher up in your layout to further emphasize key metrics importance.
-  - Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators if they’ll help minimize ambiguity.
+  - Place metrics higher in your layout when you want to emphasize their importance.
+  - Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.
   - Keep titles and values as short and concise as possible. Round or truncate values to significant figures, and use common abbreviations instead of spelling out words.
-  - Avoid having more than five metrics in a single dashboard view to prevent overwhelming your user with too much information.
+  - Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information.
 </ExampleContainer>
 
 ## How to build
 
 ### Anatomy
 
-A single metric is typically comprised of:
+A single metric typically comprises:
 
 1. **Metric value:** can either be numeric or a string.
 2. **Subtitles and subvalues:** displays supporting information to improve the user’s understanding of a metric. Subtitles can link to related pages.
@@ -79,12 +77,12 @@ Metric is available in three sizes—small, medium and large. Change the size of
 See the vertical and horizontal examples below for individual spacing values.
 
 <ExampleContainer type="positive" customPillText="Best practices">
- Consider using the same orientation when displaying multiple metrics within a single view, for greater visual consistency. Do not mix vertical and horizontal metrics.
+ Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.
 </ExampleContainer>
 
 ### Vertical metric
 
-By default, metric is arranged vertically with the value positioned beneath the title.
+By default, metrics are arranged vertically with the value positioned beneath the title.
 
 #### Large
 
@@ -115,7 +113,7 @@ By default, metric is arranged vertically with the value positioned beneath the 
 
 ### Horizontal metric
 
-You can display the metric component in a horizontal orientation, if that's more suitable for your layout. Ensure the margin height is adjusted in line with the size of the metric.
+You can display the metric component in a horizontal orientation if that's more suitable for your layout. Ensure the margin height is adjusted in line with the size of the metric.
 
 #### Large
 
@@ -145,11 +143,11 @@ You can display the metric component in a horizontal orientation, if that's more
   />
 
 
-### Subtitle and subvalue
+## Subtitle and subvalue
 
-In addition to the title, you can display a supporting subtitle and/or subvalue within a metric. This information can be used to provide more context, and improve users' comprehension of a metric value and its impact.
+In addition to the title, you can display a supporting subtitle and/or subvalue within a metric. You can use this to provide more context and improve users' comprehension of a metric's value and its impact.
 
-Subtitles are always displayed directly beneath the title, while subvalues are beneath the key value.
+Place subtitles directly beneath the title, and subvalues beneath the key value.
 
   <Diagram
     src="/img/patterns/metric/subtitle-and-subvalue.png"
@@ -159,10 +157,10 @@ Subtitles are always displayed directly beneath the title, while subvalues are b
   />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  To give more context about a metric value such as whether it is positive or negative—consider using the subvalue to provide past data, average, threshold or target values, or comparable high or low values.
+  To give more context about a metric value, such as whether it is positive or negative, use the subvalue to provide past data, average, threshold or target values, or comparable high or low values.
 </ExampleContainer>
 
-### Link
+## Link
 
 Display a link in the metric's subtitle text, enabling users to navigate to another page with related information.
 
@@ -175,7 +173,7 @@ Enable users to navigate to another page by linking from the subtitle.
     border
   />
 
-### Indicators
+## Indicators
 
 Use indicators to provide further contextual information. For example, if the metric value represents a change from a previous value, i.e. from positive to negative, you can display an arrow icon as a strong visual indicator of the direction in change.
 
