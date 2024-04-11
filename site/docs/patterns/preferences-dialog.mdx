@@ -49,19 +49,11 @@ A preferences dialog comprises three key features:
 - Use a [button bar](./button-bar) to display any actions at the bottom of the dialog. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
 - Use a [parent-child layout](../components/parent-child-layout) component to position the navigation and content within a preferences dialog. 
 
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_off.png",
-      alt: "Example showing a preferences dialog's layout construction.",
-    },
-    {
-      src: "/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_on.png",
-      alt: "Example showing a preferences dialog's layout construction with grid.",
-    },
-  ]}
-  label="Layout grid"
-/>
+<Diagram
+    src="/img/patterns/preferences-dialog/preferences_dialog_spacing_toggle_on.png"
+    alt="Example showing a preferences dialog's layout construction."
+    border
+  />
 
 <ExampleContainer type="positive" customPillText="Best practices">
   - In the parent-child layout, the parent container (containing the navigation) typically remains fixed in width when the user resizes the browser. You can apply an independent layout grid to align the content with the child container. This enables it to adapt responsively based on the viewport size.
