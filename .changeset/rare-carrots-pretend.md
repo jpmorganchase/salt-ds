@@ -3,6 +3,7 @@
 ---
 
 Promoted `ParentChildLayout` from labs to core.
+Promoted `useIsViewportLargerThanBreakpoint` from labs to core.
 
 ```tsx
 const parent = <div>Parent</div>;
