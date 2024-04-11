@@ -8,7 +8,6 @@ import {
   makePrefixer,
   usePrevious,
 } from "@salt-ds/core";
-// eslint-disable-line
 import { useIsViewportLargerThanBreakpoint } from "@salt-ds/core/src/parent-child-layout/useIsViewportLargerThanBreakpoint";
 
 import { useWindow } from "@salt-ds/window";
