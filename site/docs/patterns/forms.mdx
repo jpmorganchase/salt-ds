@@ -13,9 +13,7 @@ data:
     ]  
 ---
 
-A form allows you to capture data, gather opinions and receive information in a consistent format.
-
-This pattern provides practical and visually enriched guidelines for creating forms that are flexible to business domain, user experience and channel.
+A form allows you to capture data, gather opinions and receive information in a consistent format. This pattern provides guidelines for creating forms that are flexible to business domain, user experience and channel.
 
 ## When to use
 
@@ -40,10 +38,10 @@ For more details on button bar layout, visit the [button bar pattern](/salt/patt
 Form controls align to a column layout with an even number of columns across breakpoints.
 
 A form control consists of a [form field](/salt/components/form-field) wrapped around:
-- An input
-- A combo box
-- A dropdown
-- A radio button or checkbox group
+- An input.
+- A combo box.
+- A dropdown.
+- A radio button or checkbox group.
 
 <ImageSwitcher
   images={[
@@ -53,7 +51,7 @@ A form control consists of a [form field](/salt/components/form-field) wrapped a
   label="Show spacing"
 />
 
-You can find more information on the Salt spacing system [here](../foundations/spacing).
+Read more in the [spacing foundation]](../foundations/spacing).
 
 <ExampleContainer type="positive" label="Best practices">
 - Align the width of a form field to the number of columns that best reflect the length of its expected text.
@@ -95,20 +93,14 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
 
 ### Compact form layout
 
-Occasionally it’s necessary to  display a data-rich form in a small viewport without reducing the  component density. In this case, you can reduce or remove spacing to  achieve a compact form layout.
+You may need to display a data-rich form in a small viewport without reducing the component density. In this case, you can reduce or remove spacing to achieve a compact form layout.
 
 Use these layouts to display a:
 
-- Dense editable form, such as trade tickets.
+- Dense editable form, such as for trade tickets.
 - (Read-only) summary of a form (on their own page or an accompanying left summary column).
 
 #### Editable form
-
-<Diagram
-  src="/img/patterns/forms/editable.png"
-  alt="Example showing an editable form."
-  border
-/>
 
 If a compact form is editable, display it with:
 
@@ -116,22 +108,26 @@ If a compact form is editable, display it with:
 - Primary background.
 - Right-aligned labels (see “Label placement”).
 
+<Diagram
+  src="/img/patterns/forms/editable.png"
+  alt="Example showing an editable form."
+  border
+/>
+
 #### Read-only summary
+
+If a compact form is for reference (e.g., a summary/comparison), display it with:
+
+- Primary fields.
+- Primary background.
+- Read-only state.
+- Left-aligned labels (see “Label placement”).
 
 <Diagram
   src="/img/patterns/forms/readonly-summary.png"
   alt="Example showing a read-only summary."
   border
 />
-
-<ExampleContainer type="positive" label="Best practices">
-If a compact form is for reference (e.g., a summary/comparison), you should display it with:
-
-- Primary fields.
-- Primary background.
-- Read-only state.
-- Left-aligned labels (see “Label placement”).
-</ExampleContainer>
 
 ### Button bar layout
 
@@ -147,11 +143,15 @@ You can display form fields across multiple columns. This is best:
 
 ### Top-down reading order
 
+For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between content to remain clear at 400% zoom. Use a top-down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
+
 <Diagram
   src="/img/patterns/forms/readonly-summary.png"
   alt="Example showing a read-only summary."
   border
 />
+
+Use top-placed labels with columns to maintain a clear relationship between field and label.
 
 <ImageSwitcher
   images={[
@@ -161,22 +161,15 @@ You can display form fields across multiple columns. This is best:
   label="Show spacing"
 />
 
-<ExampleContainer type="positive" label="Best practices">
-- Use top-placed labels with columns to maintain a clear relationship between field and label.
-- For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between  content to remain clear at 400% zoom. Use a top-down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
-</ExampleContainer>
-
 ### Unrelated columns
+
+For unrelated columns, align each column to its own layout grid, with the separator attached to the right margin of the preceding column. This ensures adequate separation between columns and separators.
 
 <Diagram
   src="/img/patterns/forms/readonly-summary.png"
   alt="Example showing a read-only summary."
   border
 />
-
-<ExampleContainer type="positive" label="Best practices">
-In this case, align each column to its own layout grid, with the  separator attached to the right margin of the preceding column. This  ensures adequate separation between columns and separators.
-</ExampleContainer>
 
 ## Full page
 
@@ -193,7 +186,7 @@ Embed your form in the application layout when the form is:
 
 ## Overlay (dialog/drawer)
 
-Typically displays smaller forms that:
+An overlay typically displays smaller forms that:
 
 - Collect information to inform a larger workflow.
 - Display on application boot (i.e., as the app loads).
@@ -208,12 +201,13 @@ Typically displays smaller forms that:
 ## Field and background fill
 
 Salt provides primary and secondary variants of both form fields and backgrounds.
-To keep busy forms as simple as  possible, choose a combination of these fills to achieve a visual  hierarchy. Rather than adding background colors, if you need further  visual separation, use:
 
-- Headings
-- Sections and separators
-- Progressive disclosure
-- Multiple columns
+To keep busy forms as simple as  possible, choose a combination of these fills to achieve a visual hierarchy. Rather than adding background colors, if you need further visual separation, use:
+
+- Headings.
+- Sections and separators.
+- Progressive disclosure.
+- Multiple columns.
 
 Choose the combination that best fits:
 
@@ -254,7 +248,7 @@ Use secondary field on secondary background as an alternate option, but not a co
 />
 
 <ExampleContainer type="positive" label="Best practices">
-Use a bordered multiline field when Form Field fill matches the background fill.
+Use a bordered multiline field when the form field fill matches the background fill.
 </ExampleContainer>
 
 ## Label or question
@@ -285,7 +279,7 @@ You can display form fields with either:
     - Generally no limit to the word count of a field question (it wraps over multiple lines).
     - Brings emphasis to the question, over the field content.
     - Commonly used to create questionnaires and surveys.
-    - Uses a primary Body strong type style.
+    - Uses a primary "Body strong" type style.
   </Diagram>
 </Diagrams>
 
@@ -311,7 +305,7 @@ The default label placement for form fields. Top placement offers:
 ### Left placement
 
 - You can align labels on the left of the form control to the left or right.
-- Often used in very dense,  “compact” forms, where the quantity of visible fields is more important  than completion time and viewport size.
+- Often used in very dense, compact forms, where the quantity of visible fields is more important than completion time and viewport size.
 
 <Diagrams>
   <Diagram
@@ -343,12 +337,12 @@ The default label placement for form fields. Top placement offers:
 </ExampleContainer>
 
 <ExampleContainer type="negative">
-- We don’t recommend mixing label placements across the same form.
+- Don't mix label placements across the same form.
 </ExampleContainer>
 
 ## Progressive disclosure
 
-Progressive disclosure is the reveal of content (i.e., fields or information) at the right time for your user. It helps to avoid overwhelming users by hiding sections of fields until they need to see them.
+Progressive disclosure is revealing content (i.e., fields or information) at the right time for your user. It helps to avoid overwhelming users by hiding sections or fields until they need to see them.
 
 You may use this to:
 
@@ -358,7 +352,7 @@ You may use this to:
 
 ### Expandable sections
 
-These use accordions to progressively reveal fields in long, dense forms. Sections aren't mutually exclusive: users can expand multiple to compare.
+These use accordions to progressively reveal fields in long, dense forms. Sections aren't mutually exclusive: users can expand multiple sections to compare.
 
 <ImageSwitcher
   images={[
