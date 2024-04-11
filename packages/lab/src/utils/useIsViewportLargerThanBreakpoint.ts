@@ -1,4 +1,8 @@
-import { useCurrentBreakpoint, useOrderedBreakpoints, Breakpoints  } from "@salt-ds/core";
+import {
+  useCurrentBreakpoint,
+  useOrderedBreakpoints,
+  Breakpoints,
+} from "@salt-ds/core";
 
 export const useIsViewportLargerThanBreakpoint = (
   targetedBreakpoint: keyof Breakpoints
