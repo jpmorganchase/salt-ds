@@ -7,5 +7,6 @@ export * from "./useClickOutside";
 export * from "./useEventCallback";
 export * from "./useLayoutEffectOnce";
 export * from "./useLayoutEffectSkipFirst";
+export * from "./useIsViewportLargerThanBreakpoint";
 export * from "./useOverflowDetection";
 export * from "./useSlideSelection";
