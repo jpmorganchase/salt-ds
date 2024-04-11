@@ -15,8 +15,8 @@ import {
   Dialog,
   DialogContent,
   DialogCloseButton,
+  ParentChildLayout,
 } from "@salt-ds/core";
-import { ParentChildLayout } from "@salt-ds/lab";
 import {
   ChevronLeftIcon,
   ExportIcon,

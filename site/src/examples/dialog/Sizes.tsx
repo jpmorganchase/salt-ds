@@ -10,13 +10,9 @@ import {
   DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/core";
-import {
-  SteppedTracker,
-  TrackerStep,
-  StepLabel,
   ParentChildLayout,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 
 const SmallDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);

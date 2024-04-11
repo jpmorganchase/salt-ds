@@ -1,9 +1,12 @@
 import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
 import { clsx } from "clsx";
-
-import { Scrim, ScrimProps } from "@salt-ds/core";
-
-import { Breakpoints, makePrefixer, usePrevious } from "@salt-ds/core";
+import {
+  Scrim,
+  ScrimProps,
+  Breakpoints,
+  makePrefixer,
+  usePrevious,
+} from "@salt-ds/core";
 import { useIsViewportLargerThanBreakpoint } from "../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";

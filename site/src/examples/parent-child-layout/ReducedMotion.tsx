@@ -4,8 +4,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Label,
+  ParentChildLayout,
 } from "@salt-ds/core";
-import { ParentChildLayout } from "@salt-ds/lab";
 
 import styles from "./Default.module.css";
 import clsx from "clsx";
