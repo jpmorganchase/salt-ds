@@ -1,3 +1,4 @@
+export * from "./ContextMenu";
 export * from "./GroupedItems";
 export * from "./GroupedWithIcon";
 export * from "./Multilevel";

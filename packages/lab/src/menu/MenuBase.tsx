@@ -4,6 +4,7 @@ import {
   useControlled,
   useFloatingUI,
   UseFloatingUIProps,
+  useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import {
   flip,
@@ -22,6 +23,7 @@ import {
   useListNavigation,
   useFloatingTree,
   size,
+  ReferenceType,
 } from "@floating-ui/react";
 
 export interface MenuBaseProps {
@@ -42,10 +44,21 @@ export interface MenuBaseProps {
    * Set the placement of the Menu component relative to the trigger element. Defaults to `bottom-start` if it's the root menu or `right-start` if it's nested.
    */
   placement?: UseFloatingUIProps["placement"];
+  /**
+   * Callback to returns a [virtual element](https://floating-ui.com/docs/virtual-elements). If this is provided, it will override MenuTrigger.
+   */
+  getVirtualElement?: () => ReferenceType | null;
 }
 
 export function MenuBase(props: MenuBaseProps) {
-  const { children, defaultOpen, open, onOpenChange, placement } = props;
+  const {
+    children,
+    defaultOpen,
+    open,
+    onOpenChange,
+    placement,
+    getVirtualElement,
+  } = props;
   const parentId = useFloatingParentNodeId();
   const nodeId = useFloatingNodeId();
   const tree = useFloatingTree();
@@ -75,7 +88,10 @@ export function MenuBase(props: MenuBaseProps) {
     nodeId,
     open: openState,
     onOpenChange: setOpen,
-    placement: placement ?? (isNested ? "right-start" : "bottom-start"),
+    strategy: !getVirtualElement ? "absolute" : "fixed",
+    placement:
+      placement ??
+      (isNested || !!getVirtualElement ? "right-start" : "bottom-start"),
     middleware: [
       // Align the nested menu by shifting it by var(--salt-size-border)
       offset(isNested ? { crossAxis: -1 } : {}),
@@ -90,6 +106,12 @@ export function MenuBase(props: MenuBaseProps) {
       }),
     ],
   });
+
+  useIsomorphicLayoutEffect(() => {
+    if (getVirtualElement) {
+      refs.setPositionReference(getVirtualElement());
+    }
+  }, [getVirtualElement]);
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [

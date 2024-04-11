@@ -1,4 +1,4 @@
-import { Button, SegmentedButtonGroup } from "@salt-ds/core";
+import { Button, Card, SegmentedButtonGroup } from "@salt-ds/core";
 import {
   Menu,
   MenuGroup,
@@ -16,6 +16,8 @@ import {
   PasteIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
+import { useState } from "react";
+import { VirtualElement } from "@floating-ui/react";
 
 export default {
   title: "Lab/Menu",
@@ -300,5 +302,54 @@ export const SplitButton: StoryFn = () => {
         </MenuPanel>
       </Menu>
     </SegmentedButtonGroup>
+  );
+};
+
+export const ContextMenu: StoryFn = () => {
+  const [virtualElement, setVirtualElement] = useState<VirtualElement | null>(
+    null
+  );
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Card
+        style={{
+          width: 300,
+          aspectRatio: 2 / 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onContextMenu={(event) => {
+          event.preventDefault();
+          setVirtualElement({
+            getBoundingClientRect: () => ({
+              width: 0,
+              height: 0,
+              x: event.clientX,
+              y: event.clientY,
+              top: event.clientY,
+              right: event.clientX,
+              bottom: event.clientY,
+              left: event.clientX,
+            }),
+          });
+          setOpen(true);
+        }}
+      >
+        Right click here
+      </Card>
+      <Menu
+        getVirtualElement={() => virtualElement}
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <MenuPanel>
+          <MenuItem>Copy</MenuItem>
+          <MenuItem>Move</MenuItem>
+          <MenuItem>Delete</MenuItem>
+        </MenuPanel>
+      </Menu>
+    </>
   );
 };

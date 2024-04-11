@@ -2,7 +2,7 @@ import { composeStories } from "@storybook/react";
 import * as menuStories from "@stories/menu/menu.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
-const { SingleLevel, MultiLevel, GroupedItems, IconWithGroups } =
+const { ContextMenu, SingleLevel, MultiLevel, GroupedItems, IconWithGroups } =
   composeStories(menuStories);
 
 describe("Given a Menu", () => {
@@ -182,6 +182,26 @@ describe("Given a Menu", () => {
     cy.findByRole("menu").should("exist");
     cy.findByRole("button", { name: "Open Menu" }).realClick();
     cy.findByRole("menu").should("exist");
+  });
+
+  it("should support virtual elements", () => {
+    cy.mount(<ContextMenu />);
+    cy.findByRole("menu").should("not.exist");
+    cy.findByText("Right click here").realClick({
+      button: "right",
+    });
+    cy.findByRole("menu").should("exist");
+    cy.findByText("Right click here").then(($el) => {
+      const offset = $el.offset();
+      const width = $el.outerWidth();
+      const height = $el.outerHeight();
+      if (offset !== undefined && height !== undefined && width !== undefined) {
+        const centerX = offset.left + width / 2;
+        const centerY = offset.top + height / 2;
+        cy.findByRole("menu").should("have.css", "top", `${centerY}px`);
+        cy.findByRole("menu").should("have.css", "left", `${centerX}px`);
+      }
+    });
   });
 
   it("should render the custom floating component", () => {
