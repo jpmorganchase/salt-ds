@@ -83,6 +83,12 @@
     background-color: var(--agGrid-background);
     padding: var(--salt-spacing-100);
     color: var(--agGrid-menu-color);
+    border-color: var(--agGrid-menu-borderColor);
+  }
+
+  /** pop up shadow */
+  .ag-popup-child:not(.ag-tooltip-custom) {
+    box-shadow: var(--agGrid-menu-shadow);
   }
 
   .ag-menu .ag-tabs-body {
@@ -270,18 +276,53 @@
     font-weight: var(--agGrid-header-fontWeight);
   }
 
+  .ag-header-icon {
+    color: var(--agGrid-header-foreground);
+  }
+
   .ag-header-cell:after,
   .ag-header-group-cell:after {
     height: var(--agGrid-column-separator-height);
     top: var(--agGrid-column-separator-top);
   }
 
+  /** Move sort arrow towards menu icon */
+  .ag-ltr
+    .ag-header-cell:not(.ag-right-aligned-header)
+    .ag-header-label-icon.ag-hidden
+    + .ag-sort-indicator-container {
+    margin-left: auto;
+  }
+
+  .ag-ltr
+    .ag-header-cell.ag-right-aligned-header
+    .ag-header-label-icon.ag-hidden
+    + .ag-sort-indicator-container {
+    margin-right: auto;
+  }
+
+  .ag-sort-indicator-container {
+    align-items: center;
+  }
+
+  .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon {
+    padding-left: var(--salt-spacing-100);
+  }
+
+  .ag-ltr
+    .ag-header-cell:not(.ag-right-aligned-header)
+    .ag-sort-indicator-icon {
+    padding-right: var(--salt-spacing-100);
+  }
+
   .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
     margin-right: auto;
+    padding-left: var(--salt-spacing-100);
   }
 
   .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
     margin-left: auto;
+    padding-right: var(--salt-spacing-100);
   }
 
   .ag-keyboard-focus .ag-header-cell:focus:after {
@@ -347,10 +388,6 @@
     border: 0;
     padding-left: var(--salt-spacing-100);
     padding-right: var(--salt-spacing-100);
-  }
-
-  .ag-cell-wrapper {
-    height: 100%;
   }
 
   .ag-ltr .ag-cell {
@@ -668,6 +705,15 @@
     outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
       var(--salt-focused-outlineColor);
     outline-offset: -2px;
+  }
+
+  .ag-header-cell.ag-column-menu-visible {
+    background: var(--salt-actionable-secondary-background-active);
+    color: var(--salt-actionable-secondary-foreground-active);
+  }
+
+  .ag-header-cell.ag-column-menu-visible .ag-icon {
+    color: var(--salt-actionable-secondary-foreground-active);
   }
 
   /* We have to fake a border (below) to ensure alignment */

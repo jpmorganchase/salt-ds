@@ -1,14 +1,16 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
 import {
+  Button,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Warning = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -24,17 +26,16 @@ export const Warning = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open warning dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open warning dialog</Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="warning"
+        size="small"
+        id={id}
       >
-        <DialogTitle>File access</DialogTitle>
+        <DialogHeader header="File access" />
+
         <DialogContent>
           Users will be able to make edits and modify Trades 2023 file. Give
           access anyway?

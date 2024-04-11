@@ -4,7 +4,7 @@
   display: inline-flex;
   align-items: center;
   background: var(--saltPill-background, var(--salt-actionable-primary-background));
-  border-radius: 0;
+  border-radius: var(--saltPill-borderRadius, var(--salt-palette-corner-weaker, 0));
   border: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   min-height: var(--salt-text-minHeight);

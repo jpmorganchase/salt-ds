@@ -1,5 +1,6 @@
 ---
-title: Avatar
+title:
+  $ref: ./#/title
 layout: DetailComponent
 sidebar:
   exclude: true
@@ -7,8 +8,8 @@ data:
   $ref: ./#/data
 ---
 
-### Best practices
+## Best practices
 
-You should exclude decorative avatars (avatars that repeat the information already expressed by the accompanying text) from screen reader access to avoid repetition. If you're adding an avatar for decorative purposes, use `aria-hidden` to exclude its label from the screen reader.
+Exclude decorative avatars (avatars that repeat the information already expressed by the accompanying text) from screen reader access to avoid repetition. If you're adding an avatar for decorative purposes, use `aria-hidden` to exclude its label from the screen reader.
 
 If you're using an alternative icon inside an avatar, the icon's `aria-label` should be descriptive in relation to the avatar context, not the icon context. For example, when using `<BuildingSolidIcon/>` to represent a company, `aria-label` should read "Company profile" rather than the icon's default label "building solid."

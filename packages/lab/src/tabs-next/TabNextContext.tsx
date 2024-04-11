@@ -1,10 +1,10 @@
 import { createContext } from "@salt-ds/core";
 import { ReactNode, SyntheticEvent, useContext } from "react";
 
-type TabValue = {
+interface TabValue {
   value: string;
   label: ReactNode;
-};
+}
 
 export interface TabsContextValue {
   activeColor: "primary" | "secondary";

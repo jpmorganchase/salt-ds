@@ -1,4 +1,4 @@
-import { ComboBoxNext, ComboBoxNextProps, Option } from "@salt-ds/lab";
+import { ComboBox, ComboBoxProps, Option } from "@salt-ds/core";
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import { shortColorData } from "./exampleData";
 
@@ -23,8 +23,8 @@ export const CustomFiltering = (): ReactElement => {
     }
   };
 
-  const handleOpenChange: ComboBoxNextProps["onOpenChange"] = (event) => {
-    if (event.type === "click") {
+  const handleOpenChange: ComboBoxProps["onOpenChange"] = (newOpen, reason) => {
+    if (reason === "manual") {
       setShowAll(true);
     }
   };
@@ -36,7 +36,7 @@ export const CustomFiltering = (): ReactElement => {
   const options = showAll ? shortColorData : filteredOptions;
 
   return (
-    <ComboBoxNext
+    <ComboBox
       style={{ width: "266px" }}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
@@ -44,10 +44,8 @@ export const CustomFiltering = (): ReactElement => {
       value={value}
     >
       {options.map((color) => (
-        <Option value={color} key={color}>
-          {color}
-        </Option>
+        <Option value={color} key={color} />
       ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

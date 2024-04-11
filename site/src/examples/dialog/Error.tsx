@@ -1,14 +1,16 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
 import {
+  Button,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Error = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -24,17 +26,16 @@ export const Error = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open error dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open error dialog</Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
         role="alertdialog"
         status="error"
+        size="small"
+        id={id}
       >
-        <DialogTitle>Can't move file</DialogTitle>
+        <DialogHeader header="Can`t move file" />
         <DialogContent>
           You don’t have permission to move or delete this file.
         </DialogContent>

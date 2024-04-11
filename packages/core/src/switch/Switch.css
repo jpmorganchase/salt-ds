@@ -19,6 +19,7 @@
 .saltSwitch-track {
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
   --saltIcon-size: 100%;
+  border-radius: var(--salt-palette-corner-weak, 0);
   display: flex;
   flex-shrink: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
@@ -26,6 +27,7 @@
   align-items: center;
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);
+  box-sizing: border-box;
 }
 
 .saltSwitch-label {
@@ -71,6 +73,8 @@
   background: currentColor;
   margin: var(--salt-spacing-25);
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner-weaker, 0);
 }
 
 .saltSwitch-input:focus-visible + .saltSwitch-track .saltSwitch-thumb,

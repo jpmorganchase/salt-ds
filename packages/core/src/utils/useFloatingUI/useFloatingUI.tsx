@@ -1,29 +1,31 @@
 import {
+  FloatingFocusManager,
+  FloatingFocusManagerProps,
+  FloatingPortal,
   Middleware,
-  Placement,
   Platform,
   Strategy,
+  UseFloatingOptions,
   autoUpdate,
   flip,
   limitShift,
   platform,
   shift,
   useFloating,
-  FloatingPortal,
-  FloatingFocusManager,
-  FloatingFocusManagerProps,
 } from "@floating-ui/react";
-
 import {
-  createContext,
+  ComponentPropsWithoutRef,
   ReactNode,
+  createContext,
+  forwardRef,
   useContext,
   useMemo,
-  forwardRef,
-  ComponentPropsWithoutRef,
 } from "react";
-
-import { SaltProvider } from "../../salt-provider";
+import {
+  SaltProvider,
+  UNSTABLE_SaltProviderNext,
+  useTheme,
+} from "../../salt-provider";
 
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -38,13 +40,15 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position props for the floating component
+   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relative to the trigger.
+   * `width` and `height` are used to define the size of the floating element.
+   *
    */
-  top: number;
-  left: number;
+  top?: number;
+  left?: number;
   width?: number;
   height?: number;
-  position: Strategy;
+  position?: Strategy;
 }
 
 const DefaultFloatingComponent = forwardRef<
@@ -69,23 +73,29 @@ const DefaultFloatingComponent = forwardRef<
     position,
   };
 
-  if (focusManagerProps) {
+  const { themeNext } = useTheme();
+
+  const ChosenSaltProvider = themeNext
+    ? UNSTABLE_SaltProviderNext
+    : SaltProvider;
+
+  if (focusManagerProps && open) {
     return (
       <FloatingPortal>
-        <SaltProvider>
+        <ChosenSaltProvider>
           <FloatingFocusManager {...focusManagerProps}>
             <div style={style} {...rest} ref={ref} />
           </FloatingFocusManager>
-        </SaltProvider>
+        </ChosenSaltProvider>
       </FloatingPortal>
     );
   }
 
   return open ? (
     <FloatingPortal>
-      <SaltProvider>
+      <ChosenSaltProvider>
         <div style={style} {...rest} ref={ref} />
-      </SaltProvider>
+      </ChosenSaltProvider>
     </FloatingPortal>
   ) : null;
 });
@@ -124,24 +134,15 @@ export function useFloatingComponent() {
   return useContext(FloatingComponentContext);
 }
 
-export interface UseFloatingUIProps {
-  /**
-   * Sets position relative to trigger.
-   */
-  placement?: Placement;
-  strategy?: Strategy;
+export interface UseFloatingUIProps
+  extends Pick<
+    UseFloatingOptions,
+    "placement" | "strategy" | "open" | "onOpenChange" | "nodeId"
+  > {
   /**
    * Function to update the default middleware used to extend or replace it
    */
   middleware?: Middleware[];
-  /**
-   * Sets visible state.
-   */
-  open?: boolean;
-  /**
-   * Callback function triggered when open state changes.
-   */
-  onOpenChange?: (open: boolean) => void;
 }
 
 type GetMiddleware = (middleware: Middleware[]) => Middleware[];
@@ -214,16 +215,19 @@ export interface UseFloatingUIReturn extends ReturnType<typeof useFloating> {
 
 export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   const {
-    placement,
-    strategy,
     middleware = DEFAULT_FLOATING_UI_MIDDLEWARE,
     open = false,
     onOpenChange,
+    ...other
   } = props;
 
-  const handleOpenChange = (open: boolean) => {
+  const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
+    open,
+    boolean,
+    reason
+  ) => {
     update();
-    onOpenChange?.(open);
+    onOpenChange?.(open, boolean, reason);
   };
 
   const {
@@ -233,8 +237,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   } = useFloatingPlatform();
 
   const { refs, update, ...rest } = useFloating({
-    placement,
-    strategy,
+    ...other,
     middleware: contextMiddleware(middleware),
     open,
     onOpenChange: handleOpenChange,

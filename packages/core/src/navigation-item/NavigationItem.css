@@ -11,6 +11,7 @@
   cursor: var(--salt-selectable-cursor-hover);
   /* Hover off animation */
   transition: all var(--salt-duration-instant) ease-in-out;
+  box-sizing: border-box;
 }
 
 /* Vars applied to NavigationItem component when root */

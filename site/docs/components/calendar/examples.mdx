@@ -1,0 +1,78 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="calendar" exampleName="Default">
+
+## Default (single-select)
+
+The default calendar allows the user to navigate months and years and select a single date.
+
+</LivePreview>
+
+<LivePreview componentName="calendar" displayName="Multi selection" exampleName="MultiSelection">
+
+## Multi selection
+
+When `selectionVariant="multiselect"`, users can select multiple items from the calendar dates.
+
+</LivePreview>
+  
+<LivePreview componentName="calendar" displayName="Range selection" exampleName="RangeSelection">
+
+## Range selection
+
+When `selectionVariant="range"`, users can select a range of items from the calendar dates by selecting two dates to set the range.
+
+</LivePreview>
+  
+<LivePreview componentName="calendar" displayName="Offset selection" exampleName="OffsetSelection">
+
+## Offset selection
+
+When `selectionVariant="offset"`, users can select a range of a set number of items by passing `endDateOffset`.
+
+</LivePreview>
+  
+<LivePreview componentName="calendar" displayName="Unselectable dates" exampleName="UnselectableDates">
+
+## Unselectable dates
+
+Unselectable dates are visually distinct from selectable dates. When the user tries to select one, the calendar will show a tooltip with extra information.
+Use the `isDayUnselectable` prop to pass a function that determines if a day is unselectable and returns the tooltip description.
+
+</LivePreview>  
+  
+<LivePreview componentName="calendar" displayName="Disabled dates" exampleName="DisabledDates">
+
+## Disabled dates
+
+Disabled dates are not selectable.
+Use the `isDayUnselectable` prop to pass a function that determines if a day is unselectable and returns the tooltip description.
+
+</LivePreview>
+
+<LivePreview componentName="calendar" displayName="Highlighted dates" exampleName="HighlightedDates">
+
+## Highlighted dates
+
+Highlighted dates are characterized by a triangle in the top right corner that attributes an event to that day. When the user hovers on the date, the calendar will show a tooltip with extra information.
+
+</LivePreview>
+
+<LivePreview componentName="calendar" displayName="Hidden out of range dates" exampleName="HiddenOutOfRangeDates">
+
+## Hidden out of range dates
+
+By default, dates outside the visible month are out of range and visually distinct from current month dates. To hide them, you can use `hideOutOfRangeDates`.
+
+</LivePreview>
+
+</LivePreviewControls>

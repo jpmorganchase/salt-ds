@@ -8,20 +8,20 @@ data:
   $ref: ./#/data
 ---
 
-### Using the components
+## Using the components
 
-#### When to use
+### When to use
 
 - Use tabs to organize logically related but mutually exclusive content on a single page.
 - Use tabstrips to prevent users from navigating to another page to complete a task.
 
-#### When not to use
+### When not to use
 
 - Don’t use tabstrips when users need to compare information between views.
 - Don’t use tabstrips to communicate progress. Instead, use [`Stepped Tracker`](/salt/components/stepped-tracker).
 - Don’t use tabstrips for primary navigation, taking the user off the current page. Instead, use [`Navigation Item`](/salt/components/navigation-item).
 
-### Content
+## Content
 
 - All labels should be short and concise.
 - Labels should clearly communicate the underlying view.
@@ -30,7 +30,7 @@ data:
 - Do not wrap labels. Use truncation with `Tooltip` if necessary.
 - Icon and text should match each other semantically.
 
-### Import
+## Import
 
 To import `TabNext` and `TapstripNext` from the lab Salt package, use:
 
@@ -38,12 +38,12 @@ To import `TabNext` and `TapstripNext` from the lab Salt package, use:
 import { TabNext, TabstripNext } from "@salt-ds/lab";
 ```
 
-### Props
+## Props
 
-#### `TabNext`
+### `TabNext`
 
 <PropsTable packageName="lab" componentName="TabNext" />
 
-#### `TabstripNext`
+### `TabstripNext`
 
 <PropsTable packageName="lab" componentName="TabstripNext" />

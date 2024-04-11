@@ -1,0 +1,32 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To allow users to input a date or range of dates.
+
+### When not to use
+
+- For calendar-related tasks other than selecting a date, such as picking a time or time-zone; or displaying event information.
+- If the date or range is pre-determined and can’t be specified by the user. Consider showing date options in a dropdown instead.
+
+## Import
+
+To import `Calendar` from the lab Salt package, use:
+
+```js
+import { Calendar } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="Calendar" />

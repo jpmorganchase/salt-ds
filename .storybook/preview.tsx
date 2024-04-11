@@ -1,6 +1,7 @@
 import type { ArgTypes, Parameters } from "@storybook/react";
 import type { GlobalTypes } from "@storybook/csf";
 import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/theme-next.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/400.css";
@@ -13,6 +14,7 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/700-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/open-sans/800-italic.css";
+import "@fontsource/pt-mono";
 import "./styles.css";
 
 import { ComponentProps } from "react";
@@ -21,6 +23,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withStrictMode } from "docs/decorators/withStrictMode";
 import { withScaffold } from "docs/decorators/withScaffold";
+import { withDateMock } from "docs/decorators/withDateMock";
 import { SaltProvider } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 import { initialize, mswLoader } from "msw-storybook-addon";
@@ -115,6 +118,27 @@ export const globalTypes: GlobalTypes = {
       title: "Component Style Injection",
     },
   },
+  themeNext: {
+    name: "Experimental theme next",
+    description: "Turn on/off theme next",
+    defaultValue: "disable",
+    toolbar: {
+      icon: "beaker",
+      items: ["disable", "enable"],
+      title: "Theme Next",
+    },
+  },
+  corner: {
+    name: "Experimental corner",
+    description: "Switch corner to sharp / rounded",
+    defaultValue: "sharp",
+    // if: { global: "themeNext", eq: "enable" }, // todo: why if doesn't work?
+    toolbar: {
+      icon: "beaker",
+      items: ["sharp", "rounded"],
+      title: "Corner",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {
@@ -131,18 +155,19 @@ export const parameters: Parameters = {
       method: "alphabetical",
       order: [
         "Documentation",
-        ["Core", "Icons", "Lab"],
+        ["Introduction", "*", "Lab"],
+        "Patterns",
+        "Core",
+        "Icons",
+        "Lab",
+        "*",
         "Theme",
         [
           "About the Salt Theme",
-          "Foundations",
           "Palettes",
           ["*", "Opacities"],
           "Characteristics",
         ],
-        "Core",
-        "Icons",
-        "Lab",
       ],
     },
   },
@@ -178,6 +203,7 @@ export const decorators = [
   withTheme,
   WithTextSpacingWrapper,
   withStrictMode,
+  withDateMock,
 ];
 
 export const loaders = [mswLoader];

@@ -6,7 +6,7 @@
   display: inline-flex;
   background: var(--salt-actionable-secondary-background);
   border: 0 solid transparent;
-  border-radius: 0;
+  border-radius: var(--salt-palette-corner-weaker, 0);
   height: var(--salt-size-base);
   color: var(--salt-actionable-secondary-foreground);
   text-transform: var(--salt-text-action-textTransform);

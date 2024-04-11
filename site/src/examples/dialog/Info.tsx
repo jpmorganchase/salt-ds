@@ -1,14 +1,16 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
 import {
+  Button,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Info = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -24,17 +26,15 @@ export const Info = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open info dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open info dialog</Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="info"
+        size="small"
+        id={id}
       >
-        <DialogTitle>File update</DialogTitle>
+        <DialogHeader header="File update" />
         <DialogContent>
           A new version of this file is available with 26 updates.
         </DialogContent>

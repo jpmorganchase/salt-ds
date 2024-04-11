@@ -1,7 +1,14 @@
 import { ChangeEvent } from "react";
-
-import { Overlay, OverlayPanel, OverlayTrigger } from "@salt-ds/lab";
-import { Button, CheckboxGroup, Checkbox } from "@salt-ds/core";
+import {
+  Button,
+  CheckboxGroup,
+  Checkbox,
+  useId,
+  Overlay,
+  OverlayPanel,
+  OverlayTrigger,
+  OverlayPanelContent,
+} from "@salt-ds/core";
 import React from "react";
 import styles from "./index.module.css";
 
@@ -24,13 +31,12 @@ const checkboxesData = [
   },
 ];
 
-const WithActionsContent = ({
-  onClose,
-  id,
-}: {
+interface WithActionsContentProps {
+  id?: string;
   onClose: () => void;
-  id: string;
-}) => {
+}
+
+const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
   const [controlledValues, setControlledValues] = React.useState([
     checkboxesData[0].value,
   ]);
@@ -74,10 +80,10 @@ const WithActionsContent = ({
 
   return (
     <>
-      <h3 id={`${id}-header`} style={{ marginTop: 0, paddingBottom: 10 }}>
+      <h3 id={id} style={{ marginTop: 0, paddingBottom: 10 }}>
         Export
       </h3>
-      <div id={`${id}-content`}>
+      <div>
         <Checkbox
           indeterminate={indeterminate}
           checked={!indeterminate}
@@ -106,25 +112,17 @@ const WithActionsContent = ({
 };
 
 export const WithActions = () => {
-  const [show, setShow] = React.useState(false);
-  const id = "overlay-with-actions";
+  const [open, setOpen] = React.useState(false);
+  const id = useId();
+
+  const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   return (
-    <Overlay
-      open={show}
-      onClose={() => {
-        setShow(false);
-      }}
-      onKeyDown={(event) => {
-        event.key === "Escape" && setShow(false);
-      }}
-      placement="bottom"
-      id={id}
-    >
+    <Overlay open={open} onOpenChange={onOpenChange} placement="bottom">
       <OverlayTrigger>
         <Button
           onClick={() => {
-            setShow(true);
+            setOpen(true);
           }}
         >
           Show Overlay
@@ -134,13 +132,16 @@ export const WithActions = () => {
         style={{
           width: 246,
         }}
+        aria-labelledby={id}
       >
-        <WithActionsContent
-          onClose={() => {
-            setShow(false);
-          }}
-          id={id}
-        />
+        <OverlayPanelContent>
+          <WithActionsContent
+            id={id}
+            onClose={() => {
+              setOpen(false);
+            }}
+          />
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

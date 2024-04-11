@@ -4,6 +4,7 @@
   --tooltip-zIndex: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
   /* apply icon margin based on the text line height so it's aligned on all densities */
   --tooltip-icon-marginTop: calc((var(--salt-text-lineHeight) - max(var(--salt-icon-size-base), 12px)) / 2);
+  --tooltip-status-borderColor: var(--salt-container-primary-borderColor);
 }
 
 .saltTooltip {
@@ -11,6 +12,7 @@
   border-color: var(--saltTooltip-borderColor, var(--tooltip-status-borderColor));
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
+  border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
   color: var(--saltTooltip-text-color, var(--salt-content-primary-foreground));
   font-family: var(--salt-text-fontFamily);
@@ -38,7 +40,7 @@
 
 /* Styles applied to status indicator */
 .saltTooltip-icon {
-  --saltIcon-margin: var(--tooltip-icon-marginTop) var(--saltTooltip-icon-marginRight, 6px) 0 0;
+  --saltIcon-margin: var(--tooltip-icon-marginTop) var(--salt-spacing-75) 0 0;
   vertical-align: top;
   align-self: flex-start;
 }

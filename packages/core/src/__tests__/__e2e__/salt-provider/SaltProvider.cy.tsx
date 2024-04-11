@@ -1,10 +1,15 @@
 import {
+  ownerWindow,
   SaltProvider,
   useAriaAnnouncer,
   useDensity,
   useTheme,
+  UNSTABLE_SaltProviderNext,
 } from "@salt-ds/core";
-import { mount } from "cypress/react";
+import { mount } from "cypress/react18";
+import { WindowProvider } from "@salt-ds/window";
+import { ReactNode, useCallback, useState } from "react";
+import { createPortal } from "react-dom";
 
 const TestComponent = ({
   id = "test-1",
@@ -14,7 +19,7 @@ const TestComponent = ({
   className?: string;
 }) => {
   const density = useDensity();
-  const { theme, mode } = useTheme();
+  const { theme, mode, UNSTABLE_corner, themeNext } = useTheme();
   const { announce } = useAriaAnnouncer();
   const announcerPresent = typeof announce === "function";
 
@@ -26,6 +31,8 @@ const TestComponent = ({
       data-theme={theme}
       data-mode={mode}
       data-announcer={announcerPresent}
+      data-corner={UNSTABLE_corner}
+      data-themeNext={themeNext}
     />
   );
 };
@@ -58,6 +65,17 @@ describe("Given a SaltProvider", () => {
         .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-announcer", "true");
       cy.get("[aria-live]").should("exist");
+    });
+
+    it("should not have theme next class and attributes applied", () => {
+      mount(
+        <SaltProvider>
+          <TestComponent />
+        </SaltProvider>
+      );
+
+      cy.get(".salt-theme-next").should("have.length", 0);
+      cy.get("html").should("exist").and("not.have.attr", "data-corner");
     });
   });
 
@@ -186,6 +204,150 @@ describe("Given a SaltProvider", () => {
         .should("have.length", 1)
         .and("have.attr", "data-mode", "dark")
         .and("have.class", "salt-density-high");
+    });
+  });
+
+  it("should warn when two providers are set to apply to root", () => {
+    cy.spy(console, "warn").as("consoleSpy");
+
+    mount(
+      <SaltProvider applyClassesTo={"root"}>
+        <SaltProvider applyClassesTo={"root"}>
+          <TestComponent />
+        </SaltProvider>
+      </SaltProvider>
+    );
+
+    cy.get("@consoleSpy").should(
+      "have.been.calledWith",
+      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+    );
+  });
+
+  function FakeWindow({ children }: { children?: ReactNode }) {
+    const [mountNode, setMountNode] = useState<HTMLElement | undefined>(
+      undefined
+    );
+
+    const handleFrameRef = useCallback((node: HTMLIFrameElement) => {
+      setMountNode(node?.contentWindow?.document?.body);
+    }, []);
+
+    return (
+      <iframe ref={handleFrameRef}>
+        <WindowProvider window={ownerWindow(mountNode)}>
+          {mountNode && createPortal(children, mountNode)}
+        </WindowProvider>
+      </iframe>
+    );
+  }
+
+  it.skip("should not warn when two providers are set to apply to root but are in different windows", () => {
+    cy.spy(console, "warn").as("consoleSpy");
+
+    mount(
+      <SaltProvider applyClassesTo={"root"}>
+        <FakeWindow>
+          <SaltProvider applyClassesTo={"root"}>
+            <TestComponent />
+          </SaltProvider>
+        </FakeWindow>
+      </SaltProvider>
+    );
+
+    cy.get("@consoleSpy").should("not.have.been.called");
+  });
+});
+
+describe("Given a SaltProviderNext", () => {
+  describe("with no props set", () => {
+    it("should apply default theme attributes to the html element", () => {
+      mount(
+        <UNSTABLE_SaltProviderNext>
+          <TestComponent />
+        </UNSTABLE_SaltProviderNext>
+      );
+
+      cy.get("div.salt-provider").should("have.length", 0);
+
+      cy.get("html")
+        .should("exist")
+        .and("have.attr", "data-mode", "light")
+        .and("have.attr", "data-corner", "sharp")
+        .and("have.class", "salt-theme-next")
+        .and("have.class", "salt-density-medium");
+    });
+    it("should read correct default values from provider and add an AriaAnnouncer", () => {
+      mount(
+        <UNSTABLE_SaltProviderNext>
+          <TestComponent />
+        </UNSTABLE_SaltProviderNext>
+      );
+      cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "data-density", "medium")
+        .and("have.attr", "data-mode", "light")
+        .and("have.attr", "data-announcer", "true")
+        .and("have.attr", "data-corner", "sharp")
+        .and("have.attr", "data-themeNext", "true");
+      cy.get("[aria-live]").should("exist");
+    });
+  });
+
+  describe("when nested", () => {
+    it("should inherit values not passed as props", () => {
+      mount(
+        <UNSTABLE_SaltProviderNext density="high" mode="dark" corner="rounded">
+          <TestComponent />
+          <UNSTABLE_SaltProviderNext density="medium">
+            <TestComponent id="test-2" />
+          </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>
+      );
+
+      cy.get("html.salt-theme-next").should("have.length", 1);
+      cy.get(".salt-provider.salt-theme-next").should("have.length", 1);
+
+      cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "data-density", "high")
+        .and("have.attr", "data-mode", "dark")
+        .and("have.attr", "data-corner", "rounded")
+        .and("have.attr", "data-announcer", "true");
+
+      cy.get("#test-2")
+        .should("exist")
+        .and("have.attr", "data-density", "medium")
+        .and("have.attr", "data-mode", "dark")
+        .and("have.attr", "data-corner", "rounded")
+        .and("have.attr", "data-announcer", "true");
+    });
+    it("should take different values set as props", () => {
+      mount(
+        <UNSTABLE_SaltProviderNext density="high" mode="dark" corner="rounded">
+          <TestComponent />
+          <UNSTABLE_SaltProviderNext density="medium" corner="sharp">
+            <TestComponent id="test-2" />
+          </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>
+      );
+
+      cy.get("html.salt-theme-next").should("have.length", 1);
+      cy.get(".salt-provider.salt-theme-next").should("have.length", 1);
+
+      cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "data-density", "high")
+        .and("have.attr", "data-mode", "dark")
+        .and("have.attr", "data-corner", "rounded")
+        .and("have.attr", "data-announcer", "true");
+
+      cy.get("#test-2")
+        .should("exist")
+        .and("have.attr", "data-density", "medium")
+        .and("have.attr", "data-mode", "dark")
+        .and("have.attr", "data-corner", "sharp")
+        .and("have.attr", "data-announcer", "true");
     });
   });
 });

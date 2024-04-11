@@ -1,6 +1,6 @@
 import { useState, ComponentType } from "react";
 import { StoryFn } from "@storybook/react";
-import { Button, FlexLayout, StackLayout, Badge } from "@salt-ds/core";
+import { Button, StackLayout, Badge } from "@salt-ds/core";
 import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
 import {
   BankCheckIcon,
@@ -228,11 +228,8 @@ export const ControlledTabstrip: TabstripStory = ({
 
   return (
     <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-      <StackLayout gap={1}>
-        <FlexLayout gap={1}>
-          <Button onClick={() => setValue("Home")}>Home</Button>
-          <Button onClick={() => setValue("Liquidity")}>End</Button>
-        </FlexLayout>
+      <StackLayout gap={1} direction="row" align="center">
+        <Button onClick={() => setValue("Home")}>Home</Button>
         <TabstripNext
           {...tabstripProps}
           value={value}
@@ -246,6 +243,7 @@ export const ControlledTabstrip: TabstripStory = ({
             </TabNext>
           ))}
         </TabstripNext>
+        <Button onClick={() => setValue("Liquidity")}>End</Button>
       </StackLayout>
     </div>
   );

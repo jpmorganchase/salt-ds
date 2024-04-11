@@ -17,6 +17,7 @@ import {
 } from "@jpmorganchase/mosaic-components";
 import { LayoutProvider } from "@jpmorganchase/mosaic-layouts";
 import { useCreateStore, StoreProvider } from "@jpmorganchase/mosaic-store";
+import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
 import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
 import { SessionProvider } from "next-auth/react";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
@@ -25,6 +26,7 @@ import "@jpmorganchase/mosaic-theme/index.css";
 import "@jpmorganchase/mosaic-theme/baseline.css";
 import "@jpmorganchase/mosaic-layouts/index.css";
 import "@jpmorganchase/mosaic-site-components/index.css";
+import "@jpmorganchase/mosaic-sitemap-component/index.css";
 import "@jpmorganchase/mosaic-components/index.css";
 import "@jpmorganchase/mosaic-labs-components/index.css";
 import "@jpmorganchase/mosaic-content-editor-plugin/index.css";
@@ -46,6 +48,7 @@ const components = {
   Homepage,
   Image,
   img: withMarkdownSpacing(Image),
+  Sitemap,
 };
 
 const layoutComponents = { ...mosaicLayouts, ...saltLayouts };

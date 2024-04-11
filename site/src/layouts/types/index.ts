@@ -1,33 +1,9 @@
-import { ReactNode, ReactElement } from "react";
-import type {
-  Breadcrumb,
-  LinkType,
-} from "@jpmorganchase/mosaic-site-components";
-import { FooterProps } from "@jpmorganchase/mosaic-site-components";
+import { ReactElement } from "react";
+import { LayoutProps as MosaicLayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 
-export type LayoutProps = {
-  children?: ReactNode;
+export interface LayoutProps extends MosaicLayoutProps {
   sidebar?: ReactElement;
   pageTitle?: ReactElement;
-  className?: string;
-  ToCProps?: {
-    items: any;
-  };
-  SidebarProps?: Pick<FooterProps, "helpLinks">;
-  NextPrevLinksProps?: {
-    next?: LinkType;
-    prev?: LinkType;
-  };
-  BreadcrumbsProps?: { breadcrumbs: (typeof Breadcrumb)[] };
-  BackLinkProps?: { label?: string; link: string };
   Footer?: ReactElement;
-  FooterProps?: any;
-  layout?: string;
-  meta?: {
-    data: { [key: string]: any };
-  };
-  frontmatter?: {
-    [key: string]: any;
-  };
   isMobileView?: boolean;
-};
+}

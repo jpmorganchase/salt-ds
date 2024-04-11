@@ -1,34 +1,39 @@
 import { ReactElement } from "react";
-
 import {
+  Tooltip,
+  Button,
+  useId,
   Overlay,
   OverlayPanel,
+  OverlayPanelContent,
   OverlayProps,
   OverlayTrigger,
-} from "@salt-ds/lab";
-import { Tooltip, Button } from "@salt-ds/core";
+} from "@salt-ds/core";
 import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
-  const { id, placement, ...rest } = props;
+  const { placement, ...rest } = props;
+  const id = useId();
 
   return (
-    <Overlay id={id} placement={placement} {...rest}>
+    <Overlay placement={placement} {...rest}>
       <OverlayTrigger>
         <Button>{placement}</Button>
       </OverlayTrigger>
-      <OverlayPanel>
-        <h3 id={`${id}-header`} className={styles.contentHeading}>
-          Title
-        </h3>
-        <div id={`${id}-content`}>
-          Content of Overlay
-          <br />
-          <br />
-          <Tooltip content={"im a tooltip"}>
-            <Button>hover me</Button>
-          </Tooltip>
-        </div>
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelContent>
+          <h3 id={id} className={styles.contentHeading}>
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <br />
+            <br />
+            <Tooltip content={"I'm a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );
@@ -37,14 +42,14 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
 export const Placement = (): ReactElement => (
   <div>
     <div style={{ marginBottom: 10 }}>
-      <OverlayTemplate id="overlay-top" placement="top" />
+      <OverlayTemplate placement="top" />
     </div>
     <div style={{ marginBottom: 40 }}>
-      <OverlayTemplate id="overlay-bottom" placement="bottom" />
+      <OverlayTemplate placement="bottom" />
     </div>
     <div style={{ marginBottom: 10 }}>
-      <OverlayTemplate id="overlay-left" placement="left" />
+      <OverlayTemplate placement="left" />
     </div>
-    <OverlayTemplate id="overlay-right" placement="right" />
+    <OverlayTemplate placement="right" />
   </div>
 );

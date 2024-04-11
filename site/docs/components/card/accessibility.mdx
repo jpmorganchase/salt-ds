@@ -8,22 +8,55 @@ data:
   $ref: ./#/data
 ---
 
-### Keyboard interactions
+In adherence to accessibility standards, the boundaries of a user interface component are only subjective to the 3:1 contrast minimum if they serve to identify the components purpose.
+
+Salt card components incorporate subtle borders as part of their design. To ensure these cards meet accessibility criteria, it’s imperative to check that any content (i.e., text or icon) used within them maintain a minimum contrast ratio of 4:5:1 against the card background. This can be achieved by using the `--salt-content-*` tokens.
+
+For optimal accessibility when using multiple cards together:
+
+- Use cards of uniform size.
+- Use a repetitive arrangement pattern.
+- Maintain consistent spacing between the cards.
+- Use `InteractableCardGroup` to ensure users can navigate between interactable cards using keyboard controls, similar to interacting with checkboxes and radio buttons.
+
+Salt provides layout components that can help achieve this.
+
+## Keyboard interactions
 
 <KeyboardControls>
+
 <KeyboardControl keyOrCombos="Tab">
 
-Tab moves focus to a target element in the correct tabbing order on a page.
+- Tab moves focus to a link card or an interactable card.
+- In a single-select group, moves focus to the next focusable element on the page. This is consistent with radio button.
+- In a multi-select group, moves focus to the next card within the group. This is consistent with checkbox.
 
 </KeyboardControl>
+
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-When focus is on a target element, this action moves focus to the previous interactive element within the tab order.
+- Tab moves focus to a link card or an interactable card.
+- In a single-select group, moves focus to the previous focusable element on the page.
+- In a multi-select group, moves focus to the previous card within the group.
 
 </KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- In a single-select group, selects an unselected interactable card.
+- In a multi-select group, selects or deselects an interactable card.
+
+</KeyboardControl>
+
 <KeyboardControl keyOrCombos="Enter">
 
-If the target element has focus, Enter activates the target element.
+- In a link card, Enter navigates the user.
+- In an interactable card outside of a group, if the card has focus Enter activates it.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Up arrow / Down arrow / Left arrow / Right arrow">
+
+- In a single-select group, moves focus between the available card options, and simultaneously selects an option.
 
 </KeyboardControl>
 </KeyboardControls>

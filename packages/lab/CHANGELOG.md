@@ -1,5 +1,372 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.40
+
+### Minor Changes
+
+- ae971d21: Remove `Overlay`, `OverlayTrigger`, `OverlayPanel`, `OverlayPanelCloseButton`, and `OverlayPanelContent` from labs and promote to core.
+- ed32f6e0: Refactor of `ParentChildLayout`:
+
+  - removes parentPosition and disableAnimation props
+  - collapsedViewElement renamed to visibleView
+  - reduced motion animation changed to fade in
+
+### Patch Changes
+
+- 0fe48b4f: Added `type="button"` to button elements to prevent some components submitting forms.
+- a1dace8d: CarouselSlide's ButtonBar prop is now less strict and accepts more components
+
+## 1.0.0-alpha.39
+
+### Minor Changes
+
+- 96c2ca62: Removed `SegmentedButtonGroup` from labs and promoted to core.
+- 8ed621bc: Removed the `onClose` prop from `Overlay`, `onOpenChange` is now called for events that open/close the overlay.
+
+  ```tsx
+  export const ControlledOverlay = () => {
+    const [open, setOpen] = useState(false);
+    const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
+
+    return (
+      <Overlay open={open} onOpenChange={onOpenChange}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>Overlay Content</OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- ebe59171: Added `OverlayPanelCloseButton` and `OverlayPanelContent` components as children of `OverlayPanel`
+
+  ```tsx
+  export const OverlayWithCloseButton = ({ onOpenChange }: OverlayProps) => {
+    const [open, setOpen] = useState(false);
+
+    const onChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+    };
+
+    const handleClose = () => setOpen(false);
+
+    return (
+      <Overlay open={open} onOpenChange={onChange}>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>
+          <OverlayPanelCloseButton onClick={handleClose} />
+          <OverlayPanelContent>Overlay Content</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+### Patch Changes
+
+- f6202615: Visual updates to Calendar's "today" indicator and Tab's active indicator due to `--salt-size-indicator` being updated.
+
+## 1.0.0-alpha.38
+
+### Patch Changes
+
+- 4adacc6b: Fix SegmentedButtonGroup's display name.
+  Fix SegmentedButtonGroup's ref being applied incorrectly.
+
+## 1.0.0-alpha.37
+
+### Minor Changes
+
+- 53a7f22c: Removed `DropdownNext`, `Option`, `OptionGroup` and `ComboBoxNext` from labs and promoted to core.
+- 6cdfe94e: Add `SegmentedButtonGroup` to labs
+  `SegmentedButtonGroup` should be used to display a list of actionable buttons, flush with separators
+
+  ```tsx
+  const SegmentedButtonGroup = () => (
+    <SegmentedButtonGroup>
+      <Button> Button </Button>
+      <Button> Button </Button>
+      <Button> Button </Button>
+    </SegmentedButtonGroup>
+  );
+  ```
+
+### Patch Changes
+
+- 91074aa2: - Fixed tabs container height to fit its contents and display as block so it can take 100% width without an extra wrapper.
+
+## 1.0.0-alpha.36
+
+### Minor Changes
+
+- 7d9436e0: Added pills to multi-select ComboBoxNext.
+  Added `truncate` to ComboBoxNext which collapsing the ComboBoxNext to one line.
+
+### Patch Changes
+
+- 7d9436e0: Fixed DropdownNext and ComboBoxNext's list design.
+
+## 1.0.0-alpha.35
+
+### Minor Changes
+
+- ff69de19: Remove `Dialog`, `DialogHeader`, `DialogContent`, `DialogActions`, and `DialogCloseButton` from labs and promote to core
+
+### Patch Changes
+
+- 517ce28b: Optional prop `id` is no longer passed down from `Overlay` to aria-labelledby in `OverlayPanel`
+  aria-labelledBy should be passed down directly to the `OverlayPanel` via and id attached to the title element
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const id = useId();
+    return (
+      <Overlay>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel aria-labelledby={id}>
+          <h3 className={styles.contentHeading} id={id}>
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <Tooltip content={"im a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanel>
+      </Overlay>
+    );
+  };
+  ```
+
+- 0c4d186d: Fix tabstrip not collapsing when sharing parent with other items
+- 54b8e1a9: Fixed Tab being deleted whilst editing Tab label and pressing backspace or delete
+
+## 1.0.0-alpha.34
+
+### Minor Changes
+
+- f27ecfa7: Implemented corner radius for relevant components when used with theme next. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+- cba9f9b9: - Rename `DialogTitle` to `DialogHeader`
+  - Change `DialogHeader` optional props `title` and `subtitle` to `header` and `preheader`
+- 245301a9: Added `LinkCard` to lab.
+
+  Use a Link card when the entire card should be clickable and navigate the user.
+
+  ```tsx
+  <LinkCard href="https://www.saltdesignsystem.com" target="_blank"></LinkCard>
+  ```
+
+- 8610999f: Remove `Drawer` and `DrawerCloseButton` from labs and promote to core
+- cbe6c522: Removed `LinkCard` from lab and promoted to core.
+- df15ac98: - Added `valueToString` to `DropdownNext` and `ComboBoxNext`. This replaces the `textValue` prop on `Option`s. This is needed when the value is different to the display value, or the value is not a string.
+  - Removed `defaultValue` from `DropdownNext`.
+  - Mousing over options will now set them to active.
+  - Clearing the input will clear the list of active items.
+  - `Option` will now use the value or the result from `valueToString` as its default children.
+
+### Patch Changes
+
+- 543c9ff2: Updates to calendar
+
+  - Removed animations.
+  - Visual updates to the component.
+  - Updated the delay time for day tooltips.
+  - Added `highlighted` days - characterized by a triangle in the top right corner that attributes an event to that day.
+  - Added `disabled` days and made `unselectable` days focusable.
+
+## 1.0.0-alpha.33
+
+### Patch Changes
+
+- 9d23fdce: Added `box-sizing: border-box` to:
+
+  - `Dialog`
+  - `DialogTitle`
+  - `Drawer`
+  - `FormLabel`
+  - `InputLegacy`
+  - `LayerLayout`
+  - `List`
+  - `Option`
+  - `OptionList`
+  - `TabNext`
+  - `TabstripNext`
+  - `TokenizedInputNext`
+  - `TokenizedInput`
+
+## 1.0.0-alpha.32
+
+### Minor Changes
+
+- 2771c6de: - Convert `Dialog Title` to accept props instead of a composable api
+
+  - Optional Props `title` and `subtitle` added to `Dialog Title`
+  - `Dialog Title` no longer accepts children
+  - Optional `id` prop added to `Dialog` to announce the `title` and `subtitle` when using a screen reader
+
+  ```tsx
+  export const Default = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+    const id = useId();
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button onClick={handleRequestOpen}>
+          Open default dialog
+        </Button>
+        <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+          <DialogTitle title="Terms and conditions" />
+          <DialogContent>
+            Dialog Content
+            </StackLayout>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Accept
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+- fc915775: - Refactored `Drawer` to use floating-ui and Salt's `Scrim`.
+
+  - Fixced open prop to be false by default
+  - Fixed `Floating Components` implementation of focus manager props from Floating UI
+  - Added optional `DrawerCloseButton`.
+  - Added optional props `disableScrim` and `diableDismiss`
+
+  ```tsx
+  export const DrawerTemplate = (): ReactElement => {
+    const [open, setOpen] = useState(false);
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button onClick={handleRequestOpen}>Open Drawer</Button>
+        <Drawer open={open} onOpenChange={onOpenChange} style={{ width: 300 }}>
+          <DrawerCloseButton onClick={handleClose} />
+          <H2>Title</H2>
+          <Text>Content of drawer</Text>
+        </Drawer>
+      </>
+    );
+  };
+  ```
+
+- 4ab245a7: - Add `disableScrim` as an optional prop preventing the Scrim from being rendered. Use case is for Desktop Environments
+
+### Patch Changes
+
+- 2e36ad0b: `TabstripNext`, `TabNext` and `AppHeader` have bene updated to use separable tokens.
+- d9eaf511: Fixed DropdownNext and ComboBoxNext not working in desktop environemnts.
+  Fixed DropdownNext not showing a placeholder when it's value was an empty string.
+  Fixed DropdownNext and ComboBoxNext's lists not showing over Dialogs.
+
+## 1.0.0-alpha.31
+
+### Minor Changes
+
+- de68031a: - Added `min` and `hideLabel` to LinearProgress and CircularProgress.
+  - Removed `unit` from LinearProgress.
+- 0e031a5c: Removed `CircularProgress` and `LinearProgress` from lab and promoted to core.
+- 9d0b2a40: - Refactored `Dialog` to use floating-ui and Salt's `Scrim`.
+
+  - Implement FloatingComponent for Desktop support
+  - Added optional `disableDismiss` prop to prevent a click away dismissing the dialog.
+  - Added a `size` prop which takes `small`, `medium` and `large`.
+
+  ```tsx
+  const AlertDialog = () => {
+    const [open, setOpen] = useState(openProp);
+
+    const handleRequestOpen = () => {
+      setOpen(true);
+    };
+
+    const onOpenChange = (value: boolean) => {
+      setOpen(value);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+          Click to open dialog
+        </Button>
+        <Dialog
+          size={"small"}
+          role="alertdialog"
+          status={"error"}
+          open={open}
+          onOpenChange={onOpenChange}
+          initialFocus={1}
+          disableDismiss
+        >
+          <DialogTitle>Delete Transaction</DialogTitle>
+          <DialogContent>
+            Are you sure you want to permanently delete this transaction
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="cta" onClick={handleClose}>
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  };
+  ```
+
+- 604a7314: Add support for complex value options to ComboBoxNext and DropdownNext.
+
+### Patch Changes
+
+- bef0d509: Undeprecated `--salt-track-borderColor`, which was incorrectly deprecated in feb80146.
+- 56af744e: Parent Child Layout
+
+  Removed `parent-child-item` component. Replaced by `FlexItem`
+  Renamed `stackedAtBreakpoint` prop to `collapseAtBreakpoint`
+  Renamed `stackedViewElement` prop to `collapsedViewElement`
+  Removed `orientation` prop
+  Added `parentPosition` and `onCollapseChange` props
+
 ## 1.0.0-alpha.30
 
 ### Patch Changes

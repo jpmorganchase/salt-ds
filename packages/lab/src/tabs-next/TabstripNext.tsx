@@ -202,27 +202,28 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
 
     return (
       <TabsContext.Provider value={contextValue}>
-        <Overflow ref={handleRef}>
-          <div
-            role="tablist"
-            className={clsx(
-              withBaseName(),
-              withBaseName("horizontal"),
-              withBaseName(variant),
-              className
-            )}
-            onKeyDown={handleKeyDown}
-            style={tabstripStyle}
-            {...rest}
-          >
-            {children}
-            <OverflowMenu
-              tabs={tabList}
-              onOpenChange={handleOverflowOpenChange}
-              onSelectionChange={handleOverflowItemClick}
-            />
-          </div>
-        </Overflow>
+        <div className={clsx(withBaseName("container"), withBaseName(variant))}>
+          <Overflow ref={handleRef}>
+            <div
+              role="tablist"
+              className={clsx(
+                withBaseName(),
+                withBaseName("horizontal"),
+                className
+              )}
+              onKeyDown={handleKeyDown}
+              style={tabstripStyle}
+              {...rest}
+            >
+              {children}
+              <OverflowMenu
+                tabs={tabList}
+                onOpenChange={handleOverflowOpenChange}
+                onSelectionChange={handleOverflowItemClick}
+              />
+            </div>
+          </Overflow>
+        </div>
       </TabsContext.Provider>
     );
   }

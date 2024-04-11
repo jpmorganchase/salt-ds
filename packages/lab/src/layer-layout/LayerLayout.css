@@ -15,6 +15,7 @@
   padding: var(--layerLayout-padding);
   box-shadow: var(--saltLayerLayout-boxShadow, var(--layerLayout-boxShadow));
   z-index: calc(var(--salt-zIndex-appHeader) - 1);
+  box-sizing: border-box;
 }
 
 .saltLayerLayout-fullScreen {

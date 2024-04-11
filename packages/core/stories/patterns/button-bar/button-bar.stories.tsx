@@ -10,14 +10,12 @@ import {
   SplitLayout,
   StackLayout,
   useResponsiveProp,
-} from "@salt-ds/core";
-import {
   Dialog,
   DialogActions,
   DialogContent,
-  DropdownNext as Dropdown,
+  Dropdown,
   Option,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
 import { Meta } from "@storybook/react";
@@ -234,11 +232,7 @@ const formFields = (
     </FormField>
     <FormField>
       <FormFieldLabel>Field label</FormFieldLabel>
-      <Dropdown
-        defaultValue={"Value"}
-        defaultSelected={["Value"]}
-        style={{ width: "100%" }}
-      >
+      <Dropdown defaultSelected={["Value"]} style={{ width: "100%" }}>
         <Option value="Value">Value</Option>
       </Dropdown>
       <FormFieldHelperText>Helper text</FormFieldHelperText>

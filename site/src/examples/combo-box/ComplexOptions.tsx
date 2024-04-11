@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, Suspense, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBox, Option } from "@salt-ds/core";
 import { LargeCity, largestCities } from "./exampleData";
 import { LazyCountrySymbol } from "@salt-ds/countries";
 
@@ -32,13 +32,13 @@ export const ComplexOptions = (): ReactElement => {
 
   return (
     <Suspense fallback={null}>
-      <ComboBoxNext style={{ width: "266px" }} onChange={handleChange}>
+      <ComboBox style={{ width: "266px" }} onChange={handleChange}>
         {largestCities
           .filter((value) => customMatchPattern(value, filter))
           .map((value) => (
             <OptionWithCountrySymbol value={value} key={value.name} />
           ))}
-      </ComboBoxNext>
+      </ComboBox>
     </Suspense>
   );
 };

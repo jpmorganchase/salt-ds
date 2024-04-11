@@ -144,7 +144,6 @@
   --salt-track-textAlign: center;
   --salt-track-background: var(--salt-palette-track-background);
   --salt-track-background-disabled: var(--salt-palette-track-background-disabled);
-  --salt-track-borderColor: var(--salt-palette-track-border); /* Use --salt-palette-neutral-secondary-border */
   --salt-track-borderColor-disabled: var(--salt-palette-track-border-disabled);
 
   /* Taggable */

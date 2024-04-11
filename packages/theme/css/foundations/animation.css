@@ -8,8 +8,8 @@
   --salt-animation-scale-end: 1;
   --salt-animation-transform-start: 100%;
   --salt-animation-transform-end: 0;
-  --salt-animation-duration: 0.3s;
-  --salt-animation-timing-function: ease-in;
+  --salt-animation-duration: var(--salt-duration-perceptible);
+  --salt-animation-timing-function: ease-in-out;
 
   /* Slide Animations */
   --salt-animation-slide-in-top: slide-in-top var(--salt-animation-duration) var(--salt-animation-timing-function);
@@ -26,7 +26,7 @@
   --salt-animation-fade-in-back: fade-in-back var(--salt-animation-duration) var(--salt-animation-timing-function);
   --salt-animation-fade-in-forward: fade-in-forward var(--salt-animation-duration) var(--salt-animation-timing-function);
   --salt-animation-fade-in-center: fade-in-center var(--salt-animation-duration) var(--salt-animation-timing-function);
-  --salt-animation-fade-out-back: fade-out-back var(--salt-animation-duration) ease-out both;
+  --salt-animation-fade-out-back: fade-out-back var(--salt-animation-duration) ease-in-out both;
 }
 
 /*Slide keyframes */

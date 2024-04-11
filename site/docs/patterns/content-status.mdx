@@ -1,0 +1,162 @@
+---
+title: Content status
+layout: DetailPattern
+aliases:
+  - /salt/patterns/content-status
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-content-status--info", label: "Examples" }
+    ]
+  components: ["Button", "Progress", "Spinner", "Stack layout", "Status indicator", "Text"]
+---
+
+A content status provides information about content in a container component of an application.
+
+It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance.
+
+<Diagram
+  src="/img/patterns/content-status/content-status.png"
+  alt="Example showing a content status with an info indicator"
+  border
+/>
+
+## When to use
+
+Use this pattern in a container component:
+- When content is loading.
+- To share information with users.
+- To let users know there’s an error.
+- When the user has successfully submitted content.
+
+## How to build
+
+### Anatomy
+
+The content status consists of three functional areas:
+
+1. **Visual indicator:** Content status can use [`StatusIndicator`](/salt/components/status-indicator), [`Progress`](/salt/components/progress) or [`Spinner`](/salt/components/spinner) for its visual indicator.
+2. **Text:** Text elements serve as supporting messages.
+3. **Button:** Buttons are optional and can be added to reload content or perform a custom action.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-anatomy.png"
+  alt="Example showing a content status anatomy"
+  border
+  content="Content status functional areas."
+/>
+
+### Layout
+
+- Use [`StackLayout`](/salt/components/stack-layout) to display the two lists and move buttons that make up list builder in a row formation.
+- Use [`Text`](/salt/components/text), [`Button`](/salt/components/button) and [`Input`](/salt/components/input) to assemble the header area.
+- Use [`StackLayout`](/salt/components/stack-layout) to orient the move buttons between the two lists in a column formation.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-layout.png"
+  alt="Example showing a content status with components and spacing labeled"
+  border
+  content="Anatomy of content status."
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Text line length shouldn't exceed 80 characters. See the [typography foundation](/salt/foundations/typography) for more information.
+- You should horizontally and vertically center the pattern in the container.
+</ExampleContainer>
+
+### Supporting messages
+
+- **Have a clear hierarchy**: Your titles should be stand-alone, revealing key information your users need to know without relying on the supporting message, which users may skim over, e.g., “Login required.”
+- **Be helpful**: If it’s possible for your users to resolve or rectify an issue, make sure you state this clearly, e.g., “You can log in to access this data.”
+- **Keep it simple**: Try to limit titles to a single line and supporting messages to no more than three lines.
+
+## Loading content
+
+We've used a [progress](/salt/components/progress) component in this example to help manage user expectations. If you know how much of a current process is complete, use this to communicate that information.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-loading.png"
+  alt="Example showing a content status with a progress indicator"
+  caption="Example showing a content status with a progress indicator."
+  border
+/>
+
+We've used a [spinner](/salt/components/spinner) component to reassure users in this example. Use this to let your users know that content is loading or processing without sharing an exact time frame.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-loading-small.png"
+  alt="Example showing a content status with a spinner"
+  caption="Example showing a content status with a spinner."
+  border
+/>
+
+## Info message
+
+Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate that message to let users know why they can't see any content.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-info.png"
+  alt="Example showing a content status with an info indicator"
+  caption="Example showing a content status with an info indicator."
+  border
+/>
+
+## Warning message
+
+Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. This could include a system status that may cause issues at a later point.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-warning.png"
+  alt="Example showing a content status with a warning indicator"
+  caption="Example showing a content status with a warning indicator."
+  border
+/>
+
+## Error message
+
+Use the error status to communicate a critical issue that prevents the user from continuing or completing the task. This could include missing content or user information required.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-error.png"
+  alt="Example showing a content status with an error indicator"
+  caption="Example showing a content status with an error indicator."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+ Error and warning messages should: 
+ 1. Notify users when there’s an issue. 
+ 2. Identify and explain the issue. 
+ 3. Provide a resolution.
+</ExampleContainer>
+
+
+## Success message
+
+This example lets users know that content has been successfully processed, e.g., the user has completed and submitted a form.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-success.png"
+  alt="Example showing a content status with a success indicator"
+  caption="Example showing a content status with a success indicator."
+  border
+/>
+
+## Label only
+
+Use the label only content status when you:
+
+- Have limited space.
+- Don’t want to display spinners due to performance concerns, e.g., on low performance devices.
+- Want to avoid busy visual UI and animations.
+
+For example, use for displaying a loading status in a data grid or in a combo box list.
+
+<Diagram
+  src="/img/patterns/content-status/content-status-label-only.png"
+  alt="Example showing a content status with a success indicator"
+  border
+  caption="Example showing a content status with a label only."
+/>
+
+:fragment{src="./fragments/feedback.mdx"}

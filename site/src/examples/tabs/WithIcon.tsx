@@ -20,17 +20,15 @@ export const WithIcon = (): ReactElement => {
   };
 
   return (
-    <div>
-      <TabstripNext defaultValue={tabs[0]}>
-        {tabs.map((label) => {
-          const Icon = tabToIcon[label];
-          return (
-            <TabNext value={label} key={label}>
-              <Icon /> {label}
-            </TabNext>
-          );
-        })}
-      </TabstripNext>
-    </div>
+    <TabstripNext defaultValue={tabs[0]} align="center">
+      {tabs.map((label) => {
+        const Icon = tabToIcon[label];
+        return (
+          <TabNext value={label} key={label}>
+            <Icon /> {label}
+          </TabNext>
+        );
+      })}
+    </TabstripNext>
   );
 };

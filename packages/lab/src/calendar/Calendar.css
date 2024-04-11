@@ -1,3 +1,5 @@
 .saltCalendar {
   width: min-content;
+  background: var(--salt-container-primary-background);
+  padding: var(--salt-spacing-100);
 }

@@ -16,4 +16,6 @@
   overflow: auto;
   padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
   width: var(--saltPanel-width, 100%);
+  border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
+  box-sizing: border-box;
 }

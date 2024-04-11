@@ -1,0 +1,47 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is within the navigation bar, Tab moves focus to the next focusable element in the calendar.
+- If focus is in a day, Tab moves focus to the next focusable component.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- This action moves focus to the previous focusable component within the calendar.
+- If focus is in the previous month arrow button, moves focus to the previous focusable component.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Arrow keys">
+
+- If a calendar day has focus, arrow keys move focus left, right, up or down to a parallel day.
+- If focus is inside the **Month** or **Year** dropdown menu list, arrow keys move focus to the previous or next list item. When focus is on the first or last list item it wraps, respectively, to the bottom or top of the list.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If left or right arrow button has focus, this action navigates the calendar to previous or next month respectively. Focus remains on the button.
+- If a calendar date has focus, this action selects the date.
+- If a calendar date has focus and there is a start date selected in a date range, this action activates the end date field and keeps focus on the calendar dates.
+- If focus is on the **Month** or **Year** button, this action activates the menu, displays a dropdown menu list, and moves focus inside the list.
+- If focus is inside a dropdown menu list, this action selects the item with focus, closes the list and returns focus to the **Month** or **Year** button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+
+- If **Month** or **Year** dropdown menu list has focus, Escape closes the list and returns focus to the **Month** or **Year** button.
+
+</KeyboardControl>
+</KeyboardControls>

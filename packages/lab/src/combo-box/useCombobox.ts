@@ -122,7 +122,6 @@ export const useCombobox = <
     state: "value",
   });
 
-  // TODO repeated in ComboboxNext, move to utils
   const collectionItemsToItem = useCallback(
     (
       sel: CollectionItem<Item> | null | CollectionItem<Item>[]

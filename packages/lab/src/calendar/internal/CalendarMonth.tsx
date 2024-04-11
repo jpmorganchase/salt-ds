@@ -30,8 +30,6 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
     const {
       className,
       date,
-      hideOutOfRangeDates,
-      isVisible,
       renderDayContents,
       onMouseLeave,
       TooltipProps,

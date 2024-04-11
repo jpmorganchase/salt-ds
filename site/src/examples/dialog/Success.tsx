@@ -1,14 +1,16 @@
 import { ReactElement, useState } from "react";
-import { Button } from "@salt-ds/core";
 import {
+  Button,
+  useId,
   Dialog,
-  DialogTitle,
+  DialogHeader,
   DialogActions,
   DialogContent,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 export const Success = (): ReactElement => {
   const [open, setOpen] = useState(false);
+  const id = useId();
 
   const handleRequestOpen = () => {
     setOpen(true);
@@ -24,17 +26,15 @@ export const Success = (): ReactElement => {
 
   return (
     <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Open success dialog
-      </Button>
+      <Button onClick={handleRequestOpen}>Open success dialog</Button>
       <Dialog
-        style={{ width: 500 }}
         open={open}
         onOpenChange={onOpenChange}
-        role="alertdialog"
         status="success"
+        size="small"
+        id={id}
       >
-        <DialogTitle>File uploaded</DialogTitle>
+        <DialogHeader header="File uploaded" />
         <DialogContent>
           File has been successfully uploaded to the shared drive.
         </DialogContent>

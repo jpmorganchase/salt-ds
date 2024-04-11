@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBox, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const Placeholder = (): ReactElement => {
@@ -22,7 +22,7 @@ export const Placeholder = (): ReactElement => {
   };
 
   return (
-    <ComboBoxNext
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
@@ -34,10 +34,8 @@ export const Placeholder = (): ReactElement => {
           color.toLowerCase().includes(value.trim().toLowerCase())
         )
         .map((color) => (
-          <Option value={color} key={color}>
-            {color}
-          </Option>
+          <Option value={color} key={color} />
         ))}
-    </ComboBoxNext>
+    </ComboBox>
   );
 };

@@ -1,0 +1,98 @@
+.saltDropdown {
+  --dropdown-borderColor: var(--salt-editable-borderColor);
+  --dropdown-color: var(--salt-content-primary-foreground);
+  --dropdown-cursor: var(--salt-selectable-cursor-hover);
+}
+
+.saltDropdown {
+  all: unset;
+  box-sizing: border-box;
+  min-width: 4em;
+  width: 100%;
+  background: var(--dropdown-background);
+  cursor: var(--dropdown-cursor);
+  min-height: var(--salt-size-base);
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--salt-spacing-100);
+  gap: var(--salt-spacing-100);
+  color: var(--dropdown-color);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+}
+
+.saltDropdown:hover {
+  --dropdown-borderColor: var(--salt-editable-borderColor-hover);
+}
+
+.saltDropdown:focus-visible {
+  outline: var(--salt-focused-outline);
+  --dropdown-borderColor: var(--salt-editable-borderColor-hover);
+}
+
+.saltDropdown-content {
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+
+.saltDropdown-placeholder {
+  color: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+.saltDropdown-primary {
+  --dropdown-background: var(--salt-editable-primary-background);
+}
+
+.saltDropdown-secondary {
+  --dropdown-background: var(--salt-editable-secondary-background);
+}
+
+.saltDropdown:disabled {
+  --dropdown-background: var(--salt-editable-primary-background-disabled);
+  --dropdown-borderColor: var(--salt-editable-borderColor-disabled);
+  --dropdown-color: var(--salt-content-primary-foreground-disabled);
+  --dropdown-cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltDropdown[aria-readonly="true"] {
+  --dropdown-background: var(--salt-editable-primary-background-readonly);
+  --dropdown-borderColor: var(--salt-editable-borderColor-readonly);
+  --dropdown-color: var(--salt-content-primary-foreground);
+  --dropdown-cursor: var(--salt-selectable-cursor-readonly);
+}
+
+.saltDropdown-error {
+  --dropdown-background: var(--salt-status-error-background);
+  --dropdown-borderColor: var(--salt-status-error-borderColor);
+}
+
+.saltDropdown-error .saltDropdown:focus-visible {
+  outline-color: var(--salt-status-error-borderColor);
+  --dropdown-borderColor: var(--salt-status-error-borderColor);
+}
+
+.saltDropdown-warning {
+  --dropdown-background: var(--salt-status-warning-background);
+  --dropdown-borderColor: var(--salt-status-warning-borderColor);
+}
+
+.saltDropdown-warning .saltDropdown:focus-visible {
+  outline-color: var(--salt-status-warning-borderColor);
+  --dropdown-borderColor: var(--salt-status-warning-borderColor);
+}
+
+.saltDropdown-success {
+  --dropdown-background: var(--salt-status-success-background);
+  --dropdown-borderColor: var(--salt-status-success-borderColor);
+}
+
+.saltDropdown-success .saltDropdown:focus-visible {
+  outline-color: var(--salt-status-success-borderColor);
+  --dropdown-borderColor: var(--salt-status-success-borderColor);
+}

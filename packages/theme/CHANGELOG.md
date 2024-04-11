@@ -1,5 +1,81 @@
 # @salt-ds/theme
 
+## 1.14.0
+
+### Minor Changes
+
+- f6202615: Updated `--salt-size-indicator`.
+
+  | Density | Before (px) | After (px) |
+  | ------- | ----------- | ---------- |
+  | High    | 1           | 2          |
+  | Medium  | 2           | 3          |
+  | Low     | 3           | 4          |
+  | Touch   | 4           | 5          |
+
+## 1.13.1
+
+### Patch Changes
+
+- 4f925b41: Fix `--salt-navigable-background-hover` referencing deprecated value `--salt-palette-navigate-primary-background-hover`, change to reference correct value `--salt-palette-navigate-background-hover`
+
+## 1.13.0
+
+### Minor Changes
+
+- f27ecfa7: Added `theme-next.css` which includes experimental theme implementation. Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+
+## 1.12.1
+
+### Patch Changes
+
+- 9d23fdce: Removed `box-sizing: border-box` from global.css. This was causing issues in applications that were built using `box-sizing: content-box`.
+
+## 1.12.0
+
+### Minor Changes
+
+- a374c206: Added `--salt-color-gray-50-fade-border`.
+
+  ```diff
+  + --salt-color-gray-50-fade-border: rgba(206, 210, 217, var(--salt-palette-opacity-disabled));
+  ```
+
+  Updated the values of `--salt-palette-neutral-primary-border`, `--salt-palette-neutral-primary-border-disabled`, `--salt-palette-neutral-secondary-border` and `--salt-palette-neutral-secondary-border-disabled`.
+
+  This will affect the border color of Card, InteractableCard, FileDropZone, ToggleButtonGroup, Overlay, CircularProgress, LinearProgress and SteppedTracker.
+
+  New values in light mode:
+
+  ```diff
+  - --salt-palette-neutral-primary-border: var(--salt-color-gray-60);
+  - --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-60-fade-border);
+  + --salt-palette-neutral-primary-border: var(--salt-color-gray-50);
+  + --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-50-fade-border);
+  ```
+
+  ```diff
+  - --salt-palette-neutral-secondary-border: var(--salt-color-gray-90);
+  - --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-90-fade-border);
+  + --salt-palette-neutral-secondary-border: var(--salt-color-gray-50);
+  + --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-fade-border);
+  ```
+
+  New values in dark mode:
+
+  ```diff
+  - --salt-palette-neutral-secondary-border: var(--salt-color-gray-90);
+  - --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-90-fade-border);
+  + --salt-palette-neutral-secondary-border: var(--salt-color-gray-300);
+  + --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-fade-border);
+  ```
+
+## 1.11.1
+
+### Patch Changes
+
+- bef0d509: Undeprecated `--salt-track-borderColor`, which was incorrectly deprecated in feb80146.
+
 ## 1.11.0
 
 ### Minor Changes
@@ -126,9 +202,6 @@
   - --salt-track-borderWidth-complete
   - --salt-track-borderWidth-incomplete
   + --salt-size-border-strong
-
-  - --salt-track-borderColor
-  + --salt-palette-neutral-secondary-border
   ```
 
   #### Miscellaneous

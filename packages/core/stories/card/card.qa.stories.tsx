@@ -25,6 +25,14 @@ export const AllExamplesUsingText: StoryFn<
         <H1>Secondary card with density</H1>
         <Text>Content</Text>
       </Card>
+      <Card accent="top" hoverable>
+        <H1>Card with accent and density</H1>
+        <Text>Content</Text>
+      </Card>
+      <Card variant="secondary" accent="bottom" hoverable>
+        <H1>Secondary card with accent and density</H1>
+        <Text>Content</Text>
+      </Card>
       <InteractableCard>
         <H1>Interactable card with density</H1>
         <Text>Content</Text>

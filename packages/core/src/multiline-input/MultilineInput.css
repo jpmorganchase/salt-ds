@@ -21,6 +21,7 @@
   padding-right: var(--salt-spacing-100);
   position: relative;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Style applied on hover */
@@ -99,18 +100,17 @@
 .saltMultilineInput-textarea {
   background: none;
   border: none;
-  box-sizing: content-box;
+  box-sizing: border-box;
   color: inherit;
   cursor: inherit;
-  display: inline-flex;
-  height: calc(var(--saltMultilineInput-rows, 3) * var(--salt-text-lineHeight));
   flex-grow: 1;
   font: inherit;
   letter-spacing: 0;
+  line-height: var(--salt-text-lineHeight);
   margin: var(--salt-spacing-75) 0;
   min-width: 0;
-  overflow: hidden;
-  resize: none;
+  min-height: 0;
+  resize: vertical;
   padding: 0;
 }
 

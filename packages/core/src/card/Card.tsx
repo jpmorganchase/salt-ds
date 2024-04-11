@@ -3,18 +3,26 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { makePrefixer } from "../utils";
+import { capitalize, makePrefixer } from "../utils";
 
 import cardCss from "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   /**
+   * If provided an accent is shown in the specified position.
+   */
+  accent?: "bottom" | "top" | "left" | "right";
+  /**
    * **Deprecated:** Use the InteractableCard component instead
    *
    * If `true`, the card will be disabled.
    */
   disabled?: boolean;
+  /**
+   * If `true` the card will have hover styling.
+   */
+  hoverable?: boolean;
   /**
    * **Deprecated:** Use the InteractableCard component instead
    *
@@ -23,7 +31,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   interactable?: boolean;
   /**
-   * Styling variant; defaults to "primary".
+   * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
 }
@@ -33,10 +41,12 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   ref
 ) {
   const {
+    accent,
+    children,
     className,
     disabled,
     interactable,
-    children,
+    hoverable,
     variant = "primary",
     ...rest
   } = props;
@@ -54,6 +64,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
         withBaseName(),
         withBaseName(variant),
         {
+          [withBaseName("accent")]: accent,
+          [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+          [withBaseName("hoverable")]: hoverable,
           /* **Deprecated:** InteractableCard should be used instead for these features */
           [withBaseName("disabled")]: disabled,
           [withBaseName("interactable")]: interactable,

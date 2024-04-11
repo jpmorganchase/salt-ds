@@ -1,44 +1,37 @@
 import { ReactElement } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
+import { ComboBox, Option, StackLayout } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
-import { StackLayout } from "@salt-ds/core";
 
 export const Validation = (): ReactElement => {
   return (
     <StackLayout>
-      <ComboBoxNext
+      <ComboBox
         defaultValue="Error value"
         validationStatus="error"
         style={{ width: "266px" }}
       >
         {shortColorData.map((color) => (
-          <Option value={color} key={color}>
-            {color}
-          </Option>
+          <Option value={color} key={color} />
         ))}
-      </ComboBoxNext>
-      <ComboBoxNext
+      </ComboBox>
+      <ComboBox
         defaultValue="Warning value"
         validationStatus="warning"
         style={{ width: "266px" }}
       >
         {shortColorData.map((color) => (
-          <Option value={color} key={color}>
-            {color}
-          </Option>
+          <Option value={color} key={color} />
         ))}
-      </ComboBoxNext>
-      <ComboBoxNext
+      </ComboBox>
+      <ComboBox
         defaultValue="Success value"
         validationStatus="success"
         style={{ width: "266px" }}
       >
         {shortColorData.map((color) => (
-          <Option value={color} key={color}>
-            {color}
-          </Option>
+          <Option value={color} key={color} />
         ))}
-      </ComboBoxNext>
+      </ComboBox>
     </StackLayout>
   );
 };

@@ -4,7 +4,7 @@ import { MultilineInput } from "@salt-ds/core";
 export const Secondary = (): ReactElement => (
   <MultilineInput
     variant="secondary"
-    value="Value"
+    defaultValue="Value"
     style={{ maxWidth: "256px" }}
   />
 );

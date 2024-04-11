@@ -5,7 +5,7 @@ import {
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@salt-ds/lab";
+import { LinearProgress } from "@salt-ds/core";
 import "./grid.stories.css";
 import { StoryFn } from "@storybook/react";
 

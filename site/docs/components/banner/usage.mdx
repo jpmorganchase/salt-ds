@@ -8,33 +8,31 @@ data:
   $ref: ./#/data
 ---
 
-### Using the component
+## Using the component
 
 Always position the banner component in the main content area or in the related container component. It should sit directly below the navigation and span the page or container horizontally.
 
-You should configure it to close when:
+Configure it to close when:
 
 - The user performs an action that fixes an issue, such as correcting a validation error.
-
 - The system status that triggered the notification is resolved, such as restoring a server connection.
 
-#### When to use
+### When to use
 
 - To show a notification that applies to the user’s current task or workflow.
 
-#### When not to use
+### When not to use
 
 - To notify users of an event that has occurred in a peripheral application or workflow. Instead, use [`Toast`](../toast).
-
 - When a low priority event not requiring user feedback causes the notification. Instead, use [`Toast`](../toast).
 
-### Content
+## Content
 
 A banner typically has one or two lines of text. Make content short, clear, and concise, allowing users to quickly scan the notification and understand the situation and/or next steps.
 
-Body Default applies to the content, however, if titles are necessary, you should configure them to display the Body Strong typography style across densities. See the [typography foundation](/salt/foundations/typography/) for more information.
+Body Default applies to the content, however, if titles are necessary, configure them to display the Body Strong typography style across densities. See the [typography foundation](/salt/foundations/typography/) for more information.
 
-### Import
+## Import
 
 To import `Banner` and related components from the core Salt package, use:
 
@@ -42,16 +40,16 @@ To import `Banner` and related components from the core Salt package, use:
 import { Banner, BannerContent, BannerActions } from "@salt-ds/core";
 ```
 
-### Props
+## Props
 
-#### `Banner`
+### `Banner`
 
 <PropsTable componentName="Banner" />
 
-#### `BannerContent`
+### `BannerContent`
 
 <PropsTable componentName="BannerContent" />
 
-#### `BannerActions`
+### `BannerActions`
 
 <PropsTable componentName="BannerActions" />

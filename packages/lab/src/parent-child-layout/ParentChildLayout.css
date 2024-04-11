@@ -1,2 +1,30 @@
 .saltParentChildLayout {
+  display: flex;
+  gap: var(--parentChildLayout-gap);
+}
+
+.saltParentChildLayout-child {
+  flex-grow: 1;
+}
+
+.saltParentChildLayout-collapsed {
+  width: 100%;
+}
+
+.saltParentChildLayout-childAnimation {
+  animation: var(--salt-animation-slide-in-right);
+}
+
+.saltParentChildLayout-parentAnimation {
+  animation: var(--salt-animation-slide-in-left);
+}
+
+@media (prefers-reduced-motion) {
+  .saltParentChildLayout-parentAnimation {
+    animation: var(--salt-animation-fade-in-center);
+  }
+
+  .saltParentChildLayout-childAnimation {
+    animation: var(--salt-animation-fade-in-center);
+  }
 }

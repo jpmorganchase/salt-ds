@@ -1,0 +1,127 @@
+/* Styles applied to Dialog component */
+.saltDialog {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
+  background: var(--salt-container-primary-background);
+  box-shadow: var(--salt-overlayable-shadow-modal);
+  overflow-y: auto;
+  z-index: var(--salt-zIndex-drawer);
+  height: min-content;
+  border: var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-border);
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner, 0);
+}
+
+/* Styles applied to Dialog when a status="info" */
+.saltDialog-info {
+  border-color: var(--salt-status-info-borderColor);
+}
+
+/* Styles applied to Dialog when a status="error" */
+.saltDialog-error {
+  border-color: var(--salt-status-error-borderColor);
+}
+
+/* Styles applied to Dialog when a status="warning" */
+.saltDialog-warning {
+  border-color: var(--salt-status-warning-borderColor);
+}
+
+/* Styles applied to Dialog when a status="success" */
+.saltDialog-success {
+  border-color: var(--salt-status-success-borderColor);
+}
+
+/* Styles applied when the component mounts */
+.saltDialog.saltDialog-enterAnimation {
+  animation: var(--salt-animation-fade-in-center);
+}
+
+/* Styles applied when the component unmounts */
+.saltDialog.saltDialog-exitAnimation {
+  animation: var(--salt-animation-fade-out-back);
+}
+
+/* Pending design decision on heights and widths  */
+.saltDialog-small-xs {
+  width: 100%;
+  max-height: 48%;
+}
+
+.saltDialog-small-sm {
+  width: 56%;
+  max-height: 48%;
+}
+
+.saltDialog-small-md {
+  width: 36%;
+  max-height: 48%;
+}
+
+.saltDialog-small-lg {
+  width: 24%;
+  max-height: 48%;
+}
+
+.saltDialog-small-xl {
+  width: 24%;
+  max-height: 48%;
+}
+
+.saltDialog-medium-xs {
+  width: 100%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-sm {
+  width: 84%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-md {
+  width: 68%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-lg {
+  width: 48%;
+  max-height: 72%;
+}
+
+.saltDialog-medium-xl {
+  width: 48%;
+  max-height: 72%;
+}
+
+.saltDialog-large-xs {
+  width: 100%;
+  max-height: 84%;
+}
+
+.saltDialog-large-sm {
+  width: 96%;
+  max-height: 84%;
+}
+
+.saltDialog-large-md {
+  width: 84%;
+  max-height: 84%;
+}
+
+.saltDialog-large-lg {
+  width: 72%;
+  max-height: 84%;
+}
+
+.saltDialog-large-xl {
+  width: 72%;
+  max-height: 84%;
+}

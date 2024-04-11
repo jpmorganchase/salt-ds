@@ -1,10 +1,10 @@
 import { createContext, useContext } from "react";
 import { useCalendar } from "../useCalendar";
 
-type CalendarState = {
+interface CalendarState {
   state: ReturnType<typeof useCalendar>["state"];
   helpers: ReturnType<typeof useCalendar>["helpers"];
-};
+}
 
 const CalendarContext = createContext<CalendarState | null>(null);
 

@@ -24,6 +24,25 @@ const saltConfig = {
       disabled: true,
     },
     {
+      modulePath: "@jpmorganchase/mosaic-plugins/PublicAssetsPlugin",
+      priority: -1,
+      options: {
+        outputDir: "./public",
+        assets: ["sitemap.xml"],
+      },
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/FragmentPlugin",
+      options: {},
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin",
+      options: {
+        minRank: 2,
+        maxRank: 2,
+      },
+    },
+    {
       modulePath: require.resolve(
         "./src/mosaic-plugins/LabsComponentPlugin.mjs"
       ),
