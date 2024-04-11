@@ -4,11 +4,11 @@ import { clsx } from "clsx";
 import {
   Scrim,
   ScrimProps,
-  useIsViewportLargerThanBreakpoint,
   Breakpoints,
   makePrefixer,
   usePrevious,
 } from "@salt-ds/core";
+import { useIsViewportLargerThanBreakpoint } from "@salt-ds/core/src/parent-child-layout/useIsViewportLargerThanBreakpoint";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
