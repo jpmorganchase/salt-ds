@@ -7,7 +7,6 @@ import {
   LaptopIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { ParentChildLayout } from "@salt-ds/lab";
 import {
   Button,
   FlexLayout,
@@ -27,6 +26,7 @@ import {
   Dialog,
   DialogContent,
   DialogCloseButton,
+  ParentChildLayout,
 } from "@salt-ds/core";
 
 import "./parent-child-layout.stories.css";
