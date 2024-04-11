@@ -89,23 +89,29 @@ const getResponsiveValue = <T>(
   )[1];
 };
 
-export const useResponsiveProp = <T>(
-  value: ResponsiveProp<T>,
+export function useResponsiveProp<T>(
+  value: ResponsiveProp<T> | undefined,
   defaultValue: T
-) => {
+): T;
+export function useResponsiveProp<T>(
+  value: ResponsiveProp<T> | undefined,
+  defaultValue: T,
+  parseValue: (value: T) => string
+): string;
+export function useResponsiveProp<T>(
+  value: ResponsiveProp<T> | undefined,
+  defaultValue: T,
+  parseValue?: (value: T) => string
+): T | string {
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
   // return early if the values are the same
-  if (value === defaultValue) return defaultValue;
+  if (value === defaultValue || value === undefined)
+    return parseValue ? parseValue(defaultValue) : defaultValue;
 
   const currentViewport = getCurrentBreakpoint(breakpoints, viewport);
-  if (hasBreakpointValues(value, breakpoints)) {
-    return getResponsiveValue(
-      value,
-      breakpoints,
-      currentViewport,
-      defaultValue
-    );
-  }
-  return value;
-};
+  const resolvedValue = hasBreakpointValues(value, breakpoints)
+    ? getResponsiveValue(value, breakpoints, currentViewport, defaultValue)
+    : value;
+  return parseValue ? parseValue(resolvedValue) : resolvedValue;
+}

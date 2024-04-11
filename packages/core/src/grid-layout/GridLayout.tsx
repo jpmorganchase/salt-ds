@@ -20,23 +20,23 @@ export type GridLayoutProps<T extends ElementType> =
       /**
        * Number of columns to be displayed. Defaults to 12
        */
-      columns?: ResponsiveProp<number>;
+      columns?: ResponsiveProp<number | string>;
       /**
        * Number of rows to be displayed. Defaults to 1
        */
-      rows?: ResponsiveProp<number>;
+      rows?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
        */
-      gap?: ResponsiveProp<number>;
+      gap?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
        */
-      columnGap?: ResponsiveProp<number>;
+      columnGap?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
        */
-      rowGap?: ResponsiveProp<number>;
+      rowGap?: ResponsiveProp<number | string>;
     }
   >;
 
@@ -45,6 +45,22 @@ type GridLayoutComponent = <T extends ElementType = "div">(
 ) => ReactElement | null;
 
 const withBaseName = makePrefixer("saltGridLayout");
+
+function parseGridValue(value: number | string) {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return `repeat(${value}, 1fr)`;
+}
+
+function parseGridGap(value: number | string) {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return `calc(var(--salt-spacing-100) * ${value})`;
+}
 
 export const GridLayout: GridLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
@@ -70,15 +86,15 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     });
     const Component = as || "div";
 
-    const gridColumns = useResponsiveProp(columns, 12);
+    const gridColumns = useResponsiveProp(columns, 12, parseGridValue);
 
-    const gridRows = useResponsiveProp(rows, 1);
+    const gridRows = useResponsiveProp(rows, 1, parseGridValue);
 
-    const gridGap = useResponsiveProp(gap, 3);
+    const gridGap = useResponsiveProp(gap, 3, parseGridGap);
 
-    const gridColumnGap = useResponsiveProp(columnGap, 3);
+    const gridColumnGap = useResponsiveProp(columnGap, 3, parseGridGap);
 
-    const gridRowGap = useResponsiveProp(rowGap, 3);
+    const gridRowGap = useResponsiveProp(rowGap, 3, parseGridGap);
 
     const gridLayoutStyles = {
       ...style,

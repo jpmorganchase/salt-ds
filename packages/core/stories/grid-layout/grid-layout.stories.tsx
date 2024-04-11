@@ -43,7 +43,9 @@ Default.args = {
   columns: { xs: 1, sm: 3, md: 6, lg: 9, xl: 12 },
 };
 
-const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
+export const ResponsiveViewWithCustomBreakpoints: StoryFn<typeof GridLayout> = (
+  args
+) => {
   return (
     <SaltProvider breakpoints={customBreakpoints}>
       <GridLayout {...args} className="layout-container custom-breaks">
@@ -68,7 +70,6 @@ const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
   );
 };
 
-export const ResponsiveViewWithCustomBreakpoints = ResponsiveView.bind({});
 ResponsiveViewWithCustomBreakpoints.args = {
   columns: { xs: 1, md: 6, lg: 12 },
   rows: { md: 8, lg: 3 },
@@ -90,7 +91,7 @@ const footerColumns = Object.keys(footerLinks).map((header, index) => (
   </div>
 ));
 
-const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
+export const Footer: StoryFn<typeof GridLayout> = (args) => {
   return (
     <GridLayout {...args}>
       <GridItem
@@ -109,7 +110,6 @@ const FooterTemplate: StoryFn<typeof GridLayout> = (args) => {
     </GridLayout>
   );
 };
-export const Footer = FooterTemplate.bind({});
 Footer.args = {
   columnGap: { xs: 2, md: 8 },
   columns: { xs: 1, sm: 2, md: 6 },
@@ -124,7 +124,7 @@ const renderArticleButtons = (
     </Button>
   </FlowLayout>
 );
-const Blog: StoryFn<typeof GridLayout> = (args) => {
+export const Composite: StoryFn<typeof GridLayout> = (args) => {
   return (
     <div className="grid-blog-container">
       <GridLayout {...args}>
@@ -209,13 +209,12 @@ const Blog: StoryFn<typeof GridLayout> = (args) => {
     </div>
   );
 };
-export const Composite = Blog.bind({});
 Composite.args = {
   as: "main",
   columns: { xs: 1, sm: 2, lg: 4 },
 };
 
-const GridLayoutNestedExample: StoryFn<typeof GridLayout> = () => {
+export const Nested: StoryFn<typeof GridLayout> = () => {
   return (
     <GridLayout columnGap={6} columns={2}>
       <div className="layout-content">Item 1</div>
@@ -226,5 +225,9 @@ const GridLayoutNestedExample: StoryFn<typeof GridLayout> = () => {
     </GridLayout>
   );
 };
-export const Nested = GridLayoutNestedExample.bind({});
 Nested.args = {};
+
+export const ColumnTemplate = Template.bind({});
+ColumnTemplate.args = {
+  columns: "1fr auto 200px",
+};
