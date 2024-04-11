@@ -6261,7 +6261,7 @@ __metadata:
     "@tanstack/react-query": "npm:^4.28.0"
     "@testing-library/cypress": "npm:^10.0.0"
     "@testing-library/dom": "npm:^10.0.0"
-    "@testing-library/react": "npm:^12.1.0"
+    "@testing-library/react": "npm:^15.0.0"
     "@types/no-scroll": "npm:^2.1.0"
     "@types/node": "npm:^20.0.0"
     "@types/react": "npm:^18.0.0"
@@ -8684,22 +8684,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^8.0.0":
-  version: 8.19.1
-  resolution: "@testing-library/dom@npm:8.19.1"
-  dependencies:
-    "@babel/code-frame": "npm:^7.10.4"
-    "@babel/runtime": "npm:^7.12.5"
-    "@types/aria-query": "npm:^5.0.1"
-    aria-query: "npm:^5.0.0"
-    chalk: "npm:^4.1.0"
-    dom-accessibility-api: "npm:^0.5.9"
-    lz-string: "npm:^1.4.4"
-    pretty-format: "npm:^27.0.2"
-  checksum: 10/91bea89894783fb9f6e606ca948b0f15088a2cb080ed751ae08ca4fa97b8a550ddf312e35835596876eedc3ac68ec511eb2244522628a29ee927e520e2444cb8
-  languageName: node
-  linkType: hard
-
 "@testing-library/dom@npm:^9.0.0":
   version: 9.0.0
   resolution: "@testing-library/dom@npm:9.0.0"
@@ -8716,17 +8700,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:^12.1.0":
-  version: 12.1.3
-  resolution: "@testing-library/react@npm:12.1.3"
+"@testing-library/react@npm:^15.0.0":
+  version: 15.0.0
+  resolution: "@testing-library/react@npm:15.0.0"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
-    "@testing-library/dom": "npm:^8.0.0"
-    "@types/react-dom": "npm:*"
+    "@testing-library/dom": "npm:^10.0.0"
+    "@types/react-dom": "npm:^18.0.0"
   peerDependencies:
-    react: "*"
-    react-dom: "*"
-  checksum: 10/8993292c53a56b5d68b2b422aa346a267cb70c4f52802e42d52662bb028ac98afb2a6430a284cb52c9a820fe76972bcd3fe982077d10f6f35e7a4ac50407b177
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 10/78217cb67c2e0fb72dc4f51d19a25fbc290f298f3ca73a517ceda67a352741405740e0daa9ba5d93e4496a8f51f1465774e84d2a828863133b539304e0759dad
   languageName: node
   linkType: hard
 
@@ -9462,7 +9446,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:*, @types/react-dom@npm:^18.0.0":
+"@types/react-dom@npm:^18.0.0":
   version: 18.0.6
   resolution: "@types/react-dom@npm:18.0.6"
   dependencies:
