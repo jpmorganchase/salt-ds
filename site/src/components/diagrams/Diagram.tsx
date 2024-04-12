@@ -1,32 +1,32 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Image } from "@jpmorganchase/mosaic-site-components";
 import { clsx } from "clsx";
 
 import styles from "./Diagrams.module.css";
 
-type DesignCardProps = {
+interface DiagramProps {
   src: string;
   border?: boolean;
   alt: string;
   children: ReactNode;
   contentPosition?: "top" | "bottom";
   caption?: string;
-};
+}
 
 export const Diagram = ({
   src,
   alt,
   border,
   children,
-  contentPosition,
+  contentPosition = "top",
   caption,
-}: DesignCardProps) => (
+}: DiagramProps) => (
   <div
     className={clsx(styles.diagram, {
-      [styles.contentTop]: contentPosition === "top",
+      [styles.contentTop]: contentPosition === "top" && children,
     })}
   >
-    {contentPosition === "top" && (
+    {contentPosition === "top" && children && (
       <div className={styles.textContainer}>{children}</div>
     )}
     {src && (
@@ -41,7 +41,7 @@ export const Diagram = ({
         )}
       </figure>
     )}
-    {contentPosition === "bottom" && (
+    {contentPosition === "bottom" && children && (
       <div className={styles.textContainer}>{children}</div>
     )}
   </div>
