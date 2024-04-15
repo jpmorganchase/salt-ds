@@ -4,7 +4,12 @@ import { deleteSync } from "del";
 import esbuild from "esbuild";
 import fs from "fs-extra";
 
-const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md", "package.json"];
+const FILES_TO_COPY = [
+  "README.md",
+  "CHANGELOG.md",
+  "package.json",
+  "json/theme.json",
+];
 
 const cwd = process.cwd();
 const packageJson = (
@@ -48,6 +53,7 @@ for (const file of FILES_TO_COPY) {
   const from = path.join(cwd, file);
   const to = path.join(buildFolder, file);
   try {
+    await fs.ensureDir(path.dirname(to));
     await fs.copyFile(from, to);
     console.log(
       `${path.relative(process.cwd(), from)} copied to ${path.relative(
@@ -56,6 +62,7 @@ for (const file of FILES_TO_COPY) {
       )}`,
     );
   } catch (error) {
+    console.error(error);
     if (error.code !== "ENOENT") {
       throw error;
     }
