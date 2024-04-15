@@ -1,0 +1,29 @@
+.salt-theme.salt-theme-next {
+  /* CTA variant */
+  --salt-actionable-cta-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-cta-foreground-hover: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-cta-foreground-active: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-cta-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-cta-background: var(--salt-palette-accent-action);
+  --salt-actionable-cta-background-hover: var(--salt-palette-accent-weak); /* TBD */
+  --salt-actionable-cta-background-active: var(--salt-palette-accent-action-active);
+  --salt-actionable-cta-background-disabled: var(--salt-palette-accent-action-disabled);
+  /* Primary variant */
+  --salt-actionable-primary-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-primary-foreground-hover: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-primary-foreground-active: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-primary-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-primary-background: var(--salt-palette-neutral-action);
+  --salt-actionable-primary-background-hover: var(--salt-palette-neutral-weak); /* TBD */
+  --salt-actionable-primary-background-active: var(--salt-palette-neutral-action-active);
+  --salt-actionable-primary-background-disabled: var(--salt-palette-neutral-action-disabled);
+  /* Secondary variant */
+  --salt-actionable-secondary-foreground: var(--salt-palette-foreground-primary);
+  --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-secondary-foreground-active: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-secondary-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-actionable-secondary-background: var(--salt-palette-background-transparent); /* TBD */
+  --salt-actionable-secondary-background-hover: var(--salt-palette-neutral-weak); /* TBD */
+  --salt-actionable-secondary-background-active: var(--salt-palette-neutral-action-active);
+  --salt-actionable-secondary-background-disabled: var(--salt-palette-neutral-action-disabled);
+}
