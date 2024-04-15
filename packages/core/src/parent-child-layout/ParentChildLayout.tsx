@@ -86,7 +86,8 @@ export const ParentChildLayout = forwardRef<
     >
       {isCollapsed ? (
         <div
-          className={clsx({
+          key={visibleView}
+          className={clsx(withBaseName("animation"), {
             [withBaseName("collapsed")]: isCollapsed,
             [withBaseName("childAnimation")]: visibleView === "child",
             [withBaseName("parentAnimation")]: visibleView === "parent",
