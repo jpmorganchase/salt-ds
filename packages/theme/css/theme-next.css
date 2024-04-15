@@ -1,3 +1,22 @@
+@import url(foundations/color-next.css);
 @import url(foundations/curve-next.css);
+@import url(foundations/fade-next.css);
+
+@import url(palette/accent-next.css);
+@import url(palette/background-next.css);
 @import url(palette/corner-next.css);
+@import url(palette/foreground-next.css);
+@import url(palette/info-next.css);
+@import url(palette/negative-next.css);
+@import url(palette/neutral-next.css);
+@import url(palette/positive-next.css);
 @import url(palette/text-next.css);
+@import url(palette/warning-next.css);
+
+@import url(characteristics/accent-next.css);
+@import url(characteristics/actionable-next.css);
+@import url(characteristics/container-next.css);
+@import url(characteristics/content-next.css);
+@import url(characteristics/status-next.css);
+@import url(characteristics/target-next.css);
+@import url(characteristics/track-next.css);
