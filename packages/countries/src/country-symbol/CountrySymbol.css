@@ -5,6 +5,7 @@
   --country-symbol-base-size: var(--salt-size-base, 20px);
   --country-symbol-size: calc(var(--country-symbol-base-size) * var(--country-symbol-size-multiplier));
   --country-symbol-width: calc(var(--country-symbol-size) * var(--country-symbol-aspect-ratio-multiplier));
+  --saltCountrySymbol-aspect-ratio-multiplier: 1;
 }
 
 .saltCountrySymbol {
@@ -18,4 +19,8 @@
   overflow: hidden;
   user-select: none;
   border-radius: 50%;
+}
+.saltSharpCountrySymbol {
+  border-radius: 0%;
+  --saltCountrySymbol-aspect-ratio-multiplier: 1.44;
 }
