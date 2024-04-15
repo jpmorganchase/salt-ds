@@ -92,7 +92,8 @@
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .saltButton:active,
-.saltButton.saltButton-active {
+.saltButton.saltButton-active,
+.saltButton[aria-expanded="true"] {
   background: var(--saltButton-background-active, var(--button-background-active));
   color: var(--saltButton-text-color-active, var(--button-text-color-active));
 }
@@ -107,8 +108,4 @@
   background: var(--saltButton-background-disabled, var(--button-background-disabled));
   color: var(--saltButton-text-color-disabled, var(--button-text-color-disabled));
   cursor: var(--saltButton-cursor-disabled, var(--salt-actionable-cursor-disabled));
-}
-
-.saltButton[href] {
-  display: inline-flex;
 }
