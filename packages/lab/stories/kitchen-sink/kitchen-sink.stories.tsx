@@ -58,7 +58,11 @@ import {
   Error as ToastError,
   Warning as ToastWarning,
 } from "../../../core/stories/toast/toast.stories";
-import { WithValidation as FormFieldValidation } from "../../../core/stories/form-field/form-field.stories";
+import {
+  WithValidation as FormFieldValidation,
+  WithMultilineInputAsQuestion,
+  HelperText as FormFieldHelperText,
+} from "../../../core/stories/form-field/form-field.stories";
 import {
   Default as PillDefault,
   Disabled as PillDisabled,
@@ -319,6 +323,12 @@ export const Example1 = () => {
       </StackLayout>
       <StackLayout direction="row">
         <FormFieldValidation />
+        <StackLayout>
+          <FormFieldHelperText />
+          <FlexItem>
+            <WithMultilineInputAsQuestion />
+          </FlexItem>
+        </StackLayout>
       </StackLayout>
       <AgGridThemeDefault
         columnDefs={[
