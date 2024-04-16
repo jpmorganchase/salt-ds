@@ -1,3 +1,6 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -5,14 +8,11 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
+import { CellFrame } from "./CellFrame";
+import { CornerTag } from "./CornerTag";
 import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
-import { CornerTag } from "./CornerTag";
-import { Cell } from "./internal";
 
 import textCellEditorCss from "./TextCellEditor.css";
 
@@ -88,7 +88,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   }, [endEditMode, editorText]);
 
   return (
-    <Cell separator={column?.separator} className={withBaseName()}>
+    <CellFrame separator={column?.separator} className={withBaseName()}>
       <div className={withBaseName("inputContainer")}>
         <input
           data-testid="grid-cell-editor-input"
@@ -100,6 +100,6 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
         />
       </div>
       <CornerTag />
-    </Cell>
+    </CellFrame>
   );
 }
