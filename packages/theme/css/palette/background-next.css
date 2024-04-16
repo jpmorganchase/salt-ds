@@ -4,7 +4,7 @@
   --salt-palette-background-primary-disabled: var(--salt-color-background-snow-40a);
   --salt-palette-background-secondary: var(--salt-color-background-fog);
   --salt-palette-background-secondary-disabled: var(--salt-color-background-fog-40a);
-  --salt-palette-background-transparent: transparent;
+  --salt-palette-background-none: transparent;
 }
 .salt-theme.salt-theme-next[data-mode="dark"] {
   --salt-palette-background-backdrop: var(--salt-color-black-70a);
@@ -12,5 +12,5 @@
   --salt-palette-background-primary-disabled: var(--salt-color-background-jet-40a);
   --salt-palette-background-secondary: var(--salt-color-background-charcoal);
   --salt-palette-background-secondary-disabled: var(--salt-color-background-charcoal-40a);
-  --salt-palette-background-transparent: transparent;
+  --salt-palette-background-none: transparent;
 }
