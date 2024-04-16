@@ -22,7 +22,7 @@
   --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-secondary-foreground-active: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-secondary-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
-  --salt-actionable-secondary-background: var(--salt-palette-background-transparent); /* TBD */
+  --salt-actionable-secondary-background: var(--salt-palette-background-none); /* TBD */
   --salt-actionable-secondary-background-hover: var(--salt-palette-neutral-weak); /* TBD */
   --salt-actionable-secondary-background-active: var(--salt-palette-neutral-action-active);
   --salt-actionable-secondary-background-disabled: var(--salt-palette-neutral-action-disabled);
