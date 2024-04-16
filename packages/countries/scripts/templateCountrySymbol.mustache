@@ -14,7 +14,7 @@ const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
     const { className, ...rest } = props;
 
     return (
-      <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} className={clsx(className, { "saltSharpCountrySymbol": {{sharp}} })} {...rest}>
+      <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} className={clsx(className, { "saltCountrySymbol-sharp": {{sharp}} })} {...rest}>
         {{{svgElements}}}
       </CountrySymbol>
     );
