@@ -35,6 +35,7 @@ export interface TooltipProps
   hideArrow?: boolean;
   /**
    * Whether to hide the status icon within the Tooltip. Defaults to `false`.
+   * If no status is provided, icon will also be hidden.
    */
   hideIcon?: boolean;
   /**
@@ -42,7 +43,7 @@ export interface TooltipProps
    */
   content: ReactNode;
   /**
-   * A string to determine the status of the Tooltip. Defaults to `info`.
+   * Optional string to determine the status of the Tooltip.
    */
   status?: ValidationStatus;
   /**
@@ -77,7 +78,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       hideIcon = false,
       open: openProp,
       content,
-      status: statusProp = "info",
+      status: statusProp,
       placement = "right",
       enterDelay = 300,
       leaveDelay = 0,
@@ -133,7 +134,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           })}
 
         <FloatingComponent
-          className={clsx(withBaseName(), withBaseName(status), className)}
+          className={clsx(
+            withBaseName(),
+            { [withBaseName(status ?? "")]: status },
+            className
+          )}
           open={open && !disabled && hasContent}
           {...getTooltipProps()}
           ref={floatingRef}

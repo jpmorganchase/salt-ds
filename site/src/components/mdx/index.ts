@@ -1,5 +1,4 @@
 import { withAnchorHeading } from "./anchorHeading";
-import { Link as a } from "@salt-ds/core";
 import { Code as code } from "./code";
 import { Heading2 } from "./h2";
 import { Heading3 } from "./h3";
@@ -10,6 +9,7 @@ import { Table as table } from "./table";
 import { Thead as thead } from "./thead";
 import { Tr as tr } from "./tr";
 import { UnorderedList as ul } from "./ul";
+import { Link as a } from "./link";
 
 const h2 = withAnchorHeading(Heading2);
 const h3 = withAnchorHeading(Heading3);

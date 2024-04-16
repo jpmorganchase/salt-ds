@@ -7,13 +7,12 @@ import {
   createDummyInvestors,
 } from "./dummyData";
 import { useEffect, useState } from "react";
-import { ContentStatus } from "@salt-ds/lab";
 import {
   useQuery,
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { Scrim, useTheme } from "@salt-ds/core";
+import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { rest } from "msw";
 import "./grid.stories.css";
 
@@ -116,7 +115,7 @@ export function ServerSideSort() {
         aria-label="Example Scrim"
         open={showFetching && !isFetchedAfterMount}
       >
-        <ContentStatus status="loading" />
+        <Spinner size="medium" />
       </Scrim>
 
       <Grid

@@ -40,15 +40,43 @@ const ProgressWithControls = ({
   );
 };
 
+const ProgressWithBufferControls = ({
+  ProgressComponent: Progress,
+}: ProgressWithControlsProps) => {
+  const { handleReset, handleStart, handleStop, isProgressing, value } =
+    useProgressingValue();
+  return (
+    <div className="root">
+      <FlowLayout gap={1} className="controls">
+        <Button disabled={isProgressing} onClick={handleStart}>
+          Start
+        </Button>
+        <Button disabled={!isProgressing} onClick={handleStop}>
+          Stop
+        </Button>
+        <Button onClick={handleReset}>Reset</Button>
+      </FlowLayout>
+      <Progress aria-label="Download" bufferValue={value} />
+    </div>
+  );
+};
+
 export const Default: StoryFn<typeof CircularProgress> = (args) => (
   <CircularProgress aria-label="Download" {...args} />
 );
 Default.args = {
   value: 38,
 };
-export const HideLabel: StoryFn<typeof CircularProgress> = () => (
-  <CircularProgress aria-label="Download" value={38} hideLabel />
-);
+export const HideLabel = Default.bind({});
+HideLabel.args = {
+  hideLabel: true,
+  value: 38,
+};
+export const WithBuffer = Default.bind({});
+WithBuffer.args = {
+  value: 38,
+  bufferValue: 60,
+};
 
 export const MaxValue: StoryFn<typeof CircularProgress> = () => (
   <StackLayout align="center">
@@ -59,4 +87,8 @@ export const MaxValue: StoryFn<typeof CircularProgress> = () => (
 
 export const ProgressingValue: StoryFn<typeof CircularProgress> = () => (
   <ProgressWithControls ProgressComponent={CircularProgress} />
+);
+
+export const ProgressingBufferValue: StoryFn<typeof CircularProgress> = () => (
+  <ProgressWithBufferControls ProgressComponent={CircularProgress} />
 );

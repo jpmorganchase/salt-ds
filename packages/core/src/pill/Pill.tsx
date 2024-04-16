@@ -51,6 +51,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
         { [withBaseName("active")]: active },
         className
       )}
+      type="button"
       {...restButtonProps}
       {...rest}
     >

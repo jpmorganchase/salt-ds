@@ -1,4 +1,4 @@
-import { ReactElement, DragEvent } from "react";
+import { ReactElement, SyntheticEvent } from "react";
 import {
   FileDropZone,
   FileDropZoneIcon,
@@ -6,7 +6,7 @@ import {
   Text,
 } from "@salt-ds/core";
 
-const validate = (event: DragEvent<HTMLDivElement>, files: File[]) => {
+const validate = (event: SyntheticEvent, files: File[]) => {
   console.log("validate files", files);
 };
 
@@ -17,7 +17,7 @@ export const Default = (): ReactElement => (
   >
     <FileDropZoneIcon />
     <strong>Drop files here or</strong>
-    <FileDropZoneTrigger accept=".png" />
+    <FileDropZoneTrigger accept=".png" onChange={validate} />
     <Text>Only .png files</Text>
   </FileDropZone>
 );

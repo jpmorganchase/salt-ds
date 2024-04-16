@@ -88,6 +88,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
         onFocus={handleFocus}
         tabIndex={focusable && !disabled ? 0 : -1}
         value={value}
+        type="button"
         {...rest}
       >
         {children}

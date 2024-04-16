@@ -62,3 +62,17 @@
 .textContainer {
   flex: 1;
 }
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  margin: 0;
+}
+
+.caption {
+  font-style: var(--salt-editable-help-fontStyle);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  color: var(--salt-content-primary-foreground);
+}

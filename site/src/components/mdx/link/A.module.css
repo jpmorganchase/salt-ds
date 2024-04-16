@@ -1,0 +1,5 @@
+.a {
+  --mosaic-color-dark-navigable-documentLink-regular: var(--salt-content-primary-foreground);
+  --mosaic-color-dark-navigable-documentLink-hover: var(--salt-content-foreground-hover);
+  --mosaic-color-dark-navigable-documentLink-visited: var(--salt-content-foreground-visited);
+}

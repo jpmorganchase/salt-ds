@@ -27,7 +27,7 @@ export const DialogCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
         className={clsx(withBaseName(), className)}
         {...rest}
       >
-        <CloseIcon />
+        <CloseIcon aria-hidden />
       </Button>
     );
   }

@@ -9,7 +9,16 @@ import circularProgressCSS from "./CircularProgress.css";
 
 const withBaseName = makePrefixer("saltCircularProgress");
 
+const getRotationAngle = (bar: number, shift = 0) => {
+  return -180 + ((bar - shift) / 50) * 180;
+};
+
 export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The value of the buffer indicator.
+   * Value between 0 and max.
+   */
+  bufferValue?: number;
   /**
    * Whether to hide the text label within the progress. Defaults to `false`.
    */
@@ -35,7 +44,15 @@ export const CircularProgress = forwardRef<
   HTMLDivElement,
   CircularProgressProps
 >(function CircularProgress(
-  { className, hideLabel = false, max = 100, min = 0, value = 0, ...rest },
+  {
+    className,
+    hideLabel = false,
+    max = 100,
+    min = 0,
+    value = 0,
+    bufferValue = 0,
+    ...rest
+  },
   ref
 ) {
   const targetWindow = useWindow();
@@ -45,23 +62,31 @@ export const CircularProgress = forwardRef<
     window: targetWindow,
   });
 
-  const subOverlayRightStyle: CSSProperties = {};
-  const subOverlayLeftStyle: CSSProperties = {};
+  const bufferSubOverlayRightStyle: CSSProperties = {};
+  const bufferSubOverlayLeftStyle: CSSProperties = {};
+  const barSubOverlayRightStyle: CSSProperties = {};
+  const barSubOverlayLeftStyle: CSSProperties = {};
 
-  const getRotationAngle = (progress: number, shift = 0) => {
-    return -180 + ((progress - shift) / 50) * 180;
-  };
-
+  const buffer = ((bufferValue - min) / (max - min)) * 100;
   const progress = ((value - min) / (max - min)) * 100;
 
   if (progress <= 50) {
     const rotationAngle = getRotationAngle(progress);
-    subOverlayRightStyle.transform = `rotate(${rotationAngle}deg)`;
-    subOverlayLeftStyle.transform = "rotate(-180deg)";
+    barSubOverlayRightStyle.transform = `rotate(${rotationAngle}deg)`;
+    barSubOverlayLeftStyle.transform = "rotate(-180deg)";
   } else {
     const rotationAngle = getRotationAngle(progress, 50);
-    subOverlayRightStyle.transform = "rotate(0deg)";
-    subOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
+    barSubOverlayRightStyle.transform = "rotate(0deg)";
+    barSubOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
+  }
+  if (buffer <= 50) {
+    const rotationAngle = getRotationAngle(buffer);
+    bufferSubOverlayRightStyle.transform = `rotate(${rotationAngle}deg)`;
+    bufferSubOverlayLeftStyle.transform = "rotate(-180deg)";
+  } else {
+    const rotationAngle = getRotationAngle(buffer, 50);
+    bufferSubOverlayRightStyle.transform = "rotate(0deg)";
+    bufferSubOverlayLeftStyle.transform = `rotate(${rotationAngle}deg)`;
   }
 
   return (
@@ -76,18 +101,45 @@ export const CircularProgress = forwardRef<
     >
       <div className={withBaseName("track")} />
       <div className={withBaseName("bars")}>
+        {buffer > 0 && (
+          <div className={withBaseName("bufferOverlayRight")}>
+            <div
+              className={clsx(withBaseName("bufferSubOverlayRight"), {
+                [withBaseName("bufferSubOverlay")]: buffer <= 50,
+              })}
+              style={bufferSubOverlayRightStyle}
+            >
+              <div className={withBaseName("bufferBackground")} />
+              <div className={withBaseName("bufferBorder")} />
+            </div>
+          </div>
+        )}
         <div className={withBaseName("barOverlayRight")}>
           <div
             className={withBaseName("barSubOverlayRight")}
-            style={subOverlayRightStyle}
+            style={barSubOverlayRightStyle}
           >
             <div className={withBaseName("bar")} />
           </div>
         </div>
+        {buffer > 0 && (
+          <div className={withBaseName("bufferOverlayLeft")}>
+            <div
+              className={clsx(
+                withBaseName("bufferSubOverlay"),
+                withBaseName("bufferSubOverlayLeft")
+              )}
+              style={bufferSubOverlayLeftStyle}
+            >
+              <div className={withBaseName("bufferBorder")} />
+              <div className={withBaseName("bufferBackground")} />
+            </div>
+          </div>
+        )}
         <div className={withBaseName("barOverlayLeft")}>
           <div
             className={withBaseName("barSubOverlayLeft")}
-            style={subOverlayLeftStyle}
+            style={barSubOverlayLeftStyle}
           >
             <div className={withBaseName("bar")} />
           </div>

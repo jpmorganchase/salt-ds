@@ -62,6 +62,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         <button
           aria-label={formatDate(day)}
           disabled={disabled}
+          type="button"
           {...dayProps}
           ref={buttonRef}
           {...rest}

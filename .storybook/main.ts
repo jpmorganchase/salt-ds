@@ -1,7 +1,6 @@
 import { dirname, join } from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import type { UserConfig } from "vite";
-import { mergeConfig } from "vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 import { cssInline } from "../tooling/css-inline-plugin";
@@ -28,6 +27,7 @@ const config: StorybookConfig = {
     "@storybook/addon-storysource",
   ],
   async viteFinal(config, { configType }) {
+    const { mergeConfig } = await import("vite");
     // customize the Vite config here
 
     const customConfig: UserConfig = {

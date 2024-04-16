@@ -1,0 +1,37 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- When using segmented button group ensure you follow the [button accessibility guidance](/salt/components/button/accessibility).
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Tab moves focus to the segmented button group.
+- If moving focus into a segmented button group, Tab moves focus to the first button in the group.
+- If focus is inside a segmented button group, Tab moves focus to the next button in the group.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- If the button has focus, this action activates it.
+- If the button is disabled and can receive focus, this action does nothing.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- This action moves focus to outside of the segmented button group component and to the previous element in the tabbing order.
+- If focus is inside a segmented button group, this action moves focus to the previous button within the tab order.
+
+</KeyboardControl>
+</KeyboardControls>

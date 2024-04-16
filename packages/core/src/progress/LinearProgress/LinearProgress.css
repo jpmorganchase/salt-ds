@@ -15,24 +15,37 @@
   height: var(--salt-size-bar-strong);
 }
 
-.saltLinearProgress-bar {
-  width: 100%;
+.saltLinearProgress-bar,
+.saltLinearProgress-buffer {
   position: absolute;
   left: 0;
   bottom: 0;
   top: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
+}
+
+.saltLinearProgress-buffer {
+  width: 0;
+  background: var(--salt-container-primary-background);
+  outline: solid var(--salt-size-border) var(--salt-accent-background);
+  z-index: var(--salt-zIndex-default);
+  outline-offset: calc(var(--salt-size-border) * -1);
+}
+
+.saltLinearProgress-bar {
+  width: 100%;
   background: var(--salt-accent-background);
-  z-index: 2;
+  z-index: calc(var(--salt-zIndex-default) * 2);
 }
 
 .saltLinearProgress-track {
   background: var(--salt-track-borderColor);
   width: 100%;
-  height: var(--salt-size-bar-small);
+  height: var(--salt-size-bar);
   position: absolute;
-  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar-small)) / 2);
+  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
+  right: 0;
   transition: transform 0.2s linear;
   transform-origin: left;
 }

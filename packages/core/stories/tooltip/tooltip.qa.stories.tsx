@@ -28,20 +28,12 @@ const IconWithTooltip = (props: {
 
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer height={500} itemPadding={45} width={1200} {...props}>
-      <IconWithTooltip content="Hello, World" />
-      <IconWithTooltip status="error" content="Uh oh, world" />
-      <IconWithTooltip
-        content={
-          <div
-            style={{
-              background: "var(--salt-text-secondary-foreground)",
-              width: 60,
-              height: "var(--salt-text-lineHeight)",
-            }}
-          />
-        }
-      />
+    <QAContainer height={670} itemPadding={25} width={1200} {...props}>
+      <IconWithTooltip content="Default" />
+      <IconWithTooltip status="info" content="Info" />
+      <IconWithTooltip status="error" content="Error" />
+      <IconWithTooltip status="success" content="Success" />
+      <IconWithTooltip status="warning" content="Warning" />
       <div
         style={{
           width: 10,
@@ -50,7 +42,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           position: "absolute",
         }}
       >
-        <IconWithTooltip content="Hidden, World?" />
+        <IconWithTooltip content="Hidden trigger" />
       </div>
     </QAContainer>
   );
@@ -64,16 +56,16 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
   props
 ) => (
   <QAContainerNoStyleInjection
-    height={500}
-    itemPadding={45}
+    height={670}
+    itemPadding={25}
     width={1200}
     {...props}
   >
-    <IconWithTooltip content="Hello, World" />
-    <IconWithTooltip status="error" content="Uh oh, world" />
-    <IconWithTooltip
-      content={<div style={{ background: "#ccc", width: 60, height: 20 }} />}
-    />
+    <IconWithTooltip content="Default" />
+    <IconWithTooltip status="info" content="Info" />
+    <IconWithTooltip status="error" content="Error" />
+    <IconWithTooltip status="success" content="Success" />
+    <IconWithTooltip status="warning" content="Warning" />
     <div
       style={{
         width: 10,
@@ -82,7 +74,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         position: "absolute",
       }}
     >
-      <IconWithTooltip content="Hidden, World?" />
+      <IconWithTooltip content="Hidden trigger" />
     </div>
   </QAContainerNoStyleInjection>
 );

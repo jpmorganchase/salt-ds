@@ -2,7 +2,7 @@
 .saltLinkCard {
   border-width: var(--saltLinkCard-borderWidth, var(--salt-size-border));
   border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
-  border-radius: var(--saltLinkCard-borderRadius, 0);
+  border-radius: var(--saltLinkCard-borderRadius, var(--salt-palette-corner, 0));
   display: block;
   padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
   position: relative;
@@ -74,17 +74,19 @@
   --linkCard-accent-color: var(--salt-selectable-foreground-hover);
 }
 
-/* Styles applied on hover state to LinkCard */
-.saltLinkCard:hover {
-  cursor: var(--salt-selectable-cursor-hover);
-  box-shadow: var(--salt-overlayable-shadow-hover);
-  --linkCard-accent-color: var(--salt-selectable-foreground-hover);
-}
-
 /* Styles applied on active state to LinkCard */
 .saltLinkCard:active {
   cursor: var(--salt-selectable-cursor-active);
   border-color: var(--salt-selectable-borderColor-selected);
   box-shadow: var(--salt-overlayable-shadow);
   --linkCard-accent-color: var(--salt-selectable-foreground-selected);
+}
+
+/* Styles applied on hover state to LinkCard */
+@media (hover: hover) {
+  .saltLinkCard:hover {
+    cursor: var(--salt-selectable-cursor-hover);
+    box-shadow: var(--salt-overlayable-shadow-hover);
+    --linkCard-accent-color: var(--salt-selectable-foreground-hover);
+  }
 }

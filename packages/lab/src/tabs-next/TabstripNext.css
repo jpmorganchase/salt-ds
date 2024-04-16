@@ -13,8 +13,9 @@
   line-height: var(--salt-text-lineHeight);
 }
 .saltTabstripNext-container {
-  display: inherit;
+  display: block;
   width: 100%;
+  height: fit-content;
   position: relative;
 }
 
