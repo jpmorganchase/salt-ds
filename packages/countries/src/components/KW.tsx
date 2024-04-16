@@ -18,7 +18,7 @@ const KW = forwardRef<SVGSVGElement, KWProps>(function KW(props: KWProps, ref) {
       aria-label="Kuwait"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

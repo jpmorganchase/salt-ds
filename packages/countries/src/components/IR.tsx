@@ -18,7 +18,7 @@ const IR = forwardRef<SVGSVGElement, IRProps>(function IR(props: IRProps, ref) {
       aria-label="Iran (Islamic Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

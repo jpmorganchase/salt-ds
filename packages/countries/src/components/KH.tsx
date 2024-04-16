@@ -18,7 +18,7 @@ const KH = forwardRef<SVGSVGElement, KHProps>(function KH(props: KHProps, ref) {
       aria-label="Cambodia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

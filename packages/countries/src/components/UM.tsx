@@ -18,7 +18,7 @@ const UM = forwardRef<SVGSVGElement, UMProps>(function UM(props: UMProps, ref) {
       aria-label="United States Minor Outlying Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

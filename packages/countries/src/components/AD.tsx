@@ -18,7 +18,7 @@ const AD = forwardRef<SVGSVGElement, ADProps>(function AD(props: ADProps, ref) {
       aria-label="Andorra"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

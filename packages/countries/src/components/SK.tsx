@@ -18,7 +18,7 @@ const SK = forwardRef<SVGSVGElement, SKProps>(function SK(props: SKProps, ref) {
       aria-label="Slovakia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

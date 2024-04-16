@@ -18,7 +18,7 @@ const BG = forwardRef<SVGSVGElement, BGProps>(function BG(props: BGProps, ref) {
       aria-label="Bulgaria"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

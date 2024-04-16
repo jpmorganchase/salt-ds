@@ -18,7 +18,7 @@ const LK = forwardRef<SVGSVGElement, LKProps>(function LK(props: LKProps, ref) {
       aria-label="Sri Lanka"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

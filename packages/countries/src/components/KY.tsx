@@ -18,7 +18,7 @@ const KY = forwardRef<SVGSVGElement, KYProps>(function KY(props: KYProps, ref) {
       aria-label="Cayman Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

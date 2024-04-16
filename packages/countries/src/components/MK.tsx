@@ -18,7 +18,7 @@ const MK = forwardRef<SVGSVGElement, MKProps>(function MK(props: MKProps, ref) {
       aria-label="North Macedonia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

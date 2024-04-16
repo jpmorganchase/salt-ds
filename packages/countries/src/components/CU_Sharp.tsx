@@ -21,7 +21,7 @@ const CU_Sharp = forwardRef<SVGSVGElement, CU_SharpProps>(function CU_Sharp(
       aria-label="Cuba"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -18,7 +18,7 @@ const SM = forwardRef<SVGSVGElement, SMProps>(function SM(props: SMProps, ref) {
       aria-label="San Marino"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

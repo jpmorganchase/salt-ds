@@ -21,7 +21,7 @@ const OM_Sharp = forwardRef<SVGSVGElement, OM_SharpProps>(function OM_Sharp(
       aria-label="Oman"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

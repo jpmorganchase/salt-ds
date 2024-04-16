@@ -18,7 +18,7 @@ const AR = forwardRef<SVGSVGElement, ARProps>(function AR(props: ARProps, ref) {
       aria-label="Argentina"
       viewBox="0 0 73 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

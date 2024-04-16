@@ -21,7 +21,7 @@ const CY_Sharp = forwardRef<SVGSVGElement, CY_SharpProps>(function CY_Sharp(
       aria-label="Cyprus"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

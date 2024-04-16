@@ -18,7 +18,7 @@ const UA = forwardRef<SVGSVGElement, UAProps>(function UA(props: UAProps, ref) {
       aria-label="Ukraine"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

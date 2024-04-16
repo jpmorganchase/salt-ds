@@ -18,7 +18,7 @@ const IM = forwardRef<SVGSVGElement, IMProps>(function IM(props: IMProps, ref) {
       aria-label="Isle of Man"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

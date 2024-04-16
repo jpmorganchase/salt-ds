@@ -18,7 +18,7 @@ const SA = forwardRef<SVGSVGElement, SAProps>(function SA(props: SAProps, ref) {
       aria-label="Saudi Arabia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

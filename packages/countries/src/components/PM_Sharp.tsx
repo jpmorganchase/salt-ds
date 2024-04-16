@@ -21,7 +21,7 @@ const PM_Sharp = forwardRef<SVGSVGElement, PM_SharpProps>(function PM_Sharp(
       aria-label="Saint Pierre and Miquelon"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -21,7 +21,7 @@ const NG_Sharp = forwardRef<SVGSVGElement, NG_SharpProps>(function NG_Sharp(
       aria-label="Nigeria"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

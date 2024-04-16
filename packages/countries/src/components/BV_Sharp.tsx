@@ -21,7 +21,7 @@ const BV_Sharp = forwardRef<SVGSVGElement, BV_SharpProps>(function BV_Sharp(
       aria-label="Bouvet Island"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

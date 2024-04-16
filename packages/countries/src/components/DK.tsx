@@ -18,7 +18,7 @@ const DK = forwardRef<SVGSVGElement, DKProps>(function DK(props: DKProps, ref) {
       aria-label="Denmark"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

@@ -21,7 +21,7 @@ const GQ_Sharp = forwardRef<SVGSVGElement, GQ_SharpProps>(function GQ_Sharp(
       aria-label="Equatorial Guinea"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

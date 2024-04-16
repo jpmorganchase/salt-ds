@@ -18,7 +18,7 @@ const CC = forwardRef<SVGSVGElement, CCProps>(function CC(props: CCProps, ref) {
       aria-label="Cocos (Keeling) Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

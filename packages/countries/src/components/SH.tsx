@@ -18,7 +18,7 @@ const SH = forwardRef<SVGSVGElement, SHProps>(function SH(props: SHProps, ref) {
       aria-label="Saint Helena, Ascension and Tristan da Cunha"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

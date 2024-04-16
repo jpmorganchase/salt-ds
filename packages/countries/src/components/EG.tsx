@@ -18,7 +18,7 @@ const EG = forwardRef<SVGSVGElement, EGProps>(function EG(props: EGProps, ref) {
       aria-label="Egypt"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

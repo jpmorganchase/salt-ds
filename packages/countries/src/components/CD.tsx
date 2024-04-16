@@ -18,7 +18,7 @@ const CD = forwardRef<SVGSVGElement, CDProps>(function CD(props: CDProps, ref) {
       aria-label="Congo (the Democratic Republic of the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

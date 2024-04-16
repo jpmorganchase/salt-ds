@@ -18,7 +18,7 @@ const BO = forwardRef<SVGSVGElement, BOProps>(function BO(props: BOProps, ref) {
       aria-label="Bolivia (Plurinational State of)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

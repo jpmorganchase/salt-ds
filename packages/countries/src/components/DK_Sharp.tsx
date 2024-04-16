@@ -21,7 +21,7 @@ const DK_Sharp = forwardRef<SVGSVGElement, DK_SharpProps>(function DK_Sharp(
       aria-label="Denmark"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

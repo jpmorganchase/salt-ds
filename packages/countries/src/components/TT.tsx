@@ -18,7 +18,7 @@ const TT = forwardRef<SVGSVGElement, TTProps>(function TT(props: TTProps, ref) {
       aria-label="Trinidad and Tobago"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

@@ -18,7 +18,7 @@ const AQ = forwardRef<SVGSVGElement, AQProps>(function AQ(props: AQProps, ref) {
       aria-label="Antarctica"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

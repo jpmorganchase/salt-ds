@@ -18,7 +18,7 @@ const RO = forwardRef<SVGSVGElement, ROProps>(function RO(props: ROProps, ref) {
       aria-label="Romania"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

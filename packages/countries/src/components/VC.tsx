@@ -18,7 +18,7 @@ const VC = forwardRef<SVGSVGElement, VCProps>(function VC(props: VCProps, ref) {
       aria-label="Saint Vincent and the Grenadines"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

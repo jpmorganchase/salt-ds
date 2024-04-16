@@ -21,7 +21,7 @@ const PE_Sharp = forwardRef<SVGSVGElement, PE_SharpProps>(function PE_Sharp(
       aria-label="Peru"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -21,7 +21,7 @@ const KN_Sharp = forwardRef<SVGSVGElement, KN_SharpProps>(function KN_Sharp(
       aria-label="Saint Kitts and Nevis"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

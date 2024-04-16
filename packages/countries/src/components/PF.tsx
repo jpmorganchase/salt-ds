@@ -18,7 +18,7 @@ const PF = forwardRef<SVGSVGElement, PFProps>(function PF(props: PFProps, ref) {
       aria-label="French Polynesia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

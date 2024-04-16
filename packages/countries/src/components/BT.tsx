@@ -18,7 +18,7 @@ const BT = forwardRef<SVGSVGElement, BTProps>(function BT(props: BTProps, ref) {
       aria-label="Bhutan"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

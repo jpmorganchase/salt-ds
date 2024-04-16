@@ -18,7 +18,7 @@ const AE = forwardRef<SVGSVGElement, AEProps>(function AE(props: AEProps, ref) {
       aria-label="United Arab Emirates (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

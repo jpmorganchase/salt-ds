@@ -18,7 +18,7 @@ const ET = forwardRef<SVGSVGElement, ETProps>(function ET(props: ETProps, ref) {
       aria-label="Ethiopia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

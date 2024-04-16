@@ -18,7 +18,7 @@ const SC = forwardRef<SVGSVGElement, SCProps>(function SC(props: SCProps, ref) {
       aria-label="Seychelles"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

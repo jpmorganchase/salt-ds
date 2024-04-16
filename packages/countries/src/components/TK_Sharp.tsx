@@ -21,7 +21,7 @@ const TK_Sharp = forwardRef<SVGSVGElement, TK_SharpProps>(function TK_Sharp(
       aria-label="Tokelau"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

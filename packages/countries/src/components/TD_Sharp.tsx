@@ -21,7 +21,7 @@ const TD_Sharp = forwardRef<SVGSVGElement, TD_SharpProps>(function TD_Sharp(
       aria-label="Chad"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

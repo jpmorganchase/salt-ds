@@ -18,7 +18,7 @@ const NF = forwardRef<SVGSVGElement, NFProps>(function NF(props: NFProps, ref) {
       aria-label="Norfolk Island"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

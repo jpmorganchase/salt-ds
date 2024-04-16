@@ -18,7 +18,7 @@ const MW = forwardRef<SVGSVGElement, MWProps>(function MW(props: MWProps, ref) {
       aria-label="Malawi"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

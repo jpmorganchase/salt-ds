@@ -21,7 +21,7 @@ const EE_Sharp = forwardRef<SVGSVGElement, EE_SharpProps>(function EE_Sharp(
       aria-label="Estonia"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

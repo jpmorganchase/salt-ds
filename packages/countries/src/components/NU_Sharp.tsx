@@ -21,7 +21,7 @@ const NU_Sharp = forwardRef<SVGSVGElement, NU_SharpProps>(function NU_Sharp(
       aria-label="Niue"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -18,7 +18,7 @@ const MX = forwardRef<SVGSVGElement, MXProps>(function MX(props: MXProps, ref) {
       aria-label="Mexico"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

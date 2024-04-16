@@ -21,7 +21,7 @@ const FM_Sharp = forwardRef<SVGSVGElement, FM_SharpProps>(function FM_Sharp(
       aria-label="Micronesia (Federated States of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

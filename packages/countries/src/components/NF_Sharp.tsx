@@ -21,7 +21,7 @@ const NF_Sharp = forwardRef<SVGSVGElement, NF_SharpProps>(function NF_Sharp(
       aria-label="Norfolk Island"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

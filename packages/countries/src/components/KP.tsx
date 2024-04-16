@@ -18,7 +18,7 @@ const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
       aria-label="Korea (the Democratic People&#39;s Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

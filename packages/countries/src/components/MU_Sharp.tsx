@@ -21,7 +21,7 @@ const MU_Sharp = forwardRef<SVGSVGElement, MU_SharpProps>(function MU_Sharp(
       aria-label="Mauritius"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

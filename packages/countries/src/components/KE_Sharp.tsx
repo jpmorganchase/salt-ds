@@ -21,7 +21,7 @@ const KE_Sharp = forwardRef<SVGSVGElement, KE_SharpProps>(function KE_Sharp(
       aria-label="Kenya"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

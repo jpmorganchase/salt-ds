@@ -18,7 +18,7 @@ const KM = forwardRef<SVGSVGElement, KMProps>(function KM(props: KMProps, ref) {
       aria-label="Comoros (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

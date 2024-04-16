@@ -21,7 +21,7 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
       aria-label="Fiji"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

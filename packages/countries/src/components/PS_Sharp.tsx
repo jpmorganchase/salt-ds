@@ -21,7 +21,7 @@ const PS_Sharp = forwardRef<SVGSVGElement, PS_SharpProps>(function PS_Sharp(
       aria-label="Palestine (State of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

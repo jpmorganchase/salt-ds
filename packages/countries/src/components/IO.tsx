@@ -18,7 +18,7 @@ const IO = forwardRef<SVGSVGElement, IOProps>(function IO(props: IOProps, ref) {
       aria-label="British Indian Ocean Territory (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

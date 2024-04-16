@@ -21,7 +21,7 @@ const GW_Sharp = forwardRef<SVGSVGElement, GW_SharpProps>(function GW_Sharp(
       aria-label="Guinea-Bissau"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -18,7 +18,7 @@ const VU = forwardRef<SVGSVGElement, VUProps>(function VU(props: VUProps, ref) {
       aria-label="Vanuatu"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

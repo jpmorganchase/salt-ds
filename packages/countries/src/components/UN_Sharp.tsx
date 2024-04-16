@@ -21,7 +21,7 @@ const UN_Sharp = forwardRef<SVGSVGElement, UN_SharpProps>(function UN_Sharp(
       aria-label="United Nations"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -21,7 +21,7 @@ const VA_Sharp = forwardRef<SVGSVGElement, VA_SharpProps>(function VA_Sharp(
       aria-label="Holy See (the)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

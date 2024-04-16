@@ -18,7 +18,7 @@ const NA = forwardRef<SVGSVGElement, NAProps>(function NA(props: NAProps, ref) {
       aria-label="Namibia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

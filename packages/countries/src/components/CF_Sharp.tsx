@@ -21,7 +21,7 @@ const CF_Sharp = forwardRef<SVGSVGElement, CF_SharpProps>(function CF_Sharp(
       aria-label="Central African Republic (the)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

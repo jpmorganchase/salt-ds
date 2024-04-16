@@ -21,7 +21,7 @@ const VE_Sharp = forwardRef<SVGSVGElement, VE_SharpProps>(function VE_Sharp(
       aria-label="Venezuela (Bolivarian Republic of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -21,7 +21,7 @@ const IE_Sharp = forwardRef<SVGSVGElement, IE_SharpProps>(function IE_Sharp(
       aria-label="Ireland"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

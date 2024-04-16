@@ -19,7 +19,7 @@ const GB_NIR_Sharp = forwardRef<SVGSVGElement, GB_NIR_SharpProps>(
         aria-label="Northern Ireland"
         viewBox="0 0 72 50"
         ref={ref}
-        className={clsx(className, { saltSharpCountrySymbol: true })}
+        className={clsx(className, { "saltCountrySymbol-sharp": true })}
         {...rest}
       >
         <mask

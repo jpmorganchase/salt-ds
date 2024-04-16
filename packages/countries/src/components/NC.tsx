@@ -18,7 +18,7 @@ const NC = forwardRef<SVGSVGElement, NCProps>(function NC(props: NCProps, ref) {
       aria-label="New Caledonia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

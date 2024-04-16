@@ -18,7 +18,7 @@ const BV = forwardRef<SVGSVGElement, BVProps>(function BV(props: BVProps, ref) {
       aria-label="Bouvet Island"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

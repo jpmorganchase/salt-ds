@@ -18,7 +18,7 @@ const HK = forwardRef<SVGSVGElement, HKProps>(function HK(props: HKProps, ref) {
       aria-label="Hong Kong"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

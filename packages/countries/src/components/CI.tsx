@@ -18,7 +18,7 @@ const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
       aria-label="Côte d&#39;Ivoire"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

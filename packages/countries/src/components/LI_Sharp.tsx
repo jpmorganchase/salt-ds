@@ -21,7 +21,7 @@ const LI_Sharp = forwardRef<SVGSVGElement, LI_SharpProps>(function LI_Sharp(
       aria-label="Liechtenstein"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

@@ -21,7 +21,7 @@ const RO_Sharp = forwardRef<SVGSVGElement, RO_SharpProps>(function RO_Sharp(
       aria-label="Romania"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

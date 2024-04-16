@@ -18,7 +18,7 @@ const AW = forwardRef<SVGSVGElement, AWProps>(function AW(props: AWProps, ref) {
       aria-label="Aruba"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

@@ -18,7 +18,7 @@ const GH = forwardRef<SVGSVGElement, GHProps>(function GH(props: GHProps, ref) {
       aria-label="Ghana"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

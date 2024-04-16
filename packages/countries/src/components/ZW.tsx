@@ -18,7 +18,7 @@ const ZW = forwardRef<SVGSVGElement, ZWProps>(function ZW(props: ZWProps, ref) {
       aria-label="Zimbabwe"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

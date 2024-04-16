@@ -18,7 +18,7 @@ const GW = forwardRef<SVGSVGElement, GWProps>(function GW(props: GWProps, ref) {
       aria-label="Guinea-Bissau"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

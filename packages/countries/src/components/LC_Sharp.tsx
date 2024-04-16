@@ -21,7 +21,7 @@ const LC_Sharp = forwardRef<SVGSVGElement, LC_SharpProps>(function LC_Sharp(
       aria-label="Saint Lucia"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

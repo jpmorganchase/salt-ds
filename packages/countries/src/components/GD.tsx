@@ -18,7 +18,7 @@ const GD = forwardRef<SVGSVGElement, GDProps>(function GD(props: GDProps, ref) {
       aria-label="Grenada"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

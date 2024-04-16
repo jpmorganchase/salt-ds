@@ -18,7 +18,7 @@ const YT = forwardRef<SVGSVGElement, YTProps>(function YT(props: YTProps, ref) {
       aria-label="Mayotte"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

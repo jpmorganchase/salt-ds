@@ -21,7 +21,7 @@ const KR_Sharp = forwardRef<SVGSVGElement, KR_SharpProps>(function KR_Sharp(
       aria-label="Korea (the Republic of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

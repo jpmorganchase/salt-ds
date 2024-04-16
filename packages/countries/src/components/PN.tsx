@@ -18,7 +18,7 @@ const PN = forwardRef<SVGSVGElement, PNProps>(function PN(props: PNProps, ref) {
       aria-label="Pitcairn"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

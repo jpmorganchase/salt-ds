@@ -21,7 +21,7 @@ const CK_Sharp = forwardRef<SVGSVGElement, CK_SharpProps>(function CK_Sharp(
       aria-label="Cook Islands (the)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

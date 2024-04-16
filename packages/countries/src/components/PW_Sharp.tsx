@@ -21,7 +21,7 @@ const PW_Sharp = forwardRef<SVGSVGElement, PW_SharpProps>(function PW_Sharp(
       aria-label="Palau"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

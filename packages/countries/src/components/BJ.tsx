@@ -18,7 +18,7 @@ const BJ = forwardRef<SVGSVGElement, BJProps>(function BJ(props: BJProps, ref) {
       aria-label="Benin"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

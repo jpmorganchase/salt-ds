@@ -18,7 +18,7 @@ const BF = forwardRef<SVGSVGElement, BFProps>(function BF(props: BFProps, ref) {
       aria-label="Burkina Faso"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

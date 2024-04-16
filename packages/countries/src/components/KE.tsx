@@ -18,7 +18,7 @@ const KE = forwardRef<SVGSVGElement, KEProps>(function KE(props: KEProps, ref) {
       aria-label="Kenya"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

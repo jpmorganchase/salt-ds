@@ -18,7 +18,7 @@ const CN = forwardRef<SVGSVGElement, CNProps>(function CN(props: CNProps, ref) {
       aria-label="China"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

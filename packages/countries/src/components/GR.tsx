@@ -18,7 +18,7 @@ const GR = forwardRef<SVGSVGElement, GRProps>(function GR(props: GRProps, ref) {
       aria-label="Greece"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

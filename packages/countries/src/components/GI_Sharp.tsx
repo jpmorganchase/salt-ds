@@ -21,7 +21,7 @@ const GI_Sharp = forwardRef<SVGSVGElement, GI_SharpProps>(function GI_Sharp(
       aria-label="Gibraltar"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

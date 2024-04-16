@@ -18,7 +18,7 @@ const LV = forwardRef<SVGSVGElement, LVProps>(function LV(props: LVProps, ref) {
       aria-label="Latvia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

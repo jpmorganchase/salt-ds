@@ -18,7 +18,7 @@ const ML = forwardRef<SVGSVGElement, MLProps>(function ML(props: MLProps, ref) {
       aria-label="Mali"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

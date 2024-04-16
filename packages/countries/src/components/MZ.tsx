@@ -18,7 +18,7 @@ const MZ = forwardRef<SVGSVGElement, MZProps>(function MZ(props: MZProps, ref) {
       aria-label="Mozambique"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

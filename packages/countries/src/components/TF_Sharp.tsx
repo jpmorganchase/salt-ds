@@ -21,7 +21,7 @@ const TF_Sharp = forwardRef<SVGSVGElement, TF_SharpProps>(function TF_Sharp(
       aria-label="French Southern Territories (the)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

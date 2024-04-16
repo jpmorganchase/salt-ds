@@ -18,7 +18,7 @@ const LA = forwardRef<SVGSVGElement, LAProps>(function LA(props: LAProps, ref) {
       aria-label="Lao People&#39;s Democratic Republic (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

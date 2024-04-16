@@ -18,7 +18,7 @@ const UY = forwardRef<SVGSVGElement, UYProps>(function UY(props: UYProps, ref) {
       aria-label="Uruguay"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

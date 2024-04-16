@@ -21,7 +21,7 @@ const BQ_Sharp = forwardRef<SVGSVGElement, BQ_SharpProps>(function BQ_Sharp(
       aria-label="Bonaire Sint Eustatius and Saba"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

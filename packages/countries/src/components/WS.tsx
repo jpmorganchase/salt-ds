@@ -18,7 +18,7 @@ const WS = forwardRef<SVGSVGElement, WSProps>(function WS(props: WSProps, ref) {
       aria-label="Samoa"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

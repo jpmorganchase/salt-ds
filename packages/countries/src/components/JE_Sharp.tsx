@@ -21,7 +21,7 @@ const JE_Sharp = forwardRef<SVGSVGElement, JE_SharpProps>(function JE_Sharp(
       aria-label="Jersey"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

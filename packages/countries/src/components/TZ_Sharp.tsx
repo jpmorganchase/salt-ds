@@ -21,7 +21,7 @@ const TZ_Sharp = forwardRef<SVGSVGElement, TZ_SharpProps>(function TZ_Sharp(
       aria-label="Tanzania (the United Republic of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: true })}
+      className={clsx(className, { "saltCountrySymbol-sharp": true })}
       {...rest}
     >
       <mask

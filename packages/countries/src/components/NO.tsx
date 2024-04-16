@@ -18,7 +18,7 @@ const NO = forwardRef<SVGSVGElement, NOProps>(function NO(props: NOProps, ref) {
       aria-label="Norway"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

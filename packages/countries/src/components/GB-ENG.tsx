@@ -21,7 +21,7 @@ const GB_ENG = forwardRef<SVGSVGElement, GB_ENGProps>(function GB_ENG(
       aria-label="England"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask

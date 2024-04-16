@@ -18,7 +18,7 @@ const TD = forwardRef<SVGSVGElement, TDProps>(function TD(props: TDProps, ref) {
       aria-label="Chad"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { saltSharpCountrySymbol: false })}
+      className={clsx(className, { "saltCountrySymbol-sharp": false })}
       {...rest}
     >
       <mask
