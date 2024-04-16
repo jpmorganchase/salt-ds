@@ -1,0 +1,58 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+If focus is on a menu item, Tab closes the menu and moves focus to the next focusable element in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+If focus is on a menu item, this action closes the menu and moves focus to the previous focusable element in the tab order.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space / Enter">
+
+- If focus is on the menu trigger, this action opens the menu and places focus on the first menu item.
+- When focus is on a menu item that has a submenu, this action opens the submenu and places focus on its first item.
+- Otherwise, this actionaactivates the item, and closes the menu.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up arrow">
+  
+When focus is in a menu, Up arrow moves focus to the previous item.
+
+</KeyboardControl>
+  
+<KeyboardControl keyOrCombos="Down arrow">
+
+When focus is in a menu, Down arrow moves focus to the next item.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Right arrow">
+  
+When focus is in a menu and on a menu item that has a submenu, Right arrow opens the submenu and places focus on its first item.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Left arrow">
+
+When focus is in a submenu of an item in a menu, Left arrow closes the submenu and returns focus to the parent menu item.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Escape">
+  
+Escape closes the menu, and sets focus to the element element that triggered opening the menu, e.g. a button or the parent menu item from which the menu was opened.
+
+</KeyboardControl>
+</KeyboardControls>

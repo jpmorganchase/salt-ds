@@ -85,7 +85,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   const { Component: FloatingComponent } = useFloatingComponent();
 
   const { context, floating, elements } = useFloatingUI({
-    open,
+    open: showComponent,
     onOpenChange,
   });
 
@@ -110,7 +110,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
   }, [open, showComponent, setShowComponent]);
 
   return (
-    <ConditionalScrimWrapper condition={open && !disableScrim}>
+    <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
       <FloatingComponent
         open={showComponent}
         ref={handleRef}

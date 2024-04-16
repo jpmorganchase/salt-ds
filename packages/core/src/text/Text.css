@@ -78,6 +78,12 @@
   font-weight: var(--salt-text-action-fontWeight);
 }
 
+/* Code */
+code.saltText,
+.saltText-code.saltText {
+  font-family: var(--salt-text-code-fontFamily);
+}
+
 /* Display 1 */
 .saltText-display1.saltText {
   font-family: var(--salt-text-display1-fontFamily);

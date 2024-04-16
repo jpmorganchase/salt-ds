@@ -8,8 +8,9 @@ Tableau is a data visualization tool. It allows users to create customized dashb
 This guidance outlines how you can best align your Tableau dashboards with the Salt design system foundations. It's not possible to fully align Tableau designs with all of the foundations due to the tool's limitations, but this guidance will help you achieve greater visual consistency in spacing, typography, color and icons.
 
 <Diagram
-  src="/img/design-getting-started/intro-image.png"
+  src="/img/design-getting-started/tableau/intro-image.png"
   alt="Full Salt dashboard view in Tableau"
+  border
 />
 
 ## Analytical dashboard
@@ -54,20 +55,23 @@ To import a layout grid SVG into Tableau:
 Tableau does not import images at 100% scale, and instead applies 4px outer padding across all borders by default. In the layout panel, change the padding values to 0px on all sides. This ensures any content aligned to the grid is sized and positioned accurately.
 
 <Diagram
-  src="/img/design-getting-started/import-layout-grid.png"
+  src="/img/design-getting-started/tableau/import-layout-grid.png"
   alt="Importing an SVG image of a layout grid"
+  border
 />
 
 The Salt example dashboard uses an eight-column MD large grid.
 
 <Diagram
-  src="/img/design-getting-started/8-column-MD-grid.png"
+  src="/img/design-getting-started/tableau/8-column-MD-grid.png"
   alt="Eight column layout grid in MD"
+  border
 />
 
 <Diagram
-  src="/img/design-getting-started/tableau-padding-lock.png"
+  src="/img/design-getting-started/tableau/tableau-padding-lock.png"
   alt="Configure the padding by locking and unlocking"
+  border
 />
 
 ### Content modules
@@ -94,8 +98,9 @@ There are three types of containers to organize elements within
 - Blank: a versatile container that provides flexibility over both width and height. Blank objects add spacing and help with the organisation of a layout.
 
 <Diagram
-  src="/img/design-getting-started/tableau-container-types.png"
+  src="/img/design-getting-started/tableau/tableau-container-types.png"
   alt="Tableau object types from the Dashboard panel"
+  border
 />
 
 Dashboards typically have a layout comprising a main body region supported by a fixed panel.
@@ -105,8 +110,9 @@ Since the main body region contains panels positioned to accommodate content and
 A fixed panel can be a floating or tiled container. The Salt example dashboard utilizes a floating container for flexibility of positioning and ease of adjustment.
 
 <Diagram
-  src="/img/design-getting-started/fixed-panel-and-main-body.png"
+  src="/img/design-getting-started/tableau/fixed-panel-and-main-body.png"
   alt="Dashboard region layout"
+  border
 />
 
 #### Nesting containers
@@ -115,7 +121,7 @@ Using nested containers, you can define the content layout and structure. You ca
 
 <Diagrams>
   <Diagram
-    src="/img/design-getting-started/horizontal-parent-container.png"
+    src="/img/design-getting-started/tableau/horizontal-parent-container.png"
     contentPosition="top"
     alt="Horizontal container nesting"
   >
@@ -129,7 +135,7 @@ Using nested containers, you can define the content layout and structure. You ca
   </Diagram>
 
   <Diagram
-    src="/img/design-getting-started/vertical-parent-container.png"
+    src="/img/design-getting-started/tableau/vertical-parent-container.png"
     contentPosition="top"
     alt="Vertical container nesting"
   >
@@ -169,20 +175,23 @@ Another example of where some complex nesting may be required to align elements 
 By nesting the buttons within their own container, you can control the spacing and positioning of the buttons. The containers can be used to determine the height of the buttons. Width is controlled via the dropdown menu on the individual buttons. Select ‘edit width’ to amend the value.
 
 <Diagram
-  src="/img/design-getting-started/buttons-layout.png"
+  src="/img/design-getting-started/tableau/buttons-layout.png"
   alt="Dashboard text and buttons"
+  border
 />
 
 To horizontally align a set of buttons, place two or more buttons inside a horizontal container to control the height of the buttons.
 
 <Diagram
-  src="/img/design-getting-started/buttons-padding.png"
+  src="/img/design-getting-started/tableau/buttons-padding.png"
   alt="Vertical button padding"
+  border
 />
 
 <Diagram
-  src="/img/design-getting-started/buttons-container-1.png"
+  src="/img/design-getting-started/tableau/buttons-container-1.png"
   alt="Vertical button padding"
+  border
 />
 
 Place the horizontal container containing the buttons inside a vertical container. Add a blank object directly below the buttons inside the vertical container to act as padding for the positioning of the buttons in relation to the rest of the content it’s aligned to within the dashboard.
@@ -190,13 +199,15 @@ Place the horizontal container containing the buttons inside a vertical containe
 Each container type, including the buttons, has it’s own inner and outer padding values that can be used to arrange the buttons on the grid. It is important these values are set in a logical manner to aid with ease of spacing management.
 
 <Diagram
-  src="/img/design-getting-started/buttons-container-2.png"
+  src="/img/design-getting-started/tableau/buttons-container-2.png"
   alt="Vertical padding container"
+  border
 />
 
 <Diagram
-  src="/img/design-getting-started/buttons-container-3.png"
+  src="/img/design-getting-started/tableau/buttons-container-3.png"
   alt="Blank object for padding"
+  border
 />
 
 ## Typography
@@ -233,13 +244,18 @@ It's also important to note the font preset sizes within Tableau don't visually 
 
 Drag and drop a text object from the Objects panel to add text. You can nest text objects within containers and apply individual padding values to them using the Layout panel.
 
-<Diagram src="/img/design-getting-started/text-object.png" alt="Text object" />
+<Diagram
+  src="/img/design-getting-started/tableau/text-object.png"
+  alt="Text object"
+  border
+/>
 
 Double-click into a text object to edit the content and formatting. You can edit individual parts of a single text object separately to display the type style and color.
 
 <Diagram
-  src="/img/design-getting-started/edit-text.png"
+  src="/img/design-getting-started/tableau/edit-text.png"
   alt="Edit and format text"
+  border
 />
 
 ### Metrics
@@ -253,16 +269,18 @@ The Salt example dashboard contains three prestyled text-based metrics you can a
 You can use these to represent a change from a previous value. You can also add characters or labels to help provide context to the presented value.
 
 <Diagram
-  src="/img/design-getting-started/metrics-full.png"
+  src="/img/design-getting-started/tableau/metrics-full.png"
   alt="Panel with a set of metrics"
+  border
 />
 
 You can find metrics within sheets which are single-view worksheets or stories accessible via the tabs at the bottom
 of the interface. A single sheet contains editable data, shelves, cards, legends, and the Data and Analytics panes in its side bar. A collection of sheets form a dashboard and its content.
 
 <Diagram
-  src="/img/design-getting-started/tableau-tabs.png"
+  src="/img/design-getting-started/tableau/tableau-tabs.png"
   alt="Tableau interface tabs"
+  border
 />
 
 To use an existing Salt metric from the file, duplicate a chosen metric tab at the bottom and rename it. It’s important to note that you can only use an individual metric once within a dashboard; even if the design requires duplicates, you must represent this via multiple sheets.
@@ -271,15 +289,17 @@ To use an existing Salt metric from the file, duplicate a chosen metric tab at t
 - To place a sheet/metric within a dashboard, drag and drop a sheet from the list into a container.
 
 <Diagram
-  src="/img/design-getting-started/tableau-sheets.png"
+  src="/img/design-getting-started/tableau/tableau-sheets.png"
   alt="Tableau sheets list"
+  border
 />
 
 Edit text within the relevant sheet containing the metric/data. You can control the font style, weight, size and color via the Edit Label panel. You can also apply different colors to individual parts of text.
 
 <Diagram
-  src="/img/design-getting-started/edit-metric-text.png"
+  src="/img/design-getting-started/tableau/edit-metric-text.png"
   alt="Format metric text"
+  border
 />
 
 ## Color
@@ -291,8 +311,9 @@ There are fewer constraints when applying color within Tableau. Use a color sele
 The Tableau file contains the UITK Categorical color palette to apply to data visualization widgets. You can only access this palette within individual worksheets rather than a dashboard view.
 
 <Diagram
-  src="/img/design-getting-started/salt-color-palette.png"
+  src="/img/design-getting-started/tableau/salt-color-palette.png"
   alt="Salt 2.0 Beta color palette in Tableau"
+  border
 />
 
 You can add additional custom palettes within a file manually using the following steps:
@@ -301,8 +322,9 @@ You can add additional custom palettes within a file manually using the followin
 2. Right-click on the file and select **Open with** > **Notepad**.
 
 <Diagram
-  src="/img/design-getting-started/documents-folder-tableau.png"
+  src="/img/design-getting-started/tableau/documents-folder-tableau.png"
   alt="Open preferences file from documents"
+  border
 />
 
 This should open up a text file containing HTML of the existing color palettes within the Tableau file.
@@ -315,8 +337,9 @@ This should open up a text file containing HTML of the existing color palettes w
 It’s important to note that in order to update the Tableau file with new color palettes, after saving the Preferences file with the updated hex values, both the Preferences notepad and the Tableau window need to be closed before re-opening Tableau.
 
 <Diagram
-  src="/img/design-getting-started/preferences-notepad.png"
+  src="/img/design-getting-started/tableau/preferences-notepad.png"
   alt="Preferences notepad window"
+  border
 />
 
 ### Panels
@@ -329,8 +352,9 @@ Use the following Salt tokens for panels in light mode dashboards:
 - Secondary containers: `--container-secondary-background` (hex value EAEDEF)
 
 <Diagram
-  src="/img/design-getting-started/panel-containers.png"
+  src="/img/design-getting-started/tableau/panel-containers.png"
   alt="Applying color to panels in Tableau"
+  border
 />
 
 ### Text
@@ -338,8 +362,9 @@ Use the following Salt tokens for panels in light mode dashboards:
 You can apply color to text using RGB or Hex Ref inputs. Text-based sheets don't contain preset color palettes like charts do. However, you can add individual colours into the **Custom colors** section within the color picker for quicker reference.
 
 <Diagram
-  src="/img/design-getting-started/text-colour.png"
+  src="/img/design-getting-started/tableau/text-color.png"
   alt="Color window for formatting text"
+  border
 />
 
 ### Apply color to charts
@@ -351,15 +376,17 @@ To apply color to individual elements of a chart, follow the below steps:
 1. Select the chart value to assign a color to from the ‘Category’ list on the right-hand side
 
 <Diagram
-  src="/img/design-getting-started/chart-1.png"
+  src="/img/design-getting-started/tableau/chart-1.png"
   alt="Select chart value to assign color"
+  border
 />
 
 2. Select edit colours from the ‘Marks’ card to the left. This will open the color palette window. Select ‘Assign Palette’ to ensure colors are assigned from the correct palette.
 
 <Diagram
-  src="/img/design-getting-started/chart-2.png"
+  src="/img/design-getting-started/tableau/chart-2.png"
   alt="Apply color to chart from Salt 2.0 Beta color palette"
+  border
 />
 
 3. Select a color from the ‘Salt 2.0 Beta’ palette (or a color palette of your choice), click ‘Apply’ to assign the color and then click ‘Ok’ to confirm and close the window.
@@ -367,8 +394,9 @@ To apply color to individual elements of a chart, follow the below steps:
 Your chart should update with the newly assigned color.
 
 <Diagram
-  src="/img/design-getting-started/chart-3.png"
+  src="/img/design-getting-started/tableau/chart-3.png"
   alt="Chart with updated color"
+  border
 />
 
 ## Icons
@@ -380,6 +408,7 @@ For instance, in the Salt dashboard example, the positive metric uses an up arro
 Instead, an alternative solution is to use the Windows Character Map utility to copy and paste characters such as up/down arrows as part of the metric text. This allows a metric to adapt to the dashboard’s functional requirements.
 
 <Diagram
-  src="/img/design-getting-started/icons-and-characters.png"
+  src="/img/design-getting-started/tableau/icons-and-characters.png"
   alt="Chart with updated color"
+  border
 />

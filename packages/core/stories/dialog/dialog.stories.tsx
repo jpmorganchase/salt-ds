@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { PropsWithChildren, ReactNode, useState } from "react";
+import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import {
   Button,
   StackLayout,
@@ -22,6 +22,15 @@ export default {
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
   },
 } as Meta<typeof Dialog>;
+
+const UnmountLogger = () => {
+  useEffect(() => {
+    return () => {
+      console.log(new Date().getTime(), "Dummy unmount");
+    };
+  }, []);
+  return null;
+};
 
 const DialogTemplate: StoryFn<
   DialogProps & { header: string; preheader: string; content: ReactNode }
@@ -61,7 +70,10 @@ const DialogTemplate: StoryFn<
         size={size}
       >
         <DialogHeader header={header} preheader={preheader} />
-        <DialogContent>{content}</DialogContent>
+        <DialogContent>
+          {content}
+          <UnmountLogger />
+        </DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={handleClose}>
             Cancel

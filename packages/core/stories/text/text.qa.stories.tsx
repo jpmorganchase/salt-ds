@@ -10,6 +10,7 @@ import {
   Text,
   TextNotation,
   TextAction,
+  Code,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -68,6 +69,9 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <TextAction>
       Action <strong>strong</strong> and <small>small</small> text
     </TextAction>
+    <Code>
+      Code <strong>strong</strong> and <small>small</small> text
+    </Code>
   </QAContainer>
 );
 
@@ -121,6 +125,9 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <TextAction>
       Action <strong>strong</strong> and <small>small</small> text
     </TextAction>
+    <Code>
+      Code <strong>strong</strong> and <small>small</small> text
+    </Code>
   </QAContainerNoStyleInjection>
 );
 

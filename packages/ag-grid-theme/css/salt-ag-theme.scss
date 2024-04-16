@@ -88,6 +88,16 @@ div[class*="ag-theme-salt"] {
     var(--salt-content-primary-foreground)
   );
 
+  --agGrid-menu-borderColor: var(
+    --saltAgGrid-menu-borderColor,
+    var(--salt-selectable-borderColor-selected)
+  );
+
+  --agGrid-menu-shadow: var(
+    --saltAgGrid-menu-shadow,
+    var(--salt-overlayable-shadow-popout)
+  );
+
   --agGrid-row-color-hover: var(
     --saltAgGrid-row-color-hover,
     var(--salt-selectable-background-hover)

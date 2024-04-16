@@ -1,0 +1,61 @@
+.saltOption {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  display: flex;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  align-items: center;
+  cursor: var(--salt-selectable-cursor-hover);
+  box-sizing: border-box;
+}
+
+.saltOption-active {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltOption-focusVisible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-border) * -2);
+}
+
+.saltOption:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltOption[aria-selected="true"] {
+  background: var(--salt-selectable-background-selected);
+}
+
+.saltOption[aria-selected="true"]::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+}
+
+.saltOption[aria-selected="true"]::before {
+  border-top: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+}
+
+.saltOption[aria-selected="true"]:first-of-type::before {
+  border-top: unset;
+  top: 0;
+}
+.saltOption[aria-selected="true"]:last-of-type::before {
+  border-bottom: unset;
+  bottom: 0;
+}
+
+.saltOption[aria-disabled="true"] {
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
+}

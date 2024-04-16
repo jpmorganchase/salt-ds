@@ -1,13 +1,8 @@
 import { Meta, StoryFn } from "@storybook/react";
 
-import {
-  ButtonBar,
-  Carousel,
-  CarouselSlide,
-  OrderedButton,
-} from "@salt-ds/lab";
+import { Carousel, CarouselSlide } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { FlexLayout } from "@salt-ds/core";
+import { Button, FlexLayout } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
@@ -15,11 +10,7 @@ export default {
 } as Meta<typeof Carousel>;
 
 const CarouselExample: StoryFn<typeof Carousel> = (args) => {
-  const renderButtonBar = () => (
-    <ButtonBar>
-      <OrderedButton variant="cta">Learn more</OrderedButton>
-    </ButtonBar>
-  );
+  const renderButtonBar = () => <Button variant="cta">Learn more</Button>;
 
   return (
     <Carousel className="carousel-container" {...args}>

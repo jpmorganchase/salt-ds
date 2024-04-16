@@ -48,10 +48,8 @@ export interface Data {
   relatedComponents: RelatedComponent[];
   sourceCodeUrl: string;
   package: ComponentNpmInfo;
-  stickerSheet?: string;
   bugReport?: string;
   featureRequest?: string;
-  askQuestion?: string;
 }
 
 type CustomSiteState = SiteState & { data?: Data };

@@ -1,5 +1,4 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBoxNext, Option } from "@salt-ds/lab";
 import {
   Button,
   Checkbox,
@@ -12,6 +11,8 @@ import {
   H2,
   useId,
   Drawer,
+  ComboBox,
+  Option,
 } from "@salt-ds/core";
 
 export const MandatoryAction = (): ReactElement => {
@@ -68,7 +69,7 @@ export const MandatoryAction = (): ReactElement => {
           </FormField>
           <FormField>
             <FormFieldLabel>Postcode</FormFieldLabel>
-            <ComboBoxNext
+            <ComboBox
               onChange={handleChange}
               onSelectionChange={handleSelectionChange}
               value={value}
@@ -79,7 +80,7 @@ export const MandatoryAction = (): ReactElement => {
                   {postcode}
                 </Option>
               ))}
-            </ComboBoxNext>
+            </ComboBox>
             <FormFieldHelperText>Do not include space</FormFieldHelperText>
           </FormField>
           <FormField>

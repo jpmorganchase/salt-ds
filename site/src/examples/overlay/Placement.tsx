@@ -1,12 +1,14 @@
 import { ReactElement } from "react";
-
 import {
+  Tooltip,
+  Button,
+  useId,
   Overlay,
   OverlayPanel,
+  OverlayPanelContent,
   OverlayProps,
   OverlayTrigger,
-} from "@salt-ds/lab";
-import { Tooltip, Button, useId } from "@salt-ds/core";
+} from "@salt-ds/core";
 import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {
@@ -19,17 +21,19 @@ export const OverlayTemplate = (props: OverlayProps): ReactElement => {
         <Button>{placement}</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
-        <h3 id={id} className={styles.contentHeading}>
-          Title
-        </h3>
-        <div>
-          Content of Overlay
-          <br />
-          <br />
-          <Tooltip content={"im a tooltip"}>
-            <Button>hover me</Button>
-          </Tooltip>
-        </div>
+        <OverlayPanelContent>
+          <h3 id={id} className={styles.contentHeading}>
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <br />
+            <br />
+            <Tooltip content={"I'm a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
+        </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

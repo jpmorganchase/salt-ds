@@ -8,10 +8,9 @@ import {
 import { makePrefixer } from "@salt-ds/core";
 
 import { clsx } from "clsx";
-import { ButtonBarProps } from "../button-bar";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
-  ButtonBar?: ElementType<Partial<ButtonBarProps>>;
+  ButtonBar?: ElementType;
   Media: ReactElement;
   description?: string;
   title?: string;
@@ -68,7 +67,6 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
                   [withBaseName("buttonBarContainerLeft")]:
                     contentAlignment === "left",
                 })}
-                stackAtBreakpoint={0}
               />
             </div>
           )}
