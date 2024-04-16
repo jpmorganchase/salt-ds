@@ -92,8 +92,14 @@
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .saltButton:active,
-.saltButton.saltButton-active,
-.saltButton[aria-expanded="true"] {
+.saltButton.saltButton-active {
+  background: var(--saltButton-background-active, var(--button-background-active));
+  color: var(--saltButton-text-color-active, var(--button-text-color-active));
+}
+
+/* Styles applied when the button triggers a dialog or menu */
+.saltButton[aria-expanded="true"][aria-haspopup="menu"],
+.saltButton[aria-expanded="true"][aria-haspopup="dialog"] {
   background: var(--saltButton-background-active, var(--button-background-active));
   color: var(--saltButton-text-color-active, var(--button-text-color-active));
 }
