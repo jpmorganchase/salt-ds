@@ -6292,7 +6292,7 @@ __metadata:
     mockdate: "npm:^3.0.5"
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch"
     msw: "npm:^1.2.1"
-    msw-storybook-addon: "npm:^1.8.0"
+    msw-storybook-addon: "npm:^2.0.0"
     prettier: "npm:^2.6.2"
     pretty-quick: "npm:^3.1.3"
     react: "npm:^18.0.0"
@@ -22972,14 +22972,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw-storybook-addon@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "msw-storybook-addon@npm:1.8.0"
+"msw-storybook-addon@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "msw-storybook-addon@npm:2.0.0"
   dependencies:
     is-node-process: "npm:^1.0.1"
   peerDependencies:
-    msw: ">=0.35.0 <2.0.0"
-  checksum: 10/dc20f166ba69dadefadbad3af25566cefc3a53d66bd849a2c6682d5b05e258bfc2a7394077925886ca646e1ef067ea8e59549a3f7a54783deb32a285b43a4534
+    msw: ^2.0.0
+  checksum: 10/b49a4bb4e70a3e983ade89bb28117bdc17975d820e53b36d80d2a231b614ac7739b34efb524d1724f4cf41d70929c1f987a91e22a3611b45b21a7d1b936db026
   languageName: node
   linkType: hard
 
