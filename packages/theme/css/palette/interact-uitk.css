@@ -1,0 +1,8 @@
+.salt-theme.salt-uitk-theme[data-mode="light"] {
+  --salt-palette-interact-border-active: var(--salt-uitk-color-blue-400);
+  --salt-palette-interact-foreground-active: var(--salt-uitk-color-blue-400);
+}
+.salt-theme.salt-uitk-theme[data-mode="dark"] {
+  --salt-palette-interact-border-active: var(--salt-uitk-color-blue-400);
+  --salt-palette-interact-foreground-active: var(--salt-uitk-color-blue-400);
+}
