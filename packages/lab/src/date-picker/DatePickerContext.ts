@@ -7,10 +7,10 @@ export interface DatePickerContextValue {
   openState: boolean;
   setOpen: (newOpen: boolean) => void;
   disabled: boolean;
-  startDate: DateValue | null;
+  startDate: DateValue | undefined;
   setStartDate: (newStartDate: DateValue) => void;
-  endDate: DateValue | null;
-  setEndDate: (newStartDate: DateValue) => void;
+  endDate: DateValue | undefined;
+  setEndDate: (newEndDate: DateValue) => void;
   selectionVariant: "default" | "range";
 }
 
@@ -20,9 +20,9 @@ export const DatePickerContext = createContext<DatePickerContextValue>(
     openState: false,
     setOpen: () => undefined,
     disabled: false,
-    startDate: null,
+    startDate: undefined,
     setStartDate: () => undefined,
-    endDate: null,
+    endDate: undefined,
     setEndDate: () => undefined,
     selectionVariant: "default",
   }

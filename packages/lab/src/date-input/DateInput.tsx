@@ -5,23 +5,15 @@ import {
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
-  KeyboardEvent,
-  Ref,
+  ReactNode,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import dateInputCss from "./DateInput.css";
-import {
-  Button,
-  makePrefixer,
-  useControlled,
-  useFormFieldProps,
-} from "@salt-ds/core";
+import { makePrefixer, useControlled, useFormFieldProps } from "@salt-ds/core";
 import { DateFormatter } from "@internationalized/date";
-import { CalendarIcon } from "@salt-ds/icons";
-import { useDatePickerContext } from "../date-picker/DatePickerContext";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -50,13 +42,13 @@ export interface DateInputProps
    */
   emptyReadOnlyMarker?: string;
   /**
+   * End adornment component
+   */
+  endAdornment?: ReactNode;
+  /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes) applied to the `input` elements.
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
-  /**
-   * Optional ref for the dateInput component
-   */
-  inputRef?: Ref<HTMLInputElement>;
   /**
    * If `true`, the component is read only.
    */
@@ -75,29 +67,30 @@ export interface DateInputProps
   dateFormatter?: (input: string) => string;
   startDate?: string;
   defaultStartDate?: string;
+  endDate?: string;
+  defaultEndDate?: string;
+  selectionVariant?: "default" | "range";
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   function DateInput(
     {
-      "aria-activedescendant": ariaActiveDescendant,
-      "aria-expanded": ariaExpanded,
-      "aria-owns": ariaOwns,
       className,
       disabled,
       emptyReadOnlyMarker = "—",
       inputProps = {},
-      inputRef,
+      endAdornment,
+
       readOnly: readOnlyProp,
-      role,
       startDate: startDateProp,
-      defaultStartDate: defaultStartDateProp = startDateProp === undefined
-        ? ""
-        : undefined,
+      endDate: endDateProp,
+      defaultStartDate: defaultStartDateProp,
+      defaultEndDate: defaultEndDateProp,
       validationStatus: validationStatusProp,
       variant = "primary",
       dateFormatter = defaultDateFormatter,
       placeholder = "dd mmm yyyy",
+      selectionVariant = "default",
       ...rest
     },
     ref
@@ -120,28 +113,32 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
 
-    const restA11yProps = {
-      "aria-activedescendant": ariaActiveDescendant,
-      "aria-expanded": ariaExpanded,
-      "aria-owns": ariaOwns,
-    };
-
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const isEmptyReadOnly =
-      isReadOnly && !defaultStartDateProp && !startDateProp;
-    const defaultStartDate = isEmptyReadOnly
-      ? emptyReadOnlyMarker
-      : defaultStartDateProp;
-    const [startDate, setStartDate] = useControlled({
-      controlled: startDateProp,
-      default: defaultStartDate,
-      name: "DateInput",
-      state: "value",
-    });
+    const isEmptyReadOnly = isReadOnly && !defaultStartDateProp;
+    const defaultStartDate =
+      isEmptyReadOnly && !startDateProp
+        ? emptyReadOnlyMarker
+        : defaultStartDateProp;
+    const defaultEndDate =
+      isEmptyReadOnly && !endDateProp
+        ? emptyReadOnlyMarker
+        : defaultEndDateProp;
 
     const getDateValidationStatus = (value: string | undefined) =>
       value && isInvalidDate(value) ? "error" : undefined;
 
+    const [startDate, setStartDate] = useControlled({
+      controlled: startDateProp,
+      default: defaultStartDate ?? "",
+      name: "StartDateInput",
+      state: "value",
+    });
+    const [endDate, setEndDate] = useControlled({
+      controlled: endDateProp,
+      default: defaultEndDate ?? "",
+      name: "EndDateInput",
+      state: "value",
+    });
     const [dateStatus, setDateStatus] = useState<"error" | undefined>(
       getDateValidationStatus(startDate)
     );
@@ -167,8 +164,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
 
-    const { openState, setOpen, selectionVariant } = useDatePickerContext();
-
     const format = (date: string) => {
       const formattedDate = dateFormatter(date);
       setStartDate(formattedDate);
@@ -182,23 +177,27 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       startDate && format(startDate);
       onBlur?.(event);
       setDateStatus(getDateValidationStatus(startDate));
+      if (selectionVariant !== "range") {
+        setFocused(false);
+      }
+    };
+
+    const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+      setEndDate(event.target.value);
+      onChange?.(event);
+    };
+
+    const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+      startDate && format(startDate);
+      onBlur?.(event);
+      setDateStatus(getDateValidationStatus(startDate));
       setFocused(false);
     };
 
     const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
       onFocus?.(event);
       setFocused(true);
-      setOpen(true);
     };
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Tab" && event.shiftKey) {
-        setOpen(false);
-      }
-      onKeyDown?.(event);
-    };
-
-    const activeInput = selectionVariant === "default" && openState;
 
     return (
       <div
@@ -220,28 +219,41 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
           aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
           className={clsx(withBaseName("input"), {
-            [withBaseName("active")]: activeInput,
+            [withBaseName("active")]:
+              selectionVariant !== "range" && !startDate,
           })}
           disabled={isDisabled}
           readOnly={isReadOnly}
-          ref={inputRef}
-          role={role}
           tabIndex={isDisabled ? -1 : 0}
           onBlur={handleStartDateBlur}
           onChange={handleStartDateChange}
-          onKeyDown={handleKeyDown}
           onFocus={!isDisabled ? handleFocus : undefined}
           placeholder={placeholder}
-          value={startDate ?? ""}
-          {...restA11yProps}
+          value={startDate}
           {...restDateInputProps}
           required={isRequired}
         />
+        {selectionVariant === "range" && (
+          <input
+            aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
+            aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+            className={clsx(withBaseName("input"), {
+              [withBaseName("active")]: startDate && !endDate,
+            })}
+            disabled={isDisabled}
+            readOnly={isReadOnly}
+            tabIndex={isDisabled ? -1 : 0}
+            onBlur={handleEndDateBlur}
+            onChange={handleEndDateChange}
+            placeholder={placeholder}
+            value={endDate}
+            {...restDateInputProps}
+            required={isRequired}
+          />
+        )}
         {
           <div className={withBaseName("endAdornmentContainer")}>
-            <Button variant="secondary" onClick={() => setOpen(!openState)}>
-              <CalendarIcon />
-            </Button>
+            {endAdornment}
           </div>
         }
         <div className={withBaseName("activationIndicator")} />

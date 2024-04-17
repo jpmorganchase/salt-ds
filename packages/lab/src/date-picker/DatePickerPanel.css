@@ -7,4 +7,5 @@
   z-index: var(--salt-zIndex-popout);
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
+  display: flex;
 }

@@ -1,15 +1,23 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef, useState } from "react";
+import {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  forwardRef,
+  KeyboardEvent,
+  useEffect,
+  useState,
+} from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import datePickerCss from "./DatePicker.css";
-import { makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
+import { Button, makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
-import { flip, size } from "@floating-ui/react";
+import { flip, size, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue } from "@internationalized/date";
+import { CalendarIcon } from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
@@ -42,7 +50,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     const [open, setOpen] = useState<boolean>(false);
     const [startDate, setStartDate] = useState<DateValue | null>(null);
+    const [endDate, setEndDate] = useState<DateValue | null>(null);
+    const [inputValue, setInputValue] = useState<string>("");
 
+    useEffect(() => {
+      // TODO: Format
+      setInputValue(startDate as string);
+    }, [startDate]);
     const { x, y, strategy, elements, floating, reference, context } =
       useFloatingUI({
         open: open,
@@ -60,36 +74,60 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         ],
       });
 
+    const dismiss = useDismiss(context);
+
+    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
+
     const datePickerContextValue = {
       openState: open,
       setOpen,
-      disabled: disabled,
-      endDate: null,
-      setEndDate: () => undefined,
-      startDate: startDate,
-      setStartDate: setStartDate,
-      selectionVariant: selectionVariant,
+      disabled,
+      endDate,
+      setEndDate,
+      startDate,
+      setStartDate,
+      selectionVariant,
+    };
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      setInputValue(value);
+    };
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Tab" && event.shiftKey) {
+        setOpen(false);
+      }
     };
 
     const inputRef = useForkRef(ref, reference);
     return (
       <DatePickerContext.Provider value={datePickerContextValue}>
-        {/*// TODO: parse before passing to unput */}
         <DateInput
           className={clsx(withBaseName())}
           ref={inputRef}
-          startDate={startDate as string}
+          {...getReferenceProps()}
+          onFocus={() => setOpen(true)}
+          selectionVariant={selectionVariant}
+          startDate={inputValue}
+          endDate={endDate}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
           placeholder={placeholder}
+          endAdornment={
+            <Button variant="secondary" onClick={() => setOpen(!open)}>
+              <CalendarIcon />
+            </Button>
+          }
           {...rest}
         />
         <DatePickerPanel
           left={x ?? 0}
           top={y ?? 0}
-          context={context}
           position={strategy}
           width={elements.floating?.offsetWidth}
           height={elements.floating?.offsetHeight}
           ref={floating}
+          {...getFloatingProps()}
         />
       </DatePickerContext.Provider>
     );

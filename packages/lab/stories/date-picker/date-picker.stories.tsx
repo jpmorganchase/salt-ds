@@ -12,3 +12,8 @@ const DatePickerTemplate: StoryFn<DatePickerProps> = (args) => {
 
 export const Default = DatePickerTemplate.bind({});
 Default.args = {};
+
+export const Range = DatePickerTemplate.bind({});
+Range.args = {
+  selectionVariant: "range",
+};

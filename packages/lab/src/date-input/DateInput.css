@@ -107,7 +107,7 @@
   text-align: left;
   width: min-content;
 }
-/* todo: styles to apply when calendar is open and focus is on first calendar / there is no startDate selected*/
+
 .saltDateInput-active::first-line {
   background: var(--salt-content-foreground-highlight);
 }

@@ -10,7 +10,7 @@ describe("GIVEN a DateInput", () => {
 
   describe("WHEN cy.mounted as an uncontrolled component", () => {
     it("THEN it should cy.mount with the specified defaultValue", () => {
-      cy.mount(<Default defaultValue="01 Feb 2000" />);
+      cy.mount(<Default defaultStartDate="01 Feb 2000" />);
       cy.findByRole("textbox").should("have.value", "01 Feb 2000");
     });
 
@@ -22,7 +22,9 @@ describe("GIVEN a DateInput", () => {
           event.persist();
           changeSpy(event);
         };
-        cy.mount(<Default defaultValue="01 Feb 2000" onChange={onChange} />);
+        cy.mount(
+          <Default defaultStartDate="01 Feb 2000" onChange={onChange} />
+        );
         cy.findByRole("textbox").click().clear().type("02-feb-2000");
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: "02-feb-2000" },
@@ -33,7 +35,9 @@ describe("GIVEN a DateInput", () => {
           // React 16 backwards compatibility
           event.persist();
         };
-        cy.mount(<Default defaultValue="01 jan 2000" onChange={onChange} />);
+        cy.mount(
+          <Default defaultStartDate="01 jan 2000" onChange={onChange} />
+        );
         cy.findByRole("textbox").click().clear().type("02-feb-2000");
         cy.findByRole("textbox").blur();
         cy.findByRole("textbox").should("have.value", "02 Feb 2000");
@@ -43,7 +47,9 @@ describe("GIVEN a DateInput", () => {
           // React 16 backwards compatibility
           event.persist();
         };
-        cy.mount(<Default defaultValue="01 jan 2000" onChange={onChange} />);
+        cy.mount(
+          <Default defaultStartDate="01 jan 2000" onChange={onChange} />
+        );
         cy.findByRole("textbox").click().clear().type("01 0ct 2000");
         cy.findByRole("textbox").blur();
         cy.findByRole("textbox").should("have.value", "01 0ct 2000");
