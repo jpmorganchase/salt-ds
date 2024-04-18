@@ -20,6 +20,10 @@ import {
   StyleInjectionProvider,
 } from "@salt-ds/styles";
 import { UNSTABLE_Corner } from "../theme/Corner";
+import {
+  MatchedBreakpointProvider,
+  useMatchedBreakpoints,
+} from "./matched-breakpoints";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -264,12 +268,16 @@ function InternalSaltProvider({
     corner,
   ]);
 
+  const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
+
   const saltProvider = (
     <DensityContext.Provider value={density}>
       <ThemeContext.Provider value={themeContextValue}>
-        <BreakpointContext.Provider value={breakpoints}>
-          <ViewportProvider>{themedChildren}</ViewportProvider>
-        </BreakpointContext.Provider>
+        <MatchedBreakpointProvider matchedBreakpoints={matchedBreakpoints}>
+          <BreakpointContext.Provider value={breakpoints}>
+            <ViewportProvider>{themedChildren}</ViewportProvider>
+          </BreakpointContext.Provider>
+        </MatchedBreakpointProvider>
       </ThemeContext.Provider>
     </DensityContext.Provider>
   );

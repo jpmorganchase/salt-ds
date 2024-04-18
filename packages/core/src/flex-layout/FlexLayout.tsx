@@ -4,14 +4,15 @@ import { clsx } from "clsx";
 import {
   makePrefixer,
   ResponsiveProp,
-  useResponsiveProp,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
+  resolveResponsiveValue,
 } from "../utils";
 
 import flexLayoutCss from "./FlexLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
@@ -44,7 +45,7 @@ export type FlexLayoutProps<T extends ElementType> =
       /**
        * Controls the space between items, default is 3.
        */
-      gap?: ResponsiveProp<number>;
+      gap?: ResponsiveProp<number | string>;
       /**
        * Defines the alignment along the main axis, default is "start".
        */
@@ -66,6 +67,18 @@ type FlexLayoutComponent = <T extends ElementType = "div">(
   props: FlexLayoutProps<T>
 ) => ReactElement | null;
 
+function parseAlignment(style: string | undefined) {
+  return style === "start" || style === "end" ? `flex-${style}` : style;
+}
+
+function parseSpacing(value: number | string | undefined) {
+  if (value === undefined || typeof value === "string") {
+    return value;
+  }
+
+  return `calc(var(--salt-spacing-100) * ${value})`;
+}
+
 export const FlexLayout: FlexLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
     {
@@ -73,12 +86,12 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
       align,
       children,
       className,
-      direction,
-      gap,
+      direction = "row",
+      gap = 3,
       justify,
       separators,
       style,
-      wrap,
+      wrap = false,
       ...rest
     }: FlexLayoutProps<T>,
     ref?: PolymorphicRef<T>
@@ -92,19 +105,17 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
 
     const Component = as || "div";
     const separatorAlignment = separators === true ? "center" : separators;
-    const addPrefix = (style: string) => {
-      return style === "start" || style === "end" ? `flex-${style}` : style;
-    };
 
-    const flexGap = useResponsiveProp(gap, 3);
-    const flexDirection = useResponsiveProp(direction, "row");
-    const flexWrap = useResponsiveProp(wrap, false);
+    const { matchedBreakpoints } = useMatchedBreakpointContext();
+    const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
+    const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
+    const flexWrap = resolveResponsiveValue(wrap, matchedBreakpoints);
     const flexLayoutStyles = {
       ...style,
-      "--flexLayout-align": align && addPrefix(align),
+      "--flexLayout-align": parseAlignment(align),
       "--flexLayout-direction": flexDirection,
-      "--flexLayout-gap-multiplier": flexGap,
-      "--flexLayout-justify": justify && addPrefix(justify),
+      "--flexLayout-gap": parseSpacing(flexGap),
+      "--flexLayout-justify": parseAlignment(justify),
       "--flexLayout-wrap": flexWrap ? "wrap" : "nowrap",
     };
 
@@ -115,11 +126,11 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
           {
             [withBaseName("separator")]: separatorAlignment && !wrap,
             [withBaseName(
-              `separator-${flexDirection || "row"}-${
-                separatorAlignment || "center"
+              `separator-${flexDirection ?? "row"}-${
+                separatorAlignment ?? "center"
               }`
             )]: separatorAlignment && !wrap,
-            [withBaseName(`separator-${flexDirection || "row"}`)]:
+            [withBaseName(`separator-${flexDirection ?? "row"}`)]:
               separatorAlignment && !wrap,
           },
           className

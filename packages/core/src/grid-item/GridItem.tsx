@@ -4,13 +4,14 @@ import { clsx } from "clsx";
 import {
   makePrefixer,
   ResponsiveProp,
-  useResponsiveProp,
   PolymorphicRef,
   PolymorphicComponentPropWithRef,
+  resolveResponsiveValue,
 } from "../utils";
 import gridItemCss from "./GridItem.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",
@@ -62,8 +63,8 @@ export const GridItem: GridItemComponent = forwardRef(
       as,
       children,
       className,
-      colSpan,
-      rowSpan,
+      colSpan = "auto",
+      rowSpan = "auto",
       horizontalAlignment = "stretch",
       verticalAlignment = "stretch",
       style,
@@ -78,10 +79,12 @@ export const GridItem: GridItemComponent = forwardRef(
       window: targetWindow,
     });
 
-    const Component = as || "div";
-    const gridItemColSpan = useResponsiveProp(colSpan, "auto");
+    const { matchedBreakpoints } = useMatchedBreakpointContext();
 
-    const gridItemRowSpan = useResponsiveProp(rowSpan, "auto");
+    const Component = as || "div";
+    const gridItemColSpan = resolveResponsiveValue(colSpan, matchedBreakpoints);
+
+    const gridItemRowSpan = resolveResponsiveValue(rowSpan, matchedBreakpoints);
 
     const gridColumnStart = gridItemColSpan
       ? `span ${gridItemColSpan}`

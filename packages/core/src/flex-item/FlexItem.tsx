@@ -2,14 +2,15 @@ import { forwardRef, ElementType, ReactElement, CSSProperties } from "react";
 import {
   makePrefixer,
   ResponsiveProp,
-  useResponsiveProp,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
+  resolveResponsiveValue,
 } from "../utils";
 import flexItemCss from "./FlexItem.css";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
 
 const withBaseName = makePrefixer("saltFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
@@ -69,11 +70,12 @@ export const FlexItem: FlexItemComponent = forwardRef(
       css: flexItemCss,
       window: targetWindow,
     });
+    const { matchedBreakpoints } = useMatchedBreakpointContext();
 
     const Component = as || "div";
-    const flexItemShrink = useResponsiveProp(shrink, 1);
-    const flexItemGrow = useResponsiveProp(grow, 0);
-    const flexItemBasis = useResponsiveProp(basis, "auto");
+    const flexItemShrink = resolveResponsiveValue(shrink, matchedBreakpoints);
+    const flexItemGrow = resolveResponsiveValue(grow, matchedBreakpoints);
+    const flexItemBasis = resolveResponsiveValue(basis, matchedBreakpoints);
 
     const itemStyle = {
       "--saltFlexItem-alignment": align,
