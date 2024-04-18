@@ -1,0 +1,18 @@
+<svg width="72" height="50" viewBox="0 0 72 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_784_2749" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="72" height="50">
+<rect width="72" height="50" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_784_2749)">
+<rect width="72" height="50" fill="#DD2033"/>
+<rect x="56" y="50" width="40" height="50" transform="rotate(180 56 50)" fill="#F5F7F8"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M18.406 23.4351C18.1401 24.666 18 25.9438 18 27.2544C18 37.1955 26.0589 45.2544 36 45.2544C45.9411 45.2544 54 37.1955 54 27.2544C54 25.9157 53.8539 24.6112 53.5767 23.356L47.9134 25.805C47.9706 26.2801 48 26.7638 48 27.2544C48 33.8818 42.6274 39.2544 36 39.2544C29.3726 39.2544 24 33.8818 24 27.2544C24 26.7921 24.0261 26.336 24.077 25.8874L18.406 23.4351Z" fill="#009B77"/>
+<path d="M26.1997 8L46.1997 8L46.1997 15.9412C46.1997 22.0164 42.501 27.4795 36.8604 29.7357L36.1997 30L35.539 29.7357C29.8984 27.4795 26.1997 22.0164 26.1997 15.9412L26.1997 8Z" fill="#FF9E42"/>
+<mask id="mask1_784_2749" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="26" y="8" width="21" height="22">
+<path d="M26.1997 8H46.1997V15.9412C46.1997 22.0164 42.501 27.4795 36.8604 29.7357L36.1997 30L35.539 29.7357C29.8984 27.4795 26.1997 22.0164 26.1997 15.9412V8Z" fill="#005EB8"/>
+</mask>
+<g mask="url(#mask1_784_2749)">
+<rect x="26.1997" y="18" width="20" height="12" fill="#DD2033"/>
+<rect x="26.1997" y="8" width="10" height="10" fill="#0091DA"/>
+</g>
+</g>
+</svg>

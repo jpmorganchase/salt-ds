@@ -1,11 +1,14 @@
 import { Suspense, useState } from "react";
 import {
   TT,
+  TT_Sharp,
   MX,
+  MX_Sharp,
   CountrySymbol,
   countryMetaMap,
   LazyCountrySymbol,
 } from "@salt-ds/countries";
+import { type CountryCode } from "@salt-ds/countries";
 import { Meta, StoryFn } from "@storybook/react";
 import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
@@ -24,6 +27,10 @@ export const SaltCountrySymbol: StoryFn<typeof CountrySymbol> = (args) => (
   <TT {...args} />
 );
 
+export const SaltCountrySymbolSharp: StoryFn<typeof CountrySymbol> = (args) => (
+  <TT_Sharp {...args} />
+);
+
 export const CountrySymbolMultipleSizes: StoryFn<typeof CountrySymbol> = () => (
   <StackLayout direction="row">
     <MX size={1} />
@@ -31,6 +38,18 @@ export const CountrySymbolMultipleSizes: StoryFn<typeof CountrySymbol> = () => (
     <MX size={3} />
     <MX size={4} />
     <MX size={5} />
+  </StackLayout>
+);
+
+export const CountrySymbolSharpMultipleSizes: StoryFn<
+  typeof CountrySymbol
+> = () => (
+  <StackLayout direction="row">
+    <MX_Sharp size={1} />
+    <MX_Sharp size={2} />
+    <MX_Sharp size={3} />
+    <MX_Sharp size={4} />
+    <MX_Sharp size={5} />
   </StackLayout>
 );
 
@@ -52,7 +71,11 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
           />
         </FormField>
         <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
-          {Object.values(countryMetaMap)
+          {Object.keys(countryMetaMap)
+            .filter((componentCode) => !componentCode.endsWith("_Sharp"))
+            .map(
+              (componentCode) => countryMetaMap[componentCode as CountryCode]
+            )
             .filter(({ countryCode, countryName }) => {
               const searchText = inputText.toLowerCase();
 
@@ -69,12 +92,21 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
                   gap={1}
                   align="center"
                 >
-                  <LazyCountrySymbol
-                    key={countryCode}
-                    code={countryCode}
-                    {...args}
-                  />
-                  <p style={{ margin: 0 }}>{countryCode}</p>
+                  <StackLayout direction="row">
+                    <LazyCountrySymbol
+                      key={countryCode}
+                      code={countryCode}
+                      {...args}
+                    />
+                    <LazyCountrySymbol
+                      key={countryCode + "sharp"}
+                      code={(countryCode + "_Sharp") as CountryCode}
+                      {...args}
+                    />
+                  </StackLayout>
+                  <p style={{ margin: 0 }}>
+                    {countryCode} / {countryCode}_Sharp
+                  </p>
                   <p style={{ margin: 0, textAlign: "center" }}>
                     {countryName}
                   </p>
