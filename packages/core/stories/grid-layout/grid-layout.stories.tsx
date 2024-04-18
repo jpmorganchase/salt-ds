@@ -228,3 +228,8 @@ const GridLayoutNestedExample: StoryFn<typeof GridLayout> = () => {
 };
 export const Nested = GridLayoutNestedExample.bind({});
 Nested.args = {};
+
+export const ColumnTemplate = Template.bind({});
+ColumnTemplate.args = {
+  columns: "1fr auto 200px",
+};
