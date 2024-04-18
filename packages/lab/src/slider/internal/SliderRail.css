@@ -1,7 +1,0 @@
-.saltSliderRail {
-  height: var(--slider-selection-height);
-  background: var(--slider-rail-color) ;
-  grid-row: 1;
-  grid-column-start: 1;
-  grid-column-end: 4;
-}

@@ -59,6 +59,11 @@
   --slider-label-paddingRight: var(--saltSlider-label-paddingRight, 0);
 
   display: flex;
+  flex-direction: row;
+}
+
+.saltSlider-trackContainer {
+  display: flex;
   flex-direction: column;
 }
 

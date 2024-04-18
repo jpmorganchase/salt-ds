@@ -70,23 +70,11 @@ export type UpdateValueItem = (
 ) => SliderValue;
 
 export function useValueUpdater(
-  pushable: boolean | undefined,
-  pushDistance: number,
   min: number,
   max: number
 ): UpdateValueItem {
   return useMemo(() => {
-    const updater = pushable
-      ? (oldValue: number[], index: number, valueItem: number) =>
-          updateValueItemPushable(
-            oldValue,
-            index,
-            valueItem,
-            min,
-            max,
-            pushDistance
-          )
-      : (oldValue: number[], index: number, valueItem: number) =>
+    const updater = (oldValue: number[], index: number, valueItem: number) =>
           updateValueItemNotPushable(oldValue, index, valueItem, min, max);
     return (oldValue: SliderValue, index: number, valueItem: number) => {
       if (!Array.isArray(oldValue)) {
@@ -101,7 +89,7 @@ export function useValueUpdater(
       }
       return newValue;
     };
-  }, [pushable, pushDistance, min, max]);
+  }, [min, max]);
 }
 
 export const roundValue = (v: number, step: number) =>

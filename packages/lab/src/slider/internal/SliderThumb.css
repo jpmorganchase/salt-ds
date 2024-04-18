@@ -12,6 +12,8 @@
   grid-row: 1;
   grid-column-start: 2;
   z-index: 1;
+  /* How do we feel about this, the alternative is to have SliderRail as a separate component  */
+  margin-top: calc(-0.5 * var(--salt-size-selectable));
 }
 
 .saltSliderThumb-min {

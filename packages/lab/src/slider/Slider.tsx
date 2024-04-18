@@ -1,10 +1,9 @@
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled, Label } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { SliderSelection } from "./internal/SliderSelection";
-import { SliderMark } from "./internal/SliderRailMarks";
 import { createTrackGridTemplateColumns } from "./internal/styles";
 import { useSliderKeyDown } from "./internal/useSliderKeyDown";
 import { useSliderMouseDown } from "./internal/useSliderMouseDown";
@@ -15,11 +14,10 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import sliderCss from "./Slider.css";
-import { SliderRail } from "./internal/SliderRail";
 
 const withBaseName = makePrefixer("saltSlider");
 
-const defaultMin = 5;
+const defaultMin = 0;
 const defaultMax = 20;
 const defaultStep = 1;
 
@@ -39,6 +37,7 @@ export interface SliderProps
   marks?: SliderMark[];
   hideMarks?: boolean;
   hideMarkLabels?: boolean;
+  unit?: string; // Could add this, might be helpful
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -51,8 +50,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = defaultMin,
     onChange,
     className,
-    pushable,
-    pushDistance = 0,
     disabled,
 
     ...rest
@@ -76,7 +73,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   // Look into what this does ?
-  const updateValueItem = useValueUpdater(pushable, pushDistance, min, max);
+  // Remove all the stuff for range and only leave stuff for the single slider
+  const updateValueItem = useValueUpdater(min, max);
 
   const onMouseDown = useSliderMouseDown(
     trackRef,
@@ -100,46 +98,28 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange
   );
 
+  // This doesn't seem entierly accurate - different calculation instead of lerp might be needed
+  // In accuracy seems to be greater when min != 0
   const trackGridTeplateColumns = useMemo(
     () => createTrackGridTemplateColumns(min, max, value, step),
     [min, max, value, step]
   );
 
   return (
-    <div
-      ref={ref}
-      className={clsx(withBaseName(), className)}
-      //On Key down should be on the track ?
-      onKeyDown={onKeyDown}
-      {...rest}
-    >
-      {min}
-      <SliderTrack
-        style={trackGridTeplateColumns}
-        ref={trackRef}
-        onMouseDown={disabled ? undefined : onMouseDown}
-      >
-        <SliderThumb value={value} min={min} max={max} />
-        <SliderRail />
-        <SliderSelection />
-      </SliderTrack>
-      {max}
+    <div ref={ref} className={clsx(withBaseName(), className)}>
+      <Label>{min}</Label>
+      <div className={withBaseName("trackContainer")} {...rest}>
+        <SliderTrack
+          style={trackGridTeplateColumns}
+          ref={trackRef}
+          onKeyDown={onKeyDown}
+          onMouseDown={disabled ? undefined : onMouseDown}
+        >
+          <SliderSelection />
+          <SliderThumb value={value} min={min} max={max} />
+        </SliderTrack>
+      </div>
+      <Label>{max}</Label>
     </div>
   );
 });
-
-{
-  /* {(Array.isArray(value) ? value : [value]).map((value: number, i) => ( */
-}
-{
-  /* <SliderThumb
-          // key={i}
-          value={value}
-          min={min}
-          max={max}
-          // style={handleStyles[i]}
-        /> */
-}
-{
-  /* ))} */
-}
