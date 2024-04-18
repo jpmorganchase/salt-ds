@@ -140,7 +140,7 @@ describe("GIVEN a Grid", () => {
       "THEN it should render 1 column and 12 rows on xs viewport",
       {
         viewportHeight: 900,
-        viewportWidth: 600,
+        viewportWidth: 599,
       },
       () => {
         cy.mount(<Default columns={columns} rows={rows} />);

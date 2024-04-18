@@ -12,7 +12,7 @@ import {
 import gridLayoutCss from "./GridLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
+import { useBreakpoint } from "../breakpoints";
 
 export type GridLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -87,7 +87,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     });
     const Component = as || "div";
 
-    const { matchedBreakpoints } = useMatchedBreakpointContext();
+    const { matchedBreakpoints } = useBreakpoint();
 
     const gridColumns = resolveResponsiveValue(columns, matchedBreakpoints);
 

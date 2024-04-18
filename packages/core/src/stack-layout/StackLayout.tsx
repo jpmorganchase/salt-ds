@@ -16,7 +16,7 @@ import { clsx } from "clsx";
 import stackLayoutCss from "./StackLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
+import { useBreakpoint } from "../breakpoints";
 
 const withBaseName = makePrefixer("saltStackLayout");
 
@@ -75,7 +75,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
       window: targetWindow,
     });
 
-    const { matchedBreakpoints } = useMatchedBreakpointContext();
+    const { matchedBreakpoints } = useBreakpoint();
 
     const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
     const separatorAlignment = separators === true ? "center" : separators;

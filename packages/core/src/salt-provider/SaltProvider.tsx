@@ -8,7 +8,12 @@ import React, {
   useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
-import { Breakpoints, DEFAULT_BREAKPOINTS } from "../breakpoints";
+import {
+  Breakpoints,
+  DEFAULT_BREAKPOINTS,
+  BreakpointProvider,
+  useMatchedBreakpoints,
+} from "../breakpoints";
 import { Density, Mode, ThemeName } from "../theme";
 import { ViewportProvider } from "../viewport";
 import { useIsomorphicLayoutEffect } from "../utils";
@@ -20,10 +25,6 @@ import {
   StyleInjectionProvider,
 } from "@salt-ds/styles";
 import { UNSTABLE_Corner } from "../theme/Corner";
-import {
-  MatchedBreakpointProvider,
-  useMatchedBreakpoints,
-} from "./matched-breakpoints";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -273,11 +274,11 @@ function InternalSaltProvider({
   const saltProvider = (
     <DensityContext.Provider value={density}>
       <ThemeContext.Provider value={themeContextValue}>
-        <MatchedBreakpointProvider matchedBreakpoints={matchedBreakpoints}>
+        <BreakpointProvider matchedBreakpoints={matchedBreakpoints}>
           <BreakpointContext.Provider value={breakpoints}>
             <ViewportProvider>{themedChildren}</ViewportProvider>
           </BreakpointContext.Provider>
-        </MatchedBreakpointProvider>
+        </BreakpointProvider>
       </ThemeContext.Provider>
     </DensityContext.Provider>
   );

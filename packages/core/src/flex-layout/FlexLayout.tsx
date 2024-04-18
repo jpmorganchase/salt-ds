@@ -12,7 +12,7 @@ import {
 import flexLayoutCss from "./FlexLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
+import { useBreakpoint } from "../breakpoints";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
@@ -106,7 +106,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
     const Component = as || "div";
     const separatorAlignment = separators === true ? "center" : separators;
 
-    const { matchedBreakpoints } = useMatchedBreakpointContext();
+    const { matchedBreakpoints } = useBreakpoint();
     const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
     const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
     const flexWrap = resolveResponsiveValue(wrap, matchedBreakpoints);

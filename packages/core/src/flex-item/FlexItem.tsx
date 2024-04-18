@@ -10,7 +10,7 @@ import flexItemCss from "./FlexItem.css";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
+import { useBreakpoint } from "../breakpoints";
 
 const withBaseName = makePrefixer("saltFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
@@ -70,7 +70,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
       css: flexItemCss,
       window: targetWindow,
     });
-    const { matchedBreakpoints } = useMatchedBreakpointContext();
+    const { matchedBreakpoints } = useBreakpoint();
 
     const Component = as || "div";
     const flexItemShrink = resolveResponsiveValue(shrink, matchedBreakpoints);

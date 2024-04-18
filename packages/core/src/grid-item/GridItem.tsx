@@ -11,7 +11,7 @@ import {
 import gridItemCss from "./GridItem.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { useMatchedBreakpointContext } from "../salt-provider/matched-breakpoints";
+import { useBreakpoint } from "../breakpoints";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",
@@ -79,7 +79,7 @@ export const GridItem: GridItemComponent = forwardRef(
       window: targetWindow,
     });
 
-    const { matchedBreakpoints } = useMatchedBreakpointContext();
+    const { matchedBreakpoints } = useBreakpoint();
 
     const Component = as || "div";
     const gridItemColSpan = resolveResponsiveValue(colSpan, matchedBreakpoints);

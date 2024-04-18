@@ -1,26 +1,23 @@
 import { createContext, useIsomorphicLayoutEffect } from "../utils";
 import { ReactNode, useContext, useState } from "react";
-import { Breakpoints } from "../breakpoints";
+import { Breakpoints } from "./Breakpoints";
 
 type Breakpoint = keyof Breakpoints;
 
-interface MatchedBreakpointContext {
+interface BreakpointContext {
   matchedBreakpoints: Breakpoint[];
 }
 
-const Context = createContext<MatchedBreakpointContext>(
-  "MatchedBreakpointContext",
-  { matchedBreakpoints: [] }
-);
+const Context = createContext<BreakpointContext>("BreakpointContext", {
+  matchedBreakpoints: [],
+});
 
-interface MatchedBreakpointProviderProps {
+interface BreakpointProviderProps {
   children?: ReactNode;
   matchedBreakpoints: Breakpoint[];
 }
 
-export function MatchedBreakpointProvider(
-  props: MatchedBreakpointProviderProps
-) {
+export function BreakpointProvider(props: BreakpointProviderProps) {
   const { children, matchedBreakpoints } = props;
 
   return (
@@ -33,12 +30,13 @@ export function MatchedBreakpointProvider(
 export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
   const entries = Object.entries(breakpoints).sort(([, a], [, b]) => b - a);
   const queries = entries.map(([, value]) => `(min-width: ${value}px)`);
+
   const supportsMatchMedia =
     typeof window !== "undefined" && typeof window.matchMedia === "function";
 
-  const [matchedBreakpoints, setMatchedBreakpoints] = useState<Breakpoint[]>(
-    []
-  );
+  const [matchedBreakpoints, setMatchedBreakpoints] = useState<
+    Partial<Record<Breakpoint, boolean>>
+  >(Object.fromEntries(entries.map(([bp]) => [bp as Breakpoint, false])));
 
   useIsomorphicLayoutEffect(() => {
     if (!supportsMatchMedia) {
@@ -52,13 +50,12 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
       return {
         mq,
         handler: () => {
-          if (mq.matches) {
-            setMatchedBreakpoints((prev) => prev.concat([bp]));
-          } else {
-            setMatchedBreakpoints((prev) =>
-              prev.filter((breakpoint) => breakpoint !== bp)
-            );
-          }
+          setMatchedBreakpoints((prev) => {
+            return {
+              ...prev,
+              [bp]: mq.matches,
+            };
+          });
         },
       };
     });
@@ -76,9 +73,18 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supportsMatchMedia]);
 
-  return matchedBreakpoints;
+  return Object.keys(matchedBreakpoints).filter(
+    (bp) => matchedBreakpoints[bp as Breakpoint]
+  ) as Breakpoint[];
 }
 
-export function useMatchedBreakpointContext(): MatchedBreakpointContext {
-  return useContext(Context);
+export function useBreakpoint(): BreakpointContext & {
+  breakpoint: Breakpoint | null;
+} {
+  const { matchedBreakpoints } = useContext(Context);
+
+  return {
+    matchedBreakpoints,
+    breakpoint: matchedBreakpoints[0] ?? null,
+  };
 }
