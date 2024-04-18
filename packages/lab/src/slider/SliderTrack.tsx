@@ -8,9 +8,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import sliderTrackCss from "./SliderTrack.css";
 
-export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {
-  sliderSelectionStyles: Object;
-}
+export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 
 const withBaseName = makePrefixer("saltSliderTrack");
 

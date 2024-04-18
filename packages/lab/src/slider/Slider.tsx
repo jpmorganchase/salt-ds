@@ -5,7 +5,10 @@ import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./SliderTrack";
 import { SliderSelection } from "./SliderSelection";
 import { SliderMark } from "./internal/SliderRailMarks";
-import { createTrackStyle } from "./internal/styles";
+import {
+  createTrackStyle,
+  createTrackGridTemplateColumns,
+} from "./internal/styles";
 import { useSliderKeyDown } from "./internal/useSliderKeyDown";
 import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import { useValueUpdater } from "./internal/utils";
@@ -100,14 +103,19 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange
   );
 
-  const valueLength = Array.isArray(value) ? value.length : 1;
+  // const valueLength = Array.isArray(value) ? value.length : 1;
 
-  const trackStyle = useMemo(
-    () => createTrackStyle(min, max, value),
+  // const trackGridTeplateColumns = useMemo(
+  //   () => createTrackStyle(min, max, value),
+  //   [min, max, value]
+  // );
+
+  const trackGridTeplateColumns = useMemo(
+    () => createTrackGridTemplateColumns(min, max, value),
     [min, max, value]
   );
 
-  console.log({ trackStyle });
+  console.log(trackGridTeplateColumns);
 
   return (
     <div
@@ -119,7 +127,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     >
       {min}
       <SliderTrack
-        style={trackStyle}
+        style={trackGridTeplateColumns}
         ref={trackRef}
         onMouseDown={disabled ? undefined : onMouseDown}
       >

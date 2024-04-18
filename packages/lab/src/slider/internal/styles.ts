@@ -7,8 +7,15 @@ function widthToPercentage(w: number, max: number) {
   return `${Math.round((1000 * w) / max) * 0.1}%`;
 }
 
-function lerp (value: number, min: number, max: number) {
-  return (((value - min))/(max-min)) * max
+function lerp (min: number, max: number, value: number) {
+  return ((value - min)/(max-min) * 100)
+}
+
+//Might need to round this so it's not folating point numbers 
+export function createTrackGridTemplateColumns(min: number, max: number, value: number) {
+  const normaliseValueBetweenRange = lerp(min, max, value)
+  return{ gridTemplateColumns: `${normaliseValueBetweenRange}% auto auto` }
+
 }
 
 function createGridTemplateColumns(
@@ -20,7 +27,7 @@ function createGridTemplateColumns(
   const colWidths: number[] = [];
   console.log({min})
   let prev = min;
-  for (let v of values) {
+  for (const v of values) {
     console.log({v})
     // Why equate prev and min ?
     colWidths.push(v - prev);
@@ -70,6 +77,9 @@ export function createTrackStyle(
   value: SliderValue
 ): CSSProperties {
   const values = Array.isArray(value) ? value : [value];
+
+
+
   return {
     gridTemplateColumns: createGridTemplateColumns(min, max, values),
   };
