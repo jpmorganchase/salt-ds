@@ -1,60 +1,184 @@
-import { Button, Card, Checkbox } from "@salt-ds/core";
-import { Slider, type SliderProps } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import { Input, FormField, FormFieldLabel, FlexLayout } from "@salt-ds/core";
+import { Slider, SliderProps, SliderValue } from "@salt-ds/lab";
+import { useState, ChangeEvent } from "react";
+import { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Slider",
   component: Slider,
 };
 
-const SliderTemplate: StoryFn<SliderProps> = (args) => {
-  return <Slider {...args} />;
+const Template: StoryFn<SliderProps> = ({ ...args }) => {
+  return <Slider style={{ width: "300px" }} {...args} />;
 };
 
-const SliderOnACardTemplate: StoryFn<SliderProps> = (props) => {
+export const Default = Template.bind({});
+Default.args = {
+  min: 0,
+  max: 10,
+  "aria-label": "default",
+};
+
+export const NonZeroInput = Template.bind({});
+NonZeroInput.args = {
+  min: -5,
+  max: 5,
+  "aria-label": "NonZeroInput",
+};
+
+export const CustomStep = Template.bind({});
+CustomStep.args = {
+  min: -1,
+  max: 1,
+  step: 0.2,
+  marks: "all",
+  "aria-label": "CustomStep",
+};
+
+export const BottomLabel = Template.bind({});
+BottomLabel.args = {
+  marks: "bottom",
+  "aria-label": "CustomStep",
+};
+
+export const WithMarks = Template.bind({});
+WithMarks.args = {
+  min: -5,
+  max: 5,
+  marks: "all",
+  "aria-label": "withMarks",
+};
+
+export const WithInput = () => {
+  const [value, setValue] = useState<SliderValue>(5);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value as unknown;
+    setValue(inputValue as SliderValue);
+  };
+
+  const handleChange = (value: SliderValue) => {
+    setValue(value);
+  };
+
   return (
-    <Card>
-      <Checkbox label="Coffee" />
-      <Checkbox label="Black Tea" />
-      <Checkbox label="Green Tea" />
-      <Slider label="Sugar" min={0} max={5} defaultValue={1} />
-      <Slider
-        label="Milk"
-        defaultValue={50}
-        marks={[0, 10, 50, { value: 100, label: "100% Milk" }]}
-        {...props}
-      />
-      <Checkbox label="Iced" />
-      <Button>Start</Button>
-    </Card>
+    <FormField>
+      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <Input
+          placeholder="value"
+          style={{ width: "1px", margin: "5px" }}
+          onChange={handleInputChange}
+        />
+        <Slider
+          style={{ width: "300px" }}
+          min={-50}
+          max={50}
+          value={value}
+          onChange={handleChange}
+          aria-label="withInput"
+        />
+      </div>
+    </FormField>
   );
 };
 
-export const Simple = SliderTemplate.bind({});
-
-export const Range = SliderTemplate.bind({});
-
-export const Stacked = SliderOnACardTemplate.bind({});
-
-Simple.args = {
-  defaultValue: 30,
-  min: 0,
-  max: 60,
-  label: "Simple slider",
+const RangeTemplate: StoryFn<SliderProps> = ({ ...args }) => {
+  return <Slider style={{ width: "300px" }} {...args} />;
 };
 
+export const Range = RangeTemplate.bind({});
 Range.args = {
-  defaultValue: [-30, 0, 30],
-  pushable: true,
-  pushDistance: 10,
-  min: -50,
-  max: 50,
-  step: 5,
-  pageStep: 25,
-  label: "Range slider",
+  min: 0,
+  max: 100,
+  defaultValue: [20, 80],
 };
 
-Stacked.args = {
-  hideMarks: false,
-  hideMarkLabels: false,
+export const RangeWithMarks = RangeTemplate.bind({});
+RangeWithMarks.args = {
+  min: 0,
+  max: 100,
+  step: 10,
+  defaultValue: [20, 80],
+  marks: "all",
+};
+
+function validate(minValue: number, maxValue: number) {
+  if (minValue > maxValue) return false;
+  else return true;
+}
+
+export const RangeWithInput = () => {
+  const [value, setValue] = useState([0, 50]);
+  const [minValue, setMinValue] = useState(`${value[0]}`);
+  const [maxValue, setMaxValue] = useState(`${value[1]}`);
+  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
+    undefined
+  );
+
+  const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+    setMinValue(inputValue);
+  };
+
+  const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value;
+    setMaxValue(inputValue);
+  };
+
+  const handleInputBlur = () => {
+    const minNumVal = parseFloat(minValue);
+    const maxNumVal = parseFloat(maxValue);
+    const validated = validate(minNumVal, maxNumVal);
+    validated
+      ? (setValue([minNumVal, maxNumVal]), setValidationStatus(undefined))
+      : setValidationStatus("error");
+  };
+
+  const handleSliderChange = (value: number[]) => {
+    setValue(value);
+    setMinValue(`${value[0]}`);
+    setMaxValue(`${value[1]}`);
+  };
+
+  return (
+    <FormField>
+      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <FlexLayout gap={3} align="center">
+        <Input
+          placeholder={`${minValue}`}
+          value={minValue}
+          style={{ width: "10px", margin: "5px" }}
+          onBlur={handleInputBlur}
+          onChange={handleMinInputChange}
+          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
+          validationStatus={validationStatus}
+        />
+        <Slider
+          style={{ width: "300px" }}
+          min={0}
+          max={50}
+          value={value}
+          // @ts-ignore
+          onChange={handleSliderChange}
+          aria-label="withInput"
+        />
+        <Input
+          placeholder={`${maxValue}`}
+          value={maxValue}
+          style={{ width: "10px" }}
+          onBlur={handleInputBlur}
+          onChange={handleMaxInputChange}
+          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
+          validationStatus={validationStatus}
+        />
+      </FlexLayout>
+    </FormField>
+  );
 };
