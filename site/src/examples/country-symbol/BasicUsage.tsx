@@ -6,7 +6,7 @@ export const BasicUsage = (): ReactElement => (
   <FlowLayout>
     <TT />
     <FR />
-    <FR />
+    <AU />
     <PT />
   </FlowLayout>
 );
