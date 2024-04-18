@@ -1,5 +1,14 @@
 # @salt-ds/countries
 
+## 1.3.0
+
+### Minor Changes
+
+- a3669c40: Add "sharp" variant for all country flags.
+
+  - Default (round): `<TT />`
+  - Sharp (rectangular): `<TT_Sharp />`
+
 ## 1.2.0
 
 ### Minor Changes

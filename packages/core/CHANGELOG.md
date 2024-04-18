@@ -1,5 +1,26 @@
 # @salt-ds/core
 
+## 1.25.0
+
+### Minor Changes
+
+- 884ce037: Promoted `ParentChildLayout` from labs to core.
+
+  ```tsx
+  const parent = <div>Parent</div>;
+
+  const child = <di>Child</div>;
+
+  export const Default = (): ReactElement => (
+    <ParentChildLayout parent={parent} child={child} />
+  );
+  ```
+
+### Patch Changes
+
+- afe3d590: Updated Button to use active styles, when a menu or overlay is open.
+- bb3b682f: Fixed ComboBox's nested button going into an active state when ComboBox is open.
+
 ## 1.24.0
 
 ### Minor Changes
