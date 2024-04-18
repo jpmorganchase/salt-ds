@@ -1,24 +1,40 @@
 import { makePrefixer } from "@salt-ds/core";
-
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import sliderCss from "../Slider.css";
+import { ComponentPropsWithoutRef } from "react";
+import {
+  getPercentage,
+  getPercentageDifference,
+  getPercentageOffset,
+} from "./utils";
+import { useSliderContext } from "./SliderContext";
+import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltSliderSelection");
 
-export interface SliderSelectionProps {
-  valueLength: number;
-}
+export interface SliderSelectionProps extends ComponentPropsWithoutRef<"div"> {}
 
-export function SliderSelection({ valueLength }: SliderSelectionProps) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-slider",
-    css: sliderCss,
-    window: targetWindow,
-  });
+export function SliderSelection({
+  ...props
+}: SliderSelectionProps): JSX.Element {
+  const { min, max, value } = useSliderContext();
+
+  const percentageDifference = Array.isArray(value)
+    ? getPercentageDifference(min, max, value)
+    : getPercentage(min, max, value);
+
+  const percentageOffset = Array.isArray(value)
+    ? getPercentageOffset(min, max, value)
+    : 0;
 
   return (
-    <div className={valueLength < 2 ? withBaseName() : withBaseName("range")} />
+    <div
+      className={clsx(withBaseName(), {
+        [withBaseName("range")]: Array.isArray(value),
+      })}
+      style={{
+        width: percentageDifference,
+        left: percentageOffset,
+      }}
+      {...props}
+    />
   );
 }
