@@ -3,4 +3,5 @@
   grid-row: 1;
   cursor: pointer;
   transition: grid-template-columns 100ms ease;
+  align-items: center;
 }

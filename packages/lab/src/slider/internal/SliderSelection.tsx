@@ -7,9 +7,7 @@ import sliderSelectionCss from "./SliderSelection.css";
 
 const withBaseName = makePrefixer("saltSliderSelection");
 
-// export interface SliderSelectionProps extends ComponentPropsWithoutRef<"div"> {
-//   styles: object;
-// }
+export interface SliderSelectionProps extends ComponentPropsWithoutRef<"div"> {}
 
 export function SliderSelection({ ...props }: SliderSelectionProps) {
   const targetWindow = useWindow();
@@ -18,11 +16,5 @@ export function SliderSelection({ ...props }: SliderSelectionProps) {
     window: targetWindow,
   });
 
-  return (
-    <div
-      className={withBaseName()}
-      //  style={styles}
-      {...props}
-    />
-  );
+  return <div className={withBaseName()} {...props} />;
 }

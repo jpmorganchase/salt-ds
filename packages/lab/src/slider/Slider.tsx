@@ -2,13 +2,10 @@ import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { SliderThumb } from "./internal/SliderThumb";
-import { SliderTrack } from "./SliderTrack";
-import { SliderSelection } from "./SliderSelection";
+import { SliderTrack } from "./internal/SliderTrack";
+import { SliderSelection } from "./internal/SliderSelection";
 import { SliderMark } from "./internal/SliderRailMarks";
-import {
-  createTrackStyle,
-  createTrackGridTemplateColumns,
-} from "./internal/styles";
+import { createTrackGridTemplateColumns } from "./internal/styles";
 import { useSliderKeyDown } from "./internal/useSliderKeyDown";
 import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import { useValueUpdater } from "./internal/utils";
@@ -103,19 +100,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange
   );
 
-  // const valueLength = Array.isArray(value) ? value.length : 1;
-
-  // const trackGridTeplateColumns = useMemo(
-  //   () => createTrackStyle(min, max, value),
-  //   [min, max, value]
-  // );
-
   const trackGridTeplateColumns = useMemo(
-    () => createTrackGridTemplateColumns(min, max, value),
-    [min, max, value]
+    () => createTrackGridTemplateColumns(min, max, value, step),
+    [min, max, value, step]
   );
-
-  console.log(trackGridTeplateColumns);
 
   return (
     <div
@@ -131,6 +119,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         ref={trackRef}
         onMouseDown={disabled ? undefined : onMouseDown}
       >
+        <SliderThumb value={value} min={min} max={max} />
         <SliderRail />
         <SliderSelection />
       </SliderTrack>

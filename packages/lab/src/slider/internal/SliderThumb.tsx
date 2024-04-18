@@ -19,12 +19,12 @@ export interface slilderThumbProps {
   min: number;
   max: number;
   value: number;
-  index?: number;
   disabled?: boolean;
+  index?: number;
 }
 
 export function SliderThumb(props: slilderThumbProps): JSX.Element {
-  const { min, max, value, disabled, style, children, ...rest } = props;
+  const { min, max, value, disabled, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -32,28 +32,10 @@ export function SliderThumb(props: slilderThumbProps): JSX.Element {
     window: targetWindow,
   });
 
-  const offsetValue = value + 0.5;
-
-  const trackStyle = useMemo(
-    () => createTrackStyle(min, max, offsetValue),
-    [min, max, value]
-  );
-
-  // const sliderStyles = {
-  //   left: `${trackStyle}`,
-  // };
-
   return (
-    // make the tooltip optional ?
     <Tooltip content={value} status={"info"} hideIcon placement="top">
       <div
-        style={style}
         className={withBaseName()}
-        // [withBaseName("min")]: value === min,
-        // [withBaseName("max")]: value === max,
-        // }
-        // )}
-        // style={sliderStyles}
         role="slider"
         aria-valuemin={min}
         aria-valuemax={max}

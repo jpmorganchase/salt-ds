@@ -12,6 +12,8 @@ function lerp (min: number, max: number, value: number) {
 }
 
 //Might need to round this so it's not folating point numbers 
+//The thumb doesn't always go directly to the slider, 
+//Try rounding this using the step value given by the user
 export function createTrackGridTemplateColumns(min: number, max: number, value: number) {
   const normaliseValueBetweenRange = lerp(min, max, value)
   return{ gridTemplateColumns: `${normaliseValueBetweenRange}% auto auto` }
