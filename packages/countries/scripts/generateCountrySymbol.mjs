@@ -117,10 +117,23 @@ const generateCountrySymbolComponents = ({
       .slice(0, firstSpaceIndex)
       .toUpperCase();
 
+    // Use country code to get the sharp (a.k.a. rectangular) version of the SVG
+    const globPathSharp = path
+      .join(basePath, `./SVG/sharp/${countryCode}.svg`)
+      .replace(/\\/g, "/");
+
+    const sharpSvgString = fs.readFileSync(globPathSharp, "utf-8");
+
     const countryName = filenameWithoutExtension.slice(firstSpaceIndex).trim();
 
     let viewBox;
+    let sharpViewBox;
+
     const newFilePath = path.join(componentsPath, countryCode + ".tsx");
+    const newSharpFilePath = path.join(
+      componentsPath,
+      countryCode + "_Sharp.tsx"
+    );
 
     countryMetaMap[countryCode] = {
       countryCode,
@@ -130,7 +143,7 @@ const generateCountrySymbolComponents = ({
     console.log("processing", fileName, "to", newFilePath);
 
     // SVGO is a separate step to enable multi-pass optimizations.
-    const optimizedSvg = optimize(svgString, {
+    const optimizeOptions = {
       multipass: true,
       plugins: [
         {
@@ -149,71 +162,92 @@ const generateCountrySymbolComponents = ({
           },
         },
       ],
-    });
+    };
+
+    const optimizedSvg = optimize(svgString, optimizeOptions);
+    const optimizedSharpSvg = optimize(sharpSvgString, optimizeOptions);
 
     const getUidString = (countryCode, value) => {
       return `\$\{uid\}-${countryCode}-${value}`;
     };
 
-    const svgPaths = optimize(optimizedSvg.data, {
-      plugins: [
-        {
-          name: "mapHTMLAttributesToReactProps",
-          fn: () => {
-            return {
-              element: {
-                enter: (node) => {
-                  const newAttributes = {};
-                  // preserve an order of attributes
-                  for (const [name, value] of Object.entries(node.attributes)) {
-                    if (node.name === "mask") {
-                      // convert style="mask-type:... to style={{ maskType: ... }} "
-                      if (
-                        name === "style" &&
-                        typeof value === "string" &&
-                        value.includes("mask-type:")
-                      ) {
-                        newAttributes[
-                          "style"
-                        ] = `${REPLACE_START}{{ maskType: '${value.slice(
-                          10
-                        )}' }}${REPLACE_END}`;
-                        // Allow each component instance to use unique ids for masks
-                      } else if (name === "id") {
-                        newAttributes[
-                          svgAttributeMap[name] || name
-                        ] = `${REPLACE_START}{\`${getUidString(
-                          countryCode,
-                          value
-                        )}\`}${REPLACE_END}`;
-                      } else {
-                        newAttributes[svgAttributeMap[name] || name] = value;
-                      }
-                    } else if (name === "mask") {
-                      // Reference the unique mask Ids in the url for the mask attribute
-                      const maskId = value
-                        .replace("url(", "")
-                        .replace(")", "")
-                        .replace("#", "");
-
-                      const newValue = `${REPLACE_START}{\`url(#${getUidString(
+    const optimizePlugins = {
+      mapHTMLAttributesToReactProps: {
+        name: "mapHTMLAttributesToReactProps",
+        fn: () => {
+          return {
+            element: {
+              enter: (node) => {
+                const newAttributes = {};
+                // preserve an order of attributes
+                for (const [name, value] of Object.entries(node.attributes)) {
+                  if (node.name === "mask") {
+                    // convert style="mask-type:... to style={{ maskType: ... }} "
+                    if (
+                      name === "style" &&
+                      typeof value === "string" &&
+                      value.includes("mask-type:")
+                    ) {
+                      newAttributes[
+                        "style"
+                      ] = `${REPLACE_START}{{ maskType: '${value.slice(
+                        10
+                      )}' }}${REPLACE_END}`;
+                      // Allow each component instance to use unique ids for masks
+                    } else if (name === "id") {
+                      newAttributes[
+                        svgAttributeMap[name] || name
+                      ] = `${REPLACE_START}{\`${getUidString(
                         countryCode,
-                        maskId
-                      )})\`}${REPLACE_END}`;
-
-                      newAttributes[svgAttributeMap[name] || name] = newValue;
+                        value
+                      )}\`}${REPLACE_END}`;
                     } else {
-                      // Everything else
                       newAttributes[svgAttributeMap[name] || name] = value;
                     }
-                  }
-                  node.attributes = newAttributes;
-                },
-              },
-            };
-          },
-        },
+                  } else if (name === "mask") {
+                    // Reference the unique mask Ids in the url for the mask attribute
+                    const maskId = value
+                      .replace("url(", "")
+                      .replace(")", "")
+                      .replace("#", "");
 
+                    const newValue = `${REPLACE_START}{\`url(#${getUidString(
+                      countryCode,
+                      maskId
+                    )})\`}${REPLACE_END}`;
+
+                    newAttributes[svgAttributeMap[name] || name] = newValue;
+                  } else {
+                    // Everything else
+                    newAttributes[svgAttributeMap[name] || name] = value;
+                  }
+                }
+                node.attributes = newAttributes;
+              },
+            },
+          };
+        },
+      },
+      removeSvg: {
+        name: "removeSvg",
+        fn: () => {
+          return {
+            element: {
+              exit: (node, parentNode) => {
+                if (node.name === "svg") {
+                  const index = parentNode.children.indexOf(node);
+                  parentNode.children.splice(index, 1, ...node.children);
+                }
+              },
+            },
+          };
+        },
+      },
+    };
+
+    const svgPaths = optimize(optimizedSvg.data, {
+      plugins: [
+        optimizePlugins.mapHTMLAttributesToReactProps,
         {
           name: "find-viewBox",
           fn: () => {
@@ -228,21 +262,27 @@ const generateCountrySymbolComponents = ({
             };
           },
         },
+        optimizePlugins.removeSvg,
+      ],
+    });
+    const sharpSvgPaths = optimize(optimizedSharpSvg.data, {
+      plugins: [
+        optimizePlugins.mapHTMLAttributesToReactProps,
         {
-          name: "removeSvg",
+          name: "find-viewBox",
           fn: () => {
             return {
               element: {
-                exit: (node, parentNode) => {
-                  if (node.name === "svg") {
-                    const index = parentNode.children.indexOf(node);
-                    parentNode.children.splice(index, 1, ...node.children);
+                enter: (node, parentNode) => {
+                  if (parentNode.type === "root") {
+                    sharpViewBox = node.attributes.viewBox;
                   }
                 },
               },
             };
           },
         },
+        optimizePlugins.removeSvg,
       ],
     });
 
@@ -251,9 +291,21 @@ const generateCountrySymbolComponents = ({
       componentName: countryCodeToComponentName(countryCode),
       ariaLabel: countryName,
       viewBox: viewBox ?? "0 0 72 72",
+      sharp: false,
+    });
+    const sharpFileContents = Mustache.render(template, {
+      svgElements: sharpSvgPaths.data,
+      componentName: countryCodeToComponentName(countryCode) + "_Sharp",
+      ariaLabel: countryName,
+      viewBox: sharpViewBox ?? "0 0 72 50",
+      sharp: true,
     });
 
     const replacedText = fileContents
+      .replaceAll(`"${REPLACE_START}`, "")
+      .replaceAll(`${REPLACE_END}"`, "");
+
+    const replacedSharpText = sharpFileContents
       .replaceAll(`"${REPLACE_START}`, "")
       .replaceAll(`${REPLACE_END}"`, "");
 
@@ -262,7 +314,15 @@ const generateCountrySymbolComponents = ({
       PRETTIER_SETTINGS
     );
 
+    const formattedSharpResult = prettier.format(
+      GENERATED_WARNING_COMMENT.concat(replacedSharpText),
+      PRETTIER_SETTINGS
+    );
+
     fs.writeFileSync(newFilePath, formattedResult, {
+      encoding: "utf8",
+    });
+    fs.writeFileSync(newSharpFilePath, formattedSharpResult, {
       encoding: "utf8",
     });
   });
@@ -278,7 +338,9 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
     .sort((a, b) => a.fileName - b.fileName)
     .map((countryMeta) => {
       const componentName = countryCodeToComponentName(countryMeta.countryCode);
-      return `export { default as ${componentName} } from './${countryMeta.countryCode}';`;
+      const defaultExport = `export { default as ${componentName} } from './${countryMeta.countryCode}';`;
+      const sharpExport = `export { default as ${componentName}_Sharp } from './${countryMeta.countryCode}_Sharp';`;
+      return [defaultExport, sharpExport].join("\n");
     });
 
   const contentWithMetaExport = [...content];
@@ -319,7 +381,12 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
       countryName: "${countryMeta.countryName}",
     },`;
 
-    metaText.push(entryText);
+    const sharpEntryText = `"${code}_Sharp": {
+      countryCode: "${countryMeta.countryCode}",
+      countryName: "${countryMeta.countryName}",
+    },`;
+
+    metaText = [...metaText, entryText, sharpEntryText];
   }
 
   const endText = `
@@ -360,20 +427,21 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
     import { lazy } from "react";
   `;
 
-  let laztMapText = ["export const lazyMap = {"];
+  let lazyMapText = ["export const lazyMap = {"];
 
   for (const code in countryMetaMap) {
     const entryText = `"${code}": lazy(() => import("../components/${code}")),`;
+    const sharpEntryText = `"${code}_Sharp": lazy(() => import("../components/${code}_Sharp")),`;
 
-    laztMapText.push(entryText);
+    lazyMapText = [...lazyMapText, entryText, sharpEntryText];
   }
 
-  laztMapText.push("} as const");
+  lazyMapText.push("} as const");
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,
     importText,
-    laztMapText.join("\n"),
+    lazyMapText.join("\n"),
   ].join("\n");
 
   const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
