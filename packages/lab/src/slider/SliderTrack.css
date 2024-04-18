@@ -1,0 +1,11 @@
+.saltSliderTrack {
+  /* height: var(--slider-selection-height);
+  background: var(--slider-rail-color) ; */
+  /* width: 100%; */
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-row: 1;
+  /* align-items: end; */
+  cursor: pointer;
+  transition: grid-template-columns 100ms ease;
+}

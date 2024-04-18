@@ -1,0 +1,26 @@
+.saltSliderThumb {
+  width: var(--salt-size-indicator);
+  height: var(--salt-size-selectable);
+  background: var(--slider-selection-color);
+  /* grid-column-start: 1;
+  grid-column-end: -2; */
+}
+
+.saltSliderThumb-min {
+  border-left: none;
+  margin-left: 0;
+}
+
+.saltSliderThumb-max {
+  border-right: none;
+}
+
+.saltSliderThumb-box:focus-visible {
+  outline-style: var(--slider-handle-outlineStyle);
+  outline-width: var(--slider-handle-outlineWidth);
+  outline-color: var(--slider-handle-outlineColor);
+  outline-offset: var(--slider-handle-outlineOffset);
+}
+
+
+

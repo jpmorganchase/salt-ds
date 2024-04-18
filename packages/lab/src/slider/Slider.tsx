@@ -1,18 +1,11 @@
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
-import {
-  CSSProperties,
-  forwardRef,
-  HTMLAttributes,
-  useMemo,
-  useRef,
-} from "react";
-import { SliderHandle } from "./internal/SliderHandle";
-import { SliderMarkLabels } from "./internal/SliderMarkLabels";
-import { SliderRail } from "./internal/SliderRail";
-import { SliderMark, SliderRailMarks } from "./internal/SliderRailMarks";
-import { SliderSelection } from "./internal/SliderSelection";
-import { createHandleStyles, createTrackStyle } from "./internal/styles";
+import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
+import { SliderThumb } from "./internal/SliderThumb";
+import { SliderTrack } from "./SliderTrack";
+import { SliderSelection } from "./SliderSelection";
+import { SliderMark } from "./internal/SliderRailMarks";
+import { createTrackStyle } from "./internal/styles";
 import { useSliderKeyDown } from "./internal/useSliderKeyDown";
 import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import { useValueUpdater } from "./internal/utils";
@@ -22,11 +15,12 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import sliderCss from "./Slider.css";
+import { SliderRail } from "./internal/SliderRail";
 
 const withBaseName = makePrefixer("saltSlider");
 
-const defaultMin = 0;
-const defaultMax = 100;
+const defaultMin = 5;
+const defaultMax = 20;
 const defaultStep = 1;
 
 export interface SliderProps
@@ -56,15 +50,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     value: valueProp,
     defaultValue = defaultMin,
     onChange,
-    label,
     className,
     pushable,
     pushDistance = 0,
     disabled,
-    marks,
-    hideMarks,
-    hideMarkLabels,
-    ...restProps
+
+    ...rest
   },
   ref
 ) {
@@ -84,19 +75,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     state: "Value",
   });
 
+  // Look into what this does ?
   const updateValueItem = useValueUpdater(pushable, pushDistance, min, max);
-
-  const trackStyle = useMemo(
-    () => createTrackStyle(min, max, value),
-    [min, max, value]
-  );
-
-  const valueLength = Array.isArray(value) ? value.length : 1;
-
-  const handleStyles: CSSProperties[] = useMemo(
-    () => createHandleStyles(valueLength),
-    [valueLength]
-  );
 
   const onMouseDown = useSliderMouseDown(
     trackRef,
@@ -120,54 +100,49 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange
   );
 
+  const valueLength = Array.isArray(value) ? value.length : 1;
+
+  const trackStyle = useMemo(
+    () => createTrackStyle(min, max, value),
+    [min, max, value]
+  );
+
+  console.log({ trackStyle });
+
   return (
     <div
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      )}
       ref={ref}
-      onKeyDown={disabled ? undefined : onKeyDown}
-      aria-label={`${label} slider from ${min} to ${max}`}
-      role="group"
+      className={clsx(withBaseName(), className)}
+      //On Key down should be on the track ?
+      onKeyDown={onKeyDown}
+      {...rest}
     >
-      {label !== undefined ? (
-        <div className={withBaseName("label")}>{label}</div>
-      ) : null}
-      <div
-        className={withBaseName("clickable")}
+      {min}
+      <SliderTrack
+        style={trackStyle}
+        ref={trackRef}
         onMouseDown={disabled ? undefined : onMouseDown}
       >
-        <div
-          className={withBaseName("track")}
-          style={trackStyle}
-          ref={trackRef}
-        >
-          <SliderRail />
-          {marks && !hideMarks ? (
-            <SliderRailMarks min={min} max={max} marks={marks} />
-          ) : null}
-          {marks && !hideMarkLabels ? (
-            <SliderMarkLabels min={min} max={max} marks={marks} />
-          ) : null}
-          <SliderSelection valueLength={valueLength} />
-          {(Array.isArray(value) ? value : [value]).map((v, i) => (
-            <SliderHandle
-              key={i}
-              min={min}
-              max={max}
-              value={v}
-              index={i}
-              disabled={!!disabled}
-              valueLength={valueLength}
-              style={handleStyles[i]}
-            />
-          ))}
-        </div>
-      </div>
+        <SliderRail />
+        <SliderSelection />
+      </SliderTrack>
+      {max}
     </div>
   );
 });
+
+{
+  /* {(Array.isArray(value) ? value : [value]).map((value: number, i) => ( */
+}
+{
+  /* <SliderThumb
+          // key={i}
+          value={value}
+          min={min}
+          max={max}
+          // style={handleStyles[i]}
+        /> */
+}
+{
+  /* ))} */
+}
