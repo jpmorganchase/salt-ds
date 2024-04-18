@@ -22,7 +22,6 @@ SingleInput.args = {
 
 export const WithInput = () => {
   const [value, setValue] = useState<number>(0);
-  console.log(value);
   const max = 50;
   return (
     <div
@@ -36,7 +35,9 @@ export const WithInput = () => {
         onChange={(event: FormEvent<HTMLInputElement>) =>
           setValue(event.target.value)
         }
-      />
+      >
+        {value}
+      </Input>
       <Slider
         style={{ width: "300px" }}
         min={0}

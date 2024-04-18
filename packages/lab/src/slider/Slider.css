@@ -60,11 +60,13 @@
 
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .saltSlider-trackContainer {
   display: flex;
   flex-direction: column;
+  margin: var(--salt-spacing-50)
 }
 
 

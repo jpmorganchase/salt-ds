@@ -65,6 +65,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 
   const trackRef = useRef<HTMLDivElement>(null);
 
+  //When in a controlled state wht is the slider not being responsive to the mouse ?
   const [value, setValue] = useControlled<SliderValue>({
     controlled: valueProp,
     default: defaultValue,
