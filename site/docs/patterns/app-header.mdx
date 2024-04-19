@@ -8,13 +8,14 @@ data:
     [
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-app-header--app-header", label: "Examples"},
     ]
-  components: ["Navigation item"]
+  components: ["Navigation item", "Button"]
+  relatedPatterns: ["Navigation", "Vertical navigation"]
 ---
 
 An app header is a consistently available element that sits at the top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions.
 
   <Diagram
-    src="/img/patterns/app-header/app-header.png"
+    src="/img/patterns/app-header/app-header-hero.png"
     alt="App header example"
     border
   />
@@ -34,18 +35,18 @@ The app header has three functional areas:
 3. **Utilities:** Provides access to persistent application-wide utilities, such as external links, search, notifications, help, account details and settings.
 
   <Diagram
-    src="/img/patterns/app-header/anatomy.png"
+    src="/img/patterns/app-header/app-header-anatomy.png"
     alt="Header functional areas—branding, navigation and utilities."
     border
   />
 
 ### Desktop layout
 
-- Use a [navigation item](/salt/components/navigation-item) to build the horizontal page navigation, as explained in the [navigation pattern](./navigation).
-- Use the flex layout component with justify set to `space-between` to position the brand logo, navigation and utilities.
+- Use [`NavigationItem`](/salt/components/navigation-item) to build the horizontal page navigation, as explained in the [navigation pattern](./navigation).
+- Use `FlexLayout` with justify set to `space-between` to position the brand logo, navigation and utilities.
 
   <Diagram
-    src="/img/patterns/app-header/desktop.png"
+    src="/img/patterns/app-header/app-header-layout.png"
     alt="Example showing header’s desktop layout construction."
     border
   />
@@ -57,17 +58,52 @@ The app header has three functional areas:
 - Use a stack layout to position the [vertical navigation](./vertical-navigation) and utilities within the drawer.
 
   <Diagram
-    src="/img/patterns/app-header/mobile.png"
+    src="/img/patterns/app-header/app-header-mobile-layout.png"
     alt="Example showing header’s mobile layout construction."
     border
   />
+
+### Logo treatment
+
+Always place your logo on the top-left corner of the application. It can be preceded by the app name in text form as part of the branding area. This area can vary in size and composition where:
+
+- The max-height follows the fixed default height for base components in each density —size-base.    
+- The width responds to its content —standalone logo; or logo & app name together. 
+
+Refer to the [J.P. Morgan Brand Toolbox](https://www.jpmcbrandtoolbox.com/users/sign_in) brand guidelines if using an authorized J.P. Morgan logo.
+
+  <Diagram
+    src="/img/patterns/app-header/app-header-logo-treatment.png"
+    alt="Example showing the logo layout construction."
+    border
+  />
+
+Consider the following when placing your logo in the app header:
+
+- Keep the aspect ratio of your logo when resizing it in each density. Consider visual balance and affordance. 
+- You don't need to resize your logo to fit the max-height (size-base) of the branding area. 
+- If preceded by the app name, the text should follow density aware body-text.
+- Consider creating a compact version of your logo for small viewport experiences.
+
+<Diagram
+    src="/img/patterns/app-header/app-header-compact-logo.png"
+    alt="Example showing the comapct logo layout construction."
+    border
+  />
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Always place the logo on the top-left corner of the application.
+- You can place a title or app name in text form next to the logo.
+- Link the logo to the app home page. 
+- The logo should give users a sense of place while providing a large enough clickable target area.
+</ExampleContainer>
 
 ## Header only
 
 In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation for complex hierarchies.
 
   <Diagram
-    src="/img/patterns/app-header/header-only.png"
+    src="/img/patterns/app-header/app-header-only.png"
     alt="Example of the header-only variant."
     border
   />
@@ -77,8 +113,9 @@ In this layout, the app header is globally persistent. You can use it as standal
 The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).  
 
   <Diagram
-    src="/img/patterns/app-header/with-vertical-nav.png"
+    src="/img/patterns/app-header/app-header-vertical-navigation.png"
     alt="Header paired with vertical navigation."
+    caption="An app header paired with vertical navigation."
     border
   />
 
@@ -91,16 +128,18 @@ For small viewport experiences, the app logo remains visible, while navigation a
 ### Desktop
 
   <Diagram
-    src="/img/patterns/app-header/responsive-desktop.png"
+    src="/img/patterns/app-header/app-header-responsive-behavior-desktop.png"
     alt="App header with desktop layout for medium, large and extra large viewport experiences."
+    caption="App header with desktop layout for medium, large and extra large viewport experiences."
     border
   />
 
 ### Mobile
 
   <Diagram
-    src="/img/patterns/app-header/responsive-mobile.png"
+    src="/img/patterns/app-header/app-header-responsive-behavior-mobile.png"
     alt="App header with mobile layout for extra small and small viewport experiences."
+    caption="App header with mobile layout for extra small and small viewport experiences."
     border
   />
 
@@ -116,8 +155,9 @@ For small viewport experiences, the app logo remains visible, while navigation a
 The app header should sit in the north region, above the main, in a sticky position while the user scrolls down the page. This increases the discoverability of the elements in the header, where users can quickly access the navigation and utility actions elements without scrolling up to the top of the page. 
 
   <Diagram
-    src="/img/patterns/app-header/sticky-header.png"
+    src="/img/patterns/app-header/app-header-sticky-position.png"
     alt="The header stays in place while the user scrolls."
+    caption="The header stays in place while the user scrolls."
     border
   />
 
@@ -126,8 +166,9 @@ The app header should sit in the north region, above the main, in a sticky posit
 If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This enables keyboard and screen reader users to shift focus quickly to the main page content and navigate your application more efficiently.
 
   <Diagram
-    src="/img/patterns/app-header/skip-link.png"
+    src="/img/patterns/app-header/app-header-bypass-behavior.png"
     alt="Example of the 'Skip to content' link in the app header."
+    caption="Example of the 'Skip to content' link in the app header."
     border
   />
 
