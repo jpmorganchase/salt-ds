@@ -25,11 +25,11 @@ export const VerticalNestedGroup = (): ReactElement => {
     <nav>
       <StackLayout
         as="ul"
+        gap="var(--salt-size-border)"
         style={{
           width: 250,
           listStyle: "none",
           paddingLeft: 0,
-          gap: "var(--salt-size-border)",
         }}
       >
         {multipleLevelNesting.map(({ name, subNav }) => (
@@ -72,11 +72,11 @@ export const VerticalNestedGroup = (): ReactElement => {
             {expanded.includes(name) && (
               <StackLayout
                 as="ul"
+                gap="var(--salt-size-border)"
                 style={{
                   width: 250,
                   listStyle: "none",
                   paddingLeft: 0,
-                  gap: "var(--salt-size-border)",
                 }}
               >
                 {subNav?.map((item) => {
@@ -123,11 +123,11 @@ export const VerticalNestedGroup = (): ReactElement => {
                       {expanded.includes(item.name) && (
                         <StackLayout
                           as="ul"
+                          gap="var(--salt-size-border)"
                           style={{
                             width: 250,
                             listStyle: "none",
                             paddingLeft: 0,
-                            gap: "var(--salt-size-border)",
                           }}
                         >
                           {item.subNav.map((nestedItem) => {
