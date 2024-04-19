@@ -8,7 +8,11 @@ export const VerticalGroup = (): ReactElement => {
 
   return (
     <nav>
-      <StackLayout as="ul" gap={1} style={{ listStyle: "none" }}>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{ listStyle: "none" }}
+      >
         {items.map((item) => (
           <li key={item}>
             <NavigationItem

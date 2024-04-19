@@ -1,13 +1,11 @@
 /* Default variables applied to the root element */
 .saltFlexLayout {
-  --flexLayout-gap-multiplier: var(--flexLayout-gap-density-multiplier, 3);
   --flexLayout-layout-display: flex;
   --flexLayout-direction: row;
   --flexLayout-wrap: nowrap;
   --flexLayout-justify: flex-start;
   --flexLayout-align: stretch;
   --flexLayout-separator: var(--salt-size-border);
-  --flexLayout-gap: calc(var(--salt-size-unit) * var(--flexLayout-gap-multiplier));
 }
 
 /* Style applied to the root element */

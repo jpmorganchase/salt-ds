@@ -1,21 +1,10 @@
-.salt-density-touch {
-  --gridLayout-gap-density-multiplier: 2;
-}
-
-/* Default variables applied to the root element */
-.saltGridLayout {
-  --gridLayout-space: 1fr;
-  --gridLayout-rowGap: var(--gridLayout-gap-density-multiplier, 3);
-  --gridLayout-columnGap: var(--gridLayout-gap-density-multiplier, 3);
-}
-
 /* Style applied to the root element */
 .saltGridLayout {
   display: grid;
-  column-gap: calc(var(--salt-size-unit) * var(--gridLayout-columnGap));
-  row-gap: calc(var(--salt-size-unit) * var(--gridLayout-rowGap));
-  grid-template-columns: repeat(var(--gridLayout-columns), var(--gridLayout-space));
-  grid-template-rows: repeat(var(--gridLayout-rows), var(--gridLayout-space));
+  column-gap: var(--gridLayout-columnGap);
+  row-gap: var(--gridLayout-rowGap);
+  grid-template-columns: var(--gridLayout-columns);
+  grid-template-rows: var(--gridLayout-rows);
   grid-auto-columns: auto;
   grid-auto-rows: auto;
 }

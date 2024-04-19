@@ -5,7 +5,11 @@ export * from "./badge";
 export * from "./banner";
 export * from "./border-item";
 export * from "./border-layout";
-export * from "./breakpoints";
+export {
+  type Breakpoints,
+  DEFAULT_BREAKPOINTS,
+  useBreakpoint,
+} from "./breakpoints";
 export * from "./button";
 export * from "./card";
 export * from "./checkbox";

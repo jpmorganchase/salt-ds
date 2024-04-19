@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.41
+
+### Minor Changes
+
+- 884ce037: Removed `ParentChildLayout` from labs and promote to core.
+
 ## 1.0.0-alpha.40
 
 ### Minor Changes
