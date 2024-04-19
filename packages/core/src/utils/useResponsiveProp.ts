@@ -109,3 +109,24 @@ export const useResponsiveProp = <T>(
   }
   return value;
 };
+
+function isBreakpointProp<T>(
+  value: ResponsiveProp<T>
+): value is BreakpointProp<T> {
+  return typeof value === "object" && !Array.isArray(value);
+}
+
+export function resolveResponsiveValue<Value>(
+  value: ResponsiveProp<Value>,
+  matchedBreakpoints: (keyof Breakpoints)[]
+) {
+  if (value && isBreakpointProp(value)) {
+    for (const breakpoint of matchedBreakpoints) {
+      if (value[breakpoint] != null) {
+        return value[breakpoint];
+      }
+    }
+    return undefined;
+  }
+  return value;
+}
