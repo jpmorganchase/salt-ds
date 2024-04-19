@@ -57,6 +57,14 @@ Use the pattern when the user needs to perform actions after reaching the end of
     border
   />
 
+Buttons can display text or icons (or both) to describe the action. 
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Always use verbs that emphasize the action the button carries out.
+  - Be succinct. Avoid having more than two or three words in a button label.
+  - For example, use **Create** instead of **Ok** to create a profile, or **Save/Discard** instead of **Yes/No** to save changes.
+</ExampleContainer>
+
 ## Button options
 
 There are three button variants to choose from. Choosing the correct button depends on the context and is ultimately the choice of the application team. However, we recommend following these guidelines for consistent design:
@@ -156,6 +164,10 @@ The container and the type of scenario determine the position of actions (CTA, p
 
 ## Button bar position
 
+There are two ways to position the button bar.
+
+### Fixed
+
 Fix the button bar at the bottom of the viewport when:
 - A user can proceed (or step back) regardless of task completion.
 - The task is in a wizard.
@@ -163,7 +175,7 @@ Fix the button bar at the bottom of the viewport when:
 If content overflows, the button bar uses a secondary border style.
 <Diagrams>
   <Diagram
-    src="/img/patterns/button-bar/fixed-left.png"
+    src="/img/patterns/button-bar/button-bar-fixed-1.png"
     alt="Example showing a form overflowing behind a button bar. The button bar has a top border."
     contentPosition="bottom"
     border
@@ -171,7 +183,7 @@ If content overflows, the button bar uses a secondary border style.
   When fields overflow behind the button bar, a border should indicate if more fields are available. 
   </Diagram>
   <Diagram
-    src="/img/patterns/button-bar/fixed-right.png"
+    src="/img/patterns/button-bar/button-bar-fixed-2.png"
     alt="Example showing the end of a form. The button bar has no top border."
     contentPosition="bottom"
     border
@@ -180,7 +192,7 @@ If content overflows, the button bar uses a secondary border style.
   </Diagram>
 </Diagrams>
 
-## In line
+### In line
 
 The button bar is located at the end of the task when:
 - The user needs to complete the entire task before proceeding, for example, if there are mandatory fields in a form.
@@ -188,7 +200,7 @@ The button bar is located at the end of the task when:
 
 <Diagrams>
   <Diagram
-    src="/img/patterns/button-bar/in-line-left.png"
+    src="/img/patterns/button-bar/button-bar-in-line-1.png"
     alt="Example showing an overflowing form."
     contentPosition="bottom"
     border
@@ -196,24 +208,14 @@ The button bar is located at the end of the task when:
   When the button bar is at the end of the task, the button may not be visible when the user is at the top.
   </Diagram>
   <Diagram
-    src="/img/patterns/button-bar/in-line-right.png"
+    src="/img/patterns/button-bar/button-bar-in-line-2.png"
     alt="Example showing the bottom of a form with buttons."
-    contentPosition="bottom"
+    contentPosition="bottom"=
     border
   >
   The button bar is visible when the user scrolls to the bottom of the task.
   </Diagram>
 </Diagrams>
-
-## Button labels
-
-Buttons can display text or icons (or both) to describe the action. 
-
-<ExampleContainer type="positive" customPillText="Best practices">
-  - Always use verbs that emphasize the action the button carries out.
-  - Be succinct. Avoid having more than two or three words in a button label.
-  - For example, use **Create** instead of **Ok** to create a profile, or **Save/Discard** instead of **Yes/No** to save changes.
-</ExampleContainer>
 
 ## Stacked button bar
 
@@ -221,11 +223,11 @@ For improved usability at smaller screen or app resolutions, we recommend respon
 
 We recommend stacking at the xs breakpoint by default. Buttons will expand to fill the full width of the button bar when stacked.
 
-**Order of stacked buttons**: In a stacked button layout, we recommend buttons stack in order of importance from the top down.
+In a stacked button layout, we recommend buttons stack in order of importance from the top down.
 
   <Diagram
-    src="/img/patterns/button-bar/stacked.png"
-    alt="Example button bar, vertically stacked"
+    src="/img/patterns/button-bar/vert-nav-layout-5.png"
+    alt="Example button bar, vertically stacked."
     contentPosition="top"
     border
   />
@@ -241,7 +243,7 @@ We recommend stacking at the xs breakpoint by default. Buttons will expand to fi
 2. Adjust the direction property on both stack layout and split layout (if used) to `{{xs: "column", sm: "row"}}`. This responsive setting arranges the buttons into a column for extra small (xs) screens and a row for small (sm) screens and upwards. This ensures a responsive layout that adapts to the viewport width.
 3. When the button bar has core actions on the right, you'll need to configure an alternative stack layout.
     - Reverse the buttons in this layout to ensure that the core actions are at the top.
-    - Employ Salt's responsive design utilities to render this alternative layout at the desired breakpoint. You can find an example of this behaviour [here](https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--responsive-reverse).
+    - Employ Salt's responsive design utilities to render this alternative layout at the desired breakpoint..
 
   <Diagram
     src="/img/patterns/button-bar/build-stacked.png"
