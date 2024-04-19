@@ -9,13 +9,14 @@ import {
   makePrefixer,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
+  resolveResponsiveValue,
   ResponsiveProp,
-  useResponsiveProp,
 } from "../utils";
 import { clsx } from "clsx";
 import stackLayoutCss from "./StackLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useBreakpoint } from "../breakpoints";
 
 const withBaseName = makePrefixer("saltStackLayout");
 
@@ -46,13 +47,21 @@ type StackLayoutComponent = <T extends ElementType = "div">(
   props: StackLayoutProps<T>
 ) => ReactElement | null;
 
+function parseSpacing(value: number | string | undefined) {
+  if (value === undefined || typeof value === "string") {
+    return value;
+  }
+
+  return `calc(var(--salt-spacing-100) * ${value})`;
+}
+
 export const StackLayout: StackLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
     {
       children,
       className,
       direction = "column",
-      gap,
+      gap = 3,
       separators,
       style,
       ...rest
@@ -66,19 +75,21 @@ export const StackLayout: StackLayoutComponent = forwardRef(
       window: targetWindow,
     });
 
-    const flexGap = useResponsiveProp(gap, 3);
+    const { matchedBreakpoints } = useBreakpoint();
+
+    const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
     const separatorAlignment = separators === true ? "center" : separators;
-    const flexDirection = useResponsiveProp(direction, "column");
+    const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
     const stackLayoutStyles = {
       ...style,
-      "--stackLayout-gap-multiplier": flexGap,
+      "--stackLayout-gap": parseSpacing(flexGap),
     };
     return (
       <FlexLayout
         className={clsx(
           withBaseName(),
-          withBaseName(flexDirection),
           {
+            [withBaseName(flexDirection ?? "")]: flexDirection,
             [withBaseName("separator")]: !!separatorAlignment,
             [separatorAlignment
               ? withBaseName(`separator-${separatorAlignment}`)

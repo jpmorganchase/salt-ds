@@ -1,8 +1,6 @@
 /* Default variables applied to the root element */
 .saltStackLayout {
-  --stackLayout-gap-multiplier: var(--stackLayout-gap-density-multiplier, 3);
   --stackLayout-separator-weight: var(--salt-size-border, 1);
-  --stackLayout-gap: calc(var(--salt-size-unit) * var(--stackLayout-gap-multiplier));
 }
 
 .saltStackLayout-separator > * {
