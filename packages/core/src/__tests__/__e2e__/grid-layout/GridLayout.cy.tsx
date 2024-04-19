@@ -15,7 +15,7 @@ describe("GIVEN a Grid", () => {
   describe("WHEN no props are provided", () => {
     it("THEN it should render 12 columns and 1 row", () => {
       // Passing empty columns to test default, as example needs columns for accessibility purposes.
-      cy.mount(<Default columns={{}} />);
+      cy.mount(<Default columns={undefined} />);
 
       cy.get(".saltGridLayout")
         .invoke("css", "grid-template-columns")
@@ -140,7 +140,7 @@ describe("GIVEN a Grid", () => {
       "THEN it should render 1 column and 12 rows on xs viewport",
       {
         viewportHeight: 900,
-        viewportWidth: 600,
+        viewportWidth: 599,
       },
       () => {
         cy.mount(<Default columns={columns} rows={rows} />);

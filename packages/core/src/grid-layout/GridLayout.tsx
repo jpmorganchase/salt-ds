@@ -4,14 +4,15 @@ import { clsx } from "clsx";
 import {
   makePrefixer,
   ResponsiveProp,
-  useResponsiveProp,
   PolymorphicComponentPropWithRef,
   PolymorphicRef,
+  resolveResponsiveValue,
 } from "../utils";
 
 import gridLayoutCss from "./GridLayout.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useBreakpoint } from "../breakpoints";
 
 export type GridLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -20,23 +21,23 @@ export type GridLayoutProps<T extends ElementType> =
       /**
        * Number of columns to be displayed. Defaults to 12
        */
-      columns?: ResponsiveProp<number>;
+      columns?: ResponsiveProp<number | string>;
       /**
        * Number of rows to be displayed. Defaults to 1
        */
-      rows?: ResponsiveProp<number>;
+      rows?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
        */
-      gap?: ResponsiveProp<number>;
+      gap?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
        */
-      columnGap?: ResponsiveProp<number>;
+      columnGap?: ResponsiveProp<number | string>;
       /**
        * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
        */
-      rowGap?: ResponsiveProp<number>;
+      rowGap?: ResponsiveProp<number | string>;
     }
   >;
 
@@ -46,6 +47,22 @@ type GridLayoutComponent = <T extends ElementType = "div">(
 
 const withBaseName = makePrefixer("saltGridLayout");
 
+function parseGridValue(value: number | string | undefined) {
+  if (value === undefined || typeof value === "string") {
+    return value;
+  }
+
+  return `repeat(${value}, 1fr)`;
+}
+
+function parseSpacing(value: number | string | undefined) {
+  if (value === undefined || typeof value === "string") {
+    return value;
+  }
+
+  return `calc(var(--salt-spacing-100) * ${value})`;
+}
+
 export const GridLayout: GridLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
     {
@@ -54,7 +71,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
       className,
       columns = 12,
       rows = 1,
-      gap,
+      gap = 3,
       columnGap,
       rowGap,
       style,
@@ -70,22 +87,24 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     });
     const Component = as || "div";
 
-    const gridColumns = useResponsiveProp(columns, 12);
+    const { matchedBreakpoints } = useBreakpoint();
 
-    const gridRows = useResponsiveProp(rows, 1);
+    const gridColumns = resolveResponsiveValue(columns, matchedBreakpoints);
 
-    const gridGap = useResponsiveProp(gap, 3);
+    const gridRows = resolveResponsiveValue(rows, matchedBreakpoints);
 
-    const gridColumnGap = useResponsiveProp(columnGap, 3);
+    const gridGap = resolveResponsiveValue(gap, matchedBreakpoints);
 
-    const gridRowGap = useResponsiveProp(rowGap, 3);
+    const gridColumnGap = resolveResponsiveValue(columnGap, matchedBreakpoints);
+
+    const gridRowGap = resolveResponsiveValue(rowGap, matchedBreakpoints);
 
     const gridLayoutStyles = {
       ...style,
-      "--gridLayout-columns": gridColumns,
-      "--gridLayout-rows": gridRows,
-      "--gridLayout-columnGap": gridColumnGap ?? gridGap,
-      "--gridLayout-rowGap": gridRowGap ?? gridGap,
+      "--gridLayout-columns": parseGridValue(gridColumns),
+      "--gridLayout-rows": parseGridValue(gridRows),
+      "--gridLayout-columnGap": parseSpacing(gridColumnGap ?? gridGap),
+      "--gridLayout-rowGap": parseSpacing(gridRowGap ?? gridGap),
     };
 
     return (
