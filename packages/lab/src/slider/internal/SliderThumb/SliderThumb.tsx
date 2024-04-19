@@ -25,8 +25,6 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     window: targetWindow,
   });
 
-  //Need to make the slider selection thumb larger
-
   return (
     <Tooltip content={value} status={"info"} hideIcon placement="top">
       <div className={withBaseName("selectionArea")}>

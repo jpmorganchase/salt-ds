@@ -10,4 +10,3 @@ export const clampValue = (v: number, min: number, max: number) => {
   }
   return v;
 };
-

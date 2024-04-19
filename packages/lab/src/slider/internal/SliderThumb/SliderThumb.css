@@ -2,22 +2,18 @@
   width: var(--salt-size-indicator);
   height: var(--salt-size-selectable);
   background: var(--slider-selection-color);
-  grid-row: 1;
-  grid-column-start: 2;
-  z-index: 1;
 }
 
 .saltSliderThumb-selectionArea {
-  grid-column-start: 2;
-  margin-top: calc(-0.5 * var(--salt-spacing-200));
-  margin-left: calc(-1 * var(--salt-spacing-100));
-  width: var(--salt-spacing-200);
-  height: var(--salt-spacing-200);
-  display: flex;
   grid-row: 1;
+  grid-column-start: 2;
+  display: flex;
   align-items: center;
   justify-content: center;
-  border: solid 0.1px;
+  margin-top: calc(-0.5 * var(--salt-size-base));
+  margin-left: calc(-0.5 * var(--salt-size-base));
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
 }
 
 .saltSliderThumb:focus-visible {
@@ -25,20 +21,3 @@
   outline-width: var(--slider-handle-outlineWidth);
   outline-offset: var(--slider-handle-outlineOffset);
 }
-
-.saltSliderThumb-selectionArea:hover {
-  outline-color: var(pink);
-}
-
-.saltSliderThumb-min {
-  border-left: none;
-  margin-left: 0;
-}
-
-.saltSliderThumb-max {
-  border-right: none;
-}
-
-
-
-

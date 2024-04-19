@@ -1,1 +1,1 @@
-export * from './SliderSelection'
+export * from "./SliderSelection";
