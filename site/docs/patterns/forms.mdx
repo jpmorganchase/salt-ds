@@ -29,7 +29,7 @@ Use a form to enable users to input and submit data. Forms can be simple and use
 
 ### Anatomy
 
-You can display a form as a dedicated page, within a dialog, nested into drawers or within a side panel. Independently of how a form is displayed, the following elements are generally found in a form:
+You can display a form as a dedicated page, within a dialog, nested into drawers or within a side panel. Independently of how a form is displayed, you would generally include the following elements in a form:
 
 1. **Heading**: Provides users with additional context.
 2. **Label**: Helps users understand what information to provide.
@@ -84,6 +84,8 @@ Headings create more visual separation (after choosing field and background fill
   label="Show spacing"
 />
 
+Read more in the [spacing foundation](../foundations/spacing).
+
 #### Sections and separators
 
 Use horizontal separators to increase visual hierarchy alongside fills and headings. They use the tertiary separator style to denote sections of related fields or information.
@@ -101,48 +103,7 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
 - Inset separators so that they don’t extend into the column layout margin.
 </ExampleContainer>
 
-### Compact form layout
-
-You may need to display a data-rich form in a small viewport without reducing the component density. In this case, you can reduce or remove spacing to achieve a compact form layout.
-
-Use these layouts to display a:
-
-- Dense editable form, such as for trade tickets.
-- (Read-only) summary of a form (on their own page or an accompanying left summary column).
-
-#### Editable form
-
-If a compact form is editable, display it with:
-
-- Secondary fields.
-- Primary background.
-- Right-aligned labels (see “Label placement”).
-
-<ImageSwitcher
-  images={[
-    { src: "/img/patterns/forms/form-compact-layout.png", alt: "" },
-    { src: "/img/patterns/forms/form-compact-layout-spacing.png", alt: "" },
-  ]}
-  label="Show spacing"
-/>
-
-#### Read-only summary
-
-If a compact form is for reference (e.g., a summary/comparison), display it with:
-
-- Primary fields.
-- Primary background.
-- Read-only state.
-- Left-aligned labels (see “Label placement”).
-
-<Diagram
-  src="/img/patterns/forms/form-readonly.png"
-  alt="Example showing a read-only summary."
-  caption="Example showing a read-only summary."
-  border
-/>
-
-## Multiple columns
+### Multiple columns
 
 You can display form fields across multiple columns. This is best:
 
@@ -150,9 +111,7 @@ You can display form fields across multiple columns. This is best:
 - When vertical space is at a premium and you need to reduce scrolling.
 - When you need an additional “summary” column (typically the left column) for comparison.
 
-### Top down reading order
-
-For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between content to remain clear at 400% zoom. Use a top down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
+#### Top down reading order
 
 <Diagram
   src="/img/patterns/forms/form-reading-order.png"
@@ -161,7 +120,10 @@ For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the rel
   border
 />
 
-Use top placed labels with columns to maintain a clear relationship between field and label.
+<ExampleContainer type="positive" label="Best practices">
+- Use top placed labels with columns to maintain a clear relationship between field and label.
+- For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between content to remain clear at 400% zoom. Use a top down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
+</ExampleContainer>
 
 <ImageSwitcher
   images={[
@@ -171,9 +133,7 @@ Use top placed labels with columns to maintain a clear relationship between fiel
   label="Wrap columns"
 />
 
-### Unrelated columns
-
-For unrelated columns, align each column to its own layout grid, with the separator attached to the right margin of the preceding column. This ensures adequate separation between columns and separators.
+#### Unrelated columns
 
 <Diagram
   src="/img/patterns/forms/form-unrelated-columns.png"
@@ -181,6 +141,10 @@ For unrelated columns, align each column to its own layout grid, with the separa
   caption="In the above example, the left and right columns are not directly related to each other."
   border
 />
+
+<ExampleContainer type="positive" label="Best practices">
+Align each column to its own layout grid, with the separator attached to the right margin of the preceding column. This ensures adequate separation between columns and separators.
+</ExampleContainer>
 
 ## Full page
 
@@ -350,6 +314,51 @@ The default label placement for form fields. Top placement offers:
 
 <ExampleContainer type="negative">
 - Don't mix label placements across the same form.
+</ExampleContainer>
+
+## Compact form
+
+You may need to display a data-rich form in a small viewport without reducing the component density. In this case, you can reduce or remove spacing to achieve a compact form layout.
+
+Use these layouts to display a:
+
+- Dense editable form, such as for trade tickets.
+- (Read-only) summary of a form (on their own page or an accompanying left summary column).
+
+### Editable form
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/forms/form-compact-layout.png", alt: "" },
+    { src: "/img/patterns/forms/form-compact-layout-spacing.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+If a compact form is editable, display it with:
+
+- Secondary fields.
+- Primary background.
+- Right-aligned labels (see “Label placement”).
+</ExampleContainer>
+
+### Read-only summary
+
+<Diagram
+  src="/img/patterns/forms/form-readonly.png"
+  alt="Example showing a read-only summary."
+  caption="Example showing a read-only summary."
+  border
+/>
+
+<ExampleContainer type="positive" label="Best practices">
+If a compact form is for reference (e.g., a summary/comparison), display it with:
+
+- Primary fields.
+- Primary background.
+- Read-only state.
+- Left-aligned labels (see “Label placement”).
 </ExampleContainer>
 
 ## Progressive disclosure
