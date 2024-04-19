@@ -13,16 +13,14 @@ const GP_Sharp = forwardRef<SVGSVGElement, GP_SharpProps>(function GP_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GP_Sharp"
       aria-label="Guadeloupe"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-GP-a`}

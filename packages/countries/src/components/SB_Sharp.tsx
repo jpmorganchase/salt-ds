@@ -13,16 +13,14 @@ const SB_Sharp = forwardRef<SVGSVGElement, SB_SharpProps>(function SB_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="SB_Sharp"
       aria-label="Solomon Islands"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-SB-a`}

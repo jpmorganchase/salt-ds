@@ -10,16 +10,13 @@ export type DJProps = CountrySymbolProps;
 const DJ = forwardRef<SVGSVGElement, DJProps>(function DJ(props: DJProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="DJ"
       aria-label="Djibouti"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-DJ-a`}

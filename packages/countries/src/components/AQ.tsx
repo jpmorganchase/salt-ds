@@ -10,16 +10,13 @@ export type AQProps = CountrySymbolProps;
 const AQ = forwardRef<SVGSVGElement, AQProps>(function AQ(props: AQProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AQ"
       aria-label="Antarctica"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-AQ-a`}

@@ -10,16 +10,13 @@ export type AEProps = CountrySymbolProps;
 const AE = forwardRef<SVGSVGElement, AEProps>(function AE(props: AEProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AE"
       aria-label="United Arab Emirates (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-AE-a`}

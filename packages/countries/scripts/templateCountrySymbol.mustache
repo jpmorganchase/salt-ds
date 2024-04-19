@@ -11,10 +11,8 @@ const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
 
     const uid = useId(props.id);
 
-    const { className, ...rest } = props;
-
     return (
-      <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} className={clsx(className, { "saltCountrySymbol-sharp": {{sharp}} })} {...rest}>
+      <CountrySymbol data-testid="{{componentName}}" aria-label="{{ariaLabel}}" viewBox="{{viewBox}}" ref={ref} {{#sharp}}sharp{{/sharp}} {...props}>
         {{{svgElements}}}
       </CountrySymbol>
     );

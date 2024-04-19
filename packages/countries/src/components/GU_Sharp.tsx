@@ -13,16 +13,14 @@ const GU_Sharp = forwardRef<SVGSVGElement, GU_SharpProps>(function GU_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GU_Sharp"
       aria-label="Guam"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-GU-a`}

@@ -10,16 +10,13 @@ export type ERProps = CountrySymbolProps;
 const ER = forwardRef<SVGSVGElement, ERProps>(function ER(props: ERProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="ER"
       aria-label="Eritrea"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-ER-a`}

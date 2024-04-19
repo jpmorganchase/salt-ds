@@ -10,16 +10,13 @@ export type IRProps = CountrySymbolProps;
 const IR = forwardRef<SVGSVGElement, IRProps>(function IR(props: IRProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="IR"
       aria-label="Iran (Islamic Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-IR-a`}

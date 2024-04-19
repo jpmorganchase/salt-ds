@@ -13,16 +13,14 @@ const MQ_Sharp = forwardRef<SVGSVGElement, MQ_SharpProps>(function MQ_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="MQ_Sharp"
       aria-label="Martinique"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-MQ-a`}

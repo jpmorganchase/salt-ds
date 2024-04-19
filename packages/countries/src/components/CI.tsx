@@ -10,16 +10,13 @@ export type CIProps = CountrySymbolProps;
 const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="CI"
       aria-label="Côte d&#39;Ivoire"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-CI-a`}
