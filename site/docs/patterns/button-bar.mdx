@@ -29,6 +29,7 @@ Use the pattern when the user needs to perform actions after reaching the end of
 ### Anatomy
 
 1. **Buttons**: use to provide possible actions for users to take.
+2. **Groups**: used to visually communicate which buttons are related to each other.
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-anatomy.png"
@@ -57,13 +58,7 @@ Use the pattern when the user needs to perform actions after reaching the end of
     border
   />
 
-Buttons can display text or icons (or both) to describe the action. 
-
-<ExampleContainer type="positive" customPillText="Best practices">
-  - Always use verbs that emphasize the action the button carries out.
-  - Be succinct. Avoid having more than two or three words in a button label.
-  - For example, use **Create** instead of **Ok** to create a profile, or **Save/Discard** instead of **Yes/No** to save changes.
-</ExampleContainer>
+Buttons can display text or icons (or both) to describe the action. See [`Button`](/salt/components/button)'s documentation for further guidance.
 
 ## Button options
 
@@ -87,7 +82,8 @@ There are three button variants to choose from. Choosing the correct button depe
 
 Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate path and uses a primary button because there are only two options. However, in Example 2, Cancel uses the secondary button because three actions are available to the user, with this one being tertiary and the least desired option.
 
-### Example 1
+In the below example:
+
     - The **Submit** primary action uses the CTA button
     - The **Cancel** alternate action uses the primary button
 
@@ -98,7 +94,8 @@ Remember to use a hierarchy when making your button choices, much like following
     contentPosition="top"
   />
 
-### Example 2
+In the below example:
+
     - The **Next** primary action uses the CTA button
     - The **Previous** alternate action uses the primary button (order follows sequential forms).
     - The **Cancel** tertiary action uses the secondary button.
