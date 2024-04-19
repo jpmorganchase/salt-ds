@@ -108,10 +108,10 @@
   width: min-content;
 }
 
-.saltDateInput-active::first-line {
+/* TODO: check if active will be needed. currently not using */
+.saltDateInput-active::first-line, .saltDateInput-input:focus::first-line {
   background: var(--salt-content-foreground-highlight);
 }
-
 /* Reset in the  class */
 .saltDateInput-input:focus {
   outline: none;

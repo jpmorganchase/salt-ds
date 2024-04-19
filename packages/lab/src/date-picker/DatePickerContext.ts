@@ -1,9 +1,9 @@
-import { createContext } from "@salt-ds/core";
+import { createContext, UseFloatingUIReturn } from "@salt-ds/core";
 import { useContext } from "react";
 import { DateValue } from "@internationalized/date";
 
-export interface DatePickerContextValue {
-  // TODO: add the floating ui context?
+export interface DatePickerContextValue
+  extends Partial<Pick<UseFloatingUIReturn, "context">> {
   openState: boolean;
   setOpen: (newOpen: boolean) => void;
   disabled: boolean;
@@ -12,6 +12,7 @@ export interface DatePickerContextValue {
   endDate: DateValue | undefined;
   setEndDate: (newEndDate: DateValue) => void;
   selectionVariant: "default" | "range";
+  getPanelPosition: () => Record<string, unknown>;
 }
 
 export const DatePickerContext = createContext<DatePickerContextValue>(
@@ -25,6 +26,7 @@ export const DatePickerContext = createContext<DatePickerContextValue>(
     endDate: undefined,
     setEndDate: () => undefined,
     selectionVariant: "default",
+    getPanelPosition: () => ({}),
   }
 );
 

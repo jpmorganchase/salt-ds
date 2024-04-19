@@ -1,12 +1,5 @@
 import { clsx } from "clsx";
-import {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  forwardRef,
-  KeyboardEvent,
-  useEffect,
-  useState,
-} from "react";
+import { ComponentPropsWithoutRef, forwardRef, useState } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
@@ -14,7 +7,13 @@ import datePickerCss from "./DatePicker.css";
 import { Button, makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
-import { flip, size, useDismiss, useInteractions } from "@floating-ui/react";
+import {
+  flip,
+  size,
+  useDismiss,
+  useFocus,
+  useInteractions,
+} from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
@@ -51,15 +50,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const [open, setOpen] = useState<boolean>(false);
     const [startDate, setStartDate] = useState<DateValue | null>(null);
     const [endDate, setEndDate] = useState<DateValue | null>(null);
-    const [inputValue, setInputValue] = useState<string>("");
 
-    useEffect(() => {
-      // TODO: Format
-      setInputValue(startDate as string);
-    }, [startDate]);
     const { x, y, strategy, elements, floating, reference, context } =
       useFloatingUI({
         open: open,
+        onOpenChange: setOpen,
         placement: "bottom-start",
         middleware: [
           size({
@@ -74,9 +69,30 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         ],
       });
 
+    const focus = useFocus(context);
     const dismiss = useDismiss(context);
 
-    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+      focus,
+      dismiss,
+    ]);
+
+    // const setStartDate = (date: DateValue | null) => {
+    //   setStartDateState(date);
+    //   if (selectionVariant === "range" && date) {
+    //     const secondInput =
+    //       refs.reference.current?.querySelectorAll("input")[1];
+    //     secondInput?.focus();
+    //   }
+    // };
+    //
+    const getPanelPosition = () => ({
+      top: y ?? 0,
+      left: x ?? 0,
+      position: strategy,
+      width: elements.floating?.offsetWidth,
+      height: elements.floating?.offsetHeight,
+    });
 
     const datePickerContextValue = {
       openState: open,
@@ -87,48 +103,32 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       startDate,
       setStartDate,
       selectionVariant,
-    };
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setInputValue(value);
-    };
-    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "Tab" && event.shiftKey) {
-        setOpen(false);
-      }
+      context,
+      getPanelPosition,
     };
 
     const inputRef = useForkRef(ref, reference);
+
+    const handleCalendarButton = () => {
+      setOpen(!open);
+      // TODO: move focus to the input
+    };
     return (
       <DatePickerContext.Provider value={datePickerContextValue}>
         <DateInput
           className={clsx(withBaseName())}
           ref={inputRef}
           {...getReferenceProps()}
-          onFocus={() => setOpen(true)}
           selectionVariant={selectionVariant}
-          startDate={inputValue}
-          endDate={endDate}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           endAdornment={
-            <Button variant="secondary" onClick={() => setOpen(!open)}>
+            <Button variant="secondary" onClick={handleCalendarButton}>
               <CalendarIcon />
             </Button>
           }
           {...rest}
         />
-        <DatePickerPanel
-          left={x ?? 0}
-          top={y ?? 0}
-          position={strategy}
-          width={elements.floating?.offsetWidth}
-          height={elements.floating?.offsetHeight}
-          ref={floating}
-          {...getFloatingProps()}
-        />
+        <DatePickerPanel ref={floating} {...getFloatingProps()} />
       </DatePickerContext.Provider>
     );
   }

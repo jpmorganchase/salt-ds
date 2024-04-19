@@ -36,8 +36,9 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       setEndDate,
       setOpen,
       selectionVariant,
+      context,
+      getPanelPosition,
     } = useDatePickerContext();
-
     const isRangePicker = selectionVariant === "range";
 
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
@@ -53,17 +54,29 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       (_, newDate) => {
         setStartDate(newDate);
         setOpen(false);
+        // TODO: send focus back to input?
       };
 
     const selectedDate =
       selectionVariant === "default" ? startDate : { startDate, endDate };
-    // TODO: calendar is not closing on dismiss - check floating ui implementation
+
     return (
       <FloatingComponent
         open={openState}
         className={clsx(withBaseName(), className)}
         aria-modal="true"
         ref={ref}
+        focusManagerProps={
+          context
+            ? {
+                context: context,
+                initialFocus: -1,
+                returnFocus: false,
+                modal: false,
+              }
+            : undefined
+        }
+        {...getPanelPosition()}
         {...rest}
       >
         <Calendar
