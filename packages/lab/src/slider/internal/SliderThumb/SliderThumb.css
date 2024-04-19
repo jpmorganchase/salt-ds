@@ -5,8 +5,29 @@
   grid-row: 1;
   grid-column-start: 2;
   z-index: 1;
-  /* How do we feel about this, the alternative is to have SliderRail as a separate component  */
-  margin-top: calc(-0.5 * var(--salt-size-selectable));
+}
+
+.saltSliderThumb-selectionArea {
+  grid-column-start: 2;
+  margin-top: calc(-0.5 * var(--salt-spacing-200));
+  margin-left: calc(-1 * var(--salt-spacing-100));
+  width: var(--salt-spacing-200);
+  height: var(--salt-spacing-200);
+  display: flex;
+  grid-row: 1;
+  align-items: center;
+  justify-content: center;
+  border: solid 0.1px;
+}
+
+.saltSliderThumb:focus-visible {
+  outline-style: var(--slider-handle-outlineStyle);
+  outline-width: var(--slider-handle-outlineWidth);
+  outline-offset: var(--slider-handle-outlineOffset);
+}
+
+.saltSliderThumb-selectionArea:hover {
+  outline-color: var(pink);
 }
 
 .saltSliderThumb-min {
@@ -18,12 +39,6 @@
   border-right: none;
 }
 
-.saltSliderThumb-box:focus-visible {
-  outline-style: var(--slider-handle-outlineStyle);
-  outline-width: var(--slider-handle-outlineWidth);
-  outline-color: var(--slider-handle-outlineColor);
-  outline-offset: var(--slider-handle-outlineOffset);
-}
 
 
 

@@ -9,7 +9,9 @@ const withBaseName = makePrefixer("saltSliderSelection");
 
 export interface SliderSelectionProps extends ComponentPropsWithoutRef<"div"> {}
 
-export function SliderSelection({ ...props }: SliderSelectionProps) {
+export function SliderSelection({
+  ...props
+}: SliderSelectionProps): JSX.Element {
   const targetWindow = useWindow();
   useComponentCssInjection({
     css: sliderSelectionCss,

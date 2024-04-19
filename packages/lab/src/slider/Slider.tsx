@@ -79,15 +79,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange
   );
 
-  const onKeyDown = useSliderKeyDown(
-    value,
-    min,
-    max,
-    pageStep,
-    step,
-    setValue,
-    onChange
-  );
+  const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
 
   const trackGridTeplateColumns = useMemo(
     () => createTrackGridTemplateColumns(min, max, value, step),
