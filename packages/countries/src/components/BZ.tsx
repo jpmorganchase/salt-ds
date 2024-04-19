@@ -10,16 +10,13 @@ export type BZProps = CountrySymbolProps;
 const BZ = forwardRef<SVGSVGElement, BZProps>(function BZ(props: BZProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="BZ"
       aria-label="Belize"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-BZ-a`}

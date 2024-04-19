@@ -10,16 +10,13 @@ export type JMProps = CountrySymbolProps;
 const JM = forwardRef<SVGSVGElement, JMProps>(function JM(props: JMProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="JM"
       aria-label="Jamaica"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-JM-a`}

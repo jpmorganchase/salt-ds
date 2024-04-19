@@ -10,16 +10,13 @@ export type IEProps = CountrySymbolProps;
 const IE = forwardRef<SVGSVGElement, IEProps>(function IE(props: IEProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="IE"
       aria-label="Ireland"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-IE-a`}

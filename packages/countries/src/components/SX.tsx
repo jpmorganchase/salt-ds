@@ -10,16 +10,13 @@ export type SXProps = CountrySymbolProps;
 const SX = forwardRef<SVGSVGElement, SXProps>(function SX(props: SXProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="SX"
       aria-label="Sint Maarten (Dutch part)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-SX-a`}

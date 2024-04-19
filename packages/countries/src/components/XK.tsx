@@ -10,16 +10,13 @@ export type XKProps = CountrySymbolProps;
 const XK = forwardRef<SVGSVGElement, XKProps>(function XK(props: XKProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="XK"
       aria-label="Kosovo (the Republic of)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-XK-a`}
