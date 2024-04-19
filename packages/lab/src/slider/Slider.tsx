@@ -10,6 +10,7 @@ import {
   createTrackGridTemplateColumns,
   useSliderKeyDown,
   useSliderMouseDown,
+  SliderMarks,
 } from "./internal";
 
 import sliderCss from "./Slider.css";
@@ -34,6 +35,7 @@ export interface SliderProps
   disabled?: boolean;
   onChange?: (value: number) => void;
   unit?: string; // Could add this, might be helpful
+  showMarks?: boolean;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -41,13 +43,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     min = defaultMin,
     max = defaultMax,
     step = defaultStep,
-    pageStep = step,
     value: valueProp,
     defaultValue = defaultMin,
     onChange,
     className,
     disabled,
-
+    showMarks,
     ...rest
   },
   ref
@@ -87,20 +88,17 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   );
 
   return (
-    <div ref={ref} className={clsx(withBaseName(), className)}>
-      <Label>{min}</Label>
-      <div className={withBaseName("trackContainer")} {...rest}>
-        <SliderTrack
-          style={trackGridTeplateColumns}
-          ref={trackRef}
-          onKeyDown={disabled ? undefined : onKeyDown}
-          onMouseDown={disabled ? undefined : onMouseDown}
-        >
-          <SliderSelection />
-          <SliderThumb value={value} min={min} max={max} />
-        </SliderTrack>
-      </div>
-      <Label>{max}</Label>
+    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+      <SliderTrack
+        style={trackGridTeplateColumns}
+        ref={trackRef}
+        onKeyDown={disabled ? undefined : onKeyDown}
+        onMouseDown={disabled ? undefined : onMouseDown}
+      >
+        <SliderSelection />
+        <SliderThumb value={value} min={min} max={max} />
+      </SliderTrack>
+      {showMarks && <SliderMarks max={max} min={min} step={step} />}
     </div>
   );
 });

@@ -58,13 +58,13 @@
   --slider-label-paddingLeft: var(--saltSlider-label-paddingLeft, 0);
   --slider-label-paddingRight: var(--saltSlider-label-paddingRight, 0);
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+
+
 }
 
-.saltSlider-trackContainer {
-  display: flex;
-  flex-direction: column;
+/* .saltSlider-trackContainer {
+
   margin: var(--salt-spacing-50);
-}
+} */

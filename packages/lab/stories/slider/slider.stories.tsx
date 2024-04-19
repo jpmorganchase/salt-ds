@@ -1,6 +1,6 @@
 import { Input, FormField, FormFieldLabel, useId } from "@salt-ds/core";
 import { Slider, SliderProps } from "@salt-ds/lab";
-import { useState, FormEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { StoryFn } from "@storybook/react";
 
 export default {
@@ -20,11 +20,20 @@ SingleInput.args = {
   max: 100,
 };
 
+export const WithMarks = () => {
+  return (
+    <FormField>
+      <FormFieldLabel> Slider with Mark </FormFieldLabel>
+      <Slider showMarks style={{ width: "300px" }} />
+    </FormField>
+  );
+};
+
 export const WithInput = () => {
   const [value, setValue] = useState<number>(5);
   const max = 50;
 
-  const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
 
