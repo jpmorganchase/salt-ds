@@ -1,4 +1,4 @@
-import { Input, useId } from "@salt-ds/core";
+import { Input, FormField, FormFieldLabel, useId } from "@salt-ds/core";
 import { Slider, SliderProps } from "@salt-ds/lab";
 import { useState, FormEvent } from "react";
 import { StoryFn } from "@storybook/react";
@@ -21,29 +21,39 @@ SingleInput.args = {
 };
 
 export const WithInput = () => {
-  const [value, setValue] = useState<number>(0);
+  const [value, setValue] = useState<number>(5);
   const max = 50;
+
+  const handleInputChange = (event: FormEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleChange = (value: number) => {
+    setValue(value);
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-      }}
-    >
-      <Input
-        style={{ width: "1px", margin: "5px" }}
-        onChange={(event: FormEvent<HTMLInputElement>) =>
-          setValue(event.target.value)
-        }
+    <FormField>
+      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
       >
-        {value}
-      </Input>
-      <Slider
-        style={{ width: "300px" }}
-        min={0}
-        max={max}
-        value={value}
-      ></Slider>
-    </div>
+        <Input
+          placeholder="value"
+          style={{ width: "1px", margin: "5px" }}
+          onChange={handleInputChange}
+        />
+        <Slider
+          style={{ width: "300px" }}
+          min={0}
+          max={max}
+          value={value}
+          onChange={handleChange}
+        />
+      </div>
+    </FormField>
   );
 };

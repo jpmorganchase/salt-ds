@@ -1,14 +1,4 @@
 import { makePrefixer, Tooltip } from "@salt-ds/core";
-import { clsx } from "clsx";
-import {
-  CSSProperties,
-  ComponentPropsWithoutRef,
-  ReactNode,
-  useMemo,
-} from "react";
-// import { getSliderAriaLabel } from "../utils";
-import { createTrackStyle } from "./styles";
-
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import sliderThumbCss from "./SliderThumb.css";
@@ -41,9 +31,8 @@ export function SliderThumb(props: slilderThumbProps): JSX.Element {
         aria-valuemax={max}
         aria-valuenow={value}
         aria-disabled={disabled}
-        // aria-label={getSliderAriaLabel(valueLength, index)}
         tabIndex={0}
-        // data-handle-index={index}
+        // data-handle-index={index} What is this for ?
         {...rest}
       />
     </Tooltip>

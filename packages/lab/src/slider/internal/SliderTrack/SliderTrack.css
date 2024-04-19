@@ -5,5 +5,8 @@
   height: var(--slider-selection-height);
   background: var(--slider-rail-color);
   transition: grid-template-columns 100ms ease;
-  /* align-items: start; */
+}
+
+.saltSliderTrack:active {
+  cursor: grabbing;
 }

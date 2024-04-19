@@ -1,11 +1,4 @@
 .saltSliderThumb {
-  /* display: flex;
-  align-items: center;
-  width: min-content; 
-  border: 1px 1px 1px 1px;
-  border-style: solid;
-  border-color: var(--slider-selection-color); */
-  
   width: var(--salt-size-indicator);
   height: var(--salt-size-selectable);
   background: var(--slider-selection-color);

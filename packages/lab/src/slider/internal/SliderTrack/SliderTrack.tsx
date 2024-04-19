@@ -3,7 +3,6 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { SliderRail } from "./internal/SliderRail";
 import { SliderSelection } from "./SliderSelection";
 import { clsx } from "clsx";
-
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import sliderTrackCss from "./SliderTrack.css";
