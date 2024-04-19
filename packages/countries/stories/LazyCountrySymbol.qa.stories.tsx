@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
+import { type CountryCode } from "@salt-ds/countries";
 import { Suspense } from "react";
 
 export default {
@@ -20,14 +21,19 @@ export const AllLazyCountrySymbols: StoryFn = () => {
             padding: "12px 0",
           }}
         >
-          {Object.values(countryMetaMap).map(({ countryCode }) => (
-            <LazyCountrySymbol
-              key={countryCode}
-              code={countryCode}
-              id={`${size}-${countryCode}`}
-              size={size}
-            />
-          ))}
+          {Object.keys(countryMetaMap)
+            .filter((componentCode) => !componentCode.endsWith("_Sharp"))
+            .map(
+              (componentCode) => countryMetaMap[componentCode as CountryCode]
+            )
+            .map(({ countryCode }) => (
+              <LazyCountrySymbol
+                key={countryCode}
+                code={countryCode}
+                id={`${size}-${countryCode}`}
+                size={size}
+              />
+            ))}
         </div>
       ))}
     </Suspense>
