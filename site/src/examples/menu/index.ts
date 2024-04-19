@@ -1,4 +1,3 @@
-export * from "./ContextMenu";
 export * from "./GroupedItems";
 export * from "./GroupedWithIcon";
 export * from "./Multilevel";
@@ -6,4 +5,5 @@ export * from "./Placement";
 export * from "./Scrolling";
 export * from "./SeparatorOnly";
 export * from "./SingleLevel";
+export * from "./VirtualElement";
 export * from "./WithIcon";

@@ -45,7 +45,7 @@ export interface MenuBaseProps {
    */
   placement?: UseFloatingUIProps["placement"];
   /**
-   * Callback to returns a [virtual element](https://floating-ui.com/docs/virtual-elements). If this is provided, it will override MenuTrigger.
+   * Function that returns a [virtual element](https://floating-ui.com/docs/virtual-elements). If this is provided, it will override MenuTrigger.
    */
   getVirtualElement?: () => ReferenceType | null;
 }
@@ -91,7 +91,7 @@ export function MenuBase(props: MenuBaseProps) {
     strategy: !getVirtualElement ? "absolute" : "fixed",
     placement:
       placement ??
-      (isNested || !!getVirtualElement ? "right-start" : "bottom-start"),
+      (isNested || getVirtualElement ? "right-start" : "bottom-start"),
     middleware: [
       // Align the nested menu by shifting it by var(--salt-size-border)
       offset(isNested ? { crossAxis: -1 } : {}),

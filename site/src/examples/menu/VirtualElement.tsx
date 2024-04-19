@@ -1,12 +1,11 @@
 import { ReactElement, useState } from "react";
 import { Card } from "@salt-ds/core";
 import { Menu, MenuItem, MenuPanel } from "@salt-ds/lab";
-import { VirtualElement } from "@floating-ui/react";
+import { VirtualElement as FloatingUIVirtualElement } from "@floating-ui/react";
 
-export const ContextMenu = (): ReactElement => {
-  const [virtualElement, setVirtualElement] = useState<VirtualElement | null>(
-    null
-  );
+export const VirtualElement = (): ReactElement => {
+  const [virtualElement, setVirtualElement] =
+    useState<FloatingUIVirtualElement | null>(null);
   const [open, setOpen] = useState(false);
   return (
     <>
