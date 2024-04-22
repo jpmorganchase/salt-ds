@@ -50,7 +50,6 @@ export const AppHeader = () => {
       <header>
         <FlexLayout
           style={{
-            // height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
             paddingLeft: "var(--salt-spacing-300)",
             paddingRight: "var(--salt-spacing-300)",
             backgroundColor: "var(--salt-container-primary-background)",
