@@ -16,6 +16,14 @@
   padding: calc(var(--salt-spacing-200) - var(--salt-size-border));
 }
 
+.primaryBackground {
+  background: var(--salt-container-primary-background);
+}
+
+.secondaryBackground {
+  background: var(--salt-container-secondary-background);
+}
+
 .diagram {
   display: flex;
   flex-direction: column;
