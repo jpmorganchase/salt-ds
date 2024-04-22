@@ -2784,9 +2784,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/code-coverage@npm:^3.12.32":
-  version: 3.12.32
-  resolution: "@cypress/code-coverage@npm:3.12.32"
+"@cypress/code-coverage@npm:^3.12.35":
+  version: 3.12.35
+  resolution: "@cypress/code-coverage@npm:3.12.35"
   dependencies:
     "@cypress/webpack-preprocessor": "npm:^6.0.0"
     chalk: "npm:4.1.2"
@@ -2803,7 +2803,7 @@ __metadata:
     babel-loader: ^8.3 || ^9
     cypress: "*"
     webpack: ^4 || ^5
-  checksum: 10/fc67b523c7341bd6b970e2007af8e82024ae00240aaa45d49116a300e0d578942cec5b140e40f6b91db93862cdc92fc829fc96396d9b852c2dc6082dd067daad
+  checksum: 10/d481e188248d7639a70d6178f283faf03fa1f87853fce6e7427679ca016408a004f4745269c0432e0b7ad420b255021ad3ed648fd741da22b91e65783bf0c3f6
   languageName: node
   linkType: hard
 
@@ -6242,7 +6242,7 @@ __metadata:
   resolution: "@salt-ds/root@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.25.2"
-    "@cypress/code-coverage": "npm:^3.12.32"
+    "@cypress/code-coverage": "npm:^3.12.35"
     "@faker-js/faker": "npm:^8.0.0"
     "@fontsource/open-sans": "npm:^4.5.13"
     "@fontsource/pt-mono": "npm:^5.0.12"
@@ -6278,7 +6278,7 @@ __metadata:
     chromatic: "npm:^10.2.0"
     ci-info: "npm:^3.3.1"
     clsx: "npm:^2.0.0"
-    cypress: "npm:^13.7.1"
+    cypress: "npm:^13.8.0"
     cypress-axe: "npm:^1.5.0"
     cypress-real-events: "npm:^1.12.0"
     deepmerge: "npm:^4.2.2"
@@ -13543,9 +13543,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^13.7.1":
-  version: 13.7.1
-  resolution: "cypress@npm:13.7.1"
+"cypress@npm:^13.8.0":
+  version: 13.8.0
+  resolution: "cypress@npm:13.8.0"
   dependencies:
     "@cypress/request": "npm:^3.0.0"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -13591,7 +13591,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/897abf011156af85fae617b20177ed945fb76c78ac9bfad10af870e62181f9d56fdc886e00602e576cfbc79cc97230dc20c7bd5b4b87a4ada7ed83025fb147d3
+  checksum: 10/114eaac462feb3ebb7a57dc088857cfeace1341ae4e84a3406ef8f487f3c0ec42f31d2b2c5de5411f26057502f50561f3d62fd019a8161933b615c6847fb5332
   languageName: node
   linkType: hard
 
