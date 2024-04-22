@@ -55,8 +55,8 @@ A form control consists of a [form field](/salt/components/form-field) wrapped a
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/forms/form-layout.png", alt: "" },
     { src: "/img/patterns/forms/form-layout-spacing.png", alt: "" },
+    { src: "/img/patterns/forms/form-layout.png", alt: "" },
   ]}
   label="Show vertical spacing"
 />
@@ -98,7 +98,7 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
   label="Show spacing"
 />
 
-<ExampleContainer type="positive" label="Best practices">
+<ExampleContainer type="positive" customPillText="Best practices">
 - Break a long form up into sections (or sequential steps) of, ideally, 7 (+/-2) form fields (Miller’s Law).
 - Inset separators so that they don’t extend into the column layout margin.
 </ExampleContainer>
@@ -113,6 +113,8 @@ You can display form fields across multiple columns. This is best:
 
 #### Top down reading order
 
+Use a top down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
+
 <Diagram
   src="/img/patterns/forms/form-reading-order.png"
   alt="Top down reading order."
@@ -120,10 +122,7 @@ You can display form fields across multiple columns. This is best:
   border
 />
 
-<ExampleContainer type="positive" label="Best practices">
-- Use top placed labels with columns to maintain a clear relationship between field and label.
-- For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between content to remain clear at 400% zoom. Use a top down reading order to ensure that form fields maintain a logical order as they reposition at different browser zoom levels.
-</ExampleContainer>
+Use top placed labels with columns to maintain a clear relationship between field and label. For ADA compliance, forms must adhere to WCAG 2.1 Reflow, which requires the relationship between content to remain clear at 400% zoom.
 
 <ImageSwitcher
   images={[
@@ -135,16 +134,14 @@ You can display form fields across multiple columns. This is best:
 
 #### Unrelated columns
 
+Align each column to its own layout grid, with the separator attached to the right margin of the preceding column. This ensures adequate separation between columns and separators.
+
 <Diagram
   src="/img/patterns/forms/form-unrelated-columns.png"
   alt="Example showing a form with unrelated columns."
   caption="In the above example, the left and right columns are not directly related to each other."
   border
 />
-
-<ExampleContainer type="positive" label="Best practices">
-Align each column to its own layout grid, with the separator attached to the right margin of the preceding column. This ensures adequate separation between columns and separators.
-</ExampleContainer>
 
 ## Full page
 
@@ -350,7 +347,7 @@ Use these layouts to display a:
   label="Show spacing"
 />
 
-<ExampleContainer type="positive" label="Best practices">
+<ExampleContainer type="positive" customPillText="Best practices">
 If a compact form is editable, display it with:
 
 - Secondary fields.
@@ -367,7 +364,7 @@ If a compact form is editable, display it with:
   border
 />
 
-<ExampleContainer type="positive" label="Best practices">
+<ExampleContainer type="positive" customPillText="Best practices">
 If a compact form is for reference (e.g., a summary/comparison), display it with:
 
 - Primary fields.
@@ -398,7 +395,7 @@ These use accordions to progressively reveal fields in long, dense forms. Sectio
   label="Expand sections"
 />
 
-<ExampleContainer type="positive" label="Best practices">
+<ExampleContainer type="positive" customPillText="Best practices">
 - Expand the first section on displaying the form.
 - Align the left edge of fields to the accordion label and the right edge to the underlying layout grid.
 </ExampleContainer>
