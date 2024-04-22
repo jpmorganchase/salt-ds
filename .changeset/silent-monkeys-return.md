@@ -2,6 +2,7 @@
 "@salt-ds/lab": minor
 ---
 
+Submenu's now persist when the cursor moves from the menu to the body. This makes it easier to interact with submenus.
 Added `getVirtualElement` to Menu. To allow positioning Menu's relative to a custom reference area. This can be used to create a context menu.
 
 ```tsx

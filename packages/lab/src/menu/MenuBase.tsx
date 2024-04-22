@@ -116,7 +116,7 @@ export function MenuBase(props: MenuBaseProps) {
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
       useHover(context, {
-        enabled: isNested,
+        enabled: isNested && !focusInside,
         handleClose: safePolygon({ blockPointerEvents: true }),
       }),
       useClick(context, {

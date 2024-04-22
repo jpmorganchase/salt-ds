@@ -122,7 +122,7 @@ describe("Given a Menu", () => {
     cy.findByRole("menu").should("not.exist");
   });
 
-  it("should close nested menus when the mouse leaves the menu", () => {
+  it("should close nested menus when the mouse leaves the menu and hovers an item in the parent menu", () => {
     cy.mount(<MultiLevel />);
     cy.findByRole("button", { name: "Open Menu" }).realClick();
     cy.findAllByRole("menu").should("have.length", 1);
@@ -130,6 +130,16 @@ describe("Given a Menu", () => {
     cy.findAllByRole("menu").should("have.length", 2);
     cy.findByRole("menuitem", { name: "Copy" }).realHover();
     cy.findAllByRole("menu").should("have.length", 1);
+  });
+
+  it("should not close nested menus when the mouse leaves the menu and hovers the page body", () => {
+    cy.mount(<MultiLevel />);
+    cy.findByRole("button", { name: "Open Menu" }).realClick();
+    cy.findAllByRole("menu").should("have.length", 1);
+    cy.findByRole("menuitem", { name: "Edit styling" }).realHover();
+    cy.findAllByRole("menu").should("have.length", 2);
+    cy.get("body").realHover();
+    cy.findAllByRole("menu").should("have.length", 2);
   });
 
   it("should support nested keyboard navigation", () => {
