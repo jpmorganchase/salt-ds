@@ -1,4 +1,4 @@
-import { makePrefixer, useControlled, Label } from "@salt-ds/core";
+import { Label, makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { useWindow } from "@salt-ds/window";
@@ -7,7 +7,7 @@ import {
   SliderThumb,
   SliderTrack,
   SliderSelection,
-  createTrackGridTemplateColumns,
+  getTrackGridTemplateColumns,
   useSliderKeyDown,
   useSliderMouseDown,
   SliderMarks,
@@ -18,7 +18,7 @@ import sliderCss from "./Slider.css";
 const withBaseName = makePrefixer("saltSlider");
 
 const defaultMin = 0;
-const defaultMax = 20;
+const defaultMax = 10;
 const defaultStep = 1;
 
 export interface SliderProps
@@ -27,15 +27,12 @@ export interface SliderProps
   min?: number;
   max?: number;
   step?: number;
-  pageStep?: number;
   value?: number;
   defaultValue?: number;
-  pushable?: boolean;
-  pushDistance?: number;
   disabled?: boolean;
   onChange?: (value: number) => void;
-  unit?: string; // Could add this, might be helpful
   showMarks?: boolean;
+  labelBottom?: boolean;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -48,7 +45,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange,
     className,
     disabled,
-    showMarks,
+    showMarks = false,
+    labelBottom = false,
     ...rest
   },
   ref
@@ -62,7 +60,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 
   const trackRef = useRef<HTMLDivElement>(null);
 
-  //When in a controlled state why is the slider not being responsive to the mouse ?
   const [value, setValue] = useControlled<number>({
     controlled: valueProp,
     default: defaultValue,
@@ -83,12 +80,21 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
 
   const trackGridTeplateColumns = useMemo(
-    () => createTrackGridTemplateColumns(min, max, value, step),
+    () => getTrackGridTemplateColumns(min, max, value, step),
     [min, max, value, step]
   );
 
   return (
-    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+    <div
+      ref={ref}
+      className={clsx(
+        withBaseName(),
+        { [withBaseName("inline")]: !labelBottom && !showMarks },
+        className
+      )}
+      {...rest}
+    >
+      {!showMarks && <Label> {min} </Label>}
       <SliderTrack
         style={trackGridTeplateColumns}
         ref={trackRef}
@@ -99,6 +105,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         <SliderThumb value={value} min={min} max={max} />
       </SliderTrack>
       {showMarks && <SliderMarks max={max} min={min} step={step} />}
+      {!showMarks && <Label> {max} </Label>}
     </div>
   );
 });

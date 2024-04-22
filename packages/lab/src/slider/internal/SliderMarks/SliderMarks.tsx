@@ -1,5 +1,6 @@
 import { Label, makePrefixer } from "@salt-ds/core";
 import { ComponentPropsWithoutRef } from "react";
+import { getMarkStyles } from "../styles";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -25,15 +26,20 @@ export function SliderMarks({
     window: targetWindow,
   });
 
-  const marks = [];
-  for (let i = min; i <= max; i = i + step) {
-    marks.push(i);
-  }
+  const marks = getMarkStyles(min, max, step);
 
   return (
     <div className={withBaseName()} {...rest}>
       {marks.map((mark) => {
-        return <Label key={mark}>{mark}</Label>;
+        return (
+          <Label
+            className={withBaseName("mark")}
+            key={mark.index}
+            style={{ left: mark.position }}
+          >
+            {mark.index}
+          </Label>
+        );
       })}
     </div>
   );

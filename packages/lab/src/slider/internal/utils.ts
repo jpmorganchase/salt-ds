@@ -1,12 +1,12 @@
-export const roundValue = (v: number, step: number) =>
-  Math.round(v / step) * step;
+export const roundValue = (value: number, step: number) =>
+  Math.round(value / step) * step;
 
-export const clampValue = (v: number, min: number, max: number) => {
-  if (v < min) {
+export const clampValue = (value: number, min: number, max: number) => {
+  if (value < min) {
     return min;
   }
-  if (v > max) {
+  if (value > max) {
     return max;
   }
-  return v;
+  return value;
 };

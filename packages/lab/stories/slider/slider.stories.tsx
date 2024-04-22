@@ -8,25 +8,36 @@ export default {
   component: Slider,
 };
 
-const Default: StoryFn<SliderProps> = ({ ...args }) => {
+const Template: StoryFn<SliderProps> = ({ ...args }) => {
   const id = useId();
 
   return <Slider style={{ width: "300px" }} {...args}></Slider>;
 };
 
-export const SingleInput = Default.bind({});
-SingleInput.args = {
+export const Default = Template.bind({});
+Default.args = {
   min: 0,
-  max: 100,
+  max: 10,
 };
 
-export const WithMarks = () => {
-  return (
-    <FormField>
-      <FormFieldLabel> Slider with Mark </FormFieldLabel>
-      <Slider showMarks style={{ width: "300px" }} />
-    </FormField>
-  );
+export const BottomLabel = Template.bind({});
+BottomLabel.args = {
+  min: 0,
+  max: 10,
+  labelBottom: true,
+};
+
+export const NonZeroInput = Template.bind({});
+NonZeroInput.args = {
+  min: -5,
+  max: 5,
+};
+
+export const WithMarks = Template.bind({});
+WithMarks.args = {
+  min: -5,
+  max: 5,
+  showMarks: true,
 };
 
 export const WithInput = () => {

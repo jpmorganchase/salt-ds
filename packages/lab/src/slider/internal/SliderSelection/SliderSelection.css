@@ -5,10 +5,3 @@
   grid-column-start: 1;
   grid-column-end: 2;
 }
-
-.saltSliderSelection-range {
-  height: var(--slider-selection-height);
-  background: var(--slider-selection-color);
-  grid-column-start: 2;
-  grid-column-end: 3;
-}

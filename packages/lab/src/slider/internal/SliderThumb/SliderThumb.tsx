@@ -4,7 +4,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import sliderThumbCss from "./SliderThumb.css";
 import { clsx } from "clsx";
 import { ComponentPropsWithoutRef } from "react";
-import { ManSolidIcon } from "@salt-ds/icons";
 
 const withBaseName = makePrefixer("saltSliderThumb");
 

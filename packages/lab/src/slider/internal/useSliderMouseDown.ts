@@ -22,10 +22,10 @@ const valueFromClientX = (context: MouseContext, x: number) => {
   const { min, max, step, trackRef } = context;
   const rect = trackRef.current!.getBoundingClientRect();
   const localX = x - rect.x;
-  let v = (localX / rect.width) * (max - min) + min;
-  v = roundValue(v, step);
-  v = clampValue(v, min, max);
-  return v;
+  let value = (localX / rect.width) * (max - min) + min;
+  value = roundValue(value, step);
+  value = clampValue(value, min, max);
+  return value;
 };
 
 export function useSliderMouseDown(

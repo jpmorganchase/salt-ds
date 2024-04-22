@@ -1,10 +1,9 @@
 .saltSliderMarks {
-  grid-row: 2;
-  grid-column-start: 1;
-  grid-column-end: 4;
-  z-index: -1;
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
+  position: relative;
   background: pink;
+}
+
+.saltSliderMarks-mark {
+  position: absolute;
+  transform: translate(-50%);
 }
