@@ -19,6 +19,7 @@ import {
   CloseIcon,
 } from "@salt-ds/icons";
 import { Meta } from "@storybook/react";
+import logo from "../../assets/logo.png";
 
 export default {
   title: "Patterns/App Header",
@@ -49,9 +50,9 @@ export const AppHeader = () => {
       <header>
         <FlexLayout
           style={{
-            height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-            paddingLeft: "var(--salt-spacing-200)",
-            paddingRight: "var(--salt-spacing-200)",
+            // height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+            paddingLeft: "var(--salt-spacing-300)",
+            paddingRight: "var(--salt-spacing-300)",
             backgroundColor: "var(--salt-container-primary-background)",
             position: "fixed",
             width: "100%",
@@ -63,7 +64,14 @@ export const AppHeader = () => {
           gap={3}
         >
           <FlexItem align="center">
-            <Text>App logo</Text>
+            <img
+              alt="logo"
+              src={logo}
+              style={{
+                display: "block",
+                height: "calc(var(--salt-size-base) * 0.6)",
+              }}
+            />
           </FlexItem>
           <nav>
             <ul
@@ -158,7 +166,14 @@ export const AppHeader = () => {
             )}
           </FlexItem>
           <FlexItem align="center">
-            <Text>App logo</Text>
+            <img
+              alt="logo"
+              src={logo}
+              style={{
+                display: "block",
+                height: "calc(var(--salt-size-base) * 0.6)",
+              }}
+            />
           </FlexItem>
         </StackLayout>
         <Drawer
