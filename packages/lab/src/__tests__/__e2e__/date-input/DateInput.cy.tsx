@@ -9,7 +9,7 @@ describe("GIVEN a DateInput", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN cy.mounted as an uncontrolled component", () => {
-    it("THEN it should cy.mount with the specified defaultValue", () => {
+    it("THEN it should cy.mount with the specified defaultStartDate", () => {
       cy.mount(<Default defaultStartDate="01 Feb 2000" />);
       cy.findByRole("textbox").should("have.value", "01 Feb 2000");
     });

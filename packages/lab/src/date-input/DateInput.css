@@ -109,7 +109,7 @@
 }
 
 /* TODO: check if active will be needed. currently not using */
-.saltDateInput-active::first-line, .saltDateInput-input:focus::first-line {
+.saltDateInput-active::first-line {
   background: var(--salt-content-foreground-highlight);
 }
 /* Reset in the  class */

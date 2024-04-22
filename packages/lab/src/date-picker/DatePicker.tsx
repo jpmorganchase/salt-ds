@@ -4,7 +4,13 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import datePickerCss from "./DatePicker.css";
-import { Button, makePrefixer, useFloatingUI, useForkRef } from "@salt-ds/core";
+import {
+  Button,
+  makePrefixer,
+  useControlled,
+  useFloatingUI,
+  useForkRef,
+} from "@salt-ds/core";
 import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
 import {
@@ -28,6 +34,10 @@ export interface DatePickerProps
     > {
   selectionVariant?: "default" | "range";
   disabled?: boolean;
+  startDate?: DateValue;
+  defaultStartDate?: DateValue;
+  endDate?: DateValue;
+  defaultEndDate?: DateValue;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -36,6 +46,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       selectionVariant = "default",
       disabled = false,
       placeholder = "dd mmm yyyy",
+      startDate: startDateProp,
+      endDate: endDateProp,
+      defaultStartDate,
+      defaultEndDate,
       ...rest
     },
     ref
@@ -48,8 +62,19 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     });
 
     const [open, setOpen] = useState<boolean>(false);
-    const [startDate, setStartDate] = useState<DateValue | null>(null);
-    const [endDate, setEndDate] = useState<DateValue | null>(null);
+
+    const [startDate, setStartDate] = useControlled({
+      controlled: startDateProp,
+      default: defaultStartDate,
+      name: "StartDate",
+      state: "value",
+    });
+    const [endDate, setEndDate] = useControlled({
+      controlled: endDateProp,
+      default: defaultEndDate,
+      name: "EndDateInput",
+      state: "value",
+    });
 
     const { x, y, strategy, elements, floating, reference, context } =
       useFloatingUI({
@@ -100,18 +125,21 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       disabled,
       endDate,
       setEndDate,
+      defaultEndDate,
       startDate,
       setStartDate,
+      defaultStartDate,
       selectionVariant,
       context,
       getPanelPosition,
     };
 
-    const inputRef = useForkRef(ref, reference);
+    const inputRef = useForkRef<HTMLDivElement>(ref, reference);
 
     const handleCalendarButton = () => {
       setOpen(!open);
       // TODO: move focus to the input
+      // from spec, opening should move focus to first item inside panel
     };
     return (
       <DatePickerContext.Provider value={datePickerContextValue}>

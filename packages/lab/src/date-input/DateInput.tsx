@@ -7,6 +7,7 @@ import {
   InputHTMLAttributes,
   ReactNode,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -23,21 +24,20 @@ import {
 import { useDatePickerContext } from "../date-picker/DatePickerContext";
 
 const withBaseName = makePrefixer("saltDateInput");
-
+const isInvalidDate = (value: string) =>
+  // @ts-ignore evaluating validity of date
+  value && isNaN(new Date(value));
 const createDate = (date: string): Date | null => {
   try {
-    return new Date(date);
+    return isInvalidDate(date) ? null : new Date(date);
   } catch (err) {
     return null;
   }
 };
-const isInvalidDate = (value: string) =>
-  // @ts-ignore evaluating validity of date
-  value && isNaN(new Date(value));
 
 const defaultDateFormatter = (input: string): string => {
   const date = createDate(input);
-  return isInvalidDate(input)
+  return !date
     ? input
     : new DateFormatter("EN-GB", {
         day: "2-digit",
@@ -78,10 +78,6 @@ export interface DateInputProps
    * Function to format the input value.
    */
   dateFormatter?: (input: string) => string;
-  startDate?: string;
-  defaultStartDate?: string;
-  endDate?: string;
-  defaultEndDate?: string;
   selectionVariant?: "default" | "range";
 }
 
@@ -93,12 +89,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       emptyReadOnlyMarker = "—",
       inputProps = {},
       endAdornment,
-
       readOnly: readOnlyProp,
-      // startDate: startDateProp,
+      // startDateValue: startDateValueProp,
       // endDate: endDateProp,
-      defaultStartDate: defaultStartDateProp,
-      defaultEndDate: defaultEndDateProp,
+      // defaultStartDate: defaultStartDateProp,
+      // defaultEndDate: defaultEndDateProp,
       validationStatus: validationStatusProp,
       variant = "primary",
       dateFormatter = defaultDateFormatter,
@@ -114,14 +109,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       window: targetWindow,
     });
 
-    const {
-      startDate,
-      endDate,
-      setStartDate,
-      setEndDate,
-      setOpen,
-      selectionVariant,
-    } = useDatePickerContext();
+    const { startDate, endDate, setStartDate, selectionVariant } =
+      useDatePickerContext();
 
     const {
       a11yProps: {
@@ -135,34 +124,22 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     } = useFormFieldProps();
 
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const isEmptyReadOnly = isReadOnly && !defaultStartDateProp;
-    const defaultStartDate =
-      isEmptyReadOnly && !startDate
-        ? emptyReadOnlyMarker
-        : defaultStartDateProp;
-    const defaultEndDate =
-      isEmptyReadOnly && !endDate ? emptyReadOnlyMarker : defaultEndDateProp;
 
     const getDateValidationStatus = (value: string | undefined) =>
       value && isInvalidDate(value) ? "error" : undefined;
-    // TODO: move this out to Date Picker
-    // const [startDate, setStartDate] = useControlled({
-    //   controlled: startDateProp,
-    //   default: defaultStartDate ?? "",
-    //   name: "StartDateInput",
-    //   state: "value",
-    // });
-    // const [endDate, setEndDate] = useControlled({
-    //   controlled: endDateProp,
-    //   default: defaultEndDate ?? "",
-    //   name: "EndDateInput",
-    //   state: "value",
-    // });
-    const [dateStatus, setDateStatus] = useState<"error" | undefined>(
-      getDateValidationStatus(startDate)
-    );
 
+    const [startDateStringValue, setStartDateStringValue] = useState<string>(
+      startDate?.toString() ?? ""
+    );
+    const [endDateStringValue, setEndDateStringValue] = useState<string>(
+      endDate?.toString ?? ""
+    );
+    // const [dateStatus, setDateStatus] = useState<"error" | undefined>(getDateValidationStatus(startDate));
     const isDisabled = disabled || formFieldDisabled;
+    const dateStatus = useMemo(
+      () => getDateValidationStatus(startDateStringValue),
+      [startDateStringValue]
+    );
     const validationStatus =
       dateStatus ?? formFieldValidationStatus ?? validationStatusProp;
 
@@ -177,43 +154,30 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       required: dateInputPropsRequired,
       ...restDateInputProps
     } = inputProps;
-    const [startDateStringValue, setStartDateStringValue] = useState<string>(
-      startDate as string
-    );
 
+    // Effects. Update date strings when dates change
     useEffect(() => {
-      // TODO: Format
       if (startDate) {
-        setStartDateStringValue(dateFormatter(startDate as string));
+        setStartDateStringValue(dateFormatter(startDate.toString()));
       }
     }, [startDate]);
+    useEffect(() => {
+      if (endDate) {
+        setEndDateStringValue(dateFormatter(endDate.toString()));
+      }
+    }, [endDate]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
 
-    const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setStartDateStringValue(event.target.value);
-      onChange?.(event);
-    };
-    const handleStartDateKeyDown = (event) => {
-      if (event.key === "Enter") {
-        handleStartDateBlur(event);
-        // TODO: return the focus
-      }
-    };
-
-    const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      const targetDateValue = dateFormatter(event.target.value);
-      const startDateValue = dateFormatter(startDate as string);
-      const validationStatus = getDateValidationStatus(targetDateValue);
-      setDateStatus(validationStatus);
+    const updateDate = (inputDate: string, startDate: string) => {
       if (validationStatus) {
         return;
       }
-      if (startDateValue !== targetDateValue) {
+      if (startDate !== inputDate) {
         const isoDate = parseAbsolute(
-          createDate(targetDateValue)?.toISOString(),
+          createDate(inputDate)?.toISOString() ?? "",
           getLocalTimeZone()
         );
         setStartDate(
@@ -221,18 +185,29 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         );
       }
     };
-
-    const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setEndDate(event.target.value);
+    const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+      setStartDateStringValue(event.target.value);
       onChange?.(event);
     };
 
-    const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      // startDate && format(startDate);
-      onBlur?.(event);
-      setDateStatus(getDateValidationStatus(startDate));
-      setFocused(false);
+    const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+      const targetDateValue = dateFormatter(event.target.value);
+      const startDateValue = startDate
+        ? dateFormatter(startDate.toString())
+        : "";
+      updateDate(targetDateValue, startDateValue);
     };
+
+    // const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //   setEndDate(event.target.value);
+    //   onChange?.(event);
+    // };
+
+    // const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+    //   // startDate && format(startDate);
+    //   onBlur?.(event);
+    //   setFocused(false);
+    // };
 
     const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
       onFocus?.(event);
@@ -264,7 +239,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           tabIndex={isDisabled ? -1 : 0}
           onBlur={handleStartDateBlur}
           onChange={handleStartDateChange}
-          onKeyDown={handleStartDateKeyDown}
+          // onKeyDown={handleStartDateKeyDown} // TODO: update and return the focus
           onFocus={!isDisabled ? handleFocus : undefined}
           placeholder={placeholder}
           value={startDateStringValue}
@@ -279,10 +254,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
             disabled={isDisabled}
             readOnly={isReadOnly}
             tabIndex={isDisabled ? -1 : 0}
-            onBlur={handleEndDateBlur}
-            onChange={handleEndDateChange}
+            // onBlur={handleEndDateBlur}
+            // onChange={handleEndDateChange}
             placeholder={placeholder}
-            value={endDate}
+            value={endDateStringValue}
             {...restDateInputProps}
             required={isRequired}
           />

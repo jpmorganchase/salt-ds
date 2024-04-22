@@ -1,5 +1,12 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer, useFloatingComponent } from "@salt-ds/core";
+import {
+  Button,
+  FlexItem,
+  FlexLayout,
+  makePrefixer,
+  StackLayout,
+  useFloatingComponent,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useDatePickerContext } from "./DatePickerContext";
 import dateInputPanelCss from "./DatePickerPanel.css";
@@ -79,24 +86,36 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         {...getPanelPosition()}
         {...rest}
       >
-        <Calendar
-          selectionVariant={selectionVariant}
-          defaultVisibleMonth={startDate ?? undefined}
-          selectedDate={selectedDate}
-          onSelectedDateChange={isRangePicker ? setRangeDate : setSingleDate}
-        />
-        {isRangePicker && (
-          <Calendar
-            selectionVariant={selectionVariant}
-            defaultVisibleMonth={
-              startDate
-                ? startDate.add({ months: 1 })
-                : today(getLocalTimeZone()).add({ months: 1 })
-            }
-            selectedDate={selectedDate}
-            onSelectedDateChange={setRangeDate}
-          />
-        )}
+        <StackLayout>
+          <FlexLayout>
+            <Calendar
+              selectionVariant={selectionVariant}
+              defaultVisibleMonth={startDate ?? undefined}
+              selectedDate={selectedDate}
+              onSelectedDateChange={
+                isRangePicker ? setRangeDate : setSingleDate
+              }
+            />
+            {isRangePicker && (
+              <Calendar
+                selectionVariant={selectionVariant}
+                defaultVisibleMonth={
+                  startDate
+                    ? startDate.add({ months: 1 })
+                    : today(getLocalTimeZone()).add({ months: 1 })
+                }
+                selectedDate={selectedDate}
+                onSelectedDateChange={setRangeDate}
+              />
+            )}
+          </FlexLayout>
+          {isRangePicker && (
+            <FlexItem>
+              <Button>Cancel</Button>
+              <Button>Apply</Button>
+            </FlexItem>
+          )}
+        </StackLayout>
       </FloatingComponent>
     );
   }
