@@ -2,24 +2,49 @@ import { composeStories } from "@storybook/react";
 import { ChangeEvent } from "react";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import { CalendarDate } from "@internationalized/date";
 const composedStories = composeStories(datePickerStories);
 const { Default, Range } = composedStories;
 
+const testDate = new CalendarDate(2000, 2, 1);
 describe("GIVEN a DatePicker", () => {
   checkAccessibility(composedStories);
-
-  // TEST:
-  // SINGLE:
-  // - single renders with the calendar button and placeholder
-  // - you can type a date into the field
-  // - check disabled works fine
-  // - click on the button opens the panel
-  // - focus opens the panel
-  // TODO: there is a problem with clicking the button renders.
-  // - check that button and unfocus closes the pannel
-  // - check dismiss closes the panel TODO: currently not working
-  // - check that blur/enter submits the date and updates the calendar
-  // - check that updates in the calendar update the input
-  // - check the date is right for edge cases? (diff locales, diff date formats ... times could affect if the parsing is wrong)
-  // RANGE:
+  describe("WHEN datepicker is mounted", () => {
+    it("THEN it should mount with the specified defaultStartDate", () => {
+      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.findByRole("textbox").should("have.value", "01 Feb 2000");
+    });
+    it("THEN should format a valid date with a different format on blur", () => {
+      const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+      };
+      cy.mount(<Default defaultStartDate={testDate} onChange={onChange} />);
+      cy.findByRole("textbox").click().clear().type("02-feb-2000");
+      cy.findByRole("textbox").blur();
+      cy.findByRole("textbox").should("have.value", "02 Feb 2000");
+    });
+    it("THEN should error and not format invalid dates on blur", () => {
+      const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+      };
+      cy.mount(<Default defaultStartDate={testDate} onChange={onChange} />);
+      cy.findByRole("textbox").click().clear().type("01 0ct 2000");
+      cy.findByRole("textbox").blur();
+      cy.findByRole("textbox").should("have.value", "01 0ct 2000");
+    });
+    it("THEN clicking the calendar button should toggle the panel", () => {
+      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.findByRole("button", { name: "calendar" }).realClick();
+      cy.findByRole("application").should("exist");
+    });
+    it("THEN focus on input should the calendar button should toggle the panel", () => {
+      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.realPress("Tab");
+      cy.findByRole("application").should("exist");
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("application").should("not.exist");
+    });
+  });
 });
