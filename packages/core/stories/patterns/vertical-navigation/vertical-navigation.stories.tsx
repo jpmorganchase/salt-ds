@@ -1,6 +1,14 @@
 import { FC, useState } from "react";
 import { BorderLayout, BorderItem, NavigationItem } from "@salt-ds/core";
 import { Meta } from "@storybook/react";
+import {
+  LineChartIcon,
+  NotificationIcon,
+  PinIcon,
+  SearchIcon,
+  ReceiptIcon,
+  UserIcon,
+} from "@salt-ds/icons";
 
 export default {
   title: "Patterns/Vertical Navigation",
@@ -41,12 +49,12 @@ const Header = () => {
 
 export const SingleLevel = () => {
   const navigationData = [
-    { name: "Overview", href: "#" },
-    { name: "Data analysis", href: "#" },
-    { name: "Market monitor", href: "#" },
-    { name: "Checks", href: "#" },
-    { name: "Operations", href: "#" },
-    { name: "Trades", href: "#" },
+    { name: "Overview", href: "#", icon: <PinIcon /> },
+    { name: "Data analysis", href: "#", icon: <LineChartIcon /> },
+    { name: "Market monitor", href: "#", icon: <NotificationIcon /> },
+    { name: "Checks", href: "#", icon: <SearchIcon /> },
+    { name: "Operations", href: "#", icon: <UserIcon /> },
+    { name: "Trades", href: "#", icon: <ReceiptIcon /> },
   ];
 
   const [active, setActive] = useState(navigationData[0].name);
@@ -77,6 +85,7 @@ export const SingleLevel = () => {
                     setActive(item.name);
                   }}
                 >
+                  {item.icon}
                   {item.name}
                 </NavigationItem>
               </li>
