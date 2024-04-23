@@ -1,7 +1,5 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import {
-  Button,
-  FlexItem,
   FlexLayout,
   makePrefixer,
   StackLayout,
@@ -14,18 +12,22 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import {
   Calendar,
+  CalendarProps,
   UseRangeSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
 } from "../calendar";
 import { getLocalTimeZone, today } from "@internationalized/date";
 
-export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {}
+export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
+  onSelect?: () => void;
+}
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, ...rest } = props;
+    const { className, onSelect, ...rest } = props;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-date-input-panel",
@@ -46,27 +48,37 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       context,
       getPanelPosition,
     } = useDatePickerContext();
-    const isRangePicker = selectionVariant === "range";
 
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
         if (!startDate && newDate.startDate) {
           setStartDate(newDate.startDate);
-        } else {
+        }
+        if (startDate && newDate.startDate) {
           newDate.endDate && setEndDate(newDate.endDate);
         }
+        onSelect?.();
         setOpen(false);
       };
     const setSingleDate: UseSingleSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
         setStartDate(newDate);
+        onSelect?.();
         setOpen(false);
-        // TODO: send focus back to input?
       };
 
-    const selectedDate =
-      selectionVariant === "default" ? startDate : { startDate, endDate };
-
+    const isRangePicker = selectionVariant === "range";
+    const firstCalendarProps: CalendarProps = isRangePicker
+      ? {
+          selectionVariant: "range",
+          selectedDate: { startDate, endDate },
+          onSelectedDateChange: setRangeDate,
+        }
+      : {
+          selectionVariant: "default",
+          selectedDate: startDate,
+          onSelectedDateChange: setSingleDate,
+        };
     return (
       <FloatingComponent
         open={openState}
@@ -77,7 +89,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           context
             ? {
                 context: context,
-                initialFocus: -1,
+                initialFocus: 0,
                 returnFocus: false,
                 modal: false,
               }
@@ -89,32 +101,22 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         <StackLayout>
           <FlexLayout>
             <Calendar
-              selectionVariant={selectionVariant}
               defaultVisibleMonth={startDate ?? undefined}
-              selectedDate={selectedDate}
-              onSelectedDateChange={
-                isRangePicker ? setRangeDate : setSingleDate
-              }
+              {...firstCalendarProps}
             />
             {isRangePicker && (
               <Calendar
-                selectionVariant={selectionVariant}
+                selectionVariant="range"
                 defaultVisibleMonth={
                   startDate
                     ? startDate.add({ months: 1 })
                     : today(getLocalTimeZone()).add({ months: 1 })
                 }
-                selectedDate={selectedDate}
+                selectedDate={{ startDate, endDate }}
                 onSelectedDateChange={setRangeDate}
               />
             )}
           </FlexLayout>
-          {isRangePicker && (
-            <FlexItem>
-              <Button>Cancel</Button>
-              <Button>Apply</Button>
-            </FlexItem>
-          )}
         </StackLayout>
       </FloatingComponent>
     );

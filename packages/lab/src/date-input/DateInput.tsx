@@ -5,7 +5,9 @@ import {
   FocusEvent,
   forwardRef,
   InputHTMLAttributes,
+  KeyboardEvent,
   ReactNode,
+  RefObject,
   useEffect,
   useMemo,
   useState,
@@ -34,6 +36,9 @@ const createDate = (date: string): Date | null => {
     return null;
   }
 };
+
+const getDateValidationStatus = (value: string | undefined) =>
+  value && isInvalidDate(value) ? "error" : undefined;
 
 const defaultDateFormatter = (input: string): string => {
   const date = createDate(input);
@@ -78,7 +83,18 @@ export interface DateInputProps
    * Function to format the input value.
    */
   dateFormatter?: (input: string) => string;
+  /**
+   * Selection Variant for the calendar.
+   */
   selectionVariant?: "default" | "range";
+  /**
+   * Reference for the startInput;
+   */
+  startInputRef?: RefObject<HTMLInputElement>;
+  /**
+   * Reference for the endInput;
+   */
+  endInputRef?: RefObject<HTMLInputElement>;
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -90,14 +106,12 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       inputProps = {},
       endAdornment,
       readOnly: readOnlyProp,
-      // startDateValue: startDateValueProp,
-      // endDate: endDateProp,
-      // defaultStartDate: defaultStartDateProp,
-      // defaultEndDate: defaultEndDateProp,
       validationStatus: validationStatusProp,
       variant = "primary",
       dateFormatter = defaultDateFormatter,
       placeholder = "dd mmm yyyy",
+      startInputRef,
+      endInputRef,
       ...rest
     },
     ref
@@ -109,8 +123,16 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       window: targetWindow,
     });
 
-    const { startDate, endDate, setStartDate, selectionVariant } =
+    const { startDate, endDate, setStartDate, setEndDate, selectionVariant } =
       useDatePickerContext();
+
+    const [focused, setFocused] = useState(false);
+    const [startDateStringValue, setStartDateStringValue] = useState<string>(
+      startDate?.toString() ?? ""
+    );
+    const [endDateStringValue, setEndDateStringValue] = useState<string>(
+      endDate?.toString ?? ""
+    );
 
     const {
       a11yProps: {
@@ -124,26 +146,14 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     } = useFormFieldProps();
 
     const isReadOnly = readOnlyProp || formFieldReadOnly;
-
-    const getDateValidationStatus = (value: string | undefined) =>
-      value && isInvalidDate(value) ? "error" : undefined;
-
-    const [startDateStringValue, setStartDateStringValue] = useState<string>(
-      startDate?.toString() ?? ""
-    );
-    const [endDateStringValue, setEndDateStringValue] = useState<string>(
-      endDate?.toString ?? ""
-    );
-    // const [dateStatus, setDateStatus] = useState<"error" | undefined>(getDateValidationStatus(startDate));
     const isDisabled = disabled || formFieldDisabled;
+
     const dateStatus = useMemo(
       () => getDateValidationStatus(startDateStringValue),
       [startDateStringValue]
     );
     const validationStatus =
       dateStatus ?? formFieldValidationStatus ?? validationStatusProp;
-
-    const [focused, setFocused] = useState(false);
 
     const {
       "aria-describedby": dateInputDescribedBy,
@@ -171,47 +181,69 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
 
-    const updateDate = (inputDate: string, startDate: string) => {
-      if (validationStatus) {
-        return;
-      }
-      if (startDate !== inputDate) {
-        const isoDate = parseAbsolute(
-          createDate(inputDate)?.toISOString() ?? "",
-          getLocalTimeZone()
-        );
-        setStartDate(
-          new CalendarDate(isoDate.year, isoDate.month, isoDate.day)
-        );
+    function getCalendarDate(inputDate: string) {
+      const isoDate = parseAbsolute(
+        createDate(inputDate)?.toISOString() ?? "",
+        getLocalTimeZone()
+      );
+      return new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
+    }
+
+    const updateStartDate = (dateString: string) => {
+      const inputDate = dateFormatter(dateString);
+      const startDateValue = startDate
+        ? dateFormatter(startDate.toString())
+        : "";
+      if (!validationStatus && startDateValue !== inputDate) {
+        const calendarDate = getCalendarDate(inputDate);
+        setStartDate(calendarDate);
       }
     };
+
+    const updateEndDate = (dateString: string) => {
+      const inputDate = dateFormatter(dateString);
+      const endDateValue = endDate ? dateFormatter(endDate.toString()) : "";
+      if (!validationStatus && endDateValue !== inputDate) {
+        const calendarDate = getCalendarDate(inputDate);
+        setEndDate(calendarDate);
+      }
+    };
+
+    // Handlers
+    const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+      onFocus?.(event);
+      setFocused(true);
+    };
+    const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+      updateStartDate(event.target.value);
+      setFocused(false);
+    };
+
     const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
       setStartDateStringValue(event.target.value);
       onChange?.(event);
     };
 
-    const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      const targetDateValue = dateFormatter(event.target.value);
-      const startDateValue = startDate
-        ? dateFormatter(startDate.toString())
-        : "";
-      updateDate(targetDateValue, startDateValue);
+    const handleStartDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        updateStartDate(startDateStringValue);
+        setFocused(false);
+      }
     };
 
-    // const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    //   setEndDate(event.target.value);
-    //   onChange?.(event);
-    // };
-
-    // const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-    //   // startDate && format(startDate);
-    //   onBlur?.(event);
-    //   setFocused(false);
-    // };
-
-    const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-      onFocus?.(event);
-      setFocused(true);
+    const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
+      updateEndDate(event.target.value);
+      setFocused(false);
+    };
+    const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+      setEndDateStringValue(event.target.value);
+      onChange?.(event);
+    };
+    const handleEndDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") {
+        updateEndDate(endDateStringValue);
+        setFocused(false);
+      }
     };
 
     return (
@@ -236,10 +268,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           className={withBaseName("input")}
           disabled={isDisabled}
           readOnly={isReadOnly}
+          ref={startInputRef}
           tabIndex={isDisabled ? -1 : 0}
           onBlur={handleStartDateBlur}
           onChange={handleStartDateChange}
-          // onKeyDown={handleStartDateKeyDown} // TODO: update and return the focus
+          onKeyDown={handleStartDateKeyDown}
           onFocus={!isDisabled ? handleFocus : undefined}
           placeholder={placeholder}
           value={startDateStringValue}
@@ -253,9 +286,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
             className={withBaseName("input")}
             disabled={isDisabled}
             readOnly={isReadOnly}
+            ref={endInputRef}
             tabIndex={isDisabled ? -1 : 0}
-            // onBlur={handleEndDateBlur}
-            // onChange={handleEndDateChange}
+            onBlur={handleEndDateBlur}
+            onChange={handleEndDateChange}
+            onKeyDown={handleEndDateKeyDown}
             placeholder={placeholder}
             value={endDateStringValue}
             {...restDateInputProps}
