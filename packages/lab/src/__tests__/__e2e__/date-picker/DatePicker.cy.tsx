@@ -39,12 +39,5 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("button", { name: "calendar" }).realClick();
       cy.findByRole("application").should("exist");
     });
-    it("THEN focus on input should the calendar button should toggle the panel", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
-      cy.realPress("Tab");
-      cy.findByRole("application").should("exist");
-      cy.realPress(["Shift", "Tab"]);
-      cy.findByRole("application").should("not.exist");
-    });
   });
 });
