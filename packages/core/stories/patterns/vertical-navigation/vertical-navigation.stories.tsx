@@ -83,7 +83,7 @@ export const SingleLevel = () => {
             <StackLayout
               gap="var(--salt-size-border)"
               as="ul"
-              style={{ listStyle: "none", paddingLeft: 0 }}
+              style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
               {navigationData.map((item) => (
                 <li style={{ listStyle: "none" }} key={item.name}>
@@ -219,7 +219,7 @@ export const Nested = () => {
             <StackLayout
               gap="var(--salt-size-border)"
               as="ul"
-              style={{ listStyle: "none", paddingLeft: 0 }}
+              style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
               {navigationData.map((item) => (
                 <RecursiveNavItem item={item} />
