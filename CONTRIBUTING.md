@@ -1,6 +1,25 @@
 # Contributing to Salt
 
-To do: intro.
+Follow below instructions to contribute to Salt.
+
+1. Run `yarn` to install dependencies. If this step stuck, check your cooperate proxy setting.
+1. Run `yarn build` to build all packages across the repo.
+1. Run `yarn storybook` to run local [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
+1. Run `cd site && yarn serve` to run local instance of [documentation](https://www.saltdesignsystem.com/) site.
+
+## Packages
+
+The repo contains below packages under `/packages`
+
+- ag-grid-theme: Custom theme for [AG Grid](https://ag-grid.com/)
+- core: Stable components for production use 
+- countries: [Country symbol](https://www.saltdesignsystem.com/salt/components/country-symbol/) components following ISO 3166
+- data-grid: Experimental data grid implementation
+- icons: [Icon](https://www.saltdesignsystem.com/salt/components/icon/) components 
+- lab: Experimental components may or may not land in core
+- styles: [Style injection](https://storybook.saltdesignsystem.com/?path=/docs/documentation-style-injection--docs) implementation
+- theme: Implementation of Salt theme and design tokens, using CSS variables
+- window: [Desktop support](https://storybook.saltdesignsystem.com/?path=/docs/documentation-desktop-support--docs) implementation to support platforms like [OpenFin](https://www.openfin.co/) 
 
 ## How to's
 
