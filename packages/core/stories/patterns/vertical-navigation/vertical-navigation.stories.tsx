@@ -1,5 +1,10 @@
 import { FC, useState } from "react";
-import { BorderLayout, BorderItem, NavigationItem } from "@salt-ds/core";
+import {
+  BorderLayout,
+  BorderItem,
+  NavigationItem,
+  StackLayout,
+} from "@salt-ds/core";
 import { Meta } from "@storybook/react";
 import {
   LineChartIcon,
@@ -47,6 +52,8 @@ const Header = () => {
   );
 };
 
+// TODO add border gap between items
+
 export const SingleLevel = () => {
   const navigationData = [
     { name: "Overview", href: "#", icon: <PinIcon /> },
@@ -73,23 +80,29 @@ export const SingleLevel = () => {
       >
         <aside style={{ width: "250px" }}>
           <nav>
-            {navigationData.map((item) => (
-              <li style={{ listStyle: "none" }} key={item.name}>
-                <NavigationItem
-                  active={active === item.name}
-                  href={item.href}
-                  orientation="vertical"
-                  onClick={(event) => {
-                    // prevent default to avoid navigation in storybook example
-                    event.preventDefault();
-                    setActive(item.name);
-                  }}
-                >
-                  {item.icon}
-                  {item.name}
-                </NavigationItem>
-              </li>
-            ))}
+            <StackLayout
+              gap="var(--salt-size-border)"
+              as="ul"
+              style={{ listStyle: "none", paddingLeft: 0 }}
+            >
+              {navigationData.map((item) => (
+                <li style={{ listStyle: "none" }} key={item.name}>
+                  <NavigationItem
+                    active={active === item.name}
+                    href={item.href}
+                    orientation="vertical"
+                    onClick={(event) => {
+                      // prevent default to avoid navigation in storybook example
+                      event.preventDefault();
+                      setActive(item.name);
+                    }}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </NavigationItem>
+                </li>
+              ))}
+            </StackLayout>
           </nav>
         </aside>
       </BorderItem>
@@ -203,9 +216,15 @@ export const Nested = () => {
       >
         <aside style={{ width: "250px" }}>
           <nav>
-            {navigationData.map((item) => (
-              <RecursiveNavItem item={item} />
-            ))}
+            <StackLayout
+              gap="var(--salt-size-border)"
+              as="ul"
+              style={{ listStyle: "none", paddingLeft: 0 }}
+            >
+              {navigationData.map((item) => (
+                <RecursiveNavItem item={item} />
+              ))}
+            </StackLayout>
           </nav>
         </aside>
       </BorderItem>
