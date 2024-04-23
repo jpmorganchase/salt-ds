@@ -1,26 +1,6 @@
-import { FC, ReactNode, useEffect, useState } from "react";
-import {
-  Button,
-  FlexItem,
-  FlexLayout,
-  StackLayout,
-  BorderLayout,
-  BorderItem,
-  NavigationItem,
-  useResponsiveProp,
-  Text,
-  Drawer,
-} from "@salt-ds/core";
-import {
-  SymphonyIcon,
-  StackoverflowIcon,
-  GithubIcon,
-  MenuIcon,
-  CloseIcon,
-  NotificationIcon,
-} from "@salt-ds/icons";
+import { FC, useState } from "react";
+import { BorderLayout, BorderItem, NavigationItem } from "@salt-ds/core";
 import { Meta } from "@storybook/react";
-import { AppHeader } from "packages/lab/src";
 
 export default {
   title: "Patterns/Vertical Navigation",
@@ -32,6 +12,32 @@ interface NavigationItemData {
   children?: NavigationItemData[];
   level?: number;
 }
+
+const Item = () => {
+  return (
+    <div
+      style={{
+        padding: "calc(var(--salt-spacing-400)*4)",
+        margin: "var(--salt-spacing-400)",
+        backgroundColor: "var(--salt-color-gray-10)",
+      }}
+    />
+  );
+};
+
+const Header = () => {
+  return (
+    <header
+      style={{
+        position: "fixed",
+        padding: "var(--salt-spacing-300)",
+        backgroundColor: "var(--salt-color-gray-40)",
+        width: "100%",
+        zIndex: "var(--salt-zIndex-appHeader)",
+      }}
+    />
+  );
+};
 
 export const VerticalNavigation = () => {
   const navigationData = [
@@ -51,15 +57,15 @@ export const VerticalNavigation = () => {
   ];
 
   const [active, setActive] = useState(navigationData[0].name);
-
   const [expanded, setExpanded] = useState<string[]>([]);
 
   const handleExpand = (item: NavigationItemData) => () => {
-    if (expanded.includes(item.name)) {
-      setExpanded(expanded.filter((expanded) => expanded !== item.name));
-    } else {
-      setExpanded([...expanded, item.name]);
-    }
+    const isExpanded = expanded.includes(item.name);
+    setExpanded(
+      isExpanded
+        ? expanded.filter((name) => name !== item.name)
+        : [...expanded, item.name]
+    );
   };
 
   const isParentOfActiveItem = (
@@ -67,13 +73,10 @@ export const VerticalNavigation = () => {
     activeName: string
   ): boolean => {
     return children.some((child: NavigationItemData) => {
-      if (child.name === activeName) {
-        return true;
-      }
-      if (child.children) {
-        return isParentOfActiveItem(child.children, activeName);
-      }
-      return false;
+      if (child.name === activeName) return true;
+      return child.children
+        ? isParentOfActiveItem(child.children, activeName)
+        : false;
     });
   };
 
@@ -104,8 +107,9 @@ export const VerticalNavigation = () => {
         </NavigationItem>
         {item.children &&
           expanded.includes(item.name) &&
-          item.children.map((child) => (
+          item.children.map((child, index) => (
             <RecursiveNavItem
+              key={index}
               item={{ ...child, level: (item.level || 0) + 1 }}
             />
           ))}
@@ -116,29 +120,22 @@ export const VerticalNavigation = () => {
   return (
     <BorderLayout>
       <BorderItem position="north">
-        <header
-          style={{
-            position: "fixed",
-            padding: "var(--salt-spacing-300)",
-            margin: "var(--salt-spacing-100)",
-            backgroundColor: "var(--salt-color-gray-10",
-            width: "100%",
-            zIndex: "var(--salt-zIndex-appHeader)",
-          }}
-        />
+        <Header />
       </BorderItem>
       <BorderItem
         position="west"
         style={{
-          marginTop: "calc(var(--salt-spacing-400) * 2)",
+          marginTop: "calc(var(--salt-spacing-400) * 2)", // Margin should be the height of the header
           position: "fixed",
         }}
       >
-        <nav style={{ width: "250px" }}>
-          {navigationData.map((item) => (
-            <RecursiveNavItem item={item} />
-          ))}
-        </nav>
+        <aside style={{ width: "250px" }}>
+          <nav>
+            {navigationData.map((item) => (
+              <RecursiveNavItem item={item} />
+            ))}
+          </nav>
+        </aside>
       </BorderItem>
       <BorderItem
         position="center"
@@ -147,27 +144,10 @@ export const VerticalNavigation = () => {
           marginLeft: "250px",
         }}
       >
-        {Array.from({ length: 6 }, (_, index) => (
-          <div
-            key={index}
-            style={{
-              padding: "var(--salt-spacing-400)",
-              margin: "var(--salt-spacing-400)",
-              backgroundColor: "var(--salt-color-gray-10",
-            }}
-          />
-        ))}
-      </BorderItem>
-      <BorderItem position="south">
-        <div
-          style={{
-            padding: "var(--salt-spacing-200)",
-            margin: "var(--salt-spacing-200)",
-            backgroundColor: "var(--salt-color-gray-10",
-          }}
-        >
-          <Text>Footer</Text>
-        </div>
+        <Item />
+        <Item />
+        <Item />
+        <Item />
       </BorderItem>
     </BorderLayout>
   );
