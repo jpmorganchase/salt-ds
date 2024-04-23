@@ -19,7 +19,7 @@ import {
   CloseIcon,
 } from "@salt-ds/icons";
 import { Meta } from "@storybook/react";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.svg";
 
 export default {
   title: "Patterns/App Header",
@@ -69,7 +69,7 @@ export const AppHeader = () => {
               src={logo}
               style={{
                 display: "block",
-                height: "calc(var(--salt-size-base) * 0.6)",
+                height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
               }}
             />
           </FlexItem>
@@ -171,7 +171,7 @@ export const AppHeader = () => {
               src={logo}
               style={{
                 display: "block",
-                height: "calc(var(--salt-size-base) * 0.6)",
+                height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
               }}
             />
           </FlexItem>
