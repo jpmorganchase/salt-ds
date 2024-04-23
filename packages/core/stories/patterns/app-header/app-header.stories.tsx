@@ -1,4 +1,4 @@
-import { FC, HTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import {
   Button,
   FlexItem,
@@ -55,7 +55,8 @@ export const AppHeader = () => {
             backgroundColor: "var(--salt-container-primary-background)",
             position: "fixed",
             width: "100%",
-            boxShadow: offset > 0 ? "var(--salt-shadow-1)" : "none",
+            boxShadow:
+              offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
             borderBottom:
               "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
           }}
@@ -124,8 +125,10 @@ export const AppHeader = () => {
       <header>
         <StackLayout
           direction="row"
+          gap={3}
           style={{
             width: "100%",
+            height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
             backgroundColor: "var(--salt-container-primary-background)",
             zIndex: "calc(var(--salt-zIndex-drawer) + 1)",
             position: "fixed",
@@ -138,10 +141,9 @@ export const AppHeader = () => {
             style={{
               justifyContent: "center",
               display: "flex",
-              height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-              width: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-              borderRight:
-                "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
+              // height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
+              paddingLeft: "var(--salt-spacing-100)",
+              // width: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
             }}
           >
             {!drawerOpen && (
@@ -153,7 +155,6 @@ export const AppHeader = () => {
                 <MenuIcon />
               </Button>
             )}
-
             {drawerOpen && (
               <Button
                 onClick={() => setDrawerOpen(false)}
