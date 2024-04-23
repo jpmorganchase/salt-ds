@@ -6285,7 +6285,7 @@ __metadata:
     dom-accessibility-api: "npm:^0.6.3"
     eslint: "npm:^8.48.0"
     eslint-config-prettier: "npm:^9.0.0"
-    eslint-plugin-cypress: "npm:^2.14.0"
+    eslint-plugin-cypress: "npm:^3.0.0"
     eslint-plugin-import: "npm:^2.28.1"
     eslint-plugin-local-rules: "npm:^2.0.0"
     eslint-plugin-storybook: "npm:^0.6.14"
@@ -15750,14 +15750,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-cypress@npm:^2.14.0":
-  version: 2.14.0
-  resolution: "eslint-plugin-cypress@npm:2.14.0"
+"eslint-plugin-cypress@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "eslint-plugin-cypress@npm:3.0.0"
   dependencies:
     globals: "npm:^13.20.0"
   peerDependencies:
-    eslint: ">= 3.2.1"
-  checksum: 10/b35e612f32afe76ea863ffea99732efc2a4a5c8b3ff118664464a2728a311177390a61273c7e3f85055504d6dcdb755c98a8cb9c8e7f997ec694daa9684d38c9
+    eslint: ">=7 <9"
+  checksum: 10/23abb3783a82a1e991bd7332cc9dbc952839800270b51a0104ccdca24cfac51778038a291d2f84f35f82f328ae3e7c971d41ca90f275331bf2d13b2ba381addf
   languageName: node
   linkType: hard
 
