@@ -42,6 +42,10 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    * Href to be passed to the Link element.
    */
   href?: string;
+  /**
+   * Additional properties passed to the Link element.
+   */
+  linkProps?: ComponentPropsWithoutRef<"a">;
 }
 
 const withBaseName = makePrefixer("saltNavigationItem");
@@ -60,6 +64,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       onExpand,
       href,
       style: styleProp,
+      linkProps = {},
       ...rest
     } = props;
 
@@ -97,6 +102,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
           onExpand={onExpand}
           active={active}
           href={href}
+          linkProps={linkProps}
         >
           <span className={withBaseName("label")}>{children}</span>
           {parent && (

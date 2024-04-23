@@ -17,7 +17,24 @@ describe("GIVEN a NavItem", () => {
     });
   });
 
-  describe("AND `href` is NOT passed", () => {
+  describe("AND `href` is NOT passed AND `linkProps` is passed", () => {
+    it("should render a link using linkProps", () => {
+      cy.mount(
+        <NavigationItem
+          linkProps={{ href: "https://www.saltdesignsystem.com" }}
+        >
+          Navigation Item
+        </NavigationItem>
+      );
+      cy.findByRole("link").should(
+        "have.attr",
+        "href",
+        "https://www.saltdesignsystem.com"
+      );
+    });
+  });
+
+  describe("AND `href` is NOT passed AND `linkProps` is NOT passed", () => {
     it("should render a button", () => {
       cy.mount(<NavigationItem>Navigation Item</NavigationItem>);
       cy.findByRole("button").should("exist");
