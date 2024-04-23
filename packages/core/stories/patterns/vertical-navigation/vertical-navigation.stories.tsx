@@ -39,9 +39,74 @@ const Header = () => {
   );
 };
 
-export const VerticalNavigation = () => {
+export const SingleLevel = () => {
   const navigationData = [
-    { name: "Overview", href: "" },
+    { name: "Overview", href: "#" },
+    { name: "Data analysis", href: "#" },
+    { name: "Market monitor", href: "#" },
+    { name: "Checks", href: "#" },
+    { name: "Operations", href: "#" },
+    { name: "Trades", href: "#" },
+  ];
+
+  const [active, setActive] = useState(navigationData[0].name);
+
+  return (
+    <BorderLayout>
+      <BorderItem position="north">
+        <Header />
+      </BorderItem>
+      <BorderItem
+        position="west"
+        style={{
+          marginTop: "calc(var(--salt-spacing-300) * 2)", // Margin should be the height of the header
+          position: "fixed",
+        }}
+      >
+        <aside style={{ width: "250px" }}>
+          <nav>
+            {navigationData.map((item) => (
+              <li style={{ listStyle: "none" }} key={item.name}>
+                <NavigationItem
+                  active={active === item.name}
+                  href={item.href}
+                  orientation="vertical"
+                  onClick={(event) => {
+                    // prevent default to avoid navigation in storybook example
+                    event.preventDefault();
+                    setActive(item.name);
+                  }}
+                >
+                  {item.name}
+                </NavigationItem>
+              </li>
+            ))}
+          </nav>
+        </aside>
+      </BorderItem>
+      <BorderItem
+        position="center"
+        style={{
+          marginTop: "calc(var(--salt-spacing-300) * 2)",
+          marginLeft: "250px",
+        }}
+      >
+        <Item />
+        <Item />
+        <Item />
+        <Item />
+      </BorderItem>
+    </BorderLayout>
+  );
+};
+
+SingleLevel.parameters = {
+  layout: "fullscreen",
+};
+
+export const Nested = () => {
+  const navigationData = [
+    { name: "Overview", href: "#" },
     {
       name: "Data",
       children: [
@@ -82,7 +147,7 @@ export const VerticalNavigation = () => {
 
   const RecursiveNavItem: FC<{ item: NavigationItemData }> = ({ item }) => {
     return (
-      <li style={{ listStyle: "none" }}>
+      <li style={{ listStyle: "none" }} key={item.name}>
         <NavigationItem
           active={active === item.name}
           blurActive={
@@ -90,7 +155,6 @@ export const VerticalNavigation = () => {
               ? isParentOfActiveItem(item.children, active)
               : false
           }
-          key={item.name}
           href={item.href}
           expanded={expanded.includes(item.name)}
           orientation="vertical"
@@ -107,9 +171,8 @@ export const VerticalNavigation = () => {
         </NavigationItem>
         {item.children &&
           expanded.includes(item.name) &&
-          item.children.map((child, index) => (
+          item.children.map((child) => (
             <RecursiveNavItem
-              key={index}
               item={{ ...child, level: (item.level || 0) + 1 }}
             />
           ))}
@@ -125,7 +188,7 @@ export const VerticalNavigation = () => {
       <BorderItem
         position="west"
         style={{
-          marginTop: "calc(var(--salt-spacing-400) * 2)", // Margin should be the height of the header
+          marginTop: "calc(var(--salt-spacing-300) * 2)", // Margin should be the height of the header
           position: "fixed",
         }}
       >
@@ -140,7 +203,7 @@ export const VerticalNavigation = () => {
       <BorderItem
         position="center"
         style={{
-          marginTop: "calc(var(--salt-spacing-400) * 2)",
+          marginTop: "calc(var(--salt-spacing-300) * 2)",
           marginLeft: "250px",
         }}
       >
@@ -153,6 +216,6 @@ export const VerticalNavigation = () => {
   );
 };
 
-VerticalNavigation.parameters = {
+Nested.parameters = {
   layout: "fullscreen",
 };
