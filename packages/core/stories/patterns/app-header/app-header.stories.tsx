@@ -141,9 +141,7 @@ export const AppHeader = () => {
             style={{
               justifyContent: "center",
               display: "flex",
-              // height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
               paddingLeft: "var(--salt-spacing-100)",
-              // width: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
             }}
           >
             {!drawerOpen && (
