@@ -133,7 +133,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       startDate?.toString() ?? ""
     );
     const [endDateStringValue, setEndDateStringValue] = useState<string>(
-      endDate?.toString ?? ""
+      endDate?.toString() ?? ""
     );
 
     const {
@@ -150,12 +150,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const isDisabled = disabled || formFieldDisabled;
 
-    const dateStatus = useMemo(
-      () => getDateValidationStatus(startDateStringValue),
-      [startDateStringValue]
-    );
     const validationStatus =
-      dateStatus ?? formFieldValidationStatus ?? validationStatusProp;
+      getDateValidationStatus(startDateStringValue) ??
+      formFieldValidationStatus ??
+      validationStatusProp;
 
     const {
       "aria-describedby": dateInputDescribedBy,

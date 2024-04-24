@@ -50,23 +50,25 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       defaultEndDate,
       dateFormatter,
       CalendarProps,
+      className,
       ...rest
     },
     ref
   ) {
     const [open, setOpen] = useState<boolean>(false);
+    const [focusInside, setFocusInside] = useState<boolean>(false);
 
     const [startDate, setStartDate] = useControlled({
       controlled: startDateProp,
       default: defaultStartDate,
       name: "StartDate",
-      state: "value",
+      state: "startDate",
     });
     const [endDate, setEndDate] = useControlled({
       controlled: endDateProp,
       default: defaultEndDate,
-      name: "EndDateInput",
-      state: "value",
+      name: "EndDate",
+      state: "endDate",
     });
 
     const { x, y, strategy, elements, floating, reference, context } =
@@ -74,17 +76,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         open: open,
         onOpenChange: setOpen,
         placement: "bottom-start",
-        middleware: [
-          size({
-            apply({ rects, elements, availableHeight }) {
-              Object.assign(elements.floating.style, {
-                minWidth: `${rects.reference.width}px`,
-                maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
-              });
-            },
-          }),
-          flip({ fallbackStrategy: "initialPlacement" }),
-        ],
+        middleware: [flip({ fallbackStrategy: "initialPlacement" })],
       });
 
     const dismiss = useDismiss(context);
@@ -114,13 +106,15 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         : startInputRef?.current?.focus();
     };
     const handleCalendarButton = () => {
-      startInputRef?.current?.focus();
+      // startInputRef?.current?.focus();
       setOpen(!open);
     };
 
     // Context
     const datePickerContextValue = {
       openState: open,
+      focusInside,
+      setFocusInside,
       setOpen,
       disabled,
       endDate,
@@ -137,7 +131,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     return (
       <DatePickerContext.Provider value={datePickerContextValue}>
         <DateInput
-          className={clsx(withBaseName())}
+          className={clsx(withBaseName(), className)}
           ref={inputRef}
           {...getReferenceProps()}
           startInputRef={startInputRef}
@@ -148,9 +142,11 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <Button
               variant="secondary"
               onClick={handleCalendarButton}
+              onKeyDown={() => setFocusInside(!focusInside)}
               disabled={disabled || formFieldReadOnly || formFieldDisabled}
+              aria-label="Open Calendar"
             >
-              <CalendarIcon />
+              <CalendarIcon aria-hidden />
             </Button>
           }
           {...rest}

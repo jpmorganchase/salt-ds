@@ -38,14 +38,15 @@ describe("GIVEN a DatePicker", () => {
     });
     it("THEN clicking the calendar button should toggle the panel", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
-      cy.findByRole("button", { name: "calendar" }).realClick();
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
-      cy.findByRole("button", { name: "calendar" }).realClick();
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("not.exist");
     });
     it("THEN should close the calendar panel once a date is selected", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
-      cy.findByRole("button", { name: "calendar" }).realClick();
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", { name: "15/02/2000" }).should("exist");
       cy.findByRole("button", { name: "15/02/2000" }).realClick();
       cy.findByRole("application").should("not.exist");
     });
