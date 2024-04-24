@@ -3,9 +3,10 @@ import {
   RefObject,
   useCallback,
   useRef,
+  useEffect
 } from "react";
 import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundValue } from "./utils";
+import { clampValue, roundToStep, roundToTwoDp } from "./utils";
 
 interface MouseContext {
   min: number;
@@ -18,13 +19,15 @@ interface MouseContext {
   onChange?: SliderChangeHandler;
 }
 
-const valueFromClientX = (context: MouseContext, x: number) => {
+const valueFromClientX = (context: MouseContext, distanceToMouse: number) => {
   const { min, max, step, trackRef } = context;
-  const rect = trackRef.current!.getBoundingClientRect();
-  const localX = x - rect.x;
-  let value = (localX / rect.width) * (max - min) + min;
-  value = roundValue(value, step);
-  value = clampValue(value, min, max);
+  const sliderTrackRect = trackRef.current!.getBoundingClientRect();
+  const distanceFromTrackStart = distanceToMouse - sliderTrackRect.x;
+
+  let value = (distanceFromTrackStart / sliderTrackRect.width) * (max - min) + min;
+
+  value = roundToStep(value, step);
+  value = roundToTwoDp(value)
   return value;
 };
 
@@ -35,8 +38,9 @@ export function useSliderMouseDown(
   max: number,
   step: number,
   setValue: SliderChangeHandler,
-  onChange?: SliderChangeHandler
+  onChange?: SliderChangeHandler,
 ) {
+
   const mouseContext = useRef<MouseContext>({
     min,
     max,
@@ -47,19 +51,30 @@ export function useSliderMouseDown(
     onChange,
   });
 
+  useEffect(() => {
+    const c = mouseContext.current;
+    c.min = min;
+    c.max = max;
+    c.step = step;
+    c.value = value;
+    c.onChange = onChange;
+    c.setValue = setValue;
+  }, [min, max, step, value, setValue, onChange]);
+
+
   const onMouseMove = useCallback((event: MouseEvent) => {
     const { setValue, onChange } = mouseContext.current;
     const { clientX } = event;
     const clickValue = valueFromClientX(mouseContext.current, clientX);
+    const newValue = clampValue(mouseContext.current.value, clickValue, min, max)
 
-    setValue(clickValue);
-    onChange?.(clickValue);
+    setValue(newValue);
+    onChange?.(newValue);
   }, []);
 
   const onMouseUp = useCallback(() => {
     document.removeEventListener("mouseup", onMouseUp);
     document.removeEventListener("mousemove", onMouseMove);
-    mouseContext.current.handleIndex = undefined;
   }, [onMouseMove]);
 
   return useCallback((event: ReactMouseEvent) => {
@@ -67,10 +82,12 @@ export function useSliderMouseDown(
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("mousemove", onMouseMove);
 
-    const { clientX } = event; // x value of the mouse event
+    const { clientX } = event;
     const clickValue = valueFromClientX(mouseContext.current, clientX);
-    setValue(clickValue);
-    onChange?.(clickValue);
+    const newValue = clampValue(mouseContext.current.value, clickValue, min, max)
+
+    setValue(newValue);
+    onChange?.(newValue);
 
     event.preventDefault();
   }, []);

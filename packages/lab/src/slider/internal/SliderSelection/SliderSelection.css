@@ -1,7 +1,0 @@
-.saltSliderSelection {
-  height: var(--slider-selection-height);
-  background: var(--slider-selection-color);
-  grid-row: 1;
-  grid-column-start: 1;
-  grid-column-end: 2;
-}

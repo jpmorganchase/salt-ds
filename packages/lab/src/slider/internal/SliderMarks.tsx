@@ -1,10 +1,6 @@
 import { Label, makePrefixer } from "@salt-ds/core";
 import { ComponentPropsWithoutRef } from "react";
-import { getMarkStyles } from "../styles";
-
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import sliderMarksCss from "./SliderMarks.css";
+import { getMarkStyles } from "./styles";
 
 const withBaseName = makePrefixer("saltSliderMarks");
 
@@ -20,12 +16,6 @@ export function SliderMarks({
   step,
   ...rest
 }: SliderMarksProps): JSX.Element {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    css: sliderMarksCss,
-    window: targetWindow,
-  });
-
   const marks = getMarkStyles(min, max, step);
 
   return (

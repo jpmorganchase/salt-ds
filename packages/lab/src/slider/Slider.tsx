@@ -29,10 +29,9 @@ export interface SliderProps
   step?: number;
   value?: number;
   defaultValue?: number;
-  disabled?: boolean;
   onChange?: (value: number) => void;
   showMarks?: boolean;
-  labelBottom?: boolean;
+  tooltipPlacement?: "left" | "right" | "top" | "bottom";
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -44,9 +43,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = defaultMin,
     onChange,
     className,
-    disabled,
+    tooltipPlacement = "top",
+    ["aria-label"]: ariaLabel,
     showMarks = false,
-    labelBottom = false,
     ...rest
   },
   ref
@@ -80,8 +79,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
 
   const trackGridTeplateColumns = useMemo(
-    () => getTrackGridTemplateColumns(min, max, value, step),
-    [min, max, value, step]
+    () => getTrackGridTemplateColumns(min, max, value),
+    [min, max, value]
   );
 
   return (
@@ -89,7 +88,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       ref={ref}
       className={clsx(
         withBaseName(),
-        { [withBaseName("inline")]: !labelBottom && !showMarks },
+        { [withBaseName("inline")]: !showMarks },
         className
       )}
       {...rest}
@@ -98,11 +97,17 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       <SliderTrack
         style={trackGridTeplateColumns}
         ref={trackRef}
-        onKeyDown={disabled ? undefined : onKeyDown}
-        onMouseDown={disabled ? undefined : onMouseDown}
+        onKeyDown={onKeyDown}
+        onMouseDown={onMouseDown}
       >
         <SliderSelection />
-        <SliderThumb value={value} min={min} max={max} />
+        <SliderThumb
+          value={value}
+          min={min}
+          max={max}
+          aria-label={ariaLabel}
+          tooltipPlacement={tooltipPlacement}
+        />
       </SliderTrack>
       {showMarks && <SliderMarks max={max} min={min} step={step} />}
       {!showMarks && <Label> {max} </Label>}

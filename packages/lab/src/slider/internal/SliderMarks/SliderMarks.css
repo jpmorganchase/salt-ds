@@ -1,9 +1,0 @@
-.saltSliderMarks {
-  position: relative;
-  background: pink;
-}
-
-.saltSliderMarks-mark {
-  position: absolute;
-  transform: translate(-50%);
-}

@@ -1,5 +1,5 @@
 import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundValue } from "./utils";
+import { clampValue, roundToStep, roundToTwoDp } from "./utils";
 
 export function useSliderKeyDown(
   value: SliderValue,
@@ -10,7 +10,6 @@ export function useSliderKeyDown(
   onChange?: SliderChangeHandler
 ) {
   return (event: React.KeyboardEvent) => {
-    console.log("keydown");
     let valueItem: number = value;
     switch (event.key) {
       case "ArrowUp":
@@ -25,8 +24,9 @@ export function useSliderKeyDown(
         return;
     }
     event.preventDefault();
-    valueItem = roundValue(valueItem, step);
-    valueItem = clampValue(valueItem, min, max);
+    valueItem = roundToStep(valueItem, step);
+    valueItem = roundToTwoDp(valueItem)
+    // valueItem = clampValue(valueItem, min, max);
     setValue(valueItem);
     onChange?.(valueItem);
   };
