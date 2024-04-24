@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "chokidar": "^3.5.3",
-    "cssnano": "^5.1.13",
+    "cssnano": "^7.0.0",
     "del": "^7.0.0",
     "fs-extra": "^11.1.0",
     "postcss": "^8.4.14",
