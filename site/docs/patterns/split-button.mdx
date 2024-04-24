@@ -1,0 +1,103 @@
+---
+title: Split button
+layout: DetailPattern
+aliases:
+  - /salt/patterns/split-button
+data:
+  components: ["Card", "Checkbox", "Radio button", "Stack layout", "Grid layout"]
+---
+
+A Split Button enables users to perform a main action and have access to relevant, supplementary actions displayed inside the menu. 
+
+<Diagram
+  src="/img/patterns/selectable-card/selectable-card-group.png"
+  alt="Example showing a series of selectable cards."
+  border
+/>
+
+## When to use
+
+Use the pattern when providing users with an action that has multiple commands associated with it. Users are able to immediately action the default command and access the supplementary actions, which include more specific or less commonly-used actions.
+
+For example, “Paste” functionality commands could be split as follows: 
+- Default command: Paste 
+- Alternative commands: Keep source formatting, Match formatting, Paste special...
+
+## How to build
+
+### Anatomy
+
+A split button contains:
+
+1. *Main action:* the default action a user can take.
+2. *Arrow button:* contains a chevron-down icon and triggers the menu.
+3. *Supplementary actions:* lower priority actions displayed in menu. 
+
+<Diagram
+  src="/img/patterns/selectable-card/selectable-card-anatomy.png"
+  alt="Selectable card using a title, an image and radio button."
+  border
+/>
+
+### Layout
+
+- Use the segmented button group component as the base structure of the split button.
+- Use the chevron-down icon for the menu trigger.
+- Use a menu component to display supplementary actions for users to take.
+- By default, the menu is displayed bottom-end of the arrow button.
+
+<Diagram
+  src="/img/patterns/selectable-card/selectable-card-spacing.png"
+  alt="Showing spacing tokens applied to a regular size selectable card."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- By default, the menu is displayed bottom-end of the arrow button.
+</ExampleContainer>
+
+## Split button affordance
+
+You can use CTA buttons, Primary buttons, and Secondary buttons in a Split button pattern. See guidance for button options to select the most suitable ones for your application.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/selectable-card/radio-button.png",
+      alt: "Mutually exclusive selection."
+    },
+    {
+      src: "/img/patterns/selectable-card/hide-radio-button.png",
+      alt: "Mutually exclusive selection without radio button."
+    },
+  ]}
+  label="Hide radio button"
+  caption="Selectable cards with radio buttons."
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Don’t mix the button variants in the same split button.
+</ExampleContainer>
+
+## Multiple actions
+
+You can have multiple main actions if they have the same importance/priority.
+
+<Diagram
+  src="/img/patterns/selectable-card/checkbox.png"
+  alt="Multiple selection."
+  border
+  caption="Use checkboxes for multiple selection."
+/>
+
+## Icon-only
+
+The main action is represented by an icon-only button to minimize the width of the entire split button.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Avoid using an icon-only split button if the proposed icons are likely to be unfamiliar to your target audience.
+- Use a textual label if your main action is high priority—so that it’s less likely to be overlooked.
+- Use a Tooltip to describe or label the action.
+</ExampleContainer>
+
+:fragment{src="./fragments/feedback.mdx"}
