@@ -48,9 +48,11 @@ export const StandardLayout = () => {
     setIsError(newVal.length > MAX_CHARS);
   };
 
-
   return (
-    <GridLayout columns={4} style={{ width: "calc(var(--salt-size-base) * 12)" }}>
+    <GridLayout
+      columns={4}
+      style={{ width: "calc(var(--salt-size-base) * 12)" }}
+    >
       <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
@@ -58,9 +60,7 @@ export const StandardLayout = () => {
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
       </GridItem>
-      <GridItem
-        colSpan={2}
-      >
+      <GridItem colSpan={2}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
           <Dropdown defaultSelected={["Value text"]} style={{ width: "100%" }}>
@@ -79,7 +79,7 @@ export const StandardLayout = () => {
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <FormField >
+        <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
           <MultilineInput
             bordered
@@ -97,12 +97,15 @@ export const StandardLayout = () => {
         </FormField>
       </GridItem>
     </GridLayout>
-  )
-}
+  );
+};
 
 export const Sections = () => {
   return (
-    <GridLayout columns={4} style={{ width: "calc(var(--salt-size-base) * 20)" }}>
+    <GridLayout
+      columns={4}
+      style={{ width: "calc(var(--salt-size-base) * 20)" }}
+    >
       <GridItem colSpan={2}>
         <FormField>
           <FormFieldLabel>Expected total annual volumes</FormFieldLabel>
@@ -139,20 +142,22 @@ export const Sections = () => {
         </FormField>
       </GridItem>
       <GridItem colSpan={3}>
-        <FormField >
+        <FormField>
           <FormFieldLabel>Service description</FormFieldLabel>
           <Dropdown>
             <Option value="Value">Value</Option>
           </Dropdown>
-          <FormFieldHelperText>Description of the services that are being requested</FormFieldHelperText>
+          <FormFieldHelperText>
+            Description of the services that are being requested
+          </FormFieldHelperText>
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
         <hr></hr>
       </GridItem>
     </GridLayout>
-  )
-}
+  );
+};
 
 export const SecondaryField = () => {
   const [value, setValue] = useState<string>("Value text");
@@ -166,7 +171,10 @@ export const SecondaryField = () => {
   };
 
   return (
-    <GridLayout columns={4} style={{ width: "calc(var(--salt-size-base) * 12)" }}>
+    <GridLayout
+      columns={4}
+      style={{ width: "calc(var(--salt-size-base) * 12)" }}
+    >
       <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
@@ -174,19 +182,21 @@ export const SecondaryField = () => {
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
       </GridItem>
-      <GridItem
-        colSpan={4}
-      >
+      <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
-          <Dropdown variant="secondary" defaultSelected={["Value text"]} style={{ width: "100%" }}>
+          <Dropdown
+            variant="secondary"
+            defaultSelected={["Value text"]}
+            style={{ width: "100%" }}
+          >
             <Option value="Value text">Value text</Option>
           </Dropdown>
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <FormField >
+        <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
           <MultilineInput
             variant="secondary"
@@ -205,8 +215,8 @@ export const SecondaryField = () => {
         </FormField>
       </GridItem>
     </GridLayout>
-  )
-}
+  );
+};
 
 export const SecondaryBackground = () => {
   const [value, setValue] = useState<string>("Value text");
@@ -220,21 +230,22 @@ export const SecondaryBackground = () => {
   };
 
   return (
-    <GridLayout columns={4} style={{
-      padding: "var(--salt-spacing-300)",
-      backgroundColor: "var(--salt-container-secondary-background)",
-      width: "calc(var(--salt-size-base) * 12)"
-    }}>
-      < GridItem colSpan={4} >
+    <GridLayout
+      columns={4}
+      style={{
+        padding: "var(--salt-spacing-300)",
+        backgroundColor: "var(--salt-container-secondary-background)",
+        width: "calc(var(--salt-size-base) * 12)",
+      }}
+    >
+      <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
           <Input defaultValue="Value text" />
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
-      </GridItem >
-      <GridItem
-        colSpan={4}
-      >
+      </GridItem>
+      <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
           <Dropdown defaultSelected={["Value text"]} style={{ width: "100%" }}>
@@ -244,7 +255,7 @@ export const SecondaryBackground = () => {
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <FormField >
+        <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
           <MultilineInput
             bordered
@@ -261,37 +272,53 @@ export const SecondaryBackground = () => {
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
       </GridItem>
-    </GridLayout >
-  )
-}
+    </GridLayout>
+  );
+};
 
 export const Compact = () => {
   return (
     <StackLayout gap={1} style={{ width: "calc(var(--salt-size-base) * 12)" }}>
       <FormField labelPlacement="left">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown variant="secondary" defaultSelected={["Value text"]} style={{ width: "100%" }}>
+        <Dropdown
+          variant="secondary"
+          defaultSelected={["Value text"]}
+          style={{ width: "100%" }}
+        >
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown variant="secondary" defaultSelected={["Value text"]} style={{ width: "100%" }}>
+        <Dropdown
+          variant="secondary"
+          defaultSelected={["Value text"]}
+          style={{ width: "100%" }}
+        >
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown variant="secondary" defaultSelected={["Value text"]} style={{ width: "100%" }}>
+        <Dropdown
+          variant="secondary"
+          defaultSelected={["Value text"]}
+          style={{ width: "100%" }}
+        >
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown variant="secondary" defaultSelected={["Value text"]} style={{ width: "100%" }}>
+        <Dropdown
+          variant="secondary"
+          defaultSelected={["Value text"]}
+          style={{ width: "100%" }}
+        >
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
     </StackLayout>
-  )
-}
+  );
+};
