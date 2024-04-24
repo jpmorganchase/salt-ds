@@ -12,23 +12,34 @@ import { Default } from "./examples";
 export default {
   title: "Ag Grid/Ag Grid Theme",
   component: AgGridReact,
+  parameters: {
+    // Make all ag grid examples go through chromatic
+    chromatic: {
+      disableSnapshot: false,
+      delay: 200,
+      // double default width from `useAgGridHelpers` given we're using side-by-side mode, + panel wrapper padding
+      modes: {
+        dual: { mode: "side-by-side", viewport: { width: 800 * 2 + 24 * 4 } },
+      },
+    },
+  },
 };
 
 export const BasicGrid: StoryObj<typeof AgGridReact> = () => {
   return <Default />;
 };
-BasicGrid.parameters = {
-  chromatic: { disableSnapshot: false },
-};
 BasicGrid.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
-  const azCell = await canvas.findByText("AZ");
+  // Do findAll here so this will also work in `side-by-side` mode
+  const azCells = await canvas.findAllByText("AZ");
 
-  await userEvent.click(azCell);
+  for (const cell of azCells) {
+    await userEvent.click(cell);
 
-  // classname has focus ring, which we want to snapshot, #3290
-  await expect(azCell).toHaveClass("ag-cell-range-single-cell");
+    // classname has focus ring, which we want to snapshot, #3290
+    await expect(cell).toHaveClass("ag-cell-range-single-cell");
+  }
 };
 
 export {
@@ -42,7 +53,6 @@ export {
   Icons,
   FloatingFilter,
   HDCompact,
-  HDCompactDark,
   InfiniteScroll,
   LoadingOverlay,
   MasterDetail,
@@ -57,9 +67,7 @@ export {
   StatusBar,
   StatusBarDark,
   VariantSecondary,
-  VariantSecondaryDark,
   VariantZebra,
-  VariantZebraDark,
   WrappedCell,
   WrappedHeader,
 } from "./examples";
