@@ -322,6 +322,8 @@ export const ContextMenu: StoryFn = () => {
         }}
         onContextMenu={(event) => {
           event.preventDefault();
+          //React 16 support
+          event.persist();
           setVirtualElement({
             getBoundingClientRect: () => ({
               width: 0,
