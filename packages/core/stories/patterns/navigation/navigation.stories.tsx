@@ -43,30 +43,24 @@ export const Navigation = () => {
   const verticalNavigationData = [{
     name: "Overview",
     href: "#",
-    icon: <PinIcon />
   }, {
     name: "Data analysis",
     href: "#",
-    icon: <LineChartIcon />
   }, {
     name: "Market monitor",
     href: "#",
-    icon: <NotificationIcon />
   }, {
     name: "Checks",
     href: "#",
-    icon: <SearchIcon />
   }, {
     name: "Operations",
     href: "#",
-    icon: <UserIcon />
   }, {
     name: "Trades",
     href: "#",
-    icon: <ReceiptIcon />
   }];
 
-  const headerItems = ["Home", "About", "Services", "Contact", "Blog"];
+  const headerItems = ["Home", "Transactions", "FX", "Credit Manager"];
 
   const headerUtilities = [
     {
@@ -83,7 +77,7 @@ export const Navigation = () => {
     },
   ];
   const [activeVerticalNav, setActiveVerticalNav] = useState(verticalNavigationData[0].name);
-  const [activeHeaderNav, setActiveHeaderNAv] = useState(headerItems[0]);
+  const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
   const [offset, setOffset] = useState(0);
 
   const setScroll = () => {
@@ -142,7 +136,7 @@ export const Navigation = () => {
                     onClick={(event) => {
                       // prevent default to avoid navigation in storybook example
                       event.preventDefault();
-                      setActiveHeaderNAv(item)
+                      setActiveHeaderNav(item)
                     }}
                   >
                     {item}
@@ -185,7 +179,6 @@ export const Navigation = () => {
                 event.preventDefault();
                 setActiveVerticalNav(item.name);
               }}>
-                {item.icon}
                 {item.name}
               </NavigationItem>
             </li>)}
