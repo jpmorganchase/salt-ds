@@ -123,8 +123,14 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       window: targetWindow,
     });
 
-    const { startDate, endDate, setStartDate, setEndDate, selectionVariant } =
-      useDatePickerContext();
+    const {
+      startDate,
+      endDate,
+      setStartDate,
+      setEndDate,
+      selectionVariant,
+      setOpen,
+    } = useDatePickerContext();
 
     const [focused, setFocused] = useState(false);
     const [startDateStringValue, setStartDateStringValue] = useState<string>(
@@ -177,6 +183,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       }
     }, [endDate]);
 
+    useEffect(() => {
+      console.log("focused changed to ", focused);
+    }, [focused]);
+
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
@@ -190,6 +200,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     }
 
     const updateStartDate = (dateString: string) => {
+      if (!dateString) return;
       const inputDate = dateFormatter(dateString);
       const startDateValue = startDate
         ? dateFormatter(startDate.toString())
@@ -227,7 +238,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const handleStartDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
         updateStartDate(startDateStringValue);
-        setFocused(false);
+        setOpen(false);
       }
     };
 
@@ -242,7 +253,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const handleEndDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
         updateEndDate(endDateStringValue);
-        setFocused(false);
+        setOpen(false);
       }
     };
 

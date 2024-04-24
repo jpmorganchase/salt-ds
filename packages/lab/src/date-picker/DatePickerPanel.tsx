@@ -20,13 +20,14 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: () => void;
+  CalendarProps?: Partial<CalendarProps>;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, onSelect, ...rest } = props;
+    const { className, onSelect, CalendarProps, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -56,9 +57,9 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         }
         if (startDate && newDate.startDate) {
           newDate.endDate && setEndDate(newDate.endDate);
+          setOpen(false);
         }
         onSelect?.();
-        setOpen(false);
       };
     const setSingleDate: UseSingleSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
@@ -89,7 +90,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           context
             ? {
                 context: context,
-                initialFocus: 0,
+                initialFocus: -1,
                 returnFocus: false,
                 modal: false,
               }

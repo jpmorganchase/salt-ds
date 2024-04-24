@@ -7,6 +7,7 @@ import {
   useControlled,
   useFloatingUI,
   useForkRef,
+  useFormFieldProps,
 } from "@salt-ds/core";
 import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
@@ -14,6 +15,7 @@ import { flip, size, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
+import { CalendarProps } from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
@@ -29,6 +31,11 @@ export interface DatePickerProps
   defaultStartDate?: DateValue;
   endDate?: DateValue;
   defaultEndDate?: DateValue;
+  CalendarProps?: Partial<CalendarProps> | undefined;
+  /**
+   * Function to format the input value.
+   */
+  dateFormatter?: (input: string) => string;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -41,6 +48,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       endDate: endDateProp,
       defaultStartDate,
       defaultEndDate,
+      dateFormatter,
+      CalendarProps,
       ...rest
     },
     ref
@@ -81,6 +90,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const dismiss = useDismiss(context);
 
     const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
+    const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
+      useFormFieldProps();
 
     const getPanelPosition = () => ({
       top: y ?? 0,
@@ -103,8 +114,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         : startInputRef?.current?.focus();
     };
     const handleCalendarButton = () => {
-      setOpen(!open);
       startInputRef?.current?.focus();
+      setOpen(!open);
     };
 
     // Context
@@ -133,8 +144,13 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           startInputRef={startInputRef}
           endInputRef={endInputRef}
           placeholder={placeholder}
+          dateFormatter={dateFormatter}
           endAdornment={
-            <Button variant="secondary" onClick={handleCalendarButton}>
+            <Button
+              variant="secondary"
+              onClick={handleCalendarButton}
+              disabled={disabled || formFieldReadOnly || formFieldDisabled}
+            >
               <CalendarIcon />
             </Button>
           }
@@ -144,6 +160,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           ref={floatingRef}
           {...getFloatingProps()}
           onSelect={handleSelect}
+          CalendarProps={CalendarProps}
         />
       </DatePickerContext.Provider>
     );
