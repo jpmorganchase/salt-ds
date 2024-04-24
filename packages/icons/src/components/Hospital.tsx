@@ -15,7 +15,7 @@ export const HospitalIcon = forwardRef<SVGSVGElement, HospitalIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6.5 2v1.031h1v1h-1V5h-1v-.969h-1v-1h1V2h1ZM5 7V6H4v1h1Zm0 1v1H4V8h1Zm3-1V6H7v1h1Zm0 1v1H7V8h1Z" />
+        <path d="M6.5 2v1h1v1h-1v1h-1V4h-1V3h1V2h1ZM5 7V6H4v1h1Zm0 1v1H4V8h1Zm3-1V6H7v1h1Zm0 1v1H7V8h1Z" />
         <path
           fillRule="evenodd"
           d="M10 11h2v1H0v-1h2V0h8v11ZM3 1h6v10H7v-1H5v1H3V1Z"

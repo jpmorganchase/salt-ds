@@ -13,7 +13,7 @@ export const SaltShakerSolidIcon = forwardRef<
     <Icon
       data-testid="SaltShakerSolidIcon"
       aria-label="salt shaker solid"
-      viewBox="0 0 13 12"
+      viewBox="0 0 12 12"
       ref={ref}
       {...props}
     >

@@ -17,7 +17,11 @@ export const ColumnChooserSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 12h12V0H0v12zM1 2h10v1H6v1h3v1H6v1h3v1H6v1h3v1H6v2H5V3H1V2zm0 2h3v1H1V4zm3 2v1H1V6h3zm0 2v1H1V8h3z" />
+      <path
+        fillRule="evenodd"
+        d="M0 12V0h12v12H0ZM1 2h10v1H6v1h3v1H6v1h3v1H6v1h3v1H6v2H5V3H1V2Zm0 2h3v1H1V4Zm3 2H1v1h3V6Zm0 2H1v1h3V8Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });
