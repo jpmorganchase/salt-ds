@@ -4,7 +4,7 @@ Follow below instructions to contribute to Salt.
 
 1. Run `yarn` to install dependencies. If this step is stuck, check your proxy setting.
 1. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
-1. Run `yarn storybook` to run  a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
+1. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
 1. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
 
 ## Packages
