@@ -3,7 +3,6 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   Input,
-  StackLayout,
   Switch,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
@@ -44,19 +43,26 @@ AllExamplesGrid.parameters = {
 
 export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} cols={2} {...props}>
-    <StackLayout direction="row">
-      <FormField labelPlacement="left">
-        <FormFieldLabel>Reference</FormFieldLabel>
-        <Input defaultValue="Value" />
-        <FormFieldHelperText>Helpertext</FormFieldHelperText>
-      </FormField>
-
-      <FormField labelPlacement="left">
-        <FormFieldLabel>Label</FormFieldLabel>
-        <Switch />
-        <FormFieldHelperText>Helpertext</FormFieldHelperText>
-      </FormField>
-    </StackLayout>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Reference</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="right">
+      <FormFieldLabel>Reference</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="right">
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
   </QAContainer>
 );
 FormFieldAlignments.parameters = {
