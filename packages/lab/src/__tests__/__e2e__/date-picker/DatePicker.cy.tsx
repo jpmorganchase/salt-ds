@@ -3,13 +3,15 @@ import { ChangeEvent } from "react";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { CalendarDate } from "@internationalized/date";
+
 const composedStories = composeStories(datePickerStories);
 const { Default, Range } = composedStories;
 
 const testDate = new CalendarDate(2000, 2, 1);
 describe("GIVEN a DatePicker", () => {
   checkAccessibility(composedStories);
-  describe("WHEN datepicker is mounted", () => {
+
+  describe("WHEN single datepicker is mounted", () => {
     it("THEN it should mount with the specified defaultStartDate", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
       cy.findByRole("textbox").should("have.value", "01 Feb 2000");
@@ -38,6 +40,21 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
       cy.findByRole("button", { name: "calendar" }).realClick();
       cy.findByRole("application").should("exist");
+      cy.findByRole("button", { name: "calendar" }).realClick();
+      cy.findByRole("application").should("not.exist");
     });
+    it("THEN should close the calendar panel once a date is selected", () => {
+      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.findByRole("button", { name: "calendar" }).realClick();
+      cy.findByRole("button", { name: "15/02/2000" }).realClick();
+      cy.findByRole("application").should("not.exist");
+    });
+    it("THEN should not open the calendar when disabled", () => {
+      cy.mount(<Default defaultStartDate={testDate} disabled />);
+      cy.findByRole("button").should("be.disabled");
+    });
+  });
+  describe("WHEN range datepicker is mounted", () => {
+    //
   });
 });
