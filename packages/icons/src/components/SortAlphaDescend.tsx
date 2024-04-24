@@ -13,7 +13,7 @@ export const SortAlphaDescendIcon = forwardRef<
     <Icon
       data-testid="SortAlphaDescendIcon"
       aria-label="sort alpha descend"
-      viewBox="0 0 12 13"
+      viewBox="0 0 12 12"
       ref={ref}
       {...props}
     >
