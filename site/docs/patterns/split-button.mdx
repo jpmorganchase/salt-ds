@@ -10,8 +10,8 @@ data:
 A Split Button enables users to perform a main action and have access to relevant, supplementary actions displayed inside the menu. 
 
 <Diagram
-  src="/img/patterns/selectable-card/selectable-card-group.png"
-  alt="Example showing a series of selectable cards."
+  src="/img/patterns/split-button/split-button-hero-shot.png"
+  alt="Example showing a split button."
   border
 />
 
@@ -34,8 +34,8 @@ A split button contains:
 3. *Supplementary actions:* lower priority actions displayed in menu. 
 
 <Diagram
-  src="/img/patterns/selectable-card/selectable-card-anatomy.png"
-  alt="Selectable card using a title, an image and radio button."
+  src="/img/patterns/split-button/split-button-anatomy.png"
+  alt="Split button showing supplementary actions."
   border
 />
 
@@ -47,8 +47,8 @@ A split button contains:
 - By default, the menu is displayed bottom-end of the arrow button.
 
 <Diagram
-  src="/img/patterns/selectable-card/selectable-card-spacing.png"
-  alt="Showing spacing tokens applied to a regular size selectable card."
+  src="/img/patterns/split-button/split-button-layout.png"
+  alt="layout"
   border
 />
 
@@ -60,19 +60,11 @@ A split button contains:
 
 You can use CTA buttons, Primary buttons, and Secondary buttons in a Split button pattern. See guidance for button options to select the most suitable ones for your application.
 
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/selectable-card/radio-button.png",
-      alt: "Mutually exclusive selection."
-    },
-    {
-      src: "/img/patterns/selectable-card/hide-radio-button.png",
-      alt: "Mutually exclusive selection without radio button."
-    },
-  ]}
-  label="Hide radio button"
-  caption="Selectable cards with radio buttons."
+<Diagram
+  src="/img/patterns/split-button/split-button-affordance.png"
+  alt="Example showing CTA, Primary and Secondary variants of a split button."
+  caption="Example showing CTA, Primary and Secondary variants of a split button."
+  border
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
@@ -84,15 +76,22 @@ You can use CTA buttons, Primary buttons, and Secondary buttons in a Split butto
 You can have multiple main actions if they have the same importance/priority.
 
 <Diagram
-  src="/img/patterns/selectable-card/checkbox.png"
-  alt="Multiple selection."
+  src="/img/patterns/split-button/split-button-multiple-actions.png"
+  alt="Multiple actions."
   border
-  caption="Use checkboxes for multiple selection."
+  caption="Example showing two main actions, Copy and Paste in a split button."
 />
 
 ## Icon-only
 
 The main action is represented by an icon-only button to minimize the width of the entire split button.
+
+<Diagram
+  src="/img/patterns/split-button/split-button-icon-only.png"
+  alt="Icon only."
+  border
+  caption="Example showing the main action represented by an icon with a Tooltip."
+/>
 
 <ExampleContainer type="positive" customPillText="Best practices">
 - Avoid using an icon-only split button if the proposed icons are likely to be unfamiliar to your target audience.
