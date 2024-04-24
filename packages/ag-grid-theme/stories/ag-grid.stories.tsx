@@ -1,13 +1,12 @@
 import { AgGridReact } from "ag-grid-react";
 import { userEvent, within, expect } from "@storybook/test";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { StoryObj } from "@storybook/react";
+import { Default } from "./examples";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-material.css";
 import "../uitk-ag-theme.css";
 import "../salt-ag-theme.css";
-
-import { Default } from "./examples";
 
 export default {
   title: "Ag Grid/Ag Grid Theme",
@@ -56,7 +55,6 @@ export {
   InfiniteScroll,
   LoadingOverlay,
   MasterDetail,
-  MasterDetailDark,
   NoDataOverlay,
   Pagination,
   ParentChildRows,
@@ -65,7 +63,6 @@ export {
   PinnedRows,
   SortAndFilter,
   StatusBar,
-  StatusBarDark,
   VariantSecondary,
   VariantZebra,
   WrappedCell,
