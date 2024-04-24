@@ -17,6 +17,9 @@ export default {
 export const BasicGrid: StoryObj<typeof AgGridReact> = () => {
   return <Default />;
 };
+BasicGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
 BasicGrid.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
