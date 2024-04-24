@@ -84,10 +84,6 @@ export interface DateInputProps
    */
   dateFormatter?: (input: string) => string;
   /**
-   * Selection Variant for the calendar.
-   */
-  selectionVariant?: "default" | "range";
-  /**
    * Reference for the startInput;
    */
   startInputRef?: RefObject<HTMLInputElement>;
@@ -182,10 +178,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         setEndDateStringValue(dateFormatter(endDate.toString()));
       }
     }, [endDate]);
-
-    useEffect(() => {
-      console.log("focused changed to ", focused);
-    }, [focused]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)

@@ -140,7 +140,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           className={clsx(withBaseName())}
           ref={inputRef}
           {...getReferenceProps()}
-          selectionVariant={selectionVariant}
           startInputRef={startInputRef}
           endInputRef={endInputRef}
           placeholder={placeholder}
