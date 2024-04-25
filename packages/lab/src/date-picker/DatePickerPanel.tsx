@@ -53,7 +53,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       endDate,
       setEndDate,
       setOpen,
-      focusInside,
       selectionVariant,
       context,
       getPanelPosition,
@@ -102,9 +101,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           context
             ? {
                 context: context,
-                initialFocus: focusInside ? -1 : 0,
-                returnFocus: false,
-                modal: false,
+                initialFocus: -1,
               }
             : undefined
         }

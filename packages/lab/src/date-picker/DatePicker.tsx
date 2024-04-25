@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
 
 import {
   Button,
@@ -62,7 +62,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     },
     ref
   ) {
-    const [focusInside, setFocusInside] = useState<boolean>(false);
+    // const [focusInside, setFocusInside] = useState<boolean>(false);
 
     const [open, setOpen] = useControlled({
       controlled: openProp,
@@ -125,8 +125,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     // Context
     const datePickerContextValue = {
       openState: open,
-      focusInside,
-      setFocusInside,
       setOpen,
       disabled,
       endDate,
@@ -154,7 +152,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             <Button
               variant="secondary"
               onClick={handleCalendarButton}
-              onKeyDown={() => setFocusInside(!focusInside)}
               disabled={disabled || formFieldReadOnly || formFieldDisabled}
               aria-label="Open Calendar"
             >

@@ -276,7 +276,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           onKeyDown={handleStartDateKeyDown}
           onFocus={!isDisabled ? handleFocus : undefined}
           placeholder={placeholder}
-          value={startDateStringValue}
+          value={
+            isReadOnly && !startDateStringValue
+              ? emptyReadOnlyMarker
+              : startDateStringValue
+          }
           {...restDateInputProps}
           required={isRequired}
         />
@@ -298,7 +302,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
               onChange={handleEndDateChange}
               onKeyDown={handleEndDateKeyDown}
               placeholder={placeholder}
-              value={endDateStringValue}
+              value={
+                isReadOnly && !endDateStringValue
+                  ? emptyReadOnlyMarker
+                  : endDateStringValue
+              }
               {...restDateInputProps}
               required={isRequired}
             />

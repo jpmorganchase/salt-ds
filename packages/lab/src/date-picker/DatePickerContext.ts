@@ -6,8 +6,6 @@ export interface DatePickerContextValue
   extends Partial<Pick<UseFloatingUIReturn, "context">> {
   openState: boolean;
   setOpen: (newOpen: boolean) => void;
-  focusInside: boolean;
-  setFocusInside: (newOpen: boolean) => void;
   disabled: boolean;
   startDate: DateValue | undefined;
   defaultStartDate: DateValue | undefined;
@@ -24,8 +22,6 @@ export const DatePickerContext = createContext<DatePickerContextValue>(
   {
     openState: false,
     setOpen: () => undefined,
-    focusInside: false,
-    setFocusInside: () => undefined,
     disabled: false,
     startDate: undefined,
     defaultStartDate: undefined,
