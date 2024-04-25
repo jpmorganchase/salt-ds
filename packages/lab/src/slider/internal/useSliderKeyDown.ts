@@ -1,5 +1,5 @@
 import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundToStep, roundToTwoDp } from "./utils";
+import { roundToStep, roundToTwoDp } from "./utils";
 
 export function useSliderKeyDown(
   value: SliderValue,
@@ -12,6 +12,12 @@ export function useSliderKeyDown(
   return (event: React.KeyboardEvent) => {
     let valueItem: number = value;
     switch (event.key) {
+      case "Home":
+        valueItem = min;
+        break;
+      case "End":
+        valueItem = max;
+        break;
       case "ArrowUp":
       case "ArrowRight":
         valueItem += step;

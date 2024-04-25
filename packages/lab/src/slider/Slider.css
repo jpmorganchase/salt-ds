@@ -41,7 +41,6 @@
   cursor: pointer;
   height: var(--salt-size-bar);
   background: var(--salt-track-borderColor);
-  transition: grid-template-columns 100ms ease;
   width: 100%;
 }
 
