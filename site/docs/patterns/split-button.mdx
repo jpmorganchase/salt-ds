@@ -43,7 +43,7 @@ A split button contains:
 
 - Use the segmented button group component as the base structure of the split button.
 - Use the chevron-down icon for the menu trigger.
-- Use a menu component to display supplementary actions for users to take.
+- Use a menu component to display supplementary actions for users to take. Set the component's `placement` prop to "bottom-end" without quotation marks.
 
 <Diagram
   src="/img/patterns/split-button/split-button-layout.png"
@@ -51,13 +51,10 @@ A split button contains:
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
-- By default, the menu is displayed bottom-end of the arrow button.
-</ExampleContainer>
 
 ## Split button affordance
 
-You can use CTA buttons, Primary buttons, and Secondary buttons in a Split button pattern. See guidance for button options to select the most suitable ones for your application.
+You can use CTA buttons, primary buttons and secondary buttons in a split button pattern. See guidance for [button options](/salt/components/button) to select the most suitable ones for your application.
 
 <Diagram
   src="/img/patterns/split-button/split-button-affordance.png"
@@ -67,12 +64,12 @@ You can use CTA buttons, Primary buttons, and Secondary buttons in a Split butto
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-- Don’t mix the button variants in the same split button.
+Don’t mix the button variants in the same split button.
 </ExampleContainer>
 
 ## Multiple actions
 
-You can have multiple main actions if they have the same importance/priority.
+Include multiple main actions if they have the same importance/priority.
 
 <Diagram
   src="/img/patterns/split-button/split-button-multiple-actions.png"
@@ -89,13 +86,13 @@ The main action is represented by an icon-only button to minimize the width of t
   src="/img/patterns/split-button/split-button-icon-only.png"
   alt="Icon only."
   border
-  caption="Example showing the main action represented by an icon with a Tooltip."
+  caption="Example showing the main action represented by an icon with a tooltip."
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
 - Avoid using an icon-only split button if your target audience is unlikely to recognize the proposed icons.
 - Use a textual label if your main action is high priority. This ensures users are more likely to see it.
-- Use a Tooltip to describe or label the action.
+- Use a [tooltip](/salt/components/tooltip) to describe or label the action.
 </ExampleContainer>
 
 :fragment{src="./fragments/feedback.mdx"}
