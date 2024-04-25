@@ -65,7 +65,7 @@
 
   --grid-headerColumnSeparator-color: var(--saltGrid-headerColumnSeparator-color, var(--salt-separable-tertiary-borderColor));
   --grid-headerRowSeparator-color: var(--saltGrid-headerRowSeparator-color, var(--salt-separable-primary-borderColor));
-  --grid-headerRowSeparator-gap: var(--saltGrid-headerRowSeparator-gap, var(--salt-size-unit));
+  --grid-headerRowSeparator-gap: var(--saltGrid-headerRowSeparator-gap, var(--salt-spacing-100));
   --grid-headerRowSeparator-height: var(--saltGrid-headerRowSeparator-height, 1px);
   --grid-groupHeaderRowSeparator-color: var(--saltGrid-groupHeaderRowSeparator-color, var(--salt-separable-tertiary-borderColor));
 

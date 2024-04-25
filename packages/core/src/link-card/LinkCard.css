@@ -35,7 +35,7 @@
 .saltLinkCard-accentBottom::after {
   left: calc(-1 * var(--salt-size-border));
   bottom: calc(-1 * var(--salt-size-border));
-  height: var(--salt-size-accent);
+  height: var(--salt-size-bar);
   width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
@@ -44,14 +44,14 @@
   left: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
   height: calc(100% + calc(2 * var(--salt-size-border)));
-  width: var(--salt-size-accent);
+  width: var(--salt-size-bar);
 }
 
 /* Styles applied to LinkCard if `accent="top"` */
 .saltLinkCard-accentTop::after {
   left: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
-  height: var(--salt-size-accent);
+  height: var(--salt-size-bar);
   width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
@@ -60,7 +60,7 @@
   right: calc(-1 * var(--salt-size-border));
   top: calc(-1 * var(--salt-size-border));
   height: calc(100% + calc(2 * var(--salt-size-border)));
-  width: var(--salt-size-accent);
+  width: var(--salt-size-bar);
 }
 
 /* Styles applied to LinkCard on focus */

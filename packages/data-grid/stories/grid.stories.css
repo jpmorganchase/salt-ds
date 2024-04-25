@@ -83,7 +83,7 @@
 }
 
 .customHeaderText {
-  padding-left: var(--salt-size-unit);
+  padding-left: var(--salt-spacing-100);
   flex-grow: 1;
 }
 
@@ -96,5 +96,5 @@
 }
 
 .treeNodeName {
-  padding-left: var(--salt-size-unit);
+  padding-left: var(--salt-spacing-100);
 }
