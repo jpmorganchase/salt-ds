@@ -55,8 +55,11 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       (_, newDate) => {
         if (!startDate && newDate.startDate) {
           setStartDate(newDate.startDate);
-        }
-        if (startDate && newDate.startDate) {
+        } else if (startDate && newDate.startDate) {
+          if (!newDate.endDate || newDate.startDate <= newDate.endDate) {
+            setStartDate(newDate.startDate);
+            setEndDate(undefined);
+          }
           newDate.endDate && setEndDate(newDate.endDate);
           setOpen(false);
         }

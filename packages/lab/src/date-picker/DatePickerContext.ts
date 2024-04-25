@@ -11,10 +11,10 @@ export interface DatePickerContextValue
   disabled: boolean;
   startDate: DateValue | undefined;
   defaultStartDate: DateValue | undefined;
-  setStartDate: (newStartDate: DateValue) => void;
+  setStartDate: (newStartDate: DateValue | undefined) => void;
   endDate: DateValue | undefined;
   defaultEndDate: DateValue | undefined;
-  setEndDate: (newEndDate: DateValue) => void;
+  setEndDate: (newEndDate: DateValue | undefined) => void;
   selectionVariant: "default" | "range";
   getPanelPosition: () => Record<string, unknown>;
 }

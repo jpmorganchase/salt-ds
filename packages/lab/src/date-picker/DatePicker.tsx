@@ -36,6 +36,7 @@ export interface DatePickerProps
    * Function to format the input value.
    */
   dateFormatter?: (input: string) => string;
+  open?: boolean;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -51,13 +52,19 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       dateFormatter,
       CalendarProps,
       className,
+      open: openProp,
       ...rest
     },
     ref
   ) {
-    const [open, setOpen] = useState<boolean>(false);
     const [focusInside, setFocusInside] = useState<boolean>(false);
 
+    const [open, setOpen] = useControlled({
+      controlled: openProp,
+      default: false,
+      name: "openPanel",
+      state: "openPanel",
+    });
     const [startDate, setStartDate] = useControlled({
       controlled: startDateProp,
       default: defaultStartDate,

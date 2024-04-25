@@ -167,14 +167,12 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
 
     // Effects. Update date strings when dates change
     useEffect(() => {
-      if (startDate) {
-        setStartDateStringValue(dateFormatter(startDate.toString()));
-      }
+      setStartDateStringValue(
+        startDate ? dateFormatter(startDate.toString()) : ""
+      );
     }, [startDate]);
     useEffect(() => {
-      if (endDate) {
-        setEndDateStringValue(dateFormatter(endDate.toString()));
-      }
+      setEndDateStringValue(endDate ? dateFormatter(endDate.toString()) : "");
     }, [endDate]);
 
     const isRequired = formFieldRequired
@@ -190,7 +188,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     }
 
     const updateStartDate = (dateString: string) => {
-      if (!dateString) return;
+      if (!dateString) setStartDate(undefined);
       const inputDate = dateFormatter(dateString);
       const startDateValue = startDate
         ? dateFormatter(startDate.toString())
@@ -202,6 +200,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const updateEndDate = (dateString: string) => {
+      if (!dateString) setEndDate(undefined);
       const inputDate = dateFormatter(dateString);
       const endDateValue = endDate ? dateFormatter(endDate.toString()) : "";
       if (!validationStatus && endDateValue !== inputDate) {
