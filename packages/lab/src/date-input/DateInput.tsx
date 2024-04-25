@@ -19,8 +19,7 @@ import { makePrefixer, useFormFieldProps } from "@salt-ds/core";
 import {
   CalendarDate,
   DateFormatter,
-  getLocalTimeZone,
-  parseAbsolute,
+  parseAbsoluteToLocal,
 } from "@internationalized/date";
 import { useDatePickerContext } from "../date-picker/DatePickerContext";
 
@@ -179,9 +178,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       : dateInputPropsRequired;
 
     function getCalendarDate(inputDate: string) {
-      const isoDate = parseAbsolute(
-        createDate(inputDate)?.toISOString() ?? "",
-        getLocalTimeZone()
+      const isoDate = parseAbsoluteToLocal(
+        createDate(inputDate)?.toISOString() ?? ""
       );
       return new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
     }
