@@ -281,22 +281,28 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           required={isRequired}
         />
         {selectionVariant === "range" && (
-          <input
-            aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
-            aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
-            className={withBaseName("input")}
-            disabled={isDisabled}
-            readOnly={isReadOnly}
-            ref={endInputRef}
-            tabIndex={isDisabled ? -1 : 0}
-            onBlur={handleEndDateBlur}
-            onChange={handleEndDateChange}
-            onKeyDown={handleEndDateKeyDown}
-            placeholder={placeholder}
-            value={endDateStringValue}
-            {...restDateInputProps}
-            required={isRequired}
-          />
+          <>
+            <span>-</span>
+            <input
+              aria-describedby={clsx(
+                formFieldDescribedBy,
+                dateInputDescribedBy
+              )}
+              aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+              className={withBaseName("input")}
+              disabled={isDisabled}
+              readOnly={isReadOnly}
+              ref={endInputRef}
+              tabIndex={isDisabled ? -1 : 0}
+              onBlur={handleEndDateBlur}
+              onChange={handleEndDateChange}
+              onKeyDown={handleEndDateKeyDown}
+              placeholder={placeholder}
+              value={endDateStringValue}
+              {...restDateInputProps}
+              required={isRequired}
+            />
+          </>
         )}
         {
           <div className={withBaseName("endAdornmentContainer")}>

@@ -51,17 +51,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       getPanelPosition,
     } = useDatePickerContext();
 
-    const visibleStartMonth = useMemo(
-      () => startDate ?? today(getLocalTimeZone()),
-      [startDate]
-    );
-    const visibleEndMonth = useMemo(
-      () =>
-        endDate ??
-        startDate?.add({ months: 1 }) ??
-        today(getLocalTimeZone()).add({ months: 1 }),
-      [startDate]
-    );
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
         if (!startDate && newDate.startDate) {
@@ -114,13 +103,17 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         <StackLayout>
           <FlexLayout>
             <Calendar
-              visibleMonth={visibleStartMonth}
+              defaultVisibleMonth={startDate ?? today(getLocalTimeZone())}
               {...firstCalendarProps}
             />
             {isRangePicker && (
               <Calendar
                 selectionVariant="range"
-                visibleMonth={visibleEndMonth}
+                defaultVisibleMonth={
+                  endDate ??
+                  startDate?.add({ months: 1 }) ??
+                  today(getLocalTimeZone()).add({ months: 1 })
+                }
                 selectedDate={{ startDate, endDate }}
                 onSelectedDateChange={setRangeDate}
               />
