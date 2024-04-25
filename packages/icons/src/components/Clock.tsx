@@ -15,8 +15,12 @@ export const ClockIcon = forwardRef<SVGSVGElement, ClockIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 3v3H3v1h4V3H6z" />
-        <path d="M12 6A6 6 0 1 0 0 6a6 6 0 0 0 12 0zm-1 0A5 5 0 1 1 .999 5.999 5 5 0 0 1 11 6z" />
+        <path d="M6 3v3H3v1h4V3H6Z" />
+        <path
+          fillRule="evenodd"
+          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0Zm-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

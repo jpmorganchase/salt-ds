@@ -15,7 +15,11 @@ export const StepDefaultIcon = forwardRef<SVGSVGElement, StepDefaultIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm6-4A6 6 0 1 1 0 6a6 6 0 0 1 12 0z" />
+        <path
+          fillRule="evenodd"
+          d="M6 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm6-4A6 6 0 1 1 0 6a6 6 0 0 1 12 0Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

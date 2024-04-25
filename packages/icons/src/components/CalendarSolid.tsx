@@ -17,7 +17,11 @@ export const CalendarSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M3.996 1.008V0H3v1.008H0V12h12V1.008H9V0h-.996v1.008H3.996zM1 2.004h2v1h1v-1h4v1h1v-1h2v2H1v-2z" />
+      <path
+        fillRule="evenodd"
+        d="M4 1V0H3v1H0v11h12V1H9V0H8v1H4ZM1 2h2v1h1V2h4v1h1V2h2v2H1V2Z"
+        clipRule="evenodd"
+      />
     </Icon>
   );
 });
