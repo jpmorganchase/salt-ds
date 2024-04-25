@@ -34,6 +34,12 @@ List synonymous names that someone might use when searching for this component. 
 
 List other, similar components with the relationship "similarTo." List other components that this component uses with the relationship "contains." As with alsoKnownAs, use sentence case and order them alphabetically.
 
+### relatedPatterns
+
+Add any related patterns here. Include patterns that the reader of the component document would likely want to access. Don't include a pattern just because it uses the component. A reader of the `Card` documentation would likely want to read more about the selectable card pattern, but it's less relevant for the `GridLayout` documentation reader even though the pattern also uses this component.
+
+Patterns must already be published on the Salt site. Use the exact title of the pattern, in quotation marks, with each pattern separated by a comma. Delete this line if there are no related patterns.
+
 ### stickerSheet
 
 Link to a Figma stickersheet where applicable.
