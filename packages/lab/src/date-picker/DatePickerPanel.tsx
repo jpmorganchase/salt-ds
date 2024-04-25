@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useMemo, useState } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 import {
   FlexLayout,
   makePrefixer,
@@ -20,7 +20,15 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: () => void;
-  CalendarProps?: Partial<CalendarProps>;
+  CalendarProps?: Partial<
+    Omit<
+      CalendarProps,
+      | "selectionVariant"
+      | "selectedDate"
+      | "defaultSelectedDate"
+      | "onSelectedDateChange"
+    >
+  >;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -108,6 +116,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
             <Calendar
               defaultVisibleMonth={startDate ?? today(getLocalTimeZone())}
               {...firstCalendarProps}
+              {...CalendarProps}
             />
             {isRangePicker && (
               <Calendar
@@ -119,6 +128,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
                 }
                 selectedDate={{ startDate, endDate }}
                 onSelectedDateChange={setRangeDate}
+                {...CalendarProps}
               />
             )}
           </FlexLayout>

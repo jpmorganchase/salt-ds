@@ -9,7 +9,6 @@ import {
   ReactNode,
   RefObject,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -42,7 +41,7 @@ const getDateValidationStatus = (value: string | undefined) =>
 
 const defaultDateFormatter = (input: string): string => {
   const date = createDate(input);
-  return !date
+  return !input || !date
     ? input
     : new DateFormatter("EN-GB", {
         day: "2-digit",
@@ -170,10 +169,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       setStartDateStringValue(
         startDate ? dateFormatter(startDate.toString()) : ""
       );
-    }, [startDate]);
+    }, [startDate, dateFormatter]);
     useEffect(() => {
       setEndDateStringValue(endDate ? dateFormatter(endDate.toString()) : "");
-    }, [endDate]);
+    }, [endDate, dateFormatter]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -217,6 +216,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
       updateStartDate(event.target.value);
       setFocused(false);
+      onBlur?.(event);
     };
 
     const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -234,6 +234,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
       updateEndDate(event.target.value);
       setFocused(false);
+      onBlur?.(event);
     };
     const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
       setEndDateStringValue(event.target.value);

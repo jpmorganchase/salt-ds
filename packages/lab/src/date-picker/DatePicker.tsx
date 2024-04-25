@@ -11,11 +11,14 @@ import {
 } from "@salt-ds/core";
 import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
-import { flip, size, useDismiss, useInteractions } from "@floating-ui/react";
+import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
-import { CalendarProps } from "../calendar";
+import {
+  UseRangeSelectionCalendarProps,
+  UseSingleSelectionCalendarProps,
+} from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
@@ -31,7 +34,9 @@ export interface DatePickerProps
   defaultStartDate?: DateValue;
   endDate?: DateValue;
   defaultEndDate?: DateValue;
-  CalendarProps?: Partial<CalendarProps> | undefined;
+  CalendarProps?:
+    | UseRangeSelectionCalendarProps
+    | UseSingleSelectionCalendarProps;
   /**
    * Function to format the input value.
    */
@@ -113,7 +118,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         : startInputRef?.current?.focus();
     };
     const handleCalendarButton = () => {
-      // startInputRef?.current?.focus();
+      startInputRef?.current?.focus();
       setOpen(!open);
     };
 
