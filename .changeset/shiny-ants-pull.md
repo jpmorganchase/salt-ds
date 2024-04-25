@@ -2,7 +2,7 @@
 "@salt-ds/icons": patch
 ---
 
-Re-exporting all the icons from Figma. This has caused the following:
+Reexporting all the icons from Figma. This has caused the following:
 
 - The "9" in the `SortNumAscendIcon` is no longer cut off.
 - The arrow in the `PlaceInIcon` is no longer too short.
