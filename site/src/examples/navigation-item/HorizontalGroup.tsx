@@ -11,7 +11,7 @@ export const HorizontalGroup = (): ReactElement => {
       <StackLayout
         as="ul"
         direction="row"
-        gap={1}
+        gap={0}
         style={{ listStyle: "none" }}
       >
         {items.map((item) => (

@@ -64,24 +64,14 @@
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-vertical {
   --saltButton-margin: var(--salt-spacing-50) 0;
-
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-50) * 2);
   padding-right: var(--salt-spacing-100);
-  padding-left: calc(var(--salt-spacing-300) * (min(var(--saltNavigationItem-level, 0) + 1, 2)));
+  padding-left: calc(var(--salt-spacing-300) + var(--salt-size-icon) + var(--salt-spacing-100));
   width: 100%;
 }
 
-/* Styles applied to NavigationItem label */
-.saltNavigationItem-label {
-  color: var(--salt-content-primary-foreground);
-  line-height: var(--salt-text-lineHeight);
-  font-family: var(--salt-text-fontFamily);
-  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
-  flex: 1;
-  text-align: left;
-  display: flex;
-  align-items: baseline;
-  gap: var(--salt-spacing-100);
+.saltNavigationItem-vertical.saltNavigationItem-rootItem {
+  padding-left: var(--salt-spacing-300);
 }
 
 /* Styles applied to NavigationItem Badge */
@@ -103,14 +93,14 @@
 .saltNavigationItem-wrapper::after {
   content: "";
   position: absolute;
-  top: var(--salt-spacing-25);
-  left: 0;
   display: block;
 }
 
 /* Styles applied to activation line when orientation = "horizontal" */
 .saltNavigationItem-horizontal::after {
-  width: 100%;
+  top: var(--salt-spacing-25);
+  left: var(--salt-spacing-50);
+  right: var(--salt-spacing-50);
   height: var(--salt-size-indicator);
 }
 
@@ -118,7 +108,8 @@
 .saltNavigationItem-vertical::after {
   width: var(--salt-size-indicator);
   left: var(--salt-spacing-25);
-  height: calc(100% - var(--salt-spacing-50));
+  top: var(--salt-spacing-50);
+  bottom: var(--salt-spacing-50);
 }
 
 /* Styles applied to activation line on hover  */
