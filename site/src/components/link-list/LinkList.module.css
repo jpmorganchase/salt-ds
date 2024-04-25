@@ -1,8 +1,9 @@
 .link {
   display: flex;
   gap: var(--salt-spacing-100);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: row;
+  max-width: 18em;
 }
 
 .list {
@@ -24,6 +25,6 @@
 
 .subheader {
   font-style: var(--salt-editable-help-fontStyle);
-  margin-top: var(--salt-spacing-300);
+  margin-top: var(--salt-spacing-100);
   margin-bottom: var(--salt-spacing-200);
 }
