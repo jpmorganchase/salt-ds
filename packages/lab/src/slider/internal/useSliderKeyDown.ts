@@ -25,8 +25,7 @@ export function useSliderKeyDown(
     }
     event.preventDefault();
     valueItem = roundToStep(valueItem, step);
-    valueItem = roundToTwoDp(valueItem)
-    // valueItem = clampValue(valueItem, min, max);
+    valueItem = roundToTwoDp(valueItem);
     setValue(valueItem);
     onChange?.(valueItem);
   };

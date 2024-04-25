@@ -123,7 +123,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     );
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
-    const hasContent = content !== undefined && content != "";
+    const hasContent = !!content;
 
     return (
       <>

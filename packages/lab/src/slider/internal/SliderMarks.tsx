@@ -16,7 +16,6 @@ export function SliderMarks({
   step,
   ...rest
 }: SliderMarksProps): JSX.Element {
-  
   const marks = getMarkStyles(min, max, step);
 
   return (

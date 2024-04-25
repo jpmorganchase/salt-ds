@@ -3,7 +3,7 @@ import {
   RefObject,
   useCallback,
   useRef,
-  useEffect
+  useEffect,
 } from "react";
 import { SliderChangeHandler, SliderValue } from "../types";
 import { clampValue, roundToStep, roundToTwoDp } from "./utils";
@@ -24,10 +24,11 @@ const valueFromClientX = (context: MouseContext, distanceToMouse: number) => {
   const sliderTrackRect = trackRef.current!.getBoundingClientRect();
   const distanceFromTrackStart = distanceToMouse - sliderTrackRect.x;
 
-  let value = (distanceFromTrackStart / sliderTrackRect.width) * (max - min) + min;
+  let value =
+    (distanceFromTrackStart / sliderTrackRect.width) * (max - min) + min;
 
   value = roundToStep(value, step);
-  value = roundToTwoDp(value)
+  value = roundToTwoDp(value);
   return value;
 };
 
@@ -38,9 +39,8 @@ export function useSliderMouseDown(
   max: number,
   step: number,
   setValue: SliderChangeHandler,
-  onChange?: SliderChangeHandler,
+  onChange?: SliderChangeHandler
 ) {
-
   const mouseContext = useRef<MouseContext>({
     min,
     max,
@@ -61,12 +61,16 @@ export function useSliderMouseDown(
     c.setValue = setValue;
   }, [min, max, step, value, setValue, onChange]);
 
-
   const onMouseMove = useCallback((event: MouseEvent) => {
     const { setValue, onChange } = mouseContext.current;
     const { clientX } = event;
     const clickValue = valueFromClientX(mouseContext.current, clientX);
-    const newValue = clampValue(mouseContext.current.value, clickValue, min, max)
+    const newValue = clampValue(
+      mouseContext.current.value,
+      clickValue,
+      min,
+      max
+    );
 
     setValue(newValue);
     onChange?.(newValue);
@@ -84,7 +88,12 @@ export function useSliderMouseDown(
 
     const { clientX } = event;
     const clickValue = valueFromClientX(mouseContext.current, clientX);
-    const newValue = clampValue(mouseContext.current.value, clickValue, min, max)
+    const newValue = clampValue(
+      mouseContext.current.value,
+      clickValue,
+      min,
+      max
+    );
 
     setValue(newValue);
     onChange?.(newValue);

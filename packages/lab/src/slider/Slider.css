@@ -1,8 +1,38 @@
-.saltSlider-inline {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.saltSlider {
+  display: grid;
   gap: var(--salt-spacing-100);
+}
+
+.saltSlider-labelMinBottom {
+  grid-row: 2;
+  grid-column-start: 1;
+}
+
+.saltSlider-labelMaxBottom {
+  grid-row: 2;
+  grid-column-start: 1;
+  justify-self: end;
+}
+
+.saltSlider-labelMinInline {
+  grid-row: 1;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  justify-self: start;
+  background: pink;
+}
+
+.saltSlider-labelMaxInline {
+  grid-row: 1;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  justify-self: end;
+  background: blue;
+}
+
+.saltSlider-trackInline {
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 .saltSliderTrack {
@@ -12,15 +42,13 @@
   height: var(--salt-size-bar);
   background: var(--salt-track-borderColor);
   transition: grid-template-columns 100ms ease;
-  width: 100%
+  width: 100%;
 }
 
 .saltSliderTrack-container {
   height: var(--salt-size-selectable);
   display: flex;
   align-items: center;
-  align-content: center;
-  flex-grow: 1;
 }
 
 .saltSliderTrack:active {
@@ -42,7 +70,7 @@
   width: var(--salt-size-base);
   height: var(--salt-size-base);
   transform: translate(-50%, -50%);
-  margin-top: calc(0.5 * var(--salt-size-bar))
+  margin-top: calc(0.5 * var(--salt-size-bar));
 }
 
 .saltSliderThumb:focus-visible {

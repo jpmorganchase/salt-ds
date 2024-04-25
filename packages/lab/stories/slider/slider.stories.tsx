@@ -31,7 +31,13 @@ CustomStep.args = {
   min: -1,
   max: 1,
   step: 0.2,
-  showMarks: true,
+  labels: "full",
+  "aria-label": "CustomStep",
+};
+
+export const BottomLabel = Template.bind({});
+BottomLabel.args = {
+  labels: "bottom",
   "aria-label": "CustomStep",
 };
 
@@ -39,7 +45,7 @@ export const WithMarks = Template.bind({});
 WithMarks.args = {
   min: -5,
   max: 5,
-  showMarks: true,
+  labels: "full",
   "aria-label": "withMarks",
 };
 
@@ -47,7 +53,8 @@ export const WithInput = () => {
   const [value, setValue] = useState<number>(5);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
+    const inputValue = event.currentTarget.value as unknown
+    setValue(inputValue as number);
   };
 
   const handleChange = (value: number) => {

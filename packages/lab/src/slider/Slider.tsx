@@ -23,15 +23,15 @@ const defaultStep = 1;
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
-  label?: string;
   min?: number;
   max?: number;
   step?: number;
   value?: number;
   defaultValue?: number;
   onChange?: (value: number) => void;
-  showMarks?: boolean;
+  hideLabels?: boolean;
   tooltipPlacement?: "left" | "right" | "top" | "bottom";
+  labels?: "inline" | "bottom" | "full";
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -45,7 +45,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     className,
     tooltipPlacement = "top",
     ["aria-label"]: ariaLabel,
-    showMarks = false,
+    labels = "inline",
     ...rest
   },
   ref
@@ -84,18 +84,22 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   );
 
   return (
-    <div
-      ref={ref}
-      className={clsx(
-        withBaseName(),
-        { [withBaseName("inline")]: !showMarks },
-        className
+    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+      {labels !== "full" && (
+        <Label
+          className={clsx({
+            [withBaseName("labelMinInline")]: labels === "inline",
+            [withBaseName("labelMinBottom")]: labels === "bottom",
+          })}
+        >
+          {min}
+        </Label>
       )}
-      {...rest}
-    >
-      {!showMarks && <Label> {min} </Label>}
       <SliderTrack
         style={trackGridTeplateColumns}
+        className={clsx({
+          [withBaseName("trackInline")]: labels === "inline",
+        })}
         ref={trackRef}
         onKeyDown={onKeyDown}
         onMouseDown={onMouseDown}
@@ -109,8 +113,17 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
           tooltipPlacement={tooltipPlacement}
         />
       </SliderTrack>
-      {showMarks && <SliderMarks max={max} min={min} step={step} />}
-      {!showMarks && <Label> {max} </Label>}
+      {labels !== "full" && (
+        <Label
+          className={clsx({
+            [withBaseName("labelMaxInline")]: labels === "inline",
+            [withBaseName("labelMaxBottom")]: labels === "bottom",
+          })}
+        >
+          {max}
+        </Label>
+      )}
+      {labels === "full" && <SliderMarks max={max} min={min} step={step} />}
     </div>
   );
 });
