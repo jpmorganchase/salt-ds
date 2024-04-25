@@ -119,3 +119,10 @@
 .salt-density-high .saltSwitch-thumb {
   border: 0;
 }
+
+/* Styles applied when switch is inside a form field with label left or right, ensuring alignment with base / input height */
+.saltFormField-labelRight .saltSwitch,
+.saltFormField-labelLeft .saltSwitch {
+  padding-top: var(--salt-spacing-50);
+  padding-bottom: var(--salt-spacing-50);
+}

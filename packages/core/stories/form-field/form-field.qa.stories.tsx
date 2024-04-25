@@ -1,4 +1,9 @@
-import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Input,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -18,7 +23,15 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       <FormFieldLabel>Form Field label</FormFieldLabel>
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>
-    <FormField labelPlacement="left" {...props}>
+    <FormField labelPlacement="left" validationStatus="error" {...props}>
+      <FormFieldLabel>Form Field label</FormFieldLabel>
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
+    </FormField>
+    <FormField validationStatus="success" {...props}>
+      <FormFieldLabel>Form Field label</FormFieldLabel>
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="left" validationStatus="warning" {...props}>
       <FormFieldLabel>Form Field label</FormFieldLabel>
       <FormFieldHelperText>Helper text</FormFieldHelperText>
     </FormField>

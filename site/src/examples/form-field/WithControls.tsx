@@ -8,7 +8,7 @@ import {
   FlowLayout,
   FormFieldLabel,
   FormFieldHelperText,
-  Input,
+  Switch,
 } from "@salt-ds/core";
 
 const radioData = [
@@ -38,7 +38,7 @@ const checkboxesData = [
   },
 ];
 
-export const WithCheckboxAndRadioButton = (): ReactElement => {
+export const WithControls = (): ReactElement => {
   const [isRadioError, setIsRadioError] = useState(true);
 
   const [radioGroupValue, setRadioGroupValue] = useState("");
@@ -120,6 +120,10 @@ export const WithCheckboxAndRadioButton = (): ReactElement => {
         <FormFieldHelperText>{`${
           isCheckboxError ? "Must select at least one option. " : ""
         }`}</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Draft</FormFieldLabel>
+        <Switch />
       </FormField>
     </FlowLayout>
   );
