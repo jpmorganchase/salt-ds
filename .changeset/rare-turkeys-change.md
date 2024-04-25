@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix padding when Switch used with left/right aligned FormFieldLabel
+Fixed Switch's alignment when it's used with a left/right aligned FormFieldLabel.
