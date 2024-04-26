@@ -22,6 +22,7 @@ import {
   parseAbsoluteToLocal,
 } from "@internationalized/date";
 import { useDatePickerContext } from "../date-picker/DatePickerContext";
+import { getCurrentLocale } from "../calendar/internal/utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 const isInvalidDate = (value: string) =>
@@ -42,7 +43,7 @@ const defaultDateFormatter = (input: string): string => {
   const date = createDate(input);
   return !input || !date
     ? input
-    : new DateFormatter("EN-GB", {
+    : new DateFormatter(getCurrentLocale(), {
         day: "2-digit",
         month: "short",
         year: "numeric",
@@ -123,6 +124,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       setStartDate,
       setEndDate,
       selectionVariant,
+      openState,
       setOpen,
     } = useDatePickerContext();
 
@@ -225,6 +227,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const handleStartDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
         updateStartDate(startDateStringValue);
+        setOpen(false);
+      }
+      if (event.key === "Tab" && event.shiftKey && openState) {
         setOpen(false);
       }
     };
