@@ -19,6 +19,8 @@ import { makePrefixer, useFormFieldProps } from "@salt-ds/core";
 import {
   CalendarDate,
   DateFormatter,
+  DateValue,
+  getLocalTimeZone,
   parseAbsoluteToLocal,
 } from "@internationalized/date";
 import { useDatePickerContext } from "../date-picker/DatePickerContext";
@@ -36,18 +38,24 @@ const createDate = (date: string): Date | null => {
   }
 };
 
+function getCalendarDate(inputDate: string) {
+  const isoDate = parseAbsoluteToLocal(
+    createDate(inputDate)?.toISOString() ?? ""
+  );
+  return new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
+}
+
 const getDateValidationStatus = (value: string | undefined) =>
   value && isInvalidDate(value) ? "error" : undefined;
 
-const defaultDateFormatter = (input: string): string => {
-  const date = createDate(input);
-  return !input || !date
-    ? input
-    : new DateFormatter(getCurrentLocale(), {
+const defaultDateFormatter = (date: DateValue | undefined): string => {
+  return date
+    ? new DateFormatter(getCurrentLocale(), {
         day: "2-digit",
         month: "short",
         year: "numeric",
-      }).format(date);
+      }).format(date.toDate(getLocalTimeZone()))
+    : "";
 };
 
 export interface DateInputProps
@@ -81,7 +89,7 @@ export interface DateInputProps
   /**
    * Function to format the input value.
    */
-  dateFormatter?: (input: string) => string;
+  dateFormatter?: (input: DateValue | undefined) => string;
   /**
    * Reference for the startInput;
    */
@@ -111,6 +119,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     },
     ref
   ) {
+    const inputStringFormatter = (input: string): string => {
+      const date = getCalendarDate(input);
+      return !input || !date ? input : dateFormatter(date);
+    };
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-dateInput",
@@ -130,10 +142,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
 
     const [focused, setFocused] = useState(false);
     const [startDateStringValue, setStartDateStringValue] = useState<string>(
-      startDate?.toString() ?? ""
+      dateFormatter(startDate)
     );
     const [endDateStringValue, setEndDateStringValue] = useState<string>(
-      endDate?.toString() ?? ""
+      dateFormatter(endDate)
     );
 
     const {
@@ -167,31 +179,19 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
 
     // Effects. Update date strings when dates change
     useEffect(() => {
-      setStartDateStringValue(
-        startDate ? dateFormatter(startDate.toString()) : ""
-      );
+      setStartDateStringValue(dateFormatter(startDate));
     }, [startDate, dateFormatter]);
     useEffect(() => {
-      setEndDateStringValue(endDate ? dateFormatter(endDate.toString()) : "");
+      setEndDateStringValue(dateFormatter(endDate));
     }, [endDate, dateFormatter]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
-
-    function getCalendarDate(inputDate: string) {
-      const isoDate = parseAbsoluteToLocal(
-        createDate(inputDate)?.toISOString() ?? ""
-      );
-      return new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
-    }
-
     const updateStartDate = (dateString: string) => {
       if (!dateString) setStartDate(undefined);
-      const inputDate = dateFormatter(dateString);
-      const startDateValue = startDate
-        ? dateFormatter(startDate.toString())
-        : "";
+      const inputDate = inputStringFormatter(dateString);
+      const startDateValue = dateFormatter(startDate);
       if (!validationStatus && startDateValue !== inputDate) {
         const calendarDate = getCalendarDate(inputDate);
         setStartDate(calendarDate);
@@ -200,8 +200,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
 
     const updateEndDate = (dateString: string) => {
       if (!dateString) setEndDate(undefined);
-      const inputDate = dateFormatter(dateString);
-      const endDateValue = endDate ? dateFormatter(endDate.toString()) : "";
+      const inputDate = inputStringFormatter(dateString);
+      const endDateValue = dateFormatter(endDate);
       if (!validationStatus && endDateValue !== inputDate) {
         const calendarDate = getCalendarDate(inputDate);
         setEndDate(calendarDate);
