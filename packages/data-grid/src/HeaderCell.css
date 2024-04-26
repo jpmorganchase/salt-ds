@@ -27,11 +27,11 @@
 }
 
 .saltGridHeaderCell-alignRightWithSortOrder {
-  margin-left: calc(var(--salt-size-unit) * 2);
+  margin-left: var(--salt-spacing-100);
 }
 
 .saltGridHeaderCell-alignLeftWithSortOrder {
-  margin-right: calc(var(--salt-size-unit) * 2);
+  margin-right: var(--salt-spacing-200);
 }
 
 .saltGridHeaderCell-autosizeContainer {
@@ -103,7 +103,7 @@
 
 .saltGridHeaderCell-sortingIcon {
   display: flex;
-  margin: 0 var(--salt-size-unit);
+  margin: 0 var(--salt-spacing-100);
 }
 
 .saltGridHeaderCell-sortingIconStart {

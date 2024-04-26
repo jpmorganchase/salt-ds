@@ -6,9 +6,9 @@
 .card-demo-inner-content {
   display: grid;
   grid-template-columns: repeat(2, auto);
-  gap: calc(var(--salt-size-unit) * 2);
+  gap: var(--salt-spacing-200);
   align-items: center;
-  padding: var(--salt-size-unit) var(--salt-size-unit) 0 var(--salt-size-unit);
+  padding: var(--salt-spacing-100) var(--salt-spacing-100) 0 var(--salt-spacing-100);
 }
 
 .salt-density-high {

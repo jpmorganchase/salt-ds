@@ -8,6 +8,7 @@ import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 
 import { Data, Relationship } from "./DetailComponent";
 import styles from "./SecondarySidebar.module.css";
+import { RelatedPatterns } from "../DetailPattern/RelatedPatterns";
 
 type SecondarySidebarProps = {
   additionalData?: Data;
@@ -65,6 +66,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
         <LinkList heading="Similar to" links={similarToLinks} />
         <LinkList heading="Contains" links={containsList} />
       </div>
+      <RelatedPatterns />
       <div className={styles.wrapper}>
         <LinkList
           heading="Resources"

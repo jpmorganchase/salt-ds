@@ -15,7 +15,11 @@ export const BuildReportIcon = forwardRef<SVGSVGElement, BuildReportIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 3v9h12V3H9V1H3v2H0zm1 1h10v2H8V5H4v1H1V4zm0 7V7h3v1h4V7h3v4H1zm7-9v1H4V2h4z" />
+        <path
+          fillRule="evenodd"
+          d="M0 3h3V1h6v2h3v9H0V3Zm1 1v2h3V5h4v1h3V4H1Zm0 7V7h3v1h4V7h3v4H1Zm7-9H4v1h4V2Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }
