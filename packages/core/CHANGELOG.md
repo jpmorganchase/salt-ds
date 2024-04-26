@@ -1,5 +1,33 @@
 # @salt-ds/core
 
+## 1.26.0
+
+### Minor Changes
+
+- d885e02d: Added `useBreakpoint` which returns on object containing matchedBreakpoints and `breakpoint`.
+
+  - `matchedBreakpoints` - is an array of all matched breakpoints e.g. when the viewport matches the M breakpoint this array contains M, SM and XS.
+  - `breakpoint` - is the current matched breakpoint.
+
+- d885e02d: Added support for passing a string gap values to FlexLayout and GridLayout.
+
+  ```tsx
+  <FlexLayout gap="spacing-100" />
+  <GridLayout gap="spacing-100" rowGap="spacing-100" columnGap="spacing-100" />
+  ```
+
+  Added support for passing a string column and row template to GridLayout.
+
+  ```tsx
+  <GridLayout columns="1fr 1fr 2fr" rows="1fr 2fr" />
+  ```
+
+### Patch Changes
+
+- 51e164e3: Fixed Combo box and Dropdown options not growing in height with their content.
+- f2f88a0d: Fixed Switch's alignment when it's used with a left/right aligned FormFieldLabel.
+- 8ebd9138: Fixed deprecated `--salt-size-accent` references to `--salt-size-bar`. Fixed deprecated `--salt-size-unit` references to `--salt-spacing-100`.
+
 ## 1.25.0
 
 ### Minor Changes
