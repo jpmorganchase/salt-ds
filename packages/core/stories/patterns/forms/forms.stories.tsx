@@ -63,7 +63,7 @@ export const StandardLayout = () => {
       <GridItem colSpan={2}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
-          <Dropdown defaultSelected={["Value text"]} style={{ width: "100%" }}>
+          <Dropdown defaultSelected={["Value text"]}>
             <Option value="Value text">Value text</Option>
           </Dropdown>
           <FormFieldHelperText>Helper text</FormFieldHelperText>
@@ -72,7 +72,7 @@ export const StandardLayout = () => {
       <GridItem colSpan={3}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
-          <Dropdown defaultSelected={["Value text"]} style={{ width: "100%" }}>
+          <Dropdown defaultSelected={["Value text"]}>
             <Option value="Value text">Value text</Option>
           </Dropdown>
           <FormFieldHelperText>Helper text</FormFieldHelperText>
@@ -195,11 +195,7 @@ export const SecondaryField = () => {
       <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
-          <Dropdown
-            variant="secondary"
-            defaultSelected={["Value text"]}
-            style={{ width: "100%" }}
-          >
+          <Dropdown variant="secondary" defaultSelected={["Value text"]}>
             <Option value="Value text">Value text</Option>
           </Dropdown>
           <FormFieldHelperText>Helper text</FormFieldHelperText>
@@ -258,7 +254,7 @@ export const SecondaryBackground = () => {
       <GridItem colSpan={4}>
         <FormField>
           <FormFieldLabel>Field label</FormFieldLabel>
-          <Dropdown defaultSelected={["Value text"]} style={{ width: "100%" }}>
+          <Dropdown defaultSelected={["Value text"]}>
             <Option value="Value text">Value text</Option>
           </Dropdown>
           <FormFieldHelperText>Helper text</FormFieldHelperText>
@@ -291,41 +287,25 @@ export const Compact = () => {
     <StackLayout gap={1} style={{ width: "calc(var(--salt-size-base) * 12)" }}>
       <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown
-          variant="secondary"
-          defaultSelected={["Value text"]}
-          style={{ width: "100%" }}
-        >
+        <Dropdown variant="secondary" defaultSelected={["Value text"]}>
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
       <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown
-          variant="secondary"
-          defaultSelected={["Value text"]}
-          style={{ width: "100%" }}
-        >
+        <Dropdown variant="secondary" defaultSelected={["Value text"]}>
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
       <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown
-          variant="secondary"
-          defaultSelected={["Value text"]}
-          style={{ width: "100%" }}
-        >
+        <Dropdown variant="secondary" defaultSelected={["Value text"]}>
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
       <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
-        <Dropdown
-          variant="secondary"
-          defaultSelected={["Value text"]}
-          style={{ width: "100%" }}
-        >
+        <Dropdown variant="secondary" defaultSelected={["Value text"]}>
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
