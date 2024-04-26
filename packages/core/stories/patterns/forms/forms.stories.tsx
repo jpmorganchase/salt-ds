@@ -115,7 +115,7 @@ export const Sections = () => {
       <GridItem colSpan={2} />
       <GridItem colSpan={2}>
         <FormField>
-          <FormFieldLabel>Expected total annual valurs</FormFieldLabel>
+          <FormFieldLabel>Expected total annual values</FormFieldLabel>
           <StackLayout direction="row" align="center">
             <Input placeholder="e.g., 100000" />
             <Text style={{ whiteSpace: "nowrap" }}>US Dollar</Text>
@@ -123,9 +123,14 @@ export const Sections = () => {
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <hr></hr>
+        <div
+          style={{
+            borderBottom:
+              "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor)",
+          }}
+        />
       </GridItem>
-      <GridItem colSpan={1}>
+      <GridItem colSpan={2}>
         <FormField>
           <FormFieldLabel>Client directed request?</FormFieldLabel>
           <RadioButtonGroup direction="horizontal">
@@ -141,7 +146,7 @@ export const Sections = () => {
           <Input placeholder="e.g., 100000" />
         </FormField>
       </GridItem>
-      <GridItem colSpan={3}>
+      <GridItem colSpan={3} style={{ borderBottom: "thick red" }}>
         <FormField>
           <FormFieldLabel>Service description</FormFieldLabel>
           <Dropdown>
@@ -153,7 +158,12 @@ export const Sections = () => {
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <hr></hr>
+        <div
+          style={{
+            borderBottom:
+              "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor)",
+          }}
+        />
       </GridItem>
     </GridLayout>
   );
@@ -279,7 +289,7 @@ export const SecondaryBackground = () => {
 export const Compact = () => {
   return (
     <StackLayout gap={1} style={{ width: "calc(var(--salt-size-base) * 12)" }}>
-      <FormField labelPlacement="left">
+      <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
         <Dropdown
           variant="secondary"
@@ -289,7 +299,7 @@ export const Compact = () => {
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
-      <FormField labelPlacement="left">
+      <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
         <Dropdown
           variant="secondary"
@@ -299,7 +309,7 @@ export const Compact = () => {
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
-      <FormField labelPlacement="left">
+      <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
         <Dropdown
           variant="secondary"
@@ -309,7 +319,7 @@ export const Compact = () => {
           <Option value="Value text">Value text</Option>
         </Dropdown>
       </FormField>
-      <FormField labelPlacement="left">
+      <FormField labelPlacement="right">
         <FormFieldLabel>Label</FormFieldLabel>
         <Dropdown
           variant="secondary"
