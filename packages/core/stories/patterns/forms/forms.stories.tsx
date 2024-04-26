@@ -146,7 +146,7 @@ export const Sections = () => {
           <Input placeholder="e.g., 100000" />
         </FormField>
       </GridItem>
-      <GridItem colSpan={3} style={{ borderBottom: "thick red" }}>
+      <GridItem colSpan={3}>
         <FormField>
           <FormFieldLabel>Service description</FormFieldLabel>
           <Dropdown>
