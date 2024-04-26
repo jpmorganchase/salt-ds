@@ -32,19 +32,19 @@
   grid-column-start: 2;
 }
 
-.saltSliderTrack-container {
-  height: var(--salt-size-selectable);
+.saltSliderTrack {
   display: flex;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
   align-items: center;
 }
 
-.saltSliderTrack {
-  display: grid;
-  grid-row: 1;
-  cursor: pointer;
+.saltSliderTrack-rail {
   height: var(--salt-size-bar);
   background: var(--salt-track-borderColor);
   width: 100%;
+  position: absolute;
 }
 
 .saltSliderTrack:active {
@@ -79,9 +79,8 @@
 .saltSliderSelection {
   height: var(--salt-size-bar);
   background: var(--salt-accent-borderColor);
-  grid-row: 1;
-  grid-column-start: 1;
-  grid-column-end: 2;
+  align-items: start;
+  position: absolute;
 }
 
 .saltSliderMarks {

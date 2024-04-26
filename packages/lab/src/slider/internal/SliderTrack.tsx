@@ -3,6 +3,7 @@ import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
 import { clsx } from "clsx";
 import { useMouseTrackDown } from "./useMouseTrackDown";
 import { getPercentage } from "./utils";
+import { SliderSelection } from "./SliderSelection";
 
 export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {
   min: number;
@@ -32,6 +33,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
     const trackRef = useRef<HTMLDivElement>(null);
     const trackRefs = useForkRef(trackRef, ref);
 
+    // Can this go in Selection?
     const { trackProps } = useMouseTrackDown(
       trackRef,
       min,
@@ -41,24 +43,12 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       onChange
     );
 
-    // const trackGridTeplateColumns = useMemo(
-    //   () => getTrackGridTemplateColumns(min, max, value),
-    //   [min, max, value]
-    // );
-
     const percentage = getPercentage(min, max, value);
-    console.log(percentage);
 
     return (
-      <div className={clsx(withBaseName("container"), className)}>
-        <div
-          className={withBaseName()}
-          ref={trackRefs}
-          {...trackProps}
-          {...rest}
-        >
-          {children}
-        </div>
+      <div className={withBaseName()} ref={trackRefs} {...trackProps} {...rest}>
+        <div className={withBaseName("rail")} />
+        <SliderSelection style={{ width: `${percentage}` }} />
       </div>
     );
   }

@@ -95,7 +95,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         setValue={setValue}
         onChange={onChange}
       >
-        <SliderSelection />
+        {/* <SliderSelection /> */}
         {/* <SliderThumb
           value={value}
           min={min}
