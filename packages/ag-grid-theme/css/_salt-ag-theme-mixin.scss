@@ -417,6 +417,7 @@
   }
 
   .ag-ltr {
+    .ag-cell-range-single-cell,
     .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
       outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle)
         var(--salt-focused-outlineColor);
