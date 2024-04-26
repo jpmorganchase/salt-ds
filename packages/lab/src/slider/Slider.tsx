@@ -45,6 +45,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     className,
     tooltipPlacement = "top",
     ["aria-label"]: ariaLabel,
+    hideLabels = false,
     labels = "inline",
     ...rest
   },
@@ -57,8 +58,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     window: targetWindow,
   });
 
-  const trackRef = useRef<HTMLDivElement>(null);
-
   const [value, setValue] = useControlled<number>({
     controlled: valueProp,
     default: defaultValue,
@@ -66,26 +65,16 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     state: "Value",
   });
 
-  const onMouseDown = useSliderMouseDown(
-    trackRef,
-    value,
-    min,
-    max,
-    step,
-    setValue,
-    onChange
-  );
+  // const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
 
-  const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
-
-  const trackGridTeplateColumns = useMemo(
-    () => getTrackGridTemplateColumns(min, max, value),
-    [min, max, value]
-  );
+  // const trackGridTeplateColumns = useMemo(
+  //   () => getTrackGridTemplateColumns(min, max, value),
+  //   [min, max, value]
+  // );
 
   return (
     <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-      {labels !== "full" && (
+      {!hideLabels && labels !== "full" && (
         <Label
           className={clsx({
             [withBaseName("labelMinInline")]: labels === "inline",
@@ -96,24 +85,26 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         </Label>
       )}
       <SliderTrack
-        style={trackGridTeplateColumns}
         className={clsx({
           [withBaseName("trackInline")]: labels === "inline",
         })}
-        ref={trackRef}
-        onKeyDown={onKeyDown}
-        onMouseDown={onMouseDown}
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        setValue={setValue}
+        onChange={onChange}
       >
         <SliderSelection />
-        <SliderThumb
+        {/* <SliderThumb
           value={value}
           min={min}
           max={max}
           aria-label={ariaLabel}
           tooltipPlacement={tooltipPlacement}
-        />
+        /> */}
       </SliderTrack>
-      {labels !== "full" && (
+      {!hideLabels && labels !== "full" && (
         <Label
           className={clsx({
             [withBaseName("labelMaxInline")]: labels === "inline",
@@ -123,7 +114,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
           {max}
         </Label>
       )}
-      {labels === "full" && <SliderMarks max={max} min={min} step={step} />}
+      {/* {labels === "full" && <SliderMarks max={max} min={min} step={step} />} */}
     </div>
   );
 });

@@ -49,11 +49,16 @@ WithMarks.args = {
   "aria-label": "withMarks",
 };
 
+export const HideLabels = Template.bind({});
+HideLabels.args = {
+  hideLabels: true,
+};
+
 export const WithInput = () => {
   const [value, setValue] = useState<number>(5);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.currentTarget.value as unknown
+    const inputValue = event.currentTarget.value as unknown;
     setValue(inputValue as number);
   };
 

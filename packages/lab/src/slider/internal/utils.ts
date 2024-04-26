@@ -19,3 +19,8 @@ export const clampValue = (
   }
   return newValue;
 };
+
+export function getPercentage(min: number, max: number, value: number) {
+  const percentage = ((value - min) / (max - min)) * 100;
+  return `${Math.min(Math.max(percentage, 0), 100)}%`;
+}

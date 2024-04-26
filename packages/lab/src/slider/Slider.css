@@ -1,9 +1,13 @@
 .saltSlider {
   display: grid;
+  overflow: hidden;
   gap: var(--salt-spacing-100);
+  grid-template-columns: auto 1fr auto;
+  /* padding: 5px */
 }
 
 .saltSlider-labelMinBottom {
+  position: relative;
   grid-row: 2;
   grid-column-start: 1;
 }
@@ -17,22 +21,21 @@
 .saltSlider-labelMinInline {
   grid-row: 1;
   grid-column-start: 1;
-  grid-column-end: 2;
-  justify-self: start;
-  background: pink;
 }
 
 .saltSlider-labelMaxInline {
   grid-row: 1;
   grid-column-start: 3;
-  grid-column-end: 4;
-  justify-self: end;
-  background: blue;
 }
 
 .saltSlider-trackInline {
   grid-column-start: 2;
-  grid-column-end: 3;
+}
+
+.saltSliderTrack-container {
+  height: var(--salt-size-selectable);
+  display: flex;
+  align-items: center;
 }
 
 .saltSliderTrack {
@@ -42,12 +45,6 @@
   height: var(--salt-size-bar);
   background: var(--salt-track-borderColor);
   width: 100%;
-}
-
-.saltSliderTrack-container {
-  height: var(--salt-size-selectable);
-  display: flex;
-  align-items: center;
 }
 
 .saltSliderTrack:active {
@@ -73,9 +70,10 @@
 }
 
 .saltSliderThumb:focus-visible {
-  outline-style: var(--slider-handle-outlineStyle);
-  outline-width: var(--slider-handle-outlineWidth);
-  outline-offset: var(--slider-handle-outlineOffset);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-color: var(--salt-focused-outlineColor);
 }
 
 .saltSliderSelection {
