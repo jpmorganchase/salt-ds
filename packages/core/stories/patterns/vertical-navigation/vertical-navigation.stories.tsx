@@ -52,8 +52,6 @@ const Header = () => {
   );
 };
 
-// TODO add border gap between items
-
 export const SingleLevel = () => {
   const navigationData = [
     { name: "Overview", href: "#", icon: <PinIcon /> },
