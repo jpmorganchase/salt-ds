@@ -31,6 +31,7 @@ const isInvalidDate = (value: string) =>
   // @ts-ignore evaluating validity of date
   value && isNaN(new Date(value));
 const createDate = (date: string): Date | null => {
+  if (!date) return null;
   try {
     return isInvalidDate(date) ? null : new Date(date);
   } catch (err) {
@@ -39,9 +40,9 @@ const createDate = (date: string): Date | null => {
 };
 
 function getCalendarDate(inputDate: string) {
-  const isoDate = parseAbsoluteToLocal(
-    createDate(inputDate)?.toISOString() ?? ""
-  );
+  const date = createDate(inputDate);
+  if (!date) return undefined;
+  const isoDate = parseAbsoluteToLocal(date?.toISOString());
   return new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
 }
 
@@ -162,8 +163,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const isDisabled = disabled || formFieldDisabled;
 
+    const [validationStatusState, setValidationStatus] = useState<
+      "error" | undefined
+    >(undefined);
     const validationStatus =
-      getDateValidationStatus(startDateStringValue) ??
+      validationStatusState ??
       formFieldValidationStatus ??
       validationStatusProp;
 
@@ -189,6 +193,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
     const updateStartDate = (dateString: string) => {
+      setValidationStatus(getDateValidationStatus(dateString));
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const startDateValue = dateFormatter(startDate);
@@ -199,6 +204,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const updateEndDate = (dateString: string) => {
+      setValidationStatus(getDateValidationStatus(dateString));
       if (!dateString) setEndDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const endDateValue = dateFormatter(endDate);

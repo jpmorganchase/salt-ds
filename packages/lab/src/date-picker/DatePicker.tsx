@@ -40,7 +40,7 @@ export interface DatePickerProps
   /**
    * Function to format the input value.
    */
-  dateFormatter?: (input: string) => string;
+  dateFormatter?: (input: DateValue | undefined) => string;
   open?: boolean;
 }
 
