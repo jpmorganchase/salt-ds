@@ -87,8 +87,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       DateValue | undefined
     >(endDate);
 
-    const onOpenChange = (newState, b, c) => {
-      console.log(newState, c);
+    const onOpenChange = (newState: boolean) => {
       setOpen(newState);
       startInputRef?.current?.focus();
     };

@@ -32,6 +32,10 @@ export interface UseTooltipProps
    */
   disableHoverListener?: boolean;
   /**
+   * When true the tooltip will be disabled.
+   */
+  disabled?: boolean;
+  /**
    * The number of milliseconds to wait before showing the tooltip.
    * This prop won't impact the enter touch delay (`enterTouchDelay`).
    */
@@ -51,6 +55,7 @@ export function useTooltip(props?: UseTooltipProps) {
     open: openProp,
     onOpenChange,
     placement: placementProp,
+    disabled,
     disableHoverListener,
     disableFocusListener,
   } = props ?? {};
