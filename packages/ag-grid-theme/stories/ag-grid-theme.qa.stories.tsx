@@ -172,6 +172,49 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
   }
 };
 
+export const ColumnMenuNumberFilter: StoryObj<typeof AgGridReact> = () => {
+  return <ColumnGroup />;
+};
+ColumnMenuNumberFilter.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const nameHeaderCells = await canvas.findAllByText("Population");
+
+  for (const cell of nameHeaderCells) {
+    const gridRoot: HTMLElement = cell.closest(".ag-root-wrapper")!;
+
+    await userEvent.click(
+      cell
+        .closest(".ag-header-cell-comp-wrapper")!
+        .querySelector(".ag-icon.ag-icon-menu")!
+    );
+
+    const dialog = within(gridRoot).getByRole("dialog", {
+      name: "Column Menu",
+    });
+
+    await userEvent.click(within(dialog).getByRole("tab", { name: /filter/i }));
+
+    await userEvent.click(
+      await within(dialog).findByRole("combobox", {
+        name: "Filtering operator",
+      })
+    );
+
+    const dropDown = within(gridRoot).getByRole("listbox", {
+      name: "Select Field",
+    });
+    await userEvent.click(
+      within(dropDown).getByRole("option", { name: "Not blank" })
+    );
+
+    // Snapshot radio buttons, which comes from icon in v31
+    await expect(within(dialog).getByText("AND")).toBeInTheDocument();
+    await expect(within(dialog).getByText("OR")).toBeInTheDocument();
+  }
+};
+
 export const ToolPanelColumns: StoryObj<typeof AgGridReact> = () => {
   return <ToolPanel />;
 };
