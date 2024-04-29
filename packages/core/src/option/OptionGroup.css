@@ -3,6 +3,8 @@
   color: var(--salt-text-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
+  font-family: var(--salt-text-fontFamily);
+  line-height: var(--salt-text-label-lineHeight);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
@@ -10,5 +12,5 @@
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: calc(var(--salt-zIndex-default) + 1);
 }

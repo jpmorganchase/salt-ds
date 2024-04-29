@@ -3,6 +3,8 @@
   background: var(--salt-selectable-background);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  line-height: var(--salt-text-label-lineHeight);
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
@@ -29,31 +31,9 @@
 }
 
 .saltOption[aria-selected="true"] {
+  z-index: var(--salt-zIndex-default);
   background: var(--salt-selectable-background-selected);
-}
-
-.saltOption[aria-selected="true"]::before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: -1px;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-}
-
-.saltOption[aria-selected="true"]::before {
-  border-top: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
-  border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
-}
-
-.saltOption[aria-selected="true"]:first-of-type::before {
-  border-top: unset;
-  top: 0;
-}
-.saltOption[aria-selected="true"]:last-of-type::before {
-  border-bottom: unset;
-  bottom: 0;
+  box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
 }
 
 .saltOption[aria-disabled="true"] {
