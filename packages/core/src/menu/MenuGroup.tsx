@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useId } from "../utils";
 import menuGroupCss from "./MenuGroup.css";
 
 export interface MenuGroupProps extends ComponentPropsWithoutRef<"div"> {

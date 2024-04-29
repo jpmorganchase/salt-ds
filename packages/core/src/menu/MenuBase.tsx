@@ -1,12 +1,6 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { MenuContext } from "./MenuContext";
 import {
-  useControlled,
-  useFloatingUI,
-  UseFloatingUIProps,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
-import {
   flip,
   offset,
   shift,
@@ -25,6 +19,12 @@ import {
   size,
   ReferenceType,
 } from "@floating-ui/react";
+import {
+  useControlled,
+  useFloatingUI,
+  UseFloatingUIProps,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 
 export interface MenuBaseProps {
   children?: ReactNode;

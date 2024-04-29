@@ -1,6 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Card } from "@salt-ds/core";
-import { Menu, MenuItem, MenuPanel } from "@salt-ds/lab";
+import { Card, Menu, MenuItem, MenuPanel } from "@salt-ds/core";
 import { VirtualElement as FloatingUIVirtualElement } from "@floating-ui/react";
 
 export const VirtualElement = (): ReactElement => {
