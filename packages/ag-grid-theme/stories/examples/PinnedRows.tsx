@@ -1,9 +1,8 @@
-import { StackLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const sumReducer = (acc: number, n: number) => acc + n;
 const minReducer = (acc: number, n: number) => (n < acc ? n : acc);
@@ -49,7 +48,7 @@ const PinnedRowsExample = function PinnedRowsExample({
   showHeader = true,
   ...rest
 }: PinnedRowsExampleProps) {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -81,19 +80,16 @@ const PinnedRowsExample = function PinnedRowsExample({
   const pinnedBottomRowData = showFooter ? footerRow() : undefined;
   const pinnedTopRowData = showHeader ? getHeaderRow() : undefined;
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...rest}
-          columnDefs={columnDefs}
-          rowData={rowData}
-          pinnedBottomRowData={pinnedBottomRowData}
-          pinnedTopRowData={pinnedTopRowData}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...rest}
+        columnDefs={columnDefs}
+        rowData={rowData}
+        pinnedBottomRowData={pinnedBottomRowData}
+        pinnedTopRowData={pinnedTopRowData}
+      />
+    </div>
   );
 };
 

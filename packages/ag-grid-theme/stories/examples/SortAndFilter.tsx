@@ -1,4 +1,3 @@
-import { StackLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useEffect } from "react";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
@@ -29,7 +28,7 @@ const colDef = [
 ];
 
 const SortAndFilter = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -53,17 +52,14 @@ const SortAndFilter = (props: AgGridReactProps) => {
   }, [api, isGridReady]);
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          columnDefs={colDef}
-          rowData={rowData}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        columnDefs={colDef}
+        rowData={rowData}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 
