@@ -23,7 +23,8 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-width: var(--salt-size-border);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  --ag-icon-size: var(--salt-icon-size-base);
+  /* Replicating min size 12px from Icon.css */
+  --ag-icon-size: max(var(--salt-icon-size-base), 12px);
   --ag-input-focus-border-color: var(--salt-editable-borderColor-hover);
   --ag-input-focus-box-shadow: none;
   --ag-invalid-color: var(--salt-status-error-foreground);
@@ -33,7 +34,7 @@ div[class*="ag-theme-salt"] {
   --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
   --ag-range-selection-background-color: var(--salt-overlayable-rangeSelection);
   --ag-range-selection-border-style: none;
-  --ag-row-group-indent-size: calc(var(--ag-grid-size) * 4 + var(--salt-spacing-100));
+  --ag-row-group-indent-size: calc(var(--ag-icon-size) + var(--ag-cell-widget-spacing));
   --ag-row-hover-color: var(--salt-selectable-background-hover);
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
   --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
