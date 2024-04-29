@@ -1,30 +1,57 @@
-import {
-  MouseEvent as ReactMouseEvent,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundToStep, roundToTwoDp } from "./utils";
-import { mergeProps } from "@salt-ds/core";
+import { RefObject, useState } from "react";
+import { SliderValue, SliderChangeHandler } from "../types";
+import { getValue } from "./utils";
 
+export function useMouseThumbDown(
+  trackRef: RefObject<Element>,
+  min: number,
+  max: number,
+  step: number,
+  value: SliderValue,
+  setValue: SliderChangeHandler,
+  onChange: SliderChangeHandler
+) {
+  const [thumbFocus, setThumbFocus] = useState(false);
+  // const [mouseDown, setMouseDown] = useState(false);
 
-export function useMouseThumbDown(trackRef: RefObject<Element>, min: number, max: number, step: number, value: SliderValue, setValue, onChange) {
-  console.log('mouseThumbDown')
-
-
-  if (Array.isArray(value)){
-    console.log( 'value = range')
+  if (Array.isArray(value)) {
+    console.log("value = range");
   }
+
+  const onMouseMove = (event: MouseEvent) => {
+    getValue(trackRef, min, max, step, setValue, onChange, event);
+    setThumbFocus(true);
+  };
+
+  const onMouseUp = () => {
+    document.removeEventListener("mousemove", onMouseMove);
+    document.removeEventListener("mouseup", onMouseUp);
+    setThumbFocus(false);
+  };
 
   const onDownThumb = () => {
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+  };
 
-  }
-
-
-  
-
- return  {trackProps: {onMouseDown(){onDownThumb(event, 'id')}}, onBlur(){}, onFocus(){}, onMouseDown(){}, onMouseLeave(){}, onMouseOver(){}}
+  return {
+    thumbProps: {
+      onMouseDown() {
+        onDownThumb();
+      },
+      onFocus() {
+        setThumbFocus(true);
+      },
+      onBlur() {
+        setThumbFocus(false);
+      },
+      onMouseLeave() {
+        setThumbFocus(false);
+      },
+      onMouseOver() {
+        setThumbFocus(true);
+      },
+    },
+    thumbFocus,
+  };
 }

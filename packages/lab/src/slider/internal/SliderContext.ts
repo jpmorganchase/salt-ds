@@ -1,36 +1,22 @@
 import { useContext, createContext } from "react";
-
-export type SliderValue = number;
-export type SliderChangeHandler = (value: SliderValue) => void;
-
-
+import { SliderChangeHandler, SliderValue } from "../types";
 export interface SliderContextValue {
-  min: number | undefined,
-  max: number | undefined,
-  step: number | undefined,
-  value: SliderValue | undefined,
-  setValue: () => void,
-  onChange: () => void
-
- 
-  getFloatingProps: (
-    userProps?: React.HTMLProps<HTMLElement> | undefined
-  ) => Record<string, unknown>;
-  getReferenceProps: (
-    userProps?: React.HTMLProps<Element> | undefined
-  ) => Record<string, unknown>;
+  min: number | undefined;
+  max: number | undefined;
+  step: number | undefined;
+  value: SliderValue | undefined;
+  setValue: SliderChangeHandler;
+  onChange: SliderChangeHandler;
 }
 
-export const SliderContext = createContext<SliderContextValue>(
-  {
-    min: undefined,
-    max: undefined,
-    step: undefined,
-    value: 0,
-    setValue: () => null,
-    onChange: () => null
-  }
-);
+export const SliderContext = createContext<SliderContextValue>({
+  min: 0,
+  max: 0,
+  step: 0,
+  value: 0,
+  setValue: () => null,
+  onChange: () => null,
+});
 
 export function useSliderContext() {
   return useContext(SliderContext);

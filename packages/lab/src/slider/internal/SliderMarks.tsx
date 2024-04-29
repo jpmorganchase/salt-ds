@@ -1,6 +1,6 @@
 import { Label, makePrefixer } from "@salt-ds/core";
 import { ComponentPropsWithoutRef } from "react";
-import { getMarkStyles } from "./styles";
+import { getMarkStyles } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderMarks");
 

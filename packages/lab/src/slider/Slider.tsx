@@ -1,24 +1,19 @@
 import { Label, makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
+import { forwardRef, HTMLAttributes } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import {
-  SliderTrack,
-  SliderMarks,
-  SliderContext,
-  SliderThumb,
-} from "./internal";
+import { SliderTrack, SliderMarks, SliderContext } from "./internal";
 
 import sliderCss from "./Slider.css";
+import { SliderChangeHandler } from "./types";
 
 const withBaseName = makePrefixer("saltSlider");
 
 const defaultMin = 0;
 const defaultMax = 10;
 const defaultStep = 1;
-
-//TODO: sort Slider marks and types
+const minRange = 1; // for range
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
@@ -27,7 +22,7 @@ export interface SliderProps
   step?: number;
   value?: number;
   defaultValue?: number;
-  onChange?: (value: number) => void;
+  onChange?: SliderChangeHandler | undefined;
   hideLabels?: boolean;
   tooltipPlacement?: "left" | "right" | "top" | "bottom";
   labels?: "inline" | "bottom" | "full";
@@ -42,9 +37,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = defaultMin,
     onChange,
     className,
-    // tooltipPlacement = "top", Pass into context to avoid prop drilling
     // ["aria-label"]: ariaLabel,
-    hideLabels = false,
     labels = "inline",
     ...rest
   },
@@ -78,7 +71,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       }}
     >
       <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-        {!hideLabels && labels !== "full" && (
+        {labels !== "full" && (
           <Label
             className={clsx({
               [withBaseName("labelMinInline")]: labels === "inline",
@@ -93,7 +86,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
             [withBaseName("trackInline")]: labels === "inline",
           })}
         />
-        {!hideLabels && labels !== "full" && (
+        {labels !== "full" && (
           <Label
             className={clsx({
               [withBaseName("labelMaxInline")]: labels === "inline",
@@ -103,7 +96,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
             {max}
           </Label>
         )}
-        {/* {labels === "full" && <SliderMarks max={max} min={min} step={step} />} */}
+        {labels === "full" && <SliderMarks max={max} min={min} step={step} />}
       </div>
     </SliderContext.Provider>
   );
