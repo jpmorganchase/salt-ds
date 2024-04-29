@@ -4,36 +4,22 @@ import { clsx } from "clsx";
 import { useMouseTrackDown } from "./useMouseTrackDown";
 import { getPercentage } from "./utils";
 import { SliderSelection } from "./SliderSelection";
+import { SliderThumb } from "./SliderThumb";
+import { useSliderContext } from "./SliderContext";
 
-export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {
-  min: number;
-  max: number;
-  step: number;
-  value: number;
-  setValue: () => void;
-  onChange: () => void;
-}
+export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 
 const withBaseName = makePrefixer("saltSliderTrack");
 
 export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
   function SliderTrack(props, ref) {
-    const {
-      min,
-      max,
-      step,
-      value,
-      setValue,
-      onChange,
-      children,
-      className,
-      ...rest
-    } = props;
+    const { children, className, ...rest } = props;
+
+    const { min, max, step, value, setValue, onChange } = useSliderContext();
 
     const trackRef = useRef<HTMLDivElement>(null);
     const trackRefs = useForkRef(trackRef, ref);
 
-    // Can this go in Selection?
     const { trackProps } = useMouseTrackDown(
       trackRef,
       min,
@@ -49,6 +35,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       <div className={withBaseName()} ref={trackRefs} {...trackProps} {...rest}>
         <div className={withBaseName("rail")} />
         <SliderSelection style={{ width: `${percentage}` }} />
+        <SliderThumb trackRef={trackRef} />
       </div>
     );
   }

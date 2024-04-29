@@ -1,62 +1,92 @@
 import { makePrefixer, Tooltip } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, useState, useEffect } from "react";
+import { getPercentage } from "./utils";
+import {
+  ComponentPropsWithoutRef,
+  useState,
+  useEffect,
+  RefObject,
+} from "react";
+import { useMouseThumbDown } from "./useMouseThumbDown";
+import { useSliderContext } from "./SliderContext";
 
 const withBaseName = makePrefixer("saltSliderThumb");
 
 export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
-  min: number;
-  max: number;
-  value: number;
+  trackRef: RefObject<HTMLDivElement>;
   disabled?: boolean;
   index?: number;
   tooltipPlacement?: "left" | "right" | "top" | "bottom";
 }
 
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
-  const { min, max, value, tooltipPlacement, className, ...rest } = props;
+  const { trackRef, tooltipPlacement, className, ...rest } = props;
 
-  useEffect(() => {
-    document.addEventListener("mouseup", handleMouseUp);
-    return () => {
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, []);
+  const { min, max, step, value, setValue, onChange } = useSliderContext();
 
-  const [thumbFocus, setThumbFocus] = useState(false);
-  const [mouseDown, setMouseDown] = useState(false);
+  // Could probably take the below and put in its down hook, similar to useMouseTrack down
+  // Logic looks good, just need to add in step for calcuation
+  // Add input html
+  // create your own version of the tooltip
 
-  const handleMouseUp = () => {
-    setMouseDown(false);
-    setThumbFocus(false);
-  };
+  //TODO: sort the onKey down interaction - add to slider thumb
 
-  const handleMouseLeave = () => {
-    if (!mouseDown) {
-      setThumbFocus(false);
-    }
-  };
+  // const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
 
-  const handleMouseDown = () => {
-    setMouseDown(true);
-    setThumbFocus(true);
-  };
+  const { thumbProps } = useMouseThumbDown(
+    trackRef,
+    min,
+    max,
+    step,
+    value,
+    setValue,
+    onChange
+  );
+
+  // const [thumbFocus, setThumbFocus] = useState(false);
+  // const [mouseDown, setMouseDown] = useState(false);
+
+  // useEffect(() => {
+  //   document.addEventListener("mouseup", handleMouseUp);
+  //   return () => {
+  //     document.removeEventListener("mouseup", handleMouseUp);
+  //   };
+  // }, []);
+
+  // const handleMouseUp = () => {
+  //   setMouseDown(false);
+  //   setThumbFocus(false);
+  // };
+
+  // const handleMouseLeave = () => {
+  //   if (!mouseDown) {
+  //     setThumbFocus(false);
+  //   }
+  // };
+
+  // const handleMouseDown = () => {
+  //   setMouseDown(true);
+  //   setThumbFocus(true);
+  // };
+
+  const percentage = getPercentage(min, max, value);
 
   return (
     <Tooltip
       content={value}
-      open={thumbFocus}
+      // open={thumbFocus}
       status={"info"}
       hideIcon
       placement={tooltipPlacement}
     >
       <div
         className={withBaseName("selectionArea")}
-        onBlur={() => setThumbFocus(false)}
-        onFocus={() => setThumbFocus(true)}
-        onMouseDown={() => handleMouseDown()}
-        onMouseLeave={() => handleMouseLeave()}
-        onMouseOver={() => setThumbFocus(true)}
+        style={{ left: `${percentage}` }}
+        // onBlur={() => setThumbFocus(false)}
+        // onFocus={() => setThumbFocus(true)}
+        // onMouseDown={() => handleMouseDown()}
+        // onMouseLeave={() => handleMouseLeave()}
+        // onMouseOver={() => setThumbFocus(true)}
       >
         <div
           className={clsx(withBaseName(), className)}
@@ -64,6 +94,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={value}
+          aria-orientation="horizontal"
           tabIndex={0}
           {...rest}
         />

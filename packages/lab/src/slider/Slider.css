@@ -51,22 +51,21 @@
   cursor: grabbing;
 }
 
-.saltSliderThumb {
-  width: var(--salt-size-indicator);
-  height: var(--salt-size-selectable);
-  background: var(--salt-accent-borderColor);
-}
-
 .saltSliderThumb-selectionArea {
-  grid-row: 1;
-  grid-column-start: 2;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   width: var(--salt-size-base);
   height: var(--salt-size-base);
-  transform: translate(-50%, -50%);
-  margin-top: calc(0.5 * var(--salt-size-bar));
+  transform: translate(-50%, 0%);
+}
+
+.saltSliderThumb {
+  width: var(--salt-size-indicator);
+  height: var(--salt-size-selectable);
+  background: var(--salt-accent-borderColor);
+  z-index: 1;
 }
 
 .saltSliderThumb:focus-visible {

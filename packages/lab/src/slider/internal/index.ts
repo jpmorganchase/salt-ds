@@ -6,3 +6,4 @@ export * from "./utils";
 // export * from "./styles";
 export * from "./useSliderKeyDown";
 export * from "./useMouseTrackDown";
+export * from "./SliderContext";

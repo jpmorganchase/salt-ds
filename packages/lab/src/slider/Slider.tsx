@@ -4,13 +4,10 @@ import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import {
-  SliderThumb,
   SliderTrack,
-  SliderSelection,
-  getTrackGridTemplateColumns,
-  useSliderKeyDown,
-  useSliderMouseDown,
   SliderMarks,
+  SliderContext,
+  SliderThumb,
 } from "./internal";
 
 import sliderCss from "./Slider.css";
@@ -20,6 +17,8 @@ const withBaseName = makePrefixer("saltSlider");
 const defaultMin = 0;
 const defaultMax = 10;
 const defaultStep = 1;
+
+//TODO: sort Slider marks and types
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
@@ -43,8 +42,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = defaultMin,
     onChange,
     className,
-    tooltipPlacement = "top",
-    ["aria-label"]: ariaLabel,
+    // tooltipPlacement = "top", Pass into context to avoid prop drilling
+    // ["aria-label"]: ariaLabel,
     hideLabels = false,
     labels = "inline",
     ...rest
@@ -65,56 +64,47 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     state: "Value",
   });
 
-  // const onKeyDown = useSliderKeyDown(value, min, max, step, setValue, onChange);
-
-  // const trackGridTeplateColumns = useMemo(
-  //   () => getTrackGridTemplateColumns(min, max, value),
-  //   [min, max, value]
-  // );
+  //TODO: memoize the slider context, maybe the mouse and keydown hooks could also be memoized or in callback functions ?
 
   return (
-    <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-      {!hideLabels && labels !== "full" && (
-        <Label
+    <SliderContext.Provider
+      value={{
+        value,
+        min,
+        max,
+        step,
+        setValue,
+        onChange,
+      }}
+    >
+      <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+        {!hideLabels && labels !== "full" && (
+          <Label
+            className={clsx({
+              [withBaseName("labelMinInline")]: labels === "inline",
+              [withBaseName("labelMinBottom")]: labels === "bottom",
+            })}
+          >
+            {min}
+          </Label>
+        )}
+        <SliderTrack
           className={clsx({
-            [withBaseName("labelMinInline")]: labels === "inline",
-            [withBaseName("labelMinBottom")]: labels === "bottom",
+            [withBaseName("trackInline")]: labels === "inline",
           })}
-        >
-          {min}
-        </Label>
-      )}
-      <SliderTrack
-        className={clsx({
-          [withBaseName("trackInline")]: labels === "inline",
-        })}
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        setValue={setValue}
-        onChange={onChange}
-      >
-        {/* <SliderSelection /> */}
-        {/* <SliderThumb
-          value={value}
-          min={min}
-          max={max}
-          aria-label={ariaLabel}
-          tooltipPlacement={tooltipPlacement}
-        /> */}
-      </SliderTrack>
-      {!hideLabels && labels !== "full" && (
-        <Label
-          className={clsx({
-            [withBaseName("labelMaxInline")]: labels === "inline",
-            [withBaseName("labelMaxBottom")]: labels === "bottom",
-          })}
-        >
-          {max}
-        </Label>
-      )}
-      {/* {labels === "full" && <SliderMarks max={max} min={min} step={step} />} */}
-    </div>
+        />
+        {!hideLabels && labels !== "full" && (
+          <Label
+            className={clsx({
+              [withBaseName("labelMaxInline")]: labels === "inline",
+              [withBaseName("labelMaxBottom")]: labels === "bottom",
+            })}
+          >
+            {max}
+          </Label>
+        )}
+        {/* {labels === "full" && <SliderMarks max={max} min={min} step={step} />} */}
+      </div>
+    </SliderContext.Provider>
   );
 });
