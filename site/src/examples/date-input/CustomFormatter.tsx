@@ -1,15 +1,19 @@
 import { ReactElement } from "react";
 import { DateInput } from "@salt-ds/lab";
+import {
+  DateFormatter,
+  DateValue,
+  getLocalTimeZone,
+} from "@internationalized/date";
+import { getCurrentLocale } from "@salt-ds/lab/src/calendar/internal/utils";
 
 export const CustomFormatter = (): ReactElement => {
-  const formatter = (input: string): string => {
-    const date = new Date(input);
-    // @ts-ignore evaluating validity of date
-    return isNaN(date)
-      ? input
-      : new Intl.DateTimeFormat("en-US", {
+  const formatter = (date: DateValue | undefined): string => {
+    return date
+      ? new DateFormatter(getCurrentLocale(), {
           year: "numeric",
-        }).format(date);
+        }).format(date.toDate(getLocalTimeZone()))
+      : "";
   };
 
   return (

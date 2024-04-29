@@ -93,6 +93,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           selectedDate: { startDate, endDate },
           onSelectedDateChange: setRangeDate,
           maxDate: startDate,
+          hideOutOfRangeDates: true,
         }
       : {
           selectionVariant: "default",
@@ -122,7 +123,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
               defaultVisibleMonth={startDate ?? today(getLocalTimeZone())}
               visibleMonth={startVisibleMonth}
               onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
-              hideOutOfRangeDates
               {...firstCalendarProps}
               {...CalendarProps}
             />
