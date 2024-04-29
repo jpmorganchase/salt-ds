@@ -54,7 +54,6 @@
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
     "@fontsource/pt-mono": "^5.0.12",
-    "@frsource/cypress-plugin-visual-regression-diff": "^3.3.10",
     "@mswjs/data": "^0.14.0",
     "@storybook/addon-a11y": "^8.0.10",
     "@storybook/addon-actions": "^8.0.10",

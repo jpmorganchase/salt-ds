@@ -7,7 +7,6 @@ import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
 import { ReactNode } from "react";
 import { SaltProvider } from "@salt-ds/core";
 import { AnnouncementListener } from "./AnnouncementListener";
-import "@frsource/cypress-plugin-visual-regression-diff";
 
 const SupportedThemeModeValues = ["light", "dark"] as const;
 type SupportedThemeMode = (typeof SupportedThemeModeValues)[number];
@@ -152,20 +151,6 @@ Cypress.Commands.add("paste", { prevSubject: "element" }, (input, value) => {
       );
     });
   }
-});
-
-Cypress.Screenshot.defaults({
-  onBeforeScreenshot($el) {
-    // turn off pointer events for everything in the body element
-    // @ts-ignore
-    document.querySelector("body").style.pointerEvents = "none";
-  },
-
-  onAfterScreenshot($el, props) {
-    // restore default pointer event behavior
-    // @ts-ignore
-    document.querySelector("body").style.pointerEvents = "initial";
-  },
 });
 
 // Workaround for an issue in Cypress, where ResizeObserver fails with the message
