@@ -1,11 +1,10 @@
-import { Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { Button } from "@salt-ds/core";
+import { Button, Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Lab/Menu/Menu QA",
+  title: "Core/Menu/Menu QA",
   component: Menu,
 } as Meta<typeof Menu>;
 

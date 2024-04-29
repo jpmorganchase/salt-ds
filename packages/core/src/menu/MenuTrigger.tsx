@@ -1,8 +1,8 @@
 import { cloneElement, isValidElement, ReactNode } from "react";
-import { mergeProps, useForkRef } from "@salt-ds/core";
 import { useMenuContext } from "./MenuContext";
 import { MenuTriggerContext } from "./MenuTriggerContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
+import { mergeProps, useForkRef } from "../utils";
 
 export interface MenuTriggerProps {
   /**
