@@ -1,11 +1,5 @@
+import { ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
 import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  useEffect,
-  useState,
-} from "react";
-import {
-  Button,
   FlexLayout,
   makePrefixer,
   StackLayout,
@@ -22,7 +16,7 @@ import {
   UseRangeSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
 } from "../calendar";
-import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: () => void;
@@ -124,7 +118,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       >
         <StackLayout>
           <FlexLayout>
-            <Button />
             <Calendar
               defaultVisibleMonth={startDate ?? today(getLocalTimeZone())}
               visibleMonth={startVisibleMonth}
