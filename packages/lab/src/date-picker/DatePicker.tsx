@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
 
 import {
   Button,
@@ -62,8 +62,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     },
     ref
   ) {
-    // const [focusInside, setFocusInside] = useState<boolean>(false);
-
     const [open, setOpen] = useControlled({
       controlled: openProp,
       default: false,
@@ -82,11 +80,23 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       name: "EndDate",
       state: "endDate",
     });
+    const [startVisibleMonth, setStartVisibleMonth] = useState<
+      DateValue | undefined
+    >(startDate);
+    const [endVisibleMonth, setEndVisibleMonth] = useState<
+      DateValue | undefined
+    >(endDate);
+
+    const onOpenChange = (newState, b, c) => {
+      console.log(newState, c);
+      setOpen(newState);
+      startInputRef?.current?.focus();
+    };
 
     const { x, y, strategy, elements, floating, reference, context } =
       useFloatingUI({
         open: open,
-        onOpenChange: setOpen,
+        onOpenChange: onOpenChange,
         placement: "bottom-start",
         middleware: [flip({ fallbackStrategy: "initialPlacement" })],
       });
@@ -132,6 +142,10 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       defaultEndDate,
       startDate,
       setStartDate,
+      startVisibleMonth,
+      setStartVisibleMonth,
+      endVisibleMonth,
+      setEndVisibleMonth,
       defaultStartDate,
       selectionVariant,
       context,

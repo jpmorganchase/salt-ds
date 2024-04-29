@@ -1,5 +1,11 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
 import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Button,
   FlexLayout,
   makePrefixer,
   StackLayout,
@@ -16,7 +22,7 @@ import {
   UseRangeSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
 } from "../calendar";
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: () => void;
@@ -50,8 +56,12 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       openState,
       startDate,
       setStartDate,
+      startVisibleMonth,
+      setStartVisibleMonth,
       endDate,
       setEndDate,
+      endVisibleMonth,
+      setEndVisibleMonth,
       setOpen,
       selectionVariant,
       context,
@@ -79,12 +89,16 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         setOpen(false);
       };
 
+    useEffect(() => {
+      setStartVisibleMonth(startDate);
+    }, [startDate]);
     const isRangePicker = selectionVariant === "range";
     const firstCalendarProps: CalendarProps = isRangePicker
       ? {
           selectionVariant: "range",
           selectedDate: { startDate, endDate },
           onSelectedDateChange: setRangeDate,
+          maxDate: startDate,
         }
       : {
           selectionVariant: "default",
@@ -110,8 +124,12 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       >
         <StackLayout>
           <FlexLayout>
+            <Button />
             <Calendar
               defaultVisibleMonth={startDate ?? today(getLocalTimeZone())}
+              visibleMonth={startVisibleMonth}
+              onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
+              hideOutOfRangeDates
               {...firstCalendarProps}
               {...CalendarProps}
             />
@@ -125,6 +143,10 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
                 }
                 selectedDate={{ startDate, endDate }}
                 onSelectedDateChange={setRangeDate}
+                visibleMonth={endVisibleMonth}
+                onVisibleMonthChange={(_, month) => setEndVisibleMonth(month)}
+                hideOutOfRangeDates
+                minDate={startDate?.add({ months: 1 }) ?? undefined}
                 {...CalendarProps}
               />
             )}

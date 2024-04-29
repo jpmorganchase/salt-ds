@@ -7,10 +7,16 @@ export interface DatePickerContextValue
   openState: boolean;
   setOpen: (newOpen: boolean) => void;
   disabled: boolean;
+  //start date values
   startDate: DateValue | undefined;
   defaultStartDate: DateValue | undefined;
   setStartDate: (newStartDate: DateValue | undefined) => void;
+  startVisibleMonth: DateValue | undefined;
+  setStartVisibleMonth: (newStartDate: DateValue | undefined) => void;
+  // end date values for range picker
   endDate: DateValue | undefined;
+  endVisibleMonth: DateValue | undefined;
+  setEndVisibleMonth: (newStartDate: DateValue | undefined) => void;
   defaultEndDate: DateValue | undefined;
   setEndDate: (newEndDate: DateValue | undefined) => void;
   selectionVariant: "default" | "range";
@@ -26,9 +32,13 @@ export const DatePickerContext = createContext<DatePickerContextValue>(
     startDate: undefined,
     defaultStartDate: undefined,
     setStartDate: () => undefined,
+    startVisibleMonth: undefined,
+    setStartVisibleMonth: () => undefined,
     endDate: undefined,
-    setEndDate: () => undefined,
     defaultEndDate: undefined,
+    setEndDate: () => undefined,
+    endVisibleMonth: undefined,
+    setEndVisibleMonth: () => undefined,
     selectionVariant: "default",
     getPanelPosition: () => ({}),
   }
