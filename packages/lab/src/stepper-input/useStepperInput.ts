@@ -1,4 +1,9 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent, MutableRefObject } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  MutableRefObject,
+} from "react";
 import { ButtonProps, useControlled, useId, InputProps } from "@salt-ds/core";
 import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
 import { useSpinner } from "./internal/useSpinner";
@@ -16,8 +21,8 @@ const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
 
 const callAll =
   (...fns: any[]) =>
-    (...args: any[]) =>
-      fns.forEach((fn) => fn && fn(...args));
+  (...args: any[]) =>
+    fns.forEach((fn) => fn && fn(...args));
 
 const toFixedDecimalPlaces = (inputNumber: number, decimalPlaces: number) =>
   inputNumber.toFixed(decimalPlaces);
