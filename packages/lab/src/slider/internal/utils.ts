@@ -20,7 +20,6 @@ export const getValue = (
     value = clampValue(value, min, max);
     setValue(value);
     onChange?.(value);
-    event.preventDefault(); // Is this needed ?
   }
 };
 
@@ -49,7 +48,7 @@ export function getMarkStyles(min: number, max: number, step: number) {
   for (let i = min; i <= max; i = i + step) {
     const MarkPosition = getPercentage(min, max, i);
     const MarkLabel = roundToTwoDp(i);
-    marks.push({ index: MarkLabel, position: `${MarkPosition}%` });
+    marks.push({ index: MarkLabel, position: MarkPosition });
   }
 
   return marks;

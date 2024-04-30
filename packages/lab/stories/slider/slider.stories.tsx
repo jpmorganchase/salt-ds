@@ -31,7 +31,7 @@ CustomStep.args = {
   min: -1,
   max: 1,
   step: 0.2,
-  labels: "full",
+  labels: "marks",
   "aria-label": "CustomStep",
 };
 
@@ -45,7 +45,7 @@ export const WithMarks = Template.bind({});
 WithMarks.args = {
   min: -5,
   max: 5,
-  labels: "full",
+  labels: "marks",
   "aria-label": "withMarks",
 };
 
@@ -64,26 +64,26 @@ export const WithInput = () => {
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexDirection: "row",
         }}
-      >
-        <Input
-          placeholder="value"
-          style={{ width: "1px", margin: "5px" }}
-          onChange={handleInputChange}
-        />
-        <Slider
-          style={{ width: "300px" }}
-          min={-50}
-          max={50}
-          value={value}
-          onChange={handleChange}
-          aria-label="withInput"
-        />
-      </div>
+      > */}
+      <Input
+        placeholder="value"
+        style={{ width: "1px", margin: "5px" }}
+        onChange={handleInputChange}
+      />
+      <Slider
+        style={{ width: "300px" }}
+        min={-50}
+        max={50}
+        value={value}
+        onChange={handleChange}
+        aria-label="withInput"
+      />
+      {/* </div> */}
     </FormField>
   );
 };

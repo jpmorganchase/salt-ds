@@ -70,27 +70,29 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         onChange,
       }}
     >
-      <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+      <div
+        ref={ref}
+        className={clsx(
+          withBaseName(),
+          { [withBaseName("bottomLabel")]: labels !== "inline" },
+          className
+        )}
+        {...rest}
+      >
         {labels !== "marks" && (
           <Label
             className={clsx({
-              [withBaseName("labelMinInline")]: labels === "inline",
-              [withBaseName("labelMinBottom")]: labels === "bottom",
+              [withBaseName("labelMinBottom")]: labels !== "inline",
             })}
           >
             {min}
           </Label>
         )}
-        <SliderTrack
-          className={clsx({
-            [withBaseName("trackInline")]: labels === "inline",
-          })}
-        />
+        <SliderTrack />
         {labels !== "marks" && (
           <Label
             className={clsx({
-              [withBaseName("labelMaxInline")]: labels === "inline",
-              [withBaseName("labelMaxBottom")]: labels === "bottom",
+              [withBaseName("labelMaxBottom")]: labels !== "inline",
             })}
           >
             {max}

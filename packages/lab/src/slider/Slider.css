@@ -1,42 +1,31 @@
 .saltSlider {
-  /* display: grid; */
+  display: grid;
   gap: var(--salt-spacing-100);
-  /* grid-template-columns: auto 1fr auto; */
-  display: flex;
-  
+  grid-template-columns: auto 1fr auto;
+}
+
+.saltSlider-bottomLabel {
+  grid-template-columns: 1fr
 }
 
 .saltSlider-labelMinBottom {
-  position: relative;
   grid-row: 2;
-  grid-column-start: 1;
+  grid-column: 1;
+  justify-self: start;
+  width: min-content;
 }
 
 .saltSlider-labelMaxBottom {
   grid-row: 2;
-  grid-column-start: 1;
+  grid-column: 1;
   justify-self: end;
-}
-
-.saltSlider-labelMinInline {
-  grid-row: 1;
-  grid-column-start: 1;
-}
-
-.saltSlider-labelMaxInline {
-  grid-row: 1;
-  grid-column-start: 3;
-}
-
-.saltSlider-trackInline {
-  grid-column-start: 2;
+  width: min-content;
 }
 
 .saltSliderTrack {
   display: flex;
   position: relative;
   cursor: pointer;
-  width: 100%;
   align-items: center;
 }
 
@@ -110,9 +99,11 @@
 
 .saltSliderMarks {
   position: relative;
+  width: inherit;
 }
 
 .saltSliderMarks-mark {
   position: absolute;
   transform: translate(-50%);
+  line-height: var(--salt-text-lineHeight);
 }
