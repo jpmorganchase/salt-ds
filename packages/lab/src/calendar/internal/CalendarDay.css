@@ -29,7 +29,7 @@
 .saltCalendarDay-outOfRange {
   color: var(--salt-content-secondary-foreground);
 }
-.saltCalendarDay-outOfRange .saltCalendarDay-today  {
+.saltCalendarDay-outOfRange .saltCalendarDay-today {
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-secondary-foreground);
 }
 
