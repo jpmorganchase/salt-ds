@@ -1,4 +1,3 @@
-
 import { RefObject } from "react";
 import { getValue } from "./utils";
 import { SliderChangeHandler } from "../types";
