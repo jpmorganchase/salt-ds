@@ -10,9 +10,6 @@ const withBaseName = makePrefixer("saltSliderThumb");
 
 export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
   trackRef: RefObject<HTMLDivElement>;
-  disabled?: boolean;
-  index?: number;
-  tooltipPlacement?: "left" | "right" | "top" | "bottom";
 }
 
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
@@ -44,7 +41,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
           [withBaseName("showTooltip")]: !thumbFocus,
         })}
       >
-        <Label> {value} </Label>
+        <Label>{value}</Label>
       </div>
       <div className={withBaseName("selectionArea")} {...thumbProps}>
         <div
