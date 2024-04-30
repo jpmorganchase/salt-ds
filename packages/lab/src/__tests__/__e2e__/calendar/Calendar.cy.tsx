@@ -149,7 +149,7 @@ describe("GIVEN a Calendar", () => {
           name: formatDate(testDate),
         }).should("be.focused");
       });
-      it.only("SHOULD when there is no selected date, move from navigation panel to today if exists", () => {
+      it("SHOULD when there is no selected date, move from navigation panel to today if exists", () => {
         const todayTestDate = today(localTimeZone);
         cy.mount(
           <Default
