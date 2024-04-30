@@ -51,7 +51,7 @@ const getDateValidationStatus = (value: string | undefined) =>
 
 const defaultDateFormatter = (date: DateValue | undefined): string => {
   return date
-    ? new DateFormatter(getCurrentLocale(), {
+    ? new DateFormatter("EN-GB", {
         day: "2-digit",
         month: "short",
         year: "numeric",

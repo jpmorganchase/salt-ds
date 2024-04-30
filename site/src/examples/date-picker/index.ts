@@ -1,2 +1,2 @@
-export * from "./Primary";
+export * from "./Single";
 export * from "./CustomFormatter";

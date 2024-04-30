@@ -110,7 +110,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           context
             ? {
                 context: context,
-                initialFocus: -1,
+                initialFocus: 4,
               }
             : undefined
         }
