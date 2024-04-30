@@ -185,6 +185,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     useEffect(() => {
       setStartDateStringValue(dateFormatter(startDate));
     }, [startDate, dateFormatter]);
+
     useEffect(() => {
       setEndDateStringValue(dateFormatter(endDate));
     }, [endDate, dateFormatter]);
@@ -193,23 +194,21 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
     const updateStartDate = (dateString: string) => {
-      setValidationStatus(getDateValidationStatus(dateString));
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
-      const startDateValue = dateFormatter(startDate);
-      if (!validationStatus && startDateValue !== inputDate) {
-        const calendarDate = getCalendarDate(inputDate);
+      const calendarDate = getCalendarDate(inputDate);
+      setValidationStatus(getDateValidationStatus(dateString));
+      if (calendarDate) {
         setStartDate(calendarDate);
       }
     };
 
     const updateEndDate = (dateString: string) => {
-      setValidationStatus(getDateValidationStatus(dateString));
       if (!dateString) setEndDate(undefined);
       const inputDate = inputStringFormatter(dateString);
-      const endDateValue = dateFormatter(endDate);
-      if (!validationStatus && endDateValue !== inputDate) {
-        const calendarDate = getCalendarDate(inputDate);
+      const calendarDate = getCalendarDate(inputDate);
+      setValidationStatus(getDateValidationStatus(dateString));
+      if (calendarDate) {
         setEndDate(calendarDate);
       }
     };
