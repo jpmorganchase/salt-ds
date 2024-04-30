@@ -2,8 +2,8 @@ import { makePrefixer, Label } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { getPercentage } from "./utils";
 import { ComponentPropsWithoutRef, RefObject } from "react";
-import { useMouseThumbDown } from "./useMouseThumbDown";
-import { useSliderKeyDown } from "./useSliderKeyDown";
+import { useMouseDownThumb } from "./useMouseDownThumb";
+import { useKeyDownThumb } from "./useKeyDownThumb";
 import { useSliderContext } from "./SliderContext";
 
 const withBaseName = makePrefixer("saltSliderThumb");
@@ -20,9 +20,9 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
 
   const { min, max, step, value, setValue, onChange } = useSliderContext();
 
-  const onKeyDown = useSliderKeyDown(min, max, step, value, setValue, onChange);
+  const onKeyDown = useKeyDownThumb(min, max, step, value, setValue, onChange);
 
-  const { thumbProps, thumbFocus } = useMouseThumbDown(
+  const { thumbProps, thumbFocus } = useMouseDownThumb(
     trackRef,
     min,
     max,

@@ -1,7 +1,7 @@
 import { SliderChangeHandler, SliderValue } from "../types";
 import { roundToStep, roundToTwoDp } from "./utils";
 
-export function useSliderKeyDown(
+export function useKeyDownThumb(
   min: number,
   max: number,
   step: number,

@@ -7,7 +7,7 @@ export interface SliderContextValue {
   value: SliderValue;
   setValue: SliderChangeHandler;
   onChange: SliderChangeHandler | undefined;
-  ariaLabel: string | undefined
+  ariaLabel: string | undefined;
 }
 
 export const SliderContext = createContext<SliderContextValue>({
@@ -17,7 +17,7 @@ export const SliderContext = createContext<SliderContextValue>({
   value: 0,
   setValue: () => null,
   onChange: () => null,
-  ariaLabel: 'slider'
+  ariaLabel: "slider",
 });
 
 export function useSliderContext() {

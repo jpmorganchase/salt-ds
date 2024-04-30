@@ -50,6 +50,5 @@ export function getMarkStyles(min: number, max: number, step: number) {
     const MarkLabel = roundToTwoDp(i);
     marks.push({ index: MarkLabel, position: MarkPosition });
   }
-
   return marks;
 }

@@ -18,7 +18,7 @@ export const SliderTrack = () => {
     <div
       className={withBaseName()}
       ref={trackRef}
-      onMouseDown={() =>
+      onMouseDown={(event) =>
         getValue(trackRef, min, max, step, setValue, onChange, event)
       }
     >
