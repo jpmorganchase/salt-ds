@@ -7,22 +7,12 @@ aliases:
 data:
   resources:
     [
-      # The below link is publicly accessible, use the structure below for these links
-      { href: "https://url-goes-here", label: "URL here" },
-      # The below link is marked as for J. P. Morgan employees only, use the structure below for these links
-      { href: "https://url-goes-here", label: "URL here", internal: true},
     ]
-  components: ["Related component 1", "Related component 2"]
-  relatedPatterns: ["Related pattern 1"]
+  components: ["Button", "Dropdown"]
+  relatedPatterns: ["Button bar", "Metric"]
 ---
 
 Introduction goes here. Add a series of sentences here.
-
-  <Diagram
-    src="/img/patterns/pattern-name/pattern-name-hero-shot.png"
-    alt="Introductory pattern image"
-    border
-  />
 
 ## When to use
 
@@ -34,23 +24,13 @@ Include the When to use section here.
 
 Anatomy text goes here.
 
-  <Diagram
-    src="/img/patterns/pattern-name/pattern-name-anatomy.png"
-    alt="Pattern anatomy."
-    contentPosition="top"
-    border
-  />
-
 ### Layout
 
 Layout section goes here. Add multiple sections if needed.
 
-  <Diagram
-    src="/img/patterns/pattern-name/pattern-name-layout-1.png"
-    alt="A pattern layout."
-    contentPosition="top"
-    border
-  />
+<ExampleContainer type="positive" customPillText="Best practices">
+Do this
+</ExampleContainer>
 
 ## Behaviors and variants
 
@@ -74,10 +54,10 @@ Use the image switcher below when appropriate.
 
 <ImageSwitcher
   images={[
-    { src: "/img/patterns/pattern-name/image-1.png", alt: "" },
-    { src: "/img/patterns/pattern-name/image-2.png", alt: "" },
+    { src: "/img/patterns/pattern-name/field-background-1.png", alt: "" },
+    { src: "/img/patterns/pattern-name/field-background-2.png", alt: "" },
   ]}
-  label="Show spacing"
+  label="Show secondary"
 />
 
 Leave the code below as-is to display a feedback section.
