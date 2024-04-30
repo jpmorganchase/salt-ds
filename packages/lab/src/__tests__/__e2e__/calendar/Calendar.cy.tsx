@@ -137,6 +137,18 @@ describe("GIVEN a Calendar", () => {
     });
 
     describe("Keyboard", () => {
+      it.only("SHOULD move from navigation pannel to selected date if exists", () => {
+        cy.mount(
+          <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
+        );
+        cy.findByRole("button", {
+          name: `Next Month, ${formatDate(testDate.add({ months: 1 }))}`,
+        }).focus();
+        cy.realPress("Tab");
+        cy.findByRole("button", {
+          name: formatDate(testDate),
+        }).should("be.focused");
+      });
       it("SHOULD move the focus when the arrow keys are pressed", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
 

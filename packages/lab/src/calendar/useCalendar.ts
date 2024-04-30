@@ -135,7 +135,7 @@ export function useCalendar(props: useCalendarProps) {
   const [calendarFocused, setCalendarFocused] = useState(false);
 
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
-    startOfMonth(visibleMonth)
+    (selectedDate as DateValue) ?? today ?? startOfMonth(visibleMonth)
   );
 
   const isDayVisible = useCallback(
