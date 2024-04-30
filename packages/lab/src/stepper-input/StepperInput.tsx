@@ -1,13 +1,21 @@
 import { clsx } from "clsx";
-import React, { forwardRef, ReactNode, useRef } from "react";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import {
+  ComponentPropsWithoutRef,
+  FocusEventHandler,
+  forwardRef,
+  ReactNode,
+  useRef,
+} from "react";
+import {
+  Button,
+  ButtonProps,
+  makePrefixer,
+  Input,
+  InputProps,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
-import {
-  InputLegacy as Input,
-  InputLegacyProps as InputProps,
-} from "../input-legacy";
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
 import { useStepperInput } from "./useStepperInput";
 
@@ -15,22 +23,68 @@ import stepperInputCss from "./StepperInput.css";
 
 const withBaseName = makePrefixer("saltStepperInput");
 
-export interface StepperInputProps {
+export interface StepperInputProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  /**
+   * Props to be passed to the button components.
+   */
   ButtonProps?: Partial<ButtonProps>;
+  /**
+   * Props to be passed to the input component.
+   */
   InputProps?: Partial<InputProps>;
+  /**
+   * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
+   */
   block?: number;
-  className?: string;
+  /**
+   * The number of decimal places to display.
+   */
   decimalPlaces?: number;
+  /**
+   * Sets the initial default value of the component.
+   */
   defaultValue?: number;
+  /**
+   * Values passed in via the `liveValue` prop are not immediately rendered. Instead, the refresh button is displayed,
+offering the user the option to reset the component's display value to the updated `liveValue` prop.
+   */
   liveValue?: number;
+  /**
+   * The maximum value that can be selected.
+   */
   max?: number;
+  /**
+   * The minimum value that can be selected.
+   */
   min?: number;
-  onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
-  onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
+  /**
+   * Callback when stepper input loses focus.
+   */
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * Callback when stepper input value is changed.
+   */
   onChange?: (changedValue: number | string) => void;
+  /**
+   * Callback when stepper input gains focus.
+   */
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * If `true`, always display the refresh button
+   */
   showRefreshButton?: boolean;
+  /**
+   * The amount to increment or decrement the value by when using the stepper buttons or Up Arrow and Down Arrow keys.
+   */
   step?: number;
+  /**
+   * Determines the text alignment of the display value.
+   */
   textAlign?: "center" | "left" | "right";
+  /**
+   * The value of the stepper input. The component will be controlled if this prop is provided.
+   */
   value?: number | string;
 }
 
@@ -42,6 +96,9 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       textAlign = "left",
       className,
       showRefreshButton = false,
+      onBlur,
+      onFocus,
+      ...rest
     } = props;
 
     const targetWindow = useWindow();
@@ -128,14 +185,14 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
     return (
       <div
         className={clsx(withBaseName(), className)}
-        onBlur={props.onBlur}
-        onFocus={props.onFocus}
+        onBlur={onBlur}
+        onFocus={onFocus}
         ref={ref}
+        {...rest}
       >
         <Input
           className={withBaseName("input")}
           endAdornment={endAdornment}
-          highlightOnFocus
           ref={inputRef}
           textAlign={textAlign}
           {...getInputProps(InputPropsProp)}

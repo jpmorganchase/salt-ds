@@ -1,6 +1,5 @@
-import { KeyboardEvent, MouseEvent, MutableRefObject } from "react";
-import { ButtonProps, useControlled, useId } from "@salt-ds/core";
-import { InputLegacyProps as InputProps } from "../input-legacy";
+import { ChangeEvent, KeyboardEvent, MouseEvent, MutableRefObject } from "react";
+import { ButtonProps, useControlled, useId, InputProps } from "@salt-ds/core";
 import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
@@ -17,8 +16,8 @@ const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
 
 const callAll =
   (...fns: any[]) =>
-  (...args: any[]) =>
-    fns.forEach((fn) => fn && fn(...args));
+    (...args: any[]) =>
+      fns.forEach((fn) => fn && fn(...args));
 
 const toFixedDecimalPlaces = (inputNumber: number, decimalPlaces: number) =>
   inputNumber.toFixed(decimalPlaces);
@@ -37,7 +36,7 @@ const toFloat = (inputValue: number | string) => {
   return parseFloat(inputValue.toString());
 };
 
-const santizedInput = (numberString: string) =>
+const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
 const getButtonIcon = (type: Direction) =>
@@ -196,15 +195,15 @@ export const useStepperInput = (
     setHasAnnounced(false);
   };
 
-  const handleInputChange = (event: KeyboardEvent) => {
-    const changedValue = (event.currentTarget as HTMLInputElement).value;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const changedValue = (event.target as HTMLInputElement).value;
 
     if (!isControlled) {
-      setCurrentValue(santizedInput(changedValue));
+      setCurrentValue(sanitizedInput(changedValue));
     }
 
     if (onChange) {
-      onChange(santizedInput(changedValue));
+      onChange(sanitizedInput(changedValue));
     }
   };
 
