@@ -21,6 +21,41 @@ export const Default: StoryFn = (args) => {
   );
 };
 
+export const DecimalPlaces: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <StepperInput decimalPlaces={2} {...args} />
+      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+    </FormField>
+  );
+};
+
+export const RefreshButton: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <StepperInput
+        showRefreshButton
+        liveValue={5}
+        defaultValue={6}
+        {...args}
+      />
+      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+    </FormField>
+  );
+};
+
+export const MinAndMaxValue: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <StepperInput max={10} min={0} defaultValue={5} {...args} />
+      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+    </FormField>
+  );
+};
+
 export const Alignment: StoryFn = (args) => (
   <StackLayout>
     <FormField>

@@ -130,10 +130,10 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
     );
 
     const endAdornment: ReactNode = (
-      <div className={withBaseName("adornmentContainer")} ref={adornmentRef}>
+      <>
         <Button
           aria-label="Refresh default value"
-          className={clsx(withBaseName("secondaryButton"), {
+          className={clsx({
             // Refresh button is always rendered and has its visibility toggled to
             // avoid component width changing.
             [withBaseName("hideSecondaryButton")]: !(
@@ -145,41 +145,30 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         >
           <RefreshIcon aria-label="refresh" />
         </Button>
-        <div className={withBaseName("buttonContainer")}>
-          <Button
-            className={clsx(
-              withBaseName("stepperButton"),
-              withBaseName("increment"),
-              {
-                active: incrementButtonDown,
-              }
-            )}
-            disabled={isAtMax()}
-            {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
-          >
-            <TriangleUpIcon
-              className={withBaseName("stepperButtonIcon")}
-              aria-label={getButtonIcon(stepperDirection.INCREMENT)}
-            />
-          </Button>
-          <Button
-            className={clsx(
-              withBaseName("stepperButton"),
-              withBaseName("decrement"),
-              {
-                active: decrementButtonDown,
-              }
-            )}
-            disabled={isAtMin()}
-            {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-          >
-            <TriangleDownIcon
-              className={withBaseName("stepperButtonIcon")}
-              aria-label={getButtonIcon(stepperDirection.DECREMENT)}
-            />
-          </Button>
-        </div>
-      </div>
+
+        <Button
+          className={clsx({
+            active: incrementButtonDown,
+          })}
+          disabled={isAtMax()}
+          {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
+        >
+          <TriangleUpIcon
+            aria-label={getButtonIcon(stepperDirection.INCREMENT)}
+          />
+        </Button>
+        <Button
+          className={clsx({
+            active: decrementButtonDown,
+          })}
+          disabled={isAtMin()}
+          {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
+        >
+          <TriangleDownIcon
+            aria-label={getButtonIcon(stepperDirection.DECREMENT)}
+          />
+        </Button>
+      </>
     );
 
     return (
