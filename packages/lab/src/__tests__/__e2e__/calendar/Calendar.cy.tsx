@@ -137,7 +137,7 @@ describe("GIVEN a Calendar", () => {
     });
 
     describe("Keyboard", () => {
-      it.only("SHOULD move from navigation pannel to selected date if exists", () => {
+      it("SHOULD move from navigation panel to selected date if exists", () => {
         cy.mount(
           <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
         );
@@ -147,6 +147,24 @@ describe("GIVEN a Calendar", () => {
         cy.realPress("Tab");
         cy.findByRole("button", {
           name: formatDate(testDate),
+        }).should("be.focused");
+      });
+      it.only("SHOULD when there is no selected date, move from navigation panel to today if exists", () => {
+        const todayTestDate = today(localTimeZone);
+        cy.mount(
+          <Default
+            selectedDate={todayTestDate}
+            defaultVisibleMonth={todayTestDate}
+          />
+        );
+        cy.findByRole("button", {
+          name: `Next Month, ${formatDate(
+            startOfMonth(todayTestDate).add({ months: 1 })
+          )}`,
+        }).focus();
+        cy.realPress("Tab");
+        cy.findByRole("button", {
+          name: formatDate(todayTestDate),
         }).should("be.focused");
       });
       it("SHOULD move the focus when the arrow keys are pressed", () => {
