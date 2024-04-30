@@ -98,7 +98,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       showRefreshButton = false,
       onBlur,
       onFocus,
-      ...rest
     } = props;
 
     const targetWindow = useWindow();
@@ -177,7 +176,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         onBlur={onBlur}
         onFocus={onFocus}
         ref={ref}
-        {...rest}
       >
         <Input
           className={withBaseName("input")}
