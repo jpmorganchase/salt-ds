@@ -43,7 +43,6 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         })}
       >
         <Label>{value}</Label>
-        {/* <div className={withBaseName("arrow")} /> */}
       </div>
       <div className={withBaseName("selectionArea")} {...thumbProps}>
         <div

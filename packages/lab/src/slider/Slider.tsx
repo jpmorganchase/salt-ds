@@ -21,9 +21,8 @@ export interface SliderProps
   step?: number;
   value?: number;
   defaultValue?: number;
-  onChange?: SliderChangeHandler;
-  hideLabels?: boolean;
   labels?: "inline" | "bottom" | "marks";
+  onChange?: SliderChangeHandler;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(

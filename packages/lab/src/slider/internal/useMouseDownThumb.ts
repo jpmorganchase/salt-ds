@@ -1,9 +1,9 @@
-import { RefObject, useState, MouseEvent } from "react";
+import { RefObject, useState } from "react";
 import { SliderValue, SliderChangeHandler } from "../types";
 import { getValue } from "./utils";
 
 export function useMouseDownThumb(
-  trackRef: RefObject<Element>,
+  trackRef: RefObject<HTMLDivElement>,
   min: number,
   max: number,
   step: number,
@@ -23,14 +23,12 @@ export function useMouseDownThumb(
   };
 
   const onMouseUp = () => {
-    //@ts-ignore
     document.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("mouseup", onMouseUp);
     setThumbFocus(false);
   };
 
   const onDownThumb = () => {
-    //@ts-ignore
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
   };

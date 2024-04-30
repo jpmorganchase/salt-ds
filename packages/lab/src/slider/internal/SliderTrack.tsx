@@ -1,9 +1,10 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useRef, ComponentPropsWithoutRef } from "react";
-import { getPercentage, getValue } from "./utils";
+import { getPercentage } from "./utils";
 import { SliderSelection } from "./SliderSelection";
 import { SliderThumb } from "./SliderThumb";
 import { useSliderContext } from "./SliderContext";
+import { useMouseDownTrack } from "./useMouseDownTrack";
 
 export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 
@@ -16,15 +17,17 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
 
   const percentage = getPercentage(min, max, value);
 
+  const { trackProps } = useMouseDownTrack(
+    trackRef,
+    min,
+    max,
+    step,
+    setValue,
+    onChange
+  );
+
   return (
-    <div
-      className={withBaseName()}
-      ref={trackRef}
-      onMouseDown={(event) =>
-        getValue(trackRef, min, max, step, setValue, onChange, event)
-      }
-      {...props}
-    >
+    <div className={withBaseName()} ref={trackRef} {...trackProps} {...props}>
       <div className={withBaseName("rail")} />
       <SliderSelection style={{ width: `${percentage}` }} />
       <SliderThumb trackRef={trackRef} />

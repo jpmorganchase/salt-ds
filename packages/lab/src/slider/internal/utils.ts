@@ -1,5 +1,5 @@
 import { SliderValue, SliderChangeHandler } from "../types";
-import { RefObject, MouseEvent } from "react";
+import { RefObject } from "react";
 
 export const getValue = (
   trackRef: RefObject<Element>,

@@ -65,14 +65,6 @@
   transform: translate(0, -100%);
 }
 
-.saltSliderThumb-arrow {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
-  transform: rotate(45deg);
-}
-
 .saltSliderThumb-showTooltip {
   display: none;
 }
