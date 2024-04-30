@@ -29,7 +29,6 @@ export function useKeyDownThumb(
       default:
         return;
     }
-    event.preventDefault();
     valueItem = roundToStep(valueItem, step);
     valueItem = roundToTwoDp(valueItem);
     setValue(valueItem);
