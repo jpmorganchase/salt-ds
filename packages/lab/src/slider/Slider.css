@@ -1,9 +1,9 @@
 .saltSlider {
-  display: grid;
-  /* overflow: hidden; */
+  /* display: grid; */
   gap: var(--salt-spacing-100);
-  grid-template-columns: auto 1fr auto;
-  /* padding: 5px */
+  /* grid-template-columns: auto 1fr auto; */
+  display: flex;
+  
 }
 
 .saltSlider-labelMinBottom {
@@ -57,33 +57,23 @@
   align-items: center;
   justify-content: center;
   transform: translate(-50%, 0%);
-  /* border: solid red; */
-  /* background: blue; */
   height: 50px;
   width: 50px;
 }
 
 .saltSliderThumb-tooltip {
   background: var(--tooltip-background);
-  border-color: var(--saltTooltip-borderColor, var(--tooltip-status-borderColor));
+  border-color: var(--salt-status-info-borderColor);
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
-  border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
+  line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
   color: var(--saltTooltip-text-color, var(--salt-content-primary-foreground));
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
-  font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
-  line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
   max-width: var(--saltTooltip-maxWidth, 230px);
   padding: var(--saltTooltip-padding, var(--salt-size-unit));
   position: absolute;
-  text-align: var(--saltTooltip-textAlign, left);
   z-index: var(--tooltip-zIndex);
-  top: -50px;
-  width: 50px;
-  height: 50px;
-  background: pink;
+  transform: translate(0, -100%);
 }
 
 .saltSliderThumb-showTooltip {
@@ -94,7 +84,6 @@
   display: flex;
   width: var(--salt-size-base);
   height: var(--salt-size-base);
-  /* border: solid; */
 }
 
 .saltSliderThumb {

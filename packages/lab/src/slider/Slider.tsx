@@ -25,7 +25,7 @@ export interface SliderProps
   onChange?: SliderChangeHandler | undefined;
   hideLabels?: boolean;
   tooltipPlacement?: "left" | "right" | "top" | "bottom";
-  labels?: "inline" | "bottom" | "full";
+  labels?: "inline" | "bottom" | "marks";
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -71,7 +71,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       }}
     >
       <div ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-        {labels !== "full" && (
+        {labels !== "marks" && (
           <Label
             className={clsx({
               [withBaseName("labelMinInline")]: labels === "inline",
@@ -86,7 +86,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
             [withBaseName("trackInline")]: labels === "inline",
           })}
         />
-        {labels !== "full" && (
+        {labels !== "marks" && (
           <Label
             className={clsx({
               [withBaseName("labelMaxInline")]: labels === "inline",
@@ -96,7 +96,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
             {max}
           </Label>
         )}
-        {labels === "full" && <SliderMarks max={max} min={min} step={step} />}
+        {labels === "marks" && <SliderMarks max={max} min={min} step={step} />}
       </div>
     </SliderContext.Provider>
   );
