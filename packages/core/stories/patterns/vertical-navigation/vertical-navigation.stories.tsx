@@ -42,11 +42,8 @@ const Header = () => {
   return (
     <header
       style={{
-        position: "fixed",
         padding: "var(--salt-spacing-300)",
         backgroundColor: "var(--salt-color-gray-40)",
-        width: "100%",
-        zIndex: "var(--salt-zIndex-appHeader)",
       }}
     />
   );
@@ -66,17 +63,18 @@ export const SingleLevel = () => {
 
   return (
     <BorderLayout>
-      <BorderItem position="north">
+      <BorderItem position="north" sticky>
         <Header />
       </BorderItem>
       <BorderItem
         position="west"
+        sticky
         style={{
-          marginTop: "calc(var(--salt-spacing-300) * 2)", // Margin should be the height of the header
-          position: "fixed",
+          top: "calc(var(--salt-spacing-300) * 2)",
+          maxHeight: "calc(100vh - var(--salt-spacing-300) * 2)",
         }}
       >
-        <aside style={{ width: "250px" }}>
+        <aside style={{ width: "200px" }}>
           <nav>
             <StackLayout
               gap="var(--salt-size-border)"
@@ -104,13 +102,7 @@ export const SingleLevel = () => {
           </nav>
         </aside>
       </BorderItem>
-      <BorderItem
-        position="center"
-        style={{
-          marginTop: "calc(var(--salt-spacing-300) * 2)",
-          marginLeft: "250px",
-        }}
-      >
+      <BorderItem position="center">
         <Item />
         <Item />
         <Item />
@@ -202,14 +194,15 @@ export const Nested = () => {
 
   return (
     <BorderLayout>
-      <BorderItem position="north">
+      <BorderItem position="north" sticky>
         <Header />
       </BorderItem>
       <BorderItem
         position="west"
+        sticky
         style={{
-          marginTop: "calc(var(--salt-spacing-300) * 2)", // Margin should be the height of the header
-          position: "fixed",
+          top: "calc(var(--salt-spacing-300) * 2)",
+          maxHeight: "calc(100vh - var(--salt-spacing-300) * 2)",
         }}
       >
         <aside style={{ width: "250px" }}>
@@ -226,13 +219,7 @@ export const Nested = () => {
           </nav>
         </aside>
       </BorderItem>
-      <BorderItem
-        position="center"
-        style={{
-          marginTop: "calc(var(--salt-spacing-300) * 2)",
-          marginLeft: "250px",
-        }}
-      >
+      <BorderItem position="center">
         <Item />
         <Item />
         <Item />
