@@ -1,12 +1,13 @@
 import { useContext, createContext } from "react";
 import { SliderChangeHandler, SliderValue } from "../types";
 export interface SliderContextValue {
-  min: number | undefined;
-  max: number | undefined;
-  step: number | undefined;
-  value: SliderValue | undefined;
+  min: number;
+  max: number;
+  step: number;
+  value: SliderValue;
   setValue: SliderChangeHandler;
-  onChange: SliderChangeHandler;
+  onChange: SliderChangeHandler | undefined;
+  ariaLabel: string | undefined
 }
 
 export const SliderContext = createContext<SliderContextValue>({
@@ -16,6 +17,7 @@ export const SliderContext = createContext<SliderContextValue>({
   value: 0,
   setValue: () => null,
   onChange: () => null,
+  ariaLabel: 'slider'
 });
 
 export function useSliderContext() {

@@ -12,7 +12,6 @@ export function useMouseThumbDown(
   onChange: SliderChangeHandler
 ) {
   const [thumbFocus, setThumbFocus] = useState(false);
-  // const [mouseDown, setMouseDown] = useState(false);
 
   if (Array.isArray(value)) {
     console.log("value = range");

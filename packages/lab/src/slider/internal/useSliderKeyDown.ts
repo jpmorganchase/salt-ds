@@ -1,4 +1,4 @@
-import { SliderChangeHandler, SliderValue } from "../internal/SliderContext";
+import { SliderChangeHandler, SliderValue } from "../types";
 import { roundToStep, roundToTwoDp } from "./utils";
 
 export function useSliderKeyDown(
@@ -6,8 +6,8 @@ export function useSliderKeyDown(
   max: number,
   step: number,
   value: SliderValue,
-  setValue: (value: SliderValue) => void,
-  onChange?: (value: SliderValue) => void
+  setValue: SliderChangeHandler,
+  onChange: SliderChangeHandler | undefined
 ) {
   return (event: React.KeyboardEvent) => {
     let valueItem: number = value;

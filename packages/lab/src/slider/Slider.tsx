@@ -13,7 +13,6 @@ const withBaseName = makePrefixer("saltSlider");
 const defaultMin = 0;
 const defaultMax = 10;
 const defaultStep = 1;
-const minRange = 1; // for range
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
@@ -22,9 +21,8 @@ export interface SliderProps
   step?: number;
   value?: number;
   defaultValue?: number;
-  onChange?: SliderChangeHandler | undefined;
+  onChange?: SliderChangeHandler;
   hideLabels?: boolean;
-  tooltipPlacement?: "left" | "right" | "top" | "bottom";
   labels?: "inline" | "bottom" | "marks";
 }
 
@@ -37,7 +35,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = defaultMin,
     onChange,
     className,
-    // ["aria-label"]: ariaLabel,
+    ["aria-label"]: ariaLabel,
     labels = "inline",
     ...rest
   },
@@ -57,8 +55,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     state: "Value",
   });
 
-  //TODO: memoize the slider context, maybe the mouse and keydown hooks could also be memoized or in callback functions ?
-
   return (
     <SliderContext.Provider
       value={{
@@ -68,6 +64,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         step,
         setValue,
         onChange,
+        ariaLabel,
       }}
     >
       <div

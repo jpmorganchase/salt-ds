@@ -7,7 +7,7 @@ export const getValue = (
   max: number,
   step: number,
   setValue: SliderChangeHandler,
-  onChange: SliderChangeHandler,
+  onChange: SliderChangeHandler | undefined,
   event: MouseEvent
 ) => {
   const { clientX } = event;
@@ -53,4 +53,3 @@ export function getMarkStyles(min: number, max: number, step: number) {
 
   return marks;
 }
-

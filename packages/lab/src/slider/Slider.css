@@ -5,7 +5,7 @@
 }
 
 .saltSlider-bottomLabel {
-  grid-template-columns: 1fr
+  grid-template-columns: 1fr;
 }
 
 .saltSlider-labelMinBottom {
