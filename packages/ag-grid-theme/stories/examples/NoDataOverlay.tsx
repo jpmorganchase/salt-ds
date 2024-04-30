@@ -20,7 +20,7 @@ const CustomDialog = () => {
     >
       <DialogHeader status="error" header="Can`t move file" />
       <DialogContent>
-        You don't have permission to move or delete this file.
+        You don&#39;t have permission to move or delete this file.
       </DialogContent>
       <DialogActions>
         <Button>Help Desk</Button>
@@ -31,23 +31,20 @@ const CustomDialog = () => {
 };
 
 const NoDataOverlay = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
 
   return (
-    <div>
-      {switcher}
-      <div style={{ height: 800, width: 800 }} {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridExampleColumns}
-          rowData={[]}
-          noRowsOverlayComponent={CustomDialog}
-        />
-      </div>
+    <div style={{ height: 800, width: 800 }} {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={dataGridExampleColumns}
+        rowData={[]}
+        noRowsOverlayComponent={CustomDialog}
+      />
     </div>
   );
 };
