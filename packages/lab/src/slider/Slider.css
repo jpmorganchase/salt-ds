@@ -1,5 +1,5 @@
 .saltSlider {
-  display: grid;
+  display: grid !important;
   gap: var(--salt-spacing-100);
   grid-template-columns: auto 1fr auto;
 }
@@ -63,6 +63,14 @@
   position: absolute;
   z-index: var(--tooltip-zIndex);
   transform: translate(0, -100%);
+}
+
+.saltSliderThumb-arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
 }
 
 .saltSliderThumb-showTooltip {

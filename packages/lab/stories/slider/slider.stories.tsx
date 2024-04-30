@@ -53,7 +53,7 @@ export const WithInput = () => {
   const [value, setValue] = useState<number>(5);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.currentTarget.value as unknown;
+    const inputValue = event.target.value as unknown;
     setValue(inputValue as number);
   };
 
@@ -64,26 +64,27 @@ export const WithInput = () => {
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
-      {/* <div
+      <div
         style={{
           display: "flex",
           flexDirection: "row",
+          alignItems: "center",
         }}
-      > */}
-      <Input
-        placeholder="value"
-        style={{ width: "1px", margin: "5px" }}
-        onChange={handleInputChange}
-      />
-      <Slider
-        style={{ width: "300px" }}
-        min={-50}
-        max={50}
-        value={value}
-        onChange={handleChange}
-        aria-label="withInput"
-      />
-      {/* </div> */}
+      >
+        <Input
+          placeholder="value"
+          style={{ width: "1px", margin: "5px" }}
+          onChange={handleInputChange}
+        />
+        <Slider
+          style={{ width: "300px" }}
+          min={-50}
+          max={50}
+          value={value}
+          onChange={handleChange}
+          aria-label="withInput"
+        />
+      </div>
     </FormField>
   );
 };
