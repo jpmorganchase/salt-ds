@@ -4,6 +4,7 @@ import {
   endOfYear,
   getLocalTimeZone,
   isSameDay,
+  isSameMonth,
   startOfMonth,
   startOfYear,
   today,
@@ -134,8 +135,24 @@ export function useCalendar(props: useCalendarProps) {
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
+  const getInitialFocusedDate: () => DateValue | undefined = () => {
+    switch (selectionVariant) {
+      case "multiselect":
+        return defaultSelectedDate?.[0];
+      case "offset":
+      case "range":
+        return defaultSelectedDate?.startDate;
+      default:
+        return defaultSelectedDate;
+    }
+  };
+
+  const defaultFocusDate = isSameMonth(today(getLocalTimeZone()), visibleMonth)
+    ? today(getLocalTimeZone())
+    : undefined;
+
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
-    (selectedDate as DateValue) ?? today ?? startOfMonth(visibleMonth)
+    getInitialFocusedDate() ?? defaultFocusDate ?? startOfMonth(visibleMonth)
   );
 
   const isDayVisible = useCallback(

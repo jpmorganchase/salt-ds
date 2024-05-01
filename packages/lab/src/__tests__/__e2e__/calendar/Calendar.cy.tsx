@@ -167,6 +167,29 @@ describe("GIVEN a Calendar", () => {
           name: formatDate(todayTestDate),
         }).should("be.focused");
       });
+      it("SHOULD focus the start of the month once navigating to months without today and selected", () => {
+        const todayTestDate = today(localTimeZone);
+        cy.mount(
+          <Default
+            selectedDate={todayTestDate}
+            defaultVisibleMonth={todayTestDate}
+          />
+        );
+        cy.findByRole("button", {
+          name: `Next Month, ${formatDate(
+            startOfMonth(todayTestDate).add({ months: 1 })
+          )}`,
+        }).focus();
+        cy.findByRole("button", {
+          name: `Next Month, ${formatDate(
+            startOfMonth(todayTestDate).add({ months: 1 })
+          )}`,
+        }).realClick();
+        cy.realPress("Tab");
+        cy.findByRole("button", {
+          name: formatDate(startOfMonth(todayTestDate).add({ months: 1 })),
+        }).should("be.focused");
+      });
       it("SHOULD move the focus when the arrow keys are pressed", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
 
