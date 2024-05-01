@@ -160,6 +160,20 @@ export const useStepperInput = (
     }
   };
 
+  const { activate: decrementSpinnerBlock } = useSpinner(
+    decrementBlock,
+    isAtMin()
+  );
+
+  const { activate: decrementSpinner } = useSpinner(decrement, isAtMin());
+
+  const { activate: incrementSpinnerBlock } = useSpinner(
+    incrementBlock,
+    isAtMax()
+  );
+
+  const { activate: incrementSpinner } = useSpinner(increment, isAtMax());
+
   const handleInputBlur = () => {
     if (currentValue === undefined) return;
 
