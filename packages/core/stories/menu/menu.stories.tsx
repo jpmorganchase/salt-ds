@@ -1,24 +1,26 @@
-import { Button, SegmentedButtonGroup } from "@salt-ds/core";
 import {
+  Button,
+  Card,
   Menu,
   MenuGroup,
   MenuItem,
   MenuPanel,
   MenuTrigger,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
-  ChevronDownIcon,
   CopyIcon,
   ExportIcon,
   MicroMenuIcon,
   PasteIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
+import { useState } from "react";
+import { VirtualElement } from "@floating-ui/react";
 
 export default {
-  title: "Lab/Menu",
+  title: "Core/Menu",
   component: Menu,
 } as Meta<typeof Menu>;
 
@@ -283,22 +285,53 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
   );
 };
 
-export const SplitButton: StoryFn = () => {
+export const ContextMenu: StoryFn = () => {
+  const [virtualElement, setVirtualElement] = useState<VirtualElement | null>(
+    null
+  );
+  const [open, setOpen] = useState(false);
   return (
-    <SegmentedButtonGroup>
-      <Button variant="cta">Edit</Button>
-      <Menu placement="bottom-end">
-        <MenuTrigger>
-          <Button variant="cta">
-            <ChevronDownIcon aria-hidden />
-          </Button>
-        </MenuTrigger>
+    <>
+      <Card
+        style={{
+          width: 300,
+          aspectRatio: 2 / 1,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onContextMenu={(event) => {
+          event.preventDefault();
+          //React 16 support
+          event.persist();
+          setVirtualElement({
+            getBoundingClientRect: () => ({
+              width: 0,
+              height: 0,
+              x: event.clientX,
+              y: event.clientY,
+              top: event.clientY,
+              right: event.clientX,
+              bottom: event.clientY,
+              left: event.clientX,
+            }),
+          });
+          setOpen(true);
+        }}
+      >
+        Right click here
+      </Card>
+      <Menu
+        getVirtualElement={() => virtualElement}
+        open={open}
+        onOpenChange={setOpen}
+      >
         <MenuPanel>
           <MenuItem>Copy</MenuItem>
           <MenuItem>Move</MenuItem>
           <MenuItem>Delete</MenuItem>
         </MenuPanel>
       </Menu>
-    </SegmentedButtonGroup>
+    </>
   );
 };

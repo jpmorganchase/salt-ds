@@ -2,6 +2,9 @@
 
 const valueParser = require("postcss-value-parser");
 const stylelint = require("stylelint");
+const glob = require("fast-glob");
+const csstree = require("css-tree");
+const fs = require("node:fs");
 
 const { report, ruleMessages } = stylelint.utils;
 
@@ -34,13 +37,32 @@ const declarationValueIndex = function declarationValueIndex(decl) {
   }, 0);
 };
 
+const deprecatedTokensSet = new Set(
+  glob
+    // Matches all files in src folders that start with a capital letter which should be all components.
+    .sync("./packages/theme/css/deprecated/*.css")
+    .flatMap((file) => {
+      const ast = csstree.parse(fs.readFileSync(file, { encoding: "utf-8" }));
+      return csstree
+        .findAll(
+          ast,
+          (node, item, list) =>
+            node.type === "Declaration" && node.property.startsWith("--salt")
+        )
+        .map((decl) => decl.property);
+    })
+    .filter(Boolean)
+);
+
 // ---- Start of plugin ----
 
 const ruleName = "salt/correct-theme-token-usage";
 
 const messages = ruleMessages(ruleName, {
-  expected: (propertyChecked) =>
+  noExpectedFoundationPalette: (propertyChecked) =>
     `No foundation or palette variables (${propertyChecked}) should be used in component`, // Can encode option in error message if needed
+  noDeprecated: (propertyChecked) =>
+    `No deprecated token (${propertyChecked}) should be used in component`,
 });
 
 const meta = {
@@ -98,22 +120,29 @@ const allAllowedKeys = [
 
 const varEndDetector = "(?![\\w-])";
 
-const regexpPattern = new RegExp(
+const allowedKeyRegexpPattern = new RegExp(
   `--salt(w+)?-(${allAllowedKeys.join("|")}).*${varEndDetector}`
 );
+
+function isAllowedKeys(property, verboseLog) {
+  const checkResult =
+    !isSaltThemeCustomProperty(property) ||
+    allowedKeyRegexpPattern.test(property);
+  verboseLog && console.log("Checking", property, "isAllowedKeys", checkResult);
+  return checkResult;
+}
+
+function isDeprecatedToken(property, verboseLog) {
+  const checkResult = deprecatedTokensSet.has(property);
+  verboseLog && console.log("Checking", property, "is deprecated", checkResult);
+  return checkResult;
+}
 
 module.exports = stylelint.createPlugin(
   ruleName,
   (primaryOption, secondaryOptionObject, context) => {
     return (root, result) => {
       const verboseLog = primaryOption.logLevel === "verbose";
-
-      function check(property) {
-        const checkResult =
-          !isSaltThemeCustomProperty(property) || regexpPattern.test(property);
-        verboseLog && console.log("Checking", checkResult, property);
-        return checkResult;
-      }
 
       root.walkDecls((decl) => {
         const { prop, value } = decl;
@@ -131,31 +160,72 @@ module.exports = stylelint.createPlugin(
 
           verboseLog && console.log({ nodes });
 
-          if (!firstNode || check(firstNode.value)) return;
+          if (!firstNode) return;
 
-          complain(
-            declarationValueIndex(decl) + firstNode.sourceIndex,
-            firstNode.value.length,
-            decl,
-            firstNode.value
-          );
+          if (!isAllowedKeys(firstNode.value, verboseLog)) {
+            complainNoExpecteFoundationOrPalette(
+              declarationValueIndex(decl) + firstNode.sourceIndex,
+              firstNode.value.length,
+              decl,
+              firstNode.value
+            );
+          }
+
+          if (isDeprecatedToken(firstNode.value, verboseLog)) {
+            complainDeprecatedTokenUsage(
+              declarationValueIndex(decl) + firstNode.sourceIndex,
+              firstNode.value.length,
+              decl,
+              firstNode.value
+            );
+          }
+
+          return;
         });
 
         verboseLog && console.log({ prop });
 
-        if (check(prop)) return;
+        if (!isAllowedKeys(prop, verboseLog)) {
+          complainNoExpecteFoundationOrPalette(0, prop.length, decl, prop);
+        }
 
-        complain(0, prop.length, decl, prop);
+        if (isDeprecatedToken(prop, verboseLog)) {
+          complainDeprecatedTokenUsage(0, prop.length, decl, prop);
+        }
+
+        return;
       });
 
-      function complain(index, length, decl, propertyChecked) {
+      function complainNoExpecteFoundationOrPalette(
+        index,
+        length,
+        decl,
+        propertyChecked
+      ) {
         report({
           result,
           ruleName,
-          message: messages.expected(propertyChecked),
+          message: messages.noExpectedFoundationPalette(propertyChecked),
           node: decl,
           index,
           endIndex: index + length,
+        });
+      }
+
+      function complainDeprecatedTokenUsage(
+        index,
+        length,
+        decl,
+        propertyChecked
+      ) {
+        report({
+          result,
+          ruleName,
+          message: messages.noDeprecated(propertyChecked),
+          node: decl,
+          index,
+          endIndex: index + length,
+          severity: "warning", // Keep deprecated token in warning for now
         });
       }
     };

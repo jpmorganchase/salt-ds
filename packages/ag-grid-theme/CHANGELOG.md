@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.4.1
+
+### Patch Changes
+
+- 0ca29531: Fixed single cell focus ring not visible in range selection mode (Fixed #3290)
+
 ## 1.4.0
 
 ### Minor Changes

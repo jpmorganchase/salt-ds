@@ -15,7 +15,11 @@ export const ChevronUpIcon = forwardRef<SVGSVGElement, ChevronUpIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 4.692 1.599 9.5.5 8.508 6 2.5l5.5 6.008-1.099.992L6 4.692z" />
+        <path
+          fillRule="evenodd"
+          d="M6 4.692 1.599 9.5.5 8.508 6 2.5l5.5 6.008-1.099.992L6 4.692Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

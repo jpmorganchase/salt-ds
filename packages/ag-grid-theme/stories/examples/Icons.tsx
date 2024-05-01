@@ -1,12 +1,12 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import saltStyles from "../../css/_export-salt-icons.module.scss";
 import uitkStyles from "../../css/_export-uitk-icons.module.scss";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-import iconCss from "./Icons.css";
 import { CSSProperties } from "react";
+import iconCss from "./Icons.css";
 
 const Icons = () => {
   const targetWindow = useWindow();
@@ -15,7 +15,7 @@ const Icons = () => {
     css: iconCss,
     window: targetWindow,
   });
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
 
   const { containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
@@ -24,7 +24,6 @@ const Icons = () => {
 
   return (
     <>
-      {switcher}
       {Object.keys(styles).map((key) => {
         if (styles[key].startsWith('"')) {
           return (

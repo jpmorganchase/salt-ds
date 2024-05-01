@@ -15,7 +15,11 @@ export const MaximizeIcon = forwardRef<SVGSVGElement, MaximizeIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 0h12v12H0V0zm11 3H1v8h10V3z" />
+        <path
+          fillRule="evenodd"
+          d="M0 0h12v12H0V0Zm11 3H1v8h10V3Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }

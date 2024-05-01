@@ -78,5 +78,23 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     }
   };
 
-  return { ...listControl, select, valueState, setValueState };
+  const removePill = (event: SyntheticEvent, itemToRemove: Item) => {
+    if (!multiselect || disabled || readOnly) {
+      return;
+    }
+
+    let newSelected;
+
+    if (selectedState.includes(itemToRemove)) {
+      newSelected = selectedState.filter((item) => item !== itemToRemove);
+    } else {
+      newSelected = selectedState.concat([itemToRemove]);
+    }
+
+    setSelectedState(newSelected);
+    setValueState("");
+    onSelectionChange?.(event, newSelected);
+  };
+
+  return { ...listControl, select, valueState, setValueState, removePill };
 }

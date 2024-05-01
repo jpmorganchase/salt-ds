@@ -46,6 +46,7 @@ export interface Data {
   description: string;
   alsoKnownAs: string[];
   relatedComponents: RelatedComponent[];
+  relatedPatterns: string[];
   sourceCodeUrl: string;
   package: ComponentNpmInfo;
   bugReport?: string;

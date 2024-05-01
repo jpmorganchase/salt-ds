@@ -15,8 +15,12 @@ export const BankCheckIcon = forwardRef<SVGSVGElement, BankCheckIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M12 2v8H0V2h12zm-1 2H1v5h10V4z" />
-        <path d="M2 7h7v1H2V7zm0-2h4v1H2V5zm6 0h2v1H8V5z" />
+        <path
+          fillRule="evenodd"
+          d="M12 2H0v8h12V2Zm-1 2H1v5h10V4Z"
+          clipRule="evenodd"
+        />
+        <path d="M2 7h7v1H2V7Zm0-2h4v1H2V5Zm6 0h2v1H8V5Z" />
       </Icon>
     );
   }

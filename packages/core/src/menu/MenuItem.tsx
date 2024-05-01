@@ -6,11 +6,11 @@ import {
   MouseEvent,
 } from "react";
 import { clsx } from "clsx";
-import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { useFloatingTree, useListItem } from "@floating-ui/react";
+import { makePrefixer, useForkRef } from "../utils";
 
 import menuItemCss from "./MenuItem.css";
 import { useIsMenuTrigger } from "./MenuTriggerContext";

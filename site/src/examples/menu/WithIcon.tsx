@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+import { Button, Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/core";
 import {
   CopyIcon,
   ExportIcon,

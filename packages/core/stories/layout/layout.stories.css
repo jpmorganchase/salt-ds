@@ -66,7 +66,7 @@
 }
 
 .flow-layout-container {
-  padding: calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
+  padding: var(--salt-spacing-200) var(--salt-size-container-spacing);
   background-color: var(--salt-container-secondary-background);
 }
 
@@ -90,20 +90,20 @@
 }
 
 .border-layout-custom-form .saltInputLegacy-suffixContainer {
-  margin-right: var(--salt-size-unit);
+  margin-right: var(--salt-spacing-100);
 }
 
 .border-layout-switch-container {
-  padding: var(--salt-size-unit);
+  padding: var(--salt-spacing-100);
 }
 
 .border-layout-button-container,
 .flow-layout-form-container {
-  padding: calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
+  padding: var(--salt-spacing-200) var(--salt-size-container-spacing);
 }
 
 .border-layout-pill {
-  margin: calc(var(--salt-size-unit) * 2) var(--salt-size-container-spacing);
+  margin: calc(var(--salt-spacing-100) * 2) var(--salt-size-container-spacing);
   --saltPill-background: var(--salt-status-success-foreground);
   --saltPill-text-color: var(--salt-color-white);
   --saltPill-borderRadius: 10px;
@@ -115,7 +115,7 @@
   z-index: 10;
 }
 .border-layout-form-footer button {
-  margin-top: calc(var(--salt-size-unit) * 2);
+  margin-top: calc(var(--salt-spacing-100) * 2);
   margin-bottom: 16px;
 }
 
@@ -135,7 +135,7 @@
 .border-layout-contacts-footer {
   border-top: 1px solid;
   border-color: var(--salt-separable-secondary-borderColor);
-  padding: var(--salt-size-container-spacing) 0 calc(var(--salt-size-unit) * 2) 0;
+  padding: var(--salt-size-container-spacing) 0 calc(var(--salt-spacing-100) * 2) 0;
   text-align: center;
 }
 
@@ -198,7 +198,7 @@
 
 .parent-child-composite-empty-container {
   width: 12px;
-  padding: var(--salt-size-unit);
+  padding: var(--salt-spacing-100);
 }
 
 .parent-child-composite-container p,
@@ -221,7 +221,7 @@
 
 .parent-child-composite-empty-container {
   width: 12px;
-  padding: var(--salt-size-unit);
+  padding: var(--salt-spacing-100);
 }
 
 .parent-child-composite-container p,

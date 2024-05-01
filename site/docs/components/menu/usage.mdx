@@ -10,22 +10,27 @@ data:
 
 ## Using the component
 
+- Menu items should relate to the interactive element or interaction that triggers the menu.
+
 ### When to use
 
 - When you need to display a list of actions or options.
+- When you have limited space and need to display overflow action in a list.
+- When you need to display secondary or less important information and actions inside a trigger element.
 
 ### When not to use
 
-- Inside a form. Instead, use [`ComboBox`](../combo-box) or [`Dropdown`]("../dropdown).
+- Inside a form. Instead, use [`ComboBox`](../combo-box) or [`Dropdown`](../dropdown).
 
 ## Content
 
 - Always use sentence case for menu item labels.
 - Keep menu item labels short and concise.
+- Use an ellipsis at the end of a menu item label for actions that will require more information from the user to complete. For example, "Open file..." requires the user to choose a file.
 
 ## Import
 
-To import `Menu` and related components from the lab Salt package, use:
+To import `Menu` and related components from the core Salt package, use:
 
 ```js
 import {
@@ -34,27 +39,27 @@ import {
   MenuTrigger,
   MenuPanel,
   MenuGroup,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 ```
 
 ## Props
 
 ### `Menu`
 
-<PropsTable packageName="lab" componentName="Menu" />
+<PropsTable packageName="core" componentName="Menu" />
 
 ### `MenuItem`
 
-<PropsTable packageName="lab" componentName="MenuItem" />
+<PropsTable packageName="core" componentName="MenuItem" />
 
 ### `MenuTrigger`
 
-<PropsTable packageName="lab" componentName="MenuTrigger" />
+<PropsTable packageName="core" componentName="MenuTrigger" />
 
 ### `MenuPanel`
 
-<PropsTable packageName="lab" componentName="MenuPanel" />
+<PropsTable packageName="core" componentName="MenuPanel" />
 
 ### `MenuGroup`
 
-<PropsTable packageName="lab" componentName="MenuGroup" />
+<PropsTable packageName="core" componentName="MenuGroup" />

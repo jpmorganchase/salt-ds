@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { Spinner } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { Spinner, StackLayout } from "@salt-ds/core";
+import { useEffect } from "react";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[]
@@ -23,7 +23,7 @@ const generateData = function generateData<T extends { name: string }>(
 const dataSourceRows = generateData(dataGridExampleData);
 
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -46,19 +46,16 @@ const InfiniteScroll = (props: AgGridReactProps) => {
   }, [api, isGridReady]);
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridInfiniteScrollExampleColumns}
-          rowModelType="infinite"
-          infiniteInitialRowCount={100}
-          components={infiniteScrollComponents}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={dataGridInfiniteScrollExampleColumns}
+        rowModelType="infinite"
+        infiniteInitialRowCount={100}
+        components={infiniteScrollComponents}
+      />
+    </div>
   );
 };
 

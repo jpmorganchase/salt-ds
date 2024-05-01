@@ -30,6 +30,7 @@ export * from "./interactable-card";
 export * from "./link";
 export * from "./link-card";
 export { useListControlContext } from "./list-control";
+export * from "./menu";
 export * from "./multiline-input";
 export * from "./navigation-item";
 export * from "./option";
