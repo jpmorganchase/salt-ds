@@ -1,4 +1,10 @@
 import { StepperInput, FormField } from "@salt-ds/lab";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  StackLayout,
+} from "@salt-ds/core";
 import { useState } from "react";
 
 describe("Stepper Input - Accessibility", () => {
@@ -20,15 +26,17 @@ describe("Stepper Input - Accessibility", () => {
 
   it("has the correct labelling when wrapped in a `FormField`", () => {
     cy.mount(
-      <FormField helperText="please enter a value" label="stepper input">
+      <FormField>
+        <FormFieldLabel>Stepper Input</FormFieldLabel>
         <StepperInput defaultValue={-10} min={0} />
+        <FormFieldHelperText>Please enter a value</FormFieldHelperText>
       </FormField>
     );
 
-    cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
+    cy.findByRole("spinbutton").should("have.accessibleName", "Stepper Input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "please enter a value"
+      "Please enter a value"
     );
   });
 
@@ -38,8 +46,10 @@ describe("Stepper Input - Accessibility", () => {
 
       return (
         <>
-          <FormField helperText="please enter a value" label="stepper input">
+          <FormField>
+            <FormFieldLabel>Stepper Input</FormFieldLabel>
             <StepperInput defaultValue={10} liveValue={liveValue} />
+            <FormFieldHelperText>Please enter a value</FormFieldHelperText>
           </FormField>
           <button
             onClick={() => setLiveValue((prev) => prev + 1)}
@@ -53,21 +63,21 @@ describe("Stepper Input - Accessibility", () => {
 
     cy.mount(<ControlledLiveValue />);
 
-    cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
+    cy.findByRole("spinbutton").should("have.accessibleName", "Stepper Input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "please enter a value"
+      "Please enter a value"
     );
 
     cy.findByRole("button", { name: "Increment" }).realClick();
 
     cy.findByRole("spinbutton").should(
       "have.accessibleName",
-      "stepper input , value out of date"
+      "Stepper iInput , value out of date"
     );
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "please enter a value"
+      "Please enter a value"
     );
   });
 
@@ -77,8 +87,10 @@ describe("Stepper Input - Accessibility", () => {
 
       return (
         <>
-          <FormField helperText="please enter a value" label="stepper input">
+          <FormField>
+            <FormFieldLabel>Stepper Input</FormFieldLabel>
             <StepperInput defaultValue={10} liveValue={liveValue} />
+            <FormFieldHelperText>Please enter a value</FormFieldHelperText>
           </FormField>
           <button
             onClick={() => setLiveValue((prev) => prev + 1)}
@@ -96,11 +108,11 @@ describe("Stepper Input - Accessibility", () => {
 
     cy.findByRole("spinbutton").should(
       "have.accessibleName",
-      "stepper input , value out of date"
+      "Stepper Input , value out of date"
     );
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "please enter a value"
+      "Please enter a value"
     );
 
     cy.findByRole("button", { name: "Refresh default value" }).realClick();
@@ -108,7 +120,7 @@ describe("Stepper Input - Accessibility", () => {
     cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "please enter a value"
+      "Please enter a value"
     );
   });
 

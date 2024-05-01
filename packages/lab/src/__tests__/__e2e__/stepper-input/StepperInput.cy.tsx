@@ -3,8 +3,8 @@ import { StepperInput } from "@salt-ds/lab";
 describe("Stepper Input", () => {
   it("renders with default props", () => {
     cy.mount(<StepperInput />);
-    // Component should render with three buttons - refresh, increment, and decrement
-    cy.findAllByRole("button", { hidden: true }).should("have.length", 3);
+    // Component should render with two buttons - increment, and decrement
+    cy.findAllByRole("button", { hidden: true }).should("have.length", 2);
 
     cy.findByRole("spinbutton").should("exist");
     cy.findByRole("spinbutton").should("have.value", "0");
