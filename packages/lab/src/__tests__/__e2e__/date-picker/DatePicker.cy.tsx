@@ -2,12 +2,23 @@ import { composeStories } from "@storybook/react";
 import { ChangeEvent } from "react";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { CalendarDate } from "@internationalized/date";
+import {
+  CalendarDate,
+  DateFormatter,
+  DateValue,
+  getLocalTimeZone,
+} from "@internationalized/date";
 
 const composedStories = composeStories(datePickerStories);
 const { Default, Range } = composedStories;
 
 const testDate = new CalendarDate(2000, 2, 1);
+const localTimeZone = getLocalTimeZone();
+const currentLocale = navigator.languages[0];
+const formatDate = (date: DateValue, options?: Intl.DateTimeFormatOptions) => {
+  const formatter = new DateFormatter(currentLocale, options);
+  return formatter.format(date.toDate(localTimeZone));
+};
 describe("GIVEN a DatePicker", () => {
   checkAccessibility(composedStories);
 
@@ -44,8 +55,12 @@ describe("GIVEN a DatePicker", () => {
     it("THEN should close the calendar panel once a date is selected", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      cy.findByRole("button", { name: "15/02/2000" }).should("exist");
-      cy.findByRole("button", { name: "15/02/2000" }).realClick();
+      cy.findByRole("button", {
+        name: formatDate(testDate.add({ days: 11 })),
+      }).should("exist");
+      cy.findByRole("button", {
+        name: formatDate(testDate.add({ days: 11 })),
+      }).realClick();
       cy.findByRole("application").should("not.exist");
     });
     it("THEN should not open the calendar when disabled", () => {

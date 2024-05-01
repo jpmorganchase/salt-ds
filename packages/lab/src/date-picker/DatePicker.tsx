@@ -28,12 +28,33 @@ export interface DatePickerProps
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
+  /**
+   * Selection variant. Defaults to single select.
+   */
   selectionVariant?: "default" | "range";
+  /**
+   * If `true`, the component will be disabled.
+   */
   disabled?: boolean;
+  /**
+   * The start date value. Use when the component is controlled.
+   */
   startDate?: DateValue;
+  /**
+   * The default start date value. Use when the component is not controlled.
+   */
   defaultStartDate?: DateValue;
+  /**
+   * The end date value. Use when the component is controlled.
+   */
   endDate?: DateValue;
+  /**
+   * The default end date value. Use when the component is not controlled.
+   */
   defaultEndDate?: DateValue;
+  /**
+   * Props to be passed to the Calendar component.
+   */
   CalendarProps?:
     | UseRangeSelectionCalendarProps
     | UseSingleSelectionCalendarProps;
@@ -41,6 +62,13 @@ export interface DatePickerProps
    * Function to format the input value.
    */
   dateFormatter?: (input: DateValue | undefined) => string;
+  /**
+   * Callback function triggered when open state changes.
+   */
+  onOpenChange?: (newOpen: boolean) => void;
+  /**
+   * Display or hide the component.
+   */
   open?: boolean;
 }
 
@@ -58,6 +86,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       CalendarProps,
       className,
       open: openProp,
+      onOpenChange: onOpenChangeProp,
       ...rest
     },
     ref
@@ -90,6 +119,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const onOpenChange = (newState: boolean) => {
       setOpen(newState);
       startInputRef?.current?.focus();
+      onOpenChangeProp?.(newState);
     };
 
     const { x, y, strategy, elements, floating, reference, context } =
