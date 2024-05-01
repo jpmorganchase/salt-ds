@@ -52,7 +52,7 @@
   line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
   letter-spacing: var(--saltButton-letterSpacing, var(--salt-text-action-letterSpacing));
   text-transform: var(--saltButton-textTransform, var(--salt-text-action-textTransform));
-  padding: 0 var(--saltButton-padding, var(--salt-size-unit));
+  padding: 0 var(--saltButton-padding, var(--salt-spacing-100));
   margin: var(--saltButton-margin, 0);
   height: var(--saltButton-height, var(--salt-size-base));
   min-width: var(--saltButton-minWidth, unset);
@@ -92,8 +92,14 @@
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .saltButton:active,
-.saltButton.saltButton-active,
-.saltButton[aria-expanded="true"] {
+.saltButton.saltButton-active {
+  background: var(--saltButton-background-active, var(--button-background-active));
+  color: var(--saltButton-text-color-active, var(--button-text-color-active));
+}
+
+/* Styles applied when the button triggers a dialog or menu */
+.saltButton[aria-expanded="true"][aria-haspopup="menu"],
+.saltButton[aria-expanded="true"][aria-haspopup="dialog"] {
   background: var(--saltButton-background-active, var(--button-background-active));
   color: var(--saltButton-text-color-active, var(--button-text-color-active));
 }

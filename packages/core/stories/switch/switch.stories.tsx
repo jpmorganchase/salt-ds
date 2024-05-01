@@ -1,6 +1,13 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { Switch } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
+  StackLayout,
+  Switch,
+} from "@salt-ds/core";
 
 export default {
   title: "Core/Switch",
@@ -51,4 +58,22 @@ export const Controlled: StoryFn<typeof Switch> = (args) => {
 
 Controlled.args = {
   label: "Controlled",
+};
+
+export const WithinFormField: StoryFn<typeof Switch> = (args) => {
+  return (
+    <StackLayout direction="row">
+      <FormField labelPlacement="left">
+        <FormFieldLabel>Reference</FormFieldLabel>
+        <Input defaultValue="Value" />
+        <FormFieldHelperText>Helper text</FormFieldHelperText>
+      </FormField>
+
+      <FormField labelPlacement="left">
+        <FormFieldLabel>Label</FormFieldLabel>
+        <Switch {...args} />
+        <FormFieldHelperText>Helper text</FormFieldHelperText>
+      </FormField>
+    </StackLayout>
+  );
 };

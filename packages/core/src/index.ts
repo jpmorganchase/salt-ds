@@ -5,7 +5,11 @@ export * from "./badge";
 export * from "./banner";
 export * from "./border-item";
 export * from "./border-layout";
-export * from "./breakpoints";
+export {
+  type Breakpoints,
+  DEFAULT_BREAKPOINTS,
+  useBreakpoint,
+} from "./breakpoints";
 export * from "./button";
 export * from "./card";
 export * from "./checkbox";
@@ -26,6 +30,7 @@ export * from "./interactable-card";
 export * from "./link";
 export * from "./link-card";
 export { useListControlContext } from "./list-control";
+export * from "./menu";
 export * from "./multiline-input";
 export * from "./navigation-item";
 export * from "./option";

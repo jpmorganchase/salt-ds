@@ -12,6 +12,7 @@
   align-items: center;
   cursor: var(--salt-selectable-cursor-hover);
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .saltOption-active {

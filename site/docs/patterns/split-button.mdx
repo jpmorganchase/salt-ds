@@ -1,0 +1,98 @@
+---
+title: Split button
+layout: DetailPattern
+aliases:
+  - /salt/patterns/split-button
+data:
+  components: ["Button", "Menu", "Segmented Button Group", "Tooltip"]
+---
+
+A split button enables users to perform a main action and access relevant, supplementary actions inside a menu. 
+
+<Diagram
+  src="/img/patterns/split-button/split-button-hero-shot.png"
+  alt="Example showing a split button."
+  border
+/>
+
+## When to use
+
+Use the pattern for actions with multiple associated commands. Users are able to immediately perform the default action and access supplementary actions, which include more specific or less commonly-used actions.
+
+For example, a paste-focused split button could include: 
+- **Default action:** Paste.
+- **Supplementary actions:** Keep source formatting, Match destination formatting, Paste text only.
+
+## How to build
+
+### Anatomy
+
+A split button contains:
+
+1. **Main action:** the default action a user can take.
+2. **Arrow button:** contains a chevron-down icon and triggers the menu.
+3. **Supplementary actions:** lower priority actions displayed in a menu. 
+
+<Diagram
+  src="/img/patterns/split-button/split-button-anatomy.png"
+  alt="Split button showing supplementary actions."
+  border
+/>
+
+### Layout
+
+- Use the segmented button group component as the base structure of the split button.
+- Use the chevron-down icon for the menu trigger.
+- Use a menu component to display supplementary actions for users to take. Set the component's `placement` prop to "bottom-end" without quotation marks.
+
+<Diagram
+  src="/img/patterns/split-button/split-button-layout.png"
+  alt="layout"
+  border
+/>
+
+
+## Split button affordance
+
+You can use CTA buttons, primary buttons and secondary buttons in a split button pattern. See guidance for [button options](/salt/components/button) to select the most suitable ones for your application.
+
+<Diagram
+  src="/img/patterns/split-button/split-button-affordance.png"
+  alt="Example showing CTA, Primary and Secondary variants of a split button."
+  caption="Example showing CTA, primary and secondary variants of a split button."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Don’t mix the button variants in the same split button.
+</ExampleContainer>
+
+## Multiple actions
+
+Include multiple main actions if they have the same importance/priority.
+
+<Diagram
+  src="/img/patterns/split-button/split-button-multiple-actions.png"
+  alt="Multiple actions."
+  border
+  caption="Example showing two main actions, Copy and Paste, in a split button."
+/>
+
+## Icon-only
+
+The main action is represented by an icon-only button to minimize the width of the entire split button.
+
+<Diagram
+  src="/img/patterns/split-button/split-button-icon-only.png"
+  alt="Icon only."
+  border
+  caption="Example showing the main action represented by an icon with a tooltip."
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Avoid using an icon-only split button if your target audience is unlikely to recognize the proposed icons.
+- Use a textual label if your main action is high priority. This ensures users are more likely to see it.
+- Use a [tooltip](/salt/components/tooltip) to describe or label the action.
+</ExampleContainer>
+
+:fragment{src="./fragments/feedback.mdx"}

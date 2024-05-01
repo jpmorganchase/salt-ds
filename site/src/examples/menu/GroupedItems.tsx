@@ -1,12 +1,12 @@
 import { ReactElement } from "react";
 import {
+  Button,
   Menu,
   MenuGroup,
   MenuItem,
   MenuPanel,
   MenuTrigger,
-} from "@salt-ds/lab";
-import { Button } from "@salt-ds/core";
+} from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
 
 export const GroupedItems = (): ReactElement => {

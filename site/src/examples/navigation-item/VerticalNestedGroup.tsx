@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { NavigationItem } from "@salt-ds/core";
+import { NavigationItem, StackLayout } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 const multipleLevelNesting = [
@@ -23,7 +23,15 @@ export const VerticalNestedGroup = (): ReactElement => {
 
   return (
     <nav>
-      <ul style={{ width: 250, listStyle: "none", paddingLeft: 0 }}>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
         {multipleLevelNesting.map(({ name, subNav }) => (
           <li key={name}>
             <NavigationItem
@@ -62,7 +70,9 @@ export const VerticalNestedGroup = (): ReactElement => {
               {name}
             </NavigationItem>
             {expanded.includes(name) && (
-              <ul
+              <StackLayout
+                as="ul"
+                gap="var(--salt-size-border)"
                 style={{
                   width: 250,
                   listStyle: "none",
@@ -111,7 +121,9 @@ export const VerticalNestedGroup = (): ReactElement => {
                       </NavigationItem>
 
                       {expanded.includes(item.name) && (
-                        <ul
+                        <StackLayout
+                          as="ul"
+                          gap="var(--salt-size-border)"
                           style={{
                             width: 250,
                             listStyle: "none",
@@ -137,16 +149,16 @@ export const VerticalNestedGroup = (): ReactElement => {
                               </li>
                             );
                           })}
-                        </ul>
+                        </StackLayout>
                       )}
                     </li>
                   );
                 })}
-              </ul>
+              </StackLayout>
             )}
           </li>
         ))}
-      </ul>
+      </StackLayout>
     </nav>
   );
 };

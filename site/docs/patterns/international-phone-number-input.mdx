@@ -1,10 +1,10 @@
 ---
-title: International phone number input
+title: International phone number
 layout: DetailPattern
 aliases:
   - /salt/patterns/international-phone-number-input
 data:
-  components: ["Dropdown", "Input"]
+  components: ["Dropdown", "Input", "Stack layout"]
 ---
 
 An international phone number input gives users a set of form fields to input phone number information for specific countries.
@@ -19,75 +19,72 @@ Use the pattern when your user needs to enter a phone number for a specific coun
 
 ## How to build
 
-- The pattern consists of two form controls: a [dropdown](../components/dropdown) that displays country selection (with a country symbol component the user can expand or collapse), and an [input](../components/input) that displays the phone number.
-- When the user selects the country, the text input adornment in the phone number input displays the country code.
+1. **Country selector**: allows the user to select the correct country code for their phone number. 
+2. **Phone number**: displays the entered phone number.
 
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/international-phone-number-input/pattern_without_country.png",
-      alt: "Phone number input pattern without selected country",
-    },
-    {
-      src: "/img/patterns/international-phone-number-input/pattern_with_country.png",
-      alt: "Phone number input pattern with selected country",
-    },
-  ]}
-  label="Select United Kingdom"
+When the user selects the country, the text input adornment in the phone number input displays the country code.
+
+<Diagram
+  src="/img/patterns/international-phone-number-input/IPN-anatomy.png"
+  alt="International phone number anatomy"
+  border
 />
 
 ## Layout
 
-You can display the pattern using a [stack layout](../components/stack-layout) as a column or a row.
+* Use `Dropdown` to display the country selection (with a country symbol component the user can expand or collapse).
+* Use `Input` to display the phone number.
+* Use `StackLayout` to display the pattern elements in either a column or row.
+
+<Diagram
+  src="/img/patterns/international-phone-number-input/IPN-layout.png"
+  alt="International phone number layout"
+  border
+/>
 
 ### Column layout
 
 A column layout has two form controls as a vertical column. We suggest using the stack layout for better visibility of the country name and the country code.
 
-<Diagrams>
-  <Diagram
-    src="/img/patterns/international-phone-number-input/pattern_with_country_symbol.png"
-    alt="Phone number input pattern with country symbol"
-    contentPosition="top"
-    border
-  >
-    #### With country symbol
-  </Diagram>
-  <Diagram
-    src="/img/patterns/international-phone-number-input/pattern_without_country_symbol.png"
-    alt="Phone number input pattern without country symbol"
-    contentPosition="top"
-    border
-  >
-    #### Without country symbol
-  </Diagram>
-</Diagrams>
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/international-phone-number-input/IPN-column-layout-symbol.png",
+      alt: "With country symbol",
+    },
+    {
+      src: "/img/patterns/international-phone-number-input/IPN-column-layout-hide-symbol.png",
+      alt: "Without country symbol",
+    },
+  ]}
+  label="Hide country symbol"
+/>
 
 <ExampleContainer type="positive" customPillText="Best practices">
-  - We suggest using the full country name instead of the abbreviation because users may
-  filter the selection by the country name.
+We recommend using the full country name instead of an abbreviation because users may filter the selection by typing the country name.
 </ExampleContainer>
 
 ### Row layout
 
-A row layout has two form controls as a horizontal row. You can use the row layout when there's a need to save space.
+A row layout positions the two form controls within a horizontal orientation. Use this layout if you need to save space.
 
 <Diagram
-  src="/img/patterns/international-phone-number-input/pattern_row_layout.png"
+  src="/img/patterns/international-phone-number-input/IPN-row-layout.png"
   alt="Pattern row layout"
+  caption="An international phone number form with a row layout."
   border
 />
 
-When the country name is wider than the input, the name is truncated. In this case, we suggest using the column layout.
+When the country name exceeds the width of the input, the text is truncated. In this case, we recommend using the column layout instead.
 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/international-phone-number-input/pattern_truncated_row_layout.png",
+      src: "/img/patterns/international-phone-number-input/IPN-row-layout-truncated.png",
       alt: "Truncated row layout",
     },
     {
-      src: "/img/patterns/international-phone-number-input/pattern_truncated_column_layout.png",
+      src: "/img/patterns/international-phone-number-input/IPN-alternative-column-layout.png",
       alt: "Column layout",
     },
   ]}
@@ -96,20 +93,20 @@ When the country name is wider than the input, the name is truncated. In this ca
 
 ## Country selection dropdown
 
-The country selection dropdown uses the [list](../components/list) component and the country list should be in the alphabetical order.
+The country selection dropdown uses the [list](../components/list) component and should display in alphabetical order.
 
 <ImageSwitcher
   images={[
     {
-      src: "/img/patterns/international-phone-number-input/country_selection_closed.png",
+      src: "/img/patterns/international-phone-number-input/IPN-country-dropdown-collapsed.png",
       alt: "Country selection dropdown closed",
     },
     {
-      src: "/img/patterns/international-phone-number-input/country_selection_open.png",
+      src: "/img/patterns/international-phone-number-input/IPN-country-dropdown-expanded.png",
       alt: "Country selection dropdown open",
     },
   ]}
-  label="Country selection dropdown"
+  label="Expand country selection dropdown"
 />
 
 :fragment{src="./fragments/feedback.mdx"}

@@ -131,6 +131,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     listRef,
     valueState,
     setValueState,
+    removePill,
   } = listControl;
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
@@ -298,7 +299,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const handlePillRemove = (event: SyntheticEvent, index: number) => {
     event.stopPropagation();
     const removed = selectedState[index];
-    select(event, getOptionsMatching((option) => option.value === removed)[0]);
+    removePill(event, removed);
   };
 
   const handleListMouseOver = () => {

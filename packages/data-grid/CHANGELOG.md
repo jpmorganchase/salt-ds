@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.4-alpha.10
+
+### Patch Changes
+
+- 8ebd9138: Fixed deprecated `--salt-size-accent` references to `--salt-size-bar`. Fixed deprecated `--salt-size-unit` references to `--salt-spacing-100`.
+
 ## 1.0.4-alpha.9
 
 ### Patch Changes

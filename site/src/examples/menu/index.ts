@@ -5,4 +5,5 @@ export * from "./Placement";
 export * from "./Scrolling";
 export * from "./SeparatorOnly";
 export * from "./SingleLevel";
+export * from "./VirtualElement";
 export * from "./WithIcon";

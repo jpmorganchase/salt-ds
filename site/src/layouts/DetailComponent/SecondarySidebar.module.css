@@ -2,12 +2,18 @@
   max-width: 90%;
 }
 
-.wrapper:not(:last-of-type),
-.tableOfContents {
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+.wrapper:not(:first-of-type)::before {
+  content: "";
+  height: var(--salt-size-border);
+  background: var(--salt-separable-tertiary-borderColor);
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: var(--salt-spacing-300);
 }
 
 .wrapper {
+  position: relative;
   padding-top: var(--salt-spacing-200);
   padding-bottom: var(--salt-spacing-200);
 }

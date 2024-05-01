@@ -22,6 +22,7 @@ import {
   FormFieldLabelPlacement,
   Button,
   MultilineInput,
+  Switch,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { NoteIcon, InfoIcon } from "@salt-ds/icons";
@@ -227,6 +228,13 @@ export const LabelLeftWithControls: StoryFn<typeof FormField> = (props) => {
         <FormHelperText>{`${
           isCheckboxError ? "Must select at least one option. " : ""
         }`}</FormHelperText>
+      </FormField>
+      <FormField labelPlacement="left" {...props}>
+        <FormLabel>Draft</FormLabel>
+        <Switch />
+        <FormHelperText>
+          Saves changes immediately when not a draft
+        </FormHelperText>
       </FormField>
     </FlowLayout>
   );
@@ -512,6 +520,11 @@ export const WithControls: StoryFn<typeof FormField> = (props) => {
         <FormHelperText>{`${
           isCheckboxError ? "Must select at least one option. " : ""
         }`}</FormHelperText>
+      </FormField>
+      <FormField {...props}>
+        <FormLabel>Draft</FormLabel>
+        <Switch />
+        <FormHelperText>Publishes immediately when unchecked</FormHelperText>
       </FormField>
     </FlowLayout>
   );

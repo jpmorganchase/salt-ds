@@ -1,0 +1,159 @@
+---
+title: International address form
+layout: DetailPattern
+aliases:
+  - /salt/patterns/international-address-form
+  - /salt/patterns/international-address-input
+data:
+  components: ["Input", "Dropdown", "Stack layout"]
+  relatedPatterns: ["Forms"]
+  resources:
+    [
+      { href: "https://www.saltdesignsystem.com/salt/patterns/forms/", label: "Forms pattern", internal: false },
+      { href: "https://www.figma.com/file/Evs4JfcZTmMxyJxRh3UVBT/(WIP)-International-Address-Input?type=design&node-id=982-87858&mode=design", label: "International address form templates", internal: true }
+    ]  
+---
+
+An international address form gives users a set of form fields to input address information for specific countries. The form displays relevant fields for a user-selected location.
+
+The pattern aims to accommodate users worldwide, but your team may be able to take further steps that fall outside its scope. For example, check with your tech partners if it's possible to detect user location and automatically adjust the form.
+
+Future versions of this pattern will cover the use of APIs, autocompletion and enhanced support for more locations.
+
+<Diagram
+    src="/img/patterns/international-address-input/iai-generic-format-heroimage.png"
+    alt="An international address form."
+    contentPosition="top"
+    border
+  />
+
+## When to use
+
+Use it when your user needs to enter an address for a specific country. This could be for shipping, contact, legal or compliance purposes, such as client onboarding flow or client detail collection processes.
+
+## How to build
+
+### Anatomy
+
+1. **Address form elements**: Allows the user to input their details such as their name, address, postal code, town/city and optionally their state/province.
+2. **Country selector**: Allows the user to select the correct country for their address.
+
+<Diagram
+    src="/img/patterns/international-address-input/iai-anatomy.png"
+    alt="An international address form anatomy."
+    contentPosition="top"
+    border
+  />
+
+### Layout
+
+* Use `Input` to display the address form elements.
+* Use `Dropdown` to display the country selector.
+* Use `StackLayout` to display the pattern elements in a column. 
+
+For further layout guidance, please refer to the [form pattern](../forms).
+
+<Diagram
+    src="/img/patterns/international-address-input/iai-layout.png"
+    alt="An international address form layout."
+    contentPosition="top"
+    border
+  />
+
+## Dynamic format
+
+The dynamic format uses form field labels specific to a country or region. The form only displays fields relevant to a specific country in a recognizable order and with familiar labels. This will reduce barriers to input and minimize user errors.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/international-address-input/iai-dynamic-format-toggle-off.png",
+      alt: "Example showing a Select country dropdown",
+    },
+    {
+      src: "/img/patterns/international-address-input/iai-dynamic-format-toggle-on.png",
+      alt: "Example showing Dynamic template with United States selected",
+    },
+  ]}
+  label="Select United States"
+/>
+
+<Diagrams>
+  <Diagram
+    src="/img/patterns/international-address-input/iai-dynamic-format-france.png"
+    alt="Example showing Dynamic template with France selected"
+    contentPosition="top"
+    border
+  >
+    #### France
+  </Diagram>
+  <Diagram
+    src="/img/patterns/international-address-input/iai-dynamic-format-germany.png"
+    alt="Example showing Dynamic template with Germany selected"
+    contentPosition="top"
+    border
+  >
+    #### Germany
+  </Diagram>
+  <Diagram
+    src="/img/patterns/international-address-input/iai-dynamic-format-spain.png"
+    alt="Example showing Dynamic template with Spain selected"
+    contentPosition="top"
+    border
+  >
+    #### Spain
+  </Diagram>
+  <Diagram
+    src="/img/patterns/international-address-input/iai-dynamic-format-uk.png"
+    alt="Example showing Dynamic template with United Kingdom selected"
+    contentPosition="top"
+    border
+  >
+    #### United Kingdom
+  </Diagram>
+</Diagrams>
+
+### Generic format
+
+The generic format uses a single international address form for all countries and regions.
+
+Sometimes, using templates may be difficult due to requirements or product scope. In these cases, use the generic format.
+
+<Diagram
+  src="/img/patterns/international-address-input/iai-generic-format.png"
+  alt="Example showing generic format"
+  caption="Example showing a generic format."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Choose the format that best fits the technical capabilities of your app, delivery timescales and required locations. 
+  - Combine dynamic formats and generic formats if users input international addresses worldwide. You can provide templates using both generic and dynamic formats.
+</ExampleContainer>
+
+## Additional addresses
+
+There may be cases where users will need an additional address form. For example, where the client's address may be different from the business address. We recommend a checkbox after the first form for users to select if they need the additional form.
+
+<Diagram
+  src="/img/patterns/international-address-input/iai-adding-additional-details.png"
+  alt="Example showing additional address input."
+  caption="Example showing additional address input."
+  border
+/>
+
+## Customized address forms
+
+Sometimes, you need to customize the address form while considering other information you're collecting based on the product scope.
+
+- You may need an additional form field, e.g., House No..
+- You can use the address form alongside other fields. This may include international phone number, email address, banking details, time zone selection and others.
+
+<Diagram
+  src="/img/patterns/international-address-input/iai-customized-address-forms.png"
+  alt="Example showing a customized address form."
+  caption="Example showing a customized address form."
+  border
+/>
+
+:fragment{src="./fragments/feedback.mdx"}

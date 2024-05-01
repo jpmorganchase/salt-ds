@@ -15,7 +15,11 @@ export const PivotIcon = forwardRef<SVGSVGElement, PivotIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M12 0v12H0V0h12zM1 11h3L1 8.5V11zm3-2v2h7V1H1v7.5L4 6v2h4V4H6l2.5-3L11 4H9v5H4z" />
+        <path
+          fillRule="evenodd"
+          d="M12 0H0v12h12V0ZM1 11V8.5L4 11H1Zm3-2v2h7V1H1v7.5L4 6v2h4V4H6l2.5-3L11 4H9v5H4Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }
