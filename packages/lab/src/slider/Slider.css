@@ -51,7 +51,7 @@
 }
 
 .saltSliderThumb-tooltip {
-  background: var(--tooltip-background);
+  background: var(--salt-container-primary-background);
   border-color: var(--salt-status-info-borderColor);
   border-style: var(--salt-container-borderStyle);
   border-width: var(--salt-size-border);
@@ -61,7 +61,7 @@
   max-width: var(--saltTooltip-maxWidth, 230px);
   padding: var(--saltTooltip-padding, var(--salt-size-unit));
   position: absolute;
-  z-index: var(--tooltip-zIndex);
+  z-index: var(--salt-zIndex-flyover);
   transform: translate(0, -100%);
 }
 
@@ -92,7 +92,6 @@
 
 .saltSliderMarks {
   position: relative;
-  width: inherit;
 }
 
 .saltSliderMarks-mark {
