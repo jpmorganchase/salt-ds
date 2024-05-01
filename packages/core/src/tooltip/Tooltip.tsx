@@ -104,7 +104,6 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       placement,
       enterDelay,
       leaveDelay,
-      disabled,
       ...rest,
     };
 
