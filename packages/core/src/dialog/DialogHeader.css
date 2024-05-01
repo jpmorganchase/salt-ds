@@ -30,7 +30,7 @@
   top: 0;
   left: 0;
   bottom: var(--salt-spacing-100);
-  width: var(--salt-size-accent);
+  width: var(--salt-size-bar);
   background: var(--salt-accent-background);
 }
 

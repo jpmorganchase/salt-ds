@@ -19,7 +19,7 @@ export const HospitalSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M2 0h8v11h2v1H0v-1h2V0Zm3 11h2v-1H5v1Zm1.5-9v1.031h1v1h-1V5h-1v-.969h-1v-1h1V2h1ZM5.062 6h-1v1h1V6Zm-1 2h1v1h-1V8ZM8 7V6H7v1h1Zm0 1v1H7V8h1Z"
+        d="M2 0h8v11h2v1H0v-1h2V0Zm3 11h2v-1H5v1Zm1.5-9v1h1v1h-1v1h-1V4h-1V3h1V2h1ZM5 6H4v1h1V6ZM4 8h1v1H4V8Zm4-1V6H7v1h1Zm0 1v1H7V8h1Z"
         clipRule="evenodd"
       />
     </Icon>

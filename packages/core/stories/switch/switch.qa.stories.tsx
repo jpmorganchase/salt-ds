@@ -1,4 +1,10 @@
-import { Switch } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
+  Switch,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -32,6 +38,34 @@ export const AllExamplesGrid: StoryFn<
 };
 
 AllExamplesGrid.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer height={500} width={1000} cols={2} {...props}>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Reference</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="right">
+      <FormFieldLabel>Reference</FormFieldLabel>
+      <Input defaultValue="Value" />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+    <FormField labelPlacement="right">
+      <FormFieldLabel>Label</FormFieldLabel>
+      <Switch />
+      <FormFieldHelperText>Helpertext</FormFieldHelperText>
+    </FormField>
+  </QAContainer>
+);
+FormFieldAlignments.parameters = {
   chromatic: { disableSnapshot: false },
 };
 

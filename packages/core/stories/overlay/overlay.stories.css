@@ -1,5 +1,5 @@
 .content-heading {
-  margin: 0 0 calc(var(--salt-size-unit) / 2);
+  margin: 0 0 var(--salt-spacing-50);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
 }

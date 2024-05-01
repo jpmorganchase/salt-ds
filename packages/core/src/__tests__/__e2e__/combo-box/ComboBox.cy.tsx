@@ -522,6 +522,16 @@ describe("Given a ComboBox", () => {
     cy.findByRole("button", { name: /^Alabama/ }).should("be.focused");
   });
 
+  it("should be able to delete a pill when its option is not visible on screen", () => {
+    cy.mount(<MultiplePills />);
+    cy.findByRole("combobox").realClick();
+    cy.realType("UNKNOWN");
+    cy.realPress("Home");
+    cy.findAllByRole("button").should("have.length", "4");
+    cy.realPress("Backspace");
+    cy.findAllByRole("button").should("have.length", "3");
+  });
+
   it("should render the custom floating component", () => {
     cy.mount(
       <CustomFloatingComponentProvider>

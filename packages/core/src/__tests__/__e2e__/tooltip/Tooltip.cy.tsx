@@ -74,6 +74,19 @@ describe("GIVEN a Tooltip", () => {
       );
       cy.findByRole("tooltip").should("not.exist");
     });
+
+    it("should not attach floating-ui event handlers when disabled", () => {
+      const keyDownSpy = cy.stub().as("keyDownSpy");
+      cy.mount(
+        <div onKeyDown={keyDownSpy}>
+          <Open disabled />
+        </div>
+      );
+
+      cy.findByRole("button").focus();
+      cy.realPress("Escape");
+      cy.get("@keyDownSpy").should("have.been.called");
+    });
   });
   describe("WHEN tooltip placement is", () => {
     it("TOP - tooltip should be positioned above the trigger", () => {

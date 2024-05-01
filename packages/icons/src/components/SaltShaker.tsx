@@ -11,7 +11,7 @@ export const SaltShakerIcon = forwardRef<SVGSVGElement, SaltShakerIconProps>(
       <Icon
         data-testid="SaltShakerIcon"
         aria-label="salt shaker"
-        viewBox="0 0 13 12"
+        viewBox="0 0 12 12"
         ref={ref}
         {...props}
       >

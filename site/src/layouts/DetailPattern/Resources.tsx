@@ -1,21 +1,6 @@
 import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import styles from "./Resources.module.css";
-import { Image } from "@jpmorganchase/mosaic-site-components";
-import { Link } from "@salt-ds/core";
 import { LinkList } from "../../components/link-list/LinkList";
-
-const LinkWithLogo = ({ href, label }: { href: string; label: string }) => (
-  <div className={styles.link}>
-    {href.includes("figma.com") && <Image src="/img/figma_logo.svg" alt="" />}
-    {href.includes("github.com") && <Image src="/img/github_logo.svg" alt="" />}
-    {href.includes("storybook") && (
-      <Image src="/img/storybook_logo.svg" alt="" />
-    )}
-    <Link href={href} target="_blank">
-      {label}
-    </Link>
-  </div>
-);
 
 type Resources = {
   href: string;

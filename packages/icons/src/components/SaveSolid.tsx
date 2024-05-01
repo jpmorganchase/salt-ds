@@ -15,9 +15,13 @@ export const SaveSolidIcon = forwardRef<SVGSVGElement, SaveSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M9 7H3v2h6V7z" />
-        <path d="M3 0v4h5V0h.707L12 3.293V12H0V0h3zm7 6H2v4h8V6z" />
-        <path d="M4 0v3h3V0H4z" />
+        <path d="M9 7H3v2h6V7Z" />
+        <path
+          fillRule="evenodd"
+          d="M3 0H0v12h12V3.293L8.707 0H8v4H3V0Zm7 6H2v4h8V6Z"
+          clipRule="evenodd"
+        />
+        <path d="M4 0v3h3V0H4Z" />
       </Icon>
     );
   }
