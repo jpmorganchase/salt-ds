@@ -20,7 +20,6 @@ export function SliderMarks({
   return (
     <div className={withBaseName()} {...rest}>
       {marks.map((mark) => {
-        console.log(mark.position);
         return (
           <Label
             className={withBaseName("mark")}

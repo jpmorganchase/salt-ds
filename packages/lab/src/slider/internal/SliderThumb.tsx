@@ -13,7 +13,7 @@ export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
-  const { trackRef, className, ...rest } = props;
+  const { trackRef, ...rest } = props;
 
   const { min, max, step, value, setValue, onChange, ariaLabel } =
     useSliderContext();
@@ -36,6 +36,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     <div
       style={{ left: `${percentage}` }}
       className={withBaseName("container")}
+      {...thumbProps}
     >
       <div
         className={clsx(withBaseName("tooltip"), {
@@ -44,20 +45,18 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
       >
         <Label>{value}</Label>
       </div>
-      <div className={withBaseName("selectionArea")} {...thumbProps}>
-        <div
-          className={clsx(withBaseName(), className)}
-          onKeyDown={onKeyDown}
-          role="slider"
-          aria-valuemin={min}
-          aria-valuemax={max}
-          aria-valuenow={value}
-          aria-label={ariaLabel}
-          aria-orientation="horizontal"
-          tabIndex={0}
-          {...rest}
-        />
-      </div>
+      <div
+        className={withBaseName()}
+        onKeyDown={onKeyDown}
+        role="slider"
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-label={ariaLabel}
+        aria-orientation="horizontal"
+        tabIndex={0}
+        {...rest}
+      />
     </div>
   );
 }

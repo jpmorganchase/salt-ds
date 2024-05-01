@@ -12,8 +12,8 @@ export interface SliderContextValue {
 
 export const SliderContext = createContext<SliderContextValue>({
   min: 0,
-  max: 0,
-  step: 0,
+  max: 10,
+  step: 1,
   value: 0,
   setValue: () => null,
   onChange: () => null,

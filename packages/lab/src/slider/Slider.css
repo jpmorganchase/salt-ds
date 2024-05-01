@@ -1,5 +1,5 @@
 .saltSlider {
-  display: grid !important;
+  display: grid;
   gap: var(--salt-spacing-100);
   grid-template-columns: auto 1fr auto;
 }
@@ -46,18 +46,18 @@
   align-items: center;
   justify-content: center;
   transform: translate(-50%, 0%);
-  height: 50px;
-  width: 50px;
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
 }
 
 .saltSliderThumb-tooltip {
   background: var(--tooltip-background);
   border-color: var(--salt-status-info-borderColor);
-  border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
-  border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
-  line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
-  box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
-  color: var(--saltTooltip-text-color, var(--salt-content-primary-foreground));
+  border-style: var(--salt-container-borderStyle);
+  border-width: var(--salt-size-border);
+  line-height: var(--salt-text-lineHeight);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  color: var(--salt-content-primary-foreground);
   max-width: var(--saltTooltip-maxWidth, 230px);
   padding: var(--saltTooltip-padding, var(--salt-size-unit));
   position: absolute;
@@ -69,18 +69,11 @@
   display: none;
 }
 
-.saltSliderThumb-selectionArea {
-  display: flex;
-  width: var(--salt-size-base);
-  height: var(--salt-size-base);
-}
-
 .saltSliderThumb {
   position: relative;
   width: var(--salt-size-indicator);
   height: var(--salt-size-selectable);
   background: var(--salt-accent-borderColor);
-  margin: auto;
 }
 
 .saltSliderThumb:focus-visible {
