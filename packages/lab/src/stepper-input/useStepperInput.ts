@@ -44,9 +44,6 @@ const toFloat = (inputValue: number | string) => {
 const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
-const getButtonIcon = (type: Direction) =>
-  type === stepperDirection.INCREMENT ? "triangle-up" : "triangle-down";
-
 export const useStepperInput = (
   props: StepperInputProps,
   inputRef: MutableRefObject<HTMLInputElement | null>
@@ -298,7 +295,6 @@ export const useStepperInput = (
 
   return {
     decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
-    getButtonIcon,
     getButtonProps,
     getInputProps,
     incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,

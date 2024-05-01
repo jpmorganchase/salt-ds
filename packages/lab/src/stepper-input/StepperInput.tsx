@@ -114,7 +114,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
 
     const {
       decrementButtonDown,
-      getButtonIcon,
       getButtonProps,
       getInputProps,
       incrementButtonDown,
@@ -154,9 +153,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
           disabled={isAtMax()}
           {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
         >
-          <TriangleUpIcon
-            aria-label={getButtonIcon(stepperDirection.INCREMENT)}
-          />
+          <TriangleUpIcon aria-label="triangle-up" />
         </Button>
         <Button
           className={clsx({
@@ -165,9 +162,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
           disabled={isAtMin()}
           {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
         >
-          <TriangleDownIcon
-            aria-label={getButtonIcon(stepperDirection.DECREMENT)}
-          />
+          <TriangleDownIcon aria-label="triangle-down" />
         </Button>
       </>
     );
