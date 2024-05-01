@@ -1,28 +1,24 @@
-import { StackLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
-import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleColumnsColoration";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import dataGridExampleColumnsColoration from "../dependencies/dataGridExampleColumnsColoration";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const Coloration = (props: AgGridReactProps) => {
-  const { themeName, switcher } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridExampleColumnsColoration}
-          rowData={dataGridExampleData}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={dataGridExampleColumnsColoration}
+        rowData={dataGridExampleData}
+      />
+    </div>
   );
 };
 

@@ -16,24 +16,21 @@ const CustomOverlay = () => (
 );
 
 const LoadingOverlay = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps} tabIndex={-1}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          columnDefs={dataGridExampleColumns}
-          rowData={null}
-          loadingOverlayComponent={CustomOverlay}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps} tabIndex={-1}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        columnDefs={dataGridExampleColumns}
+        rowData={null}
+        loadingOverlayComponent={CustomOverlay}
+      />
+    </div>
   );
 };
 

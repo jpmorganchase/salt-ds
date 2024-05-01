@@ -1,14 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { Checkbox, FlexItem, StackLayout, useDensity } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import {
-  StackLayout,
-  FlexItem,
-  FlexLayout,
-  Checkbox,
-  useDensity,
-} from "@salt-ds/core";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const longNamesData = dataGridExampleData.map((d) => ({
@@ -18,7 +12,7 @@ const longNamesData = dataGridExampleData.map((d) => ({
 
 const WrappedCell = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
     compact,
@@ -39,17 +33,14 @@ const WrappedCell = (props: AgGridReactProps) => {
 
   return (
     <StackLayout gap={4}>
-      <FlexLayout direction="row">
-        {switcher}
-        <FlexItem>
-          <Checkbox
-            checked={compact && density === "high"}
-            label="Compact (for high density only)"
-            onChange={handleCompactChange}
-            disabled={density !== "high"}
-          />
-        </FlexItem>
-      </FlexLayout>
+      <FlexItem>
+        <Checkbox
+          checked={compact && density === "high"}
+          label="Compact (for high density only)"
+          onChange={handleCompactChange}
+          disabled={density !== "high"}
+        />
+      </FlexItem>
       <div {...containerProps} style={{ height: "400px", width: "500px" }}>
         <AgGridReact
           columnDefs={[
