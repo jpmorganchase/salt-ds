@@ -160,18 +160,6 @@ export const useStepperInput = (
     }
   };
 
-  const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
-    useSpinner(decrementBlock, isAtMin());
-
-  const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
-    useSpinner(decrement, isAtMin());
-
-  const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
-    useSpinner(incrementBlock, isAtMax());
-
-  const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
-    useSpinner(increment, isAtMax());
-
   const handleInputBlur = () => {
     if (currentValue === undefined) return;
 
@@ -294,10 +282,8 @@ export const useStepperInput = (
   };
 
   return {
-    decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
     getButtonProps,
     getInputProps,
-    incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
     isAtMax,
     isAtMin,
     refreshCurrentValue,

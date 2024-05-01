@@ -1,3 +1,15 @@
-.saltStepperInput-hideSecondaryButton {
-  visibility: hidden;
+/* Styles applied to stepper buttons container */
+.saltStepperInput-buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-50);
+}
+
+/* Styles applied to stepper buttons */
+.saltInput-endAdornmentContainer .saltButton ~ .saltButton.saltStepperInput-stepperButton,
+.saltStepperInput-stepperButton {
+  --saltButton-height: calc((var(--salt-size-base) - var(--salt-spacing-150)) * 0.5);
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  margin-left: 0;
+  margin-right: 0;
 }

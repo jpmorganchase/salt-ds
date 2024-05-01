@@ -15,7 +15,7 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
+import { ChevronDownIcon, ChevronUpIcon, RefreshIcon } from "@salt-ds/icons";
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
 import { useStepperInput } from "./useStepperInput";
 
@@ -113,10 +113,8 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const {
-      decrementButtonDown,
       getButtonProps,
       getInputProps,
-      incrementButtonDown,
       isAtMax,
       isAtMin,
       refreshCurrentValue,
@@ -131,39 +129,32 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
 
     const endAdornment: ReactNode = (
       <>
-        <Button
-          aria-label="Refresh default value"
-          className={clsx({
-            // Refresh button is always rendered and has its visibility toggled to
-            // avoid component width changing.
-            [withBaseName("hideSecondaryButton")]: !(
-              showRefreshButton || valuesHaveDiverged()
-            ),
-          })}
-          onClick={refreshCurrentValue}
-          variant="secondary"
-        >
-          <RefreshIcon aria-label="refresh" />
-        </Button>
-
-        <Button
-          className={clsx({
-            active: incrementButtonDown,
-          })}
-          disabled={isAtMax()}
-          {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
-        >
-          <TriangleUpIcon aria-label="triangle-up" />
-        </Button>
-        <Button
-          className={clsx({
-            active: decrementButtonDown,
-          })}
-          disabled={isAtMin()}
-          {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-        >
-          <TriangleDownIcon aria-label="triangle-down" />
-        </Button>
+        {showRefreshButton && (
+          <Button
+            aria-label="Refresh default value"
+            className={withBaseName("refreshButton")}
+            onClick={refreshCurrentValue}
+            variant="secondary"
+          >
+            <RefreshIcon aria-label="refresh" />
+          </Button>
+        )}
+        <div className={withBaseName("buttonContainer")}>
+          <Button
+            className={withBaseName("stepperButton")}
+            disabled={isAtMax()}
+            {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
+          >
+            <ChevronUpIcon aria-label="chevron-up" />
+          </Button>
+          <Button
+            className={withBaseName("stepperButton")}
+            disabled={isAtMin()}
+            {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
+          >
+            <ChevronDownIcon aria-label="chevron-down" />
+          </Button>
+        </div>
       </>
     );
 
