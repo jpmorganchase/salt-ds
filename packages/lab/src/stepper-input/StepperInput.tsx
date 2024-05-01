@@ -24,7 +24,7 @@ import stepperInputCss from "./StepperInput.css";
 const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  extends Omit<ComponentPropsWithoutRef<"input">, "onChange"> {
   /**
    * Props to be passed to the button components.
    */
