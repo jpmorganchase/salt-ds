@@ -130,9 +130,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         middleware: [flip({ fallbackStrategy: "initialPlacement" })],
       });
 
-    const dismiss = useDismiss(context);
-
-    const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
+    const { getReferenceProps, getFloatingProps } = useInteractions([
+      useDismiss(context),
+    ]);
     const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
       useFormFieldProps();
 

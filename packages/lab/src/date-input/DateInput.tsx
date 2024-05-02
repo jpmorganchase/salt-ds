@@ -24,19 +24,14 @@ import {
   parseAbsoluteToLocal,
 } from "@internationalized/date";
 import { useDatePickerContext } from "../date-picker/DatePickerContext";
-import { getCurrentLocale } from "../calendar/internal/utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 const isInvalidDate = (value: string) =>
   // @ts-ignore evaluating validity of date
   value && isNaN(new Date(value));
 const createDate = (date: string): Date | null => {
-  if (!date) return null;
-  try {
-    return isInvalidDate(date) ? null : new Date(date);
-  } catch (err) {
-    return null;
-  }
+  if (!date || isInvalidDate(date)) return null;
+  else return new Date(date);
 };
 
 function getCalendarDate(inputDate: string) {
