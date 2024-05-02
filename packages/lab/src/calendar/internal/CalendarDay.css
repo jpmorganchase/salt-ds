@@ -33,7 +33,7 @@
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-secondary-foreground);
 }
 
-.saltCalendarDay-outOfRange.saltCalendarDay-highlighted {
+.saltCalendarDay-outOfRange.saltCalendarDay-highlighted:before {
   background: var(--salt-content-secondary-foreground);
 }
 .saltCalendarDay:hover,
