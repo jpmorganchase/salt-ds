@@ -29,6 +29,9 @@
 .saltCalendarDay-outOfRange {
   color: var(--salt-content-secondary-foreground);
 }
+.saltCalendarDay-outOfRange:hover {
+  color: var(--salt-content-primary-foreground);
+}
 .saltCalendarDay-outOfRange .saltCalendarDay-today {
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-secondary-foreground);
 }
@@ -72,7 +75,8 @@
   cursor: var(--salt-selectable-cursor-disabled);
 }
 
-.saltCalendarDay-highlighted:before {
+.saltCalendarDay-highlighted:before,
+.saltCalendarDay-highlighted:hover:before {
   content: "";
   height: var(--salt-spacing-200); /* TODO: change for size-modifier when available */
   width: var(--salt-spacing-200);
@@ -95,7 +99,8 @@
 }
 
 .saltCalendarDay-today,
-.saltCalendarDay-today:hover {
+.saltCalendarDay-today:hover,
+.saltCalendarDay-outOfRange .saltCalendarDay-today:hover {
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-foreground-active);
   margin-bottom: calc(var(--salt-size-indicator) * -1);
 }
