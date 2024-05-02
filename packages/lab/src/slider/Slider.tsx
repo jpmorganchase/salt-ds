@@ -16,12 +16,33 @@ const defaultStep = 1;
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+  /**
+   * Minimum slider value
+   */
   min?: number;
+  /**
+   * Maximum slider value
+   */
   max?: number;
+  /**
+   * Minimum interval the slider thumb can move
+   */
   step?: number;
-  value?: number;
+  /**
+   * Initial value of the slider
+   */
   defaultValue?: number;
-  labels?: "inline" | "bottom" | "marks";
+  /**
+   * The markings the slider is displayed with
+   */
+  marks?: "inline" | "bottom" | "all";
+  /**
+   * Value of the slider, to be used when in a controlled state
+   */
+  value?: number;
+  /**
+   * Change handler to be used when in a controlled state
+   */
   onChange?: SliderChangeHandler;
 }
 
@@ -35,7 +56,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange,
     className,
     ["aria-label"]: ariaLabel,
-    labels = "inline",
+    marks = "inline",
     ...rest
   },
   ref
@@ -70,31 +91,31 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         ref={ref}
         className={clsx(
           withBaseName(),
-          { [withBaseName("bottomLabel")]: labels !== "inline" },
+          { [withBaseName("bottomLabel")]: marks !== "inline" },
           className
         )}
         {...rest}
       >
-        {labels !== "marks" && (
+        {marks !== "all" && (
           <Label
             className={clsx({
-              [withBaseName("labelMinBottom")]: labels !== "inline",
+              [withBaseName("labelMinBottom")]: marks !== "inline",
             })}
           >
             {min}
           </Label>
         )}
         <SliderTrack />
-        {labels !== "marks" && (
+        {marks !== "all" && (
           <Label
             className={clsx({
-              [withBaseName("labelMaxBottom")]: labels !== "inline",
+              [withBaseName("labelMaxBottom")]: marks !== "inline",
             })}
           >
             {max}
           </Label>
         )}
-        {labels === "marks" && <SliderMarks max={max} min={min} step={step} />}
+        {marks === "all" && <SliderMarks max={max} min={min} step={step} />}
       </div>
     </SliderContext.Provider>
   );

@@ -42,6 +42,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         className={clsx(withBaseName("tooltip"), {
           [withBaseName("showTooltip")]: !thumbFocus,
         })}
+        aria-expanded={thumbFocus}
       >
         <Label>{value}</Label>
       </div>

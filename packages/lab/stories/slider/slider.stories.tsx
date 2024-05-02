@@ -31,13 +31,13 @@ CustomStep.args = {
   min: -1,
   max: 1,
   step: 0.2,
-  labels: "marks",
+  marks: "all",
   "aria-label": "CustomStep",
 };
 
 export const BottomLabel = Template.bind({});
 BottomLabel.args = {
-  labels: "bottom",
+  marks: "bottom",
   "aria-label": "CustomStep",
 };
 
@@ -45,7 +45,7 @@ export const WithMarks = Template.bind({});
 WithMarks.args = {
   min: -5,
   max: 5,
-  labels: "marks",
+  marks: "all",
   "aria-label": "withMarks",
 };
 
