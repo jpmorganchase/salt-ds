@@ -92,24 +92,29 @@ $icons: (
 }
 
 @each $name, $glyph in $icons {
-  [class^="ag-theme-salt"] .ag-icon-#{$name} {
+  [class^="ag-theme-salt"] .ag-icon-#{$name},
+  [class*=" ag-theme-salt"] .ag-icon-#{$name} {
     font-family: "salt-icons";
   }
 
-  [class^="ag-theme-salt"] .ag-icon-#{$name}::before {
+  [class^="ag-theme-salt"] .ag-icon-#{$name}::before,
+  [class*=" ag-theme-salt"] .ag-icon-#{$name}::before {
     content: $glyph;
   }
 }
 
-[class^="ag-theme-salt"] .ag-checkbox-input-wrapper::after {
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper::after,
+[class*=" ag-theme-salt"] .ag-checkbox-input-wrapper::after {
   font-family: "salt-icons";
   content: "";
 }
 
-[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked::after {
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked::after,
+[class*=" ag-theme-salt"] .ag-checkbox-input-wrapper.ag-checked::after {
   content: "\ea2e";
 }
 
-[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
+[class^="ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate::after,
+[class*=" ag-theme-salt"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
   content: "\ea10";
 }
