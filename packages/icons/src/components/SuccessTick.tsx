@@ -15,7 +15,11 @@ export const SuccessTickIcon = forwardRef<SVGSVGElement, SuccessTickIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="m11.8 2.26-7.463 8.052-4.1-3.832 1.024-1.096L4.26 8.187l6.439-6.948 1.1 1.02z" />
+        <path
+          fillRule="evenodd"
+          d="m3.871 8.033 6.187-6.187 1.061 1.06-7.248 7.248-2.99-2.99 1.06-1.061 1.93 1.93Z"
+          clipRule="evenodd"
+        />
       </Icon>
     );
   }
