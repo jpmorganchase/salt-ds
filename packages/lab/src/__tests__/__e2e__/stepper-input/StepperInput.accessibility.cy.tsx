@@ -1,10 +1,5 @@
-import { StepperInput, FormField } from "@salt-ds/lab";
-import {
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  StackLayout,
-} from "@salt-ds/core";
+import { StepperInput } from "@salt-ds/lab";
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import { useState } from "react";
 
 describe("Stepper Input - Accessibility", () => {
@@ -73,7 +68,7 @@ describe("Stepper Input - Accessibility", () => {
 
     cy.findByRole("spinbutton").should(
       "have.accessibleName",
-      "Stepper iInput , value out of date"
+      "Stepper Input , value out of date"
     );
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
