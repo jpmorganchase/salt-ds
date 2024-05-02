@@ -39,7 +39,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
 
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-date-input-panel",
+      testId: "salt-date-picker-panel",
       css: dateInputPanelCss,
       window: targetWindow,
     });
