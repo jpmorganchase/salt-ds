@@ -15,7 +15,7 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { ChevronDownIcon, ChevronUpIcon, RefreshIcon } from "@salt-ds/icons";
+import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
 import { useStepperInput } from "./useStepperInput";
 
@@ -129,7 +129,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
 
     const endAdornment: ReactNode = (
       <>
-        {showRefreshButton && (
+        {(showRefreshButton || valuesHaveDiverged()) && (
           <Button
             aria-label="Refresh default value"
             className={withBaseName("refreshButton")}
@@ -139,22 +139,18 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
             <RefreshIcon aria-label="refresh" />
           </Button>
         )}
-        <div className={withBaseName("buttonContainer")}>
-          <Button
-            className={withBaseName("stepperButton")}
-            disabled={isAtMax()}
-            {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
-          >
-            <ChevronUpIcon aria-label="chevron-up" />
-          </Button>
-          <Button
-            className={withBaseName("stepperButton")}
-            disabled={isAtMin()}
-            {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-          >
-            <ChevronDownIcon aria-label="chevron-down" />
-          </Button>
-        </div>
+        <Button
+          disabled={isAtMin()}
+          {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
+        >
+          <RemoveIcon aria-label="remove-icon" />
+        </Button>
+        <Button
+          disabled={isAtMax()}
+          {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
+        >
+          <AddIcon aria-label="add-icon" />
+        </Button>
       </>
     );
 
