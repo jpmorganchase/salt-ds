@@ -20,7 +20,7 @@ export function useAgGridHelpers({
   mode: modeProp,
   density: densityProp,
   containerClassName,
-}: AgGridHelpersProps): {
+}: AgGridHelpersProps = {}): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
@@ -69,7 +69,7 @@ export function useAgGridHelpers({
 
   return {
     containerProps: {
-      className,
+      className: clsx(containerClassName, className),
       style: { height: 500, width: 800 },
     },
     agGridProps: {
