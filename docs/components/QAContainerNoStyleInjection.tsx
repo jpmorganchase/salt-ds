@@ -4,17 +4,17 @@ import { QAContainer, QAContainerProps } from "./QAContainer";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
-import coreCss from "../css/salt-core.css?inline";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
-import iconCss from "../../packages/icons/src/icon/Icon.css?inline";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
-import labCss from "../css/salt-lab.css?inline";
+// import coreCss from "../css/salt-core.css?inline";
+//
+// // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// // @ts-ignore
+// // eslint-disable-next-line import/no-unresolved
+// import iconCss from "../../packages/icons/src/icon/Icon.css?inline";
+//
+// // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// // @ts-ignore
+// // eslint-disable-next-line import/no-unresolved
+// import labCss from "../css/salt-lab.css?inline";
 
 export const useDynamicStyleSheet = (styleSheet: string, id: string): void => {
   useEffect(() => {

@@ -185,6 +185,8 @@
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-100);
+  flex-grow: 1;
+  justify-content: end;
 }
 
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {

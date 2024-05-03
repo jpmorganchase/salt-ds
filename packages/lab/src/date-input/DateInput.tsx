@@ -304,6 +304,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
               onBlur={handleEndDateBlur}
               onChange={handleEndDateChange}
               onKeyDown={handleEndDateKeyDown}
+              onFocus={!isDisabled ? handleFocus : undefined}
               placeholder={placeholder}
               value={
                 isReadOnly && !endDateStringValue
