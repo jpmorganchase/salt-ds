@@ -100,6 +100,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const hookProps: UseTooltipProps = {
       open: openProp,
+      disabled,
       placement,
       enterDelay,
       leaveDelay,

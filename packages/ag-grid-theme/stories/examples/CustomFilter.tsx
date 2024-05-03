@@ -8,7 +8,7 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 
 const CustomFilter = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
 
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers({
@@ -80,7 +80,6 @@ const CustomFilter = (props: AgGridReactProps) => {
 
   return (
     <StackLayout gap={4}>
-      {switcher}
       <FlowLayout gap={2}>
         <Button onClick={handlePopLt100kClick}>Pop &gt; 100k</Button>
         <Button onClick={handlePopMt100kClick}>Pop &lt; 100k</Button>

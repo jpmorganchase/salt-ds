@@ -1,34 +1,28 @@
+import { ColDef, ColGroupDef } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { StackLayout } from "@salt-ds/core";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
-import { ColDef, ColGroupDef } from "ag-grid-community";
 
 const ColumnGroup = (props: AgGridReactProps) => {
-  const { themeName, switcher } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          rowData={dataGridExampleData}
-          columnDefs={columnsWithGrouping("US States")}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        rowData={dataGridExampleData}
+        columnDefs={columnsWithGrouping("US States")}
+      />
+    </div>
   );
 };
 
-const columnsWithGrouping = (
-  groupName: string
-): Array<ColGroupDef | ColDef> => [
+const columnsWithGrouping = (groupName: string): (ColGroupDef | ColDef)[] => [
   {
     headerName: "",
     field: "on",

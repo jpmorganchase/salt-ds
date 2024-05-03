@@ -1,15 +1,14 @@
 import { GetContextMenuItemsParams } from "ag-grid-community";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { StackLayout } from "@salt-ds/core";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
-import windows from "../dependencies/windows.png";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
 import mac from "../dependencies/mac.png";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import windows from "../dependencies/windows.png";
 
 const ContextMenu = (props: AgGridReactProps) => {
-  const { themeName, switcher } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
@@ -145,19 +144,16 @@ const ContextMenu = (props: AgGridReactProps) => {
   };
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          allowContextMenuWithControlKey
-          getContextMenuItems={getContextMenuItems}
-          columnDefs={dataGridExampleColumns}
-          rowData={dataGridExampleData}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        allowContextMenuWithControlKey
+        getContextMenuItems={getContextMenuItems}
+        columnDefs={dataGridExampleColumns}
+        rowData={dataGridExampleData}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 

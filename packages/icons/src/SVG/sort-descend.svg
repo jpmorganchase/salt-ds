@@ -1,4 +1,4 @@
-<svg width="12" height="12" viewBox="0 0 12 12" >
+<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" >
 <path d="M0 3V1H6V3H0Z" />
 <path d="M0 7H4V5H0V7Z" />
 <path d="M0 11H3V9H0V11Z" />

@@ -7790,16 +7790,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/csf@npm:^0.1.0":
-  version: 0.1.1
-  resolution: "@storybook/csf@npm:0.1.1"
-  dependencies:
-    type-fest: "npm:^2.19.0"
-  checksum: 10/d79f9eca1184a3e3e6cf6b19b47ea2378db3fb2ec574686d311597b0de83cd8148a038311a891a348089edac2dc4dd7ceb65a87845a882546d9fc00146e3ce29
-  languageName: node
-  linkType: hard
-
-"@storybook/csf@npm:^0.1.2":
+"@storybook/csf@npm:^0.1.0, @storybook/csf@npm:^0.1.2":
   version: 0.1.4
   resolution: "@storybook/csf@npm:0.1.4"
   dependencies:
@@ -8816,23 +8807,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@testing-library/dom@npm:9.0.0"
-  dependencies:
-    "@babel/code-frame": "npm:^7.10.4"
-    "@babel/runtime": "npm:^7.12.5"
-    "@types/aria-query": "npm:^5.0.1"
-    aria-query: "npm:^5.0.0"
-    chalk: "npm:^4.1.0"
-    dom-accessibility-api: "npm:^0.5.9"
-    lz-string: "npm:^1.4.4"
-    pretty-format: "npm:^27.0.2"
-  checksum: 10/c8a1c682b7004b63a1076f074417e5792f2cc7e91c04c60bb0a3b5b2ab30eb37930b90f42f993ec7fd3616f9d9575e6ac4a799d39a8cb7f39e8d18abcd81296a
-  languageName: node
-  linkType: hard
-
-"@testing-library/dom@npm:^9.3.1":
+"@testing-library/dom@npm:^9.0.0, @testing-library/dom@npm:^9.3.1":
   version: 9.3.4
   resolution: "@testing-library/dom@npm:9.3.4"
   dependencies:
@@ -12355,22 +12330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chai@npm:^4.3.10":
-  version: 4.3.10
-  resolution: "chai@npm:4.3.10"
-  dependencies:
-    assertion-error: "npm:^1.1.0"
-    check-error: "npm:^1.0.3"
-    deep-eql: "npm:^4.1.3"
-    get-func-name: "npm:^2.0.2"
-    loupe: "npm:^2.3.6"
-    pathval: "npm:^1.1.1"
-    type-detect: "npm:^4.0.8"
-  checksum: 10/9e545fd60f5efee4f06f7ad62f7b1b142932b08fbb3454db69defd511e7c58771ce51843764212da1e129b2c9d1b029fbf5f98da030fe67a95a0853e8679524f
-  languageName: node
-  linkType: hard
-
-"chai@npm:^4.3.7":
+"chai@npm:^4.3.10, chai@npm:^4.3.7":
   version: 4.4.1
   resolution: "chai@npm:4.4.1"
   dependencies:
@@ -21417,7 +21377,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lz-string@npm:^1.4.4, lz-string@npm:^1.5.0":
+"lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
   bin:
@@ -30086,17 +30046,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyspy@npm:^2.1.1":
+"tinyspy@npm:^2.1.1, tinyspy@npm:^2.2.0":
   version: 2.2.1
   resolution: "tinyspy@npm:2.2.1"
   checksum: 10/170d6232e87f9044f537b50b406a38fbfd6f79a261cd12b92879947bd340939a833a678632ce4f5c4a6feab4477e9c21cd43faac3b90b68b77dd0536c4149736
-  languageName: node
-  linkType: hard
-
-"tinyspy@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "tinyspy@npm:2.2.0"
-  checksum: 10/bcc5a08c2dc7574d32e6dcc2e760ad95a3cf30249c22799815b6389179427c95573d27d2d965ebc5fca2b6d338c46678cd7337ea2a9cebacee3dc662176b07cb
   languageName: node
   linkType: hard
 

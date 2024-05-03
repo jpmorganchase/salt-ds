@@ -1,9 +1,8 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { StackLayout } from "@salt-ds/core";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const generateData = (states: typeof dataGridExampleData) =>
   states.reduce((result, row) => {
@@ -16,25 +15,22 @@ const generateData = (states: typeof dataGridExampleData) =>
   }, [] as typeof dataGridExampleData);
 
 const PagedGrid = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          columnDefs={dataGridExampleColumns}
-          pagination
-          paginationPageSize={100}
-          rowData={generateData(dataGridExampleData)}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        columnDefs={dataGridExampleColumns}
+        pagination
+        paginationPageSize={100}
+        rowData={generateData(dataGridExampleData)}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 
