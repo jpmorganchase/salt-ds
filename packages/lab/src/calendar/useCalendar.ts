@@ -12,6 +12,7 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
+  isRangeOrOffsetSelectionValue,
   UseMultiSelectionCalendarProps,
   UseOffsetSelectionCalendarProps,
   UseRangeSelectionCalendarProps,
@@ -135,24 +136,56 @@ export function useCalendar(props: useCalendarProps) {
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
-  const getInitialFocusedDate: () => DateValue | undefined = () => {
-    switch (selectionVariant) {
-      case "multiselect":
-        return defaultSelectedDate?.[0];
-      case "offset":
-      case "range":
-        return defaultSelectedDate?.startDate;
-      default:
-        return defaultSelectedDate;
+  const isInVisibleMonth = (
+    date: DateValue | undefined | null
+  ): date is DateValue => date != null && isSameMonth(date, visibleMonth);
+
+  const getInitialFocusedDate = (): DateValue => {
+    const selectedDate = selectionManager.state.selectedDate;
+    // Case range or offset
+    if (isRangeOrOffsetSelectionValue(selectedDate)) {
+      if (isInVisibleMonth(selectedDate?.startDate)) {
+        return selectedDate.startDate;
+      }
+      if (isInVisibleMonth(selectedDate?.endDate)) {
+        return selectedDate.endDate;
+      }
+      if (
+        selectedDate?.startDate &&
+        selectedDate?.endDate &&
+        visibleMonth.compare(selectedDate.startDate) < 0 &&
+        visibleMonth.compare(selectedDate.endDate) > 0
+      ) {
+        return startOfMonth(visibleMonth);
+      }
     }
+    // Case multiselect
+    if (Array.isArray(selectedDate)) {
+      // return first selected day in visible month
+      const selectionInMonth = selectedDate
+        .filter((day) => isInVisibleMonth(day))
+        .sort((a, b) => a.compare(b));
+      if (selectionInMonth.length > 0) {
+        return selectionInMonth[0];
+      }
+    }
+    // Case single select
+    if (
+      !isRangeOrOffsetSelectionValue(selectedDate) &&
+      !Array.isArray(selectedDate) &&
+      isInVisibleMonth(selectedDate)
+    ) {
+      return selectedDate;
+    }
+    // default
+    if (isInVisibleMonth(today(getLocalTimeZone()))) {
+      return today(getLocalTimeZone());
+    }
+    return startOfMonth(visibleMonth);
   };
 
-  const defaultFocusDate = isSameMonth(today(getLocalTimeZone()), visibleMonth)
-    ? today(getLocalTimeZone())
-    : undefined;
-
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
-    getInitialFocusedDate() ?? defaultFocusDate ?? startOfMonth(visibleMonth)
+    getInitialFocusedDate
   );
 
   const isDayVisible = useCallback(
