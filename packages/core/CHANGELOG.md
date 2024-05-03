@@ -1,5 +1,32 @@
 # @salt-ds/core
 
+## 1.27.0
+
+### Minor Changes
+
+- 542b6228: Added `Menu`, `MenuItem`, `MenuTrigger`, `MenuPanel` and `MenuGroup`.
+
+  ```tsx
+  <Menu>
+    <MenuTrigger>
+      <Button variant="secondary" aria-label="Open Menu">
+        <MicroMenuIcon aria-hidden />
+      </Button>
+    </MenuTrigger>
+    <MenuPanel>
+      <MenuItem>Copy</MenuItem>
+      <MenuItem>Paste</MenuItem>
+      <MenuItem>Export</MenuItem>
+      <MenuItem>Settings</MenuItem>
+    </MenuPanel>
+  </Menu>
+  ```
+
+### Patch Changes
+
+- 3f9febe3: Fix pills not being removed when they are not in the displayed list in a combo box.
+- 04b5e51b: Fixed Tooltip not being fully disabled when `disabled=true`.
+
 ## 1.26.0
 
 ### Minor Changes

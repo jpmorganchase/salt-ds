@@ -1,5 +1,12 @@
 # @salt-ds/icons
 
+## 1.11.2
+
+### Patch Changes
+
+- 298ec90c: Fixed `saltIcons.css` not being shipped as part of the package.
+  Fixed CSS icons not appearing.
+
 ## 1.11.1
 
 ### Patch Changes
