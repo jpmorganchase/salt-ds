@@ -11,6 +11,11 @@
     border: none;
   }
 
+  .ag-root-wrapper,
+  .ag-sticky-top {
+    background: var(--ag-background-color, var(--agGrid-background));
+  }
+
   // Because we are using a different border thickness on focus than default
   // we have to adjust height on various elements either using the line-height or height
   // properties.
@@ -344,6 +349,7 @@
 
   .ag-row {
     color: var(--agGrid-foreground);
+    background-color: var(--ag-background-color, var(--agGrid-background));
   }
 
   .ag-row-hover {

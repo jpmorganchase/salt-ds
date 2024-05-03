@@ -376,11 +376,18 @@ export const MultipleChildren: StoryFn<typeof FormField> = (props) => {
 
 export const Readonly: StoryFn<typeof FormField> = (props) => {
   return (
-    <FormField style={{ width: "366px" }} readOnly {...props}>
-      <FormLabel>Readonly Form Field</FormLabel>
-      <Input defaultValue="Primary Input value" />
-      <FormHelperText>This Form Field is readonly</FormHelperText>
-    </FormField>
+    <StackLayout>
+      <FormField style={{ width: "366px" }} readOnly {...props}>
+        <FormLabel>Readonly Form Field</FormLabel>
+        <Input defaultValue="Primary Input value" />
+        <FormHelperText>This Form Field is readonly</FormHelperText>
+      </FormField>
+      <FormField style={{ width: "366px" }} readOnly {...props}>
+        <FormLabel>Readonly multiline input</FormLabel>
+        <MultilineInput defaultValue="Input value" />
+        <FormHelperText>This Form Field is readonly</FormHelperText>
+      </FormField>
+    </StackLayout>
   );
 };
 
