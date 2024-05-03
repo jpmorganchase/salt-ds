@@ -1,4 +1,6 @@
 import {
+  Button,
+  FlexItem,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
@@ -6,6 +8,8 @@ import {
 } from "@salt-ds/core";
 import { StepperInput } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
+import { RefreshIcon } from "@salt-ds/icons";
+import { useState } from "react";
 export default {
   title: "Lab/Stepper Input",
   component: StepperInput,
@@ -35,12 +39,7 @@ export const RefreshButton: StoryFn = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Default Stepper Input</FormFieldLabel>
-      <StepperInput
-        showRefreshButton
-        liveValue={5}
-        defaultValue={6}
-        {...args}
-      />
+      <StepperInput defaultValue={6} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
@@ -75,3 +74,23 @@ export const Alignment: StoryFn = (args) => (
     </FormField>
   </StackLayout>
 );
+
+export const ExternalRefreshButton = () => {
+  const [value, setValue] = useState<number | string>(10);
+
+  return (
+    <StackLayout direction="row" align="center">
+      <FormField>
+        <FormFieldLabel>Stepper Input</FormFieldLabel>
+        <StepperInput
+          value={value}
+          onChange={(changedValue) => setValue(changedValue)}
+        />
+        <FormFieldHelperText>Please enter a value</FormFieldHelperText>
+      </FormField>
+      <Button onClick={() => setValue(10)}>
+        <RefreshIcon />
+      </Button>
+    </StackLayout>
+  );
+};

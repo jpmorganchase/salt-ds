@@ -5,7 +5,6 @@ import {
   MutableRefObject,
 } from "react";
 import { ButtonProps, useControlled, useId, InputProps } from "@salt-ds/core";
-import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
 
@@ -52,7 +51,6 @@ export const useStepperInput = (
     block = 10,
     decimalPlaces = 0,
     defaultValue = 0,
-    liveValue,
     max = Number.MAX_SAFE_INTEGER,
     min = Number.MIN_SAFE_INTEGER,
     onChange,
@@ -82,22 +80,6 @@ export const useStepperInput = (
     if (currentValue === undefined) return true;
     return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
   };
-
-  const valuesHaveDiverged = () => {
-    if (liveValue === undefined || currentValue === undefined) return false;
-    return (
-      toFloat(toFixedDecimalPlaces(liveValue, decimalPlaces)) !==
-      toFloat(currentValue)
-    );
-  };
-
-  const { setHasAnnounced } = useDynamicAriaLabel(
-    ", value out of date",
-    liveValue !== undefined,
-    inputRef,
-    currentValue,
-    valuesHaveDiverged
-  );
 
   const decrement = () => {
     if (currentValue === undefined || isAtMin()) return;
@@ -160,19 +142,17 @@ export const useStepperInput = (
     }
   };
 
-  const { activate: decrementSpinnerBlock } = useSpinner(
-    decrementBlock,
-    isAtMin()
-  );
+  const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
+    useSpinner(decrementBlock, isAtMin());
 
-  const { activate: decrementSpinner } = useSpinner(decrement, isAtMin());
+  const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
+    useSpinner(decrement, isAtMin());
 
-  const { activate: incrementSpinnerBlock } = useSpinner(
-    incrementBlock,
-    isAtMax()
-  );
+  const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
+    useSpinner(incrementBlock, isAtMax());
 
-  const { activate: incrementSpinner } = useSpinner(increment, isAtMax());
+  const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
+    useSpinner(increment, isAtMax());
 
   const handleInputBlur = () => {
     if (currentValue === undefined) return;
@@ -193,10 +173,6 @@ export const useStepperInput = (
     if (onChange) {
       onChange(roundedValue);
     }
-  };
-
-  const handleInputFocus = () => {
-    setHasAnnounced(false);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -236,24 +212,6 @@ export const useStepperInput = (
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
 
-  const refreshCurrentValue = () => {
-    const refreshedcurrentValue =
-      liveValue !== undefined ? liveValue : defaultValue;
-    if (refreshedcurrentValue === undefined) return;
-
-    setCurrentValue(
-      toFixedDecimalPlaces(toFloat(refreshedcurrentValue), decimalPlaces)
-    );
-
-    inputRef.current?.focus();
-
-    if (onChange) {
-      onChange(
-        toFixedDecimalPlaces(toFloat(refreshedcurrentValue), decimalPlaces)
-      );
-    }
-  };
-
   const getButtonProps = (
     type: Direction = stepperDirection.INCREMENT,
     buttonPropsProp: ButtonProps = {}
@@ -289,19 +247,19 @@ export const useStepperInput = (
       },
       onBlur: callAll(inputProps.onBlur, handleInputBlur),
       onChange: callAll(inputProps.onChange, handleInputChange),
-      onFocus: callAll(inputProps.onFocus, handleInputFocus),
+      onFocus: callAll(inputProps.onFocus),
       onKeyDown: callAll(inputProps.onKeyPress, handleInputKeyDown),
       value: String(currentValue),
     };
   };
 
   return {
+    decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
     getButtonProps,
     getInputProps,
+    incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
     isAtMax,
     isAtMin,
-    refreshCurrentValue,
     stepperDirection,
-    valuesHaveDiverged,
   };
 };

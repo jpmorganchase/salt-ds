@@ -15,8 +15,7 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
-import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
+import { AddIcon, RemoveIcon } from "@salt-ds/icons";
 import { useStepperInput } from "./useStepperInput";
 
 import stepperInputCss from "./StepperInput.css";
@@ -46,11 +45,6 @@ export interface StepperInputProps
    */
   defaultValue?: number;
   /**
-   * Values passed in via the `liveValue` prop are not immediately rendered. Instead, the refresh button is displayed,
-offering the user the option to reset the component's display value to the updated `liveValue` prop.
-   */
-  liveValue?: number;
-  /**
    * The maximum value that can be selected.
    */
   max?: number;
@@ -70,10 +64,6 @@ offering the user the option to reset the component's display value to the updat
    * Callback when stepper input gains focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
-  /**
-   * If `true`, always display the refresh button
-   */
-  showRefreshButton?: boolean;
   /**
    * The amount to increment or decrement the value by when using the stepper buttons or Up Arrow and Down Arrow keys.
    */
@@ -95,7 +85,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       InputProps: InputPropsProp,
       textAlign = "left",
       className,
-      showRefreshButton = false,
       onBlur,
       onChange,
       onFocus,
@@ -109,7 +98,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       window: targetWindow,
     });
 
-    const adornmentRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const {
@@ -117,28 +105,11 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       getInputProps,
       isAtMax,
       isAtMin,
-      refreshCurrentValue,
       stepperDirection,
-      valuesHaveDiverged,
     } = useStepperInput(props, inputRef);
-
-    useActivationIndicatorPosition(
-      adornmentRef,
-      valuesHaveDiverged() || showRefreshButton
-    );
 
     const endAdornment: ReactNode = (
       <>
-        {(showRefreshButton || valuesHaveDiverged()) && (
-          <Button
-            aria-label="Refresh default value"
-            className={withBaseName("refreshButton")}
-            onClick={refreshCurrentValue}
-            variant="secondary"
-          >
-            <RefreshIcon aria-label="refresh" />
-          </Button>
-        )}
         <Button
           disabled={isAtMin()}
           {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
@@ -162,7 +133,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         ref={ref}
       >
         <Input
-          className={withBaseName("input")}
           endAdornment={endAdornment}
           ref={inputRef}
           textAlign={textAlign}
