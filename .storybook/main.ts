@@ -24,6 +24,7 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-a11y"),
     getAbsolutePath("@storybook/addon-mdx-gfm"),
+    getAbsolutePath("@storybook/addon-interactions"),
     "@storybook/addon-storysource",
   ],
   async viteFinal(config, { configType }) {

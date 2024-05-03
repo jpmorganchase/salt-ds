@@ -1,6 +1,6 @@
-import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 import { MenuContextValue } from "./MenuContext";
+import { createContext } from "../utils";
 
 export interface MenuPanelContextValue
   extends Pick<

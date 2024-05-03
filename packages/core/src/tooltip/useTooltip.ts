@@ -20,6 +20,10 @@ export interface UseTooltipProps
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
+   * When `true`, the tooltip will be disabled.
+   */
+  disabled?: boolean;
+  /**
    * Do not respond to focus events.
    */
   disableFocusListener?: boolean;
@@ -42,6 +46,7 @@ export interface UseTooltipProps
 export function useTooltip(props?: UseTooltipProps) {
   const {
     enterDelay,
+    disabled,
     leaveDelay,
     open: openProp,
     onOpenChange,
@@ -65,7 +70,7 @@ export function useTooltip(props?: UseTooltipProps) {
 
   const { floating, reference, x, y, strategy, placement, context, elements } =
     useFloatingUI({
-      open,
+      open: disabled ? false : open,
       onOpenChange: handleOpenChange,
       placement: placementProp,
       middleware: [
@@ -85,12 +90,12 @@ export function useTooltip(props?: UseTooltipProps) {
         open: enterDelay,
         close: leaveDelay,
       },
-      enabled: !disableHoverListener,
+      enabled: !(disableHoverListener || disabled),
       handleClose: safePolygon(),
     }),
-    useFocus(context, { enabled: !disableFocusListener }),
+    useFocus(context, { enabled: !(disableFocusListener || disabled) }),
     useRole(context, { role: "tooltip" }),
-    useDismiss(context),
+    useDismiss(context, { enabled: !disabled }),
     useAriaAnnounce(context, {
       delay: {
         open: enterDelay,

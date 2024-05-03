@@ -1,29 +1,25 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { StackLayout } from "@salt-ds/core";
-import dataGridExampleData from "../dependencies/dataGridExampleData";
-import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
+import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
+import dataGridExampleData from "../dependencies/dataGridExampleData";
+import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const FloatingFilter = (props: AgGridReactProps) => {
-  const { switcher, themeName } = useAgGridThemeSwitcher();
+  const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
   });
 
   return (
-    <StackLayout gap={4}>
-      {switcher}
-      <div {...containerProps}>
-        <AgGridReact
-          defaultColDef={{ floatingFilter: true }}
-          columnDefs={customFilterExampleColumns}
-          rowData={dataGridExampleData}
-          {...agGridProps}
-          {...props}
-        />
-      </div>
-    </StackLayout>
+    <div {...containerProps}>
+      <AgGridReact
+        defaultColDef={{ floatingFilter: true }}
+        columnDefs={customFilterExampleColumns}
+        rowData={dataGridExampleData}
+        {...agGridProps}
+        {...props}
+      />
+    </div>
   );
 };
 

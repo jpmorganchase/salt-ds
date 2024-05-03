@@ -1,6 +1,6 @@
-import { createContext, UseFloatingUIReturn } from "@salt-ds/core";
 import { Dispatch, MutableRefObject, SetStateAction, useContext } from "react";
 import { useInteractions } from "@floating-ui/react";
+import { createContext, UseFloatingUIReturn } from "../utils";
 
 type UseInteractionsReturn = ReturnType<typeof useInteractions>;
 

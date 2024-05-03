@@ -1,15 +1,15 @@
-import { Button, Card, SegmentedButtonGroup } from "@salt-ds/core";
 import {
+  Button,
+  Card,
   Menu,
   MenuGroup,
   MenuItem,
   MenuPanel,
   MenuTrigger,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
-  ChevronDownIcon,
   CopyIcon,
   ExportIcon,
   MicroMenuIcon,
@@ -20,7 +20,7 @@ import { useState } from "react";
 import { VirtualElement } from "@floating-ui/react";
 
 export default {
-  title: "Lab/Menu",
+  title: "Core/Menu",
   component: Menu,
 } as Meta<typeof Menu>;
 
@@ -282,26 +282,6 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
         </MenuGroup>
       </MenuPanel>
     </Menu>
-  );
-};
-
-export const SplitButton: StoryFn = () => {
-  return (
-    <SegmentedButtonGroup>
-      <Button variant="cta">Edit</Button>
-      <Menu placement="bottom-end">
-        <MenuTrigger>
-          <Button variant="cta">
-            <ChevronDownIcon aria-hidden />
-          </Button>
-        </MenuTrigger>
-        <MenuPanel>
-          <MenuItem>Copy</MenuItem>
-          <MenuItem>Move</MenuItem>
-          <MenuItem>Delete</MenuItem>
-        </MenuPanel>
-      </Menu>
-    </SegmentedButtonGroup>
   );
 };
 
