@@ -20,4 +20,5 @@ const RowGroupPanel = (props: AgGridReactProps) => {
       />
     </div>
   );
+};
 export default RowGroupPanel;
