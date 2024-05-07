@@ -8,6 +8,8 @@ import {
   ComboBoxProps,
   Option,
   OptionGroup,
+  Text,
+  Label
 } from "@salt-ds/core";
 import {
   CountryCode,
@@ -651,4 +653,52 @@ MultiplePillsTruncated.args = {
   defaultSelected: ["Alabama", "Alaska", "Arizona"],
   multiselect: true,
   truncate: true,
+};
+
+export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
+  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: Person[]
+  ) => {
+    if (newSelected.length === 1) {
+      setValue(newSelected[0].firstName);
+    } else {
+      setValue("");
+    }
+  };
+
+  const options = people.filter(
+    (person) =>
+      person.firstName.toLowerCase().includes(value.trim().toLowerCase()) ||
+      person.lastName.toLowerCase().includes(value.trim().toLowerCase())
+  );
+
+  return (
+    <ComboBox<Person>
+      {...args}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      valueToString={(person) => person.displayName}
+    >
+      {options.map((person) => (
+        <Option key={person.id} value={person} >
+          <StackLayout gap={0.25} align="start">
+            <Text variant="primary" >{person.firstName}</Text>
+            <Label variant="secondary" >{person.lastName}</Label>
+          </StackLayout>
+        </Option>
+      ))}
+    </ComboBox>
+  );
 };
