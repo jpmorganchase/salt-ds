@@ -65,6 +65,7 @@ import {
   HelperText as FormFieldHelperText,
   Readonly as FormFieldReadonly,
 } from "../../../core/stories/form-field/form-field.stories";
+import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories.tsx";
 import {
   Default as PillDefault,
   Disabled as PillDisabled,
@@ -239,6 +240,9 @@ export const Example1 = () => {
         <Button disabled>Submit</Button>
       </StackLayout>
       <StackLayout direction="row">
+        <SegmentedButtonGroupDefault />
+      </StackLayout>
+      <StackLayout direction="row">
         <ToggleButtonGroupHorizontalText defaultValue="high" />
         <ToggleButtonGroupHorizontalIon defaultValue="light" />
         <ToggleButtonGroupHorizontal defaultValue="all" />
@@ -284,7 +288,10 @@ export const Example1 = () => {
         <SwitchDefault label="Switch" disabled />
         <SwitchDefault label="Switch" disabled defaultChecked />
       </StackLayout>
-      <StackLayout direction="row" gap={20} style={{ marginBlock: 60 }}>
+      <StackLayout direction="row" gap={16} style={{ marginBlock: 60 }}>
+        <Tooltip content="I am a tooltip" open placement="bottom">
+          <Button>Info</Button>
+        </Tooltip>
         <Tooltip content="I am a tooltip" status="info" open placement="bottom">
           <Button>Info</Button>
         </Tooltip>
