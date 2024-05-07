@@ -79,7 +79,7 @@ export const CalendarCarousel = forwardRef<
             }}
             aria-hidden={index !== 1 ? "true" : undefined}
           >
-            <CalendarMonth isVisible={index === 1} {...rest} date={date} />
+            <CalendarMonth {...rest} date={date} />
           </div>
         ))}
       </div>

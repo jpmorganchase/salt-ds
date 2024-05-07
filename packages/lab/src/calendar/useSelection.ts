@@ -84,7 +84,7 @@ function addOrRemoveFromArray(
 
 const defaultOffset = (date: DateValue) => date;
 
-function isRangeOrOffsetSelectionValue(
+export function isRangeOrOffsetSelectionValue(
   selectionValue?: AllSelectionValueType
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return selectionValue != null && isPlainObject(selectionValue);
