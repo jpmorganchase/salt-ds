@@ -47,24 +47,29 @@ $icons: (
 }
 
 @each $name, $glyph in $icons {
-  [class^="ag-theme-uitk"] .ag-icon-#{$name} {
+  [class^="ag-theme-uitk"] .ag-icon-#{$name},
+  [class*=" ag-theme-uitk"] .ag-icon-#{$name} {
     font-family: "jpmuitk-icons";
   }
 
-  [class^="ag-theme-uitk"] .ag-icon-#{$name}::before {
+  [class^="ag-theme-uitk"] .ag-icon-#{$name}::before,
+  [class*=" ag-theme-uitk"] .ag-icon-#{$name}::before {
     content: $glyph;
   }
 }
 
-[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper::after {
+[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper::after,
+[class*=" ag-theme-uitk"] .ag-checkbox-input-wrapper::after {
   font-family: "jpmuitk-icons";
   content: "";
 }
 
-[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-checked::after {
+[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-checked::after,
+[class*=" ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-checked::after {
   content: "\e95b";
 }
 
-[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
+[class^="ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-indeterminate::after,
+[class*=" ag-theme-uitk"] .ag-checkbox-input-wrapper.ag-indeterminate::after {
   content: "\e94e";
 }
