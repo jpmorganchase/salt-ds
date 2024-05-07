@@ -1,5 +1,5 @@
 .salt-theme.salt-theme-next {
-  --salt-status-info-foreground: var(--salt-palette-accent-strong); /* TBD */
+  --salt-status-info-foreground: var(--salt-palette-accent);
   --salt-status-success-foreground: var(--salt-palette-positive);
   --salt-status-warning-foreground: var(--salt-palette-warning);
   --salt-status-error-foreground: var(--salt-palette-negative);
@@ -7,7 +7,7 @@
   --salt-status-negative-foreground: var(--salt-palette-negative);
   --salt-status-positive-foreground: var(--salt-palette-positive);
 
-  --salt-status-info-borderColor: var(--salt-palette-accent-strong);
+  --salt-status-info-borderColor: var(--salt-palette-accent);
   --salt-status-success-borderColor: var(--salt-palette-positive);
   --salt-status-warning-borderColor: var(--salt-palette-warning);
   --salt-status-error-borderColor: var(--salt-palette-negative);
