@@ -65,14 +65,13 @@ import {
   HelperText as FormFieldHelperText,
   Readonly as FormFieldReadonly,
 } from "../../../core/stories/form-field/form-field.stories";
-import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories.tsx";
+import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories";
 import {
   Default as PillDefault,
   Disabled as PillDisabled,
   Closable as PillClosable,
   Icon as PillIcon,
 } from "../../../core/stories/pill/pill.stories";
-import { Default as ListNextDefault } from "../../../lab/stories/list-next/list.stories";
 import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
 import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default";
 import AgGridThemeZebra from "../../../ag-grid-theme/stories/examples/VariantZebra";
