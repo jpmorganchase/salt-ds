@@ -10,6 +10,8 @@ import {
   StackLayout,
   Text,
   ValidationStatus,
+  FlowLayout,
+  FlexItem,
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 
@@ -272,3 +274,25 @@ export const MultipleActions: StoryFn<typeof Banner> = (args) => {
     </Banner>
   );
 };
+
+export const MultipleActionsButtons: StoryFn<typeof Banner> = (props) => (
+  <div style={{ width: 500 }}>
+    <Banner {...props}>
+      <BannerContent>
+        <StackLayout gap={2}>
+          <Text>
+            Information missing in form submission
+          </Text>
+          <FlowLayout gap={1}>
+            <FlexItem>
+              <Button variant="primary">Primary Button</Button>
+            </FlexItem>
+            <FlexItem>
+              <Button variant="secondary">Secondary Button</Button>
+            </FlexItem>
+          </FlowLayout>
+        </StackLayout>
+      </BannerContent>
+    </Banner>
+  </div>
+);
