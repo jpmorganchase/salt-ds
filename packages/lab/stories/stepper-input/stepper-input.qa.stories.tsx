@@ -15,7 +15,6 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         defaultValue={0.5}
         max={10}
         min={-5}
-        showRefreshButton
         step={0.5}
       />
       <StepperInput
@@ -23,7 +22,6 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         defaultValue={0.2}
         max={10}
         min={-5}
-        showRefreshButton
         step={1}
         textAlign={"center"}
       />
