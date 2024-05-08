@@ -33,10 +33,10 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Text disabled>
       Primary disabled <strong>strong</strong> and <small>small</small> text
     </Text>
-    <Text variant="secondary">
+    <Text color="secondary">
       Secondary <strong>strong</strong> and <small>small</small> text
     </Text>
-    <Text variant="secondary" disabled>
+    <Text color="secondary" disabled>
       Secondary disabled <strong>strong</strong> and <small>small</small> text
     </Text>
     <Display1>

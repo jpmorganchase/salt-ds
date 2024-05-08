@@ -28,10 +28,10 @@ Colors symbolising a success state or indication of process completion.
     />
     <ColorItem
       title="Foreground"
-      subtitle="--salt-palette-success-foreground"
+      subtitle="--salt-palette-success-foreground-informative"
       colors={{
-        "--salt-palette-success-foreground":
-          "var(--salt-palette-success-foreground)",
+        "--salt-palette-success-foreground-informative":
+          "var(--salt-palette-success-foreground-informative)",
       }}
     />
     <ColorItem
@@ -68,6 +68,10 @@ Colors symbolising a success state or indication of process completion.
     <ColorBlock
       colorVar="--salt-palette-success-border-disabled"
       replacementToken="#24874B66"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-success-foreground"
+      replacementToken="--salt-palette-success-foreground-decorative"
     />
   </DocGrid>
 </Canvas>

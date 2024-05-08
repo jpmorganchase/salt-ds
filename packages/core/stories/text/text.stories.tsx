@@ -31,14 +31,30 @@ export const Primary: StoryFn<typeof Text> = () => {
 };
 
 export const Secondary: StoryFn<typeof Text> = () => {
-  return <Text variant="secondary">This is a secondary text example</Text>;
+  return <Text color="secondary">This is a secondary text example</Text>;
+};
+
+export const Success: StoryFn<typeof Text> = () => {
+  return <Text color="success">This is a success text example</Text>;
+};
+
+export const Warning: StoryFn<typeof Text> = () => {
+  return <Text color="warning">This is a warning text example</Text>;
+};
+
+export const Error: StoryFn<typeof Text> = () => {
+  return <Text color="error">This is a error text example</Text>;
+};
+
+export const InheritColor: StoryFn<typeof Text> = () => {
+  return <Text color="inherit">This is a secondary text example</Text>;
 };
 
 export const Disabled: StoryFn<typeof Text> = () => {
   return (
     <div>
       <Text disabled>This is a disabled primary text example</Text>
-      <Text variant="secondary" disabled>
+      <Text color="secondary" disabled>
         This is a disabled secondary text example
       </Text>
     </div>

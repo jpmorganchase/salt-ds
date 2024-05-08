@@ -1,3 +1,7 @@
+.saltText {
+  --text-color: currentColor;
+}
+
 /* Main css class. Style for body text */
 .saltText {
   color: var(--saltText-color, var(--text-color));
@@ -38,6 +42,21 @@
 /* Disabled secondary variant */
 .saltText-secondary.saltText-disabled {
   --text-color: var(--salt-content-secondary-foreground-disabled);
+}
+
+/* Success variant */
+.saltText-success {
+  --text-color: var(--salt-success-foreground-informative);
+}
+
+/* Warning variant */
+.saltText-warning {
+  --text-color: var(--salt-warning-foreground-informative);
+}
+
+/* Error variant */
+.saltText-error {
+  --text-color: var(--salt-error-foreground-informative);
 }
 
 /* Body emphasis strong */
