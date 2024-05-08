@@ -59,10 +59,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const countryCss = fileNames
     .map((fileName) => {
-      const svgString = fs
-        .readFileSync(fileName, "utf-8")
-        .trim()
-        .replaceAll(/\r?\n|\r/g, "");
+      const svgString = fs.readFileSync(fileName, "utf-8").trim();
 
       const filenameWithoutExtension = path.parse(fileName).name;
 
@@ -79,6 +76,41 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     .join("\n");
 
   const ALL_CSS = `[class*=' saltCountry-'],[class^='saltCountry-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
+
+  const formattedResult = prettier.format(
+    CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
+    { ...PRETTIER_SETTINGS, parser: "css" }
+  );
+
+  fs.writeFileSync(cssOutputPath, formattedResult, {
+    encoding: "utf8",
+  });
+};
+
+/** Generate all sharp country SVG as background image, in a single CSS */
+const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
+  // options is optional
+  const options = {};
+
+  const globPath = path
+    .join(basePath, `./SVG/sharp/+(${fileArg})`)
+    .replace(/\\/g, "/");
+
+  const fileNames = glob.sync(globPath, options);
+
+  const countryCss = fileNames
+    .map((fileName) => {
+      const svgString = fs.readFileSync(fileName, "utf-8").trim();
+
+      const countryCode = path.parse(fileName).name.toUpperCase();
+
+      return `.saltCountrySharp-${countryCode}{background-image:url("data:image/svg+xml,${encodeURIComponent(
+        svgString
+      )}")}`;
+    })
+    .join("\n");
+
+  const ALL_CSS = `[class*=' saltCountrySharp-'],[class^='saltCountrySharp-'] {background-size: cover;height:var(--salt-size-base, 20px);}\n`;
 
   const formattedResult = prettier.format(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
@@ -465,6 +497,7 @@ const basePath = path.join(__dirname, "../src");
 const componentsPath = path.join(basePath, "./components/");
 const templatePath = path.join(__dirname, "./templateCountrySymbol.mustache");
 const cssOutputPath = path.join(__dirname, "../saltCountries.css");
+const sharpCssOutputPath = path.join(__dirname, "../saltSharpCountries.css");
 const fileArg = process.argv.splice(2).join("|");
 
 generateComponentsFolder(basePath);
@@ -477,6 +510,11 @@ const countryMetaMap = generateCountrySymbolComponents({
 generateCssAsBg({
   basePath,
   cssOutputPath,
+  fileArg,
+});
+generateSharpCssAsBg({
+  basePath,
+  cssOutputPath: sharpCssOutputPath,
   fileArg,
 });
 generateCountryMetaMap({ countryMetaMap, basePath });
