@@ -1,4 +1,9 @@
-import { ComponentPropsWithoutRef, forwardRef, useEffect } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import {
   FlexLayout,
   makePrefixer,
@@ -16,7 +21,7 @@ import {
   UseRangeSelectionCalendarProps,
   UseSingleSelectionCalendarProps,
 } from "../calendar";
-import { getLocalTimeZone, today } from "@internationalized/date";
+import { DateValue, endOfMonth, startOfMonth } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: () => void;
@@ -45,6 +50,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
     });
 
     const { Component: FloatingComponent } = useFloatingComponent();
+    const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 
     const {
       openState,
@@ -64,14 +70,9 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
 
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
-        if (!startDate && newDate.startDate) {
-          setStartDate(newDate.startDate);
-        } else if (startDate && newDate.startDate) {
-          if (!newDate.endDate || newDate.startDate <= newDate.endDate) {
-            setStartDate(newDate.startDate);
-            setEndDate(undefined);
-          }
-          newDate.endDate && setEndDate(newDate.endDate);
+        setStartDate(newDate.startDate);
+        setEndDate(newDate.endDate);
+        if (newDate.startDate && newDate.endDate) {
           setOpen(false);
         }
         onSelect?.();
@@ -82,17 +83,33 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         onSelect?.();
         setOpen(false);
       };
-
+    const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
+      _,
+      newHoveredDate
+    ) => {
+      setHoveredDate(newHoveredDate);
+    };
     useEffect(() => {
-      setStartVisibleMonth(startDate);
+      if (startDate) {
+        setStartVisibleMonth(startDate);
+        setEndVisibleMonth(startDate.add({ months: 1 }));
+      }
     }, [startDate]);
+
     const isRangePicker = selectionVariant === "range";
     const firstCalendarProps: CalendarProps = isRangePicker
       ? {
           selectionVariant: "range",
+          hoveredDate:
+            startDate &&
+            hoveredDate &&
+            hoveredDate.compare(endOfMonth(startDate)) > 0
+              ? endOfMonth(startDate)
+              : hoveredDate,
+          onHoveredDateChange: handleHoveredDateChange,
           selectedDate: { startDate, endDate },
           onSelectedDateChange: setRangeDate,
-          maxDate: startDate,
+          maxDate: startDate && endOfMonth(startDate),
           hideOutOfRangeDates: true,
         }
       : {
@@ -100,6 +117,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           selectedDate: startDate,
           onSelectedDateChange: setSingleDate,
         };
+
     return (
       <FloatingComponent
         open={openState}
@@ -120,7 +138,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         <StackLayout>
           <FlexLayout>
             <Calendar
-              defaultVisibleMonth={startDate ?? today(getLocalTimeZone())}
               visibleMonth={startVisibleMonth}
               onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
               {...firstCalendarProps}
@@ -129,17 +146,18 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
             {isRangePicker && (
               <Calendar
                 selectionVariant="range"
-                defaultVisibleMonth={
-                  endDate ??
-                  startDate?.add({ months: 1 }) ??
-                  today(getLocalTimeZone()).add({ months: 1 })
-                }
+                hoveredDate={hoveredDate}
+                onHoveredDateChange={handleHoveredDateChange}
                 selectedDate={{ startDate, endDate }}
                 onSelectedDateChange={setRangeDate}
                 visibleMonth={endVisibleMonth}
                 onVisibleMonthChange={(_, month) => setEndVisibleMonth(month)}
                 hideOutOfRangeDates
-                minDate={startDate?.add({ months: 1 }) ?? undefined}
+                minDate={
+                  startDate
+                    ? startOfMonth(startDate)?.add({ months: 1 })
+                    : undefined
+                }
                 {...CalendarProps}
               />
             )}

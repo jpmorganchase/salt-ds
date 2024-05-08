@@ -13,7 +13,7 @@ import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
 import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
-import { DateValue } from "@internationalized/date";
+import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
 import {
   UseRangeSelectionCalendarProps,
@@ -111,10 +111,14 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     });
     const [startVisibleMonth, setStartVisibleMonth] = useState<
       DateValue | undefined
-    >(startDate);
+    >(startDate ?? today(getLocalTimeZone()));
     const [endVisibleMonth, setEndVisibleMonth] = useState<
       DateValue | undefined
-    >(endDate);
+    >(
+      endDate ??
+        startDate?.add({ months: 1 }) ??
+        today(getLocalTimeZone()).add({ months: 1 })
+    );
 
     const onOpenChange = (newState: boolean) => {
       setOpen(newState);
@@ -152,9 +156,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
 
     // Handlers
     const handleSelect = () => {
-      selectionVariant === "range" && startDate
-        ? endInputRef?.current?.focus()
-        : startInputRef?.current?.focus();
+      if (selectionVariant === "default" && startDate) {
+        startInputRef?.current?.focus();
+      }
     };
     const handleCalendarButton = () => {
       startInputRef?.current?.focus();
