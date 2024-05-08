@@ -20,16 +20,14 @@ Colors symbolising a warning state.
         "--salt-palette-warning-border": "var(--salt-palette-warning-border)",
       }}
     />
-
     <ColorItem
       title="Foreground"
-      subtitle="--salt-palette-warning-foreground"
+      subtitle="--salt-palette-warning-foreground-informative"
       colors={{
-        "--salt-palette-warning-foreground":
-          "var(--salt-palette-warning-foreground)",
+        "--salt-palette-warning-foreground-informative":
+          "var(--salt-palette-warning-foreground-informative)",
       }}
     />
-
     <ColorItem
       title="Background"
       subtitle="--salt-palette-warning-background"
@@ -38,7 +36,6 @@ Colors symbolising a warning state.
           "var(--salt-palette-warning-background)",
       }}
     />
-
     <ColorItem
       title="Background (selected)"
       subtitle="--salt-palette-warning-background-selected"
@@ -47,7 +44,6 @@ Colors symbolising a warning state.
           "var(--salt-palette-warning-background-selected)",
       }}
     />
-
   </ColorPalette>
 </ColorContainer>
 
@@ -55,9 +51,17 @@ Colors symbolising a warning state.
 
 <Canvas>
   <DocGrid withNotes>
-    <ColorBlock colorVar="--salt-palette-warning-background-emphasize" replacementToken="--salt-palette-warning-background" />
-
-    <ColorBlock colorVar="--salt-palette-warning-border-disabled" replacementToken="#EA731966" />
-
+    <ColorBlock
+      colorVar="--salt-palette-warning-background-emphasize"
+      replacementToken="--salt-palette-warning-background"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-warning-border-disabled"
+      replacementToken="#EA731966"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-warning-foreground"
+      replacementToken="--salt-palette-warning-foreground-decorative"
+    />
   </DocGrid>
 </Canvas>

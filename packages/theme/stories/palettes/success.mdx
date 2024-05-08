@@ -20,16 +20,14 @@ Colors symbolising a success state or indication of process completion.
         "--salt-palette-success-border": "var(--salt-palette-success-border)",
       }}
     />
-
     <ColorItem
       title="Foreground"
-      subtitle="--salt-palette-success-foreground"
+      subtitle="--salt-palette-success-foreground-informative"
       colors={{
-        "--salt-palette-success-foreground":
-          "var(--salt-palette-success-foreground)",
+        "--salt-palette-success-foreground-informative":
+          "var(--salt-palette-success-foreground-informative)",
       }}
     />
-
     <ColorItem
       title="Background"
       subtitle="--salt-palette-success-background"
@@ -38,7 +36,6 @@ Colors symbolising a success state or indication of process completion.
           "var(--salt-palette-success-background)",
       }}
     />
-
     <ColorItem
       title="Background (selected)"
       subtitle="--salt-palette-success-background-selected"
@@ -47,7 +44,6 @@ Colors symbolising a success state or indication of process completion.
           "var(--salt-palette-success-background-selected)",
       }}
     />
-
   </ColorPalette>
 </ColorContainer>
 
@@ -55,11 +51,21 @@ Colors symbolising a success state or indication of process completion.
 
 <Canvas>
   <DocGrid withNotes>
-    <ColorBlock colorVar="--salt-palette-success-background-emphasize" replacementToken="--salt-palette-success-background" />
-
-    <ColorBlock colorVar="--salt-palette-success-foreground-disabled" replacementToken="#24874BB3" />
-
-    <ColorBlock colorVar="--salt-palette-success-border-disabled" replacementToken="#24874B66" />
-
+    <ColorBlock
+      colorVar="--salt-palette-success-background-emphasize"
+      replacementToken="--salt-palette-success-background"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-success-foreground-disabled"
+      replacementToken="#24874BB3"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-success-border-disabled"
+      replacementToken="#24874B66"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-success-foreground"
+      replacementToken="--salt-palette-success-foreground-decorative"
+    />
   </DocGrid>
 </Canvas>
