@@ -341,3 +341,65 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = () => {
     </Dropdown>
   );
 };
+
+export const SelectAll: StoryFn<DropdownProps> = (args) => {
+  const [selected, setSelected] = useState<string[]>([]);
+  const allSelectedOptionValue = 'all'
+
+  const handleSelectionChange: DropdownProps["onSelectionChange"] = (
+    event,
+    newSelected
+  ) => {
+
+    let newOptionsSelected = [...newSelected];
+
+    //case: clear all if select all is unselected
+    if (selected.includes(allSelectedOptionValue) && newOptionsSelected.includes(allSelectedOptionValue)) {
+      newOptionsSelected = newOptionsSelected.filter(el => el !== allSelectedOptionValue);
+      if (newOptionsSelected.length === usStates.length) {
+        newOptionsSelected = [];
+      }
+    }
+    //case: clear all if select all is unselected
+    else if (selected.includes(allSelectedOptionValue) && !newOptionsSelected.includes(allSelectedOptionValue)) {
+      newOptionsSelected = [];
+    }
+    //case: select all if select all is selected
+    else if (!selected.includes(allSelectedOptionValue) && newOptionsSelected.includes(allSelectedOptionValue)) {
+      newOptionsSelected = [...usStates, allSelectedOptionValue]
+    }
+    //case: select all should be checked if all options are selected
+    else if (!newOptionsSelected.includes(allSelectedOptionValue) && newOptionsSelected.length === usStates.length) {
+      newOptionsSelected = [...usStates, allSelectedOptionValue]
+    }
+
+    setSelected(newOptionsSelected);
+    args.onSelectionChange?.(event, newOptionsSelected);
+
+  };
+
+  return (
+    <Dropdown
+      {...args}
+      placeholder="Placeholder text"
+      style={{ width: '200px' }}
+      selected={selected}
+      value={
+        selected.length < 2 ? selected[0] : selected.includes('all') ? 'All Selected' : `${selected.length} items selected`
+      }
+      onSelectionChange={handleSelectionChange}
+      multiselect
+    >
+      <Option
+        style={{
+          borderBottom: "solid",
+          borderWidth: "1px",
+          borderColor: "var(--salt-separable-tertiary-borderColor)"
+        }}
+        value={allSelectedOptionValue} key={allSelectedOptionValue} >Select All</Option>
+      {usStates.map((state) => (
+        <Option value={state} key={state} />
+      ))}
+    </Dropdown>
+  );
+};
