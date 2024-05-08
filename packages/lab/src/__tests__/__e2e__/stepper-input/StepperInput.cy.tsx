@@ -141,36 +141,6 @@ describe("Stepper Input", () => {
     cy.findByTestId("decrement-button").should("be.disabled");
   });
 
-  it("displays the refresh button when `showRefreshButton` prop is `true`", () => {
-    cy.mount(<StepperInput showRefreshButton />);
-    cy.findByRole("button", { name: "Refresh default value" }).should(
-      "be.visible"
-    );
-  });
-
-  it("resets the to `defaultValue` after refresh button is clicked", () => {
-    cy.mount(<StepperInput showRefreshButton />);
-
-    cy.findByTestId("increment-button").realClick();
-    cy.findByRole("spinbutton").should("have.value", "1");
-
-    cy.findByRole("button", { name: "Refresh default value" }).realClick();
-    cy.findByRole("spinbutton").should("have.value", "0");
-  });
-
-  it("calls the `onChange` callback on refresh", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-
-    cy.mount(<StepperInput onChange={changeSpy} showRefreshButton />);
-
-    cy.findByTestId("increment-button").realClick();
-
-    cy.findByRole("button", { name: "Refresh default value" }).realClick();
-
-    cy.findByRole("spinbutton").should("have.value", "0");
-    cy.get("@changeSpy").should("have.been.called");
-  });
-
   it("displays value with correct number of decimal places on blur", () => {
     cy.mount(<StepperInput decimalPlaces={2} />);
 

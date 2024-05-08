@@ -1,6 +1,5 @@
 import {
   Button,
-  FlexItem,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
@@ -35,22 +34,14 @@ export const DecimalPlaces: StoryFn = (args) => {
   );
 };
 
-export const RefreshButton: StoryFn = (args) => {
-  return (
-    <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
-      <StepperInput defaultValue={6} {...args} />
-      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
-    </FormField>
-  );
-};
-
 export const MinAndMaxValue: StoryFn = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Default Stepper Input</FormFieldLabel>
       <StepperInput max={10} min={0} defaultValue={5} {...args} />
-      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      <FormFieldHelperText>
+        Please enter a number between 0 and 10
+      </FormFieldHelperText>
     </FormField>
   );
 };
@@ -79,7 +70,7 @@ export const ExternalRefreshButton = () => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
-    <StackLayout direction="row" align="center">
+    <StackLayout direction="row" align="center" gap={1}>
       <FormField>
         <FormFieldLabel>Stepper Input</FormFieldLabel>
         <StepperInput
