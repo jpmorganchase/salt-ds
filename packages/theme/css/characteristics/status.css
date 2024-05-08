@@ -1,11 +1,12 @@
 .salt-theme {
   --salt-status-info-foreground: var(--salt-palette-info-foreground);
-  --salt-status-success-foreground: var(--salt-palette-success-foreground);
-  --salt-status-warning-foreground: var(--salt-palette-warning-foreground);
-  --salt-status-error-foreground: var(--salt-palette-error-foreground);
   --salt-status-static-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-status-negative-foreground: var(--salt-palette-negative-foreground);
   --salt-status-positive-foreground: var(--salt-palette-positive-foreground);
+  --salt-status-success-foreground-informative: var(--salt-palette-success-foreground-informative);
+  --salt-status-warning-foreground-informative: var(--salt-palette-warning-foreground-informative);
+  --salt-status-error-foreground-informative: var(--salt-palette-error-foreground-informative);
+  --salt-status-info-foreground-informative: var(--salt-palette-info-foreground-informative);
 
   --salt-status-info-borderColor: var(--salt-palette-info-border);
   --salt-status-success-borderColor: var(--salt-palette-success-border);

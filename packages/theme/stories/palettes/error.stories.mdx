@@ -28,10 +28,10 @@ Colors used to symbolise an error state.
     />
     <ColorItem
       title="Foreground"
-      subtitle="--salt-palette-error-foreground"
+      subtitle="--salt-palette-error-foreground-informative"
       colors={{
-        "--salt-palette-error-foreground":
-          "var(--salt-palette-error-foreground)",
+        "--salt-palette-error-foreground-informative":
+          "var(--salt-palette-error-foreground-informative)",
       }}
     />
     <ColorItem
@@ -68,6 +68,10 @@ Colors used to symbolise an error state.
     <ColorBlock
       colorVar="--salt-palette-error-border-disabled"
       replacementToken="#E32B1666"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-error-foreground"
+      replacementToken="--salt-palette-error-foreground-decorative"
     />
   </DocGrid>
 </Canvas>

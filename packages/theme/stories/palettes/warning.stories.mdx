@@ -28,10 +28,10 @@ Colors symbolising a warning state.
     />
     <ColorItem
       title="Foreground"
-      subtitle="--salt-palette-warning-foreground"
+      subtitle="--salt-palette-warning-foreground-informative"
       colors={{
-        "--salt-palette-warning-foreground":
-          "var(--salt-palette-warning-foreground)",
+        "--salt-palette-warning-foreground-informative":
+          "var(--salt-palette-warning-foreground-informative)",
       }}
     />
     <ColorItem
@@ -64,6 +64,10 @@ Colors symbolising a warning state.
     <ColorBlock
       colorVar="--salt-palette-warning-border-disabled"
       replacementToken="#EA731966"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-warning-foreground"
+      replacementToken="--salt-palette-warning-foreground-decorative"
     />
   </DocGrid>
 </Canvas>
