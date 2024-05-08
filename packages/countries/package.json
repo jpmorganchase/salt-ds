@@ -14,7 +14,8 @@
   },
   "sideEffects": false,
   "files": [
-    "saltCountries.css"
+    "saltCountries.css",
+    "saltSharpCountries.css"
   ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",

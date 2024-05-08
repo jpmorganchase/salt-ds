@@ -2,6 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { StackLayout } from "@salt-ds/core";
 import { MX, countryMetaMap } from "@salt-ds/countries";
 import "@salt-ds/countries/saltCountries.css";
+import "@salt-ds/countries/saltSharpCountries.css";
 import { QAContainer } from "docs/components";
 
 export default {
