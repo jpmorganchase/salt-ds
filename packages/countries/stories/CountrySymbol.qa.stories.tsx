@@ -54,3 +54,37 @@ export const CssBackground: StoryFn = () => {
 CssBackground.parameters = {
   chromatic: { disableSnapshot: false },
 };
+
+export const SharpCountrySymbolCssBackground: StoryFn = () => {
+  return (
+    <QAContainer
+      width={1400}
+      vertical
+      transposeDensity
+      itemWidthAuto
+      itemPadding={12}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(20, auto)",
+          gap: 8,
+          padding: "12px 0",
+        }}
+      >
+        {Object.keys(countryMetaMap)
+          .filter((name) => !name.endsWith("_Sharp"))
+          .map((countryName) => (
+            <div
+              key={countryName}
+              className={`saltCountrySharp-${countryName}`}
+            />
+          ))}
+      </div>
+    </QAContainer>
+  );
+};
+
+SharpCountrySymbolCssBackground.parameters = {
+  chromatic: { disableSnapshot: false },
+};
