@@ -653,6 +653,13 @@ MultiplePillsTruncated.args = {
   truncate: true,
 };
 
+export const FreeTextNotAddedToList = Template.bind({});
+FreeTextNotAddedToList.args = {
+  multiselect: true,
+  allowFreeText: true
+};
+
+// pass allowFreeText prop to enable onblur and tab selection
 export const FreeText: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
@@ -686,6 +693,7 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: 150 }}
+      allowFreeText
     >
       {Array.from(new Set(usStates.concat(selectedValues)))
         .filter((state) =>

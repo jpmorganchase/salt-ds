@@ -51,7 +51,11 @@ export type ListControlProps<Item> = {
    * Callback used to convert an option's `value` to a string. This is needed when the value is different to the display value or the value is not a string.
    */
   valueToString?: (item: Item) => string;
-};
+  /**
+   * If true, custom option typed which are not part of the option's list will also be marked as selected.
+   */
+  allowFreeText?: boolean;
+}
 
 export function defaultValueToString<Item>(item: Item): string {
   return typeof item === "string" ? item : "";

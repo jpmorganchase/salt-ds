@@ -33,7 +33,7 @@ import {
 import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
 import { defaultValueToString } from "../list-control/ListControlState";
-import { ListControlContext } from "../list-control/ListControlContext";
+import { ListControlContext, OptionValue } from "../list-control/ListControlContext";
 import { useComboBox, UseComboBoxProps } from "./useComboBox";
 import { OptionList } from "../option/OptionList";
 import { PillInput, PillInputProps } from "../pill-input";
@@ -60,6 +60,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     endAdornment,
     readOnly: readOnlyProp,
     multiselect,
+    allowFreeText,
     onSelectionChange,
     selected,
     defaultSelected,
@@ -122,6 +123,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     getOptionsMatching,
     options,
     selectedState,
+    setSelectedState,
     select,
     clear,
     focusVisibleState,
@@ -131,7 +133,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     listRef,
     valueState,
     setValueState,
-    removePill,
   } = listControl;
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
@@ -195,6 +196,13 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
+  const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (allowFreeText && activeState && value && multiselect) {
+      //show entered value as selected on blur
+      select(event, activeState);
+    }
+    onBlur?.(event);
+  }
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
     const count = options.length - 1;
@@ -250,6 +258,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       case "Tab":
         if (!multiselect && activeState) {
           select(event, activeState);
+        } else if (multiselect && allowFreeText && activeState) {
+          select(event, activeState);
         }
         break;
     }
@@ -285,10 +295,16 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     // Wait for the filter to happen
     queueMicrotask(() => {
       if (event.target.value !== "") {
-        const newOption = getOptionAtIndex(0);
-        if (newOption) {
-          setActive(newOption);
-        }
+        const matchedOption = getOptionAtIndex(0);
+        const freeTextOption: OptionValue<Item> = {
+          disabled: false,
+          id: event.target.value,
+          value: event.target.value as unknown as Item
+        };
+        //case handling for freeText when options are not added to the list
+        const freeText = matchedOption && valueToString(matchedOption.value).toLowerCase() === event.target.value.toLowerCase() ? getOptionAtIndex(0) : freeTextOption;
+        const newOption = allowFreeText ? freeText : matchedOption;
+        setActive(newOption);
       } else {
         setActive(undefined);
       }
@@ -299,7 +315,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const handlePillRemove = (event: SyntheticEvent, index: number) => {
     event.stopPropagation();
     const removed = selectedState[index];
-    removePill(event, removed);
+    const removedOption = getOptionsMatching((option) => option.value === removed)[0];
+    if (allowFreeText && !removedOption) {
+      //allow free text case where option is not added to the list by the user.
+      setSelectedState([...selectedState].filter((item) => item !== selectedState[index]));
+    } else if (removedOption) {
+      //calls select function if removed option is present in the list irrespective of allow free text configuration.
+      select(event, getOptionsMatching((option) => option.value === removed)[0]);
+    }
   };
 
   const handleListMouseOver = () => {
@@ -417,7 +440,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         value={valueState}
         ref={handleRef}
         {...getReferenceProps({
-          onBlur,
+          onBlur: handleBlur,
           onFocus: handleFocus,
           ...rest,
         })}
