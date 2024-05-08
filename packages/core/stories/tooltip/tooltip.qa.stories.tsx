@@ -34,6 +34,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <IconWithTooltip status="error" content="Error" />
       <IconWithTooltip status="success" content="Success" />
       <IconWithTooltip status="warning" content="Warning" />
+      <IconWithTooltip content={0} />
       <div
         style={{
           width: 10,
