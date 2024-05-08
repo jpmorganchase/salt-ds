@@ -13,16 +13,14 @@ const PK_Sharp = forwardRef<SVGSVGElement, PK_SharpProps>(function PK_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="PK_Sharp"
       aria-label="Pakistan"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-PK-a`}

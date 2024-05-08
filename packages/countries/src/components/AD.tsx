@@ -10,16 +10,13 @@ export type ADProps = CountrySymbolProps;
 const AD = forwardRef<SVGSVGElement, ADProps>(function AD(props: ADProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AD"
       aria-label="Andorra"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-AD-a`}

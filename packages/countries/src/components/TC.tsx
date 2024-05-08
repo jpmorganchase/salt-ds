@@ -10,16 +10,13 @@ export type TCProps = CountrySymbolProps;
 const TC = forwardRef<SVGSVGElement, TCProps>(function TC(props: TCProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TC"
       aria-label="Turks and Caicos Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-TC-a`}

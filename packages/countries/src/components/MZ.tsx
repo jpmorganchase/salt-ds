@@ -10,16 +10,13 @@ export type MZProps = CountrySymbolProps;
 const MZ = forwardRef<SVGSVGElement, MZProps>(function MZ(props: MZProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="MZ"
       aria-label="Mozambique"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-MZ-a`}

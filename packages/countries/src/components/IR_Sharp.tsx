@@ -13,16 +13,14 @@ const IR_Sharp = forwardRef<SVGSVGElement, IR_SharpProps>(function IR_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="IR_Sharp"
       aria-label="Iran (Islamic Republic of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-IR-a`}

@@ -10,16 +10,13 @@ export type SMProps = CountrySymbolProps;
 const SM = forwardRef<SVGSVGElement, SMProps>(function SM(props: SMProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="SM"
       aria-label="San Marino"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-SM-a`}

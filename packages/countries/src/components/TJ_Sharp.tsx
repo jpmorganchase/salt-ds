@@ -13,16 +13,14 @@ const TJ_Sharp = forwardRef<SVGSVGElement, TJ_SharpProps>(function TJ_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TJ_Sharp"
       aria-label="Tajikistan"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-TJ-a`}
