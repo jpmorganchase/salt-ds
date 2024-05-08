@@ -7,6 +7,8 @@ export default {
   title: "Icons/Icon/Icon QA",
 } as Meta;
 
+const allIconNames = allIcons.map((iconComponent) => iconComponent.displayName);
+
 const sizes = [1, 2, 3] as const;
 export const IconSizes: StoryFn = () => {
   return (
@@ -67,8 +69,34 @@ NoStyleInjection.parameters = {
 
 export const CssBackground: StoryFn = () => {
   return (
-    <QAContainer height={500} width={350}>
-      <div className="saltIcons-AddDocument" />
+    <QAContainer
+      width={1400}
+      itemPadding={12}
+      vertical
+      itemWidthAuto
+      transposeDensity
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(20, auto)",
+          gap: 8,
+          padding: "12px 0",
+        }}
+      >
+        {allIconNames.map((iconName) =>
+          iconName ? (
+            <div
+              key={iconName}
+              className={`saltIcons-${iconName.replace("Icon", "")}`}
+            />
+          ) : null
+        )}
+      </div>
     </QAContainer>
   );
+};
+
+CssBackground.parameters = {
+  chromatic: { disableSnapshot: false },
 };

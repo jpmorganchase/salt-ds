@@ -59,7 +59,10 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const countryCss = fileNames
     .map((fileName) => {
-      const svgString = fs.readFileSync(fileName, "utf-8").trim();
+      const svgString = fs
+        .readFileSync(fileName, "utf-8")
+        .trim()
+        .replaceAll(/\r?\n|\r/g, "");
 
       const filenameWithoutExtension = path.parse(fileName).name;
 

@@ -1,0 +1,91 @@
+---
+title: Pattern name
+layout:
+  DetailPattern
+  # To omit optional items, comment them out with #
+aliases:
+  - /salt/patterns/pattern-name
+data:
+  resources: [
+      # The below link is publicly accessible, use the structure below for these links
+      { href: "https://url-goes-here", label: "URL here" },
+      # The below link is marked as for J. P. Morgan employees only, use the structure below for these links
+      { href: "https://url-goes-here", label: "URL here", internal: true },
+    ]
+  components: ["Related component 1", "Related component 2"]
+  relatedPatterns: ["Related pattern 1"]
+---
+
+Introduction goes here. Add a series of sentences here.
+
+{" "}
+
+<Diagram
+  src="/img/patterns/pattern-name/pattern-name-hero-shot.png"
+  alt="Introductory pattern image"
+  border
+/>
+
+## When to use
+
+Include the When to use section here.
+
+## How to build
+
+### Anatomy
+
+Anatomy text goes here.
+
+{" "}
+
+<Diagram
+  src="/img/patterns/pattern-name/pattern-name-anatomy.png"
+  alt="Pattern anatomy."
+  contentPosition="top"
+  border
+/>
+
+### Layout
+
+Layout section goes here. Add multiple sections if needed.
+
+{" "}
+
+<Diagram
+  src="/img/patterns/pattern-name/pattern-name-layout-1.png"
+  alt="A pattern layout."
+  contentPosition="top"
+  border
+/>
+
+## Behaviors and variants
+
+Add as many behavior and variant sections as needed
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  Use best practices boxes like these where relevant
+</ExampleContainer>
+
+<ExampleContainer type="positive">
+  Use Do and Don't sections together when needed
+</ExampleContainer>
+
+<ExampleContainer type="negative">
+  Use Do and Don't sections together when needed
+</ExampleContainer>
+
+Use the below code to place images side by side with relevant text.
+
+Use the image switcher below when appropriate.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/pattern-name/image-1.png", alt: "" },
+    { src: "/img/patterns/pattern-name/image-2.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
+Leave the code below as-is to display a feedback section.
+
+:fragment{src="./fragments/feedback.mdx"}

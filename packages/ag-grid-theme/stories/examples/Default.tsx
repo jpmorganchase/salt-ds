@@ -3,10 +3,14 @@ import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const Default = (props: AgGridReactProps) => {
+const Default = ({
+  containerClassName,
+  ...agProps
+}: AgGridReactProps & { containerClassName?: string }) => {
   const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
+    containerClassName,
   });
 
   return (
@@ -34,7 +38,7 @@ const Default = (props: AgGridReactProps) => {
         rowSelection="single"
         enableRangeSelection={true}
         {...agGridProps}
-        {...props}
+        {...agProps}
       />
     </div>
   );
