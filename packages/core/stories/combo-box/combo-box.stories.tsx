@@ -702,3 +702,53 @@ export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
     </ComboBox>
   );
 };
+
+export const FreeText: StoryFn<ComboBoxProps> = (args) => {
+  const [value, setValue] = useState(getTemplateDefaultValue(args));
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
+    args.onSelectionChange?.(event, newSelected);
+    setSelectedValues(newSelected);
+
+    setValue("");
+  };
+
+  return (
+    <ComboBox
+      {...args}
+      multiselect
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      style={{ width: 150 }}
+    >
+      {Array.from(new Set(usStates.concat(selectedValues)))
+        .filter((state) =>
+          state.toLowerCase().includes(value.trim().toLowerCase())
+        )
+        .map((state) => (
+          <Option value={state} key={state} />
+        ))}
+      {value && !usStates.includes(value) && (
+        <Option value={value} key={value}>
+          Add "{value}"
+        </Option>
+      )}
+    </ComboBox>
+  );
+};
