@@ -7,12 +7,13 @@ import { clsx } from "clsx";
 const withBaseName = makePrefixer("saltSliderSelection");
 
 function getPercentageDifference(min, max, value) {
-  const valueDiff = value[1] - value[0]; //This breaks if the thumbs swap over
+  const valueDiff = value[0] - value[1]; //This breaks if the thumbs swap over
   return getPercentage(min, max, valueDiff);
 }
 
 function getPercentageOffset(min, max, value) {
-  const offsetRight = ((value[0] - min) / (max - min)) * 100;
+  // The values mixed up the wrong way round ????
+  const offsetRight = ((value[1] - min) / (max - min)) * 100;
 
   return Math.min(Math.max(offsetRight, 0), 100);
 }

@@ -112,11 +112,14 @@ RangeWithMarks.args = {
 export const RangeWithInput = () => {
   const [value, setValue] = useState<number>([20, 40]);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>, index) => {
+  const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value as unknown;
-    index
-      ? setValue([inputValue as number, value[1] as number])
-      : setValue([value[0] as number, inputValue as number]);
+    setValue([inputValue as number, value[1] as number]);
+  };
+
+  const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = event.target.value as unknown;
+    setValue([value[0] as number, inputValue as number]);
   };
 
   const handleChange = (value: number) => {
@@ -136,7 +139,7 @@ export const RangeWithInput = () => {
         <Input
           placeholder="value"
           style={{ width: "1px", margin: "5px" }}
-          onChange={handleInputChange}
+          onChange={handleMinInputChange}
         />
         <Slider
           style={{ width: "300px" }}
@@ -149,7 +152,7 @@ export const RangeWithInput = () => {
         <Input
           placeholder="value"
           style={{ width: "1px", margin: "5px" }}
-          onChange={handleInputChange}
+          onChange={handleMaxInputChange}
         />
       </div>
     </FormField>

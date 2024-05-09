@@ -10,7 +10,6 @@ const withBaseName = makePrefixer("saltSliderThumb");
 
 export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
   trackRef: RefObject<HTMLDivElement>;
-  value: number;
   index: number;
 }
 

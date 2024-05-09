@@ -1,5 +1,5 @@
 import { SliderChangeHandler, SliderValue } from "../types";
-import { roundToStep, roundToTwoDp } from "./utils";
+import { clampValue, roundToStep, roundToTwoDp, setRangeValue } from "./utils";
 
 export function useKeyDownThumb(
   min: number,
@@ -36,12 +36,7 @@ export function useKeyDownThumb(
     }
     valueItem = roundToStep(valueItem, step);
     valueItem = roundToTwoDp(valueItem);
-    if (Array.isArray(value)) {
-      index ? setValue([valueItem, value[1]], index) : setValue([value[0], valueItem], index);
-      index ? onChange?.([valueItem, value[1]]) : onChange?.([value[0], valueItem]);
-    } else {
-      setValue(valueItem);
-      onChange?.(valueItem);
-    }
-  };
-}
+    valueItem = clampValue(valueItem, min, max);
+
+    Array.isArray(value) ? ( setRangeValue(value, valueItem, setValue, onChange, index)) : (setValue(valueItem), onChange?.(valueItem))
+}}

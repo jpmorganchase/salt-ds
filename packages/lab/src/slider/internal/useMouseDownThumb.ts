@@ -1,6 +1,6 @@
 import { RefObject, useState } from "react";
 import { SliderValue, SliderChangeHandler } from "../types";
-import { getValue } from "./utils";
+import { getValue, setRangeValue } from "./utils";
 
 export function useMouseDownThumb(
   trackRef: RefObject<HTMLDivElement>,
@@ -15,17 +15,11 @@ export function useMouseDownThumb(
   const [thumbFocus, setThumbFocus] = useState(false);
 
   const onMouseMove = (event: MouseEvent): void => {
-    // event.preventDefault();
-    const newValue = getValue(trackRef, min, max, step, event);
-    if (Array.isArray(value)) {
-      index ? setValue([newValue, value[1]]) : setValue([value[0], newValue]);
-      index
-        ? onChange?.([newValue, value[1]], index)
-        : onChange?.([value[0], newValue], index);
-    } else {
-      setValue(newValue);
-      onChange?.(newValue, index);
-    }
+    event.preventDefault();
+    const newValue: number = getValue(trackRef, min, max, step, event);
+    Array.isArray(value)
+      ? setRangeValue(value, newValue, setValue, onChange, index)
+      : (setValue(newValue), onChange?.(newValue))
   };
 
   const onMouseUp = () => {

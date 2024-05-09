@@ -11,8 +11,7 @@ export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 const withBaseName = makePrefixer("saltSliderTrack");
 
 export const SliderTrack = ({ ...props }: SliderTrackProps) => {
-  const { min, max, step, value, setValue, onChange, index } =
-    useSliderContext();
+  const { min, max, step, value, setValue, onChange } = useSliderContext();
 
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -26,19 +25,15 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
     onChange
   );
 
+  const thumbs = (Array.isArray(value) ? value : [value]).sort((a, b) => b - a);
+
   return (
     <div className={withBaseName()} ref={trackRef} {...trackProps} {...props}>
       <div className={withBaseName("rail")} />
       <SliderSelection />
-      {!Array.isArray(value) && (
-        <SliderThumb trackRef={trackRef} index={0} value={value} />
-      )}
-      {Array.isArray(value) && (
-        <>
-          <SliderThumb trackRef={trackRef} index={1} value={value[1]} />
-          <SliderThumb trackRef={trackRef} index={0} value={value[0]} />
-        </>
-      )}
+      {thumbs.map((value, i) => (
+        <SliderThumb key={i} index={i} trackRef={trackRef} />
+      ))}
     </div>
   );
 };
