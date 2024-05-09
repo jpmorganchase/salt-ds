@@ -138,6 +138,16 @@ export const globalTypes: GlobalTypes = {
       title: "Heading font",
     },
   },
+  accent: {
+    name: "Experimental accent",
+    description: "Switch accent to blue / teal",
+    defaultValue: "blue",
+    toolbar: {
+      icon: "beaker",
+      items: ["blue", "teal"],
+      title: "Accent",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {

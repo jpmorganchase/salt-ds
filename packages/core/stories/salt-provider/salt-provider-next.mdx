@@ -163,3 +163,32 @@ A new structure of palette layer is introduced to help making color changes easi
 
 All existing characteristics are re-wired through above new palette layers to use the new colors,
 which is scoped to `.salt-theme-next`.
+
+## Accent color switch
+
+A new `accent` prop is introduced with `"blue"` (default) and `"teal"` options.
+This enables the possiblity of switching all components using accent colors to use either blue or teal
+color palette, e.g. CTA button, checkbox, radio button, etc.
+
+```tsx
+<UNSTABLE_SaltProviderNext accent="teal">
+```
+
+Under the hood, a new `data-accent` attribute is added alongside with other style option attributes, where
+below variables are being switched to different colors
+
+```
+--salt-palette-accent
+--salt-palette-accent-disabled
+--salt-palette-accent-strong
+--salt-palette-accent-strong-disabled
+--salt-palette-accent-stronger
+--salt-palette-accent-stronger-disabled
+--salt-palette-accent-strongest
+--salt-palette-accent-weak
+--salt-palette-accent-weaker
+--salt-palette-accent-weaker-disabled
+--salt-palette-accent-weakest
+--salt-palette-accent-action-hover
+--salt-palette-accent-action-active
+```
