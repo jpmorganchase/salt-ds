@@ -90,6 +90,10 @@
   position: absolute;
 }
 
+.saltSliderSelection-range {
+  align-items: center;
+}
+
 .saltSliderMarks {
   position: relative;
 }

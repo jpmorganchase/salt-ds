@@ -9,17 +9,24 @@ export function useMouseDownThumb(
   step: number,
   value: SliderValue,
   setValue: SliderChangeHandler,
-  onChange: SliderChangeHandler | undefined
+  onChange: SliderChangeHandler | undefined,
+  index: number
 ) {
   const [thumbFocus, setThumbFocus] = useState(false);
 
-  if (Array.isArray(value)) {
-    console.log("value = range");
-  }
-
   const onMouseMove = (event: MouseEvent): void => {
-    getValue(trackRef, min, max, step, setValue, onChange, event);
-    setThumbFocus(true);
+    event.preventDefault();
+    const newValue = getValue(trackRef, min, max, step, event);
+    if (Array.isArray(value)) {
+      index ? setValue([newValue, value[1]]) : setValue([value[0], newValue]);
+      index
+        ? onChange?.([newValue, value[1]])
+        : onChange?.([value[0], newValue]);
+    } else {
+      setValue(newValue);
+      onChange?.(newValue);
+    }
+    // setThumbFocus(true);
   };
 
   const onMouseUp = () => {

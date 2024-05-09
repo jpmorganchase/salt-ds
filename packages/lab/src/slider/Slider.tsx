@@ -6,7 +6,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { SliderTrack, SliderMarks, SliderContext } from "./internal";
 
 import sliderCss from "./Slider.css";
-import { SliderChangeHandler } from "./types";
+import { SliderChangeHandler, SliderValue } from "./types";
 
 const withBaseName = makePrefixer("saltSlider");
 
@@ -68,7 +68,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     window: targetWindow,
   });
 
-  const [value, setValue] = useControlled<number>({
+  const [value, setValue] = useControlled<SliderValue>({
     controlled: valueProp,
     default: defaultValue,
     name: "Slider",

@@ -6,8 +6,6 @@ export const getValue = (
   min: number,
   max: number,
   step: number,
-  setValue: SliderChangeHandler,
-  onChange: SliderChangeHandler | undefined,
   event: MouseEvent
 ) => {
   const { clientX } = event;
@@ -18,9 +16,22 @@ export const getValue = (
     let value = roundToStep(normaliseBetweenValues, step);
     value = roundToTwoDp(value);
     value = clampValue(value, min, max);
-    setValue(value);
-    onChange?.(value);
+    return value;
   }
+};
+
+// Can probably do this all in a single reduce function - look at other libraries
+// Only needed on the track mouse down
+export const getIndexOfClosestThumb = (
+  newValue: SliderValue,
+  value: number
+) => {
+  const thumbIndex = value.map((value) => {
+    return Math.abs(value - newValue);
+  });
+  const closestThumbValue = Math.max(...thumbIndex);
+
+  return thumbIndex.indexOf(closestThumbValue);
 };
 
 export const roundToTwoDp = (value: number) => Math.round(value * 100) / 100;
@@ -28,7 +39,7 @@ export const roundToTwoDp = (value: number) => Math.round(value * 100) / 100;
 export const roundToStep = (value: number, step: number) =>
   Math.round(value / step) * step;
 
-export const clampValue = (value: SliderValue, min: number, max: number) => {
+export const clampValue = (value: number, min: number, max: number) => {
   if (value > max) {
     return max;
   }

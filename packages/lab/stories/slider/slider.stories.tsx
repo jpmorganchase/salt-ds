@@ -88,3 +88,14 @@ export const WithInput = () => {
     </FormField>
   );
 };
+
+export const Range = () => {
+  return (
+    <Slider
+      defaultValue={[0, 20]}
+      min={0}
+      max={100}
+      style={{ width: "300px" }}
+    />
+  );
+};
