@@ -280,9 +280,7 @@ export const MultipleActionsButtons: StoryFn<typeof Banner> = (props) => (
     <Banner {...props}>
       <BannerContent>
         <StackLayout gap={2}>
-          <Text>
-            Information missing in form submission
-          </Text>
+          <Text>Information missing in form submission</Text>
           <FlowLayout gap={1}>
             <FlexItem>
               <Button variant="primary">Primary Button</Button>
