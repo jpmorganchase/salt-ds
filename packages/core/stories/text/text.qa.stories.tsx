@@ -48,6 +48,9 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Text color="error">
       Error <strong>strong</strong> and <small>small</small> text
     </Text>
+    <Text color="info">
+      Info <strong>strong</strong> and <small>small</small> text
+    </Text>
     <Display1>
       Display 1 <strong>strong</strong> and <small>small</small> text
     </Display1>
@@ -112,6 +115,9 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     </Text>
     <Text color="error">
       Error <strong>strong</strong> and <small>small</small> text
+    </Text>
+    <Text color="info">
+      Info <strong>strong</strong> and <small>small</small> text
     </Text>
     <Display1>
       Display 1 <strong>strong</strong> and <small>small</small> text

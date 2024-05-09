@@ -59,6 +59,11 @@
   --text-color: var(--salt-status-error-foreground-informative);
 }
 
+/* Info variant */
+.saltText-info {
+  --text-color: var(--salt-status-info-foreground-informative);
+}
+
 /* Body emphasis strong */
 .saltText strong {
   font-weight: var(--salt-text-fontWeight-strong);
