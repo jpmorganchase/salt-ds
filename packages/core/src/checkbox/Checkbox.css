@@ -1,6 +1,6 @@
 /* Styles applied to root component */
 .saltCheckbox {
-  display: flex;
+  display: inline-flex;
   gap: var(--salt-spacing-100);
   position: relative;
   cursor: var(--salt-selectable-cursor-hover);

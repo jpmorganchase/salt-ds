@@ -1,6 +1,6 @@
 /* Styles applied to RadioButton container */
 .saltRadioButton {
-  display: flex;
+  display: inline-flex;
   gap: var(--salt-spacing-100);
   cursor: var(--salt-selectable-cursor-hover);
   position: relative;
