@@ -13,7 +13,15 @@ export const Primary: StoryFn<typeof Link> = () => {
 
 export const Secondary: StoryFn<typeof Link> = () => {
   return (
-    <Link variant="secondary" href="https://www.google.com">
+    <Link color="secondary" href="https://www.google.com">
+      Link to URL
+    </Link>
+  );
+};
+
+export const InheritColor: StoryFn<typeof Link> = () => {
+  return (
+    <Link color="inherit" href="https://www.google.com">
       Link to URL
     </Link>
   );
