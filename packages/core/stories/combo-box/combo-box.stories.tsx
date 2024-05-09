@@ -9,7 +9,7 @@ import {
   Option,
   OptionGroup,
   Text,
-  Label
+  Label,
 } from "@salt-ds/core";
 import {
   CountryCode,
@@ -692,10 +692,10 @@ export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
       valueToString={(person) => person.displayName}
     >
       {options.map((person) => (
-        <Option key={person.id} value={person} >
+        <Option key={person.id} value={person}>
           <StackLayout gap={0.25} align="start">
-            <Text variant="primary" >{person.firstName}</Text>
-            <Label variant="secondary" >{person.lastName}</Label>
+            <Text variant="primary">{person.firstName}</Text>
+            <Label variant="secondary">{person.lastName}</Label>
           </StackLayout>
         </Option>
       ))}

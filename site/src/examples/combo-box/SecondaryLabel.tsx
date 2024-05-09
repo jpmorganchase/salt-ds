@@ -39,7 +39,7 @@ export const SecondaryLabel = (): ReactElement => {
           <Option key={city.countryCode} value={city}>
             <StackLayout gap={0.25} align="start">
               <Text variant="primary">{city.name}</Text>
-              <Label variant="secondary" >{city.countryCode}</Label>
+              <Label variant="secondary">{city.countryCode}</Label>
             </StackLayout>
           </Option>
         ))}
