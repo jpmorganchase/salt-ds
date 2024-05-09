@@ -15,7 +15,11 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import dateInputCss from "./DateInput.css";
-import { makePrefixer, useFormFieldProps } from "@salt-ds/core";
+import {
+  makePrefixer,
+  StatusAdornment,
+  useFormFieldProps,
+} from "@salt-ds/core";
 import {
   CalendarDate,
   DateFormatter,
@@ -134,6 +138,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       selectionVariant,
       openState,
       setOpen,
+      validationStatusState,
+      setValidationStatus,
     } = useDatePickerContext();
 
     const [focused, setFocused] = useState(false);
@@ -158,9 +164,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const isDisabled = disabled || formFieldDisabled;
 
-    const [validationStatusState, setValidationStatus] = useState<
-      "error" | undefined
-    >(undefined);
     const validationStatus =
       validationStatusState ??
       formFieldValidationStatus ??
@@ -192,7 +195,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      setValidationStatus(getDateValidationStatus(dateString));
+      setValidationStatus(
+        getDateValidationStatus(dateString) ??
+          getDateValidationStatus(endDateStringValue)
+      );
       if (calendarDate) {
         setStartDate(calendarDate);
       }
@@ -202,7 +208,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       if (!dateString) setEndDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      setValidationStatus(getDateValidationStatus(dateString));
+      setValidationStatus(
+        getDateValidationStatus(dateString) ??
+          getDateValidationStatus(startDateStringValue)
+      );
       if (calendarDate) {
         setEndDate(calendarDate);
       }
@@ -318,6 +327,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         )}
         {
           <div className={withBaseName("endAdornmentContainer")}>
+            {!isDisabled && !isReadOnly && validationStatus && (
+              <StatusAdornment status={validationStatus} />
+            )}
             {endAdornment}
           </div>
         }

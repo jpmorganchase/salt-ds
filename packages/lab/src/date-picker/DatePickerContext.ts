@@ -19,6 +19,8 @@ export interface DatePickerContextValue
   setEndVisibleMonth: (newStartDate: DateValue | undefined) => void;
   defaultEndDate: DateValue | undefined;
   setEndDate: (newEndDate: DateValue | undefined) => void;
+  validationStatusState: "error" | undefined;
+  setValidationStatus: (newStatus: "error" | undefined) => void;
   selectionVariant: "default" | "range";
   getPanelPosition: () => Record<string, unknown>;
 }
@@ -37,6 +39,8 @@ export const DatePickerContext = createContext<DatePickerContextValue>(
     endDate: undefined,
     defaultEndDate: undefined,
     setEndDate: () => undefined,
+    validationStatusState: undefined,
+    setValidationStatus: () => undefined,
     endVisibleMonth: undefined,
     setEndVisibleMonth: () => undefined,
     selectionVariant: "default",

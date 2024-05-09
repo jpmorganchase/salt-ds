@@ -109,6 +109,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       name: "EndDate",
       state: "endDate",
     });
+    const [validationStatusState, setValidationStatus] = useState<
+      "error" | undefined
+    >(undefined);
     const [startVisibleMonth, setStartVisibleMonth] = useState<
       DateValue | undefined
     >(startDate ?? today(getLocalTimeZone()));
@@ -183,6 +186,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       selectionVariant,
       context,
       getPanelPosition,
+      validationStatusState,
+      setValidationStatus,
     };
 
     return (

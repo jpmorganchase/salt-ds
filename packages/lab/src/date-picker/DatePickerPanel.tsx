@@ -66,12 +66,14 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       selectionVariant,
       context,
       getPanelPosition,
+      setValidationStatus,
     } = useDatePickerContext();
 
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
         setStartDate(newDate.startDate);
         setEndDate(newDate.endDate);
+        setValidationStatus(undefined);
         if (newDate.startDate && newDate.endDate) {
           setOpen(false);
         }
@@ -80,6 +82,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
     const setSingleDate: UseSingleSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
         setStartDate(newDate);
+        setValidationStatus(undefined);
         onSelect?.();
         setOpen(false);
       };
@@ -135,7 +138,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         {...getPanelPosition()}
         {...rest}
       >
-        <StackLayout>
+        <StackLayout separators gap={0}>
           <FlexLayout>
             <Calendar
               visibleMonth={startVisibleMonth}
