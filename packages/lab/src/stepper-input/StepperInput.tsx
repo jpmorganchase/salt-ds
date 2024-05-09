@@ -111,18 +111,20 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
     const endAdornment: ReactNode = (
       <div className={withBaseName("buttonContainer")}>
         <Button
+          aria-label="increment-value"
           className={withBaseName("stepperButton")}
           disabled={isAtMax()}
           {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
         >
-          <TriangleUpIcon aria-label="triangle-up-icon" />
+          <TriangleUpIcon aria-hidden />
         </Button>
         <Button
+          aria-label="decrement-value"
           className={withBaseName("stepperButton")}
           disabled={isAtMin()}
           {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
         >
-          <TriangleDownIcon aria-label="triangle-down-icon" />
+          <TriangleDownIcon aria-hidden />
         </Button>
       </div>
     );

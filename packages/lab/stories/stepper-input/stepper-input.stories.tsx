@@ -66,7 +66,7 @@ export const Alignment: StoryFn = (args) => (
   </StackLayout>
 );
 
-export const ExternalRefreshButton = () => {
+export const Controlled = () => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
