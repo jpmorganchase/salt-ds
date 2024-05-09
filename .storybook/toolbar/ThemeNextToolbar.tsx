@@ -65,6 +65,8 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
 
   const isActive = initialized;
 
+  if (!isActive) return null;
+
   const items: TooltipLinkListLink[] = Object.keys(globalOptions).flatMap(
     (globalKey) => {
       return [
