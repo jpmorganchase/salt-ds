@@ -1,6 +1,6 @@
 /* Styles applied to RadioButton container */
 .saltRadioButton {
-  display: flex;
+  display: inline-flex;
   gap: var(--salt-spacing-100);
   cursor: var(--salt-selectable-cursor-hover);
   position: relative;
@@ -62,13 +62,13 @@
 }
 
 .saltRadioButton-error .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
-  outline-color: var(--salt-status-error-foreground);
-  border-color: var(--salt-status-error-foreground);
-  color: var(--salt-status-error-foreground);
+  outline-color: var(--salt-status-error-foreground-decorative);
+  border-color: var(--salt-status-error-borderColor);
+  color: var(--salt-status-error-foreground-decorative);
 }
 
 .saltRadioButton-warning .saltRadioButton-input:focus-visible + .saltRadioButtonIcon {
-  outline-color: var(--salt-status-warning-foreground);
-  border-color: var(--salt-status-warning-foreground);
-  color: var(--salt-status-warning-foreground);
+  outline-color: var(--salt-status-warning-foreground-decorative);
+  border-color: var(--salt-status-warning-borderColor);
+  color: var(--salt-status-warning-foreground-decorative);
 }

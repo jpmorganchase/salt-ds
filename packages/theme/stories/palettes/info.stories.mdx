@@ -1,10 +1,4 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { Meta, Canvas, ColorPalette, ColorItem } from "@storybook/addon-docs";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
@@ -30,7 +24,10 @@ Colors used to represent informational content or messaging.
       title="Foreground"
       subtitle="--salt-palette-info-foreground"
       colors={{
-        "--salt-palette-info-foreground": "var(--salt-palette-info-foreground)",
+        "--salt-palette-info-foreground-decorative":
+          "var(--salt-palette-info-foreground-decorative)",
+        "--salt-palette-info-foreground-informative":
+          "var(--salt-palette-info-foreground-informative)",
       }}
     />
     <ColorItem
@@ -58,6 +55,10 @@ Colors used to represent informational content or messaging.
     <ColorBlock
       colorVar="--salt-palette-info-border-disabled"
       replacementToken="#2670A966"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-info-foreground"
+      replacementToken="--salt-palette-info-foreground-decorative"
     />
   </DocGrid>
 </Canvas>

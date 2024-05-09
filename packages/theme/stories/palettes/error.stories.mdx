@@ -1,10 +1,4 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { Meta, Canvas, ColorPalette, ColorItem } from "@storybook/addon-docs";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
@@ -30,6 +24,8 @@ Colors used to symbolise an error state.
       title="Foreground"
       subtitle="--salt-palette-error-foreground-informative"
       colors={{
+        "--salt-palette-error-foreground-decorative":
+          "var(--salt-palette-error-foreground-decorative)",
         "--salt-palette-error-foreground-informative":
           "var(--salt-palette-error-foreground-informative)",
       }}

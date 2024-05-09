@@ -1,10 +1,4 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { Meta, Canvas, ColorPalette, ColorItem } from "@storybook/addon-docs";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
@@ -30,6 +24,8 @@ Colors symbolising a success state or indication of process completion.
       title="Foreground"
       subtitle="--salt-palette-success-foreground-informative"
       colors={{
+        "--salt-palette-success-foreground-decorative":
+          "var(--salt-palette-success-foreground-decorative)",
         "--salt-palette-success-foreground-informative":
           "var(--salt-palette-success-foreground-informative)",
       }}
