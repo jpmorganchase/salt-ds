@@ -12,7 +12,8 @@ div[class*="ag-theme-uitk-low"] {
 div[class*="ag-theme-uitk-touch"] {
   --uitk-size-unit: 16px;
 }
-div[class^="ag-theme-uitk"] {
+div[class^="ag-theme-uitk"],
+div[class*=" ag-theme-uitk"] {
   --uitk-container-spacing: calc(var(--uitk-size-unit) * 2);
 }
 

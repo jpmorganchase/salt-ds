@@ -4,6 +4,7 @@ import {
   endOfYear,
   getLocalTimeZone,
   isSameDay,
+  isSameMonth,
   startOfMonth,
   startOfYear,
   today,
@@ -11,6 +12,7 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
+  isRangeOrOffsetSelectionValue,
   UseMultiSelectionCalendarProps,
   UseOffsetSelectionCalendarProps,
   UseRangeSelectionCalendarProps,
@@ -134,8 +136,56 @@ export function useCalendar(props: useCalendarProps) {
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
+  const isInVisibleMonth = (
+    date: DateValue | undefined | null
+  ): date is DateValue => date != null && isSameMonth(date, visibleMonth);
+
+  const getInitialFocusedDate = (): DateValue => {
+    const selectedDate = selectionManager.state.selectedDate;
+    // Case range or offset
+    if (isRangeOrOffsetSelectionValue(selectedDate)) {
+      if (isInVisibleMonth(selectedDate?.startDate)) {
+        return selectedDate.startDate;
+      }
+      if (isInVisibleMonth(selectedDate?.endDate)) {
+        return selectedDate.endDate;
+      }
+      if (
+        selectedDate?.startDate &&
+        selectedDate?.endDate &&
+        visibleMonth.compare(selectedDate.startDate) < 0 &&
+        visibleMonth.compare(selectedDate.endDate) > 0
+      ) {
+        return startOfMonth(visibleMonth);
+      }
+    }
+    // Case multiselect
+    if (Array.isArray(selectedDate)) {
+      // return first selected day in visible month
+      const selectionInMonth = selectedDate
+        .filter((day) => isInVisibleMonth(day))
+        .sort((a, b) => a.compare(b));
+      if (selectionInMonth.length > 0) {
+        return selectionInMonth[0];
+      }
+    }
+    // Case single select
+    if (
+      !isRangeOrOffsetSelectionValue(selectedDate) &&
+      !Array.isArray(selectedDate) &&
+      isInVisibleMonth(selectedDate)
+    ) {
+      return selectedDate;
+    }
+    // default
+    if (isInVisibleMonth(today(getLocalTimeZone()))) {
+      return today(getLocalTimeZone());
+    }
+    return startOfMonth(visibleMonth);
+  };
+
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
-    startOfMonth(visibleMonth)
+    getInitialFocusedDate
   );
 
   const isDayVisible = useCallback(

@@ -19,7 +19,6 @@ export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
   date: DateValue;
   hideOutOfRangeDates?: boolean;
   renderDayContents?: CalendarDayProps["renderDayContents"];
-  isVisible?: boolean;
   TooltipProps?: CalendarDayProps["TooltipProps"];
 }
 

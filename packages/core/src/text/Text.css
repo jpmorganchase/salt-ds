@@ -1,3 +1,7 @@
+.saltText {
+  --text-color: currentColor;
+}
+
 /* Main css class. Style for body text */
 .saltText {
   color: var(--saltText-color, var(--text-color));

@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.43
+
+### Minor Changes
+
+- 542b6228: Removed `Menu`, `MenuItem`, `MenuTrigger`, `MenuPanel` and `MenuGroup` from labs and promoted to core.
+
 ## 1.0.0-alpha.42
 
 ### Minor Changes

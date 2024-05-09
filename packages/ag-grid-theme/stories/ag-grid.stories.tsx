@@ -68,3 +68,8 @@ export {
   WrappedCell,
   WrappedHeader,
 } from "./examples";
+
+// Regression of #3351, icon should match Default
+export const WithExtraContainerClass = () => {
+  return <Default containerClassName="foo" />;
+};

@@ -10,6 +10,7 @@ import { AgGridReactProps } from "ag-grid-react";
 import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { useDensity, useTheme } from "@salt-ds/core";
 import { LicenseManager } from "ag-grid-enterprise";
+import { clsx } from "clsx";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -18,6 +19,7 @@ interface AgGridHelpersProps {
   compact?: boolean;
   mode?: string;
   density?: string;
+  containerClassName?: string;
 }
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
@@ -26,6 +28,7 @@ export function useAgGridHelpers({
   compact = false,
   mode: modeProp,
   density: densityProp,
+  containerClassName,
 }: AgGridHelpersProps): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
@@ -67,9 +70,12 @@ export function useAgGridHelpers({
     }
   }, [density, agThemeName, compact]);
 
-  const className = `${agThemeName}-${density}${
-    compact && density === "high" ? `-compact` : ``
-  }-${mode}`;
+  const className = clsx(
+    containerClassName,
+    `${agThemeName}-${density}${
+      compact && density === "high" ? `-compact` : ``
+    }-${mode}`
+  );
 
   const onGridReady = useCallback(({ api, columnApi }: GridReadyEvent) => {
     apiRef.current = { api, columnApi };
