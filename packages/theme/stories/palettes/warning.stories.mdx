@@ -1,10 +1,4 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { Meta, Canvas, ColorPalette, ColorItem } from "@storybook/addon-docs";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
@@ -28,8 +22,10 @@ Colors symbolising a warning state.
     />
     <ColorItem
       title="Foreground"
-      subtitle="--salt-palette-warning-foreground-informative"
+      subtitle="--salt-palette-warning-foreground"
       colors={{
+        "--salt-palette-warning-foreground-decorative":
+          "var(--salt-palette-warning-foreground-decorative)",
         "--salt-palette-warning-foreground-informative":
           "var(--salt-palette-warning-foreground-informative)",
       }}
