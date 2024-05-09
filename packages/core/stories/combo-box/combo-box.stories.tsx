@@ -843,3 +843,93 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
     </ComboBox>
   );
 };
+
+export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
+  const [value, setValue] = useState(getTemplateDefaultValue(args));
+  const [selected, setSelected] = useState<string[]>([]);
+  const allSelectedOptionValue = "all";
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    let newOptionsSelected = [...newSelected];
+    //case: clear all if select all is unselected
+    if (
+      selected.includes(allSelectedOptionValue) &&
+      newOptionsSelected.includes(allSelectedOptionValue)
+    ) {
+      newOptionsSelected = newOptionsSelected.filter(
+        (el) => el !== allSelectedOptionValue
+      );
+      if (newOptionsSelected.length === usStates.length) {
+        newOptionsSelected = [];
+      }
+    }
+    //case: clear all if select all is unselected
+    else if (
+      selected.includes(allSelectedOptionValue) &&
+      !newOptionsSelected.includes(allSelectedOptionValue)
+    ) {
+      newOptionsSelected = [];
+    }
+    //case: select all if select all is selected
+    else if (
+      !selected.includes(allSelectedOptionValue) &&
+      newOptionsSelected.includes(allSelectedOptionValue)
+    ) {
+      newOptionsSelected = [...usStates, allSelectedOptionValue];
+    }
+    //case: select all should be checked if all options are selected
+    else if (
+      !newOptionsSelected.includes(allSelectedOptionValue) &&
+      newOptionsSelected.length === usStates.length
+    ) {
+      newOptionsSelected = [...usStates, allSelectedOptionValue];
+    }
+
+    setSelected(newOptionsSelected);
+    args.onSelectionChange?.(event, newOptionsSelected);
+
+    setValue("");
+  };
+
+  const filteredOptions = usStates.filter((state) =>
+    state.toLowerCase().includes(value.trim().toLowerCase())
+  );
+  return (
+    <ComboBox
+      {...args}
+      multiselect
+      selected={selected}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      style={{ width: "266px" }}
+    >
+      {filteredOptions.length > 1 && (
+        <Option
+          style={{
+            borderBottom: "solid",
+            borderWidth: "1px",
+            borderColor: "var(--salt-separable-tertiary-borderColor)",
+          }}
+          value={"all"}
+          key={"all"}
+        >
+          Select All
+        </Option>
+      )}
+      {filteredOptions.map((state) => (
+        <Option value={state} key={state} />
+      ))}
+    </ComboBox>
+  );
+};
