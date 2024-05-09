@@ -23,8 +23,9 @@ const fetcher = async (url: string, filter: string) => {
 
 export const ServerSideData = (): ReactElement => {
   const [value, setValue] = useState("");
+  const minLengthIsMet = value.length > 2;
   const { data, isLoading } = useSWR<string[]>(
-    value.length > 2 ? `/example-data/states.json?s=${value}` : null,
+    minLengthIsMet ? `/example-data/states.json?s=${value}` : null,
     (url: string) => fetcher(url, value),
     {
       fallbackData: [],
@@ -63,7 +64,7 @@ export const ServerSideData = (): ReactElement => {
         {!loading && hasResults
           ? data?.map((state) => <Option value={state} key={state} />)
           : null}
-        {!loading && !hasResults ? (
+        {!loading && !hasResults && minLengthIsMet ? (
           <div
             className={styles.statusOption}
             role="option"
