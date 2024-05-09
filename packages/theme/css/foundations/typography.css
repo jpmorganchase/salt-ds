@@ -1,6 +1,6 @@
 .salt-theme {
-  --salt-typography-fontFamily: "Open Sans";
-  --salt-typography-fontFamily-code: "PT Mono";
+  --salt-typography-fontFamily-openSans: "Open Sans";
+  --salt-typography-fontFamily-ptMono: "PT Mono";
 
   --salt-typography-fontWeight-light: 300;
   --salt-typography-fontWeight-regular: 400;
