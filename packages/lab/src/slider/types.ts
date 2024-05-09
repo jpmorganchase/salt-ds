@@ -1,2 +1,2 @@
 export type SliderValue = number | number[];
-export type SliderChangeHandler = (value: SliderValue) => void;
+export type SliderChangeHandler = (value: SliderValue, index?: number) => void;

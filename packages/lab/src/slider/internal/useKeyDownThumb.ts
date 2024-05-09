@@ -37,7 +37,7 @@ export function useKeyDownThumb(
     valueItem = roundToStep(valueItem, step);
     valueItem = roundToTwoDp(valueItem);
     if (Array.isArray(value)) {
-      index ? setValue([valueItem, value[1]]) : setValue([value[0], valueItem]);
+      index ? setValue([valueItem, value[1]], index) : setValue([value[0], valueItem], index);
       index ? onChange?.([valueItem, value[1]]) : onChange?.([value[0], valueItem]);
     } else {
       setValue(valueItem);

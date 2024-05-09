@@ -11,7 +11,8 @@ export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 const withBaseName = makePrefixer("saltSliderTrack");
 
 export const SliderTrack = ({ ...props }: SliderTrackProps) => {
-  const { min, max, step, value, setValue, onChange } = useSliderContext();
+  const { min, max, step, value, setValue, onChange, index } =
+    useSliderContext();
 
   const trackRef = useRef<HTMLDivElement>(null);
 

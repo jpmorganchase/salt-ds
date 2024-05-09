@@ -9,7 +9,8 @@ export function useMouseDownTrack(
   step: number,
   value: SliderValue,
   setValue: SliderChangeHandler,
-  onChange: SliderChangeHandler | undefined
+  onChange: SliderChangeHandler,
+  index: number
 ) {
   return {
     trackProps: {
@@ -22,6 +23,9 @@ export function useMouseDownTrack(
           closestThumbIndex
             ? setValue([newValue, value[1]])
             : setValue([value[0], newValue]);
+            closestThumbIndex
+            ? onChange([newValue, value[1]], index)
+            : setValue([value[0], newValue], index);
         } else {
           setValue(newValue);
         }

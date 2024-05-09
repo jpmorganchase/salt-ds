@@ -89,13 +89,69 @@ export const WithInput = () => {
   );
 };
 
-export const Range = () => {
+const RangeTemplate: StoryFn<SliderProps> = ({ ...args }) => {
+  return <Slider style={{ width: "300px" }} {...args} />;
+};
+
+export const Range = RangeTemplate.bind({});
+Range.args = {
+  min: 0,
+  max: 100,
+  defaultValue: [20, 80],
+};
+
+export const RangeWithMarks = RangeTemplate.bind({});
+RangeWithMarks.args = {
+  min: 0,
+  max: 100,
+  step: 10,
+  defaultValue: [20, 80],
+  labels: "marks",
+};
+
+export const RangeWithInput = () => {
+  const [value, setValue] = useState<number>([20, 40]);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>, index) => {
+    const inputValue = event.target.value as unknown;
+    index
+      ? setValue([inputValue as number, value[1] as number])
+      : setValue([value[0] as number, inputValue as number]);
+  };
+
+  const handleChange = (value: number) => {
+    setValue(value);
+  };
+
   return (
-    <Slider
-      defaultValue={[0, 20]}
-      min={0}
-      max={100}
-      style={{ width: "300px" }}
-    />
+    <FormField>
+      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <Input
+          placeholder="value"
+          style={{ width: "1px", margin: "5px" }}
+          onChange={handleInputChange}
+        />
+        <Slider
+          style={{ width: "300px" }}
+          min={0}
+          max={50}
+          value={value}
+          onChange={handleChange}
+          aria-label="withInput"
+        />
+        <Input
+          placeholder="value"
+          style={{ width: "1px", margin: "5px" }}
+          onChange={handleInputChange}
+        />
+      </div>
+    </FormField>
   );
 };

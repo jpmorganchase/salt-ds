@@ -15,18 +15,17 @@ export function useMouseDownThumb(
   const [thumbFocus, setThumbFocus] = useState(false);
 
   const onMouseMove = (event: MouseEvent): void => {
-    event.preventDefault();
+    // event.preventDefault();
     const newValue = getValue(trackRef, min, max, step, event);
     if (Array.isArray(value)) {
       index ? setValue([newValue, value[1]]) : setValue([value[0], newValue]);
       index
-        ? onChange?.([newValue, value[1]])
-        : onChange?.([value[0], newValue]);
+        ? onChange?.([newValue, value[1]], index)
+        : onChange?.([value[0], newValue], index);
     } else {
       setValue(newValue);
-      onChange?.(newValue);
+      onChange?.(newValue, index);
     }
-    // setThumbFocus(true);
   };
 
   const onMouseUp = () => {
