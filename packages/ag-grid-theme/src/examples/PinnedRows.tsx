@@ -77,6 +77,7 @@ const PinnedRowsExample = function PinnedRowsExample({
         {...agGridProps}
         {...rest}
         columnDefs={columnDefs}
+        rowSelection="multiple"
         rowData={rowData}
         pinnedBottomRowData={pinnedBottomRowData}
         pinnedTopRowData={pinnedTopRowData}

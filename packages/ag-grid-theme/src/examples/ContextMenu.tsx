@@ -147,6 +147,7 @@ const ContextMenu = (props: AgGridReactProps) => {
         allowContextMenuWithControlKey
         getContextMenuItems={getContextMenuItems}
         columnDefs={dataGridExampleColumns}
+        rowSelection="multiple"
         rowData={dataGridExampleData}
       />
     </div>

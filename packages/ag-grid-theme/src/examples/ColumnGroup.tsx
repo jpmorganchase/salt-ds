@@ -11,6 +11,7 @@ const ColumnGroup = (props: AgGridReactProps) => {
       <AgGridReact
         {...agGridProps}
         {...props}
+        rowSelection="multiple"
         rowData={dataGridExampleData}
         columnDefs={columnsWithGrouping("US States")}
       />
