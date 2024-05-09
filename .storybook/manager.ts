@@ -8,7 +8,7 @@ addons.setConfig({
 
 addons.register("theme-next-addon", () => {
   addons.add("theme-next-addon/toolbar", {
-    title: "Example Storybook toolbar",
+    title: "Theme next toolbar",
     //👇 Sets the type of UI element in Storybook
     type: types.TOOL,
     //👇 Shows the Toolbar UI element if either the Canvas or Docs tab is active
