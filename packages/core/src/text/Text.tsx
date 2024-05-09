@@ -44,7 +44,14 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
     /*
      * The color of the text. Defaults to "primary".
      */
-    color?: "inherit" | "primary" | "secondary" | "success" | "warning" | "error" | "info";
+    color?:
+      | "inherit"
+      | "primary"
+      | "secondary"
+      | "success"
+      | "warning"
+      | "error"
+      | "info";
   }
 >;
 
@@ -104,4 +111,3 @@ export const Text: TextComponent = forwardRef(
     );
   }
 );
-

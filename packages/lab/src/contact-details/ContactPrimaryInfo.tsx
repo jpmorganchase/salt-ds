@@ -43,9 +43,7 @@ export const ContactPrimaryInfo = forwardRef<
       styleAs={variant === "default" ? "h2" : "h4"}
       className={clsx(withBaseName(), className)}
       role="heading"
-      aria-labelledby={`${id} ${secondaryId ?? null} ${
-         tertiaryId ?? null
-      }`}
+      aria-labelledby={`${id} ${secondaryId ?? null} ${tertiaryId ?? null}`}
       aria-level={ariaLevel}
       data-testid="primary"
     >
