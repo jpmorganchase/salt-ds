@@ -25,7 +25,8 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
     onChange
   );
 
-  const thumbs = (Array.isArray(value) ? value : [value]).sort((a, b) => b - a);
+  const thumbs = Array.isArray(value) ? value : [value];
+  // .sort((a, b) => b - a);
 
   return (
     <div className={withBaseName()} ref={trackRef} {...trackProps} {...props}>
