@@ -15,7 +15,7 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { AddIcon, RemoveIcon } from "@salt-ds/icons";
+import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useStepperInput } from "./useStepperInput";
 
 import stepperInputCss from "./StepperInput.css";
@@ -109,20 +109,22 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
     } = useStepperInput(props, inputRef);
 
     const endAdornment: ReactNode = (
-      <>
+      <div className={withBaseName("buttonContainer")}>
         <Button
-          disabled={isAtMin()}
-          {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-        >
-          <RemoveIcon aria-label="remove-icon" />
-        </Button>
-        <Button
+          className={withBaseName("stepperButton")}
           disabled={isAtMax()}
           {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
         >
-          <AddIcon aria-label="add-icon" />
+          <TriangleUpIcon aria-label="triangle-up-icon" />
         </Button>
-      </>
+        <Button
+          className={withBaseName("stepperButton")}
+          disabled={isAtMin()}
+          {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
+        >
+          <TriangleDownIcon aria-label="triangle-down-icon" />
+        </Button>
+      </div>
     );
 
     return (
