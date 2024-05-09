@@ -2,7 +2,7 @@
   --salt-palette-warning-background: var(--salt-color-orange-10);
   --salt-palette-warning-background-selected: var(--salt-color-orange-20);
   --salt-palette-warning-border: var(--salt-color-orange-700);
-  --salt-palette-warning-foreground-informative: var(--salt-color-orange-850);
+  --salt-palette-warning-foreground-informative: var(--salt-color-orange-800);
   --salt-palette-error-foreground-decorative: var(--salt-color-orange-700);
 }
 
