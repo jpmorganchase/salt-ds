@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBox, Label, Option, StackLayout, Text } from "@salt-ds/core";
+import { ComboBox, Option, StackLayout, Text } from "@salt-ds/core";
 import { largestCities, LargeCity } from "./exampleData";
 
 export const SecondaryLabel = (): ReactElement => {
@@ -21,7 +21,13 @@ export const SecondaryLabel = (): ReactElement => {
     }
   };
 
-  const cities = largestCities.slice(0, 5);
+  const options = largestCities
+    .slice(0, 5)
+    .filter(
+      (city) =>
+        city.name.toLowerCase().includes(value.trim().toLowerCase()) ||
+        city.countryCode.toLowerCase().includes(value.trim().toLowerCase())
+    );
 
   return (
     <ComboBox
@@ -31,18 +37,14 @@ export const SecondaryLabel = (): ReactElement => {
       style={{ width: "266px" }}
       valueToString={(value) => value.name}
     >
-      {cities
-        .filter((city) =>
-          city.name.toLowerCase().includes(value.trim().toLowerCase())
-        )
-        .map((city) => (
-          <Option key={city.countryCode} value={city}>
-            <StackLayout gap={0.25} align="start">
-              <Text variant="primary">{city.name}</Text>
-              <Label variant="secondary">{city.countryCode}</Label>
-            </StackLayout>
-          </Option>
-        ))}
+      {options.map((city) => (
+        <Option key={city.countryCode} value={city}>
+          <StackLayout gap={0.25} align="start">
+            <Text>{city.name}</Text>
+            <Text color="secondary">{city.countryCode}</Text>
+          </StackLayout>
+        </Option>
+      ))}
     </ComboBox>
   );
 };

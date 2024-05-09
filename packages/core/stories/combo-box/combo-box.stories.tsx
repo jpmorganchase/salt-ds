@@ -9,7 +9,6 @@ import {
   Option,
   OptionGroup,
   Text,
-  Label,
 } from "@salt-ds/core";
 import {
   CountryCode,
@@ -655,6 +654,20 @@ MultiplePillsTruncated.args = {
   truncate: true,
 };
 
+export type LargeCity = {
+  name: string;
+  countryCode: CountryCode;
+};
+
+export const largestCities: LargeCity[] = [
+  { name: "Tokyo", countryCode: "JP" },
+  { name: "Delhi", countryCode: "IN" },
+  { name: "Shanghai", countryCode: "CN" },
+  { name: "São Paulo", countryCode: "BR" },
+  { name: "Mexico City", countryCode: "MX" },
+  { name: "Cairo", countryCode: "EG" },
+];
+
 export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
@@ -668,34 +681,34 @@ export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: Person[]
+    newSelected: LargeCity[]
   ) => {
     if (newSelected.length === 1) {
-      setValue(newSelected[0].firstName);
+      setValue(newSelected[0].name);
     } else {
       setValue("");
     }
   };
 
-  const options = people.filter(
-    (person) =>
-      person.firstName.toLowerCase().includes(value.trim().toLowerCase()) ||
-      person.lastName.toLowerCase().includes(value.trim().toLowerCase())
+  const options = largestCities.filter(
+    (city) =>
+      city.name.toLowerCase().includes(value.trim().toLowerCase()) ||
+      city.countryCode.toLowerCase().includes(value.trim().toLowerCase())
   );
 
   return (
-    <ComboBox<Person>
-      {...args}
+    <ComboBox
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
-      valueToString={(person) => person.displayName}
+      style={{ width: "266px" }}
+      valueToString={(city) => city.name}
     >
-      {options.map((person) => (
-        <Option key={person.id} value={person}>
+      {options.map((city) => (
+        <Option key={city.countryCode} value={city}>
           <StackLayout gap={0.25} align="start">
-            <Text variant="primary">{person.firstName}</Text>
-            <Label variant="secondary">{person.lastName}</Label>
+            <Text>{city.name}</Text>
+            <Text color="secondary">{city.countryCode}</Text>
           </StackLayout>
         </Option>
       ))}
