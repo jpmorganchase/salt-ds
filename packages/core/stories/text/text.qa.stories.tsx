@@ -39,17 +39,20 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Text color="secondary" disabled>
       Secondary disabled <strong>strong</strong> and <small>small</small> text
     </Text>
-    <Text color="success">
-      Success <strong>strong</strong> and <small>small</small> text
-    </Text>
-    <Text color="warning">
-      Warning <strong>strong</strong> and <small>small</small> text
+    <Text color="info">
+      Info <strong>strong</strong> and <small>small</small> text
     </Text>
     <Text color="error">
       Error <strong>strong</strong> and <small>small</small> text
     </Text>
-    <Text color="info">
-      Info <strong>strong</strong> and <small>small</small> text
+    <Text color="warning">
+      Warning <strong>strong</strong> and <small>small</small> text
+    </Text>
+    <Text color="success">
+      Success <strong>strong</strong> and <small>small</small> text
+    </Text>
+    <Text color="inherit">
+      Inherit <strong>strong</strong> and <small>small</small> text
     </Text>
     <Display1>
       Display 1 <strong>strong</strong> and <small>small</small> text
@@ -107,17 +110,17 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Text color="secondary" disabled>
       Secondary disabled <strong>strong</strong> and <small>small</small> text
     </Text>
-    <Text color="success">
-      Success <strong>strong</strong> and <small>small</small> text
-    </Text>
-    <Text color="warning">
-      Warning <strong>strong</strong> and <small>small</small> text
+    <Text color="info">
+      Info <strong>strong</strong> and <small>small</small> text
     </Text>
     <Text color="error">
       Error <strong>strong</strong> and <small>small</small> text
     </Text>
-    <Text color="info">
-      Info <strong>strong</strong> and <small>small</small> text
+    <Text color="warning">
+      Warning <strong>strong</strong> and <small>small</small> text
+    </Text>
+    <Text color="success">
+      Success <strong>strong</strong> and <small>small</small> text
     </Text>
     <Display1>
       Display 1 <strong>strong</strong> and <small>small</small> text

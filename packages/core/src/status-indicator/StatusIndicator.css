@@ -1,8 +1,8 @@
 .saltStatusIndicator {
-  --statusIndicator-warning-color: var(--salt-status-warning-foreground);
-  --statusIndicator-info-color: var(--salt-status-info-foreground);
-  --statusIndicator-success-color: var(--salt-status-success-foreground);
-  --statusIndicator-error-color: var(--salt-status-error-foreground);
+  --statusIndicator-warning-color: var(--salt-status-warning-foreground-decorative);
+  --statusIndicator-info-color: var(--salt-status-info-foreground-decorative);
+  --statusIndicator-success-color: var(--salt-status-success-foreground-decorative);
+  --statusIndicator-error-color: var(--salt-status-error-foreground-decorative);
   color: var(--saltStatusIndicator-color, var(--statusIndicator-Color));
 }
 

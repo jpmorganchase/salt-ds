@@ -9,6 +9,7 @@ import { ElementType, forwardRef, ReactElement } from "react";
 import textCss from "./Text.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { ValidationStatus } from "../status-indicator";
 
 export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
@@ -44,14 +45,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
     /*
      * The color of the text. Defaults to "primary".
      */
-    color?:
-      | "inherit"
-      | "primary"
-      | "secondary"
-      | "success"
-      | "warning"
-      | "error"
-      | "info";
+    color?: "inherit" | "primary" | "secondary" | ValidationStatus;
   }
 >;
 
