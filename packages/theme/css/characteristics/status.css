@@ -6,6 +6,7 @@
   --salt-status-success-foreground-informative: var(--salt-palette-success-foreground-informative);
   --salt-status-warning-foreground-informative: var(--salt-palette-warning-foreground-informative);
   --salt-status-error-foreground-informative: var(--salt-palette-error-foreground-informative);
+  --salt-status-info-foreground-informative: var(--salt-palette-info-foreground-informative);
 
   --salt-status-info-borderColor: var(--salt-palette-info-border);
   --salt-status-success-borderColor: var(--salt-palette-success-border);

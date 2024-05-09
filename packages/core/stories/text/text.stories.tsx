@@ -46,6 +46,10 @@ export const Error: StoryFn<typeof Text> = () => {
   return <Text color="error">This is a error text example</Text>;
 };
 
+export const Info: StoryFn<typeof Text> = () => {
+  return <Text color="info">This is a info text example</Text>;
+};
+
 export const InheritColor: StoryFn<typeof Text> = () => {
   return <Text color="inherit">This is a secondary text example</Text>;
 };

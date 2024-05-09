@@ -50,7 +50,8 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "secondary"
       | "success"
       | "warning"
-      | "error";
+      | "error"
+      | "info";
   }
 >;
 

@@ -9,5 +9,6 @@ export const Color = (): ReactElement => (
     <Text color="success">This is success color of Text</Text>
     <Text color="warning">This is warning color of Text</Text>
     <Text color="error">This is error color of Text</Text>
+    <Text color="info">This is error color of Text</Text>
   </StackLayout>
 );
