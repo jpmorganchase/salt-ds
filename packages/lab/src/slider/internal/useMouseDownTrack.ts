@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import { getIndexOfClosestThumb, getValue } from "./utils";
+import { getValue } from "./utils";
 import { SliderChangeHandler, SliderValue } from "../types";
 
 export function useMouseDownTrack(
@@ -16,15 +16,19 @@ export function useMouseDownTrack(
       onMouseDown(event: React.MouseEvent) {
         //@ts-ignore
 
-        const newValue = getValue(trackRef, min, max, step, event);
+        const newValue: number = getValue(trackRef, min, max, step, event);
         if (Array.isArray(value)) {
-          const closestThumbIndex = getIndexOfClosestThumb(newValue, value);
-          closestThumbIndex
-            ? setValue([newValue, value[1]])
-            : setValue([value[0], newValue]);
-          closestThumbIndex
-            ? onChange([newValue, value[1]])
-            : setValue([value[0], newValue]);
+          const nearestThumb =
+            Math.abs(value[0] - newValue) < Math.abs(value[1] - newValue)
+              ? 0
+              : 1;
+          nearestThumb
+            ? setValue([value[0], newValue])
+            : setValue([newValue, value[1]]);
+
+          nearestThumb
+            ? onChange?.([value[0], newValue])
+            : onChange?.([newValue, value[1]]);
         } else {
           setValue(newValue);
         }

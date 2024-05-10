@@ -20,27 +20,24 @@ export const getValue = (
   }
 };
 
-export function setRangeValue(value: number[], newValue: number, setValue: SliderChangeHandler, onChange: SliderChangeHandler, index: number, step : number) {
-  if (Math.abs(value[0] - newValue) < step ||  Math.abs(value[1] - newValue) < step ) return
-  if (!index && newValue > value[1] ) return 
-  if (index && newValue < value[0] ) return 
-  index? setValue?.([value[0], newValue]) : setValue?.([newValue, value[1] ]) 
-  index ? onChange?.([value[0], newValue]) : onChange?.([newValue, value[1] ])
+export function setRangeValue(
+  value: number[],
+  newValue: number,
+  setValue: SliderChangeHandler,
+  onChange: SliderChangeHandler,
+  index: number,
+  step: number
+) {
+  if (
+    Math.abs(value[0] - newValue) < step ||
+    Math.abs(value[1] - newValue) < step
+  )
+    return;
+  if (!index && newValue > value[1]) return;
+  if (index && newValue < value[0]) return;
+  index ? setValue?.([value[0], newValue]) : setValue?.([newValue, value[1]]);
+  index ? onChange?.([value[0], newValue]) : onChange?.([newValue, value[1]]);
 }
-
-// Can probably do this all in a single reduce function - look at other libraries
-// Only needed on the track mouse down
-export const getIndexOfClosestThumb = (
-  newValue: SliderValue,
-  value: number
-) => {
-  const thumbIndex = value.map((value) => {
-    return Math.abs(value - newValue);
-  });
-  const closestThumbValue = Math.max(...thumbIndex);
-
-  return thumbIndex.indexOf(closestThumbValue);
-};
 
 export const roundToTwoDp = (value: number) => Math.round(value * 100) / 100;
 

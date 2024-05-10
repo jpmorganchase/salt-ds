@@ -28,7 +28,7 @@ export function useKeyDownThumb(
         valueItem += step;
         break;
       case "ArrowDown":
-      case "ArrowLeft": 
+      case "ArrowLeft":
         valueItem -= step;
         break;
       default:
@@ -38,5 +38,8 @@ export function useKeyDownThumb(
     valueItem = roundToTwoDp(valueItem);
     valueItem = clampValue(valueItem, min, max);
 
-    Array.isArray(value) ? ( setRangeValue(value, valueItem, setValue, onChange, index, step)) : (setValue(valueItem), onChange?.(valueItem))
-}}
+    Array.isArray(value)
+      ? setRangeValue(value, valueItem, setValue, onChange, index, step)
+      : (setValue(valueItem), onChange?.(valueItem));
+  };
+}
