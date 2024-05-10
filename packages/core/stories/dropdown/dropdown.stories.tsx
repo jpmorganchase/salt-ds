@@ -352,7 +352,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
   ) => {
     let newOptionsSelected = [...newSelected];
 
-    //case: clear all if select all is unselected
+    //case: if select all is previously selected but any option is unselected, then unselect the select all checkbox
     if (
       selected.includes(allSelectedOptionValue) &&
       newOptionsSelected.includes(allSelectedOptionValue)
@@ -360,9 +360,6 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       newOptionsSelected = newOptionsSelected.filter(
         (el) => el !== allSelectedOptionValue
       );
-      if (newOptionsSelected.length === usStates.length) {
-        newOptionsSelected = [];
-      }
     }
     //case: clear all if select all is unselected
     else if (
