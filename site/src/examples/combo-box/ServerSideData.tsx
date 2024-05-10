@@ -1,5 +1,12 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
-import { ComboBox, Option, Spinner } from "@salt-ds/core";
+import {
+  ComboBox,
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  Option,
+  Spinner,
+} from "@salt-ds/core";
 import useSWR from "swr";
 import styles from "./index.module.css";
 
@@ -16,8 +23,9 @@ const fetcher = async (url: string, filter: string) => {
 
 export const ServerSideData = (): ReactElement => {
   const [value, setValue] = useState("");
+  const minLengthIsMet = value.length > 2;
   const { data, isLoading } = useSWR<string[]>(
-    `/example-data/states.json?s=${value}`,
+    minLengthIsMet ? `/example-data/states.json?s=${value}` : null,
     (url: string) => fetcher(url, value),
     {
       fallbackData: [],
@@ -42,25 +50,42 @@ export const ServerSideData = (): ReactElement => {
     }
   };
 
+  const hasResults = Array.isArray(data) && data.length > 0;
+
   return (
-    <ComboBox
-      onChange={handleChange}
-      onSelectionChange={handleSelectionChange}
-      value={value}
-      style={{ width: "266px" }}
-      endAdornment={loading && <Spinner size="small" />}
-    >
-      {!loading ? (
-        data?.map((color) => <Option value={color} key={color} />)
-      ) : (
-        <div
-          className={styles.statusOption}
-          role="option"
-          aria-selected="false"
-        >
-          Loading...
-        </div>
-      )}
-    </ComboBox>
+    <FormField style={{ width: "266px" }}>
+      <FormFieldLabel>State</FormFieldLabel>
+      <ComboBox
+        onChange={handleChange}
+        onSelectionChange={handleSelectionChange}
+        value={value}
+        endAdornment={loading && <Spinner size="small" />}
+      >
+        {!loading && hasResults
+          ? data?.map((state) => <Option value={state} key={state} />)
+          : null}
+        {!loading && !hasResults && minLengthIsMet ? (
+          <div
+            className={styles.statusOption}
+            role="option"
+            aria-selected="false"
+          >
+            No results found
+          </div>
+        ) : null}
+        {loading ? (
+          <div
+            className={styles.statusOption}
+            role="option"
+            aria-selected="false"
+          >
+            Loading...
+          </div>
+        ) : null}
+      </ComboBox>
+      <FormFieldHelperText>
+        Please enter more than 2 characters to search.
+      </FormFieldHelperText>
+    </FormField>
   );
 };
