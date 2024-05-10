@@ -11,5 +11,5 @@
   --salt-palette-error-background-selected: var(--salt-color-red-900);
   --salt-palette-error-border: var(--salt-color-red-500);
   --salt-palette-error-foreground-decorative: var(--salt-color-red-500);
-  --salt-palette-error-foreground-informative: var(--salt-color-red-200);
+  --salt-palette-error-foreground-informative: var(--salt-color-red-400);
 }
