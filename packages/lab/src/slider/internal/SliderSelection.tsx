@@ -6,16 +6,14 @@ import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltSliderSelection");
 
-function getPercentageDifference(min, max, value) {
+function getPercentageDifference(min: number, max: number, value: number[]) {
   const valueDiff = value[1] - value[0];
   const percentage = ((valueDiff - min) / (max - min)) * 100;
   return `${Math.min(Math.max(percentage, 0), 100)}%`;
 }
 
-function getPercentageOffset(min, max, value) {
-  // The values mixed up the wrong way round ????
+function getPercentageOffset(min: number, max: number, value: number[]) {
   const offsetLeft = ((value[0] - min) / (max - min)) * 100;
-
   return Math.min(Math.max(offsetLeft, 0), 100);
 }
 
@@ -30,7 +28,9 @@ export function SliderSelection({
     ? getPercentageDifference(min, max, value)
     : getPercentage(min, max, value);
 
-  const percentageOffset = getPercentageOffset(min, max, value);
+  const percentageOffset = Array.isArray(value)
+    ? getPercentageOffset(min, max, value)
+    : 0;
 
   return (
     <div
@@ -39,7 +39,7 @@ export function SliderSelection({
       })}
       style={{
         width: `${percentage}`,
-        left: Array.isArray(value) ? `${percentageOffset}%` : 0,
+        left: `${percentageOffset}%`,
       }}
       {...props}
     />

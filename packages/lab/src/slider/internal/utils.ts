@@ -1,4 +1,4 @@
-import { SliderChangeHandler, SliderValue } from "../types";
+import { SliderChangeHandler } from "../types";
 import { RefObject } from "react";
 
 export const getValue = (
@@ -9,7 +9,6 @@ export const getValue = (
   event: MouseEvent
 ) => {
   const { clientX } = event;
-  if (trackRef.current) {
     const { width, x } = trackRef.current.getBoundingClientRect();
     const localX = clientX - x;
     const normaliseBetweenValues = (localX / width) * (max - min) + min;
@@ -17,7 +16,6 @@ export const getValue = (
     value = roundToTwoDp(value);
     value = clampValue(value, min, max);
     return value;
-  }
 };
 
 export function setRangeValue(

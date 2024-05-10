@@ -7,7 +7,7 @@ export function useKeyDownThumb(
   step: number,
   value: SliderValue,
   setValue: SliderChangeHandler,
-  onChange: SliderChangeHandler | undefined,
+  onChange: SliderChangeHandler,
   index: number
 ) {
   return (event: React.KeyboardEvent) => {

@@ -1,7 +1,7 @@
 import { makePrefixer, Label } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { getPercentage } from "./utils";
-import { ComponentPropsWithoutRef, RefObject, useState } from "react";
+import { ComponentPropsWithoutRef, RefObject } from "react";
 import { useMouseDownThumb } from "./useMouseDownThumb";
 import { useKeyDownThumb } from "./useKeyDownThumb";
 import { useSliderContext } from "./SliderContext";
@@ -68,7 +68,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
-        aria-label={index}
+        aria-label={ariaLabel}
         aria-orientation="horizontal"
         tabIndex={0}
         {...rest}

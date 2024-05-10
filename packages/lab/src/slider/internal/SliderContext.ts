@@ -6,7 +6,7 @@ export interface SliderContextValue {
   step: number;
   value: SliderValue;
   setValue: SliderChangeHandler;
-  onChange: SliderChangeHandler | undefined;
+  onChange: SliderChangeHandler;
   ariaLabel: string | undefined;
 }
 

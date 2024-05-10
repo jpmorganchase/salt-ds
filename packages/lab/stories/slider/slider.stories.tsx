@@ -1,5 +1,5 @@
 import { Input, FormField, FormFieldLabel } from "@salt-ds/core";
-import { Slider, SliderProps } from "@salt-ds/lab";
+import { Slider, SliderProps, SliderValue } from "@salt-ds/lab";
 import { useState, ChangeEvent } from "react";
 import { StoryFn } from "@storybook/react";
 
@@ -50,14 +50,14 @@ WithMarks.args = {
 };
 
 export const WithInput = () => {
-  const [value, setValue] = useState<number>(5);
+  const [value, setValue] = useState<SliderValue>(5);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value as unknown;
-    setValue(inputValue as number);
+    setValue(inputValue as SliderValue);
   };
 
-  const handleChange = (value: number) => {
+  const handleChange = (value: SliderValue) => {
     setValue(value);
   };
 
@@ -110,19 +110,19 @@ RangeWithMarks.args = {
 };
 
 export const RangeWithInput = () => {
-  const [value, setValue] = useState<number>([20, 40]);
+  const [value, setValue] = useState<SliderValue>([20, 40]);
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value as unknown;
-    setValue([inputValue as number, value[1] as number]);
+    setValue([inputValue as number, value[1]]);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value as unknown;
-    setValue([value[0] as number, inputValue as number]);
+    setValue([value[0], inputValue as number]);
   };
 
-  const handleChange = (value: number) => {
+  const handleChange = (value: SliderValue) => {
     setValue(value);
   };
 

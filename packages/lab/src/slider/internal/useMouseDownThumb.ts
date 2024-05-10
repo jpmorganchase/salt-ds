@@ -9,7 +9,7 @@ export function useMouseDownThumb(
   step: number,
   value: SliderValue,
   setValue: SliderChangeHandler,
-  onChange: SliderChangeHandler | undefined,
+  onChange: SliderChangeHandler,
   index: number
 ) {
   const [thumbFocus, setThumbFocus] = useState(false);
