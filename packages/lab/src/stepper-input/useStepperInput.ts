@@ -176,7 +176,7 @@ export const useStepperInput = (
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const changedValue = (event.currentTarget as HTMLInputElement).value;
+    const changedValue = (event.target as HTMLInputElement).value;
 
     if (!isControlled) {
       setCurrentValue(sanitizedInput(changedValue));
