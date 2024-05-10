@@ -113,7 +113,7 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     })
     .join("\n");
 
-  const ALL_CSS = `[class*=' saltCountrySharp-'],[class^='saltCountrySharp-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
+  const ALL_CSS = `[class*=' saltCountrySharp-'],[class^='saltCountrySharp-'] {background-size: cover;height:var(--salt-size-base, 20px);width:calc(var(--salt-size-base, 20px) * 1.44);}\n`;
 
   const formattedResult = prettier.format(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
