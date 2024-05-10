@@ -12,13 +12,14 @@ export function useMouseDownThumb(
   onChange: SliderChangeHandler | undefined,
   index: number
 ) {
+
   const [thumbFocus, setThumbFocus] = useState(false);
 
   const onMouseMove = (event: MouseEvent): void => {
     event.preventDefault();
     const newValue: number = getValue(trackRef, min, max, step, event);
     Array.isArray(value)
-      ? setRangeValue(value, newValue, setValue, onChange, index)
+      ? setRangeValue(value, newValue, setValue, onChange, index, step)
       : (setValue(newValue), onChange?.(newValue))
   };
 

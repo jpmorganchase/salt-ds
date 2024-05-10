@@ -42,8 +42,8 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
 
   const percentage = Array.isArray(value)
     ? index
-      ? getPercentage(min, max, value[0])
-      : getPercentage(min, max, value[1])
+      ? getPercentage(min, max, value[1])
+      : getPercentage(min, max, value[0])
     : getPercentage(min, max, value);
 
   return (
@@ -58,7 +58,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         })}
         aria-expanded={thumbFocus}
       >
-        {Array.isArray(value) && <Label>{index ? value[0] : value[1]}</Label>}
+        {Array.isArray(value) && <Label>{index ? value[1] : value[0]}</Label>}
         {!Array.isArray(value) && <Label>{value}</Label>}
       </div>
       <div
@@ -68,7 +68,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuenow={value}
-        aria-label={ariaLabel}
+        aria-label={index}
         aria-orientation="horizontal"
         tabIndex={0}
         {...rest}

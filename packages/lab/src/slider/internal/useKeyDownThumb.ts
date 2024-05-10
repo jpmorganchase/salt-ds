@@ -13,8 +13,8 @@ export function useKeyDownThumb(
   return (event: React.KeyboardEvent) => {
     let valueItem: number = Array.isArray(value)
       ? index
-        ? value[0]
-        : value[1]
+        ? value[1]
+        : value[0]
       : value;
     switch (event.key) {
       case "Home":
@@ -28,7 +28,7 @@ export function useKeyDownThumb(
         valueItem += step;
         break;
       case "ArrowDown":
-      case "ArrowLeft":
+      case "ArrowLeft": 
         valueItem -= step;
         break;
       default:
@@ -38,5 +38,5 @@ export function useKeyDownThumb(
     valueItem = roundToTwoDp(valueItem);
     valueItem = clampValue(valueItem, min, max);
 
-    Array.isArray(value) ? ( setRangeValue(value, valueItem, setValue, onChange, index)) : (setValue(valueItem), onChange?.(valueItem))
+    Array.isArray(value) ? ( setRangeValue(value, valueItem, setValue, onChange, index, step)) : (setValue(valueItem), onChange?.(valueItem))
 }}

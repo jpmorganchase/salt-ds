@@ -26,15 +26,14 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
   );
 
   const thumbs = Array.isArray(value) ? value : [value];
-  // .sort((a, b) => b - a);
 
   return (
     <div className={withBaseName()} ref={trackRef} {...trackProps} {...props}>
       <div className={withBaseName("rail")} />
       <SliderSelection />
-      {thumbs.map((value, i) => (
-        <SliderThumb key={i} index={i} trackRef={trackRef} />
-      ))}
+      {thumbs.map((value, i) => {
+        return <SliderThumb key={i} index={i} trackRef={trackRef} />;
+      })}
     </div>
   );
 };

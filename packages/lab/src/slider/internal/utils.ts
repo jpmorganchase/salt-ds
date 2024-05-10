@@ -20,16 +20,12 @@ export const getValue = (
   }
 };
 
-export function setRangeValue(value: number[], newValue: number, setValue: SliderChangeHandler, onChange: SliderChangeHandler, index: number) {
-  if (Math.abs(value[0] - newValue) < 1 ||  Math.abs(value[1] - newValue) < 1 ) return
-  console.log(index, newValue, value[1])
-  // the values are mixed up the wrong way round
-  // if (!index && newValue >= value[0] ) return 
-  // if (index && newValue <= value[0] ) return 
-  // console.log(index)
-
-  index ? setValue([newValue, value[1]]) : setValue([value[0], newValue]);
-  index ? onChange?.([newValue, value[1]]) : onChange?.([value[0], newValue]);
+export function setRangeValue(value: number[], newValue: number, setValue: SliderChangeHandler, onChange: SliderChangeHandler, index: number, step : number) {
+  if (Math.abs(value[0] - newValue) < step ||  Math.abs(value[1] - newValue) < step ) return
+  if (!index && newValue > value[1] ) return 
+  if (index && newValue < value[0] ) return 
+  index? setValue?.([value[0], newValue]) : setValue?.([newValue, value[1] ]) 
+  index ? onChange?.([value[0], newValue]) : onChange?.([newValue, value[1] ])
 }
 
 // Can probably do this all in a single reduce function - look at other libraries
