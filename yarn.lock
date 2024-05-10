@@ -6347,7 +6347,7 @@ __metadata:
     dotenv-load: "npm:^2.0.1"
     eslint-config-next: "npm:^14.0.0"
     lodash-es: "npm:^4.17.21"
-    next: "npm:^14.0.4"
+    next: "npm:^14.1.1"
     next-auth: "npm:^4.24.7"
     raw-loader: "npm:^4.0.2"
     react: "npm:^18.2.0"
