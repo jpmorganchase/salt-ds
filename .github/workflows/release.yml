@@ -14,6 +14,7 @@ permissions:
 jobs:
   release:
     name: Release
+    if: github.repository == 'jpmorganchase/salt-ds'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
