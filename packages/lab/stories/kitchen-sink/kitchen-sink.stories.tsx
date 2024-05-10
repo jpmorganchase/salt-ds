@@ -236,7 +236,15 @@ export const Example1 = () => {
       </StackLayout>
       <StackLayout direction="row">
         <ButtonExamples />
-        <Button disabled>Submit</Button>
+        <Button variant="cta" disabled>
+          CTA
+        </Button>
+        <Button variant="primary" disabled>
+          Primary
+        </Button>
+        <Button variant="secondary" disabled>
+          Secondary
+        </Button>
       </StackLayout>
       <StackLayout direction="row">
         <SegmentedButtonGroupDefault />
