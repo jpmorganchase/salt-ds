@@ -23,7 +23,6 @@ export const AllLazyCountrySymbols: StoryFn = () => {
           }}
         >
           {Object.keys(countryMetaMap)
-            .filter((componentCode) => !componentCode.endsWith("_Sharp"))
             .map(
               (componentCode) => countryMetaMap[componentCode as CountryCode]
             )

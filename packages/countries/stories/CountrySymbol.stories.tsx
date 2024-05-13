@@ -72,7 +72,6 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
         </FormField>
         <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
           {Object.keys(countryMetaMap)
-            .filter((componentCode) => !componentCode.endsWith("_Sharp"))
             .map(
               (componentCode) => countryMetaMap[componentCode as CountryCode]
             )
