@@ -10,8 +10,6 @@
   --salt-palette-accent-weaker: var(--salt-color-blue-200);
   --salt-palette-accent-weaker-disabled: var(--salt-color-blue-200-40a);
   --salt-palette-accent-weakest: var(--salt-color-blue-100);
-  --salt-palette-accent-action: var(--salt-color-blue-500);
-  --salt-palette-accent-action-active: var(--salt-color-blue-600);
 }
 
 .salt-theme.salt-theme-next[data-mode="dark"] {
@@ -26,6 +24,4 @@
   --salt-palette-accent-weaker: var(--salt-color-blue-800);
   --salt-palette-accent-weaker-disabled: var(--salt-color-blue-800-40a);
   --salt-palette-accent-weakest: var(--salt-color-blue-900);
-  --salt-palette-accent-action: var(--salt-color-blue-500);
-  --salt-palette-accent-action-active: var(--salt-color-blue-600);
 }
