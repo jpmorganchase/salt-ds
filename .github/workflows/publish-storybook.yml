@@ -72,7 +72,7 @@ jobs:
             sha: "${{ github.event.workflow_run.head_commit.id }}",
             state: "sucesss",
             description: "Successfully deployed",
-            context: "Storybook"
+            context: "Storybook",
             target_url: "${{ steps.publish.outputs.url }}"
             });
 
@@ -87,6 +87,6 @@ jobs:
             sha: "${{ github.event.workflow_run.head_commit.id }}",
             state: "error",
             description: "Failed to deploy",
-            context: "Storybook"
+            context: "Storybook",
             target_url: "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             });
