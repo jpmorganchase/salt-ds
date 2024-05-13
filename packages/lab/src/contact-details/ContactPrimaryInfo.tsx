@@ -6,7 +6,7 @@ import { useContactDetailsContext } from "./internal";
 const withBaseName = makePrefixer("saltContactPrimaryInfo");
 
 export interface ContactPrimaryInfoProps
-   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   text: string;
 }
 
