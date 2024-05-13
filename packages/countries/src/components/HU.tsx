@@ -10,16 +10,13 @@ export type HUProps = CountrySymbolProps;
 const HU = forwardRef<SVGSVGElement, HUProps>(function HU(props: HUProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="HU"
       aria-label="Hungary"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-HU-a`}

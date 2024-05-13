@@ -10,16 +10,13 @@ export type ECProps = CountrySymbolProps;
 const EC = forwardRef<SVGSVGElement, ECProps>(function EC(props: ECProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="EC"
       aria-label="Ecuador"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-EC-a`}

@@ -10,16 +10,13 @@ export type NFProps = CountrySymbolProps;
 const NF = forwardRef<SVGSVGElement, NFProps>(function NF(props: NFProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="NF"
       aria-label="Norfolk Island"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-NF-a`}

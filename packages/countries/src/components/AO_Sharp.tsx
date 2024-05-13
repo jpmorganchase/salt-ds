@@ -13,16 +13,14 @@ const AO_Sharp = forwardRef<SVGSVGElement, AO_SharpProps>(function AO_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AO_Sharp"
       aria-label="Angola"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-AO-a`}

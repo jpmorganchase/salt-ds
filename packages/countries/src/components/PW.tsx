@@ -10,16 +10,13 @@ export type PWProps = CountrySymbolProps;
 const PW = forwardRef<SVGSVGElement, PWProps>(function PW(props: PWProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="PW"
       aria-label="Palau"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-PW-a`}

@@ -13,16 +13,14 @@ const BQ_Sharp = forwardRef<SVGSVGElement, BQ_SharpProps>(function BQ_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="BQ_Sharp"
       aria-label="Bonaire Sint Eustatius and Saba"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-BQ-a`}

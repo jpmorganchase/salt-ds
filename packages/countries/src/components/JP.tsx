@@ -10,16 +10,13 @@ export type JPProps = CountrySymbolProps;
 const JP = forwardRef<SVGSVGElement, JPProps>(function JP(props: JPProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="JP"
       aria-label="Japan"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-JP-a`}

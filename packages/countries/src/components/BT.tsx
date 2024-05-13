@@ -10,16 +10,13 @@ export type BTProps = CountrySymbolProps;
 const BT = forwardRef<SVGSVGElement, BTProps>(function BT(props: BTProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="BT"
       aria-label="Bhutan"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-BT-a`}

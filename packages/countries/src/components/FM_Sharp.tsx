@@ -13,16 +13,14 @@ const FM_Sharp = forwardRef<SVGSVGElement, FM_SharpProps>(function FM_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="FM_Sharp"
       aria-label="Micronesia (Federated States of)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-FM-a`}

@@ -10,16 +10,13 @@ export type TNProps = CountrySymbolProps;
 const TN = forwardRef<SVGSVGElement, TNProps>(function TN(props: TNProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TN"
       aria-label="Tunisia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-TN-a`}

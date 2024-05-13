@@ -18,6 +18,10 @@ export interface CountrySymbolProps extends SVGAttributes<SVGSVGElement> {
    * Multiplier for the base Country Symbol size. Should be a positive integer to conform to the rest of the design system.
    */
   size?: number;
+  /**
+   * If `true`, the CountrySymbol will be sharp.
+   */
+  sharp?: boolean;
 }
 
 export const DEFAULT_COUNTRY_SYMBOL_SIZE = 1;
@@ -29,6 +33,7 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
       className,
       size = DEFAULT_COUNTRY_SYMBOL_SIZE,
       style: styleProp,
+      sharp,
       ...rest
     },
     ref
@@ -47,7 +52,11 @@ export const CountrySymbol = forwardRef<SVGSVGElement, CountrySymbolProps>(
 
     return (
       <svg
-        className={clsx(withBaseName(), className)}
+        className={clsx(
+          withBaseName(),
+          withBaseName(sharp ? "sharp" : "round"),
+          className
+        )}
         style={style}
         role="img"
         {...rest}

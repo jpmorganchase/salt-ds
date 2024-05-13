@@ -13,16 +13,14 @@ const GI_Sharp = forwardRef<SVGSVGElement, GI_SharpProps>(function GI_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GI_Sharp"
       aria-label="Gibraltar"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-GI-a`}
