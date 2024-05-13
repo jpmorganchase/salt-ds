@@ -49,12 +49,21 @@ Added decorative and informative info, error, warning and success foreground tok
 ```diff
 +  --salt-palette-info-foreground-decorative: var(--salt-color-blue-100);
 +  --salt-palette-info-foreground-informative: var(--salt-color-blue-200);
-+  --salt-palette-error-foreground-decorative: var(--salt-color-red-500);
++  --salt-palette-error-foreground-decorative: var(--salt-color-red-400);
 +  --salt-palette-error-foreground-informative: var(--salt-color-red-200);
 +  --salt-palette-warning-foreground-decorative: var(--salt-color-orange-500);
 +  --salt-palette-warning-foreground-informative: var(--salt-color-orange-400);
 +  --salt-palette-success-foreground-decorative: var(--salt-color-green-400);
 +  --salt-palette-success-foreground-informative: var(--salt-color-green-200);
+```
+
+Updated info and error border tokens.
+
+```diff
+-  --salt-palette-info-border: var(--salt-color-blue-500);
++  --salt-palette-info-border: var(--salt-color-blue-400);
+-  --salt-palette-error-border: var(--salt-color-red-500);
++  --salt-palette-error-border: var(--salt-color-red-400);
 ```
 
 Deprecated status foreground tokens.
