@@ -17,6 +17,8 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import calendarCss from "./Calendar.css";
+import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
+import { getCurrentLocale } from "./internal/utils";
 
 export type CalendarProps = useCalendarProps & {
   className?: string;
@@ -57,6 +59,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       setCalendarFocused(false);
     }, [setCalendarFocused]);
 
+    const calendarLabel = new DateFormatter(getCurrentLocale(), {
+      month: "long",
+      year: "numeric",
+    }).format(state.visibleMonth.toDate(getLocalTimeZone()));
     return (
       <CalendarContext.Provider
         value={{
@@ -67,6 +73,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         <div
           className={clsx(withBaseName(), className)}
           role="application"
+          aria-label={calendarLabel}
           ref={ref}
         >
           <CalendarNavigation hideYearDropdown={hideYearDropdown} />
