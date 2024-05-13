@@ -902,14 +902,6 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
     state.toLowerCase().includes(value.trim().toLowerCase())
   );
 
-  const selectAllStyles = !selected.includes(allSelectedOptionValue)
-    ? {
-        borderBottom: "solid",
-        borderWidth: "1px",
-        borderColor: "var(--salt-separable-tertiary-borderColor)",
-      }
-    : {};
-
   return (
     <ComboBox
       {...args}
@@ -921,21 +913,29 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
       style={{ width: "266px" }}
     >
       {filteredOptions.length > 1 && (
-        <Option
-          style={{
-            position: "sticky",
-            top: 0,
-            zIndex: 9,
-            background: !selected.includes(allSelectedOptionValue)
-              ? "var(--salt-color-white)"
-              : "",
-            ...selectAllStyles,
-          }}
-          value={"all"}
-          key={"all"}
-        >
-          Select All
-        </Option>
+        <div>
+          <Option
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 9,
+              background: !selected.includes(allSelectedOptionValue)
+                ? "var(--salt-color-white)"
+                : "",
+              borderBottom: "solid",
+              borderWidth: "1px",
+              borderColor:
+                selected.includes(filteredOptions[0]) ||
+                selected.includes(allSelectedOptionValue)
+                  ? "transparent"
+                  : "var(--salt-separable-tertiary-borderColor)",
+            }}
+            value={"all"}
+            key={"all"}
+          >
+            Select All
+          </Option>
+        </div>
       )}
       {filteredOptions.map((state) => (
         <Option value={state} key={state} />

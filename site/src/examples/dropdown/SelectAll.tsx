@@ -46,14 +46,6 @@ export const SelectAll = (): ReactElement => {
     setSelected(newOptionsSelected);
   };
 
-  const selectAllStyles = !selected.includes(allSelectedOptionValue)
-    ? {
-        borderBottom: "solid",
-        borderWidth: "1px",
-        borderColor: "var(--salt-separable-tertiary-borderColor)",
-      }
-    : {};
-
   return (
     <Dropdown
       style={{ width: "266px" }}
@@ -68,21 +60,29 @@ export const SelectAll = (): ReactElement => {
       onSelectionChange={handleSelectionChange}
       multiselect
     >
-      <Option
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 9,
-          background: !selected.includes(allSelectedOptionValue)
-            ? "var(--salt-color-white)"
-            : "",
-          ...selectAllStyles,
-        }}
-        value={allSelectedOptionValue}
-        key={allSelectedOptionValue}
-      >
-        Select All
-      </Option>
+      <div>
+        <Option
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 9,
+            background: !selected.includes(allSelectedOptionValue)
+              ? "var(--salt-color-white)"
+              : "",
+            borderBottom: "solid",
+            borderWidth: "1px",
+            borderColor:
+              selected.includes(shortColorData[0]) ||
+              selected.includes(allSelectedOptionValue)
+                ? "transparent"
+                : "var(--salt-separable-tertiary-borderColor)",
+          }}
+          value={allSelectedOptionValue}
+          key={allSelectedOptionValue}
+        >
+          Select All
+        </Option>
+      </div>
       {shortColorData.map((state) => (
         <Option value={state} key={state} />
       ))}
