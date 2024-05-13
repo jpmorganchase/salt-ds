@@ -1,10 +1,4 @@
-import {
-  Meta,
-  Story,
-  Canvas,
-  ColorPalette,
-  ColorItem,
-} from "@storybook/addon-docs";
+import { Canvas, ColorItem, ColorPalette, Meta } from "@storybook/blocks";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { ColorContainer } from "docs/components/ColorContainer";
 import { DocGrid } from "docs/components/DocGrid";
@@ -26,6 +20,7 @@ Colors used to represent informational content or messaging.
         "--salt-palette-info-border": "var(--salt-palette-info-border)",
       }}
     />
+
     <ColorItem
       title="Foreground"
       subtitle="--salt-palette-info-foreground"
@@ -33,6 +28,7 @@ Colors used to represent informational content or messaging.
         "--salt-palette-info-foreground": "var(--salt-palette-info-foreground)",
       }}
     />
+
     <ColorItem
       title="Background"
       subtitle="--salt-palette-info-background"
@@ -40,6 +36,7 @@ Colors used to represent informational content or messaging.
         "--salt-palette-info-background": "var(--salt-palette-info-background)",
       }}
     />
+
   </ColorPalette>
 </ColorContainer>
 
@@ -47,17 +44,11 @@ Colors used to represent informational content or messaging.
 
 <Canvas>
   <DocGrid withNotes>
-    <ColorBlock
-      colorVar="--salt-palette-info-background-emphasize"
-      replacementToken="--salt-palette-info-background"
-    />
-    <ColorBlock
-      colorVar="--salt-palette-info-foreground-disabled"
-      replacementToken="#2670A9B3"
-    />
-    <ColorBlock
-      colorVar="--salt-palette-info-border-disabled"
-      replacementToken="#2670A966"
-    />
+    <ColorBlock colorVar="--salt-palette-info-background-emphasize" replacementToken="--salt-palette-info-background" />
+
+    <ColorBlock colorVar="--salt-palette-info-foreground-disabled" replacementToken="#2670A9B3" />
+
+    <ColorBlock colorVar="--salt-palette-info-border-disabled" replacementToken="#2670A966" />
+
   </DocGrid>
 </Canvas>

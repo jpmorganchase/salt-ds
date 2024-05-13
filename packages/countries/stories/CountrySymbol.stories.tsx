@@ -122,11 +122,3 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
 AllCountrySymbolsWithSearch.args = {
   size: 2,
 };
-
-AllCountrySymbolsWithSearch.parameters = {
-  docs: {
-    source: {
-      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
-    },
-  },
-};

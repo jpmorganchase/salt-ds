@@ -31,8 +31,8 @@ export default {
     gap: {
       type: "number",
     },
-    endItem: { control: { type: null } },
-    startItem: { control: { type: null } },
+    endItem: { control: false },
+    startItem: { control: false },
   },
   decorators: [
     (Story) => (

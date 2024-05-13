@@ -1,7 +1,4 @@
-import { Meta, Story, Canvas } from "@storybook/addon-docs";
-import { ColorBlock } from "docs/components/ColorBlock";
-import { DocGrid } from "docs/components/DocGrid";
-import { OpacityBlock } from "docs/components/OpacityBlock";
+import { Meta } from "@storybook/blocks";
 
 <Meta title="Theme/Palettes/About Palettes" />
 
@@ -29,7 +26,7 @@ The palette sits in between the foundations and characteristics. The palette is 
 
 The palette provides meaning to the colors used throughout the characteristics. For a component with a background color set to `--salt-actionable-cta-background`, rather than this token directly pointing to the foundation token `--salt-color-blue-500`, this value instead resolves to the palette token `--salt-interact-cta-background`. Similarly, selectable backgrounds resolve to the same palette token. This ensures that anything that is interactable throughout your theme is consistent. The palette sits directly in the middle.
 
-Component CSS attribute &#8594; Characteristic token &#8594; **_Palette token_** &#8594; Foundation token &#8594; Raw RGBA Value
+Component CSS attribute → Characteristic token → **_Palette token_** → Foundation token → Raw RGBA Value
 
 ## Token structure
 
