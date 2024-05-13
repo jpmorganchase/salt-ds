@@ -70,7 +70,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             sha: "${{ github.event.workflow_run.head_commit.id }}",
-            state: "sucesss",
+            state: "success",
             description: "Successfully deployed",
             context: "Storybook",
             target_url: "${{ steps.publish.outputs.url }}"
