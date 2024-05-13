@@ -901,6 +901,15 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
   const filteredOptions = usStates.filter((state) =>
     state.toLowerCase().includes(value.trim().toLowerCase())
   );
+
+  const selectAllStyles = !selected.includes(allSelectedOptionValue)
+    ? {
+        borderBottom: "solid",
+        borderWidth: "1px",
+        borderColor: "var(--salt-separable-tertiary-borderColor)",
+      }
+    : {};
+
   return (
     <ComboBox
       {...args}
@@ -914,9 +923,13 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
       {filteredOptions.length > 1 && (
         <Option
           style={{
-            borderBottom: "solid",
-            borderWidth: "1px",
-            borderColor: "var(--salt-separable-tertiary-borderColor)",
+            position: "sticky",
+            top: 0,
+            zIndex: 9,
+            background: !selected.includes(allSelectedOptionValue)
+              ? "var(--salt-color-white)"
+              : "",
+            ...selectAllStyles,
           }}
           value={"all"}
           key={"all"}

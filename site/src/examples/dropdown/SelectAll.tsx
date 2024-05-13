@@ -46,6 +46,14 @@ export const SelectAll = (): ReactElement => {
     setSelected(newOptionsSelected);
   };
 
+  const selectAllStyles = !selected.includes(allSelectedOptionValue)
+    ? {
+        borderBottom: "solid",
+        borderWidth: "1px",
+        borderColor: "var(--salt-separable-tertiary-borderColor)",
+      }
+    : {};
+
   return (
     <Dropdown
       style={{ width: "266px" }}
@@ -62,9 +70,13 @@ export const SelectAll = (): ReactElement => {
     >
       <Option
         style={{
-          borderBottom: "solid",
-          borderWidth: "1px",
-          borderColor: "var(--salt-separable-tertiary-borderColor)",
+          position: "sticky",
+          top: 0,
+          zIndex: 9,
+          background: !selected.includes(allSelectedOptionValue)
+            ? "var(--salt-color-white)"
+            : "",
+          ...selectAllStyles,
         }}
         value={allSelectedOptionValue}
         key={allSelectedOptionValue}
