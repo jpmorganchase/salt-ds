@@ -17,7 +17,7 @@ export default {
     rowGap: {
       type: "number",
     },
-    children: { control: { type: null } },
+    children: { control: false },
   },
 } as Meta<typeof BorderLayout>;
 

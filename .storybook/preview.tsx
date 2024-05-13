@@ -1,5 +1,4 @@
-import type { Parameters } from "@storybook/react";
-import type { GlobalTypes } from "@storybook/csf";
+import type { Parameters, GlobalTypes, ArgTypes } from "@storybook/types";
 import "@salt-ds/theme/index.css";
 import "@salt-ds/theme/css/theme-next.css";
 import "@fontsource/open-sans/300.css";
@@ -141,9 +140,9 @@ export const globalTypes: GlobalTypes = {
   },
 };
 
-// export const argTypes: ArgTypes = {
-//   ref: { control: { type: null } },
-// };
+export const argTypes: ArgTypes = {
+  ref: { control: false },
+};
 
 export const parameters: Parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },

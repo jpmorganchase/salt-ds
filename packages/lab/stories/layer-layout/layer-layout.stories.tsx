@@ -18,7 +18,7 @@ export default {
   component: LayerLayout,
   argTypes: {
     position: {
-      options: LAYER_POSITIONS,
+      options: Array.from(LAYER_POSITIONS),
       control: { type: "select" },
     },
   },
