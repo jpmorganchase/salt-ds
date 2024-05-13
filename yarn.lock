@@ -6284,7 +6284,7 @@ __metadata:
     ag-grid-enterprise: "npm:^28.2.1"
     ag-grid-react: "npm:^28.2.1"
     axe-core: "npm:^4.9.0"
-    chromatic: "npm:^10.2.0"
+    chromatic: "npm:^11.3.2"
     ci-info: "npm:^3.3.1"
     clsx: "npm:^2.0.0"
     cypress: "npm:^13.8.0"
@@ -12553,14 +12553,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromatic@npm:^10.2.0":
-  version: 10.2.0
-  resolution: "chromatic@npm:10.2.0"
+"chromatic@npm:^11.3.2":
+  version: 11.3.2
+  resolution: "chromatic@npm:11.3.2"
+  peerDependencies:
+    "@chromatic-com/cypress": ^0.*.* || ^1.0.0
+    "@chromatic-com/playwright": ^0.*.* || ^1.0.0
+  peerDependenciesMeta:
+    "@chromatic-com/cypress":
+      optional: true
+    "@chromatic-com/playwright":
+      optional: true
   bin:
     chroma: dist/bin.js
     chromatic: dist/bin.js
     chromatic-cli: dist/bin.js
-  checksum: 10/8df1b4a828c7d5eb2614fcab9a1685f5be947a68f5f31733ebf2bbfab86f6b02c0ee99064bfe62b1457f05ddef285c1d36d5674208f778c815714c51c72a68bd
+  checksum: 10/2537b86eb5799be7ddab81544699cab98c01629c5e65d59d869beac7c15aee046520f1ae63decd889146e2ec67d1d12e6589424702ea9216d226e2dff6bf04db
   languageName: node
   linkType: hard
 

@@ -1,0 +1,28 @@
+name: "Build Storybook"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build Storybook
+        run: yarn build-storybook
+        env:
+          NODE_OPTIONS: "--max_old_space_size=6144"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: storybook-build
+          path: ./storybook-static

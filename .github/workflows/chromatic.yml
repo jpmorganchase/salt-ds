@@ -1,11 +1,10 @@
 name: "Chromatic"
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["Build Storybook"]
+    types:
+      - completed
 
 jobs:
   chromatic-deployment:
@@ -17,19 +16,21 @@ jobs:
         with:
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - name: Build ag grid theme
-        run: yarn build:ag-grid-theme
-      - name: Bundle css
-        run: yarn bundle:css
-        # 👇 Adds Chromatic as a step in the workflow
+      - name: "Download build artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-build
+          path: ./storybook-static
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
-        uses: chromaui/action-next@v1
+        uses: chromaui/action@v1
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
@@ -42,5 +43,4 @@ jobs:
           autoAcceptChanges: "main"
           ignoreLastBuildOnBranch: "!(main)**"
           traceChanged: "expanded"
-        env:
-          NODE_OPTIONS: "--max_old_space_size=6144"
+          storybookBuildDir: "./storybook-static"
