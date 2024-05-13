@@ -34,8 +34,10 @@ const isInvalidDate = (value: string) =>
   // @ts-ignore evaluating validity of date
   value && isNaN(new Date(value));
 const createDate = (date: string): Date | null => {
-  if (!date || isInvalidDate(date)) return null;
-  else return new Date(date);
+  if (!date || isInvalidDate(date)) {
+    return null;
+  }
+  return new Date(date);
 };
 
 function getCalendarDate(inputDate: string) {

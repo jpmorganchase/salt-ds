@@ -9,6 +9,7 @@ import {
   makePrefixer,
   StackLayout,
   useFloatingComponent,
+  useFormFieldProps,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useDatePickerContext } from "./DatePickerContext";
@@ -69,6 +70,8 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       setValidationStatus,
     } = useDatePickerContext();
 
+    const { a11yProps } = useFormFieldProps();
+
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
       (_, newDate) => {
         setStartDate(newDate.startDate);
@@ -120,7 +123,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           selectedDate: startDate,
           onSelectedDateChange: setSingleDate,
         };
-
+    console.log(a11yProps);
     return (
       <FloatingComponent
         open={openState}
@@ -136,6 +139,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
             : undefined
         }
         {...getPanelPosition()}
+        {...a11yProps}
         {...rest}
       >
         <StackLayout separators gap={0}>

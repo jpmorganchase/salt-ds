@@ -112,7 +112,9 @@
 .saltDateInput-input:focus {
   outline: none;
 }
-
+.saltDateInput-input ~ .saltDateInput-input {
+  flex-grow: 2.65;
+}
 /* Style applied to selected input */
 .saltDateInput-input::selection {
   background: var(--salt-content-foreground-highlight);
@@ -185,8 +187,6 @@
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-100);
-  flex-grow: 1;
-  justify-content: end;
 }
 
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {

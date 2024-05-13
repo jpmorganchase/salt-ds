@@ -6,10 +6,10 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 
-export const WithFormField = (): ReactElement => (
+export const RangeWithFormField = (): ReactElement => (
   <FormField style={{ width: "200px" }}>
-    <FormLabel>Pick a date</FormLabel>
-    <DatePicker />
+    <FormLabel>Select date range</FormLabel>
+    <DatePicker selectionVariant="range" />
     <FormHelperText>Date format DD MMM YYYY (e.g. 09 Jun 2021)</FormHelperText>
   </FormField>
 );
