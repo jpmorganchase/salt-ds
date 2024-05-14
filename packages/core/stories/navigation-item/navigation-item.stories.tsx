@@ -1,11 +1,14 @@
+import React, { FC, useState } from "react";
 import {
   Badge,
   FlexLayout,
   NavigationItem,
   NavigationItemProps,
+  NavigationItemRenderProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
 
 import "./navigation-item.stories.css";
@@ -582,6 +585,106 @@ export const VerticalNestedGroupNoIcon = () => {
           </li>
         ))}
       </ul>
+    </nav>
+  );
+};
+
+export const WithRenderElement = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const CustomLinkImplementation = (props: NavigationItemRenderProps) => (
+    <a {...props} aria-label={"overridden-label"}>
+      <Text>Your Own Link Implementation</Text>
+    </a>
+  );
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
+        <li>
+          <NavigationItem
+            expanded={expanded}
+            level={0}
+            onExpand={() => setExpanded(!expanded)}
+            orientation="vertical"
+            parent={true}
+            render={<button />}
+          >
+            Render Prop Parent
+          </NavigationItem>
+        </li>
+        {expanded ? (
+          <li>
+            <NavigationItem
+              href="#"
+              level={1}
+              orientation="vertical"
+              render={<CustomLinkImplementation />}
+            >
+              Render Prop Child
+            </NavigationItem>
+          </li>
+        ) : null}
+      </StackLayout>
+    </nav>
+  );
+};
+
+export const WithRenderProp = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const render: FC<NavigationItemRenderProps> = (props) => {
+    console.log("render NavigationItem with callback props", props);
+    const { parent, parentProps, linkProps } = props;
+    if (parent) {
+      return <button {...parentProps} />;
+    } else {
+      return <a {...linkProps} />;
+    }
+  };
+
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
+        <li>
+          <NavigationItem
+            expanded={expanded}
+            level={0}
+            onExpand={() => setExpanded(!expanded)}
+            orientation="vertical"
+            parent={true}
+            render={render}
+          >
+            Render Prop Parent
+          </NavigationItem>
+        </li>
+        {expanded ? (
+          <li>
+            <NavigationItem
+              href="#"
+              level={1}
+              orientation="vertical"
+              render={render}
+            >
+              Render Prop Child
+            </NavigationItem>
+          </li>
+        ) : null}
+      </StackLayout>
     </nav>
   );
 };

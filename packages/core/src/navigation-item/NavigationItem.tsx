@@ -1,13 +1,40 @@
-import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
-import { makePrefixer } from "../utils";
+import React, {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ComponentPropsWithoutRef,
+  forwardRef,
+  MouseEvent,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from "react";
+import { makePrefixer, mergeProps } from "../utils";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
-import { ConditionalWrapper } from "./ConditionalWrapper";
 
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import navigationItemCss from "./NavigationItem.css";
+
+type OptionalPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
+
+type RenderProp<P = React.HTMLAttributes<any>> = (props: P) => ReactNode;
+
+export interface NavigationItemRenderProps
+  extends OptionalPartial<
+    NavigationItemProps,
+    "active" | "expanded" | "level" | "parent" | "orientation"
+  > {
+  /**
+   * Props to apply to the chld row to render a link
+   */
+  linkProps?: AnchorHTMLAttributes<HTMLAnchorElement>;
+  /**
+   * Props to apply to the parent row to open and close the row
+   */
+  parentProps?: ButtonHTMLAttributes<HTMLButtonElement>;
+}
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -35,6 +62,10 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   parent?: boolean;
   /**
+   * Render prop to enable customisation of navigation item element.
+   */
+  render?: RenderProp<NavigationItemRenderProps> | ReactElement;
+  /**
    * Action to be triggered when the navigation item is expanded.
    */
   onExpand?: MouseEventHandler<HTMLButtonElement>;
@@ -46,19 +77,41 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltNavigationItem");
 
+type CreateElementProps = NavigationItemRenderProps &
+  OptionalPartial<NavigationItemProps, "render">;
+
+function createElement(Type: React.ElementType, props: CreateElementProps) {
+  const { render, ...rest } = props;
+  const elementProps = props.parent ? props.parentProps : props.linkProps;
+  let element: ReactElement;
+  if (React.isValidElement<any>(render)) {
+    const renderProps = render.props;
+    element = React.cloneElement(
+      render,
+      mergeProps(elementProps as Record<string, unknown>, renderProps)
+    );
+  } else if (render) {
+    element = render(rest) as ReactElement;
+  } else {
+    element = <Type {...elementProps} />;
+  }
+  return element;
+}
+
 export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
   function NavigationItem(props, ref) {
     const {
       active,
       blurActive,
+      render,
       children,
       className,
       expanded = false,
+      href,
       orientation = "horizontal",
       parent,
       level = 0,
       onExpand,
-      href,
       style: styleProp,
       ...rest
     } = props;
@@ -75,6 +128,61 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       "--saltNavigationItem-level": `${level}`,
     };
 
+    const isParent = parent || href === undefined; // for backwards compatiblity with original
+    const elementProps = {
+      className: clsx(
+        withBaseName("wrapper"),
+        {
+          [withBaseName("active")]: active || blurActive,
+          [withBaseName("blurActive")]: blurActive,
+          [withBaseName("rootItem")]: level === 0,
+        },
+        withBaseName(orientation)
+      ),
+      children: (
+        <>
+          <span className={withBaseName("label")}>{children}</span>
+          {isParent ? (
+            <ExpansionIcon expanded={expanded} orientation={orientation} />
+          ) : null}
+        </>
+      ),
+    };
+    let parentProps: Partial<ButtonHTMLAttributes<HTMLButtonElement>> = {};
+    let linkProps: Partial<AnchorHTMLAttributes<HTMLAnchorElement>> = {};
+    if (isParent) {
+      const handleExpand = onExpand
+        ? (event: MouseEvent<HTMLButtonElement>) => {
+            event.stopPropagation();
+            onExpand(event);
+          }
+        : undefined;
+      parentProps = {
+        ...elementProps,
+        "aria-label": "expand",
+        "aria-expanded": expanded,
+        onClick: handleExpand,
+      };
+    } else {
+      linkProps = {
+        ...elementProps,
+        href,
+        "aria-label": "change page",
+        "aria-current": active ? "page" : undefined,
+      };
+    }
+
+    const defaultElementType = isParent ? "button" : "a";
+    const renderedElement = createElement(defaultElementType, {
+      active,
+      expanded,
+      parent: isParent,
+      level,
+      orientation,
+      render,
+      linkProps: !isParent ? linkProps : undefined,
+      parentProps: isParent ? parentProps : undefined,
+    });
     return (
       <div
         ref={ref}
@@ -82,27 +190,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         style={style}
         {...rest}
       >
-        <ConditionalWrapper
-          className={clsx(
-            withBaseName("wrapper"),
-            {
-              [withBaseName("active")]: active || blurActive,
-              [withBaseName("blurActive")]: blurActive,
-              [withBaseName("rootItem")]: level === 0,
-            },
-            withBaseName(orientation)
-          )}
-          parent={parent}
-          expanded={expanded}
-          onExpand={onExpand}
-          active={active}
-          href={href}
-        >
-          <span className={withBaseName("label")}>{children}</span>
-          {parent && (
-            <ExpansionIcon expanded={expanded} orientation={orientation} />
-          )}
-        </ConditionalWrapper>
+        {renderedElement}
       </div>
     );
   }
