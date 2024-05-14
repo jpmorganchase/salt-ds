@@ -272,27 +272,30 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
     if (!openState) {
       setOpen(true, "input");
     }
 
-    if (event.target.value === "" && !multiselect) {
+    if (value === "" && !multiselect) {
       clear(event);
     }
 
-    setValueState(event.target.value);
+    setValueState(value);
 
-    // Wait for the filter to happen
-    queueMicrotask(() => {
-      if (event.target.value !== "") {
+    if (value != "") {
+      // Wait for the filter to happen
+      queueMicrotask(() => {
         const newOption = getOptionAtIndex(0);
         if (newOption) {
           setActive(newOption);
         }
-      } else {
-        setActive(undefined);
-      }
-    });
+      });
+    } else {
+      setActive(undefined);
+    }
+
     onChange?.(event);
   };
 
