@@ -8,6 +8,7 @@ import {
   SaltProvider,
   ToggleButton,
   ToggleButtonGroup,
+  useTheme,
 } from "@salt-ds/core";
 
 import "docs/story.css";
@@ -31,7 +32,7 @@ export const Default = () => {
 };
 
 export const ToggleTheme = () => {
-  const [mode, setMode] = useState<Mode>("light");
+  const { mode, setMode } = useTheme();
 
   const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
     setMode(event.currentTarget.value as Mode);
