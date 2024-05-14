@@ -42,11 +42,9 @@ export const CssBackground: StoryFn = () => {
           padding: "12px 0",
         }}
       >
-        {Object.keys(countryMetaMap)
-          .filter((name) => !name.endsWith("_Sharp"))
-          .map((countryName) => (
-            <div key={countryName} className={`saltCountry-${countryName}`} />
-          ))}
+        {Object.keys(countryMetaMap).map((countryName) => (
+          <div key={countryName} className={`saltCountry-${countryName}`} />
+        ))}
       </div>
     </QAContainer>
   );
@@ -73,14 +71,12 @@ export const SharpCountrySymbolCssBackground: StoryFn = () => {
           padding: "12px 0",
         }}
       >
-        {Object.keys(countryMetaMap)
-          .filter((name) => !name.endsWith("_Sharp"))
-          .map((countryName) => (
-            <div
-              key={countryName}
-              className={`saltCountrySharp-${countryName}`}
-            />
-          ))}
+        {Object.keys(countryMetaMap).map((countryName) => (
+          <div
+            key={countryName}
+            className={`saltCountrySharp-${countryName}`}
+          />
+        ))}
       </div>
     </QAContainer>
   );

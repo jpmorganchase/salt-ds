@@ -103,7 +103,10 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const countryCss = fileNames
     .map((fileName) => {
-      const svgString = fs.readFileSync(fileName, "utf-8").trim();
+      const svgString = fs
+        .readFileSync(fileName, "utf-8")
+        .trim()
+        .replaceAll(/\r?\n|\r/g, "");
 
       const countryCode = path.parse(fileName).name.toUpperCase();
 
@@ -419,12 +422,7 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
       countryName: "${countryMeta.countryName}",
     },`;
 
-    const sharpEntryText = `"${code}_Sharp": {
-      countryCode: "${countryMeta.countryCode}",
-      countryName: "${countryMeta.countryName}",
-    },`;
-
-    metaText = [...metaText, entryText, sharpEntryText];
+    metaText = [...metaText, entryText];
   }
 
   const endText = `
