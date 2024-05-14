@@ -289,17 +289,17 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     setValueState(value);
 
-    if (value != "") {
-      // Wait for the filter to happen
-      queueMicrotask(() => {
+    // Wait for the filter to happen
+    queueMicrotask(() => {
+      if (value != "") {
         const newOption = getOptionAtIndex(0);
         if (newOption) {
           setActive(newOption);
         }
-      });
-    } else {
-      setActive(undefined);
-    }
+      } else {
+        setActive(undefined);
+      }
+    });
 
     onChange?.(event);
   };
