@@ -91,3 +91,10 @@ export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
 export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
   <ProgressBufferWithControls ProgressComponent={LinearProgress} />
 );
+
+export const Indeterminate = Default.bind({});
+Indeterminate.args = {
+  hideLabel: true,
+  value: 38,
+  variant: "indeterminate",
+};
