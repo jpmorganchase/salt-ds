@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@salt-ds/core";
+import { Button, ButtonProps, StackLayout } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
@@ -161,23 +161,12 @@ export const WithIcon: StoryFn<typeof Button> = () => {
 
 export const FullWidth: StoryFn<typeof Button> = () => {
   return (
-    <div
-      style={{
-        width: "98vw",
-        display: "flex",
-        gap: "8px",
-        flexDirection: "column",
-      }}
-    >
-      <Button variant="primary" style={{ width: "100%" }}>
-        Primary FullWidth Button
-      </Button>
-      <Button variant="secondary" style={{ width: "100%" }}>
-        Secondary FullWidth Button
-      </Button>
-      <Button variant="cta" style={{ width: "100%" }}>
+    <StackLayout style={{ width: "98vw" }}>
+      <Button variant="primary">Primary FullWidth Button</Button>
+      <Button variant="secondary">Secondary FullWidth Button</Button>
+      <Button variant="cta">
         Send <SendIcon aria-hidden />
       </Button>
-    </div>
+    </StackLayout>
   );
 };
