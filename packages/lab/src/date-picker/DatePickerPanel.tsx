@@ -123,7 +123,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           selectedDate: startDate,
           onSelectedDateChange: setSingleDate,
         };
-    console.log(a11yProps);
     return (
       <FloatingComponent
         open={openState}

@@ -96,7 +96,6 @@
   color: inherit;
   cursor: inherit;
   display: block;
-  flex: 1;
   font: inherit;
   height: 100%;
   letter-spacing: var(--saltDateInput-letterSpacing, 0);
@@ -112,9 +111,7 @@
 .saltDateInput-input:focus {
   outline: none;
 }
-.saltDateInput-input ~ .saltDateInput-input {
-  flex-grow: 2.65;
-}
+
 /* Style applied to selected input */
 .saltDateInput-input::selection {
   background: var(--salt-content-foreground-highlight);
@@ -183,10 +180,11 @@
 
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
-  align-items: center;
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-100);
+  margin-left: auto;
+  align-items: end;
 }
 
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {

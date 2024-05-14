@@ -140,11 +140,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const { getReferenceProps, getFloatingProps } = useInteractions([
       useDismiss(context),
     ]);
-    const {
-      disabled: formFieldDisabled,
-      readOnly: formFieldReadOnly,
-      a11yProps,
-    } = useFormFieldProps();
+    const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
+      useFormFieldProps();
 
     const getPanelPosition = () => ({
       top: y ?? 0,

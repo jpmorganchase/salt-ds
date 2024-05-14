@@ -8,7 +8,10 @@ import {
   KeyboardEvent,
   ReactNode,
   RefObject,
+  SyntheticEvent,
+  useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -18,6 +21,7 @@ import dateInputCss from "./DateInput.css";
 import {
   makePrefixer,
   StatusAdornment,
+  useForkRef,
   useFormFieldProps,
 } from "@salt-ds/core";
 import {
@@ -40,11 +44,19 @@ const createDate = (date: string): Date | null => {
   return new Date(date);
 };
 
+const getIsoDate = (date: Date) => {
+  try {
+    return parseAbsoluteToLocal(date?.toISOString());
+  } catch (err) {
+    return undefined;
+  }
+};
+
 function getCalendarDate(inputDate: string) {
   const date = createDate(inputDate);
   if (!date) return undefined;
-  const isoDate = parseAbsoluteToLocal(date?.toISOString());
-  return new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
+  const isoDate = getIsoDate(date);
+  return isoDate && new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
 }
 
 const getDateValidationStatus = (value: string | undefined) =>
@@ -121,6 +133,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     },
     ref
   ) {
+    const wrapperRef = useRef(null);
+    const inputRef = useForkRef<HTMLDivElement>(ref, wrapperRef);
     const inputStringFormatter = (input: string): string => {
       const date = getCalendarDate(input);
       return !input || !date ? input : dateFormatter(date);
@@ -181,14 +195,24 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ...restDateInputProps
     } = inputProps;
 
+    const validateRange = useCallback(() => {
+      if (startDate && endDate) {
+        setValidationStatus(
+          startDate?.compare(endDate) >= 1 ? "error" : undefined
+        );
+      }
+    }, [endDate, startDate, setValidationStatus]);
+
     // Effects. Update date strings when dates change
     useEffect(() => {
       setStartDateStringValue(dateFormatter(startDate));
-    }, [startDate, dateFormatter]);
+      validateRange();
+    }, [startDate, dateFormatter, validateRange]);
 
     useEffect(() => {
       setEndDateStringValue(dateFormatter(endDate));
-    }, [endDate, dateFormatter]);
+      validateRange();
+    }, [endDate, dateFormatter, validateRange]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -197,9 +221,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
+      const emptyDateStatus = !calendarDate && inputDate ? "error" : undefined;
       setValidationStatus(
         getDateValidationStatus(dateString) ??
-          getDateValidationStatus(endDateStringValue)
+          getDateValidationStatus(endDateStringValue) ??
+          emptyDateStatus
       );
       if (calendarDate) {
         setStartDate(calendarDate);
@@ -210,9 +236,11 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       if (!dateString) setEndDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
+      const emptyDateStatus = !calendarDate && inputDate ? "error" : undefined;
       setValidationStatus(
         getDateValidationStatus(dateString) ??
-          getDateValidationStatus(startDateStringValue)
+          getDateValidationStatus(startDateStringValue) ??
+          emptyDateStatus
       );
       if (calendarDate) {
         setEndDate(calendarDate);
@@ -261,6 +289,12 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       }
     };
 
+    const handleInputClick = (event: SyntheticEvent<HTMLDivElement>) => {
+      if (event.target === wrapperRef.current) {
+        startInputRef?.current?.focus();
+      }
+    };
+
     return (
       <div
         className={clsx(
@@ -274,7 +308,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           },
           className
         )}
-        ref={ref}
+        onClick={(event) => handleInputClick(event)}
+        ref={inputRef}
         {...rest}
       >
         <input
