@@ -10,16 +10,13 @@ export type USProps = CountrySymbolProps;
 const US = forwardRef<SVGSVGElement, USProps>(function US(props: USProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="US"
       aria-label="United States of America (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-US-a`}

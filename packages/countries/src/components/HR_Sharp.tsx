@@ -13,16 +13,14 @@ const HR_Sharp = forwardRef<SVGSVGElement, HR_SharpProps>(function HR_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="HR_Sharp"
       aria-label="Croatia"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-HR-a`}

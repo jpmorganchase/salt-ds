@@ -10,16 +10,13 @@ export type SAProps = CountrySymbolProps;
 const SA = forwardRef<SVGSVGElement, SAProps>(function SA(props: SAProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="SA"
       aria-label="Saudi Arabia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-SA-a`}

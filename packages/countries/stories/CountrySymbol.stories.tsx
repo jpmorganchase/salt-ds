@@ -72,7 +72,6 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
         </FormField>
         <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
           {Object.keys(countryMetaMap)
-            .filter((componentCode) => !componentCode.endsWith("_Sharp"))
             .map(
               (componentCode) => countryMetaMap[componentCode as CountryCode]
             )
@@ -121,12 +120,4 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
 
 AllCountrySymbolsWithSearch.args = {
   size: 2,
-};
-
-AllCountrySymbolsWithSearch.parameters = {
-  docs: {
-    source: {
-      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
-    },
-  },
 };

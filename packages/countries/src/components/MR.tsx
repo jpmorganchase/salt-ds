@@ -10,16 +10,13 @@ export type MRProps = CountrySymbolProps;
 const MR = forwardRef<SVGSVGElement, MRProps>(function MR(props: MRProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="MR"
       aria-label="Mauritania"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-MR-a`}

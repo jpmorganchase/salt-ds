@@ -11,16 +11,14 @@ const GB_WLS_Sharp = forwardRef<SVGSVGElement, GB_WLS_SharpProps>(
   function GB_WLS_Sharp(props: GB_WLS_SharpProps, ref) {
     const uid = useId(props.id);
 
-    const { className, ...rest } = props;
-
     return (
       <CountrySymbol
         data-testid="GB_WLS_Sharp"
         aria-label="Wales"
         viewBox="0 0 72 50"
         ref={ref}
-        className={clsx(className, { "saltCountrySymbol-sharp": true })}
-        {...rest}
+        sharp
+        {...props}
       >
         <mask
           id={`${uid}-GB-WLS-a`}

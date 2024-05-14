@@ -173,7 +173,9 @@ export function useCalendar(props: useCalendarProps) {
     if (
       !isRangeOrOffsetSelectionValue(selectedDate) &&
       !Array.isArray(selectedDate) &&
-      isInVisibleMonth(selectedDate)
+      isInVisibleMonth(selectedDate) &&
+      // @ts-ignore Checks it is not a range
+      !selectedDate.startDate
     ) {
       return selectedDate;
     }

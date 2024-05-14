@@ -1,25 +1,18 @@
-import { DocsContext, getComponent } from "@storybook/addon-docs";
-import { useContext } from "react";
+import { useOf, Of } from "@storybook/addon-docs";
 import { ResetWrapper } from "@storybook/components";
 import { ClassNameRow } from "./ClassNameRow";
-import { getDocgenSection } from "./utils";
 import { EmptyBlock } from "./EmptyBlock";
 import { TableWrapper } from "./TableWrapper";
+import { getClassNames } from "./utils";
 
-export interface ClassName {
-  name: string;
-  description: string;
-}
-export function CSSClassTable(props: Record<string, string>): JSX.Element {
-  const context = useContext(DocsContext);
+export function CSSClassTable(props: { of: Of }): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const main = getComponent(props, context);
-  const classNames = getDocgenSection<Record<string, ClassName>>(
-    main,
-    "classNames"
-  );
+  const { of } = props;
 
-  if (!classNames || Object.values(classNames).length < 1) {
+  const resolved = useOf(of);
+  const classNames = getClassNames(resolved);
+
+  if (Object.values(classNames).length < 1) {
     return (
       <EmptyBlock>No CSS class names found for this component.</EmptyBlock>
     );

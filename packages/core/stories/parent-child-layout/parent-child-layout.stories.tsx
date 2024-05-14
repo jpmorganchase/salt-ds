@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
+import { fn } from "@storybook/test";
 
 import {
   ChevronLeftIcon,
@@ -34,6 +35,9 @@ import "./parent-child-layout.stories.css";
 export default {
   title: "Lab/Layout/Parent Child Layout",
   component: ParentChildLayout,
+  args: {
+    onCollapseChange: fn(),
+  },
 } as Meta<typeof ParentChildLayout>;
 
 const parent = <div className="parent-content">Parent</div>;

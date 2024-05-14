@@ -38,6 +38,15 @@ describe("GIVEN a Calendar", () => {
   describe("Today's Date", () => {
     it("SHOULD set `aria-current=date` on today's date", () => {
       cy.mount(<Default />);
+      cy.findByRole("application").should("exist");
+      cy.findByRole("application").should(
+        "have.attr",
+        "aria-label",
+        formatDate(today(localTimeZone), {
+          month: "long",
+          year: "numeric",
+        })
+      );
       cy.findByRole("button", {
         name: formatDate(today(localTimeZone)),
       }).should("have.attr", "aria-current", "date");
@@ -549,7 +558,7 @@ describe("GIVEN a Calendar", () => {
       it("SHOULD move to start date selected if it is within visible month", () => {
         const todayTestDate = today(localTimeZone);
         cy.mount(
-          <MultiSelection
+          <RangeSelection
             selectedDate={{
               startDate: startOfMonth(todayTestDate).add({ days: 1 }),
               endDate: endOfMonth(todayTestDate),
@@ -570,7 +579,7 @@ describe("GIVEN a Calendar", () => {
       it("SHOULD move to end date selected if it is within visible month and startDate is not", () => {
         const todayTestDate = today(localTimeZone);
         cy.mount(
-          <MultiSelection
+          <RangeSelection
             selectedDate={{
               startDate: startOfMonth(todayTestDate).subtract({ months: 1 }),
               endDate: endOfMonth(todayTestDate),
@@ -588,13 +597,15 @@ describe("GIVEN a Calendar", () => {
           name: formatDate(endOfMonth(todayTestDate)),
         }).should("be.focused");
       });
-      it("SHOULD move to today's date if selected date is not within the visible month", () => {
+      it("SHOULD move to today's date if selected range is not within the visible month", () => {
         const todayTestDate = today(localTimeZone);
         cy.mount(
-          <MultiSelection
+          <RangeSelection
             selectedDate={{
-              startDate: todayTestDate.subtract({ months: 2, days: 1 }),
-              endDate: todayTestDate.subtract({ months: 2 }),
+              startDate: todayTestDate.subtract({ months: 2 }),
+              endDate: todayTestDate.subtract({
+                months: 1,
+              }),
             }}
             defaultVisibleMonth={todayTestDate}
           />
@@ -644,7 +655,7 @@ describe("GIVEN a Calendar", () => {
           name: formatDate(startOfMonth(todayTestDate).add({ months: 2 })),
         }).should("be.focused");
       });
-      it.only("SHOULD move to start of the month if the full month is part of a selected range", () => {
+      it("SHOULD move to start of the month if the full month is part of a selected range", () => {
         cy.mount(
           <RangeSelection
             selectedDate={{
