@@ -5,7 +5,9 @@
   -webkit-appearance: none;
   display: inline-flex;
   background: var(--salt-actionable-secondary-background);
-  border: 0 solid transparent;
+  border-color: var(--salt-actionable-secondary-borderColor, transparent);
+  border-style: solid;
+  border-width: var(--salt-actionable-borderWidth, 0);
   border-radius: var(--salt-palette-corner-weaker, 0);
   height: var(--salt-size-base);
   color: var(--salt-actionable-secondary-foreground);
@@ -25,6 +27,7 @@
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
   cursor: var(--salt-actionable-cursor-hover);
+  border-color: var(--salt-actionable-secondary-borderColor-hover, transparent);
 }
 
 .saltToggleButton:focus-visible {
@@ -32,6 +35,7 @@
   background: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
   cursor: var(--salt-actionable-cursor-hover);
+  border-color: var(--salt-actionable-secondary-borderColor-hover, transparent);
 }
 
 .saltToggleButton[aria-checked="true"]:focus-visible,
@@ -39,6 +43,7 @@
   background: var(--salt-actionable-secondary-background-active);
   color: var(--salt-actionable-secondary-foreground-active);
   cursor: var(--salt-actionable-cursor-active);
+  border-color: var(--salt-actionable-secondary-borderColor-active, transparent);
 }
 
 .saltToggleButton[aria-checked="true"],
@@ -46,10 +51,12 @@
   background: var(--salt-actionable-secondary-background-active);
   color: var(--salt-actionable-secondary-foreground-active);
   cursor: var(--salt-actionable-cursor-active);
+  border-color: var(--salt-actionable-secondary-borderColor-active, transparent);
 }
 
 .saltToggleButton:disabled {
   background: var(--salt-actionable-secondary-background-disabled);
   cursor: var(--salt-actionable-cursor-disabled);
   color: var(--salt-actionable-secondary-foreground-disabled);
+  border-color: var(--salt-actionable-secondary-borderColor-disabled, transparent);
 }

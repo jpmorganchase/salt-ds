@@ -1,29 +1,43 @@
 .salt-theme.salt-theme-next {
+  --salt-actionable-borderWidth: 1px; /* TBD, reference any foundation ? */
+
   /* CTA variant */
   --salt-actionable-cta-foreground: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-cta-foreground-hover: var(--salt-palette-foreground-invert);
-  --salt-actionable-cta-foreground-active: var(--salt-palette-foreground-invert);
+  --salt-actionable-cta-foreground-hover: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-cta-foreground-active: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-cta-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
   --salt-actionable-cta-background: var(--salt-palette-accent);
-  --salt-actionable-cta-background-hover: var(--salt-palette-accent-strong);
-  --salt-actionable-cta-background-active: var(--salt-palette-accent-stronger);
+  --salt-actionable-cta-background-hover: var(--salt-palette-accent-action-hover);
+  --salt-actionable-cta-background-active: var(--salt-palette-accent-action-active);
   --salt-actionable-cta-background-disabled: var(--salt-palette-accent-disabled);
+  --salt-actionable-cta-borderColor: transparent;
+  --salt-actionable-cta-borderColor-hover: var(--salt-palette-accent);
+  --salt-actionable-cta-borderColor-active: var(--salt-palette-accent);
+  --salt-actionable-cta-borderColor-disabled: transparent;
   /* Primary variant */
   --salt-actionable-primary-foreground: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-primary-foreground-hover: var(--salt-palette-foreground-invert);
-  --salt-actionable-primary-foreground-active: var(--salt-palette-foreground-invert);
+  --salt-actionable-primary-foreground-hover: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-primary-foreground-active: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-primary-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
   --salt-actionable-primary-background: var(--salt-palette-neutral);
-  --salt-actionable-primary-background-hover: var(--salt-palette-neutral-strong);
-  --salt-actionable-primary-background-active: var(--salt-palette-neutral-stronger);
+  --salt-actionable-primary-background-hover: var(--salt-palette-neutral-action-hover);
+  --salt-actionable-primary-background-active: var(--salt-palette-neutral-action-active);
   --salt-actionable-primary-background-disabled: var(--salt-palette-neutral-strong-disabled);
+  --salt-actionable-primary-borderColor: transparent;
+  --salt-actionable-primary-borderColor-hover: var(--salt-palette-neutral);
+  --salt-actionable-primary-borderColor-active: var(--salt-palette-neutral);
+  --salt-actionable-primary-borderColor-disabled: transparent;
   /* Secondary variant */
   --salt-actionable-secondary-foreground: var(--salt-palette-foreground-primary);
-  --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-invert);
-  --salt-actionable-secondary-foreground-active: var(--salt-palette-foreground-invert);
+  --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-primary-alt);
+  --salt-actionable-secondary-foreground-active: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-secondary-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
   --salt-actionable-secondary-background: var(--salt-palette-background-none);
-  --salt-actionable-secondary-background-hover: var(--salt-palette-neutral-strong);
-  --salt-actionable-secondary-background-active: var(--salt-palette-neutral-stronger);
+  --salt-actionable-secondary-background-hover: var(--salt-palette-neutral-action-hover);
+  --salt-actionable-secondary-background-active: var(--salt-palette-neutral-action-active);
   --salt-actionable-secondary-background-disabled: var(--salt-palette-background-none);
+  --salt-actionable-secondary-borderColor: transparent;
+  --salt-actionable-secondary-borderColor-hover: var(--salt-palette-neutral);
+  --salt-actionable-secondary-borderColor-active: var(--salt-palette-neutral);
+  --salt-actionable-secondary-borderColor-disabled: transparent;
 }
