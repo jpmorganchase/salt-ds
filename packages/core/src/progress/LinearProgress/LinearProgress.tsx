@@ -68,7 +68,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
 
     return (
       <div
-        className={clsx(withBaseName(), withBaseName(variant), className)}
+        className={clsx(withBaseName(), className)}
         ref={ref}
         role="progressbar"
         aria-valuemax={max}
@@ -77,7 +77,10 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         {...rest}
       >
         <div className={withBaseName("barContainer")}>
-          <div className={withBaseName("bar")} style={barStyle} />
+          <div
+            className={clsx(withBaseName("bar"), withBaseName(variant))}
+            style={barStyle}
+          />
           {bufferValue > 0 ? (
             <div className={withBaseName("buffer")} style={bufferStyle} />
           ) : null}
