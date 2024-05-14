@@ -1,0 +1,4 @@
+.salt-theme.salt-theme-next {
+  --salt-emphasis-highlight-informative: var(--salt-palette-neutral-highlight-strong);
+  --salt-emphasis-lowlight-informative: var(--salt-palette-neutral-lowlight-strong);
+}

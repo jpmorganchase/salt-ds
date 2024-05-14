@@ -8,10 +8,10 @@
   --button-text-color-active: var(--salt-actionable-cta-foreground-active);
   --button-text-color-disabled: var(--salt-actionable-cta-foreground-disabled);
   --button-text-color-hover: var(--salt-actionable-cta-foreground-hover);
-  --button-borderColor: var(--salt-actionable-cta-borderColor);
-  --button-borderColor-hover: var(--salt-actionable-cta-borderColor-hover);
-  --button-borderColor-active: var(--salt-actionable-cta-borderColor-active);
-  --button-borderColor-disabled: var(--salt-actionable-cta-borderColor-disabled);
+  --button-borderColor: var(--salt-actionable-cta-borderColor, transparent);
+  /* Border top / bottom defined below */
+  --button-borderColor-active: var(--salt-actionable-cta-borderColor-active, transparent);
+  --button-borderColor-disabled: var(--salt-actionable-cta-borderColor-disabled, transparent);
 }
 
 /* Styles applied to the root element if variant="primary" (or no variant specified) */
@@ -25,7 +25,7 @@
   --button-text-color-disabled: var(--salt-actionable-primary-foreground-disabled);
   --button-text-color-hover: var(--salt-actionable-primary-foreground-hover);
   --button-borderColor: var(--salt-actionable-primary-borderColor);
-  --button-borderColor-hover: var(--salt-actionable-primary-borderColor-hover);
+  /* Border top / bottom defined below */
   --button-borderColor-active: var(--salt-actionable-primary-borderColor-active);
   --button-borderColor-disabled: var(--salt-actionable-primary-borderColor-disabled);
 }
@@ -41,9 +41,14 @@
   --button-text-color-disabled: var(--salt-actionable-secondary-foreground-disabled);
   --button-text-color-hover: var(--salt-actionable-secondary-foreground-hover);
   --button-borderColor: var(--salt-actionable-secondary-borderColor);
-  --button-borderColor-hover: var(--salt-actionable-secondary-borderColor-hover);
+  /* Border top / bottom defined below */
   --button-borderColor-active: var(--salt-actionable-secondary-borderColor-active);
   --button-borderColor-disabled: var(--salt-actionable-secondary-borderColor-disabled);
+}
+
+.saltButton {
+  --button-borderTopColor-hover: var(--salt-emphasis-highlight-informative, transparent);
+  --button-borderBottomColor-hover: var(--salt-emphasis-lowlight-informative, transparent);
 }
 
 .saltButton {
@@ -102,7 +107,8 @@
 .saltButton:hover {
   background: var(--saltButton-background-hover, var(--button-background-hover));
   color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
-  border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
+  border-top-color: var(--saltButton-borderTopColor-hover, var(--button-borderTopColor-hover));
+  border-bottom-color: var(--saltButton-borderBottomColor-hover, var(--button-borderBottomColor-hover));
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
