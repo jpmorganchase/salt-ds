@@ -158,3 +158,26 @@ export const WithIcon: StoryFn<typeof Button> = () => {
     </div>
   );
 };
+
+export const FullWidth: StoryFn<typeof Button> = () => {
+  return (
+    <div
+      style={{
+        width: "98vw",
+        display: "flex",
+        gap: "8px",
+        flexDirection: "column",
+      }}
+    >
+      <Button variant="primary" style={{ width: "100%" }}>
+        Primary FullWidth Button
+      </Button>
+      <Button variant="secondary" style={{ width: "100%" }}>
+        Secondary FullWidth Button
+      </Button>
+      <Button variant="cta" style={{ width: "100%" }}>
+        Send <SendIcon aria-hidden />
+      </Button>
+    </div>
+  );
+};
