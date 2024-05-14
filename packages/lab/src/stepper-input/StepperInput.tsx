@@ -108,41 +108,34 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       stepperDirection,
     } = useStepperInput(props, inputRef);
 
-    const endAdornment: ReactNode = (
-      <div className={withBaseName("buttonContainer")}>
-        <Button
-          aria-label="increment-value"
-          className={withBaseName("stepperButton")}
-          disabled={isAtMax()}
-          {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
-        >
-          <TriangleUpIcon aria-hidden />
-        </Button>
-        <Button
-          aria-label="decrement-value"
-          className={withBaseName("stepperButton")}
-          disabled={isAtMin()}
-          {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-        >
-          <TriangleDownIcon aria-hidden />
-        </Button>
-      </div>
-    );
-
     return (
-      <div
-        className={clsx(withBaseName(), className)}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        ref={ref}
-      >
+      <div className={clsx(withBaseName(), className)} ref={ref}>
         <Input
-          endAdornment={endAdornment}
+          onBlur={onBlur}
+          onFocus={onFocus}
           ref={inputRef}
           textAlign={textAlign}
           {...getInputProps(InputPropsProp)}
           {...rest}
         />
+        <div className={withBaseName("buttonContainer")}>
+          <Button
+            aria-label="increment-value"
+            className={withBaseName("stepperButton")}
+            disabled={isAtMax()}
+            {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
+          >
+            <TriangleUpIcon aria-hidden />
+          </Button>
+          <Button
+            aria-label="decrement-value"
+            className={withBaseName("stepperButton")}
+            disabled={isAtMin()}
+            {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
+          >
+            <TriangleDownIcon aria-hidden />
+          </Button>
+        </div>
       </div>
     );
   }

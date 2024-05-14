@@ -1,15 +1,20 @@
+/* Styles applied to stepper container */
+.saltStepperInput {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-50);
+}
+
 /* Styles applied to stepper buttons container */
 .saltStepperInput-buttonContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--salt-spacing-25);
+  gap: var(--salt-spacing-50);
 }
 
 /* Styles applied to stepper buttons */
-.saltInput-endAdornmentContainer .saltButton ~ .saltButton.saltStepperInput-stepperButton,
 .saltStepperInput-stepperButton {
-  --saltButton-height: calc((var(--salt-size-base) - var(--salt-spacing-100) - var(--salt-spacing-25)) * 0.5);
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  margin-left: 0;
-  margin-right: 0;
+  --saltButton-height: calc((var(--salt-size-base) - var(--salt-spacing-50)) * 0.5);
+  --saltButton-width: var(--salt-size-base);
 }
