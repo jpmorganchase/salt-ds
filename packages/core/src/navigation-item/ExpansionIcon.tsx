@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronRightIcon } from "@salt-ds/icons";
-import type { NavigationItemProps } from "./NavigationItem";
+import { FC } from "react";
 
 const iconExpansionMap = {
   vertical: {
@@ -12,11 +12,26 @@ const iconExpansionMap = {
   },
 };
 
-export function ExpansionIcon({
+type ExpansionIconProps = {
+  /**
+   * Whether the navigation item is expanded.
+   */
+  expanded?: boolean;
+  /**
+   * className
+   */
+  className?: string;
+  /**
+   * The orientation of the navigation item.
+   */
+  orientation?: "horizontal" | "vertical";
+};
+
+export const ExpansionIcon: FC<ExpansionIconProps> = ({
   expanded = false,
   orientation = "horizontal",
-}: Pick<NavigationItemProps, "expanded" | "orientation" | "className">) {
+}) => {
   const Icon =
     iconExpansionMap[orientation][expanded ? "expanded" : "collapsed"];
   return <Icon aria-hidden="true" />;
-}
+};
