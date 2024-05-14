@@ -56,3 +56,56 @@
   white-space: nowrap;
   padding-left: var(--salt-spacing-100);
 }
+
+.saltLinearProgress-indeterminate.saltLinearProgress-bar {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+  transition: transform 0.2s linear 0s;
+  transform-origin: left center;
+  width: auto;
+  animation: 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running indeterminate-progress-bar;
+  /* animation: 2s linear infinite indeterminate-progress-bar; */
+}
+
+@keyframes indeterminate-progress-bar {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+/* .saltLinearProgress-indeterminate .saltLinearProgress-track {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+  transition: transform 0.2s linear 0s;
+  transform-origin: left center;
+  width: auto;
+  animation: 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) 1.15s infinite normal none running track-animation;
+}
+
+@keyframes track-animation {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+} */
