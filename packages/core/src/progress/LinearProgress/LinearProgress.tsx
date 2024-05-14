@@ -34,6 +34,7 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
    * Value between 0 and max.
    */
   value?: number;
+  variant?: "determinate" | "indeterminate";
 }
 
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
@@ -45,6 +46,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       min = 0,
       value = 0,
       bufferValue = 0,
+      variant = "determinate",
       ...rest
     },
     ref
@@ -66,7 +68,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
 
     return (
       <div
-        className={clsx(withBaseName(), className)}
+        className={clsx(withBaseName(), withBaseName(variant), className)}
         ref={ref}
         role="progressbar"
         aria-valuemax={max}
