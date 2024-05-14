@@ -4,12 +4,13 @@
 
 Added new tokens
 
-| Tier | Token | Value |
-| Foundation | `--salt-typography-fontFamily-openSans` | "Open Sans" |
-| Foundation | `--salt-typography-fontFamily-ptMono` | "PT Mono" |
-| Palette | `--salt-palette-text-fontFamily` | `--salt-typography-fontFamily-openSans` |
-| Palette | `--salt-palette-text-fontFamily-heading` | `--salt-typography-fontFamily-openSans` |
-| Palette | `--salt-palette-text-fontFamily-code` | `--salt-typography-fontFamily-ptMono` |
+| Tier       | Token                                    | Value                                   |
+| ---------- | ---------------------------------------- | --------------------------------------- |
+| Foundation | `--salt-typography-fontFamily-openSans`  | "Open Sans"                             |
+| Foundation | `--salt-typography-fontFamily-ptMono`    | "PT Mono"                               |
+| Palette    | `--salt-palette-text-fontFamily`         | `--salt-typography-fontFamily-openSans` |
+| Palette    | `--salt-palette-text-fontFamily-heading` | `--salt-typography-fontFamily-openSans` |
+| Palette    | `--salt-palette-text-fontFamily-code`    | `--salt-typography-fontFamily-ptMono`   |
 
 Updated existing token value mapping to use new tokens
 

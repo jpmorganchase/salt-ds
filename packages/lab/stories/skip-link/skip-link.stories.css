@@ -4,6 +4,6 @@
 
 .goalsList {
   font-size: var(--salt-text-fontSize);
-  font-family: var(--salt-palette-text-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-lineHeight);
 }
