@@ -271,6 +271,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     onFocus?.(event);
   };
 
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    event.persist();
+    onBlur?.(event);
+  };
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
@@ -420,7 +425,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         value={valueState}
         ref={handleRef}
         {...getReferenceProps({
-          onBlur,
+          onBlur: handleBlur,
           onFocus: handleFocus,
           ...rest,
         })}
