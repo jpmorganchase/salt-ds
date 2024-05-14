@@ -7,10 +7,11 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 
 import { Meta, StoryFn } from "@storybook/react";
-import { GB, US } from "@salt-ds/countries";
+import { CountryCode, GB, US } from "@salt-ds/countries";
 import { SyntheticEvent, useState } from "react";
 import { LocationIcon } from "@salt-ds/icons";
 
@@ -309,6 +310,39 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = (args) => {
     >
       {people.map((person) => (
         <Option value={person} key={person.id} />
+      ))}
+    </Dropdown>
+  );
+};
+
+export type LargeCity = {
+  name: string;
+  countryCode: CountryCode;
+};
+
+export const largestCities: LargeCity[] = [
+  { name: "Tokyo", countryCode: "JP" },
+  { name: "Delhi", countryCode: "IN" },
+  { name: "Shanghai", countryCode: "CN" },
+  { name: "São Paulo", countryCode: "BR" },
+  { name: "Mexico City", countryCode: "MX" },
+  { name: "Cairo", countryCode: "EG" },
+];
+
+export const SecondaryLabel: StoryFn<typeof Dropdown> = (args) => {
+  return (
+    <Dropdown
+      style={{ width: "266px" }}
+      valueToString={(city: LargeCity) => city.name}
+      placeholder="Secondary label example"
+    >
+      {largestCities.map((city) => (
+        <Option key={city.countryCode} value={city}>
+          <StackLayout gap={0.25} align="start">
+            <Text>{city.name}</Text>
+            <Text color="secondary">{city.countryCode}</Text>
+          </StackLayout>
+        </Option>
       ))}
     </Dropdown>
   );
