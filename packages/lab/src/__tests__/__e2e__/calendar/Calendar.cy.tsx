@@ -38,6 +38,15 @@ describe("GIVEN a Calendar", () => {
   describe("Today's Date", () => {
     it("SHOULD set `aria-current=date` on today's date", () => {
       cy.mount(<Default />);
+      cy.findByRole("application").should("exist");
+      cy.findByRole("application").should(
+        "have.attr",
+        "aria-label",
+        formatDate(today(localTimeZone), {
+          month: "long",
+          year: "numeric",
+        })
+      );
       cy.findByRole("button", {
         name: formatDate(today(localTimeZone)),
       }).should("have.attr", "aria-current", "date");
