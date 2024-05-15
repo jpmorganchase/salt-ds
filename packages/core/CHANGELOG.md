@@ -1,5 +1,15 @@
 # @salt-ds/core
 
+## 1.27.1
+
+### Patch Changes
+
+- 067bc00f: Make `SegmentedButtonGroup` CSS selectors apply divider styles only to `.saltButton`, preventing dividers appearing when using floating-ui components like `Menu`.
+- 5ff98b54: Fixed ComboBox logging event errors in React 16.
+- 88961433: Changed RadioButton's display to `inline-flex` so the hit area only covers the label.
+- d972d206: Fixed `Tooltip` not displaying when the `content` prop value is falsy e.g. 0
+- 88961433: Changed Checkbox's display to `inline-flex` so the hit area only covers the label.
+
 ## 1.27.0
 
 ### Minor Changes
