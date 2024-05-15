@@ -20,10 +20,14 @@
   font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
   line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
   max-width: var(--saltTooltip-maxWidth, 230px);
-  padding: var(--saltTooltip-padding, var(--salt-spacing-100));
+  padding: 0 var(--saltTooltip-padding, var(--salt-spacing-100));
   position: relative;
   text-align: var(--saltTooltip-textAlign, left);
   z-index: var(--tooltip-zIndex);
+  min-height: var(--saltTooltip-height, var(--salt-size-base));
+  display: inline-flex;
+  justify-content: var(--saltTooltip-justifyContent, center);
+  align-items: var(--saltTooltip-alignItems, center);
 }
 
 /* Styles applied to container */
