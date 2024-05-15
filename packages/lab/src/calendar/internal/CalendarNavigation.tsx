@@ -279,7 +279,7 @@ export const CalendarNavigation = forwardRef<
           onClick={handleNavigateNext}
           focusableWhenDisabled={true}
         >
-          <ChevronRightIcon aria-label={"Next Month"} />
+          <ChevronRightIcon aria-label="Next Month" />
         </Button>
       </Tooltip>
     </div>
