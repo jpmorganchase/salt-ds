@@ -9,13 +9,13 @@
 }
 
 .saltStatusAdornment-error {
-  --statusAdornment-color: var(--salt-status-error-foreground);
+  --statusAdornment-color: var(--salt-status-error-foreground-decorative);
 }
 
 .saltStatusAdornment-warning {
-  --statusAdornment-color: var(--salt-status-warning-foreground);
+  --statusAdornment-color: var(--salt-status-warning-foreground-decorative);
 }
 
 .saltStatusAdornment-success {
-  --statusAdornment-color: var(--salt-status-success-foreground);
+  --statusAdornment-color: var(--salt-status-success-foreground-decorative);
 }
