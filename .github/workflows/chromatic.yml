@@ -48,7 +48,7 @@ jobs:
             const draft = fs.readFileSync("./METADATA/draft", "utf8").trim();
             core.setOutput("draft", draft);
       - name: Publish to Chromatic
-        if: ${{ steps.chromatic_branch.outputs.draft == 'true' }}
+        if: ${{ steps.chromatic_branch.outputs.draft != 'true' }}
         uses: chromaui/action@v11
         # Chromatic GitHub Action options
         with:
