@@ -43,7 +43,7 @@ export interface FormFieldProps
 
 const withBaseName = makePrefixer("saltFormField");
 
-export const FormField = forwardRef(
+export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   (
     {
       children,
@@ -52,13 +52,11 @@ export const FormField = forwardRef(
       id: idProp,
       labelPlacement = "top",
       necessity,
-      onBlur,
-      onFocus,
       readOnly = false,
       validationStatus,
       ...restProps
-    }: FormFieldProps,
-    ref: ForwardedRef<HTMLDivElement>
+    },
+    ref
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
