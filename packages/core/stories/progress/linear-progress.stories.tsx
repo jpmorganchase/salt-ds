@@ -94,7 +94,5 @@ export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
 
 export const Indeterminate = Default.bind({});
 Indeterminate.args = {
-  hideLabel: true,
-  value: 38,
   variant: "indeterminate",
 };
