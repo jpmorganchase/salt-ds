@@ -61,6 +61,6 @@ jobs:
           skip: "changeset-release/*"
           autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' }}
           ignoreLastBuildOnBranch: "**"
-          traceChanged: "expanded"
+          traceChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'expanded' || '' }}
           storybookBuildDir: "./storybook-static"
           branchName: ${{ steps.chromatic_branch.outputs.branchName }}
