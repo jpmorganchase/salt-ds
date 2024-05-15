@@ -34,6 +34,10 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
    * Value between 0 and max.
    */
   value?: number;
+  /**
+   * The variant to use.
+   * Defaults to "determinate".
+   */
   variant?: "determinate" | "indeterminate";
 }
 
@@ -58,8 +62,11 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       window: targetWindow,
     });
 
-    const progress = ((value - min) / (max - min)) * 100;
-    const buffer = ((bufferValue - min) / (max - min)) * 100;
+    const isIndeterminate = variant === "indeterminate";
+    const progress = isIndeterminate ? 60 : ((value - min) / (max - min)) * 100;
+    const buffer = isIndeterminate
+      ? 0
+      : ((bufferValue - min) / (max - min)) * 100;
     const barStyle: CSSProperties = {};
     const bufferStyle: CSSProperties = {};
 
@@ -86,11 +93,12 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           ) : null}
           <div className={withBaseName("track")} />
         </div>
-        {!hideLabel && (
-          <Text styleAs="h2" className={withBaseName("progressLabel")}>
-            {`${Math.round(progress)} %`}
-          </Text>
-        )}
+        {!hideLabel ||
+          (!isIndeterminate && (
+            <Text styleAs="h2" className={withBaseName("progressLabel")}>
+              {`${Math.round(progress)} %`}
+            </Text>
+          ))}
       </div>
     );
   }

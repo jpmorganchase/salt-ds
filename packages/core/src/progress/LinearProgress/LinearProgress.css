@@ -65,7 +65,7 @@
   transition: transform 0.2s linear 0s;
   transform-origin: left center;
   width: auto;
-  animation: 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running indeterminate-progress-bar;
+  animation: 2s cubic-bezier(0.65, 0.815, 0.735, 0.395) 0s infinite normal none running indeterminate-progress-bar;
   /* animation: 2s linear infinite indeterminate-progress-bar; */
 }
 
