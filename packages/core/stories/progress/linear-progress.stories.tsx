@@ -92,7 +92,27 @@ export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
   <ProgressBufferWithControls ProgressComponent={LinearProgress} />
 );
 
-export const Indeterminate = Default.bind({});
-Indeterminate.args = {
-  variant: "indeterminate",
-};
+// export const Indeterminate = Default.bind({});
+// Indeterminate.args = {
+//   variant: "indeterminate",
+// };
+
+// TODO: temp example to be removed
+export const Indeterminate: StoryFn<typeof LinearProgress> = () => (
+  <StackLayout direction="row" gap={10}>
+    <StackLayout>
+      <h3 style={{ textAlign: "center" }}> Animation speed = 2s</h3>
+      <LinearProgress variant="indeterminate" />
+      <div></div>
+      <h3 style={{ textAlign: "center" }}> Animation speed = 1s</h3>
+      <LinearProgress variant="indeterminate" animationSpeed="1s" />
+    </StackLayout>
+    <StackLayout>
+      <h3 style={{ textAlign: "center" }}> Progress line width = 60%</h3>
+      <LinearProgress variant="indeterminate" />
+      <div></div>
+      <h3 style={{ textAlign: "center" }}> Progress line width = 33%</h3>
+      <LinearProgress variant="indeterminate" progressLineWidth={33} />
+    </StackLayout>
+  </StackLayout>
+);
