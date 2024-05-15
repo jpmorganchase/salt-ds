@@ -39,6 +39,8 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
    * Defaults to "determinate".
    */
   variant?: "determinate" | "indeterminate";
+  animationSpeed?: string; // TODO: Temp prop to be removed
+  progressLineWidth?: number; // TODO: Temp prop to be removed
 }
 
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
@@ -51,6 +53,8 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       value = 0,
       bufferValue = 0,
       variant = "determinate",
+      animationSpeed = "2s",
+      progressLineWidth = 60,
       ...rest
     },
     ref
@@ -63,7 +67,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const isIndeterminate = variant === "indeterminate";
-    const progress = isIndeterminate ? 60 : ((value - min) / (max - min)) * 100;
+    const progress = isIndeterminate
+      ? progressLineWidth
+      : ((value - min) / (max - min)) * 100;
     const buffer = isIndeterminate
       ? 0
       : ((bufferValue - min) / (max - min)) * 100;
@@ -71,6 +77,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     const bufferStyle: CSSProperties = {};
 
     barStyle.width = `${progress}%`;
+    barStyle.animation = `${animationSpeed} linear infinite indeterminate-progress-bar`;
     bufferStyle.width = `${buffer}%`;
 
     return (
