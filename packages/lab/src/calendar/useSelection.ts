@@ -90,6 +90,16 @@ export function isRangeOrOffsetSelectionValue(
   return selectionValue != null && isPlainObject(selectionValue);
 }
 
+export function isRangeOrOffsetSelectionWithValues(
+  selectionValue?: AllSelectionValueType
+): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
+  return (
+    isRangeOrOffsetSelectionValue(selectionValue) &&
+    Boolean(selectionValue?.startDate) &&
+    Boolean(selectionValue?.endDate)
+  );
+}
+
 const withBaseName = makePrefixer("saltCalendarDay");
 
 export function useSelectionCalendar(props: useSelectionCalendarProps) {

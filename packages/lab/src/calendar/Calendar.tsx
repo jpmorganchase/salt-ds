@@ -73,7 +73,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         <div
           className={clsx(withBaseName(), className)}
           role="application"
-          aria-label={`Calendar, ${calendarLabel}`}
+          aria-label={calendarLabel}
           ref={ref}
         >
           <CalendarNavigation hideYearDropdown={hideYearDropdown} />

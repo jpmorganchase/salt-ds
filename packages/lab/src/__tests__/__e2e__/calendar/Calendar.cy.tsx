@@ -33,14 +33,13 @@ const formatDate = (date: DateValue, options?: Intl.DateTimeFormatOptions) => {
   const formatter = new DateFormatter(currentLocale, options);
   return formatter.format(date.toDate(localTimeZone));
 };
-const dayOptions: Intl.DateTimeFormatOptions = {
-  day: "2-digit",
-  month: "long",
-  year: "numeric",
-};
 
 const formatDay = (date: DateValue) => {
-  return formatDate(date, dayOptions);
+  return formatDate(date, {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
 };
 
 describe("GIVEN a Calendar", () => {
@@ -50,10 +49,10 @@ describe("GIVEN a Calendar", () => {
       cy.findByRole("application").should("exist");
       cy.findByRole("application").should(
         "have.accessibleName",
-        `Calendar, ${formatDate(today(localTimeZone), {
+        formatDate(today(localTimeZone), {
           month: "long",
           year: "numeric",
-        })}`
+        })
       );
       cy.findByRole("button", {
         name: formatDay(today(localTimeZone)),
@@ -248,62 +247,95 @@ describe("GIVEN a Calendar", () => {
   });
 
   describe("Single Selection", () => {
-    it("SHOULD on first interaction", () => {
-      it("SHOULD move to selected date if it is within the visible month", () => {
-        cy.mount(
-          <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(testDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to today's date if selected date is not within the visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <Default
-            selectedDate={todayTestDate.subtract({ months: 2 })}
-            defaultVisibleMonth={todayTestDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(todayTestDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to today's date if there is not selected date", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(<Default defaultVisibleMonth={todayTestDate} />);
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(todayTestDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <Default defaultVisibleMonth={todayTestDate.add({ months: 1 })} />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).realClick();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-        }).should("be.focused");
-      });
+    it("SHOULD move to selected date if it is within the visible month", () => {
+      cy.mount(
+        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(testDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to selected date when navigating back to selection month", () => {
+      cy.mount(
+        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).realClick();
+      cy.findByRole("button", {
+        name: "Previous Month",
+      }).realClick();
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(testDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if selected date is not within the visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <Default
+          selectedDate={todayTestDate.subtract({ months: 2 })}
+          defaultVisibleMonth={todayTestDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if there is not selected date", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(<Default defaultVisibleMonth={todayTestDate} />);
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if there is not selected date", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(<Default defaultVisibleMonth={todayTestDate} />);
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).realClick();
+      cy.findByRole("button", {
+        name: "Previous Month",
+      }).realClick();
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <Default defaultVisibleMonth={todayTestDate.add({ months: 1 })} />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).realClick();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
+      }).should("be.focused");
     });
     it("SHOULD hover one day when a day is hovered", () => {
       cy.mount(<Default defaultVisibleMonth={testDate} />);
@@ -356,71 +388,69 @@ describe("GIVEN a Calendar", () => {
   });
 
   describe("Multi-Selection", () => {
-    it("SHOULD on first interaction", () => {
-      it("SHOULD move to first selected date of the visible month", () => {
-        cy.mount(
-          <MultiSelection
-            selectedDate={[
-              testDate.add({ days: 8 }),
-              testDate.add({ days: 3 }),
-              testDate,
-            ]}
-            defaultVisibleMonth={testDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(testDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to today's date if selected date is not within the visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <MultiSelection
-            selectedDate={[todayTestDate.subtract({ months: 2 })]}
-            defaultVisibleMonth={todayTestDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(todayTestDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to today's date if there is not selected date", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(<MultiSelection defaultVisibleMonth={todayTestDate} />);
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(todayTestDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <MultiSelection
-            defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).realClick();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-        }).should("be.focused");
-      });
+    it("SHOULD move to first selected date of the visible month", () => {
+      cy.mount(
+        <MultiSelection
+          selectedDate={[
+            testDate.add({ days: 8 }),
+            testDate.add({ days: 3 }),
+            testDate,
+          ]}
+          defaultVisibleMonth={testDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(testDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if selected date is not within the visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <MultiSelection
+          selectedDate={[todayTestDate.subtract({ months: 2 })]}
+          defaultVisibleMonth={todayTestDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if there is not selected date", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(<MultiSelection defaultVisibleMonth={todayTestDate} />);
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <MultiSelection
+          defaultVisibleMonth={todayTestDate.add({ months: 1 })}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).realClick();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
+      }).should("be.focused");
     });
     it("SHOULD allow multiple dates to be selected and unselected", () => {
       cy.mount(<MultiSelection defaultVisibleMonth={testDate} />);
@@ -542,113 +572,111 @@ describe("GIVEN a Calendar", () => {
   });
 
   describe("Range Selection", () => {
-    describe("SHOULD on first interaction", () => {
-      it("SHOULD move to start date selected if it is within visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <RangeSelection
-            selectedDate={{
-              startDate: startOfMonth(todayTestDate).add({ days: 1 }),
-              endDate: endOfMonth(todayTestDate),
-            }}
-            defaultVisibleMonth={todayTestDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(startOfMonth(todayTestDate).add({ days: 1 })),
-        }).should("be.focused");
-      });
-      it("SHOULD move to end date selected if it is within visible month and startDate is not", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <RangeSelection
-            selectedDate={{
-              startDate: startOfMonth(todayTestDate).subtract({ months: 1 }),
-              endDate: endOfMonth(todayTestDate),
-            }}
-            defaultVisibleMonth={todayTestDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(endOfMonth(todayTestDate)),
-        }).should("be.focused");
-      });
-      it("SHOULD move to today's date if selected range is not within the visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <RangeSelection
-            selectedDate={{
-              startDate: todayTestDate.subtract({ months: 2 }),
-              endDate: todayTestDate.subtract({
-                months: 1,
-              }),
-            }}
-            defaultVisibleMonth={todayTestDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(todayTestDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to today's date if there is not selected date", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(<RangeSelection defaultVisibleMonth={todayTestDate} />);
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(todayTestDate),
-        }).should("be.focused");
-      });
-      it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-        const todayTestDate = today(localTimeZone);
-        cy.mount(
-          <RangeSelection
-            defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).realClick();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-        }).should("be.focused");
-      });
-      it("SHOULD move to start of the month if the full month is part of a selected range", () => {
-        cy.mount(
-          <RangeSelection
-            selectedDate={{
-              startDate: testDate.subtract({ months: 2 }),
-              endDate: testDate.add({ months: 2 }),
-            }}
-            defaultVisibleMonth={testDate}
-          />
-        );
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).focus();
-        cy.realPress("Tab");
-        cy.findByRole("button", {
-          name: formatDay(startOfMonth(testDate)),
-        }).should("be.focused");
-      });
+    it("SHOULD move to start date selected if it is within visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <RangeSelection
+          selectedDate={{
+            startDate: startOfMonth(todayTestDate).add({ days: 1 }),
+            endDate: endOfMonth(todayTestDate),
+          }}
+          defaultVisibleMonth={todayTestDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(todayTestDate).add({ days: 1 })),
+      }).should("be.focused");
+    });
+    it("SHOULD move to end date selected if it is within visible month and startDate is not", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <RangeSelection
+          selectedDate={{
+            startDate: startOfMonth(todayTestDate).subtract({ months: 1 }),
+            endDate: endOfMonth(todayTestDate),
+          }}
+          defaultVisibleMonth={todayTestDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(endOfMonth(todayTestDate)),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if selected range is not within the visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <RangeSelection
+          selectedDate={{
+            startDate: todayTestDate.subtract({ months: 2 }),
+            endDate: todayTestDate.subtract({
+              months: 1,
+            }),
+          }}
+          defaultVisibleMonth={todayTestDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to today's date if there is not selected date", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(<RangeSelection defaultVisibleMonth={todayTestDate} />);
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
+    it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <RangeSelection
+          defaultVisibleMonth={todayTestDate.add({ months: 1 })}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).realClick();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
+      }).should("be.focused");
+    });
+    it("SHOULD move to start of the month if the full month is part of a selected range", () => {
+      cy.mount(
+        <RangeSelection
+          selectedDate={{
+            startDate: testDate.subtract({ months: 2 }),
+            endDate: testDate.add({ months: 2 }),
+          }}
+          defaultVisibleMonth={testDate}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(testDate)),
+      }).should("be.focused");
     });
     it("SHOULD allow a range to be selected", () => {
       cy.mount(<RangeSelection defaultVisibleMonth={testDate} />);
