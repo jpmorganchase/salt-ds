@@ -35,7 +35,7 @@ jobs:
           echo $DRAFT > ./METADATA/draft
         env:
           DRAFT: ${{ github.event.pull_request.draft }}
-          BRANCH_NAME: ${{ github.event.pull_request.head.repo.fork && github.event.pull_request.head.label || github.ref_name }}
+          BRANCH_NAME: ${{ github.event.pull_request.head.label || github.ref_name }}
       - uses: actions/upload-artifact@v4
         with:
           name: metadata
