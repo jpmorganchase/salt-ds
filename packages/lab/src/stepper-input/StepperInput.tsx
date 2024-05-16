@@ -83,13 +83,10 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const {
-      getButtonProps,
-      getInputProps,
-      isAtMax,
-      isAtMin,
-      stepperDirection,
-    } = useStepperInput(props, inputRef);
+    const { getButtonProps, getInputProps, isAtMax, isAtMin } = useStepperInput(
+      props,
+      inputRef
+    );
 
     return (
       <div className={clsx(withBaseName(), className)} ref={ref}>
@@ -106,7 +103,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
               aria-label="increment-value"
               className={withBaseName("stepperButton")}
               disabled={isAtMax()}
-              {...getButtonProps(stepperDirection.INCREMENT)}
+              {...getButtonProps("increment")}
             >
               <TriangleUpIcon aria-hidden />
             </Button>
@@ -114,7 +111,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
               aria-label="decrement-value"
               className={withBaseName("stepperButton")}
               disabled={isAtMin()}
-              {...getButtonProps(stepperDirection.DECREMENT)}
+              {...getButtonProps("decrement")}
             >
               <TriangleDownIcon aria-hidden />
             </Button>

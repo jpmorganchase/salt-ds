@@ -8,13 +8,6 @@ import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
 
-type Direction = "decrement" | "increment";
-
-const stepperDirection = {
-  INCREMENT: "increment" as Direction,
-  DECREMENT: "decrement" as Direction,
-};
-
 // The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
 
@@ -201,22 +194,20 @@ export const useStepperInput = (
 
   const handleButtonMouseDown = (
     event: MouseEvent<HTMLButtonElement>,
-    type: Direction = stepperDirection.INCREMENT
+    direction: string
   ) => {
     if (event.nativeEvent.button !== 0) return;
-    type === stepperDirection.INCREMENT
-      ? incrementSpinner()
-      : decrementSpinner();
+    direction === "increment" ? incrementSpinner() : decrementSpinner();
   };
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
 
-  const getButtonProps = (type: Direction = stepperDirection.INCREMENT) => ({
+  const getButtonProps = (direction: string) => ({
     "aria-hidden": true,
-    "data-testid": `${type}-button`,
+    "data-testid": `${direction}-button`,
     tabIndex: -1,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
-      handleButtonMouseDown(event, type),
+      handleButtonMouseDown(event, direction),
     onMouseUp: () => handleButtonMouseUp(),
   });
 
@@ -252,6 +243,5 @@ export const useStepperInput = (
     incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
     isAtMax,
     isAtMin,
-    stepperDirection,
   };
 };
