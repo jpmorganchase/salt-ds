@@ -90,7 +90,7 @@ export function isRangeOrOffsetSelectionValue(
   return selectionValue != null && isPlainObject(selectionValue);
 }
 
-export function isRangeOrOffsetSelectionWithValues(
+export function isRangeOrOffsetSelectionWithStartDate(
   selectionValue?: AllSelectionValueType
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
