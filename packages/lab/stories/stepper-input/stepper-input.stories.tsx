@@ -71,6 +71,7 @@ export const MinAndMaxValue: StoryFn = (args) => {
         onChange={(changedValue) => setValue(changedValue)}
         max={max}
         min={min}
+        style={{ width: "250px" }}
       />
       <FormFieldHelperText>
         Please enter a value between {min} and {max}
