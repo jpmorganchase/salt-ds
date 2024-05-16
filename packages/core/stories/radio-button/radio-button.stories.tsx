@@ -20,7 +20,7 @@ export const Checked = () => {
   return <RadioButton label="Subscribe" value="subscribe" checked />;
 };
 
-export const WithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
+export const WithSecondaryLabel = () => {
   return (
     <RadioButton
       label={
