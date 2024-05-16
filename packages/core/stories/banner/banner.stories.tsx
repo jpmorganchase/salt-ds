@@ -221,21 +221,36 @@ export const Dismissible = () => {
 
 export const MultipleLines = (props: BannerProps) => {
   return (
-    <div style={{ width: 500 }}>
-      <Banner status="error" {...props}>
+    <StackLayout style={{ width: 500 }}>
+      <Banner status="error">
         <BannerContent>
-          <Text>
-            <strong>Information missing in form submission</strong>
-          </Text>
-          <div>
-            <ul style={{ paddingLeft: 0 }}>
-              <li>Username</li>
-              <li>Password</li>
-            </ul>
-          </div>
+          <StackLayout gap={1}>
+            <Text>
+              <strong>Unable to process transaction</strong>
+            </Text>
+            <Text>
+              There was an error processing your transaction. Please check that
+              your payment details are correct and try again.
+            </Text>
+            <Link href="#">Find out more</Link>
+          </StackLayout>
         </BannerContent>
       </Banner>
-    </div>
+      <Banner status="success">
+        <BannerContent>
+          <StackLayout gap={1}>
+            <Text>
+              An invite has been sent to <strong>Person 1</strong>. Once they
+              accept, you will receive a notification.
+            </Text>
+            <FlowLayout gap={1}>
+              <Button variant="secondary">Cancel invite</Button>
+              <Button variant="primary">Resend invite</Button>
+            </FlowLayout>
+          </StackLayout>
+        </BannerContent>
+      </Banner>
+    </StackLayout>
   );
 };
 
@@ -260,37 +275,3 @@ export const MultipleBanners: StoryFn<typeof Banner> = () => {
     </StackLayout>
   );
 };
-
-export const MultipleActions: StoryFn<typeof Banner> = (args) => {
-  return (
-    <Banner {...args} style={{ width: 500 }}>
-      <BannerContent>The one-time PIN you entered has expired</BannerContent>
-      <BannerActions>
-        <Link>See more</Link>
-        <Button aria-label="refresh" variant="secondary">
-          <RefreshIcon />
-        </Button>
-      </BannerActions>
-    </Banner>
-  );
-};
-
-export const MultipleActionsButtons: StoryFn<typeof Banner> = (props) => (
-  <div style={{ width: 500 }}>
-    <Banner {...props}>
-      <BannerContent>
-        <StackLayout gap={2}>
-          <Text>Information missing in form submission</Text>
-          <FlowLayout gap={1}>
-            <FlexItem>
-              <Button variant="primary">Primary Button</Button>
-            </FlexItem>
-            <FlexItem>
-              <Button variant="secondary">Secondary Button</Button>
-            </FlexItem>
-          </FlowLayout>
-        </StackLayout>
-      </BannerContent>
-    </Banner>
-  </div>
-);
