@@ -10,16 +10,13 @@ export type KEProps = CountrySymbolProps;
 const KE = forwardRef<SVGSVGElement, KEProps>(function KE(props: KEProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="KE"
       aria-label="Kenya"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-KE-a`}

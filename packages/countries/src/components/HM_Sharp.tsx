@@ -13,16 +13,14 @@ const HM_Sharp = forwardRef<SVGSVGElement, HM_SharpProps>(function HM_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="HM_Sharp"
       aria-label="Heard Island and McDonald Islands"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-HM-a`}

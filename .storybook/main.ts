@@ -10,9 +10,11 @@ const config: StorybookConfig = {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
-  stories: ["../packages/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+  stories: ["../packages/*/stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"],
   staticDirs: ["../docs/public"],
-
+  typescript: {
+    reactDocgen: "react-docgen-typescript",
+  },
   addons: [
     {
       name: "@storybook/addon-essentials",
@@ -29,7 +31,6 @@ const config: StorybookConfig = {
   ],
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
-    // customize the Vite config here
 
     const customConfig: UserConfig = {
       plugins: [cssInline(), cssVariableDocgen()],

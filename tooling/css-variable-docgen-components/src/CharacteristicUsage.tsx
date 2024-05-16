@@ -1,39 +1,23 @@
-import { useContext, useEffect, useState } from "react";
-import { DocsContext, getComponent } from "@storybook/addon-docs";
+import { useEffect, useState } from "react";
+import { useOf } from "@storybook/addon-docs";
 import { ResetWrapper } from "@storybook/components";
 import { Spinner } from "@salt-ds/core";
 import { CharacteristicUsageRow } from "./CharacteristicUsageRow";
 import { EmptyBlock } from "./EmptyBlock";
-import { getCharacteristics, getDocgenSection } from "./utils";
+import { getCharacteristics } from "./utils";
 import { TableWrapper } from "./TableWrapper";
 
 import "./CharacteristicUsage.css";
 
-interface CSSVariable {
-  name: string;
-  type?: string;
-  defaultValue?: string;
-}
-
-export interface Characteristic {
-  name: string;
-  tokens?: string[];
-}
-
 export function CharacteristicUsage(
   props: Record<string, string>
 ): JSX.Element {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const context = useContext(DocsContext);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const main = getComponent(props, context);
-  const cssVariablesApi = getDocgenSection<Record<string, CSSVariable>>(
-    main,
-    "cssVariablesApi"
-  );
+  const { of } = props;
 
-  const characteristicTokenMap =
-    getCharacteristics<Record<string, CSSVariable>>(cssVariablesApi);
+  const resolved = useOf(of);
+  const characteristicTokenMap = getCharacteristics(resolved);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setTimeout(() => {

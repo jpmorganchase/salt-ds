@@ -13,16 +13,14 @@ const EH_Sharp = forwardRef<SVGSVGElement, EH_SharpProps>(function EH_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="EH_Sharp"
       aria-label="Western Sahara"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-EH-a`}

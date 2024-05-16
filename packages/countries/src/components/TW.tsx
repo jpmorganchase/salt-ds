@@ -10,16 +10,13 @@ export type TWProps = CountrySymbolProps;
 const TW = forwardRef<SVGSVGElement, TWProps>(function TW(props: TWProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TW"
       aria-label="Taiwan (Province of China)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-TW-a`}

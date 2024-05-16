@@ -1,5 +1,5 @@
 .salt-theme .sbdocs {
-  font-family: var(--salt-typography-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);
@@ -41,7 +41,7 @@
   color: var(--salt-color-gray-900);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
-  font-family: var(--salt-typography-fontFamily);
+  font-family: var(--salt-text-code-fontFamily);
   font-size: var(--salt-text-fontSize);
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);

@@ -13,65 +13,65 @@
   --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
 
   /* Body text (should be used as default) */
-  --salt-text-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-fontFamily: var(--salt-palette-text-fontFamily);
   --salt-text-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-text-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Notation */
-  --salt-text-notation-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-notation-fontFamily: var(--salt-palette-text-fontFamily);
   --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* H1 */
-  --salt-text-h1-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-h1-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-h1-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-text-h1-fontWeight-small: var(--salt-typography-fontWeight-medium);
   --salt-text-h1-fontWeight-strong: var(--salt-typography-fontWeight-extraBold);
 
   /* H2 */
-  --salt-text-h2-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-h2-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-h2-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-h2-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-h2-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* H3 */
-  --salt-text-h3-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-h3-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-h3-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-h3-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-h3-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* H4 */
-  --salt-text-h4-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-h4-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-h4-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-h4-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-text-h4-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   /* Label */
-  --salt-text-label-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-label-fontFamily: var(--salt-palette-text-fontFamily);
   --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-light);
   --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
 
   /* Display text */
-  --salt-text-display1-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-display1-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-display1-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display1-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display1-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
-  --salt-text-display2-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-display2-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-display2-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display2-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display2-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
-  --salt-text-display3-fontFamily: var(--salt-typography-fontFamily);
+  --salt-text-display3-fontFamily: var(--salt-palette-text-fontFamily-heading);
   --salt-text-display3-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-display3-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-text-display3-fontWeight-small: var(--salt-typography-fontWeight-regular);
 
   /* Code */
-  --salt-text-code-fontFamily: var(--salt-typography-fontFamily-code);
+  --salt-text-code-fontFamily: var(--salt-palette-text-fontFamily-code);
 }
 
 /* Sizes by density */

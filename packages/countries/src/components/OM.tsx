@@ -10,16 +10,13 @@ export type OMProps = CountrySymbolProps;
 const OM = forwardRef<SVGSVGElement, OMProps>(function OM(props: OMProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="OM"
       aria-label="Oman"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-OM-a`}

@@ -5,7 +5,7 @@
   gap: var(--salt-size-border);
 }
 
-.saltSegmentedButtonGroup > *:not(:last-child)::after {
+.saltSegmentedButtonGroup > .saltButton:not(:last-of-type)::after {
   content: "";
   width: var(--salt-size-border);
   position: absolute;
@@ -14,7 +14,7 @@
   height: 100%;
 }
 
-.saltSegmentedButtonGroup > *:not(:first-child)::before {
+.saltSegmentedButtonGroup > .saltButton:not(:first-of-type)::before {
   content: "";
   width: var(--salt-size-border);
   position: absolute;

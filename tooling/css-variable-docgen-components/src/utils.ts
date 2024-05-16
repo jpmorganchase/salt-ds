@@ -1,4 +1,5 @@
-import { Component } from "@storybook/addon-docs";
+import { getDocgenSection, isValidDocgenSection } from "@storybook/docs-tools";
+import { useOf } from "@storybook/addon-docs";
 
 const SALT_CHARACTERISTICS = [
   "accent",
@@ -19,38 +20,62 @@ const SALT_CHARACTERISTICS = [
   "track",
 ];
 
-export function hasDocgen(component: Component): boolean {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return !!component.__docgenInfo;
+export interface ClassName {
+  name: string;
+  description: string;
 }
 
-export function getDocgenSection<T>(component: Component, section: string): T {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-  return hasDocgen(component) ? component.__docgenInfo[section] : null;
+interface CSSVariable {
+  name: string;
+  type?: string;
+  defaultValue?: string;
 }
 
-export function getCharacteristics<T>(
-  cssVariablesApi: T
-): Record<string, string[]> {
-  const characteristicFoundationTokenMap: Record<string, string[]> = {};
+export function getCharacteristics(resolved: ReturnType<typeof useOf>) {
+  const section = getDocgenSection(resolved, "cssVariablesApi") as Record<
+    string,
+    CSSVariable[]
+  >;
+  if (isValidDocgenSection(section)) {
+    const characteristicFoundationTokenMap: Record<string, string[]> = {};
 
-  Object.keys(cssVariablesApi).forEach((token) => {
-    if (token.startsWith("--salt-")) {
-      const characteristicName = token.replace("--salt-", "").split("-")[0];
-      if (
-        characteristicName.length &&
-        SALT_CHARACTERISTICS.includes(characteristicName)
-      ) {
-        if (!characteristicFoundationTokenMap[characteristicName]) {
-          characteristicFoundationTokenMap[characteristicName] = [token];
-        } else if (
-          !characteristicFoundationTokenMap[characteristicName]?.includes(token)
+    Object.keys(section).forEach((token) => {
+      if (token.startsWith("--salt-")) {
+        const characteristicName = token.replace("--salt-", "").split("-")[0];
+        if (
+          characteristicName.length &&
+          SALT_CHARACTERISTICS.includes(characteristicName)
         ) {
-          characteristicFoundationTokenMap[characteristicName].push(token);
+          if (!characteristicFoundationTokenMap[characteristicName]) {
+            characteristicFoundationTokenMap[characteristicName] = [token];
+          } else if (
+            !characteristicFoundationTokenMap[characteristicName]?.includes(
+              token
+            )
+          ) {
+            characteristicFoundationTokenMap[characteristicName].push(token);
+          }
         }
       }
-    }
-  });
+    });
 
-  return characteristicFoundationTokenMap;
+    return characteristicFoundationTokenMap;
+  }
+
+  return {};
+}
+
+export function getClassNames(
+  resolved: ReturnType<typeof useOf>
+): Record<string, ClassName> {
+  const classNames = getDocgenSection(resolved, "classNames") as Record<
+    string,
+    ClassName
+  >;
+
+  if (isValidDocgenSection(classNames)) {
+    return classNames;
+  }
+
+  return {};
 }

@@ -10,16 +10,13 @@ export type KYProps = CountrySymbolProps;
 const KY = forwardRef<SVGSVGElement, KYProps>(function KY(props: KYProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="KY"
       aria-label="Cayman Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-KY-a`}

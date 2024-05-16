@@ -1,5 +1,4 @@
-import type { ArgTypes, Parameters } from "@storybook/react";
-import type { GlobalTypes } from "@storybook/csf";
+import type { Parameters, GlobalTypes, ArgTypes } from "@storybook/types";
 import "@salt-ds/theme/index.css";
 import "@salt-ds/theme/css/theme-next.css";
 import "@fontsource/open-sans/300.css";
@@ -139,10 +138,20 @@ export const globalTypes: GlobalTypes = {
       title: "Corner",
     },
   },
+  headingFont: {
+    name: "Experimental heading font",
+    description: "Switch heading font to open sans / amplitude",
+    defaultValue: "Open Sans",
+    toolbar: {
+      icon: "beaker",
+      items: ["Open Sans", "Amplitude"],
+      title: "Heading font",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {
-  ref: { control: { type: null } },
+  ref: { control: false },
 };
 
 export const parameters: Parameters = {

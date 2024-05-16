@@ -1,0 +1,43 @@
+name: "Build Storybook"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+jobs:
+  build-storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Build Storybook
+        run: yarn build-storybook
+        env:
+          NODE_OPTIONS: "--max_old_space_size=6144"
+      - name: Upload Storybook Static
+        uses: actions/upload-artifact@v4
+        with:
+          name: storybook-build
+          path: ./storybook-static
+          retention-days: 1
+      - name: Save branch metadata for Chromatic
+        run: |
+          mkdir METADATA
+          echo $BRANCH_NAME > ./METADATA/branch-name
+          echo $DRAFT > ./METADATA/draft
+        env:
+          DRAFT: ${{ github.event.pull_request.draft }}
+          BRANCH_NAME: ${{ github.event.pull_request.head.label || github.ref_name }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: metadata
+          path: ./METADATA
+          retention-days: 1

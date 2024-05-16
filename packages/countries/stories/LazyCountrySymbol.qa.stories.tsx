@@ -14,6 +14,7 @@ export const AllLazyCountrySymbols: StoryFn = () => {
     <Suspense fallback="Loading...">
       {sizes.map((size) => (
         <div
+          key={size}
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(15, auto)",
@@ -22,7 +23,6 @@ export const AllLazyCountrySymbols: StoryFn = () => {
           }}
         >
           {Object.keys(countryMetaMap)
-            .filter((componentCode) => !componentCode.endsWith("_Sharp"))
             .map(
               (componentCode) => countryMetaMap[componentCode as CountryCode]
             )

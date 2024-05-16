@@ -9,6 +9,7 @@ import { ChaseCompactLogo } from "./assets/ChaseCompactLogo";
 export default {
   title: "Lab/Logo",
   component: Logo,
+  subcomponents: { LogoImage, LogoSeparator },
 } as Meta<typeof Logo>;
 
 export const LogoWithImage: StoryFn<typeof Logo> = (args) => (

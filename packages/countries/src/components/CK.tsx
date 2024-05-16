@@ -10,16 +10,13 @@ export type CKProps = CountrySymbolProps;
 const CK = forwardRef<SVGSVGElement, CKProps>(function CK(props: CKProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="CK"
       aria-label="Cook Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-CK-a`}

@@ -271,20 +271,27 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     onFocus?.(event);
   };
 
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    event.persist();
+    onBlur?.(event);
+  };
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
     if (!openState) {
       setOpen(true, "input");
     }
 
-    if (event.target.value === "" && !multiselect) {
+    if (value === "" && !multiselect) {
       clear(event);
     }
 
-    setValueState(event.target.value);
+    setValueState(value);
 
     // Wait for the filter to happen
     queueMicrotask(() => {
-      if (event.target.value !== "") {
+      if (value != "") {
         const newOption = getOptionAtIndex(0);
         if (newOption) {
           setActive(newOption);
@@ -293,6 +300,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         setActive(undefined);
       }
     });
+
     onChange?.(event);
   };
 
@@ -417,7 +425,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         value={valueState}
         ref={handleRef}
         {...getReferenceProps({
-          onBlur,
+          onBlur: handleBlur,
           onFocus: handleFocus,
           ...rest,
         })}

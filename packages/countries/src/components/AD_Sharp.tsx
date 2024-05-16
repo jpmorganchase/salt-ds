@@ -13,16 +13,14 @@ const AD_Sharp = forwardRef<SVGSVGElement, AD_SharpProps>(function AD_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AD_Sharp"
       aria-label="Andorra"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-AD-a`}

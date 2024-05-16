@@ -10,16 +10,13 @@ export type LKProps = CountrySymbolProps;
 const LK = forwardRef<SVGSVGElement, LKProps>(function LK(props: LKProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="LK"
       aria-label="Sri Lanka"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-LK-a`}
