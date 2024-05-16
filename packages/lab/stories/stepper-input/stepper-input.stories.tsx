@@ -75,30 +75,6 @@ export const Alignment: StoryFn = (args) => (
   </StackLayout>
 );
 
-export const Controlled: StoryFn = (args) => {
-  const [value, setValue] = useState<number | string>(10);
-
-  return (
-    <StackLayout direction="row" align="center" gap={1}>
-      <FormField>
-        <FormFieldLabel>Stepper Input</FormFieldLabel>
-        <StepperInput
-          {...args}
-          value={value}
-          onChange={(changedValue: SetStateAction<string | number>) => {
-            console.log("onChange");
-            setValue(changedValue);
-          }}
-        />
-        <FormFieldHelperText>Please enter a value</FormFieldHelperText>
-      </FormField>
-      <Button onClick={() => setValue(10)}>
-        <RefreshIcon />
-      </Button>
-    </StackLayout>
-  );
-};
-
 export const RefreshAdornment: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
@@ -110,7 +86,11 @@ export const RefreshAdornment: StoryFn = (args) => {
         value={value}
         onChange={(changedValue) => setValue(changedValue)}
         endAdornment={
-          <Button aria-label="refresh" onClick={() => setValue(10)}>
+          <Button
+            variant="secondary"
+            aria-label="refresh"
+            onClick={() => setValue(10)}
+          >
             <RefreshIcon aria-hidden />
           </Button>
         }
