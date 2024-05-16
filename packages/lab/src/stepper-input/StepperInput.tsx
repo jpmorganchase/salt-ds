@@ -1,18 +1,6 @@
 import { clsx } from "clsx";
-import {
-  ComponentPropsWithoutRef,
-  FocusEventHandler,
-  forwardRef,
-  ReactNode,
-  useRef,
-} from "react";
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  Input,
-  InputProps,
-} from "@salt-ds/core";
+import { FocusEventHandler, forwardRef, useRef } from "react";
+import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
@@ -22,16 +10,7 @@ import stepperInputCss from "./StepperInput.css";
 
 const withBaseName = makePrefixer("saltStepperInput");
 
-export interface StepperInputProps
-  extends Omit<ComponentPropsWithoutRef<"input">, "onChange"> {
-  /**
-   * Props to be passed to the button components.
-   */
-  ButtonProps?: Partial<ButtonProps>;
-  /**
-   * Props to be passed to the input component.
-   */
-  InputProps?: Partial<InputProps>;
+export interface StepperInputProps extends Omit<InputProps, "onChange"> {
   /**
    * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
    */
@@ -52,6 +31,10 @@ export interface StepperInputProps
    * The minimum value that can be selected.
    */
   min?: number;
+  /**
+   * Whether to hide the stepper buttons. Defaults to `false`.
+   */
+  hideButtons?: boolean;
   /**
    * Callback when stepper input loses focus.
    */
@@ -81,10 +64,9 @@ export interface StepperInputProps
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   function StepperInput(props, ref) {
     const {
-      ButtonProps: ButtonPropsProp,
-      InputProps: InputPropsProp,
       textAlign = "left",
       className,
+      hideButtons,
       onBlur,
       onChange,
       onFocus,
@@ -115,27 +97,28 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
           onFocus={onFocus}
           ref={inputRef}
           textAlign={textAlign}
-          {...getInputProps(InputPropsProp)}
-          {...rest}
+          {...getInputProps(rest)}
         />
-        <div className={withBaseName("buttonContainer")}>
-          <Button
-            aria-label="increment-value"
-            className={withBaseName("stepperButton")}
-            disabled={isAtMax()}
-            {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
-          >
-            <TriangleUpIcon aria-hidden />
-          </Button>
-          <Button
-            aria-label="decrement-value"
-            className={withBaseName("stepperButton")}
-            disabled={isAtMin()}
-            {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-          >
-            <TriangleDownIcon aria-hidden />
-          </Button>
-        </div>
+        {!hideButtons && (
+          <div className={withBaseName("buttonContainer")}>
+            <Button
+              aria-label="increment-value"
+              className={withBaseName("stepperButton")}
+              disabled={isAtMax()}
+              {...getButtonProps(stepperDirection.INCREMENT)}
+            >
+              <TriangleUpIcon aria-hidden />
+            </Button>
+            <Button
+              aria-label="decrement-value"
+              className={withBaseName("stepperButton")}
+              disabled={isAtMin()}
+              {...getButtonProps(stepperDirection.DECREMENT)}
+            >
+              <TriangleDownIcon aria-hidden />
+            </Button>
+          </div>
+        )}
       </div>
     );
   }

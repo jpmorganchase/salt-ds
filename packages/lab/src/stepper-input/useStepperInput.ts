@@ -4,7 +4,7 @@ import {
   MouseEvent,
   MutableRefObject,
 } from "react";
-import { ButtonProps, useControlled, useId, InputProps } from "@salt-ds/core";
+import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
 
@@ -56,7 +56,6 @@ export const useStepperInput = (
     onChange,
     step = 1,
     value,
-    InputProps: inputPropsProp = {},
   } = props;
 
   const [currentValue, setCurrentValue, isControlled] = useControlled({
@@ -64,7 +63,7 @@ export const useStepperInput = (
     default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
     name: "stepper-input",
   });
-  const inputId = useId(inputPropsProp.id);
+  const inputId = useId();
 
   const isOutOfRange = () => {
     if (currentValue === undefined) return true;
@@ -212,20 +211,13 @@ export const useStepperInput = (
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
 
-  const getButtonProps = (
-    type: Direction = stepperDirection.INCREMENT,
-    buttonPropsProp: ButtonProps = {}
-  ) => ({
+  const getButtonProps = (type: Direction = stepperDirection.INCREMENT) => ({
     "aria-hidden": true,
     "data-testid": `${type}-button`,
     tabIndex: -1,
-    ...buttonPropsProp,
-    onMouseDown: callAll(
-      (event: MouseEvent<HTMLButtonElement>) =>
-        handleButtonMouseDown(event, type),
-      buttonPropsProp.onMouseDown
-    ),
-    onMouseUp: callAll(() => handleButtonMouseUp(), buttonPropsProp.onMouseUp),
+    onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
+      handleButtonMouseDown(event, type),
+    onMouseUp: () => handleButtonMouseUp(),
   });
 
   const getInputProps = (

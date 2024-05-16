@@ -10,26 +10,6 @@ describe("Stepper Input", () => {
     cy.findByRole("spinbutton").should("have.value", "0");
   });
 
-  it("accepts `Input` props", () => {
-    const blurSpy = cy.stub().as("blurSpy");
-    const changeSpy = cy.stub().as("changeSpy");
-
-    cy.mount(
-      <StepperInput
-        InputProps={{
-          onBlur: blurSpy,
-          onChange: changeSpy,
-        }}
-      />
-    );
-
-    cy.findByRole("spinbutton").focus();
-    cy.realType("1");
-    cy.get("@changeSpy").should("have.been.called");
-    cy.realPress("Tab");
-    cy.get("@blurSpy").should("have.been.called");
-  });
-
   it("increments the default value on button click", () => {
     cy.mount(<StepperInput />);
 
@@ -174,41 +154,6 @@ describe("Stepper Input", () => {
 
     cy.findByTestId("increment-button").realClick();
     cy.get("@changeSpy").should("have.been.calledWith", "-109.44");
-  });
-
-  it("calls the input's change handlers", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-    const inputChangeSpy = cy.stub().as("inputChangeSpy");
-
-    cy.mount(
-      <StepperInput
-        InputProps={{ onChange: inputChangeSpy }}
-        onChange={changeSpy}
-      />
-    );
-
-    cy.findByRole("spinbutton").focus();
-    cy.findByRole("spinbutton").clear();
-    cy.realType("1");
-
-    cy.findByRole("spinbutton").should("have.value", "1");
-
-    cy.get("@changeSpy").should("have.been.called");
-    cy.get("@inputChangeSpy").should("have.been.called");
-  });
-
-  it("calls the input's blur handlers", () => {
-    const blurSpy = cy.stub().as("blurSpy");
-
-    cy.mount(<StepperInput InputProps={{ onBlur: blurSpy }} />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.findByRole("spinbutton").clear();
-    cy.realType("1");
-    cy.realPress("Tab");
-
-    cy.findByRole("spinbutton").should("have.value", "1");
-    cy.get("@blurSpy").should("have.been.called");
   });
 
   it("allows maximum safe integer", () => {

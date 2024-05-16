@@ -7,8 +7,8 @@ import {
 } from "@salt-ds/core";
 import { StepperInput } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
-import { RefreshIcon } from "@salt-ds/icons";
-import { useState } from "react";
+import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
+import { SetStateAction, useState } from "react";
 export default {
   title: "Lab/Stepper Input",
   component: StepperInput,
@@ -75,7 +75,9 @@ export const Controlled = () => {
         <FormFieldLabel>Stepper Input</FormFieldLabel>
         <StepperInput
           value={value}
-          onChange={(changedValue) => setValue(changedValue)}
+          onChange={(changedValue: SetStateAction<string | number>) =>
+            setValue(changedValue)
+          }
         />
         <FormFieldHelperText>Please enter a value</FormFieldHelperText>
       </FormField>
@@ -83,5 +85,25 @@ export const Controlled = () => {
         <RefreshIcon />
       </Button>
     </StackLayout>
+  );
+};
+
+export const RefreshAdornment = () => {
+  const [value, setValue] = useState<number | string>(10);
+
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput
+        value={value}
+        onChange={(changedValue) => setValue(changedValue)}
+        endAdornment={
+          <Button aria-label="refresh" onClick={() => setValue(10)}>
+            <RefreshIcon aria-hidden />
+          </Button>
+        }
+      />
+      <FormFieldHelperText>Please enter a value</FormFieldHelperText>
+    </FormField>
   );
 };
