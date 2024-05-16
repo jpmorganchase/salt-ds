@@ -66,7 +66,7 @@ export const Alignment: StoryFn = (args) => (
   </StackLayout>
 );
 
-export const Controlled = () => {
+export const Controlled: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
@@ -74,10 +74,12 @@ export const Controlled = () => {
       <FormField>
         <FormFieldLabel>Stepper Input</FormFieldLabel>
         <StepperInput
+          {...args}
           value={value}
-          onChange={(changedValue: SetStateAction<string | number>) =>
-            setValue(changedValue)
-          }
+          onChange={(changedValue: SetStateAction<string | number>) => {
+            console.log("onChange");
+            setValue(changedValue);
+          }}
         />
         <FormFieldHelperText>Please enter a value</FormFieldHelperText>
       </FormField>
@@ -88,18 +90,61 @@ export const Controlled = () => {
   );
 };
 
-export const RefreshAdornment = () => {
+export const RefreshAdornment: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput
+        {...args}
         value={value}
         onChange={(changedValue) => setValue(changedValue)}
         endAdornment={
           <Button aria-label="refresh" onClick={() => setValue(10)}>
             <RefreshIcon aria-hidden />
+          </Button>
+        }
+      />
+      <FormFieldHelperText>Please enter a value</FormFieldHelperText>
+    </FormField>
+  );
+};
+
+export const HideButton: StoryFn = (args) => {
+  const [value, setValue] = useState<number | string>(10);
+
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput
+        {...args}
+        hideButtons
+        textAlign="center"
+        value={value}
+        onChange={(changedValue) => setValue(changedValue)}
+        startAdornment={
+          <Button
+            aria-label="decerement value"
+            onClick={() =>
+              setValue(
+                typeof value === "string" ? parseFloat(value) - 1 : value - 1
+              )
+            }
+          >
+            <RemoveIcon aria-hidden />
+          </Button>
+        }
+        endAdornment={
+          <Button
+            aria-label="increment value"
+            onClick={() =>
+              setValue(
+                typeof value === "string" ? parseFloat(value) + 1 : value + 1
+              )
+            }
+          >
+            <AddIcon aria-hidden />
           </Button>
         }
       />
