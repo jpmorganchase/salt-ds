@@ -1,6 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { Button, Checkbox, CheckboxGroup, StackLayout, Text } from "@salt-ds/core";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 
 export default {
   title: "Core/Checkbox",
@@ -49,10 +55,12 @@ export const Indeterminate: StoryFn<typeof Checkbox> = () => {
 export const WithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
   return (
     <Checkbox
-      label={<StackLayout gap={0.25} align="start">
-        <Text>This is a Primary text</Text>
-        <Text color="secondary">This is a Secondary text</Text>
-      </StackLayout>}
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>This is a Primary text</Text>
+          <Text color="secondary">This is a Secondary text</Text>
+        </StackLayout>
+      }
     />
   );
 };

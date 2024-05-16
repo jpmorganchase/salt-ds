@@ -1,5 +1,10 @@
 import { ChangeEventHandler, useState } from "react";
-import { RadioButton, RadioButtonGroup, StackLayout, Text } from "@salt-ds/core";
+import {
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -18,10 +23,12 @@ export const Checked = () => {
 export const WithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
   return (
     <RadioButton
-      label={<StackLayout gap={0.25} align="start">
-        <Text>This is a Primary text</Text>
-        <Text color="secondary">This is a Secondary text</Text>
-      </StackLayout>}
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>This is a Primary text</Text>
+          <Text color="secondary">This is a Secondary text</Text>
+        </StackLayout>
+      }
     />
   );
 };
