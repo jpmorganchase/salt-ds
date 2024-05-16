@@ -10,6 +10,8 @@ import {
   StackLayout,
   Text,
   ValidationStatus,
+  FlowLayout,
+  FlexItem,
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 
@@ -219,21 +221,36 @@ export const Dismissible = () => {
 
 export const MultipleLines = (props: BannerProps) => {
   return (
-    <div style={{ width: 500 }}>
-      <Banner status="error" {...props}>
+    <StackLayout style={{ width: 500 }}>
+      <Banner status="error">
         <BannerContent>
-          <Text>
-            <strong>Information missing in form submission</strong>
-          </Text>
-          <div>
-            <ul style={{ paddingLeft: 0 }}>
-              <li>Username</li>
-              <li>Password</li>
-            </ul>
-          </div>
+          <StackLayout gap={1}>
+            <Text>
+              <strong>Unable to process transaction</strong>
+            </Text>
+            <Text>
+              There was an error processing your transaction. Please check that
+              your payment details are correct and try again.
+            </Text>
+            <Link href="#">Find out more</Link>
+          </StackLayout>
         </BannerContent>
       </Banner>
-    </div>
+      <Banner status="success">
+        <BannerContent>
+          <StackLayout gap={1}>
+            <Text>
+              An invite has been sent to <strong>Person 1</strong>. Once they
+              accept, you will receive a notification.
+            </Text>
+            <FlowLayout gap={1}>
+              <Button variant="secondary">Cancel invite</Button>
+              <Button variant="primary">Resend invite</Button>
+            </FlowLayout>
+          </StackLayout>
+        </BannerContent>
+      </Banner>
+    </StackLayout>
   );
 };
 
@@ -256,19 +273,5 @@ export const MultipleBanners: StoryFn<typeof Banner> = () => {
         mollit anim id est laborum.
       </Text>
     </StackLayout>
-  );
-};
-
-export const MultipleActions: StoryFn<typeof Banner> = (args) => {
-  return (
-    <Banner {...args} style={{ width: 500 }}>
-      <BannerContent>The one-time PIN you entered has expired</BannerContent>
-      <BannerActions>
-        <Link>See more</Link>
-        <Button aria-label="refresh" variant="secondary">
-          <RefreshIcon />
-        </Button>
-      </BannerActions>
-    </Banner>
   );
 };

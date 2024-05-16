@@ -642,6 +642,22 @@ describe("GIVEN a Calendar", () => {
         name: formatDay(todayTestDate),
       }).should("be.focused");
     });
+    it("SHOULD move to today's date if there is an empty selected range", () => {
+      const todayTestDate = today(localTimeZone);
+      cy.mount(
+        <RangeSelection
+          defaultVisibleMonth={todayTestDate}
+          selectedDate={{ startDate: undefined, endDate: undefined }}
+        />
+      );
+      cy.findByRole("button", {
+        name: "Next Month",
+      }).focus();
+      cy.realPress("Tab");
+      cy.findByRole("button", {
+        name: formatDay(todayTestDate),
+      }).should("be.focused");
+    });
     it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
       const todayTestDate = today(localTimeZone);
       cy.mount(
