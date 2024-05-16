@@ -1,5 +1,6 @@
 .salt-theme {
   --salt-typography-fontFamily-openSans: "Open Sans";
+  --salt-typography-fontFamily-amplitude: "Amplitude";
   --salt-typography-fontFamily-ptMono: "PT Mono";
 
   --salt-typography-fontWeight-light: 300;
