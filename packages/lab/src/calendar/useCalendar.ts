@@ -12,7 +12,7 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
-  isRangeOrOffsetSelectionValue,
+  isRangeOrOffsetSelectionWithStartDate,
   UseMultiSelectionCalendarProps,
   UseOffsetSelectionCalendarProps,
   UseRangeSelectionCalendarProps,
@@ -143,7 +143,7 @@ export function useCalendar(props: useCalendarProps) {
   const getInitialFocusedDate = (): DateValue => {
     const selectedDate = selectionManager.state.selectedDate;
     // Case range or offset
-    if (isRangeOrOffsetSelectionValue(selectedDate)) {
+    if (isRangeOrOffsetSelectionWithStartDate(selectedDate)) {
       if (isInVisibleMonth(selectedDate?.startDate)) {
         return selectedDate.startDate;
       }
@@ -171,11 +171,9 @@ export function useCalendar(props: useCalendarProps) {
     }
     // Case single select
     if (
-      !isRangeOrOffsetSelectionValue(selectedDate) &&
+      !isRangeOrOffsetSelectionWithStartDate(selectedDate) &&
       !Array.isArray(selectedDate) &&
-      isInVisibleMonth(selectedDate) &&
-      // @ts-ignore Checks it is not a range
-      !selectedDate.startDate
+      isInVisibleMonth(selectedDate)
     ) {
       return selectedDate;
     }
@@ -236,7 +234,7 @@ export function useCalendar(props: useCalendarProps) {
 
   useEffect(() => {
     if (!isDayVisible(focusedDate)) {
-      setFocusedDateState(startOfMonth(visibleMonth));
+      setFocusedDateState(getInitialFocusedDate());
     }
   }, [isDayVisible, focusedDate, visibleMonth]);
 
