@@ -8,3 +8,4 @@ export * from "./NoWrap";
 export * from "./Wrap";
 export * from "./LongText";
 export * from "./WithFormField";
+export * from "./WithSecondaryLabel";
