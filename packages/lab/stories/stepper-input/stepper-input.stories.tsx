@@ -24,6 +24,15 @@ export const Default: StoryFn = (args) => {
   );
 };
 
+export const Secondary: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <StepperInput {...args} variant="secondary" />
+      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+    </FormField>
+  );
+};
 export const DecimalPlaces: StoryFn = (args) => {
   return (
     <FormField>
