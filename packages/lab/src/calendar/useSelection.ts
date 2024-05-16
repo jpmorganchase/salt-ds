@@ -95,9 +95,7 @@ export function isRangeOrOffsetSelectionWithStartDate(
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
-    Boolean(
-      selectionValue?.startDate ?? selectionValue?.startDate === undefined
-    )
+    Boolean(Object.keys(selectionValue).find((i) => i === "startDate"))
   );
 }
 

@@ -642,7 +642,7 @@ describe("GIVEN a Calendar", () => {
         name: formatDay(todayTestDate),
       }).should("be.focused");
     });
-    it.only("SHOULD move to today's date if there is an empty selected range", () => {
+    it("SHOULD move to today's date if there is an empty selected range", () => {
       const todayTestDate = today(localTimeZone);
       cy.mount(
         <RangeSelection
