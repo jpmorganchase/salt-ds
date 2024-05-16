@@ -1,0 +1,7 @@
+.salt-theme-next.salt-theme[data-heading-font="Open Sans"] {
+  --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
+}
+
+.salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
+  --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-amplitude);
+}

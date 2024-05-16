@@ -20,16 +20,16 @@ Colors used to symbolise an error state.
         "--salt-palette-error-border": "var(--salt-palette-error-border)",
       }}
     />
-
     <ColorItem
       title="Foreground"
       subtitle="--salt-palette-error-foreground"
       colors={{
-        "--salt-palette-error-foreground":
-          "var(--salt-palette-error-foreground)",
+        "--salt-palette-error-foreground-decorative":
+          "var(--salt-palette-error-foreground-decorative)",
+        "--salt-palette-error-foreground-informative":
+          "var(--salt-palette-error-foreground-informative)",
       }}
     />
-
     <ColorItem
       title="Background"
       subtitle="--salt-palette-error-background"
@@ -38,7 +38,6 @@ Colors used to symbolise an error state.
           "var(--salt-palette-error-background)",
       }}
     />
-
     <ColorItem
       title="Background (selected)"
       subtitle="--salt-palette-error-background-selected"
@@ -47,7 +46,6 @@ Colors used to symbolise an error state.
           "var(--salt-palette-error-background-selected)",
       }}
     />
-
   </ColorPalette>
 </ColorContainer>
 
@@ -55,11 +53,21 @@ Colors used to symbolise an error state.
 
 <Canvas>
   <DocGrid withNotes>
-    <ColorBlock colorVar="--salt-palette-error-background-emphasize" replacementToken="--salt-palette-error-background" />
-
-    <ColorBlock colorVar="--salt-palette-error-foreground-disabled" replacementToken="#E32B16B3" />
-
-    <ColorBlock colorVar="--salt-palette-error-border-disabled" replacementToken="#E32B1666" />
-
+    <ColorBlock
+      colorVar="--salt-palette-error-background-emphasize"
+      replacementToken="--salt-palette-error-background"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-error-foreground-disabled"
+      replacementToken="#E32B16B3"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-error-border-disabled"
+      replacementToken="#E32B1666"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-error-foreground"
+      replacementToken="--salt-palette-error-foreground-decorative"
+    />
   </DocGrid>
 </Canvas>

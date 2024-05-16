@@ -224,11 +224,7 @@ export const CalendarNavigation = forwardRef<
           onClick={handleNavigatePrevious}
           focusableWhenDisabled={true}
         >
-          <ChevronLeftIcon
-            aria-label={`Previous Month, ${formatDate(
-              visibleMonth.subtract({ months: 1 })
-            )}`}
-          />
+          <ChevronLeftIcon aria-label="Previous Month" />
         </Button>
       </Tooltip>
       <div className={withBaseName("dropdowns")}>
@@ -283,11 +279,7 @@ export const CalendarNavigation = forwardRef<
           onClick={handleNavigateNext}
           focusableWhenDisabled={true}
         >
-          <ChevronRightIcon
-            aria-label={`Next Month, ${formatDate(
-              visibleMonth.add({ months: 1 })
-            )}`}
-          />
+          <ChevronRightIcon aria-label="Next Month" />
         </Button>
       </Tooltip>
     </div>
