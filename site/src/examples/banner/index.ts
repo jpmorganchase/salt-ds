@@ -5,3 +5,4 @@ export * from "./Static";
 export * from "./Success";
 export * from "./Warning";
 export * from "./SecondaryVariant";
+export * from "./MultilineBanners";
