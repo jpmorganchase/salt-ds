@@ -56,10 +56,7 @@ function processFile(
   let darkContent;
   let generalContent;
 
-  if (
-    filePath.includes("palette-next") ||
-    filePath.includes("characteristics-next")
-  ) {
+  if (filePath.includes("next")) {
     lightContent = cssContent.match(lightModeNextRegex);
     darkContent = cssContent.match(darkModeNextRegex);
     generalContent = cssContent.match(generalThemeNextRegex);
@@ -170,38 +167,6 @@ function processFile(
 }
 
 module.exports = {
-  fromFile: function getCssVariablesFromFile(filePath) {
-    const cssVariables = {};
-    const lightModeVariables = {};
-    const darkModeVariables = {};
-    const hdVariables = {};
-    const mdVariables = {};
-    const ldVariables = {};
-    const tdVariables = {};
-
-    const stats = fs.statSync(filePath);
-    if (stats.isFile() && path.extname(filePath) === ".css") {
-      processFile(filePath, {
-        cssVariables,
-        lightModeVariables,
-        darkModeVariables,
-        hdVariables,
-        mdVariables,
-        ldVariables,
-        tdVariables,
-      });
-    }
-
-    return {
-      light: lightModeVariables,
-      dark: darkModeVariables,
-      high: hdVariables,
-      medium: mdVariables,
-      low: ldVariables,
-      touch: tdVariables,
-      general: cssVariables,
-    };
-  },
   fromDir: function getCssVariablesFromDir(dirPath, nonColors) {
     const cssVariables = {};
     const lightModeVariables = {};
@@ -211,7 +176,7 @@ module.exports = {
     const ldVariables = {};
     const tdVariables = {};
     const files = fs.readdirSync(dirPath);
-    const foundations = files.map((file) => file.replace(".css", ""));
+    const dirFiles = files.map((file) => file.replace(".css", ""));
     files.forEach((file) => {
       const filePath = path.join(dirPath, file);
       const fileName = file.replace(".css", "");
@@ -223,7 +188,7 @@ module.exports = {
       } else if (
         stats.isFile() &&
         path.extname(file) === ".css" &&
-        !foundations.includes(`${fileName}-next`) &&
+        !dirFiles.includes(`${fileName}-next`) &&
         fileName !== "fade"
       ) {
         processFile(

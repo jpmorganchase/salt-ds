@@ -13,6 +13,23 @@ function removePrefix(cssVar) {
   return cssVar.replace("--salt-", "");
 }
 
+const cssVarRegex = /var\(([a-z-0-9,\s]+)\)/;
+function extractVar(color) {
+  let cssVar = cssVarRegex.exec(color)[1];
+  if (cssVar.includes(",")) {
+    // shouldn't, but safety check
+    cssVar = cssVar.split(",")[0];
+  }
+  return cssVar;
+}
+
+// TODO: If opacity could be a var, need to fix this
+function extractOpacity(color) {
+  let opacity = color.split(",")[-1];
+  opacity.replaceAll(")", "").trim("");
+  return opacity;
+}
+
 const jsonTokens = {
   modes: ["$light", "$dark"],
   densities: ["$high", "$medium", "$low", "$touch"],
@@ -62,6 +79,9 @@ function formatFoundationValue(semantic, tokenValue) {
       break;
     case "opacity":
       foundationSemantic = "opacity";
+      break;
+    case "text":
+      foundationSemantic = "typography";
       break;
     default:
       foundationSemantic = "color";
@@ -119,6 +139,9 @@ function format(variables) {
             break;
           case "opacity":
             type = "number";
+            break;
+          case "text":
+            type = "fontFamily";
             break;
           default:
             type = "color";
@@ -186,21 +209,34 @@ function format(variables) {
             }
             break;
           case "color":
+            type = "color";
             if (tokenName.includes("fade")) {
-              type = "color";
-              const colorToken = `${tokenName.split("-fade")[0]}`;
-              const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
-              // the semantic check here is due to e.g. --salt-palette-opacity-disabled used in fade tokens (correct) vs
-              // e.g. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover (this is technically wrong)
-              tokenValue = {
-                color: `{foundations.color.${colorToken}}`,
-                opacity: `{${
-                  opacityValue.includes("palette") ? "palette" : "foundations"
-                }.opacity.${removePrefix(stripVarFunc(opacityValue))}}`,
-              };
+              if (tokenValue.includes("var(")) {
+                const rgbToken = extractVar(tokenValue);
+                const opacity = extractOpacity(tokenValue);
+                tokenValue = {
+                  color: `${formatFoundationValue("color", rgbToken)}`,
+                  opacity: opacity,
+                };
+              } else {
+                const colorToken = `${tokenName.split("-fade")[0]}`;
+                const opacityValue = stripVarFunc(tokenValue.split(",")[3]);
+                // the semantic check here is due to e.g. --salt-palette-opacity-disabled used in fade tokens (correct) vs
+                // e.g. --salt-opacity-8 directly used in --salt-color-black-fade-background-hover (this is technically wrong)
+                tokenValue = {
+                  color: `{foundations.color.${colorToken}}`,
+                  opacity: `{${
+                    opacityValue.includes("palette") ? "palette" : "foundations"
+                  }.opacity.${removePrefix(stripVarFunc(opacityValue))}}`,
+                };
+              }
             } else {
-              type = "color";
-              tokenValue = colorFormatSwap("hex", tokenValue);
+              if (tokenValue.includes("var(")) {
+                const rgbToken = extractVar(tokenValue);
+                tokenValue = `${formatFoundationValue("color", rgbToken)}`;
+              } else {
+                tokenValue = colorFormatSwap("hex", tokenValue);
+              }
             }
             break;
           default:
@@ -304,26 +340,16 @@ function format(variables) {
 }
 
 function themeToJson() {
-  const paletteVariables = fromFile(
-    path.resolve(__dirname, "../../css/palette/palette-next.css")
+  const paletteVariables = fromDir(
+    path.resolve(__dirname, "../../css/palette")
   );
   const foundationVariables = fromDir(
     path.resolve(__dirname, "../../css/foundations")
   );
-  let characteristicVariables = fromFile(
-    path.resolve(
-      __dirname,
-      "../../css/characteristics/characteristics-next.css"
-    )
-  );
-  let characteristicsNonColors = fromDir(
+  const characteristicVariables = fromDir(
     path.resolve(__dirname, "../../css/characteristics"),
     true
   );
-  characteristicVariables = {
-    ...characteristicVariables,
-    ...characteristicsNonColors,
-  };
   format({
     $light: {
       ...paletteVariables.light,
