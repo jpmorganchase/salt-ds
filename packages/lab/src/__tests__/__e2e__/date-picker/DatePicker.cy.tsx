@@ -30,6 +30,14 @@ const formatInput = (date: DateValue): string =>
     year: "numeric",
   }).format(date.toDate(localTimeZone));
 
+const formatDay = (date: DateValue) => {
+  return formatDate(date, {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+};
+
 describe("GIVEN a DatePicker", () => {
   checkAccessibility(composedStories);
 
@@ -66,10 +74,10 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
-        name: formatDate(testDate.add({ days: 11 })),
+        name: formatDay(testDate.add({ days: 11 })),
       }).should("exist");
       cy.findByRole("button", {
-        name: formatDate(testDate.add({ days: 11 })),
+        name: formatDay(testDate.add({ days: 11 })),
       }).realClick();
       cy.findByRole("application").should("not.exist");
     });
@@ -83,9 +91,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("textbox").blur();
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
-        name: `Next Month, ${formatDate(
-          startOfMonth(testDate).add({ months: 1 })
-        )}`,
+        name: "Next Month",
       }).focus();
     });
     it("THEN it should clear the date if an empty input is submitted", () => {
@@ -99,7 +105,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("textbox").click().clear();
       cy.findByRole("textbox").blur();
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      cy.findByRole("button", { name: formatDate(testDate) }).should(
+      cy.findByRole("button", { name: formatDay(testDate) }).should(
         "not.have.attr",
         "aria-pressed",
         "true"
@@ -141,10 +147,10 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(<Range />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
-        name: formatDate(today(localTimeZone).add({ days: 11 })),
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
       }).should("exist");
       cy.findByRole("button", {
-        name: formatDate(today(localTimeZone).add({ days: 11 })),
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
       }).realClick();
       cy.findAllByRole("application").should("have.length", 2);
     });
@@ -152,10 +158,10 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(<Range />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
-        name: formatDate(today(localTimeZone).add({ days: 11 })),
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
       }).realClick();
       cy.findByRole("button", {
-        name: formatDate(today(localTimeZone).add({ days: 12 })),
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 12 })),
       }).realClick();
       cy.findByRole("application").should("not.exist");
     });
@@ -168,20 +174,16 @@ describe("GIVEN a DatePicker", () => {
       );
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
-        name: formatDate(testDate.add({ months: 1, days: 1 })),
+        name: formatDay(testDate.add({ months: 1, days: 1 })),
       }).should("exist");
       cy.findByRole("button", {
-        name: formatDate(testDate.add({ months: 1, days: 1 })),
+        name: formatDay(testDate.add({ months: 1, days: 1 })),
       }).realClick();
       cy.findByRole("button", {
-        name: `Previous Month, ${formatDate(
-          startOfMonth(testDate).add({ months: 1 })
-        )}`,
+        name: "Previous Month",
       }).should("exist");
       cy.findByRole("button", {
-        name: `Next Month, ${formatDate(
-          startOfMonth(testDate).add({ months: 2 })
-        )}`,
+        name: "Next Month",
       }).should("exist");
     });
   });
