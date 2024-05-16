@@ -96,7 +96,6 @@ export function isRangeOrOffsetSelectionWithValues(
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
     Boolean(selectionValue?.startDate) &&
-    Boolean(selectionValue?.endDate)
   );
 }
 
