@@ -111,3 +111,23 @@ These components use `--salt-palette-corner-strongest` token
 
 - Avatar
 - Badge
+
+## Heading font switch
+
+A new `headingFont` prop is added to switch display and heading font family between Open Sans and Amplitude.
+
+```
+<UNSTABLE_SaltProviderNext headingFont="Amplitude">
+```
+
+You'll need to install Amplitude font to your application to make sure every user will see the font correctly, e.g.,
+
+```css
+@font-face {
+  font-family: "Amplitude";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("PATH/TO/FONT.woff2") format("woff2");
+}
+```

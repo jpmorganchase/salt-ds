@@ -65,7 +65,8 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 }
 
 export const withTheme: Decorator = (StoryFn, context) => {
-  const { density, mode, styleInjection, themeNext, corner } = context.globals;
+  const { density, mode, styleInjection, themeNext, corner, headingFont } =
+    context.globals;
 
   const Provider =
     themeNext === "enable" ? UNSTABLE_SaltProviderNext : SaltProvider;
@@ -95,6 +96,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
             key={`${mode}-${styleInjection}`}
             enableStyleInjection={styleInjection === "enable"}
             corner={corner}
+            headingFont={headingFont}
           >
             <Panel>
               <StoryFn />
@@ -112,6 +114,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
       key={`${mode}-${styleInjection}`}
       enableStyleInjection={styleInjection === "enable"}
       corner={corner}
+      headingFont={headingFont}
     >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />

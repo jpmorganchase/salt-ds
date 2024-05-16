@@ -40,16 +40,16 @@
 
 .saltRadioButtonIcon-error,
 .saltRadioButton:hover .saltRadioButtonIcon-error {
-  color: var(--salt-status-error-foreground);
+  color: var(--salt-status-error-foreground-decorative);
   border-color: var(--salt-status-error-borderColor);
-  outline-color: var(--salt-status-error-foreground);
+  outline-color: var(--salt-status-error-foreground-decorative);
 }
 
 .saltRadioButtonIcon-warning,
 .saltRadioButton:hover .saltRadioButtonIcon-warning {
-  color: var(--salt-status-warning-foreground);
+  color: var(--salt-status-warning-foreground-decorative);
   border-color: var(--salt-status-warning-borderColor);
-  outline-color: var(--salt-status-warning-foreground);
+  outline-color: var(--salt-status-warning-foreground-decorative);
 }
 
 .saltRadioButtonIcon-readOnly,

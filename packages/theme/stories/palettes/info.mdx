@@ -20,15 +20,16 @@ Colors used to represent informational content or messaging.
         "--salt-palette-info-border": "var(--salt-palette-info-border)",
       }}
     />
-
     <ColorItem
       title="Foreground"
       subtitle="--salt-palette-info-foreground"
       colors={{
-        "--salt-palette-info-foreground": "var(--salt-palette-info-foreground)",
+        "--salt-palette-info-foreground-decorative":
+          "var(--salt-palette-info-foreground-decorative)",
+        "--salt-palette-info-foreground-informative":
+          "var(--salt-palette-info-foreground-informative)",
       }}
     />
-
     <ColorItem
       title="Background"
       subtitle="--salt-palette-info-background"
@@ -36,7 +37,6 @@ Colors used to represent informational content or messaging.
         "--salt-palette-info-background": "var(--salt-palette-info-background)",
       }}
     />
-
   </ColorPalette>
 </ColorContainer>
 
@@ -44,11 +44,21 @@ Colors used to represent informational content or messaging.
 
 <Canvas>
   <DocGrid withNotes>
-    <ColorBlock colorVar="--salt-palette-info-background-emphasize" replacementToken="--salt-palette-info-background" />
-
-    <ColorBlock colorVar="--salt-palette-info-foreground-disabled" replacementToken="#2670A9B3" />
-
-    <ColorBlock colorVar="--salt-palette-info-border-disabled" replacementToken="#2670A966" />
-
+    <ColorBlock
+      colorVar="--salt-palette-info-background-emphasize"
+      replacementToken="--salt-palette-info-background"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-info-foreground-disabled"
+      replacementToken="#2670A9B3"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-info-border-disabled"
+      replacementToken="#2670A966"
+    />
+    <ColorBlock
+      colorVar="--salt-palette-info-foreground"
+      replacementToken="--salt-palette-info-foreground-decorative"
+    />
   </DocGrid>
 </Canvas>

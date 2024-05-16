@@ -138,6 +138,16 @@ export const globalTypes: GlobalTypes = {
       title: "Corner",
     },
   },
+  headingFont: {
+    name: "Experimental heading font",
+    description: "Switch heading font to open sans / amplitude",
+    defaultValue: "Open Sans",
+    toolbar: {
+      icon: "beaker",
+      items: ["Open Sans", "Amplitude"],
+      title: "Heading font",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {
