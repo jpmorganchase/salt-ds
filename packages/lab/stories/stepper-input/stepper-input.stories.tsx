@@ -37,7 +37,7 @@ export const DecimalPlaces: StoryFn = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Default Stepper Input</FormFieldLabel>
-      <StepperInput decimalPlaces={2} {...args} />
+      <StepperInput decimalPlaces={2} step={0.01} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
