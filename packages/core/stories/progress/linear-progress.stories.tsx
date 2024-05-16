@@ -114,5 +114,15 @@ export const Indeterminate: StoryFn<typeof LinearProgress> = () => (
       <h3 style={{ textAlign: "center" }}> Progress line width = 33%</h3>
       <LinearProgress variant="indeterminate" progressLineWidth={33} />
     </StackLayout>
+    <StackLayout>
+      <h3 style={{ textAlign: "center" }}>
+        Progress line width = 66% Animation speed = 1.8s
+      </h3>
+      <LinearProgress
+        variant="indeterminate"
+        progressLineWidth={66}
+        animationSpeed="1.8s"
+      />
+    </StackLayout>
   </StackLayout>
 );
