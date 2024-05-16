@@ -44,12 +44,36 @@ export const DecimalPlaces: StoryFn = (args) => {
 };
 
 export const MinAndMaxValue: StoryFn = (args) => {
+  const [value, setValue] = useState<number | string>(2);
+  const max = 5;
+  const min = 0;
+
+  const getValidationStatus = () => {
+    if (typeof value === "number") {
+      if (value > max || value < min) {
+        return "error";
+      }
+    } else {
+      const numericValue = parseFloat(value);
+      if (numericValue > max || numericValue < min) {
+        return "error";
+      }
+    }
+    return undefined;
+  };
+
   return (
-    <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
-      <StepperInput max={10} min={0} defaultValue={5} {...args} />
+    <FormField validationStatus={getValidationStatus()}>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput
+        {...args}
+        value={value}
+        onChange={(changedValue) => setValue(changedValue)}
+        max={max}
+        min={min}
+      />
       <FormFieldHelperText>
-        Please enter a number between 0 and 10
+        Please enter a value between {min} and {max}
       </FormFieldHelperText>
     </FormField>
   );
