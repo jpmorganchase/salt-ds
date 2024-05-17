@@ -57,8 +57,8 @@ export const WithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
     <Checkbox
       label={
         <StackLayout gap={0.25} align="start">
-          <Text>This is a Primary text</Text>
-          <Text color="secondary">This is a Secondary text</Text>
+          <Text>Bonds</Text>
+          <Text color="secondary">Debt securities</Text>
         </StackLayout>
       }
     />
@@ -179,20 +179,145 @@ export const HorizontalGroup: StoryFn<typeof Checkbox> = () => {
   );
 };
 
+export const HorizontalGroupWithSecondaryLabel: StoryFn<
+  typeof Checkbox
+> = () => {
+  return (
+    <CheckboxGroup
+      defaultCheckedValues={["alternatives", "equities"]}
+      direction={"horizontal"}
+    >
+      <Checkbox
+        value="alternatives"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Alternatives</Text>
+            <Text color="secondary">Other investments</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="equities"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Equities</Text>
+            <Text color="secondary">Company shares</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="fixed income"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Fixed income</Text>
+            <Text color="secondary">Interest-paying</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="bonds"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Bonds</Text>
+            <Text color="secondary">Debt securities</Text>
+          </StackLayout>
+        }
+      />
+    </CheckboxGroup>
+  );
+};
+
+export const VerticalGroupWithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
+  return (
+    <CheckboxGroup defaultCheckedValues={["alternatives", "equities"]}>
+      <Checkbox
+        value="alternatives"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Alternatives</Text>
+            <Text color="secondary">Other investments</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="equities"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Equities</Text>
+            <Text color="secondary">Company shares</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="fixed income"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Fixed income</Text>
+            <Text color="secondary">Interest-paying</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="bonds"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Bonds</Text>
+            <Text color="secondary">Debt securities</Text>
+          </StackLayout>
+        }
+      />
+    </CheckboxGroup>
+  );
+};
+
 export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
   <div
     style={{
-      width: 250,
+      width: 300,
     }}
   >
     <CheckboxGroup name="fx" direction={"horizontal"} wrap={wrap}>
-      <Checkbox key="option1" label="Alternatives" value="alternatives" />
-      <Checkbox key="option2" label="Equities" value="equities" />
+      <Checkbox
+        key="option1"
+        value="alternatives"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Alternatives</Text>
+            <Text color="secondary">Other investments</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        key="option2"
+        value="equities"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Equities</Text>
+            <Text color="secondary">Company shares</Text>
+          </StackLayout>
+        }
+      />
       <Checkbox
         disabled
         key="option3"
-        label="Fixed income"
         value="fixed income"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Fixed income</Text>
+            <Text color="secondary">Interest-paying</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        disabled
+        key="option4"
+        value="bonds"
+        label={
+          <StackLayout gap={0.25} align="start">
+            <Text>Bonds</Text>
+            <Text color="secondary">Debt securities</Text>
+          </StackLayout>
+        }
       />
     </CheckboxGroup>
   </div>

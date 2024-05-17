@@ -25,8 +25,8 @@ export const WithSecondaryLabel = () => {
     <RadioButton
       label={
         <StackLayout gap={0.25} align="start">
-          <Text>This is a Primary text</Text>
-          <Text color="secondary">This is a Secondary text</Text>
+          <Text>Bonds</Text>
+          <Text color="secondary">Debt securities</Text>
         </StackLayout>
       }
     />
@@ -82,6 +82,76 @@ export const HorizontalGroup = () => (
     <RadioButton key="option1" label="NAMR" value="option1" />
     <RadioButton key="option2" label="APAC" value="option2" />
     <RadioButton key="option3" label="EMEA" value="option3" />
+  </RadioButtonGroup>
+);
+
+export const VerticalGroupWithSecondaryLabel = () => (
+  <RadioButtonGroup>
+    <RadioButton
+      key="option1"
+      value="option1"
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>NAMR</Text>
+          <Text color="secondary">North America</Text>
+        </StackLayout>
+      }
+    />
+    <RadioButton
+      key="option2"
+      value="option2"
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>APAC</Text>
+          <Text color="secondary">Asia–Pacific</Text>
+        </StackLayout>
+      }
+    />
+    <RadioButton
+      key="option3"
+      value="option3"
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>EMEA</Text>
+          <Text color="secondary">Europe, Middle East, and Africa</Text>
+        </StackLayout>
+      }
+    />
+  </RadioButtonGroup>
+);
+
+export const HorizontalGroupWithSecondaryLabel = () => (
+  <RadioButtonGroup direction={"horizontal"}>
+    <RadioButton
+      key="option1"
+      value="option1"
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>NAMR</Text>
+          <Text color="secondary">North America</Text>
+        </StackLayout>
+      }
+    />
+    <RadioButton
+      key="option2"
+      value="option2"
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>APAC</Text>
+          <Text color="secondary">Asia–Pacific</Text>
+        </StackLayout>
+      }
+    />
+    <RadioButton
+      key="option3"
+      value="option3"
+      label={
+        <StackLayout gap={0.25} align="start">
+          <Text>EMEA</Text>
+          <Text color="secondary">Europe, Middle East, and Africa</Text>
+        </StackLayout>
+      }
+    />
   </RadioButtonGroup>
 );
 
