@@ -23,5 +23,8 @@
   },
   "devDependencies": {
     "del": "^7.0.0"
+  },
+  "peerDependencies": {
+    "@salt-ds/theme": "^1.15.0"
   }
 }

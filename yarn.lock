@@ -5667,6 +5667,8 @@ __metadata:
   resolution: "@salt-ds/ag-grid-theme@workspace:packages/ag-grid-theme"
   dependencies:
     del: "npm:^7.0.0"
+  peerDependencies:
+    "@salt-ds/theme": ^1.15.0
   languageName: unknown
   linkType: soft
 
