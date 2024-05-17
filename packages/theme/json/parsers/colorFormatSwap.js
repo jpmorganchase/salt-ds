@@ -29,9 +29,6 @@ module.exports = function colorFormatSwap(swapTo, color) {
       a = ((a * 255) | (1 << 8)).toString(16).slice(1).trim();
       return rgbToHex(r, g, b) + a;
     } else {
-      if (color.includes("var(")) {
-        const cssVar = extractVar(color);
-      }
       const [r, g, b] = color
         .replace("rgb(", "")
         .replace(")", "")

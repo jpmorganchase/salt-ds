@@ -164,22 +164,15 @@
       },
       "palette-error-border": {
         "$value": {
-          "$dark": "{foundations.color.color-red-400}",
+          "$dark": "{foundations.color.color-red-500}",
           "$light": "{foundations.color.color-red-500}"
         },
         "$type": "color"
       },
-      "palette-error-foreground-decorative": {
+      "palette-error-foreground": {
         "$value": {
-          "$dark": "{foundations.color.color-red-400}",
+          "$dark": "{foundations.color.color-red-500}",
           "$light": "{foundations.color.color-red-500}"
-        },
-        "$type": "color"
-      },
-      "palette-error-foreground-informative": {
-        "$value": {
-          "$dark": "{foundations.color.color-red-200}",
-          "$light": "{foundations.color.color-red-600}"
         },
         "$type": "color"
       }
@@ -780,17 +773,10 @@
         },
         "$type": "color"
       },
-      "palette-success-foreground-decorative": {
+      "palette-success-foreground": {
         "$value": {
           "$dark": "{foundations.color.color-green-400}",
           "$light": "{foundations.color.color-green-500}"
-        },
-        "$type": "color"
-      },
-      "palette-success-foreground-informative": {
-        "$value": {
-          "$dark": "{foundations.color.color-green-200}",
-          "$light": "{foundations.color.color-green-600}"
         },
         "$type": "color"
       }
@@ -839,20 +825,6 @@
       "palette-opacity-tertiary-border": {
         "$value": "{foundations.opacity.opacity-15}",
         "$type": "number"
-      }
-    },
-    "text": {
-      "palette-text-fontFamily": {
-        "$value": "{foundations.typography.typography-fontFamily-openSans}",
-        "$type": "fontFamily"
-      },
-      "palette-text-fontFamily-heading": {
-        "$value": "{foundations.typography.typography-fontFamily-openSans}",
-        "$type": "fontFamily"
-      },
-      "palette-text-fontFamily-code": {
-        "$value": "{foundations.typography.typography-fontFamily-ptMono}",
-        "$type": "fontFamily"
       }
     }
   },
@@ -1924,15 +1896,11 @@
       }
     },
     "typography": {
-      "typography-fontFamily-openSans": {
+      "typography-fontFamily": {
         "$value": "\"Open Sans\"",
         "$type": "fontFamily"
       },
-      "typography-fontFamily-amplitude": {
-        "$value": "\"Amplitude\"",
-        "$type": "fontFamily"
-      },
-      "typography-fontFamily-ptMono": {
+      "typography-fontFamily-code": {
         "$value": "\"PT Mono\"",
         "$type": "fontFamily"
       },
@@ -2186,7 +2154,7 @@
         "$type": "fontWeight"
       },
       "text-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-fontWeight": {
@@ -2202,7 +2170,7 @@
         "$type": "fontWeight"
       },
       "text-notation-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-notation-fontWeight": {
@@ -2218,7 +2186,7 @@
         "$type": "fontWeight"
       },
       "text-h1-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h1-fontWeight": {
@@ -2234,7 +2202,7 @@
         "$type": "fontWeight"
       },
       "text-h2-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h2-fontWeight": {
@@ -2250,7 +2218,7 @@
         "$type": "fontWeight"
       },
       "text-h3-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h3-fontWeight": {
@@ -2266,7 +2234,7 @@
         "$type": "fontWeight"
       },
       "text-h4-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-h4-fontWeight": {
@@ -2282,7 +2250,7 @@
         "$type": "fontWeight"
       },
       "text-label-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-label-fontWeight": {
@@ -2298,7 +2266,7 @@
         "$type": "fontWeight"
       },
       "text-display1-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-display1-fontWeight": {
@@ -2314,7 +2282,7 @@
         "$type": "fontWeight"
       },
       "text-display2-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-display2-fontWeight": {
@@ -2330,7 +2298,7 @@
         "$type": "fontWeight"
       },
       "text-display3-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-heading}",
+        "$value": "{foundations.typography.typography-fontFamily}",
         "$type": "fontFamily"
       },
       "text-display3-fontWeight": {
@@ -2346,7 +2314,7 @@
         "$type": "fontWeight"
       },
       "text-code-fontFamily": {
-        "$value": "{palette.text.palette-text-fontFamily-code}",
+        "$value": "{foundations.typography.typography-fontFamily-code}",
         "$type": "fontFamily"
       }
     },
