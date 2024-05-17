@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix `DialogContent` spacing
+Remove padding bottom and padding right from `DialogContent`
