@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const { fromDir, fromFile } = require("./getCssVariablesFromDir");
+const { fromDir } = require("./getCssVariablesFromDir");
 const colorFormatSwap = require("./colorFormatSwap");
 
 /* Removes surrounding CSS var('...') function from a token */
@@ -33,6 +33,8 @@ function extractOpacity(color) {
 const jsonTokens = {
   modes: ["$light", "$dark"],
   densities: ["$high", "$medium", "$low", "$touch"],
+  fonts: ["$amplitude", "$openSans"],
+  corners: ["$rounded", "$sharp"],
   palette: {},
   foundations: {},
   characteristics: {},
@@ -347,10 +349,30 @@ function themeToJson() {
     path.resolve(__dirname, "../../css/foundations")
   );
   const characteristicVariables = fromDir(
-    path.resolve(__dirname, "../../css/characteristics"),
-    true
+    path.resolve(__dirname, "../../css/characteristics")
   );
   format({
+    $rounded: {
+      ...paletteVariables.rounded,
+      /* corners are only palette, but adding for safety */
+      ...foundationVariables.rounded,
+      ...characteristicVariables.rounded,
+    },
+    $sharp: {
+      ...paletteVariables.sharp,
+      ...foundationVariables.sharp,
+      ...characteristicVariables.sharp,
+    },
+    $amplitude: {
+      ...paletteVariables.amplitude,
+      ...foundationVariables.amplitude,
+      ...characteristicVariables.amplitude,
+    },
+    $openSans: {
+      ...paletteVariables.openSans,
+      ...foundationVariables.openSans,
+      ...characteristicVariables.openSans,
+    },
     $light: {
       ...paletteVariables.light,
       ...foundationVariables.light,

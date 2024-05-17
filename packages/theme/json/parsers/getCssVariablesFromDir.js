@@ -16,6 +16,14 @@ const lightModeNextRegex =
 const darkModeNextRegex =
   /\.salt-theme-next\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
 const generalThemeNextRegex = /\.salt-theme-next.\{(.*?)\}.*?/s;
+const openSansFontRegex =
+  /\.salt-theme-next\[data-heading-font="Open Sans"\].\{(.*?)\}.*?/s;
+const amplitudeFontRegex =
+  /\.salt-theme-next\[data-heading-font="Amplitude"\].\{(.*?)\}.*?/s;
+const roundedCornerRegex =
+  /\.salt-theme-next\[data-corner="rounded"].\{(.*?)\}.*?/s;
+const sharpCornerRegex =
+  /\.salt-theme-next\[data-corner="sharp"].\{(.*?)\}.*?/s;
 
 function isNonColor(token) {
   const tokenParts = token.split("-");
@@ -41,8 +49,11 @@ function processFile(
     mdVariables,
     ldVariables,
     tdVariables,
-  },
-  nonColors
+    openSansVariables,
+    amplitudeVariables,
+    roundedCornerVariables,
+    sharpCornerVariables,
+  }
 ) {
   // Process CSS files
   const cssContent = fs.readFileSync(filePath, "utf8");
@@ -55,11 +66,19 @@ function processFile(
   let lightContent;
   let darkContent;
   let generalContent;
+  let amplitudeContent;
+  let openSansContent;
+  let roundedCornerContent;
+  let sharpCornerContent;
 
   if (filePath.includes("next")) {
     lightContent = cssContent.match(lightModeNextRegex);
     darkContent = cssContent.match(darkModeNextRegex);
     generalContent = cssContent.match(generalThemeNextRegex);
+    amplitudeContent = cssContent.match(amplitudeFontRegex);
+    openSansContent = cssContent.match(openSansFontRegex);
+    roundedCornerContent = cssContent.match(roundedCornerRegex);
+    sharpCornerContent = cssContent.match(sharpCornerRegex);
   } else {
     lightContent = cssContent.match(lightModeRegex);
     darkContent = cssContent.match(darkModeRegex);
@@ -69,105 +88,84 @@ function processFile(
   if (lightContent) {
     while ((match = cssVariableRegex.exec(lightContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          lightModeVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        lightModeVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      lightModeVariables[variableName] = variableValue;
     }
   }
   if (darkContent) {
     while ((match = cssVariableRegex.exec(darkContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          darkModeVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        darkModeVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      darkModeVariables[variableName] = variableValue;
     }
   }
   if (hdContent) {
     while ((match = cssVariableRegex.exec(hdContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          hdVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        hdVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      hdVariables[variableName] = variableValue;
     }
   }
   if (mdContent) {
     while ((match = cssVariableRegex.exec(mdContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          mdVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        mdVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      mdVariables[variableName] = variableValue;
     }
   }
   if (ldContent) {
     while ((match = cssVariableRegex.exec(ldContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          ldVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        ldVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      ldVariables[variableName] = variableValue;
     }
   }
   if (tdContent) {
     while ((match = cssVariableRegex.exec(tdContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          tdVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        tdVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      tdVariables[variableName] = variableValue;
     }
   }
   if (generalContent) {
     while ((match = cssVariableRegex.exec(generalContent[0])) !== null) {
       const variableName = match[1];
-      if (nonColors) {
-        if (isNonColor(variableName)) {
-          const variableValue = match[2].trim();
-          cssVariables[variableName] = variableValue;
-        }
-      } else {
-        const variableValue = match[2].trim();
-        cssVariables[variableName] = variableValue;
-      }
+      const variableValue = match[2].trim();
+      cssVariables[variableName] = variableValue;
+    }
+  }
+  if (amplitudeContent) {
+    while ((match = cssVariableRegex.exec(amplitudeContent[0])) !== null) {
+      const variableName = match[1];
+      const variableValue = match[2].trim();
+      amplitudeVariables[variableName] = variableValue;
+    }
+  }
+  if (openSansContent) {
+    while ((match = cssVariableRegex.exec(openSansContent[0])) !== null) {
+      const variableName = match[1];
+      const variableValue = match[2].trim();
+      openSansVariables[variableName] = variableValue;
+    }
+  }
+  if (roundedCornerContent) {
+    while ((match = cssVariableRegex.exec(roundedCornerContent[0])) !== null) {
+      const variableName = match[1];
+      const variableValue = match[2].trim();
+      roundedCornerVariables[variableName] = variableValue;
+    }
+  }
+  if (sharpCornerContent) {
+    while ((match = cssVariableRegex.exec(sharpCornerContent[0])) !== null) {
+      const variableName = match[1];
+      const variableValue = match[2].trim();
+      sharpCornerVariables[variableName] = variableValue;
     }
   }
 }
 
 module.exports = {
-  fromDir: function getCssVariablesFromDir(dirPath, nonColors) {
+  fromDir: function getCssVariablesFromDir(dirPath) {
     const cssVariables = {};
     const lightModeVariables = {};
     const darkModeVariables = {};
@@ -175,6 +173,10 @@ module.exports = {
     const mdVariables = {};
     const ldVariables = {};
     const tdVariables = {};
+    const openSansVariables = {};
+    const amplitudeVariables = {};
+    const roundedCornerVariables = {};
+    const sharpCornerVariables = {};
     const files = fs.readdirSync(dirPath);
     const dirFiles = files.map((file) => file.replace(".css", ""));
     files.forEach((file) => {
@@ -189,24 +191,23 @@ module.exports = {
         stats.isFile() &&
         path.extname(file) === ".css" &&
         !dirFiles.includes(`${fileName}-next`) &&
-        fileName !== "fade"
+        fileName !== "fade" // TODO: consider
       ) {
-        processFile(
-          filePath,
-          {
-            cssVariables,
-            lightModeVariables,
-            darkModeVariables,
-            hdVariables,
-            mdVariables,
-            ldVariables,
-            tdVariables,
-          },
-          nonColors
-        );
+        processFile(filePath, {
+          cssVariables,
+          lightModeVariables,
+          darkModeVariables,
+          hdVariables,
+          mdVariables,
+          ldVariables,
+          tdVariables,
+          openSansVariables,
+          amplitudeVariables,
+          roundedCornerVariables,
+          sharpCornerVariables,
+        });
       }
     });
-
     return {
       light: lightModeVariables,
       dark: darkModeVariables,
@@ -215,6 +216,10 @@ module.exports = {
       low: ldVariables,
       touch: tdVariables,
       general: cssVariables,
+      openSans: openSansVariables,
+      amplitude: amplitudeVariables,
+      rounded: roundedCornerVariables,
+      sharp: sharpCornerVariables,
     };
   },
 };

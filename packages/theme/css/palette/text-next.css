@@ -1,7 +1,13 @@
-.salt-theme-next.salt-theme[data-heading-font="Open Sans"] {
+.salt-theme-next {
+  /* these get missed by parser if not included */
+  --salt-palette-text-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
+}
+
+.salt-theme.salt-theme-next[data-heading-font="Open Sans"] {
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
 }
 
-.salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
+.salt-theme.salt-theme-next[data-heading-font="Amplitude"] {
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-amplitude);
 }

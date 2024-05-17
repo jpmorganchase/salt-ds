@@ -172,6 +172,8 @@ function toCSS(themeJson) {
 
   // TODO: characteristics
 
+  // TODO: fonts and corners
+
   let CSS = "";
 
   for (const c of Object.entries(classes)) {
