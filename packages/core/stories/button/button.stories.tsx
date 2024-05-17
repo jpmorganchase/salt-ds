@@ -162,11 +162,9 @@ export const WithIcon: StoryFn<typeof Button> = () => {
 export const FullWidth: StoryFn<typeof Button> = () => {
   return (
     <StackLayout style={{ width: "98vw" }}>
-      <Button variant="primary">Primary FullWidth Button</Button>
-      <Button variant="secondary">Secondary FullWidth Button</Button>
-      <Button variant="cta">
-        Send <SendIcon aria-hidden />
-      </Button>
+      <Button variant="primary">Primary full width Button</Button>
+      <Button variant="secondary">Secondary full width Button</Button>
+      <Button variant="cta">Cta full width button</Button>
     </StackLayout>
   );
 };
