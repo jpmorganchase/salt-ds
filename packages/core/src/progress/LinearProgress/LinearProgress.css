@@ -70,7 +70,7 @@
 
 @keyframes indeterminate-progress-bar {
   0% {
-    left: -35%;
+    left: -90%;
     right: 100%;
   }
   60% {
