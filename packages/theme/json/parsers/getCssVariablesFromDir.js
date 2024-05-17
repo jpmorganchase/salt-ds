@@ -179,19 +179,20 @@ module.exports = {
     const sharpCornerVariables = {};
     const files = fs.readdirSync(dirPath);
     const dirFiles = files.map((file) => file.replace(".css", ""));
+    const isFoundationsDir = dirPath.includes("foundations");
     files.forEach((file) => {
       const filePath = path.join(dirPath, file);
       const fileName = file.replace(".css", "");
-      const stats = fs.statSync(filePath);
 
+      const stats = fs.statSync(filePath);
       if (stats.isDirectory()) {
         // Recursively process subdirectories
         Object.assign(cssVariables, getCssVariablesFromDir(filePath));
       } else if (
         stats.isFile() &&
         path.extname(file) === ".css" &&
-        !dirFiles.includes(`${fileName}-next`) &&
-        fileName !== "fade" // TODO: consider
+        ((isFoundationsDir && !dirFiles.includes(`${fileName}-next`)) ||
+          (!isFoundationsDir && fileName.includes("-next")))
       ) {
         processFile(filePath, {
           cssVariables,
