@@ -173,18 +173,33 @@ describe("GIVEN a DatePicker", () => {
         />
       );
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findAllByRole("combobox")
+        .eq(0)
+        .should("have.text", formatDate(testDate, { month: "short" }));
+      cy.findAllByRole("combobox")
+        .eq(2)
+        .should(
+          "have.text",
+          formatDate(testDate.add({ months: 1 }), { month: "short" })
+        );
       cy.findByRole("button", {
         name: formatDay(testDate.add({ months: 1, days: 1 })),
       }).should("exist");
       cy.findByRole("button", {
         name: formatDay(testDate.add({ months: 1, days: 1 })),
       }).realClick();
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).should("exist");
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).should("exist");
+      cy.findAllByRole("combobox")
+        .eq(0)
+        .should(
+          "have.text",
+          formatDate(testDate.add({ months: 1 }), { month: "short" })
+        );
+      cy.findAllByRole("combobox")
+        .eq(2)
+        .should(
+          "have.text",
+          formatDate(testDate.add({ months: 2 }), { month: "short" })
+        );
     });
   });
 });
