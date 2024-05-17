@@ -56,7 +56,7 @@ export const WithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
   return (
     <Checkbox
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>Bonds</Text>
           <Text color="secondary">Debt securities</Text>
         </StackLayout>
@@ -190,7 +190,7 @@ export const HorizontalGroupWithSecondaryLabel: StoryFn<
       <Checkbox
         value="alternatives"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Alternatives</Text>
             <Text color="secondary">Other investments</Text>
           </StackLayout>
@@ -199,7 +199,7 @@ export const HorizontalGroupWithSecondaryLabel: StoryFn<
       <Checkbox
         value="equities"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Equities</Text>
             <Text color="secondary">Company shares</Text>
           </StackLayout>
@@ -208,7 +208,7 @@ export const HorizontalGroupWithSecondaryLabel: StoryFn<
       <Checkbox
         value="fixed income"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Fixed income</Text>
             <Text color="secondary">Interest-paying</Text>
           </StackLayout>
@@ -217,7 +217,7 @@ export const HorizontalGroupWithSecondaryLabel: StoryFn<
       <Checkbox
         value="bonds"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Bonds</Text>
             <Text color="secondary">Debt securities</Text>
           </StackLayout>
@@ -233,7 +233,7 @@ export const VerticalGroupWithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
       <Checkbox
         value="alternatives"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Alternatives</Text>
             <Text color="secondary">Other investments</Text>
           </StackLayout>
@@ -242,7 +242,7 @@ export const VerticalGroupWithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
       <Checkbox
         value="equities"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Equities</Text>
             <Text color="secondary">Company shares</Text>
           </StackLayout>
@@ -251,7 +251,7 @@ export const VerticalGroupWithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
       <Checkbox
         value="fixed income"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Fixed income</Text>
             <Text color="secondary">Interest-paying</Text>
           </StackLayout>
@@ -260,7 +260,7 @@ export const VerticalGroupWithSecondaryLabel: StoryFn<typeof Checkbox> = () => {
       <Checkbox
         value="bonds"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Bonds</Text>
             <Text color="secondary">Debt securities</Text>
           </StackLayout>
@@ -281,7 +281,7 @@ export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
         key="option1"
         value="alternatives"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Alternatives</Text>
             <Text color="secondary">Other investments</Text>
           </StackLayout>
@@ -291,7 +291,7 @@ export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
         key="option2"
         value="equities"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Equities</Text>
             <Text color="secondary">Company shares</Text>
           </StackLayout>
@@ -302,7 +302,7 @@ export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
         key="option3"
         value="fixed income"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Fixed income</Text>
             <Text color="secondary">Interest-paying</Text>
           </StackLayout>
@@ -313,7 +313,7 @@ export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
         key="option4"
         value="bonds"
         label={
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Bonds</Text>
             <Text color="secondary">Debt securities</Text>
           </StackLayout>

@@ -24,7 +24,7 @@ export const WithSecondaryLabel = () => {
   return (
     <RadioButton
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>Bonds</Text>
           <Text color="secondary">Debt securities</Text>
         </StackLayout>
@@ -91,7 +91,7 @@ export const VerticalGroupWithSecondaryLabel = () => (
       key="option1"
       value="option1"
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>NAMR</Text>
           <Text color="secondary">North America</Text>
         </StackLayout>
@@ -101,7 +101,7 @@ export const VerticalGroupWithSecondaryLabel = () => (
       key="option2"
       value="option2"
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>APAC</Text>
           <Text color="secondary">Asia–Pacific</Text>
         </StackLayout>
@@ -111,7 +111,7 @@ export const VerticalGroupWithSecondaryLabel = () => (
       key="option3"
       value="option3"
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>EMEA</Text>
           <Text color="secondary">Europe, Middle East, and Africa</Text>
         </StackLayout>
@@ -126,7 +126,7 @@ export const HorizontalGroupWithSecondaryLabel = () => (
       key="option1"
       value="option1"
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>NAMR</Text>
           <Text color="secondary">North America</Text>
         </StackLayout>
@@ -136,7 +136,7 @@ export const HorizontalGroupWithSecondaryLabel = () => (
       key="option2"
       value="option2"
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>APAC</Text>
           <Text color="secondary">Asia–Pacific</Text>
         </StackLayout>
@@ -146,7 +146,7 @@ export const HorizontalGroupWithSecondaryLabel = () => (
       key="option3"
       value="option3"
       label={
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>EMEA</Text>
           <Text color="secondary">Europe, Middle East, and Africa</Text>
         </StackLayout>
