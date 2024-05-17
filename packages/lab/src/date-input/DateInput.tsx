@@ -359,8 +359,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
                   ? emptyReadOnlyMarker
                   : endDateStringValue
               }
-              {...restDateInputProps}
               required={isRequired}
+              {...restDateInputProps}
             />
           </>
         )}

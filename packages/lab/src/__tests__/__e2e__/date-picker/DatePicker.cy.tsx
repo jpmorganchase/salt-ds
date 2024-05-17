@@ -47,11 +47,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("textbox").should("have.value", formatInput(testDate));
     });
     it("THEN should format a valid date with a different format on blur", () => {
-      const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        // React 16 backwards compatibility
-        event.persist();
-      };
-      cy.mount(<Default defaultStartDate={testDate} onChange={onChange} />);
+      cy.mount(<Default defaultStartDate={testDate} />);
       cy.findByRole("textbox").click().clear().type(testInput);
       cy.findByRole("textbox").blur();
       cy.findByRole("textbox").should(
@@ -64,6 +60,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("textbox").click().clear().type("date");
       cy.findByRole("textbox").blur();
       cy.findByRole("textbox").should("have.value", "date");
+      cy.findByRole("img", { name: "error" }).should("exist");
     });
     it("THEN clicking the calendar button should open the panel", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
@@ -81,7 +78,7 @@ describe("GIVEN a DatePicker", () => {
       }).realClick();
       cy.findByRole("application").should("not.exist");
     });
-    it("THEN should not open the calendar when disabled", () => {
+    it("THEN open button should be disabled when component is disabled", () => {
       cy.mount(<Default defaultStartDate={testDate} disabled />);
       cy.findByRole("button").should("be.disabled");
     });
@@ -128,7 +125,7 @@ describe("GIVEN a DatePicker", () => {
         .should("have.value", formatInput(testDate.add({ months: 1 })));
     });
 
-    it("THEN it should allow selecting start and end date trough input", () => {
+    it("THEN it should allow selecting start and end date through input", () => {
       cy.mount(<Range />);
       cy.findAllByRole("textbox").eq(0).clear().click().type(testInput);
       cy.findAllByRole("textbox").eq(1).click().type(rangeTestInput);
@@ -142,6 +139,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findAllByRole("textbox").eq(0).click().type("date");
       cy.findAllByRole("textbox").eq(0).blur();
       cy.findAllByRole("textbox").eq(0).should("have.value", "date");
+      cy.findByRole("img", { name: "error" }).should("exist");
     });
     it("THEN it should not close the calendar when a start date is selected", () => {
       cy.mount(<Range />);

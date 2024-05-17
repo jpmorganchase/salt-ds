@@ -8,7 +8,7 @@ const { Default } = composedStories;
 describe("GIVEN a DateInput", () => {
   checkAccessibility(composedStories);
 
-  describe("WHEN mounted the controlled component", () => {
+  describe("WHEN mounted the component", () => {
     describe("WHEN the input is updated", () => {
       it("THEN should call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
