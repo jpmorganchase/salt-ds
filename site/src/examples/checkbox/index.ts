@@ -10,4 +10,4 @@ export * from "./NoWrapGroup";
 export * from "./WrapGroup";
 export * from "./Indeterminate";
 export * from "./WithFormField";
-export * from "./WithSecondaryLabel";
+export * from "./WithDescription";
