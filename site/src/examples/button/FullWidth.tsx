@@ -10,7 +10,7 @@ export const FullWidth = (): ReactElement => (
       Secondary full width Button
     </Button>
     <Button variant="cta" style={{ width: "100%" }}>
-      Cta full width button
+      Cta full width Button
     </Button>
   </StackLayout>
 );
