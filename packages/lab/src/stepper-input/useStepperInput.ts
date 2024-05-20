@@ -204,11 +204,10 @@ export const useStepperInput = (
 
   const getButtonProps = (direction: string) => ({
     "aria-hidden": true,
-    "data-testid": `${direction}-button`,
     tabIndex: -1,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
       handleButtonMouseDown(event, direction),
-    onMouseUp: () => handleButtonMouseUp(),
+    onMouseUp: handleButtonMouseUp,
   });
 
   const getInputProps = (

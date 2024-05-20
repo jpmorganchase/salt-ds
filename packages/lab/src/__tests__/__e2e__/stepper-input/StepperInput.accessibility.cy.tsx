@@ -41,11 +41,11 @@ describe("Stepper Input - Accessibility", () => {
 
   it("sets the correct default ARIA attributes on the increment/decrement buttons", () => {
     cy.mount(<StepperInput />);
-    cy.findByTestId("increment-button")
+    cy.findByLabelText("increment value")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
 
-    cy.findByTestId("decrement-button")
+    cy.findByLabelText("decrement value")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
   });

@@ -19,16 +19,15 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       />
       <StepperInput
         decimalPlaces={3}
-        defaultValue={0.2}
+        defaultValue={-5}
         max={10}
         min={-5}
         step={1}
         textAlign={"center"}
       />
-
       <StepperInput
         decimalPlaces={1}
-        defaultValue={0.88}
+        defaultValue={5}
         max={5}
         min={0}
         step={1}

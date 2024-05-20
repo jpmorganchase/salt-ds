@@ -13,7 +13,7 @@ describe("Stepper Input", () => {
   it("increments the default value on button click", () => {
     cy.mount(<StepperInput />);
 
-    cy.findByTestId("increment-button").realClick({ clickCount: 2 });
+    cy.findByLabelText("increment value").realClick({ clickCount: 2 });
 
     cy.findByRole("spinbutton").should("have.value", "2");
   });
@@ -21,7 +21,7 @@ describe("Stepper Input", () => {
   it("decrements the default value on button click", () => {
     cy.mount(<StepperInput />);
 
-    cy.findByTestId("decrement-button").realClick({ clickCount: 2 });
+    cy.findByLabelText("decrement value").realClick({ clickCount: 2 });
 
     cy.findByRole("spinbutton").should("have.value", "-2");
   });
@@ -32,7 +32,7 @@ describe("Stepper Input", () => {
     cy.findByRole("spinbutton").clear();
     cy.findByRole("spinbutton").should("have.value", "");
 
-    cy.findByTestId("increment-button").realClick();
+    cy.findByLabelText("increment value").realClick();
 
     cy.findByRole("spinbutton").should("have.value", "1");
   });
@@ -43,7 +43,7 @@ describe("Stepper Input", () => {
     cy.findByRole("spinbutton").clear();
     cy.findByRole("spinbutton").should("have.value", "");
 
-    cy.findByTestId("decrement-button").realClick();
+    cy.findByLabelText("decrement value").realClick();
 
     cy.findByRole("spinbutton").should("have.value", "-1");
   });
@@ -56,7 +56,7 @@ describe("Stepper Input", () => {
     cy.realType("-");
     cy.findByRole("spinbutton").should("have.value", "-");
 
-    cy.findByTestId("increment-button").realClick();
+    cy.findByLabelText("increment value").realClick();
     cy.findByRole("spinbutton").should("have.value", "1");
   });
 
@@ -68,7 +68,7 @@ describe("Stepper Input", () => {
     cy.realType("-");
     cy.findByRole("spinbutton").should("have.value", "-");
 
-    cy.findByTestId("decrement-button").realClick();
+    cy.findByLabelText("decrement value").realClick();
     cy.findByRole("spinbutton").should("have.value", "-1");
   });
 
@@ -80,7 +80,7 @@ describe("Stepper Input", () => {
   it("increments by specified `step` value", () => {
     cy.mount(<StepperInput defaultValue={10} step={10} />);
 
-    cy.findByTestId("increment-button").realClick();
+    cy.findByLabelText("increment value").realClick();
     cy.findByRole("spinbutton").should("have.value", "20");
   });
 
@@ -89,36 +89,36 @@ describe("Stepper Input", () => {
       <StepperInput decimalPlaces={2} defaultValue={3.14} step={0.01} />
     );
 
-    cy.findByTestId("increment-button").realClick();
+    cy.findByLabelText("increment value").realClick();
     cy.findByRole("spinbutton").should("have.value", "3.15");
   });
 
   it("decrements by specified `step` value", () => {
     cy.mount(<StepperInput defaultValue={0} step={10} />);
 
-    cy.findByTestId("decrement-button").realClick();
+    cy.findByLabelText("decrement value").realClick();
     cy.findByRole("spinbutton").should("have.value", "-10");
   });
 
   it("decrements by specified floating point `step` value", () => {
     cy.mount(<StepperInput decimalPlaces={2} defaultValue={0.0} step={0.01} />);
 
-    cy.findByTestId("decrement-button").realClick();
+    cy.findByLabelText("decrement value").realClick();
     cy.findByRole("spinbutton").should("have.value", "-0.01");
   });
 
   it("disables the increment button at `max`", () => {
     cy.mount(<StepperInput defaultValue={9} max={10} />);
 
-    cy.findByTestId("increment-button").realClick();
-    cy.findByTestId("increment-button").should("be.disabled");
+    cy.findByLabelText("increment value").realClick();
+    cy.findByLabelText("increment value").should("be.disabled");
   });
 
   it("disables the decrement button at `min`", () => {
     cy.mount(<StepperInput defaultValue={1} min={0} />);
 
-    cy.findByTestId("decrement-button").realClick();
-    cy.findByTestId("decrement-button").should("be.disabled");
+    cy.findByLabelText("decrement value").realClick();
+    cy.findByLabelText("decrement value").should("be.disabled");
   });
 
   it("displays value with correct number of decimal places on blur", () => {
@@ -136,7 +136,7 @@ describe("Stepper Input", () => {
 
     cy.mount(<StepperInput defaultValue={16} onChange={changeSpy} />);
 
-    cy.findByTestId("decrement-button").realClick();
+    cy.findByLabelText("decrement value").realClick();
     cy.get("@changeSpy").should("have.been.calledWith", "15");
   });
 
@@ -152,7 +152,7 @@ describe("Stepper Input", () => {
       />
     );
 
-    cy.findByTestId("increment-button").realClick();
+    cy.findByLabelText("increment value").realClick();
     cy.get("@changeSpy").should("have.been.calledWith", "-109.44");
   });
 
@@ -184,9 +184,9 @@ describe("Stepper Input", () => {
       />
     );
 
-    cy.findByTestId("increment-button").realClick();
+    cy.findByLabelText("increment value").realClick();
 
-    cy.findByTestId("increment-button").should("be.disabled");
+    cy.findByLabelText("increment value").should("be.disabled");
     cy.get("@changeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
       "have.value",
@@ -204,9 +204,9 @@ describe("Stepper Input", () => {
       />
     );
 
-    cy.findByTestId("decrement-button").realClick();
+    cy.findByLabelText("decrement value").realClick();
 
-    cy.findByTestId("decrement-button").should("be.disabled");
+    cy.findByLabelText("decrement value").should("be.disabled");
     cy.get("@changeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
       "have.value",

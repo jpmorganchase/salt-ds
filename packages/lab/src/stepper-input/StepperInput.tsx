@@ -100,7 +100,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         {!hideButtons && (
           <div className={withBaseName("buttonContainer")}>
             <Button
-              aria-label="increment-value"
+              aria-label="increment value"
               className={withBaseName("stepperButton")}
               disabled={isAtMax()}
               {...getButtonProps("increment")}
@@ -108,7 +108,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
               <TriangleUpIcon aria-hidden />
             </Button>
             <Button
-              aria-label="decrement-value"
+              aria-label="decrement value"
               className={withBaseName("stepperButton")}
               disabled={isAtMin()}
               {...getButtonProps("decrement")}
