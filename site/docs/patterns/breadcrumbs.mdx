@@ -1,0 +1,146 @@
+---
+title: Breadcrumbs
+layout: DetailPattern
+aliases:
+  - /salt/patterns/Breadcrumbs
+data:
+  components: ["Button", "Icon", "Link", "Text"]
+---
+
+Breadcrumbs are a secondary navigation pattern that helps users keep track of their current location within a hierarchy. It provides a space-efficient means of allowing quick navigation to previous levels. 
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-hero-shot.png"
+  alt="Example showing breadcrumbs."
+  border
+/>
+
+## When to use
+
+Use the pattern when the user navigates through related pages, or drills down into tables or charts. It provides further navigation relative to a users workflow/selection within their current area, page or widget. They are especially useful for identifying a location in a hierarchy when the user lands on a page via deep-linking from search or an external source. 
+
+- **Default action:** Paste.
+- **Supplementary actions:** Keep source formatting, Match destination formatting, Paste text only.
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-when.png"
+  alt="Low-fi header paired with Breadcrumbs."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+- Use breadcrumbs to complement the application's main navigation—never to replace it.
+- Don't show breadcrumbs when there is only one level in a hierarchy.
+</ExampleContainer>
+
+## How to build
+
+### Anatomy
+
+Breadcrumbs contain:
+
+1. **Breadcrumb:** Previous levels displayed as links icons separating them.
+2. **Current level:** A text label showing the user’s current location.
+3. **SupOverflow menu:** Use an overflow menu to show collapsed breadcrumbs.  
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-anatomy.png"
+  alt="Breadcrumbs anatomy"
+  border
+/>
+
+### Layout
+
+- Use the [`Link`](/salt/components/link) component as the breadcrumb.
+- Use the chevron-right [`Icon`](/salt/components/icon) as the separators.
+- Use the icon only menu button for the overflow menu trigger. 
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-layout-1.png"
+  alt="layout"
+  border
+/>
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-layout-2.png"
+  alt="layout"
+  border
+/>
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-layout-3.png"
+  alt="layout"
+  border
+/>
+
+## Collapsed breadcrumbs
+
+Breadcrumbs can be collapsed to save space or hide lower priority levels (e.g. only displaying Home and the current level). The hidden levels can be revealed in 2 different ways:
+
+### Overflow menu
+
+Use an overflow menu when there is not enough horizontal space available, the order of the menu items should match the hierarchy of the levels.
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/breadcrumbs/breadcrumbs-collapsed-overflow-menu.png",
+      alt: "Example showing collapsed breadcrumbs with an overflow menu.",
+    },
+    {
+      src: "/img/patterns/breadcrumbs/breadcrumbs-collapsed-overflow-menu-expanded.png",
+      alt: "Example showing collapsed breadcrumbs with an overflow menu active.",
+    },
+  ]}
+  label="Show overflow menu"
+/>
+
+
+
+### Expansion
+
+Alternatively (if there is sufficient horizontal space), use an use an expansion button to reveal all levels. Showing the levels inline can make the hierarchy of the levels more visible. 
+
+<ImageSwitcher
+  images={[
+    {
+      src: "/img/patterns/breadcrumbs/breadcrumbs-collapsed-expansion.png",
+      alt: "Example showing collapsed breadcrumbs with expansion behavior.",
+    },
+    {
+      src: "/img/patterns/breadcrumbs/breadcrumbs-collapsed-expansion-expanded.png",
+      alt: "Example showing collapsed breadcrumbs with expansion behavior.",
+    },
+  ]}
+  label="Show expansion"
+/>
+
+## Wrapped breadcrumbs
+
+Wrap breadcrumbs when there is a need to keep the breadcrumb trail visible in the app, breadcrumbs can wrap onto subsequent lines. The breadcrumb and its separator should be on the same line.
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-wrapped.png"
+  alt="layout"
+  border
+/>
+
+
+## Shortened/customized breadcrumbs
+
+In some cases, you might want to hide breadcrumbs to make the path shorter or change breadcrumb labels to provide more context and help users understand the current task.
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-shortened.png"
+  alt="layout"
+  border
+/>
+
+<Diagram
+  src="/img/patterns/breadcrumbs/breadcrumbs-customized.png"
+  alt="layout"
+  border
+/>
+
+
+:fragment{src="./fragments/feedback.mdx"}
