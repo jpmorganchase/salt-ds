@@ -7,15 +7,10 @@ export const WrapGroup = (): ReactElement => (
       width: 250,
     }}
   >
-    <CheckboxGroup name="fx" direction={"horizontal"} wrap={true}>
-      <Checkbox key="option1" label="Alternatives" value="alternatives" />
-      <Checkbox key="option2" label="Equities" value="equities" />
-      <Checkbox
-        disabled
-        key="option3"
-        label="Fixed income"
-        value="fixed income"
-      />
+    <CheckboxGroup name="fx" direction="horizontal" wrap>
+      <Checkbox label="Alternatives" value="alternatives" />
+      <Checkbox label="Equities" value="equities" />
+      <Checkbox disabled label="Fixed income" value="fixed income" />
     </CheckboxGroup>
   </div>
 );

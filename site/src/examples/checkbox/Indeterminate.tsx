@@ -21,6 +21,7 @@ export const Indeterminate = (): ReactElement => {
       checked={checkboxState.checked}
       indeterminate={checkboxState.indeterminate}
       label="Equities"
+      value="equities"
       onChange={handleChange}
     />
   );
