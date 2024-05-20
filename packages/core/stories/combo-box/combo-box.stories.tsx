@@ -913,15 +913,18 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
       style={{ width: "266px" }}
     >
       {filteredOptions.length > 1 && (
-        <div>
+        <div
+          style={{
+            position: "sticky",
+            top: 0,
+            zIndex: 9,
+            background: !selected.includes(allSelectedOptionValue)
+              ? "var(--salt-color-white)"
+              : "",
+          }}
+        >
           <Option
             style={{
-              position: "sticky",
-              top: 0,
-              zIndex: 9,
-              background: !selected.includes(allSelectedOptionValue)
-                ? "var(--salt-color-white)"
-                : "",
               borderBottom: "solid",
               borderWidth: "1px",
               borderColor:

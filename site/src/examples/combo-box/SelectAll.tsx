@@ -1,17 +1,21 @@
-import { ReactElement, useState } from "react";
-import { Dropdown, Option, DropdownProps } from "@salt-ds/core";
+import { ChangeEvent, ReactElement, useState, SyntheticEvent } from "react";
+import { ComboBox, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const SelectAll = (): ReactElement => {
+  const [value, setValue] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
   const allSelectedOptionValue = "all";
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
 
-  const handleSelectionChange: DropdownProps["onSelectionChange"] = (
-    event,
-    newSelected
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
   ) => {
     let newOptionsSelected = [...newSelected];
-
     //case: if select all is previously selected but any option is unselected, then unselect the select all checkbox
     if (
       selected.includes(allSelectedOptionValue) &&
@@ -44,51 +48,54 @@ export const SelectAll = (): ReactElement => {
     }
 
     setSelected(newOptionsSelected);
+
+    setValue("");
   };
 
+  const filteredOptions = shortColorData.filter((data) =>
+    data.toLowerCase().includes(value.trim().toLowerCase())
+  );
+
   return (
-    <Dropdown
-      style={{ width: "266px" }}
-      selected={selected}
-      value={
-        selected.length < 2
-          ? selected[0]
-          : selected.includes("all")
-          ? "All Selected"
-          : `${selected.length} items selected`
-      }
-      onSelectionChange={handleSelectionChange}
+    <ComboBox
       multiselect
+      selected={selected}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      style={{ width: "266px" }}
     >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-          background: !selected.includes(allSelectedOptionValue)
-            ? "var(--salt-color-white)"
-            : "",
-        }}
-      >
-        <Option
+      {filteredOptions.length > 1 && (
+        <div
           style={{
-            borderBottom: "solid",
-            borderWidth: "1px",
-            borderColor:
-              selected.includes(shortColorData[0]) ||
-              selected.includes(allSelectedOptionValue)
-                ? "transparent"
-                : "var(--salt-separable-tertiary-borderColor)",
+            position: "sticky",
+            top: 0,
+            zIndex: 9,
+            background: !selected.includes(allSelectedOptionValue)
+              ? "var(--salt-color-white)"
+              : "",
           }}
-          value={allSelectedOptionValue}
-          key={allSelectedOptionValue}
         >
-          Select All
-        </Option>
-      </div>
-      {shortColorData.map((state) => (
+          <Option
+            style={{
+              borderBottom: "solid",
+              borderWidth: "1px",
+              borderColor:
+                selected.includes(filteredOptions[0]) ||
+                selected.includes(allSelectedOptionValue)
+                  ? "transparent"
+                  : "var(--salt-separable-tertiary-borderColor)",
+            }}
+            value={"all"}
+            key={"all"}
+          >
+            Select All
+          </Option>
+        </div>
+      )}
+      {filteredOptions.map((state) => (
         <Option value={state} key={state} />
       ))}
-    </Dropdown>
+    </ComboBox>
   );
 };
