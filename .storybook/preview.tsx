@@ -20,7 +20,6 @@ import { ComponentProps } from "react";
 import { withTheme } from "docs/decorators/withTheme";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
-import { withStrictMode } from "docs/decorators/withStrictMode";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { withDateMock } from "docs/decorators/withDateMock";
 import { SaltProvider } from "@salt-ds/core";
@@ -88,15 +87,6 @@ export const globalTypes: GlobalTypes = {
     toolbar: {
       title: "Text Spacing",
       items: ["disable", "enable"],
-    },
-  },
-  strictMode: {
-    name: "Strict Mode",
-    description: "Enables React's Strict Mode",
-    defaultValue: "enable",
-    toolbar: {
-      items: ["disable", "enable"],
-      title: "Strict Mode",
     },
   },
   scaffold: {
@@ -211,7 +201,6 @@ export const decorators = [
   withResponsiveWrapper,
   withTheme,
   WithTextSpacingWrapper,
-  withStrictMode,
   withDateMock,
 ];
 
