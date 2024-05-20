@@ -204,6 +204,8 @@ export const useStepperInput = (
 
   const getButtonProps = (direction: string) => ({
     "aria-hidden": true,
+    disabled:
+      props.disabled || (direction === "increment" ? isAtMax() : isAtMin()),
     tabIndex: -1,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
       handleButtonMouseDown(event, direction),
@@ -246,7 +248,5 @@ export const useStepperInput = (
     getButtonProps,
     getInputProps,
     incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
-    isAtMax,
-    isAtMin,
   };
 };

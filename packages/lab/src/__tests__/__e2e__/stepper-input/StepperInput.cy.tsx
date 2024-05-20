@@ -237,4 +237,52 @@ describe("Stepper Input", () => {
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "-5.800");
   });
+
+  it("increments the value on arrow up key press", () => {
+    cy.mount(<StepperInput />);
+
+    cy.findByRole("spinbutton").focus();
+    cy.realPress("ArrowUp");
+
+    cy.findByRole("spinbutton").should("have.value", "1");
+  });
+
+  it("decrements the value on arrow down key press", () => {
+    cy.mount(<StepperInput />);
+
+    cy.findByRole("spinbutton").focus();
+    cy.realPress("ArrowDown");
+
+    cy.findByRole("spinbutton").should("have.value", "-1");
+  });
+
+  it("is disabled when the `disabled` prop is true", () => {
+    cy.mount(<StepperInput disabled />);
+
+    cy.findByRole("spinbutton").should("be.disabled");
+    cy.findByLabelText("increment value").should("be.disabled");
+    cy.findByLabelText("decrement value").should("be.disabled");
+  });
+
+  it("is controlled when the `value` prop is provided", () => {
+    cy.mount(<StepperInput value={5} />);
+
+    cy.findByRole("spinbutton").should("have.value", "5");
+
+    cy.findByLabelText("increment value").realClick();
+    cy.findByRole("spinbutton").should("have.value", "5");
+
+    cy.findByLabelText("decrement value").realClick();
+    cy.findByRole("spinbutton").should("have.value", "5");
+  });
+
+  it("sanitizes input to only allow numbers, decimal points, and plus/minus symbols", () => {
+    cy.mount(<StepperInput />);
+
+    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").clear();
+    cy.realType("abc-12.3.+-def");
+
+    cy.findByRole("spinbutton").should("have.value", "-12.3");
+  });
 });
