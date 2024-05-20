@@ -10,8 +10,8 @@ data:
 
 ## Best practices
 
-- Wrap `DateInput` in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
-- The component clips text that extends beyond its visible area. All states have the same behavior—default, read-only and disabled—whether or not the input has focus. To view the text in its entirety, the user can traverse the characters using the cursor.
+- Clearly indicate dates that can’t be selected, e.g., weekend, non-trading or other blocked days, if relevant to your use case.
+- Consider showing date options in a Dropdown, instead of a Date Picker, if the date or range is pre-determined and can’t be specified by the user.
 
 ## Keyboard interactions
 
@@ -20,23 +20,28 @@ data:
 
     - If focus is above the input, Tab moves focus onto the input and highlights the text. If the input area is empty, Tab displays a text cursor in the input area.
     - If the input is disabled, Tab skips the input.
-    - If the input has focus, Tab moves focus out of the input, to next focusable component in the tab order and formats the date.
+    - If the input has focus, Tab moves focus to the calendar button, if there is a valid date in a wrong format, it formats the date.
+    - If focus is on the calendar button and the panel is open, Tab moves focus to the selected day, current day or first day of the month.
+    - If focus is within the panel, Tab moves focus to the next focusable navigation element in the calendar.
 
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Shift + Tab">
 
-    If focused, Shift + Tab moves focus out of the component to the previous component in the tab order.
+    - If focus is on the input, Shift + Tab moves focus out of the component to the previous component in the tab order.
+    - If focus is on the calendar button, Shift + Tab moves focus into the input.
+    - If focus is within the panel, Shift + Tab  moves focus to the last focusable navigation element in the calendar.
 
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Enter">
 
-    If an interactive adornment, e.g., a button, has focus, Tab activates the element.
+    - If focus is on the button Enter toggles the calendar.
+    - If focus is on the input, Enter formats the input text as date.
 
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Space">
 
     - When the input area has focus, Space inserts a character at the position of the text cursor.
-    - If an interactive adornment, e.g., a button, has focus, Space activates the element.
+    - If the calendar button has focus, Space toggles the calendar.
 
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Right Arrow">

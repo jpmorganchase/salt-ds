@@ -1,5 +1,10 @@
 import { ChangeEventHandler, useState } from "react";
-import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
+import {
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -15,9 +20,23 @@ export const Checked = () => {
   return <RadioButton label="Subscribe" value="subscribe" checked />;
 };
 
+export const WithDescription = () => {
+  return (
+    <RadioButton
+      value="bonds"
+      label={
+        <StackLayout gap={0.5} align="start">
+          <Text>Bonds</Text>
+          <Text color="secondary">Debt securities</Text>
+        </StackLayout>
+      }
+    />
+  );
+};
+
 export const Disabled = () => {
   return (
-    <RadioButtonGroup disabled>
+    <RadioButtonGroup name="region" disabled>
       <RadioButton label="Validate with email" value="email" />
       <RadioButton label="Validate with text message" value="text" checked />
     </RadioButtonGroup>
@@ -26,7 +45,7 @@ export const Disabled = () => {
 
 export const Readonly = () => {
   return (
-    <RadioButtonGroup readOnly>
+    <RadioButtonGroup name="region" readOnly>
       <RadioButton label="Validate with email" value="email" />
       <RadioButton label="Validate with text message" value="text" checked />
     </RadioButtonGroup>
@@ -35,7 +54,7 @@ export const Readonly = () => {
 
 export const Error = () => {
   return (
-    <RadioButtonGroup validationStatus="error">
+    <RadioButtonGroup name="region" validationStatus="error">
       <RadioButton label="Error" value="Error-unchecked" />
       <RadioButton label="Error" value="Error-checked" checked />
     </RadioButtonGroup>
@@ -44,7 +63,7 @@ export const Error = () => {
 
 export const Warning = () => {
   return (
-    <RadioButtonGroup validationStatus="warning">
+    <RadioButtonGroup name="region" validationStatus="warning">
       <RadioButton label="Warning" value="Warning-unchecked" />
       <RadioButton label="Warning" value="Warning-checked" checked />
     </RadioButtonGroup>
@@ -52,20 +71,57 @@ export const Warning = () => {
 };
 
 export const VerticalGroup = () => (
-  <RadioButtonGroup>
-    <RadioButton key="option1" label="NAMR" value="option1" />
-    <RadioButton key="option2" label="APAC" value="option2" />
-    <RadioButton key="option3" label="EMEA" value="option3" />
+  <RadioButtonGroup name="region">
+    <RadioButton label="NAMR" value="namr" />
+    <RadioButton label="APAC" value="apac" />
+    <RadioButton label="EMEA" value="emea" />
   </RadioButtonGroup>
 );
 
 export const HorizontalGroup = () => (
-  <RadioButtonGroup direction={"horizontal"}>
-    <RadioButton key="option1" label="NAMR" value="option1" />
-    <RadioButton key="option2" label="APAC" value="option2" />
-    <RadioButton key="option3" label="EMEA" value="option3" />
+  <RadioButtonGroup name="region" direction="horizontal">
+    <RadioButton label="NAMR" value="namr" />
+    <RadioButton label="APAC" value="apac" />
+    <RadioButton label="EMEA" value="emea" />
   </RadioButtonGroup>
 );
+
+const GroupWithDescriptions: StoryFn<typeof RadioButtonGroup> = (args) => (
+  <RadioButtonGroup name="region" {...args}>
+    <RadioButton
+      value="namr"
+      label={
+        <StackLayout gap={0.5} align="start">
+          <Text>NAMR</Text>
+          <Text color="secondary">North America</Text>
+        </StackLayout>
+      }
+    />
+    <RadioButton
+      value="apac"
+      label={
+        <StackLayout gap={0.5} align="start">
+          <Text>APAC</Text>
+          <Text color="secondary">Asia–Pacific</Text>
+        </StackLayout>
+      }
+    />
+    <RadioButton
+      value="emea"
+      label={
+        <StackLayout gap={0.5} align="start">
+          <Text>EMEA</Text>
+          <Text color="secondary">Europe, Middle East, and Africa</Text>
+        </StackLayout>
+      }
+    />
+  </RadioButtonGroup>
+);
+
+export const VerticalGroupWithDescriptions = GroupWithDescriptions.bind({});
+VerticalGroupWithDescriptions.args = { direction: "vertical" };
+export const HorizontalGroupWithDescriptions = GroupWithDescriptions.bind({});
+HorizontalGroupWithDescriptions.args = { direction: "horizontal" };
 
 export const WrapGroup: StoryFn<typeof RadioButtonGroup> = ({ wrap }) => (
   <div
@@ -73,15 +129,10 @@ export const WrapGroup: StoryFn<typeof RadioButtonGroup> = ({ wrap }) => (
       width: 250,
     }}
   >
-    <RadioButtonGroup name="fx" direction={"horizontal"} wrap={wrap}>
-      <RadioButton key="option1" label="North America" value="option1" />
-      <RadioButton key="option2" label="Asia, Pacific" value="option2" />
-      <RadioButton
-        disabled
-        key="option3"
-        label="Europe, Middle East, Africa"
-        value="option3"
-      />
+    <RadioButtonGroup name="region" direction="horizontal" wrap={wrap}>
+      <RadioButton label="North America" value="namr" />
+      <RadioButton label="Asia, Pacific" value="apac" />
+      <RadioButton disabled label="Europe, Middle East, Africa" value="emea" />
     </RadioButtonGroup>
   </div>
 );
@@ -96,16 +147,16 @@ NoWrapGroup.args = { wrap: false };
 const radioData = [
   {
     label: "NAMR",
-    value: "option1",
+    value: "namr",
   },
   {
     label: "APAC",
-    value: "option2",
+    value: "apac",
   },
   {
     disabled: true,
     label: "EMEA",
-    value: "option3",
+    value: "emea",
   },
 ];
 
