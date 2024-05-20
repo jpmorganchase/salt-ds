@@ -331,3 +331,48 @@ export const DesktopDialog = () => {
     </StackLayout>
   );
 };
+
+export const StickyFooter: StoryFn<typeof Dialog> = ({
+  open: openProp = false,
+}) => {
+  const [open, setOpen] = useState(openProp);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <Dialog open={open} onOpenChange={onOpenChange} className="longDialog">
+        <DialogHeader header="Congratulations! You have created a Dialog." />
+        <DialogContent>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book.
+        </DialogContent>
+        <DialogActions>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button onClick={handleClose}>Previous</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Next
+          </Button>
+        </DialogActions>
+        <DialogCloseButton onClick={handleClose} />
+      </Dialog>
+    </>
+  );
+};
