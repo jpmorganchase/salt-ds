@@ -10,6 +10,8 @@ import {
   FormFieldLabel as FormLabel,
   Input,
   AccordionGroupProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import "./accordion.stories.css";
@@ -185,4 +187,39 @@ export const Status: StoryFn<AccordionGroupProps> = (props) => (
       </Accordion>
     ))}
   </AccordionGroup>
+);
+
+export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
+  <Accordion style={{ width: "90%" }} {...props}>
+    <AccordionHeader>
+      <StackLayout direction={"row"} style={{ width: "100%" }}>
+        <StackLayout gap={0.25} align="start">
+          <Text>Title</Text>
+          <Text color="secondary">Description goes here</Text>
+        </StackLayout>
+        <div style={{ marginLeft: "auto" }}>
+          <Text color="secondary" style={{ width: "max-content" }}>
+            Secondary label{" "}
+          </Text>
+        </div>
+      </StackLayout>
+    </AccordionHeader>
+    <AccordionPanel>
+      <FlowLayout>
+        Please fill out the following details.
+        <FormField labelPlacement="left">
+          <FormLabel>Disclosure ID</FormLabel>
+          <Input />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormLabel>Email</FormLabel>
+          <Input />
+        </FormField>
+        <FormField labelPlacement="left">
+          <FormLabel>Justification</FormLabel>
+          <Input />
+        </FormField>
+      </FlowLayout>
+    </AccordionPanel>
+  </Accordion>
 );
