@@ -10,7 +10,17 @@
   padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
   display: flex;
   box-sizing: border-box;
+}
+
+/* Not implemented */
+
+.saltOptionGroup-label {
   position: sticky;
-  top: 0;
+  top: -1px;
+}
+
+.saltOptionGroup-stuck {
+  background: var(--salt-container-primary-background);
+  box-shadow: var(--salt-overlayable-shadow);
   z-index: 2;
 }
