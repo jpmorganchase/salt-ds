@@ -193,7 +193,7 @@ export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
   <Accordion style={{ width: "90%" }} {...props}>
     <AccordionHeader>
       <StackLayout direction={"row"} style={{ width: "100%" }}>
-        <StackLayout gap={0.25} align="start">
+        <StackLayout gap={0.5} align="start">
           <Text>Title</Text>
           <Text color="secondary">Description goes here</Text>
         </StackLayout>

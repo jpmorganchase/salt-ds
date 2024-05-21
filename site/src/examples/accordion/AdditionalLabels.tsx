@@ -13,11 +13,11 @@ import {
 } from "@salt-ds/core";
 
 export const AdditionalLabels = (): ReactElement => (
-  <FlexLayout style={{ width: "p0%" }}>
+  <FlexLayout style={{ width: "90%" }}>
     <Accordion value="accordion-additional-label-example">
       <AccordionHeader>
         <StackLayout direction={"row"} style={{ width: "100%" }}>
-          <StackLayout gap={0.25} align="start">
+          <StackLayout gap={0.5} align="start">
             <Text>Title</Text>
             <Text color="secondary">Description goes here</Text>
           </StackLayout>
