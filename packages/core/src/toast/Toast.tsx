@@ -20,7 +20,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   props,
   ref
 ) {
-  const { children, className, status = "info", ...rest } = props;
+  const { children, className, status, ...rest } = props;
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toast",
@@ -30,12 +30,18 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
 
   return (
     <div
-      className={clsx(withBaseName(), withBaseName(status), className)}
+      className={clsx(
+        withBaseName(),
+        withBaseName(status ?? "default"),
+        className
+      )}
       role="alert"
       {...rest}
       ref={ref}
     >
-      <StatusIndicator status={status} className={withBaseName("icon")} />
+      {status && (
+        <StatusIndicator status={status} className={withBaseName("icon")} />
+      )}
       {children}
     </div>
   );

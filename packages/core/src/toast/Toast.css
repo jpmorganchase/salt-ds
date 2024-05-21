@@ -30,6 +30,7 @@
 .saltToast-icon.saltIcon {
   margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
 }
+
 .salt-density-high.saltToast-icon.saltIcon {
   margin: calc(var(--salt-spacing-75) + 1px) 0 var(--salt-spacing-75) 0;
 }
@@ -52,4 +53,9 @@
 /* Styles applied when state = "success" */
 .saltToast-success {
   --toast-borderColor: var(--salt-status-success-borderColor);
+}
+
+/* Styles applied when no status is passed*/
+.saltToast-default {
+  --toast-borderColor: var(--salt-status-default-borderColor);
 }
