@@ -49,9 +49,11 @@
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
   --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
+  --salt-palette-error-foreground: var(--salt-color-red-500);
 
   --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-foreground);
+  --salt-palette-info-foreground: var(--salt-color-blue-500);
 
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-700-fade-foreground);
 
@@ -59,9 +61,11 @@
 
   --salt-palette-success-border-disabled: var(--salt-color-green-500-fade-border);
   --salt-palette-success-foreground-disabled: var(--salt-color-green-500-fade-foreground);
+  --salt-palette-success-foreground: var(--salt-color-green-500);
 
   --salt-palette-warning-foreground-disabled: var(--salt-color-orange-700-fade-foreground);
   --salt-palette-warning-border-disabled: var(--salt-color-orange-700-fade-border);
+  --salt-palette-warning-foreground: var(--salt-color-orange-700);
 
   /* Navigate */
   --salt-palette-navigate-primary-background: transparent;
@@ -120,9 +124,11 @@
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
   --salt-palette-error-border-disabled: var(--salt-color-red-500-fade-border);
+  --salt-palette-error-foreground: var(--salt-color-red-500);
 
   --salt-palette-info-border-disabled: var(--salt-color-blue-500-fade-border);
   --salt-palette-info-foreground-disabled: var(--salt-color-blue-500-fade-foreground);
+  --salt-palette-info-foreground: var(--salt-color-blue-500);
 
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-300-fade-foreground);
 
@@ -130,9 +136,11 @@
 
   --salt-palette-success-border-disabled: var(--salt-color-green-400-fade-border);
   --salt-palette-success-foreground-disabled: var(--salt-color-green-400-fade-foreground);
+  --salt-palette-success-foreground: var(--salt-color-green-400);
 
   --salt-palette-warning-foreground-disabled: var(--salt-color-orange-500-fade-foreground);
   --salt-palette-warning-border-disabled: var(--salt-color-orange-500-fade-border);
+  --salt-palette-warning-foreground: var(--salt-color-orange-500);
 
   /* Navigate */
   --salt-palette-navigate-primary-background: transparent;

@@ -10,16 +10,13 @@ export type GIProps = CountrySymbolProps;
 const GI = forwardRef<SVGSVGElement, GIProps>(function GI(props: GIProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GI"
       aria-label="Gibraltar"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-GI-a`}

@@ -1,5 +1,6 @@
 import { DateInput, DateInputProps } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
+import { DateValue, getLocalTimeZone } from "@internationalized/date";
 
 export default {
   title: "Lab/Date Input",
@@ -10,14 +11,12 @@ const DateInputTemplate: StoryFn<DateInputProps> = (args) => {
   return <DateInput {...args} />;
 };
 
-const formatter = (input: string): string => {
-  const date = new Date(input);
-  // @ts-ignore evaluating validity of date
-  return isNaN(date)
-    ? input
-    : new Intl.DateTimeFormat("en-US", {
+const formatter = (input: DateValue | undefined): string => {
+  return input
+    ? new Intl.DateTimeFormat("en-US", {
         year: "numeric",
-      }).format(date);
+      }).format(input.toDate(getLocalTimeZone()))
+    : "";
 };
 
 export const Default = DateInputTemplate.bind({});

@@ -10,16 +10,13 @@ export type TVProps = CountrySymbolProps;
 const TV = forwardRef<SVGSVGElement, TVProps>(function TV(props: TVProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TV"
       aria-label="Tuvalu"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-TV-a`}

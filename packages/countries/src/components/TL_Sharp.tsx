@@ -13,16 +13,14 @@ const TL_Sharp = forwardRef<SVGSVGElement, TL_SharpProps>(function TL_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TL_Sharp"
       aria-label="Timor-Leste"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-TL-a`}

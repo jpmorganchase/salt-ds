@@ -10,16 +10,13 @@ export type ATProps = CountrySymbolProps;
 const AT = forwardRef<SVGSVGElement, ATProps>(function AT(props: ATProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AT"
       aria-label="Austria"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-AT-a`}

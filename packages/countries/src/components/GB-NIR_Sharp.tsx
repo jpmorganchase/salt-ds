@@ -11,16 +11,14 @@ const GB_NIR_Sharp = forwardRef<SVGSVGElement, GB_NIR_SharpProps>(
   function GB_NIR_Sharp(props: GB_NIR_SharpProps, ref) {
     const uid = useId(props.id);
 
-    const { className, ...rest } = props;
-
     return (
       <CountrySymbol
         data-testid="GB_NIR_Sharp"
         aria-label="Northern Ireland"
         viewBox="0 0 72 50"
         ref={ref}
-        className={clsx(className, { "saltCountrySymbol-sharp": true })}
-        {...rest}
+        sharp
+        {...props}
       >
         <mask
           id={`${uid}-GB-NIR-a`}

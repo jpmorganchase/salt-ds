@@ -10,16 +10,13 @@ export type MLProps = CountrySymbolProps;
 const ML = forwardRef<SVGSVGElement, MLProps>(function ML(props: MLProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="ML"
       aria-label="Mali"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-ML-a`}

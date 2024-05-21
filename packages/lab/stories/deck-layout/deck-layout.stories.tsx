@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import { Card } from "@salt-ds/core";
-import { DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
+import { DeckLayout, DeckItem, Tab, Tabstrip } from "@salt-ds/lab";
 import "../layout/layout.stories.css";
 
 export default {
@@ -12,6 +12,7 @@ export default {
       control: { type: "number", min: 0, max: 5, defaultValue: 0 },
     },
   },
+  subcomponents: { DeckItem },
 } as Meta<typeof DeckLayout>;
 
 const deckCards = (slides: number) =>

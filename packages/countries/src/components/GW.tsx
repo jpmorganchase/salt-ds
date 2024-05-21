@@ -10,16 +10,13 @@ export type GWProps = CountrySymbolProps;
 const GW = forwardRef<SVGSVGElement, GWProps>(function GW(props: GWProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GW"
       aria-label="Guinea-Bissau"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-GW-a`}

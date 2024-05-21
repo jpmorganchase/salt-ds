@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/countries",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
   },
   "sideEffects": false,
   "files": [
-    "saltCountries.css"
+    "saltCountries.css",
+    "saltSharpCountries.css"
   ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",

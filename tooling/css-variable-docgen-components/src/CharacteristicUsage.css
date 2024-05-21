@@ -1,5 +1,5 @@
 .characteristicTokenDoc {
-  font-family: var(--salt-typography-fontFamily-code);
+  font-family: var(--salt-text-fontFamily-code);
   height: var(--salt-size-base);
   margin: var(--salt-size-unit);
 }

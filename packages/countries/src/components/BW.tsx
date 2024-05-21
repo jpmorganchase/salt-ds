@@ -10,16 +10,13 @@ export type BWProps = CountrySymbolProps;
 const BW = forwardRef<SVGSVGElement, BWProps>(function BW(props: BWProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="BW"
       aria-label="Botswana"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-BW-a`}

@@ -10,16 +10,13 @@ export type SNProps = CountrySymbolProps;
 const SN = forwardRef<SVGSVGElement, SNProps>(function SN(props: SNProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="SN"
       aria-label="Senegal"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-SN-a`}

@@ -28,7 +28,7 @@ All.args = {
   children: <p>This is a Panel</p>,
 };
 All.argTypes = {
-  children: { control: { type: null } },
+  children: { control: false },
 };
 
 export const Primary = Template.bind({});

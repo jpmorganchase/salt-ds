@@ -10,16 +10,13 @@ export type CDProps = CountrySymbolProps;
 const CD = forwardRef<SVGSVGElement, CDProps>(function CD(props: CDProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="CD"
       aria-label="Congo (the Democratic Republic of the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-CD-a`}

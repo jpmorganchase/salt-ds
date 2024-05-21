@@ -4,7 +4,7 @@
 
 .salt-theme {
   color: var(--salt-content-primary-foreground);
-  font-family: var(--salt-typography-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   letter-spacing: var(--salt-text-letterSpacing);
   line-height: var(--salt-text-lineHeight);

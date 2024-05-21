@@ -40,6 +40,7 @@
     "lodash-es": "^4.17.21",
     "next": "^14.0.4",
     "next-auth": "^4.24.7",
+    "node-fetch": "^3.0.0",
     "raw-loader": "^4.0.2"
   },
   "devDependencies": {

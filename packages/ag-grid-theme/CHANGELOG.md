@@ -1,5 +1,12 @@
 # @salt-ds/ag-grid-theme
 
+## 1.4.2
+
+### Patch Changes
+
+- 98d1a03f: Fixed icon not displayed correctly when salt theme class is not applied first on a container (fixes #3351)
+- 318515c5: Fixed header background incorrectly referencing palette color (`--salt-container-primary-background`) instead of characterstics (`--salt-container-primary-background`)
+
 ## 1.4.1
 
 ### Patch Changes

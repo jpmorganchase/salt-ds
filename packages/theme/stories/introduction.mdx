@@ -1,0 +1,242 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Theme/About the Salt Theme" />
+
+# About the Salt Theme
+
+## Our approach
+
+The Salt design system is built using Vanilla CSS, which enables us to provide a custom and consistent set of styles. There are several benefits to using Vanilla CSS:
+
+- Salt has no third-party style dependencies, which means we are free to take our own approach to styling.
+- The Salt theme is built entirely using CSS custom properties.
+- Vanilla CSS provides performance improvements by removing the runtime overhead common in CSS-in-JS solutions.
+- Vanilla CSS allows the Salt theme to be published and consumed independent of the component library–it can be used in contexts where Salt components are not able to be used, for example, static code deployment within a CMS.
+- Separation of styles into CSS files reduces the tie-in with React, which opens up the possibility of sharing style assets with non-react components.
+
+Our approach provides not only the mechanism by which our components are styled, but also a consistent approach for styling all elements of your project. An application may contain a mix of Salt components, plain HTML—often for layout purposes, custom components, and possibly some third party components. You should be able to use the Salt theme to style all of these. The goal is to make it as easy as possible to achieve a consistent experience across your entire application.
+
+### CSS declarations
+
+The CSS comprises two kinds of declarations:
+
+- CSS Custom Properties declarations, also known as _CSS Variables_.
+- Traditional CSS selector rules with values assigned to CSS attributes.
+
+CSS Variables enables us to declare CSS attribute values in a way that allows them to be re-used across multiple selector rules. This
+is just one feature of CSS Variables which makes them useful. There are many powerful features, described in more detail below.
+A simple example will help to illustrate some of the key concepts:
+
+```css
+:root {
+  --property-my-color: red;
+}
+
+.Button {
+  background-color: var(--property-my-color);
+}
+```
+
+## CSS levels
+
+Salt styles are defined at two different levels, which operate together at runtime:
+
+- **Theme styles** - consisting of CSS Variables \*
+- **Component styles** - each component contributes its own stylesheet. Many of the CSS declarations reference CSS variables defined in the theme i.e. the variables will be defined at the theme level and used at the component level.
+
+## Theme styles
+
+The Salt theme is a collection of design tokens split into a three-tier hierarchy. The token tiers are:
+
+- **Foundation** - Foundation tokens are the primitive values for attributes like color, size, shadow and opacity.
+- **Palette** - Palette tokens are semantically grouped foundational colors which allow a consistent look-and-feel when used by characteristics, rather than referencing the foundational tokens directly. For example, actionable, selectable, and editable characteristic tokens all use the 'interact' palette. If the theme needed to change the background color of interactive elements it would only have to be updated in one place, the palette, instead of within each characteristic.
+- **Characteristic** – Semantic groupings of all visual attributes (not just color) that are applied to a set of components, depending on their shared functionality or behavior–a characteristic may include typography, cursor behaviors, border styles and widths, as well as attributes such as background and foreground colors.
+
+#### Design considerations:
+
+Theme libraries are provided within Figma which are aligned as closely as possible to the Characteristic tokens. All styles are included, but the token structure in Figma may differ slightly from code.
+
+### Foundations
+
+Foundational tokens are divided into the following groups:
+
+| Foundation            | Description                                                         | Example token                          | Example value                     |
+| --------------------- | ------------------------------------------------------------------- | -------------------------------------- | --------------------------------- |
+| Color                 | The core set of colors that make up the Salt theme                  | `--salt-color-gray-800`                | `rgb(36, 37, 38)`                 |
+| Duration              | Durations between a user action and system feedback                 | `--salt-duration-cutoff`               | `10000`                           |
+| Opacity               | Opacity percentages for different attributes                        | `--salt-opacity-background`            | `0.7`                             |
+| Shadow                | Shadows used to convey elevation or hierarchy                       | `--salt-shadow-black-4`                | `0 6px 10px 0 rgba(0, 0, 0, 0.2)` |
+| Size                  | Sizes in px used for width, height, border width, etc.              | `--salt-size-basis-unit`               | `4px`                             |
+| Spacing               | Spacing in px used for padding, margins, etc., based on spacing-100 | `--salt-spacing-100`                   | `4px`                             |
+| Typography            | Fonts and font weights provided by the theme                        | `--salt-typography-fontWeight-regular` | `400`                             |
+| Z-index               | Number indicating appropriate z-index of components                 | `--salt-zIndex-flyover`                | `1500`                            |
+| **Deprecated:** Delay | Replaced with duration                                              | Replaced with duration                 | Replaced with duration            |
+| **Deprecated:** Icon  | Replaced with size                                                  | Replaced with size                     | Replaced with size                |
+
+### Palettes
+
+| Semantic Palette        | Appropriate usage                                                            | Example token                               | Example value             |
+| ----------------------- | ---------------------------------------------------------------------------- | ------------------------------------------- | ------------------------- |
+| Accent                  | Colors used to provide brand detail                                          | `--salt-palette-accent-background`          | `--salt-color-blue-500`   |
+| Error                   | Colors used to symbolize an error state                                      | `--salt-palette-error-border`               | `--salt-color-red-500`    |
+| Info                    | Colors used to represent informational content or messaging                  | `--salt-palette-info-foreground`            | `--salt-color-blue-500`   |
+| Interact                | Colors representing actions, such as editing or selecting                    | `--salt-palette-interact-border`            | `--salt-color-gray-90`    |
+| Navigate                | Colors used to signify navigation or navigable items                         | `--salt-palette-navigate-foreground-hover`  | `--salt-color-blue-600`   |
+| Negative                | Colors conveying a negative value or result                                  | `--salt-palette-negative-foreground`        | `--salt-color-red-700`    |
+| Neutral                 | Colors used to define regions or blocks of content without inferring meaning | `--salt-palette-neutral-primary-foreground` | `--salt-color-gray-900`   |
+| Positive                | Colors conveying a positive value or result                                  | `--salt-palette-positive-foreground`        | `--salt-color-green-700`  |
+| Success                 | Colors symbolizing a success state or indication of process completion       | `--salt-palette-success-border`             | `--salt-color-green-500`  |
+| Warning                 | Colors symbolizing a warning state                                           | `--salt-palette-warning-foreground`         | `--salt-color-orange-500` |
+| **Deprecated:** Track   | No replacement                                                               | \*                                          | \*                        |
+| **Deprecated:** Measure | Replaced with track                                                          | \*                                          | \*                        |
+
+#### Palette opacities
+
+| Opacity                                      | Defined value       |
+| -------------------------------------------- | ------------------- |
+| `--salt-palette-opacity-background-readonly` | `--salt-opacity-0`  |
+| `--salt-palette-opacity-border-readonly`     | `--salt-opacity-8`  |
+| `--salt-palette-opacity-disabled`            | `--salt-opacity-40` |
+| `--salt-palette-opacity-backdrop`            | `--salt-opacity-70` |
+| `--salt-palette-opacity-primary-border`      | `--salt-opacity-40` |
+| `--salt-palette-opacity-secondary-border`    | `--salt-opacity-25` |
+| `--salt-palette-opacity-tertiary-border`     | `--salt-opacity-15` |
+
+### Characteristics
+
+Characteristics semantically group both palette and foundational tokens to provide a complete set of attributes for component styling. Because of the semantic nature of the groups there are some direct relationships between the color palettes and characteristics such as accent.
+
+| Characteristic               | Appropriate usage                                                                    | Example token                                | Example value                                      |
+| ---------------------------- | ------------------------------------------------------------------------------------ | -------------------------------------------- | -------------------------------------------------- |
+| Accent                       | Provides a non-functional brand detail to a component or element                     | `--salt-accent-background`                   | `--salt-palette-accent-background`                 |
+| Actionable                   | Components that enable an action to be performed                                     | `--salt-actionable-primary-background-hover` | `--salt-palette-interact-primary-background-hover` |
+| Container                    | Defines an area that can encapsulate multiple elements or items of content           | `--salt-container-borderStyle`               | `solid`                                            |
+| Draggable                    | Components that can be dragged                                                       | `--salt-draggable-grab-cursor-hover`         | `grab`                                             |
+| Editable                     | Components that have mutable input                                                   | `--salt-editable-borderStyle`                | `solid`                                            |
+| Focused                      | Components that have a focused state                                                 | `--salt-focused-outlineStyle`                | `dotted`                                           |
+| Navigable                    | Components that change data sets or view contexts                                    | `--salt-navigable-cursor-hover`              | `pointer`                                          |
+| Overlayable                  | Components that form hierarchies in layout                                           | `--salt-overlayable-shadow-scroll`           | `--salt-shadow-100`                                |
+| Selectable                   | Components that have a selected state or contain elements that can be selected       | `--salt-selectable-cursor-hover`             | `pointer`                                          |
+| Separable                    | Components, or elements within a component that divide content, functions or regions | `--salt-separable-primary-borderColor`       | `--salt-palette-neutral-primary-border`            |
+| Status                       | Components indicating an informational, warning, error or success state              | `--salt-status-info-borderColor`             | `--salt-palette-info-border`                       |
+| Target                       | Components that form a target for draggable elements                                 | `--salt-target-borderStyle`                  | `dashed`                                           |
+| Text                         | All text components or HTML elements                                                 | `--salt-text-fontFamily`                     | `--salt-palette-text-fontFamily-heading`           |
+| Track                        | Components that indicate a changeable value or progression                           | `--salt-track-borderStyle`                   | `solid`                                            |
+| Content                      | Provides default color values for text and icon display                              | `--salt-content-primary-foreground`          | `--salt-palette-neutral-primary-foreground`        |
+| **Deprecated:** Differential | Replaced with Status                                                                 | \*                                           | \*                                                 |
+| **Deprecated:** Measure      | Replaced with Track                                                                  | \*                                           | \*                                                 |
+
+### Token naming conventions
+
+Salt tokens are made up of different elements. Depending on the tier, different elements are combined to form the token name.
+
+- CSS variables in Salt are prefixed `--salt-`. This is a rule with no exceptions.
+- Foundation tokens all use CSS constant values.
+- Foundation and characteristic token names all begin `--salt-<foundation/characteristic name>-`. This again is a rule with no exceptions.
+- Palette tokens are differentiated by the inclusion of the tier before the palette name `--salt-palette-<palette name>-`.
+
+### Theme scoping - how CSS variables work
+
+CSS variables have a concept of scoping - they may be global to an entire HTML page or constrained to a subset of that page.
+Consider the example given above:
+
+```css
+:root {
+  --property-my-color: red;
+}
+
+.Button {
+  background-color: var(--property-my-color);
+}
+```
+
+In this case, the scope is `:root`. This is equivalent to `html` so variables declared in this way are global. They can be referenced in any CSS that is applied to the page. We constrain the scope of a variable using a CSS selector, exactly as we declare regular CSS rules:
+
+```css
+.salt-theme[data-mode="light"] {
+  --property-my-color: red;
+}
+```
+
+In this case, the CSS selector `.salt-theme[data-mode="light"]` constrains the scope of variable `--property-my-color`. This variable will only be available to style elements that have the CSS class `.salt-theme` and the data attribute `data-mode="light"` or are descendants of such an element. This is how the Salt theme is applied to an application or website. All of the CSS variables that constitute the Salt theme are scoped to either `.salt-theme[data-mode="light"]` or `.salt-theme[data-mode="dark"]`. If, at the top level of your project, you have a structure like this:
+
+```html
+<div class="MyApplication salt-theme" data-mode="light">
+  <rest-of-my-application />
+</div>
+```
+
+In this case the Salt theme variables will be available throughout the app, and components that consume theme variables will be styled appropriately.
+
+Salt provides the `SaltProvider` component for React users that takes care of injecting the appropriate CSS class names into the HTML, for example:
+
+```jsx
+<SaltProvider density="high" mode="light">
+  <RestOfMyApplication />
+</SaltProvider>
+```
+
+Refer to the `SaltProvider` documentation for more detail.
+
+### Theme variants
+
+Salt provides two types of theme variant:
+
+- Mode; light or dark
+- Density; high, medium, low, and touch
+
+The combination of CSS variables with CSS selector scoping is very flexible. It allows us to offer multiple variants of the same sets of characteristics, between which we can alternate by switching scopes.
+
+The Salt theme offers light and dark variants in addition to four densities. This means we’re able to repeat subsets of the theme variables, each scoped to different selectors. The application owner then opts into one of the available options from each of these variants by using the appropriate scope selector class. In the example above, using the `SaltProvider` the application is using the light and high density variants. The HTML for this app will look like this:
+
+```html
+<div class="salt-provider salt-theme salt-density-high" data-mode="light">
+  <rest-of-my-application />
+</div>
+```
+
+In the CSS where the theme variables are declared, there are sections declared as follows:
+
+```css
+.salt-theme {
+  --salt-actionable-primary-foreground: var(
+    --salt-palette-interact-primary-foreground
+  );
+}
+```
+
+The palette token then resolves down to:
+
+```css
+.salt-theme[data-mode="light"] {
+  --salt-palette-interact-primary-foreground: var(--salt-color-gray-900);
+}
+.salt-theme[data-mode="dark"] {
+  --salt-palette-interact-primary-foreground: var(--salt-color-white);
+}
+```
+
+Note that the CSS variable is the same—the values associated with it differ between the light and dark `scopes`. When this variable is used by a Button to style the button text, the color applied will be appropriate to the theme variant applied to the page. Because CSS variable scopes can be nested, there is great flexibility for combining regions with different styling variants within the same app. If a page with a light theme requires that a smaller region of that page be styled with a dark or even custom theme, that is straightforward.
+
+## Component styles
+
+Component styles work with theme styles to give a complete theme-based styling solution. At the component level, we specify exactly which HTML elements have particular styles applied to them. By generalizing these styles across the application, which is what the theme variables allow us to do, we achieve consistency of design not only across an application but across all applications using the design system.
+
+We have already mentioned that components will reference Theme variables, the example below is from Button. It shows a single style declaration but illustrates some important concepts:
+
+```css
+.saltButton {
+  font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
+}
+```
+
+- All Salt components have a CSS class on the root element, of the form `salt<ComponentName>`. This is a rule with no exceptions.
+- The value from a CSS API variable (more on this below) is assigned as a style by using `var(--<variableName>-<...>);`.
+- A CSS variable reference can define a fallback value to be used if the primary variable does not have a value:
+  `var(--primary-variable-value, var(--fallback-value))`.
+- The fallback value can equally be a simple constant CSS value
+  `var(--primary-variable-value, 12px);`.
+
+In the Button example above, font-size is being set to whatever value has been assigned to the variable `--saltButton-fontSize`. If this variable has not been defined, or is not in scope at the point where this Button element is rendered, then the fallback value will be taken from `--salt-text-fontSize`. Providing that a Salt theme is in scope at this point, this will have a value. If neither of these variables had values associated with them at this location, then the font-size would default to whatever value was in effect by the normal CSS mechanisms.
+
+Note the naming convention for the first variable `--saltButton-fontSize`. The prefix matches exactly (even in case) the CSS class of the component. That identifies this as a _CSS API variable_. These are not actually assigned any value anywhere in Salt code. They are a customization mechanism intended for use by consumers of Salt components. A default (or fallback) value is _always_ provided in this case, and will often reference a theme characteristic variable. If consumers need to override a default style assignment, these API variables provide a simple means to do this. The group of API variables available with each component are published as part of the documentation for each component (as are the CSS class names).

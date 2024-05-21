@@ -10,16 +10,13 @@ export type CAProps = CountrySymbolProps;
 const CA = forwardRef<SVGSVGElement, CAProps>(function CA(props: CAProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="CA"
       aria-label="Canada"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-CA-a`}

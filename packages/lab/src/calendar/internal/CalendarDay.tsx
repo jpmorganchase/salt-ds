@@ -60,7 +60,11 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         {...TooltipProps}
       >
         <button
-          aria-label={formatDate(day)}
+          aria-label={formatDate(day, {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
           disabled={disabled}
           type="button"
           {...dayProps}

@@ -10,16 +10,13 @@ export type NCProps = CountrySymbolProps;
 const NC = forwardRef<SVGSVGElement, NCProps>(function NC(props: NCProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="NC"
       aria-label="New Caledonia"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-NC-a`}

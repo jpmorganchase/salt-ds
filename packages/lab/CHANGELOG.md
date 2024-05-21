@@ -1,5 +1,16 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.44
+
+### Patch Changes
+
+- 92bb63a1: - fixed keyboard navigation between panel and dates in calendar
+  - fixed highlight and today characteristics for previous months in calendar
+- 894aaf0b: Calendar fixes:
+
+  - Fixed mozilla div focus bug https://bugzilla.mozilla.org/show_bug.cgi?id=1069739 and added aria label to calendar for accessibility improvement.
+  - Prevent event defaults in keyboard navigation.
+
 ## 1.0.0-alpha.43
 
 ### Minor Changes

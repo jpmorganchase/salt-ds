@@ -13,16 +13,14 @@ const AZ_Sharp = forwardRef<SVGSVGElement, AZ_SharpProps>(function AZ_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="AZ_Sharp"
       aria-label="Azerbaijan"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-AZ-a`}

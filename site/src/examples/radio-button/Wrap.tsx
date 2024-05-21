@@ -7,15 +7,10 @@ export const Wrap = (): ReactElement => (
       width: 250,
     }}
   >
-    <RadioButtonGroup name="fx" direction={"horizontal"} wrap={true}>
-      <RadioButton key="option1" label="North America" value="option1" />
-      <RadioButton key="option2" label="Asia, Pacific" value="option2" />
-      <RadioButton
-        disabled
-        key="option3"
-        label="Europe, Middle East, Africa"
-        value="option3"
-      />
+    <RadioButtonGroup name="region" direction="horizontal" wrap>
+      <RadioButton label="North America" value="namr" />
+      <RadioButton label="Asia, Pacific" value="apac" />
+      <RadioButton disabled label="Europe, Middle East, Africa" value="emea" />
     </RadioButtonGroup>
   </div>
 );
