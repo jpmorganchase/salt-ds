@@ -315,32 +315,50 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = (args) => {
   );
 };
 
-export type LargeCity = {
-  name: string;
-  countryCode: CountryCode;
+export type CityWithCountry = {
+  value: string;
+  country: string;
 };
 
-export const largestCities: LargeCity[] = [
-  { name: "Tokyo", countryCode: "JP" },
-  { name: "Delhi", countryCode: "IN" },
-  { name: "Shanghai", countryCode: "CN" },
-  { name: "São Paulo", countryCode: "BR" },
-  { name: "Mexico City", countryCode: "MX" },
-  { name: "Cairo", countryCode: "EG" },
+export const citiesWithCountries = [
+  {
+    value: "Chicago",
+    country: "US",
+  },
+  {
+    value: "Miami",
+    country: "US",
+  },
+  {
+    value: "New York",
+    country: "US",
+  },
+  {
+    value: "Liverpool",
+    country: "GB",
+  },
+  {
+    value: "London",
+    country: "GB",
+  },
+  {
+    value: "Manchester",
+    country: "GB",
+  },
 ];
 
 export const SecondaryLabel: StoryFn<typeof Dropdown> = (args) => {
   return (
     <Dropdown
       style={{ width: "266px" }}
-      valueToString={(city: LargeCity) => city.name}
+      valueToString={(city: CityWithCountry) => city.value}
       placeholder="Secondary label example"
     >
-      {largestCities.map((city) => (
-        <Option key={city.countryCode} value={city}>
+      {citiesWithCountries.map((city) => (
+        <Option key={city.value} value={city}>
           <StackLayout gap={0.25} align="start">
-            <Text>{city.name}</Text>
-            <Text color="secondary">{city.countryCode}</Text>
+            <Text>{city.value}</Text>
+            <Text color="secondary">{city.country}</Text>
           </StackLayout>
         </Option>
       ))}

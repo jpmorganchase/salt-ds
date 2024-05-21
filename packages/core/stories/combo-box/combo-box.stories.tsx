@@ -654,21 +654,41 @@ MultiplePillsTruncated.args = {
   truncate: true,
 };
 
-export type LargeCity = {
-  name: string;
-  countryCode: CountryCode;
+export type CityWithCountry = {
+  value: string;
+  country: string;
 };
 
-export const largestCities: LargeCity[] = [
-  { name: "Tokyo", countryCode: "JP" },
-  { name: "Delhi", countryCode: "IN" },
-  { name: "Shanghai", countryCode: "CN" },
-  { name: "São Paulo", countryCode: "BR" },
-  { name: "Mexico City", countryCode: "MX" },
-  { name: "Cairo", countryCode: "EG" },
+export const citiesWithCountries = [
+  {
+    value: "Chicago",
+    country: "US",
+  },
+  {
+    value: "Miami",
+    country: "US",
+  },
+  {
+    value: "New York",
+    country: "US",
+  },
+  {
+    value: "Liverpool",
+    country: "GB",
+  },
+  {
+    value: "London",
+    country: "GB",
+  },
+  {
+    value: "Manchester",
+    country: "GB",
+  },
 ];
 
-export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
+export const SecondaryLabel: StoryFn<ComboBoxProps<CityWithCountry>> = (
+  args
+) => {
   const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -681,19 +701,19 @@ export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: LargeCity[]
+    newSelected: CityWithCountry[]
   ) => {
     if (newSelected.length === 1) {
-      setValue(newSelected[0].name);
+      setValue(newSelected[0].value);
     } else {
       setValue("");
     }
   };
 
-  const options = largestCities.filter(
+  const options = citiesWithCountries.filter(
     (city) =>
-      city.name.toLowerCase().includes(value.trim().toLowerCase()) ||
-      city.countryCode.toLowerCase().includes(value.trim().toLowerCase())
+      city.value.toLowerCase().includes(value.trim().toLowerCase()) ||
+      city.country.toLowerCase().includes(value.trim().toLowerCase())
   );
 
   return (
@@ -702,13 +722,13 @@ export const SecondaryLabel: StoryFn<ComboBoxProps<Person>> = (args) => {
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}
-      valueToString={(city) => city.name}
+      valueToString={(city) => city.value}
     >
       {options.map((city) => (
-        <Option key={city.countryCode} value={city}>
+        <Option key={city.value} value={city}>
           <StackLayout gap={0.25} align="start">
-            <Text>{city.name}</Text>
-            <Text color="secondary">{city.countryCode}</Text>
+            <Text>{city.value}</Text>
+            <Text color="secondary">{city.country}</Text>
           </StackLayout>
         </Option>
       ))}

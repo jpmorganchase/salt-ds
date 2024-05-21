@@ -1,7 +1,6 @@
 import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import { ComboBox, Option, StackLayout, Text } from "@salt-ds/core";
-import { largestCities, LargeCity } from "./exampleData";
-
+import { citiesWithCountries, CityWithCountry } from "./exampleData";
 export const SecondaryLabel = (): ReactElement => {
   const [value, setValue] = useState("");
 
@@ -12,22 +11,20 @@ export const SecondaryLabel = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: LargeCity[]
+    newSelected: CityWithCountry[]
   ) => {
     if (newSelected.length === 1) {
-      setValue(newSelected[0].name);
+      setValue(newSelected[0].value);
     } else {
       setValue("");
     }
   };
 
-  const options = largestCities
-    .slice(0, 5)
-    .filter(
-      (city) =>
-        city.name.toLowerCase().includes(value.trim().toLowerCase()) ||
-        city.countryCode.toLowerCase().includes(value.trim().toLowerCase())
-    );
+  const options = citiesWithCountries.filter(
+    (city) =>
+      city.value.toLowerCase().includes(value.trim().toLowerCase()) ||
+      city.country.toLowerCase().includes(value.trim().toLowerCase())
+  );
 
   return (
     <ComboBox
@@ -35,13 +32,13 @@ export const SecondaryLabel = (): ReactElement => {
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}
-      valueToString={(value) => value.name}
+      valueToString={(value) => value.value}
     >
       {options.map((city) => (
-        <Option key={city.countryCode} value={city}>
+        <Option key={city.value} value={city}>
           <StackLayout gap={0.25} align="start">
-            <Text>{city.name}</Text>
-            <Text color="secondary">{city.countryCode}</Text>
+            <Text>{city.value}</Text>
+            <Text color="secondary">{city.country}</Text>
           </StackLayout>
         </Option>
       ))}
