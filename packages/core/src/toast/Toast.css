@@ -57,5 +57,5 @@
 
 /* Styles applied when no status is passed*/
 .saltToast-default {
-  --toast-borderColor: var(--salt-status-default-borderColor);
+  --toast-borderColor: var(--salt-container-primary-borderColor-default);
 }
