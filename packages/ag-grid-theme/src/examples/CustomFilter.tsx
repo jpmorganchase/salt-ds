@@ -1,19 +1,13 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const CustomFilter = (props: AgGridReactProps) => {
   const [hasSavedState, setHasSavedState] = useState(true);
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
-
-  useEffect(() => {
-    if (isGridReady) {
-      api?.sizeColumnsToFit();
-    }
-  }, [api, isGridReady]);
+  const { api, agGridProps, containerProps } = useAgGridHelpers();
 
   const handlePopMt100kClick = () => {
     const popMt100kComponent = api!.getFilterInstance("population")!;

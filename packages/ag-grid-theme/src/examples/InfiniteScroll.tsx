@@ -28,7 +28,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
     if (isGridReady) {
       api!.sizeColumnsToFit();
 
-      api!.setDatasource({
+      api!.setGridOption("datasource", {
         getRows: ({ startRow, endRow, successCallback }) => {
           setTimeout(() => {
             successCallback(
@@ -39,7 +39,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
         },
       });
     }
-  }, [api, isGridReady]);
+  }, [isGridReady]);
 
   return (
     <div {...containerProps}>

@@ -1,6 +1,6 @@
 import { Checkbox, StackLayout, useDensity } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import dataGridExampleColumnsWrap from "../dependencies/dataGridExampleColumnsWrap";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -19,16 +19,10 @@ const statusBar = {
 
 const WrappedHeader = (props: AgGridReactProps) => {
   const [compact, setCompact] = useState(false);
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers({
+  const { agGridProps, containerProps } = useAgGridHelpers({
     compact,
   });
   const { defaultColDef: propsColDefs, ...restAgGridProps } = agGridProps;
-
-  useEffect(() => {
-    if (isGridReady) {
-      api?.sizeColumnsToFit();
-    }
-  }, [api, isGridReady]);
 
   const density = useDensity();
 
