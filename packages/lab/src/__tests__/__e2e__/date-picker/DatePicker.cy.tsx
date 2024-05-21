@@ -1,5 +1,4 @@
 import { composeStories } from "@storybook/react";
-import { ChangeEvent } from "react";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import {
@@ -82,6 +81,11 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(<Default defaultStartDate={testDate} disabled />);
       cy.findByRole("button").should("be.disabled");
     });
+    it("THEN render read only when prop is passed", () => {
+      cy.mount(<Default defaultStartDate={testDate} readOnly />);
+      cy.findByRole("textbox").should("have.attr", "readonly");
+      cy.findByRole("button").should("be.disabled");
+    });
     it("THEN it should update the selected month when changing selected date", () => {
       cy.mount(<Default defaultStartDate={testDate} />);
       cy.findByRole("textbox").click().clear().type(testInput);
@@ -95,7 +99,6 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(
         <Default
           defaultStartDate={testDate}
-          // @ts-ignore
           CalendarProps={{ visibleMonth: testDate }}
         />
       );
