@@ -30,7 +30,7 @@ export const WrappedHeader = (props: AgGridReactProps) => {
   }, [api, isGridReady]);
 
   return (
-    <div {...containerProps} style={{ height: "400px", width: "500px" }}>
+    <div {...containerProps}>
       <AgGridReact
         columnDefs={wrappedColumns}
         rowData={defaultData}
