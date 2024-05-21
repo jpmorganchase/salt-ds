@@ -126,7 +126,7 @@ export const RefreshAdornment: StoryFn = (args) => {
   );
 };
 
-export const HideButton: StoryFn = (args) => {
+export const HideButtons: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
