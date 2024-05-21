@@ -1,4 +1,4 @@
-import { Badge, Button, StackLayout } from "@salt-ds/core";
+import { Badge, Panel } from "@salt-ds/core";
 import {
   BankCheckIcon,
   CreditCardIcon,
@@ -6,72 +6,65 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabstripNext, type TabstripNextProps } from "@salt-ds/lab";
+import {
+  TabNext,
+  TabNextPanel,
+  TabsNext,
+  TabstripNext,
+  type TabstripNextProps,
+} from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
-import { type ComponentType, useState } from "react";
+import { type ComponentType, useRef, useState } from "react";
+
 import "./tabstrip-next.stories.css";
 
 export default {
-  title: "Lab/Tabs Next/Tabstrip Next",
-  component: TabstripNext,
+  title: "Lab/Tabs Next",
+  component: TabsNext,
   args: {
     value: undefined,
     onChange: undefined,
   },
 };
 
-type TabstripStory = StoryFn<
+type TabsStory = StoryFn<
   TabstripNextProps & {
-    width?: number;
-    tabs: string[];
+    tabs?: string[];
   }
 >;
 
-const tabToIcon: Record<string, ComponentType> = {
-  Home: HomeIcon,
-  Transactions: ReceiptIcon,
-  Loans: CreditCardIcon,
-  Checks: BankCheckIcon,
-  Liquidity: LineChartIcon,
-};
-
-const TabstripTemplate: TabstripStory = ({
-  width = 600,
-  tabs,
-  ...tabstripProps
-}) => {
+const TabsTemplate: TabsStory = ({ tabs = [], ...tabstripProps }) => {
   return (
-    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-      <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
+    <div className="container">
+      <TabsNext>
+        <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
+          {tabs.map((label) => (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabstripNext>
         {tabs.map((label) => (
-          <TabNext value={label} key={label}>
+          <TabNextPanel value={label} key={label}>
             {label}
-          </TabNext>
+          </TabNextPanel>
         ))}
-      </TabstripNext>
+      </TabsNext>
     </div>
   );
 };
 
-export const DefaultLeftAligned = TabstripTemplate.bind({});
+export const DefaultLeftAligned = TabsTemplate.bind({});
 DefaultLeftAligned.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
-  width = 600,
-  tabs,
+export const MainTabBleedingIntoPrimaryBackground: TabsStory = ({
+  tabs = [],
   ...tabstripProps
 }) => {
   return (
-    <div
-      style={{
-        width,
-        minWidth: 0,
-        maxWidth: "100%",
-      }}
-      className="container secondary-container"
-    >
+    <div className="container secondary-container">
       <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
         {tabs.map((label) => {
           return (
@@ -81,7 +74,7 @@ export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
           );
         })}
       </TabstripNext>
-      <div className="inner-container primary-container" />
+      <Panel className="inner-container" />
     </div>
   );
 };
@@ -90,20 +83,12 @@ MainTabBleedingIntoPrimaryBackground.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
-  width = 600,
-  tabs,
+export const MainTabBleedingIntoSecondaryBackground: TabsStory = ({
+  tabs = [],
   ...tabstripProps
 }) => {
   return (
-    <div
-      style={{
-        width,
-        minWidth: 0,
-        maxWidth: "100%",
-      }}
-      className="container primary-container"
-    >
+    <div className="container primary-container">
       <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
         {tabs.map((label) => {
           return (
@@ -113,7 +98,7 @@ export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
           );
         })}
       </TabstripNext>
-      <div className="inner-container secondary-container" />
+      <Panel variant="secondary" className="inner-container" />
     </div>
   );
 };
@@ -123,22 +108,18 @@ MainTabBleedingIntoSecondaryBackground.args = {
   activeColor: "secondary",
 };
 
-export const Inline = TabstripTemplate.bind({});
+export const Inline = TabsTemplate.bind({});
 Inline.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
   variant: "inline",
 };
 
-export const InlineWithSecondaryBackground: TabstripStory = ({
-  width = 600,
-  tabs,
+export const InlineWithSecondaryBackground: TabsStory = ({
+  tabs = [],
   ...tabstripProps
 }) => {
   return (
-    <div
-      style={{ width, display: "flex", height: 200 }}
-      className="secondary-container"
-    >
+    <div className="secondary-container">
       <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
         {tabs.map((label) => (
           <TabNext value={label} key={label}>
@@ -155,25 +136,29 @@ InlineWithSecondaryBackground.args = {
   variant: "inline",
 };
 
-export const Centered = TabstripTemplate.bind({});
+export const Centered = TabsTemplate.bind({});
 Centered.args = {
   align: "center",
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const RightAligned = TabstripTemplate.bind({});
+export const RightAligned = TabsTemplate.bind({});
 RightAligned.args = {
   align: "right",
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const WithIcon: TabstripStory = ({
-  width = 600,
-  tabs,
-  ...tabstripProps
-}) => {
+const tabToIcon: Record<string, ComponentType> = {
+  Home: HomeIcon,
+  Transactions: ReceiptIcon,
+  Loans: CreditCardIcon,
+  Checks: BankCheckIcon,
+  Liquidity: LineChartIcon,
+};
+
+export const WithIcon: TabsStory = ({ tabs = [], ...tabstripProps }) => {
   return (
-    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
         {tabs.map((label) => {
           const Icon = tabToIcon[label];
@@ -183,7 +168,7 @@ export const WithIcon: TabstripStory = ({
               key={label}
               disabled={label === "Transactions"}
             >
-              <Icon /> {label}
+              <Icon aria-hidden /> {label}
             </TabNext>
           );
         })}
@@ -196,13 +181,9 @@ WithIcon.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const WithBadge: TabstripStory = ({
-  width = 600,
-  tabs,
-  ...tabstripProps
-}) => {
+export const WithBadge: TabsStory = ({ tabs = [], ...tabstripProps }) => {
   return (
-    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabstripNext defaultValue={tabs[0]} {...tabstripProps}>
         {tabs.map((label) => (
           <TabNext value={label} key={label}>
@@ -219,40 +200,7 @@ WithBadge.args = {
   tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
 };
 
-export const ControlledTabstrip: TabstripStory = ({
-  width = 600,
-  tabs,
-  ...tabstripProps
-}) => {
-  const [value, setValue] = useState<string>(tabs[0]);
-
-  return (
-    <div style={{ width, minWidth: 0, maxWidth: "100%" }}>
-      <StackLayout gap={1} direction="row" align="center">
-        <Button onClick={() => setValue("Home")}>Home</Button>
-        <TabstripNext
-          {...tabstripProps}
-          value={value}
-          onChange={(_, { value }) => {
-            setValue(value);
-          }}
-        >
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              {label}
-            </TabNext>
-          ))}
-        </TabstripNext>
-        <Button onClick={() => setValue("Liquidity")}>End</Button>
-      </StackLayout>
-    </div>
-  );
-};
-ControlledTabstrip.args = {
-  tabs: ["Home", "Transactions", "Loans", "Checks", "Liquidity"],
-};
-
-export const LotsOfTabsTabstrip = TabstripTemplate.bind({});
+export const LotsOfTabsTabstrip = TabsTemplate.bind({});
 LotsOfTabsTabstrip.args = {
   tabs: [
     "Home",
@@ -273,4 +221,78 @@ LotsOfTabsTabstrip.args = {
     "Larger",
     "Screens",
   ],
+};
+
+export const Closable: TabsStory = ({ ...tabstripProps }) => {
+  const [tabs, setTabs] = useState([
+    "Home",
+    "Transactions",
+    "Loans",
+    "Checks",
+    "Liquidity",
+  ]);
+
+  return (
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+      <TabstripNext
+        defaultValue={tabs[0]}
+        onClose={(_event, closedTab) => {
+          setTabs(tabs.filter((tab) => tab !== closedTab));
+        }}
+        {...tabstripProps}
+      >
+        {tabs.map((label) => (
+          <TabNext value={label} key={label} closable>
+            {label}
+            {label === "Transactions" && <Badge value={2} />}
+          </TabNext>
+        ))}
+      </TabstripNext>
+    </div>
+  );
+};
+
+export const AddTabs: TabsStory = ({ ...tabstripProps }) => {
+  const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
+  const [value, setValue] = useState("Home");
+  const newCount = useRef(0);
+
+  return (
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+      <TabstripNext
+        value={value}
+        onChange={(_event, newValue) => setValue(newValue)}
+        onAdd={() => {
+          const newTab = `New Tab${newCount.current > 0 ? ` ${newCount.current}` : ""}`;
+          newCount.current += 1;
+
+          setTabs((old) => old.concat(newTab));
+          setValue(newTab);
+        }}
+      >
+        {tabs.map((label) => (
+          <TabNext value={label} key={label}>
+            {label}
+          </TabNext>
+        ))}
+      </TabstripNext>
+    </div>
+  );
+};
+
+export const TabPanel = () => {
+  return (
+    <div style={{ width: 500, height: 400 }}>
+      <TabsNext>
+        <TabstripNext defaultValue="Transactions">
+          <TabNext value="Transactions">Transactions</TabNext>
+          <TabNext value="Loans">Loans</TabNext>
+          <TabNext value="Checks">Checks</TabNext>
+        </TabstripNext>
+        <TabNextPanel value="Transactions">Transactions</TabNextPanel>
+        <TabNextPanel value="Loans">Loans</TabNextPanel>
+        <TabNextPanel value="Checks">Checks</TabNextPanel>
+      </TabsNext>
+    </div>
+  );
 };

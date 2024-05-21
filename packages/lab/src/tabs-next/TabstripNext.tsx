@@ -1,45 +1,53 @@
-import { Overflow } from "@fluentui/react-overflow";
-import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import {
+  Button,
+  capitalize,
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
+import { AddIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   type KeyboardEvent,
-  type ReactNode,
   type SyntheticEvent,
   forwardRef,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import type { SelectionChangeHandler } from "../common-hooks";
-import { OverflowMenu } from "./OverflowMenu";
-import { TabsContext } from "./TabNextContext";
+
+import { TabOverflowList } from "./TabOverflowList";
+import { useTabsNext } from "./TabsNextContext";
 import tabstripCss from "./TabstripNext.css";
+import { TabstripNextContext } from "./TabstripNextContext";
+import { useCollection } from "./hooks/useCollection";
+import { useOverflow } from "./hooks/useOverflow";
 
 const withBaseName = makePrefixer("saltTabstripNext");
 
 export interface TabstripNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /* Styling active color variant. Defaults to "primary". */
-  activeColor?: "primary" | "secondary";
+  activeColor?: "primary" | "secondary" | "tertiary";
   /* Tabs alignment. Defaults to "left" */
   align?: "left" | "center" | "right";
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
   value?: string;
   /* Callback for the controlled version. */
-  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  onChange?: (event: SyntheticEvent, value: string) => void;
   /* Initial value for the uncontrolled version. */
   defaultValue?: string;
   /* The Tabs variant */
   variant?: "main" | "inline";
-}
-
-interface TabValue {
-  value: string;
-  label: ReactNode;
+  onAdd?: () => void;
+  onClose?: (event: SyntheticEvent, value: string) => void;
 }
 
 export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
@@ -49,8 +57,10 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       align = "left",
       children,
       className,
-      value: valueProp,
+      value,
       defaultValue,
+      onAdd,
+      onClose,
       onChange,
       onKeyDown,
       style,
@@ -64,135 +74,132 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       window: targetWindow,
     });
 
+    const {
+      registerItem,
+      item,
+      getNext,
+      getPrevious,
+      getFirst,
+      getLast,
+      items,
+    } = useCollection({ wrap: true });
+    const { setSelectedTab } = useTabsNext();
+
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
+    const addButtonRef = useRef<HTMLButtonElement>(null);
+    const overflowButtonRef = useRef<HTMLButtonElement>(null);
+    const [menuOpen, setMenuOpen] = useState(false);
 
-    const [value, setValue] = useControlled({
-      controlled: valueProp,
+    const [selected, setSelectedState] = useControlled({
+      controlled: value,
       default: defaultValue,
       name: "TabstripNext",
       state: "selected",
     });
-    const [focusable, setFocusableState] = useState<string | undefined>(value);
-    const [overflowOpen, setOverflowOpen] = useState(false);
 
-    const activate = useCallback(
-      (event: SyntheticEvent<HTMLButtonElement>) => {
-        const newValue = event.currentTarget.value;
-        setValue(newValue);
-        if (value !== newValue) {
-          onChange?.(event, { value: newValue });
-        }
-      },
-      [onChange, value],
-    );
+    const [visible, hidden, isMeasuring] = useOverflow({
+      container: tabstripRef,
+      tabs: items,
+      children,
+      selected,
+      addButton: addButtonRef,
+      overflowButton: overflowButtonRef,
+    });
 
-    const isActive = useCallback(
-      (id: string | undefined) => {
-        return value === id;
-      },
-      [value],
-    );
+    useIsomorphicLayoutEffect(() => {
+      setSelectedTab(selected);
+    }, [selected, setSelectedTab]);
 
-    const setFocusable = useCallback((id: string | undefined) => {
-      setFocusableState(id);
-    }, []);
-
-    const isFocusable = useCallback(
-      (id: string | undefined) => {
-        return focusable === id || !focusable;
-      },
-      [focusable],
-    );
-
-    const [tabList, setTabList] = useState<TabValue[]>([]);
-    const registerTab = useCallback((tab: TabValue) => {
-      setTabList((list) => list.concat([tab]));
-    }, []);
-
-    const unregisterTab = useCallback((id: string) => {
-      setTabList((list) => list.filter((item) => item.value !== id));
-    }, []);
+    const [active, setActive] = useState<string | undefined>(selected);
+    const movedRef = useRef(false);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (overflowOpen) return;
+      if (!active) return;
+      const actionMap = {
+        ArrowRight: getNext,
+        ArrowLeft: getPrevious,
+        Home: getFirst,
+        End: getLast,
+        ArrowUp: menuOpen ? getPrevious : undefined,
+        ArrowDown: menuOpen ? getNext : undefined,
+      };
 
-      const elements: HTMLElement[] = Array.from(
-        tabstripRef.current?.querySelectorAll(
-          `div:not([data-overflowing]) > [role="tab"]:not([disabled])`,
-        ) ?? [],
-      );
+      const action = actionMap[event.key as keyof typeof actionMap];
 
-      const currentIndex = elements.findIndex(
-        (element) => element === targetWindow?.document.activeElement,
-      );
-
-      if (currentIndex < 0) return;
-
-      switch (event.key) {
-        case "ArrowDown":
-        case "ArrowRight":
-          elements[Math.min(currentIndex + 1, elements.length)]?.focus();
-          break;
-        case "ArrowUp":
-        case "ArrowLeft":
-          elements[Math.max(0, currentIndex - 1)]?.focus();
-          break;
-        case "Home":
-          elements[0]?.focus();
-          break;
-        case "End":
-          elements[elements.length - 1]?.focus();
-      }
-
-      onKeyDown?.(event);
-    };
-
-    const handleOverflowItemClick: SelectionChangeHandler<TabValue> = (
-      event,
-      item,
-    ) => {
-      if (item) {
-        setValue(item.value);
-        requestAnimationFrame(() => {
-          const element = tabstripRef.current?.querySelector(
-            `[value="${item.value}"]`,
-          );
-          if (element instanceof HTMLElement) {
-            element?.focus();
-          }
-        });
-        if (value !== item.value) {
-          onChange?.(event, { value: item.value });
+      if (action) {
+        event.preventDefault();
+        const nextId = action(active);
+        if (nextId) {
+          movedRef.current = true;
+          setActive(nextId);
         }
       }
     };
 
-    const handleOverflowOpenChange = (isOpen: boolean) => {
-      setOverflowOpen(isOpen);
+    const handleClose = useCallback(
+      (event: SyntheticEvent, id: string) => {
+        const first = getFirst();
+        const newActive = id === first ? getNext(id) : getPrevious(id);
+        if (id === selected) {
+          setSelected(event, newActive);
+        } else {
+          setActive(newActive);
+        }
+        onClose?.(event, id);
+      },
+      [getFirst, getNext, getPrevious, selected, onClose],
+    );
+
+    const setSelected = useCallback(
+      (event: SyntheticEvent, action: string) => {
+        setSelectedState(action);
+        setActive(action);
+
+        setTimeout(() => {
+          const itemElement = item(action)?.element;
+          itemElement?.focus({ preventScroll: true });
+          itemElement?.scrollIntoView({ block: "nearest", inline: "nearest" });
+        }, 0);
+
+        onChange?.(event, action);
+      },
+      [onChange],
+    );
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useEffect(() => {
+      if (!movedRef.current) return;
+      const itemElement = item(active)?.element;
+      if (itemElement) {
+        itemElement.focus({ preventScroll: true });
+        itemElement.scrollIntoView({ block: "nearest", inline: "nearest" });
+      }
+    }, [active]);
+
+    const [focusInside, setFocusInside] = useState(false);
+
+    const handleFocus = (event: FocusEvent) => {
+      if (event.target !== addButtonRef.current) {
+        setFocusInside(true);
+      }
+    };
+
+    const handleBlur = () => {
+      setFocusInside(false);
     };
 
     const contextValue = useMemo(
       () => ({
-        activate,
-        isActive,
-        setFocusable,
-        isFocusable,
-        registerTab,
-        unregisterTab,
+        registerItem,
         variant,
-        activeColor,
+        setSelected,
+        selected,
+        setActive,
+        focusInside,
+        handleClose,
       }),
-      [
-        activate,
-        isActive,
-        setFocusable,
-        isFocusable,
-        registerTab,
-        unregisterTab,
-        variant,
-        activeColor,
-      ],
+      [variant, setSelected, selected, registerItem, focusInside, handleClose],
     );
 
     const tabstripStyle = {
@@ -201,30 +208,46 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
     };
 
     return (
-      <TabsContext.Provider value={contextValue}>
-        <div className={clsx(withBaseName("container"), withBaseName(variant))}>
-          <Overflow ref={handleRef}>
-            <div
-              role="tablist"
-              className={clsx(
-                withBaseName(),
-                withBaseName("horizontal"),
-                className,
-              )}
-              onKeyDown={handleKeyDown}
-              style={tabstripStyle}
-              {...rest}
+      <TabstripNextContext.Provider value={contextValue}>
+        <div
+          role="tablist"
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            withBaseName("horizontal"),
+            withBaseName(`activeColor${capitalize(activeColor)}`),
+            className,
+          )}
+          style={tabstripStyle}
+          ref={handleRef}
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          {...rest}
+        >
+          {visible}
+          <TabOverflowList
+            isMeasuring={isMeasuring}
+            buttonRef={overflowButtonRef}
+            tabstripRef={tabstripRef}
+            open={menuOpen}
+            setOpen={setMenuOpen}
+          >
+            {hidden}
+          </TabOverflowList>
+          {onAdd && (
+            <Button
+              ref={addButtonRef}
+              aria-label="Add Tab"
+              appearance="transparent"
+              sentiment="neutral"
+              onClick={onAdd}
             >
-              {children}
-              <OverflowMenu
-                tabs={tabList}
-                onOpenChange={handleOverflowOpenChange}
-                onSelectionChange={handleOverflowItemClick}
-              />
-            </div>
-          </Overflow>
+              <AddIcon aria-hidden />
+            </Button>
+          )}
         </div>
-      </TabsContext.Provider>
+      </TabstripNextContext.Provider>
     );
   },
 );

@@ -45,7 +45,7 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
       <TabstripNext
         {...tabstripProps}
         value={value}
-        onChange={(_, { value }) => {
+        onChange={(_, value) => {
           setValue(value);
         }}
       >
@@ -59,7 +59,7 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
         {...tabstripProps}
         value={value}
         variant="inline"
-        onChange={(_, { value }) => {
+        onChange={(_, value) => {
           setValue(value);
         }}
       >

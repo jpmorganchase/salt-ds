@@ -8,17 +8,17 @@ import {
 import { TabNext, TabstripNext } from "@salt-ds/lab";
 import type { ComponentType, ReactElement } from "react";
 
+const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
+
+const tabToIcon: Record<string, ComponentType> = {
+  Home: HomeIcon,
+  Transactions: ReceiptIcon,
+  Loans: CreditCardIcon,
+  Checks: BankCheckIcon,
+  Liquidity: LineChartIcon,
+};
+
 export const WithIcon = (): ReactElement => {
-  const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
-
-  const tabToIcon: Record<string, ComponentType> = {
-    Home: HomeIcon,
-    Transactions: ReceiptIcon,
-    Loans: CreditCardIcon,
-    Checks: BankCheckIcon,
-    Liquidity: LineChartIcon,
-  };
-
   return (
     <TabstripNext defaultValue={tabs[0]} align="center">
       {tabs.map((label) => {

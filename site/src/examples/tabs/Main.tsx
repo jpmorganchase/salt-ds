@@ -10,7 +10,7 @@ import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
-export const Inline = (): ReactElement => {
+export const Main = (): ReactElement => {
   const [alignment, setAlignment] =
     useState<TabstripNextProps["align"]>("center");
 
@@ -20,7 +20,7 @@ export const Inline = (): ReactElement => {
 
   return (
     <StackLayout gap={6} style={{ alignItems: "center", width: "30vw" }}>
-      <TabstripNext variant="inline" defaultValue={tabs[0]} align={alignment}>
+      <TabstripNext defaultValue={tabs[0]} align={alignment}>
         {tabs.map((label) => (
           <TabNext value={label} key={label}>
             {label}

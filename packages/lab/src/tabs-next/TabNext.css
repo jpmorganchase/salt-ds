@@ -1,10 +1,10 @@
 /* Class applied to root Tab element */
 .saltTabNext {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   appearance: none;
   -webkit-appearance: none;
-  display: inline-flex;
   background: var(--salt-navigable-primary-background);
   gap: var(--salt-spacing-100);
   border: none;
@@ -29,12 +29,13 @@
   font-size: var(--salt-text-fontSize);
 }
 
-.saltTabNext-primary {
-  --tabNext-background-active: var(--salt-container-primary-background);
-}
-
-.saltTabNext-secondary {
-  --tabNext-background-active: var(--salt-container-secondary-background);
+.saltTabNext-action {
+  all: unset;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .saltTabNext::after {
@@ -54,30 +55,30 @@
 }
 
 .saltTabNext:hover::after,
-.saltTabNext:focus-visible::after {
+.saltTabNext-focusVisible::after {
   background: var(--salt-navigable-indicator-hover);
 }
 
-.saltTabNext:disabled:hover::after,
-.saltTabNext:disabled:focus-visible::after {
+.saltTabNext-disabled:hover::after,
+.saltTabNext-disabled.saltTabNext-focusVisible::after {
   background: none;
 }
 
-.saltTabNext:focus-visible {
+.saltTabNext-focusVisible {
   outline: var(--salt-focused-outline);
 }
 
-.saltTabNext-main[aria-selected="true"] {
-  background: var(--tabNext-background-active);
+.saltTabNext-main.saltTabNext-selected {
+  background: var(--saltTabstripNext-activeColor);
   border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
   border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
-.saltTabNext[aria-selected="true"]::after {
+.saltTabNext.saltTabNext-selected::after {
   background: var(--salt-navigable-indicator-active);
 }
 
-.saltTabNext:disabled {
+.saltTabNext.saltTabNext-disabled {
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }
