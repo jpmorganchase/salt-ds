@@ -6,7 +6,7 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -69,19 +69,22 @@ export const String: StoryFn = () => {
 
 export const InlineBadge: StoryFn = () => {
   return (
-    <TabstripNext
-      defaultValue="Home"
-      style={{
-        minWidth: 350,
-      }}
-    >
-      <TabNext value="Home">Home</TabNext>
-      <TabNext value="Transactions" aria-label="Transations - 30 updates">
-        Transactions
-        <Badge value={30} />
-      </TabNext>
-      <TabNext value="Loans">Loans</TabNext>
-    </TabstripNext>
+    <TabsNext defaultValue="Home">
+      <TabBar padding separator>
+        <TabListNext
+          style={{
+            minWidth: 350,
+          }}
+        >
+          <TabNext value="Home">Home</TabNext>
+          <TabNext value="Transactions" aria-label="Transations - 30 updates">
+            Transactions
+            <Badge value={30} />
+          </TabNext>
+          <TabNext value="Loans">Loans</TabNext>
+        </TabListNext>
+      </TabBar>
+    </TabsNext>
   );
 };
 
@@ -119,17 +122,16 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
 
 export const InlineDotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <TabstripNext
-      variant="inline"
-      defaultValue="Home"
-      align="center"
-      style={{ minWidth: 350 }}
-    >
-      <TabNext value="Home">Home</TabNext>
-      <TabNext value="Transactions" aria-label="Transactions - New">
-        Transactions <Badge />
-      </TabNext>
-      <TabNext value="Loans">Loans</TabNext>
-    </TabstripNext>
+    <TabsNext defaultValue="Home">
+      <TabBar>
+        <TabListNext appearance="transparent" style={{ minWidth: 350 }}>
+          <TabNext value="Home">Home</TabNext>
+          <TabNext value="Transactions" aria-label="Transactions - New">
+            Transactions <Badge />
+          </TabNext>
+          <TabNext value="Loans">Loans</TabNext>
+        </TabListNext>
+      </TabBar>
+    </TabsNext>
   );
 };
