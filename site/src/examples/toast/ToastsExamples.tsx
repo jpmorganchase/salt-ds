@@ -8,7 +8,7 @@ export const InfoToast = () => {
     setOpen(false);
   };
   return open ? (
-    <Toast>
+    <Toast status="info">
       <ToastContent>
         <Text>
           <strong>File update</strong>

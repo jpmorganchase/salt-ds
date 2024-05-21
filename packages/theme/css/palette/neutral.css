@@ -17,6 +17,7 @@
   --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
+  --salt-palette-neutral-primary-border-default: var(--salt-color-gray-50);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -24,6 +25,7 @@
   --salt-palette-neutral-primary-background-disabled: var(--salt-color-gray-800-fade-background);
   --salt-palette-neutral-primary-background-readonly: var(--salt-color-gray-800-fade-background-readonly);
   --salt-palette-neutral-primary-border: var(--salt-color-gray-300);
+  --salt-palette-neutral-primary-border-default: var(--salt-color-gray-300);
   --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-300-fade-border);
   --salt-palette-neutral-primary-foreground: var(--salt-color-white);
   --salt-palette-neutral-primary-foreground-disabled: var(--salt-color-white-fade-foreground);

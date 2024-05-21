@@ -17,7 +17,7 @@
   --salt-status-error-borderColor: var(--salt-palette-error-border);
   --salt-status-warning-borderColor: var(--salt-palette-warning-border);
   --salt-status-success-borderColor: var(--salt-palette-success-border);
-  --salt-status-default-borderColor: var(--salt-palette-neutral-primary-border);
+  --salt-status-default-borderColor: var(--salt-container-primary-borderColor-default);
 
   --salt-status-info-background: var(--salt-palette-info-background);
   --salt-status-error-background: var(--salt-palette-error-background);
