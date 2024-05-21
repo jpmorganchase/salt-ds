@@ -236,17 +236,13 @@ const PatternStory: StoryFn<PatternStoryProps> = () => {
         <nav aria-label="Breadcrumb">
           <ol>
             <li>
-              <Link href="#" styleAs="label">
-                Home
-              </Link>
+              <Link href="#">Home</Link>
             </li>
             <Separator />
             {additionalBreadcrumbs}
             <Separator />
             <li>
-              <Text maxRows={1} styleAs="label">
-                Current level
-              </Text>
+              <Text maxRows={1}>Current level</Text>
             </li>
           </ol>
         </nav>
@@ -256,9 +252,7 @@ const PatternStory: StoryFn<PatternStoryProps> = () => {
         <nav aria-label="Breadcrumb">
           <ol>
             <li>
-              <Link href="#" styleAs="label">
-                Home
-              </Link>
+              <Link href="#">Home</Link>
             </li>
             <Separator />
             <MenuButton CascadingMenuProps={{ initialSource }} hideCaret>
@@ -266,9 +260,7 @@ const PatternStory: StoryFn<PatternStoryProps> = () => {
             </MenuButton>
             <Separator />
             <li>
-              <Text maxRows={1} styleAs="label">
-                Current level
-              </Text>
+              <Text maxRows={1}>Current level</Text>
             </li>
           </ol>
         </nav>
@@ -278,9 +270,7 @@ const PatternStory: StoryFn<PatternStoryProps> = () => {
         <nav aria-label="Breadcrumb">
           <ol>
             <li>
-              <Link href="#" styleAs="label">
-                Home
-              </Link>
+              <Link href="#">Home</Link>
             </li>
             <Separator />
             {isExpanded ? (
@@ -292,9 +282,7 @@ const PatternStory: StoryFn<PatternStoryProps> = () => {
             )}
             <Separator />
             <li>
-              <Text maxRows={1} styleAs="label">
-                Current level
-              </Text>
+              <Text maxRows={1}>Current level</Text>
             </li>
           </ol>
         </nav>
