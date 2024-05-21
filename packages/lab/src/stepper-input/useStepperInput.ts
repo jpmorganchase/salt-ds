@@ -233,12 +233,6 @@ export const useStepperInput = (
       onChange: callAll(inputProps.onChange, handleInputChange),
       onFocus: inputProps.onFocus,
       onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
-      validationStatus:
-        inputProps.validationStatus !== undefined
-          ? inputProps.validationStatus
-          : isOutOfRange()
-          ? "error"
-          : undefined,
       value: String(currentValue),
     };
   };

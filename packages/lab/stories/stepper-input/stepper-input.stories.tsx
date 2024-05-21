@@ -45,15 +45,6 @@ export const DecimalPlaces: StoryFn = (args) => {
 };
 
 export const MinAndMaxValue: StoryFn = (args) => {
-  return (
-    <div>
-      <Text>Enter a value between 0 and 5</Text>
-      <StepperInput {...args} max={5} min={0} style={{ width: "250px" }} />
-    </div>
-  );
-};
-
-export const ControlledMinAndMaxValue: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const max = 5;
   const min = 0;
