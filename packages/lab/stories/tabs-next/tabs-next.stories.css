@@ -1,0 +1,10 @@
+#storybook-root {
+  min-width: 0;
+}
+
+.container {
+  min-width: 0;
+  min-height: 200px;
+  width: 600px;
+  max-width: 100%;
+}

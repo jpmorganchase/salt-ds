@@ -1,2 +1,5 @@
 export * from "./TabNext";
-export * from "./TabstripNext";
+export * from "./TabListNext";
+export * from "./TabsNext";
+export * from "./TabNextPanel";
+export * from "./TabBar";

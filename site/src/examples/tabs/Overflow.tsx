@@ -1,25 +1,16 @@
-import { Badge } from "@salt-ds/core";
 import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
-const notifications: Record<(typeof tabs)[number], number> = {
-  Transactions: 1,
-  Checks: 6,
-};
-
-export const WithBadge = (): ReactElement => {
+export const Overflow = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar separator padding>
-        <TabListNext>
+        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
               {label}
-              {notifications[label] > 0 ? (
-                <Badge value={notifications[label]} />
-              ) : undefined}
             </TabNext>
           ))}
         </TabListNext>

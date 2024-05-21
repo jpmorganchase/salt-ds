@@ -1,0 +1,31 @@
+/* Component class applied to the root element */
+.saltTabListNext {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background: transparent;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  gap: var(--salt-spacing-100);
+}
+
+.saltTabListNext-center {
+  justify-content: center;
+}
+
+.saltTabListNext-right {
+  justify-content: flex-end;
+}
+
+.saltTabListNext-activeColorPrimary {
+  --saltTabListNext-activeColor: var(--salt-container-primary-background);
+}
+
+.saltTabListNext-activeColorSecondary {
+  --saltTabListNext-activeColor: var(--salt-container-secondary-background);
+}
+
+.saltTabListNext-activeColorTertiary {
+  --saltTabListNext-activeColor: var(--salt-container-tertiary-background);
+}

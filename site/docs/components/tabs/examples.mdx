@@ -9,27 +9,19 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="tabs" exampleName="MainTabstrip" >
+<LivePreview componentName="tabs" exampleName="Appearance" >
 
-## Main tabstrip (default)
+## Appearance
 
-The main tabstrip uses a border to separate the tabs from the rest of the page. You can align tabs inside the tabstrip can be aligned to the left, center or right. Use it to organize content across the main region of an interface under the app header.
-
-### Best practices
-
-The main tabstrip should span the width of the page.
+Two different appearances are available for tabs: Bordered and Transparent.
 
 </LivePreview>
 
-<LivePreview componentName="tabs" exampleName="Inline" >
+<LivePreview componentName="tabs" exampleName="SeparatorAndPadding" >
 
-## Inline tabstrip
+## Separator and padding
 
-The inline tabstrip has no separator between the tabs and the content below. Use it within an area of a page to switch between related content. Like the main tabstrip, you can align the tabs to the left, center or right.
-
-### Best practices
-
-Don’t use inline tabs standalone outside of the content region it is nested within.
+Tabs can be shown with a separator or padding to help create visual alignment in your UI,
 
 </LivePreview>
 
@@ -50,6 +42,58 @@ Ensure that icon descriptors are used consistently across all tabs within the st
 ## With badge
 
 Tabs can feature a [badge](../badge) that serves as a visual cue. They can inform users of additional context, notifications, or new content.
+
+</LivePreview>
+
+<LivePreview componentName="tabs" exampleName="Overflow" >
+
+## Overflow
+
+When there are too many tabs to fit in the tabstrip, an overflow menu appears. The overflow menu contains a list of all tabs that are not visible in the tabstrip. Users can access the overflow menu by clicking the chevron icon on the right side of the tabstrip or navigating using the arrow keys.
+
+</LivePreview>
+
+<LivePreview componentName="tabs" exampleName="AddANewTab" >
+
+## Add a new tab
+
+When `onAdd` is set on the `Tabstrip` component, a button will appear that allows users to add a new tab.
+
+### Best practices
+
+- Provide enough space to display several newly added tabs before overflow is enabled.
+- Set the new tab to be the active tab when it is added.
+
+</LivePreview>
+
+<LivePreview componentName="tabs" exampleName="ClosableTabs" >
+
+## Closable tabs
+
+Tabs can be set as closable using the `closable` prop. When a tab is closable, a close button appears on the right side of the tab. A tab can be closed, whether it is active or inactive.
+
+When closing a tab, a warning dialog may be used when closing a tab will result in data loss.
+
+### Best practices
+
+- Don't use closable tabs for tabs that are essential to the user's workflow.
+- Don't allow users to close the last tab in a tabstrip.
+
+</LivePreview>
+
+<LivePreview componentName="tabs" exampleName="DisabledTabs" >
+
+## Disabled tabs
+
+Tabs can be set as disabled using the `disabled` prop.
+
+</LivePreview>
+
+<LivePreview componentName="tabs" exampleName="ActiveColor" >
+
+## Active color
+
+Tabs supports three active colors: "primary", "secondary" and "tertiary".
 
 </LivePreview>
 </LivePreviewControls>
