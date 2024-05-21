@@ -63,7 +63,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const isIndeterminate = variant === "indeterminate";
-    const progress = isIndeterminate ? 60 : ((value - min) / (max - min)) * 100;
+    const progress = isIndeterminate ? 66 : ((value - min) / (max - min)) * 100;
     const buffer = isIndeterminate
       ? 0
       : ((bufferValue - min) / (max - min)) * 100;
