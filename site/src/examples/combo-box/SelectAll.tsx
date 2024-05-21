@@ -16,37 +16,23 @@ export const SelectAll = (): ReactElement => {
     newSelected: string[]
   ) => {
     let newOptionsSelected = [...newSelected];
-    //case: if select all is previously selected but any option is unselected, then unselect the select all checkbox
-    if (
-      selected.includes(allSelectedOptionValue) &&
-      newOptionsSelected.includes(allSelectedOptionValue)
-    ) {
-      newOptionsSelected = newOptionsSelected.filter(
-        (el) => el !== allSelectedOptionValue
-      );
-    }
-    //case: clear all if select all is unselected
-    else if (
-      selected.includes(allSelectedOptionValue) &&
-      !newOptionsSelected.includes(allSelectedOptionValue)
-    ) {
-      newOptionsSelected = [];
-    }
-    //case: select all if select all is selected
-    else if (
-      !selected.includes(allSelectedOptionValue) &&
-      newOptionsSelected.includes(allSelectedOptionValue)
-    ) {
-      newOptionsSelected = [...shortColorData, allSelectedOptionValue];
-    }
-    //case: select all should be checked if all options are selected
-    else if (
-      !newOptionsSelected.includes(allSelectedOptionValue) &&
-      newOptionsSelected.length === shortColorData.length
-    ) {
-      newOptionsSelected = [...shortColorData, allSelectedOptionValue];
-    }
+    const wasAllSelected = selected.includes(allSelectedOptionValue);
+    const isAllSelected = newOptionsSelected.includes(allSelectedOptionValue);
 
+    if (wasAllSelected) {
+      if (isAllSelected) {
+        newOptionsSelected = newOptionsSelected.filter(
+          (el) => el !== allSelectedOptionValue
+        );
+      } else {
+        newOptionsSelected = [];
+      }
+    } else if (
+      isAllSelected ||
+      (!isAllSelected && newOptionsSelected.length === shortColorData.length)
+    ) {
+      newOptionsSelected = [...shortColorData, allSelectedOptionValue];
+    }
     setSelected(newOptionsSelected);
 
     setValue("");
