@@ -14,7 +14,7 @@ const generateData = (states: typeof defaultData) =>
     return [...result, ...data];
   }, [] as typeof defaultData);
 
-const PagedGrid = (props: AgGridReactProps) => {
+export const Pagination = (props: AgGridReactProps) => {
   // We've created a local custom hook to set the rows and column sizes. For complete example check the `Default` example.
   const { agGridProps, containerProps } = useAgGridHelpers();
 
@@ -31,20 +31,6 @@ const PagedGrid = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export const Pagination = () => (
-  <div
-    style={{
-      marginTop: "-150px",
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-    }}
-  >
-    <PagedGrid />
-  </div>
-);
 
 // Helps to set className, rowHeight and headerHeight depending on the current density
 function useAgGridHelpers(compact = false): {
