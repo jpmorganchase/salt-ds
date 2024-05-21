@@ -14,7 +14,6 @@ import {
   useRef,
   useState,
 } from "react";
-import type { SelectionChangeHandler } from "../common-hooks";
 import { OverflowMenu } from "./OverflowMenu";
 import { TabsContext } from "./TabNextContext";
 import tabstripCss from "./TabstripNext.css";
@@ -74,7 +73,6 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       state: "selected",
     });
     const [focusable, setFocusableState] = useState<string | undefined>(value);
-    const [overflowOpen, setOverflowOpen] = useState(false);
 
     const activate = useCallback(
       (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -115,8 +113,6 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
     }, []);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (overflowOpen) return;
-
       const elements: HTMLElement[] = Array.from(
         tabstripRef.current?.querySelectorAll(
           `div:not([data-overflowing]) > [role="tab"]:not([disabled])`,
@@ -148,28 +144,24 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       onKeyDown?.(event);
     };
 
-    const handleOverflowItemClick: SelectionChangeHandler<TabValue> = (
-      event,
-      item,
+    const handleOverflowItemClick = (
+      event: SyntheticEvent,
+      itemValue: string,
     ) => {
-      if (item) {
-        setValue(item.value);
-        requestAnimationFrame(() => {
+      if (itemValue) {
+        setValue(itemValue);
+        setTimeout(() => {
           const element = tabstripRef.current?.querySelector(
-            `[value="${item.value}"]`,
+            `[value="${itemValue}"]`,
           );
           if (element instanceof HTMLElement) {
             element?.focus();
           }
-        });
-        if (value !== item.value) {
-          onChange?.(event, { value: item.value });
+        }, 50);
+        if (value !== itemValue) {
+          onChange?.(event, { value: itemValue });
         }
       }
-    };
-
-    const handleOverflowOpenChange = (isOpen: boolean) => {
-      setOverflowOpen(isOpen);
     };
 
     const contextValue = useMemo(
@@ -218,8 +210,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
               {children}
               <OverflowMenu
                 tabs={tabList}
-                onOpenChange={handleOverflowOpenChange}
-                onSelectionChange={handleOverflowItemClick}
+                onItemClick={handleOverflowItemClick}
               />
             </div>
           </Overflow>
