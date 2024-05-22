@@ -56,7 +56,7 @@ export const useStepperInput = (
     default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
     name: "stepper-input",
   });
-  const inputId = useId();
+  const inputId = useId(props.id);
 
   const isOutOfRange = () => {
     if (currentValue === undefined) return true;
@@ -169,7 +169,7 @@ export const useStepperInput = (
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const changedValue = (event.target as HTMLInputElement).value;
+    const changedValue = event.target.value;
 
     if (!isControlled) {
       setCurrentValue(sanitizedInput(changedValue));
