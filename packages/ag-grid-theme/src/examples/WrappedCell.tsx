@@ -60,8 +60,4 @@ const WrappedCell = (props: AgGridReactProps) => {
   );
 };
 
-WrappedCell.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
 export default WrappedCell;

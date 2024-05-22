@@ -84,8 +84,4 @@ const ToolPanel = (props: AgGridReactProps) => {
   );
 };
 
-ToolPanel.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
 export default ToolPanel;
