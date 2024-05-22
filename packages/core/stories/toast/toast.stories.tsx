@@ -26,11 +26,11 @@ const Template: StoryFn<typeof Toast> = ({ children, ...args }) => (
 export const Default: StoryFn<typeof Toast> = (args) => (
   <Toast {...args} style={{ width: 260 }}>
     <ToastContent>
-      <Text>
-        <strong>File update</strong>
-      </Text>
-      <div>A new version of this file is available with 37 updates. </div>
+      <Text>A new question has been posted with the [salt-ds] tag in Stack Overflow.</Text>
     </ToastContent>
+    <Button variant="secondary">
+      <CloseIcon />
+    </Button>
   </Toast>
 );
 

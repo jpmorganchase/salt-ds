@@ -6,9 +6,8 @@ export const Default = (): ReactElement => (
   <Toast style={{ width: 260 }}>
     <ToastContent>
       <Text>
-        <strong>File update</strong>
+        A new question has been posted with the [salt-ds] tag in Stack Overflow.
       </Text>
-      <div>A new version of this file is available with 37 updates. </div>
     </ToastContent>
     <Button variant="secondary">
       <CloseIcon />
