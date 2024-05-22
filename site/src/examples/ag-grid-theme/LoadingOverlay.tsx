@@ -1,8 +1,7 @@
 import { Card, Spinner, StackLayout, Text } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
-import { CSSProperties } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
-import { defaultColumns, defaultData } from "./data";
+import { defaultColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const CustomOverlay = () => (
