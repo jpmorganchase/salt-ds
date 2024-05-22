@@ -77,8 +77,7 @@ import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default"
 import AgGridThemeZebra from "../../../ag-grid-theme/stories/examples/VariantZebra";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/stories/examples/HDCompact";
 
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-material.css";
+import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
 
 export default {
