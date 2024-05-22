@@ -44,6 +44,7 @@ export const useStepperInput = (
     block = 10,
     decimalPlaces = 0,
     defaultValue = 0,
+    id: idProp,
     max = Number.MAX_SAFE_INTEGER,
     min = Number.MIN_SAFE_INTEGER,
     onChange,
@@ -56,7 +57,7 @@ export const useStepperInput = (
     default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
     name: "stepper-input",
   });
-  const inputId = useId(props.id);
+  const inputId = useId(idProp);
 
   const isOutOfRange = () => {
     if (currentValue === undefined) return true;
