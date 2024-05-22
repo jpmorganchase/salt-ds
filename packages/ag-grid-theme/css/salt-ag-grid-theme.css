@@ -17,7 +17,7 @@ div[class*="ag-theme-salt"] {
   --ag-grid-size: var(--salt-spacing-50);
   --ag-header-background-color: var(--salt-container-primary-background);
   --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
-  --ag-header-column-separator-color: var(--salt-separable-secondary-borderColor);
+  --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);
   --ag-header-column-separator-display: block;
   --ag-header-column-separator-height: var(--salt-text-fontSize);
   --ag-header-column-separator-width: var(--salt-size-border);
