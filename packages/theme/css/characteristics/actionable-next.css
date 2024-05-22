@@ -30,10 +30,10 @@
   --salt-actionable-secondary-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-secondary-foreground-active: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-secondary-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
-  --salt-actionable-secondary-background: var(--salt-palette-background-none);
+  --salt-actionable-secondary-background: transparent;
   --salt-actionable-secondary-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-secondary-background-active: var(--salt-palette-neutral-action-active);
-  --salt-actionable-secondary-background-disabled: var(--salt-palette-background-none);
+  --salt-actionable-secondary-background-disabled: transparent;
   --salt-actionable-secondary-borderColor: transparent;
   --salt-actionable-secondary-borderColor-hover: transparent; /* TBD when adding bordered button */
   --salt-actionable-secondary-borderColor-active: var(--salt-palette-neutral);
