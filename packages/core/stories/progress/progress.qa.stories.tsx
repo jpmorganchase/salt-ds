@@ -35,6 +35,12 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         hideLabel
       />
       <CircularProgress aria-label="Download" value={38} hideLabel />
+      <LinearProgress
+        aria-label="Download"
+        className={className}
+        style={{ padding: "50px" }}
+        variant="indeterminate"
+      />
     </QAContainer>
   );
 };
