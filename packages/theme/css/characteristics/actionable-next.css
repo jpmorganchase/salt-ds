@@ -10,7 +10,7 @@
   --salt-actionable-cta-background-hover: var(--salt-palette-accent-action-hover);
   --salt-actionable-cta-background-active: var(--salt-palette-accent-action-active);
   --salt-actionable-cta-background-disabled: var(--salt-palette-accent-disabled);
-  --salt-actionable-cta-borderColor: transparent; /* TBD when adding bordered button */
+  --salt-actionable-cta-borderColor: var(--salt-palette-accent);
   --salt-actionable-cta-borderColor-hover: transparent; /* TBD when adding bordered button */
   --salt-actionable-cta-borderColor-active: var(--salt-palette-accent);
   --salt-actionable-cta-borderColor-disabled: transparent; /* TBD when adding bordered button */
@@ -23,7 +23,7 @@
   --salt-actionable-primary-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-primary-background-active: var(--salt-palette-neutral-action-active);
   --salt-actionable-primary-background-disabled: var(--salt-palette-neutral-strong-disabled);
-  --salt-actionable-primary-borderColor: transparent; /* TBD when adding bordered button */
+  --salt-actionable-primary-borderColor: var(--salt-palette-neutral);
   --salt-actionable-primary-borderColor-hover: transparent; /* TBD when adding bordered button */
   --salt-actionable-primary-borderColor-active: var(--salt-palette-neutral);
   --salt-actionable-primary-borderColor-disabled: transparent; /* TBD when adding bordered button */
@@ -36,7 +36,7 @@
   --salt-actionable-secondary-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-secondary-background-active: var(--salt-palette-neutral-action-active);
   --salt-actionable-secondary-background-disabled: var(--salt-palette-background-none);
-  --salt-actionable-secondary-borderColor: transparent; /* TBD when adding bordered button */
+  --salt-actionable-secondary-borderColor: transparent;
   --salt-actionable-secondary-borderColor-hover: transparent; /* TBD when adding bordered button */
   --salt-actionable-secondary-borderColor-active: var(--salt-palette-neutral);
   --salt-actionable-secondary-borderColor-disabled: transparent; /* TBD when adding bordered button */
