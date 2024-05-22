@@ -131,3 +131,35 @@ You'll need to install Amplitude font to your application to make sure every use
   src: url("PATH/TO/FONT.woff2") format("woff2");
 }
 ```
+
+## Unified Color Palette
+
+A completely new color palette is used with balanced color ramps for each color group.
+
+You will find 9 colors in each color group, which makes sure middle point (500 colors) will achieve
+at least 4.5 contrast ratio against both light and dark primary background. Primary and secondary
+background colors are no longer picked from the color ramps, but rather from additional foundation
+colors (snow & marble in light, jet & granite in dark).
+
+Refer to Figma file ([UNSTABLE Salt Colors (variables)](<https://www.figma.com/file/e753bB0n5Adc0LCXqtvslu/UNSTABLE-Salt-Colors-(variables)?type=design&node-id=424%3A77224&mode=design&t=1snosiQ76rKnIe9d-1>))
+for color values and mappings.
+
+Migration note: If you're referring any Salt foundation colors (i.e. `--salt-color-*`) directly in your code,
+you'll need to revisit those values. We do not recommend directly consume foundation colors directly, instead
+try to find a characteristics color instead which will work better in different modes.
+
+## New Theme Palette Structure
+
+A new structure of palette layer is introduced to help making color changes easier for custom themes, namely
+
+- Accent
+- Background
+- Foreground
+- Neutral
+- Info
+- Negative
+- Positive
+- Warning
+
+All existing characteristics are re-wired through above new palette layers to use the new colors,
+which is scoped to `.salt-theme-next`.

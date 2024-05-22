@@ -223,7 +223,7 @@
 
 .saltPillInput-startAdornmentContainer > .saltButton,
 .saltPillInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: var(--salt-spacing-50);
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 

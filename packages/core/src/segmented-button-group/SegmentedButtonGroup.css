@@ -10,8 +10,10 @@
   width: var(--salt-size-border);
   position: absolute;
   background: var(--button-background);
-  right: calc(var(--salt-size-border) * -1);
-  height: 100%;
+  /* Accomodate button border */
+  right: calc(var(--salt-size-border) * -2);
+  top: calc(var(--salt-size-border) * -1);
+  bottom: calc(var(--salt-size-border) * -1);
 }
 
 .saltSegmentedButtonGroup > .saltButton:not(:first-of-type)::before {
@@ -19,6 +21,8 @@
   width: var(--salt-size-border);
   position: absolute;
   background: var(--salt-separable-primary-borderColor);
-  left: calc(var(--salt-size-border) * -1);
-  height: 100%;
+  /* Accomodate button border */
+  left: calc(var(--salt-size-border) * -2);
+  top: calc(var(--salt-size-border) * -1);
+  bottom: calc(var(--salt-size-border) * -1);
 }
