@@ -12,6 +12,7 @@ import {
   AccordionGroupProps,
   StackLayout,
   Text,
+  SplitLayout,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import "./accordion.stories.css";
@@ -190,23 +191,21 @@ export const Status: StoryFn<AccordionGroupProps> = (props) => (
 );
 
 export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
-  <Accordion style={{ width: "90%" }} {...props}>
+  <Accordion {...props}>
     <AccordionHeader>
-      <StackLayout direction={"row"} style={{ width: "100%" }}>
-        <StackLayout gap={0.5} align="start">
-          <Text>Title</Text>
-          <Text color="secondary">Description goes here</Text>
-        </StackLayout>
-        <div style={{ marginLeft: "auto" }}>
-          <Text color="secondary" style={{ width: "max-content" }}>
-            Secondary label{" "}
-          </Text>
-        </div>
-      </StackLayout>
+      <SplitLayout
+        startItem={
+          <StackLayout gap={0.5} align="start">
+            <Text>Title</Text>
+            <Text color="secondary">Description goes here </Text>
+          </StackLayout>
+        }
+        endItem={<Text color="secondary">Secondary label</Text>}
+      />
     </AccordionHeader>
     <AccordionPanel>
       <FlowLayout>
-        Please fill out the following details.
+        <Text>Please fill out the following details.</Text>
         <FormField labelPlacement="left">
           <FormLabel>Disclosure ID</FormLabel>
           <Input />
