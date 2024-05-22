@@ -25,6 +25,7 @@ export interface DatePickerProps
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
+  inputAriaLabel?: string;
   /**
    * Selection variant. Defaults to single select.
    */
@@ -100,6 +101,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onOpenChange: onOpenChangeProp,
       helperText,
       readOnly: readOnlyProp,
+      inputAriaLabel,
       ...rest
     },
     ref
@@ -215,6 +217,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           placeholder={placeholder}
           dateFormatter={dateFormatter}
           readOnly={isReadOnly}
+          ariaLabel={inputAriaLabel}
           endAdornment={
             <Button
               variant="secondary"

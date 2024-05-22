@@ -9,6 +9,7 @@ import {
   startOfMonth,
   today,
 } from "@internationalized/date";
+import { ChangeEvent, useState } from "react";
 
 const composedStories = composeStories(datePickerStories);
 const { Default, Range } = composedStories;
@@ -111,6 +112,12 @@ describe("GIVEN a DatePicker", () => {
         "true"
       );
     });
+    it("should allow a controlled open state", () => {
+      cy.mount(<Default open />);
+      cy.findAllByRole("application").should("exist");
+      cy.realPress("Escape");
+      cy.findAllByRole("application").should("exist");
+    });
   });
   describe("WHEN range datepicker is mounted", () => {
     it("THEN it should mount with the specified defaultStartDate and defaultEndDate", () => {
@@ -201,6 +208,33 @@ describe("GIVEN a DatePicker", () => {
           "have.text",
           formatDate(testDate.add({ months: 2 }), { month: "short" })
         );
+    });
+  });
+  describe("WHEN mounted as a controlled component", () => {
+    it("THEN should mount with specified date", () => {
+      cy.mount(<Default startDate={testDate} />);
+      cy.findByRole("textbox").should("have.value", formatInput(testDate));
+    });
+    describe("WHEN the date is updated", () => {
+      it("should call onChange with the new value", () => {
+        const changeSpy = cy.stub().as("changeSpy");
+        function ControlledPicker() {
+          const [date, setDate] = useState(testDate);
+          const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+            // React 16 backwards compatibility
+            event.persist();
+            setDate(testDate);
+            changeSpy(event);
+          };
+
+          return <Default startDate={date} onChange={onChange} />;
+        }
+        cy.mount(<ControlledPicker />);
+        cy.findByRole("textbox").click().clear().type(testInput);
+        cy.get("@changeSpy").should("have.been.calledWithMatch", {
+          target: { value: testInput },
+        });
+      });
     });
   });
 });

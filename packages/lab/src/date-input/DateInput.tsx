@@ -11,6 +11,7 @@ import {
   SyntheticEvent,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -75,6 +76,7 @@ const defaultDateFormatter = (date: DateValue | undefined): string => {
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<ComponentPropsWithoutRef<"input">, "disabled" | "placeholder"> {
+  ariaLabel?: string;
   /**
    * The marker to use in an empty read only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
@@ -118,6 +120,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   function DateInput(
     {
       className,
+      ariaLabel,
       disabled,
       emptyReadOnlyMarker = "—",
       inputProps = {},
@@ -157,6 +160,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       validationStatusState,
       setValidationStatus,
     } = useDatePickerContext();
+
+    const endDateInputID = useId();
+    const startDateInputID = useId();
 
     const [focused, setFocused] = useState(false);
     const [startDateStringValue, setStartDateStringValue] = useState<string>(
@@ -287,6 +293,9 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         updateEndDate(endDateStringValue);
         setOpen(false);
       }
+      if (event.key === "Tab" && openState) {
+        setOpen(false);
+      }
     };
 
     const handleInputClick = (event: SyntheticEvent<HTMLDivElement>) => {
@@ -314,7 +323,13 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       >
         <input
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+          aria-labelledby={clsx(
+            formFieldLabelledBy,
+            dateInputLabelledBy,
+            startDateInputID
+          )}
+          aria-label={clsx("Start date", ariaLabel)}
+          id={startDateInputID}
           className={withBaseName("input")}
           disabled={isDisabled}
           readOnly={isReadOnly}
@@ -342,7 +357,13 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
                 formFieldDescribedBy,
                 dateInputDescribedBy
               )}
-              aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+              aria-labelledby={clsx(
+                formFieldLabelledBy,
+                dateInputLabelledBy,
+                endDateInputID
+              )}
+              aria-label={clsx("End date", ariaLabel)}
+              id={endDateInputID}
               className={withBaseName("input")}
               disabled={isDisabled}
               readOnly={isReadOnly}
