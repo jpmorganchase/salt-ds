@@ -15,10 +15,7 @@ import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
-import {
-  UseRangeSelectionCalendarProps,
-  UseSingleSelectionCalendarProps,
-} from "../calendar";
+import { CalendarProps } from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
@@ -55,9 +52,15 @@ export interface DatePickerProps
   /**
    * Props to be passed to the Calendar component.
    */
-  CalendarProps?:
-    | UseRangeSelectionCalendarProps
-    | UseSingleSelectionCalendarProps;
+  CalendarProps?: Partial<
+    Omit<
+      CalendarProps,
+      | "selectionVariant"
+      | "selectedDate"
+      | "defaultSelectedDate"
+      | "onSelectedDateChange"
+    >
+  >;
   /**
    * Function to format the input value.
    */
@@ -70,6 +73,14 @@ export interface DatePickerProps
    * Display or hide the component.
    */
   open?: boolean;
+  /**
+   * Helper text to display in the panel
+   */
+  helperText?: string;
+  /**
+   * If `true`, the component is read only.
+   */
+  readOnly?: boolean;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -87,6 +98,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       className,
       open: openProp,
       onOpenChange: onOpenChangeProp,
+      helperText,
+      readOnly: readOnlyProp,
       ...rest
     },
     ref
@@ -142,6 +155,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     ]);
     const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
       useFormFieldProps();
+    const isReadOnly = readOnlyProp || formFieldReadOnly;
 
     const getPanelPosition = () => ({
       top: y ?? 0,
@@ -200,11 +214,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           endInputRef={endInputRef}
           placeholder={placeholder}
           dateFormatter={dateFormatter}
+          readOnly={isReadOnly}
           endAdornment={
             <Button
               variant="secondary"
               onClick={handleCalendarButton}
-              disabled={disabled || formFieldReadOnly || formFieldDisabled}
+              disabled={disabled || isReadOnly || formFieldDisabled}
               aria-label="Open Calendar"
             >
               <CalendarIcon aria-hidden />
@@ -217,6 +232,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           {...getFloatingProps()}
           onSelect={handleSelect}
           CalendarProps={CalendarProps}
+          helperText={helperText}
         />
       </DatePickerContext.Provider>
     );

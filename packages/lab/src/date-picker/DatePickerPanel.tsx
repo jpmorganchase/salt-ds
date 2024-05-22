@@ -5,7 +5,9 @@ import {
   useState,
 } from "react";
 import {
+  FlexItem,
   FlexLayout,
+  FormFieldHelperText,
   makePrefixer,
   StackLayout,
   useFloatingComponent,
@@ -26,6 +28,7 @@ import { DateValue, endOfMonth, startOfMonth } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: () => void;
+  helperText?: string;
   CalendarProps?: Partial<
     Omit<
       CalendarProps,
@@ -41,7 +44,7 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, onSelect, CalendarProps, ...rest } = props;
+    const { className, onSelect, helperText, CalendarProps, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -141,7 +144,12 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
         {...a11yProps}
         {...rest}
       >
-        <StackLayout separators gap={0}>
+        <StackLayout separators gap={0} className={withBaseName("container")}>
+          {helperText && (
+            <FlexItem className={withBaseName("header")}>
+              <FormFieldHelperText>{helperText}</FormFieldHelperText>
+            </FlexItem>
+          )}
           <FlexLayout>
             <Calendar
               visibleMonth={startVisibleMonth}
