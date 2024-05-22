@@ -3,14 +3,8 @@ import { Button, StackLayout } from "@salt-ds/core";
 
 export const FullWidth = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>
-    <Button variant="primary" style={{ width: "100%" }}>
-      Primary full width Button
-    </Button>
-    <Button variant="secondary" style={{ width: "100%" }}>
-      Secondary full width Button
-    </Button>
-    <Button variant="cta" style={{ width: "100%" }}>
-      Cta full width button
-    </Button>
+    <Button variant="primary">Primary full width Button</Button>
+    <Button variant="secondary">Secondary full width Button</Button>
+    <Button variant="cta">Cta full width button</Button>
   </StackLayout>
 );
