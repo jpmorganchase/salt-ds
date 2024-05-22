@@ -5,6 +5,7 @@ import {
   forwardRef,
   KeyboardEvent,
   ReactNode,
+  Ref,
   useRef,
 } from "react";
 import { useWindow } from "@salt-ds/window";
@@ -259,4 +260,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
       </div>
     </ListControlContext.Provider>
   );
-});
+}) as <Item = string>(
+  props: ListBoxProps<Item> & { ref?: Ref<HTMLButtonElement> }
+) => JSX.Element;
