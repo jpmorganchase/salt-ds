@@ -352,7 +352,7 @@ export const SecondaryLabel: StoryFn<typeof Dropdown> = (args) => {
     <Dropdown
       style={{ width: "266px" }}
       valueToString={(city: CityWithCountry) => city.value}
-      placeholder="Secondary label example"
+      placeholder="City"
     >
       {citiesWithCountries.map((city) => (
         <Option key={city.value} value={city}>

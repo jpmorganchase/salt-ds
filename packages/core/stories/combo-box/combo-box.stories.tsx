@@ -723,6 +723,7 @@ export const SecondaryLabel: StoryFn<ComboBoxProps<CityWithCountry>> = (
       value={value}
       style={{ width: "266px" }}
       valueToString={(city) => city.value}
+      placeholder="City"
     >
       {options.map((city) => (
         <Option key={city.value} value={city}>

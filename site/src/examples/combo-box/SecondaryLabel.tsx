@@ -33,6 +33,7 @@ export const SecondaryLabel = (): ReactElement => {
       value={value}
       style={{ width: "266px" }}
       valueToString={(value) => value.value}
+      placeholder="City"
     >
       {options.map((city) => (
         <Option key={city.value} value={city}>
