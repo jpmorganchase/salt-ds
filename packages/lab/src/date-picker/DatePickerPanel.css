@@ -9,3 +9,11 @@
   box-sizing: border-box;
   display: flex;
 }
+.saltDatePickerPanel-container {
+  width: min-content;
+  gap: 1px;
+}
+
+.saltDatePickerPanel-header {
+  padding: var(--salt-spacing-100);
+}

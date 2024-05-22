@@ -1,4 +1,8 @@
-import { SaltProvider } from "@salt-ds/core";
+import {
+  SaltProvider,
+  UNSTABLE_SaltProviderNext,
+  useTheme,
+} from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { useAgGridThemeSwitcher } from "../dependencies/ThemeSwitcher";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -18,6 +22,7 @@ const statusBar = {
 };
 
 const HDCompact = (props: AgGridReactProps) => {
+  const { themeNext } = useTheme();
   const { themeName } = useAgGridThemeSwitcher();
   const { agGridProps, containerProps } = useAgGridHelpers({
     agThemeName: `ag-theme-${themeName}`,
@@ -25,8 +30,10 @@ const HDCompact = (props: AgGridReactProps) => {
     density: "high",
   });
 
+  const Provider = themeNext ? UNSTABLE_SaltProviderNext : SaltProvider;
+
   return (
-    <SaltProvider density="high">
+    <Provider density="high">
       <div {...containerProps}>
         <AgGridReact
           columnDefs={dataGridExampleColumns}
@@ -47,7 +54,7 @@ const HDCompact = (props: AgGridReactProps) => {
           }}
         />
       </div>
-    </SaltProvider>
+    </Provider>
   );
 };
 

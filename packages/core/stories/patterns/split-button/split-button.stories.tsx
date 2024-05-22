@@ -5,6 +5,7 @@ import {
   MenuPanel,
   MenuTrigger,
   SegmentedButtonGroup,
+  Tooltip,
 } from "@salt-ds/core";
 import {
   PrintIcon,
@@ -13,6 +14,7 @@ import {
   ShareIcon,
   ChevronDownIcon,
   ChatIcon,
+  ArrowLeftIcon,
 } from "@salt-ds/icons";
 import { Meta } from "@storybook/react";
 
@@ -50,6 +52,95 @@ export const Primary = () => {
             <ShareIcon aria-hidden />
             Share
           </MenuItem>
+        </MenuPanel>
+      </Menu>
+    </SegmentedButtonGroup>
+  );
+};
+
+export const Secondary = () => {
+  return (
+    <SegmentedButtonGroup>
+      <Button variant="secondary">Action</Button>
+      <Menu placement="bottom-end">
+        <MenuTrigger>
+          <Button variant="secondary" aria-label="Open Menu">
+            <ChevronDownIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>Action 2</MenuItem>
+          <MenuItem>Action 3</MenuItem>
+          <MenuItem>Action 4</MenuItem>
+          <MenuItem>Action 5</MenuItem>
+        </MenuPanel>
+      </Menu>
+    </SegmentedButtonGroup>
+  );
+};
+
+export const CTA = () => {
+  return (
+    <SegmentedButtonGroup>
+      <Button variant="cta">Action</Button>
+      <Menu placement="bottom-end">
+        <MenuTrigger>
+          <Button variant="cta" aria-label="Open Menu">
+            <ChevronDownIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>Action 2</MenuItem>
+          <MenuItem>Action 3</MenuItem>
+          <MenuItem>Action 4</MenuItem>
+          <MenuItem>Action 5</MenuItem>
+        </MenuPanel>
+      </Menu>
+    </SegmentedButtonGroup>
+  );
+};
+
+export const MultipleActions = () => {
+  return (
+    <SegmentedButtonGroup>
+      <Button>Copy</Button>
+      <Button>Paste</Button>
+      <Menu placement="bottom-end">
+        <MenuTrigger>
+          <Button aria-label="Open Menu">
+            <ChevronDownIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>Action 2</MenuItem>
+          <MenuItem>Action 3</MenuItem>
+          <MenuItem>Action 4</MenuItem>
+          <MenuItem>Action 5</MenuItem>
+        </MenuPanel>
+      </Menu>
+    </SegmentedButtonGroup>
+  );
+};
+
+export const IconOnly = () => {
+  return (
+    <SegmentedButtonGroup>
+      <Tooltip content="Previous">
+        <Button aria-label="previous">
+          <ArrowLeftIcon aria-hidden />
+        </Button>
+      </Tooltip>
+      <Menu placement="bottom-end">
+        <MenuTrigger>
+          <Button aria-label="Open Menu">
+            <ChevronDownIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>Action 2</MenuItem>
+          <MenuItem>Action 3</MenuItem>
+          <MenuItem>Action 4</MenuItem>
+          <MenuItem>Action 5</MenuItem>
         </MenuPanel>
       </Menu>
     </SegmentedButtonGroup>

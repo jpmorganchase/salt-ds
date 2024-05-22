@@ -105,7 +105,6 @@
   padding: 0;
   text-align: left;
   width: min-content;
-  flex-grow: 1;
 }
 
 /* Reset in the  class */

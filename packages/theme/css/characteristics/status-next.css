@@ -1,0 +1,23 @@
+.salt-theme.salt-theme-next {
+  --salt-status-info-foreground: var(--salt-palette-accent);
+  --salt-status-success-foreground: var(--salt-palette-positive);
+  --salt-status-warning-foreground: var(--salt-palette-warning);
+  --salt-status-error-foreground: var(--salt-palette-negative);
+  --salt-status-static-foreground: var(--salt-palette-foreground-secondary); /* TBD */
+  --salt-status-negative-foreground: var(--salt-palette-negative);
+  --salt-status-positive-foreground: var(--salt-palette-positive);
+
+  --salt-status-info-borderColor: var(--salt-palette-accent);
+  --salt-status-success-borderColor: var(--salt-palette-positive);
+  --salt-status-warning-borderColor: var(--salt-palette-warning);
+  --salt-status-error-borderColor: var(--salt-palette-negative);
+
+  --salt-status-info-background: var(--salt-palette-accent-weakest);
+  --salt-status-success-background: var(--salt-palette-positive-weak);
+  --salt-status-warning-background: var(--salt-palette-warning-weak);
+  --salt-status-error-background: var(--salt-palette-negative-weak);
+
+  --salt-status-success-background-selected: var(--salt-palette-positive-weak);
+  --salt-status-warning-background-selected: var(--salt-palette-warning-weak);
+  --salt-status-error-background-selected: var(--salt-palette-negative-weak);
+}
