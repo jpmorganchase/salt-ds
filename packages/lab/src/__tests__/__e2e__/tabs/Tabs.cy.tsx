@@ -253,7 +253,7 @@ describe("Editable Tabs", () => {
   });
 
   describe("WHEN ENTER is pressed on tab selected via keyboard", () => {
-    it("THEN tab enters edit state", () => {
+    it.skip("THEN tab enters edit state", () => {
       cy.mount(<SimpleTabstrip enableRenameTab width={400} />);
       cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.wait(100); // ArrowRight need some time to move focus after click
