@@ -118,6 +118,7 @@ export const useStepperInput = (
   };
 
   const setNextValue = (modifiedValue: number) => {
+    if (props.readOnly) return;
     let nextValue = modifiedValue;
     if (nextValue < min) nextValue = min;
     if (nextValue > max) nextValue = max;
@@ -233,6 +234,7 @@ export const useStepperInput = (
       onChange: callAll(inputProps.onChange, handleInputChange),
       onFocus: inputProps.onFocus,
       onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
+      textAlign: inputProps.textAlign,
       value: String(currentValue),
     };
   };

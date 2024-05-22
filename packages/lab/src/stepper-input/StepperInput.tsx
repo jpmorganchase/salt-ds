@@ -11,7 +11,7 @@ import stepperInputCss from "./StepperInput.css";
 const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps
-  extends Omit<InputProps, "onChange" | "readOnly" | "emptyReadOnlyMarker"> {
+  extends Omit<InputProps, "onChange" | "emptyReadOnlyMarker"> {
   /**
    * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
    */
@@ -65,12 +65,12 @@ export interface StepperInputProps
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   function StepperInput(props, ref) {
     const {
-      textAlign = "left",
       className,
       hideButtons,
       onBlur,
       onChange,
       onFocus,
+      readOnly,
       ...rest
     } = props;
 
@@ -91,10 +91,10 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
           onBlur={onBlur}
           onFocus={onFocus}
           ref={inputRef}
-          textAlign={textAlign}
+          readOnly={readOnly}
           {...getInputProps(rest)}
         />
-        {!hideButtons && (
+        {!hideButtons && !readOnly && (
           <div className={withBaseName("buttonContainer")}>
             <Button
               aria-label="increment value"

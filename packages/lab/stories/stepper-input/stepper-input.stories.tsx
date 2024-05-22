@@ -167,3 +167,12 @@ export const HideButtons: StoryFn = (args) => {
     </FormField>
   );
 };
+
+export const ReadOnly: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} readOnly />
+    </FormField>
+  );
+};
