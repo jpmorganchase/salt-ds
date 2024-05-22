@@ -80,7 +80,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         role="progressbar"
         aria-valuemax={max}
         aria-valuemin={min}
-        aria-valuenow={Math.round(value)}
+        aria-valuenow={isIndeterminate ? undefined : Math.round(value)}
         {...rest}
       >
         <div className={withBaseName("barContainer")}>
@@ -93,12 +93,11 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           ) : null}
           <div className={withBaseName("track")} />
         </div>
-        {!hideLabel ||
-          (!isIndeterminate && (
-            <Text styleAs="h2" className={withBaseName("progressLabel")}>
-              {`${Math.round(progress)} %`}
-            </Text>
-          ))}
+        {!hideLabel && !isIndeterminate && (
+          <Text styleAs="h2" className={withBaseName("progressLabel")}>
+            {`${Math.round(progress)} %`}
+          </Text>
+        )}
       </div>
     );
   }

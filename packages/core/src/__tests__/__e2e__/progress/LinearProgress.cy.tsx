@@ -18,4 +18,11 @@ describe("GIVEN a LinearProgress", () => {
     cy.findByRole("progressbar").contains("75 %");
     cy.findByRole("progressbar").should("not.contain.text", "0"); // test regression #3202
   });
+
+  it("SHOULD render indeterminate progress bar", () => {
+    cy.mount(<Default variant="indeterminate" />);
+    cy.findByRole("progressbar").should("have.attr", "aria-valuemax", "100");
+    cy.findByRole("progressbar").should("have.attr", "aria-valuemin", "0");
+    cy.findByRole("progressbar").should("not.have.attr", "aria-valuenow");
+  });
 });
