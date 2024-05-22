@@ -1,6 +1,7 @@
 /* Styles applied to Toast root element */
 .saltToast {
   --toast-background: var(--salt-container-primary-background);
+  --toast-borderColor: var(--salt-container-primary-borderColor);
 
   background: var(--saltToast-background, var(--toast-background));
   border-color: var(--saltToast-borderColor, var(--toast-borderColor));
@@ -53,9 +54,4 @@
 /* Styles applied when state = "success" */
 .saltToast-success {
   --toast-borderColor: var(--salt-status-success-borderColor);
-}
-
-/* Styles applied when no status is passed*/
-.saltToast-default {
-  --toast-borderColor: var(--salt-container-primary-borderColor-default);
 }

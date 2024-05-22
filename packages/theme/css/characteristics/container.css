@@ -5,7 +5,6 @@
   --salt-container-primary-background-disabled: var(--salt-palette-neutral-primary-background-disabled);
   --salt-container-primary-borderColor: var(--salt-palette-neutral-primary-border);
   --salt-container-primary-borderColor-disabled: var(--salt-palette-neutral-primary-border-disabled);
-  --salt-container-primary-borderColor-default: var(--salt-palette-neutral-primary-border-default);
 
   --salt-container-secondary-background: var(--salt-palette-neutral-secondary-background);
   --salt-container-secondary-background-disabled: var(--salt-palette-neutral-secondary-background-disabled);
