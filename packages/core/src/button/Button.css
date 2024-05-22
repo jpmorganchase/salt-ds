@@ -64,7 +64,7 @@
   line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
   letter-spacing: var(--saltButton-letterSpacing, var(--salt-text-action-letterSpacing));
   text-transform: var(--saltButton-textTransform, var(--salt-text-action-textTransform));
-  padding: 0 var(--saltButton-padding, var(--salt-spacing-100));
+  padding: 0 var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--salt-size-border, 0))));
   margin: var(--saltButton-margin, 0);
   height: var(--saltButton-height, var(--salt-size-base));
   min-width: var(--saltButton-minWidth, unset);
