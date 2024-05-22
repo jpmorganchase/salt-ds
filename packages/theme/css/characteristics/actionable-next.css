@@ -20,7 +20,7 @@
   --salt-actionable-primary-background: var(--salt-palette-neutral);
   --salt-actionable-primary-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-primary-background-active: var(--salt-palette-neutral-action-active);
-  --salt-actionable-primary-background-disabled: var(--salt-palette-neutral-strong-disabled);
+  --salt-actionable-primary-background-disabled: var(--salt-palette-neutral-disabled);
   --salt-actionable-primary-borderColor: var(--salt-palette-neutral);
   --salt-actionable-primary-borderColor-hover: transparent; /* TBD when adding bordered button */
   --salt-actionable-primary-borderColor-active: var(--salt-palette-neutral);
