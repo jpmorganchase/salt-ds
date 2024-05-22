@@ -11,7 +11,6 @@ import {
   SyntheticEvent,
   useCallback,
   useEffect,
-  useId,
   useRef,
   useState,
 } from "react";
@@ -24,6 +23,7 @@ import {
   StatusAdornment,
   useForkRef,
   useFormFieldProps,
+  useId,
 } from "@salt-ds/core";
 import {
   CalendarDate,
