@@ -50,7 +50,7 @@
   align-items: var(--saltButton-alignItems, center);
   appearance: none;
   background: var(--saltButton-background, var(--button-background));
-  border-color: var(--saltButton-borderColor, var(--button-borderColor));
+  border-color: var(--saltButton-borderColor, var(--button-borderColor, transparent));
   border-style: var(--saltButton-borderStyle, solid);
   border-width: var(--saltButton-borderWidth, var(--salt-size-border, 0));
   border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
