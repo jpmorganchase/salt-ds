@@ -293,7 +293,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         updateEndDate(endDateStringValue);
         setOpen(false);
       }
-      if (event.key === "Tab" && openState) {
+      if (event.key === "Tab" && openState && startDate && endDate) {
         setOpen(false);
       }
     };
