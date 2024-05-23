@@ -27,7 +27,7 @@ const headerRow: any[] = [
     name: "Top",
     code: "Top",
     capital: "Top",
-    population: "Top",
+    population: 0,
   },
 ];
 
