@@ -10,8 +10,8 @@ export const Error = (): ReactElement => (
       </Text>
       <div>The connection timed out and failed to retrieve data.</div>
     </ToastContent>
-    <Button variant="secondary">
-      <CloseIcon />
+    <Button variant="secondary" aria-label="Dismiss">
+      <CloseIcon aria-hidden />
     </Button>
   </Toast>
 );

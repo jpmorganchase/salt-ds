@@ -10,8 +10,8 @@ export const Info = (): ReactElement => (
       </Text>
       <div>A new version of this file is available with 37 updates. </div>
     </ToastContent>
-    <Button variant="secondary">
-      <CloseIcon />
+    <Button variant="secondary" aria-label="Dismiss">
+      <CloseIcon aria-hidden />
     </Button>
   </Toast>
 );
