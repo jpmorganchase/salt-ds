@@ -13,7 +13,7 @@ div[class*="ag-theme-salt"] {
   --ag-chip-background-color: var(--salt-actionable-primary-background);
   --ag-data-color: var(--salt-content-primary-foreground);
   --ag-disabled-foreground-color: var(--salt-content-primary-foreground-disabled);
-  --ag-font-family: var(--salt-typography-fontFamily);
+  --ag-font-family: var(--salt-text-fontFamily);
   --ag-font-size: var(--salt-text-fontSize);
   --ag-foreground-color: var(--salt-content-primary-foreground);
   --ag-grid-size: var(--salt-spacing-50);
@@ -26,10 +26,10 @@ div[class*="ag-theme-salt"] {
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   /* Replicating min size 12px from Icon.css */
-  --ag-icon-size: max(var(--salt-icon-size-base), 12px);
+  --ag-icon-size: max(var(--salt-size-icon), 12px);
   --ag-input-focus-border-color: var(--salt-editable-borderColor-hover);
   --ag-input-focus-box-shadow: none;
-  --ag-invalid-color: var(--salt-status-error-foreground);
+  --ag-invalid-color: var(--salt-status-error-foreground-informative);
   --ag-list-item-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-material-primary-color: var(--salt-editable-borderColor);
   --ag-modal-overlay-background-color: var(--salt-overlayable-background);
@@ -83,7 +83,7 @@ div[class*="ag-theme-salt"] .ag-header {
 
 div[class*="ag-theme-salt"] .ag-header-row {
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-typography-fontWeight-semiBold);
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
 div[class*="ag-theme-salt"] .ag-pinned-left-header {
@@ -192,7 +192,7 @@ div[class*="ag-theme-salt"] .ag-menu-option-icon {
 }
 
 div[class*="ag-theme-salt"] .ag-tab {
-  height: var(--salt-size-stackable);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   flex: 1 1 auto;
 }
 
