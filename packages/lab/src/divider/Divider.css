@@ -1,0 +1,20 @@
+.saltDivider {
+  border: 1px solid;
+  width: 100%;
+}
+
+.saltDivider-primary {
+  border-color: var(--salt-separable-primary-borderColor);
+}
+
+.saltDivider-secondary {
+  border-color: var(--salt-separable-secondary-borderColor);
+}
+
+.saltDivider-tertiary {
+  border-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltDivider-vertical {
+  transform: rotate(90deg);
+}
