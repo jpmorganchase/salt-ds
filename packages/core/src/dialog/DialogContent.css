@@ -9,6 +9,7 @@
   padding-left: var(--salt-spacing-100);
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
   box-shadow: none;
+  flex: 1;
 }
 
 .saltDialogContent-scroll {

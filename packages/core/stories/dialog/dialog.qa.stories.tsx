@@ -25,6 +25,19 @@ function FakeDialog({ children, status, id }: DialogProps) {
   );
 }
 
+function FakeLongDialog({ children, status, id }: DialogProps) {
+  return (
+    <DialogContext.Provider value={{ status, id }}>
+      <div
+        className="fakeDialogWindow longDialog"
+        style={{ display: "flex", flexDirection: "column" }}
+      >
+        {children}
+      </div>
+    </DialogContext.Provider>
+  );
+}
+
 export default {
   title: "Lab/Dialog/QA",
   component: Dialog,
@@ -235,5 +248,33 @@ export const ErrorDialog: StoryFn<QAContainerProps> = (props) => {
 };
 
 ErrorDialog.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const StickyFooter: StoryFn<QAContainerProps> = () => {
+  return (
+    <QAContainer width={1300} itemPadding={3}>
+      <FakeLongDialog>
+        <DialogHeader
+          header="Congratulations! You have created a Dialog."
+          style={{ width: "500px" }}
+        />
+        <DialogCloseButton />
+        <DialogContent>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book.
+        </DialogContent>
+        <DialogActions>
+          <Button>Cancel</Button>
+          <Button variant="cta">Subscribe</Button>
+        </DialogActions>
+      </FakeLongDialog>
+    </QAContainer>
+  );
+};
+
+StickyFooter.parameters = {
   chromatic: { disableSnapshot: false },
 };
