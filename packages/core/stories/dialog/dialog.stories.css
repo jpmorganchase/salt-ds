@@ -9,3 +9,7 @@
   border-style: var(--salt-container-borderStyle);
   border-color: var(--salt-separable-tertiary-borderColor);
 }
+
+.longDialog {
+  height: 300px;
+}
