@@ -5,7 +5,6 @@ export interface SliderContextValue {
   max: number;
   step: number;
   value: SliderValue;
-  setValue: SliderChangeHandler;
   onChange: SliderChangeHandler;
   ariaLabel: string | undefined;
 }
@@ -15,7 +14,6 @@ export const SliderContext = createContext<SliderContextValue>({
   max: 10,
   step: 1,
   value: 0,
-  setValue: () => null,
   onChange: () => null,
   ariaLabel: "slider",
 });

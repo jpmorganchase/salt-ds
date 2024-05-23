@@ -75,6 +75,11 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     state: "Value",
   });
 
+  const handleSliderChange = (value: SliderValue) => {
+    setValue(value);
+    onChange?.(value);
+  };
+
   return (
     <SliderContext.Provider
       value={{
@@ -82,8 +87,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         min,
         max,
         step,
-        setValue,
-        onChange,
+        onChange: handleSliderChange,
         ariaLabel,
       }}
     >

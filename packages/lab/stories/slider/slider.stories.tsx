@@ -1,4 +1,4 @@
-import { Input, FormField, FormFieldLabel } from "@salt-ds/core";
+import { Input, FormField, FormFieldLabel, FlexLayout } from "@salt-ds/core";
 import { Slider, SliderProps, SliderValue } from "@salt-ds/lab";
 import { useState, ChangeEvent } from "react";
 import { StoryFn } from "@storybook/react";
@@ -8,9 +8,9 @@ export default {
   component: Slider,
 };
 
-const Template: StoryFn<SliderProps> = ({ ...args }) => (
-  <Slider style={{ width: "300px" }} {...args} />
-);
+const Template: StoryFn<SliderProps> = ({ ...args }) => {
+  return <Slider style={{ width: "300px" }} {...args} />;
+};
 
 export const Default = Template.bind({});
 Default.args = {
@@ -110,51 +110,63 @@ RangeWithMarks.args = {
 };
 
 export const RangeWithInput = () => {
-  const [value, setValue] = useState<SliderValue>([20, 40]);
+  const [value, setValue] = useState([0, 50]);
+  const [minValue, setMinValue] = useState(`${value[0]}`);
+  const [maxValue, setMaxValue] = useState(`${value[1]}`);
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value as unknown;
-    setValue([inputValue as number, value[1]]);
+    const inputValue = event.target.value;
+    setMinValue(inputValue);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value as unknown;
-    setValue([value[0], inputValue as number]);
+    const inputValue = event.target.value;
+    setMaxValue(inputValue);
   };
 
-  const handleChange = (value: SliderValue) => {
+  const handleInputBlur = () => {
+    const minNumVal = parseFloat(minValue);
+    const maxNumVal = parseFloat(maxValue);
+    if (!isNaN(minNumVal) && !isNaN(maxNumVal)) {
+      setValue([minNumVal, maxNumVal]);
+    }
+  };
+
+  const handleSliderChange = (value: number[]) => {
     setValue(value);
+    setMinValue(`${value[0]}`);
+    setMaxValue(`${value[1]}`);
   };
 
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
+      <FlexLayout gap={3} align="center">
         <Input
-          placeholder="value"
-          style={{ width: "1px", margin: "5px" }}
+          placeholder={`${minValue}`}
+          value={minValue}
+          style={{ width: "10px", margin: "5px" }}
+          onBlur={handleInputBlur}
           onChange={handleMinInputChange}
+          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
         />
         <Slider
           style={{ width: "300px" }}
           min={0}
           max={50}
           value={value}
-          onChange={handleChange}
+          onChange={handleSliderChange}
           aria-label="withInput"
         />
         <Input
-          placeholder="value"
-          style={{ width: "1px", margin: "5px" }}
+          placeholder={`${maxValue}`}
+          value={maxValue}
+          style={{ width: "10px" }}
+          onBlur={handleInputBlur}
           onChange={handleMaxInputChange}
+          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
         />
-      </div>
+      </FlexLayout>
     </FormField>
   );
 };

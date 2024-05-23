@@ -1,4 +1,4 @@
-import { RefObject, useState } from "react";
+import { RefObject, useState, useRef } from "react";
 import { SliderValue, SliderChangeHandler } from "../types";
 import { getValue, setRangeValue } from "./utils";
 
@@ -8,29 +8,45 @@ export function useMouseDownThumb(
   max: number,
   step: number,
   value: SliderValue,
-  setValue: SliderChangeHandler,
   onChange: SliderChangeHandler,
-  index: number
+  index: number,
 ) {
-  const [thumbFocus, setThumbFocus] = useState(false);
 
-  const onMouseMove = (event: MouseEvent): void => {
-    event.preventDefault();
-    const newValue: number = getValue(trackRef, min, max, step, event);
-    Array.isArray(value)
-      ? setRangeValue(value, newValue, setValue, onChange, index, step)
-      : (setValue(newValue), onChange?.(newValue));
-  };
 
-  const onMouseUp = () => {
-    document.removeEventListener("mousemove", onMouseMove);
-    document.removeEventListener("mouseup", onMouseUp);
-    setThumbFocus(false);
-  };
+
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [ mouseDown, setMouseDown ] = useState(false)
+  const activeThumbIndex = useRef({
+        index: undefined
+    });
 
   const onDownThumb = () => {
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("pointermove", onMouseMove);
+    document.addEventListener("pointerup", onMouseUp);
+    setMouseDown(true)
+    activeThumbIndex.current.index = index
+  };
+
+  const onMouseUp = (event: MouseEvent) => {
+    event.preventDefault();
+    document.removeEventListener("pointermove", onMouseMove);
+    document.removeEventListener("pointerup", onMouseUp);
+    setTooltipVisible(false);
+    setMouseDown(false)
+    activeThumbIndex.current.index = undefined
+  };
+
+  const onMouseMove = (event: MouseEvent): void => {
+    const newValue: number = getValue(trackRef, min, max, step, event);
+    Array.isArray(value)
+      ? setRangeValue(
+          value,
+          newValue,
+          onChange,
+          index,
+          step
+        )
+      : onChange?.(newValue);
   };
 
   return {
@@ -38,19 +54,22 @@ export function useMouseDownThumb(
       onMouseDown() {
         onDownThumb();
       },
+      onMouseOver() {
+        activeThumbIndex.current.index === index && setTooltipVisible(true);
+      },
       onFocus() {
-        setThumbFocus(true);
+        setTooltipVisible(true);
+      },
+      onMouseUp() {
+        setTooltipVisible(false);
       },
       onBlur() {
-        setThumbFocus(false);
+        setTooltipVisible(false);
       },
       onMouseLeave() {
-        setThumbFocus(false);
-      },
-      onMouseOver() {
-        setThumbFocus(true);
+        !mouseDown && setTooltipVisible(false)
       },
     },
-    thumbFocus,
+    tooltipVisible,
   };
 }

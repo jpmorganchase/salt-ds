@@ -1,5 +1,5 @@
 import { SliderChangeHandler } from "../types";
-import { RefObject } from "react";
+import { RefObject, useRef } from "react";
 
 export const getValue = (
   trackRef: RefObject<Element>,
@@ -9,19 +9,18 @@ export const getValue = (
   event: MouseEvent
 ) => {
   const { clientX } = event;
-    const { width, x } = trackRef.current.getBoundingClientRect();
-    const localX = clientX - x;
-    const normaliseBetweenValues = (localX / width) * (max - min) + min;
-    let value = roundToStep(normaliseBetweenValues, step);
-    value = roundToTwoDp(value);
-    value = clampValue(value, min, max);
-    return value;
+  const { width, x } = trackRef.current!.getBoundingClientRect();
+  const localX = clientX - x;
+  const normaliseBetweenValues = (localX / width) * (max - min) + min;
+  let value = roundToStep(normaliseBetweenValues, step);
+  value = roundToTwoDp(value);
+  value = clampValue(value, min, max);
+  return value;
 };
 
 export function setRangeValue(
   value: number[],
   newValue: number,
-  setValue: SliderChangeHandler,
   onChange: SliderChangeHandler,
   index: number,
   step: number
@@ -31,9 +30,8 @@ export function setRangeValue(
     Math.abs(value[1] - newValue) < step
   )
     return;
-  if (!index && newValue > value[1]) return;
-  if (index && newValue < value[0]) return;
-  index ? setValue?.([value[0], newValue]) : setValue?.([newValue, value[1]]);
+  if (index === 0 && newValue > value[1]) return;
+  if (index === 1 && newValue < value[0]) return;
   index ? onChange?.([value[0], newValue]) : onChange?.([newValue, value[1]]);
 }
 
@@ -55,6 +53,21 @@ export const clampValue = (value: number, min: number, max: number) => {
 export function getPercentage(min: number, max: number, value: number) {
   const percentage = ((value - min) / (max - min)) * 100;
   return `${Math.min(Math.max(percentage, 0), 100)}%`;
+}
+
+export function getPercentageDifference(
+  min: number,
+  max: number,
+  value: number[]
+) {
+  const valueDiff = value[1] - value[0];
+  const percentage = ((valueDiff - min) / (max - min)) * 100;
+  return `${Math.min(Math.max(percentage, 0), 100)}%`;
+}
+
+export function getPercentageOffset(min: number, max: number, value: number[]) {
+  const offsetLeft = ((value[0] - min) / (max - min)) * 100;
+  return `${Math.min(Math.max(offsetLeft, 0), 100)}%`;
 }
 
 export function getMarkStyles(min: number, max: number, step: number) {

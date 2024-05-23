@@ -8,7 +8,6 @@ export function useMouseDownTrack(
   max: number,
   step: number,
   value: SliderValue,
-  setValue: SliderChangeHandler,
   onChange: SliderChangeHandler | undefined
 ) {
   return {
@@ -22,15 +21,12 @@ export function useMouseDownTrack(
             Math.abs(value[0] - newValue) < Math.abs(value[1] - newValue)
               ? 0
               : 1;
-          nearestThumb
-            ? setValue([value[0], newValue])
-            : setValue([newValue, value[1]]);
 
           nearestThumb
             ? onChange?.([value[0], newValue])
             : onChange?.([newValue, value[1]]);
         } else {
-          setValue(newValue);
+          onChange?.(newValue);
         }
       },
     },

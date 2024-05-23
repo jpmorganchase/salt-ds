@@ -1,7 +1,7 @@
 import { makePrefixer, Label } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { getPercentage } from "./utils";
-import { ComponentPropsWithoutRef, RefObject } from "react";
+import { ComponentPropsWithoutRef, RefObject, useRef } from "react";
 import { useMouseDownThumb } from "./useMouseDownThumb";
 import { useKeyDownThumb } from "./useKeyDownThumb";
 import { useSliderContext } from "./SliderContext";
@@ -16,28 +16,21 @@ export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
   const { trackRef, index, ...rest } = props;
 
-  const { min, max, step, value, setValue, onChange, ariaLabel } =
-    useSliderContext();
+  const { min, max, step, value, onChange, ariaLabel } = useSliderContext();
 
-  const onKeyDown = useKeyDownThumb(
-    min,
-    max,
-    step,
-    value,
-    setValue,
-    onChange,
-    index
-  );
+  const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
-  const { thumbProps, thumbFocus } = useMouseDownThumb(
+  const sliderThumbRef = useRef(null);
+
+  const { thumbProps, tooltipVisible } = useMouseDownThumb(
     trackRef,
     min,
     max,
     step,
     value,
-    setValue,
     onChange,
-    index
+    index,
+    sliderThumbRef
   );
 
   const percentage = Array.isArray(value)
@@ -54,7 +47,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     >
       <div
         className={clsx(withBaseName("tooltip"), {
-          [withBaseName("showTooltip")]: !thumbFocus,
+          [withBaseName("showTooltip")]: !tooltipVisible,
         })}
         aria-expanded={thumbFocus}
       >
@@ -71,6 +64,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         aria-label={ariaLabel}
         aria-orientation="horizontal"
         tabIndex={0}
+        ref={sliderThumbRef}
         {...rest}
       />
     </div>

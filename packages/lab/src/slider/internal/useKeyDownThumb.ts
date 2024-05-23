@@ -6,11 +6,11 @@ export function useKeyDownThumb(
   max: number,
   step: number,
   value: SliderValue,
-  setValue: SliderChangeHandler,
   onChange: SliderChangeHandler,
   index: number
 ) {
   return (event: React.KeyboardEvent) => {
+    // event.preventDefault();
     let valueItem: number = Array.isArray(value)
       ? index
         ? value[1]
@@ -39,7 +39,7 @@ export function useKeyDownThumb(
     valueItem = clampValue(valueItem, min, max);
 
     Array.isArray(value)
-      ? setRangeValue(value, valueItem, setValue, onChange, index, step)
-      : (setValue(valueItem), onChange?.(valueItem));
+      ? setRangeValue(value, valueItem, onChange, index, step)
+      : onChange?.(valueItem);
   };
 }
