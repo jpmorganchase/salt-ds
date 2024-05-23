@@ -1,16 +1,12 @@
-import { KeyboardEvent, MouseEvent, MutableRefObject } from "react";
-import { ButtonProps, useControlled, useId } from "@salt-ds/core";
-import { InputLegacyProps as InputProps } from "../input-legacy";
-import { useDynamicAriaLabel } from "./internal/useDynamicAriaLabel";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  MutableRefObject,
+} from "react";
+import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
-
-type Direction = "decrement" | "increment";
-
-const stepperDirection = {
-  INCREMENT: "increment" as Direction,
-  DECREMENT: "decrement" as Direction,
-};
 
 // The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
@@ -37,11 +33,8 @@ const toFloat = (inputValue: number | string) => {
   return parseFloat(inputValue.toString());
 };
 
-const santizedInput = (numberString: string) =>
+const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
-
-const getButtonIcon = (type: Direction) =>
-  type === stepperDirection.INCREMENT ? "triangle-up" : "triangle-down";
 
 export const useStepperInput = (
   props: StepperInputProps,
@@ -51,13 +44,12 @@ export const useStepperInput = (
     block = 10,
     decimalPlaces = 0,
     defaultValue = 0,
-    liveValue,
+    id: idProp,
     max = Number.MAX_SAFE_INTEGER,
     min = Number.MIN_SAFE_INTEGER,
     onChange,
     step = 1,
     value,
-    InputProps: inputPropsProp = {},
   } = props;
 
   const [currentValue, setCurrentValue, isControlled] = useControlled({
@@ -65,7 +57,7 @@ export const useStepperInput = (
     default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
     name: "stepper-input",
   });
-  const inputId = useId(inputPropsProp.id);
+  const inputId = useId(idProp);
 
   const isOutOfRange = () => {
     if (currentValue === undefined) return true;
@@ -81,22 +73,6 @@ export const useStepperInput = (
     if (currentValue === undefined) return true;
     return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
   };
-
-  const valuesHaveDiverged = () => {
-    if (liveValue === undefined || currentValue === undefined) return false;
-    return (
-      toFloat(toFixedDecimalPlaces(liveValue, decimalPlaces)) !==
-      toFloat(currentValue)
-    );
-  };
-
-  const { setHasAnnounced } = useDynamicAriaLabel(
-    ", value out of date",
-    liveValue !== undefined,
-    inputRef,
-    currentValue,
-    valuesHaveDiverged
-  );
 
   const decrement = () => {
     if (currentValue === undefined || isAtMin()) return;
@@ -143,6 +119,7 @@ export const useStepperInput = (
   };
 
   const setNextValue = (modifiedValue: number) => {
+    if (props.readOnly) return;
     let nextValue = modifiedValue;
     if (nextValue < min) nextValue = min;
     if (nextValue > max) nextValue = max;
@@ -192,19 +169,15 @@ export const useStepperInput = (
     }
   };
 
-  const handleInputFocus = () => {
-    setHasAnnounced(false);
-  };
-
-  const handleInputChange = (event: KeyboardEvent) => {
-    const changedValue = (event.currentTarget as HTMLInputElement).value;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const changedValue = event.target.value;
 
     if (!isControlled) {
-      setCurrentValue(santizedInput(changedValue));
+      setCurrentValue(sanitizedInput(changedValue));
     }
 
     if (onChange) {
-      onChange(santizedInput(changedValue));
+      onChange(sanitizedInput(changedValue));
     }
   };
 
@@ -223,48 +196,22 @@ export const useStepperInput = (
 
   const handleButtonMouseDown = (
     event: MouseEvent<HTMLButtonElement>,
-    type: Direction = stepperDirection.INCREMENT
+    direction: string
   ) => {
     if (event.nativeEvent.button !== 0) return;
-    type === stepperDirection.INCREMENT
-      ? incrementSpinner()
-      : decrementSpinner();
+    direction === "increment" ? incrementSpinner() : decrementSpinner();
   };
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
 
-  const refreshCurrentValue = () => {
-    const refreshedcurrentValue =
-      liveValue !== undefined ? liveValue : defaultValue;
-    if (refreshedcurrentValue === undefined) return;
-
-    setCurrentValue(
-      toFixedDecimalPlaces(toFloat(refreshedcurrentValue), decimalPlaces)
-    );
-
-    inputRef.current?.focus();
-
-    if (onChange) {
-      onChange(
-        toFixedDecimalPlaces(toFloat(refreshedcurrentValue), decimalPlaces)
-      );
-    }
-  };
-
-  const getButtonProps = (
-    type: Direction = stepperDirection.INCREMENT,
-    buttonPropsProp: ButtonProps = {}
-  ) => ({
+  const getButtonProps = (direction: string) => ({
     "aria-hidden": true,
-    "data-testid": `${type}-button`,
+    disabled:
+      props.disabled || (direction === "increment" ? isAtMax() : isAtMin()),
     tabIndex: -1,
-    ...buttonPropsProp,
-    onMouseDown: callAll(
-      (event: MouseEvent<HTMLButtonElement>) =>
-        handleButtonMouseDown(event, type),
-      buttonPropsProp.onMouseDown
-    ),
-    onMouseUp: callAll(() => handleButtonMouseUp(), buttonPropsProp.onMouseUp),
+    onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
+      handleButtonMouseDown(event, direction),
+    onMouseUp: handleButtonMouseUp,
   });
 
   const getInputProps = (
@@ -286,22 +233,17 @@ export const useStepperInput = (
       },
       onBlur: callAll(inputProps.onBlur, handleInputBlur),
       onChange: callAll(inputProps.onChange, handleInputChange),
-      onFocus: callAll(inputProps.onFocus, handleInputFocus),
-      onKeyDown: callAll(inputProps.onKeyPress, handleInputKeyDown),
+      onFocus: inputProps.onFocus,
+      onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
+      textAlign: inputProps.textAlign,
       value: String(currentValue),
     };
   };
 
   return {
     decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
-    getButtonIcon,
     getButtonProps,
     getInputProps,
     incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
-    isAtMax,
-    isAtMin,
-    refreshCurrentValue,
-    stepperDirection,
-    valuesHaveDiverged,
   };
 };
