@@ -3,10 +3,14 @@ import { Button, Link, Text, Toast, ToastContent } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 
 export const Default = (): ReactElement => (
-  <Toast style={{ width: 260 }}>
+  <Toast>
     <ToastContent>
       <Text>
-        Updated to v2.0.0. See <Link href="#">What's new</Link>
+        Updated to latest version of Salt. See{" "}
+        <Link href="https://github.com/jpmorganchase/salt-ds/releases">
+          what's new
+        </Link>
+        .
       </Text>
     </ToastContent>
     <Button variant="secondary" aria-label="Dismiss">

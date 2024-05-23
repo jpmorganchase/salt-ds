@@ -25,10 +25,14 @@ const Template: StoryFn<typeof Toast> = ({ children, ...args }) => (
 );
 
 export const Default: StoryFn<typeof Toast> = (args) => (
-  <Toast {...args} style={{ width: 260 }}>
+  <Toast {...args}>
     <ToastContent>
       <Text>
-        Updated to v2.0.0. See <Link href="#">What's new</Link>
+        Updated to latest version of Salt. See{" "}
+        <Link href="https://github.com/jpmorganchase/salt-ds/releases">
+          what's new
+        </Link>
+        .
       </Text>
     </ToastContent>
     <Button variant="secondary" aria-label="Dismiss">
