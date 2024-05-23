@@ -8,7 +8,7 @@ div[class*="ag-theme-salt"] {
   --ag-checkbox-checked-color: var(--salt-selectable-foreground-selected);
   --ag-checkbox-indeterminate-color: var(--salt-selectable-foreground);
   --ag-checkbox-unchecked-color: var(--salt-selectable-borderColor);
-  --ag-chip-background-color: var(--salt-taggable-background);
+  --ag-chip-background-color: var(--salt-actionable-primary-background);
   --ag-data-color: var(--salt-content-primary-foreground);
   --ag-disabled-foreground-color: var(--salt-content-primary-foreground-disabled);
   --ag-font-family: var(--salt-typography-fontFamily);
@@ -19,7 +19,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
   --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);
   --ag-header-column-separator-display: block;
-  --ag-header-column-separator-height: var(--salt-text-fontSize);
+  --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
   --ag-header-column-separator-width: var(--salt-size-border);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
@@ -28,7 +28,7 @@ div[class*="ag-theme-salt"] {
   --ag-input-focus-border-color: var(--salt-editable-borderColor-hover);
   --ag-input-focus-box-shadow: none;
   --ag-invalid-color: var(--salt-status-error-foreground);
-  --ag-list-item-height: var(--salt-size-base);
+  --ag-list-item-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-material-primary-color: var(--salt-editable-borderColor);
   --ag-modal-overlay-background-color: var(--salt-overlayable-background);
   --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
@@ -40,12 +40,14 @@ div[class*="ag-theme-salt"] {
   --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
   --ag-selected-row-background-color: var(--salt-selectable-background-selected);
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
-  --ag-selected-tab-underline-width: 2px;
+  --ag-selected-tab-underline-width: var(--salt-size-indicator);
   --ag-subheader-background-color: var(--salt-palette-neutral-primary-background);
-  --ag-toggle-button-off-background-color: var(--salt-selectable-foreground);
+  --ag-toggle-button-off-background-color: var(--salt-container-primary-background);
   --ag-toggle-button-off-border-color: var(--salt-selectable-borderColor);
-  --ag-toggle-button-on-background-color: var(--salt-selectable-foreground-selected);
+  --ag-toggle-button-on-background-color: var(--salt-container-primary-background);
   --ag-toggle-button-on-border-color: var(--salt-selectable-borderColor-selected);
+  --ag-toggle-button-switch-border-color: var(--salt-container-primary-background); /* Fake a border with bg color */
+  --ag-toggle-button-switch-background-color: var(--salt-selectable-foreground);
   --ag-tooltip-background-color: var(--salt-container-primary-background);
   --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
   --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
@@ -225,8 +227,6 @@ div[class*="ag-theme-salt"] .ag-cell {
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
-  display: flex;
-  align-items: center;
 }
 
 div[class*="ag-theme-salt"] .editable-cell,
@@ -522,4 +522,32 @@ div[class*="ag-theme-salt"] .ag-column-drop-cell {
 
 div[class*="ag-theme-salt"] .ag-tool-panel-wrapper > .ag-react-container {
   width: inherit;
+}
+
+/* Toggle Button */
+.ag-toggle-button-input-wrapper::before {
+  top: calc(1px - var(--ag-toggle-button-border-width));
+  left: calc(1px - var(--ag-toggle-button-border-width));
+
+  height: calc(var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width));
+  width: calc(var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width));
+}
+.ag-toggle-button-input-wrapper.ag-checked::before {
+  --ag-toggle-button-switch-background-color: var(--salt-selectable-borderColor-selected);
+  border-color: var(--ag-toggle-button-switch-border-color);
+  left: calc(100% - var(--ag-toggle-button-height) + 2 * var(--ag-toggle-button-border-width));
+}
+
+/* Column Drop List */
+.ag-column-drop-cell-drag-handle {
+  margin-left: 0;
+}
+
+.ag-column-drop-cell {
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  padding: 0 var(--salt-spacing-50);
+}
+
+.ag-column-drop-cell-button {
+  min-width: unset;
 }
