@@ -29,6 +29,7 @@ import {
   SaltShakerIcon,
   SaltShakerSolidIcon,
 } from "@salt-ds/icons";
+import { ListNext, ListItemNext } from "@salt-ds/lab";
 import {
   DefaultGroup as AccordionDefault,
   Status as AccordionStatus,
@@ -58,7 +59,13 @@ import {
   Error as ToastError,
   Warning as ToastWarning,
 } from "../../../core/stories/toast/toast.stories";
-import { WithValidation as FormFieldValidation } from "../../../core/stories/form-field/form-field.stories";
+import {
+  WithValidation as FormFieldValidation,
+  WithMultilineInputAsQuestion,
+  HelperText as FormFieldHelperText,
+  Readonly as FormFieldReadonly,
+} from "../../../core/stories/form-field/form-field.stories";
+import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories";
 import {
   Default as PillDefault,
   Disabled as PillDisabled,
@@ -67,7 +74,12 @@ import {
 } from "../../../core/stories/pill/pill.stories";
 import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
 import AgGridThemeDefault from "../../../ag-grid-theme/stories/examples/Default";
+import AgGridThemeZebra from "../../../ag-grid-theme/stories/examples/VariantZebra";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/stories/examples/HDCompact";
+
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-material.css";
+import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
 
 export default {
   title: "Experimental/Kitchen Sink",
@@ -224,7 +236,18 @@ export const Example1 = () => {
       </StackLayout>
       <StackLayout direction="row">
         <ButtonExamples />
-        <Button disabled>Submit</Button>
+        <Button variant="cta" disabled>
+          CTA
+        </Button>
+        <Button variant="primary" disabled>
+          Primary
+        </Button>
+        <Button variant="secondary" disabled>
+          Secondary
+        </Button>
+      </StackLayout>
+      <StackLayout direction="row">
+        <SegmentedButtonGroupDefault />
       </StackLayout>
       <StackLayout direction="row">
         <ToggleButtonGroupHorizontalText defaultValue="high" />
@@ -272,7 +295,10 @@ export const Example1 = () => {
         <SwitchDefault label="Switch" disabled />
         <SwitchDefault label="Switch" disabled defaultChecked />
       </StackLayout>
-      <StackLayout direction="row" gap={20} style={{ marginBlock: 60 }}>
+      <StackLayout direction="row" gap={16} style={{ marginBlock: 60 }}>
+        <Tooltip content="I am a tooltip" open placement="bottom">
+          <Button>Info</Button>
+        </Tooltip>
         <Tooltip content="I am a tooltip" status="info" open placement="bottom">
           <Button>Info</Button>
         </Tooltip>
@@ -319,6 +345,25 @@ export const Example1 = () => {
       </StackLayout>
       <StackLayout direction="row">
         <FormFieldValidation />
+        <StackLayout>
+          <FormFieldHelperText />
+          <FlexItem>
+            <WithMultilineInputAsQuestion />
+          </FlexItem>
+        </StackLayout>
+        <StackLayout>
+          <FormFieldReadonly />
+        </StackLayout>
+      </StackLayout>
+      <StackLayout>
+        <ListNext selected="blue">
+          <ListItemNext value="green">Green</ListItemNext>
+          <ListItemNext disabled value="red">
+            Red
+          </ListItemNext>
+          <ListItemNext value="blue">Blue</ListItemNext>
+          <ListItemNext value="purple">Purple</ListItemNext>
+        </ListNext>
       </StackLayout>
       <AgGridThemeDefault
         columnDefs={[
@@ -344,6 +389,8 @@ export const Example1 = () => {
           },
         ]}
       />
+      <H3>Zebra</H3>
+      <AgGridThemeZebra />
       <H3>HD Compact</H3>
       <AgGridThemeHDCompact
         columnDefs={[

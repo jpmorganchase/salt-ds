@@ -4,3 +4,4 @@ export * from "./IconAndText";
 export * from "./IconOnly";
 export * from "./Primary";
 export * from "./Secondary";
+export * from "./FullWidth";
