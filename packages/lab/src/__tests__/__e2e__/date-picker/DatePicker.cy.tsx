@@ -42,12 +42,12 @@ describe("GIVEN a DatePicker", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN single datepicker is mounted", () => {
-    it("THEN it should mount with the specified defaultStartDate", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
+    it("THEN it should mount with the specified defaultSelectedDate", () => {
+      cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("textbox").should("have.value", formatInput(testDate));
     });
     it("THEN should format a valid date with a different format on blur", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("textbox").click().clear().type(testInput);
       cy.findByRole("textbox").blur();
       cy.findByRole("textbox").should(
@@ -56,19 +56,19 @@ describe("GIVEN a DatePicker", () => {
       );
     });
     it("THEN should error and not format invalid dates on blur", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("textbox").click().clear().type("date");
       cy.findByRole("textbox").blur();
       cy.findByRole("textbox").should("have.value", "date");
       cy.findByRole("img", { name: "error" }).should("exist");
     });
     it("THEN clicking the calendar button should open the panel", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
     });
     it("THEN should close the calendar panel once a date is selected", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
         name: formatDay(testDate.add({ days: 11 })),
@@ -79,16 +79,16 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("application").should("not.exist");
     });
     it("THEN open button should be disabled when component is disabled", () => {
-      cy.mount(<Default defaultStartDate={testDate} disabled />);
+      cy.mount(<Default defaultSelectedDate={testDate} disabled />);
       cy.findByRole("button").should("be.disabled");
     });
     it("THEN render read only when prop is passed", () => {
-      cy.mount(<Default defaultStartDate={testDate} readOnly />);
+      cy.mount(<Default defaultSelectedDate={testDate} readOnly />);
       cy.findByRole("textbox").should("have.attr", "readonly");
       cy.findByRole("button").should("be.disabled");
     });
     it("THEN it should update the selected month when changing selected date", () => {
-      cy.mount(<Default defaultStartDate={testDate} />);
+      cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("textbox").click().clear().type(testInput);
       cy.findByRole("textbox").blur();
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -99,7 +99,7 @@ describe("GIVEN a DatePicker", () => {
     it("THEN it should clear the date if an empty input is submitted", () => {
       cy.mount(
         <Default
-          defaultStartDate={testDate}
+          defaultSelectedDate={testDate}
           CalendarProps={{ visibleMonth: testDate }}
         />
       );
@@ -120,11 +120,13 @@ describe("GIVEN a DatePicker", () => {
     });
   });
   describe("WHEN range datepicker is mounted", () => {
-    it("THEN it should mount with the specified defaultStartDate and defaultEndDate", () => {
+    it("THEN it should mount with the specified defaultSelectedDate", () => {
       cy.mount(
         <Range
-          defaultStartDate={testDate}
-          defaultEndDate={testDate.add({ months: 1 })}
+          defaultSelectedDate={{
+            startDate: testDate,
+            endDate: testDate.add({ months: 1 }),
+          }}
         />
       );
       cy.findAllByRole("textbox")
@@ -176,8 +178,10 @@ describe("GIVEN a DatePicker", () => {
     it("THEN it should move both months forward if selecting a starting date in the second calendar", () => {
       cy.mount(
         <Range
-          defaultStartDate={testDate}
-          defaultEndDate={testDate.add({ months: 1 })}
+          defaultSelectedDate={{
+            startDate: testDate,
+            endDate: testDate.add({ months: 1 }),
+          }}
         />
       );
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -212,12 +216,13 @@ describe("GIVEN a DatePicker", () => {
   });
   describe("WHEN mounted as a controlled component", () => {
     it("THEN should mount with specified date", () => {
-      cy.mount(<Default startDate={testDate} />);
+      cy.mount(<Default selectedDate={testDate} />);
       cy.findByRole("textbox").should("have.value", formatInput(testDate));
     });
     describe("WHEN the date is updated", () => {
       it("should call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
+
         function ControlledPicker() {
           const [date, setDate] = useState(testDate);
           const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -227,8 +232,9 @@ describe("GIVEN a DatePicker", () => {
             changeSpy(event);
           };
 
-          return <Default startDate={date} onChange={onChange} />;
+          return <Default selectedDate={date} onChange={onChange} />;
         }
+
         cy.mount(<ControlledPicker />);
         cy.findByRole("textbox").click().clear().type(testInput);
         cy.get("@changeSpy").should("have.been.calledWithMatch", {

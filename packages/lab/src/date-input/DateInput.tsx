@@ -114,6 +114,10 @@ export interface DateInputProps
    * Reference for the endInput;
    */
   endInputRef?: RefObject<HTMLInputElement>;
+  /**
+   * Selection variant. Defaults to single select.
+   */
+  selectionVariant?: "default" | "range";
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -122,6 +126,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       className,
       ariaLabel,
       disabled,
+      selectionVariant: selectionVariantProp,
       emptyReadOnlyMarker = "—",
       inputProps = {},
       endAdornment,
@@ -154,12 +159,14 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       endDate,
       setStartDate,
       setEndDate,
-      selectionVariant,
+      selectionVariant: pickerSelectionVariant,
       openState,
       setOpen,
       validationStatusState,
       setValidationStatus,
     } = useDatePickerContext();
+
+    const selectionVariant = selectionVariantProp ?? pickerSelectionVariant;
 
     const endDateInputID = useId();
     const startDateInputID = useId();
@@ -293,9 +300,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         updateEndDate(endDateStringValue);
         setOpen(false);
       }
-      if (event.key === "Tab" && openState && startDate && endDate) {
-        setOpen(false);
-      }
     };
 
     const handleInputClick = (event: SyntheticEvent<HTMLDivElement>) => {
@@ -322,6 +326,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         {...rest}
       >
         <input
+          autoComplete="off"
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
           aria-labelledby={clsx(
             formFieldLabelledBy,
@@ -353,6 +358,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           <>
             <span>-</span>
             <input
+              autoComplete="off"
               aria-describedby={clsx(
                 formFieldDescribedBy,
                 dateInputDescribedBy
