@@ -39,7 +39,7 @@
     "prettier": "pretty-quick --branch main",
     "prettier:all": "prettier --write .",
     "prettier:ci": "prettier --check .",
-    "lint:style": "yarn lint:style:core && yarn lint:style:icon && yarn lint:style:lab && lint:style:ag-theme",
+    "lint:style": "yarn lint:style:core && yarn lint:style:icon && yarn lint:style:lab && yarn lint:style:ag-theme",
     "lint:style:core": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
     "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
