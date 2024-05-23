@@ -58,6 +58,50 @@ export const Breadcrumbs = () => {
   );
 };
 
+export const Wrapped = () => {
+  return (
+    <nav aria-label="Breadcrumb" style={{ maxWidth: 300 }}>
+      <ol
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          padding: 0,
+          margin: 0,
+          columnGap: "var(--salt-size-unit)",
+          listStyle: "none",
+          flexWrap: "wrap",
+          minHeight: "var(--salt-size-base)",
+        }}
+      >
+        <li>
+          <Link href="#">Home</Link>
+        </li>
+        <Separator />
+        <li>
+          <Link href="#">Level 2</Link>
+        </li>
+        <Separator />
+        <li>
+          <Link href="#">Level 3</Link>
+        </li>
+        <Separator />
+        <li>
+          <Link href="#">Level 4</Link>
+        </li>
+        <Separator />
+        <li>
+          <Link href="#">Level 5</Link>
+        </li>
+        <Separator />
+        <li>
+          <Text maxRows={1}>Current level</Text>
+        </li>
+      </ol>
+    </nav>
+  );
+};
+
 export const OverflowMenu = () => {
   const initialSource = {
     menuItems: [
