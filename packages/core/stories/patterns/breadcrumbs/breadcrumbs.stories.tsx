@@ -24,8 +24,9 @@ export const Breadcrumbs = () => {
           justifyContent: "flex-start",
           padding: 0,
           margin: 0,
-          gap: "var(--salt-size-unit)",
+          columnGap: "var(--salt-size-unit)",
           listStyle: "none",
+          flexWrap: "wrap",
           minHeight: "var(--salt-size-base)",
         }}
       >
@@ -76,8 +77,9 @@ export const OverflowMenu = () => {
           justifyContent: "flex-start",
           padding: 0,
           margin: 0,
-          gap: "var(--salt-size-unit)",
+          columnGap: "var(--salt-size-unit)",
           listStyle: "none",
+          flexWrap: "wrap",
         }}
       >
         <li>
@@ -108,8 +110,9 @@ export const Expansion = () => {
           justifyContent: "flex-start",
           padding: 0,
           margin: 0,
-          gap: "var(--salt-size-unit)",
+          columnGap: "var(--salt-size-unit)",
           listStyle: "none",
+          flexWrap: "wrap",
         }}
       >
         <li>
