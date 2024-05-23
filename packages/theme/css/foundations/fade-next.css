@@ -26,6 +26,13 @@ con: If we offer these values, then it could misleading that we're offering all 
   --salt-color-blue-600-40a: rgba(var(--salt-color-blue-600-rgb), 0.4);
   --salt-color-blue-700-40a: rgba(var(--salt-color-blue-700-rgb), 0.4);
   --salt-color-blue-800-40a: rgba(var(--salt-color-blue-800-rgb), 0.4);
+  --salt-color-teal-200-40a: rgba(var(--salt-color-teal-200-rgb), 0.4);
+  --salt-color-teal-300-40a: rgba(var(--salt-color-teal-300-rgb), 0.4);
+  --salt-color-teal-400-40a: rgba(var(--salt-color-teal-400-rgb), 0.4);
+  --salt-color-teal-500-40a: rgba(var(--salt-color-teal-500-rgb), 0.4);
+  --salt-color-teal-600-40a: rgba(var(--salt-color-teal-600-rgb), 0.4);
+  --salt-color-teal-700-40a: rgba(var(--salt-color-teal-700-rgb), 0.4);
+  --salt-color-teal-800-40a: rgba(var(--salt-color-teal-800-rgb), 0.4);
   --salt-color-background-snow-40a: rgba(var(--salt-color-background-snow-rgb), 0.4);
   --salt-color-background-marble-40a: rgba(var(--salt-color-background-marble-rgb), 0.4);
   --salt-color-background-limestone-40a: rgba(var(--salt-color-background-limestone-rgb), 0.4);
