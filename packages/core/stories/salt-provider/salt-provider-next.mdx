@@ -12,16 +12,19 @@ import { Banner, BannerContent } from "@salt-ds/core";
 
 # Salt Provider Next
 
-The new Salt Provider introduces Salt's next phase theming capability with more styling options, including
-rounded corners, balanced color palettes, etc. Features will be introduced gradually over time and we're
-encouraging teams needing this to test to give us feedback.
+The new Salt Provider introduces Salt's next phase theming capability with more
+styling options, including rounded corners, balanced color palettes, etc.
+Features will be introduced gradually over time and we're encouraging teams
+needing this to test to give us feedback.
 
-It extends existing [Salt Provider](/?path=/docs/documentation-core-salt-provider--docs) so existing options
-are still available (e.g. light/dark mode, high/medium/low/touch density). Additional props will be made available
-to switch between different look.
+It extends existing
+[Salt Provider](/?path=/docs/documentation-core-salt-provider--docs) so existing
+options are still available (e.g. light/dark mode, high/medium/low/touch
+density). Additional props will be made available to switch between different
+look.
 
-To use the new Salt Provider, you need to swap any existing `SaltProvider` to use the new `UNSTABLE_SaltProviderNext`,
-and also import a new theme CSS.
+To use the new Salt Provider, you need to swap any existing `SaltProvider` to
+use the new `UNSTABLE_SaltProviderNext`, and also import a new theme CSS.
 
 ```js static
 // Swap out existing SaltProvider
@@ -33,18 +36,61 @@ import { UNSTABLE_SaltProviderNext } from "@salt-ds/core";
 import "@salt-ds/theme/css/theme-next.css";
 ```
 
-The new provider adds additional `.salt-theme-next` to either the root or provider element, together with
-any additional data attributes (e.g. `data-corner`) needed for new props.
+The new provider adds additional `.salt-theme-next` to either the root or
+provider element, together with any additional data attributes (e.g.
+`data-corner`) needed for new props.
 
-All values within `theme-next.css` will be scoped to `.salt-theme-next` to make sure any replacement values
-(like new color palettes) could override existing values in `.salt-theme`.
+All values within `theme-next.css` will be scoped to `.salt-theme-next` to make
+sure any replacement values (like new color palettes) could override existing
+values in `.salt-theme`.
+
+## Unified Color Palette
+
+A completely new color palette is used, featuring balanced color ramps for each
+color group.
+
+You will find 9 colors in each color group, ensuring that the midpoint (500
+colors) achieves at least a 4.5 contrast ratio against both light and dark
+primary backgrounds. Primary and secondary background colors are no longer
+selected from the color ramps but are instead chosen from additional foundation
+colors (snow & marble in light, jet & granite in dark).
+
+Refer to Figma file
+([UNSTABLE Salt Colors (variables)](<https://www.figma.com/file/e753bB0n5Adc0LCXqtvslu/UNSTABLE-Salt-Colors-(variables)?type=design&node-id=424%3A77224&mode=design&t=1snosiQ76rKnIe9d-1>))
+for color values and mappings.
+
+### Migration note:
+
+If you're referring any Salt foundation colors (i.e.
+`--salt-color-*`) directly in your code, you'll need to revisit those values. We
+do not recommend directly consume foundation colors directly. Instead, try to
+find a characteristics color that will work better in different modes.
+
+## New Theme Palette Structure
+
+A new structure of palette layer is introduced to help making color changes
+easier for custom themes, namely
+
+- Accent
+- Background
+- Foreground
+- Neutral
+- Info
+- Negative
+- Positive
+- Warning
+
+All existing characteristics are re-wired through above new palette layers to
+use the new colors, which is scoped to `.salt-theme-next`.
 
 ## Corner radius
 
-Although default Salt design language stays sharp corners to serve our institutional clients,
-rounded corners can be made available to many components to achieve a softer, consumer friendly feel.
+Although default Salt design language stays sharp corners to serve our
+institutional clients, rounded corners can be made available to many components
+to achieve a softer, consumer friendly feel.
 
-The `corner` prop can be used to toggle between `"sharp"` (default) and `"rounded"`.
+The `corner` prop can be used to toggle between `"sharp"` (default) and
+`"rounded"`.
 
 ```tsx
 <UNSTABLE_SaltProviderNext corner="rounded">
@@ -73,11 +119,13 @@ A new set of palette token (corner) is added with below mapping
 
 ### Components
 
-Following components have received corner options, and more components will be added from feedback.
+Following components have received corner options, and more components will be
+added from feedback.
 
 #### Interactive (inner)
 
-Interactive components sit within other interactive components use `--salt-palette-corner-weaker` token.
+Interactive components sit within other interactive components use
+`--salt-palette-corner-weaker` token.
 
 - Checkbox
 - Pill
@@ -114,13 +162,15 @@ These components use `--salt-palette-corner-strongest` token
 
 ## Heading font switch
 
-A new `headingFont` prop is added to switch display and heading font family between Open Sans and Amplitude.
+A new `headingFont` prop is added to switch display and heading font family
+between Open Sans and Amplitude.
 
 ```
 <UNSTABLE_SaltProviderNext headingFont="Amplitude">
 ```
 
-You'll need to install Amplitude font to your application to make sure every user will see the font correctly, e.g.,
+You'll need to install Amplitude font to your application to make sure every
+user will see the font correctly, e.g.,
 
 ```css
 @font-face {
@@ -132,50 +182,19 @@ You'll need to install Amplitude font to your application to make sure every use
 }
 ```
 
-## Unified Color Palette
-
-A completely new color palette is used with balanced color ramps for each color group.
-
-You will find 9 colors in each color group, which makes sure middle point (500 colors) will achieve
-at least 4.5 contrast ratio against both light and dark primary background. Primary and secondary
-background colors are no longer picked from the color ramps, but rather from additional foundation
-colors (snow & marble in light, jet & granite in dark).
-
-Refer to Figma file ([UNSTABLE Salt Colors (variables)](<https://www.figma.com/file/e753bB0n5Adc0LCXqtvslu/UNSTABLE-Salt-Colors-(variables)?type=design&node-id=424%3A77224&mode=design&t=1snosiQ76rKnIe9d-1>))
-for color values and mappings.
-
-Migration note: If you're referring any Salt foundation colors (i.e. `--salt-color-*`) directly in your code,
-you'll need to revisit those values. We do not recommend directly consume foundation colors directly, instead
-try to find a characteristics color instead which will work better in different modes.
-
-## New Theme Palette Structure
-
-A new structure of palette layer is introduced to help making color changes easier for custom themes, namely
-
-- Accent
-- Background
-- Foreground
-- Neutral
-- Info
-- Negative
-- Positive
-- Warning
-
-All existing characteristics are re-wired through above new palette layers to use the new colors,
-which is scoped to `.salt-theme-next`.
-
 ## Accent color switch
 
-A new `accent` prop is introduced with `"blue"` (default) and `"teal"` options.
-This enables the possiblity of switching all components using accent colors to use either blue or teal
-color palette, e.g. CTA button, checkbox, radio button, etc.
+A new `accent` prop is introduced with options `"blue"` (default) and `"teal"`.
+This enables the possiblity of switching all components that use accent colors to
+either blue or teal color palette, such as CTA button, checkbox, radio button,
+etc.
 
 ```tsx
 <UNSTABLE_SaltProviderNext accent="teal">
 ```
 
-Under the hood, a new `data-accent` attribute is added alongside with other style option attributes, where
-below variables are being switched to different colors
+Under the hood, a new `data-accent` attribute is added alongside other style option
+attributes. Variables below are being switched to different colors
 
 ```
 --salt-palette-accent
