@@ -40,7 +40,7 @@ const sideBar = {
       id: "customStats",
       labelDefault: "Custom Stats",
       labelKey: "customStats",
-      iconKey: "custom-stats",
+      iconKey: "save",
       toolPanel: CustomPanel,
     },
   ],

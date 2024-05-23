@@ -1,4 +1,6 @@
 div[class*="ag-theme-salt"] {
+  --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-palette-neutral-primary-background);
   --ag-border-color: var(--salt-separable-secondary-borderColor);
   --ag-borders-secondary: var(--salt-size-border) var(--salt-separable-borderStyle);
@@ -56,6 +58,11 @@ div[class*="ag-theme-salt"] {
     Use categorical color for below tokens when available
     --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
    */
+}
+
+div[class*="ag-theme-salt-compact"] {
+  --ag-row-height: var(--salt-size-base);
+  --ag-header-height: var(--salt-size-base);
 }
 
 div[class*="ag-theme-salt"] .ag-root-wrapper {
@@ -233,11 +240,11 @@ div[class*="ag-theme-salt"] .editable-cell,
 div[class*="ag-theme-salt"] .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
   outline-offset: -1px;
-  justify-content: flex-end;
+  text-align: right;
 }
 
 div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
-  justify-content: flex-end;
+  text-align: right;
 }
 
 div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),

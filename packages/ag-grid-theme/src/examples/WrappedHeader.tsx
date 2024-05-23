@@ -38,7 +38,7 @@ const WrappedHeader = (props: AgGridReactProps) => {
         onChange={handleCompactChange}
         disabled={density !== "high"}
       />
-      <div {...containerProps} style={{ height: "400px", width: "500px" }}>
+      <div {...containerProps}>
         <AgGridReact
           {...restAgGridProps}
           {...props}

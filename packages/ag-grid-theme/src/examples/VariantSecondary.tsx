@@ -1,4 +1,3 @@
-import { Banner, BannerContent, FlexLayout } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -10,24 +9,18 @@ const VariantSecondary = (props: AgGridReactProps) => {
   const { className } = containerProps;
 
   return (
-    <FlexLayout direction="column">
-      <Banner status="info">
-        <BannerContent>Variants are available in Salt theme only</BannerContent>
-      </Banner>
-      <div
-        style={{ height: 500, width: 800, marginTop: 25 }}
-        {...containerProps}
-        className={clsx(className, "ag-theme-salt-variant-secondary")}
-      >
-        <AgGridReact
-          {...agGridProps}
-          {...props}
-          rowData={dataGridExampleData}
-          columnDefs={dataGridExampleColumns}
-          rowSelection="multiple"
-        />
-      </div>
-    </FlexLayout>
+    <div
+      {...containerProps}
+      className={clsx(className, "ag-theme-salt-variant-secondary")}
+    >
+      <AgGridReact
+        {...agGridProps}
+        {...props}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns}
+        rowSelection="multiple"
+      />
+    </div>
   );
 };
 

@@ -32,7 +32,7 @@ const WrappedCell = (props: AgGridReactProps) => {
           disabled={density !== "high"}
         />
       </FlexItem>
-      <div {...containerProps} style={{ height: "400px", width: "500px" }}>
+      <div {...containerProps}>
         <AgGridReact
           {...restAgGridProps}
           {...props}
