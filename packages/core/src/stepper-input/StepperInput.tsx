@@ -1,12 +1,14 @@
 import { clsx } from "clsx";
 import { FocusEventHandler, forwardRef, useRef } from "react";
-import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useStepperInput } from "./useStepperInput";
 
 import stepperInputCss from "./StepperInput.css";
+import { makePrefixer } from "../utils";
+import { Input, InputProps } from "../input";
+import { Button } from "../button";
 
 const withBaseName = makePrefixer("saltStepperInput");
 

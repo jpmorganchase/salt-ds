@@ -4,9 +4,10 @@ import {
   MouseEvent,
   MutableRefObject,
 } from "react";
-import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
+import { useId } from "../utils";
+import { InputProps } from "../input";
 
 // The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
