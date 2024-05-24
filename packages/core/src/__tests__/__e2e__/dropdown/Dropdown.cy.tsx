@@ -281,6 +281,9 @@ describe("Given a Dropdown", () => {
       "true"
     );
     cy.realType("California");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
     cy.realPress("Enter");
     cy.get("@selectionChange").should("not.have.been.called");
     cy.findByRole("option", { name: "California" }).realClick();
@@ -429,6 +432,27 @@ describe("Given a Dropdown", () => {
   it("should show a placeholder when the value is empty", () => {
     cy.mount(<Dropdown placeholder="Placeholder" value="" />);
     cy.findByRole("combobox").should("have.text", "Placeholder");
+  });
+
+  it("should support typeahead", () => {
+    cy.mount(<Default />);
+    cy.realPress("Tab");
+    cy.realType("A");
+    cy.findByRole("listbox").should("exist");
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
+
+    cy.wait(500);
+
+    cy.realType("Co");
+    cy.findByRole("option", { name: "Connecticut" }).should(
+      "be.activeDescendant"
+    );
   });
 
   it("should render the custom floating component", () => {

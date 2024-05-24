@@ -119,6 +119,12 @@ describe("GIVEN a List box", () => {
       "aria-disabled",
       "true"
     );
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.realPress("ArrowDown");
+    cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
+    cy.findByRole("option", { name: "Arizona" }).realPress("Enter");
+    cy.get("@selectionChange").should("not.have.been.called");
     cy.findByRole("option", { name: "Arizona" }).realClick();
     cy.get("@selectionChange").should("not.have.been.called");
   });
@@ -192,5 +198,21 @@ describe("GIVEN a List box", () => {
     cy.findByRole("group", { name: "A" })
       .findByRole("option", { name: "Alabama" })
       .should("exist");
+  });
+
+  it("should support typeahead", () => {
+    cy.mount(<SingleSelect />);
+    cy.realPress("Tab");
+    cy.realType("A");
+    cy.findByRole("listbox").should("exist");
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
+
+    cy.wait(500);
+
+    cy.realType("Alas");
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
   });
 });

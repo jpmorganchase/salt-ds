@@ -23,7 +23,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
         <Option key={color} value={color} />
       ))}
     </ListBox>
-    <ListBox borderless defaultSelected={[shortColorData[0]]}>
+    <ListBox bordered defaultSelected={[shortColorData[0]]}>
       {shortColorData.map((color) => (
         <Option key={color} value={color} />
       ))}

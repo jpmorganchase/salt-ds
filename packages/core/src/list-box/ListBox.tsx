@@ -27,9 +27,9 @@ export type ListBoxProps<Item = string> = {
    */
   disabled?: boolean;
   /**
-   * If `true`, the list box will have not a border.
+   * If `false`, the list box will have not a border.
    */
-  borderless?: boolean;
+  bordered?: boolean;
   /**
    * The options to display in the list box.
    */
@@ -48,7 +48,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
   ref: ForwardedRef<HTMLDivElement>
 ) {
   const {
-    borderless,
+    bordered,
     className,
     children,
     defaultSelected,
@@ -240,7 +240,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       <div
         className={clsx(
           withBaseName(),
-          { [withBaseName("bordered")]: !borderless },
+          { [withBaseName("bordered")]: bordered },
           className
         )}
         role="listbox"

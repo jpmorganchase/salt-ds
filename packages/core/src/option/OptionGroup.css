@@ -6,21 +6,29 @@
   font-family: var(--salt-text-label-fontFamily);
   line-height: var(--salt-text-label-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
   display: flex;
   box-sizing: border-box;
 }
 
+.saltOptionGroup {
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+.saltOptionGroup:first-of-type {
+  border-top: 0;
+}
+
 /* Not implemented */
 
-.saltOptionGroup-label {
-  position: sticky;
-  top: -1px;
-}
+/*.saltOptionGroup-label {*/
+/*  position: sticky;*/
+/*  top: -1px;*/
+/*}*/
 
-.saltOptionGroup-stuck {
-  background: var(--salt-container-primary-background);
-  box-shadow: var(--salt-overlayable-shadow);
-  z-index: 2;
-}
+/*.saltOptionGroup-stuck {*/
+/*  background: var(--salt-container-primary-background);*/
+/*  box-shadow: var(--salt-overlayable-shadow);*/
+/*  z-index: 2;*/
+/*}*/

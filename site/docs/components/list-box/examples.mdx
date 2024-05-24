@@ -42,11 +42,11 @@ Use the `disabled` prop on the `Option` component to disable an option. Disabled
 
 </LivePreview>
 
-<LivePreview componentName="list-box" exampleName="Borderless">
+<LivePreview componentName="list-box" exampleName="Bordered">
 
-## Borderless
+## Bordered
 
-By default, list box has a border. Use the `borderless` prop to remove the border. This is useful when the list box is used in a container with a border. See the [list builder pattern](/salt/patterns/list-builder) for an example of this.
+Use the `bordered` prop to add a border to the list box.
 
 </LivePreview>
 
@@ -55,6 +55,19 @@ By default, list box has a border. Use the `borderless` prop to remove the borde
 ## Scrolling
 
 The list box will scroll when the number of options exceeds the height of the list box.
+
+</LivePreview>
+
+<LivePreview componentName="list-box" exampleName="ComplexOptions">
+
+## Complex options
+
+You can supply static content as children to the `Option` component. This can be used to visually assist users, for example rendering a description for the option as seen in this example.
+
+### Best practices
+
+- Users can benefit from seeing a particular visual with list items. Customize the display as you see fit. For example, if displaying a list of contacts, it may help to provide headshots alongside the option text.
+- Place any visual support such as icons, country symbols or avatars to the left of the option text.
 
 </LivePreview>
 </LivePreviewControls>
