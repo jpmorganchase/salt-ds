@@ -1,5 +1,32 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.45
+
+### Minor Changes
+
+- 375499e4: Removed `liveValue`, `showRefreshButton`, `ButtonProps` and `InputProps` props from `StepperInput`.
+  Added `hideButtons` prop from `StepperInput` and updated to extend Input's `InputProps`.
+- b9a6d1e8: - Fix calendar carousel receiving focus in firefox
+
+  - Add DatePicker component to lab
+
+  ```typescript
+  <DatePicker />
+  ```
+
+  - Updated DateInput to integrate within DatePicker
+
+- 25e38e48: TrackerStep now uses `--salt-status-success-foreground-decorative` and `--salt-status-info-foreground-decorative` instead of `--salt-status-success-foreground` and `--salt-status-info-foreground`.
+
+### Patch Changes
+
+- 579fe968: - Calendar aria-label format changed from 'MM YYYY' to 'Calendar, DD MMM YYYY'.
+  - Calendar day aria-label format changed from 'DD/MM/YYYY' to 'DD MMM YYYY'.
+  - Calendar navigation buttons aria-label format got simplified to 'Previous Month' and 'Next Month'.
+  - Fix Calendar focused item getting lost when navigating trough calendar.
+- 78e643f2: Changed `startDate` and `endDate` for `selectedDate` in DatePicker to align with Calendar props.
+  Changed `defaultStartDate` and `defaultEndDate` for `defaultSelectedDate` in DatePicker to align with Calendar props.
+
 ## 1.0.0-alpha.44
 
 ### Patch Changes
