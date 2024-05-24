@@ -10,7 +10,7 @@ import {
 
 export const CustomIcon = (): ReactElement => (
   <div style={{ display: "flex", flexDirection: "column" }}>
-    <Toast style={{ width: 260 }} Icon={FilterClearIcon}>
+    <Toast style={{ width: 260 }} Icon={FilterClearIcon} status={"info"}>
       <ToastContent>
         <Text>
           <strong>Info with Custom Icon</strong>

@@ -45,7 +45,7 @@ const UI = () => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast Icon={GlobeIcon}>
+    <Toast Icon={GlobeIcon} status={"info"}>
       <ToastContent>Custom icon toast</ToastContent>
       <Button variant="secondary">
         <CloseIcon />
