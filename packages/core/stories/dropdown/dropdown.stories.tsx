@@ -11,9 +11,13 @@ import {
 } from "@salt-ds/core";
 
 import { Meta, StoryFn } from "@storybook/react";
-import { CountryCode, GB, US } from "@salt-ds/countries";
 import { SyntheticEvent, useState } from "react";
-import { LocationIcon } from "@salt-ds/icons";
+import {
+  LocationIcon,
+  UserAdminIcon,
+  GuideClosedIcon,
+  EditIcon,
+} from "@salt-ds/icons";
 
 export default {
   title: "Core/Dropdown",
@@ -146,8 +150,8 @@ export const Variants: StoryFn<typeof Dropdown> = () => {
   );
 };
 
-export const MultiSelect = Template.bind({});
-MultiSelect.args = {
+export const Multiselect = Template.bind({});
+Multiselect.args = {
   multiselect: true,
 };
 
@@ -182,14 +186,24 @@ export const Grouped: StoryFn<typeof Dropdown> = (args) => {
   );
 };
 
-const countries: Record<string, { icon: JSX.Element; name: string }> = {
-  GB: {
-    icon: <GB aria-hidden size={0.75} />,
-    name: "United Kingdom of Great Britain and Northern Ireland",
+const permissions: Record<
+  string,
+  { icon: JSX.Element; name: string; description: string }
+> = {
+  read: {
+    icon: <GuideClosedIcon aria-hidden />,
+    name: "Read",
+    description: "Read only",
   },
-  US: {
-    icon: <US aria-hidden size={0.75} />,
-    name: "United States of America",
+  write: {
+    icon: <EditIcon aria-hidden />,
+    name: "Write",
+    description: "Read and write only",
+  },
+  admin: {
+    icon: <UserAdminIcon aria-hidden />,
+    name: "Admin",
+    description: "Full access",
   },
 };
 
@@ -204,7 +218,7 @@ export const ComplexOption: StoryFn<DropdownProps> = (args) => {
     args.onSelectionChange?.(event, newSelected);
   };
 
-  const adornment = countries[selected[0] ?? ""]?.icon || null;
+  const adornment = permissions[selected[0] ?? ""]?.icon || null;
 
   return (
     <Dropdown
@@ -212,15 +226,28 @@ export const ComplexOption: StoryFn<DropdownProps> = (args) => {
       selected={selected}
       startAdornment={adornment}
       onSelectionChange={handleSelectionChange}
-      valueToString={(item) => countries[item].name}
+      valueToString={(item) => permissions[item].name}
     >
-      <Option value="GB">
-        <GB size={0.75} aria-hidden /> United Kingdom of Great Britain and
-        Northern Ireland
-      </Option>
-      <Option value="US">
-        <US size={0.75} aria-hidden /> United States of America
-      </Option>
+      {Object.values(permissions).map(({ name, icon, description }) => (
+        <Option value={name.toLowerCase()} key={name.toLowerCase()}>
+          <StackLayout
+            direction="row"
+            gap={1}
+            style={{
+              paddingBlock:
+                "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
+            }}
+          >
+            {icon}
+            <StackLayout gap={0.5} align="start">
+              <Text>{name}</Text>
+              <Text styleAs="label" color="secondary">
+                {description}
+              </Text>
+            </StackLayout>
+          </StackLayout>
+        </Option>
+      ))}
     </Dropdown>
   );
 };
@@ -292,7 +319,7 @@ const people: Person[] = [
   { id: 4, firstName: "Jane", lastName: "Smith", displayName: "Jane Smith" },
 ];
 
-export const ObjectValue: StoryFn<DropdownProps<Person>> = (args) => {
+export const ObjectValue: StoryFn<DropdownProps<Person>> = () => {
   const [selected, setSelected] = useState<Person[]>([]);
   const handleSelectionChange = (
     event: SyntheticEvent,
@@ -310,57 +337,6 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = (args) => {
     >
       {people.map((person) => (
         <Option value={person} key={person.id} />
-      ))}
-    </Dropdown>
-  );
-};
-
-export type CityWithCountry = {
-  value: string;
-  country: string;
-};
-
-export const citiesWithCountries = [
-  {
-    value: "Chicago",
-    country: "US",
-  },
-  {
-    value: "Miami",
-    country: "US",
-  },
-  {
-    value: "New York",
-    country: "US",
-  },
-  {
-    value: "Liverpool",
-    country: "GB",
-  },
-  {
-    value: "London",
-    country: "GB",
-  },
-  {
-    value: "Manchester",
-    country: "GB",
-  },
-];
-
-export const SecondaryLabel: StoryFn<typeof Dropdown> = (args) => {
-  return (
-    <Dropdown
-      style={{ width: "266px" }}
-      valueToString={(city: CityWithCountry) => city.value}
-      placeholder="City"
-    >
-      {citiesWithCountries.map((city) => (
-        <Option key={city.value} value={city}>
-          <StackLayout gap={0.5} align="start">
-            <Text>{city.value}</Text>
-            <Text color="secondary">{city.country}</Text>
-          </StackLayout>
-        </Option>
       ))}
     </Dropdown>
   );
