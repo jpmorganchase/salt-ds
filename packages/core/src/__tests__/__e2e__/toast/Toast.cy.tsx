@@ -56,7 +56,7 @@ describe("Given a Toast", () => {
 
   it("AND custom icon, THEN renders with custom icon", () => {
     cy.mount(
-      <Toast Icon={LinkedIcon}>
+      <Toast Icon={LinkedIcon} status={"success"}>
         <ToastContent>Toast content</ToastContent>
       </Toast>
     );
