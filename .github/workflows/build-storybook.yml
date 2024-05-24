@@ -33,9 +33,11 @@ jobs:
           mkdir METADATA
           echo $BRANCH_NAME > ./METADATA/branch-name
           echo $DRAFT > ./METADATA/draft
+          echo $BASE > ./METADATA/base
         env:
           DRAFT: ${{ github.event.pull_request.draft }}
           BRANCH_NAME: ${{ github.event.pull_request.head.label || github.ref_name }}
+          BASE: ${{ github.event.pull_request.base.ref || github.ref_name }}
       - uses: actions/upload-artifact@v4
         with:
           name: metadata
