@@ -15,20 +15,6 @@ jobs:
           fetch-depth: 0
           repository: ${{ github.event.workflow_run.head_repository.full_name }}
           ref: ${{ github.event.workflow_run.head_branch }}
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn
-      - name: "Download build artifact"
-        uses: actions/download-artifact@v4
-        with:
-          name: storybook-build
-          path: ./storybook-static
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          run-id: ${{ github.event.workflow_run.id }}
       - name: "Download chromatic branch name artifact"
         uses: actions/download-artifact@v4
         with:
@@ -47,6 +33,31 @@ jobs:
 
             const draft = fs.readFileSync("./METADATA/draft", "utf8").trim();
             core.setOutput("draft", draft);
+
+            const base = fs.readFileSync("./METADATA/base", "utf8").trim();
+            core.setOutput("base", base);
+      - name: Fetch base branch from upstream
+        if: github.event.workflow_run.event == 'pull_request'
+        run: |
+          git remote add upstream ${{ github.event.repository.clone_url }}
+          git fetch upstream
+          git checkout -B ${{ steps.chromatic_branch.outputs.base }} upstream/${{ steps.chromatic_branch.outputs.base }}
+          git checkout ${{ github.event.workflow_run.head_branch }}
+          git clean -ffdx && git reset --hard HEAD
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: "Download build artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: storybook-build
+          path: ./storybook-static
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
         if: ${{ steps.chromatic_branch.outputs.draft != 'true' }}
         uses: chromaui/action@v11
@@ -57,10 +68,13 @@ jobs:
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
           onlyChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' }}
-          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'packages/(theme|ag-grid-theme)/**' || '' }}
+          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'packages/(theme)/**' || '' }}
           skip: "changeset-release/*"
           autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' }}
           ignoreLastBuildOnBranch: "**"
           traceChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'expanded' || '' }}
           storybookBuildDir: "./storybook-static"
           branchName: ${{ steps.chromatic_branch.outputs.branchName }}
+          debug: true
+        env:
+          LOG_LEVEL: "debug"
