@@ -1,5 +1,5 @@
 .salt-theme.salt-theme-next {
-  --salt-separable-primary-borderColor: var(--salt-palette-neutral-stronger-primary);
-  --salt-separable-secondary-borderColor: var(--salt-palette-neutral-stronger-secondary);
-  --salt-separable-tertiary-borderColor: var(--salt-palette-neutral-stronger-tertiary);
+  --salt-separable-primary-borderColor: var(--salt-palette-alpha-strong);
+  --salt-separable-secondary-borderColor: var(--salt-palette-alpha);
+  --salt-separable-tertiary-borderColor: var(--salt-palette-alpha-weak);
 }
