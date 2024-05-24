@@ -9,7 +9,6 @@ import {
   ReactNode,
   RefObject,
   SyntheticEvent,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -59,9 +58,6 @@ function getCalendarDate(inputDate: string) {
   const isoDate = getIsoDate(date);
   return isoDate && new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
 }
-
-const getDateValidationStatus = (value: string | undefined) =>
-  value && isInvalidDate(value) ? "error" : undefined;
 
 const defaultDateFormatter = (date: DateValue | undefined): string => {
   return date
@@ -118,6 +114,7 @@ export interface DateInputProps
    * Selection variant. Defaults to single select.
    */
   selectionVariant?: "default" | "range";
+  onInputValueChange?: (event: SyntheticEvent, value: string) => void;
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -137,6 +134,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       placeholder = "dd mmm yyyy",
       startInputRef,
       endInputRef,
+      onInputValueChange,
       ...rest
     },
     ref
@@ -162,8 +160,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       selectionVariant: pickerSelectionVariant,
       openState,
       setOpen,
-      validationStatusState,
-      setValidationStatus,
     } = useDatePickerContext();
 
     const selectionVariant = selectionVariantProp ?? pickerSelectionVariant;
@@ -193,10 +189,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const isDisabled = disabled || formFieldDisabled;
 
-    const validationStatus =
-      validationStatusState ??
-      formFieldValidationStatus ??
-      validationStatusProp;
+    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
     const {
       "aria-describedby": dateInputDescribedBy,
@@ -208,53 +201,40 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       ...restDateInputProps
     } = inputProps;
 
-    const validateRange = useCallback(() => {
-      if (startDate && endDate) {
-        setValidationStatus(
-          startDate?.compare(endDate) >= 1 ? "error" : undefined
-        );
-      }
-    }, [endDate, startDate, setValidationStatus]);
+    // const validateRange = useCallback(() => {
+    //   if (startDate && endDate) {
+    //     setValidationStatus(
+    //       startDate?.compare(endDate) >= 1 ? "error" : undefined
+    //     );
+    //   }
+    // }, [endDate, startDate, setValidationStatus]);
 
     // Effects. Update date strings when dates change
     useEffect(() => {
       setStartDateStringValue(dateFormatter(startDate));
-      validateRange();
-    }, [startDate, dateFormatter, validateRange]);
+    }, [startDate, dateFormatter]);
 
     useEffect(() => {
       setEndDateStringValue(dateFormatter(endDate));
-      validateRange();
-    }, [endDate, dateFormatter, validateRange]);
+    }, [endDate, dateFormatter]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
-    const updateStartDate = (dateString: string) => {
+    const updateStartDate = (event: SyntheticEvent, dateString: string) => {
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      const emptyDateStatus = !calendarDate && inputDate ? "error" : undefined;
-      setValidationStatus(
-        getDateValidationStatus(dateString) ??
-          getDateValidationStatus(endDateStringValue) ??
-          emptyDateStatus
-      );
+      onInputValueChange?.(event, dateString);
       if (calendarDate) {
         setStartDate(calendarDate);
       }
     };
 
-    const updateEndDate = (dateString: string) => {
+    const updateEndDate = (event: SyntheticEvent, dateString: string) => {
       if (!dateString) setEndDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      const emptyDateStatus = !calendarDate && inputDate ? "error" : undefined;
-      setValidationStatus(
-        getDateValidationStatus(dateString) ??
-          getDateValidationStatus(startDateStringValue) ??
-          emptyDateStatus
-      );
       if (calendarDate) {
         setEndDate(calendarDate);
       }
@@ -266,7 +246,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       setFocused(true);
     };
     const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      updateStartDate(event.target.value);
+      updateStartDate(event, event.target.value);
       setFocused(false);
       onBlur?.(event);
     };
@@ -278,7 +258,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
 
     const handleStartDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
-        updateStartDate(startDateStringValue);
+        updateStartDate(event, startDateStringValue);
         setOpen(false);
       }
       if (event.key === "Tab" && event.shiftKey && openState) {
@@ -287,7 +267,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      updateEndDate(event.target.value);
+      updateEndDate(event, event.target.value);
       setFocused(false);
       onBlur?.(event);
     };
@@ -297,7 +277,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
     const handleEndDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
-        updateEndDate(endDateStringValue);
+        updateEndDate(event, endDateStringValue);
         setOpen(false);
       }
     };

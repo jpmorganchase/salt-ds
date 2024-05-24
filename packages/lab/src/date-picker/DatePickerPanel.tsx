@@ -1,6 +1,7 @@
 import {
   ComponentPropsWithoutRef,
   forwardRef,
+  SyntheticEvent,
   useEffect,
   useState,
 } from "react";
@@ -27,7 +28,10 @@ import {
 import { DateValue, endOfMonth, startOfMonth } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
-  onSelect?: () => void;
+  onSelect?: (
+    event: SyntheticEvent,
+    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+  ) => void;
   helperText?: string;
   CalendarProps?: Partial<
     Omit<
@@ -70,26 +74,23 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       selectionVariant,
       context,
       getPanelPosition,
-      setValidationStatus,
     } = useDatePickerContext();
 
     const { a11yProps } = useFormFieldProps();
 
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
-      (_, newDate) => {
+      (event, newDate) => {
         setStartDate(newDate.startDate);
         setEndDate(newDate.endDate);
-        setValidationStatus(undefined);
+        onSelect?.(event, newDate);
         if (newDate.startDate && newDate.endDate) {
           setOpen(false);
         }
-        onSelect?.();
       };
     const setSingleDate: UseSingleSelectionCalendarProps["onSelectedDateChange"] =
-      (_, newDate) => {
+      (event, newDate) => {
         setStartDate(newDate);
-        setValidationStatus(undefined);
-        onSelect?.();
+        onSelect?.(event, newDate);
         setOpen(false);
       };
     const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
