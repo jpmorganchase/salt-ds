@@ -16,7 +16,7 @@ export function useMouseDownThumb(
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [ mouseDown, setMouseDown ] = useState(false)
-  const activeThumbIndex = useRef({
+  const activeThumbIndex = useRef<{ index: number | undefined}>({
         index: undefined
     });
 

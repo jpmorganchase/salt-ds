@@ -1,7 +1,7 @@
 import { makePrefixer, Label } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { getPercentage } from "./utils";
-import { ComponentPropsWithoutRef, RefObject, useRef } from "react";
+import { ComponentPropsWithoutRef, RefObject } from "react";
 import { useMouseDownThumb } from "./useMouseDownThumb";
 import { useKeyDownThumb } from "./useKeyDownThumb";
 import { useSliderContext } from "./SliderContext";
@@ -20,8 +20,6 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
 
   const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
-  const sliderThumbRef = useRef(null);
-
   const { thumbProps, tooltipVisible } = useMouseDownThumb(
     trackRef,
     min,
@@ -29,8 +27,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     step,
     value,
     onChange,
-    index,
-    sliderThumbRef
+    index
   );
 
   const percentage = Array.isArray(value)
@@ -60,11 +57,12 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         role="slider"
         aria-valuemin={min}
         aria-valuemax={max}
-        aria-valuenow={value}
+        aria-valuenow={
+          Array.isArray(value) ? (index === 0 ? value[0] : value[1]) : value
+        }
         aria-label={ariaLabel}
         aria-orientation="horizontal"
         tabIndex={0}
-        ref={sliderThumbRef}
         {...rest}
       />
     </div>

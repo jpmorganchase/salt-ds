@@ -2,6 +2,7 @@
   display: grid;
   gap: var(--salt-spacing-100);
   grid-template-columns: auto 1fr auto;
+  user-select: none;
 }
 
 .saltSlider-bottomLabel {
