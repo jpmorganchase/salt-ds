@@ -12,7 +12,7 @@ export const Refresh = (): ReactElement => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
-    <FormField>
+    <FormField style={{ width: "250px" }}>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput
         value={value}

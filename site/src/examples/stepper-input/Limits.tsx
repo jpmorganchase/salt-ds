@@ -11,29 +11,22 @@ export const Limits = (): ReactElement => {
   const max = 5;
   const min = 0;
 
-  const getValidationStatus = () => {
-    if (typeof value === "number") {
-      if (value > max || value < min) {
-        return "error";
-      }
-    } else {
-      const numericValue = parseFloat(value);
-      if (numericValue > max || numericValue < min) {
-        return "error";
-      }
-    }
-    return undefined;
+  const isOutOfRange = () => {
+    const numericValue = typeof value === "number" ? value : parseFloat(value);
+    return numericValue > max || numericValue < min;
   };
 
   return (
-    <FormField validationStatus={getValidationStatus()}>
+    <FormField
+      validationStatus={isOutOfRange() ? "error" : undefined}
+      style={{ width: "250px" }}
+    >
       <FormFieldLabel>Stepper Input with limited range</FormFieldLabel>
       <StepperInput
         value={value}
         onChange={(changedValue) => setValue(changedValue)}
         max={max}
         min={min}
-        style={{ width: "250px" }}
       />
       <FormFieldHelperText>
         Please enter a value between {min} and {max}.

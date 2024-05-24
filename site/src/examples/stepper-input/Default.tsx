@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 
 export const Default = (): ReactElement => (
-  <FormField>
+  <FormField style={{ width: "250px" }}>
     <FormFieldLabel>Default Stepper Input</FormFieldLabel>
     <StepperInput />
     <FormFieldHelperText>Please enter a number</FormFieldHelperText>

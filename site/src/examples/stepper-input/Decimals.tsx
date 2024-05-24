@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/core";
 
 export const Decimals = (): ReactElement => (
-  <FormField>
+  <FormField style={{ width: "250px" }}>
     <FormFieldLabel>Stepper Input with decimal places</FormFieldLabel>
     <StepperInput decimalPlaces={2} step={0.01} />
     <FormFieldHelperText>Please enter a number</FormFieldHelperText>
