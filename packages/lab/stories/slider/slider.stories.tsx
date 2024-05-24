@@ -106,7 +106,7 @@ RangeWithMarks.args = {
   max: 100,
   step: 10,
   defaultValue: [20, 80],
-  labels: "marks",
+  marks: "all",
 };
 
 export const RangeWithInput = () => {

@@ -48,7 +48,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         className={clsx(withBaseName("tooltip"), {
           [withBaseName("showTooltip")]: !tooltipVisible,
         })}
-        aria-expanded={thumbFocus}
+        aria-expanded={tooltipVisible}
       >
         {Array.isArray(value) && <Label>{index ? value[1] : value[0]}</Label>}
         {!Array.isArray(value) && <Label>{value}</Label>}

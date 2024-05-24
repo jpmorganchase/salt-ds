@@ -31,7 +31,7 @@ export interface SliderProps
   /**
    * Initial value of the slider
    */
-  defaultValue?: number;
+  defaultValue?: SliderValue;
   /**
    * The markings the slider is displayed with
    */
@@ -39,7 +39,7 @@ export interface SliderProps
   /**
    * Value of the slider, to be used when in a controlled state
    */
-  value?: number;
+  value?: SliderValue;
   /**
    * Change handler to be used when in a controlled state
    */
