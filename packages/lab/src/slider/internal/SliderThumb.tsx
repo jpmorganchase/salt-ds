@@ -20,6 +20,8 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
 
   const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
+  console.log(index);
+
   const { thumbProps, tooltipVisible } = useMouseDownThumb(
     trackRef,
     min,

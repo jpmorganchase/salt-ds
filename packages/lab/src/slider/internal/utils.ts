@@ -1,5 +1,5 @@
 import { SliderChangeHandler } from "../types";
-import { RefObject, useRef } from "react";
+import { RefObject } from "react";
 
 export const getValue = (
   trackRef: RefObject<Element>,
@@ -30,8 +30,10 @@ export function setRangeValue(
     Math.abs(value[1] - newValue) < step
   )
     return;
-  if (index === 0 && newValue > value[1]) return;
-  if (index === 1 && newValue < value[0]) return;
+  if (index === 0 && newValue > value[1])
+    return onChange([value[1] - step, value[1]]);
+  if (index === 1 && newValue < value[0])
+    return onChange([value[0], value[0] + step]);
   index ? onChange?.([value[0], newValue]) : onChange?.([newValue, value[1]]);
 }
 

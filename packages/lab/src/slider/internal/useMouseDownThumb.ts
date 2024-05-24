@@ -12,8 +12,6 @@ export function useMouseDownThumb(
   index: number,
 ) {
 
-
-
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [ mouseDown, setMouseDown ] = useState(false)
   const activeThumbIndex = useRef<{ index: number | undefined}>({
@@ -33,7 +31,7 @@ export function useMouseDownThumb(
     document.removeEventListener("pointerup", onMouseUp);
     setTooltipVisible(false);
     setMouseDown(false)
-    activeThumbIndex.current.index = undefined
+    activeThumbIndex.current.index = 0
   };
 
   const onMouseMove = (event: MouseEvent): void => {
@@ -55,7 +53,7 @@ export function useMouseDownThumb(
         onDownThumb();
       },
       onMouseOver() {
-        activeThumbIndex.current.index === index && setTooltipVisible(true);
+   setTooltipVisible(true)
       },
       onFocus() {
         setTooltipVisible(true);

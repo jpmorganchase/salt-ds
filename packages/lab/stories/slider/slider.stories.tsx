@@ -155,6 +155,7 @@ export const RangeWithInput = () => {
           min={0}
           max={50}
           value={value}
+          // @ts-ignore
           onChange={handleSliderChange}
           aria-label="withInput"
         />
