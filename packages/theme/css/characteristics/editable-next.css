@@ -9,11 +9,11 @@
   --salt-editable-primary-background-active: var(--salt-palette-background-primary);
   --salt-editable-primary-background-disabled: var(--salt-palette-background-primary-disabled);
   --salt-editable-primary-background-hover: var(--salt-palette-background-primary);
-  --salt-editable-primary-background-readonly: var(--salt-palette-background-none);
+  --salt-editable-primary-background-readonly: var(--salt-palette-alpha-none);
 
   --salt-editable-secondary-background: var(--salt-palette-background-secondary);
   --salt-editable-secondary-background-active: var(--salt-palette-background-secondary);
   --salt-editable-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
   --salt-editable-secondary-background-hover: var(--salt-palette-background-secondary);
-  --salt-editable-secondary-background-readonly: var(--salt-palette-background-none);
+  --salt-editable-secondary-background-readonly: var(--salt-palette-alpha-none);
 }
