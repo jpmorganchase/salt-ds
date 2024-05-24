@@ -1,4 +1,4 @@
-import { StepperInput } from "@salt-ds/lab";
+import { StepperInput } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 
