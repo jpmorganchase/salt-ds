@@ -163,7 +163,7 @@ div[class*="ag-theme-salt"] .ag-menu {
 }
 
 div[class*="ag-theme-salt"] .ag-popup-child:not(.ag-tooltip-custom) {
-  box-shadow: var(--agGrid-menu-shadow);
+  box-shadow: var(--salt-overlayable-shadow-popout);
 }
 
 div[class*="ag-theme-salt"] .ag-menu-header {
