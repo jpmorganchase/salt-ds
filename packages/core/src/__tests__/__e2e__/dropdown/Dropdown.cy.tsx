@@ -9,7 +9,7 @@ const {
   Readonly,
   Disabled,
   DisabledOption,
-  MultiSelect,
+  Multiselect,
   WithFormField,
   Grouped,
   ComplexOption,
@@ -258,7 +258,7 @@ describe("Given a Dropdown", () => {
 
   it("should allow multiple options to be selected with a mouse", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
-    cy.mount(<MultiSelect onSelectionChange={selectionChangeSpy} />);
+    cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
     cy.findByRole("combobox").should(
       "have.attr",
       "aria-multiselectable",
@@ -285,7 +285,7 @@ describe("Given a Dropdown", () => {
 
   it("should allow multiple options to be selected with the keyboard", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
-    cy.mount(<MultiSelect onSelectionChange={selectionChangeSpy} />);
+    cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
     cy.realPress("Tab");
     cy.realPress("ArrowDown");
     cy.realPress(" ");
