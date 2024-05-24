@@ -327,11 +327,9 @@ describe("Given a Dropdown", () => {
   it("should support complex options", () => {
     cy.mount(<ComplexOption />);
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "United States of America" }).should(
-      "exist"
-    );
-    cy.findByRole("option", { name: "United States of America" }).realClick();
-    cy.findByRole("combobox").should("have.text", "United States of America");
+    cy.findByRole("option", { name: "Read Read only" }).should("exist");
+    cy.findByRole("option", { name: "Read Read only" }).realClick();
+    cy.findByRole("combobox").should("have.text", "Read");
   });
 
   it("should support object values", () => {

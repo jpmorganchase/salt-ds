@@ -386,11 +386,9 @@ describe("Given a ComboBox", () => {
   it("should support complex options", () => {
     cy.mount(<ComplexOption />);
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "United States of America" }).should(
-      "exist"
-    );
-    cy.findByRole("option", { name: "United States of America" }).realClick();
-    cy.findByRole("combobox").should("have.value", "United States of America");
+    cy.findByRole("option", { name: "Kamron Marisa" }).should("exist");
+    cy.findByRole("option", { name: "Kamron Marisa" }).realClick();
+    cy.findByRole("combobox").should("have.value", "Kamron Marisa");
   });
 
   it("should support object values", () => {
