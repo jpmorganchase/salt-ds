@@ -6,6 +6,7 @@ import {
   Toast,
   ToastContent,
   ToastProps,
+  Link,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 
@@ -17,20 +18,26 @@ export default {
 const Template: StoryFn<typeof Toast> = ({ children, ...args }) => (
   <Toast {...args} style={{ width: 260 }}>
     <ToastContent>{children}</ToastContent>
-    <Button variant="secondary">
-      <CloseIcon />
+    <Button variant="secondary" aria-label="Dismiss">
+      <CloseIcon aria-hidden />
     </Button>
   </Toast>
 );
 
 export const Default: StoryFn<typeof Toast> = (args) => (
-  <Toast {...args} style={{ width: 260 }}>
+  <Toast {...args}>
     <ToastContent>
       <Text>
-        <strong>File update</strong>
+        Updated to latest version of Salt. See{" "}
+        <Link href="https://github.com/jpmorganchase/salt-ds/releases">
+          what's new
+        </Link>
+        .
       </Text>
-      <div>A new version of this file is available with 37 updates. </div>
     </ToastContent>
+    <Button variant="secondary" aria-label="Dismiss">
+      <CloseIcon aria-hidden />
+    </Button>
   </Toast>
 );
 
@@ -58,8 +65,8 @@ export const Error: StoryFn<typeof Toast> = () => (
           <div>Connection timed out. Failed to retrieve data. </div>
         </div>
       </ToastContent>
-      <Button variant="secondary">
-        <CloseIcon />
+      <Button variant="secondary" aria-label="Dismiss">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
     <Toast status="error">
@@ -94,8 +101,8 @@ export const Warning: StoryFn<typeof Toast> = () => (
           <div>Viewers of this file can see comments and suggestions. </div>
         </div>
       </ToastContent>
-      <Button variant="secondary">
-        <CloseIcon />
+      <Button variant="secondary" aria-label="Dismiss">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
     <Toast status="warning">
@@ -136,8 +143,8 @@ export const SingleLine = (args: ToastProps) => (
       <ToastContent>
         <div>This is a toast message.</div>
       </ToastContent>
-      <Button variant="secondary">
-        <CloseIcon />
+      <Button variant="secondary" aria-label="Dismiss">
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
     <Toast {...args}>

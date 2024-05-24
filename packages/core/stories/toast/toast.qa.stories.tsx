@@ -21,6 +21,12 @@ const UI = () => (
         <CloseIcon />
       </Button>
     </Toast>
+    <Toast status="info">
+      <ToastContent>This is a toast</ToastContent>
+      <Button variant="secondary">
+        <CloseIcon />
+      </Button>
+    </Toast>
     <Toast status="error">
       <ToastContent>This is a toast</ToastContent>
       <Button variant="secondary">
