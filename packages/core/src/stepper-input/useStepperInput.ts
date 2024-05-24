@@ -6,7 +6,7 @@ import {
 } from "react";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
-import { useId } from "../utils";
+import { useControlled, useId } from "../utils";
 import { InputProps } from "../input";
 
 // The input should only accept numbers, decimal points, and plus/minus symbols
