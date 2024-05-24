@@ -247,6 +247,11 @@ div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
   text-align: right;
 }
 
+/* Special case when user finish editing and click out side of the grid. */
+div[class*="ag-theme-salt"] .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
+  text-align: right;
+}
+
 div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
 div[class*="ag-theme-salt"] .ag-context-menu-open .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
 div[class*="ag-theme-salt"] .ag-cell-range-single-cell,
@@ -399,10 +404,21 @@ div[class*="ag-theme-salt"] .ag-standard-button {
 
 div[class*="ag-theme-salt"] .ag-standard-button:hover {
   background-color: var(--salt-actionable-secondary-background-hover);
+  color: var(--salt-actionable-secondary-foreground-hover);
 }
 
 div[class*="ag-theme-salt"] .ag-ltr .ag-filter-apply-panel-button {
   margin-left: 8px;
+}
+
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"] {
+  background: var(--salt-actionable-cta-background);
+  color: var(--salt-actionable-cta-foreground);
+}
+
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover {
+  background: var(--salt-actionable-cta-background-hover);
+  color: var(--salt-actionable-cta-foreground-hover);
 }
 
 div[class*="ag-theme-salt"] .ag-floating-filter {
@@ -529,6 +545,22 @@ div[class*="ag-theme-salt"] .ag-column-drop-cell {
 
 div[class*="ag-theme-salt"] .ag-tool-panel-wrapper > .ag-react-container {
   width: inherit;
+}
+
+div[class*="ag-theme-salt"] .ag-side-buttons {
+  min-width: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+div[class*="ag-theme-salt"] button.ag-side-button-button {
+  padding: var(--salt-spacing-100) var(--salt-spacing-50);
+}
+
+div[class*="ag-theme-salt"] .ag-column-drop-vertical-empty-message {
+  padding: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-side-button-icon-wrapper {
+  margin-bottom: var(--salt-spacing-100);
 }
 
 /* Toggle Button */
