@@ -15,7 +15,10 @@ import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
-import { CalendarProps } from "../calendar";
+import {
+  CalendarProps,
+  isRangeOrOffsetSelectionWithStartDate,
+} from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
@@ -25,6 +28,7 @@ export interface DatePickerProps
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
+  inputAriaLabel?: string;
   /**
    * Selection variant. Defaults to single select.
    */
@@ -34,21 +38,17 @@ export interface DatePickerProps
    */
   disabled?: boolean;
   /**
-   * The start date value. Use when the component is controlled.
+   * The selected date value. Use when the component is controlled.
+   * Can be a single date or an object with start and end dates for range selection.
    */
-  startDate?: DateValue;
+  selectedDate?: DateValue | { startDate: DateValue; endDate: DateValue };
   /**
-   * The default start date value. Use when the component is not controlled.
+   * The default date value. Use when the component is not controlled.
+   * Can be a single date or an object with start and end dates for range selection.
    */
-  defaultStartDate?: DateValue;
-  /**
-   * The end date value. Use when the component is controlled.
-   */
-  endDate?: DateValue;
-  /**
-   * The default end date value. Use when the component is not controlled.
-   */
-  defaultEndDate?: DateValue;
+  defaultSelectedDate?:
+    | DateValue
+    | { startDate: DateValue; endDate: DateValue };
   /**
    * Props to be passed to the Calendar component.
    */
@@ -89,10 +89,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       selectionVariant = "default",
       disabled = false,
       placeholder = "dd mmm yyyy",
-      startDate: startDateProp,
-      endDate: endDateProp,
-      defaultStartDate,
-      defaultEndDate,
+      selectedDate: selectedDateProp,
+      defaultSelectedDate,
       dateFormatter,
       CalendarProps,
       className,
@@ -100,6 +98,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       onOpenChange: onOpenChangeProp,
       helperText,
       readOnly: readOnlyProp,
+      inputAriaLabel,
       ...rest
     },
     ref
@@ -110,15 +109,24 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       name: "openPanel",
       state: "openPanel",
     });
+
     const [startDate, setStartDate] = useControlled({
-      controlled: startDateProp,
-      default: defaultStartDate,
+      controlled: isRangeOrOffsetSelectionWithStartDate(selectedDateProp)
+        ? selectedDateProp.startDate
+        : selectedDateProp,
+      default: isRangeOrOffsetSelectionWithStartDate(defaultSelectedDate)
+        ? defaultSelectedDate.startDate
+        : defaultSelectedDate,
       name: "StartDate",
       state: "startDate",
     });
     const [endDate, setEndDate] = useControlled({
-      controlled: endDateProp,
-      default: defaultEndDate,
+      controlled: isRangeOrOffsetSelectionWithStartDate(selectedDateProp)
+        ? selectedDateProp.endDate
+        : selectedDateProp,
+      default: isRangeOrOffsetSelectionWithStartDate(defaultSelectedDate)
+        ? defaultSelectedDate.endDate
+        : undefined,
       name: "EndDate",
       state: "endDate",
     });
@@ -189,14 +197,20 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       disabled,
       endDate,
       setEndDate,
-      defaultEndDate,
+      defaultEndDate: isRangeOrOffsetSelectionWithStartDate(defaultSelectedDate)
+        ? defaultSelectedDate.endDate
+        : defaultSelectedDate,
       startDate,
       setStartDate,
       startVisibleMonth,
       setStartVisibleMonth,
       endVisibleMonth,
       setEndVisibleMonth,
-      defaultStartDate,
+      defaultStartDate: isRangeOrOffsetSelectionWithStartDate(
+        defaultSelectedDate
+      )
+        ? defaultSelectedDate.startDate
+        : defaultSelectedDate,
       selectionVariant,
       context,
       getPanelPosition,
@@ -215,6 +229,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           placeholder={placeholder}
           dateFormatter={dateFormatter}
           readOnly={isReadOnly}
+          ariaLabel={inputAriaLabel}
           endAdornment={
             <Button
               variant="secondary"

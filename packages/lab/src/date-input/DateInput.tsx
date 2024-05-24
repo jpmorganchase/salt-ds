@@ -23,6 +23,7 @@ import {
   StatusAdornment,
   useForkRef,
   useFormFieldProps,
+  useId,
 } from "@salt-ds/core";
 import {
   CalendarDate,
@@ -75,6 +76,7 @@ const defaultDateFormatter = (date: DateValue | undefined): string => {
 export interface DateInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<ComponentPropsWithoutRef<"input">, "disabled" | "placeholder"> {
+  ariaLabel?: string;
   /**
    * The marker to use in an empty read only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
@@ -112,13 +114,19 @@ export interface DateInputProps
    * Reference for the endInput;
    */
   endInputRef?: RefObject<HTMLInputElement>;
+  /**
+   * Selection variant. Defaults to single select.
+   */
+  selectionVariant?: "default" | "range";
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   function DateInput(
     {
       className,
+      ariaLabel,
       disabled,
+      selectionVariant: selectionVariantProp,
       emptyReadOnlyMarker = "—",
       inputProps = {},
       endAdornment,
@@ -151,12 +159,17 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       endDate,
       setStartDate,
       setEndDate,
-      selectionVariant,
+      selectionVariant: pickerSelectionVariant,
       openState,
       setOpen,
       validationStatusState,
       setValidationStatus,
     } = useDatePickerContext();
+
+    const selectionVariant = selectionVariantProp ?? pickerSelectionVariant;
+
+    const endDateInputID = useId();
+    const startDateInputID = useId();
 
     const [focused, setFocused] = useState(false);
     const [startDateStringValue, setStartDateStringValue] = useState<string>(
@@ -313,8 +326,15 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
         {...rest}
       >
         <input
+          autoComplete="off"
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}
-          aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+          aria-labelledby={clsx(
+            formFieldLabelledBy,
+            dateInputLabelledBy,
+            startDateInputID
+          )}
+          aria-label={clsx("Start date", ariaLabel)}
+          id={startDateInputID}
           className={withBaseName("input")}
           disabled={isDisabled}
           readOnly={isReadOnly}
@@ -338,11 +358,18 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
           <>
             <span>-</span>
             <input
+              autoComplete="off"
               aria-describedby={clsx(
                 formFieldDescribedBy,
                 dateInputDescribedBy
               )}
-              aria-labelledby={clsx(formFieldLabelledBy, dateInputLabelledBy)}
+              aria-labelledby={clsx(
+                formFieldLabelledBy,
+                dateInputLabelledBy,
+                endDateInputID
+              )}
+              aria-label={clsx("End date", ariaLabel)}
+              id={endDateInputID}
               className={withBaseName("input")}
               disabled={isDisabled}
               readOnly={isReadOnly}

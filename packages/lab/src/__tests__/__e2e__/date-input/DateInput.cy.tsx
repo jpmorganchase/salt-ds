@@ -3,12 +3,21 @@ import { ChangeEvent } from "react";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 const composedStories = composeStories(dateInputStories);
-const { Default } = composedStories;
+const { Default, Range } = composedStories;
 
 describe("GIVEN a DateInput", () => {
   checkAccessibility(composedStories);
 
   describe("WHEN mounted the component", () => {
+    it("Should have accessible text in inputs", () => {
+      cy.mount(<Range />);
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .should("have.accessibleName", "Start date");
+      cy.findAllByRole("textbox")
+        .eq(1)
+        .should("have.accessibleName", "End date");
+    });
     describe("WHEN the input is updated", () => {
       it("THEN should call onChange with the new value", () => {
         const changeSpy = cy.stub().as("changeSpy");
