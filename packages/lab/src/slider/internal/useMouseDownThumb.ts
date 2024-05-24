@@ -9,20 +9,19 @@ export function useMouseDownThumb(
   step: number,
   value: SliderValue,
   onChange: SliderChangeHandler,
-  index: number,
+  index: number
 ) {
-
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [ mouseDown, setMouseDown ] = useState(false)
-  const activeThumbIndex = useRef<{ index: number | undefined}>({
-        index: undefined
-    });
+  const [mouseDown, setMouseDown] = useState(false);
+  const activeThumbIndex = useRef<{ index: number | undefined }>({
+    index: undefined,
+  });
 
   const onDownThumb = () => {
     document.addEventListener("pointermove", onMouseMove);
     document.addEventListener("pointerup", onMouseUp);
-    setMouseDown(true)
-    activeThumbIndex.current.index = index
+    setMouseDown(true);
+    activeThumbIndex.current.index = index;
   };
 
   const onMouseUp = (event: MouseEvent) => {
@@ -30,20 +29,14 @@ export function useMouseDownThumb(
     document.removeEventListener("pointermove", onMouseMove);
     document.removeEventListener("pointerup", onMouseUp);
     setTooltipVisible(false);
-    setMouseDown(false)
-    activeThumbIndex.current.index = 0
+    setMouseDown(false);
+    activeThumbIndex.current.index = 0;
   };
 
   const onMouseMove = (event: MouseEvent): void => {
     const newValue: number = getValue(trackRef, min, max, step, event);
     Array.isArray(value)
-      ? setRangeValue(
-          value,
-          newValue,
-          onChange,
-          index,
-          step
-        )
+      ? setRangeValue(value, newValue, onChange, index, step)
       : onChange?.(newValue);
   };
 
@@ -53,7 +46,7 @@ export function useMouseDownThumb(
         onDownThumb();
       },
       onMouseOver() {
-   setTooltipVisible(true)
+        setTooltipVisible(true);
       },
       onFocus() {
         setTooltipVisible(true);
@@ -65,7 +58,7 @@ export function useMouseDownThumb(
         setTooltipVisible(false);
       },
       onMouseLeave() {
-        !mouseDown && setTooltipVisible(false)
+        !mouseDown && setTooltipVisible(false);
       },
     },
     tooltipVisible,
