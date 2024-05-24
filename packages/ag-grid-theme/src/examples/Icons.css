@@ -1,0 +1,7 @@
+div[class^="ag-icon"]:before {
+  margin-right: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-icon-loading {
+  animation: none;
+}

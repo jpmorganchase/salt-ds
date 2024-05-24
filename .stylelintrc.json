@@ -14,5 +14,14 @@
     "salt/custom-property-starts-with-component-name": {
       "logLevel": "default"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/ag-grid-theme/**/*.css"],
+      "rules": {
+        "salt/custom-property-attributes-kebab-case": null,
+        "salt/custom-property-starts-with-component-name": null
+      }
+    }
+  ]
 }

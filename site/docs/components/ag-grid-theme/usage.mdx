@@ -16,7 +16,7 @@ When you want to use the Salt theme with AG Grid.
 
 ### When not to use
 
-When you want to use a component that is not related to AG Grid. Instead, use Grid.
+When you want to use a component that is not related to AG Grid.
 
 ## Import
 
@@ -37,7 +37,7 @@ npm install @salt-ds/ag-grid-theme
 To import the Salt AG Grid theme, use:
 
 ```js
-import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 ```
 
@@ -52,29 +52,20 @@ Then wrap your AG Grid with the corresponding class names shown below:
 </div>
 ```
 
-For light [mode](/salt/foundations/modes), use these CSS class names for each [density](/salt/foundations/density):
+For light mode, use these CSS class name `.ag-theme-salt-light`.
 
-```js
-.ag-theme-salt-high-compact-light
-.ag-theme-salt-high-light
-.ag-theme-salt-medium-light
-.ag-theme-salt-low-light
-.ag-theme-salt-touch-light
+For dark mode, use these CSS class name `.ag-theme-salt-dark`.
+
+For `compact` version, use these CSS class names:
+
+```
+.ag-theme-salt-compact-light
+.ag-theme-salt-compact-dark
 ```
 
-For dark [mode](/salt/foundations/modes), use these CSS class names for each [density](/salt/foundations/density):
+For variants add additional CSS class names:
 
-```js
-.ag-theme-salt-high-compact-dark
-.ag-theme-salt-high-dark
-.ag-theme-salt-medium-dark
-.ag-theme-salt-low-dark
-.ag-theme-salt-touch-dark
 ```
-
-For variants, use these CSS class names:
-
-```js
 .ag-theme-salt-variant-secondary
 .ag-theme-salt-variant-zebra
 ```
