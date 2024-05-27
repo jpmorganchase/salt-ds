@@ -45,6 +45,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
           [withBaseName(variant)],
           className
         )}
+        aria-orientation={orientation}
         role="separator"
         ref={ref}
         {...rest}
