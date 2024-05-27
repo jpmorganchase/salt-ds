@@ -1,5 +1,10 @@
 .saltDivider {
-  border: 1px solid;
+  border: 0;
+  margin: 0;
+}
+
+.saltDivider-horizontal {
+  border-bottom: 1px solid;
   width: 100%;
 }
 
@@ -16,5 +21,6 @@
 }
 
 .saltDivider-vertical {
-  transform: rotate(90deg);
+  border-right: 1px solid;
+  height: auto;
 }

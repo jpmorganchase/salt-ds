@@ -7,7 +7,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import DividerCss from "./Divider.css";
 
-export interface DividerProps extends ComponentPropsWithoutRef<"hr"> {
+export interface DividerProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The divider orientation.
    */
@@ -21,34 +21,34 @@ export interface DividerProps extends ComponentPropsWithoutRef<"hr"> {
 
 const withBaseName = makePrefixer("saltDivider");
 
-export const Divider = forwardRef<HTMLHRElement, DividerProps>(function Divider(
-  props,
-  ref
-) {
-  const {
-    className,
-    orientation = "horizontal",
-    variant = "primary",
-    ...rest
-  } = props;
+export const Divider = forwardRef<HTMLDivElement, DividerProps>(
+  function Divider(props, ref) {
+    const {
+      className,
+      orientation = "horizontal",
+      variant = "primary",
+      ...rest
+    } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-divider",
-    css: DividerCss,
-    window: targetWindow,
-  });
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-divider",
+      css: DividerCss,
+      window: targetWindow,
+    });
 
-  return (
-    <hr
-      className={clsx(
-        withBaseName(),
-        [withBaseName(orientation)],
-        [withBaseName(variant)],
-        className
-      )}
-      ref={ref}
-      {...rest}
-    />
-  );
-});
+    return (
+      <div
+        className={clsx(
+          withBaseName(),
+          [withBaseName(orientation)],
+          [withBaseName(variant)],
+          className
+        )}
+        role="separator"
+        ref={ref}
+        {...rest}
+      />
+    );
+  }
+);
