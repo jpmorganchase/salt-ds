@@ -13,6 +13,7 @@ import {
   StackLayout,
   Text,
   SplitLayout,
+  Label,
 } from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import "./accordion.stories.css";
@@ -194,14 +195,13 @@ export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
   <Accordion {...props}>
     <AccordionHeader style={{ alignItems: 'start' }}>
       <SplitLayout
-        style={{ marginTop: '-3px' }}
         startItem={
-          <StackLayout gap={0.5} align="start">
-            <Text>Title</Text>
-            <Text color="secondary">Description goes here </Text>
+          <StackLayout gap={0.5} >
+            <Text><strong>Accordion Title</strong></Text>
+            <Label color="secondary">Description goes here </Label>
           </StackLayout>
         }
-        endItem={<Text color="secondary">Secondary label</Text>}
+        endItem={<Label color="secondary">Accordion label</Label>}
       />
     </AccordionHeader>
     <AccordionPanel>

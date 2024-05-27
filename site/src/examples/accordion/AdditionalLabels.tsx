@@ -11,6 +11,7 @@ import {
   StackLayout,
   Text,
   SplitLayout,
+  Label
 } from "@salt-ds/core";
 
 export const AdditionalLabels = (): ReactElement => (
@@ -18,14 +19,13 @@ export const AdditionalLabels = (): ReactElement => (
     <Accordion value="accordion-additional-label-example">
       <AccordionHeader style={{ alignItems: 'start' }}>
         <SplitLayout
-          style={{ marginTop: '-3px' }}
           startItem={
-            <StackLayout gap={0.5} align="start">
-              <Text>Title</Text>
-              <Text color="secondary">Description goes here </Text>
+            <StackLayout gap={0.5} >
+              <Text><strong>Accordion Title</strong></Text>
+              <Label color="secondary">Description goes here </Label>
             </StackLayout>
           }
-          endItem={<Text color="secondary">Secondary label</Text>}
+          endItem={<Label color="secondary">Accordion label</Label>}
         />
       </AccordionHeader>
       <AccordionPanel>
