@@ -16,8 +16,9 @@ import {
 export const AdditionalLabels = (): ReactElement => (
   <FlexLayout style={{ width: "80%" }}>
     <Accordion value="accordion-additional-label-example">
-      <AccordionHeader>
+      <AccordionHeader style={{ alignItems: 'start' }}>
         <SplitLayout
+          style={{ marginTop: '-3px' }}
           startItem={
             <StackLayout gap={0.5} align="start">
               <Text>Title</Text>

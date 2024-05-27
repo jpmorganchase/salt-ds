@@ -192,8 +192,9 @@ export const Status: StoryFn<AccordionGroupProps> = (props) => (
 
 export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
   <Accordion {...props}>
-    <AccordionHeader>
+    <AccordionHeader style={{ alignItems: 'start' }}>
       <SplitLayout
+        style={{ marginTop: '-3px' }}
         startItem={
           <StackLayout gap={0.5} align="start">
             <Text>Title</Text>
