@@ -192,23 +192,26 @@ export const Status: StoryFn<AccordionGroupProps> = (props) => (
 );
 
 export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
-  <Accordion {...props}>
-    <AccordionHeader style={{ alignItems: 'start' }}>
-      <SplitLayout
-        startItem={
-          <StackLayout gap={0.5} >
-            <Text><strong>Accordion Title</strong></Text>
-            <Label color="secondary">Description goes here </Label>
-          </StackLayout>
-        }
-        endItem={<Label color="secondary">Accordion label</Label>}
-      />
+  <Accordion style={{ width: "500px" }} {...props}>
+    <AccordionHeader style={{ alignItems: "flex-start" }}>
+      <StackLayout gap={0.5} style={{ width: "100%" }}>
+        <SplitLayout
+          style={{ alignItems: "baseline" }}
+          startItem={
+            <Text>
+              <strong>Account transfers</strong>
+            </Text>
+          }
+          endItem={<Label color="secondary">2 out of 5 accounts</Label>}
+        />
+        <Label color="secondary">Easily manage payment and invoice</Label>
+      </StackLayout>
     </AccordionHeader>
     <AccordionPanel>
       <FlowLayout>
         <Text>Please fill out the following details.</Text>
         <FormField labelPlacement="left">
-          <FormLabel>Disclosure ID</FormLabel>
+          <FormLabel>Account Id</FormLabel>
           <Input />
         </FormField>
         <FormField labelPlacement="left">
@@ -216,7 +219,7 @@ export const AdditionalLabels: StoryFn<AccordionProps> = (props) => (
           <Input />
         </FormField>
         <FormField labelPlacement="left">
-          <FormLabel>Justification</FormLabel>
+          <FormLabel>Remarks</FormLabel>
           <Input />
         </FormField>
       </FlowLayout>
