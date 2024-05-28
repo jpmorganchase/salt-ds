@@ -9,6 +9,7 @@ import {
   MenuItem,
   MenuPanel,
   MenuTrigger,
+  StackLayout,
 } from "@salt-ds/core";
 import { OverflowMenuIcon, ChevronRightIcon } from "@salt-ds/icons";
 
@@ -16,11 +17,7 @@ export default {
   title: "Patterns/Breadcrumbs",
 } as Meta;
 
-const Separator = () => (
-  <li aria-hidden style={{ display: "flex" }}>
-    <ChevronRightIcon />
-  </li>
-);
+const Separator = () => <ChevronRightIcon aria-hidden />;
 
 export const Breadcrumbs = () => {
   return (
@@ -31,29 +28,34 @@ export const Breadcrumbs = () => {
         gap={1}
         style={{ listStyle: "none", minHeight: "var(--salt-size-base)" }}
       >
-        <li>
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Home</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 2</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 3</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 4</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 5</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Text maxRows={1}>Current level</Text>
-        </li>
+        </StackLayout>
       </FlowLayout>
     </nav>
   );
@@ -69,54 +71,49 @@ export const Wrapped = () => {
         style={{
           listStyle: "none",
           minHeight: "var(--salt-size-base)",
-          rowGap: 0,
         }}
       >
-        <li>
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Home</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 2</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 3</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 4</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Level 5</Link>
-        </li>
-        <Separator />
-        <li>
+          <Separator />
+        </StackLayout>
+
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Text maxRows={1}>Current level</Text>
-        </li>
+        </StackLayout>
       </FlowLayout>
     </nav>
   );
 };
 
 export const OverflowMenu = () => {
-  const initialSource = {
-    menuItems: [
-      { title: "Level 2" },
-      { title: "Level 3" },
-      { title: "Level 4" },
-      { title: "Level 5" },
-    ],
-  };
-
   return (
     <nav aria-label="Breadcrumb">
       <FlowLayout as="ul" align="center" gap={1} style={{ listStyle: "none" }}>
-        <li>
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Home</Link>
-        </li>
-        <Separator />
+          <Separator />
+        </StackLayout>
         <Menu>
           <MenuTrigger>
             <Button variant="secondary" aria-label="Open Menu">
@@ -130,10 +127,10 @@ export const OverflowMenu = () => {
             <MenuItem>Level 5</MenuItem>
           </MenuPanel>
         </Menu>
-        <Separator />
-        <li>
+        <StackLayout as="li" direction="row" gap={1} align="center">
+          <Separator />
           <Text maxRows={1}>Current level</Text>
-        </li>
+        </StackLayout>
       </FlowLayout>
     </nav>
   );
@@ -145,37 +142,40 @@ export const Expansion = () => {
   return (
     <nav aria-label="Breadcrumb">
       <FlowLayout as="ul" align="center" gap={1} style={{ listStyle: "none" }}>
-        <li>
+        <StackLayout as="li" direction="row" gap={1} align="center">
           <Link href="#">Home</Link>
-        </li>
-        <Separator />
+          <Separator />
+        </StackLayout>
         {isExpanded ? (
           <>
-            <li>
+            <StackLayout as="li" direction="row" gap={1} align="center">
               <Link href="#">Level 2</Link>
-            </li>
-            <Separator />
-            <li>
+              <Separator />
+            </StackLayout>
+
+            <StackLayout as="li" direction="row" gap={1} align="center">
               <Link href="#">Level 3</Link>
-            </li>
-            <Separator />
-            <li>
+              <Separator />
+            </StackLayout>
+
+            <StackLayout as="li" direction="row" gap={1} align="center">
               <Link href="#">Level 4</Link>
-            </li>
-            <Separator />
-            <li>
+              <Separator />
+            </StackLayout>
+
+            <StackLayout as="li" direction="row" gap={1} align="center">
               <Link href="#">Level 5</Link>
-            </li>
+            </StackLayout>
           </>
         ) : (
           <Button variant="secondary" onClick={() => setIsExpanded(true)}>
             <OverflowMenuIcon aria-hidden />
           </Button>
         )}
-        <Separator />
-        <li>
+        <StackLayout as="li" direction="row" gap={1} align="center">
+          <Separator />
           <Text maxRows={1}>Current level</Text>
-        </li>
+        </StackLayout>
       </FlowLayout>
     </nav>
   );
