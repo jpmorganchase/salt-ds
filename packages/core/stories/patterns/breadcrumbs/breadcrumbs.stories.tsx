@@ -169,7 +169,7 @@ export const Expansion = () => {
           </>
         ) : (
           <Button variant="secondary" onClick={() => setIsExpanded(true)}>
-            <OverflowMenuIcon />
+            <OverflowMenuIcon aria-hidden />
           </Button>
         )}
         <Separator />
