@@ -1,5 +1,5 @@
 .saltDivider-horizontal {
-  border-bottom: 1px solid;
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle);
   width: 100%;
 }
 
@@ -16,6 +16,6 @@
 }
 
 .saltDivider-vertical {
-  border-right: 1px solid;
+  border-right: var(--salt-size-border) var(--salt-separable-borderStyle);
   height: auto;
 }
