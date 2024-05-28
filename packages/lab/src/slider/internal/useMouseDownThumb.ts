@@ -29,11 +29,17 @@ export function useMouseDownThumb(
   };
 
   const onMouseMove = (event: MouseEvent): void => {
-    const newValue : number | undefined = getValue(trackRef, min, max, step, event);
+    const newValue: number | undefined = getValue(
+      trackRef,
+      min,
+      max,
+      step,
+      event
+    );
     if (newValue) {
-    Array.isArray(value)
-      ? setRangeValue(value, newValue, onChange, index, step)
-      : onChange?.(newValue);
+      Array.isArray(value)
+        ? setRangeValue(value, newValue, onChange, index, step)
+        : onChange?.(newValue);
     }
   };
 
