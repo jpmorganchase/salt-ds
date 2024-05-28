@@ -17,7 +17,7 @@ const Separator = () => (
 export const Breadcrumbs = () => {
   return (
     <nav aria-label="Breadcrumb">
-      <ol
+      <ul
         style={{
           display: "flex",
           alignItems: "center",
@@ -53,7 +53,7 @@ export const Breadcrumbs = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ol>
+      </ul>
     </nav>
   );
 };
@@ -61,7 +61,7 @@ export const Breadcrumbs = () => {
 export const Wrapped = () => {
   return (
     <nav aria-label="Breadcrumb" style={{ maxWidth: 300 }}>
-      <ol
+      <ul
         style={{
           display: "flex",
           alignItems: "center",
@@ -97,7 +97,7 @@ export const Wrapped = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ol>
+      </ul>
     </nav>
   );
 };
@@ -114,7 +114,7 @@ export const OverflowMenu = () => {
 
   return (
     <nav aria-label="Breadcrumb">
-      <ol
+      <ul
         style={{
           display: "flex",
           alignItems: "center",
@@ -137,7 +137,7 @@ export const OverflowMenu = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ol>
+      </ul>
     </nav>
   );
 };
@@ -147,7 +147,7 @@ export const Expansion = () => {
 
   return (
     <nav aria-label="Breadcrumb">
-      <ol
+      <ul
         style={{
           display: "flex",
           alignItems: "center",
@@ -190,7 +190,7 @@ export const Expansion = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ol>
+      </ul>
     </nav>
   );
 };
