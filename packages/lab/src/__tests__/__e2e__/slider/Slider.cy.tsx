@@ -76,4 +76,22 @@ describe("Given a Slider", () => {
       cy.get(".saltSliderThumb-tooltip").should("not.be.visible");
     });
   });
+
+  describe("Given a Slider with a range value", () => {
+    it("THEN it should have ARIA roles and attributes", () => {
+      cy.mount(
+        <Slider min={-100} max={100} step={10} defaultValue={[20, 40]} />
+      );
+
+      cy.findAllByRole("slider").should("have.length", 2);
+
+      cy.findAllByRole("slider")
+        .eq(0)
+        .should("have.attr", "aria-valuenow", "20");
+
+      cy.findAllByRole("slider")
+        .eq(1)
+        .should("have.attr", "aria-valuenow", "40");
+    });
+  });
 });
