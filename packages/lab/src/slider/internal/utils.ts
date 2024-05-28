@@ -8,15 +8,15 @@ export function getValue(
   step: number,
   event: MouseEvent
 ) {
-  if (trackRef.current){
-  const { clientX } = event;
-  const { width, x } = trackRef.current.getBoundingClientRect();
-  const localX = clientX - x;
-  const normaliseBetweenValues = (localX / width) * (max - min) + min;
-  let value = roundToStep(normaliseBetweenValues, step);
-  value = roundToTwoDp(value);
-  value = clampValue(value, min, max);
-  return value;
+  if (trackRef.current) {
+    const { clientX } = event;
+    const { width, x } = trackRef.current.getBoundingClientRect();
+    const localX = clientX - x;
+    const normaliseBetweenValues = (localX / width) * (max - min) + min;
+    let value = roundToStep(normaliseBetweenValues, step);
+    value = roundToTwoDp(value);
+    value = clampValue(value, min, max);
+    return value;
   }
 }
 
