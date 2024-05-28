@@ -1,15 +1,34 @@
 import { ReactElement, useState } from "react";
-import { Dropdown, DropdownProps, Option } from "@salt-ds/core";
-import { GB, US } from "@salt-ds/countries";
+import {
+  Dropdown,
+  DropdownProps,
+  Option,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
+import { EditIcon, GuideClosedIcon, UserAdminIcon } from "@salt-ds/icons";
 
-const countries: Record<string, { icon: JSX.Element; name: string }> = {
-  GB: {
-    icon: <GB aria-hidden size={0.75} />,
-    name: "United Kingdom of Great Britain and Northern Ireland",
+type Permission = {
+  icon: JSX.Element;
+  name: string;
+  description: string;
+};
+
+const permissions: Record<string, Permission> = {
+  read: {
+    icon: <GuideClosedIcon aria-hidden />,
+    name: "Read",
+    description: "Read only",
   },
-  US: {
-    icon: <US aria-hidden size={0.75} />,
-    name: "United States of America",
+  write: {
+    icon: <EditIcon aria-hidden />,
+    name: "Write",
+    description: "Read and write only",
+  },
+  admin: {
+    icon: <UserAdminIcon aria-hidden />,
+    name: "Admin",
+    description: "Full access",
   },
 };
 
@@ -23,23 +42,36 @@ export const ComplexOptions = (): ReactElement => {
     setSelected(newSelected);
   };
 
-  const adornment = countries[selected[0] ?? ""]?.icon || null;
+  const adornment = permissions[selected[0] ?? ""]?.icon || null;
 
   return (
     <Dropdown
       selected={selected}
       startAdornment={adornment}
       onSelectionChange={handleSelectionChange}
-      style={{ width: "266px" }}
-      valueToString={(item) => countries[item].name}
+      style={{ width: "133px" }}
+      valueToString={(item) => permissions[item].name}
     >
-      <Option value="GB">
-        <GB size={0.75} aria-hidden /> United Kingdom of Great Britain and
-        Northern Ireland
-      </Option>
-      <Option value="US">
-        <US size={0.75} aria-hidden /> United States of America
-      </Option>
+      {Object.values(permissions).map(({ name, icon, description }) => (
+        <Option value={name.toLowerCase()} key={name.toLowerCase()}>
+          <StackLayout
+            direction="row"
+            gap={1}
+            style={{
+              paddingBlock:
+                "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
+            }}
+          >
+            {icon}
+            <StackLayout gap={0.5} align="start">
+              <Text>{name}</Text>
+              <Text styleAs="label" color="secondary">
+                {description}
+              </Text>
+            </StackLayout>
+          </StackLayout>
+        </Option>
+      ))}
     </Dropdown>
   );
 };

@@ -9,7 +9,7 @@ const {
   Readonly,
   Disabled,
   DisabledOption,
-  MultiSelect,
+  Multiselect,
   WithFormField,
   Grouped,
   ComplexOption,
@@ -258,7 +258,7 @@ describe("Given a Dropdown", () => {
 
   it("should allow multiple options to be selected with a mouse", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
-    cy.mount(<MultiSelect onSelectionChange={selectionChangeSpy} />);
+    cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
     cy.findByRole("combobox").should(
       "have.attr",
       "aria-multiselectable",
@@ -285,7 +285,7 @@ describe("Given a Dropdown", () => {
 
   it("should allow multiple options to be selected with the keyboard", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
-    cy.mount(<MultiSelect onSelectionChange={selectionChangeSpy} />);
+    cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
     cy.realPress("Tab");
     cy.realPress("ArrowDown");
     cy.realPress(" ");
@@ -327,11 +327,9 @@ describe("Given a Dropdown", () => {
   it("should support complex options", () => {
     cy.mount(<ComplexOption />);
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "United States of America" }).should(
-      "exist"
-    );
-    cy.findByRole("option", { name: "United States of America" }).realClick();
-    cy.findByRole("combobox").should("have.text", "United States of America");
+    cy.findByRole("option", { name: "Read Read only" }).should("exist");
+    cy.findByRole("option", { name: "Read Read only" }).realClick();
+    cy.findByRole("combobox").should("have.text", "Read");
   });
 
   it("should support object values", () => {

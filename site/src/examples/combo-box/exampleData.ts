@@ -13,6 +13,10 @@ export const shortColorData = [
   "White",
   "Yellow",
 ];
+export type CityWithCountry = {
+  value: string;
+  country: string;
+};
 
 export const citiesWithCountries = [
   {
