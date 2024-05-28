@@ -1,22 +1,24 @@
 import { SliderChangeHandler } from "../types";
 import { RefObject } from "react";
 
-export const getValue = (
+export function getValue(
   trackRef: RefObject<Element>,
   min: number,
   max: number,
   step: number,
   event: MouseEvent
-) => {
+) {
+  if (trackRef.current){
   const { clientX } = event;
-  const { width, x } = trackRef.current!.getBoundingClientRect();
+  const { width, x } = trackRef.current.getBoundingClientRect();
   const localX = clientX - x;
   const normaliseBetweenValues = (localX / width) * (max - min) + min;
   let value = roundToStep(normaliseBetweenValues, step);
   value = roundToTwoDp(value);
   value = clampValue(value, min, max);
   return value;
-};
+  }
+}
 
 export function setRangeValue(
   value: number[],

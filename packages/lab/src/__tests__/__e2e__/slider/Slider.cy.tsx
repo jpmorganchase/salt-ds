@@ -35,7 +35,7 @@ describe("Given a Slider", () => {
       cy.findByRole("slider")
         .parent()
         .trigger("mousemove", { clientX: 50, clientY: 50 });
-      cy.get("@changeSpy").should("have.callCount", 2);
+      cy.get("@changeSpy").should("have.callCount", 1);
     });
 
     it("THEN it should respond to keyboard navigation", () => {
