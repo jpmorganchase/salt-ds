@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta } from "@storybook/react";
-import { Link, Button, Text } from "@salt-ds/core";
+import { Link, Button, Text, FlowLayout } from "@salt-ds/core";
 import { MenuButton } from "@salt-ds/lab";
 import { OverflowMenuIcon, ChevronRightIcon } from "@salt-ds/icons";
 
@@ -17,18 +17,11 @@ const Separator = () => (
 export const Breadcrumbs = () => {
   return (
     <nav aria-label="Breadcrumb">
-      <ul
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          padding: 0,
-          margin: 0,
-          columnGap: "var(--salt-size-unit)",
-          listStyle: "none",
-          flexWrap: "wrap",
-          minHeight: "var(--salt-size-base)",
-        }}
+      <FlowLayout
+        as="ul"
+        align="center"
+        gap={1}
+        style={{ listStyle: "none", minHeight: "var(--salt-size-base)" }}
       >
         <li>
           <Link href="#">Home</Link>
@@ -53,7 +46,7 @@ export const Breadcrumbs = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ul>
+      </FlowLayout>
     </nav>
   );
 };
@@ -61,17 +54,14 @@ export const Breadcrumbs = () => {
 export const Wrapped = () => {
   return (
     <nav aria-label="Breadcrumb" style={{ maxWidth: 300 }}>
-      <ul
+      <FlowLayout
+        as="ul"
+        align="center"
+        gap={1}
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          padding: 0,
-          margin: 0,
-          columnGap: "var(--salt-size-unit)",
           listStyle: "none",
-          flexWrap: "wrap",
           minHeight: "var(--salt-size-base)",
+          rowGap: 0,
         }}
       >
         <li>
@@ -97,7 +87,7 @@ export const Wrapped = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ul>
+      </FlowLayout>
     </nav>
   );
 };
@@ -114,18 +104,7 @@ export const OverflowMenu = () => {
 
   return (
     <nav aria-label="Breadcrumb">
-      <ul
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          padding: 0,
-          margin: 0,
-          columnGap: "var(--salt-size-unit)",
-          listStyle: "none",
-          flexWrap: "wrap",
-        }}
-      >
+      <FlowLayout as="ul" align="center" gap={1} style={{ listStyle: "none" }}>
         <li>
           <Link href="#">Home</Link>
         </li>
@@ -137,7 +116,7 @@ export const OverflowMenu = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ul>
+      </FlowLayout>
     </nav>
   );
 };
@@ -147,18 +126,7 @@ export const Expansion = () => {
 
   return (
     <nav aria-label="Breadcrumb">
-      <ul
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          padding: 0,
-          margin: 0,
-          columnGap: "var(--salt-size-unit)",
-          listStyle: "none",
-          flexWrap: "wrap",
-        }}
-      >
+      <FlowLayout as="ul" align="center" gap={1} style={{ listStyle: "none" }}>
         <li>
           <Link href="#">Home</Link>
         </li>
@@ -190,7 +158,7 @@ export const Expansion = () => {
         <li>
           <Text maxRows={1}>Current level</Text>
         </li>
-      </ul>
+      </FlowLayout>
     </nav>
   );
 };
