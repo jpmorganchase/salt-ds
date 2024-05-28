@@ -1,0 +1,5 @@
+.salt-theme {
+  --salt-palette-text-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
+  --salt-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
+}

@@ -287,9 +287,8 @@ export const WithCustomizedDelimiter: StoryFn<typeof TokenizedInput> = () => {
             </div>
           ) : (
             <Input
-              inputProps={{ maxLength: 1 }}
+              inputProps={{ maxLength: 1, placeholder: "Enter a delimiter" }}
               onChange={handleInputChange}
-              placeholder="Enter a delimiter"
               style={{ maxWidth: 180 }}
             />
           )}

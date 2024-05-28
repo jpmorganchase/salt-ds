@@ -8,41 +8,48 @@ const composedStories = composeStories(toastStories);
 describe("Given a Toast", () => {
   checkAccessibility(composedStories);
 
-  describe("WHEN ToastContent", () => {
-    it("AND no status, THEN renders info state", () => {
-      cy.mount(
-        <Toast>
-          <ToastContent>Toast content</ToastContent>
-        </Toast>
-      );
-      cy.findAllByTestId("InfoSolidIcon").should("exist");
-    });
+  it("AND no status, THEN renders no state", () => {
+    cy.mount(
+      <Toast>
+        <ToastContent>Toast content</ToastContent>
+      </Toast>
+    );
+    cy.findByRole("img").should("not.exist");
+  });
 
-    it("AND status is error, THEN renders error state", () => {
-      cy.mount(
-        <Toast status="error">
-          <ToastContent>Toast content</ToastContent>
-        </Toast>
-      );
-      cy.findAllByTestId("ErrorSolidIcon").should("exist");
-    });
+  it("AND status is info, THEN renders info state", () => {
+    cy.mount(
+      <Toast status="info">
+        <ToastContent>Toast content</ToastContent>
+      </Toast>
+    );
+    cy.findByRole("img", { name: "info" }).should("exist");
+  });
 
-    it("AND status is warning, THEN renders warning state", () => {
-      cy.mount(
-        <Toast status="warning">
-          <ToastContent>Toast content</ToastContent>
-        </Toast>
-      );
-      cy.findAllByTestId("WarningSolidIcon").should("exist");
-    });
+  it("AND status is error, THEN renders error state", () => {
+    cy.mount(
+      <Toast status="error">
+        <ToastContent>Toast content</ToastContent>
+      </Toast>
+    );
+    cy.findByRole("img", { name: "error" }).should("exist");
+  });
 
-    it("AND status is success, THEN renders success state", () => {
-      cy.mount(
-        <Toast status="success">
-          <ToastContent>Toast content</ToastContent>
-        </Toast>
-      );
-      cy.findAllByTestId("SuccessTickIcon").should("exist");
-    });
+  it("AND status is warning, THEN renders warning state", () => {
+    cy.mount(
+      <Toast status="warning">
+        <ToastContent>Toast content</ToastContent>
+      </Toast>
+    );
+    cy.findByRole("img", { name: "warning" }).should("exist");
+  });
+
+  it("AND status is success, THEN renders success state", () => {
+    cy.mount(
+      <Toast status="success">
+        <ToastContent>Toast content</ToastContent>
+      </Toast>
+    );
+    cy.findByRole("img", { name: "success" }).should("exist");
   });
 });

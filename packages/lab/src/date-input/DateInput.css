@@ -96,7 +96,6 @@
   color: inherit;
   cursor: inherit;
   display: block;
-  flex: 1;
   font: inherit;
   height: 100%;
   letter-spacing: var(--saltDateInput-letterSpacing, 0);
@@ -179,41 +178,23 @@
   border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
 }
 
-/* Style applied to start adornments */
-.saltDateInput-startAdornmentContainer {
-  align-items: center;
-  display: inline-flex;
-  padding-right: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
-}
-
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
-  align-items: center;
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-100);
+  margin-left: auto;
+  align-items: end;
 }
 
-.saltDateInput-readOnly .saltDateInput-startAdornmentContainer {
-  margin-left: var(--salt-spacing-50);
-}
-
-.saltDateInput-startAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
-}
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
-.saltDateInput-startAdornmentContainer .saltButton:first-child {
-  margin-left: calc(var(--salt-spacing-50) * -1);
-}
 .saltDateInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
-.saltDateInput-startAdornmentContainer > .saltButton,
 .saltDateInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: var(--salt-spacing-50);
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));

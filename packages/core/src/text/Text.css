@@ -44,6 +44,26 @@
   --text-color: var(--salt-content-secondary-foreground-disabled);
 }
 
+/* Info color */
+.saltText-info {
+  --text-color: var(--salt-status-info-foreground-informative);
+}
+
+/* Error color */
+.saltText-error {
+  --text-color: var(--salt-status-error-foreground-informative);
+}
+
+/* Warning color */
+.saltText-warning {
+  --text-color: var(--salt-status-warning-foreground-informative);
+}
+
+/* Success color */
+.saltText-success {
+  --text-color: var(--salt-status-success-foreground-informative);
+}
+
 /* Body emphasis strong */
 .saltText strong {
   font-weight: var(--salt-text-fontWeight-strong);

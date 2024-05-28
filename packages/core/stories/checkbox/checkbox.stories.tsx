@@ -1,6 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import { Button, Checkbox, CheckboxGroup, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 
 export default {
   title: "Core/Checkbox",
@@ -42,6 +48,20 @@ export const Indeterminate: StoryFn<typeof Checkbox> = () => {
       indeterminate={checkboxState.indeterminate}
       label="Equities"
       onChange={handleChange}
+    />
+  );
+};
+
+export const WithDescription: StoryFn<typeof Checkbox> = () => {
+  return (
+    <Checkbox
+      value="bonds"
+      label={
+        <StackLayout gap={0.5} align="start">
+          <Text>Bonds</Text>
+          <Text color="secondary">Debt securities</Text>
+        </StackLayout>
+      }
     />
   );
 };
@@ -150,15 +170,66 @@ export const Readonly: StoryFn<typeof Checkbox> = () => {
 export const HorizontalGroup: StoryFn<typeof Checkbox> = () => {
   return (
     <CheckboxGroup
-      defaultCheckedValues={["option-1", "option-2"]}
-      direction={"horizontal"}
+      defaultCheckedValues={["alternatives", "equities"]}
+      direction="horizontal"
     >
-      <Checkbox label="Alternatives" value="option-1" />
-      <Checkbox label="Equities" value="option-2" />
-      <Checkbox label="Fixed income" value="option-3" />
+      <Checkbox label="Alternatives" value="alternatives" />
+      <Checkbox label="Equities" value="equities" />
+      <Checkbox label="Fixed income" value="fixed income" />
     </CheckboxGroup>
   );
 };
+
+const GroupWithDescriptions: StoryFn<typeof CheckboxGroup> = (args) => {
+  return (
+    <CheckboxGroup
+      defaultCheckedValues={["alternatives", "equities"]}
+      {...args}
+    >
+      <Checkbox
+        value="alternatives"
+        label={
+          <StackLayout gap={0.5} align="start">
+            <Text>Alternatives</Text>
+            <Text color="secondary">Other investments</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="equities"
+        label={
+          <StackLayout gap={0.5} align="start">
+            <Text>Equities</Text>
+            <Text color="secondary">Company shares</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="fixed income"
+        label={
+          <StackLayout gap={0.5} align="start">
+            <Text>Fixed income</Text>
+            <Text color="secondary">Interest-paying</Text>
+          </StackLayout>
+        }
+      />
+      <Checkbox
+        value="bonds"
+        label={
+          <StackLayout gap={0.5} align="start">
+            <Text>Bonds</Text>
+            <Text color="secondary">Debt securities</Text>
+          </StackLayout>
+        }
+      />
+    </CheckboxGroup>
+  );
+};
+
+export const HorizontalGroupWithDescriptions = GroupWithDescriptions.bind({});
+HorizontalGroupWithDescriptions.args = { direction: "horizontal" };
+export const VerticalGroupWithDescriptions = GroupWithDescriptions.bind({});
+VerticalGroupWithDescriptions.args = { direction: "vertical" };
 
 export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
   <div
@@ -166,15 +237,10 @@ export const WrapGroup: StoryFn<typeof CheckboxGroup> = ({ wrap }) => (
       width: 250,
     }}
   >
-    <CheckboxGroup name="fx" direction={"horizontal"} wrap={wrap}>
-      <Checkbox key="option1" label="Alternatives" value="alternatives" />
-      <Checkbox key="option2" label="Equities" value="equities" />
-      <Checkbox
-        disabled
-        key="option3"
-        label="Fixed income"
-        value="fixed income"
-      />
+    <CheckboxGroup name="fx" direction="horizontal" wrap={wrap}>
+      <Checkbox label="Alternatives" value="alternatives" />
+      <Checkbox label="Equities" value="equities" />
+      <Checkbox disabled label="Fixed income" value="fixed income" />
     </CheckboxGroup>
   </div>
 );
@@ -186,10 +252,13 @@ NoWrapGroup.args = { wrap: false };
 
 export const UncontrolledGroup: StoryFn<typeof CheckboxGroup> = (args) => {
   return (
-    <CheckboxGroup {...args} defaultCheckedValues={["option-1", "option-2"]}>
-      <Checkbox label="Alternatives" value="option-1" />
-      <Checkbox label="Equities" value="option-2" />
-      <Checkbox label="Fixed income" value="option-3" />
+    <CheckboxGroup
+      {...args}
+      defaultCheckedValues={["alternatives", "equities"]}
+    >
+      <Checkbox label="Alternatives" value="alternatives" />
+      <Checkbox label="Equities" value="equities" />
+      <Checkbox label="Fixed income" value="fixed income" />
     </CheckboxGroup>
   );
 };

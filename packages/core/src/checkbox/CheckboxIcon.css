@@ -54,16 +54,16 @@
 
 .saltCheckboxIcon-error,
 .saltCheckbox:hover .saltCheckboxIcon-error {
-  color: var(--salt-status-error-foreground);
+  color: var(--salt-status-error-foreground-decorative);
   border-color: var(--salt-status-error-borderColor);
-  outline-color: var(--salt-status-error-foreground);
+  outline-color: var(--salt-status-error-foreground-decorative);
 }
 
 .saltCheckboxIcon-warning,
 .saltCheckbox:hover .saltCheckboxIcon-warning {
-  color: var(--salt-status-warning-foreground);
+  color: var(--salt-status-warning-foreground-decorative);
   border-color: var(--salt-status-warning-borderColor);
-  outline-color: var(--salt-status-warning-foreground);
+  outline-color: var(--salt-status-warning-foreground-decorative);
 }
 
 .saltCheckboxIcon-readOnly,

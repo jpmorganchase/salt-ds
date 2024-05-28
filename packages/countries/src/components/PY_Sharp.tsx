@@ -13,16 +13,14 @@ const PY_Sharp = forwardRef<SVGSVGElement, PY_SharpProps>(function PY_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="PY_Sharp"
       aria-label="Paraguay"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-PY-a`}

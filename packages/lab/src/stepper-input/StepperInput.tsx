@@ -1,47 +1,77 @@
 import { clsx } from "clsx";
-import React, { forwardRef, ReactNode, useRef } from "react";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { FocusEventHandler, forwardRef, useRef } from "react";
+import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { RefreshIcon, TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
-import {
-  InputLegacy as Input,
-  InputLegacyProps as InputProps,
-} from "../input-legacy";
-import { useActivationIndicatorPosition } from "./internal/useActivationIndicatorPosition";
+import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useStepperInput } from "./useStepperInput";
 
 import stepperInputCss from "./StepperInput.css";
 
 const withBaseName = makePrefixer("saltStepperInput");
 
-export interface StepperInputProps {
-  ButtonProps?: Partial<ButtonProps>;
-  InputProps?: Partial<InputProps>;
+export interface StepperInputProps
+  extends Omit<InputProps, "onChange" | "emptyReadOnlyMarker"> {
+  /**
+   * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
+   */
   block?: number;
-  className?: string;
+  /**
+   * The number of decimal places to display.
+   */
   decimalPlaces?: number;
+  /**
+   * Sets the initial default value of the component.
+   */
   defaultValue?: number;
-  liveValue?: number;
+  /**
+   * The maximum value that can be selected.
+   */
   max?: number;
+  /**
+   * The minimum value that can be selected.
+   */
   min?: number;
-  onBlur?: (event: React.FocusEvent<HTMLDivElement>) => void;
-  onFocus?: (event: React.FocusEvent<HTMLDivElement>) => void;
+  /**
+   * Whether to hide the stepper buttons. Defaults to `false`.
+   */
+  hideButtons?: boolean;
+  /**
+   * Callback when stepper input loses focus.
+   */
+  onBlur?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * Callback when stepper input value is changed.
+   */
   onChange?: (changedValue: number | string) => void;
-  showRefreshButton?: boolean;
+  /**
+   * Callback when stepper input gains focus.
+   */
+  onFocus?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * The amount to increment or decrement the value by when using the stepper buttons or Up Arrow and Down Arrow keys.
+   */
   step?: number;
+  /**
+   * Determines the text alignment of the display value.
+   */
   textAlign?: "center" | "left" | "right";
+  /**
+   * The value of the stepper input. The component will be controlled if this prop is provided.
+   */
   value?: number | string;
 }
 
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   function StepperInput(props, ref) {
     const {
-      ButtonProps: ButtonPropsProp,
-      InputProps: InputPropsProp,
-      textAlign = "left",
       className,
-      showRefreshButton = false,
+      hideButtons,
+      onBlur,
+      onChange,
+      onFocus,
+      readOnly,
+      ...rest
     } = props;
 
     const targetWindow = useWindow();
@@ -51,95 +81,37 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       window: targetWindow,
     });
 
-    const adornmentRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const {
-      decrementButtonDown,
-      getButtonIcon,
-      getButtonProps,
-      getInputProps,
-      incrementButtonDown,
-      isAtMax,
-      isAtMin,
-      refreshCurrentValue,
-      stepperDirection,
-      valuesHaveDiverged,
-    } = useStepperInput(props, inputRef);
-
-    useActivationIndicatorPosition(
-      adornmentRef,
-      valuesHaveDiverged() || showRefreshButton
-    );
-
-    const endAdornment: ReactNode = (
-      <div className={withBaseName("adornmentContainer")} ref={adornmentRef}>
-        <Button
-          aria-label="Refresh default value"
-          className={clsx(withBaseName("secondaryButton"), {
-            // Refresh button is always rendered and has its visibility toggled to
-            // avoid component width changing.
-            [withBaseName("hideSecondaryButton")]: !(
-              showRefreshButton || valuesHaveDiverged()
-            ),
-          })}
-          onClick={refreshCurrentValue}
-          variant="secondary"
-        >
-          <RefreshIcon aria-label="refresh" />
-        </Button>
-        <div className={withBaseName("buttonContainer")}>
-          <Button
-            className={clsx(
-              withBaseName("stepperButton"),
-              withBaseName("increment"),
-              {
-                active: incrementButtonDown,
-              }
-            )}
-            disabled={isAtMax()}
-            {...getButtonProps(stepperDirection.INCREMENT, ButtonPropsProp)}
-          >
-            <TriangleUpIcon
-              className={withBaseName("stepperButtonIcon")}
-              aria-label={getButtonIcon(stepperDirection.INCREMENT)}
-            />
-          </Button>
-          <Button
-            className={clsx(
-              withBaseName("stepperButton"),
-              withBaseName("decrement"),
-              {
-                active: decrementButtonDown,
-              }
-            )}
-            disabled={isAtMin()}
-            {...getButtonProps(stepperDirection.DECREMENT, ButtonPropsProp)}
-          >
-            <TriangleDownIcon
-              className={withBaseName("stepperButtonIcon")}
-              aria-label={getButtonIcon(stepperDirection.DECREMENT)}
-            />
-          </Button>
-        </div>
-      </div>
-    );
+    const { getButtonProps, getInputProps } = useStepperInput(props, inputRef);
 
     return (
-      <div
-        className={clsx(withBaseName(), className)}
-        onBlur={props.onBlur}
-        onFocus={props.onFocus}
-        ref={ref}
-      >
+      <div className={clsx(withBaseName(), className)} ref={ref}>
         <Input
-          className={withBaseName("input")}
-          endAdornment={endAdornment}
-          highlightOnFocus
+          onBlur={onBlur}
+          onFocus={onFocus}
           ref={inputRef}
-          textAlign={textAlign}
-          {...getInputProps(InputPropsProp)}
+          readOnly={readOnly}
+          {...getInputProps(rest)}
         />
+        {!hideButtons && !readOnly && (
+          <div className={withBaseName("buttonContainer")}>
+            <Button
+              aria-label="increment value"
+              className={withBaseName("stepperButton")}
+              {...getButtonProps("increment")}
+            >
+              <TriangleUpIcon aria-hidden />
+            </Button>
+            <Button
+              aria-label="decrement value"
+              className={withBaseName("stepperButton")}
+              {...getButtonProps("decrement")}
+            >
+              <TriangleDownIcon aria-hidden />
+            </Button>
+          </div>
+        )}
       </div>
     );
   }

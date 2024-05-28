@@ -13,16 +13,14 @@ const GH_Sharp = forwardRef<SVGSVGElement, GH_SharpProps>(function GH_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GH_Sharp"
       aria-label="Ghana"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-GH-a`}

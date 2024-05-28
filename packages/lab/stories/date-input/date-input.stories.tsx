@@ -10,21 +10,10 @@ const DateInputTemplate: StoryFn<DateInputProps> = (args) => {
   return <DateInput {...args} />;
 };
 
-const formatter = (input: string): string => {
-  const date = new Date(input);
-  // @ts-ignore evaluating validity of date
-  return isNaN(date)
-    ? input
-    : new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-      }).format(date);
-};
-
 export const Default = DateInputTemplate.bind({});
 Default.args = {};
 
-export const CustomFormatter = DateInputTemplate.bind({});
-CustomFormatter.args = {
-  dateFormatter: formatter,
-  placeholder: "yyyy",
+export const Range = DateInputTemplate.bind({});
+Range.args = {
+  selectionVariant: "range",
 };

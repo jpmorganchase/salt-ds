@@ -11,16 +11,14 @@ const GB_SCT_Sharp = forwardRef<SVGSVGElement, GB_SCT_SharpProps>(
   function GB_SCT_Sharp(props: GB_SCT_SharpProps, ref) {
     const uid = useId(props.id);
 
-    const { className, ...rest } = props;
-
     return (
       <CountrySymbol
         data-testid="GB_SCT_Sharp"
         aria-label="Scotland"
         viewBox="0 0 72 50"
         ref={ref}
-        className={clsx(className, { "saltCountrySymbol-sharp": true })}
-        {...rest}
+        sharp
+        {...props}
       >
         <mask
           id={`${uid}-GB-SCT-a`}

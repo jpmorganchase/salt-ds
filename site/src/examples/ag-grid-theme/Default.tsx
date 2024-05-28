@@ -1,35 +1,64 @@
+import { useDensity, useTheme } from "@salt-ds/core";
+import { GridReadyEvent } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 import { defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
+
+const columnDefs = [
+  {
+    headerName: "Name",
+    field: "name",
+    filterParams: {
+      buttons: ["reset", "apply"],
+    },
+    editable: false,
+    autoHeight: true,
+  },
+  {
+    headerName: "Code",
+    field: "code",
+  },
+  {
+    headerName: "Capital",
+    field: "capital",
+  },
+];
 
 export const Default = (): ReactElement => {
-  const { containerProps, agGridProps } = useAgGridHelpers();
+  const { mode } = useTheme();
+  const density = useDensity();
+
+  const onGridReady = ({ api }: GridReadyEvent) => {
+    api.sizeColumnsToFit();
+  };
+
+  const rowHeight = useMemo(() => {
+    switch (density) {
+      case "high":
+        return 24;
+      case "medium":
+        return 36;
+      case "low":
+        return 48;
+      case "touch":
+        return 60;
+      default:
+        return 20;
+    }
+  }, [density]);
 
   return (
-    <div {...containerProps}>
+    <div
+      className={`ag-theme-salt-${mode}`}
+      style={{ height: 500, width: "100%" }}
+    >
       <AgGridReact
-        columnDefs={[
-          {
-            headerName: "Name",
-            field: "name",
-            filterParams: {
-              buttons: ["reset", "apply"],
-            },
-            editable: false,
-          },
-          {
-            headerName: "Code",
-            field: "code",
-          },
-          {
-            headerName: "Capital",
-            field: "capital",
-          },
-        ]}
+        columnDefs={columnDefs}
         rowData={defaultData}
         rowSelection="single"
-        {...agGridProps}
+        enableRangeSelection={true}
+        onGridReady={onGridReady}
+        rowHeight={rowHeight}
       />
     </div>
   );

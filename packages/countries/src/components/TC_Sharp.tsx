@@ -13,16 +13,14 @@ const TC_Sharp = forwardRef<SVGSVGElement, TC_SharpProps>(function TC_Sharp(
 ) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="TC_Sharp"
       aria-label="Turks and Caicos Islands (the)"
       viewBox="0 0 72 50"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": true })}
-      {...rest}
+      sharp
+      {...props}
     >
       <mask
         id={`${uid}-TC-a`}

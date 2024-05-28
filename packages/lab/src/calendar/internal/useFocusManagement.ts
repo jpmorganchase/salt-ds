@@ -53,7 +53,9 @@ export function useFocusManagement({ date }: { date: DateValue }) {
         break;
       default:
     }
-
+    if (newDate.compare(date) !== 0) {
+      event.preventDefault();
+    }
     setFocusedDate(event, newDate);
   };
 

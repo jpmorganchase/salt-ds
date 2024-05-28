@@ -19,7 +19,8 @@ const TestComponent = ({
   className?: string;
 }) => {
   const density = useDensity();
-  const { theme, mode, UNSTABLE_corner, themeNext } = useTheme();
+  const { theme, mode, UNSTABLE_corner, UNSTABLE_accent, themeNext } =
+    useTheme();
   const { announce } = useAriaAnnouncer();
   const announcerPresent = typeof announce === "function";
 
@@ -32,6 +33,7 @@ const TestComponent = ({
       data-mode={mode}
       data-announcer={announcerPresent}
       data-corner={UNSTABLE_corner}
+      data-accent={UNSTABLE_accent}
       data-themeNext={themeNext}
     />
   );
@@ -274,6 +276,7 @@ describe("Given a SaltProviderNext", () => {
         .should("exist")
         .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-corner", "sharp")
+        .and("have.attr", "data-accent", "blue")
         .and("have.class", "salt-theme-next")
         .and("have.class", "salt-density-medium");
     });
@@ -289,6 +292,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-announcer", "true")
         .and("have.attr", "data-corner", "sharp")
+        .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-themeNext", "true");
       cy.get("[aria-live]").should("exist");
     });
@@ -297,7 +301,12 @@ describe("Given a SaltProviderNext", () => {
   describe("when nested", () => {
     it("should inherit values not passed as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext density="high" mode="dark" corner="rounded">
+        <UNSTABLE_SaltProviderNext
+          density="high"
+          mode="dark"
+          corner="rounded"
+          accent="teal"
+        >
           <TestComponent />
           <UNSTABLE_SaltProviderNext density="medium">
             <TestComponent id="test-2" />
@@ -313,6 +322,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-density", "high")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "rounded")
+        .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -320,13 +330,23 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-density", "medium")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "rounded")
+        .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-announcer", "true");
     });
     it("should take different values set as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext density="high" mode="dark" corner="rounded">
+        <UNSTABLE_SaltProviderNext
+          density="high"
+          mode="dark"
+          corner="rounded"
+          accent="teal"
+        >
           <TestComponent />
-          <UNSTABLE_SaltProviderNext density="medium" corner="sharp">
+          <UNSTABLE_SaltProviderNext
+            density="medium"
+            corner="sharp"
+            accent="blue"
+          >
             <TestComponent id="test-2" />
           </UNSTABLE_SaltProviderNext>
         </UNSTABLE_SaltProviderNext>
@@ -340,6 +360,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-density", "high")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "rounded")
+        .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -347,6 +368,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-density", "medium")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "sharp")
+        .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-announcer", "true");
     });
   });

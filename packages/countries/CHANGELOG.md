@@ -1,5 +1,12 @@
 # @salt-ds/countries
 
+## 1.3.1
+
+### Patch Changes
+
+- 361edb3d: Remove `<countryCode>_Sharp` entries in countryMetaMap. This was added incorrectly and makes using the map to convert between country codes and country names more difficult.
+- af21bfb3: Fixed `saltSharpCountries.css` not being shipped as part of the package.
+
 ## 1.3.0
 
 ### Minor Changes

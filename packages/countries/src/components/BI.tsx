@@ -10,16 +10,13 @@ export type BIProps = CountrySymbolProps;
 const BI = forwardRef<SVGSVGElement, BIProps>(function BI(props: BIProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="BI"
       aria-label="Burundi"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-BI-a`}

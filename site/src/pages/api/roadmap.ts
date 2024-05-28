@@ -89,6 +89,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const responseData = await response.json();
       const projectItems =
+        // @ts-ignore
         responseData.data.organization.repository.projectV2.items;
 
       hasNextPage = projectItems.pageInfo.hasNextPage;

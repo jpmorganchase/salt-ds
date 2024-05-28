@@ -8,15 +8,15 @@ export const InfoToast = () => {
     setOpen(false);
   };
   return open ? (
-    <Toast>
+    <Toast status="info">
       <ToastContent>
         <Text>
           <strong>File update</strong>
         </Text>
         <div>A new version of this file is available with 37 updates.</div>
       </ToastContent>
-      <Button variant="secondary" onClick={closeToast}>
-        <CloseIcon />
+      <Button aria-label="Dismiss" variant="secondary" onClick={closeToast}>
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
   ) : (
@@ -97,8 +97,8 @@ export const SuccessToast = () => {
           The project file has been successfully uploaded to the shared drive.
         </div>
       </ToastContent>
-      <Button variant="secondary" onClick={closeToast}>
-        <CloseIcon />
+      <Button aria-label="Dismiss" variant="secondary" onClick={closeToast}>
+        <CloseIcon aria-hidden />
       </Button>
     </Toast>
   ) : (

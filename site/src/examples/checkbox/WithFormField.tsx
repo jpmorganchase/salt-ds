@@ -13,10 +13,10 @@ export const WithFormField = (): ReactElement => {
     <FlexLayout>
       <FormField necessity="required">
         <FormFieldLabel>Assignment</FormFieldLabel>
-        <CheckboxGroup defaultCheckedValues={["option-1", "option-2"]}>
-          <Checkbox label="Alternatives" value="option-1" />
-          <Checkbox label="Equities" value="option-2" />
-          <Checkbox label="Fixed income" value="option-3" />
+        <CheckboxGroup defaultCheckedValues={["alternatives", "equities"]}>
+          <Checkbox label="Alternatives" value="alternatives" />
+          <Checkbox label="Equities" value="equities" />
+          <Checkbox label="Fixed income" value="fixed income" />
         </CheckboxGroup>
         <FormFieldHelperText>Select all appropriate</FormFieldHelperText>
       </FormField>

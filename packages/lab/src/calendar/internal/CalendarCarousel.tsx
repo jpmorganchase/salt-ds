@@ -63,6 +63,7 @@ export const CalendarCarousel = forwardRef<
   return (
     <div
       className={withBaseName()}
+      tabIndex={-1} // https://bugzilla.mozilla.org/show_bug.cgi?id=1069739
       style={{
         overflowX: "hidden",
         position: "relative",

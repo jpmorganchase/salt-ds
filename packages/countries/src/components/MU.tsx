@@ -10,16 +10,13 @@ export type MUProps = CountrySymbolProps;
 const MU = forwardRef<SVGSVGElement, MUProps>(function MU(props: MUProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="MU"
       aria-label="Mauritius"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-MU-a`}

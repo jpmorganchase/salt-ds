@@ -1,5 +1,5 @@
-import { StepperInput, FormField } from "@salt-ds/lab";
-import { useState } from "react";
+import { StepperInput } from "@salt-ds/lab";
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 
 describe("Stepper Input - Accessibility", () => {
   it("sets the correct default ARIA attributes on input", () => {
@@ -20,95 +20,17 @@ describe("Stepper Input - Accessibility", () => {
 
   it("has the correct labelling when wrapped in a `FormField`", () => {
     cy.mount(
-      <FormField helperText="please enter a value" label="stepper input">
+      <FormField>
+        <FormFieldLabel>Stepper Input</FormFieldLabel>
         <StepperInput defaultValue={-10} min={0} />
+        <FormFieldHelperText>Please enter a value</FormFieldHelperText>
       </FormField>
     );
 
-    cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
+    cy.findByRole("spinbutton").should("have.accessibleName", "Stepper Input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "please enter a value"
-    );
-  });
-
-  it("appends a message to `aria-label` when the controlled `liveValue` prop changes", () => {
-    const ControlledLiveValue = () => {
-      const [liveValue, setLiveValue] = useState(10);
-
-      return (
-        <>
-          <FormField helperText="please enter a value" label="stepper input">
-            <StepperInput defaultValue={10} liveValue={liveValue} />
-          </FormField>
-          <button
-            onClick={() => setLiveValue((prev) => prev + 1)}
-            type="button"
-          >
-            Increment
-          </button>
-        </>
-      );
-    };
-
-    cy.mount(<ControlledLiveValue />);
-
-    cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
-    cy.findByRole("spinbutton").should(
-      "have.accessibleDescription",
-      "please enter a value"
-    );
-
-    cy.findByRole("button", { name: "Increment" }).realClick();
-
-    cy.findByRole("spinbutton").should(
-      "have.accessibleName",
-      "stepper input , value out of date"
-    );
-    cy.findByRole("spinbutton").should(
-      "have.accessibleDescription",
-      "please enter a value"
-    );
-  });
-
-  it("removes the appended message from `aria-label` when the the component is refreshed", () => {
-    const ControlledLiveValue = () => {
-      const [liveValue, setLiveValue] = useState(11);
-
-      return (
-        <>
-          <FormField helperText="please enter a value" label="stepper input">
-            <StepperInput defaultValue={10} liveValue={liveValue} />
-          </FormField>
-          <button
-            onClick={() => setLiveValue((prev) => prev + 1)}
-            type="button"
-          >
-            Increment
-          </button>
-        </>
-      );
-    };
-
-    cy.mount(<ControlledLiveValue />);
-
-    cy.findByRole("button", { name: "Increment" }).realClick();
-
-    cy.findByRole("spinbutton").should(
-      "have.accessibleName",
-      "stepper input , value out of date"
-    );
-    cy.findByRole("spinbutton").should(
-      "have.accessibleDescription",
-      "please enter a value"
-    );
-
-    cy.findByRole("button", { name: "Refresh default value" }).realClick();
-
-    cy.findByRole("spinbutton").should("have.accessibleName", "stepper input");
-    cy.findByRole("spinbutton").should(
-      "have.accessibleDescription",
-      "please enter a value"
+      "Please enter a value"
     );
   });
 
@@ -119,11 +41,11 @@ describe("Stepper Input - Accessibility", () => {
 
   it("sets the correct default ARIA attributes on the increment/decrement buttons", () => {
     cy.mount(<StepperInput />);
-    cy.findByTestId("increment-button")
+    cy.findByLabelText("increment value")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
 
-    cy.findByTestId("decrement-button")
+    cy.findByLabelText("decrement value")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");
   });

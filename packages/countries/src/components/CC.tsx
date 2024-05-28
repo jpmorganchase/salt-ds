@@ -10,16 +10,13 @@ export type CCProps = CountrySymbolProps;
 const CC = forwardRef<SVGSVGElement, CCProps>(function CC(props: CCProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="CC"
       aria-label="Cocos (Keeling) Islands (the)"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-CC-a`}

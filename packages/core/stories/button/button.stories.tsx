@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@salt-ds/core";
+import { Button, ButtonProps, StackLayout } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
@@ -156,5 +156,15 @@ export const WithIcon: StoryFn<typeof Button> = () => {
         <DownloadIcon aria-hidden />
       </Button>
     </div>
+  );
+};
+
+export const FullWidth: StoryFn<typeof Button> = () => {
+  return (
+    <StackLayout style={{ width: "98vw" }}>
+      <Button variant="primary">Primary full width Button</Button>
+      <Button variant="secondary">Secondary full width Button</Button>
+      <Button variant="cta">Cta full width Button</Button>
+    </StackLayout>
   );
 };

@@ -1,6 +1,7 @@
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { useAgGridHelpers } from "./useAgGridHelpers";
+// refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
+import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const generateData = (states: typeof defaultData) =>
   states.reduce((result, row) => {
@@ -12,7 +13,9 @@ const generateData = (states: typeof defaultData) =>
     return [...result, ...data];
   }, [] as typeof defaultData);
 
-const PagedGrid = (props: AgGridReactProps) => {
+export const Pagination = (props: AgGridReactProps) => {
+  // We've created a local custom hook to set the rows and column sizes.
+  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -28,17 +31,3 @@ const PagedGrid = (props: AgGridReactProps) => {
     </div>
   );
 };
-
-export const Pagination = () => (
-  <div
-    style={{
-      marginTop: "-150px",
-      height: "100%",
-      width: "100%",
-      display: "flex",
-      flexDirection: "column",
-    }}
-  >
-    <PagedGrid />
-  </div>
-);

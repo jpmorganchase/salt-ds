@@ -5,20 +5,24 @@
   gap: var(--salt-size-border);
 }
 
-.saltSegmentedButtonGroup > *:not(:last-child)::after {
+.saltSegmentedButtonGroup > .saltButton:not(:last-of-type)::after {
   content: "";
   width: var(--salt-size-border);
   position: absolute;
   background: var(--button-background);
-  right: calc(var(--salt-size-border) * -1);
-  height: 100%;
+  /* Accomodate button border */
+  right: calc(var(--salt-size-border) * -2);
+  top: calc(var(--salt-size-border) * -1);
+  bottom: calc(var(--salt-size-border) * -1);
 }
 
-.saltSegmentedButtonGroup > *:not(:first-child)::before {
+.saltSegmentedButtonGroup > .saltButton:not(:first-of-type)::before {
   content: "";
   width: var(--salt-size-border);
   position: absolute;
   background: var(--salt-separable-primary-borderColor);
-  left: calc(var(--salt-size-border) * -1);
-  height: 100%;
+  /* Accomodate button border */
+  left: calc(var(--salt-size-border) * -2);
+  top: calc(var(--salt-size-border) * -1);
+  bottom: calc(var(--salt-size-border) * -1);
 }

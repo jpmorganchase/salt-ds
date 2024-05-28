@@ -10,16 +10,13 @@ export type GFProps = CountrySymbolProps;
 const GF = forwardRef<SVGSVGElement, GFProps>(function GF(props: GFProps, ref) {
   const uid = useId(props.id);
 
-  const { className, ...rest } = props;
-
   return (
     <CountrySymbol
       data-testid="GF"
       aria-label="French Guiana"
       viewBox="0 0 72 72"
       ref={ref}
-      className={clsx(className, { "saltCountrySymbol-sharp": false })}
-      {...rest}
+      {...props}
     >
       <mask
         id={`${uid}-GF-a`}

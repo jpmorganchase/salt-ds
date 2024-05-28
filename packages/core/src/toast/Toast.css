@@ -1,6 +1,7 @@
 /* Styles applied to Toast root element */
 .saltToast {
   --toast-background: var(--salt-container-primary-background);
+  --toast-borderColor: var(--salt-container-primary-borderColor);
 
   background: var(--saltToast-background, var(--toast-background));
   border-color: var(--saltToast-borderColor, var(--toast-borderColor));
@@ -30,6 +31,7 @@
 .saltToast-icon.saltIcon {
   margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
 }
+
 .salt-density-high.saltToast-icon.saltIcon {
   margin: calc(var(--salt-spacing-75) + 1px) 0 var(--salt-spacing-75) 0;
 }

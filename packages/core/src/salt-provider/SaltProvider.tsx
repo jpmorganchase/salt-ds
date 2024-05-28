@@ -25,6 +25,8 @@ import {
   StyleInjectionProvider,
 } from "@salt-ds/styles";
 import { UNSTABLE_Corner } from "../theme/Corner";
+import { UNSTABLE_HeadingFont } from "../theme/HeadingFont";
+import { UNSTABLE_Accent } from "../theme/Accent";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -33,6 +35,8 @@ const UNSTABLE_ADDITIONAL_THEME_NAME = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
 const DEFAULT_CORNER: UNSTABLE_Corner = "sharp";
+const DEFAULT_HEADING_FONT: UNSTABLE_HeadingFont = "Open Sans";
+const DEFAULT_ACCENT: UNSTABLE_Accent = "blue";
 export interface ThemeContextProps {
   theme: ThemeName;
   mode: Mode;
@@ -40,6 +44,8 @@ export interface ThemeContextProps {
   /** Only available when using SaltProviderNext. */
   themeNext: boolean;
   UNSTABLE_corner: UNSTABLE_Corner;
+  UNSTABLE_headingFont: UNSTABLE_HeadingFont;
+  UNSTABLE_accent: UNSTABLE_Accent;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -49,6 +55,8 @@ export const ThemeContext = createContext<ThemeContextProps>({
   mode: DEFAULT_MODE,
   themeNext: false,
   UNSTABLE_corner: DEFAULT_CORNER,
+  UNSTABLE_headingFont: DEFAULT_HEADING_FONT,
+  UNSTABLE_accent: DEFAULT_ACCENT,
 });
 
 export const BreakpointContext =
@@ -83,6 +91,8 @@ const createThemedChildren = ({
   applyClassesTo,
   themeNext,
   corner,
+  headingFont,
+  accent,
 }: {
   children: ReactNode;
   themeName: ThemeName;
@@ -94,6 +104,8 @@ const createThemedChildren = ({
   const themeNames = getThemeNames(themeName, themeNext);
   const themeNextProps = {
     "data-corner": corner,
+    "data-heading-font": headingFont,
+    "data-accent": accent,
   };
   if (applyClassesTo === "root") {
     return children;
@@ -174,6 +186,8 @@ function InternalSaltProvider({
   breakpoints: breakpointsProp,
   themeNext,
   corner: cornerProp,
+  headingFont: headingFontProp,
+  accent: accentProp,
 }: Omit<
   SaltProviderProps & ThemeNextProps & UNSTABLE_SaltProviderNextProps,
   "enableStyleInjection"
@@ -184,6 +198,8 @@ function InternalSaltProvider({
     mode: inheritedMode,
     window: inheritedWindow,
     UNSTABLE_corner: inheritedCorner,
+    UNSTABLE_headingFont: inheritedHeadingFont,
+    UNSTABLE_accent: inheritedAccent,
   } = useContext(ThemeContext);
 
   const isRootProvider = inheritedTheme === undefined || inheritedTheme === "";
@@ -193,6 +209,9 @@ function InternalSaltProvider({
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
+  const headingFont =
+    headingFontProp ?? inheritedHeadingFont ?? DEFAULT_HEADING_FONT;
+  const accent = accentProp ?? inheritedAccent ?? DEFAULT_ACCENT;
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
@@ -211,8 +230,10 @@ function InternalSaltProvider({
       window: targetWindow,
       themeNext: Boolean(themeNext),
       UNSTABLE_corner: corner,
+      UNSTABLE_headingFont: headingFont,
+      UNSTABLE_accent: accent,
     }),
-    [themeName, mode, targetWindow, themeNext, corner]
+    [themeName, mode, targetWindow, themeNext, corner, headingFont, accent]
   );
 
   const themedChildren = createThemedChildren({
@@ -223,6 +244,8 @@ function InternalSaltProvider({
     applyClassesTo,
     themeNext,
     corner: corner,
+    headingFont,
+    accent,
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -238,6 +261,9 @@ function InternalSaltProvider({
         targetWindow.document.documentElement.dataset.mode = mode;
         if (themeNext) {
           targetWindow.document.documentElement.dataset.corner = corner;
+          targetWindow.document.documentElement.dataset.headingFont =
+            headingFont;
+          targetWindow.document.documentElement.dataset.accent = accent;
         }
       } else {
         console.warn(
@@ -255,6 +281,8 @@ function InternalSaltProvider({
         targetWindow.document.documentElement.dataset.mode = undefined;
         if (themeNext) {
           delete targetWindow.document.documentElement.dataset.corner;
+          delete targetWindow.document.documentElement.dataset.headingFont;
+          delete targetWindow.document.documentElement.dataset.accent;
         }
       }
     };
@@ -267,6 +295,8 @@ function InternalSaltProvider({
     inheritedWindow,
     themeNext,
     corner,
+    headingFont,
+    accent,
   ]);
 
   const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
@@ -303,6 +333,8 @@ export function SaltProvider({
 
 interface UNSTABLE_SaltProviderNextAdditionalProps {
   corner?: UNSTABLE_Corner;
+  headingFont?: UNSTABLE_HeadingFont;
+  accent?: UNSTABLE_Accent;
 }
 
 export type UNSTABLE_SaltProviderNextProps = SaltProviderProps &

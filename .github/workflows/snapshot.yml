@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Enforce write permissions
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           COMMENT_ID: ${{ github.event.comment.id }}
         with:
@@ -49,7 +49,7 @@ jobs:
               )
             }
       - name: Validate pull request
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         id: pr_data
         env:
           FORK: ${{ github.event.pull_request.head.repo.fork }}
@@ -76,7 +76,7 @@ jobs:
           ref: refs/pull/${{ github.event.issue.number }}/head
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "yarn"
@@ -85,7 +85,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Create and publish snapshot release
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COMMENT_ID: ${{ github.event.comment.id }}

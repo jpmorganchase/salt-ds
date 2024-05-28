@@ -1,0 +1,43 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="date-picker" exampleName="SingleSelect">
+
+## Single select
+
+The default date picker allows the user to pick a single date, which is committed when it has been typed into the field or selected from the calendar.
+
+</LivePreview>
+<LivePreview componentName="date-picker" exampleName="WithFormField">
+## Form field compatibility
+
+You can wrap date picker in a form field when it’s displayed within a form. This provides functionality built into `FormField` for increased accessibility.
+
+For more information, refer to the [form pattern](/salt/patterns/forms).
+
+We recommend using our default date picker format (DD MMM YYYY) as it provides greater clarity and avoids ambiguity when identifying the month.
+
+</LivePreview>
+<LivePreview componentName="date-picker" exampleName="Range">
+## Date range
+
+The Date Range Picker enables selection of start and end dates, using the input fields or two calendars displayed.
+We recommend using the form field's label and helper text to instruct the user to select a date range by choosing both a start date and an end date.
+
+</LivePreview>
+<LivePreview componentName="date-picker" exampleName="WithDisabledDates">
+## With disabled dates
+
+You can customize the calendar by passing calendar props into `CalendarProps`.
+For more information, refer to the [calendar](/salt/components/calendar).
+
+</LivePreview>
+</LivePreviewControls>
