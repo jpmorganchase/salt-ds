@@ -152,8 +152,12 @@ export const Example1 = () => {
           <Display1>Masthead</Display1>
           <H1>H1 Header</H1>
           <H2>H2 Subheader</H2>
-          <Text variant="primary">Primary body copy</Text>
-          <Text variant="secondary">Secondary body copy</Text>
+          <Text color="primary">Primary body copy</Text>
+          <Text color="secondary">Secondary body copy</Text>
+          <Text color="error">Error body copy</Text>
+          <Text color="warning">Warning body copy</Text>
+          <Text color="success">Success body copy</Text>
+          <Text color="info">Info body copy</Text>
           <Link>Default link text</Link>
           <Text>
             <code>Code example 123</code>
@@ -163,8 +167,12 @@ export const Example1 = () => {
           <Display1>Masthead</Display1>
           <H1>H1 Header</H1>
           <H2>H2 Subheader</H2>
-          <Text variant="primary">Primary body copy</Text>
-          <Text variant="secondary">Secondary body copy</Text>
+          <Text color="primary">Primary body copy</Text>
+          <Text color="secondary">Secondary body copy</Text>
+          <Text color="error">Error body copy</Text>
+          <Text color="warning">Warning body copy</Text>
+          <Text color="success">Success body copy</Text>
+          <Text color="info">Info body copy</Text>
           <Link>Default link text</Link>
           <Text>
             <code>Code example 123</code>
@@ -175,8 +183,12 @@ export const Example1 = () => {
           <H1>H1 Header</H1>
           <Card variant="secondary">
             <H2>H2 Subheader</H2>
-            <Text variant="primary">Primary body copy</Text>
-            <Text variant="secondary">Secondary body copy</Text>
+            <Text color="primary">Primary body copy</Text>
+            <Text color="secondary">Secondary body copy</Text>
+            <Text color="error">Error body copy</Text>
+            <Text color="warning">Warning body copy</Text>
+            <Text color="success">Success body copy</Text>
+            <Text color="info">Info body copy</Text>
           </Card>
           <Link>Default link text</Link>
           <Text>
@@ -188,8 +200,12 @@ export const Example1 = () => {
           <H1>H1 Header</H1>
           <Card variant="primary">
             <H2>H2 Subheader</H2>
-            <Text variant="primary">Primary body copy</Text>
-            <Text variant="secondary">Secondary body copy</Text>
+            <Text color="primary">Primary body copy</Text>
+            <Text color="secondary">Secondary body copy</Text>
+            <Text color="error">Error body copy</Text>
+            <Text color="warning">Warning body copy</Text>
+            <Text color="success">Success body copy</Text>
+            <Text color="info">Info body copy</Text>
           </Card>
           <Link>Default link text</Link>
           <Text>
