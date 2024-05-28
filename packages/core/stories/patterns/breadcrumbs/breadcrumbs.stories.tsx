@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { Meta } from "@storybook/react";
-import { Link, Button, Text, FlowLayout } from "@salt-ds/core";
-import { MenuButton } from "@salt-ds/lab";
+import {
+  Link,
+  Button,
+  Text,
+  FlowLayout,
+  Menu,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+} from "@salt-ds/core";
 import { OverflowMenuIcon, ChevronRightIcon } from "@salt-ds/icons";
 
 export default {
@@ -109,9 +117,19 @@ export const OverflowMenu = () => {
           <Link href="#">Home</Link>
         </li>
         <Separator />
-        <MenuButton CascadingMenuProps={{ initialSource }} hideCaret>
-          <OverflowMenuIcon />
-        </MenuButton>
+        <Menu>
+          <MenuTrigger>
+            <Button variant="secondary" aria-label="Open Menu">
+              <OverflowMenuIcon aria-hidden />
+            </Button>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuItem>Level 2</MenuItem>
+            <MenuItem>Level 3</MenuItem>
+            <MenuItem>Level 4</MenuItem>
+            <MenuItem>Level 5</MenuItem>
+          </MenuPanel>
+        </Menu>
         <Separator />
         <li>
           <Text maxRows={1}>Current level</Text>
