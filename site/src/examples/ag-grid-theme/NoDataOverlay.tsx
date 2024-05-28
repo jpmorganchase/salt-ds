@@ -5,6 +5,7 @@ import {
   DialogHeader,
 } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+// refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
@@ -19,7 +20,7 @@ const CustomDialog = () => {
     >
       <DialogHeader status="error" header="Can`t move file" />
       <DialogContent>
-        You don't have permission to move or delete this file.
+        You don&apos;t have permission to move or delete this file.
       </DialogContent>
       <DialogActions>
         <Button>Help Desk</Button>
@@ -30,6 +31,8 @@ const CustomDialog = () => {
 };
 
 export const NoDataOverlay = (props: AgGridReactProps) => {
+  // We've created a local custom hook to set the rows and column sizes.
+  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (

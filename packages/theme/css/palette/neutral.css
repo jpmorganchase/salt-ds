@@ -17,6 +17,7 @@
   --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
+  --salt-palette-neutral-selection: var(--salt-color-black-fade-background-selection);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -38,4 +39,5 @@
   --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-white-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-separator: var(--salt-color-white-fade-separatorOpacity-tertiary);
+  --salt-palette-neutral-selection: var(--salt-color-white-fade-background-selection);
 }

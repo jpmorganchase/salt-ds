@@ -1,8 +1,8 @@
-import { HTMLAttributes, useEffect, useMemo, useRef, useState } from "react";
-import { AgGridReactProps } from "ag-grid-react";
-import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { useDensity, useTheme } from "@salt-ds/core";
+import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
+import { AgGridReactProps } from "ag-grid-react";
+import { HTMLAttributes, useMemo, useRef, useState } from "react";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -12,6 +12,9 @@ export function useAgGridHelpers(compact = false): {
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
   api?: GridApi;
+  /**
+   * @deprecated — Use methods via the grid api instead.
+   */
   columnApi?: ColumnApi;
   compact?: boolean;
 } {
@@ -21,23 +24,23 @@ export function useAgGridHelpers(compact = false): {
   const { mode } = useTheme();
 
   const [rowHeight, listItemHeight] = useMemo(() => {
-    switch (["ag-theme-salt", density].join("-")) {
-      case compact && "ag-theme-salt-high":
+    switch (density) {
+      case compact && "high":
         return [20, 20];
-      case "ag-theme-salt-high":
+      case "high":
         return [24, 24];
-      case "ag-theme-salt-medium":
+      case "medium":
         return [36, 36];
-      case "ag-theme-salt-low":
+      case "low":
         return [48, 48];
-      case "ag-theme-salt-touch":
+      case "touch":
         return [60, 60];
       default:
         return [20, 24];
     }
   }, [density, compact]);
 
-  const className = `ag-theme-salt-${density}${
+  const className = `ag-theme-salt${
     compact && density === "high" ? `-compact` : ``
   }-${mode}`;
 
@@ -46,18 +49,6 @@ export function useAgGridHelpers(compact = false): {
     api.sizeColumnsToFit();
     setGridReady(true);
   };
-
-  useEffect(() => {
-    // setHeaderHeight doesn't work if not in setTimeout
-    setTimeout(() => {
-      if (isGridReady) {
-        apiRef.current!.api.resetRowHeights();
-        apiRef.current!.api.setHeaderHeight(rowHeight);
-        apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
-        // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
-      }
-    }, 0);
-  }, [rowHeight, isGridReady, listItemHeight]);
 
   return {
     containerProps: {

@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/ag-grid-theme",
-  "version": "1.4.2",
+  "version": "2.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -8,9 +8,9 @@
     "directory": "packages/ag-grid-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "style": "uitk-ag-theme.css",
+  "style": "salt-ag-theme.css",
   "files": [
-    "/uitk-ag-theme.css",
+    "/fonts",
     "/salt-ag-theme.css"
   ],
   "scripts": {
@@ -22,12 +22,9 @@
     "provenance": true
   },
   "devDependencies": {
-    "chokidar": "^3.5.3",
-    "cssnano": "^5.1.13",
-    "del": "^7.0.0",
-    "fs-extra": "^11.1.0",
-    "postcss": "^8.4.14",
-    "postcss-url": "^10.1.3",
-    "sass": "^1.51.0"
+    "del": "^7.0.0"
+  },
+  "peerDependencies": {
+    "@salt-ds/theme": "^1.16.0"
   }
 }

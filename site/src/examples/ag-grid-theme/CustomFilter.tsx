@@ -1,65 +1,57 @@
-import { AgGridReact } from "ag-grid-react";
-import React, { useEffect, useState } from "react";
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import { defaultData, customFilterColumns } from "./data";
+import { AgGridReact } from "ag-grid-react";
+import { useState } from "react";
+// refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
+import { customFilterColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const CustomFilter = () => {
   const [hasSavedState, setHasSavedState] = useState(true);
-  const { api, isGridReady, agGridProps, containerProps } = useAgGridHelpers();
+  // We've created a local custom hook to set the rows and column sizes.
+  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
+  const { api, agGridProps, containerProps } = useAgGridHelpers();
 
-  useEffect(() => {
-    if (isGridReady) {
-      api?.sizeColumnsToFit();
-    }
-  }, [isGridReady]);
-
-  const handlePopMt100kClick = () => {
-    const popMt100kComponent = api!.getFilterInstance("population")!;
-    api!.setFilterModel(null);
-
-    popMt100kComponent.setModel({
+  const handlePopMt100kClick = async () => {
+    await api?.setColumnFilterModel("population", {
       type: "greaterThan",
       filter: 100000,
       filterTo: null,
     });
 
-    api!.onFilterChanged();
+    api?.onFilterChanged();
     setHasSavedState(false);
   };
 
-  const handlePopLt100kClick = () => {
-    const popLt100kComponent = api!.getFilterInstance("population")!;
-    api!.setFilterModel(null);
-
-    popLt100kComponent.setModel({
+  const handlePopLt100kClick = async () => {
+    await api?.setColumnFilterModel("population", {
       type: "lessThan",
       filter: 100000,
       filterTo: null,
     });
 
-    api!.onFilterChanged();
+    api?.onFilterChanged();
     setHasSavedState(false);
   };
 
-  const filterNewYork = () => {
-    const filterNewYork = api!.getFilterInstance("name")!;
-    api!.setFilterModel(null);
-    filterNewYork.setModel({
+  const filterNewYork = async () => {
+    await api?.setColumnFilterModel("name", {
       type: "equals",
       filter: "New York",
       filterTo: null,
     });
-    api!.onFilterChanged();
+
+    api?.onFilterChanged();
     setHasSavedState(false);
   };
 
   const saveState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
     (window as any).filterState = api!.getFilterModel();
     setHasSavedState(false);
   };
 
   const restoreState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
     api!.setFilterModel((window as any).filterState);
     setHasSavedState(true);
   };
