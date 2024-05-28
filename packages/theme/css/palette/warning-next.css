@@ -1,8 +1,10 @@
 .salt-theme.salt-theme-next[data-mode="light"] {
   --salt-palette-warning: var(--salt-color-orange-500);
+  --salt-palette-warning-strong: var(--salt-color-orange-600);
   --salt-palette-warning-weak: var(--salt-color-orange-100);
 }
 .salt-theme.salt-theme-next[data-mode="dark"] {
   --salt-palette-warning: var(--salt-color-orange-500);
+  --salt-palette-warning-strong: var(--salt-color-orange-400);
   --salt-palette-warning-weak: var(--salt-color-orange-900);
 }
