@@ -1,8 +1,20 @@
 import { ReactElement } from "react";
-import { SaltProvider, useTheme } from "@salt-ds/core";
+import { Card, SaltProvider, StackLayout, useTheme } from "@salt-ds/core";
 
-export const Theme = (): ReactElement => {
+const ThemeCard = (): ReactElement => {
   const { theme } = useTheme();
 
-  return <SaltProvider theme="salt-theme">Current theme: {theme}</SaltProvider>;
+  return (
+    <Card style={{ minHeight: "unset" }}>
+      <StackLayout>Current theme: {theme}</StackLayout>
+    </Card>
+  );
+};
+
+export const Theme = (): ReactElement => {
+  return (
+    <SaltProvider theme="custom-theme">
+      <ThemeCard />
+    </SaltProvider>
+  );
 };

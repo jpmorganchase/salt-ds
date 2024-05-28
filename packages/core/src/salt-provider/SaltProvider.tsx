@@ -68,17 +68,18 @@ export const BreakpointContext =
 /**
  * We're relying `DEFAULT_THEME_NAME` to determine whether the provider is a root.
  */
-const getThemeNames = (themeName: ThemeName, themeNext?: boolean) => {
+const getThemeNames = (
+  themeName: ThemeName,
+  themeNext?: boolean
+): ThemeName => {
   if (themeNext) {
     return themeName === DEFAULT_THEME_NAME
-      ? [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME]
-      : [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName];
+      ? clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME)
+      : clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName);
   } else {
-    {
-      return themeName === DEFAULT_THEME_NAME
-        ? [DEFAULT_THEME_NAME]
-        : [DEFAULT_THEME_NAME, themeName];
-    }
+    return themeName === DEFAULT_THEME_NAME
+      ? themeName
+      : clsx(DEFAULT_THEME_NAME, themeName);
   }
 };
 
@@ -105,7 +106,7 @@ const createThemedChildren = ({
   applyClassesTo?: TargetElement;
 } & ThemeNextProps &
   UNSTABLE_SaltProviderNextAdditionalProps) => {
-  const themeNames = getThemeNames(themeName, themeNext);
+  const themeNamesString = getThemeNames(themeName, themeNext);
   const themeNextProps = {
     "data-corner": corner,
     "data-heading-font": headingFont,
@@ -119,7 +120,7 @@ const createThemedChildren = ({
       return React.cloneElement(children, {
         className: clsx(
           children.props?.className,
-          ...themeNames,
+          themeNamesString,
           `salt-density-${density}`
         ),
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -139,8 +140,8 @@ const createThemedChildren = ({
     return (
       <div
         className={clsx(
-          `salt-provider`,
-          ...themeNames,
+          "salt-provider",
+          themeNamesString,
           `salt-density-${density}`
         )}
         data-mode={mode}
@@ -155,11 +156,44 @@ const createThemedChildren = ({
 type TargetElement = "root" | "scope" | "child";
 
 interface SaltProviderBaseProps {
+  /**
+   * Either "root", "scope" or "child".
+   * Specifies the location of salt theme class and attributes should be applied to.
+   *
+   * Defaults to "root" for a root provider, otherwise "scope".
+   */
   applyClassesTo?: TargetElement;
+  /**
+   * Either "high", "medium", "low" or "touch".
+   * Determines the amount of content that can fit on a screen based on the size and spacing of components.
+   * Refer to [density](https://www.saltdesignsystem.com/salt/foundations/density) doc for more detail.
+   *
+   * @default "medium"
+   */
   density?: Density;
+  /**
+   * A string. Specifies custom theme name(s) you want to apply, similar to `className`.
+   */
   theme?: ThemeName;
+  /**
+   * Either "light" or "dark". Enable the color palette to change from light to dark.
+   * Refer to [modes](https://www.saltdesignsystem.com/salt/foundations/modes) doc for more detail.
+   *
+   * @default "light"
+   */
   mode?: Mode;
+  /**
+   * Shape of `{ xs: number; sm: number; md: number; lg: number; xl: number; }`.
+   * Determins breakpoints used in responsive calulation for layout components.
+   */
   breakpoints?: Breakpoints;
+  /**
+   * A boolean. Enables dynamic style injection for each component.
+   *
+   * If `false`, you'll need to include component CSS yourself.
+   *
+   * @default true
+   */
   enableStyleInjection?: boolean;
 }
 
@@ -269,7 +303,8 @@ function InternalSaltProvider({
   });
 
   useIsomorphicLayoutEffect(() => {
-    const themeNames = getThemeNames(themeName, themeNext);
+    const themeNamesString = getThemeNames(themeName, themeNext);
+    const themeNames = themeNamesString.split(" ");
 
     if (applyClassesTo === "root" && targetWindow) {
       if (inheritedWindow != targetWindow) {
