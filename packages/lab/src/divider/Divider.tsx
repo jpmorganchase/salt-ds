@@ -1,11 +1,9 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-
-import DividerCss from "./Divider.css";
+import dividerCss from "./Divider.css";
 
 export interface DividerProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -33,7 +31,7 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-divider",
-      css: DividerCss,
+      css: dividerCss,
       window: targetWindow,
     });
 
