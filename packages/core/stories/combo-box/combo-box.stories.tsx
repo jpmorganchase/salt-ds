@@ -22,13 +22,6 @@ import { usStateExampleData } from "../assets/exampleData";
 export default {
   title: "Core/Combo Box",
   component: ComboBox,
-  parameters: {
-    docs: {
-      source: {
-        code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
-      },
-    },
-  },
 } as Meta<typeof ComboBox>;
 
 const usStates = usStateExampleData.slice(0, 10);
@@ -518,7 +511,7 @@ export const ComplexOption: StoryFn<ComboBoxProps<Contact>> = (args) => {
                   "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
               }}
             >
-              <Avatar name={contact.displayName} size={1} />
+              <Avatar aria-hidden name={contact.displayName} size={1} />
               <StackLayout gap={0.5} align="start">
                 <Text>{contact.displayName}</Text>
                 <Text styleAs="label" color="secondary">

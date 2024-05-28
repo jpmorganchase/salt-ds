@@ -164,7 +164,7 @@ function ContactOption({ value }: { value: Contact }) {
             "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
         }}
       >
-        <Avatar name={value.displayName} size={1} />
+        <Avatar aria-hidden name={value.displayName} size={1} />
         <StackLayout gap={0.5} align="start">
           <Text>{value.displayName}</Text>
           <Text styleAs="label" color="secondary">
