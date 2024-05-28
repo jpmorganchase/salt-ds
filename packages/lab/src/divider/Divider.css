@@ -3,6 +3,11 @@
   width: 100%;
 }
 
+.saltDivider-vertical {
+  border-right: var(--salt-size-border) var(--salt-separable-borderStyle);
+  height: auto;
+}
+
 .saltDivider-primary {
   border-color: var(--salt-separable-primary-borderColor);
 }
@@ -13,9 +18,4 @@
 
 .saltDivider-tertiary {
   border-color: var(--salt-separable-tertiary-borderColor);
-}
-
-.saltDivider-vertical {
-  border-right: var(--salt-size-border) var(--salt-separable-borderStyle);
-  height: auto;
 }
