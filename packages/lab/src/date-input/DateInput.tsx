@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
+  ChangeEventHandler,
   ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
@@ -114,7 +115,14 @@ export interface DateInputProps
    * Selection variant. Defaults to single select.
    */
   selectionVariant?: "default" | "range";
-  onInputValueChange?: (event: SyntheticEvent, value: string) => void;
+  /**
+   * Callback fired when the selected daate change.
+   */
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+  ) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -134,7 +142,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       placeholder = "dd mmm yyyy",
       startInputRef,
       endInputRef,
-      onInputValueChange,
+      onSelectionChange,
+      onChange,
       ...rest
     },
     ref
@@ -195,19 +204,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       "aria-describedby": dateInputDescribedBy,
       "aria-labelledby": dateInputLabelledBy,
       onBlur,
-      onChange,
       onFocus,
       required: dateInputPropsRequired,
       ...restDateInputProps
     } = inputProps;
-
-    // const validateRange = useCallback(() => {
-    //   if (startDate && endDate) {
-    //     setValidationStatus(
-    //       startDate?.compare(endDate) >= 1 ? "error" : undefined
-    //     );
-    //   }
-    // }, [endDate, startDate, setValidationStatus]);
 
     // Effects. Update date strings when dates change
     useEffect(() => {
@@ -225,10 +225,10 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      onInputValueChange?.(event, dateString);
       if (calendarDate) {
         setStartDate(calendarDate);
       }
+      onSelectionChange?.(event, calendarDate);
     };
 
     const updateEndDate = (event: SyntheticEvent, dateString: string) => {
@@ -238,6 +238,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       if (calendarDate) {
         setEndDate(calendarDate);
       }
+      onSelectionChange?.(event, calendarDate);
     };
 
     // Handlers

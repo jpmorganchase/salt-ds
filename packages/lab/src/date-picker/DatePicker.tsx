@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import {
+  ChangeEventHandler,
   ComponentPropsWithoutRef,
   forwardRef,
   SyntheticEvent,
@@ -47,7 +48,7 @@ export interface DatePickerProps
    * The selected date value. Use when the component is controlled.
    * Can be a single date or an object with start and end dates for range selection.
    */
-  selectedDate?: DateValue | { startDate: DateValue; endDate: DateValue };
+  selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue };
   /**
    * The default date value. Use when the component is not controlled.
    * Can be a single date or an object with start and end dates for range selection.
@@ -101,7 +102,7 @@ export interface DatePickerProps
   /**
    * Callback fired when the input value change.
    */
-  onInputValueChange?: (event: SyntheticEvent, newInput: string) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -122,7 +123,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       inputAriaLabel,
       validationStatus,
       onSelectionChange,
-      onInputValueChange,
+      onChange,
       ...rest
     },
     ref
@@ -154,9 +155,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       name: "EndDate",
       state: "endDate",
     });
-    // const [validationStatusState, setValidationStatus] = useState<
-    //   "error" | undefined
-    // >(undefined);
+
     const [startVisibleMonth, setStartVisibleMonth] = useState<
       DateValue | undefined
     >(startDate ?? today(getLocalTimeZone()));
@@ -257,7 +256,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           dateFormatter={dateFormatter}
           readOnly={isReadOnly}
           ariaLabel={inputAriaLabel}
-          onInputValueChange={onInputValueChange}
+          onSelectionChange={onSelectionChange}
+          onChange={onChange}
           endAdornment={
             <Button
               variant="secondary"
@@ -274,7 +274,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           ref={floatingRef}
           {...getFloatingProps()}
           onSelect={handleSelect}
-          onChange={onSelectionChange}
           CalendarProps={CalendarProps}
           helperText={helperText}
         />
