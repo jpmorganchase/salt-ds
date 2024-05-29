@@ -139,6 +139,12 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     removePill,
   } = listControl;
 
+  useEffect(() => {
+    if (disabled && focusedState) {
+      setFocusedState(false);
+    }
+  }, [disabled, focusedState, setFocusedState]);
+
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
     _event,
@@ -278,6 +284,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    if (disabled) return;
+
     setFocusedState(true);
     onFocus?.(event);
   };
