@@ -1,4 +1,10 @@
-import { makePrefixer, Mode, SaltProvider } from "@salt-ds/core";
+import {
+  makePrefixer,
+  Mode,
+  SaltProvider,
+  UNSTABLE_SaltProviderNext,
+  useTheme,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   Children,
@@ -52,15 +58,22 @@ const DensityBlock = ({
   children,
 }: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   mode: Mode;
-}) => (
-  <BackgroundBlock background={mode === "light" ? "white" : undefined}>
-    {DensityValues.map((d, i) => (
-      <SaltProvider mode={mode} density={d} key={i}>
-        <div className="background-item-wrapper">{children}</div>
-      </SaltProvider>
-    ))}
-  </BackgroundBlock>
-);
+}) => {
+  const { themeNext } = useTheme();
+  const ChosenSaltProvider = themeNext
+    ? UNSTABLE_SaltProviderNext
+    : SaltProvider;
+
+  return (
+    <BackgroundBlock background={mode === "light" ? "white" : undefined}>
+      {DensityValues.map((d, i) => (
+        <ChosenSaltProvider mode={mode} density={d} key={i}>
+          <div className="background-item-wrapper">{children}</div>
+        </ChosenSaltProvider>
+      ))}
+    </BackgroundBlock>
+  );
+};
 
 export const QAContainer = ({
   children,
@@ -84,6 +97,11 @@ export const QAContainer = ({
       itemPadding === undefined ? undefined : `${itemPadding}px`,
     "--qaContainer-item-width": itemWidthAuto ? "auto" : undefined,
   } as CSSProperties;
+
+  const { themeNext } = useTheme();
+  const ChosenSaltProvider = themeNext
+    ? UNSTABLE_SaltProviderNext
+    : SaltProvider;
 
   return (
     <div
@@ -109,20 +127,20 @@ export const QAContainer = ({
       ) : (
         DensityValues.map((d, i) => (
           <Fragment key={i}>
-            <SaltProvider
+            <ChosenSaltProvider
               mode="light"
               density={d}
               enableStyleInjection={enableStyleInjection}
             >
               <BackgroundBlock background="white">{children}</BackgroundBlock>
-            </SaltProvider>
-            <SaltProvider
+            </ChosenSaltProvider>
+            <ChosenSaltProvider
               mode="dark"
               density={d}
               enableStyleInjection={enableStyleInjection}
             >
               <BackgroundBlock>{children}</BackgroundBlock>
-            </SaltProvider>
+            </ChosenSaltProvider>
           </Fragment>
         ))
       )}
