@@ -1,4 +1,4 @@
-import { H2, Spinner, StackLayout, Text } from "@salt-ds/core";
+import { Spinner, Text } from "@salt-ds/core";
 import { ColorBlock } from "docs/components/ColorBlock";
 import { useEffect, useState } from "react";
 import { Table } from "../mdx/table";
@@ -70,12 +70,12 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
   );
 };
 
-export const FoundationColorView = () => {
-  const [foundationData, setFoundationData] = useState<CssVariableData | null>(
-    null
-  );
-  const [categoricalData, setCategoricalData] =
-    useState<CssVariableData | null>(null);
+export const FoundationColorView = ({
+  group,
+}: {
+  group: "foundation" | "categorical";
+}) => {
+  const [data, setData] = useState<CssVariableData | null>(null);
 
   useEffect(() => {
     const fetchJsonData = () => {
@@ -86,19 +86,14 @@ export const FoundationColorView = () => {
       );
       console.log({ data, colorKeys });
 
-      const foundationRegex = new RegExp(foundationColors.join("|"));
-      setFoundationData(
-        colorKeys
-          .filter((x) => foundationRegex.test(x))
-          .reduce<CssVariableData>((prev, current) => {
-            prev[current] = data[current];
-            return prev;
-          }, {})
+      const regex = new RegExp(
+        (group === "categorical" ? categoricalColors : foundationColors).join(
+          "|"
+        )
       );
-      const categoricalRegex = new RegExp(categoricalColors.join("|"));
-      setCategoricalData(
+      setData(
         colorKeys
-          .filter((x) => categoricalRegex.test(x))
+          .filter((x) => regex.test(x))
           .reduce<CssVariableData>((prev, current) => {
             prev[current] = data[current];
             return prev;
@@ -107,18 +102,11 @@ export const FoundationColorView = () => {
     };
 
     void fetchJsonData();
-  }, []);
+  }, [group]);
 
-  if (foundationData === null || categoricalData === null) {
+  if (data === null) {
     return <Spinner />;
   }
 
-  return (
-    <StackLayout>
-      <H2>Foundation</H2>
-      <ColorTable data={foundationData} />
-      <H2>Categorical</H2>
-      <ColorTable data={categoricalData} />
-    </StackLayout>
-  );
+  return <ColorTable data={data} />;
 };
