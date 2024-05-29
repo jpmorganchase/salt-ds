@@ -1,0 +1,41 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+  <LivePreview componentName="tag" exampleName="Bold">
+
+## Bold
+
+Bold tags are typically used when you want to emphasize or highlight specific content. Tag will have bold emphasis by default.
+
+  </LivePreview>
+  <LivePreview componentName="tag" exampleName="WithIcon">
+
+## With icon
+
+Display icons inside a tag by passing an icon as children to visually reinforce the theme or grouping of the tag and for quick recognition.
+
+  </LivePreview>
+  <LivePreview componentName="tag" exampleName="Subtle">
+
+## Subtle
+
+Subtle tags are more suitable for providing additional information or context without drawing too much attention.
+you can use subltle tags by passing it as `emphasis` prop.
+
+  </LivePreview> 
+  <LivePreview componentName="tag" exampleName="Bordered">
+  
+## Bordered
+
+You can set a bordered tag by passing `bordered` as a prop to the component.
+
+  </LivePreview>
+</LivePreviewControls>
