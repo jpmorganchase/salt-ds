@@ -1,0 +1,41 @@
+* {
+  /* TODO: MOVE TO THE RIGHT PLACE*/
+  --category-cat-1-primary-background: var(--salt-color-cobalt-500);
+  --category-primary-foreground: var(--salt-color-white);
+  --category-cat-1-secondary-background: rgb(236, 241, 249); /* rgb(236, 241, 249) TODO: SHOULD BE TOKEN */
+  --category-foreground-decorative: var(--salt-color-cobalt-500);
+  --category-cat-1-foreground-informative: rgb(35, 77, 140); /* rgb(35, 77, 140) TODO: SHOULD BE TOKEN */
+  --category-cat-1-border: var(--salt-color-cobalt-500);
+}
+
+.saltTag {
+  height: var(--salt-size-base);
+  display: flex;
+  column-gap: var(--salt-spacing-50);
+  align-items: center;
+  padding-left: var(--salt-spacing-50);
+  padding-right: var(--salt-spacing-50);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+  overflow: hidden;
+  /*border-radius: var(--saltTag-borderRadius, var(--salt-palette-corner, 0)); !* TODO: double check this *!*/
+}
+
+.saltTag-primary {
+  background: var(--category-cat-1-primary-background);
+  color: var(--category-primary-foreground)
+}
+.saltTag-secondary {
+  background: var(--category-cat-1-secondary-background);
+  color: var(--category-cat-1-foreground-informative);
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--category-cat-1-border);
+}
+.saltTag-secondary >.saltIcon, .saltTag-tertiary >.saltIcon {
+  --icon-color: var(--category-foreground-decorative);
+}
+.saltTag-tertiary {
+  background: var(--category-cat-1-secondary-background);
+  color: var(--category-cat-1-foreground-informative)
+}
