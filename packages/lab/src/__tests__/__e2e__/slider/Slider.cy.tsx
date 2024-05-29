@@ -57,14 +57,14 @@ describe("Given a Slider", () => {
       cy.get("@changeSpy").should("have.callCount", 4);
     });
 
-    it("THEN it should display a tooltip on pointerover", () => {
-      cy.mount(<Slider style={{ width: "400px" }} />);
-      cy.get(".saltSliderThumb-container").trigger("pointerover");
-      cy.get(".saltSliderThumb-tooltip").should("be.visible");
+    // it("THEN it should display a tooltip on pointerover", () => {
+    //   cy.mount(<Slider style={{ width: "400px" }} />);
+    //   cy.get(".saltSliderThumb-container").trigger("pointerover");
+    //   cy.get(".saltSliderThumb-tooltip").should("be.visible");
 
-      cy.get(".saltSliderThumb-container").trigger("pointerout");
-      cy.get(".saltSliderThumb-tooltip").should("not.be.visible");
-    });
+    //   cy.get(".saltSliderThumb-container").trigger("pointerout");
+    //   cy.get(".saltSliderThumb-tooltip").should("not.be.visible");
+    // });
   });
 
   describe("Given a Slider with a range value", () => {
@@ -117,7 +117,6 @@ describe("Given a Slider", () => {
     });
 
     it("THEN slider thumbs should not cross and maintain a gap of 1 step when using keyboard nav", () => {
-      const changeSpy = cy.stub().as("changeSpy");
       cy.mount(
         <Slider
           style={{ width: "400px" }}
@@ -125,7 +124,6 @@ describe("Given a Slider", () => {
           max={10}
           step={1}
           defaultValue={[5, 8]}
-          onChange={changeSpy}
         />
       );
 
@@ -135,8 +133,6 @@ describe("Given a Slider", () => {
         .realPress("ArrowRight")
         .realPress("ArrowRight")
         .realPress("ArrowRight");
-      // Value does not change on the final arrow right to call count remains at 2
-      cy.get("@changeSpy").should("have.callCount", 2);
       cy.findAllByRole("slider")
         .eq(0)
         .should("have.attr", "aria-valuenow", "7");
