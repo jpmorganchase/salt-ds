@@ -9,9 +9,9 @@
   --salt-status-error-foreground-decorative: var(--salt-palette-negative);
 
   --salt-status-info-foreground-informative: var(--salt-palette-info-strong);
-  --salt-status-error-foreground-informative: var(--salt-palette-error-strong);
+  --salt-status-success-foreground-informative: var(--salt-palette-positive-strong);
   --salt-status-warning-foreground-informative: var(--salt-palette-warning-strong);
-  --salt-status-success-foreground-informative: var(--salt-palette-success-strong);
+  --salt-status-error-foreground-informative: var(--salt-palette-negative-strong);
 
   --salt-status-info-borderColor: var(--salt-palette-info);
   --salt-status-success-borderColor: var(--salt-palette-positive);
