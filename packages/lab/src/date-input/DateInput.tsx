@@ -36,8 +36,7 @@ import { useDatePickerContext } from "../date-picker/DatePickerContext";
 
 const withBaseName = makePrefixer("saltDateInput");
 const isInvalidDate = (value: string) =>
-  // @ts-ignore evaluating validity of date
-  value && isNaN(new Date(value));
+  value && isNaN(new Date(value).getDay());
 const createDate = (date: string): Date | null => {
   if (!date || isInvalidDate(date)) {
     return null;

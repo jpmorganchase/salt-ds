@@ -93,7 +93,7 @@ export interface DatePickerProps
    */
   validationStatus?: "error" | "warning" | "success";
   /**
-   * Callback fired when the selected daate change.
+   * Callback fired when the selected date change.
    */
   onSelectionChange?: (
     event: SyntheticEvent,

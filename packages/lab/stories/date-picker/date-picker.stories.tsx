@@ -5,7 +5,7 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { DateValue } from "@internationalized/date";
 
 export default {
@@ -14,8 +14,7 @@ export default {
 } as Meta<typeof DatePicker>;
 
 const isInvalidDate = (value: string) =>
-  // @ts-ignore evaluating validity of date
-  value && isNaN(new Date(value));
+  value && isNaN(new Date(value).getDay());
 
 const getDateValidationStatus = (value: string | undefined) =>
   value && isInvalidDate(value) ? "error" : undefined;
@@ -36,6 +35,7 @@ export const WithFormField: StoryFn<DatePickerProps> = (args) => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined
   );
+  const [inputValue, setInputValue] = useState<string | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<
     | DateValue
     | {
@@ -45,8 +45,6 @@ export const WithFormField: StoryFn<DatePickerProps> = (args) => {
     | undefined
   >(undefined);
 
-  console.log(selectedDate);
-
   return (
     <FormField style={{ width: "200px" }} validationStatus={validationStatus}>
       <FormLabel>Pick a date</FormLabel>
@@ -54,10 +52,9 @@ export const WithFormField: StoryFn<DatePickerProps> = (args) => {
         {...args}
         selectedDate={selectedDate}
         validationStatus={validationStatus}
-        onSelectionChange={(event: SyntheticEvent, date) => {
-          setValidationStatus(
-            getDateValidationStatus(event?.currentTarget.value)
-          );
+        onChange={(event) => setInputValue(event.target.value)}
+        onSelectionChange={(event, date) => {
+          setValidationStatus(getDateValidationStatus(inputValue));
           setSelectedDate(date);
         }}
       />
