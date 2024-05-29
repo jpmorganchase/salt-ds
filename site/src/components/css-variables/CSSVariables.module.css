@@ -1,0 +1,9 @@
+.description {
+  margin-bottom: 5%;
+  font-size: var(--salt-text-fontSize);
+}
+
+.loading {
+  display: flex;
+  margin-left: 50%;
+}
