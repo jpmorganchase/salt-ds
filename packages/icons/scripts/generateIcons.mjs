@@ -260,6 +260,36 @@ const generateIconAll = async ({ icons, allPath }) => {
   await fs.promises.writeFile(allPath, formattedResult, { encoding: "utf8" });
 };
 
+/**
+ * Generate a file to export all Icon components in an object.
+ */
+const generateIconAllSite = async ({ icons, siteAllPath }) => {
+  console.log(`Generating ${siteAllPath}`);
+
+  const sortedIcons = icons
+    .sort((a, b) => a.localeCompare(b))
+    .map((componentName) => `${componentName}Icon,`);
+
+  const importsStatements =
+    "import {\n" + sortedIcons.join("\n") + `\n} from "@salt-ds/icons";\n`;
+  const exportStatements =
+    "export const allIcons = {" + sortedIcons.join("\n") + "\n};\n";
+
+  const joinedText = [
+    GENERATED_WARNING_COMMENT,
+    importsStatements,
+    exportStatements,
+  ].join("\n");
+
+  const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
+
+  console.log(`Writing ${siteAllPath}`);
+
+  await fs.promises.writeFile(siteAllPath, formattedResult, {
+    encoding: "utf8",
+  });
+};
+
 // Run the script
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
@@ -268,6 +298,10 @@ const cssOutputPath = path.join(__dirname, "../saltIcons.css");
 const fileArg = process.argv.splice(2).join("|");
 const templatePath = path.join(__dirname, "./templateIcon.mustache");
 const allPath = path.join(basePath, "../stories/icon.all.ts");
+const siteAllPath = path.join(
+  basePath,
+  "../../../site/src/examples/icon/allIconsList.ts"
+);
 
 await fs.promises.mkdir(componentsPath, { recursive: true });
 const icons = await generateIconComponents({
@@ -279,3 +313,4 @@ const icons = await generateIconComponents({
 await generateCssAsBg({ basePath, cssOutputPath, fileArg });
 await generateIndex({ icons, componentsPath });
 await generateIconAll({ icons, allPath });
+await generateIconAllSite({ icons, siteAllPath });
