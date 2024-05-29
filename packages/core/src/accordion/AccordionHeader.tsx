@@ -62,7 +62,7 @@ export const AccordionHeader = forwardRef<
       {...rest}
     >
       <ChevronRightIcon aria-hidden="true" className={withBaseName("icon")} />
-      {children}
+      <div className={withBaseName("content")}>{children}</div>
       {status && (
         <StatusIndicator
           className={withBaseName("statusIndicator")}

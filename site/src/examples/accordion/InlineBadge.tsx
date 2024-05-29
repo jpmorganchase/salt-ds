@@ -9,16 +9,18 @@ import {
   FormField,
   FormFieldLabel as FormLabel,
   Input,
+  SplitLayout,
 } from "@salt-ds/core";
 
 export const InlineBadge = (): ReactElement => (
   <FlexLayout style={{ width: "80%", height: "100%" }}>
-    <Accordion value="accordion-example" style={{ alignSelf: "self-start" }}>
+    <Accordion value="accordion-example">
       <AccordionHeader>
-        <FlexLayout justify="space-between" style={{ width: "100%" }}>
-          Internal form
-          <Badge value={"NEW"} />
-        </FlexLayout>
+        <SplitLayout
+          align="baseline"
+          startItem="Internal form"
+          endItem={<Badge value={"NEW"} />}
+        />
       </AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
