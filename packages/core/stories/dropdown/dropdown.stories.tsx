@@ -341,3 +341,80 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = () => {
     </Dropdown>
   );
 };
+export const SelectAll: StoryFn<DropdownProps> = (args) => {
+  const [selected, setSelected] = useState<string[]>([]);
+  const allSelectedOptionValue = "all";
+
+  const handleSelectionChange: DropdownProps["onSelectionChange"] = (
+    event,
+    newSelected
+  ) => {
+    let newOptionsSelected = [...newSelected];
+    const wasAllSelected = selected.includes(allSelectedOptionValue);
+    const isAllSelected = newOptionsSelected.includes(allSelectedOptionValue);
+
+    if (wasAllSelected) {
+      if (isAllSelected) {
+        newOptionsSelected = newOptionsSelected.filter(
+          (el) => el !== allSelectedOptionValue
+        );
+      } else {
+        newOptionsSelected = [];
+      }
+    } else if (
+      isAllSelected ||
+      (!isAllSelected && newOptionsSelected.length === usStates.length)
+    ) {
+      newOptionsSelected = [...usStates, allSelectedOptionValue];
+    }
+    setSelected(newOptionsSelected);
+    args.onSelectionChange?.(event, newOptionsSelected);
+  };
+
+  return (
+    <Dropdown
+      {...args}
+      style={{ width: "266px" }}
+      selected={selected}
+      value={
+        selected.length < 2
+          ? selected[0]
+          : selected.includes("all")
+          ? "All Selected"
+          : `${selected.length} items selected`
+      }
+      onSelectionChange={handleSelectionChange}
+      multiselect
+    >
+      <div
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 1,
+          background: !selected.includes(allSelectedOptionValue)
+            ? "var(--salt-color-white)"
+            : "",
+        }}
+      >
+        <Option
+          style={{
+            borderBottom: "solid",
+            borderWidth: "1px",
+            borderColor:
+              selected.includes(usStates[0]) ||
+              selected.includes(allSelectedOptionValue)
+                ? "transparent"
+                : "var(--salt-separable-tertiary-borderColor)",
+          }}
+          value={allSelectedOptionValue}
+          key={allSelectedOptionValue}
+        >
+          Select All
+        </Option>
+      </div>
+      {usStates.map((state) => (
+        <Option value={state} key={state} />
+      ))}
+    </Dropdown>
+  );
+};
