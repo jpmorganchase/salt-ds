@@ -12,4 +12,3 @@ export * from "./Validation";
 export * from "./Variants";
 export * from "./WithFormField";
 export * from "./ObjectValues";
-export * from "./SelectAll";
