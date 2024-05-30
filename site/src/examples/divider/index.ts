@@ -1,4 +1,2 @@
-export * from "./Primary";
-export * from "./Secondary";
-export * from "./Tertiary";
 export * from "./Vertical";
+export * from "./Variants";
