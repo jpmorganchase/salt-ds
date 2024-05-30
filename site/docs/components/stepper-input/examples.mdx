@@ -19,8 +19,6 @@ data:
 ### Best practices
 
 - Pick a default value that reflects the desired value for most users.
-- Select a `step` value that aligns with the precision required by the use case.
-- Set the `block` value to a reasonable multiple of the step value, allowing users to make larger adjustments.
 
 </LivePreview>
 
@@ -36,6 +34,19 @@ data:
 
 - Clearly state the accepted value range in the [`Form Field's`](salt/components/form-field) helper text.
 - Use the [`Form Field's`](salt/components/form-field) error state to inform users if they have manually typed in a value outside of the accepted range.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="StepAndBlock" >
+
+## Step and Block
+
+- You can customize the amount the value is changed by when pressing the buttons or arrow keys with the `step` prop.
+- Holding down the Shift key when pressing Up Arrow or Down Arrow keys applies a block multiplier to the step. You can customize this multiplier with the `block` prop.
+
+### Best practices
+
+- Select a `step` value that aligns with the precision required by the use case.
+- Set the `block` value to a reasonable multiple of the step value, allowing users to make larger adjustments.
 
 </LivePreview>
 <LivePreview componentName="stepper-input" exampleName="Decimals" >
