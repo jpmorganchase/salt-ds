@@ -1,55 +1,17 @@
-import { DatePicker, DatePickerProps } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import { ChangeEvent, ReactElement, useState } from "react";
+import { DatePicker } from "@salt-ds/lab";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import { ChangeEvent, useState } from "react";
 import { DateValue } from "@internationalized/date";
-
-export default {
-  title: "Lab/Date Picker",
-  component: DatePicker,
-} as Meta<typeof DatePicker>;
-
+const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
 const isInvalidDate = (value: string) =>
   value && isNaN(new Date(value).getDay());
-
 const getDateValidationStatus = (value: string | undefined) =>
   value && isInvalidDate(value) ? "error" : undefined;
-
-const DatePickerTemplate: StoryFn<DatePickerProps> = (args) => {
-  return <DatePicker {...args} />;
-};
-export const Default = DatePickerTemplate.bind({});
-Default.args = {};
-
-export const CustomFormat = DatePickerTemplate.bind({});
-CustomFormat.args = {
-  dateFormatter: (date) => date?.toLocaleString() ?? "",
-  placeholder: "YYYY-MM-DD",
-};
-
-export const Range = DatePickerTemplate.bind({});
-Range.args = {
-  selectionVariant: "range",
-};
-
-export const WithFormField: StoryFn<DatePickerProps> = (args) => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
-
-  return (
-    <FormField style={{ width: "200px" }}>
-      <FormLabel>Pick a date</FormLabel>
-      <DatePicker {...args} />
-      <FormHelperText>{helperText}</FormHelperText>
-    </FormField>
-  );
-};
-
-export const WithValidation: StoryFn<DatePickerProps> = (args) => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
+export const WithValidation = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined
   );
@@ -62,7 +24,6 @@ export const WithValidation: StoryFn<DatePickerProps> = (args) => {
     <FormField style={{ width: "200px" }} validationStatus={validationStatus}>
       <FormLabel>Pick a date</FormLabel>
       <DatePicker
-        {...args}
         selectedDate={selectedDate}
         validationStatus={validationStatus}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>

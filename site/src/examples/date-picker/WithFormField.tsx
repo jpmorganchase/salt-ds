@@ -5,6 +5,7 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+
 const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
 
 export const WithFormField = (): ReactElement => (
