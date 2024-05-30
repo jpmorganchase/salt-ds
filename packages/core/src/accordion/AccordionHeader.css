@@ -33,7 +33,7 @@
   box-sizing: border-box;
 }
 
-.saltAccordionHeader-icon {
+.saltAccordionHeader .saltAccordionHeader-icon {
   height: var(--salt-size-base);
   transition: transform var(--salt-duration-perceptible) ease-in-out;
 }
