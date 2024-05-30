@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
@@ -5,6 +6,7 @@ import {
   StackLayout,
   CircularProgress,
   LinearProgress,
+  LinearProgressProps,
 } from "@salt-ds/core";
 import { useProgressingValue } from "./useProgressingValue";
 
@@ -95,4 +97,20 @@ export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
 export const Indeterminate = Default.bind({});
 Indeterminate.args = {
   variant: "indeterminate",
+};
+
+export const IndeterminateToDeterminate: StoryFn<
+  typeof LinearProgress
+> = () => {
+  const [variant, setVariant] =
+    useState<LinearProgressProps["variant"]>("indeterminate");
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVariant("determinate"), 4000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  return <LinearProgress aria-label="Download" variant={variant} value={38} />;
 };
