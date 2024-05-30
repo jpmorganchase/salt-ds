@@ -3,34 +3,33 @@ import {
   Accordion,
   AccordionHeader,
   AccordionPanel,
-  FlexLayout,
   FlowLayout,
   FormField,
-  FormFieldLabel as FormLabel,
+  FormFieldLabel,
   Input,
 } from "@salt-ds/core";
 
 export const Default = (): ReactElement => (
-  <FlexLayout style={{ width: "80%" }}>
-    <Accordion value="accordion-example" style={{ alignSelf: "self-start" }}>
+  <div style={{ width: "80%", height: "100%" }}>
+    <Accordion value="accordion-example">
       <AccordionHeader>Internal form</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           Please fill out the following details.
           <FormField labelPlacement="left">
-            <FormLabel>Disclosure ID</FormLabel>
+            <FormFieldLabel>Disclosure ID</FormFieldLabel>
             <Input />
           </FormField>
           <FormField labelPlacement="left">
-            <FormLabel>Email</FormLabel>
+            <FormFieldLabel>Email</FormFieldLabel>
             <Input />
           </FormField>
           <FormField labelPlacement="left">
-            <FormLabel>Justification</FormLabel>
+            <FormFieldLabel>Justification</FormFieldLabel>
             <Input />
           </FormField>
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-  </FlexLayout>
+  </div>
 );
