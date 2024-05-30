@@ -34,6 +34,10 @@ export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
    * The orientation of the SteppedTracker. Defaults to `horizontal`
    */
   orientation?: "horizontal" | "vertical";
+  /**
+   * Render in visually compact mode.
+   */
+  compact?: boolean;
 }
 
 const useCheckInvalidChildren = (children: ReactNode) => {
@@ -62,6 +66,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
       className,
       activeStep,
       orientation = "horizontal",
+      compact = false,
       ...restProps
     },
     ref
@@ -79,7 +84,12 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
         <ul
-          className={clsx(withBaseName(), className, withBaseName(orientation))}
+          className={clsx(
+            withBaseName(),
+            className,
+            withBaseName(orientation),
+            compact && orientation === "horizontal" && withBaseName("compact")
+          )}
           ref={ref}
           {...restProps}
         >
