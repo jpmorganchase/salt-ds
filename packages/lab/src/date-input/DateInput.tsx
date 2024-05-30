@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import {
   ChangeEvent,
+  ChangeEventHandler,
   ComponentPropsWithoutRef,
   FocusEvent,
   forwardRef,
@@ -9,7 +10,6 @@ import {
   ReactNode,
   RefObject,
   SyntheticEvent,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -36,8 +36,7 @@ import { useDatePickerContext } from "../date-picker/DatePickerContext";
 
 const withBaseName = makePrefixer("saltDateInput");
 const isInvalidDate = (value: string) =>
-  // @ts-ignore evaluating validity of date
-  value && isNaN(new Date(value));
+  value && isNaN(new Date(value).getDay());
 const createDate = (date: string): Date | null => {
   if (!date || isInvalidDate(date)) {
     return null;
@@ -59,9 +58,6 @@ function getCalendarDate(inputDate: string) {
   const isoDate = getIsoDate(date);
   return isoDate && new CalendarDate(isoDate.year, isoDate.month, isoDate.day);
 }
-
-const getDateValidationStatus = (value: string | undefined) =>
-  value && isInvalidDate(value) ? "error" : undefined;
 
 const defaultDateFormatter = (date: DateValue | undefined): string => {
   return date
@@ -118,6 +114,14 @@ export interface DateInputProps
    * Selection variant. Defaults to single select.
    */
   selectionVariant?: "default" | "range";
+  /**
+   * Callback fired when the selected daate change.
+   */
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+  ) => void;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
@@ -137,6 +141,8 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       placeholder = "dd mmm yyyy",
       startInputRef,
       endInputRef,
+      onSelectionChange,
+      onChange,
       ...rest
     },
     ref
@@ -162,8 +168,6 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       selectionVariant: pickerSelectionVariant,
       openState,
       setOpen,
-      validationStatusState,
-      setValidationStatus,
     } = useDatePickerContext();
 
     const selectionVariant = selectionVariantProp ?? pickerSelectionVariant;
@@ -193,71 +197,47 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const isDisabled = disabled || formFieldDisabled;
 
-    const validationStatus =
-      validationStatusState ??
-      formFieldValidationStatus ??
-      validationStatusProp;
+    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
     const {
       "aria-describedby": dateInputDescribedBy,
       "aria-labelledby": dateInputLabelledBy,
       onBlur,
-      onChange,
       onFocus,
       required: dateInputPropsRequired,
       ...restDateInputProps
     } = inputProps;
 
-    const validateRange = useCallback(() => {
-      if (startDate && endDate) {
-        setValidationStatus(
-          startDate?.compare(endDate) >= 1 ? "error" : undefined
-        );
-      }
-    }, [endDate, startDate, setValidationStatus]);
-
     // Effects. Update date strings when dates change
     useEffect(() => {
       setStartDateStringValue(dateFormatter(startDate));
-      validateRange();
-    }, [startDate, dateFormatter, validateRange]);
+    }, [startDate, dateFormatter]);
 
     useEffect(() => {
       setEndDateStringValue(dateFormatter(endDate));
-      validateRange();
-    }, [endDate, dateFormatter, validateRange]);
+    }, [endDate, dateFormatter]);
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
       : dateInputPropsRequired;
-    const updateStartDate = (dateString: string) => {
+    const updateStartDate = (event: SyntheticEvent, dateString: string) => {
       if (!dateString) setStartDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      const emptyDateStatus = !calendarDate && inputDate ? "error" : undefined;
-      setValidationStatus(
-        getDateValidationStatus(dateString) ??
-          getDateValidationStatus(endDateStringValue) ??
-          emptyDateStatus
-      );
       if (calendarDate) {
         setStartDate(calendarDate);
       }
+      onSelectionChange?.(event, calendarDate);
     };
 
-    const updateEndDate = (dateString: string) => {
+    const updateEndDate = (event: SyntheticEvent, dateString: string) => {
       if (!dateString) setEndDate(undefined);
       const inputDate = inputStringFormatter(dateString);
       const calendarDate = getCalendarDate(inputDate);
-      const emptyDateStatus = !calendarDate && inputDate ? "error" : undefined;
-      setValidationStatus(
-        getDateValidationStatus(dateString) ??
-          getDateValidationStatus(startDateStringValue) ??
-          emptyDateStatus
-      );
       if (calendarDate) {
         setEndDate(calendarDate);
       }
+      onSelectionChange?.(event, calendarDate);
     };
 
     // Handlers
@@ -266,7 +246,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
       setFocused(true);
     };
     const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      updateStartDate(event.target.value);
+      updateStartDate(event, event.target.value);
       setFocused(false);
       onBlur?.(event);
     };
@@ -278,7 +258,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
 
     const handleStartDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
-        updateStartDate(startDateStringValue);
+        updateStartDate(event, startDateStringValue);
         setOpen(false);
       }
       if (event.key === "Tab" && event.shiftKey && openState) {
@@ -287,7 +267,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
 
     const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
-      updateEndDate(event.target.value);
+      updateEndDate(event, event.target.value);
       setFocused(false);
       onBlur?.(event);
     };
@@ -297,7 +277,7 @@ export const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
     };
     const handleEndDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter") {
-        updateEndDate(endDateStringValue);
+        updateEndDate(event, endDateStringValue);
         setOpen(false);
       }
     };

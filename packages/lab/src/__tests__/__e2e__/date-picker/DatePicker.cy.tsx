@@ -55,12 +55,11 @@ describe("GIVEN a DatePicker", () => {
         formatInput(testDate.add({ days: 1 }))
       );
     });
-    it("THEN should error and not format invalid dates on blur", () => {
+    it("THEN should not format invalid dates on blur", () => {
       cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("textbox").click().clear().type("date");
       cy.findByRole("textbox").blur();
       cy.findByRole("textbox").should("have.value", "date");
-      cy.findByRole("img", { name: "error" }).should("exist");
     });
     it("THEN clicking the calendar button should open the panel", () => {
       cy.mount(<Default defaultSelectedDate={testDate} />);
@@ -145,13 +144,6 @@ describe("GIVEN a DatePicker", () => {
       cy.findAllByRole("button", {
         pressed: true,
       }).should("have.length", 30);
-    });
-    it("THEN it should error if on of the dates has the wrong format", () => {
-      cy.mount(<Range />);
-      cy.findAllByRole("textbox").eq(0).click().type("date");
-      cy.findAllByRole("textbox").eq(0).blur();
-      cy.findAllByRole("textbox").eq(0).should("have.value", "date");
-      cy.findByRole("img", { name: "error" }).should("exist");
     });
     it("THEN it should not close the calendar when a start date is selected", () => {
       cy.mount(<Range />);
