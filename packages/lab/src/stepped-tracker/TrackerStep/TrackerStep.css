@@ -35,6 +35,11 @@
   width: 100%;
 }
 
+.saltSteppedTracker.saltSteppedTracker-compact .saltTrackerStep {
+  display: block;
+  padding: 0;
+}
+
 /* Pseudo-class applied to the root element on focus */
 .saltTrackerStep:focus-visible {
   outline-style: var(--salt-focused-outlineStyle);

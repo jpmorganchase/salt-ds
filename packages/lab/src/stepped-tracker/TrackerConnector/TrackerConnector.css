@@ -30,6 +30,10 @@
   border-left-color: var(--trackerConnector-color);
 }
 
+.saltSteppedTracker.saltSteppedTracker-compact .saltTrackerConnector {
+  left: calc(var(--saltIcon-size) + var(--trackerConnector-margin));
+}
+
 .saltTrackerConnector.saltTrackerConnector-active {
   --trackerConnector-style-border: var(--trackerConnector-style-active);
 }
