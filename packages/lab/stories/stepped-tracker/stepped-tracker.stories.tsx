@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
-import { Button, StackLayout, FlexLayout, Tooltip } from "@salt-ds/core";
+import { Button, StackLayout, FlexLayout, Tooltip, Label } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { StoryFn, Meta } from "@storybook/react";
 
@@ -87,6 +87,49 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
+    </StackLayout>
+  );
+};
+
+export const BasicCompact: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <StackLayout
+      direction="column"
+      align="stretch"
+      gap={10}
+      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+    >
+      <div>
+        <SteppedTracker activeStep={0} compact>
+          <TrackerStep />
+          <TrackerStep />
+          <TrackerStep />
+          <TrackerStep />
+        </SteppedTracker>
+        <Label>
+          Step 1 of 4: <StepLabel>Step Name</StepLabel>
+        </Label>
+      </div>
+      <div>
+        <SteppedTracker activeStep={2} compact>
+          <TrackerStep state="completed" />
+          <TrackerStep state="completed" />
+          <TrackerStep state="default" />
+          <TrackerStep state="default" />
+        </SteppedTracker>
+        <Label>
+          Step 3 of 4: <StepLabel>Step Name</StepLabel>
+        </Label>
+      </div>
+      <div>
+        <SteppedTracker activeStep={3} compact>
+          <TrackerStep state="completed" />
+          <TrackerStep state="completed" />
+          <TrackerStep state="completed" />
+          <TrackerStep state="completed" />
+        </SteppedTracker>
+        <StepLabel>All steps complete</StepLabel>
+      </div>
     </StackLayout>
   );
 };
