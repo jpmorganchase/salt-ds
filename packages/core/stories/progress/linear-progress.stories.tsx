@@ -105,12 +105,24 @@ export const IndeterminateToDeterminate: StoryFn<
   const [variant, setVariant] =
     useState<LinearProgressProps["variant"]>("indeterminate");
 
+  const [value, setValue] = useState(0);
+
   useEffect(() => {
     const timer = setTimeout(() => setVariant("determinate"), 4000);
-    return () => {
-      clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
-  return <LinearProgress aria-label="Download" variant={variant} value={38} />;
+  useEffect(() => {
+    if (variant === "determinate" && value < 100) {
+      const interval = setInterval(
+        () => setValue((currentValue) => currentValue + 1),
+        20
+      );
+      return () => clearInterval(interval);
+    }
+  }, [value, variant]);
+
+  return (
+    <LinearProgress aria-label="Download" variant={variant} value={value} />
+  );
 };
