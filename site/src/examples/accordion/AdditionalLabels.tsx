@@ -65,9 +65,9 @@ export const AdditionalLabels = (): ReactElement => {
                     </Text>
                   }
                   endItem={
-                    <Label styleAs="label" color="secondary">
+                    <Text styleAs="label" color="secondary">
                       {state[id].length} of {accounts.length} accounts
-                    </Label>
+                    </Text>
                   }
                 />
                 <Label styleAs="label" color="secondary">
