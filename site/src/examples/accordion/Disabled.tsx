@@ -6,14 +6,13 @@ import {
   AccordionPanel,
   FlowLayout,
   FormField,
-  FormFieldLabel as FormLabel,
+  FormFieldLabel,
   Input,
-  FlexLayout,
 } from "@salt-ds/core";
 
 export const Disabled = (): ReactElement => (
-  <FlexLayout style={{ width: "80%" }}>
-    <AccordionGroup style={{ alignSelf: "self-start" }}>
+  <div style={{ width: "80%", height: "100%" }}>
+    <AccordionGroup>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion
           value={`accordion-${i}`}
@@ -25,15 +24,15 @@ export const Disabled = (): ReactElement => (
             <FlowLayout>
               Please fill out the following details.
               <FormField labelPlacement="left">
-                <FormLabel>Disclosure ID</FormLabel>
+                <FormFieldLabel>Disclosure ID</FormFieldLabel>
                 <Input />
               </FormField>
               <FormField labelPlacement="left">
-                <FormLabel>Email</FormLabel>
+                <FormFieldLabel>Email</FormFieldLabel>
                 <Input />
               </FormField>
               <FormField labelPlacement="left">
-                <FormLabel>Justification</FormLabel>
+                <FormFieldLabel>Justification</FormFieldLabel>
                 <Input />
               </FormField>
             </FlowLayout>
@@ -41,5 +40,5 @@ export const Disabled = (): ReactElement => (
         </Accordion>
       ))}
     </AccordionGroup>
-  </FlexLayout>
+  </div>
 );

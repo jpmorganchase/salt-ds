@@ -1,19 +1,18 @@
 import { ReactElement } from "react";
 import {
   Accordion,
-  AccordionGroup as Group,
+  AccordionGroup,
   AccordionHeader,
   AccordionPanel,
-  FlexLayout,
   FlowLayout,
   FormField,
-  FormFieldLabel as FormLabel,
+  FormFieldLabel,
   Input,
 } from "@salt-ds/core";
 
-export const AccordionGroup = (): ReactElement => (
-  <FlexLayout style={{ width: "80%" }}>
-    <Group style={{ alignSelf: "self-start" }}>
+export const Group = (): ReactElement => (
+  <div style={{ width: "80%", height: "100%" }}>
+    <AccordionGroup>
       {Array.from({ length: 3 }, (_, i) => i + 1).map((i) => (
         <Accordion value={`accordion-${i}`} key={`accordion-${i}`}>
           <AccordionHeader>Internal form</AccordionHeader>
@@ -21,21 +20,21 @@ export const AccordionGroup = (): ReactElement => (
             <FlowLayout>
               Please fill out the following details.
               <FormField labelPlacement="left">
-                <FormLabel>Disclosure ID</FormLabel>
+                <FormFieldLabel>Disclosure ID</FormFieldLabel>
                 <Input />
               </FormField>
               <FormField labelPlacement="left">
-                <FormLabel>Email</FormLabel>
+                <FormFieldLabel>Email</FormFieldLabel>
                 <Input />
               </FormField>
               <FormField labelPlacement="left">
-                <FormLabel>Justification</FormLabel>
+                <FormFieldLabel>Justification</FormFieldLabel>
                 <Input />
               </FormField>
             </FlowLayout>
           </AccordionPanel>
         </Accordion>
       ))}
-    </Group>
-  </FlexLayout>
+    </AccordionGroup>
+  </div>
 );
