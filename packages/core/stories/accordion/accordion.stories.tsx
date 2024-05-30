@@ -250,9 +250,9 @@ export const AdditionalLabels: StoryFn = () => {
                     </Text>
                   }
                 />
-                <Label styleAs="label" color="secondary">
+                <Text styleAs="label" color="secondary">
                   {description}
-                </Label>
+                </Text>
               </StackLayout>
             </AccordionHeader>
             <AccordionPanel>

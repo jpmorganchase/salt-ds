@@ -70,9 +70,9 @@ export const AdditionalLabels = (): ReactElement => {
                     </Text>
                   }
                 />
-                <Label styleAs="label" color="secondary">
+                <Text styleAs="label" color="secondary">
                   {description}
-                </Label>
+                </Text>
               </StackLayout>
             </AccordionHeader>
             <AccordionPanel>
