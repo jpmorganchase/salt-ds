@@ -87,6 +87,35 @@ This is useful when you want to show a tooltip or a popover when the user hovers
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
 
 </LivePreview>
+
+  <LivePreview componentName="button" exampleName="LoadingButtons" >
+
+    ## Loading Buttons
+
+    The buttons will show a loading spinner when setting the prop `loading` to `true`. You should pass a message using the `loadingText` prop for screenreader to announce while loading state is true. It defaults to "Loading".
+
+    A Loading Button provides immediate feedback to the user after they trigger an action. It's typically used in situations where a user's action requires some processing time (more than a few seconds) before the result can be displayed. Use cases include:
+
+    - Form Submission: When a user submits a [form](/salt/patterns/forms), the Loading Button indicates that the form data is being processed. This helps prevent the user from clicking the submit button multiple times, which could potentially cause duplicate submissions or errors.
+    - Data Fetching: If a button triggers a data fetch from a server, a Loading Button indicates that the data is being retrieved. This is especially useful in applications where data retrieval might take a significant amount of time.
+    - Processing Actions: If a button triggers a complex action that requires processing, such as generating a report or performing a calculation, a Loading Button indicates that the action is in progress.
+
+    The [Content Status](salt/patterns/content-status) pattern can be displayed with a Loading Button to provide additional feedback to the user.
+
+    Alternative solutions for other use cases:
+
+    - Instant Actions: If an action is instantaneous or very quick. A Loading Button is not necessary.
+    - Complex processing: Use a [Progress Bar](/salt/components/progress) when a task is going to take a significant amount of time (more than a few seconds) and when it's possible to estimate the progress of the task. This could be when uploading or downloading large files, installing software, or completing a multi-step process.
+
+  </LivePreview>
+
+  <LivePreview componentName="button" exampleName="LoadingButtonsWithLabel" >
+
+    ## Loading Buttons with Label
+
+    The buttons will show a loading spinner when setting the prop `loading` to `true`. You should pass a message using the `loadingText` prop and `showLoadingText` as `true` for screenreader to announce while loading state is true. It defaults to "Loading".
+
+  </LivePreview>
   
 <LivePreview componentName="button" exampleName="CTA" displayName="CTA - Deprecated" >
 

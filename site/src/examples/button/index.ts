@@ -8,3 +8,5 @@ export * from "./Primary";
 export * from "./Secondary";
 export * from "./FullWidth";
 export * from "./FocusableWhenDisabled";
+export * from "./LoadingButtons";
+export * from "./LoadingButtonsWithLabel";

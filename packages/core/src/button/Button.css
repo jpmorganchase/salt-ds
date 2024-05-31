@@ -7,7 +7,7 @@
   border-width: var(--saltButton-borderWidth, var(--salt-size-border, 0));
   border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
   color: var(--saltButton-text-color, var(--button-text-color));
-  cursor: var(--saltButton-cursor, pointer);
+  cursor: var(--saltButton-cursor, var(--salt-actionable-cursor-hover));
   display: inline-flex;
   gap: var(--salt-spacing-50);
   justify-content: var(--saltButton-justifyContent, center);
@@ -173,4 +173,46 @@
   --button-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
   --button-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
   --button-borderColor-disabled: var(--salt-actionable-subtle-borderColor-disabled);
+}
+
+.saltButton-cta.saltButton-loading {
+  --button-text-color: var(--salt-content-primary-foreground);
+  --button-background: var(--salt-container-primary-background);
+  --button-borderColor: var(--salt-actionable-cta-borderColor);
+}
+
+.saltButton-cta.saltButton-loading:hover,
+.saltButton-cta.saltButton-loading:active {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-actionable-cta-borderColor);
+  cursor: default;
+}
+
+.saltButton-primary.saltButton-loading {
+  --button-text-color: var(--salt-content-primary-foreground);
+  --button-background: var(--salt-container-primary-background);
+  --button-borderColor: var(--salt-actionable-primary-borderColor);
+}
+
+.saltButton-primary.saltButton-loading:hover,
+.saltButton-primary.saltButton-loading:active {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-actionable-primary-borderColor);
+  cursor: default;
+}
+
+.saltButton-secondary.saltButton-loading {
+  --button-text-color: var(--salt-content-primary-foreground);
+  --button-background: var(--salt-container-primary-background);
+  --button-borderColor: var(--salt-actionable-secondary-borderColor);
+}
+
+.saltButton-secondary.saltButton-loading:hover,
+.saltButton-secondary.saltButton-loading:active {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-actionable-secondary-borderColor);
+  cursor: default;
 }
