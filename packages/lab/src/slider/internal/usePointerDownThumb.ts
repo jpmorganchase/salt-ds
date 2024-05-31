@@ -9,21 +9,25 @@ export function usePointerDownThumb(
   step: number,
   value: SliderValue,
   onChange: SliderChangeHandler,
-  index: number
+  index: number,
+  activeThumb: number | undefined,
+  setActiveThumb: (index: number| undefined) => void
 ) {
-  const [thumbActive, setThumbActive] = useState(false);
+
+  const [pointerDown, setPointerDown] = useState(false)
 
   const onDownThumb = () => {
     document.addEventListener("pointermove", onPointerMove);
     document.addEventListener("pointerup", onPointerUp);
-    setThumbActive(true);
+    setActiveThumb(index);
+    setPointerDown(true)
   };
 
   const onPointerUp = (event: PointerEvent) => {
     event.preventDefault();
     document.removeEventListener("pointermove", onPointerMove);
     document.removeEventListener("pointerup", onPointerUp);
-    setThumbActive(false);
+    setActiveThumb(undefined);
   };
 
   const onPointerMove = (event: PointerEvent): void => {
@@ -44,16 +48,22 @@ export function usePointerDownThumb(
       onPointerDown() {
         onDownThumb();
       },
+      onPointerOver() {
+        if (activeThumb === undefined ) setActiveThumb(index)
+      },
       onFocus() {
-        setThumbActive(true);
+        setActiveThumb(index);
       },
       onPointerUp() {
-        setThumbActive(false);
+        setActiveThumb(undefined);
       },
       onBlur() {
-        setThumbActive(false);
+        setActiveThumb(undefined);
+      },
+      onPointerOut() {
+        !pointerDown && setActiveThumb(undefined);
       },
     },
-    thumbActive,
+    activeThumb,
   };
 }
