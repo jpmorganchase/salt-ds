@@ -1,0 +1,79 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="slider" exampleName="Single">
+
+## Single Slider
+
+Selection of a single value from a horizontally oriented slider track. Values can be displayed either inline or below the track.
+
+### Best practices
+
+If the slider does not display multiple values along the track, use a tooltip to show the selected values on cursor drag and focus. This is especially important for the inline variant which only displays two values either end of the track.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="Range">
+
+## Range Slider
+
+Selection of a range of values from a horizontally oriented slider track. This determines a minimum and maximum range. Values can be displayed either inline or below the track.
+
+### Best practices
+
+The default minimum range is set to 1 step, therefore thumbs cannot pass or overlap.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="SingleFormField">
+
+## Single Form Field
+
+Wrap single slider in a form field to display a left-aligned or top label.
+
+For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+
+### Best practices
+
+We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="RangeFormField">
+
+## Range Form Field
+
+Wrap range slider in a form field to display a left-aligned or top label.
+
+For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+
+### Best practices
+
+We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="WithInput">
+
+## With Input
+
+You can display inputs with either a single or range slider. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
+The thumb and input are in sync. An update to either causes the other to update. E.g., if you use cursor click or drag along the slider track, the input must display the change in value live.
+
+### Best practices
+
+For single slider, display one input to the left of the track.
+Only use the inline variant of slider alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+
+</LivePreview>
+
+</LivePreviewControls>
