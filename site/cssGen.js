@@ -2,6 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 function getCssVariablesFromDir(dirPath) {
+  console.log("Extracting CSS variable from", dirPath);
+
   const cssVariableRegex = /([a-zA-Z0-9_-]+)\s*:\s*([^;]+)/g;
   const cssVariables = {};
 
@@ -14,7 +16,11 @@ function getCssVariablesFromDir(dirPath) {
     if (stats.isDirectory()) {
       // Recursively process subdirectories
       Object.assign(cssVariables, getCssVariablesFromDir(filePath));
-    } else if (stats.isFile() && path.extname(file) === ".css") {
+    } else if (
+      stats.isFile() &&
+      path.extname(file) === ".css" &&
+      !path.basename(file).includes("-next") // Skipping theme next
+    ) {
       // Process CSS files
       const cssContent = fs.readFileSync(filePath, "utf8");
       let match;
@@ -30,22 +36,27 @@ function getCssVariablesFromDir(dirPath) {
   return cssVariables;
 }
 
-const themeDirPath = path.resolve(
-  __dirname,
-  "../packages/theme/css/characteristics"
-);
+function extractVariables(folder, outputFile) {
+  const themeDirPath = path.resolve(__dirname, folder);
 
-const allCssVariables = getCssVariablesFromDir(themeDirPath);
-const jsonData = JSON.stringify(allCssVariables, null, 2);
-const cssFolderPath = path.resolve(
-  __dirname,
-  "../site/src/components/css-display"
-);
+  const allCharacteristicsVariables = getCssVariablesFromDir(themeDirPath);
+  const jsonData = JSON.stringify(allCharacteristicsVariables, null, 2);
+  const cssFolderPath = path.resolve(
+    __dirname,
+    "../site/src/components/css-display"
+  );
 
-const outputPath = path.join(cssFolderPath, "cssVariables.json");
+  const outputPath = path.join(cssFolderPath, outputFile);
 
-try {
-  fs.writeFileSync(outputPath, jsonData, "utf8");
-} catch (err) {
-  console.error("Error writing JSON file:", err);
+  try {
+    fs.writeFileSync(outputPath, jsonData, "utf8");
+  } catch (err) {
+    console.error("Error writing JSON file:", err);
+  }
 }
+
+extractVariables(
+  "../packages/theme/css/characteristics",
+  "cssCharacteristics.json"
+);
+extractVariables("../packages/theme/css/foundations", "cssFoundations.json");

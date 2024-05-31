@@ -12,3 +12,5 @@ next-env.d.ts
 /public/sitemap.xml
 /src/props/*.json
 /src/components/css-display/cssVariables.json
+/src/components/css-display/cssCharacteristics.json
+/src/components/css-display/cssFoundations.json
