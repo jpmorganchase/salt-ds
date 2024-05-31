@@ -5,3 +5,5 @@ export * from "./IconOnly";
 export * from "./Primary";
 export * from "./Secondary";
 export * from "./FullWidth";
+export * from "./LoadingButtons";
+export * from "./LoadingButtonsWithLabel";

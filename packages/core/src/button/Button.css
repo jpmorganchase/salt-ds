@@ -124,7 +124,7 @@
 /* Pseudo-class applied to the root element if disabled={true} */
 .saltButton:disabled,
 .saltButton-disabled,
-  /* Overrides to apply the disabled style when the button is focusable while also disabled */
+/* Overrides to apply the disabled style when the button is focusable while also disabled */
 .saltButton-disabled:active,
 .saltButton-disabled:focus-visible,
 .saltButton-disabled:hover {
@@ -132,4 +132,41 @@
   color: var(--saltButton-text-color-disabled, var(--button-text-color-disabled));
   cursor: var(--saltButton-cursor-disabled, var(--salt-actionable-cursor-disabled));
   border-color: var(--saltButton-borderColor-disabled, var(--button-borderColor-disabled));
+}
+
+.saltButton-loading-cta {
+  border-color: var(--salt-actionable-cta-borderColor);
+}
+
+.saltButton-loading-primary {
+  border-color: var(--salt-actionable-primary-borderColor);
+}
+
+.saltButton-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--salt-container-primary-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  gap: var(--salt-spacing-50);
+}
+
+.saltButton-hidden-accessible-element {
+  border: 0px solid;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  overflow: hidden;
+  padding: 0px;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.saltButton-loading-text {
+  color: var(--salt-content-primary-foreground);
 }

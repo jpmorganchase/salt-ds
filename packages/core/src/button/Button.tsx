@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "../utils";
+import { Spinner } from '../spinner'
 
 import buttonCss from "./Button.css";
 import { useButton } from "./useButton";
@@ -26,6 +27,9 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * 'primary' is the default value.
    */
   variant?: ButtonVariant;
+  isLoading?: boolean;
+  loadingText?: string;
+  showLoadingText?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -41,6 +45,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       type = "button",
       variant = "primary",
+      isLoading,
+      loadingText,
+      showLoadingText,
       ...restProps
     },
     ref?
@@ -71,16 +78,41 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(),
           withBaseName(variant),
           {
-            [withBaseName("disabled")]: disabled,
+            [withBaseName("disabled")]: (disabled),
+            [withBaseName(`loading-${variant}`)]: (isLoading),
             [withBaseName("active")]: active,
           },
           className
         )}
+        aria-disabled={isLoading || disabled}
+        aria-live={isLoading !== undefined ? 'assertive' : undefined}
         {...restProps}
         ref={ref}
         type={type}
       >
-        {children}
+        {isLoading ? (
+          <>
+            <span className={clsx(
+              withBaseName("loading-overlay"),
+              className
+            )}>
+              <Spinner size="small" className={clsx(
+                withBaseName("loading-spinner"),
+                className
+              )} />
+              <span className={clsx(
+                {
+                  [withBaseName("hidden-accessible-element")]: (!showLoadingText),
+                  [withBaseName("loading-text")]: (showLoadingText),
+                },
+                className
+              )}>{loadingText}</span>
+            </span>
+            <span aria-hidden="true">{children}</span>
+          </>
+        ) : (
+          children
+        )}
       </button>
     );
   }
