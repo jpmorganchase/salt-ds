@@ -1,5 +1,6 @@
 /* Style applied to the root element */
 .saltInput {
+  --input-border: none;
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
@@ -7,6 +8,8 @@
 
   align-items: center;
   background: var(--saltInput-background, var(--input-background));
+  border: var(--input-border);
+  border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--saltInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
@@ -178,6 +181,24 @@
   border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
 }
 
+/* Style applied if `bordered={true}` */
+.saltInput.saltInput-bordered {
+  --input-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--input-borderColor);
+  --input-borderWidth: 0;
+}
+
+/* Style applied if active or focused when `bordered={true}` */
+.saltInput-bordered:active,
+.saltInput-bordered.saltInput-focused {
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltInput-bordered.saltInput-readOnly:hover,
+.saltInput-bordered.saltInput-disabled:hover {
+  --input-borderWidth: 0;
+}
+
 /* Style applied to start adornments */
 .saltInput-startAdornmentContainer {
   align-items: center;
@@ -201,6 +222,7 @@
 .saltInput-startAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
+
 .saltInput-endAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
@@ -208,6 +230,7 @@
 .saltInput-startAdornmentContainer .saltButton:first-child {
   margin-left: calc(var(--salt-spacing-50) * -1);
 }
+
 .saltInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
