@@ -154,6 +154,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
             </FlexItem>
           )}
           <FlexLayout>
+            {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
             <FormFieldContext.Provider value={{} as FormFieldContextValue}>
               <Calendar
                 visibleMonth={startVisibleMonth}
