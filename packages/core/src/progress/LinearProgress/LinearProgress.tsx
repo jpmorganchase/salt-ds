@@ -93,9 +93,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
           ) : null}
           <div className={withBaseName("track")} />
         </div>
-        {!hideLabel && !isIndeterminate && (
+        {!hideLabel && (
           <Text styleAs="h2" className={withBaseName("progressLabel")}>
-            {`${Math.round(progress)} %`}
+            {isIndeterminate ? `—%` : `${Math.round(progress)}%`}
           </Text>
         )}
       </div>
