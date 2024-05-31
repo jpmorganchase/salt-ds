@@ -1,4 +1,10 @@
-import { Input, FormField, FormFieldLabel, FlexLayout } from "@salt-ds/core";
+import {
+  Input,
+  FormField,
+  FormFieldLabel,
+  FormFieldHelperText,
+  FlexLayout,
+} from "@salt-ds/core";
 import { Slider, SliderProps, SliderValue } from "@salt-ds/lab";
 import { useState, ChangeEvent } from "react";
 import { StoryFn } from "@storybook/react";
@@ -150,6 +156,7 @@ export const RangeWithInput = () => {
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <FormFieldHelperText>Helper text</FormFieldHelperText>
       <FlexLayout gap={3} align="center">
         <Input
           placeholder={`${minValue}`}

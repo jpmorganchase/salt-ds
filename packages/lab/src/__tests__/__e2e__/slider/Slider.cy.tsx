@@ -57,14 +57,14 @@ describe("Given a Slider", () => {
       cy.get("@changeSpy").should("have.callCount", 4);
     });
 
-    // it("THEN it should display a tooltip on pointerover", () => {
-    //   cy.mount(<Slider style={{ width: "400px" }} />);
-    //   cy.get(".saltSliderThumb-container").trigger("pointerover");
-    //   cy.get(".saltSliderThumb-tooltip").should("be.visible");
+    it("THEN it should display a tooltip on pointerover", () => {
+      cy.mount(<Slider style={{ width: "400px" }} />);
+      cy.get(".saltSliderThumb-container").trigger("pointerover");
+      cy.get(".saltSliderThumb-tooltip").should("be.visible");
 
-    //   cy.get(".saltSliderThumb-container").trigger("pointerout");
-    //   cy.get(".saltSliderThumb-tooltip").should("not.be.visible");
-    // });
+      cy.get(".saltSliderThumb-container").trigger("pointerout");
+      cy.get(".saltSliderThumb-tooltip").should("not.be.visible");
+    });
   });
 
   describe("Given a Slider with a range value", () => {
