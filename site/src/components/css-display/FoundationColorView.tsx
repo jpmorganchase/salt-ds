@@ -84,8 +84,6 @@ export const FoundationColorView = ({
       const colorKeys = Object.keys(data).filter((x) =>
         new RegExp(`^--salt-color-\\w+(-\\d+)?$`).test(x)
       );
-      console.log({ data, colorKeys });
-
       const regex = new RegExp(
         (group === "categorical" ? categoricalColors : foundationColors).join(
           "|"
