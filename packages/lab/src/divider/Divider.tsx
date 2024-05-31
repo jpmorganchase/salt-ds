@@ -39,8 +39,8 @@ export const Divider = forwardRef<HTMLDivElement, DividerProps>(
       <div
         className={clsx(
           withBaseName(),
-          [withBaseName(orientation)],
-          [withBaseName(variant)],
+          withBaseName(orientation),
+          withBaseName(variant),
           className
         )}
         aria-orientation={orientation}

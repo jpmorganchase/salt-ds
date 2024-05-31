@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import { Text, StackLayout } from "@salt-ds/core";
+import { StackLayout } from "@salt-ds/core";
 
 import { Divider, DividerProps } from "@salt-ds/lab";
 
@@ -8,46 +8,22 @@ export default {
   component: Divider,
 };
 
-export const Primary: StoryFn<DividerProps> = () => {
+export const Variants: StoryFn<DividerProps> = () => {
   return (
-    <StackLayout style={{ width: "400px" }}>
-      <Text>About</Text>
+    <StackLayout gap={6} style={{ width: "200px" }}>
       <Divider />
-      <Text>Patterns</Text>
-    </StackLayout>
-  );
-};
-
-export const Secondary: StoryFn<DividerProps> = () => {
-  return (
-    <StackLayout style={{ width: "400px" }}>
-      <Text>About</Text>
       <Divider variant="secondary" />
-      <Text>Patterns</Text>
-    </StackLayout>
-  );
-};
-
-export const Tertiary: StoryFn<DividerProps> = () => {
-  return (
-    <StackLayout style={{ width: "400px" }}>
-      <Text>About</Text>
       <Divider variant="tertiary" />
-      <Text>Patterns</Text>
     </StackLayout>
   );
 };
 
 export const Vertical: StoryFn<DividerProps> = () => {
   return (
-    <StackLayout direction="row">
-      <Text>About</Text>
+    <StackLayout direction="row" gap={10} style={{ height: "200px" }}>
       <Divider orientation="vertical" />
-      <Text>Patterns</Text>
-      <Divider orientation="vertical" />
-      <Text>Foundation</Text>
-      <Divider orientation="vertical" />
-      <Text>Theming</Text>
+      <Divider orientation="vertical" variant="secondary" />
+      <Divider orientation="vertical" variant="tertiary" />
     </StackLayout>
   );
 };
