@@ -28,6 +28,7 @@ export function usePointerDownThumb(
     document.removeEventListener("pointermove", onPointerMove);
     document.removeEventListener("pointerup", onPointerUp);
     setActiveThumb(undefined);
+    setPointerDown(false)
   };
 
   const onPointerMove = (event: PointerEvent): void => {
