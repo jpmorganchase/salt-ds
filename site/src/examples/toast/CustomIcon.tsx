@@ -2,15 +2,15 @@ import { ReactElement } from "react";
 import { Button, Text, Toast, ToastContent } from "@salt-ds/core";
 import {
   CloseIcon,
-  FilterClearIcon,
-  GlobeIcon,
-  SaltShakerIcon,
-  TailsIcon,
+  ErrorIcon,
+  InfoIcon,
+  StepSuccessIcon,
+  WarningIcon,
 } from "@salt-ds/icons";
 
 export const CustomIcon = (): ReactElement => (
   <div style={{ display: "flex", flexDirection: "column" }}>
-    <Toast style={{ width: 260 }} Icon={FilterClearIcon} status={"info"}>
+    <Toast style={{ width: 260 }} Icon={InfoIcon} status={"info"}>
       <ToastContent>
         <Text>
           <strong>Info with Custom Icon</strong>
@@ -21,7 +21,7 @@ export const CustomIcon = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast style={{ width: 260 }} Icon={GlobeIcon} status={"success"}>
+    <Toast style={{ width: 260 }} Icon={StepSuccessIcon} status={"success"}>
       <ToastContent>
         <Text>
           <strong>Success with Custom Icon</strong>
@@ -32,7 +32,7 @@ export const CustomIcon = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast style={{ width: 260 }} Icon={SaltShakerIcon} status={"warning"}>
+    <Toast style={{ width: 260 }} Icon={WarningIcon} status={"warning"}>
       <ToastContent>
         <Text>
           <strong>Warning with Custom Icon</strong>
@@ -43,7 +43,7 @@ export const CustomIcon = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast style={{ width: 260 }} Icon={TailsIcon} status={"error"}>
+    <Toast style={{ width: 260 }} Icon={ErrorIcon} status={"error"}>
       <ToastContent>
         <Text>
           <strong>Error with Custom Icon</strong>
