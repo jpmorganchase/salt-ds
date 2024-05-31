@@ -13,6 +13,8 @@ import {
   StackLayout,
   useFloatingComponent,
   useFormFieldProps,
+  FormFieldContext,
+  FormFieldContextValue,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useDatePickerContext } from "./DatePickerContext";
@@ -152,30 +154,32 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
             </FlexItem>
           )}
           <FlexLayout>
-            <Calendar
-              visibleMonth={startVisibleMonth}
-              onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
-              {...firstCalendarProps}
-              {...CalendarProps}
-            />
-            {isRangePicker && (
+            <FormFieldContext.Provider value={{} as FormFieldContextValue}>
               <Calendar
-                selectionVariant="range"
-                hoveredDate={hoveredDate}
-                onHoveredDateChange={handleHoveredDateChange}
-                selectedDate={{ startDate, endDate }}
-                onSelectedDateChange={setRangeDate}
-                visibleMonth={endVisibleMonth}
-                onVisibleMonthChange={(_, month) => setEndVisibleMonth(month)}
-                hideOutOfRangeDates
-                minDate={
-                  startDate
-                    ? startOfMonth(startDate)?.add({ months: 1 })
-                    : undefined
-                }
+                visibleMonth={startVisibleMonth}
+                onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
+                {...firstCalendarProps}
                 {...CalendarProps}
               />
-            )}
+              {isRangePicker && (
+                <Calendar
+                  selectionVariant="range"
+                  hoveredDate={hoveredDate}
+                  onHoveredDateChange={handleHoveredDateChange}
+                  selectedDate={{ startDate, endDate }}
+                  onSelectedDateChange={setRangeDate}
+                  visibleMonth={endVisibleMonth}
+                  onVisibleMonthChange={(_, month) => setEndVisibleMonth(month)}
+                  hideOutOfRangeDates
+                  minDate={
+                    startDate
+                      ? startOfMonth(startDate)?.add({ months: 1 })
+                      : undefined
+                  }
+                  {...CalendarProps}
+                />
+              )}
+            </FormFieldContext.Provider>
           </FlexLayout>
         </StackLayout>
       </FloatingComponent>

@@ -54,7 +54,7 @@ export const WithFormField: StoryFn<DatePickerProps> = (args) => {
   return (
     <FormField style={{ width: "200px" }}>
       <FormLabel>Pick a date</FormLabel>
-      <DatePicker {...args} />
+      <DatePicker {...args} helperText={helperText} />
       <FormHelperText>{helperText}</FormHelperText>
     </FormField>
   );
@@ -75,8 +75,8 @@ export const WithValidation: StoryFn<DatePickerProps> = (args) => {
       <FormLabel>Pick a date</FormLabel>
       <DatePicker
         {...args}
+        helperText={helperText}
         selectedDate={selectedDate}
-        validationStatus={validationStatus}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           setInputValue(event.target.value)
         }
