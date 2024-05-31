@@ -132,6 +132,14 @@ code.saltText,
   line-height: var(--salt-text-display3-lineHeight);
 }
 
+/* Display 4 */
+.saltText-display4.saltText {
+  font-family: var(--salt-text-display4-fontFamily);
+  font-size: var(--salt-text-display4-fontSize);
+  font-weight: var(--salt-text-display4-fontWeight);
+  line-height: var(--salt-text-display4-lineHeight);
+}
+
 /* Heading 1 */
 h1.saltText,
 .saltText-h1.saltText {

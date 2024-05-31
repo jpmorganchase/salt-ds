@@ -70,6 +70,11 @@
   --salt-text-display3-fontWeight-strong: var(--salt-palette-text-display-fontWeight-strong);
   --salt-text-display3-fontWeight-small: var(--salt-palette-text-display-fontWeight-small);
 
+  --salt-text-display4-fontFamily: var(--salt-palette-text-fontFamily-heading);
+  --salt-text-display4-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-display4-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-display4-fontWeight-small: var(--salt-typography-fontWeight-regular);
+
   /* Code */
   --salt-text-code-fontFamily: var(--salt-palette-text-fontFamily-code);
 }
