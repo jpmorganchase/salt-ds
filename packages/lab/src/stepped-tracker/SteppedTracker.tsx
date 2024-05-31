@@ -10,7 +10,7 @@ import {
 import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer } from "@salt-ds/core";
+import { capitalize, makePrefixer } from "@salt-ds/core";
 
 import {
   SteppedTrackerProvider,
@@ -21,7 +21,7 @@ import steppedTrackerCss from "./SteppedTracker.css";
 
 const withBaseName = makePrefixer("saltSteppedTracker");
 
-export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
+export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ol"> {
   /**
    * The index of the current activeStep
    */
@@ -34,6 +34,10 @@ export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
    * The orientation of the SteppedTracker. Defaults to `horizontal`
    */
   orientation?: "horizontal" | "vertical";
+  /**
+   * Label alignment. Defaults to `center`
+   */
+  alignment?: "left" | "center";
 }
 
 const useCheckInvalidChildren = (children: ReactNode) => {
@@ -55,9 +59,10 @@ const useCheckInvalidChildren = (children: ReactNode) => {
   }, [children]);
 };
 
-export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
+export const SteppedTracker = forwardRef<HTMLOListElement, SteppedTrackerProps>(
   function SteppedTracker(
     {
+      alignment = "center",
       children,
       className,
       activeStep,
@@ -78,15 +83,20 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
 
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
-        <ul
-          className={clsx(withBaseName(), className, withBaseName(orientation))}
+        <ol
+          className={clsx(
+            withBaseName(),
+            className,
+            withBaseName(orientation),
+            withBaseName(`align${capitalize(alignment)}`)
+          )}
           ref={ref}
           {...restProps}
         >
           {Children.map(children, (child, i) => (
             <TrackerStepProvider stepNumber={i}>{child}</TrackerStepProvider>
           ))}
-        </ul>
+        </ol>
       </SteppedTrackerProvider>
     );
   }

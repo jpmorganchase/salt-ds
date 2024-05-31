@@ -16,21 +16,41 @@
   flex: 1;
   position: relative;
   display: flex;
-  align-items: center;
   width: var(--saltTrackerStep-width, 100%);
-  gap: var(--salt-spacing-50);
   color: var(--salt-content-primary-foreground);
   font-size: var(--salt-text-label-fontSize);
-  line-height: var(--salt-text-label-lineHeight);
+}
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignLeft .saltTrackerStep {
+  align-items: start;
+}
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignLeft .saltTrackerStep:last-of-type {
+  flex-grow: 0;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignCenter .saltTrackerStep {
+  align-items: center;
 }
 
 .saltSteppedTracker.saltSteppedTracker-horizontal .saltTrackerStep {
   flex-direction: column;
-  padding: 0 var(--salt-spacing-25);
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignLeft .saltTrackerStep-icon {
+  padding-left: 0;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignCenter .saltTrackerStep-icon {
+  padding-left: calc(50% - (var(--saltIcon-size) / 2));
+}
+
+.saltSteppedTracker .saltTrackerStep .saltTrackerStep-track {
+  line-height: 0;
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep {
+  align-items: center;
   flex-direction: row;
+  gap: var(--salt-spacing-50);
   min-height: calc(var(--salt-size-base) * 2);
   width: 100%;
 }
@@ -43,11 +63,17 @@
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
+.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep .saltTrackerStep-body {
+  padding-top: 0;
+}
+
 .saltTrackerStep .saltTrackerStep-body {
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-top: var(--salt-spacing-50);
+  line-height: var(--salt-text-label-lineHeight);
 }
 
 .saltTrackerStep.saltTrackerStep-active {

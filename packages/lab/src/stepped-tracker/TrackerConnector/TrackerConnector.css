@@ -16,9 +16,16 @@
   border-top-style: var(--trackerConnector-style-border);
   border-top-color: var(--trackerConnector-color);
   width: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
-  left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
   top: calc(var(--saltIcon-size) / 2 - (var(--trackerConnector-thickness) / 2));
   height: 0;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignLeft .saltTrackerConnector {
+  left: calc(var(--saltIcon-size) + var(--trackerConnector-margin));
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignCenter .saltTrackerConnector {
+  left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerConnector {
