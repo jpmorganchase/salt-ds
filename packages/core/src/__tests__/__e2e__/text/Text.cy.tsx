@@ -1,3 +1,4 @@
+import { VALIDATION_NAMED_STATUS } from "../../../status-indicator";
 import {
   Text,
   Display1,
@@ -52,6 +53,16 @@ describe("GIVEN a Text Component", () => {
       cy.mount(<Component>{textExample}</Component>);
       cy.get(tag).should("have.class", "saltText");
     });
+
+    it(`${name} component should return custom className passed in`, () => {
+      const customClass = "customClass";
+      const Component = component;
+
+      cy.mount(<Component className="customClass">{textExample}</Component>);
+      cy.get(tag)
+        .should("have.class", "saltText")
+        .should("have.class", customClass);
+    });
   });
 });
 
@@ -81,26 +92,37 @@ describe("GIVEN a Text component with maxRows=2 ", () => {
   });
 });
 
-// Variant
-describe("GIVEN a Text component with variant=primary ", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should have class saltText-primary`, () => {
-      const Component = component;
+// Variant - deprecated prop, keep until we remove
+const VARIANTS = ["primary", "secondary"] as const;
+VARIANTS.forEach((variant) => {
+  describe(`GIVEN a Text component with variant=${variant} `, () => {
+    componentsArray.forEach(({ component, name }) => {
+      it(`${name} should have class saltText-${variant}`, () => {
+        const Component = component;
 
-      cy.mount(<Component variant="primary">{textExample}</Component>);
-      cy.get(".saltText").should("have.class", "saltText-primary");
+        cy.mount(<Component variant={variant}>{textExample}</Component>);
+        cy.get(".saltText").should("have.class", `saltText-${variant}`);
+      });
     });
   });
 });
-describe("GIVEN a Text component with variant=secondary ", () => {
-  componentsArray.forEach(({ component, name }) => {
-    it(`${name} should have class saltText-secondary`, () => {
-      const Component = component;
 
-      cy.mount(<Component variant="secondary">{textExample}</Component>);
-      cy.get(".saltText").should("have.class", "saltText-secondary");
+const COLORS = ["primary", "secondary", ...VALIDATION_NAMED_STATUS] as const;
+COLORS.forEach((color) => {
+  describe(`GIVEN a Text component with color=${color} `, () => {
+    componentsArray.forEach(({ component, name }) => {
+      it(`${name} should have class saltText-${color}`, () => {
+        const Component = component;
+
+        cy.mount(<Component color={color}>{textExample}</Component>);
+        cy.get(".saltText").should("have.class", `saltText-${color}`);
+      });
     });
   });
+});
+test(`GIVEN a Text component with color="inherit", it should NOT have color class `, () => {
+  cy.mount(<Text color="inherit">{textExample}</Text>);
+  cy.get(".saltText").should("not.have.class", `saltText-inherit`);
 });
 
 // styleAs
