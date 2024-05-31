@@ -104,6 +104,9 @@
   --salt-text-display3-fontSize: 42px;
   --salt-text-display3-lineHeight: 54px;
 
+  --salt-text-display4-fontSize: 42px;
+  --salt-text-display4-lineHeight: 54px;
+
   --salt-text-notation-fontSize: 14px;
   --salt-text-notation-lineHeight: 18px;
 }
@@ -136,6 +139,9 @@
 
   --salt-text-display3-fontSize: 32px;
   --salt-text-display3-lineHeight: 42px;
+
+  --salt-text-display4-fontSize: 32px;
+  --salt-text-display4-lineHeight: 42px;
 
   --salt-text-notation-fontSize: 12px;
   --salt-text-notation-lineHeight: 16px;
@@ -170,6 +176,9 @@
   --salt-text-display3-fontSize: 24px;
   --salt-text-display3-lineHeight: 32px;
 
+  --salt-text-display4-fontSize: 24px;
+  --salt-text-display4-lineHeight: 32px;
+
   --salt-text-notation-fontSize: 10px;
   --salt-text-notation-lineHeight: 13px;
 }
@@ -202,6 +211,9 @@
 
   --salt-text-display3-fontSize: 18px;
   --salt-text-display3-lineHeight: 24px;
+
+  --salt-text-display4-fontSize: 18px;
+  --salt-text-display4-lineHeight: 24px;
 
   --salt-text-notation-fontSize: 8px;
   --salt-text-notation-lineHeight: 10px;

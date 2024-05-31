@@ -34,6 +34,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "display1"
       | "display2"
       | "display3"
+      | "display4"
       | "notation"
       | "action"
       | "code";
