@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.28.1
+
+### Patch Changes
+
+- f8de151c: Fixed the chevron alignment for multi-line accordions.
+- a5556028: Fixed Text components not applying `className` correctly, including `Code`, `Display1`, `Display2`, `Display3`, `TextAction`, `TextNotation`.
+
 ## 1.28.0
 
 ### Minor Changes

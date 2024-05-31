@@ -1,5 +1,15 @@
 # @salt-ds/theme
 
+## 1.17.0
+
+### Minor Changes
+
+- 2199704e: Added categorical colors. Refer to [color page](https://www.saltdesignsystem.com/salt/foundations/color) for more detail. Closes #2523.
+
+### Patch Changes
+
+- 353e9171: Updated status tokens for theme next to match latest design
+
 ## 1.16.0
 
 ### Minor Changes
