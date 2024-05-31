@@ -11,16 +11,15 @@ export function usePointerDownThumb(
   onChange: SliderChangeHandler,
   index: number,
   activeThumb: number | undefined,
-  setActiveThumb: (index: number| undefined) => void
+  setActiveThumb: (index: number | undefined) => void
 ) {
-
-  const [pointerDown, setPointerDown] = useState(false)
+  const [pointerDown, setPointerDown] = useState(false);
 
   const onDownThumb = () => {
     document.addEventListener("pointermove", onPointerMove);
     document.addEventListener("pointerup", onPointerUp);
     setActiveThumb(index);
-    setPointerDown(true)
+    setPointerDown(true);
   };
 
   const onPointerUp = (event: PointerEvent) => {
@@ -28,6 +27,7 @@ export function usePointerDownThumb(
     document.removeEventListener("pointermove", onPointerMove);
     document.removeEventListener("pointerup", onPointerUp);
     setActiveThumb(undefined);
+    setPointerDown(false);
   };
 
   const onPointerMove = (event: PointerEvent): void => {
@@ -49,7 +49,7 @@ export function usePointerDownThumb(
         onDownThumb();
       },
       onPointerOver() {
-        if (activeThumb === undefined ) setActiveThumb(index)
+        if (activeThumb === undefined) setActiveThumb(index);
       },
       onFocus() {
         setActiveThumb(index);
