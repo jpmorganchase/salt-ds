@@ -4,7 +4,7 @@ import { Text, TextProps } from "./Text";
 export const TextAction = forwardRef<
   HTMLSpanElement,
   Omit<TextProps<"span">, "as">
->(function TextAction({ children, className, ...rest }, ref) {
+>(function TextAction({ children, ...rest }, ref) {
   return (
     <Text as="span" styleAs="action" ref={ref} {...rest}>
       {children}
