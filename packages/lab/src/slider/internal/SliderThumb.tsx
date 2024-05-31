@@ -11,23 +11,27 @@ const withBaseName = makePrefixer("saltSliderThumb");
 export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
   trackRef: RefObject<HTMLDivElement>;
   index: number;
+  activeThumb: number | undefined;
+  setActiveThumb: (index: number | undefined) => void;
 }
 
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
-  const { trackRef, index, ...rest } = props;
+  const { trackRef, index, activeThumb, setActiveThumb, ...rest } = props;
 
   const { min, max, step, value, onChange, ariaLabel } = useSliderContext();
 
   const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
-  const { thumbProps, thumbActive } = usePointerDownThumb(
+  const { thumbProps } = usePointerDownThumb(
     trackRef,
     min,
     max,
     step,
     value,
     onChange,
-    index
+    index,
+    activeThumb,
+    setActiveThumb
   );
 
   const percentage = Array.isArray(value)
@@ -35,6 +39,9 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
       ? getPercentage(min, max, value[1])
       : getPercentage(min, max, value[0])
     : getPercentage(min, max, value);
+
+  console.log({ activeThumb });
+  console.log({ index });
 
   return (
     <div
@@ -44,9 +51,9 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     >
       <div
         className={clsx(withBaseName("tooltip"), {
-          [withBaseName("showTooltip")]: thumbActive,
+          [withBaseName("showTooltip")]: activeThumb === index,
         })}
-        aria-expanded={thumbActive}
+        aria-expanded={activeThumb === index ? true : false}
       >
         {Array.isArray(value) && <Label>{index ? value[1] : value[0]}</Label>}
         {!Array.isArray(value) && <Label>{value}</Label>}
