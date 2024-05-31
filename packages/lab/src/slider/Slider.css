@@ -51,10 +51,6 @@
   height: var(--salt-size-base);
 }
 
-.saltSliderThumb-container:hover > .saltSliderThumb-tooltip {
-  display: block;
-}
-
 .saltSliderThumb-tooltip {
   background: var(--salt-container-primary-background);
   border-color: var(--salt-status-info-borderColor);
