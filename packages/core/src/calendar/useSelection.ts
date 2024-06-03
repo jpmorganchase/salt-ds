@@ -1,7 +1,6 @@
-import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
-import { isPlainObject } from "../utils";
+import { makePrefixer, useControlled, isPlainObject } from "../utils";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 

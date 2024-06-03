@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, forwardRef } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../../utils";
 import { daysForLocale } from "./utils";
 
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";

@@ -4,17 +4,11 @@ import {
   MouseEventHandler,
   SyntheticEvent,
 } from "react";
-import {
-  Button,
-  ButtonProps,
-  makePrefixer,
-  Tooltip,
-  Dropdown,
-  DropdownProps,
-  Option,
-  OptionProps,
-  useListControlContext,
-} from "@salt-ds/core";
+import { Dropdown, DropdownProps } from "../../dropdown";
+import { Button, ButtonProps } from "../../button";
+import { Option, OptionProps } from "../../option";
+import { useListControlContext } from "../../list-control";
+import { Tooltip } from "../../tooltip";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 
@@ -23,6 +17,7 @@ import { useCalendarContext } from "./CalendarContext";
 import calendarNavigationCss from "./CalendarNavigation.css";
 import { DateValue, isSameMonth, isSameYear } from "@internationalized/date";
 import { formatDate, monthDiff, monthsForLocale } from "./utils";
+import { makePrefixer } from "../../utils";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -167,7 +162,6 @@ export const CalendarNavigation = forwardRef<
     years,
     canNavigateNext,
     canNavigatePrevious,
-    visibleMonth,
     selectedMonth,
     selectedYear,
     isOutsideAllowedMonths,

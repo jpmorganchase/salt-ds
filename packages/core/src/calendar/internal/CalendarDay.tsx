@@ -1,4 +1,5 @@
-import { makePrefixer, Tooltip, TooltipProps, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "../../utils";
+import { Tooltip, TooltipProps } from "../../tooltip";
 import { clsx } from "clsx";
 import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
 import { DateValue } from "@internationalized/date";

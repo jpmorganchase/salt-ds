@@ -5,5 +5,5 @@
 Added `Calendar` component.
 
 ```tsx
-<Calendar/>
+<Calendar />
 ```

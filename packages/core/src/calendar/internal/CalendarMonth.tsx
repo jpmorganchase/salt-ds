@@ -5,7 +5,8 @@ import {
   SyntheticEvent,
 } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "../../utils";
+
 import { DateValue } from "@internationalized/date";
 import { CalendarDay, CalendarDayProps } from "./CalendarDay";
 import { formatDate, generateVisibleDays } from "./utils";

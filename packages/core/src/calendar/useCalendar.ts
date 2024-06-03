@@ -9,7 +9,7 @@ import {
   startOfYear,
   today,
 } from "@internationalized/date";
-import { useControlled } from "@salt-ds/core";
+import { useControlled } from "../utils";
 import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
   isRangeOrOffsetSelectionWithStartDate,

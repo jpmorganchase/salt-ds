@@ -1,6 +1,5 @@
 import { forwardRef, useCallback } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
 import {
   CalendarNavigation,
   CalendarNavigationProps,
@@ -19,6 +18,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import calendarCss from "./Calendar.css";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import { getCurrentLocale } from "./internal/utils";
+import { makePrefixer } from "../utils";
 
 export type CalendarProps = useCalendarProps & {
   className?: string;

@@ -12,6 +12,7 @@
   "sideEffects": false,
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
+    "@internationalized/date": "^3.0.0",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
