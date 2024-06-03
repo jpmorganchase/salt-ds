@@ -28,3 +28,5 @@ Added font weight in palette layer for display, heading, body and notation.
 ```
 
 Wired text characteristics font weight to newly added palette tokens.
+
+In theme next, when Amplitude is used for heading, font weight will be adjusted accordingly.

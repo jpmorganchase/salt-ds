@@ -15,7 +15,7 @@
   /* Body text (should be used as default) */
   --salt-text-fontFamily: var(--salt-palette-text-fontFamily);
   --salt-text-fontWeight: var(--salt-palette-text-body-fontWeight);
-  --salt-text-fontWeight-small: var(--salt-palette-text-body-fontWeight-light);
+  --salt-text-fontWeight-small: var(--salt-palette-text-body-fontWeight-small);
   --salt-text-fontWeight-strong: var(--salt-palette-text-body-fontWeight-strong);
 
   /* Notation */
