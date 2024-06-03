@@ -26,13 +26,11 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
     onChange
   );
 
-  const thumbs = Array.isArray(value) ? value : [value];
-
   return (
     <div className={withBaseName()} ref={trackRef} {...trackProps} {...props}>
       <div className={withBaseName("rail")} />
       <SliderSelection />
-      {thumbs.map((value, i) => {
+      {value.map((value, i) => {
         return (
           <SliderThumb
             key={i}

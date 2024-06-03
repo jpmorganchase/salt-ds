@@ -52,7 +52,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     max = defaultMax,
     step = defaultStep,
     value: valueProp,
-    defaultValue = defaultMin,
+    defaultValue = [0],
     onChange,
     className,
     ["aria-label"]: ariaLabel,

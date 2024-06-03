@@ -1,6 +1,6 @@
 import { RefObject, useState } from "react";
 import { SliderValue, SliderChangeHandler } from "../types";
-import { getValue, setRangeValue } from "./utils";
+import { getValue } from "./utils";
 
 export function usePointerDownThumb(
   trackRef: RefObject<HTMLDivElement>,
@@ -31,16 +31,23 @@ export function usePointerDownThumb(
   };
 
   const onPointerMove = (event: PointerEvent): void => {
-    const newValue: number | undefined = getValue(
+    let newValue: number | undefined = getValue(
       trackRef,
       min,
       max,
       step,
       event
     );
-    Array.isArray(value)
-      ? setRangeValue(value, newValue, onChange, index, step)
-      : onChange?.(newValue);
+
+    value.length > 1
+      ? (newValue =
+          index === 0
+            ? Math.min(newValue, value[1] - step)
+            : Math.max(newValue, value[0] + step))
+      : null;
+    const newValueArray = [...value];
+    newValueArray.splice(index, 1, newValue);
+    onChange(newValueArray);
   };
 
   return {

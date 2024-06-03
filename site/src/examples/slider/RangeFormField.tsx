@@ -15,7 +15,7 @@ export const RangeFormField = (): ReactElement => (
           Field Label
         </FormFieldLabel>
         <Slider
-          aria-label="single"
+          aria-label="range-form-field"
           defaultValue={[20, 80]}
           min={0}
           max={100}
@@ -26,7 +26,7 @@ export const RangeFormField = (): ReactElement => (
     <FormField>
       <FormFieldLabel> Field Label </FormFieldLabel>
       <Slider
-        aria-label="single"
+        aria-label="range-form-field"
         defaultValue={[20, 80]}
         marks="bottom"
         min={0}

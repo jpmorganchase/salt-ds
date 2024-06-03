@@ -34,18 +34,11 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     setActiveThumb
   );
 
-  const percentage = Array.isArray(value)
-    ? index
-      ? getPercentage(min, max, value[1])
-      : getPercentage(min, max, value[0])
-    : getPercentage(min, max, value);
-
-  console.log({ activeThumb });
-  console.log({ index });
+  const thumbPosition = getPercentage(min, max, value[index]);
 
   return (
     <div
-      style={{ left: `${percentage}` }}
+      style={{ left: `${thumbPosition}%` }}
       className={withBaseName("container")}
       {...thumbProps}
     >
@@ -55,8 +48,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         })}
         aria-expanded={activeThumb === index ? true : false}
       >
-        {Array.isArray(value) && <Label>{index ? value[1] : value[0]}</Label>}
-        {!Array.isArray(value) && <Label>{value}</Label>}
+        <Label>{value[index]}</Label>
       </div>
       <div
         className={withBaseName()}

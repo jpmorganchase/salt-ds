@@ -9,7 +9,7 @@ describe("Given a Slider", () => {
           min={5}
           max={125}
           step={5}
-          defaultValue={100}
+          defaultValue={[100]}
         />
       );
       cy.findByRole("slider")
@@ -36,7 +36,7 @@ describe("Given a Slider", () => {
           min={5}
           max={125}
           step={5}
-          defaultValue={100}
+          defaultValue={[100]}
           onChange={changeSpy}
         />
       );
