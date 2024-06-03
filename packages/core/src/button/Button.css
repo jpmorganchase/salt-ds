@@ -154,6 +154,7 @@
   justify-content: center;
   z-index: 1;
   gap: var(--salt-spacing-50);
+  border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
 }
 
 .saltButton-hidden-accessible-element {

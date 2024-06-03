@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "../utils";
-import { Spinner } from '../spinner'
+import { Spinner } from "../spinner";
 
 import buttonCss from "./Button.css";
 import { useButton } from "./useButton";
@@ -46,7 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = "button",
       variant = "primary",
       isLoading,
-      loadingText,
+      loadingText = "Loading",
       showLoadingText,
       ...restProps
     },
@@ -78,35 +78,37 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(),
           withBaseName(variant),
           {
-            [withBaseName("disabled")]: (disabled),
-            [withBaseName(`loading-${variant}`)]: (isLoading),
+            [withBaseName("disabled")]: disabled,
+            [withBaseName(`loading-${variant}`)]: isLoading,
             [withBaseName("active")]: active,
           },
           className
         )}
         aria-disabled={isLoading || disabled}
-        aria-live={isLoading !== undefined ? 'assertive' : undefined}
+        aria-live={isLoading !== undefined ? "assertive" : undefined}
         {...restProps}
         ref={ref}
         type={type}
       >
         {isLoading ? (
           <>
-            <span className={clsx(
-              withBaseName("loading-overlay"),
-              className
-            )}>
-              <Spinner size="small" className={clsx(
-                withBaseName("loading-spinner"),
-                className
-              )} />
-              <span className={clsx(
-                {
-                  [withBaseName("hidden-accessible-element")]: (!showLoadingText),
-                  [withBaseName("loading-text")]: (showLoadingText),
-                },
-                className
-              )}>{loadingText}</span>
+            <span className={clsx(withBaseName("loading-overlay"), className)}>
+              <Spinner
+                size="small"
+                className={clsx(withBaseName("loading-spinner"), className)}
+              />
+              <span
+                className={clsx(
+                  {
+                    [withBaseName("hidden-accessible-element")]:
+                      !showLoadingText,
+                    [withBaseName("loading-text")]: showLoadingText,
+                  },
+                  className
+                )}
+              >
+                {loadingText}
+              </span>
             </span>
             <span aria-hidden="true">{children}</span>
           </>

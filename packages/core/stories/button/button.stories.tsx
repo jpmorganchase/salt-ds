@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Button, ButtonProps, StackLayout } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
   SendIcon,
   SettingsSolidIcon,
+  ChevronRightIcon,
 } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 
@@ -175,7 +176,7 @@ const LoadingButtonGrid = ({
   secondaryButtonLabel,
   ctaButtonLabel,
   loadingText,
-  showLoadingText
+  showLoadingText,
 }: {
   primaryButtonLabel: string;
   secondaryButtonLabel: string;
@@ -186,33 +187,34 @@ const LoadingButtonGrid = ({
   const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
   const [secondaryLoadingState, setSecondaryLoadingState] = useState(false);
   const [ctaLoadingState, setCtaLoadingState] = useState(false);
-  const [disabledPrimaryLoadingState, setDisabledPrimaryLoadingState] = useState(false);
+  const [disabledPrimaryLoadingState, setDisabledPrimaryLoadingState] =
+    useState(false);
 
   const handlePrimaryClick = () => {
-    setPrimaryLoadingState(true)
+    setPrimaryLoadingState(true);
     setTimeout(() => {
-      setPrimaryLoadingState(false)
-    }, 3000)
-  }
+      setPrimaryLoadingState(false);
+    }, 3000);
+  };
   const handleSecondaryClick = () => {
-    setSecondaryLoadingState(true)
+    setSecondaryLoadingState(true);
     setTimeout(() => {
-      setSecondaryLoadingState(false)
-    }, 3000)
-  }
+      setSecondaryLoadingState(false);
+    }, 3000);
+  };
   const handleCtaClick = () => {
-    setCtaLoadingState(true)
+    setCtaLoadingState(true);
     setTimeout(() => {
-      setCtaLoadingState(false)
-    }, 3000)
-  }
+      setCtaLoadingState(false);
+    }, 3000);
+  };
 
   const handlePrimaryLoadingClick = () => {
-    setDisabledPrimaryLoadingState(true)
+    setDisabledPrimaryLoadingState(true);
     setTimeout(() => {
-      setDisabledPrimaryLoadingState(false)
-    }, 3000)
-  }
+      setDisabledPrimaryLoadingState(false);
+    }, 3000);
+  };
 
   return (
     <div
@@ -223,10 +225,47 @@ const LoadingButtonGrid = ({
         gridGap: 10,
       }}
     >
-      <Button variant="primary" showLoadingText={showLoadingText} loadingText={loadingText} isLoading={primaryLoadingState} onClick={handlePrimaryClick}>{primaryButtonLabel}</Button>
-      <Button variant="secondary" showLoadingText={showLoadingText} loadingText={loadingText} isLoading={secondaryLoadingState} onClick={handleSecondaryClick}>{secondaryButtonLabel}</Button>
-      <Button variant="cta" showLoadingText={showLoadingText} loadingText={loadingText} isLoading={ctaLoadingState} onClick={handleCtaClick}>{ctaButtonLabel}</Button>
-      <Button variant="primary" disabled={disabledPrimaryLoadingState} showLoadingText={showLoadingText} loadingText={loadingText} isLoading={disabledPrimaryLoadingState} onClick={handlePrimaryLoadingClick}>{primaryButtonLabel}</Button>
+      <Button
+        variant="primary"
+        showLoadingText={showLoadingText}
+        loadingText={loadingText}
+        isLoading={primaryLoadingState}
+        onClick={handlePrimaryClick}
+      >
+        {primaryButtonLabel}
+        <ChevronRightIcon aria-hidden />
+      </Button>
+      <Button
+        variant="secondary"
+        showLoadingText={showLoadingText}
+        loadingText={loadingText}
+        isLoading={secondaryLoadingState}
+        onClick={handleSecondaryClick}
+      >
+        {secondaryButtonLabel}
+        <ChevronRightIcon aria-hidden />
+      </Button>
+      <Button
+        variant="cta"
+        showLoadingText={showLoadingText}
+        loadingText={loadingText}
+        isLoading={ctaLoadingState}
+        onClick={handleCtaClick}
+      >
+        {ctaButtonLabel}
+        <ChevronRightIcon aria-hidden />
+      </Button>
+      <Button
+        variant="primary"
+        disabled={disabledPrimaryLoadingState}
+        showLoadingText={showLoadingText}
+        loadingText={loadingText}
+        isLoading={disabledPrimaryLoadingState}
+        onClick={handlePrimaryLoadingClick}
+      >
+        {primaryButtonLabel}
+        <ChevronRightIcon aria-hidden />
+      </Button>
     </div>
   );
 };
