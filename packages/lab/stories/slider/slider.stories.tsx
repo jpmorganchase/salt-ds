@@ -59,8 +59,8 @@ export const WithInput = () => {
   const [value, setValue] = useState<SliderValue>(5);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value as unknown;
-    setValue(inputValue as SliderValue);
+    const inputValue = event.target.value;
+    setValue(+inputValue);
   };
 
   const handleChange = (value: SliderValue) => {
@@ -121,36 +121,35 @@ function validate(minValue: number, maxValue: number) {
 }
 
 export const RangeWithInput = () => {
-  const [value, setValue] = useState([0, 50]);
-  const [minValue, setMinValue] = useState(`${value[0]}`);
-  const [maxValue, setMaxValue] = useState(`${value[1]}`);
+  const [value, setValue] = useState<number[]>([0, 50]);
+  const [minValue, setMinValue] = useState<number>(value[0]);
+  const [maxValue, setMaxValue] = useState(value[1]);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined
   );
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setMinValue(inputValue);
+    setMinValue(+inputValue);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setMaxValue(inputValue);
+    setMaxValue(+inputValue);
   };
 
   const handleInputBlur = () => {
-    const minNumVal = parseFloat(minValue);
-    const maxNumVal = parseFloat(maxValue);
-    const validated = validate(minNumVal, maxNumVal);
+    const validated = validate(+minValue, +maxValue);
     validated
-      ? (setValue([minNumVal, maxNumVal]), setValidationStatus(undefined))
+      ? (setValue([minValue, maxValue]), setValidationStatus(undefined))
       : setValidationStatus("error");
   };
 
-  const handleSliderChange = (value: number[]) => {
-    setValue(value);
-    setMinValue(`${value[0]}`);
-    setMaxValue(`${value[1]}`);
+  const handleSliderChange = (value: SliderValue) => {
+    const rangeValue = value as number[];
+    setValue(rangeValue);
+    setMinValue(rangeValue[0]);
+    setMaxValue(rangeValue[1]);
   };
 
   return (
@@ -172,7 +171,6 @@ export const RangeWithInput = () => {
           min={0}
           max={50}
           value={value}
-          // @ts-ignore
           onChange={handleSliderChange}
           aria-label="withInput"
         />
