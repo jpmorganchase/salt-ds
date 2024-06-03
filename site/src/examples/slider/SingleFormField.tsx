@@ -14,12 +14,23 @@ export const SingleFormField = (): ReactElement => (
         <FormFieldLabel style={{ width: "max-content" }}>
           Field Label
         </FormFieldLabel>
-        <Slider aria-label="single" min={0} max={100} style={{ flexGrow: 1 }} />
+        <Slider
+          aria-label="single-form-field"
+          min={0}
+          max={100}
+          style={{ flexGrow: 1 }}
+        />
       </FlexLayout>
     </FormField>
     <FormField>
       <FormFieldLabel> Field Label </FormFieldLabel>
-      <Slider aria-label="single" marks="bottom" min={0} max={50} step={10} />
+      <Slider
+        aria-label="single-form-field"
+        marks="bottom"
+        min={0}
+        max={50}
+        step={10}
+      />
     </FormField>
   </StackLayout>
 );
