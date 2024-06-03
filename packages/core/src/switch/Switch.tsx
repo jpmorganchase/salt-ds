@@ -178,7 +178,7 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
           )}
         </span>
       </span>
-      <span className={withBaseName("label")}>{label}</span>
+      {label && <span className={withBaseName("label")}>{label}</span>}
     </label>
   );
 });
