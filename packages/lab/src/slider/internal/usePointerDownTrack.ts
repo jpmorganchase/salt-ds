@@ -1,5 +1,5 @@
 import { RefObject, MouseEvent } from "react";
-import { getValue } from "./utils";
+import { getValue, setValue } from "./utils";
 import { SliderChangeHandler, SliderValue } from "../types";
 
 export function usePointerDownTrack(
@@ -8,7 +8,7 @@ export function usePointerDownTrack(
   max: number,
   step: number,
   value: SliderValue,
-  onChange: SliderChangeHandler | undefined
+  onChange: SliderChangeHandler
 ) {
   return {
     trackProps: {
@@ -23,9 +23,12 @@ export function usePointerDownTrack(
           return index;
         }, 0);
 
-        const newValueArray = [...value];
-        newValueArray.splice(value.length > 1 ? nearestIndex : 0, 1, newValue);
-        onChange?.(newValueArray);
+        setValue(
+          value,
+          newValue,
+          value.length > 1 ? nearestIndex : 0,
+          onChange
+        );
       },
     },
   };
