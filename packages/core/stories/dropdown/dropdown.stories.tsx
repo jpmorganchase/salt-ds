@@ -392,7 +392,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
           top: 0,
           zIndex: 1,
           background: !selected.includes(allSelectedOptionValue)
-            ? "var(--salt-color-white)"
+            ? "var(--salt-container-primary-background)"
             : "",
         }}
       >
