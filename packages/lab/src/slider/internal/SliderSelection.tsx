@@ -1,10 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { ComponentPropsWithoutRef } from "react";
-import {
-  getPercentage,
-  getPercentageDifference,
-  getPercentageOffset,
-} from "./utils";
+import { getPercentage } from "./utils";
 import { useSliderContext } from "./SliderContext";
 import { clsx } from "clsx";
 
@@ -17,13 +13,9 @@ export function SliderSelection({
 }: SliderSelectionProps): JSX.Element {
   const { min, max, value } = useSliderContext();
 
-  const percentageDifference = Array.isArray(value)
-    ? getPercentageDifference(min, max, value)
-    : getPercentage(min, max, value);
-
-  const percentageOffset = Array.isArray(value)
-    ? getPercentageOffset(min, max, value)
-    : 0;
+  const thumbPosition = value.map((value) => {
+    return getPercentage(min, max, value);
+  });
 
   return (
     <div
@@ -31,8 +23,11 @@ export function SliderSelection({
         [withBaseName("range")]: Array.isArray(value),
       })}
       style={{
-        width: percentageDifference,
-        left: percentageOffset,
+        left: value.length > 1 ? `${thumbPosition[0]}%` : 0,
+        width:
+          value.length > 1
+            ? `${thumbPosition[1] - thumbPosition[0]}%`
+            : `${thumbPosition[0]}%`,
       }}
       {...props}
     />

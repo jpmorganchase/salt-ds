@@ -1,5 +1,5 @@
 import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundToStep, roundToTwoDp, setRangeValue } from "./utils";
+import { clampValue, roundToStep, roundToTwoDp } from "./utils";
 
 export function useKeyDownThumb(
   min: number,
@@ -10,11 +10,7 @@ export function useKeyDownThumb(
   index: number
 ) {
   return (event: React.KeyboardEvent) => {
-    let valueItem: number = Array.isArray(value)
-      ? index
-        ? value[1]
-        : value[0]
-      : value;
+    let valueItem: number = value[index];
     switch (event.key) {
       case "Home":
         valueItem = min;
@@ -33,12 +29,13 @@ export function useKeyDownThumb(
       default:
         return;
     }
+
     valueItem = roundToStep(valueItem, step);
     valueItem = roundToTwoDp(valueItem);
     valueItem = clampValue(valueItem, min, max);
 
-    Array.isArray(value)
-      ? setRangeValue(value, valueItem, onChange, index, step)
-      : onChange?.(valueItem);
+    const newValueArray = [...value];
+    newValueArray.splice(index, 1, valueItem);
+    onChange(newValueArray);
   };
 }

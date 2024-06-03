@@ -36,7 +36,7 @@ export const BottomLabel: StoryFn<QAContainerProps> = (props) => {
       width={1200}
       {...props}
     >
-      <Slider style={{ width: "300px" }} marks="bottom" defaultValue={5} />
+      <Slider style={{ width: "300px" }} marks="bottom" defaultValue={[5]} />
     </QAContainer>
   );
 };
@@ -59,7 +59,7 @@ export const WithMarks: StoryFn<QAContainerProps> = (props) => {
         style={{ width: "300px" }}
         marks="all"
         step={2}
-        defaultValue={4}
+        defaultValue={[4]}
       />
     </QAContainer>
   );

@@ -1,4 +1,3 @@
-import { SliderChangeHandler } from "../types";
 import { RefObject } from "react";
 
 export function getValue(
@@ -18,20 +17,6 @@ export function getValue(
   return value;
 }
 
-export function setRangeValue(
-  value: number[],
-  newValue: number,
-  onChange: SliderChangeHandler,
-  index: number,
-  step: number
-) {
-  newValue =
-    index === 0
-      ? Math.min(newValue, value[1] - step)
-      : Math.max(newValue, value[0] + step);
-  index ? onChange?.([value[0], newValue]) : onChange?.([newValue, value[1]]);
-}
-
 export const roundToTwoDp = (value: number) => Math.round(value * 100) / 100;
 
 export const roundToStep = (value: number, step: number) =>
@@ -49,7 +34,7 @@ export const clampValue = (value: number, min: number, max: number) => {
 
 export function getPercentage(min: number, max: number, value: number) {
   const percentage = ((value - min) / (max - min)) * 100;
-  return `${Math.min(Math.max(percentage, 0), 100)}%`;
+  return Math.min(Math.max(percentage, 0), 100);
 }
 
 export function getPercentageDifference(
@@ -72,7 +57,7 @@ export function getMarkStyles(min: number, max: number, step: number) {
   for (let i = min; i <= max; i = i + step) {
     const MarkPosition = getPercentage(min, max, i);
     const MarkLabel = roundToTwoDp(i);
-    marks.push({ index: MarkLabel, position: MarkPosition });
+    marks.push({ index: MarkLabel, position: `${MarkPosition}%` });
   }
   return marks;
 }
