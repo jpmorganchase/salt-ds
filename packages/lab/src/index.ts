@@ -29,6 +29,7 @@ export * from "./date-input";
 export * from "./date-picker";
 export * from "./deck-item";
 export * from "./deck-layout";
+export * from "./divider";
 export * from "./dropdown";
 export * from "./editable-label";
 export {

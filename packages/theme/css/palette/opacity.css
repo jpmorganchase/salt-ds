@@ -3,7 +3,7 @@
   --salt-palette-opacity-disabled: var(--salt-opacity-40);
   --salt-palette-opacity-background-readonly: var(--salt-opacity-0);
   --salt-palette-opacity-border-readonly: var(--salt-opacity-15);
-  --salt-palette-opacity-primary-border: var(--salt-opacity-40);
+  --salt-palette-opacity-primary-border: var(--salt-opacity-45);
   --salt-palette-opacity-secondary-border: var(--salt-opacity-25);
   --salt-palette-opacity-tertiary-border: var(--salt-opacity-15);
 }
