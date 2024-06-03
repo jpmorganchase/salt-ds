@@ -5620,6 +5620,7 @@ __metadata:
   resolution: "@salt-ds/core@workspace:packages/core"
   dependencies:
     "@floating-ui/react": "npm:^0.26.5"
+    "@internationalized/date": "npm:^3.0.0"
     clsx: "npm:^2.0.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
