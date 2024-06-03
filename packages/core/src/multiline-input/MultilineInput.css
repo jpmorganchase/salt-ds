@@ -69,6 +69,7 @@
   --multilineInput-background-hover: var(--salt-status-error-background);
   --multilineInput-borderColor: var(--salt-status-error-borderColor);
   --multilineInput-outlineColor: var(--salt-status-error-borderColor);
+  --multilineInput-background-readonly: var(--salt-status-error-background);
 }
 
 /* Style applied to input if `validationState="warning"` */
@@ -79,6 +80,7 @@
   --multilineInput-background-hover: var(--salt-status-warning-background);
   --multilineInput-borderColor: var(--salt-status-warning-borderColor);
   --multilineInput-outlineColor: var(--salt-status-warning-borderColor);
+  --multilineInput-background-readonly: var(--salt-status-warning-background);
 }
 
 /* Style applied to input if `validationState="success"` */
@@ -89,6 +91,7 @@
   --multilineInput-background-hover: var(--salt-status-success-background);
   --multilineInput-borderColor: var(--salt-status-success-borderColor);
   --multilineInput-outlineColor: var(--salt-status-success-borderColor);
+  --multilineInput-background-readonly: var(--salt-status-success-background);
 }
 
 .saltMultilineInput.saltMultilineInput-withAdornmentRow {
@@ -182,10 +185,15 @@
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 
-/* Style applied if active or focused when `bordered={true}` */
-.saltMultilineInput-bordered:active,
+/* Style applied if focused when `bordered={true}` */
 .saltMultilineInput-bordered.saltMultilineInput-focused {
   --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Style applied if active when `bordered={true}` */
+.saltMultilineInput-bordered:active {
+  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+  outline: none;
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
