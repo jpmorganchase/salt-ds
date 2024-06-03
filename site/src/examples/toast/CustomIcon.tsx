@@ -10,7 +10,7 @@ import {
 
 export const CustomIcon = (): ReactElement => (
   <div style={{ display: "flex", flexDirection: "column" }}>
-    <Toast style={{ width: 260 }} Icon={InfoIcon} status={"info"}>
+    <Toast style={{ width: 260 }} icon={<InfoIcon />} status={"info"}>
       <ToastContent>
         <Text>
           <strong>Info with Custom Icon</strong>
@@ -21,7 +21,7 @@ export const CustomIcon = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast style={{ width: 260 }} Icon={StepSuccessIcon} status={"success"}>
+    <Toast style={{ width: 260 }} icon={<StepSuccessIcon />} status={"success"}>
       <ToastContent>
         <Text>
           <strong>Success with Custom Icon</strong>
@@ -32,7 +32,7 @@ export const CustomIcon = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast style={{ width: 260 }} Icon={WarningIcon} status={"warning"}>
+    <Toast style={{ width: 260 }} icon={<WarningIcon />} status={"warning"}>
       <ToastContent>
         <Text>
           <strong>Warning with Custom Icon</strong>
@@ -43,7 +43,7 @@ export const CustomIcon = (): ReactElement => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast style={{ width: 260 }} Icon={ErrorIcon} status={"error"}>
+    <Toast style={{ width: 260 }} icon={<ErrorIcon />} status={"error"}>
       <ToastContent>
         <Text>
           <strong>Error with Custom Icon</strong>

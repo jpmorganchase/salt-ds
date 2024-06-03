@@ -1,7 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
 import { StatusIndicator, ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
 
@@ -18,16 +18,14 @@ export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * (Optional) if provided, this Icon component will be used instead of the status icon
    */
-  Icon?: React.ForwardRefExoticComponent<
-    IconProps & React.RefAttributes<SVGSVGElement>
-  >;
+  icon?: ReactElement<IconProps>;
 }
 
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   props,
   ref
 ) {
-  const { children, className, status, Icon, ...rest } = props;
+  const { children, className, status, icon, ...rest } = props;
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-toast",
@@ -49,9 +47,9 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
       {status && (
         <div
           className={withBaseName("iconContainer")}
-          {...(Icon && { "aria-hidden": true })}
+          {...(icon && { "aria-hidden": true })}
         >
-          {Icon ? <Icon /> : <StatusIndicator status={status} />}
+          {icon ? icon : <StatusIndicator status={status} />}
         </div>
       )}
       {children}

@@ -158,7 +158,7 @@ export const SingleLine = (args: ToastProps) => (
 export const CustomIcon = Template.bind({});
 CustomIcon.args = {
   status: "success",
-  Icon: GlobeIcon,
+  icon: <GlobeIcon />,
   children: (
     <div>
       <Text>
