@@ -123,7 +123,7 @@
     "yup": "^1.0.2"
   },
   "resolutions": {
-    "@changesets/assemble-release-plan@^5.2.2": "patch:@changesets/assemble-release-plan@npm%3A5.2.2#./.yarn/patches/@changesets-assemble-release-plan-npm-5.2.2-11f5894b70.patch",
+    "@changesets/assemble-release-plan@npm:^6.0.2": "patch:@changesets/assemble-release-plan@npm%3A6.0.2#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.2-d74b7b2762.patch",
     "@next/eslint-plugin-next": "^14.0.0",
     "@salt-ds/lab": "workspace:*",
     "modular-scripts/rollup": "2.79.1",
