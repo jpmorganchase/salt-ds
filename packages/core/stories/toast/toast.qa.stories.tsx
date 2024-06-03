@@ -45,25 +45,25 @@ const UI = () => (
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast Icon={GlobeIcon} status={"info"}>
+    <Toast icon={<GlobeIcon />} status={"info"}>
       <ToastContent>Custom icon toast</ToastContent>
       <Button variant="secondary">
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast Icon={GlobeIcon} status="error">
+    <Toast icon={<GlobeIcon />} status="error">
       <ToastContent>Custom icon toast</ToastContent>
       <Button variant="secondary">
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast Icon={GlobeIcon} status="warning">
+    <Toast icon={<GlobeIcon />} status="warning">
       <ToastContent>Custom icon toast</ToastContent>
       <Button variant="secondary">
         <CloseIcon />
       </Button>
     </Toast>
-    <Toast Icon={GlobeIcon} status="success">
+    <Toast icon={<GlobeIcon />} status="success">
       <ToastContent>Custom icon toast</ToastContent>
       <Button variant="secondary">
         <CloseIcon />
