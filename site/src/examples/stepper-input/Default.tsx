@@ -10,6 +10,6 @@ export const Default = (): ReactElement => (
   <FormField style={{ width: "250px" }}>
     <FormFieldLabel>Default Stepper Input</FormFieldLabel>
     <StepperInput />
-    <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+    <FormFieldHelperText>Please enter a value</FormFieldHelperText>
   </FormField>
 );

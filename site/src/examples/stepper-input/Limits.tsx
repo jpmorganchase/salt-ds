@@ -29,7 +29,7 @@ export const Limits = (): ReactElement => {
         min={min}
       />
       <FormFieldHelperText>
-        Please enter a value between {min} and {max}.
+        Please enter a value between {min} and {max}
       </FormFieldHelperText>
     </FormField>
   );
