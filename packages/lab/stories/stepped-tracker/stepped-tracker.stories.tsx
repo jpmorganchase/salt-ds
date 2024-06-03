@@ -91,7 +91,7 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
   );
 };
 
-export const BasicCompact: StoryFn<typeof SteppedTracker> = () => {
+export const Compact: StoryFn<typeof SteppedTracker> = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(sampleSteps);
   const totalSteps = steps.length;

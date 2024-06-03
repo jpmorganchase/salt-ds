@@ -20,6 +20,20 @@ You can add a label to the `TrackerStep` using the `StepLabel` component.
 
   </LivePreview>
 
+  <LivePreview componentName="stepped-tracker" exampleName="Compact" >
+
+## Compact
+
+`SteppedTracker` can be displayed in a compact format using the `orientation` prop value `"horizontal-compact"`. This reduces the padding around the step nodes and left-aligns the `SteppedTracker` within its container.
+
+### Best practices
+
+Compact mode is useful when horizontal space is limited in the context of the application.
+
+When using the `SteppedTracker`in "compact" mode, avoid using individual `StepLabel` component for each step. Instead, use a single `Text` component to label the entire `SteppedTracker`.
+
+  </LivePreview>
+
   <LivePreview componentName="stepped-tracker" exampleName="Vertical" >
 
 ## Vertical
