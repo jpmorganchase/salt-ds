@@ -13,7 +13,7 @@ export const SliderContext = createContext<SliderContextValue>({
   min: 0,
   max: 10,
   step: 1,
-  value: 0,
+  value: [0],
   onChange: () => null,
   ariaLabel: "slider",
 });

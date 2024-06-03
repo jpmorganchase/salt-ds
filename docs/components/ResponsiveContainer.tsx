@@ -4,8 +4,8 @@ import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
 import { Slider, StepperInput } from "@salt-ds/lab";
 
 export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
-  const [containerWidth, setWidth] = useState(90);
-  const [containerHeight, setHeight] = useState(70);
+  const [containerWidth, setWidth] = useState([90]);
+  const [containerHeight, setHeight] = useState([70]);
   const [selected, setSelected] = useState<string>("vw/vh");
   const inPixels = selected === "px";
   const maxUnits = inPixels ? 1000 : 100;
@@ -28,31 +28,31 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           </Tooltip>
         </ToggleButtonGroup>
         <StepperInput
-          value={containerWidth}
+          value={containerWidth[0]}
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setWidth(nextValue as number)}
+          onChange={(nextValue) => setWidth([nextValue] as number[])}
         />
         <Slider
           className="StoryContainer-slider"
           id="width"
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setWidth(nextValue as number)}
+          onChange={(value: number[]) => setWidth(value)}
           value={containerWidth}
         />
         <StepperInput
-          value={containerHeight}
+          value={containerHeight[0]}
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setHeight(nextValue as number)}
+          onChange={(nextValue) => setHeight([nextValue] as number[])}
         />
         <Slider
           className="StoryContainer-slider"
           id="height"
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setHeight(nextValue as number)}
+          onChange={(value: number[]) => setHeight(value)}
           value={containerHeight}
         />
       </div>
@@ -60,8 +60,8 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
       <div
         className="StoryContainer-wrapper"
         style={{
-          width: `${containerWidth}${inPixels ? "px" : "vw"}`,
-          height: `${containerHeight}${inPixels ? "px" : "vh"}`,
+          width: `${containerWidth[0]}${inPixels ? "px" : "vw"}`,
+          height: `${containerHeight[0]}${inPixels ? "px" : "vh"}`,
         }}
       >
         {children}

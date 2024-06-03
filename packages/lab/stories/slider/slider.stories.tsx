@@ -56,11 +56,11 @@ WithMarks.args = {
 };
 
 export const WithInput = () => {
-  const [value, setValue] = useState<SliderValue>(5);
+  const [value, setValue] = useState<SliderValue>([5]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setValue(+inputValue);
+    setValue([+inputValue]);
   };
 
   const handleChange = (value: SliderValue) => {
@@ -78,7 +78,7 @@ export const WithInput = () => {
         }}
       >
         <Input
-          placeholder="value"
+          placeholder={`${value}`}
           style={{ width: "1px", margin: "5px" }}
           onChange={handleInputChange}
         />

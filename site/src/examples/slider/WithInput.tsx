@@ -1,5 +1,5 @@
 import { ReactElement, useState, ChangeEvent } from "react";
-import { Slider } from "@salt-ds/lab";
+import { Slider, SliderValue, SliderChangeHandler } from "@salt-ds/lab";
 import {
   StackLayout,
   FormField,
@@ -9,14 +9,14 @@ import {
 } from "@salt-ds/core";
 
 export const SingleWithInput = () => {
-  const [value, setValue] = useState<number>(55);
+  const [value, setValue] = useState<SliderValue>([20]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value as unknown;
-    setValue(inputValue as number);
+    const inputValue = event.target.value;
+    setValue([+inputValue]);
   };
 
-  const handleChange = (value: number) => {
+  const handleChange: SliderChangeHandler = (value: number[]) => {
     setValue(value);
   };
 
@@ -31,7 +31,7 @@ export const SingleWithInput = () => {
         }}
       >
         <Input
-          placeholder={`${value}`}
+          placeholder={`${value[0]}`}
           style={{ width: "1px", margin: "5px" }}
           onChange={handleInputChange}
         />
@@ -39,7 +39,6 @@ export const SingleWithInput = () => {
           min={-50}
           max={50}
           value={value}
-          // @ts-ignore
           onChange={handleChange}
           aria-label="withInput"
           style={{ flexGrow: 1 }}
@@ -81,7 +80,7 @@ const RangeWithInput = () => {
       : setValidationStatus("error");
   };
 
-  const handleSliderChange = (value: number[]) => {
+  const handleSliderChange: SliderChangeHandler = (value: number[]) => {
     setValue(value);
     setMinValue(`${value[0]}`);
     setMaxValue(`${value[1]}`);
@@ -105,7 +104,6 @@ const RangeWithInput = () => {
           min={0}
           max={100}
           value={value}
-          // @ts-ignore
           onChange={handleSliderChange}
           aria-label="withInput"
         />
