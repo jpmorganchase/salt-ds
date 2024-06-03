@@ -7,7 +7,12 @@ import {
   CircularProgress,
   LinearProgress,
   LinearProgressProps,
+  ValidationStatus,
+  Toast,
+  ToastContent,
+  Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";
@@ -107,6 +112,16 @@ export const IndeterminateToDeterminate: StoryFn<
 
   const [value, setValue] = useState(0);
 
+  const [toastStatus, setToastStatus] = useState<{
+    header: string;
+    status: ValidationStatus;
+    message: string;
+  }>({
+    header: "File uploading",
+    status: "info",
+    message: "File upload to shared drive in progress.",
+  });
+
   useEffect(() => {
     const timer = setTimeout(() => setVariant("determinate"), 4000);
     return () => clearTimeout(timer);
@@ -122,7 +137,36 @@ export const IndeterminateToDeterminate: StoryFn<
     }
   }, [value, variant]);
 
+  useEffect(() => {
+    if (value === 100) {
+      setToastStatus({
+        header: "Upload complete",
+        status: "success",
+        message: "File has successfully been uploaded to shared drive.",
+      });
+    }
+  }, [value]);
+
   return (
-    <LinearProgress aria-label="Download" variant={variant} value={value} />
+    <Toast status={toastStatus.status}>
+      <ToastContent>
+        <div>
+          <Text>
+            <strong>{toastStatus.header}</strong>
+          </Text>
+          <div>{toastStatus.message}</div>
+          {value !== 100 && (
+            <LinearProgress
+              aria-label="Download"
+              variant={variant}
+              value={value}
+            />
+          )}
+        </div>
+      </ToastContent>
+      <Button variant="secondary" aria-label="Dismiss">
+        <CloseIcon aria-hidden />
+      </Button>
+    </Toast>
   );
 };
