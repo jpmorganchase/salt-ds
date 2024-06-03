@@ -12,6 +12,9 @@
 .saltSteppedTracker.saltSteppedTracker-horizontal-compact {
   flex-direction: row;
 }
+.saltSteppedTracker.saltSteppedTracker-horizontal-compact {
+  padding-bottom: var(--salt-spacing-50);
+}
 
 .saltSteppedTracker.saltSteppedTracker-vertical {
   flex-direction: column;
