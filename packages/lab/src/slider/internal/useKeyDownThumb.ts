@@ -33,6 +33,12 @@ export function useKeyDownThumb(
     valueItem = roundToStep(valueItem, step);
     valueItem = roundToTwoDp(valueItem);
     valueItem = clampValue(valueItem, min, max);
+        value.length > 1
+      ? (valueItem =
+          index === 0
+            ? Math.min(valueItem, value[1] - step)
+            : Math.max(valueItem, value[0] + step))
+      : null;
 
     const newValueArray = [...value];
     newValueArray.splice(index, 1, valueItem);
