@@ -1,5 +1,12 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
+import {
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  forwardRef,
+  SyntheticEvent,
+  useRef,
+  useState,
+} from "react";
 
 import {
   Button,
@@ -41,7 +48,7 @@ export interface DatePickerProps
    * The selected date value. Use when the component is controlled.
    * Can be a single date or an object with start and end dates for range selection.
    */
-  selectedDate?: DateValue | { startDate: DateValue; endDate: DateValue };
+  selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue };
   /**
    * The default date value. Use when the component is not controlled.
    * Can be a single date or an object with start and end dates for range selection.
@@ -81,6 +88,21 @@ export interface DatePickerProps
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
+  /**
+   * Validation status.
+   */
+  validationStatus?: "error" | "warning" | "success";
+  /**
+   * Callback fired when the selected date change.
+   */
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+  ) => void;
+  /**
+   * Callback fired when the input value change.
+   */
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -99,6 +121,9 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       helperText,
       readOnly: readOnlyProp,
       inputAriaLabel,
+      validationStatus,
+      onSelectionChange,
+      onChange,
       ...rest
     },
     ref
@@ -130,9 +155,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       name: "EndDate",
       state: "endDate",
     });
-    const [validationStatusState, setValidationStatus] = useState<
-      "error" | undefined
-    >(undefined);
+
     const [startVisibleMonth, setStartVisibleMonth] = useState<
       DateValue | undefined
     >(startDate ?? today(getLocalTimeZone()));
@@ -180,10 +203,14 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
     const floatingRef = useForkRef<HTMLDivElement>(panelRef, floating);
 
     // Handlers
-    const handleSelect = () => {
+    const handleSelect = (
+      event: SyntheticEvent,
+      selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+    ) => {
       if (selectionVariant === "default" && startDate) {
         startInputRef?.current?.focus();
       }
+      onSelectionChange?.(event, selectedDate);
     };
     const handleCalendarButton = () => {
       startInputRef?.current?.focus();
@@ -214,13 +241,12 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       selectionVariant,
       context,
       getPanelPosition,
-      validationStatusState,
-      setValidationStatus,
     };
 
     return (
       <DatePickerContext.Provider value={datePickerContextValue}>
         <DateInput
+          validationStatus={validationStatus}
           className={clsx(withBaseName(), className)}
           ref={inputRef}
           {...getReferenceProps()}
@@ -230,6 +256,8 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           dateFormatter={dateFormatter}
           readOnly={isReadOnly}
           ariaLabel={inputAriaLabel}
+          onSelectionChange={onSelectionChange}
+          onChange={onChange}
           endAdornment={
             <Button
               variant="secondary"

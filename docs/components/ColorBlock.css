@@ -6,7 +6,7 @@
   border-color: transparent;
   border-style: var(--salt-container-borderStyle);
   border-width: var(--salt-size-border);
-  border-radius: var(--salt-size-unit);
+  border-radius: var(--salt-palette-corner-weak, 0);
 
   background-size: 8px 8px;
   background-position: -4px 4px, 16px 16px;

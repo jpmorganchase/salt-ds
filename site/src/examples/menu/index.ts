@@ -7,3 +7,4 @@ export * from "./SeparatorOnly";
 export * from "./SingleLevel";
 export * from "./VirtualElement";
 export * from "./WithIcon";
+export * from "./Descriptions";

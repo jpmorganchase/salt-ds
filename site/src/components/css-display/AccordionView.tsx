@@ -109,7 +109,7 @@ export const AccordionView: React.FC<{ value: string }> = ({ value }) => {
   useEffect(() => {
     const fetchJsonData = async () => {
       try {
-        const data = require("./cssVariables.json");
+        const data = require("./cssCharacteristics.json");
         setCssVariablesData(data);
       } catch (err) {
         <Banner>

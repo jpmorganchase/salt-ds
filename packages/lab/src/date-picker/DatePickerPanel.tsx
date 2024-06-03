@@ -1,6 +1,7 @@
 import {
   ComponentPropsWithoutRef,
   forwardRef,
+  SyntheticEvent,
   useEffect,
   useState,
 } from "react";
@@ -12,6 +13,8 @@ import {
   StackLayout,
   useFloatingComponent,
   useFormFieldProps,
+  FormFieldContext,
+  FormFieldContextValue,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useDatePickerContext } from "./DatePickerContext";
@@ -27,7 +30,10 @@ import {
 import { DateValue, endOfMonth, startOfMonth } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
-  onSelect?: () => void;
+  onSelect?: (
+    event: SyntheticEvent,
+    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+  ) => void;
   helperText?: string;
   CalendarProps?: Partial<
     Omit<
@@ -70,26 +76,23 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       selectionVariant,
       context,
       getPanelPosition,
-      setValidationStatus,
     } = useDatePickerContext();
 
     const { a11yProps } = useFormFieldProps();
 
     const setRangeDate: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
-      (_, newDate) => {
+      (event, newDate) => {
         setStartDate(newDate.startDate);
         setEndDate(newDate.endDate);
-        setValidationStatus(undefined);
+        onSelect?.(event, newDate);
         if (newDate.startDate && newDate.endDate) {
           setOpen(false);
         }
-        onSelect?.();
       };
     const setSingleDate: UseSingleSelectionCalendarProps["onSelectedDateChange"] =
-      (_, newDate) => {
+      (event, newDate) => {
         setStartDate(newDate);
-        setValidationStatus(undefined);
-        onSelect?.();
+        onSelect?.(event, newDate);
         setOpen(false);
       };
     const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
@@ -151,30 +154,33 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
             </FlexItem>
           )}
           <FlexLayout>
-            <Calendar
-              visibleMonth={startVisibleMonth}
-              onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
-              {...firstCalendarProps}
-              {...CalendarProps}
-            />
-            {isRangePicker && (
+            {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
+            <FormFieldContext.Provider value={{} as FormFieldContextValue}>
               <Calendar
-                selectionVariant="range"
-                hoveredDate={hoveredDate}
-                onHoveredDateChange={handleHoveredDateChange}
-                selectedDate={{ startDate, endDate }}
-                onSelectedDateChange={setRangeDate}
-                visibleMonth={endVisibleMonth}
-                onVisibleMonthChange={(_, month) => setEndVisibleMonth(month)}
-                hideOutOfRangeDates
-                minDate={
-                  startDate
-                    ? startOfMonth(startDate)?.add({ months: 1 })
-                    : undefined
-                }
+                visibleMonth={startVisibleMonth}
+                onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
+                {...firstCalendarProps}
                 {...CalendarProps}
               />
-            )}
+              {isRangePicker && (
+                <Calendar
+                  selectionVariant="range"
+                  hoveredDate={hoveredDate}
+                  onHoveredDateChange={handleHoveredDateChange}
+                  selectedDate={{ startDate, endDate }}
+                  onSelectedDateChange={setRangeDate}
+                  visibleMonth={endVisibleMonth}
+                  onVisibleMonthChange={(_, month) => setEndVisibleMonth(month)}
+                  hideOutOfRangeDates
+                  minDate={
+                    startDate
+                      ? startOfMonth(startDate)?.add({ months: 1 })
+                      : undefined
+                  }
+                  {...CalendarProps}
+                />
+              )}
+            </FormFieldContext.Provider>
           </FlexLayout>
         </StackLayout>
       </FloatingComponent>
