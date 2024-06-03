@@ -21,7 +21,7 @@ export const CustomButtons = (): ReactElement => {
         onChange={(changedValue) => setValue(changedValue)}
         startAdornment={
           <Button
-            aria-label="decerement value"
+            aria-label="decrement value"
             onClick={() =>
               setValue(
                 typeof value === "string" ? parseFloat(value) - 1 : value - 1
