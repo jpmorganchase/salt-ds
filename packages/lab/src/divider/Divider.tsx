@@ -5,14 +5,15 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import dividerCss from "./Divider.css";
 
+type a = HTMLElementTagNameMap;
+
 export interface DividerProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The divider orientation.
+   * The orientation of the divider. Defaults to `"horizontal"`.
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * The variant to use. Options are 'primary', 'secondary' and 'tertiary'.
-   * 'primary' is the default value.
+   * The variant of the divider. Defaults to `"primary"`.
    */
   variant?: "primary" | "secondary" | "tertiary";
 }
