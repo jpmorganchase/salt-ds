@@ -11,7 +11,8 @@
   position: absolute;
 }
 
-.saltSteppedTracker.saltSteppedTracker-horizontal .saltTrackerConnector {
+.saltSteppedTracker.saltSteppedTracker-horizontal .saltTrackerConnector,
+.saltSteppedTracker.saltSteppedTracker-horizontal-compact .saltTrackerConnector {
   border-top-width: var(--trackerConnector-thickness);
   border-top-style: var(--trackerConnector-style-border);
   border-top-color: var(--trackerConnector-color);
@@ -30,7 +31,7 @@
   border-left-color: var(--trackerConnector-color);
 }
 
-.saltSteppedTracker.saltSteppedTracker-compact .saltTrackerConnector {
+.saltSteppedTracker.saltSteppedTracker-horizontal-compact .saltTrackerConnector {
   left: calc(var(--saltIcon-size) + var(--trackerConnector-margin));
 }
 

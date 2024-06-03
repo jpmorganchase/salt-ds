@@ -8,7 +8,8 @@
   position: relative;
 }
 
-.saltSteppedTracker.saltSteppedTracker-horizontal {
+.saltSteppedTracker.saltSteppedTracker-horizontal,
+.saltSteppedTracker.saltSteppedTracker-horizontal-compact {
   flex-direction: row;
 }
 
