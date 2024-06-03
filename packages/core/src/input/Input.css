@@ -68,6 +68,7 @@
   --input-background-hover: var(--salt-status-error-background);
   --input-borderColor: var(--salt-status-error-borderColor);
   --input-outlineColor: var(--salt-status-error-borderColor);
+  --input-background-readonly: var(--salt-status-error-background);
 }
 
 /* Style applied to input if `validationState="warning"` */
@@ -78,6 +79,7 @@
   --input-background-hover: var(--salt-status-warning-background);
   --input-borderColor: var(--salt-status-warning-borderColor);
   --input-outlineColor: var(--salt-status-warning-borderColor);
+  --input-background-readonly: var(--salt-status-warning-background);
 }
 
 /* Style applied to input if `validationState="success"` */
@@ -88,6 +90,7 @@
   --input-background-hover: var(--salt-status-success-background);
   --input-borderColor: var(--salt-status-success-borderColor);
   --input-outlineColor: var(--salt-status-success-borderColor);
+  --input-background-readonly: var(--salt-status-success-background);
 }
 
 /* Style applied to inner input component */
@@ -187,9 +190,14 @@
   --input-borderWidth: 0;
 }
 
-/* Style applied if active or focused when `bordered={true}` */
-.saltInput-bordered:active,
+/* Style applied if focused when `bordered={true}` */
 .saltInput-bordered.saltInput-focused {
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Style applied if active when `bordered={true}` */
+.saltInput-bordered:active {
+  outline: none;
   --input-borderWidth: var(--salt-editable-borderWidth-active);
 }
 
