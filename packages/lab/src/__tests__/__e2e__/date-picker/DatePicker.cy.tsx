@@ -65,6 +65,9 @@ describe("GIVEN a DatePicker", () => {
       cy.mount(<Default defaultSelectedDate={testDate} />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
+
+      // Regression - #3471
+      cy.get(".saltDatePickerPanel").should("have.css", "z-index", "1500");
     });
     it("THEN should close the calendar panel once a date is selected", () => {
       cy.mount(<Default defaultSelectedDate={testDate} />);
