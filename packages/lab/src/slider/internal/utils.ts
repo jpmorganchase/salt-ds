@@ -1,4 +1,5 @@
 import { RefObject } from "react";
+import { SliderChangeHandler, SliderValue } from "../types";
 
 export function getValue(
   trackRef: RefObject<Element>,
@@ -15,6 +16,17 @@ export function getValue(
   value = roundToTwoDp(value);
   value = clampValue(value, min, max);
   return value;
+}
+
+export function setValue(
+  value: SliderValue,
+  newValue: number,
+  index: number,
+  onChange: SliderChangeHandler
+) {
+  const newValueArray = [...value];
+  newValueArray.splice(index, 1, newValue);
+  onChange(newValueArray);
 }
 
 export const roundToTwoDp = (value: number) => Math.round(value * 100) / 100;
