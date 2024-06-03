@@ -13,14 +13,14 @@ import {
   Calendar,
   CalendarProps,
   UseRangeSelectionCalendarProps,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 import "./calendar.stories.css";
 
 export default {
-  title: "Lab/Calendar",
+  title: "Core/Calendar",
   component: Calendar,
   args: {
     selectionVariant: "default",

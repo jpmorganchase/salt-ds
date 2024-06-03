@@ -15,18 +15,17 @@ import {
   useFormFieldProps,
   FormFieldContext,
   FormFieldContextValue,
+  Calendar,
+  CalendarProps,
+  UseRangeSelectionCalendarProps,
+  UseSingleSelectionCalendarProps,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useDatePickerContext } from "./DatePickerContext";
 import dateInputPanelCss from "./DatePickerPanel.css";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import {
-  Calendar,
-  CalendarProps,
-  UseRangeSelectionCalendarProps,
-  UseSingleSelectionCalendarProps,
-} from "../calendar";
+
 import { DateValue, endOfMonth, startOfMonth } from "@internationalized/date";
 
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {

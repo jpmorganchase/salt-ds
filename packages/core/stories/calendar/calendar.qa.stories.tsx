@@ -1,10 +1,10 @@
 import { StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { Calendar } from "@salt-ds/lab";
+import { Calendar } from "@salt-ds/core";
 import { parseDate } from "@internationalized/date";
 
 export default {
-  title: "Lab/Calendar/Calendar QA",
+  title: "Core/Calendar/Calendar QA",
   component: Calendar,
 };
 

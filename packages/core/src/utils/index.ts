@@ -3,6 +3,7 @@ export * from "./createChainedFunction";
 export * from "./createContext";
 export * from "./debounce";
 export * from "./inferElementType";
+export * from "./isPlainObject";
 export * from "./makePrefixer";
 export * from "./marginMiddleware";
 export * from "./ownerDocument";

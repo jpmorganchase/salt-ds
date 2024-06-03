@@ -15,6 +15,8 @@ import {
   useFloatingUI,
   useForkRef,
   useFormFieldProps,
+  CalendarProps,
+  isRangeOrOffsetSelectionWithStartDate,
 } from "@salt-ds/core";
 import { DatePickerContext } from "./DatePickerContext";
 import { DatePickerPanel } from "./DatePickerPanel";
@@ -22,10 +24,6 @@ import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { DateInput } from "../date-input";
 import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
-import {
-  CalendarProps,
-  isRangeOrOffsetSelectionWithStartDate,
-} from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
