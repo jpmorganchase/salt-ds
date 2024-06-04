@@ -95,7 +95,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         </div>
         {!hideLabel && (
           <Text styleAs="h2" className={withBaseName("progressLabel")}>
-            {isIndeterminate ? `—%` : `${Math.round(progress)}%`}
+            {isIndeterminate ? `— %` : `${Math.round(progress)} %`}
           </Text>
         )}
       </div>
