@@ -32,13 +32,6 @@
   margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
   color: var(--toast-borderColor);
 }
-.salt-density-high.saltToast-iconContainer > .saltIcon {
-  margin: calc(var(--salt-spacing-75) + 1px) 0 var(--salt-spacing-75) 0;
-}
-
-.salt-density-high.saltToast-icon.saltIcon {
-  margin: calc(var(--salt-spacing-75) + 1px) 0 var(--salt-spacing-75) 0;
-}
 
 /* Styles applied when state = "info" */
 .saltToast-info {

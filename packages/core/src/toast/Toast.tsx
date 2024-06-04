@@ -16,7 +16,7 @@ export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
    */
   status?: ValidationStatus;
   /**
-   * (Optional) if provided, this Icon component will be used instead of the status icon
+   * (Optional) if provided, this icon component will be used instead of the status icon
    */
   icon?: ReactElement<IconProps>;
 }
