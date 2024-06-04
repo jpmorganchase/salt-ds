@@ -365,7 +365,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       isAllSelected ||
       (!isAllSelected && newOptionsSelected.length === usStates.length)
     ) {
-      newOptionsSelected = [...usStates, allSelectedOptionValue];
+      newOptionsSelected = [allSelectedOptionValue, ...usStates];
     }
     setSelected(newOptionsSelected);
     args.onSelectionChange?.(event, newOptionsSelected);

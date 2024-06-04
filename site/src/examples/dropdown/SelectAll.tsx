@@ -26,7 +26,7 @@ export const SelectAll = (): ReactElement => {
       isAllSelected ||
       (!isAllSelected && newOptionsSelected.length === shortColorData.length)
     ) {
-      newOptionsSelected = [...shortColorData, allSelectedOptionValue];
+      newOptionsSelected = [allSelectedOptionValue, ...shortColorData];
     }
     setSelected(newOptionsSelected);
   };
