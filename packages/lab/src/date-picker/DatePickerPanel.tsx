@@ -168,7 +168,6 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
               <Calendar
                 visibleMonth={startVisibleMonth}
                 onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
-                isCompact={isCompact}
                 {...firstCalendarProps}
                 {...CalendarProps}
               />

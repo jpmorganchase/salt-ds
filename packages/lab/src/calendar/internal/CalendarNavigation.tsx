@@ -276,7 +276,7 @@ export const CalendarNavigation = forwardRef<
         leaveDelay={0} // --salt-duration-instant
       >
         <Button
-          disabled={!canNavigateNext && !isCompact}
+          disabled={!canNavigateNext}
           variant="secondary"
           onClick={handleNavigateNext}
           focusableWhenDisabled={true}

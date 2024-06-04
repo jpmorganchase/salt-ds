@@ -26,7 +26,6 @@ export type CalendarProps = useCalendarProps & {
   hideYearDropdown?: CalendarNavigationProps["hideYearDropdown"];
   TooltipProps?: CalendarCarouselProps["TooltipProps"];
   hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
-  isCompact?: boolean;
 };
 
 const withBaseName = makePrefixer("saltCalendar");
@@ -38,7 +37,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       renderDayContents,
       hideYearDropdown,
       TooltipProps,
-      isCompact,
       ...rest
     } = props;
 
@@ -51,7 +49,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
 
     const { state, helpers } = useCalendar({
       hideYearDropdown,
-      isCompact,
       ...rest,
     });
 
@@ -84,7 +81,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         >
           <CalendarNavigation
             hideYearDropdown={hideYearDropdown}
-            isCompact={isCompact}
           />
           <CalendarWeekHeader />
           <CalendarCarousel
