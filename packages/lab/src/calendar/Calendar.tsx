@@ -79,9 +79,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           aria-label={calendarLabel}
           ref={ref}
         >
-          <CalendarNavigation
-            hideYearDropdown={hideYearDropdown}
-          />
+          <CalendarNavigation hideYearDropdown={hideYearDropdown} />
           <CalendarWeekHeader />
           <CalendarCarousel
             onFocus={handleFocus}
