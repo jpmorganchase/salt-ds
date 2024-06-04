@@ -35,7 +35,7 @@ export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
     selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
   ) => void;
   helperText?: string;
-  isCompact?: boolean;
+  compact?: boolean;
   CalendarProps?: Partial<
     Omit<
       CalendarProps,
@@ -51,14 +51,8 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const {
-      className,
-      onSelect,
-      helperText,
-      CalendarProps,
-      isCompact,
-      ...rest
-    } = props;
+    const { className, onSelect, helperText, CalendarProps, compact, ...rest } =
+      props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -121,7 +115,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       ? {
           selectionVariant: "range",
           hoveredDate:
-            !isCompact &&
+            !compact &&
             startDate &&
             hoveredDate &&
             hoveredDate.compare(endOfMonth(startDate)) > 0
@@ -130,7 +124,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           onHoveredDateChange: handleHoveredDateChange,
           selectedDate: { startDate, endDate },
           onSelectedDateChange: setRangeDate,
-          maxDate: !isCompact ? startDate && endOfMonth(startDate) : undefined,
+          maxDate: !compact ? startDate && endOfMonth(startDate) : undefined,
           hideOutOfRangeDates: true,
         }
       : {
@@ -171,7 +165,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
                 {...firstCalendarProps}
                 {...CalendarProps}
               />
-              {isRangePicker && !isCompact && (
+              {isRangePicker && !compact && (
                 <Calendar
                   selectionVariant="range"
                   hoveredDate={hoveredDate}

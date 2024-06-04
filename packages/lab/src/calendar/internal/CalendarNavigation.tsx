@@ -36,7 +36,6 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   onNavigateNext?: ButtonProps["onClick"];
   onNavigatePrevious?: ButtonProps["onClick"];
   hideYearDropdown?: boolean;
-  isCompact?: boolean;
 }
 
 interface OptionWithTooltipProps extends OptionProps {
@@ -150,7 +149,6 @@ export const CalendarNavigation = forwardRef<
     MonthDropdownProps,
     YearDropdownProps,
     hideYearDropdown,
-    isCompact,
     ...rest
   } = props;
 

@@ -9,7 +9,7 @@ import {
 export const CompactRange = (): ReactElement => (
   <FormField style={{ width: "250px" }}>
     <FormLabel>Pick a range</FormLabel>
-    <DatePicker selectionVariant="range" isCompact />
+    <DatePicker selectionVariant="range" compact />
     <FormHelperText>
       Select a start and end date, format DD MMM YYYY (e.g. 09 Jun 2021)
     </FormHelperText>
