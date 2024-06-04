@@ -398,7 +398,6 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
                 : "var(--salt-separable-tertiary-borderColor)",
           }}
           value={allSelectedOptionValue}
-          key={allSelectedOptionValue}
         >
           Select All
         </Option>

@@ -57,7 +57,6 @@ export const SelectAll = (): ReactElement => {
                 : "var(--salt-separable-tertiary-borderColor)",
           }}
           value={allSelectedOptionValue}
-          key={allSelectedOptionValue}
         >
           Select All
         </Option>
