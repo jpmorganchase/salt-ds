@@ -35,6 +35,7 @@ export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
     selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
   ) => void;
   helperText?: string;
+  isCompact?: boolean;
   CalendarProps?: Partial<
     Omit<
       CalendarProps,
@@ -50,7 +51,14 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, onSelect, helperText, CalendarProps, ...rest } = props;
+    const {
+      className,
+      onSelect,
+      helperText,
+      CalendarProps,
+      isCompact,
+      ...rest
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -113,6 +121,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
       ? {
           selectionVariant: "range",
           hoveredDate:
+            !isCompact &&
             startDate &&
             hoveredDate &&
             hoveredDate.compare(endOfMonth(startDate)) > 0
@@ -121,7 +130,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
           onHoveredDateChange: handleHoveredDateChange,
           selectedDate: { startDate, endDate },
           onSelectedDateChange: setRangeDate,
-          maxDate: startDate && endOfMonth(startDate),
+          maxDate: !isCompact ? startDate && endOfMonth(startDate) : undefined,
           hideOutOfRangeDates: true,
         }
       : {
@@ -159,10 +168,11 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
               <Calendar
                 visibleMonth={startVisibleMonth}
                 onVisibleMonthChange={(_, month) => setStartVisibleMonth(month)}
+                isCompact={isCompact}
                 {...firstCalendarProps}
                 {...CalendarProps}
               />
-              {isRangePicker && (
+              {isRangePicker && !isCompact && (
                 <Calendar
                   selectionVariant="range"
                   hoveredDate={hoveredDate}

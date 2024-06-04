@@ -103,6 +103,7 @@ export interface DatePickerProps
    * Callback fired when the input value change.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  isCompact?: boolean;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -124,6 +125,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       validationStatus,
       onSelectionChange,
       onChange,
+      isCompact,
       ...rest
     },
     ref
@@ -276,6 +278,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           onSelect={handleSelect}
           CalendarProps={CalendarProps}
           helperText={helperText}
+          isCompact={isCompact}
         />
       </DatePickerContext.Provider>
     );

@@ -35,6 +35,7 @@ interface BaseUseCalendarProps {
   hideYearDropdown?: boolean;
   minDate?: DateValue;
   maxDate?: DateValue;
+  isCompact?: boolean;
 }
 
 export type useCalendarProps = (
