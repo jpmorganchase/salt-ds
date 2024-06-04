@@ -187,8 +187,6 @@ const LoadingButtonGrid = ({
   const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
   const [secondaryLoadingState, setSecondaryLoadingState] = useState(false);
   const [ctaLoadingState, setCtaLoadingState] = useState(false);
-  const [disabledPrimaryLoadingState, setDisabledPrimaryLoadingState] =
-    useState(false);
 
   const handlePrimaryClick = () => {
     setPrimaryLoadingState(true);
@@ -209,13 +207,6 @@ const LoadingButtonGrid = ({
     }, 3000);
   };
 
-  const handlePrimaryLoadingClick = () => {
-    setDisabledPrimaryLoadingState(true);
-    setTimeout(() => {
-      setDisabledPrimaryLoadingState(false);
-    }, 3000);
-  };
-
   return (
     <div
       style={{
@@ -229,14 +220,14 @@ const LoadingButtonGrid = ({
         variant="primary"
         showLoadingText={showLoadingText}
         loadingText={loadingText}
-        isLoading={primaryLoadingState}
+        isLoading={true}
         onClick={handlePrimaryClick}
       >
         {primaryButtonLabel}
         <ChevronRightIcon aria-hidden />
       </Button>
       <Button
-        variant="secondary"
+        variant="primary"
         showLoadingText={showLoadingText}
         loadingText={loadingText}
         isLoading={secondaryLoadingState}
@@ -253,18 +244,6 @@ const LoadingButtonGrid = ({
         onClick={handleCtaClick}
       >
         {ctaButtonLabel}
-        <ChevronRightIcon aria-hidden />
-      </Button>
-      <Button
-        variant="primary"
-        disabled={disabledPrimaryLoadingState}
-        showLoadingText={showLoadingText}
-        loadingText={loadingText}
-        isLoading={disabledPrimaryLoadingState}
-        onClick={handlePrimaryLoadingClick}
-      >
-        {primaryButtonLabel}
-        <ChevronRightIcon aria-hidden />
       </Button>
     </div>
   );
@@ -284,8 +263,8 @@ export const LoadingButtons: StoryFn<typeof Button> = () => {
 export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
   return (
     <LoadingButtonGrid
-      primaryButtonLabel="Primary Submit"
-      secondaryButtonLabel="Secondary Search"
+      primaryButtonLabel="Next Page"
+      secondaryButtonLabel="Previous"
       ctaButtonLabel="Click to Continue"
       loadingText="Loading"
       showLoadingText

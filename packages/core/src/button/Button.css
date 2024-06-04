@@ -91,23 +91,23 @@
 }
 
 /* Pseudo-class applied to the root element on focus when Button is active */
-.saltButton.saltButton-active:focus-visible,
-.saltButton:focus-visible(:active) {
+.saltButton.saltButton-active:focus-visible:not(.saltButton-loading-primary, .saltButton-loading-secondary, .saltButton-loading-cta),
+.saltButton:focus-visible(:active):not(.saltButton-loading-primary, .saltButton-loading-secondary, .saltButton-loading-cta) {
   background: var(--saltButton-background-active-hover, var(--button-background));
   color: var(--saltButton-text-color-active-hover, var(--button-text-color));
   border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
 }
 
 /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
-.saltButton:hover {
+.saltButton:hover:not(.saltButton-loading-primary, .saltButton-loading-secondary, .saltButton-loading-cta) {
   background: var(--saltButton-background-hover, var(--button-background-hover));
   color: var(--saltButton-text-color-hover, var(--button-text-color-hover));
   border-color: var(--saltButton-borderColor-hover, var(--button-borderColor-hover));
 }
 
 /* Pseudo-class applied to the root element when Button is active and not disabled */
-.saltButton:active,
-.saltButton.saltButton-active {
+.saltButton:active:not(.saltButton-loading-primary, .saltButton-loading-secondary, .saltButton-loading-cta),
+.saltButton.saltButton-active:not(.saltButton-loading-primary, .saltButton-loading-secondary, .saltButton-loading-cta) {
   background: var(--saltButton-background-active, var(--button-background-active));
   color: var(--saltButton-text-color-active, var(--button-text-color-active));
   border-color: var(--saltButton-borderColor-active, var(--button-borderColor-active));
@@ -134,12 +134,25 @@
   border-color: var(--saltButton-borderColor-disabled, var(--button-borderColor-disabled));
 }
 
-.saltButton-loading-cta {
-  border-color: var(--salt-actionable-cta-borderColor);
+.saltButton-loading-cta,
+.saltButton-loading-cta:active,
+.saltButton-loading-cta:focus-visible,
+.saltButton-loading-cta:hover  {
+  --button-borderColor: var(--salt-actionable-cta-borderColor);
 }
 
-.saltButton-loading-primary {
-  border-color: var(--salt-actionable-primary-borderColor);
+.saltButton-loading-primary,
+.saltButton-loading-primary:active,
+.saltButton-loading-primary:focus-visible,
+.saltButton-loading-primary:hover {
+  --button-borderColor: var(--salt-actionable-primary-borderColor);
+}
+
+.saltButton-loading-secondary,
+.saltButton-loading-secondary:active,
+.saltButton-loading-secondary:focus-visible,
+.saltButton-loading-secondary:hover {
+  --button-borderColor: var(--salt-container-primary-background);
 }
 
 .saltButton-loading-overlay {
