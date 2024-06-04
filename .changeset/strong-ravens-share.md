@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-horizontal-compact variant for Stepped Tracker
+Added "horizontal-compact" variant for Stepped Tracker
