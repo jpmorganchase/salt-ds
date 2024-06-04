@@ -45,20 +45,11 @@ export const SelectAll = (): ReactElement => {
       onSelectionChange={handleSelectionChange}
       multiselect
     >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-          background: !selected.includes(allSelectedOptionValue)
-            ? "var(--salt-color-white)"
-            : "",
-        }}
-      >
+      <div>
         <Option
           style={{
-            borderBottom: "solid",
-            borderWidth: "1px",
+            borderBottom: "var(--salt-separable-borderStyle)",
+            borderWidth: "var(--salt-size-border)",
             borderColor:
               selected.includes(shortColorData[0]) ||
               selected.includes(allSelectedOptionValue)

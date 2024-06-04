@@ -386,20 +386,11 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       onSelectionChange={handleSelectionChange}
       multiselect
     >
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-          background: !selected.includes(allSelectedOptionValue)
-            ? "var(--salt-container-primary-background)"
-            : "",
-        }}
-      >
+      <div>
         <Option
           style={{
-            borderBottom: "solid",
-            borderWidth: "1px",
+            borderBottom: "var(--salt-separable-borderStyle)",
+            borderWidth: "var(--salt-size-border)",
             borderColor:
               selected.includes(usStates[0]) ||
               selected.includes(allSelectedOptionValue)
