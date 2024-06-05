@@ -172,7 +172,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
                 {...firstCalendarProps}
                 {...CalendarProps}
               />
-              {isRangePicker && visibleMonths === 2 && (
+              {isRangePicker && !compact && (
                 <Calendar
                   selectionVariant="range"
                   hoveredDate={hoveredDate}
