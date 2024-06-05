@@ -45,10 +45,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
       ref={ref}
     >
       {status && (
-        <div
-          className={withBaseName("iconContainer")}
-          {...(icon && { "aria-hidden": true })}
-        >
+        <div className={withBaseName("iconContainer")}>
           {icon ? icon : <StatusIndicator status={status} />}
         </div>
       )}

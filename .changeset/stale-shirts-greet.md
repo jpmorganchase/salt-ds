@@ -1,8 +1,8 @@
 ---
-"@salt-ds/core": patch
+"@salt-ds/core": minor
 ---
 
-added `icon` prop to Toast to allow for a custom icon
+Added `icon` prop to Toast to allow for a custom icon
 
 ```tsx
 <Toast icon={<InfoIcon />} status={"info"}>
@@ -12,8 +12,5 @@ added `icon` prop to Toast to allow for a custom icon
     </Text>
     <div>Filters have been cleared</div>
   </ToastContent>
-  <Button variant="secondary">
-    <CloseIcon />
-  </Button>
 </Toast>
 ```

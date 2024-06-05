@@ -2,6 +2,7 @@
 .saltToast {
   --toast-background: var(--salt-container-primary-background);
   --toast-borderColor: var(--salt-container-primary-borderColor);
+  --toast-iconColor: var(--salt-container-primary-borderColor);
 
   background: var(--saltToast-background, var(--toast-background));
   border-color: var(--saltToast-borderColor, var(--toast-borderColor));
@@ -30,25 +31,29 @@
 /* Styles applied to icon */
 .saltToast-iconContainer > .saltIcon {
   margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
-  color: var(--toast-borderColor);
+  color: var(--toast-iconColor);
 }
 
 /* Styles applied when state = "info" */
 .saltToast-info {
   --toast-borderColor: var(--salt-status-info-borderColor);
+  --toast-iconColor: var(--salt-status-info-borderColor);
 }
 
 /* Styles applied when state = "error" */
 .saltToast-error {
   --toast-borderColor: var(--salt-status-error-borderColor);
+  --toast-iconColor: var(--salt-status-error-borderColor);
 }
 
 /* Styles applied when state = "warning" */
 .saltToast-warning {
   --toast-borderColor: var(--salt-status-warning-borderColor);
+  --toast-iconColor: var(--salt-status-warning-borderColor);
 }
 
 /* Styles applied when state = "success" */
 .saltToast-success {
   --toast-borderColor: var(--salt-status-success-borderColor);
+  --toast-iconColor: var(--salt-status-success-borderColor);
 }
