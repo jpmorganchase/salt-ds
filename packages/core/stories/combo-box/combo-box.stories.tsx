@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
 import {
   FormField,
+  Button,
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
@@ -11,6 +12,7 @@ import {
   Text,
   Avatar,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   CountryCode,
   countryMetaMap,
@@ -844,14 +846,11 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
   );
 };
 
-export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
+export const ClearAll: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
   const [selected, setSelected] = useState<string[]>([]);
-  const allSelectedOptionValue = "all";
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    // React 16 backwards compatibility
-    event.persist();
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setValue(value);
   };
@@ -860,27 +859,8 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
     event: SyntheticEvent,
     newSelected: string[]
   ) => {
-    let newOptionsSelected = [...newSelected];
-    const wasAllSelected = selected.includes(allSelectedOptionValue);
-    const isAllSelected = newOptionsSelected.includes(allSelectedOptionValue);
-
-    if (wasAllSelected) {
-      if (isAllSelected) {
-        newOptionsSelected = newOptionsSelected.filter(
-          (el) => el !== allSelectedOptionValue
-        );
-      } else {
-        newOptionsSelected = [];
-      }
-    } else if (
-      isAllSelected ||
-      (!isAllSelected && newOptionsSelected.length === usStates.length)
-    ) {
-      newOptionsSelected = [...usStates, allSelectedOptionValue];
-    }
-    setSelected(newOptionsSelected);
-    args.onSelectionChange?.(event, newOptionsSelected);
-
+    setSelected(newSelected);
+    args.onSelectionChange?.(event, newSelected);
     setValue("");
   };
 
@@ -888,44 +868,32 @@ export const SelectAll: StoryFn<ComboBoxProps> = (args) => {
     state.toLowerCase().includes(value.trim().toLowerCase())
   );
 
+  const handleClear = () => {
+    setValue("");
+    setSelected([]);
+  };
+
   return (
     <ComboBox
       {...args}
       multiselect
+      endAdornment={
+        (value || selected.length > 0) && (
+          <Button
+            onClick={handleClear}
+            aria-label="Clear value"
+            variant="secondary"
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        )
+      }
       selected={selected}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}
     >
-      {filteredOptions.length > 1 && (
-        <div
-          style={{
-            position: "sticky",
-            top: 0,
-            zIndex: 9,
-            background: !selected.includes(allSelectedOptionValue)
-              ? "var(--salt-color-white)"
-              : "",
-          }}
-        >
-          <Option
-            style={{
-              borderBottom: "solid",
-              borderWidth: "1px",
-              borderColor:
-                selected.includes(filteredOptions[0]) ||
-                selected.includes(allSelectedOptionValue)
-                  ? "transparent"
-                  : "var(--salt-separable-tertiary-borderColor)",
-            }}
-            value={"all"}
-            key={"all"}
-          >
-            Select All
-          </Option>
-        </div>
-      )}
       {filteredOptions.map((state) => (
         <Option value={state} key={state} />
       ))}
