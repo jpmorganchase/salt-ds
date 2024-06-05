@@ -128,6 +128,14 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     />
     <MultilineInput
       startAdornment={<FlagIcon />}
+      endAdornment={<PinSolidIcon />}
+      validationStatus="success"
+      defaultValue="Success readonly"
+      bordered
+      readOnly
+    />
+    <MultilineInput
+      startAdornment={<FlagIcon />}
       endAdornment={
         <>
           <Text>%</Text>
@@ -139,9 +147,28 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       bordered
     />
     <MultilineInput
+      startAdornment={<FlagIcon />}
+      endAdornment={
+        <>
+          <Text>%</Text>
+          <FilterClearIcon />
+        </>
+      }
+      validationStatus="error"
+      defaultValue="Error readonly"
+      bordered
+      readOnly
+    />
+    <MultilineInput
       validationStatus="warning"
       defaultValue="Warning bordered"
       bordered
+    />
+    <MultilineInput
+      validationStatus="warning"
+      defaultValue="Warning readonly"
+      bordered
+      readOnly
     />
   </QAContainer>
 );
