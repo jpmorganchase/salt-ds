@@ -125,7 +125,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       validationStatus,
       onSelectionChange,
       onChange,
-      visibleMonths,
+      visibleMonths = 2,
       ...rest
     },
     ref
