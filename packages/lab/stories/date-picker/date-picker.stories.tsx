@@ -48,8 +48,8 @@ Range.args = {
   selectionVariant: "range",
 };
 
-export const CompactRange = DatePickerTemplate.bind({});
-CompactRange.args = {
+export const VisibleMonths = DatePickerTemplate.bind({});
+VisibleMonths.args = {
   selectionVariant: "range",
   visibleMonths: 1,
 };

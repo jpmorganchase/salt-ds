@@ -6,7 +6,7 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 
-export const CompactRange = (): ReactElement => (
+export const VisibleMonths = (): ReactElement => (
   <FormField style={{ width: "250px" }}>
     <FormLabel>Pick a range</FormLabel>
     <DatePicker selectionVariant="range" visibleMonths={1} />
