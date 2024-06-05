@@ -103,6 +103,10 @@ export interface DatePickerProps
    * Callback fired when the input value change.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Number of Calendars to be shown if selectionVariant is range.
+   * 2 is the default value.
+   */
   visibleMonths?: 1 | 2;
 }
 
