@@ -51,7 +51,7 @@ Range.args = {
 export const CompactRange = DatePickerTemplate.bind({});
 CompactRange.args = {
   selectionVariant: "range",
-  compact: true,
+  visibleMonths: 1,
 };
 
 export const WithFormField: StoryFn<DatePickerProps> = (args) => {

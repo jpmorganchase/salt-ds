@@ -35,7 +35,7 @@ export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
     selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
   ) => void;
   helperText?: string;
-  compact?: boolean;
+  visibleMonths?: 1 | 2;
   CalendarProps?: Partial<
     Omit<
       CalendarProps,
@@ -51,8 +51,14 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, onSelect, helperText, CalendarProps, compact, ...rest } =
-      props;
+    const {
+      className,
+      onSelect,
+      helperText,
+      CalendarProps,
+      visibleMonths,
+      ...rest
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -111,6 +117,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
     }, [startDate]);
 
     const isRangePicker = selectionVariant === "range";
+    const compact = visibleMonths === 1;
     const firstCalendarProps: CalendarProps = isRangePicker
       ? {
           selectionVariant: "range",
@@ -165,7 +172,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
                 {...firstCalendarProps}
                 {...CalendarProps}
               />
-              {isRangePicker && !compact && (
+              {isRangePicker && visibleMonths === 2 && (
                 <Calendar
                   selectionVariant="range"
                   hoveredDate={hoveredDate}
