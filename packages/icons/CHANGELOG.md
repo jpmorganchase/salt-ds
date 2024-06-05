@@ -1,5 +1,23 @@
 # @salt-ds/icons
 
+## 1.12.0
+
+### Minor Changes
+
+- f44fe1eb: Updated icons with arrows to be more consistent:
+
+  - Inbox
+  - InboxSolid
+  - MoveAll
+  - MoveHorizontal
+  - MoveVertical
+
+  Added:
+
+  - MaximizeSolid
+  - Sparkle
+  - SparkleSolid
+
 ## 1.11.2
 
 ### Patch Changes

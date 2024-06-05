@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
 import {
   FormField,
+  Button,
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
@@ -11,6 +12,7 @@ import {
   Text,
   Avatar,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   CountryCode,
   countryMetaMap,
@@ -840,6 +842,61 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
           Add &quot;{value}&quot;
         </Option>
       )}
+    </ComboBox>
+  );
+};
+
+export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
+  const [value, setValue] = useState(getTemplateDefaultValue(args));
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    setSelected(newSelected);
+    args.onSelectionChange?.(event, newSelected);
+    setValue("");
+  };
+
+  const filteredOptions = usStates.filter((state) =>
+    state.toLowerCase().includes(value.trim().toLowerCase())
+  );
+
+  const handleClear = () => {
+    setValue("");
+    setSelected([]);
+  };
+
+  return (
+    <ComboBox
+      {...args}
+      multiselect
+      endAdornment={
+        (value || selected.length > 0) && (
+          <Button
+            onClick={handleClear}
+            aria-label="Clear value"
+            variant="secondary"
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        )
+      }
+      selected={selected}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      style={{ width: "266px" }}
+    >
+      {filteredOptions.map((state) => (
+        <Option value={state} key={state} />
+      ))}
     </ComboBox>
   );
 };

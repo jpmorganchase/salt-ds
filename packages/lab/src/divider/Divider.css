@@ -1,0 +1,27 @@
+.saltDivider-primary {
+  --divider-background: var(--salt-separable-primary-borderColor);
+}
+
+.saltDivider-secondary {
+  --divider-background: var(--salt-separable-secondary-borderColor);
+}
+
+.saltDivider-tertiary {
+  --divider-background: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltDivider {
+  background: var(--divider-background);
+  align-self: stretch;
+  margin: 0;
+  border: none;
+}
+
+.saltDivider-horizontal {
+  height: var(--salt-size-border);
+}
+
+.saltDivider-vertical {
+  width: var(--salt-size-border);
+  height: auto;
+}

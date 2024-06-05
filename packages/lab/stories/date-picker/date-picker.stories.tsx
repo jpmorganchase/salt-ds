@@ -6,7 +6,11 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import { ChangeEvent, useState } from "react";
-import { DateValue } from "@internationalized/date";
+import {
+  DateFormatter,
+  DateValue,
+  getLocalTimeZone,
+} from "@internationalized/date";
 
 export default {
   title: "Lab/Date Picker",
@@ -27,7 +31,15 @@ Default.args = {};
 
 export const CustomFormat = DatePickerTemplate.bind({});
 CustomFormat.args = {
-  dateFormatter: (date) => date?.toLocaleString() ?? "",
+  dateFormatter: (date: DateValue | undefined): string => {
+    return date
+      ? new DateFormatter("fr-CA", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date.toDate(getLocalTimeZone()))
+      : "";
+  },
   placeholder: "YYYY-MM-DD",
 };
 
@@ -42,7 +54,7 @@ export const WithFormField: StoryFn<DatePickerProps> = (args) => {
   return (
     <FormField style={{ width: "200px" }}>
       <FormLabel>Pick a date</FormLabel>
-      <DatePicker {...args} />
+      <DatePicker {...args} helperText={helperText} />
       <FormHelperText>{helperText}</FormHelperText>
     </FormField>
   );
@@ -63,8 +75,8 @@ export const WithValidation: StoryFn<DatePickerProps> = (args) => {
       <FormLabel>Pick a date</FormLabel>
       <DatePicker
         {...args}
+        helperText={helperText}
         selectedDate={selectedDate}
-        validationStatus={validationStatus}
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           setInputValue(event.target.value)
         }
