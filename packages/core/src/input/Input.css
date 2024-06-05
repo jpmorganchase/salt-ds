@@ -190,19 +190,14 @@
   --input-borderWidth: 0;
 }
 
-/* Style applied if focused when `bordered={true}` */
-.saltInput-bordered.saltInput-focused {
-  --input-borderWidth: var(--salt-editable-borderWidth-active);
-}
-
-/* Style applied if active when `bordered={true}` */
+/* Style applied if focused or active when `bordered={true}` */
+.saltInput-bordered.saltInput-focused,
 .saltInput-bordered:active {
-  outline: none;
   --input-borderWidth: var(--salt-editable-borderWidth-active);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltInput-bordered.saltInput-readOnly:hover,
+.saltInput-bordered.saltInput-readOnly,
 .saltInput-bordered.saltInput-disabled:hover {
   --input-borderWidth: 0;
 }

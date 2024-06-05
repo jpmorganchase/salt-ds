@@ -211,7 +211,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         {...restInputProps}
         required={isRequired}
       />
-      {!isDisabled && !isReadOnly && validationStatus && (
+      {!isDisabled && validationStatus && (
         <StatusAdornment status={validationStatus} />
       )}
       {endAdornment && (
