@@ -846,7 +846,7 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
   );
 };
 
-export const ClearAll: StoryFn<ComboBoxProps> = (args) => {
+export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
   const [selected, setSelected] = useState<string[]>([]);
 

@@ -3,7 +3,7 @@ import { ComboBox, Button, Option } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 import { CloseIcon } from "@salt-ds/icons";
 
-export const ClearAll = (): ReactElement => {
+export const ClearSelection = (): ReactElement => {
   const [value, setValue] = useState("");
   const [selected, setSelected] = useState<string[]>([]);
 
