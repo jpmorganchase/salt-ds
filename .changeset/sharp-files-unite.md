@@ -42,4 +42,8 @@ Updated foundation color palette used in theme next due to color contrast concer
 --salt-color-purple-200
 --salt-color-purple-300
 --salt-color-purple-400
+--salt-color-purple-600
+--salt-color-purple-700
+--salt-color-purple-800
+--salt-color-purple-900
 ```
