@@ -164,7 +164,12 @@ When the `value` prop is an object, the `valueToString` prop must be provided to
 
 ## Select All
 
-In order to achieve the select all functionality, you can pass the first option as Select All and pass in the logic to handleSelectionChange prop.
+In order to achieve the select all functionality, you can pass the first option as Select All and pass in the logic to `onSelectionChange` prop.
+
+### Best practices
+
+- Select All is beneficial in situations where users handle extensive data sets or need to execute bulk actions involving the selection of multiple items at once.
+- Select All ensures users can easily manage their selections and enhances the overall user experience by reducing the number of required clicks and providing an easy reversal option if selections are made accidentally.
 
 </LivePreview>
 </LivePreviewControls>
