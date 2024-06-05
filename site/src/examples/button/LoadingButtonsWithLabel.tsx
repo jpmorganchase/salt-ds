@@ -6,8 +6,6 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
   const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
   const [secondaryLoadingState, setSecondaryLoadingState] = useState(false);
   const [ctaLoadingState, setCtaLoadingState] = useState(false);
-  const [disabledPrimaryLoadingState, setDisabledPrimaryLoadingState] =
-    useState(false);
 
   const handlePrimaryClick = () => {
     setPrimaryLoadingState(true);
@@ -28,13 +26,6 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
     }, 3000);
   };
 
-  const handlePrimaryLoadingClick = () => {
-    setDisabledPrimaryLoadingState(true);
-    setTimeout(() => {
-      setDisabledPrimaryLoadingState(false);
-    }, 3000);
-  };
-
   return (
     <div
       style={{
@@ -51,7 +42,7 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
         isLoading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
-        Primary Submit
+        Next Page
         <ChevronRightIcon aria-hidden />
       </Button>
       <Button
@@ -61,7 +52,7 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
         isLoading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
-        Secondary Search
+        Search
         <ChevronRightIcon aria-hidden />
       </Button>
       <Button
@@ -72,17 +63,6 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
         onClick={handleCtaClick}
       >
         Click to Continue
-        <ChevronRightIcon aria-hidden />
-      </Button>
-      <Button
-        variant="primary"
-        showLoadingText
-        disabled={disabledPrimaryLoadingState}
-        loadingText="Loading"
-        isLoading={disabledPrimaryLoadingState}
-        onClick={handlePrimaryLoadingClick}
-      >
-        Primary Submit
         <ChevronRightIcon aria-hidden />
       </Button>
     </div>

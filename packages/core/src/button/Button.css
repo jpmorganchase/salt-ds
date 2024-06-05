@@ -137,7 +137,7 @@
 .saltButton-loading-cta,
 .saltButton-loading-cta:active,
 .saltButton-loading-cta:focus-visible,
-.saltButton-loading-cta:hover  {
+.saltButton-loading-cta:hover {
   --button-borderColor: var(--salt-actionable-cta-borderColor);
 }
 
@@ -179,6 +179,12 @@
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.saltButton-hidden-element {
+  display: flex;
+  gap: var(--salt-spacing-50);
+  align-items: center;
 }
 
 .saltButton-loading-text {

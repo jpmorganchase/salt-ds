@@ -110,7 +110,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                 {loadingText}
               </span>
             </span>
-            <span aria-hidden="true">{children}</span>
+            <span
+              aria-hidden="true"
+              className={clsx(withBaseName("hidden-element"))}
+            >
+              {children}
+            </span>
           </>
         ) : (
           children

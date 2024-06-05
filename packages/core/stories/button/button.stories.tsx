@@ -220,14 +220,14 @@ const LoadingButtonGrid = ({
         variant="primary"
         showLoadingText={showLoadingText}
         loadingText={loadingText}
-        isLoading={true}
+        isLoading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
         {primaryButtonLabel}
         <ChevronRightIcon aria-hidden />
       </Button>
       <Button
-        variant="primary"
+        variant="secondary"
         showLoadingText={showLoadingText}
         loadingText={loadingText}
         isLoading={secondaryLoadingState}
@@ -264,7 +264,7 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
   return (
     <LoadingButtonGrid
       primaryButtonLabel="Next Page"
-      secondaryButtonLabel="Previous"
+      secondaryButtonLabel="Search"
       ctaButtonLabel="Click to Continue"
       loadingText="Loading"
       showLoadingText
