@@ -2,7 +2,7 @@
 .saltToast {
   --toast-background: var(--salt-container-primary-background);
   --toast-borderColor: var(--salt-container-primary-borderColor);
-  --toast-iconColor: var(--salt-container-primary-borderColor);
+  --toast-iconColor: var(--salt-content-primary-foreground);
 
   background: var(--saltToast-background, var(--toast-background));
   border-color: var(--saltToast-borderColor, var(--toast-borderColor));
@@ -37,23 +37,23 @@
 /* Styles applied when state = "info" */
 .saltToast-info {
   --toast-borderColor: var(--salt-status-info-borderColor);
-  --toast-iconColor: var(--salt-status-info-borderColor);
+  --toast-iconColor: var(--salt-status-info-foreground-decorative);
 }
 
 /* Styles applied when state = "error" */
 .saltToast-error {
   --toast-borderColor: var(--salt-status-error-borderColor);
-  --toast-iconColor: var(--salt-status-error-borderColor);
+  --toast-iconColor: var(--salt-status-error-foreground-decorative);
 }
 
 /* Styles applied when state = "warning" */
 .saltToast-warning {
   --toast-borderColor: var(--salt-status-warning-borderColor);
-  --toast-iconColor: var(--salt-status-warning-borderColor);
+  --toast-iconColor: var(--salt-status-warning-foreground-decorative);
 }
 
 /* Styles applied when state = "success" */
 .saltToast-success {
   --toast-borderColor: var(--salt-status-success-borderColor);
-  --toast-iconColor: var(--salt-status-success-borderColor);
+  --toast-iconColor: var(--salt-status-success-foreground-decorative);
 }
