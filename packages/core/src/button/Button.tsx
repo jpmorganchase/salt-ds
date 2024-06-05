@@ -27,8 +27,18 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * 'primary' is the default value.
    */
   variant?: ButtonVariant;
+  /**
+   * To show a loading spinner.
+   */
   isLoading?: boolean;
+  /**
+   * For the screen reader to announce while button is in loading state
+   * 'Loading' is the default value.
+   */
   loadingText?: string;
+  /**
+   * If `true`, a loading text with spinner will be shown while button is in loading state.
+   */
   showLoadingText?: boolean;
 }
 
