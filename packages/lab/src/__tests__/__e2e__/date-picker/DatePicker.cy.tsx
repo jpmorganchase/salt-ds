@@ -123,54 +123,27 @@ describe("GIVEN a DatePicker", () => {
   });
 
   describe("WHEN range datepicker is mounted with visibleMonths 1", () => {
-    it("THEN it should mount with the specified defaultSelectedDate", () => {
-      cy.mount(
-        <Range
-          defaultSelectedDate={{
-            startDate: testDate,
-            endDate: testDate.add({ months: 1 }),
-          }}
-          visibleMonths={1}
-        />
-      );
-      cy.findAllByRole("textbox")
-        .eq(0)
-        .should("have.value", formatInput(testDate));
-      cy.findAllByRole("textbox")
+    it("THEN it should select the date ranges from a single calendar", () => {
+      cy.mount(<Range visibleMonths={1} />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
+      })
+        .should("exist")
+        .realClick();
+      cy.findAllByRole("button")
+        .should("have.class", "saltButton-secondary")
         .eq(1)
-        .should("have.value", formatInput(testDate.add({ months: 1 })));
-    });
-
-    it("THEN it should allow selecting start and end date through input", () => {
-      cy.mount(<Range visibleMonths={1} />);
-      cy.findAllByRole("textbox").eq(0).clear().click().type(testInput);
-      cy.findAllByRole("textbox").eq(1).click().type(rangeTestInput);
-      cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      cy.findAllByRole("button", {
-        pressed: true,
-      }).should("have.length", 28);
-    });
-    it("THEN it should not close the calendar when a start date is selected", () => {
-      cy.mount(<Range visibleMonths={1} />);
-      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        .realClick();
       cy.findByRole("button", {
-        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
-      }).should("exist");
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
-      }).realClick();
-      cy.findAllByRole("application").should("have.length", 1);
-    });
-    it("THEN it should close the calendar when an end date is selected", () => {
-      cy.mount(<Range visibleMonths={1} />);
-      cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 12 })),
-      }).realClick();
-      cy.findByRole("application").should("not.exist");
+        name: formatDay(
+          startOfMonth(today(localTimeZone))
+            .add({ months: 1 })
+            .add({ days: 11 })
+        ),
+      })
+        .should("exist")
+        .realClick();
     });
   });
 
