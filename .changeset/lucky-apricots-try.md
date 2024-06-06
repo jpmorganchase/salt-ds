@@ -14,8 +14,8 @@ Added font weight in palette layer for display, heading, body and notation.
 
 ```diff
 + --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
-+ --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 + --salt-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
++ --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 + --salt-palette-text-heading-fontWeight: var(--salt-typography-fontWeight-semiBold);
 + --salt-palette-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
 + --salt-palette-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-bold);
