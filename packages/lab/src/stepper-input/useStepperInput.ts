@@ -36,6 +36,8 @@ const toFloat = (inputValue: number | string) => {
 const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
+const validateInput = (numberString: string) => ACCEPT_INPUT.test(numberString);
+
 export const useStepperInput = (
   props: StepperInputProps,
   inputRef: MutableRefObject<HTMLInputElement | null>
@@ -47,7 +49,7 @@ export const useStepperInput = (
     id: idProp,
     max = Number.MAX_SAFE_INTEGER,
     min = Number.MIN_SAFE_INTEGER,
-    onChange,
+    onValueChange,
     step = 1,
     value,
   } = props;
@@ -131,8 +133,8 @@ export const useStepperInput = (
       setCurrentValue(roundedValue);
     }
 
-    if (onChange) {
-      onChange(roundedValue);
+    if (onValueChange) {
+      onValueChange(roundedValue);
     }
   };
 
@@ -148,7 +150,7 @@ export const useStepperInput = (
   const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
     useSpinner(increment, isAtMax());
 
-  const handleInputBlur = () => {
+  const handleInputBlur = (event: FocusEvent) => {
     if (currentValue === undefined) return;
 
     const roundedValue = toFixedDecimalPlaces(
@@ -164,8 +166,8 @@ export const useStepperInput = (
       setCurrentValue(roundedValue);
     }
 
-    if (onChange) {
-      onChange(roundedValue);
+    if (onValueChange) {
+      onValueChange(event, toFloat(roundedValue));
     }
   };
 
@@ -176,8 +178,8 @@ export const useStepperInput = (
       setCurrentValue(sanitizedInput(changedValue));
     }
 
-    if (onChange) {
-      onChange(sanitizedInput(changedValue));
+    if (onValueChange) {
+      onValueChange(event, toFloat(sanitizedInput(changedValue)));
     }
   };
 

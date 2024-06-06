@@ -4,7 +4,7 @@ import { useInterval } from "./useInterval";
 
 const INTERVAL_DELAY = 300;
 
-function useSpinner(activationFn: () => void, isAtLimit: boolean) {
+function useSpinner(activationFn: (event: KeyboardEvent) => void, isAtLimit: boolean) {
   const [buttonDown, setButtonDown] = useState(false);
 
   const cancelInterval = () => setButtonDown(false);
@@ -22,8 +22,8 @@ function useSpinner(activationFn: () => void, isAtLimit: boolean) {
     };
   }, []);
 
-  const activate = () => {
-    activationFn();
+  const activate = (event: KeyboardEvent) => {
+    activationFn(event);
     setButtonDown(true);
   };
 

@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import { FocusEventHandler, forwardRef, useRef } from "react";
+import { ChangeEvent, FocusEventHandler, SyntheticEvent, forwardRef, useRef } from "react";
 import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -11,7 +11,7 @@ import stepperInputCss from "./StepperInput.css";
 const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps
-  extends Omit<InputProps, "onChange" | "emptyReadOnlyMarker"> {
+  extends Omit<InputProps, "emptyReadOnlyMarker"> {
   /**
    * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
    */
@@ -43,7 +43,10 @@ export interface StepperInputProps
   /**
    * Callback when stepper input value is changed.
    */
-  onChange?: (changedValue: number | string) => void;
+  onValueChange?: (
+    event: ChangeEvent | MouseEvent | KeyboardEvent | FocusEvent,
+    changedValue: number
+  ) => void;
   /**
    * Callback when stepper input gains focus.
    */
