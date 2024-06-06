@@ -4,8 +4,8 @@
   --salt-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
 
   --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
   --salt-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 
   --salt-palette-text-heading-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-palette-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
