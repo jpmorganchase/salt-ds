@@ -45,7 +45,7 @@ Default.parameters = {
         themeNext: "disabled",
       },
       themeNext: {
-        themeNext: "enabled",
+        themeNext: "enable",
         corner: "rounded",
         accent: "teal",
         // Ignore headingFont given font is not loaded
