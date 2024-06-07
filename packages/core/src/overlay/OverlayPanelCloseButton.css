@@ -11,5 +11,10 @@
 }
 
 .saltOverlayPanelCloseButton ~ .saltOverlayPanelContent {
-  padding-right: var(--salt-spacing-400);
+  /* (button-padding * 2) + button-icon-size + (button-borderWidth * 2) */
+  --overlayPanelCloseButton-width: calc(
+    (var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--salt-size-border, 0)))) * 2) + var(--salt-size-icon) +
+      (var(--saltButton-borderWidth, var(--salt-size-border, 0)) * 2)
+  );
+  margin-right: var(--overlayPanelCloseButton-width);
 }
