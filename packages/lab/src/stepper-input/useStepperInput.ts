@@ -9,6 +9,7 @@ import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
 
+// The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
 
 const callAll =
@@ -28,6 +29,7 @@ const isAllowedNonNumeric = (inputCharacter: number | string) => {
 };
 
 const toFloat = (inputValue: number | string) => {
+  // Plus, minus, and empty characters are treated as 0
   if (isAllowedNonNumeric(inputValue)) return 0;
   return parseFloat(inputValue.toString());
 };

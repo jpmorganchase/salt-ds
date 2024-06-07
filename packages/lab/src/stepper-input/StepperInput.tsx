@@ -1,5 +1,13 @@
 import { clsx } from "clsx";
-import { ChangeEvent, FocusEventHandler, SyntheticEvent, forwardRef, useRef } from "react";
+import {
+  ChangeEvent,
+  FocusEventHandler,
+  KeyboardEvent,
+  MouseEvent,
+  FocusEvent,
+  forwardRef,
+  useRef,
+} from "react";
 import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
