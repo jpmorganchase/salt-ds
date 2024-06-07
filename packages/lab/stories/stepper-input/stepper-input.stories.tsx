@@ -44,6 +44,34 @@ export const DecimalPlaces: StoryFn = (args) => {
   );
 };
 
+export const Controlled: StoryFn = (args) => {
+  const [value, setValue] = useState<number | string>(1.11);
+
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput
+        {...args}
+        decimalPlaces={2}
+        value={value}
+        onValueChange={(_event, value) => {
+          setValue(value);
+        }}
+        endAdornment={
+          <Button
+            variant="secondary"
+            aria-label="refresh"
+            onClick={() => setValue(1.11)}
+          >
+            <RefreshIcon aria-hidden />
+          </Button>
+        }
+      />
+      <FormFieldHelperText>The changed value is: {value}</FormFieldHelperText>
+    </FormField>
+  );
+};
+
 export const MinAndMaxValue: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const max = 5;
@@ -69,7 +97,9 @@ export const MinAndMaxValue: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onChange={(changedValue) => setValue(changedValue)}
+        onValueChange={(_event, value) => {
+          setValue(value);
+        }}
         max={max}
         min={min}
         style={{ width: "250px" }}
@@ -110,7 +140,9 @@ export const RefreshAdornment: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onChange={(changedValue) => setValue(changedValue)}
+        onValueChange={(_event, value) => {
+          setValue(value);
+        }}
         endAdornment={
           <Button
             variant="secondary"
@@ -136,8 +168,9 @@ export const HideButtons: StoryFn = (args) => {
         {...args}
         hideButtons
         textAlign="center"
-        value={value}
-        onChange={(changedValue) => setValue(changedValue)}
+        onValueChange={(_event, value) => {
+          setValue(value);
+        }}
         startAdornment={
           <Button
             aria-label="decerement value"

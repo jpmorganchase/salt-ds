@@ -53,7 +53,7 @@ export interface StepperInputProps
    */
   onValueChange?: (
     event: ChangeEvent | MouseEvent | KeyboardEvent | FocusEvent,
-    changedValue: number
+    value: number
   ) => void;
   /**
    * Callback when stepper input gains focus.

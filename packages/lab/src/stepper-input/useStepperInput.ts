@@ -4,6 +4,8 @@ import {
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
+  useEffect,
+  useState,
 } from "react";
 import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
@@ -58,6 +60,16 @@ export const useStepperInput = (
     default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
     name: "stepper-input",
   });
+
+  const [inputValue, setInputValue] = useState(currentValue);
+
+  useEffect(() => {
+    if (!isControlled) {
+      return;
+    }
+    setInputValue(value);
+  }, [value, isControlled]);
+
   const inputId = useId(idProp);
 
   const isOutOfRange = () => {
@@ -134,6 +146,8 @@ export const useStepperInput = (
     if (onValueChange) {
       onValueChange(event, toFloat(roundedValue));
     }
+
+    setInputValue(roundedValue);
   };
 
   const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
@@ -167,18 +181,23 @@ export const useStepperInput = (
     if (onValueChange) {
       onValueChange(event, toFloat(roundedValue));
     }
+    setInputValue(roundedValue);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const changedValue = event.target.value;
+    const value = event.target.value;
 
     if (!isControlled) {
-      setCurrentValue(sanitizedInput(changedValue));
+      setCurrentValue(sanitizedInput(value));
     }
 
-    if (onValueChange) {
-      onValueChange(event, toFloat(sanitizedInput(changedValue)));
+    if (!value.endsWith(".")) {
+      if (onValueChange) {
+        onValueChange(event, toFloat(sanitizedInput(value)));
+      }
     }
+
+    setInputValue(value);
   };
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
@@ -240,7 +259,7 @@ export const useStepperInput = (
       onFocus: inputProps.onFocus,
       onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
       textAlign: inputProps.textAlign,
-      value: String(currentValue),
+      value: String(inputValue),
     };
   };
 
