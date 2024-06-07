@@ -242,4 +242,5 @@
 .saltInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
