@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  FocusEvent,
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
@@ -8,7 +9,6 @@ import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
 
-// The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
 
 const callAll =
@@ -28,15 +28,12 @@ const isAllowedNonNumeric = (inputCharacter: number | string) => {
 };
 
 const toFloat = (inputValue: number | string) => {
-  // Plus, minus, and empty characters are treated as 0
   if (isAllowedNonNumeric(inputValue)) return 0;
   return parseFloat(inputValue.toString());
 };
 
 const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
-
-const validateInput = (numberString: string) => ACCEPT_INPUT.test(numberString);
 
 export const useStepperInput = (
   props: StepperInputProps,
@@ -76,51 +73,50 @@ export const useStepperInput = (
     return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
   };
 
-  const decrement = () => {
+  const decrement = (event: KeyboardEvent | MouseEvent) => {
     if (currentValue === undefined || isAtMin()) return;
     let nextValue = currentValue === "" ? -step : toFloat(currentValue) - step;
 
-    // Set value to `max` if it's currently out of range
     if (max !== undefined && isOutOfRange()) nextValue = max;
 
-    setNextValue(nextValue);
+    setNextValue(nextValue, event);
   };
 
-  const decrementBlock = () => {
+  const decrementBlock = (event: KeyboardEvent | MouseEvent) => {
     if (currentValue === undefined || isAtMin()) return;
     let nextValue =
       currentValue === ""
         ? block * -step
         : toFloat(currentValue) - step * block;
 
-    // Set value to `max` if it's currently out of range
     if (max !== undefined && isOutOfRange()) nextValue = max;
 
-    setNextValue(nextValue);
+    setNextValue(nextValue, event);
   };
 
-  const increment = () => {
+  const increment = (event: KeyboardEvent | MouseEvent) => {
     if (currentValue === undefined || isAtMax()) return;
     let nextValue = currentValue === "" ? step : toFloat(currentValue) + step;
 
-    // Set value to `min` if it's currently out of range
     if (min !== undefined && isOutOfRange()) nextValue = min;
 
-    setNextValue(nextValue);
+    setNextValue(nextValue, event);
   };
 
-  const incrementBlock = () => {
+  const incrementBlock = (event: KeyboardEvent | MouseEvent) => {
     if (currentValue === undefined || isAtMax()) return;
     let nextValue =
       currentValue === "" ? block * step : toFloat(currentValue) + step * block;
 
-    // Set value to `min` if it's currently out of range
     if (min !== undefined && isOutOfRange()) nextValue = min;
 
-    setNextValue(nextValue);
+    setNextValue(nextValue, event);
   };
 
-  const setNextValue = (modifiedValue: number) => {
+  const setNextValue = (
+    modifiedValue: number,
+    event: KeyboardEvent | MouseEvent
+  ) => {
     if (props.readOnly) return;
     let nextValue = modifiedValue;
     if (nextValue < min) nextValue = min;
@@ -134,21 +130,21 @@ export const useStepperInput = (
     }
 
     if (onValueChange) {
-      onValueChange(roundedValue);
+      onValueChange(event, toFloat(roundedValue));
     }
   };
 
   const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
-    useSpinner(decrementBlock, isAtMin());
+    useSpinner((event: KeyboardEvent) => decrementBlock(event), isAtMin());
 
   const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
-    useSpinner(decrement, isAtMin());
+    useSpinner((event: KeyboardEvent) => decrement(event), isAtMin());
 
   const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
-    useSpinner(incrementBlock, isAtMax());
+    useSpinner((event: KeyboardEvent) => incrementBlock(event), isAtMax());
 
   const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
-    useSpinner(increment, isAtMax());
+    useSpinner((event: KeyboardEvent) => increment(event), isAtMax());
 
   const handleInputBlur = (event: FocusEvent) => {
     if (currentValue === undefined) return;
@@ -186,13 +182,15 @@ export const useStepperInput = (
   const handleInputKeyDown = (event: KeyboardEvent) => {
     if (["ArrowUp", "ArrowDown"].includes(event.key)) {
       event.preventDefault();
-      event.key === "ArrowUp" ? incrementSpinner() : decrementSpinner();
+      event.key === "ArrowUp"
+        ? incrementSpinner(event)
+        : decrementSpinner(event);
     }
     if (["PageUp", "PageDown"].includes(event.key)) {
       event.preventDefault();
       event.key === "PageUp"
-        ? incrementSpinnerBlock()
-        : decrementSpinnerBlock();
+        ? incrementSpinnerBlock(event)
+        : decrementSpinnerBlock(event);
     }
   };
 
@@ -201,7 +199,9 @@ export const useStepperInput = (
     direction: string
   ) => {
     if (event.nativeEvent.button !== 0) return;
-    direction === "increment" ? incrementSpinner() : decrementSpinner();
+    direction === "increment"
+      ? incrementSpinner(event)
+      : decrementSpinner(event);
   };
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
