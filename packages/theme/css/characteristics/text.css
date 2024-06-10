@@ -70,6 +70,11 @@
   --salt-text-display3-fontWeight-strong: var(--salt-palette-text-display-fontWeight-strong);
   --salt-text-display3-fontWeight-small: var(--salt-palette-text-display-fontWeight-small);
 
+  --salt-text-display4-fontFamily: var(--salt-palette-text-fontFamily-heading);
+  --salt-text-display4-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-display4-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-display4-fontWeight-small: var(--salt-typography-fontWeight-regular);
+
   /* Code */
   --salt-text-code-fontFamily: var(--salt-palette-text-fontFamily-code);
 }
@@ -104,6 +109,9 @@
   --salt-text-display3-fontSize: 42px;
   --salt-text-display3-lineHeight: 54px;
 
+  --salt-text-display4-fontSize: 42px;
+  --salt-text-display4-lineHeight: 54px;
+
   --salt-text-notation-fontSize: 14px;
   --salt-text-notation-lineHeight: 18px;
 }
@@ -136,6 +144,9 @@
 
   --salt-text-display3-fontSize: 32px;
   --salt-text-display3-lineHeight: 42px;
+
+  --salt-text-display4-fontSize: 32px;
+  --salt-text-display4-lineHeight: 42px;
 
   --salt-text-notation-fontSize: 12px;
   --salt-text-notation-lineHeight: 16px;
@@ -170,6 +181,9 @@
   --salt-text-display3-fontSize: 24px;
   --salt-text-display3-lineHeight: 32px;
 
+  --salt-text-display4-fontSize: 24px;
+  --salt-text-display4-lineHeight: 32px;
+
   --salt-text-notation-fontSize: 10px;
   --salt-text-notation-lineHeight: 13px;
 }
@@ -202,6 +216,9 @@
 
   --salt-text-display3-fontSize: 18px;
   --salt-text-display3-lineHeight: 24px;
+
+  --salt-text-display4-fontSize: 18px;
+  --salt-text-display4-lineHeight: 24px;
 
   --salt-text-notation-fontSize: 8px;
   --salt-text-notation-lineHeight: 10px;
