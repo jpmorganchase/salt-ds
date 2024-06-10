@@ -11,23 +11,31 @@ export const SelectAll = (): ReactElement => {
     newSelected
   ) => {
     let newOptionsSelected = [...newSelected];
-    const wasAllSelected = selected.includes(allSelectedOptionValue);
-    const isAllSelected = newOptionsSelected.includes(allSelectedOptionValue);
+    const allWasPreviousSelected = selected.includes(allSelectedOptionValue);
+    const allIsCurrentlySelected = newOptionsSelected.includes(
+      allSelectedOptionValue
+    );
 
-    if (wasAllSelected) {
-      if (isAllSelected) {
-        newOptionsSelected = newOptionsSelected.filter(
-          (el) => el !== allSelectedOptionValue
-        );
-      } else {
-        newOptionsSelected = [];
-      }
+    // If all was unselected
+    if (allWasPreviousSelected && !allIsCurrentlySelected) {
+      newOptionsSelected = [];
+      // If an option was unselected (-1 to not include "all")
     } else if (
-      isAllSelected ||
-      (!isAllSelected && newOptionsSelected.length === shortColorData.length)
+      allWasPreviousSelected &&
+      newOptionsSelected.length - 1 !== shortColorData.length
+    ) {
+      newOptionsSelected = newOptionsSelected.filter(
+        (el) => el !== allSelectedOptionValue
+      );
+      // If all was selected or all options are now selected
+    } else if (
+      allIsCurrentlySelected ||
+      (!allIsCurrentlySelected &&
+        newOptionsSelected.length === shortColorData.length)
     ) {
       newOptionsSelected = [allSelectedOptionValue, ...shortColorData];
     }
+
     setSelected(newOptionsSelected);
   };
 

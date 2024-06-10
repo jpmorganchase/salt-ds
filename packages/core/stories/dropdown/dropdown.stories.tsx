@@ -18,6 +18,7 @@ import {
   GuideClosedIcon,
   EditIcon,
 } from "@salt-ds/icons";
+import { shortColorData } from "@salt-ds/site/src/examples/dropdown/exampleData";
 
 export default {
   title: "Core/Dropdown",
@@ -350,23 +351,31 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
     newSelected
   ) => {
     let newOptionsSelected = [...newSelected];
-    const wasAllSelected = selected.includes(allSelectedOptionValue);
-    const isAllSelected = newOptionsSelected.includes(allSelectedOptionValue);
+    const allWasPreviousSelected = selected.includes(allSelectedOptionValue);
+    const allIsCurrentlySelected = newOptionsSelected.includes(
+      allSelectedOptionValue
+    );
 
-    if (wasAllSelected) {
-      if (isAllSelected) {
-        newOptionsSelected = newOptionsSelected.filter(
-          (el) => el !== allSelectedOptionValue
-        );
-      } else {
-        newOptionsSelected = [];
-      }
+    // If all was unselected
+    if (allWasPreviousSelected && !allIsCurrentlySelected) {
+      newOptionsSelected = [];
+      // If an option was unselected (-1 to not include "all")
     } else if (
-      isAllSelected ||
-      (!isAllSelected && newOptionsSelected.length === usStates.length)
+      allWasPreviousSelected &&
+      newOptionsSelected.length - 1 !== shortColorData.length
     ) {
-      newOptionsSelected = [allSelectedOptionValue, ...usStates];
+      newOptionsSelected = newOptionsSelected.filter(
+        (el) => el !== allSelectedOptionValue
+      );
+      // If all was selected or all options are now selected
+    } else if (
+      allIsCurrentlySelected ||
+      (!allIsCurrentlySelected &&
+        newOptionsSelected.length === shortColorData.length)
+    ) {
+      newOptionsSelected = [allSelectedOptionValue, ...shortColorData];
     }
+
     setSelected(newOptionsSelected);
     args.onSelectionChange?.(event, newOptionsSelected);
   };
