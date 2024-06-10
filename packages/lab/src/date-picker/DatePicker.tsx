@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
+  ChangeEvent,
   forwardRef,
   SyntheticEvent,
   useRef,
@@ -97,7 +97,11 @@ export interface DatePickerProps<SelectionVariantType>
   /**
    * Callback fired when the input value change.
    */
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: (
+    event: ChangeEvent<HTMLInputElement>,
+    startDateInputValue?: string,
+    endDateInputValue?: string
+  ) => void;
   /**
    * Number of Calendars to be shown if selectionVariant is range.
    * 2 is the default value.

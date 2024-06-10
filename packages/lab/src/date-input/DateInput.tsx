@@ -222,6 +222,7 @@ export const DateInput = forwardRef<
     "aria-describedby": dateInputDescribedBy,
     "aria-labelledby": dateInputLabelledBy,
     onBlur,
+    onKeyDown,
     onFocus,
     required: dateInputPropsRequired,
     ...restDateInputProps
@@ -266,7 +267,6 @@ export const DateInput = forwardRef<
   const handleStartDateBlur = (event: FocusEvent<HTMLInputElement>) => {
     updateStartDate(event, event.target.value);
     setFocused(false);
-    onBlur?.(event);
   };
 
   const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -291,7 +291,6 @@ export const DateInput = forwardRef<
   const handleEndDateBlur = (event: FocusEvent<HTMLInputElement>) => {
     updateEndDate(event, event.target.value);
     setFocused(false);
-    onBlur?.(event);
   };
   const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEndDateStringValue(event.target.value);
@@ -328,6 +327,8 @@ export const DateInput = forwardRef<
         className
       )}
       onClick={(event) => handleInputClick(event)}
+      onKeyDown={onKeyDown}
+      onBlur={onBlur}
       ref={inputRef}
       {...rest}
     >

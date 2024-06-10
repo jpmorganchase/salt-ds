@@ -283,7 +283,7 @@ describe("GIVEN a DatePicker", () => {
       });
     });
   });
-  describe.only("WHEN range is mounted as a controlled component", () => {
+  describe("WHEN range is mounted as a controlled component", () => {
     it("THEN should mount with specified date", () => {
       cy.mount(
         <Range

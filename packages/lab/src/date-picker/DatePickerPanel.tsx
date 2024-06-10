@@ -124,10 +124,8 @@ export const DatePickerPanel = forwardRef<
     setHoveredDate(newHoveredDate);
   };
   useEffect(() => {
-    console.log("selectedDate", selectedDate);
     if (isRangePicker) {
       if (selectedDate?.startDate) {
-        console.log("setting: ", selectedDate.startDate);
         setStartVisibleMonth(selectedDate.startDate);
         setEndVisibleMonth(selectedDate.startDate.add({ months: 1 }));
       }

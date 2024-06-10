@@ -107,6 +107,47 @@ export const WithValidation: StoryFn<
   );
 };
 
+export const RangeWithValidation: StoryFn<
+  DatePickerProps<RangeSelectionValueType>
+> = (args) => {
+  const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined
+  );
+  const [selectedDate, setSelectedDate] = useState<
+    RangeSelectionValueType | undefined
+  >(undefined);
+  const [startString, setStartString] = useState<string | undefined>(undefined);
+  const [endString, setEndString] = useState<string | undefined>(undefined);
+  return (
+    <FormField style={{ width: "250px" }} validationStatus={validationStatus}>
+      <FormLabel>Pick a date</FormLabel>
+      <DatePicker
+        {...args}
+        helperText={helperText}
+        selectionVariant="range"
+        selectedDate={selectedDate}
+        onChange={(
+          event: ChangeEvent<HTMLInputElement>,
+          newStartString,
+          newEndString
+        ) => {
+          setStartString(newStartString);
+          setEndString(newEndString);
+        }}
+        onSelectionChange={(_, date) => {
+          setValidationStatus(
+            getDateValidationStatus(startString) ??
+              getDateValidationStatus(endString)
+          );
+          setSelectedDate(date as RangeSelectionValueType);
+        }}
+      />
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
 export const SingleControlled: StoryFn<
   DatePickerProps<SingleSelectionValueType | RangeSelectionValueType>
 > = (args) => {
@@ -135,6 +176,22 @@ export const RangeControlled: StoryFn<
       selectedDate={selectedDate}
       onSelectionChange={(_, date) => {
         setSelectedDate(date as RangeSelectionValueType);
+      }}
+    />
+  );
+};
+
+export const ControlledOpenOnEnter: StoryFn<
+  DatePickerProps<SingleSelectionValueType | RangeSelectionValueType>
+> = (args) => {
+  // state
+  const [open, setOpen] = useState(false);
+  return (
+    <DatePicker
+      {...args}
+      open={open}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") setOpen(!open);
       }}
     />
   );
