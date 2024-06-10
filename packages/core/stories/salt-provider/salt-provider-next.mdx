@@ -44,7 +44,9 @@ All values within `theme-next.css` will be scoped to `.salt-theme-next` to make
 sure any replacement values (like new color palettes) could override existing
 values in `.salt-theme`.
 
-## Unified Color Palette
+## Color
+
+### Unified Color Palette
 
 A completely new color palette is used, featuring balanced color ramps for each
 color group.
@@ -59,14 +61,14 @@ Refer to Figma file
 ([UNSTABLE Salt Colors (variables)](<https://www.figma.com/file/e753bB0n5Adc0LCXqtvslu/UNSTABLE-Salt-Colors-(variables)?type=design&node-id=424%3A77224&mode=design&t=1snosiQ76rKnIe9d-1>))
 for color values and mappings.
 
-### Migration note:
+#### Migration note:
 
 If you're referring any Salt foundation colors (i.e.
 `--salt-color-*`) directly in your code, you'll need to revisit those values. We
 do not recommend directly consume foundation colors directly. Instead, try to
 find a characteristics color that will work better in different modes.
 
-## New Theme Palette Structure
+### New Theme Palette Structure
 
 A new structure of palette layer is introduced to help making color changes
 easier for custom themes, namely
@@ -82,6 +84,36 @@ easier for custom themes, namely
 
 All existing characteristics are re-wired through above new palette layers to
 use the new colors, which is scoped to `.salt-theme-next`.
+
+### Accent color switch
+
+A new `accent` prop is introduced with options `"blue"` (default) and `"teal"`.
+This enables switching all components that use accent colors to
+either blue or teal color palette, such as CTA button, checkbox, radio button,
+etc.
+
+```tsx
+<UNSTABLE_SaltProviderNext accent="teal">
+```
+
+Under the hood, a new `data-accent` attribute is added alongside other style option
+attributes. Variables below are being switched to different colors.
+
+```
+--salt-palette-accent
+--salt-palette-accent-disabled
+--salt-palette-accent-strong
+--salt-palette-accent-strong-disabled
+--salt-palette-accent-stronger
+--salt-palette-accent-stronger-disabled
+--salt-palette-accent-strongest
+--salt-palette-accent-weak
+--salt-palette-accent-weaker
+--salt-palette-accent-weaker-disabled
+--salt-palette-accent-weakest
+--salt-palette-accent-action-hover
+--salt-palette-accent-action-active
+```
 
 ## Corner radius
 
@@ -160,7 +192,9 @@ These components use `--salt-palette-corner-strongest` token
 - Avatar
 - Badge
 
-## Heading font switch
+## Typography
+
+### Heading font switch
 
 A new `headingFont` prop is added to switch display and heading font family
 between Open Sans and Amplitude.
@@ -186,32 +220,7 @@ user will see the font correctly, e.g.,
 }
 ```
 
-## Accent color switch
+### Display text sizes
 
-A new `accent` prop is introduced with options `"blue"` (default) and `"teal"`.
-This enables the possiblity of switching all components that use accent colors to
-either blue or teal color palette, such as CTA button, checkbox, radio button,
-etc.
-
-```tsx
-<UNSTABLE_SaltProviderNext accent="teal">
-```
-
-Under the hood, a new `data-accent` attribute is added alongside other style option
-attributes. Variables below are being switched to different colors
-
-```
---salt-palette-accent
---salt-palette-accent-disabled
---salt-palette-accent-strong
---salt-palette-accent-strong-disabled
---salt-palette-accent-stronger
---salt-palette-accent-stronger-disabled
---salt-palette-accent-strongest
---salt-palette-accent-weak
---salt-palette-accent-weaker
---salt-palette-accent-weaker-disabled
---salt-palette-accent-weakest
---salt-palette-accent-action-hover
---salt-palette-accent-action-active
-```
+Display text styles are updated to distinguish them from heading text (h1/h2/h3/h4).
+They are now larger than h1 across densities.

@@ -33,3 +33,14 @@ export const Display3 = forwardRef<
     </Text>
   );
 });
+
+export const Display4 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Display4({ children, styleAs = "display4", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});
