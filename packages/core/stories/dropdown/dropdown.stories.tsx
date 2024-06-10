@@ -369,8 +369,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       // If all was selected or all options are now selected
     } else if (
       allIsCurrentlySelected ||
-      (!allIsCurrentlySelected &&
-        newOptionsSelected.length === usStates.length)
+      (!allIsCurrentlySelected && newOptionsSelected.length === usStates.length)
     ) {
       newOptionsSelected = [allSelectedOptionValue, ...usStates];
     }
