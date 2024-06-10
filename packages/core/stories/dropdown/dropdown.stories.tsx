@@ -18,7 +18,6 @@ import {
   GuideClosedIcon,
   EditIcon,
 } from "@salt-ds/icons";
-import { shortColorData } from "@salt-ds/site/src/examples/dropdown/exampleData";
 
 export default {
   title: "Core/Dropdown",
@@ -362,7 +361,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       // If an option was unselected (-1 to not include "all")
     } else if (
       allWasPreviousSelected &&
-      newOptionsSelected.length - 1 !== shortColorData.length
+      newOptionsSelected.length - 1 !== usStates.length
     ) {
       newOptionsSelected = newOptionsSelected.filter(
         (el) => el !== allSelectedOptionValue
@@ -371,9 +370,9 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
     } else if (
       allIsCurrentlySelected ||
       (!allIsCurrentlySelected &&
-        newOptionsSelected.length === shortColorData.length)
+        newOptionsSelected.length === usStates.length)
     ) {
-      newOptionsSelected = [allSelectedOptionValue, ...shortColorData];
+      newOptionsSelected = [allSelectedOptionValue, ...usStates];
     }
 
     setSelected(newOptionsSelected);
