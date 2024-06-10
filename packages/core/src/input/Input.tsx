@@ -62,6 +62,9 @@ export interface InputProps
    * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary";
+  /** Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
 }
 
 export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
@@ -86,6 +89,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
     validationStatus: validationStatusProp,
     variant = "primary",
+    bordered = false,
     ...other
   },
   ref
@@ -175,6 +179,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName(validationStatus || "")]: validationStatus,
+          [withBaseName("bordered")]: bordered,
         },
         classNameProp
       )}
@@ -206,7 +211,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
         {...restInputProps}
         required={isRequired}
       />
-      {!isDisabled && !isReadOnly && validationStatus && (
+      {!isDisabled && validationStatus && (
         <StatusAdornment status={validationStatus} />
       )}
       {endAdornment && (

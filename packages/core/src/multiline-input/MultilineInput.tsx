@@ -239,7 +239,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
           {...restTextAreaProps}
         />
         <div className={withBaseName("suffixAdornments")}>
-          {!isDisabled && !isReadOnly && validationStatus && (
+          {!isDisabled && validationStatus && (
             <div className={withBaseName("statusAdornmentContainer")}>
               <StatusAdornment status={validationStatus} />
             </div>

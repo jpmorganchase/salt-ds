@@ -9,6 +9,7 @@
   align-items: center;
   background: var(--multilineInput-background);
   border: var(--multilineInput-border);
+  border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--salt-content-primary-foreground);
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
@@ -22,6 +23,7 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Style applied on hover */
@@ -69,6 +71,7 @@
   --multilineInput-background-hover: var(--salt-status-error-background);
   --multilineInput-borderColor: var(--salt-status-error-borderColor);
   --multilineInput-outlineColor: var(--salt-status-error-borderColor);
+  --multilineInput-background-readonly: var(--salt-status-error-background);
 }
 
 /* Style applied to input if `validationState="warning"` */
@@ -79,6 +82,7 @@
   --multilineInput-background-hover: var(--salt-status-warning-background);
   --multilineInput-borderColor: var(--salt-status-warning-borderColor);
   --multilineInput-outlineColor: var(--salt-status-warning-borderColor);
+  --multilineInput-background-readonly: var(--salt-status-warning-background);
 }
 
 /* Style applied to input if `validationState="success"` */
@@ -89,6 +93,7 @@
   --multilineInput-background-hover: var(--salt-status-success-background);
   --multilineInput-borderColor: var(--salt-status-success-borderColor);
   --multilineInput-outlineColor: var(--salt-status-success-borderColor);
+  --multilineInput-background-readonly: var(--salt-status-success-background);
 }
 
 .saltMultilineInput.saltMultilineInput-withAdornmentRow {
@@ -182,14 +187,14 @@
   --multilineInput-activationIndicator-borderWidth: 0;
 }
 
-/* Style applied if active or focused when `bordered={true}` */
-.saltMultilineInput-bordered:active,
-.saltMultilineInput-bordered.saltMultilineInput-focused {
+/* Style applied if focused or active when `bordered={true}` */
+.saltMultilineInput-bordered.saltMultilineInput-focused,
+.saltMultilineInput-bordered:active {
   --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltMultilineInput-bordered.saltMultilineInput-readOnly:hover,
+.saltMultilineInput-bordered.saltMultilineInput-readOnly,
 .saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
   --multilineInput-activationIndicator-borderWidth: 0;
 }
@@ -253,4 +258,5 @@
 .saltMultilineInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
