@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-Added categorical palette and category characteristics tokens, e.g., cat 1 tokens
+Added 20 groups of categorical palette and category characteristics tokens, e.g., cat 1 tokens
 
 Characteristics
 
