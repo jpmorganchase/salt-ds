@@ -33,5 +33,21 @@ describe("GIVEN a DateInput", () => {
         });
       });
     });
+    describe("WHEN the range input is updated", () => {
+      it("THEN should call onChange with the new value", () => {
+        const changeSpy = cy.stub().as("changeSpy");
+        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          changeSpy(event);
+        };
+        cy.mount(<Range onChange={onChange} />);
+        cy.findAllByRole("textbox").eq(0).click().clear().type("02-feb-2000");
+        cy.findAllByRole("textbox").eq(1).click().clear().type("05-feb-2000");
+        cy.get("@changeSpy").should("have.been.calledWithMatch", {
+          target: { value: "02-feb-2000" },
+        });
+      });
+    });
   });
 });
