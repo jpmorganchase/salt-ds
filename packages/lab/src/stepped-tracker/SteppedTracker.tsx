@@ -86,9 +86,9 @@ export const SteppedTracker = forwardRef<HTMLOListElement, SteppedTrackerProps>(
         <ol
           className={clsx(
             withBaseName(),
-            className,
             withBaseName(orientation),
-            withBaseName(`align${capitalize(alignment)}`)
+            withBaseName(`align${capitalize(alignment)}`),
+            className,
           )}
           ref={ref}
           {...restProps}
