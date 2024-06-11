@@ -10,14 +10,15 @@ export default {
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer cols={4} height={300} itemPadding={1} width={1200} {...props}>
+    <QAContainer cols={2} height={300} itemPadding={5} width={1200} {...props}>
       <Tag>Primary Tag</Tag>
+      <Tag bordered>Primary Tag</Tag>
+      <Tag>
+        <NotificationIcon /> With Icon Tag
+      </Tag>
       <Tag emphasis="subtle">Subtle Tag</Tag>
       <Tag emphasis="subtle" bordered>
         Bordered Tag
-      </Tag>
-      <Tag>
-        <NotificationIcon /> With Icon Tag
       </Tag>
     </QAContainer>
   );

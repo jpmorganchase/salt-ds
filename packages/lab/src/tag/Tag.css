@@ -1,5 +1,6 @@
 .saltTag {
-  height: var(--salt-size-base);
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  min-height: var(--salt-text-minHeight);
   display: flex;
   column-gap: var(--salt-spacing-50);
   align-items: center;

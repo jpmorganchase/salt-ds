@@ -4,6 +4,6 @@ import { NotificationIcon } from "@salt-ds/icons";
 
 export const WithIcon = (): ReactElement => (
   <Tag>
-    <NotificationIcon /> Primary Tag
+    <NotificationIcon /> Tag
   </Tag>
 );

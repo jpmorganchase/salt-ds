@@ -1,6 +1,10 @@
 import { ReactElement } from "react";
 import { Tag } from "@salt-ds/lab";
+import { FlowLayout } from "@salt-ds/core";
 
 export const Subtle = (): ReactElement => (
-  <Tag emphasis="subtle">Subtle Tag</Tag>
+  <FlowLayout>
+    <Tag emphasis="subtle">Tag</Tag>
+    <Tag emphasis="subtle">Tag</Tag>
+  </FlowLayout>
 );
