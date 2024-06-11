@@ -846,6 +846,12 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
   );
 };
 
+export const SelectOnTab = Template.bind({});
+SelectOnTab.args = {
+  multiselect: true,
+  selectOnTab: true,
+};
+
 export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
   const [selected, setSelected] = useState<string[]>([]);
