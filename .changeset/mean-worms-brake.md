@@ -10,5 +10,5 @@
   />
   ```
 
-- Removed `startDate`, `defaultStartDate`, `setStartDate`, `endDate`, `defaultEndDate` and `setEndDate` in DatePicker.
-- Added `selectedDate`, `defaultSelectedDate`, `setSelectedDate` in DatePicker.
+- Removed `startDate`, `defaultStartDate`, `endDate`, and `defaultEndDate` in DatePicker.
+- Added `selectedDate`, `defaultSelectedDate` in DatePicker.

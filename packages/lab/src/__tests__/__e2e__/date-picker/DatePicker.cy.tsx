@@ -306,11 +306,15 @@ describe("GIVEN a DatePicker", () => {
 
         function ControlledRangePicker() {
           const [date, setDate] = useState(testDate);
-          const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          const onChange = (
+            event: ChangeEvent<HTMLInputElement>,
+            startDate?: string,
+            endDate?: string
+          ) => {
             // React 16 backwards compatibility
             event.persist();
             setDate(testDate);
-            changeSpy(event);
+            changeSpy(startDate, endDate);
           };
 
           return <Range selectedDate={date} onChange={onChange} />;
@@ -318,13 +322,12 @@ describe("GIVEN a DatePicker", () => {
 
         cy.mount(<ControlledRangePicker />);
         cy.findAllByRole("textbox").eq(0).click().clear().type(testInput);
-        cy.get("@changeSpy").should("have.been.calledWithMatch", {
-          target: { value: testInput },
-        });
         cy.findAllByRole("textbox").eq(1).click().clear().type(rangeTestInput);
-        cy.get("@changeSpy").should("have.been.calledWithMatch", {
-          target: { value: rangeTestInput },
-        });
+        cy.get("@changeSpy").should(
+          "have.been.calledWith",
+          testInput,
+          rangeTestInput
+        );
       });
     });
   });

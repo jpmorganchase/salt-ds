@@ -270,12 +270,9 @@ export const DateInput = forwardRef<
   };
 
   const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setStartDateStringValue(event.target.value);
-    onChange?.(
-      event,
-      startInputRef?.current?.value,
-      endInputRef?.current?.value
-    );
+    const newStartValue = event.target.value;
+    setStartDateStringValue(newStartValue);
+    onChange?.(event, newStartValue, endDateStringValue);
   };
 
   const handleStartDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -293,12 +290,9 @@ export const DateInput = forwardRef<
     setFocused(false);
   };
   const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEndDateStringValue(event.target.value);
-    onChange?.(
-      event,
-      startInputRef?.current?.value,
-      endInputRef?.current?.value
-    );
+    const newEndValue = event.target.value;
+    setEndDateStringValue(newEndValue);
+    onChange?.(event, startDateStringValue, newEndValue);
   };
   const handleEndDateKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
