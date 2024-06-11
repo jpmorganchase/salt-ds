@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Divider } from "@salt-ds/lab";
-import { StackLayout } from "@salt-ds/core";
+import { StackLayout, Divider } from "@salt-ds/core";
 
 export const Vertical = (): ReactElement => {
   return (

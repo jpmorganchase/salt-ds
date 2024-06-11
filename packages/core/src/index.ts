@@ -15,6 +15,7 @@ export * from "./card";
 export * from "./checkbox";
 export * from "./combo-box";
 export * from "./dialog";
+export * from "./divider";
 export * from "./drawer";
 export * from "./dropdown";
 export * from "./file-drop-zone";

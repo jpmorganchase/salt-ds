@@ -1,10 +1,8 @@
 import { StoryFn } from "@storybook/react";
-import { StackLayout } from "@salt-ds/core";
-
-import { Divider, DividerProps } from "@salt-ds/lab";
+import { Divider, DividerProps, StackLayout } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Divider",
+  title: "Core/Divider",
   component: Divider,
 };
 
