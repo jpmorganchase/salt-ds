@@ -1,13 +1,5 @@
 import { clsx } from "clsx";
-import {
-  ChangeEvent,
-  FocusEventHandler,
-  KeyboardEvent,
-  MouseEvent,
-  FocusEvent,
-  forwardRef,
-  useRef,
-} from "react";
+import { FocusEventHandler, forwardRef, useRef, SyntheticEvent } from "react";
 import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -51,10 +43,7 @@ export interface StepperInputProps
   /**
    * Callback when stepper input value is changed.
    */
-  onValueChange?: (
-    event: ChangeEvent | MouseEvent | KeyboardEvent | FocusEvent,
-    value: number
-  ) => void;
+  onValueChange?: (event: SyntheticEvent, value: number) => void;
   /**
    * Callback when stepper input gains focus.
    */

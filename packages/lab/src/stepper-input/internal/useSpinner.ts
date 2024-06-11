@@ -1,10 +1,10 @@
-import { useEffect, useState, KeyboardEvent } from "react";
+import { useEffect, useState, KeyboardEvent, SyntheticEvent } from "react";
 import { useInterval } from "./useInterval";
 
 const INTERVAL_DELAY = 300;
 
 function useSpinner(
-  activationFn: (event?: KeyboardEvent) => void,
+  activationFn: (event?: SyntheticEvent) => void,
   isAtLimit: boolean
 ) {
   const [buttonDown, setButtonDown] = useState(false);
@@ -24,7 +24,7 @@ function useSpinner(
     };
   }, []);
 
-  const activate = (event: KeyboardEvent) => {
+  const activate = (event: SyntheticEvent) => {
     activationFn(event);
     setButtonDown(true);
   };

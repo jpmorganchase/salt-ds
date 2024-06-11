@@ -45,7 +45,7 @@ export const DecimalPlaces: StoryFn = (args) => {
 };
 
 export const Controlled: StoryFn = (args) => {
-  const [value, setValue] = useState<number | string>(1.11);
+  const [value, setValue] = useState<number>(1.11);
 
   return (
     <FormField>
@@ -55,6 +55,7 @@ export const Controlled: StoryFn = (args) => {
         decimalPlaces={2}
         value={value}
         onValueChange={(_event, value) => {
+          console.log({value}, "setting in component")
           setValue(value);
         }}
         endAdornment={
@@ -73,7 +74,7 @@ export const Controlled: StoryFn = (args) => {
 };
 
 export const MinAndMaxValue: StoryFn = (args) => {
-  const [value, setValue] = useState<number | string>(2);
+  const [value, setValue] = useState<number>(2);
   const max = 5;
   const min = 0;
 

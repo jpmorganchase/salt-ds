@@ -4,6 +4,7 @@ import {
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
+  SyntheticEvent,
   useEffect,
   useState,
 } from "react";
@@ -39,6 +40,11 @@ const toFloat = (inputValue: number | string) => {
 const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
+const isIntermediateInput = (numberString: string) => {
+  const validNumberPattern = /^[+-]?(?=\d|\.d)\d*\.?\d+$/;
+  return !validNumberPattern.test(numberString);
+};
+
 export const useStepperInput = (
   props: StepperInputProps,
   inputRef: MutableRefObject<HTMLInputElement | null>
@@ -67,7 +73,10 @@ export const useStepperInput = (
     if (!isControlled) {
       return;
     }
-    setInputValue(value);
+
+    if (value != undefined) {
+      setInputValue(value);
+    }
   }, [value, isControlled]);
 
   const inputId = useId(idProp);
@@ -87,16 +96,16 @@ export const useStepperInput = (
     return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
   };
 
-  const decrement = (event: KeyboardEvent | MouseEvent) => {
+  const decrement = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
     let nextValue = currentValue === "" ? -step : toFloat(currentValue) - step;
 
     if (max !== undefined && isOutOfRange()) nextValue = max;
 
-    setNextValue(nextValue, event);
+    setNextValue(nextValue, event ? event : undefined);
   };
 
-  const decrementBlock = (event: KeyboardEvent | MouseEvent) => {
+  const decrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
     let nextValue =
       currentValue === ""
@@ -108,7 +117,7 @@ export const useStepperInput = (
     setNextValue(nextValue, event);
   };
 
-  const increment = (event: KeyboardEvent | MouseEvent) => {
+  const increment = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
     let nextValue = currentValue === "" ? step : toFloat(currentValue) + step;
 
@@ -117,7 +126,7 @@ export const useStepperInput = (
     setNextValue(nextValue, event);
   };
 
-  const incrementBlock = (event: KeyboardEvent | MouseEvent) => {
+  const incrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
     let nextValue =
       currentValue === "" ? block * step : toFloat(currentValue) + step * block;
@@ -127,10 +136,7 @@ export const useStepperInput = (
     setNextValue(nextValue, event);
   };
 
-  const setNextValue = (
-    modifiedValue: number,
-    event: KeyboardEvent | MouseEvent
-  ) => {
+  const setNextValue = (modifiedValue: number, event?: SyntheticEvent) => {
     if (props.readOnly) return;
     let nextValue = modifiedValue;
     if (nextValue < min) nextValue = min;
@@ -143,7 +149,7 @@ export const useStepperInput = (
       setCurrentValue(roundedValue);
     }
 
-    if (onValueChange) {
+    if (onValueChange && event) {
       onValueChange(event, toFloat(roundedValue));
     }
 
@@ -151,16 +157,16 @@ export const useStepperInput = (
   };
 
   const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
-    useSpinner((event: KeyboardEvent) => decrementBlock(event), isAtMin());
+    useSpinner((event?: SyntheticEvent) => decrementBlock(event), isAtMin());
 
   const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
-    useSpinner((event: KeyboardEvent) => decrement(event), isAtMin());
+    useSpinner((event?: SyntheticEvent) => decrement(event), isAtMin());
 
   const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
-    useSpinner((event: KeyboardEvent) => incrementBlock(event), isAtMax());
+    useSpinner((event?: SyntheticEvent) => incrementBlock(event), isAtMax());
 
   const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
-    useSpinner((event: KeyboardEvent) => increment(event), isAtMax());
+    useSpinner((event?: SyntheticEvent) => increment(event), isAtMax());
 
   const handleInputBlur = (event: FocusEvent) => {
     if (currentValue === undefined) return;
@@ -191,7 +197,7 @@ export const useStepperInput = (
       setCurrentValue(sanitizedInput(value));
     }
 
-    if (!value.endsWith(".")) {
+    if (!isIntermediateInput(value)) {
       if (onValueChange) {
         onValueChange(event, toFloat(sanitizedInput(value)));
       }
@@ -259,7 +265,7 @@ export const useStepperInput = (
       onFocus: inputProps.onFocus,
       onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
       textAlign: inputProps.textAlign,
-      value: String(inputValue),
+      value: inputValue,
     };
   };
 
