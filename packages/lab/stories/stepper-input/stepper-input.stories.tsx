@@ -141,7 +141,7 @@ export const RefreshAdornment: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onValueChange={(_event, value) => {
+        onChange={(_event, value) => {
           setValue(value);
         }}
         endAdornment={
