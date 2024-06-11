@@ -148,7 +148,7 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@4.2.2",
+  "packageManager": "yarn@4.3.0",
   "msw": {
     "workerDirectory": "docs/public"
   }
