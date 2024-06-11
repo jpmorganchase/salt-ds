@@ -5,6 +5,8 @@ import { FlowLayout } from "@salt-ds/core";
 export const Subtle = (): ReactElement => (
   <FlowLayout>
     <Tag emphasis="subtle">Tag</Tag>
-    <Tag emphasis="subtle">Tag</Tag>
+    <Tag emphasis="subtle" bordered>
+      Tag
+    </Tag>
   </FlowLayout>
 );
