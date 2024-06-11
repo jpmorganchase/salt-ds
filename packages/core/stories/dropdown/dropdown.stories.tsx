@@ -8,7 +8,6 @@ import {
   FormFieldLabel,
   StackLayout,
   Text,
-  Divider,
 } from "@salt-ds/core";
 
 import { Meta, StoryFn } from "@storybook/react";
@@ -388,11 +387,20 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       multiselect
     >
       <div>
-        <Option value={allSelectedOptionValue}>Select All</Option>
-        {!(
-          selected.includes(usStates[0]) ||
-          selected.includes(allSelectedOptionValue)
-        ) && <Divider variant="tertiary" />}
+        <Option
+          style={{
+            borderBottom: "var(--salt-separable-borderStyle)",
+            borderWidth: "var(--salt-size-border)",
+            borderColor:
+              selected.includes(usStates[0]) ||
+              selected.includes(allSelectedOptionValue)
+                ? "transparent"
+                : "var(--salt-separable-tertiary-borderColor)",
+          }}
+          value={allSelectedOptionValue}
+        >
+          Select All
+        </Option>
       </div>
       {usStates.map((state) => (
         <Option value={state} key={state} />

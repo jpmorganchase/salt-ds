@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { Dropdown, Option, DropdownProps, Divider } from "@salt-ds/core";
+import { Dropdown, Option, DropdownProps } from "@salt-ds/core";
 import { shortColorData } from "./exampleData";
 
 export const SelectAll = (): ReactElement => {
@@ -54,11 +54,20 @@ export const SelectAll = (): ReactElement => {
       multiselect
     >
       <div>
-        <Option value={allSelectedOptionValue}>Select All</Option>
-        {!(
-          selected.includes(shortColorData[0]) ||
-          selected.includes(allSelectedOptionValue)
-        ) && <Divider variant="tertiary" />}
+        <Option
+          style={{
+            borderBottom: "var(--salt-separable-borderStyle)",
+            borderWidth: "var(--salt-size-border)",
+            borderColor:
+              selected.includes(shortColorData[0]) ||
+              selected.includes(allSelectedOptionValue)
+                ? "transparent"
+                : "var(--salt-separable-tertiary-borderColor)",
+          }}
+          value={allSelectedOptionValue}
+        >
+          Select All
+        </Option>
       </div>
       {shortColorData.map((state) => (
         <Option value={state} key={state} />
