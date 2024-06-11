@@ -54,7 +54,7 @@ export const Controlled: StoryFn = (args) => {
         {...args}
         decimalPlaces={2}
         value={value}
-        onValueChange={(_event, value) => {
+        onChange={(_event, value) => {
           console.log({value}, "setting in component")
           setValue(value);
         }}
@@ -98,7 +98,7 @@ export const MinAndMaxValue: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onValueChange={(_event, value) => {
+        onChange={(_event, value) => {
           setValue(value);
         }}
         max={max}

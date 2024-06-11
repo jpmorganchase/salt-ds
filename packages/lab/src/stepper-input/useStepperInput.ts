@@ -56,7 +56,7 @@ export const useStepperInput = (
     id: idProp,
     max = Number.MAX_SAFE_INTEGER,
     min = Number.MIN_SAFE_INTEGER,
-    onValueChange,
+    onChange,
     step = 1,
     value,
   } = props;
@@ -149,8 +149,8 @@ export const useStepperInput = (
       setCurrentValue(roundedValue);
     }
 
-    if (onValueChange && event) {
-      onValueChange(event, toFloat(roundedValue));
+    if (onChange && event) {
+      onChange(event, toFloat(roundedValue));
     }
 
     setInputValue(roundedValue);
@@ -184,8 +184,8 @@ export const useStepperInput = (
       setCurrentValue(roundedValue);
     }
 
-    if (onValueChange) {
-      onValueChange(event, toFloat(roundedValue));
+    if (onChange) {
+      onChange(event, toFloat(roundedValue));
     }
     setInputValue(roundedValue);
   };
@@ -198,8 +198,8 @@ export const useStepperInput = (
     }
 
     if (!isIntermediateInput(value)) {
-      if (onValueChange) {
-        onValueChange(event, toFloat(sanitizedInput(value)));
+      if (onChange) {
+        onChange(event, toFloat(sanitizedInput(value)));
       }
     }
 

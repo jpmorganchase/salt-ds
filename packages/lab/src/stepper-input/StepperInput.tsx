@@ -11,7 +11,7 @@ import stepperInputCss from "./StepperInput.css";
 const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps
-  extends Omit<InputProps, "emptyReadOnlyMarker"> {
+  extends Omit<InputProps, "onChange" | "emptyReadOnlyMarker"> {
   /**
    * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
    */
@@ -43,7 +43,7 @@ export interface StepperInputProps
   /**
    * Callback when stepper input value is changed.
    */
-  onValueChange?: (event: SyntheticEvent, value: number) => void;
+  onChange?: (event: SyntheticEvent, value: number) => void;
   /**
    * Callback when stepper input gains focus.
    */
