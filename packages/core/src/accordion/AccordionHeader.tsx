@@ -6,7 +6,7 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { StatusIndicator } from "../status-indicator";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { ChevronDownIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -61,7 +61,6 @@ export const AccordionHeader = forwardRef<
       type="button"
       {...rest}
     >
-      <ChevronRightIcon aria-hidden="true" className={withBaseName("icon")} />
       <div className={withBaseName("content")}>{children}</div>
       {status && (
         <StatusIndicator
@@ -69,6 +68,7 @@ export const AccordionHeader = forwardRef<
           status={status}
         />
       )}
+      <ChevronDownIcon aria-hidden="true" className={withBaseName("icon")} />
     </button>
   );
 });
