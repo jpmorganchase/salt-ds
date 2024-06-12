@@ -1,4 +1,5 @@
 .saltDropdown {
+  --dropdown-border: none;
   --dropdown-borderColor: var(--salt-editable-borderColor);
   --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-cursor: var(--salt-selectable-cursor-hover);
@@ -12,6 +13,8 @@
   background: var(--dropdown-background);
   cursor: var(--dropdown-cursor);
   min-height: var(--salt-size-base);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border: var(--dropdown-border);
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
   display: flex;
   align-items: center;
@@ -95,4 +98,8 @@
 .saltDropdown-success .saltDropdown:focus-visible {
   outline-color: var(--salt-status-success-borderColor);
   --dropdown-borderColor: var(--salt-status-success-borderColor);
+}
+
+.saltDropdown-bordered {
+  --dropdown-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--dropdown-borderColor);
 }
