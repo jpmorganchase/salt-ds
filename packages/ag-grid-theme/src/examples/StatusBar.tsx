@@ -7,7 +7,11 @@ import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 const CustomClickableStatusBar = () => {
   return (
     <StackLayout direction="row" align="center" gap={1}>
-      <Divider orientation="vertical" variant="secondary" />
+      <Divider
+        orientation="vertical"
+        variant="secondary"
+        style={{ height: "var(--salt-text-fontSize)", alignSelf: "center" }}
+      />
       {/* In status bar, line height being size base keeps text in the middle */}
       <Text variant="secondary" style={{ lineHeight: "var(--salt-size-base)" }}>
         Custom Component
