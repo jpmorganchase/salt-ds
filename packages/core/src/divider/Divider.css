@@ -24,4 +24,5 @@
 .saltDivider-vertical {
   width: var(--salt-size-border);
   height: auto;
+  align-self: center;
 }

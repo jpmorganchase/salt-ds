@@ -10,7 +10,7 @@ const CustomClickableStatusBar = () => {
       <Divider
         orientation="vertical"
         variant="secondary"
-        style={{ height: "var(--salt-text-fontSize)", alignSelf: "center" }}
+        style={{ height: "var(--salt-text-fontSize)" }}
       />
       {/* In status bar, line height being size base keeps text in the middle */}
       <Text variant="secondary" style={{ lineHeight: "var(--salt-size-base)" }}>
