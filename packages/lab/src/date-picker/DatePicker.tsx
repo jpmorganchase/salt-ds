@@ -103,6 +103,11 @@ export interface DatePickerProps
    * Callback fired when the input value change.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  /**
+   * Number of Calendars to be shown if selectionVariant is range.
+   * 2 is the default value.
+   */
+  visibleMonths?: 1 | 2;
 }
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
@@ -124,6 +129,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
       validationStatus,
       onSelectionChange,
       onChange,
+      visibleMonths = 2,
       ...rest
     },
     ref
@@ -276,6 +282,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
           onSelect={handleSelect}
           CalendarProps={CalendarProps}
           helperText={helperText}
+          visibleMonths={visibleMonths}
         />
       </DatePickerContext.Provider>
     );
