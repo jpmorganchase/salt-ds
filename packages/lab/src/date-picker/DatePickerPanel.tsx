@@ -63,13 +63,13 @@ export const DatePickerPanel = forwardRef<
   DatePickerPanelProps<SingleSelectionValueType | RangeSelectionValueType>
 >(function DatePickerPanel(props, ref) {
   const {
-      className,
-      onSelect,
-      helperText,
-      CalendarProps,
-      visibleMonths,
-      ...rest
-    } = props;
+    className,
+    onSelect,
+    helperText,
+    CalendarProps,
+    visibleMonths,
+    ...rest
+  } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -145,7 +145,10 @@ export const DatePickerPanel = forwardRef<
         onHoveredDateChange: handleHoveredDateChange,
         selectedDate: selectedDate,
         onSelectedDateChange: setRangeDate,
-        maxDate: !compact && selectedDate?.startDate ? endOfMonth(selectedDate?.startDate) : undefined,
+        maxDate:
+          !compact && selectedDate?.startDate
+            ? endOfMonth(selectedDate?.startDate)
+            : undefined,
         hideOutOfRangeDates: true,
       }
     : {
@@ -186,7 +189,7 @@ export const DatePickerPanel = forwardRef<
               {...firstCalendarProps}
               {...CalendarProps}
             />
-            {isRangePicker && (
+            {isRangePicker && !compact && (
               <Calendar
                 selectionVariant="range"
                 hoveredDate={hoveredDate}

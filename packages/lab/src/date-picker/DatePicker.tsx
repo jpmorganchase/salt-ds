@@ -262,7 +262,8 @@ export const DatePicker = forwardRef<
         onSelect={handleSelect}
         CalendarProps={CalendarProps}
         helperText={helperText}
-      visibleMonths={visibleMonths}/>
+        visibleMonths={visibleMonths}
+      />
     </DatePickerContext.Provider>
   );
 });
