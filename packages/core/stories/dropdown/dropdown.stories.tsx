@@ -415,3 +415,15 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
     </Dropdown>
   );
 };
+
+export const Bordered = () => {
+  return (
+    <StackLayout>
+      <Template bordered />
+      <Template bordered variant="secondary" />
+      <Template bordered validationStatus="error" />
+      <Template bordered validationStatus="warning" />
+      <Template bordered validationStatus="success" />
+    </StackLayout>
+  );
+};
