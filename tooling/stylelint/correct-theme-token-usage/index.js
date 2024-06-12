@@ -85,6 +85,7 @@ const allAllowedKeys = [
   // characteristics
   "accent",
   "actionable",
+  "category",
   "container",
   "draggable",
   "differential", // TODO: **deprecated:** delete here

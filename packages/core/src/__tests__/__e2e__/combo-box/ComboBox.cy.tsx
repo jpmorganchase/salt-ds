@@ -18,6 +18,7 @@ const {
   ObjectValue,
   MultiplePills,
   MultiplePillsTruncated,
+  SelectOnTab,
 } = composeStories(comboBoxStories);
 
 describe("Given a ComboBox", () => {
@@ -62,6 +63,46 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alaska"])
     );
+  });
+
+  it("single select should be able to filter and select an option with a Tab key press by default", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(<Default onSelectionChange={selectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.realType("Ala");
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.realPress("Tab");
+    cy.findByRole("combobox").should("have.value", "Alabama");
+    cy.get("@selectionChange").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      Cypress.sinon.match.array.deepEquals(["Alabama"])
+    );
+  });
+
+  it("single select should be able to filter and select an option with a Tab key press when selectOnTab is passed as true", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(<Default selectOnTab onSelectionChange={selectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.realType("Ala");
+    cy.realPress("Tab");
+    cy.findByRole("combobox").should("have.value", "Alabama");
+    cy.get("@selectionChange").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      Cypress.sinon.match.array.deepEquals(["Alabama"])
+    );
+  });
+
+  it("single select should not be able to filter and select an option with a Tab key press when selectOnTab is passed as false", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(
+      <Default selectOnTab={false} onSelectionChange={selectionChangeSpy} />
+    );
+    cy.findByRole("combobox").realClick();
+    cy.realType("Ala");
+    cy.realPress("Tab");
+    cy.get("@selectionChange").should("not.have.been.called");
   });
 
   it("should be able to filter and select quick-select an option with Enter", () => {
@@ -281,6 +322,42 @@ describe("Given a ComboBox", () => {
     cy.get("@selectionChange").should("not.have.been.called");
   });
 
+  it("should not allow you to select a disabled option if selectOnTab is true", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(
+      <DisabledOption
+        selectOnTab
+        multiselect
+        onSelectionChange={selectionChangeSpy}
+      />
+    );
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "California" }).should(
+      "have.attr",
+      "aria-disabled",
+      "true"
+    );
+    cy.realType("California");
+    cy.realPress("Tab");
+    cy.get("@selectionChange").should("not.have.been.called");
+  });
+
+  it("should not allow you to select a option on Tab press if list is not open", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(
+      <DisabledOption
+        open={false}
+        selectOnTab
+        multiselect
+        onSelectionChange={selectionChangeSpy}
+      />
+    );
+    cy.findByRole("combobox").realClick();
+    cy.realType("alabama");
+    cy.realPress("Tab");
+    cy.get("@selectionChange").should("not.have.been.called");
+  });
+
   it("should allow multiple options to be selected with a mouse", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
     cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
@@ -352,6 +429,49 @@ describe("Given a ComboBox", () => {
     cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.value", "");
+  });
+
+  it("should allow multiselect to select on tab key press if selectOnTab is passed as true", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(<SelectOnTab onSelectionChange={selectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.realType("Ala");
+    cy.realPress("Tab");
+    cy.get("@selectionChange").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      Cypress.sinon.match.array.deepEquals(["Alabama"])
+    );
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+  });
+
+  it("by default multiselect should not allow to select on tab key press", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.realType("Ala");
+    cy.realPress("Tab");
+    cy.get("@selectionChange").should("not.have.been.called");
+  });
+
+  it("should not allow multiselect to deselect the already selected value on tab key press if selectOnTab is passed as true", () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(<SelectOnTab onSelectionChange={selectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.realType("Ala");
+    cy.realPress("Tab");
+    cy.get("@selectionChange").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      Cypress.sinon.match.array.deepEquals(["Alabama"])
+    );
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("combobox").realClick();
+    cy.realType("Alabama");
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
   });
 
   it("should have form field support", () => {

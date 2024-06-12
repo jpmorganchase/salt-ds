@@ -1,13 +1,5 @@
 # @salt-ds/ag-grid-theme
 
-## 3.0.0
-
-### Patch Changes
-
-- Updated dependencies [2199704e]
-- Updated dependencies [353e9171]
-  - @salt-ds/theme@1.17.0
-
 ## 2.0.0
 
 ### Major Changes

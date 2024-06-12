@@ -1,0 +1,124 @@
+---
+title: Menu button
+layout: DetailPattern
+aliases:
+  - /salt/patterns/menu-button
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-menu-button--menu-button", label: "Examples" },
+    ]
+  components: ["Button", "Menu"]
+---
+
+A menu button expands to reveal numerous contextual options when there's limited space to display them. The items within the menu are often less frequently used and don't require constant display within the interface.
+
+<Diagram
+  src="/img/patterns/menu-button/create.png"
+  alt="Menu button"
+  border
+/>
+
+## When to use
+
+Use a menu button when multiple related actions need to be viewed in context but are not necessarily deemed high enough priority to be displayed on screen. When activated, the menu button reveals a list of actions a user can take. The options are displayed across a single level or multiple hierarchical levels, in a cascading menu. Clicking one option closes the menu and performs the action.
+
+Menu buttons are ideal for where space is limited, or if certain actions are not a priority in impacting the page content. They can be positioned alongside headings, within filter bars, or within alternative layouts composed of various elements. 
+
+## How to build
+
+### Anatomy
+
+A menu button contains:
+
+1. **Main action:** the default action a user can take.
+2. **Supplementary actions:** lower priority or alternative actions displayed in a menu. 
+
+<Diagram
+  src="/img/patterns/menu-button/anatomy.png"
+  alt="Menu button showing supplementary actions."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Use a chevron icon to indicate the main action button can expand to reveal options to select from. Optionally, you can use left-aligned descriptive icons to effectively signify a menu item’s purpose.
+</ExampleContainer>
+
+### Layout
+
+- Use a [button](/salt/components/button) as the trigger for the main action. 
+- Use a [menu](/salt/components/menu) to display the selection of supplementary actions for users to choose from. 
+
+<Diagram
+  src="/img/patterns/menu-button/layout.png"
+  alt="layout"
+  border
+/>
+
+By default, the action button is aligned to the top left with the menu below. Depending on where the button is positioned within the available space and layout of the interface, the menu will dynamically adjust positions in order for its options to remain visible. 
+
+<Diagram
+  src="/img/patterns/menu-button/position.png"
+  alt="layout"
+  border
+/>
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/menu-button/screen-space-1.png", alt: "Menu button to the left of the screen with the menu open to the right" },
+    { src: "/img/patterns/menu-button/screen-space-2.png", alt: "Menu button to the right of the screen with the menu open to the left" },
+  ]}
+  label="Change screen space"
+/>
+
+## Menu button
+
+Menu button uses a primary button and is used when actions in the menu are related to the core functionality of an application. The button value is typically a string supported by a chevron icon, or can be an icon-only button, provided the icon is well-known and not likely to be misinterpreted. 
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/menu-button/in-layout.png", alt: "Menu button within a page" },
+    { src: "/img/patterns/menu-button/in-layout-open.png", alt: "Open menu button within a page" },
+  ]}
+  label="Open menu"
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+Consider your particular use case, the number and characteristics of menu options you need to display, your layout and available space – when determining the most appropriate button label.
+</ExampleContainer>
+
+## Overflow menu
+
+Overflow menus contain actions that affect a smaller type of content within an interface, such as within cards or data grids. This is typically represented by a three dot icon as the action button. This is useful when space is limited or the interface needs to remain uncluttered to reduce cognitive load. 
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/menu-button/overflow-menu.png", alt: "Overflow menu button within a page" },
+    { src: "/img/patterns/menu-button/overflow-menu-open.png", alt: "Open overflow menu button within a page" },
+  ]}
+  label="Open overflow menu"
+/>
+
+## Icon-only
+
+Icon-only menu buttons can be configured to contextually align to the product requirements, instead of being displayed as a chevron. See guidance for [button options](/salt/components/button) to select the most suitable button affordance for your application. 
+
+<ImageSwitcher
+  images={[
+    { src: "/img/patterns/menu-button/icon-only.png", alt: "Icon only menu button" },
+    { src: "/img/patterns/menu-button/icon-only-open.png", alt: "Open icon only menu button" },
+  ]}
+  label="Open overflow menu"
+/>
+
+## Heading as menu
+
+You can use a menu button to control the content displayed within an application underneath a heading. Vertically align a button to the right of a heading or display text that reflects the hierarchy for your design. Use --spacing-100 between the button and text. 
+
+<Diagram
+  src="/img/patterns/menu-button/heading.png"
+  alt="layout"
+  border
+/>
+
+:fragment{src="./fragments/feedback.mdx"}

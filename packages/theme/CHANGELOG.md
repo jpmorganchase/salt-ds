@@ -1,5 +1,106 @@
 # @salt-ds/theme
 
+## 1.18.0
+
+### Minor Changes
+
+- d0b6912: Added display 4 text tokens, which have the same value as display 3.
+
+  In theme next, display sizes are remapped to reflect larger size than h1.
+
+- 87791a1: Updated H1 font weight
+
+  | H1      | Before     | New       |
+  | ------- | ---------- | --------- |
+  | Default | Bold       | Semi bold |
+  | Small   | Medium     | Regular   |
+  | Strong  | Extra bold | Bold      |
+
+  Added font weight in palette layer for display, heading, body and notation.
+
+  ```diff
+  + --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  + --salt-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  + --salt-palette-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  + --salt-palette-text-heading-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  + --salt-palette-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  + --salt-palette-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  + --salt-palette-text-body-fontWeight: var(--salt-typography-fontWeight-regular);
+  + --salt-palette-text-body-fontWeight-small: var(--salt-typography-fontWeight-light);
+  + --salt-palette-text-body-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+  + --salt-palette-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  + --salt-palette-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
+  + --salt-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  ```
+
+  Wired text characteristics font weight to newly added palette tokens.
+
+  In theme next, when Amplitude is used for heading, font weight will be adjusted accordingly.
+
+- 400c730: - Added `--salt-opacity-45: 0.45`.
+  - Updated `--salt-palette-opacity-primary-border` from `var(--salt-opacity-40)` to `var(--salt-opacity-45)`.
+- 416b7dd: Updated foundation color palette used in theme next due to color contrast concerns, below colors are impacted.
+
+  ```
+  --salt-color-blue-200
+  --salt-color-blue-300
+  --salt-color-blue-400
+  --salt-color-blue-600
+  --salt-color-blue-700
+  --salt-color-blue-800
+  --salt-color-blue-900
+  --salt-color-green-200
+  --salt-color-green-300
+  --salt-color-green-400
+  --salt-color-green-600
+  --salt-color-green-700
+  --salt-color-green-800
+  --salt-color-green-900
+  --salt-color-teal-200
+  --salt-color-teal-300
+  --salt-color-teal-400
+  --salt-color-teal-600
+  --salt-color-teal-700
+  --salt-color-teal-800
+  --salt-color-teal-900
+  --salt-color-orange-200
+  --salt-color-orange-300
+  --salt-color-orange-400
+  --salt-color-orange-500
+  --salt-color-orange-600
+  --salt-color-orange-700
+  --salt-color-orange-800
+  --salt-color-red-300
+  --salt-color-red-400
+  --salt-color-red-600
+  --salt-color-red-700
+  --salt-color-red-800
+  --salt-color-red-900
+  --salt-color-purple-200
+  --salt-color-purple-300
+  --salt-color-purple-400
+  --salt-color-purple-600
+  --salt-color-purple-700
+  --salt-color-purple-800
+  --salt-color-purple-900
+  ```
+
+- 081c82b: Added 20 groups of categorical palette and category characteristics tokens, e.g., cat 1 tokens
+
+  Characteristics
+
+  - `--salt-category-1-subtle-foreground`
+  - `--salt-category-1-subtle-background`
+  - `--salt-category-1-subtle-borderColor`
+  - `--salt-category-1-bold-background`
+  - `--salt-category-1-bold-foreground`
+
+  Palette
+
+  - `--salt-palette-categorical-1`
+  - `--salt-palette-categorical-1-strong`
+  - `--salt-palette-categorical-1-weakest`
+
 ## 1.17.0
 
 ### Minor Changes

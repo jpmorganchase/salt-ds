@@ -1,6 +1,6 @@
+@import url(foundations/alpha-next.css);
 @import url(foundations/color-next.css);
 @import url(foundations/curve-next.css);
-@import url(foundations/fade-next.css);
 
 @import url(palette/alpha-next.css);
 @import url(palette/accent-next.css);
@@ -16,6 +16,7 @@
 
 @import url(characteristics/accent-next.css);
 @import url(characteristics/actionable-next.css);
+@import url(characteristics/category-next.css);
 @import url(characteristics/container-next.css);
 @import url(characteristics/content-next.css);
 @import url(characteristics/editable-next.css);
@@ -26,4 +27,5 @@
 @import url(characteristics/separable-next.css);
 @import url(characteristics/status-next.css);
 @import url(characteristics/target-next.css);
+@import url(characteristics/text-next.css);
 @import url(characteristics/track-next.css);

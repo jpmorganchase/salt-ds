@@ -48,6 +48,12 @@ Range.args = {
   selectionVariant: "range",
 };
 
+export const VisibleMonths = DatePickerTemplate.bind({});
+VisibleMonths.args = {
+  selectionVariant: "range",
+  visibleMonths: 1,
+};
+
 export const WithFormField: StoryFn<DatePickerProps> = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
 

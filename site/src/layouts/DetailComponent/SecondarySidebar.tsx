@@ -9,6 +9,7 @@ import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 import { Data, Relationship } from "./DetailComponent";
 import styles from "./SecondarySidebar.module.css";
 import { RelatedPatterns } from "../DetailPattern/RelatedPatterns";
+import { Text } from "@salt-ds/core";
 
 type SecondarySidebarProps = {
   additionalData?: Data;
@@ -30,6 +31,23 @@ function getRelatedComponentLinks(
     .sort((a, b) => a.label.localeCompare(b.label));
 }
 
+const PackageInfo: FC<{ packageInfo: Data["package"] | undefined }> = ({
+  packageInfo,
+}) => {
+  if (packageInfo?.initialVersion) {
+    return (
+      <div className={styles.wrapper}>
+        <Text>Available since </Text>
+        <Text styleAs="code">
+          {packageInfo.name}@{packageInfo?.initialVersion}
+        </Text>
+      </div>
+    );
+  } else {
+    return null;
+  }
+};
+
 const SecondarySidebar: FC<SecondarySidebarProps> = ({
   additionalData,
   tableOfContents,
@@ -40,6 +58,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
     sourceCodeUrl = "",
     bugReport = "",
     featureRequest = "",
+    package: packageInfo,
   } = additionalData || {};
 
   const { route = "" } = useRoute();
@@ -67,6 +86,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
         <LinkList heading="Contains" links={containsList} />
       </div>
       <RelatedPatterns />
+      <PackageInfo packageInfo={packageInfo} />
       <div className={styles.wrapper}>
         <LinkList
           heading="Resources"
