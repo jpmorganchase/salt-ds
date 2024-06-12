@@ -55,7 +55,6 @@ export const Controlled: StoryFn = (args) => {
         decimalPlaces={2}
         value={value}
         onChange={(_event, value) => {
-          console.log({value}, "setting in component")
           setValue(value);
         }}
         endAdornment={
@@ -68,7 +67,9 @@ export const Controlled: StoryFn = (args) => {
           </Button>
         }
       />
-      <FormFieldHelperText>The stepper input value is: {value}</FormFieldHelperText>
+      <FormFieldHelperText>
+        The stepper input value is: {value}
+      </FormFieldHelperText>
     </FormField>
   );
 };
