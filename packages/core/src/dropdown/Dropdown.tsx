@@ -87,6 +87,9 @@ export type DropdownProps<Item = string> = {
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: Exclude<ValidationStatus, "info">;
+  /** Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
 } & Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue"> &
   ListControlProps<Item>;
 
@@ -125,6 +128,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     onFocus,
     onBlur,
     valueToString = defaultValueToString,
+    bordered = false,
     ...rest
   } = props;
 
@@ -410,6 +414,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName(validationStatus ?? "")]: validationStatus,
+            [withBaseName("bordered")]: bordered,
           },
           className
         )}
