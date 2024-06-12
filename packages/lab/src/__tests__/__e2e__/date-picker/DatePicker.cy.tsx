@@ -122,31 +122,6 @@ describe("GIVEN a DatePicker", () => {
     });
   });
 
-  describe("WHEN range datepicker is mounted with visibleMonths 1", () => {
-    it("THEN it should select the date ranges from a single calendar", () => {
-      cy.mount(<Range visibleMonths={1} />);
-      cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 11 })),
-      })
-        .should("exist")
-        .realClick();
-      cy.findAllByRole("button")
-        .should("have.class", "saltButton-secondary")
-        .eq(1)
-        .realClick();
-      cy.findByRole("button", {
-        name: formatDay(
-          startOfMonth(today(localTimeZone))
-            .add({ months: 1 })
-            .add({ days: 11 })
-        ),
-      })
-        .should("exist")
-        .realClick();
-    });
-  });
-
   describe("WHEN range datepicker is mounted", () => {
     it("THEN it should mount with the specified defaultSelectedDate", () => {
       cy.mount(
@@ -233,6 +208,36 @@ describe("GIVEN a DatePicker", () => {
           "have.text",
           formatDate(testDate.add({ months: 2 }), { month: "short" })
         );
+    });
+
+    it("should show two calendars by default", () => {
+      cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findAllByRole("application").should("have.length", 2);
+    });
+
+    it("should show one calendar when visibleMonths is 1", () => {
+      cy.mount(<Range visibleMonths={1} />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findAllByRole("application").should("have.length", 1);
+    });
+
+    it("should disable the next month button when a start date has been selected", () => {
+      cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(today(localTimeZone)),
+      }).realClick();
+      cy.findByRole("button", { name: "Next month" }).should("be.disabled");
+    });
+
+    it("should not disable the next month button when visibleMonths is 1 and a start date has been selected", () => {
+      cy.mount(<Range visibleMonths={1} />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(today(localTimeZone)),
+      }).realClick();
+      cy.findByRole("button", { name: "Next month" }).should("not.be.disabled");
     });
   });
   describe("WHEN mounted as a controlled component", () => {

@@ -36,14 +36,6 @@ Date picker can show validation states (warning, success, error) with the prop `
 The Date Range Picker enables selection of start and end dates, using the input fields or two calendars displayed.
 
 </LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="VisibleMonths">
-## Visible months
-
-The Range Picker with prop `visibleMonths={1}` renders a single calendar for a range selection. We recommend using it when the space is limited.
-
-</LivePreview>
-
 <LivePreview componentName="date-picker" exampleName="CustomFormatter">
 ## With custom formatter
 
@@ -56,6 +48,12 @@ We recommend using our default date picker format (DD MMM YYYY) as it provides g
 
 You can customize the calendar by passing calendar props into `CalendarProps`.
 For more information, refer to the [calendar](/salt/components/calendar).
+
+</LivePreview>
+<LivePreview componentName="date-picker" exampleName="VisibleMonths">
+## Visible months
+
+Use the `visibleMonths` prop to customize the number of visible months in the panel for a range date picker. This is useful on smaller viewports.
 
 </LivePreview>
 </LivePreviewControls>
