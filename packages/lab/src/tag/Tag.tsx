@@ -17,10 +17,34 @@ export interface TagProps extends ComponentPropsWithoutRef<"div"> {
    * Emphasize the styling by applying a background color: defaults to bold
    */
   emphasis?: "bold" | "subtle";
+  /**
+   * The tag category. Defaults to 1
+   */
+  category?:
+    | 1
+    | 2
+    | 3
+    | 4
+    | 5
+    | 6
+    | 7
+    | 8
+    | 9
+    | 10
+    | 11
+    | 12
+    | 13
+    | 14
+    | 15
+    | 16
+    | 17
+    | 18
+    | 19
+    | 20;
 }
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(function Tag(
-  { children, className, emphasis = "bold", bordered, ...rest },
+  { children, className, emphasis = "bold", category = 1, bordered, ...rest },
   ref
 ) {
   const targetWindow = useWindow();
@@ -35,6 +59,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(function Tag(
       ref={ref}
       className={clsx(
         withBaseName(),
+        withBaseName(`category-${category}`),
         withBaseName(emphasis),
         {
           [withBaseName("bordered")]: bordered,
