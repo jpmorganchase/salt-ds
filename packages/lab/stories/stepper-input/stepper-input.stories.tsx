@@ -68,7 +68,7 @@ export const Controlled: StoryFn = (args) => {
           </Button>
         }
       />
-      <FormFieldHelperText>The changed value is: {value}</FormFieldHelperText>
+      <FormFieldHelperText>The stepper input value is: {value}</FormFieldHelperText>
     </FormField>
   );
 };
@@ -169,7 +169,7 @@ export const HideButtons: StoryFn = (args) => {
         {...args}
         hideButtons
         textAlign="center"
-        onValueChange={(_event, value) => {
+        onChange={(_event, value) => {
           setValue(value);
         }}
         startAdornment={

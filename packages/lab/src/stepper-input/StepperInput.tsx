@@ -66,6 +66,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   function StepperInput(props, ref) {
     const {
       className,
+      decimalPlaces,
       hideButtons,
       onBlur,
       onChange,
