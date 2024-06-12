@@ -31,7 +31,7 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           value={containerWidth}
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setWidth(nextValue as number)}
+          onChange={(_event, nextValue) => setWidth(nextValue)}
         />
         <Slider
           className="StoryContainer-slider"
