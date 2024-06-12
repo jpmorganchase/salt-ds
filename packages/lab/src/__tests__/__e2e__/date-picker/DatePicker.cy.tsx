@@ -222,22 +222,36 @@ describe("GIVEN a DatePicker", () => {
       cy.findAllByRole("application").should("have.length", 1);
     });
 
-    it("should disable the next month button when a start date has been selected", () => {
+    it("should disable the first calendar's next month button and the second calendar's previous month button when a start date has been selected", () => {
       cy.mount(<Range />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
         name: formatDay(today(localTimeZone)),
       }).realClick();
-      cy.findByRole("button", { name: "Next month" }).should("be.disabled");
+      cy.findAllByRole("button", { name: "Next Month" })
+        .eq(0)
+        .should("have.attr", "aria-disabled", "true");
+      cy.findAllByRole("button", { name: "Previous Month" })
+        .eq(1)
+        .should("have.attr", "aria-disabled", "true");
     });
 
-    it("should not disable the next month button when visibleMonths is 1 and a start date has been selected", () => {
+    it("should not disable the first calendar's next month button and the second calendar's previous month button when visibleMonths is 1 and a start date has been selected", () => {
       cy.mount(<Range visibleMonths={1} />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
         name: formatDay(today(localTimeZone)),
       }).realClick();
-      cy.findByRole("button", { name: "Next month" }).should("not.be.disabled");
+      cy.findByRole("button", { name: "Next Month" }).should(
+        "not.have.attr",
+        "aria-disabled",
+        "true"
+      );
+      cy.findByRole("button", { name: "Previous Month" }).should(
+        "not.have.attr",
+        "aria-disabled",
+        "true"
+      );
     });
   });
   describe("WHEN mounted as a controlled component", () => {
