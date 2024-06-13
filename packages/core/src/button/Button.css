@@ -150,8 +150,8 @@
   --button-borderColor: var(--salt-container-primary-background);
   --saltButton-background-hover: none;
   --saltButton-background-active: none;
-  --saltButton-borderColor-active: none;
-  --saltButton-borderColor-hover: none;
+  --saltButton-borderColor-active: var(--salt-actionable-secondary-borderColor);
+  --saltButton-borderColor-hover: var(--salt-actionable-secondary-borderColor);
 }
 
 .saltButton-loading-overlay {
