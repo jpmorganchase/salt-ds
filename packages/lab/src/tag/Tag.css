@@ -11,6 +11,7 @@
   line-height: var(--salt-text-lineHeight);
   overflow: hidden;
   border-radius: var(--saltTag-borderRadius, var(--salt-palette-corner-strongest, 9999px));
+  width: fit-content;
 }
 
 .saltTag-bold {
