@@ -125,12 +125,19 @@ export interface DateInputProps<SelectionVariantType>
     event: SyntheticEvent,
     selectedDate?: SelectionVariantType
   ) => void;
-  onChange?: (
-    event: ChangeEvent<HTMLInputElement>,
-    ...args: SelectionVariantType extends RangeSelectionValueType
-      ? [startDateInputValue?: string, endDateInputValue?: string]
-      : [selectedDateInputValue: string]
-  ) => void;
+  /**
+   * Callback fired when the input value change.
+   */
+  onChange?: SelectionVariantType extends SingleSelectionValueType
+    ? (
+        event: ChangeEvent<HTMLInputElement>,
+        selectedDateInputValue?: string
+      ) => void
+    : (
+        event: ChangeEvent<HTMLInputElement>,
+        startDateInputValue?: string,
+        endDateInputValue?: string
+      ) => void;
 }
 
 export const DateInput = forwardRef<

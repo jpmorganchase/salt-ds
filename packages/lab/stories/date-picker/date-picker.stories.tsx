@@ -129,11 +129,11 @@ export const RangeWithValidation: StoryFn<
         selectedDate={selectedDate}
         onChange={(
           event: ChangeEvent<HTMLInputElement>,
-          newStartString,
-          newEndString
+          startDateInputValue?: string,
+          endDateInputValue?: string
         ) => {
-          setStartString(newStartString);
-          setEndString(newEndString);
+          setStartString(startDateInputValue);
+          setEndString(endDateInputValue);
         }}
         onSelectionChange={(_, date) => {
           setValidationStatus(

@@ -97,11 +97,16 @@ export interface DatePickerProps<SelectionVariantType>
   /**
    * Callback fired when the input value change.
    */
-  onChange?: (
-    event: ChangeEvent<HTMLInputElement>,
-    startDateInputValue?: string,
-    endDateInputValue?: string
-  ) => void;
+  onChange?: SelectionVariantType extends SingleSelectionValueType
+    ? (
+        event: ChangeEvent<HTMLInputElement>,
+        selectedDateInputValue?: string
+      ) => void
+    : (
+        event: ChangeEvent<HTMLInputElement>,
+        startDateInputValue?: string,
+        endDateInputValue?: string
+      ) => void;
   /**
    * Number of Calendars to be shown if selectionVariant is range.
    * 2 is the default value.
