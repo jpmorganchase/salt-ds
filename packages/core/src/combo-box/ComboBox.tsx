@@ -81,6 +81,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     defaultValue,
     valueToString = defaultValueToString,
     truncate,
+    bordered = false,
     ...rest
   } = props;
 
