@@ -76,6 +76,9 @@ export interface PillInputProps
   variant?: "primary" | "secondary";
   hidePillClose?: boolean;
   truncate?: boolean;
+  /** Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
 }
 
 export const PillInput = forwardRef(function PillInput(
@@ -104,6 +107,7 @@ export const PillInput = forwardRef(function PillInput(
     validationStatus: validationStatusProp,
     variant = "primary",
     truncate,
+    bordered = false,
     ...other
   }: PillInputProps,
   ref: ForwardedRef<HTMLDivElement>
@@ -249,6 +253,7 @@ export const PillInput = forwardRef(function PillInput(
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName("truncate")]: truncate,
           [withBaseName(validationStatus ?? "")]: validationStatus,
+          [withBaseName("bordered")]: bordered,
         },
         classNameProp
       )}

@@ -906,3 +906,17 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
     </ComboBox>
   );
 };
+
+export const Bordered = () => {
+  return (
+    <StackLayout>
+      <Template bordered />
+      <Template bordered variant="secondary" />
+      <Template bordered placeholder="readonly" readOnly />
+      <Template bordered placeholder="disabled" disabled />
+      <Template bordered validationStatus="error" />
+      <Template bordered validationStatus="warning" />
+      <Template bordered validationStatus="success" />
+    </StackLayout>
+  );
+};
