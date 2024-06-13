@@ -6,9 +6,8 @@ export function getValue(
   min: number,
   max: number,
   step: number,
-  event: MouseEvent
+  clientX: number
 ) {
-  const { clientX } = event;
   const { width, x } = trackRef.current!.getBoundingClientRect();
   const localX = clientX - x;
   const normaliseBetweenValues = (localX / width) * (max - min) + min;
