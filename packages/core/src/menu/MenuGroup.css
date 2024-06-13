@@ -6,10 +6,8 @@
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-lineHeight);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
+  padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
   display: flex;
-  align-items: center;
 }
 
 .saltMenuGroup {

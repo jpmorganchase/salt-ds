@@ -29,12 +29,18 @@ import {
 } from "../calendar";
 import { DateValue, endOfMonth, startOfMonth } from "@internationalized/date";
 
+function clampDate(date: DateValue | null, max: DateValue | null) {
+  if (!date || !max) return undefined;
+  return date.compare(max) === 0 ? max : date;
+}
+
 export interface DatePickerPanelProps extends ComponentPropsWithoutRef<"div"> {
   onSelect?: (
     event: SyntheticEvent,
     selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
   ) => void;
   helperText?: string;
+  visibleMonths?: 1 | 2;
   CalendarProps?: Partial<
     Omit<
       CalendarProps,
@@ -50,7 +56,14 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
   function DatePickerPanel(props, ref) {
-    const { className, onSelect, helperText, CalendarProps, ...rest } = props;
+    const {
+      className,
+      onSelect,
+      helperText,
+      CalendarProps,
+      visibleMonths,
+      ...rest
+    } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -109,19 +122,19 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
     }, [startDate]);
 
     const isRangePicker = selectionVariant === "range";
+    const compact = visibleMonths === 1;
     const firstCalendarProps: CalendarProps = isRangePicker
       ? {
           selectionVariant: "range",
+          // This clamps the hovered date to the end of the visible month, otherwise the hovered date is mirrored across calendars.
           hoveredDate:
-            startDate &&
-            hoveredDate &&
-            hoveredDate.compare(endOfMonth(startDate)) > 0
-              ? endOfMonth(startDate)
+            startDate && !compact
+              ? clampDate(hoveredDate, endOfMonth(startDate))
               : hoveredDate,
           onHoveredDateChange: handleHoveredDateChange,
           selectedDate: { startDate, endDate },
           onSelectedDateChange: setRangeDate,
-          maxDate: startDate && endOfMonth(startDate),
+          maxDate: !compact && startDate ? endOfMonth(startDate) : undefined,
           hideOutOfRangeDates: true,
         }
       : {
@@ -162,7 +175,7 @@ export const DatePickerPanel = forwardRef<HTMLDivElement, DatePickerPanelProps>(
                 {...firstCalendarProps}
                 {...CalendarProps}
               />
-              {isRangePicker && (
+              {isRangePicker && !compact && (
                 <Calendar
                   selectionVariant="range"
                   hoveredDate={hoveredDate}

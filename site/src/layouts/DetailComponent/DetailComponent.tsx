@@ -39,7 +39,7 @@ interface RelatedComponent {
 
 interface ComponentNpmInfo {
   name: string;
-  initialRelease?: string;
+  initialVersion?: string;
 }
 
 export interface Data {
