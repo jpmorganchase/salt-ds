@@ -5810,6 +5810,7 @@ __metadata:
     "@jpmorganchase/mosaic-theme": "npm:^0.1.0-beta.65"
     "@next/eslint-plugin-next": "npm:^14.0.4"
     "@philpl/buble": "npm:^0.19.7"
+    "@stackblitz/sdk": "npm:^1.10.0"
     "@types/node": "npm:^16.0.0"
     "@types/react": "npm:^18.0.26"
     concurrently: "npm:^8.0.0"
@@ -6420,6 +6421,13 @@ __metadata:
     "@smithy/types": "npm:^2.1.0"
     tslib: "npm:^2.5.0"
   checksum: 10/fc675be539dd07899ad1829bec333ee4049c24dc82251a60c252d3c7e03aa97108539707f2ba4ad4e5d8fdf80479df24b52e7abd16b3262f9551a09eb146930e
+  languageName: node
+  linkType: hard
+
+"@stackblitz/sdk@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "@stackblitz/sdk@npm:1.10.0"
+  checksum: 10/ae9857ebd877683de6b864266d4eac1610b5e958a8fe9582d9ab83a0f3aeebc7b515497d8e4320e579f11d674239be10e4e9908680e62cfd12ac01b6d96f54f4
   languageName: node
   linkType: hard
 
