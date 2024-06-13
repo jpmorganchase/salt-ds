@@ -24,11 +24,17 @@ const saltConfig = {
       disabled: true,
     },
     {
+      modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",
+      previewDisabled: true,
+      options: { maxLineLength: 240, maxLineCount: 240 },
+      priority: Number.NEGATIVE_INFINITY,
+    },
+    {
       modulePath: "@jpmorganchase/mosaic-plugins/PublicAssetsPlugin",
-      priority: -1,
+      priority: Number.NEGATIVE_INFINITY,
       options: {
         outputDir: "./public",
-        assets: ["sitemap.xml"],
+        assets: ["sitemap.xml", "search-data.json"],
       },
     },
     {

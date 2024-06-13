@@ -10,6 +10,7 @@
 next-env.d.ts
 /snapshots/
 /public/sitemap.xml
+/public/search-data.json
 /src/props/*.json
 /src/components/css-display/cssVariables.json
 /src/components/css-display/cssCharacteristics.json

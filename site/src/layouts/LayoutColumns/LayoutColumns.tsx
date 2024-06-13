@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import clsx from "clsx";
+import { SaltProvider } from "@salt-ds/core";
 import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import { useBreakpoint } from "@jpmorganchase/mosaic-components";
 import styles from "./LayoutColumns.module.css";
@@ -16,9 +17,11 @@ export const LayoutColumns = ({
   return (
     <div className={styles.root}>
       {!showDrawer && PrimarySidebar && (
-        <div className={styles.sidebar}>
-          <Sidebar>{PrimarySidebar}</Sidebar>
-        </div>
+        <SaltProvider applyClassesTo="child" mode="light">
+          <div className={styles.sidebar}>
+            <Sidebar>{PrimarySidebar}</Sidebar>
+          </div>
+        </SaltProvider>
       )}
       <main className={clsx(styles.main, { [styles.showDrawer]: showDrawer })}>
         {children}
