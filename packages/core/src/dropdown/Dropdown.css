@@ -15,6 +15,7 @@
   min-height: var(--salt-size-base);
   border: var(--dropdown-border);
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
   display: flex;
   align-items: center;
   padding: 0 var(--salt-spacing-100);
