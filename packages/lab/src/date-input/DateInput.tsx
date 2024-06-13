@@ -74,7 +74,7 @@ const defaultDateFormatter = (date: DateValue | undefined): string => {
 };
 
 export interface DateInputProps<SelectionVariantType>
-  extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
+  extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Pick<ComponentPropsWithoutRef<"input">, "disabled" | "placeholder"> {
   ariaLabel?: string;
   /**
@@ -127,8 +127,9 @@ export interface DateInputProps<SelectionVariantType>
   ) => void;
   onChange?: (
     event: ChangeEvent<HTMLInputElement>,
-    startDateInputValue?: string,
-    endDateInputValue?: string
+    ...args: SelectionVariantType extends RangeSelectionValueType
+      ? [startDateInputValue?: string, endDateInputValue?: string]
+      : [selectedDateInputValue: string]
   ) => void;
 }
 
