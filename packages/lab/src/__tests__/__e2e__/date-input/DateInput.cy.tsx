@@ -53,6 +53,7 @@ describe("GIVEN a DateInput", () => {
           .click()
           .clear()
           .type(testStartInputDate);
+        cy.get("@changeSpy").should("have.been.calledWith", testStartInputDate);
         cy.findAllByRole("textbox")
           .eq(1)
           .click()

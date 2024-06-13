@@ -82,7 +82,6 @@ export interface DatePickerProps<SelectionVariantType>
    * Helper text to display in the panel
    */
   helperText?: string;
-
   /**
    * Validation status.
    */
