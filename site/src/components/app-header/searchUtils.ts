@@ -80,7 +80,7 @@ export const performSearch = (
 ) => {
   const fuse = new Fuse(index, config);
   const results = fuse.search(term);
-  console.log("FUSE", results);
+
   return results.map((result) => {
     const fallbackContent = result.item.content
       ? result.item.content[0]

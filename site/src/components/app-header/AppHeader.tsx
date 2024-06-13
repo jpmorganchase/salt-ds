@@ -12,7 +12,7 @@ import type { TabsMenu } from "@jpmorganchase/mosaic-components";
 import { useRoute, SidebarItem } from "@jpmorganchase/mosaic-store";
 import { AppHeaderDrawer } from "@jpmorganchase/mosaic-site-components";
 import styles from "./AppHeader.module.css";
-import { ChatIcon, GithubIcon } from "@salt-ds/icons";
+import { HelpIcon, GithubIcon } from "@salt-ds/icons";
 import { Search } from "./Search";
 
 export interface AppHeaderProps {
@@ -109,7 +109,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
               variant="component"
               className={styles.appHeaderLink}
             >
-              <ChatIcon aria-hidden />
+              <HelpIcon aria-hidden />
             </Link>
           </Tooltip>
         </StackLayout>

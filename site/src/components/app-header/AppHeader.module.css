@@ -10,6 +10,12 @@
   height: calc(var(--salt-size-unit) * 1.5);
 }
 
+.drawer,
+.drawer > div {
+  display: flex;
+  align-items: center;
+}
+
 .appHeaderLink {
   height: var(--salt-size-base);
   width: var(--salt-size-base);

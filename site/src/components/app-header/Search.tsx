@@ -86,9 +86,6 @@ export function Search() {
       const category = capitalize(
         option.route.split("/")[2].split("-").join(" ")
       );
-      if (!acc[category]) {
-        acc[category] = [];
-      }
       if (
         !(
           option.route.endsWith("accessibility") ||
@@ -96,6 +93,10 @@ export function Search() {
           option.route.endsWith("usage")
         )
       ) {
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+
         acc[category].push(option);
       }
       return acc;
