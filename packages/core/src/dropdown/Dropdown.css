@@ -13,7 +13,6 @@
   background: var(--dropdown-background);
   cursor: var(--dropdown-cursor);
   min-height: var(--salt-size-base);
-  border-radius: var(--salt-palette-corner-weak, 0);
   border: var(--dropdown-border);
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
   display: flex;
