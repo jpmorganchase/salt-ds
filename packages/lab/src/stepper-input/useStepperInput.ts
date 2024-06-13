@@ -41,8 +41,7 @@ const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
 const isIntermediateInput = (numberString: string) => {
-  const validNumberPattern = /^[+-]?(?=\d|\.d)\d*\.?\d+$/;
-  return !validNumberPattern.test(numberString);
+  return parseFloat(numberString).toString() != numberString;
 };
 
 export const useStepperInput = (
@@ -63,11 +62,13 @@ export const useStepperInput = (
 
   const [currentValue, setCurrentValue, isControlled] = useControlled({
     controlled: value,
-    default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
+    default: defaultValue,
     name: "stepper-input",
   });
 
-  const [inputValue, setInputValue] = useState(currentValue);
+  const [inputValue, setInputValue] = useState<number | string>(
+    toFixedDecimalPlaces(defaultValue, decimalPlaces)
+  );
 
   useEffect(() => {
     if (!isControlled) {
@@ -75,6 +76,8 @@ export const useStepperInput = (
     }
 
     if (value != undefined) {
+      const roundedValue = toFixedDecimalPlaces(value, decimalPlaces);
+      console.log("setting in useeffect", value);
       setInputValue(value);
     }
   }, [value, isControlled]);
@@ -88,17 +91,17 @@ export const useStepperInput = (
 
   const isAtMax = () => {
     if (currentValue === undefined) return true;
-    return toFloat(currentValue) >= max || (max === 0 && currentValue === "");
+    return toFloat(currentValue) >= max || max === 0;
   };
 
   const isAtMin = () => {
     if (currentValue === undefined) return true;
-    return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
+    return toFloat(currentValue) <= min || min === 0;
   };
 
   const decrement = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
-    let nextValue = currentValue === "" ? -step : toFloat(currentValue) - step;
+    let nextValue = toFloat(currentValue) - step;
 
     if (max !== undefined && isOutOfRange()) nextValue = max;
 
@@ -107,10 +110,7 @@ export const useStepperInput = (
 
   const decrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
-    let nextValue =
-      currentValue === ""
-        ? block * -step
-        : toFloat(currentValue) - step * block;
+    let nextValue = toFloat(currentValue) - step * block;
 
     if (max !== undefined && isOutOfRange()) nextValue = max;
 
@@ -119,7 +119,7 @@ export const useStepperInput = (
 
   const increment = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
-    let nextValue = currentValue === "" ? step : toFloat(currentValue) + step;
+    let nextValue = toFloat(currentValue) + step;
 
     if (min !== undefined && isOutOfRange()) nextValue = min;
 
@@ -128,8 +128,7 @@ export const useStepperInput = (
 
   const incrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
-    let nextValue =
-      currentValue === "" ? block * step : toFloat(currentValue) + step * block;
+    let nextValue = toFloat(currentValue) + step * block;
 
     if (min !== undefined && isOutOfRange()) nextValue = min;
 
@@ -146,7 +145,7 @@ export const useStepperInput = (
     if (isNaN(toFloat(roundedValue))) return;
 
     if (!isControlled) {
-      setCurrentValue(roundedValue);
+      setCurrentValue(toFloat(roundedValue));
     }
 
     if (onChange && event) {
@@ -176,12 +175,8 @@ export const useStepperInput = (
       decimalPlaces
     );
 
-    if (
-      currentValue !== "" &&
-      !isAllowedNonNumeric(currentValue) &&
-      !isControlled
-    ) {
-      setCurrentValue(roundedValue);
+    if (!isAllowedNonNumeric(currentValue) && !isControlled) {
+      setCurrentValue(toFloat(roundedValue));
     }
 
     if (onChange) {
@@ -194,7 +189,7 @@ export const useStepperInput = (
     const value = event.target.value;
 
     if (!isControlled) {
-      setCurrentValue(sanitizedInput(value));
+      setCurrentValue(toFloat(sanitizedInput(value)));
     }
 
     if (!isIntermediateInput(value)) {

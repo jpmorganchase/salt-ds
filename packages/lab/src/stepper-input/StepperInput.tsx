@@ -59,7 +59,7 @@ export interface StepperInputProps
   /**
    * The value of the stepper input. The component will be controlled if this prop is provided.
    */
-  value?: number | string;
+  value?: number;
 }
 
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(

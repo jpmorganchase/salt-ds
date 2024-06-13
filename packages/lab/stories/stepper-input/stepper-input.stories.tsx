@@ -53,8 +53,9 @@ export const Controlled: StoryFn = (args) => {
       <StepperInput
         {...args}
         decimalPlaces={2}
-        value={value}
+        value={5}
         onChange={(_event, value) => {
+          console.log("setting in onChange story", value);
           setValue(value);
         }}
         endAdornment={
@@ -161,7 +162,7 @@ export const RefreshAdornment: StoryFn = (args) => {
 };
 
 export const HideButtons: StoryFn = (args) => {
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState<number>(10);
 
   return (
     <FormField>
@@ -173,14 +174,11 @@ export const HideButtons: StoryFn = (args) => {
         onChange={(_event, value) => {
           setValue(value);
         }}
+        value={value}
         startAdornment={
           <Button
-            aria-label="decerement value"
-            onClick={() =>
-              setValue(
-                typeof value === "string" ? parseFloat(value) - 1 : value - 1
-              )
-            }
+            aria-label="decrement value"
+            onClick={() => setValue(value - 1)}
           >
             <RemoveIcon aria-hidden />
           </Button>
@@ -188,11 +186,7 @@ export const HideButtons: StoryFn = (args) => {
         endAdornment={
           <Button
             aria-label="increment value"
-            onClick={() =>
-              setValue(
-                typeof value === "string" ? parseFloat(value) + 1 : value + 1
-              )
-            }
+            onClick={() => setValue(value + 1)}
           >
             <AddIcon aria-hidden />
           </Button>
