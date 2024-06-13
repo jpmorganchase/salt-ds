@@ -31,12 +31,13 @@ export function usePointerDownThumb(
   };
 
   const onPointerMove = (event: PointerEvent): void => {
+    const { clientX } = event;
     let newValue: number | undefined = getValue(
       trackRef,
       min,
       max,
       step,
-      event
+      clientX
     );
 
     value.length > 1

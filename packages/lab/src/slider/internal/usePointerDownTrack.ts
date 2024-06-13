@@ -13,8 +13,8 @@ export function usePointerDownTrack(
   return {
     trackProps: {
       onPointerDown(event: MouseEvent) {
-        //@ts-ignore - React MouseEvent not compatible with global mouse event, causing type error on SliderTrack
-        const newValue: number = getValue(trackRef, min, max, step, event);
+        const { clientX } = event;
+        const newValue: number = getValue(trackRef, min, max, step, clientX);
 
         const nearestIndex = value.reduce((acc, value) => {
           const difference = Math.abs(newValue - value);
