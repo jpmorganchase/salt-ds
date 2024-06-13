@@ -10,7 +10,6 @@ import {
   Option,
   OptionGroup,
   Text,
-  Avatar,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import {
@@ -504,22 +503,11 @@ export const ComplexOption: StoryFn<ComboBoxProps<Contact>> = (args) => {
         )
         .map((contact) => (
           <Option value={contact} key={contact.id}>
-            <StackLayout
-              gap={1}
-              direction="row"
-              align="center"
-              style={{
-                paddingBlock:
-                  "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
-              }}
-            >
-              <Avatar aria-hidden name={contact.displayName} size={1} />
-              <StackLayout gap={0.5} align="start">
-                <Text>{contact.displayName}</Text>
-                <Text styleAs="label" color="secondary">
-                  {contact.email}
-                </Text>
-              </StackLayout>
+            <StackLayout gap={0.5} align="start">
+              <Text>{contact.displayName}</Text>
+              <Text styleAs="label" color="secondary">
+                {contact.email}
+              </Text>
             </StackLayout>
           </Option>
         ))}
