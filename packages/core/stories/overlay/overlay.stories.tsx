@@ -202,14 +202,14 @@ const WithActionsContent = ({
       <h3 id={id} style={{ marginTop: 0 }}>
         Export
       </h3>
-      <div>
+      <StackLayout gap={1}>
         <Checkbox
           indeterminate={indeterminate}
           checked={!indeterminate}
           label={`${controlledValues.length} of 2 selected`}
           onChange={handleChange}
         />
-        <Divider variant="tertiary" style={{ marginBlock: "8px" }} />
+        <Divider variant="tertiary" />
         <CheckboxGroup
           checkedValues={controlledValues}
           onChange={handleGroupChange}
@@ -218,14 +218,14 @@ const WithActionsContent = ({
             <Checkbox key={data.value} {...data} />
           ))}
         </CheckboxGroup>
-        <Divider variant="tertiary" style={{ marginBlock: "8px" }} />
+        <Divider variant="tertiary" />
         <Button
           style={{ float: "right", marginRight: 2 }}
           onClick={handleExport}
         >
           Export
         </Button>
-      </div>
+      </StackLayout>
     </>
   );
 };
