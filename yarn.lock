@@ -4151,12 +4151,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.77":
-  version: 0.1.0-beta.77
-  resolution: "@jpmorganchase/mosaic-schemas@npm:0.1.0-beta.77"
+"@jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.77, @jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.78":
+  version: 0.1.0-beta.78
+  resolution: "@jpmorganchase/mosaic-schemas@npm:0.1.0-beta.78"
   dependencies:
     zod: "npm:^3.22.3"
-  checksum: 10/13456bef4b5a4a2a33e6655d6fd0ccfd5025d2d321cafdc26acea946a6ff0b4a313215687d505240dbaf8435648566ec41652a6861602f2137e1d37d6ba6c943
+  checksum: 10/9ceb81d8ab8cf5c686890bca31ff0f2ceff8acec1f177da93abd256efd754e7e971c5958ce9ca5bcdf4c72b0439b4725f341d8dadf4f2fa6fb41a3d4f261a355
   languageName: node
   linkType: hard
 
@@ -4292,18 +4292,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-source-local-folder@npm:0.1.0-beta.77, @jpmorganchase/mosaic-source-local-folder@npm:^0.1.0-beta.77":
-  version: 0.1.0-beta.77
-  resolution: "@jpmorganchase/mosaic-source-local-folder@npm:0.1.0-beta.77"
+"@jpmorganchase/mosaic-source-local-folder@npm:0.1.0-beta.78, @jpmorganchase/mosaic-source-local-folder@npm:^0.1.0-beta.77":
+  version: 0.1.0-beta.78
+  resolution: "@jpmorganchase/mosaic-source-local-folder@npm:0.1.0-beta.78"
   dependencies:
-    "@jpmorganchase/mosaic-schemas": "npm:^0.1.0-beta.77"
-    "@jpmorganchase/mosaic-types": "npm:^0.1.0-beta.77"
+    "@jpmorganchase/mosaic-schemas": "npm:^0.1.0-beta.78"
+    "@jpmorganchase/mosaic-types": "npm:^0.1.0-beta.78"
     chokidar: "npm:^3.5.3"
     fast-glob: "npm:^3.2.12"
     lodash-es: "npm:^4.17.21"
     rxjs: "npm:^7.5.5"
     zod: "npm:^3.22.3"
-  checksum: 10/1777e4f7f636dae11474599c91341d480389eecd9f2d3b0e50fcc8060fe2c9162715a289073ce1ec5d80b2384f972ca9f1e067b2252fa8256f55b516925f6606
+  checksum: 10/d9a0687fa5e64a3d5ca50c9d5aad4574bf678a090622b39b9e2f11db3a14b7e929728ecd838e2f2415a24ccfbb9d3c7f4dd6a48a7be6e645abc09f6b3ec98297
   languageName: node
   linkType: hard
 
@@ -4347,10 +4347,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-types@npm:^0.1.0-beta.77":
-  version: 0.1.0-beta.77
-  resolution: "@jpmorganchase/mosaic-types@npm:0.1.0-beta.77"
-  checksum: 10/b5831527130dcdd4c9f6ec593a8f6378a6182f3d1f299c139fb6cbd454c7ea1ad34f0cd798c6b6393a2619619479238fa6a05713dcd6d18626c30b4fedfd15a2
+"@jpmorganchase/mosaic-types@npm:^0.1.0-beta.77, @jpmorganchase/mosaic-types@npm:^0.1.0-beta.78":
+  version: 0.1.0-beta.78
+  resolution: "@jpmorganchase/mosaic-types@npm:0.1.0-beta.78"
+  checksum: 10/0259ee52f078ecef259714a70cd91034f8df5eda09ec05f9ba0e417a0d4b3388ab1d7746629981fd6b24f13ca93e9bf17296ab6ae37992c7f27dd6f17a1972e5
   languageName: node
   linkType: hard
 
@@ -5876,7 +5876,7 @@ __metadata:
     "@jpmorganchase/mosaic-site-preset-styles": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-sitemap-component": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-source-git-repo": "npm:0.1.0-beta.77"
-    "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.77"
+    "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.78"
     "@jpmorganchase/mosaic-standard-generator": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.77"
