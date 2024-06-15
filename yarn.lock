@@ -4307,12 +4307,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.77, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.77":
-  version: 0.1.0-beta.77
-  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.77"
+"@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.78, @jpmorganchase/mosaic-standard-generator@npm:^0.1.0-beta.77":
+  version: 0.1.0-beta.78
+  resolution: "@jpmorganchase/mosaic-standard-generator@npm:0.1.0-beta.78"
   dependencies:
     dotenv-load: "npm:^2.0.1"
-  checksum: 10/96772ba2eb46143a0eefb54c22b2e097dbe1751a800589c1b498232db89d1603a25bfb9010774f79690c5f5831e4f3a959ef493b84cdaaf22a8ea6e126b72be3
+  checksum: 10/bb016edc160ea545d6b7a5196b506d457073fcd5f64c2ed10a40e6a58ae8c22811d706b8835d4a921757cd32831c50816ec286a38d06904d6af7439fb10a5392
   languageName: node
   linkType: hard
 
@@ -5877,7 +5877,7 @@ __metadata:
     "@jpmorganchase/mosaic-sitemap-component": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-source-git-repo": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.77"
-    "@jpmorganchase/mosaic-standard-generator": "npm:0.1.0-beta.77"
+    "@jpmorganchase/mosaic-standard-generator": "npm:0.1.0-beta.78"
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.77"
     "@next/eslint-plugin-next": "npm:^14.2.2"
