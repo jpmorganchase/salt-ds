@@ -4316,16 +4316,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-store@npm:0.1.0-beta.77, @jpmorganchase/mosaic-store@npm:^0.1.0-beta.77":
-  version: 0.1.0-beta.77
-  resolution: "@jpmorganchase/mosaic-store@npm:0.1.0-beta.77"
+"@jpmorganchase/mosaic-store@npm:0.1.0-beta.78, @jpmorganchase/mosaic-store@npm:^0.1.0-beta.77":
+  version: 0.1.0-beta.78
+  resolution: "@jpmorganchase/mosaic-store@npm:0.1.0-beta.78"
   dependencies:
     zustand: "npm:^4.1.1"
   peerDependencies:
     "@types/react": ^18.0.26
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 10/d9b998016f455864533e2cb103b9e9516dc5390a8bb9aad24053eedeea7ca4fc593408c032e16b63b338c2da85b072a582ea57dcbd593141fc8afd7d40cdc651
+  checksum: 10/bd838da01b87caf3f85105369f1e7c8907fe8101fb6963571ed7713c3654b81b8f387d5be5420f1a0cf2919bfba51b9fef79e2f5422d6a91ff40157c55edd6ff
   languageName: node
   linkType: hard
 
@@ -5878,7 +5878,7 @@ __metadata:
     "@jpmorganchase/mosaic-source-git-repo": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.77"
     "@jpmorganchase/mosaic-standard-generator": "npm:0.1.0-beta.77"
-    "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.77"
+    "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.78"
     "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.77"
     "@next/eslint-plugin-next": "npm:^14.2.2"
     "@philpl/buble": "npm:^0.19.7"
