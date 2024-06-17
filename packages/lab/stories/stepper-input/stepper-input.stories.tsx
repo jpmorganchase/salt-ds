@@ -134,7 +134,7 @@ export const Alignment: StoryFn = (args) => (
 );
 
 export const RefreshAdornment: StoryFn = (args) => {
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState<number>(10);
 
   return (
     <FormField>
