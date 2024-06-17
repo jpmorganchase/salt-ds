@@ -91,7 +91,7 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
   );
 };
 
-export const Statuses: StoryFn<typeof SteppedTracker> = () => {
+export const Status: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
       direction="column"

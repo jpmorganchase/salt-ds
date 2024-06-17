@@ -52,6 +52,23 @@ export const Basic = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
+      <SteppedTracker activeStep={2}>
+        <TrackerStep state="completed">
+          <StepLabel>Completed</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Active</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="warning">
+          <StepLabel>Warning</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="error">
+          <StepLabel>Error</StepLabel>
+        </TrackerStep>
+        <TrackerStep state="default">
+          <StepLabel>Default</StepLabel>
+        </TrackerStep>
+      </SteppedTracker>
     </StackLayout>
   );
 };
