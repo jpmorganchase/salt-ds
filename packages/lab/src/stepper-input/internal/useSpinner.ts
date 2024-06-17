@@ -1,4 +1,4 @@
-import { useEffect, useState, KeyboardEvent, SyntheticEvent } from "react";
+import { useEffect, useState, SyntheticEvent } from "react";
 import { useInterval } from "./useInterval";
 
 const INTERVAL_DELAY = 300;
