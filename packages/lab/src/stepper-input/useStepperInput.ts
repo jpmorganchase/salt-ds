@@ -5,7 +5,6 @@ import {
   MouseEvent,
   MutableRefObject,
   SyntheticEvent,
-  useEffect,
   useState,
 } from "react";
 import { useControlled, useId, InputProps } from "@salt-ds/core";
@@ -67,14 +66,11 @@ export const useStepperInput = (
   });
 
   const [inputValue, setInputValue] = useState<number | string>(
-    toFixedDecimalPlaces(defaultValue, decimalPlaces)
+    toFixedDecimalPlaces(
+      isControlled && value !== undefined ? value : defaultValue,
+      decimalPlaces
+    )
   );
-
-  useEffect(() => {
-    if (isControlled && value !== undefined) {
-      setInputValue(value);
-    }
-  }, [value, isControlled]);
 
   const inputId = useId(idProp);
 
@@ -173,18 +169,20 @@ export const useStepperInput = (
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+    const sanitizedValue = sanitizedInput(value);
+    const floatValue = toFloat(sanitizedValue);
 
     if (!isControlled) {
-      setCurrentValue(toFloat(sanitizedInput(value)));
+      setCurrentValue(floatValue);
     }
 
-    if (!isIntermediateInput(value)) {
+    if (!isIntermediateInput(sanitizedValue)) {
       if (onChange) {
-        onChange(event, toFloat(sanitizedInput(value)));
+        onChange(event, floatValue);
       }
     }
 
-    setInputValue(sanitizedInput(value));
+    setInputValue(sanitizedValue);
   };
 
   const handleInputKeyDown = (event: KeyboardEvent) => {

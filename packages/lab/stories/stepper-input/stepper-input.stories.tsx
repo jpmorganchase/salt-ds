@@ -4,7 +4,6 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
-  Text,
 } from "@salt-ds/core";
 import { StepperInput } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
@@ -55,6 +54,7 @@ export const Controlled: StoryFn = (args) => {
         decimalPlaces={2}
         value={value}
         onChange={(_event, value) => {
+          console.log(_event, value);
           setValue(value);
         }}
         endAdornment={
