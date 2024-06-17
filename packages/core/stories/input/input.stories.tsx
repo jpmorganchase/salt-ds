@@ -354,3 +354,17 @@ export const Spellcheck: StoryFn<typeof Input> = () => {
     />
   );
 };
+
+export const Bordered: StoryFn<typeof Input> = (args) => {
+  return (
+    <FlowLayout style={{ width: "266px" }}>
+      <Input bordered defaultValue={args.defaultValue ?? "Value"} {...args} />
+      <Input
+        bordered
+        variant="secondary"
+        defaultValue={args.defaultValue ?? "Value"}
+        {...args}
+      />
+    </FlowLayout>
+  );
+};

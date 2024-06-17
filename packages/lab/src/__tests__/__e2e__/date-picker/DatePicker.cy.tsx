@@ -121,6 +121,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findAllByRole("application").should("exist");
     });
   });
+
   describe("WHEN range datepicker is mounted", () => {
     it("THEN it should mount with the specified defaultSelectedDate", () => {
       cy.mount(
@@ -208,6 +209,50 @@ describe("GIVEN a DatePicker", () => {
           formatDate(testDate.add({ months: 2 }), { month: "short" })
         );
     });
+
+    it("should show two calendars by default", () => {
+      cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findAllByRole("application").should("have.length", 2);
+    });
+
+    it("should show one calendar when visibleMonths is 1", () => {
+      cy.mount(<Range visibleMonths={1} />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findAllByRole("application").should("have.length", 1);
+    });
+
+    it("should disable the first calendar's next month button and the second calendar's previous month button when a start date has been selected", () => {
+      cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(today(localTimeZone)),
+      }).realClick();
+      cy.findAllByRole("button", { name: "Next Month" })
+        .eq(0)
+        .should("have.attr", "aria-disabled", "true");
+      cy.findAllByRole("button", { name: "Previous Month" })
+        .eq(1)
+        .should("have.attr", "aria-disabled", "true");
+    });
+
+    it("should not disable the first calendar's next month button and the second calendar's previous month button when visibleMonths is 1 and a start date has been selected", () => {
+      cy.mount(<Range visibleMonths={1} />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(today(localTimeZone)),
+      }).realClick();
+      cy.findByRole("button", { name: "Next Month" }).should(
+        "not.have.attr",
+        "aria-disabled",
+        "true"
+      );
+      cy.findByRole("button", { name: "Previous Month" }).should(
+        "not.have.attr",
+        "aria-disabled",
+        "true"
+      );
+    });
   });
   describe("WHEN mounted as a controlled component", () => {
     it("THEN should mount with specified date", () => {
@@ -235,6 +280,54 @@ describe("GIVEN a DatePicker", () => {
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: testInput },
         });
+      });
+    });
+  });
+  describe("WHEN range is mounted as a controlled component", () => {
+    it("THEN should mount with specified date", () => {
+      cy.mount(
+        <Range
+          selectedDate={{
+            startDate: testDate,
+            endDate: testDate.add({ months: 1 }),
+          }}
+        />
+      );
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .should("have.value", formatInput(testDate));
+      cy.findAllByRole("textbox")
+        .eq(1)
+        .should("have.value", formatInput(testDate.add({ months: 1 })));
+    });
+    describe("WHEN the date is updated", () => {
+      it("should call onChange with the new value", () => {
+        const changeSpy = cy.stub().as("changeSpy");
+
+        function ControlledRangePicker() {
+          const [date, setDate] = useState(testDate);
+          const onChange = (
+            event: ChangeEvent<HTMLInputElement>,
+            startDate?: string,
+            endDate?: string
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            setDate(testDate);
+            changeSpy(startDate, endDate);
+          };
+
+          return <Range selectedDate={date} onChange={onChange} />;
+        }
+
+        cy.mount(<ControlledRangePicker />);
+        cy.findAllByRole("textbox").eq(0).click().clear().type(testInput);
+        cy.findAllByRole("textbox").eq(1).click().clear().type(rangeTestInput);
+        cy.get("@changeSpy").should(
+          "have.been.calledWith",
+          testInput,
+          rangeTestInput
+        );
       });
     });
   });

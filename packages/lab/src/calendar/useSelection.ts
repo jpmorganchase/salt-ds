@@ -20,9 +20,9 @@ interface BaseUseSelectionCalendarProps<SelectionVariantType> {
   ) => void;
 }
 
-type SingleSelectionValueType = DateValue;
+export type SingleSelectionValueType = DateValue;
 type MultiSelectionValueType = DateValue[];
-type RangeSelectionValueType = {
+export type RangeSelectionValueType = {
   startDate?: DateValue;
   endDate?: DateValue;
 };
@@ -95,7 +95,7 @@ export function isRangeOrOffsetSelectionWithStartDate(
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
-    Boolean(selectionValue?.startDate)
+    selectionValue?.hasOwnProperty("startDate")
   );
 }
 

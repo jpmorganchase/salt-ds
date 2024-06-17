@@ -230,14 +230,7 @@ export const ComplexOption: StoryFn<DropdownProps> = (args) => {
     >
       {Object.values(permissions).map(({ name, icon, description }) => (
         <Option value={name.toLowerCase()} key={name.toLowerCase()}>
-          <StackLayout
-            direction="row"
-            gap={1}
-            style={{
-              paddingBlock:
-                "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
-            }}
-          >
+          <StackLayout direction="row" gap={1}>
             {icon}
             <StackLayout gap={0.5} align="start">
               <Text>{name}</Text>
@@ -337,6 +330,80 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = () => {
     >
       {people.map((person) => (
         <Option value={person} key={person.id} />
+      ))}
+    </Dropdown>
+  );
+};
+export const SelectAll: StoryFn<DropdownProps> = (args) => {
+  const [selected, setSelected] = useState<string[]>([]);
+  const allSelectedOptionValue = "all";
+
+  const handleSelectionChange: DropdownProps["onSelectionChange"] = (
+    event,
+    newSelected
+  ) => {
+    let newOptionsSelected = [...newSelected];
+    const allWasPreviousSelected = selected.includes(allSelectedOptionValue);
+    const allIsCurrentlySelected = newOptionsSelected.includes(
+      allSelectedOptionValue
+    );
+
+    // If all was unselected
+    if (allWasPreviousSelected && !allIsCurrentlySelected) {
+      newOptionsSelected = [];
+      // If an option was unselected (-1 to not include "all")
+    } else if (
+      allWasPreviousSelected &&
+      newOptionsSelected.length - 1 !== usStates.length
+    ) {
+      newOptionsSelected = newOptionsSelected.filter(
+        (el) => el !== allSelectedOptionValue
+      );
+      // If all was selected or all options are now selected
+    } else if (
+      allIsCurrentlySelected ||
+      (!allIsCurrentlySelected && newOptionsSelected.length === usStates.length)
+    ) {
+      newOptionsSelected = [allSelectedOptionValue, ...usStates];
+    }
+
+    setSelected(newOptionsSelected);
+    args.onSelectionChange?.(event, newOptionsSelected);
+  };
+
+  return (
+    <Dropdown
+      {...args}
+      style={{ width: "266px" }}
+      selected={selected}
+      value={
+        selected.length < 2
+          ? selected[0]
+          : selected.includes("all")
+          ? "All Selected"
+          : `${selected.length} items selected`
+      }
+      onSelectionChange={handleSelectionChange}
+      multiselect
+    >
+      <div>
+        <Option
+          style={{
+            borderBottom: "var(--salt-separable-borderStyle)",
+            borderWidth: "var(--salt-size-border)",
+            borderColor:
+              selected.includes(usStates[0]) ||
+              selected.includes(allSelectedOptionValue)
+                ? "transparent"
+                : "var(--salt-separable-tertiary-borderColor)",
+          }}
+          value={allSelectedOptionValue}
+        >
+          Select All
+        </Option>
+      </div>
+      {usStates.map((state) => (
+        <Option value={state} key={state} />
       ))}
     </Dropdown>
   );

@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import clsx from "clsx";
-import { FooterProps as MosaicFooterProps } from "@jpmorganchase/mosaic-site-components";
-import { Link } from "@salt-ds/core";
+import {
+  FooterProps as MosaicFooterProps,
+  Link,
+} from "@jpmorganchase/mosaic-site-components";
 import styles from "./Footer.module.css";
 
 type FooterLinkItem = {
   label?: string;
-  to?: string;
+  to: string;
 };
 
 export interface FooterProps extends MosaicFooterProps {

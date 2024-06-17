@@ -47,7 +47,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       window: targetWindow,
     });
 
-    const { state, helpers } = useCalendar({ hideYearDropdown, ...rest });
+    const { state, helpers } = useCalendar({
+      hideYearDropdown,
+      ...rest,
+    });
 
     const { setCalendarFocused } = helpers;
 

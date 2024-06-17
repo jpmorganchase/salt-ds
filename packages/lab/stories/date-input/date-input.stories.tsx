@@ -1,4 +1,9 @@
-import { DateInput, DateInputProps } from "@salt-ds/lab";
+import {
+  DateInput,
+  DateInputProps,
+  RangeSelectionValueType,
+  SingleSelectionValueType,
+} from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -6,7 +11,9 @@ export default {
   component: DateInput,
 } as Meta<typeof DateInput>;
 
-const DateInputTemplate: StoryFn<DateInputProps> = (args) => {
+const DateInputTemplate: StoryFn<
+  DateInputProps<SingleSelectionValueType | RangeSelectionValueType>
+> = (args) => {
   return <DateInput {...args} />;
 };
 

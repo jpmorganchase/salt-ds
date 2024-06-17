@@ -1,0 +1,16 @@
+.overviewList {
+  list-style: none;
+  padding: 0;
+  gap: var(--salt-spacing-50);
+}
+
+.overviewList li {
+  color: var(--salt-content-primary-foreground);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  height: var(--salt-size-base);
+  display: flex;
+  align-items: center;
+  padding-inline: var(--salt-spacing-100);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}

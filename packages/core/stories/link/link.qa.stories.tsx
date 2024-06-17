@@ -34,6 +34,12 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         <strong>Strong</strong> and <small>small</small> truncation example
       </Link>
     </div>
+    <Link
+      href="https://www.google.com"
+      style={{ color: "var(--salt-content-foreground-visited)" }}
+    >
+      Forced visited
+    </Link>
   </QAContainer>
 );
 
