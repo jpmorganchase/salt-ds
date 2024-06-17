@@ -266,7 +266,7 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
       <Button
         variant="cta"
         showLoadingText
-        loadingText="Loading"
+        loadingText="Sending"
         loading={ctaLoadingState}
         onClick={handleCtaClick}
       >
@@ -276,7 +276,7 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
       <Button
         variant="primary"
         showLoadingText
-        loadingText="Loading"
+        loadingText="Syncing"
         loading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
@@ -286,7 +286,7 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
       <Button
         variant="secondary"
         showLoadingText
-        loadingText="Loading"
+        loadingText="Refreshing"
         loading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
