@@ -169,17 +169,6 @@
   border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
 }
 
-.saltButton-hidden-accessible-element {
-  border: 0px solid;
-  clip: rect(0px, 0px, 0px, 0px);
-  height: 1px;
-  overflow: hidden;
-  padding: 0px;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-}
-
 .saltButton-hidden-element {
   display: flex;
   gap: var(--salt-spacing-50);
