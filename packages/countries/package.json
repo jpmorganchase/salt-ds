@@ -15,11 +15,13 @@
   "sideEffects": false,
   "files": [
     "saltCountries.css",
-    "saltSharpCountries.css"
+    "saltSharpCountries.css",
+    "css"
   ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
-    "clean": "rimraf ./src/components"
+    "clean": "rimraf ./src/components",
+    "copy:css": "yarn node ./scripts/copyCss.mjs"
   },
   "dependencies": {
     "clsx": "^2.0.0"
