@@ -132,13 +132,13 @@ export const useStepperInput = (
 
     if (!isControlled) {
       setCurrentValue(toFloat(roundedValue));
+      setInputValue(roundedValue);
     }
 
     if (onChange && event) {
       onChange(event, toFloat(roundedValue));
+      setInputValue(roundedValue);
     }
-
-    setInputValue(roundedValue);
   };
 
   const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
