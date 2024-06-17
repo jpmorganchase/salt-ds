@@ -44,9 +44,10 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
   const [valueState, setValueState] = useControlled({
     controlled: value,
     default:
-      defaultValue ?? (selectedState.length === 1 && !multiselect)
+      defaultValue ??
+      (selectedState.length === 1 && !multiselect
         ? listControl.valueToString(selectedState[0])
-        : defaultValue,
+        : defaultValue),
     name: "ComboBox",
     state: "value",
   });
