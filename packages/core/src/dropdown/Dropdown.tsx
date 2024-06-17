@@ -449,6 +449,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         </span>
         {validationStatus && <StatusAdornment status={validationStatus} />}
         {!readOnly && <ExpandIcon open={openState} />}
+        <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
         open={(openState || focusedState) && !readOnly && children != undefined}
