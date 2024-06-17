@@ -1,10 +1,6 @@
 import { ReactElement, useState } from "react";
-import {
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  StepperInput,
-} from "@salt-ds/core";
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
+import { StepperInput } from "@salt-ds/lab";
 
 export const Limits = (): ReactElement => {
   const [value, setValue] = useState<number | string>(2);

@@ -1,10 +1,6 @@
 import { ReactElement } from "react";
-import {
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  StepperInput,
-} from "@salt-ds/core";
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
+import { StepperInput } from "@salt-ds/lab";
 
 export const StepAndBlock = (): ReactElement => (
   <FormField style={{ width: "250px" }}>

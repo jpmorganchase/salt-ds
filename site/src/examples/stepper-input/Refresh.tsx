@@ -4,9 +4,9 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  StepperInput,
 } from "@salt-ds/core";
 import { RemoveIcon, AddIcon, RefreshIcon } from "@salt-ds/icons";
+import { StepperInput } from "@salt-ds/lab";
 
 export const Refresh = (): ReactElement => {
   const [value, setValue] = useState<number | string>(10);
