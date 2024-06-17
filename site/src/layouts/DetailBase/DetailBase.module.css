@@ -16,37 +16,6 @@
   --mosaic-border-width-medium: 3px;
 }
 
-.primarySidebar :global(.ps-menu-button),
-.primarySidebar :global(.ps-menuitem-root) {
-  --mosaic-color-dark-neutral-background-emphasis: var(--salt-palette-navigate-primary-background-hover);
-  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-content-secondary-foreground);
-}
-
-.primarySidebar :global(.ps-active) {
-  --mosaic-color-dark-navigable-selectableLink-unselectedLabel: var(--salt-palette-interact-foreground);
-}
-
-.primarySidebar :global(a.ps-menu-button) {
-  color: var(--salt-content-secondary-foreground);
-}
-
-.primarySidebar :global(.ps-menu-label) {
-  font-weight: var(--salt-navigable-fontWeight);
-  padding-left: var(--salt-size-unit);
-}
-
-.primarySidebar :global(a.ps-menu-button:hover) {
-  background-color: var(--color-dark-neutral-background-emphasis);
-}
-
-.primarySidebar :global(a.ps-active),
-.primarySidebar :global(.ps-menu-button.ps-active) {
-  border-left: 4px solid var(--site-tertiary-accent-orange);
-  background-color: var(--color-dark-neutral-background-emphasis);
-  color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-navigable-fontWeight);
-}
-
 .docsPageContent {
   width: calc(100% - var(--toc-width));
 }
@@ -64,8 +33,8 @@
   position: sticky;
   top: var(--navbar-height);
   width: var(--toc-width);
-  padding-top: calc(3 * var(--salt-size-unit));
-  padding-left: calc(5 * var(--salt-size-unit));
+  padding-top: var(--salt-spacing-300);
+  padding-left: calc(5 * var(--salt-spacing-100));
   margin-top: 0;
 }
 
@@ -74,36 +43,8 @@
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.sidebar aside ul[role="tree"] {
-  margin: 0;
-  padding: var(--toc-padding-vertical) 0 var(--toc-padding-vertical) var(--toc-padding-horizontal);
-  font-size: 0.8rem;
-}
-
-.sidebar ul[role="tree"] li {
-  height: 36px;
-}
-
-.sidebar ul[role="tree"] li:hover {
-  color: var(--salt-content-foreground-hover);
-  text-decoration: underline;
-}
-
-.sidebar ul[role="tree"] li[aria-checked="true"] {
-  color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-navigable-fontWeight-active);
-}
-
 .primarySidebar {
   display: contents;
-}
-
-.primarySidebar aside {
-  background-color: var(--salt-accent-foreground);
-}
-
-.primarySidebar aside svg {
-  margin-right: var(--salt-size-unit);
 }
 
 @media screen and (max-width: 768px) {

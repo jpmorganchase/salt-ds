@@ -4,7 +4,8 @@ import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 const composedStories = composeStories(dateInputStories);
 const { Default, Range } = composedStories;
-
+const testStartInputDate = "02-feb-2000";
+const testEndInputDate = "02-mar-2000";
 describe("GIVEN a DateInput", () => {
   checkAccessibility(composedStories);
 
@@ -31,6 +32,38 @@ describe("GIVEN a DateInput", () => {
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
           target: { value: "02-feb-2000" },
         });
+      });
+    });
+    describe("WHEN the range input is updated", () => {
+      it("THEN should call onChange with the new values", () => {
+        const changeSpy = cy.stub().as("changeSpy");
+        const onChange = (
+          event: ChangeEvent<HTMLInputElement>,
+          startDateInputValue?: string,
+          endDateInputValue?: string
+        ) => {
+          // React 16 backwards compatibility
+          event.persist();
+          changeSpy(startDateInputValue, endDateInputValue);
+        };
+
+        cy.mount(<Range onChange={onChange} />);
+        cy.findAllByRole("textbox")
+          .eq(0)
+          .click()
+          .clear()
+          .type(testStartInputDate);
+        cy.get("@changeSpy").should("have.been.calledWith", testStartInputDate);
+        cy.findAllByRole("textbox")
+          .eq(1)
+          .click()
+          .clear()
+          .type(testEndInputDate);
+        cy.get("@changeSpy").should(
+          "have.been.calledWith",
+          testStartInputDate,
+          testEndInputDate
+        );
       });
     });
   });
