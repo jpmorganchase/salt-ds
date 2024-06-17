@@ -1,0 +1,89 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="stepper-input" exampleName="Default" >
+
+## Default
+
+- `Stepper Input` comprises an [`Input`](salt/components/input) component with a default numerical value and stepper buttons. Once it has focus, it accepts numerical characters.
+- The default `Stepper Input` has a `defaultValue` of 0, `step` of 1 and `block` of 10.
+
+### Best practices
+
+- Pick a default value that reflects the desired value for most users.
+
+</LivePreview>
+
+<LivePreview componentName="stepper-input" exampleName="Limits" >
+
+## Limits
+
+- By default users can enter a number within the bounds of the maximum and minimum floating-point number.
+- If you need to limit the range of accepted values, you can set the `min` and/or `max` props.
+- The respective up or down buttons will be disabled when at the limit, and users will not be able to exceed them via keyboard controls.
+
+### Best practices
+
+- Clearly state the accepted value range in the [`Form Field's`](salt/components/form-field) helper text.
+- Use the [`Form Field's`](salt/components/form-field) error state to inform users if they have manually typed in a value outside of the accepted range.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="StepAndBlock" >
+
+## Step and Block
+
+- You can customize the amount the value is changed by when pressing the buttons or arrow keys with the `step` prop.
+- Holding down the Shift key when pressing Up Arrow or Down Arrow keys applies a block multiplier to the step. You can customize this multiplier with the `block` prop.
+
+### Best practices
+
+- Select a `step` value that aligns with the precision required by the use case.
+- Set the `block` value to a reasonable multiple of the step value, allowing users to make larger adjustments.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="Decimals" >
+
+## Decimals
+
+- `Stepper Input` accepts no decimal places by default. Use the `decimalPlaces` prop to allow the user to enter a value with decimal places.
+
+### Best practices
+
+- Adjust the `step` and `block` values to align with the decimal use case.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="CustomButtons" >
+
+## Custom buttons
+
+- Hide the default stepper buttons with the `hideButtons` prop if you wish to customize the appearance of the controls.
+- Ensure you provide alternative controls for adjusting the value to maintain usability and accessibility.
+
+### Best practices
+
+- Place alternative controls close to the Stepper Input, or place them inside the input field via the `endAdornment` and `startAdornment` props.
+- Ensure that buttons have useful aria-labels.
+
+</LivePreview>
+
+<LivePreview componentName="stepper-input" exampleName="Refresh" >
+
+## Refresh
+
+- You can add a refresh button inside the input field via the `endAdornment` or `startAdornment` props.
+- Use this when you want users to be able to revert to the default value.
+
+### Best practices
+
+- Ensure the button has a relevant aria-label.
+
+</LivePreview>
+</LivePreviewControls>

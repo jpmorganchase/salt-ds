@@ -1,0 +1,41 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+Use Stepper Input when users need to input or adjust numerical values, such as in forms or settings.
+
+### When to use
+
+- When you need to collect a numerical value from users.
+- When you need users to increment or decrement a numerical value.
+- When you need to ensure a value is within specific bounds.
+
+### When not to use
+
+- When collecting non-numerical data, such as text or dates. Instead use [`Input`](/salt/components/input), [`MultilineInput`](/salt/components/multiline-input) or [`Date Picker`](/salt/components/date-picker).
+- When values are predefined or the user should select from a list of options. Use a [`Dropdown`](/salt/components/input) or [`Combo Box`](/salt/components/combo-box) component instead.
+
+### Accepted characters
+
+- The Stepper Input component accepts numeric digits 0-9, decimal point (.), plus sign (+) and minus sign (-).
+- Note it does not accept the character e, which is allowed in native HTML `type="number"` inputs to represent exponential notation. This design choice ensures that all input values remain simple numerical values without exponential formatting.
+
+## Import
+
+To import `StepperInput` from the lab Salt package, use:
+
+```js
+import { StepperInput } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable componentName="StepperInput" />
