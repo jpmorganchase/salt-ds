@@ -1,5 +1,5 @@
 import { ReactElement, useState } from "react";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { SendIcon, SyncIcon, RefreshIcon } from "@salt-ds/icons";
 import { Button } from "@salt-ds/core";
 
 export const LoadingButtons = (): ReactElement => {
@@ -41,8 +41,8 @@ export const LoadingButtons = (): ReactElement => {
         isLoading={ctaLoadingState}
         onClick={handleCtaClick}
       >
-        Click to Continue
-        <ChevronRightIcon aria-hidden />
+        <SendIcon aria-hidden />
+        Send
       </Button>
       <Button
         variant="secondary"
@@ -50,8 +50,8 @@ export const LoadingButtons = (): ReactElement => {
         isLoading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
-        Search
-        <ChevronRightIcon aria-hidden />
+        <SyncIcon aria-hidden />
+        Sync
       </Button>
       <Button
         variant="primary"
@@ -59,8 +59,8 @@ export const LoadingButtons = (): ReactElement => {
         isLoading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
-        Next Page
-        <ChevronRightIcon aria-hidden />
+        <RefreshIcon aria-hidden />
+        Refresh
       </Button>
     </div>
   );

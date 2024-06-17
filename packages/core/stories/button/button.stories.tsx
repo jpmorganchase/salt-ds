@@ -6,6 +6,8 @@ import {
   SendIcon,
   SettingsSolidIcon,
   ChevronRightIcon,
+  SyncIcon,
+  RefreshIcon,
 } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 
@@ -177,12 +179,14 @@ const LoadingButtonGrid = ({
   ctaButtonLabel,
   loadingText,
   showLoadingText,
+  withRightArrowIcon,
 }: {
   primaryButtonLabel: string;
   secondaryButtonLabel: string;
   ctaButtonLabel: string;
   loadingText: string;
   showLoadingText?: boolean;
+  withRightArrowIcon?: boolean;
 }) => {
   const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
   const [secondaryLoadingState, setSecondaryLoadingState] = useState(false);
@@ -223,6 +227,7 @@ const LoadingButtonGrid = ({
         isLoading={ctaLoadingState}
         onClick={handleCtaClick}
       >
+        <SendIcon aria-hidden />
         {ctaButtonLabel}
       </Button>
       <Button
@@ -232,8 +237,10 @@ const LoadingButtonGrid = ({
         isLoading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
+        {" "}
+        {!withRightArrowIcon && <SyncIcon aria-hidden />}
         {primaryButtonLabel}
-        <ChevronRightIcon aria-hidden />
+        {withRightArrowIcon && <ChevronRightIcon aria-hidden />}
       </Button>
       <Button
         variant="secondary"
@@ -242,8 +249,9 @@ const LoadingButtonGrid = ({
         isLoading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
+        {!withRightArrowIcon && <RefreshIcon aria-hidden />}
         {secondaryButtonLabel}
-        <ChevronRightIcon aria-hidden />
+        {withRightArrowIcon && <ChevronRightIcon aria-hidden />}
       </Button>
     </div>
   );
@@ -252,9 +260,9 @@ const LoadingButtonGrid = ({
 export const LoadingButtons: StoryFn<typeof Button> = () => {
   return (
     <LoadingButtonGrid
-      primaryButtonLabel="Submit"
-      secondaryButtonLabel="Search"
-      ctaButtonLabel="Continue"
+      primaryButtonLabel="Sync"
+      secondaryButtonLabel="Refresh"
+      ctaButtonLabel="Send"
       loadingText="Loading"
     />
   );
@@ -268,6 +276,7 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
       ctaButtonLabel="Click to Continue"
       loadingText="Loading"
       showLoadingText
+      withRightArrowIcon
     />
   );
 };
