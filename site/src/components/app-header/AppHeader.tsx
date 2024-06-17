@@ -74,45 +74,50 @@ export const AppHeader: FC<AppHeaderProps> = ({
         </div>
       )}
       <div className={styles.root}>
-        {homeLink && (
-          <Link href={homeLink} variant="component">
-            {logo && (
-              <Logo>
-                <LogoImage src={appHeaderLogo} alt="Salt design system logo" />
-                {title && <Text>{title}</Text>}
-              </Logo>
-            )}
-          </Link>
-        )}
         {!isMobileOrTablet && (
-          <nav className={styles.appHeaderTabs}>
-            <StackLayout
-              as="nav"
-              direction="row"
-              style={{ listStyle: "none" }}
-              gap={0}
-            >
-              {menu.map((item) => {
-                if (item.type === TabMenuItemType.LINK) {
-                  return (
-                    <li key={item.title}>
-                      <NavigationItem
-                        active={route?.includes(item.link)}
-                        href={item.link}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          router.push(item.link);
-                        }}
-                      >
-                        {item.title}
-                      </NavigationItem>
-                    </li>
-                  );
-                }
-                return null;
-              })}
-            </StackLayout>
-          </nav>
+          <>
+            {homeLink && (
+              <Link href={homeLink} variant="component">
+                {logo && (
+                  <Logo>
+                    <LogoImage
+                      src={appHeaderLogo}
+                      alt="Salt design system logo"
+                    />
+                    {title && <Text>{title}</Text>}
+                  </Logo>
+                )}
+              </Link>
+            )}
+            <nav className={styles.appHeaderTabs}>
+              <StackLayout
+                as="ul"
+                direction="row"
+                style={{ listStyle: "none", padding: 0 }}
+                gap={0}
+              >
+                {menu.map((item) => {
+                  if (item.type === TabMenuItemType.LINK) {
+                    return (
+                      <li key={item.title}>
+                        <NavigationItem
+                          active={route?.includes(item.link)}
+                          href={item.link}
+                          onClick={(event) => {
+                            event.preventDefault();
+                            router.push(item.link);
+                          }}
+                        >
+                          {item.title}
+                        </NavigationItem>
+                      </li>
+                    );
+                  }
+                  return null;
+                })}
+              </StackLayout>
+            </nav>
+          </>
         )}
         <StackLayout direction="row" align="center" gap={1}>
           <Search />

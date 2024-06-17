@@ -2,12 +2,13 @@
   flex-grow: 1;
   display: flex;
   align-items: center;
+  gap: var(--salt-spacing-100);
   justify-content: space-between;
 }
 
 .drawer svg {
-  width: calc(var(--salt-size-unit) * 1.5);
-  height: calc(var(--salt-size-unit) * 1.5);
+  width: var(--salt-spacing-150);
+  height: var(--salt-spacing-150);
 }
 
 .drawer,

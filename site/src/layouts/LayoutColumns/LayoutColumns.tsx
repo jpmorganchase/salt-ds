@@ -23,9 +23,9 @@ export const LayoutColumns = ({
           </div>
         </SaltProvider>
       )}
-      <main className={clsx(styles.main, { [styles.showDrawer]: showDrawer })}>
+      <div className={clsx(styles.main, { [styles.showDrawer]: showDrawer })}>
         {children}
-      </main>
+      </div>
     </div>
   );
 };
