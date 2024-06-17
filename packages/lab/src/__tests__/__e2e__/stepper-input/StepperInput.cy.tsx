@@ -164,6 +164,30 @@ describe("Stepper Input", () => {
     );
   });
 
+  it("does not call the `onChange` callback when the value is intermediate", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+
+    cy.mount(<StepperInput defaultValue={15} onChange={changeSpy} />);
+
+    cy.findByRole("spinbutton").clear().type("1");
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      1
+    );
+
+    cy.findByRole("spinbutton").type(".");
+    cy.get("@changeSpy").should("have.callCount", 1);
+
+    cy.findByRole("spinbutton").type("1");
+
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      1.1
+    );
+  });
+
   it("allows maximum safe integer", () => {
     cy.mount(<StepperInput defaultValue={Number.MAX_SAFE_INTEGER} />);
 
@@ -220,6 +244,24 @@ describe("Stepper Input", () => {
       "have.value",
       Number.MIN_SAFE_INTEGER.toString()
     );
+  });
+
+  it("does not decrement below the minimum value", () => {
+    cy.mount(<StepperInput defaultValue={-1} min={-1} />);
+
+    cy.findByRole("spinbutton").should("have.value", -1);
+
+    cy.findByLabelText("decrement value").realClick();
+    cy.findByRole("spinbutton").should("have.value", -1);
+  });
+
+  it("does not increment above the maximum value", () => {
+    cy.mount(<StepperInput defaultValue={1} max={1} />);
+
+    cy.findByRole("spinbutton").should("have.value", 1);
+
+    cy.findByLabelText("increment value").realClick();
+    cy.findByRole("spinbutton").should("have.value", 1);
   });
 
   it("rounds up to correct number of decimal places", () => {
