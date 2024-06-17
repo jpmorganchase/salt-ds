@@ -137,7 +137,11 @@ describe("Stepper Input", () => {
     cy.mount(<StepperInput defaultValue={16} onChange={changeSpy} />);
 
     cy.findByLabelText("decrement value").realClick();
-    cy.get("@changeSpy").should("have.been.calledWith", "15");
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      15
+    );
   });
 
   it("calls the `onChange` callback when the value is incremented", () => {
@@ -153,7 +157,11 @@ describe("Stepper Input", () => {
     );
 
     cy.findByLabelText("increment value").realClick();
-    cy.get("@changeSpy").should("have.been.calledWith", "-109.44");
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      -109.44
+    );
   });
 
   it("allows maximum safe integer", () => {
