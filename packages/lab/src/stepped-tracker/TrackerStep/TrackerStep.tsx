@@ -3,6 +3,8 @@ import {
   StepActiveIcon,
   StepDefaultIcon,
   StepSuccessIcon,
+  WarningSolidIcon,
+  ErrorSolidIcon,
 } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -19,7 +21,7 @@ import trackerStepCss from "./TrackerStep.css";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
-type State = "default" | "completed";
+type State = "default" | "completed" | "warning" | "error";
 
 type StateWithActive = State | "active";
 
@@ -33,6 +35,8 @@ export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
 const iconMap = {
   default: StepDefaultIcon,
   completed: StepSuccessIcon,
+  warning: WarningSolidIcon,
+  error: ErrorSolidIcon,
 };
 
 const getStateIcon = ({
