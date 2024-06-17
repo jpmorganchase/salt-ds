@@ -49,6 +49,13 @@ export const StatusBar = (props: AgGridReactProps) => {
           statusBar={statusBar}
           columnDefs={defaultColumns}
           rowData={defaultData}
+          onFirstDataRendered={(params) => {
+            params.api.forEachNode((node, index) => {
+              if (node.data && index < 3) {
+                node.setSelected(true);
+              }
+            });
+          }}
           {...agGridProps}
           {...props}
         />
