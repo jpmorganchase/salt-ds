@@ -1,5 +1,6 @@
 import {
   ComboBox,
+  ComboBoxProps,
   Option,
   StackLayout,
   Text,
@@ -56,7 +57,7 @@ function useSearchData() {
   return { searchIndex, searchConfig };
 }
 
-export function Search() {
+export function Search(props: ComboBoxProps) {
   const router = useRouter();
   const { searchIndex, searchConfig } = useSearchData();
   const [value, setValue] = useState("");
@@ -120,7 +121,7 @@ export function Search() {
         )
       }
       value={value}
-      style={{ width: "266px" }}
+      {...props}
     >
       {Object.entries(results).length === 0 && query.length > 2 ? (
         <div
