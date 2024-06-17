@@ -41,7 +41,7 @@ const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
 const isIntermediateInput = (numberString: string) => {
-  return parseFloat(numberString).toString() != numberString;
+  return parseFloat(numberString).toString() !== numberString;
 };
 
 export const useStepperInput = (
@@ -71,13 +71,7 @@ export const useStepperInput = (
   );
 
   useEffect(() => {
-    if (!isControlled) {
-      return;
-    }
-
-    if (value != undefined) {
-      const roundedValue = toFixedDecimalPlaces(value, decimalPlaces);
-      console.log("setting in useeffect", value);
+    if (isControlled && value !== undefined) {
       setInputValue(value);
     }
   }, [value, isControlled]);
@@ -91,47 +85,39 @@ export const useStepperInput = (
 
   const isAtMax = () => {
     if (currentValue === undefined) return true;
-    return toFloat(currentValue) >= max || max === 0;
+    return toFloat(currentValue) >= max;
   };
 
   const isAtMin = () => {
     if (currentValue === undefined) return true;
-    return toFloat(currentValue) <= min || min === 0;
+    return toFloat(currentValue) <= min;
   };
 
   const decrement = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
     let nextValue = toFloat(currentValue) - step;
-
-    if (max !== undefined && isOutOfRange()) nextValue = max;
-
-    setNextValue(nextValue, event ? event : undefined);
+    if (nextValue < min) nextValue = min;
+    setNextValue(nextValue, event);
   };
 
   const decrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
     let nextValue = toFloat(currentValue) - step * block;
-
-    if (max !== undefined && isOutOfRange()) nextValue = max;
-
+    if (nextValue < min) nextValue = min;
     setNextValue(nextValue, event);
   };
 
   const increment = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
     let nextValue = toFloat(currentValue) + step;
-
-    if (min !== undefined && isOutOfRange()) nextValue = min;
-
+    if (nextValue > max) nextValue = max;
     setNextValue(nextValue, event);
   };
 
   const incrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
     let nextValue = toFloat(currentValue) + step * block;
-
-    if (min !== undefined && isOutOfRange()) nextValue = min;
-
+    if (nextValue > max) nextValue = max;
     setNextValue(nextValue, event);
   };
 
@@ -198,7 +184,7 @@ export const useStepperInput = (
       }
     }
 
-    setInputValue(value);
+    setInputValue(sanitizedInput(value));
   };
 
   const handleInputKeyDown = (event: KeyboardEvent) => {

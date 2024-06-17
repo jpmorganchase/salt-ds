@@ -53,9 +53,8 @@ export const Controlled: StoryFn = (args) => {
       <StepperInput
         {...args}
         decimalPlaces={2}
-        value={5}
+        value={value}
         onChange={(_event, value) => {
-          console.log("setting in onChange story", value);
           setValue(value);
         }}
         endAdornment={
