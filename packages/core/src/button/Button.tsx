@@ -94,7 +94,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           },
           className
         )}
-        aria-disabled={isLoading || disabled}
+        aria-disabled={disabled}
         aria-live={isLoading !== undefined ? "assertive" : undefined}
         {...restProps}
         ref={ref}

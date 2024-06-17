@@ -36,6 +36,16 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
       }}
     >
       <Button
+        variant="cta"
+        showLoadingText
+        loadingText="Loading"
+        isLoading={ctaLoadingState}
+        onClick={handleCtaClick}
+      >
+        Click to Continue
+        <ChevronRightIcon aria-hidden />
+      </Button>
+      <Button
         variant="primary"
         showLoadingText
         loadingText="Loading"
@@ -53,16 +63,6 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
         onClick={handleSecondaryClick}
       >
         Search
-        <ChevronRightIcon aria-hidden />
-      </Button>
-      <Button
-        variant="cta"
-        showLoadingText
-        loadingText="Loading"
-        isLoading={ctaLoadingState}
-        onClick={handleCtaClick}
-      >
-        Click to Continue
         <ChevronRightIcon aria-hidden />
       </Button>
     </div>

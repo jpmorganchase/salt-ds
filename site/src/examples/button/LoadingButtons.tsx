@@ -36,12 +36,12 @@ export const LoadingButtons = (): ReactElement => {
       }}
     >
       <Button
-        variant="primary"
+        variant="cta"
         loadingText="Loading"
-        isLoading={primaryLoadingState}
-        onClick={handlePrimaryClick}
+        isLoading={ctaLoadingState}
+        onClick={handleCtaClick}
       >
-        Next Page
+        Click to Continue
         <ChevronRightIcon aria-hidden />
       </Button>
       <Button
@@ -54,12 +54,12 @@ export const LoadingButtons = (): ReactElement => {
         <ChevronRightIcon aria-hidden />
       </Button>
       <Button
-        variant="cta"
+        variant="primary"
         loadingText="Loading"
-        isLoading={ctaLoadingState}
-        onClick={handleCtaClick}
+        isLoading={primaryLoadingState}
+        onClick={handlePrimaryClick}
       >
-        Click to Continue
+        Next Page
         <ChevronRightIcon aria-hidden />
       </Button>
     </div>

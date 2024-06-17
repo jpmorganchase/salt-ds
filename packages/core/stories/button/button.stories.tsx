@@ -217,6 +217,15 @@ const LoadingButtonGrid = ({
       }}
     >
       <Button
+        variant="cta"
+        showLoadingText={showLoadingText}
+        loadingText={loadingText}
+        isLoading={ctaLoadingState}
+        onClick={handleCtaClick}
+      >
+        {ctaButtonLabel}
+      </Button>
+      <Button
         variant="primary"
         showLoadingText={showLoadingText}
         loadingText={loadingText}
@@ -235,15 +244,6 @@ const LoadingButtonGrid = ({
       >
         {secondaryButtonLabel}
         <ChevronRightIcon aria-hidden />
-      </Button>
-      <Button
-        variant="cta"
-        showLoadingText={showLoadingText}
-        loadingText={loadingText}
-        isLoading={ctaLoadingState}
-        onClick={handleCtaClick}
-      >
-        {ctaButtonLabel}
       </Button>
     </div>
   );
