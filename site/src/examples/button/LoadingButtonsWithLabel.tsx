@@ -1,6 +1,6 @@
 import { ReactElement, useState } from "react";
 import { Button } from "@salt-ds/core";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { SendIcon, SyncIcon, RefreshIcon } from "@salt-ds/icons";
 
 export const LoadingButtonsWithLabel = (): ReactElement => {
   const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
@@ -39,31 +39,31 @@ export const LoadingButtonsWithLabel = (): ReactElement => {
         variant="cta"
         showLoadingText
         loadingText="Loading"
-        isLoading={ctaLoadingState}
+        loading={ctaLoadingState}
         onClick={handleCtaClick}
       >
-        Click to Continue
-        <ChevronRightIcon aria-hidden />
+        <SendIcon aria-hidden />
+        Send Email
       </Button>
       <Button
         variant="primary"
         showLoadingText
         loadingText="Loading"
-        isLoading={primaryLoadingState}
+        loading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
-        Next Page
-        <ChevronRightIcon aria-hidden />
+        <SyncIcon aria-hidden />
+        Sync Files
       </Button>
       <Button
         variant="secondary"
         showLoadingText
         loadingText="Loading"
-        isLoading={secondaryLoadingState}
+        loading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
-        Search
-        <ChevronRightIcon aria-hidden />
+        <RefreshIcon aria-hidden />
+        Refresh Page
       </Button>
     </div>
   );

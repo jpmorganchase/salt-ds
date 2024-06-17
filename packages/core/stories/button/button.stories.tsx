@@ -173,21 +173,64 @@ export const FullWidth: StoryFn<typeof Button> = () => {
   );
 };
 
-const LoadingButtonGrid = ({
-  primaryButtonLabel,
-  secondaryButtonLabel,
-  ctaButtonLabel,
-  loadingText,
-  showLoadingText,
-  withRightArrowIcon,
-}: {
-  primaryButtonLabel: string;
-  secondaryButtonLabel: string;
-  ctaButtonLabel: string;
-  loadingText: string;
-  showLoadingText?: boolean;
-  withRightArrowIcon?: boolean;
-}) => {
+export const LoadingButtons: StoryFn<typeof Button> = () => {
+  const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
+  const [secondaryLoadingState, setSecondaryLoadingState] = useState(false);
+  const [ctaLoadingState, setCtaLoadingState] = useState(false);
+
+  const handlePrimaryClick = () => {
+    setPrimaryLoadingState(true);
+    setTimeout(() => {
+      setPrimaryLoadingState(false);
+    }, 3000);
+  };
+  const handleSecondaryClick = () => {
+    setSecondaryLoadingState(true);
+    setTimeout(() => {
+      setSecondaryLoadingState(false);
+    }, 3000);
+  };
+  const handleCtaClick = () => {
+    setCtaLoadingState(true);
+    setTimeout(() => {
+      setCtaLoadingState(false);
+    }, 3000);
+  };
+
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "auto auto auto",
+        gridTemplateRows: "auto",
+        gridGap: 10,
+      }}
+    >
+      <Button variant="cta" loading={ctaLoadingState} onClick={handleCtaClick}>
+        <SendIcon aria-hidden />
+        Send
+      </Button>
+      <Button
+        variant="primary"
+        loading={primaryLoadingState}
+        onClick={handlePrimaryClick}
+      >
+        <SyncIcon aria-hidden />
+        Sync
+      </Button>
+      <Button
+        variant="secondary"
+        loading={secondaryLoadingState}
+        onClick={handleSecondaryClick}
+      >
+        <RefreshIcon aria-hidden />
+        Refresh
+      </Button>
+    </div>
+  );
+};
+
+export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
   const [primaryLoadingState, setPrimaryLoadingState] = useState(false);
   const [secondaryLoadingState, setSecondaryLoadingState] = useState(false);
   const [ctaLoadingState, setCtaLoadingState] = useState(false);
@@ -222,61 +265,34 @@ const LoadingButtonGrid = ({
     >
       <Button
         variant="cta"
-        showLoadingText={showLoadingText}
-        loadingText={loadingText}
-        isLoading={ctaLoadingState}
+        showLoadingText
+        loadingText="Loading"
+        loading={ctaLoadingState}
         onClick={handleCtaClick}
       >
         <SendIcon aria-hidden />
-        {ctaButtonLabel}
+        Send Email
       </Button>
       <Button
         variant="primary"
-        showLoadingText={showLoadingText}
-        loadingText={loadingText}
-        isLoading={primaryLoadingState}
+        showLoadingText
+        loadingText="Loading"
+        loading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
-        {" "}
-        {!withRightArrowIcon && <SyncIcon aria-hidden />}
-        {primaryButtonLabel}
-        {withRightArrowIcon && <ChevronRightIcon aria-hidden />}
+        <SyncIcon aria-hidden />
+        Sync Files
       </Button>
       <Button
         variant="secondary"
-        showLoadingText={showLoadingText}
-        loadingText={loadingText}
-        isLoading={secondaryLoadingState}
+        showLoadingText
+        loadingText="Loading"
+        loading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
-        {!withRightArrowIcon && <RefreshIcon aria-hidden />}
-        {secondaryButtonLabel}
-        {withRightArrowIcon && <ChevronRightIcon aria-hidden />}
+        <RefreshIcon aria-hidden />
+        Refresh Page
       </Button>
     </div>
-  );
-};
-
-export const LoadingButtons: StoryFn<typeof Button> = () => {
-  return (
-    <LoadingButtonGrid
-      primaryButtonLabel="Sync"
-      secondaryButtonLabel="Refresh"
-      ctaButtonLabel="Send"
-      loadingText="Loading"
-    />
-  );
-};
-
-export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
-  return (
-    <LoadingButtonGrid
-      primaryButtonLabel="Next Page"
-      secondaryButtonLabel="Search"
-      ctaButtonLabel="Click to Continue"
-      loadingText="Loading"
-      showLoadingText
-      withRightArrowIcon
-    />
   );
 };

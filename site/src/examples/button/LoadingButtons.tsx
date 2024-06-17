@@ -38,7 +38,7 @@ export const LoadingButtons = (): ReactElement => {
       <Button
         variant="cta"
         loadingText="Loading"
-        isLoading={ctaLoadingState}
+        loading={ctaLoadingState}
         onClick={handleCtaClick}
       >
         <SendIcon aria-hidden />
@@ -47,7 +47,7 @@ export const LoadingButtons = (): ReactElement => {
       <Button
         variant="secondary"
         loadingText="Loading"
-        isLoading={secondaryLoadingState}
+        loading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
         <SyncIcon aria-hidden />
@@ -56,7 +56,7 @@ export const LoadingButtons = (): ReactElement => {
       <Button
         variant="primary"
         loadingText="Loading"
-        isLoading={primaryLoadingState}
+        loading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
         <RefreshIcon aria-hidden />

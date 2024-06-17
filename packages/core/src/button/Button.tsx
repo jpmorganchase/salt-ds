@@ -30,7 +30,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * To show a loading spinner.
    */
-  isLoading?: boolean;
+  loading?: boolean;
   /**
    * For the screen reader to announce while button is in loading state
    * 'Loading' is the default value.
@@ -55,7 +55,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       type = "button",
       variant = "primary",
-      isLoading,
+      loading,
       loadingText = "Loading",
       showLoadingText,
       ...restProps
@@ -89,36 +89,29 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(variant),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName(`loading-${variant}`)]: isLoading,
+            [withBaseName(`loading-${variant}`)]: loading,
             [withBaseName("active")]: active,
           },
           className
         )}
-        aria-disabled={disabled}
-        aria-live={isLoading !== undefined ? "assertive" : undefined}
+        aria-live={loading !== undefined ? "assertive" : undefined}
         {...restProps}
         ref={ref}
         type={type}
       >
-        {isLoading ? (
+        {loading ? (
           <>
             <span className={clsx(withBaseName("loading-overlay"), className)}>
               <Spinner
                 size="small"
                 className={clsx(withBaseName("loading-spinner"), className)}
+                aria-label={!showLoadingText ? loadingText : undefined}
               />
-              <span
-                className={clsx(
-                  {
-                    [withBaseName("hidden-accessible-element")]:
-                      !showLoadingText,
-                    [withBaseName("loading-text")]: showLoadingText,
-                  },
-                  className
-                )}
-              >
-                {loadingText}
-              </span>
+              {showLoadingText && (
+                <span className={clsx(withBaseName("loading-text"), className)}>
+                  {loadingText}
+                </span>
+              )}
             </span>
             <span
               aria-hidden="true"
