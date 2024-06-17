@@ -37,3 +37,14 @@
   --salt-palette-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
+
+.salt-theme-next.salt-theme[data-action-font="Open Sans"] {
+  --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-openSans);
+
+  --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
+}
+.salt-theme-next.salt-theme[data-action-font="Amplitude"] {
+  --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-amplitude);
+
+  --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-medium);
+}

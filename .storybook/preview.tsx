@@ -148,6 +148,16 @@ export const globalTypes: GlobalTypes = {
       title: "Accent",
     },
   },
+  actionFont: {
+    name: "Experimental action font",
+    description: "Switch action font to open sans / amplitude",
+    defaultValue: "Open Sans",
+    toolbar: {
+      icon: "beaker",
+      items: ["Open Sans", "Amplitude"],
+      title: "Action font",
+    },
+  },
 };
 
 export const argTypes: ArgTypes = {

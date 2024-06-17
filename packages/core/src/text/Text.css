@@ -96,6 +96,7 @@
 
 /* Action */
 .saltText-action.saltText {
+  font-family: var(--salt-text-action-fontFamily);
   letter-spacing: var(--salt-text-action-letterSpacing);
   text-transform: var(--salt-text-action-textTransform);
   text-align: var(--salt-text-action-textAlign);
