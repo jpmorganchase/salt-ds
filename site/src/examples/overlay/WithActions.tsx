@@ -83,7 +83,7 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
           label={`${controlledValues.length} of 2 selected`}
           onChange={handleChange}
         />
-        <Divider variant="tertiary" />
+        <Divider variant="secondary" />
         <CheckboxGroup
           checkedValues={controlledValues}
           onChange={handleGroupChange}
@@ -92,7 +92,7 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
             <Checkbox key={data.value} {...data} />
           ))}
         </CheckboxGroup>
-        <Divider variant="tertiary" />
+        <Divider variant="secondary" />
         <Button
           style={{ float: "right", marginRight: 2 }}
           onClick={handleExport}
