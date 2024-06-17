@@ -4,7 +4,7 @@
   "commit": false,
   "linked": [],
   "access": "public",
-  "baseBranch": "main",
+  "baseBranch": "release-ag-grid-theme-v1",
   "updateInternalDependencies": "patch",
   "ignore": [],
   "privatePackages": false
