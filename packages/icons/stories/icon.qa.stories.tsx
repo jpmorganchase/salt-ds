@@ -88,7 +88,10 @@ export const CssBackground: StoryFn = () => {
           iconName ? (
             <div
               key={iconName}
-              className={`saltIcons-${iconName.replace("Icon", "")}`}
+              className={`should-not-impact saltIcons-${iconName.replace(
+                "Icon",
+                ""
+              )}`}
             />
           ) : null
         )}
