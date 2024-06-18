@@ -10,3 +10,4 @@ Added `Tag` component. Tags are non-interactive visual adornments that represent
   <Tag variant="secondary">Tag</Tag>
   <Tag category={2}>Tag</Tag>
 ```
+
