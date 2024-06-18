@@ -143,4 +143,61 @@ describe("GIVEN a SteppedTracker", () => {
       .findByTestId("StepActiveIcon")
       .should("not.exist");
   });
+
+  it("should show warning icon if a state is warning", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const stepNum = 1;
+
+    const TestComponent = (
+      <SteppedTracker activeStep={stepNum} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep
+            key={key}
+            state={key === stepNum ? "warning" : undefined}
+          >
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${stepNum + 1})`)
+      .findByTestId("WarningSolidIcon")
+      .should("exist");
+    cy.findAllByRole("listitem")
+      .not(`:nth-child(${stepNum + 1})`)
+      .findByTestId("StepActiveIcon")
+      .should("not.exist");
+  });
+
+  it("should show error icon if a state is error", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const stepNum = 1;
+
+    const TestComponent = (
+      <SteppedTracker activeStep={stepNum} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep key={key} state={key === stepNum ? "error" : undefined}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${stepNum + 1})`)
+      .findByTestId("ErrorSolidIcon")
+      .should("exist");
+    cy.findAllByRole("listitem")
+      .not(`:nth-child(${stepNum + 1})`)
+      .findByTestId("StepActiveIcon")
+      .should("not.exist");
+  });
 });
