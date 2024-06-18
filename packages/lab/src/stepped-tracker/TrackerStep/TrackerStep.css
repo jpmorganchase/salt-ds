@@ -1,8 +1,8 @@
 .saltTrackerStep {
   --trackerStep-icon-color-active: var(--saltTrackerStep-icon-color-active, var(--salt-status-info-foreground-decorative));
   --trackerStep-icon-color-completed: var(--saltTrackerStep-icon-color-completed, var(--salt-status-success-foreground-decorative));
-  --trackerStep-icon-color-warning: var(--saltTrackerStep-icon-color-completed, var(--salt-status-warning-foreground-decorative));
-  --trackerStep-icon-color-error: var(--saltTrackerStep-icon-color-completed, var(--salt-status-error-foreground-decorative));
+  --trackerStep-icon-color-warning: var(--saltTrackerStep-icon-color-warning, var(--salt-status-warning-foreground-decorative));
+  --trackerStep-icon-color-error: var(--saltTrackerStep-icon-color-error, var(--salt-status-error-foreground-decorative));
 
   --trackerStep-icon-color: var(--saltTrackerStep-icon-color, var(--salt-status-static-foreground));
 

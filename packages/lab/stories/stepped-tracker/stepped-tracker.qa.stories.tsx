@@ -63,6 +63,20 @@ export const Basic: StoryFn<QAContainerProps> = (props) => {
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
+        <SteppedTracker activeStep={0}>
+          <TrackerStep state="completed">
+            <StepLabel>Completed</StepLabel>
+          </TrackerStep>
+          <TrackerStep state="warning">
+            <StepLabel>Warning</StepLabel>
+          </TrackerStep>
+          <TrackerStep state="error">
+            <StepLabel>Error</StepLabel>
+          </TrackerStep>
+          <TrackerStep>
+            <StepLabel>Default</StepLabel>
+          </TrackerStep>
+        </SteppedTracker>
       </StackLayout>
     </QAContainer>
   );
@@ -124,6 +138,20 @@ export const Vertical: StoryFn<QAContainerProps> = (props) => {
           </TrackerStep>
           <TrackerStep state="completed">
             <StepLabel>Step Four</StepLabel>
+          </TrackerStep>
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical" activeStep={0}>
+          <TrackerStep state="completed">
+            <StepLabel>Completed</StepLabel>
+          </TrackerStep>
+          <TrackerStep state="warning">
+            <StepLabel>Warning</StepLabel>
+          </TrackerStep>
+          <TrackerStep state="error">
+            <StepLabel>Error</StepLabel>
+          </TrackerStep>
+          <TrackerStep>
+            <StepLabel>Default</StepLabel>
           </TrackerStep>
         </SteppedTracker>
       </StackLayout>
