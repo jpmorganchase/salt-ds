@@ -5,7 +5,6 @@ import {
   SearchIcon,
   SendIcon,
   SettingsSolidIcon,
-  ChevronRightIcon,
   SyncIcon,
   RefreshIcon,
 } from "@salt-ds/icons";
