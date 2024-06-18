@@ -43,10 +43,9 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
 
   const [valueState, setValueState] = useControlled({
     controlled: value,
-    default:
-      defaultValue ?? (selectedState.length === 1 && !multiselect)
+    default: defaultValue ?? ((selectedState.length === 1 && !multiselect)
         ? listControl.valueToString(selectedState[0])
-        : defaultValue,
+        : defaultValue),
     name: "ComboBox",
     state: "value",
   });
@@ -83,18 +82,12 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
       return;
     }
 
-    let newSelected;
-
-    if (selectedState.includes(itemToRemove)) {
-      newSelected = selectedState.filter((item) => item !== itemToRemove);
-    } else {
-      newSelected = selectedState.concat([itemToRemove]);
-    }
+    const newSelected = selectedState.filter((item) => item !== itemToRemove);
 
     setSelectedState(newSelected);
     setValueState("");
     onSelectionChange?.(event, newSelected);
   };
-
+console.log("valueState",valueState)
   return { ...listControl, select, valueState, setValueState, removePill };
 }
