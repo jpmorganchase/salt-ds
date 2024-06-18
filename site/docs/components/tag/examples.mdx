@@ -9,11 +9,24 @@ data:
 ---
 
 <LivePreviewControls>
-  <LivePreview componentName="tag" exampleName="Bold">
+  <LivePreview componentName="tag" exampleName="Primary">
 
-## Bold
+## Primary
 
-Bold tags are typically used when you want to emphasize or highlight specific content. Tag will have bold emphasis by default.
+Primary tags feature subtle background colors by default, making them ideal for presenting information or content without being overly attention-grabbing.
+
+To add an optional border, simply pass the `bordered` prop to the component.
+
+### Best practices
+- Ensure tag colors are consistent with their associated categories.
+- Be mindful that using an excessive number of colors can impose a heavy cognitive load on some users.
+
+  </LivePreview> 
+  <LivePreview componentName="tag" exampleName="Secondary">
+
+## Secondary
+
+Secondary tags are generally used to emphasize or highlight specific content. These tags use a bold background color to draw more attention and make the highlighted content stand out.
 
   </LivePreview>
   <LivePreview componentName="tag" exampleName="Icon">
@@ -23,16 +36,6 @@ Bold tags are typically used when you want to emphasize or highlight specific co
 Display icons inside a tag by passing an icon as children to visually reinforce its content for quick recognition.
 
   </LivePreview>
-  <LivePreview componentName="tag" exampleName="Subtle">
-
-## Subtle
-
-Subtle tags are more suitable for providing additional information or content without drawing too much attention.
-You can use subtle tags by passing it as `emphasis` prop.
-
-You can set a border in a subtle tag by passing `bordered` as a prop to the component.
-
-  </LivePreview> 
     <LivePreview componentName="tag" exampleName="Categories">
   
   ## Categories

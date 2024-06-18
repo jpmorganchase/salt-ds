@@ -1,4 +1,4 @@
-export * from "./Bold";
+export * from "./Secondary";
 export * from "./Categories";
-export * from "./Subtle";
+export * from "./Primary";
 export * from "./Icon";

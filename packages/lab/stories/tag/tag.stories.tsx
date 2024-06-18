@@ -12,28 +12,27 @@ const TagTemplate: StoryFn<typeof Tag> = (args) => {
   return <Tag {...args} />;
 };
 
-export const Bold = TagTemplate.bind({});
-Bold.args = {
+export const Primary = TagTemplate.bind({});
+Primary.args = {
   children: (
     <>
-      <NotificationIcon /> Bold
+      <NotificationIcon /> Primary
     </>
   ),
 };
 
-export const Subtle = TagTemplate.bind({});
-Subtle.args = {
-  emphasis: "subtle",
+export const Secondary = TagTemplate.bind({});
+Secondary.args = {
+  variant: "secondary",
   children: (
     <>
-      <NotificationIcon /> Subtle
+      <NotificationIcon /> Secondary
     </>
   ),
 };
 
 export const Bordered = TagTemplate.bind({});
 Bordered.args = {
-  emphasis: "subtle",
   bordered: true,
   children: (
     <>

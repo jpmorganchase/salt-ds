@@ -2,11 +2,9 @@ import { ReactElement } from "react";
 import { Tag } from "@salt-ds/lab";
 import { FlowLayout } from "@salt-ds/core";
 
-export const Subtle = (): ReactElement => (
+export const Primary = (): ReactElement => (
   <FlowLayout>
-    <Tag emphasis="subtle">Tag</Tag>
-    <Tag emphasis="subtle" bordered>
-      Tag
-    </Tag>
+    <Tag>Tag</Tag>
+    <Tag bordered>Tag</Tag>
   </FlowLayout>
 );
