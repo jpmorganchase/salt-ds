@@ -1,7 +1,15 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { Button, Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/core";
+import {
+  Button,
+  Menu,
+  MenuGroup,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+} from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
+import "./menu.qa.stories.css";
 
 export default {
   title: "Core/Menu/Menu QA",
@@ -11,28 +19,43 @@ export default {
 export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
-      itemWidthAuto
-      height={500}
-      width={800}
+      className="singleLevel"
+      cols={8}
+      height={1000}
+      width={1400}
       transposeDensity
-      vertical
       {...props}
     >
-      <div style={{ width: 190, height: 300 }}>
-        <Menu open>
-          <MenuTrigger>
-            <Button variant="secondary" aria-label="Open Menu">
-              <MicroMenuIcon aria-hidden />
-            </Button>
-          </MenuTrigger>
-          <MenuPanel>
+      <Menu open>
+        <MenuTrigger>
+          <Button variant="secondary" aria-label="Open Menu">
+            <MicroMenuIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuItem>Copy</MenuItem>
+          <MenuItem>Paste</MenuItem>
+          <MenuItem>Export</MenuItem>
+          <MenuItem>Settings</MenuItem>
+        </MenuPanel>
+      </Menu>
+      <Menu open>
+        <MenuTrigger>
+          <Button variant="secondary" aria-label="Open Menu">
+            <MicroMenuIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+        <MenuPanel>
+          <MenuGroup label="Actions">
             <MenuItem>Copy</MenuItem>
             <MenuItem>Paste</MenuItem>
-            <MenuItem>Export</MenuItem>
-            <MenuItem>Settings</MenuItem>
-          </MenuPanel>
-        </Menu>
-      </div>
+          </MenuGroup>
+          <MenuGroup label="Styling">
+            <MenuItem>Edit styling</MenuItem>
+            <MenuItem>Clear styling</MenuItem>
+          </MenuGroup>
+        </MenuPanel>
+      </Menu>
     </QAContainer>
   );
 };
