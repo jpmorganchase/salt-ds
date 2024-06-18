@@ -16,3 +16,4 @@ export * from "./ObjectValues";
 export * from "./Truncation";
 export * from "./SelectOnTab";
 export * from "./ClearSelection";
+export * from "./Bordered";

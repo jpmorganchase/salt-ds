@@ -22,6 +22,7 @@
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner-weak, 0);
   border: var(--input-border);
+  overflow: hidden;
 }
 
 .saltPillInput-truncate {
@@ -75,6 +76,7 @@
   --input-background-hover: var(--salt-status-error-background);
   --input-borderColor: var(--salt-status-error-borderColor);
   --input-outlineColor: var(--salt-status-error-borderColor);
+  --input-background-readonly: var(--salt-status-error-background);
 }
 
 /* Style applied to input if `validationState="warning"` */
@@ -85,6 +87,7 @@
   --input-background-hover: var(--salt-status-warning-background);
   --input-borderColor: var(--salt-status-warning-borderColor);
   --input-outlineColor: var(--salt-status-warning-borderColor);
+  --input-background-readonly: var(--salt-status-warning-background);
 }
 
 /* Style applied to input if `validationState="success"` */
@@ -95,6 +98,7 @@
   --input-background-hover: var(--salt-status-success-background);
   --input-borderColor: var(--salt-status-success-borderColor);
   --input-outlineColor: var(--salt-status-success-borderColor);
+  --input-background-readonly: var(--salt-status-success-background);
 }
 
 /* Style applied to inner input component */
@@ -174,7 +178,7 @@
   --input-borderColor: var(--salt-editable-borderColor-disabled);
   --input-borderStyle: var(--salt-editable-borderStyle-disabled);
   --input-borderWidth: var(--salt-size-border);
-
+  outline: none;
   background: var(--input-background-disabled);
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltInput-color-disabled, var(--salt-content-primary-foreground-disabled));
@@ -202,7 +206,8 @@
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
 .saltPillInput-bordered.saltPillInput-readOnly,
-.saltPillInput-bordered.saltPillInput-disabled:hover {
+.saltPillInput-bordered.saltPillInput-disabled:hover,
+.saltPillInput-bordered.saltPillInput-disabled.saltPillInput-focused {
   --input-borderWidth: 0;
 }
 
