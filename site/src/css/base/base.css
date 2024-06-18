@@ -1,7 +1,7 @@
 :root {
   --max-container-width: 1920px;
   --max-content-width: min(var(--max-container-width), 120ch);
-  --navbar-height: 44px;
+  --navbar-height: 60px;
 
   /* "Special" colors used mainly on homepage */
   --salt-site-dark-accent: #10212b;

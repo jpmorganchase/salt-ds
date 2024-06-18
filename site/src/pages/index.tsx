@@ -168,30 +168,28 @@ const homePageInfo = [
 
 const Homepage = (): JSX.Element => {
   return (
-    <div>
-      <main className={styles.homepageContainer}>
-        <HomepageHeader />
-        <Features heading="What to expect" listItems={features} />
-        <div className={styles.cardContainer}>
-          {cards.map((card, index) => {
-            const { icon, title, description, url, footerText, keylineColor } =
-              card;
-            return (
-              <Card
-                key={index}
-                icon={icon}
-                title={title}
-                description={description}
-                url={url}
-                footerText={footerText}
-                keylineColor={keylineColor}
-                className={styles.card}
-              />
-            );
-          })}
-        </div>
-        <HomepageAccordion homePageInfo={homePageInfo} />
-      </main>
+    <div className={styles.homepageContainer}>
+      <HomepageHeader />
+      <Features heading="What to expect" listItems={features} />
+      <div className={styles.cardContainer}>
+        {cards.map((card, index) => {
+          const { icon, title, description, url, footerText, keylineColor } =
+            card;
+          return (
+            <Card
+              key={index}
+              icon={icon}
+              title={title}
+              description={description}
+              url={url}
+              footerText={footerText}
+              keylineColor={keylineColor}
+              className={styles.card}
+            />
+          );
+        })}
+      </div>
+      <HomepageAccordion homePageInfo={homePageInfo} />
     </div>
   );
 };

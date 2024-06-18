@@ -25,7 +25,7 @@ const LabsComponentPlugin = {
 
       if (page.data?.package?.name === labPackageName) {
         page.data.status = statusLabel;
-        page.sidebar = { label: `${page.title} ${icon}` };
+        page.sidebar = { ...page.sidebar, groupLabel: `${page.title} ${icon}` };
       }
 
       if (page.fullPath === "/salt/components/index.mdx") {
