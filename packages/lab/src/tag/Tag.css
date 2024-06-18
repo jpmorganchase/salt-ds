@@ -12,6 +12,7 @@
   overflow: hidden;
   border-radius: var(--saltTag-borderRadius, var(--salt-palette-corner-strongest, 9999px));
   width: fit-content;
+  min-width: max-content;
 }
 .saltTag-primary {
   background: var(--tag-primary-background, var(--salt-category-1-subtle-background));

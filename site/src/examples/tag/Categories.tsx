@@ -3,7 +3,7 @@ import { Tag } from "@salt-ds/lab";
 import { GridLayout } from "@salt-ds/core";
 
 export const Categories = (): ReactElement => (
-  <GridLayout rows={5} columns={4}>
+  <GridLayout rows={{ sm: 7, lg: 4 }} columns={{ xs: 2, sm: 3, lg: 5 }}>
     <Tag>Cat-1</Tag>
     <Tag category={2}>Cat-2</Tag>
     <Tag category={3}>Cat-3</Tag>
