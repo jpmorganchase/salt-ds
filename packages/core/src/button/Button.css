@@ -138,12 +138,14 @@
   --button-borderColor: var(--salt-actionable-cta-borderColor);
   --button-background-hover: var(--salt-actionable-cta-background);
   --saltButton-background-active: var(--salt-actionable-cta-background);
+  cursor: unset;
 }
 
 .saltButton-loading-primary {
   --button-borderColor: var(--salt-actionable-primary-borderColor);
   --button-background-hover: var(--salt-actionable-primary-background);
   --saltButton-background-active: var(--salt-actionable-primary-background);
+  cursor: unset;
 }
 
 .saltButton-loading-secondary {
@@ -152,6 +154,7 @@
   --saltButton-background-active: none;
   --saltButton-borderColor-active: var(--salt-actionable-secondary-borderColor);
   --saltButton-borderColor-hover: var(--salt-actionable-secondary-borderColor);
+  cursor: unset;
 }
 
 .saltButton-loading-overlay {
