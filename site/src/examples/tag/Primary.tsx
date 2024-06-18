@@ -4,7 +4,7 @@ import { FlowLayout } from "@salt-ds/core";
 
 export const Primary = (): ReactElement => (
   <FlowLayout>
-    <Tag>Tag</Tag>
-    <Tag bordered>Tag</Tag>
+    <Tag>Primary</Tag>
+    <Tag bordered>Bordered</Tag>
   </FlowLayout>
 );
