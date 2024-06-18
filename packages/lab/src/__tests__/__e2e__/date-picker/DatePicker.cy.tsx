@@ -283,4 +283,52 @@ describe("GIVEN a DatePicker", () => {
       });
     });
   });
+  describe("WHEN range is mounted as a controlled component", () => {
+    it("THEN should mount with specified date", () => {
+      cy.mount(
+        <Range
+          selectedDate={{
+            startDate: testDate,
+            endDate: testDate.add({ months: 1 }),
+          }}
+        />
+      );
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .should("have.value", formatInput(testDate));
+      cy.findAllByRole("textbox")
+        .eq(1)
+        .should("have.value", formatInput(testDate.add({ months: 1 })));
+    });
+    describe("WHEN the date is updated", () => {
+      it("should call onChange with the new value", () => {
+        const changeSpy = cy.stub().as("changeSpy");
+
+        function ControlledRangePicker() {
+          const [date, setDate] = useState(testDate);
+          const onChange = (
+            event: ChangeEvent<HTMLInputElement>,
+            startDate?: string,
+            endDate?: string
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            setDate(testDate);
+            changeSpy(startDate, endDate);
+          };
+
+          return <Range selectedDate={date} onChange={onChange} />;
+        }
+
+        cy.mount(<ControlledRangePicker />);
+        cy.findAllByRole("textbox").eq(0).click().clear().type(testInput);
+        cy.findAllByRole("textbox").eq(1).click().clear().type(rangeTestInput);
+        cy.get("@changeSpy").should(
+          "have.been.calledWith",
+          testInput,
+          rangeTestInput
+        );
+      });
+    });
+  });
 });

@@ -54,14 +54,7 @@ export const ComplexOptions = (): ReactElement => {
     >
       {Object.values(permissions).map(({ name, icon, description }) => (
         <Option value={name.toLowerCase()} key={name.toLowerCase()}>
-          <StackLayout
-            direction="row"
-            gap={1}
-            style={{
-              paddingBlock:
-                "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
-            }}
-          >
+          <StackLayout direction="row" gap={1}>
             {icon}
             <StackLayout gap={0.5} align="start">
               <Text>{name}</Text>
