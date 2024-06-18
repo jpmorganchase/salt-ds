@@ -918,26 +918,3 @@ export const Bordered = () => {
     </StackLayout>
   );
 };
-export const BorderedDisabled = () => {
-  return (
-    <StackLayout>
-      <Template bordered disabled />
-      <Template bordered disabled variant="secondary" />
-      <Template bordered disabled validationStatus="error" />
-      <Template bordered disabled validationStatus="warning" />
-      <Template bordered disabled validationStatus="success" />
-    </StackLayout>
-  );
-};
-
-export const BorderedReadonly = () => {
-  return (
-    <StackLayout>
-      <Template bordered readOnly />
-      <Template bordered readOnly variant="secondary" />
-      <Template bordered readOnly validationStatus="error" />
-      <Template bordered readOnly validationStatus="warning" />
-      <Template bordered readOnly validationStatus="success" />
-    </StackLayout>
-  );
-};

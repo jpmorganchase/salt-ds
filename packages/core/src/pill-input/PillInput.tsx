@@ -330,7 +330,7 @@ export const PillInput = forwardRef(function PillInput(
           required={isRequired}
         />
       </div>
-      {!isDisabled && !isReadOnly && validationStatus && (
+      {!isDisabled && validationStatus && (
         <StatusAdornment status={validationStatus} />
       )}
       {endAdornment && (
