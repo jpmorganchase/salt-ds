@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
-import { ComboBox } from "@salt-ds/core";
+import { ComboBox, Option } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -658,5 +658,33 @@ describe("Given a ComboBox", () => {
     );
 
     cy.findByTestId(FLOATING_TEST_ID).should("exist");
+  });
+
+  it("should default to defaultValue when no defaultSelected is set", () => {
+    cy.mount(
+      <ComboBox defaultValue="Alaska">
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>
+    );
+    cy.findByRole("combobox").should("have.value", "Alaska");
+  });
+  it("should default to defaultValue when both defaultValue and defaultSelected are set", () => {
+    cy.mount(
+      <ComboBox defaultValue="Alaska" defaultSelected={["Alabama"]}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>
+    );
+    cy.findByRole("combobox").should("have.value", "Alaska");
+  });
+  it("should default to defaultSelected value when defaultValue is not set", () => {
+    cy.mount(
+      <ComboBox defaultSelected={["Alaska"]}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ComboBox>
+    );
+    cy.findByRole("combobox").should("have.value", "Alaska");
   });
 });
