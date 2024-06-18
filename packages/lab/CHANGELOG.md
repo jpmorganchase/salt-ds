@@ -1,5 +1,27 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.47
+
+### Minor Changes
+
+- 400c730: Added Divider component—`Divider` provides a thin, unobtrusive line for grouping elements to reinforce visual hierarchy.
+
+  ```tsx
+  <Divider />
+  <Divider variant={variant} orientation={orientation} />
+  ```
+
+### Patch Changes
+
+- a92c421: Fixed date picker shown behind dialog. Fixed #3471
+
+## 1.0.0-alpha.46
+
+### Patch Changes
+
+- 04a6fb86: - Remove validation logic from `DatePicker` to support integration through `FormField`.
+  - Added `onSelect` `onSelectionChange` and `validationStatus` props to `DatePicker`.
+
 ## 1.0.0-alpha.45
 
 ### Minor Changes

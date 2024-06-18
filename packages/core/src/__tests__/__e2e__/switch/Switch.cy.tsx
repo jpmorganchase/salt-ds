@@ -149,4 +149,11 @@ describe("GIVEN a Switch", () => {
       });
     });
   });
+
+  describe("WHEN used without label", () => {
+    it("THEN should NOT render label span", () => {
+      cy.mount(<Switch />);
+      cy.get(".saltSwitch-label").should("not.exist");
+    });
+  });
 });

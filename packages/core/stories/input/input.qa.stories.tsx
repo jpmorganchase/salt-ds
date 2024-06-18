@@ -93,11 +93,69 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       defaultValue={"Error with adornments"}
       validationStatus="error"
     />
+    <Input bordered defaultValue="Bordered" />
+    <Input bordered disabled defaultValue="Bordered disabled" />
+    <Input bordered readOnly defaultValue="Bordered readonly" />
+    <Input bordered variant="secondary" defaultValue="Secondary bordered" />
+    <Input
+      bordered
+      disabled
+      variant="secondary"
+      defaultValue="Secondary bordered disabled"
+    />
+    <Input
+      bordered
+      readOnly
+      variant="secondary"
+      defaultValue="Secondary bordered readonly"
+    />
+    <Input bordered defaultValue="Error bordered" validationStatus="error" />
+    <Input
+      bordered
+      defaultValue="Warning bordered"
+      validationStatus="warning"
+    />
+    <Input
+      bordered
+      defaultValue="Success bordered"
+      validationStatus="success"
+    />
+    <Input
+      bordered
+      readOnly
+      defaultValue="Error bordered readonly"
+      validationStatus="error"
+    />
+    <Input
+      bordered
+      readOnly
+      defaultValue="Warning bordered readonly"
+      validationStatus="warning"
+    />
+    <Input
+      bordered
+      readOnly
+      defaultValue="Success bordered readonly"
+      validationStatus="success"
+    />
   </QAContainer>
 );
 
 AllVariantsGrid.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disabled",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
@@ -181,6 +239,52 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       endAdornment={<CreditCardIcon />}
       defaultValue={"Error with adornments"}
       validationStatus="error"
+    />
+
+    <Input bordered defaultValue="Bordered" />
+    <Input bordered disabled defaultValue="Bordered disabled" />
+    <Input bordered readOnly defaultValue="Bordered readonly" />
+    <Input bordered variant="secondary" defaultValue="Secondary bordered" />
+    <Input
+      bordered
+      disabled
+      variant="secondary"
+      defaultValue="Secondary bordered disabled"
+    />
+    <Input
+      bordered
+      readOnly
+      variant="secondary"
+      defaultValue="Secondary bordered readonly"
+    />
+    <Input bordered defaultValue="Error bordered" validationStatus="error" />
+    <Input
+      bordered
+      defaultValue="Warning bordered"
+      validationStatus="warning"
+    />
+    <Input
+      bordered
+      defaultValue="Success bordered"
+      validationStatus="success"
+    />
+    <Input
+      bordered
+      readOnly
+      defaultValue="Error bordered readonly"
+      validationStatus="error"
+    />
+    <Input
+      bordered
+      readOnly
+      defaultValue="Warning bordered readonly"
+      validationStatus="warning"
+    />
+    <Input
+      bordered
+      readOnly
+      defaultValue="Success bordered readonly"
+      validationStatus="success"
     />
   </QAContainerNoStyleInjection>
 );

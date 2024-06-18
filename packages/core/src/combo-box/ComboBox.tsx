@@ -44,6 +44,10 @@ export type ComboBoxProps<Item = string> = {
    * The options to display in the combo box.
    */
   children?: ReactNode;
+  /**
+   * If true, options will be selected on tab key press.
+   */
+  selectOnTab?: boolean;
 } & UseComboBoxProps<Item> &
   PillInputProps;
 
@@ -60,6 +64,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     endAdornment,
     readOnly: readOnlyProp,
     multiselect,
+    selectOnTab = multiselect ? false : true,
     onSelectionChange,
     selected,
     defaultSelected,
@@ -248,7 +253,13 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
         break;
       case "Tab":
-        if (!multiselect && activeState) {
+        if (
+          openState &&
+          selectOnTab &&
+          activeState &&
+          !activeState?.disabled &&
+          !selectedState.includes(activeState?.value)
+        ) {
           select(event, activeState);
         }
         break;

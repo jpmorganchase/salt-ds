@@ -1,0 +1,46 @@
+diff --git a/dist/changesets-assemble-release-plan.cjs.js b/dist/changesets-assemble-release-plan.cjs.js
+index 60427457c887f2d72168fecec83d79088c68e3a4..b2f9655ac07d6adbc29b5c7e46c5d7af7ba1eba5 100644
+--- a/dist/changesets-assemble-release-plan.cjs.js
++++ b/dist/changesets-assemble-release-plan.cjs.js
+@@ -111,6 +111,9 @@ function incrementVersion(release, preInfo) {
+   }
+
+   let version = semverInc__default["default"](release.oldVersion, release.type);
++  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/data-grid") {
++    version = semverInc__default["default"](release.oldVersion, "prerelease")
++  }
+
+   if (preInfo !== undefined && preInfo.state.mode !== "exit") {
+     let preVersion = preInfo.preVersions.get(release.name);
+@@ -299,7 +302,7 @@ function shouldBumpMajor({
+   // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
+   return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+   // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
+-  !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
++  !onlyUpdatePeerDependentsWhenOutOfRange) && ( // bump major only if the dependent doesn't already has a major release. (https://github.com/changesets/changesets/issues/1011)
+   !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
+ }
+
+diff --git a/dist/changesets-assemble-release-plan.esm.js b/dist/changesets-assemble-release-plan.esm.js
+index f6583cf3f639e1fe4df764a015689dea74127236..318ecb08e2c58e8d3ac4ef11f659a5cd09e9e66e 100644
+--- a/dist/changesets-assemble-release-plan.esm.js
++++ b/dist/changesets-assemble-release-plan.esm.js
+@@ -100,6 +100,9 @@ function incrementVersion(release, preInfo) {
+   }
+
+   let version = semverInc(release.oldVersion, release.type);
++  if (release.name === "@salt-ds/lab" || release.name === "@salt-ds/data-grid") {
++    version = semverInc(release.oldVersion, "prerelease");
++  }
+
+   if (preInfo !== undefined && preInfo.state.mode !== "exit") {
+     let preVersion = preInfo.preVersions.get(release.name);
+@@ -288,7 +291,7 @@ function shouldBumpMajor({
+   // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
+   return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+   // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
+-  !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies(incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
++  !onlyUpdatePeerDependentsWhenOutOfRange) && ( // bump major only if the dependent doesn't already has a major release. (https://github.com/changesets/changesets/issues/1011)
+   !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
+ }
+

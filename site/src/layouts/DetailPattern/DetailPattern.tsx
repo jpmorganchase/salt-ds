@@ -1,8 +1,6 @@
 import React, { FC } from "react";
-import {
-  TableOfContents,
-  Sidebar,
-} from "@jpmorganchase/mosaic-site-components";
+import { Sidebar } from "@jpmorganchase/mosaic-site-components";
+import { TableOfContents } from "../../components/toc";
 import { DetailBase } from "../DetailBase";
 import { LayoutProps } from "../types/index";
 import { Resources } from "./Resources";

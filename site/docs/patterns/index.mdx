@@ -1,6 +1,9 @@
 ---
 title: Patterns
 layout: DetailTechnical
+data:
+  pattern:
+    $tag: pattern
 sidebar:
   label: Overview
 ---
@@ -19,20 +22,4 @@ Salt patterns are under active development. If you would like to propose a new p
 
 ## Available patterns
 
-| Pattern                                                                |
-| ---------------------------------------------------------------------- |
-| [App header](./app-header)                                             |
-| [Button bar](./button-bar)                                             |
-| [Contact details](./contact-details)                                   |
-| [Content status](./content-status)                                     |
-| [Dashboards](./dashboards)                                             |
-| [Forms](./forms)                                                       |
-| [International address input](./international-address-input)           |
-| [International phone number input](./international-phone-number-input) |
-| [List builder](./list-builder)                                         |
-| [List filtering](./list-filtering)                                     |
-| [Metric](./metric)                                                     |
-| [Navigation](./navigation)                                             |
-| [Preferences dialog](./preferences-dialog)                             |
-| [Selectable card](./selectable-card)                                   |
-| [Vertical navigation](./vertical-navigation)                           |
+<OverviewList patterns={meta.data['pattern']} />

@@ -2,6 +2,7 @@ import {
   Display1,
   Display2,
   Display3,
+  Display4,
   H1,
   H2,
   H3,
@@ -63,6 +64,9 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Display3>
       Display 3 <strong>strong</strong> and <small>small</small> text
     </Display3>
+    <Display4>
+      Display 4 <strong>strong</strong> and <small>small</small> text
+    </Display4>
     <H1>
       H1 <strong>strong</strong> and <small>small</small> text
     </H1>
@@ -98,7 +102,7 @@ AllVariantsGrid.parameters = {
         themeNext: "disabled",
       },
       themeNext: {
-        themeNext: "enabled",
+        themeNext: "enable",
         corner: "rounded",
         accent: "teal",
         // Ignore headingFont given font is not loaded

@@ -19,3 +19,4 @@ export * from "./keyboard-controls";
 export * from "./mdx";
 export * from "./support-and-contributions";
 export * from "./css-display";
+export * from "./patterns";

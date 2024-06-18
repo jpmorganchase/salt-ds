@@ -1,6 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
 import {
   FormField,
+  Button,
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
@@ -9,8 +10,8 @@ import {
   Option,
   OptionGroup,
   Text,
-  Avatar,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   CountryCode,
   countryMetaMap,
@@ -502,22 +503,11 @@ export const ComplexOption: StoryFn<ComboBoxProps<Contact>> = (args) => {
         )
         .map((contact) => (
           <Option value={contact} key={contact.id}>
-            <StackLayout
-              gap={1}
-              direction="row"
-              align="center"
-              style={{
-                paddingBlock:
-                  "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
-              }}
-            >
-              <Avatar aria-hidden name={contact.displayName} size={1} />
-              <StackLayout gap={0.5} align="start">
-                <Text>{contact.displayName}</Text>
-                <Text styleAs="label" color="secondary">
-                  {contact.email}
-                </Text>
-              </StackLayout>
+            <StackLayout gap={0.5} align="start">
+              <Text>{contact.displayName}</Text>
+              <Text styleAs="label" color="secondary">
+                {contact.email}
+              </Text>
             </StackLayout>
           </Option>
         ))}
@@ -840,6 +830,67 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
           Add &quot;{value}&quot;
         </Option>
       )}
+    </ComboBox>
+  );
+};
+
+export const SelectOnTab = Template.bind({});
+SelectOnTab.args = {
+  multiselect: true,
+  selectOnTab: true,
+};
+
+export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
+  const [value, setValue] = useState(getTemplateDefaultValue(args));
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
+    setSelected(newSelected);
+    args.onSelectionChange?.(event, newSelected);
+    setValue("");
+  };
+
+  const filteredOptions = usStates.filter((state) =>
+    state.toLowerCase().includes(value.trim().toLowerCase())
+  );
+
+  const handleClear = () => {
+    setValue("");
+    setSelected([]);
+  };
+
+  return (
+    <ComboBox
+      {...args}
+      multiselect
+      endAdornment={
+        (value || selected.length > 0) && (
+          <Button
+            onClick={handleClear}
+            aria-label="Clear value"
+            variant="secondary"
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        )
+      }
+      selected={selected}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      style={{ width: "266px" }}
+    >
+      {filteredOptions.map((state) => (
+        <Option value={state} key={state} />
+      ))}
     </ComboBox>
   );
 };

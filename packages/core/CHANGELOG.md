@@ -1,5 +1,54 @@
 # @salt-ds/core
 
+## 1.29.0
+
+### Minor Changes
+
+- d0b6912: Added `Display4` text.
+
+  ```
+  <Display4>text</Display>
+  <Text styleAs="display4">text</Text>
+  ```
+
+  It will be using different size when used in `SaltProvider` and `UNSTABLE_SaltProviderNext`.
+
+- c36e8a4: Added `icon` prop to Toast to allow for a custom icon
+
+  ```tsx
+  <Toast icon={<InfoIcon />} status={"info"}>
+    <ToastContent>
+      <Text>
+        <strong>Info with Custom Icon</strong>
+      </Text>
+      <div>Filters have been cleared</div>
+    </ToastContent>
+  </Toast>
+  ```
+
+- a0fff18: - Updated Input readonly state so that status adornment will be shown when `validationStatus` is set.
+
+  - Added `bordered` prop for Input. When set, a full border will be applied.
+
+  ```tsx
+  <Input bordered />
+  ```
+
+  - Updated MultilineInput readonly state so that status adornment will be shown and background color to match status color when `validationStatus` is set.
+  - Added rounded corner support for MultilineInput, when used in theme next.
+
+### Patch Changes
+
+- 72debf5: Fixed empty Switch label span being rendered. Closes #3505.
+- 3b854ed: Fixed SegmentedButtonGroup incorrectly rounding when theme next is used and `corner="rounded"`.
+
+## 1.28.1
+
+### Patch Changes
+
+- f8de151c: Fixed the chevron alignment for multi-line accordions.
+- a5556028: Fixed Text components not applying `className` correctly, including `Code`, `Display1`, `Display2`, `Display3`, `TextAction`, `TextNotation`.
+
 ## 1.28.0
 
 ### Minor Changes

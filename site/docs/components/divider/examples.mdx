@@ -1,0 +1,33 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="divider" exampleName="Variants" >
+
+## Variants
+
+Divider has three variants: `primary`, `secondary` and `tertiary`. The default variant is `primary`. You can use the `variant` prop to change
+
+## Best practices
+
+- Primary dividers meet the 3:1 contrast ratio against Salt backgrounds, needed for graphical elements in WCAG 2.1. They are ideal to distinguish between interactive elements or between distinct interactions.
+- Secondary dividers are ideal to distinguish between regions and containers.
+- Tertiary dividers are suitable for less prominent separations between repeated elements, where a softer distinction is desired.
+
+</LivePreview>
+
+<LivePreview componentName="divider" exampleName="Vertical" >
+
+## Vertical
+
+The orientation of the divider can be changed with the `orientation` prop.
+
+</LivePreview>
+</LivePreviewControls>

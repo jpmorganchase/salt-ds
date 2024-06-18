@@ -1,5 +1,5 @@
 import { ChangeEvent, ReactElement, useState } from "react";
-import { Avatar, ComboBox, Option, StackLayout, Text } from "@salt-ds/core";
+import { ComboBox, Option, StackLayout, Text } from "@salt-ds/core";
 
 type Contact = {
   firstName: string;
@@ -155,22 +155,11 @@ const contacts: Contact[] = [
 function ContactOption({ value }: { value: Contact }) {
   return (
     <Option value={value} key={value.id}>
-      <StackLayout
-        gap={1}
-        direction="row"
-        align="center"
-        style={{
-          paddingBlock:
-            "calc(var(--salt-spacing-100) + var(--salt-spacing-25))",
-        }}
-      >
-        <Avatar aria-hidden name={value.displayName} size={1} />
-        <StackLayout gap={0.5} align="start">
-          <Text>{value.displayName}</Text>
-          <Text styleAs="label" color="secondary">
-            {value.email}
-          </Text>
-        </StackLayout>
+      <StackLayout gap={0.5}>
+        <Text>{value.displayName}</Text>
+        <Text styleAs="label" color="secondary">
+          {value.email}
+        </Text>
       </StackLayout>
     </Option>
   );
