@@ -19,8 +19,15 @@ const TestComponent = ({
   className?: string;
 }) => {
   const density = useDensity();
-  const { theme, mode, UNSTABLE_corner, UNSTABLE_accent, themeNext } =
-    useTheme();
+  const {
+    theme,
+    mode,
+    UNSTABLE_corner,
+    UNSTABLE_accent,
+    themeNext,
+    UNSTABLE_actionFont,
+    UNSTABLE_headingFont,
+  } = useTheme();
   const { announce } = useAriaAnnouncer();
   const announcerPresent = typeof announce === "function";
 
@@ -34,6 +41,8 @@ const TestComponent = ({
       data-announcer={announcerPresent}
       data-corner={UNSTABLE_corner}
       data-accent={UNSTABLE_accent}
+      data-heading-font={UNSTABLE_headingFont}
+      data-action-font={UNSTABLE_actionFont}
       data-themeNext={themeNext}
     />
   );
@@ -277,6 +286,8 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-corner", "sharp")
         .and("have.attr", "data-accent", "blue")
+        .and("have.attr", "data-heading-font", "Open Sans")
+        .and("have.attr", "data-action-font", "Open Sans")
         .and("have.class", "salt-theme-next")
         .and("have.class", "salt-density-medium");
     });
@@ -293,6 +304,8 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-announcer", "true")
         .and("have.attr", "data-corner", "sharp")
         .and("have.attr", "data-accent", "blue")
+        .and("have.attr", "data-heading-font", "Open Sans")
+        .and("have.attr", "data-action-font", "Open Sans")
         .and("have.attr", "data-themeNext", "true");
       cy.get("[aria-live]").should("exist");
     });
@@ -306,6 +319,8 @@ describe("Given a SaltProviderNext", () => {
           mode="dark"
           corner="rounded"
           accent="teal"
+          headingFont="Amplitude"
+          actionFont="Amplitude"
         >
           <TestComponent />
           <UNSTABLE_SaltProviderNext density="medium">
@@ -323,6 +338,8 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "rounded")
         .and("have.attr", "data-accent", "teal")
+        .and("have.attr", "data-heading-font", "Amplitude")
+        .and("have.attr", "data-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -331,6 +348,8 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "rounded")
         .and("have.attr", "data-accent", "teal")
+        .and("have.attr", "data-heading-font", "Amplitude")
+        .and("have.attr", "data-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
     });
     it("should take different values set as props", () => {
@@ -340,12 +359,16 @@ describe("Given a SaltProviderNext", () => {
           mode="dark"
           corner="rounded"
           accent="teal"
+          headingFont="Amplitude"
+          actionFont="Amplitude"
         >
           <TestComponent />
           <UNSTABLE_SaltProviderNext
             density="medium"
             corner="sharp"
             accent="blue"
+            headingFont="Open Sans"
+            actionFont="Open Sans"
           >
             <TestComponent id="test-2" />
           </UNSTABLE_SaltProviderNext>
@@ -361,6 +384,8 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "rounded")
         .and("have.attr", "data-accent", "teal")
+        .and("have.attr", "data-heading-font", "Amplitude")
+        .and("have.attr", "data-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -369,6 +394,8 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-corner", "sharp")
         .and("have.attr", "data-accent", "blue")
+        .and("have.attr", "data-heading-font", "Open Sans")
+        .and("have.attr", "data-action-font", "Open Sans")
         .and("have.attr", "data-announcer", "true");
     });
   });
