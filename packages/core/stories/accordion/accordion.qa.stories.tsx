@@ -123,6 +123,26 @@ const UI = () => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
+    <Accordion value="default" arrowSide="left">
+      <AccordionHeader>Left align arrow</AccordionHeader>
+      <AccordionPanel>
+        <FlowLayout>
+          This is content inside of an Accordion.
+          <FormField labelPlacement="left">
+            <FormLabel>Disclosure ID</FormLabel>
+            <Input />
+          </FormField>
+          <FormField labelPlacement="left">
+            <FormLabel>Email</FormLabel>
+            <Input />
+          </FormField>
+          <FormField labelPlacement="left">
+            <FormLabel>Justification</FormLabel>
+            <Input />
+          </FormField>
+        </FlowLayout>
+      </AccordionPanel>
+    </Accordion>
   </AccordionGroup>
 );
 
