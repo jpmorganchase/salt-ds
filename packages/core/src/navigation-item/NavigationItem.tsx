@@ -27,7 +27,7 @@ export interface NavigationItemRenderProps
     "active" | "expanded" | "level" | "parent" | "orientation"
   > {
   /**
-   * Props to apply to the chld row to render a link
+   * Props to apply to the child row to render a link
    */
   linkProps?: AnchorHTMLAttributes<HTMLAnchorElement>;
   /**
@@ -128,7 +128,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       "--saltNavigationItem-level": `${level}`,
     };
 
-    const isParent = parent || href === undefined; // for backwards compatiblity with original
+    const isParent = parent || href === undefined;
     const elementProps = {
       className: clsx(
         withBaseName("wrapper"),
