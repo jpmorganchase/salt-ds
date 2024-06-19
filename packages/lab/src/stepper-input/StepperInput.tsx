@@ -25,6 +25,10 @@ export interface StepperInputProps
    */
   defaultValue?: number;
   /**
+   * Whether to hide the stepper buttons. Defaults to `false`.
+   */
+  hideButtons?: boolean;
+  /**
    * The maximum value that can be selected.
    */
   max?: number;
@@ -32,10 +36,6 @@ export interface StepperInputProps
    * The minimum value that can be selected.
    */
   min?: number;
-  /**
-   * Whether to hide the stepper buttons. Defaults to `false`.
-   */
-  hideButtons?: boolean;
   /**
    * Callback when stepper input loses focus.
    */
@@ -65,13 +65,18 @@ export interface StepperInputProps
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   function StepperInput(props, ref) {
     const {
+      block,
       className,
       decimalPlaces,
+      defaultValue,
       hideButtons,
+      max,
+      min,
       onBlur,
       onChange,
       onFocus,
       readOnly,
+      step,
       ...rest
     } = props;
 
