@@ -11,12 +11,19 @@ export default {
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={2} height={300} itemPadding={5} width={1200} {...props}>
-      <Tag>Primary Tag</Tag>
-      <Tag>
-        <NotificationIcon /> With Icon Tag
-      </Tag>
-      <Tag variant="secondary">Secondary Tag</Tag>
-      <Tag bordered>Bordered Tag</Tag>
+      {Array.from({ length: 12 }, (_, index) => (
+        <>
+          <Tag category={index + 1}>
+            <NotificationIcon /> With Icon Tag
+          </Tag>
+          <Tag category={index + 1} variant="secondary">
+            Secondary Tag
+          </Tag>
+          <Tag category={index + 1} bordered>
+            Bordered Tag
+          </Tag>
+        </>
+      ))}
     </QAContainer>
   );
 };
