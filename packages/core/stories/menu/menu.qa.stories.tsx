@@ -9,7 +9,6 @@ import {
   MenuTrigger,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
-import "./menu.qa.stories.css";
 
 export default {
   title: "Core/Menu/Menu QA",
@@ -19,43 +18,28 @@ export default {
 export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
-      className="singleLevel"
-      cols={8}
-      height={860}
-      width={1400}
+      itemWidthAuto
+      height={500}
+      width={800}
       transposeDensity
+      vertical
       {...props}
     >
-      <Menu open>
-        <MenuTrigger>
-          <Button variant="secondary" aria-label="Open Menu">
-            <MicroMenuIcon aria-hidden />
-          </Button>
-        </MenuTrigger>
-        <MenuPanel>
-          <MenuItem>Copy</MenuItem>
-          <MenuItem>Paste</MenuItem>
-          <MenuItem>Export</MenuItem>
-          <MenuItem>Settings</MenuItem>
-        </MenuPanel>
-      </Menu>
-      <Menu open>
-        <MenuTrigger>
-          <Button variant="secondary" aria-label="Open Menu">
-            <MicroMenuIcon aria-hidden />
-          </Button>
-        </MenuTrigger>
-        <MenuPanel>
-          <MenuGroup label="Actions">
+      <div style={{ width: 190, height: 300 }}>
+        <Menu open>
+          <MenuTrigger>
+            <Button variant="secondary" aria-label="Open Menu">
+              <MicroMenuIcon aria-hidden />
+            </Button>
+          </MenuTrigger>
+          <MenuPanel>
             <MenuItem>Copy</MenuItem>
             <MenuItem>Paste</MenuItem>
-          </MenuGroup>
-          <MenuGroup label="Styling">
-            <MenuItem>Edit styling</MenuItem>
-            <MenuItem>Clear styling</MenuItem>
-          </MenuGroup>
-        </MenuPanel>
-      </Menu>
+            <MenuItem>Export</MenuItem>
+            <MenuItem>Settings</MenuItem>
+          </MenuPanel>
+        </Menu>
+      </div>
     </QAContainer>
   );
 };
@@ -104,4 +88,35 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
 
 MultilevelExamples.parameters = {
   chromatic: { disableSnapshot: false },
+};
+
+export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      itemWidthAuto
+      height={500}
+      width={800}
+      transposeDensity
+      vertical
+      {...props}
+    >
+      <div style={{ width: 190, height: 300 }}>
+        <Menu open>
+          <MenuTrigger>
+            <Button variant="secondary" aria-label="Open Menu">
+              <MicroMenuIcon aria-hidden />
+            </Button>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuGroup label="Actions">
+              <MenuItem>Copy</MenuItem>
+            </MenuGroup>
+            <MenuGroup label="Styling">
+              <MenuItem>Edit styling</MenuItem>
+            </MenuGroup>
+          </MenuPanel>
+        </Menu>
+      </div>
+    </QAContainer>
+  );
 };
