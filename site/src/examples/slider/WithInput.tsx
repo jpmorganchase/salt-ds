@@ -22,7 +22,7 @@ export const SingleWithInput = () => {
 
   return (
     <FormField style={{ width: "400px" }}>
-      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <FormFieldLabel>Slider with Input</FormFieldLabel>
       <div
         style={{
           display: "flex",
@@ -32,6 +32,7 @@ export const SingleWithInput = () => {
       >
         <Input
           placeholder={`${value[0]}`}
+          value={`${value[0]}`}
           style={{ width: "1px", margin: "5px" }}
           onChange={handleInputChange}
         />
@@ -88,7 +89,7 @@ const RangeWithInput = () => {
 
   return (
     <FormField style={{ width: "400px" }}>
-      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <FormFieldLabel>Slider with Input</FormFieldLabel>
       <FlexLayout gap={2} align="center">
         <Input
           placeholder={`${minValue}`}
