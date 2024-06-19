@@ -1,5 +1,22 @@
 import { useState } from "react";
-import { Button, ButtonProps, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  ButtonProps,
+  StackLayout,
+  Text,
+  BannerContent,
+  Banner,
+  FlowLayout,
+  useId,
+  Dialog,
+  DialogHeader,
+  DialogActions,
+  DialogContent,
+  FormField,
+  FormFieldLabel,
+  Input,
+} from "@salt-ds/core";
+import { ChevronRightIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import {
   DownloadIcon,
   SearchIcon,
@@ -293,5 +310,103 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
         Refresh Page
       </Button>
     </div>
+  );
+};
+
+export const LoadingButtonRefreshExample: StoryFn<typeof Banner> = () => {
+  const [loadingState, setLoadingState] = useState(false);
+
+  const handlePrimaryClick = () => {
+    setLoadingState(true);
+    setTimeout(() => {
+      setLoadingState(false);
+    }, 3000);
+  };
+  return (
+    <StackLayout style={{ width: 500 }}>
+      <Banner status="info">
+        <BannerContent>
+          <StackLayout gap={1}>
+            <Text>
+              This page has updates. Refresh page if you want to see recent
+              changes.
+            </Text>
+            <FlowLayout gap={1} justify="end">
+              <Button
+                variant="cta"
+                loading={loadingState}
+                showLoadingText
+                loadingText="Refreshing"
+                aria-describedby=""
+                onClick={handlePrimaryClick}
+              >
+                <RefreshIcon aria-hidden /> Refresh Page
+              </Button>
+            </FlowLayout>
+          </StackLayout>
+        </BannerContent>
+      </Banner>
+    </StackLayout>
+  );
+};
+
+export const LoadingButtonRenameExample = () => {
+  const [loadingState, setLoadingState] = useState(false);
+
+  const handlePrimaryClick = () => {
+    setLoadingState(true);
+    setTimeout(() => {
+      setLoadingState(false);
+      handleClose();
+    }, 3000);
+  };
+  const [open, setOpen] = useState(false);
+  const id = useId();
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={handleRequestOpen}>Open dialog</Button>
+      <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+        <DialogHeader header="Find and rename layers" />
+        <DialogContent>
+          <StackLayout direction="row" align="center">
+            <FormField>
+              <FormFieldLabel>Find</FormFieldLabel>
+              <Input defaultValue="Value text" />
+            </FormField>
+            <ChevronRightIcon />
+            <FormField>
+              <FormFieldLabel>Rename to</FormFieldLabel>
+              <Input defaultValue="Value text" />
+            </FormField>
+          </StackLayout>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button
+            variant="cta"
+            loading={loadingState}
+            showLoadingText
+            loadingText="Renaming"
+            onClick={handlePrimaryClick}
+          >
+            Rename Layers
+            <DoubleChevronRightIcon />
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
