@@ -30,8 +30,11 @@ export const WithValidation = (): ReactElement => {
           setInputValue(event.target.value)
         }
         onSelectionChange={(_, date) => {
-          setValidationStatus(getDateValidationStatus(inputValue));
-          setSelectedDate(date);
+          const validationStatus = getDateValidationStatus(inputValue);
+          setValidationStatus(validationStatus);
+          if (!validationStatus) {
+            setSelectedDate(date);
+          }
         }}
       />
       <FormHelperText>{helperText}</FormHelperText>
