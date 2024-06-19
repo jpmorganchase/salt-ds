@@ -54,7 +54,6 @@ export const Controlled: StoryFn = (args) => {
         decimalPlaces={2}
         value={value}
         onChange={(_event, value) => {
-          console.log(_event, value);
           setValue(value);
         }}
         endAdornment={
