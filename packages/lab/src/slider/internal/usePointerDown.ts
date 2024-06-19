@@ -61,7 +61,7 @@ export function usePointerDown(
 
   return {
     trackProps: {
-      onPointerDown(event: PointerEvent) {
+      onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
         const { clientX } = event;
         const newValue: number = getValue(trackRef, min, max, step, clientX);
         const nearestIndex = getNearestIndex(value, newValue);
@@ -82,7 +82,7 @@ export function usePointerDown(
       },
     },
     thumbProps: {
-      onPointerDown(event: PointerEvent) {
+      onPointerDown(event: React.PointerEvent<HTMLDivElement>) {
         event.stopPropagation();
         if (index === null) return;
         onDownThumb(index);
