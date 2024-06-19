@@ -7,17 +7,6 @@ import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltTag");
 
-type Enumerate<
-  N extends number,
-  Acc extends number[] = []
-> = Acc["length"] extends N
-  ? Acc[number]
-  : Enumerate<N, [...Acc, Acc["length"]]>;
-type Range<F extends number, T extends number> = Exclude<
-  Enumerate<T>,
-  Enumerate<F>
->;
-
 export interface TagProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Styling variant with full border. Defaults to false
@@ -28,9 +17,9 @@ export interface TagProps extends ComponentPropsWithoutRef<"div"> {
    */
   variant?: "primary" | "secondary";
   /**
-   * The tag category. Defaults to 1
+   * The tag category, needs to be within range of 1-20. Defaults to 1
    */
-  category?: Range<1, 20>;
+  category?: number;
 }
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(function Tag(
