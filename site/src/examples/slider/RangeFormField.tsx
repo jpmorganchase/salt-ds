@@ -24,7 +24,7 @@ export const RangeFormField = (): ReactElement => (
       </FlexLayout>
     </FormField>
     <FormField>
-      <FormFieldLabel> Field Label </FormFieldLabel>
+      <FormFieldLabel>Field Label</FormFieldLabel>
       <Slider
         aria-label="range-form-field"
         defaultValue={[20, 80]}
