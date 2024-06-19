@@ -8,7 +8,7 @@ export const LayoutFullWidth: FC<LayoutProps> = ({
   ...rest
 }) => (
   <div className={styles.root} {...rest}>
-    <main>{children}</main>
+    <div>{children}</div>
     {Footer && Footer}
   </div>
 );

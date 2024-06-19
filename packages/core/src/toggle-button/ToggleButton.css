@@ -13,7 +13,7 @@
   color: var(--salt-actionable-secondary-foreground);
   text-transform: var(--salt-text-action-textTransform);
   font-weight: var(--salt-text-action-fontWeight);
-  font-family: var(--salt-text-fontFamily);
+  font-family: var(--salt-text-action-fontFamily);
   text-align: var(--salt-text-action-textAlign);
   letter-spacing: var(--salt-text-action-letterSpacing);
   line-height: var(--salt-text-lineHeight);

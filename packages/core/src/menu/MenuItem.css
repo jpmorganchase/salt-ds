@@ -5,10 +5,10 @@
   font-weight: var(--salt-text-fontWeight);
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
   display: flex;
-  justify-content: flex-start;
   gap: var(--salt-spacing-100);
   position: relative;
   cursor: var(--salt-selectable-cursor-hover);

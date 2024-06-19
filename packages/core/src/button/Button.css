@@ -60,7 +60,7 @@
   gap: var(--salt-spacing-50);
   justify-content: var(--saltButton-justifyContent, center);
   font-size: var(--saltButton-fontSize, var(--salt-text-fontSize));
-  font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
+  font-family: var(--saltButton-fontFamily, var(--salt-text-action-fontFamily));
   line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
   letter-spacing: var(--saltButton-letterSpacing, var(--salt-text-action-letterSpacing));
   text-transform: var(--saltButton-textTransform, var(--salt-text-action-textTransform));
