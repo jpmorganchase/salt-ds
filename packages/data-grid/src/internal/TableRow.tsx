@@ -130,10 +130,10 @@ export function TableRow<T>(props: TableRowProps<T>) {
 
         return (
           <RowValidationStatusContext.Provider
+            key={colKey}
             value={{ status: rowValidationStatus }}
           >
             <Cell
-              key={colKey}
               row={row}
               column={column}
               isFocused={isFocused}

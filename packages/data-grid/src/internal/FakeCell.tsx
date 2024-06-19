@@ -2,8 +2,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import { GridCellProps } from "../GridColumn";
-
-import { Cell } from "./Cell";
+import { CellFrame } from "../CellFrame";
 
 import fakeCellCss from "./FakeCell.css";
 
@@ -24,7 +23,7 @@ export function FakeCell<T>(props: FakeCellProps<T>) {
   });
 
   return (
-    <Cell
+    <CellFrame
       className="saltGridFakeCell"
       data-row-index={row.index}
       data-column-index={-1}
