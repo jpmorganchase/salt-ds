@@ -225,8 +225,9 @@
   align-items: center;
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
+  padding-top: var(--salt-spacing-50);
   column-gap: var(--salt-spacing-100);
-  align-self: center;
+  align-self: flex-start;
 }
 
 .saltPillInput-readOnly .saltPillInput-startAdornmentContainer {
@@ -267,6 +268,14 @@
   height: inherit;
   overflow-y: auto;
   box-sizing: border-box;
+}
+
+.saltPillInput-bordered > .saltPillInput-endAdornmentContainer {
+  padding-top: calc(var(--salt-spacing-50) - var(--salt-size-border));
+}
+
+.saltPillInput-bordered > .saltPillInput-inputWrapper {
+  padding: calc(var(--salt-spacing-50) - var(--salt-size-border)) 0;
 }
 
 .saltPillInput-pillList {
