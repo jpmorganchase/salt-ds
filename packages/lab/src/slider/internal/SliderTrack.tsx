@@ -4,7 +4,7 @@ import { useRef, ComponentPropsWithoutRef, useState } from "react";
 import { SliderSelection } from "./SliderSelection";
 import { SliderThumb } from "./SliderThumb";
 import { useSliderContext } from "./SliderContext";
-import { usePointerDownTrack } from "./usePointerDownTrack";
+import { usePointerDownThumb } from "./usePointerDownThumb";
 
 export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 
@@ -17,13 +17,16 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
 
   const [activeThumb, setActiveThumb] = useState<number | undefined>(undefined);
 
-  const { trackProps } = usePointerDownTrack(
+  const { trackProps } = usePointerDownThumb(
     trackRef,
     min,
     max,
     step,
     value,
-    onChange
+    onChange,
+    null,
+    activeThumb,
+    setActiveThumb
   );
 
   return (
