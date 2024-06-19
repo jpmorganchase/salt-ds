@@ -41,6 +41,8 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   variant?: "determinate" | "indeterminate";
 }
 
+const INDETERMINATE_BAR_WIDTH = 66;
+
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
     {
@@ -63,7 +65,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const isIndeterminate = variant === "indeterminate";
-    const progress = isIndeterminate ? 66 : ((value - min) / (max - min)) * 100;
+    const progress = isIndeterminate
+      ? INDETERMINATE_BAR_WIDTH
+      : ((value - min) / (max - min)) * 100;
     const buffer = isIndeterminate
       ? 0
       : ((bufferValue - min) / (max - min)) * 100;
