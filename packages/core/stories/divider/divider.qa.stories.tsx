@@ -37,17 +37,11 @@ export const StandaloneVertical: StoryFn<QAContainerProps> = (props) => (
     itemPadding={8}
     {...props}
   >
-    <Divider orientation="vertical" style={{ height: 100 }} />
-    <Divider
-      orientation="vertical"
-      variant="secondary"
-      style={{ height: 100 }}
-    />
-    <Divider
-      orientation="vertical"
-      variant="tertiary"
-      style={{ height: 100 }}
-    />
+    <StackLayout direction="row" style={{ height: 100 }}>
+      <Divider orientation="vertical" />
+      <Divider orientation="vertical" variant="secondary" />
+      <Divider orientation="vertical" variant="tertiary" />
+    </StackLayout>
   </QAContainer>
 );
 
@@ -66,8 +60,8 @@ export const FlexHorizontal: StoryFn<QAContainerProps> = (props) => (
   >
     <StackLayout style={{ width: 100 }}>
       <Divider />
-      <Divider />
-      <Divider />
+      <Divider variant="secondary" />
+      <Divider variant="tertiary" />
     </StackLayout>
   </QAContainer>
 );
@@ -116,8 +110,8 @@ export const FlexHorizontalHeight: StoryFn<QAContainerProps> = (props) => (
   >
     <StackLayout>
       <Divider style={{ width: 60 }} />
-      <Divider style={{ width: 60 }} />
-      <Divider style={{ width: 60 }} />
+      <Divider style={{ width: 60 }} variant="secondary" />
+      <Divider style={{ width: 60 }} variant="tertiary" />
     </StackLayout>
   </QAContainer>
 );
@@ -136,9 +130,9 @@ export const FlexVerticalHeight: StoryFn<QAContainerProps> = (props) => (
     {...props}
   >
     <StackLayout direction="row" style={{ height: 100 }}>
-      <Divider orientation="vertical" style={{ height: 60 }} />
-      <Divider orientation="vertical" style={{ height: 60 }} />
-      <Divider orientation="vertical" style={{ height: 60 }} />
+      <Divider orientation="vertical" />
+      <Divider orientation="vertical" variant="secondary" />
+      <Divider orientation="vertical" variant="tertiary" />
     </StackLayout>
   </QAContainer>
 );
