@@ -46,7 +46,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         className={clsx(withBaseName("tooltip"), {
           [withBaseName("showTooltip")]: activeThumb === index,
         })}
-        aria-expanded={activeThumb === index ? true : false}
+        aria-expanded={activeThumb === index}
       >
         <Label>{value[index]}</Label>
       </div>
