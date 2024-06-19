@@ -1,5 +1,5 @@
 import { RefObject, MouseEvent } from "react";
-import { getValue, setValue } from "./utils";
+import { getValue, setValue, getNearestIndex } from "./utils";
 import { SliderChangeHandler, SliderValue } from "../types";
 
 export function usePointerDownTrack(
@@ -16,12 +16,7 @@ export function usePointerDownTrack(
         const { clientX } = event;
         const newValue: number = getValue(trackRef, min, max, step, clientX);
 
-        const nearestIndex = value.reduce((acc, value) => {
-          const difference = Math.abs(newValue - value);
-          const prevDifference = Math.abs(newValue - acc);
-          const index = difference < prevDifference ? 1 : 0;
-          return index;
-        }, 0);
+        const nearestIndex = getNearestIndex(value, newValue);
 
         setValue(
           value,
