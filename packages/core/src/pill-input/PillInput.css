@@ -138,7 +138,8 @@
 }
 
 /* Styling when focused */
-.saltPillInput-focused {
+.saltPillInput-focused,
+.saltPillInput-focused:hover {
   --input-borderColor: var(--input-outlineColor);
   --input-borderWidth: var(--salt-editable-borderWidth-active);
 
@@ -224,9 +225,8 @@
   align-items: center;
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
-  padding-top: var(--salt-spacing-50);
   column-gap: var(--salt-spacing-100);
-  align-self: flex-start;
+  align-self: center;
 }
 
 .saltPillInput-readOnly .saltPillInput-startAdornmentContainer {
@@ -253,6 +253,7 @@
 .saltPillInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
 
 .saltPillInput-inputWrapper {
