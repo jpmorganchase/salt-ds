@@ -23,7 +23,7 @@ export const SingleFormField = (): ReactElement => (
       </FlexLayout>
     </FormField>
     <FormField>
-      <FormFieldLabel> Field Label </FormFieldLabel>
+      <FormFieldLabel>Field Label</FormFieldLabel>
       <Slider
         aria-label="single-form-field"
         marks="bottom"
