@@ -26,6 +26,10 @@
   padding-bottom: var(--salt-spacing-300);
 }
 
+.saltAccordionPanel-content.saltAccordionPanel-indentedContent {
+  padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .saltAccordionPanel {
     transition: none;
