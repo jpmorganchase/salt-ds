@@ -247,20 +247,24 @@ describe("Stepper Input", () => {
   });
 
   it("does not decrement below the minimum value", () => {
-    cy.mount(<StepperInput defaultValue={-1} min={-1} />);
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<StepperInput defaultValue={-1} min={-1} onChange={changeSpy} />);
 
     cy.findByRole("spinbutton").should("have.value", -1);
 
     cy.findByLabelText("decrement value").realClick();
+    cy.get("@changeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should("have.value", -1);
   });
 
   it("does not increment above the maximum value", () => {
-    cy.mount(<StepperInput defaultValue={1} max={1} />);
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<StepperInput defaultValue={1} max={1} onChange={changeSpy} />);
 
     cy.findByRole("spinbutton").should("have.value", 1);
 
     cy.findByLabelText("increment value").realClick();
+    cy.get("@changeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should("have.value", 1);
   });
 
