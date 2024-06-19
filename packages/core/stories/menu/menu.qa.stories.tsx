@@ -21,7 +21,7 @@ export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
     <QAContainer
       className="singleLevel"
       cols={8}
-      height={1000}
+      height={860}
       width={1400}
       transposeDensity
       {...props}

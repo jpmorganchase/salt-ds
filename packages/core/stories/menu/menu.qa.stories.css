@@ -1,7 +1,8 @@
 .singleLevel .background-block {
-  height: 500px;
+  height: 430px;
 }
 
 .saltQAContainer.singleLevel {
   --qaContainer-item-width: 160px !important;
+  margin: 0;
 }
