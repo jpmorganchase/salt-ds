@@ -72,3 +72,15 @@ export function getMarkStyles(min: number, max: number, step: number) {
   }
   return marks;
 }
+
+export function getNearestIndex(value: number[], newValue: number) {
+  if (value.length === 1) return 0;
+
+  const nearestIndex = value.reduce((acc, value) => {
+    const difference = Math.abs(newValue - value);
+    const prevDifference = Math.abs(newValue - acc);
+    const index = difference < prevDifference ? 1 : 0;
+    return index;
+  }, 0);
+  return nearestIndex;
+}
