@@ -1,4 +1,4 @@
-import { NavigationItem, NavigationItemRenderProps } from "@salt-ds/core";
+import { NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 
 describe("GIVEN a NavItem", () => {
@@ -103,7 +103,10 @@ describe("GIVEN a NavItem", () => {
 
   describe("AND `render` is passed a render function", () => {
     it("should call `render` to create parent item", () => {
-      const mockRender = cy.stub().as("render");
+      const mockRender = cy
+        .stub()
+        .as("render")
+        .returns(<button>Parent Button</button>);
       cy.mount(
         <NavigationItem
           active={true}
@@ -117,6 +120,7 @@ describe("GIVEN a NavItem", () => {
           Navigation Item
         </NavigationItem>
       );
+      cy.findByText("Parent Button").should("exist");
       cy.get("@render").should("have.been.calledWithMatch", {
         parent: true,
         active: true,
@@ -133,7 +137,10 @@ describe("GIVEN a NavItem", () => {
       });
     });
     it("should call `render` to create child item", () => {
-      const mockRender = cy.stub().as("render");
+      const mockRender = cy
+        .stub()
+        .as("render")
+        .returns(<a>Navigation Link</a>);
       cy.mount(
         <NavigationItem
           active={true}
@@ -147,6 +154,7 @@ describe("GIVEN a NavItem", () => {
           Navigation Item
         </NavigationItem>
       );
+      cy.findByText("Navigation Link").should("exist");
       cy.get("@render").should("have.been.calledWithMatch", {
         parent: false,
         active: true,
@@ -168,10 +176,7 @@ describe("GIVEN a NavItem", () => {
   describe("AND `render` is given a JSX element", () => {
     it("should merge the props and render the JSX element ", () => {
       cy.mount(
-        <NavigationItem
-          parent={true}
-          render={<button id={"button"}>Button Children</button>}
-        >
+        <NavigationItem parent={true} render={<button>Button Children</button>}>
           Navigation Item
         </NavigationItem>
       );

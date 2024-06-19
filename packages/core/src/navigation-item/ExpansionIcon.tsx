@@ -12,7 +12,7 @@ const iconExpansionMap = {
   },
 };
 
-type ExpansionIconProps = {
+interface ExpansionIconProps {
   /**
    * Whether the navigation item is expanded.
    */
@@ -25,7 +25,7 @@ type ExpansionIconProps = {
    * The orientation of the navigation item.
    */
   orientation?: "horizontal" | "vertical";
-};
+}
 
 export const ExpansionIcon: FC<ExpansionIconProps> = ({
   expanded = false,

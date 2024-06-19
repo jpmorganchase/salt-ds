@@ -589,13 +589,14 @@ export const VerticalNestedGroupNoIcon = () => {
   );
 };
 
+const CustomLinkImplementation = (props: NavigationItemRenderProps) => (
+  <a {...props} aria-label={"overridden-label"}>
+    <Text>Your Own Link Implementation</Text>
+  </a>
+);
+
 export const WithRenderElement = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
-  const CustomLinkImplementation = (props: NavigationItemRenderProps) => (
-    <a {...props} aria-label={"overridden-label"}>
-      <Text>Your Own Link Implementation</Text>
-    </a>
-  );
   return (
     <nav>
       <StackLayout
