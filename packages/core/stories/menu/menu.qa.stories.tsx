@@ -120,3 +120,7 @@ export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
     </QAContainer>
   );
 };
+
+GroupedExamples.parameters = {
+  chromatic: { disableSnapshot: false },
+};
