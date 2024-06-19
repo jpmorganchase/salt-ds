@@ -2,7 +2,7 @@ import { RefObject, useState } from "react";
 import { SliderValue, SliderChangeHandler } from "../types";
 import { getNearestIndex, getValue, setValue } from "./utils";
 
-export function usePointerDownThumb(
+export function usePointerDown(
   trackRef: RefObject<HTMLDivElement>,
   min: number,
   max: number,

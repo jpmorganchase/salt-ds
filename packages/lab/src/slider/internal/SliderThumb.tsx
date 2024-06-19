@@ -2,7 +2,7 @@ import { makePrefixer, Label } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { getPercentage } from "./utils";
 import { ComponentPropsWithoutRef, RefObject } from "react";
-import { usePointerDownThumb } from "./usePointerDownThumb";
+import { usePointerDown } from "./usePointerDown";
 import { useKeyDownThumb } from "./useKeyDownThumb";
 import { useSliderContext } from "./SliderContext";
 
@@ -22,7 +22,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
 
   const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
-  const { thumbProps } = usePointerDownThumb(
+  const { thumbProps } = usePointerDown(
     trackRef,
     min,
     max,
