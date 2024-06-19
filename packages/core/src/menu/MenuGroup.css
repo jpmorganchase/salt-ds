@@ -3,11 +3,13 @@
   color: var(--salt-text-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
-  font-family: var(--salt-text-fontFamily);
-  line-height: var(--salt-text-lineHeight);
+  font-family: var(--salt-text-label-fontFamily);
+  line-height: var(--salt-text-label-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
   display: flex;
+  box-sizing: border-box;
 }
 
 .saltMenuGroup {
