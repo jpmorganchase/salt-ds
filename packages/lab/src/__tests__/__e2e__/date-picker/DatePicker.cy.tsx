@@ -339,6 +339,7 @@ describe("GIVEN a DatePicker", () => {
 
       cy.mount(<ControlledRangePicker />);
       cy.findAllByRole("textbox").eq(0).click().clear().type(testInput);
+      cy.get("@changeSpy").should("have.been.calledWith", testInput);
       cy.findAllByRole("textbox").eq(1).click().clear().type(rangeTestInput);
       cy.get("@changeSpy").should(
         "have.been.calledWith",
