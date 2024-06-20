@@ -1,10 +1,9 @@
-import { Tag } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import { NotificationIcon } from "@salt-ds/icons";
-import { GridLayout } from "@salt-ds/core";
+import { GridLayout, Tag } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Tag",
+  title: "Core/Tag",
   component: Tag,
 } as Meta<typeof Tag>;
 
