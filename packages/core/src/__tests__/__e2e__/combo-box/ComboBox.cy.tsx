@@ -316,7 +316,7 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").should("be.disabled");
   });
 
-  it.only("should not stay focus if disabled after option selection", () => {
+  it("should not stay focus if disabled after option selection", () => {
     // Regression - #3369
     const DisabledAfterSelection = () => {
       const [disabled, setDisabled] = useState(false);
