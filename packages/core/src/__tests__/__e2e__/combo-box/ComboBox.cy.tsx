@@ -311,9 +311,10 @@ describe("Given a ComboBox", () => {
   it("should not receive focus via mouse click if it is disabled", () => {
     cy.mount(<Disabled />);
     cy.findByRole("combobox").realClick();
+    // Regression - #3369
     cy.get(".saltComboBox").should("not.have.class", "saltComboBox-focused");
 
-    cy.findByRole("combobox").should("be.disabled");
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
   });
 
   it("should not stay focus if disabled after option selection", () => {
@@ -337,7 +338,7 @@ describe("Given a ComboBox", () => {
     cy.realPress("Enter");
 
     cy.get(".saltComboBox").should("not.have.class", "saltComboBox-focused");
-    cy.findByRole("combobox").should("be.disabled");
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
   });
 
   it("should not allow you to select a disabled option", () => {

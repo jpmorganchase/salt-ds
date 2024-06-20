@@ -245,7 +245,7 @@ describe("Given a Dropdown", () => {
     cy.mount(<Disabled />);
     cy.findByRole("combobox").realClick();
 
-    cy.findByRole("combobox").should("be.disabled");
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
     cy.findByRole("listbox").should("not.exist");
   });
 
@@ -268,7 +268,7 @@ describe("Given a Dropdown", () => {
     cy.realPress("ArrowDown");
     cy.realPress("Enter");
 
-    cy.findByRole("combobox").should("be.disabled");
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
   });
 
   it("should not allow you to select a disabled option", () => {
