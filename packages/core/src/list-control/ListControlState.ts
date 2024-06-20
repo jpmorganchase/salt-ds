@@ -74,14 +74,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   const [focusedState, setFocusedState] = useState(false);
   const [focusVisibleState, setFocusVisibleState] = useState(false);
 
-  useEffect(() => {
-    // remove focus when controlling disabled
-    if (disabled && focusedState) {
-      setFocusedState(false);
-      setFocusVisibleState(false);
-    }
-  }, [disabled, focusedState, setFocusedState]);
-
   const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
     undefined
   );
