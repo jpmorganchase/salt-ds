@@ -115,7 +115,7 @@
     "react-dom": "^18.0.0",
     "rifm": "^0.12.0",
     "sass": "^1.52.3",
-    "storybook": "^8.1.8",
+    "storybook": "^8.1.10",
     "stylelint": "^16.0.0",
     "typescript": "4.6.4",
     "vite": "^4.4.9",
