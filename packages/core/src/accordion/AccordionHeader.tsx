@@ -30,7 +30,7 @@ export const AccordionHeader = forwardRef<
   AccordionHeaderProps
 >(function AccordionHeader(props, ref) {
   const { children, className, onClick, ...rest } = props;
-  const { value, expanded, toggle, arrowSide, disabled, id, status } =
+  const { value, expanded, toggle, arrowAlignment, disabled, id, status } =
     useAccordion();
 
   const targetWindow = useWindow();
@@ -62,7 +62,7 @@ export const AccordionHeader = forwardRef<
       type="button"
       {...rest}
     >
-      {arrowSide === "left" && (
+      {arrowAlignment === "left" && (
         <ChevronDownIcon aria-hidden="true" className={withBaseName("icon")} />
       )}
       <div className={withBaseName("content")}>{children}</div>
@@ -72,7 +72,7 @@ export const AccordionHeader = forwardRef<
           status={status}
         />
       )}
-      {arrowSide === "right" && (
+      {arrowAlignment === "right" && (
         <ChevronDownIcon
           aria-hidden="true"
           className={clsx(withBaseName("icon"))}

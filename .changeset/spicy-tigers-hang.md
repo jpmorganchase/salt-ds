@@ -3,4 +3,4 @@
 ---
 
 - changed arrow alignment in `accordion` to the right.
-- added `arrowSide` to `accordion` to allow left alignment.
+- added `arrowAlignment` to `accordion` to allow left alignment.

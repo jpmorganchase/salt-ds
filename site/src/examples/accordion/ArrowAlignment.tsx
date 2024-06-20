@@ -9,10 +9,10 @@ import {
   Input,
 } from "@salt-ds/core";
 
-export const ArrowSide = (): ReactElement => {
+export const ArrowAlignment = (): ReactElement => {
   return (
     <div style={{ width: "80%", height: "100%" }}>
-      <Accordion value="accordion-example" arrowSide="left">
+      <Accordion value="accordion-example" arrowAlignment="left">
         <AccordionHeader>Internal form</AccordionHeader>
         <AccordionPanel>
           <FlowLayout>

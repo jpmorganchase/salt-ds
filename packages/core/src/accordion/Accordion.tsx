@@ -19,9 +19,9 @@ export interface AccordionProps extends ComponentPropsWithoutRef<"div"> {
    */
   defaultExpanded?: boolean;
   /**
-   * Side to display the Accordion's arrow. Defaults to `right`.
+   * Side to align the Accordion's arrow. Defaults to `right`.
    */
-  arrowSide?: "left" | "right";
+  arrowAlignment?: "left" | "right";
   /**
    * Callback fired when the accordion is toggled.
    */
@@ -45,7 +45,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       defaultExpanded,
       expanded: expandedProp,
       disabled,
-      arrowSide = "right",
+      arrowAlignment = "right",
       id: idProp,
       onToggle,
       status,
@@ -79,7 +79,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           value,
           toggle,
           expanded,
-          arrowSide,
+          arrowAlignment,
           disabled: Boolean(disabled),
           id: id ?? "",
           status,

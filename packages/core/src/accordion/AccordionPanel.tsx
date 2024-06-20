@@ -27,7 +27,7 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
       window: targetWindow,
     });
 
-    const { id, expanded, arrowSide } = useAccordion();
+    const { id, expanded, arrowAlignment } = useAccordion();
 
     return (
       <div
@@ -43,7 +43,7 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
         <div className={withBaseName("inner")}>
           <div
             className={clsx(withBaseName("content"), {
-              [withBaseName("indentedContent")]: arrowSide === "left",
+              [withBaseName("indentedContent")]: arrowAlignment === "left",
             })}
           >
             {children}

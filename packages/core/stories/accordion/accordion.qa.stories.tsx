@@ -123,7 +123,7 @@ const UI = () => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-    <Accordion value="default" arrowSide="left">
+    <Accordion value="default" arrowAlignment="left">
       <AccordionHeader>Left align arrow</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
