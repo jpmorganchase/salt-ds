@@ -25,6 +25,7 @@ describe("Given a Slider", () => {
         clientX: 50,
         clientY: 50,
       });
+      cy.get(".saltSliderTrack").trigger("pointerup");
       cy.get("@changeSpy").should("have.callCount", 1);
     });
 
@@ -78,13 +79,10 @@ describe("Given a Slider", () => {
           defaultValue={[20, 40]}
         />
       );
-
       cy.findAllByRole("slider").should("have.length", 2);
-
       cy.findAllByRole("slider")
         .eq(0)
         .should("have.attr", "aria-valuenow", "20");
-
       cy.findAllByRole("slider")
         .eq(1)
         .should("have.attr", "aria-valuenow", "40");
@@ -102,11 +100,11 @@ describe("Given a Slider", () => {
           onChange={changeSpy}
         />
       );
-
       cy.get(".saltSliderTrack").trigger("pointerdown", {
         clientX: 0,
         clientY: 0,
       });
+      cy.get(".saltSliderTrack").trigger("pointerup");
       cy.get("@changeSpy").should("have.callCount", 1);
       cy.findAllByRole("slider")
         .eq(0)
@@ -126,7 +124,6 @@ describe("Given a Slider", () => {
           defaultValue={[5, 8]}
         />
       );
-
       cy.findAllByRole("slider")
         .eq(0)
         .focus()
@@ -137,7 +134,6 @@ describe("Given a Slider", () => {
         .eq(0)
         .should("have.attr", "aria-valuenow", "7");
     });
-
     it("THEN slider thumbs should not cross and maintain a gap of 1 step when using keyboard nav", () => {
       cy.mount(
         <Slider
@@ -148,15 +144,14 @@ describe("Given a Slider", () => {
           defaultValue={[2, 5]}
         />
       );
-
       cy.findAllByRole("slider")
         .eq(0)
         .trigger("pointerdown")
         .trigger("pointermove", {
           clientX: 1000,
           clientY: 1000,
-        });
-
+        })
+        .trigger("pointerup");
       cy.findAllByRole("slider")
         .eq(0)
         .should("have.attr", "aria-valuenow", "4");
