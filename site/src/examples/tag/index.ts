@@ -1,4 +1,4 @@
-export * from "./Secondary";
+export * from "./Bordered";
 export * from "./Categories";
-export * from "./Primary";
-export * from "./Icon";
+export * from "./Variants";
+export * from "./WithIcon";
