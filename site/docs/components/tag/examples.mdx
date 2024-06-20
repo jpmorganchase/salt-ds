@@ -9,25 +9,23 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="tag" exampleName="Primary">
+<LivePreview componentName="tag" exampleName="Variants">
 
-## Primary
+## Variants
 
-Primary tags feature subtle background colors by default, making them ideal for presenting information or content without being overly attention-grabbing.
-
-To add an optional border, simply pass the `bordered` prop to the component.
+Tag has two variants: primary and secondary. The primary variant is set by default. Set to secondary with variant=”secondary”.
 
 </LivePreview>
-<LivePreview componentName="tag" exampleName="Secondary">
+<LivePreview componentName="tag" exampleName="Bordered">
 
-## Secondary
+## Bordered
 
-Secondary tags are generally used to emphasize or highlight specific content. These tags use a bold background color to draw more attention and make the highlighted content stand out.
+To add a border, simply pass the `bordered` prop to the component.
 
 </LivePreview>
-<LivePreview componentName="tag" exampleName="Icon">
+<LivePreview componentName="tag" exampleName="WithIcon">
 
-## With Icon
+## With icon
 
 Display icons inside a tag by passing an icon as children to visually reinforce its content for quick recognition.
 
@@ -42,8 +40,7 @@ Note that if a category outside the range is passed, the styles will default to 
 
 ### Best practices
 
-- Ensure tag colors are consistent with their associated categories.
-- Be mindful that using an excessive number of colors can impose a heavy cognitive load on some users.
+- Be consistent when assigning categories. For example, avoid assigning two different categories to the same piece of metadata.
 
 </LivePreview> 
 </LivePreviewControls>
