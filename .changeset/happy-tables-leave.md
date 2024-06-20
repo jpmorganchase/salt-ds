@@ -1,8 +1,8 @@
 ---
-"@salt-ds/lab": minor
+"@salt-ds/core": minor
 ---
 
-Added `Tag` component. Tags are non-interactive visual adornments that represent metadata or keywords associated with content, drawing the user's attention to categories without requiring interaction.
+Added `Tag` component to core. Tags are non-interactive visual adornments that represent metadata or keywords associated with content, drawing the user's attention to categories without requiring interaction.
 
 ```typescript
   <Tag>Tag</Tag>
