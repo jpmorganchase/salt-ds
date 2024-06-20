@@ -57,6 +57,7 @@ export const useStepperInput = (
     onChange,
     step = 1,
     value,
+    ...rest
   } = props;
 
   const [currentValue, setCurrentValue, isControlled] = useControlled({
@@ -227,7 +228,7 @@ export const useStepperInput = (
   ): InputProps | undefined => {
     if (currentValue === undefined) return undefined;
     return {
-      ...inputProps,
+      ...rest,
       inputProps: {
         role: "spinbutton",
         "aria-invalid": isOutOfRange(),

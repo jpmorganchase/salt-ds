@@ -65,13 +65,8 @@ export interface StepperInputProps
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   function StepperInput(props, ref) {
     const {
-      block,
       className,
-      decimalPlaces,
-      defaultValue,
       hideButtons,
-      max,
-      min,
       onBlur,
       onChange,
       onFocus,
