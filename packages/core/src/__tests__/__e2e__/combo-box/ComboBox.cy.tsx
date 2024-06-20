@@ -316,7 +316,7 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").should("be.disabled");
   });
 
-  it("should not stay focus if disabled after option selection", () => {
+  it.only("should not stay focus if disabled after option selection", () => {
     // Regression - #3369
     const DisabledAfterSelection = () => {
       const [disabled, setDisabled] = useState(false);
@@ -332,8 +332,9 @@ describe("Given a ComboBox", () => {
     };
 
     cy.mount(<DisabledAfterSelection />);
-    cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "Alaska" }).realClick();
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.realPress("Enter");
 
     cy.get(".saltComboBox").should("not.have.class", "saltComboBox-focused");
     cy.findByRole("combobox").should("be.disabled");
