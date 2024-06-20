@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 1.4.3
+
+### Patch Changes
+
+- bbff1850: Fixed column menu not scrollable when using certain bundler
+
 ## 1.4.2
 
 ### Patch Changes
