@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { FlowLayout } from "@salt-ds/core";
-import { Tag } from "@salt-ds/lab";
+import { FlowLayout, Tag } from "@salt-ds/core";
 import { LineChartIcon, ClockIcon } from "@salt-ds/icons";
 
 export const WithIcon = (): ReactElement => (

@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
-import { Tag } from "@salt-ds/lab";
-import { GridLayout } from "@salt-ds/core";
+import { GridLayout, Tag } from "@salt-ds/core";
 
 export const Categories = (): ReactElement => (
   <GridLayout columns={{ xs: 2, sm: 4, lg: 8 }} gap={2}>
