@@ -127,11 +127,10 @@
   }
 
   .ag-menu-column-select-wrapper {
-    height: 100%;
+    margin-top: var(--salt-spacing-100);
   }
 
   .ag-column-select-list {
-    overflow: initial;
     max-height: 256px;
   }
 
