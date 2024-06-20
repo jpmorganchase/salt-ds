@@ -98,8 +98,11 @@ export const WithValidation: StoryFn<
           setInputValue(event.target.value)
         }
         onSelectionChange={(_, date) => {
-          setValidationStatus(getDateValidationStatus(inputValue));
-          setSelectedDate(date);
+          const validationStatus = getDateValidationStatus(inputValue);
+          setValidationStatus(validationStatus);
+          if (!validationStatus) {
+            setSelectedDate(date);
+          }
         }}
       />
       <FormHelperText>{helperText}</FormHelperText>
@@ -136,11 +139,14 @@ export const RangeWithValidation: StoryFn<
           setEndString(endDateInputValue);
         }}
         onSelectionChange={(_, date) => {
-          setValidationStatus(
+          const validationStatus =
             getDateValidationStatus(startString) ??
-              getDateValidationStatus(endString)
-          );
-          setSelectedDate(date as RangeSelectionValueType);
+            getDateValidationStatus(endString);
+
+          setValidationStatus(validationStatus);
+          if (!validationStatus) {
+            setSelectedDate(date as RangeSelectionValueType);
+          }
         }}
       />
       <FormHelperText>{helperText}</FormHelperText>

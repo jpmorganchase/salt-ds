@@ -239,8 +239,10 @@ export const DateInput = forwardRef<
   // Update date strings when dates change
   useEffect(() => {
     if (isRangeOrOffsetSelectionWithStartDate(selectedDate)) {
-      setStartDateStringValue(dateFormatter(selectedDate?.startDate));
-      setEndDateStringValue(dateFormatter(selectedDate?.endDate));
+      selectedDate?.startDate &&
+        setStartDateStringValue(dateFormatter(selectedDate?.startDate));
+      selectedDate?.endDate &&
+        setEndDateStringValue(dateFormatter(selectedDate?.endDate));
     } else {
       setStartDateStringValue(dateFormatter(selectedDate));
     }

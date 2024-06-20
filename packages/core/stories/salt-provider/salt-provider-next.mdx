@@ -224,3 +224,15 @@ user will see the font correctly, e.g.,
 
 Display text styles are updated to distinguish them from heading text (h1/h2/h3/h4).
 They are now larger than h1 across densities.
+
+### Action font switch
+
+A new `actionFont` prop is added to switch action font family between Open Sans
+and Amplitude, which impacts Button, Toggle Button and Segmented Button Group.
+
+```
+<UNSTABLE_SaltProviderNext actionFont="Amplitude">
+```
+
+Like `headingFont` option above, you'll need the same font declaration for Amplitude
+in your app.

@@ -210,6 +210,13 @@ export const DatePicker = forwardRef<
     if (selectionVariant === "default" && selectedDate) {
       startInputRef?.current?.focus();
     }
+
+    if (
+      isRangeOrOffsetSelectionWithStartDate(selectedDate) &&
+      selectedDate.endDate
+    ) {
+      endInputRef?.current?.focus();
+    }
     onSelectionChange?.(event, selectedDate);
   };
   const handleCalendarButton = () => {

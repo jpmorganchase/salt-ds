@@ -73,6 +73,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
     corner,
     headingFont,
     accent,
+    actionFont,
   } = context.globals;
 
   const Provider =
@@ -105,6 +106,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
             corner={corner}
             headingFont={headingFont}
             accent={accent}
+            actionFont={actionFont}
           >
             <Panel>
               <StoryFn />
@@ -124,6 +126,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
       corner={corner}
       headingFont={headingFont}
       accent={accent}
+      actionFont={actionFont}
     >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />
