@@ -1,0 +1,9 @@
+/* Custom Toolbar */
+.theme-next-toolbar-group-wrapper {
+  cursor: not-allowed;
+}
+
+.theme-next-toolbar-group-wrapper > span > span {
+  font-weight: bold;
+  color: darkgray;
+}

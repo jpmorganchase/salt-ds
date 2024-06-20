@@ -1,13 +1,16 @@
 import type { TooltipLinkListLink } from "@storybook/components";
 import {
   IconButton,
+  Separator,
   TooltipLinkList,
   WithTooltip,
 } from "@storybook/components";
 import { BeakerIcon, CheckIcon } from "@storybook/icons";
-import { GLOBALS_UPDATED } from "@storybook/core-events";
-import { useGlobals, useStorybookApi } from "@storybook/manager-api";
-import React, { useState } from "react";
+import { useGlobals } from "@storybook/manager-api";
+import { clsx } from "clsx";
+import React, { AnchorHTMLAttributes } from "react";
+
+import "./ThemeNextToolbar.css";
 
 const description = "Theme next controls";
 
@@ -52,55 +55,66 @@ export const globalOptions: Record<
   },
 };
 
+const GroupWrapper = ({
+  className,
+  children,
+}: AnchorHTMLAttributes<HTMLAnchorElement>) => {
+  return (
+    <div
+      className={clsx(className, "theme-next-toolbar-group-wrapper")}
+      children={children}
+    />
+  );
+};
+
 export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
-  // `initialized` is for avoiding incorrect `isActive` when component initializes
-  // what leads to blinking effect (inactive -> active -> inactive)
-  const [initialized, setInitialized] = useState(true);
-
-  useStorybookApi()
-    .getChannel()
-    ?.on(GLOBALS_UPDATED, () => setInitialized(true));
-
   const [globals, updateGlobals] = useGlobals();
-
-  const isActive = initialized;
-
-  if (!isActive) return null;
 
   const items: TooltipLinkListLink[] = Object.keys(globalOptions).flatMap(
     (globalKey) => {
       return [
         {
           id: `theme-next-${globalKey}-header`,
-          disabled: true, // Fake a group header
           title: camelCaseToWords(globalKey),
+          LinkWrapper: GroupWrapper, // Custom wrapper to render group
+          href: "#", // Without href, `LinkWrapper` will not work
         },
-        ...globalOptions[globalKey].items.map((value) => ({
-          id: `theme-next-${globalKey}-${value}`,
-          right:
-            globals[globalKey] === value ? (
+        ...globalOptions[globalKey].items.map((value) => {
+          const disabled =
+            globalKey === "themeNext"
+              ? false
+              : globals["themeNext"] !== "enable";
+          const active = globals[globalKey] === value;
+
+          return {
+            id: `theme-next-${globalKey}-${value}`,
+            right: active ? (
               <CheckIcon style={{ fill: "inherit" }} />
             ) : undefined,
-          title: camelCaseToWords(value),
-          onClick: () => {
-            updateGlobals({ [globalKey]: value });
-          },
-        })),
+            active,
+            title: camelCaseToWords(value),
+            onClick: () => {
+              !disabled && updateGlobals({ [globalKey]: value });
+            },
+            disabled,
+          };
+        }),
       ];
     }
   );
 
-  //   console.log({ globals, isActive, active });
-
   return (
-    <WithTooltip
-      tooltip={() => <TooltipLinkList links={items} />}
-      trigger="click"
-      closeOnOutsideClick
-    >
-      <IconButton title={description} active={isActive}>
-        <BeakerIcon /> Theme Next
-      </IconButton>
-    </WithTooltip>
+    <>
+      <Separator />
+      <WithTooltip
+        tooltip={() => <TooltipLinkList links={items} />}
+        trigger="click"
+        closeOnOutsideClick
+      >
+        <IconButton title={description} active={active}>
+          <BeakerIcon /> Theme Next
+        </IconButton>
+      </WithTooltip>
+    </>
   );
 };
