@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fixed content alignment of Option, OptionGoup, MenuItem and MenuGroup.
+Fixed content alignment of Option, OptionGroup, MenuItem and MenuGroup.

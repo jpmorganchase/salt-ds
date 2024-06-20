@@ -1,6 +1,13 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
-import { Button, Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/core";
+import {
+  Button,
+  Menu,
+  MenuGroup,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+} from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
 
 export default {
@@ -80,5 +87,40 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
 };
 
 MultilevelExamples.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      itemWidthAuto
+      height={500}
+      width={800}
+      transposeDensity
+      vertical
+      {...props}
+    >
+      <div style={{ width: 190, height: 300 }}>
+        <Menu open>
+          <MenuTrigger>
+            <Button variant="secondary" aria-label="Open Menu">
+              <MicroMenuIcon aria-hidden />
+            </Button>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuGroup label="Actions">
+              <MenuItem>Copy</MenuItem>
+            </MenuGroup>
+            <MenuGroup label="Styling">
+              <MenuItem>Edit styling</MenuItem>
+            </MenuGroup>
+          </MenuPanel>
+        </Menu>
+      </div>
+    </QAContainer>
+  );
+};
+
+GroupedExamples.parameters = {
   chromatic: { disableSnapshot: false },
 };

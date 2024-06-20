@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - release-ag-grid-theme-v1
 
 permissions:
   contents: write

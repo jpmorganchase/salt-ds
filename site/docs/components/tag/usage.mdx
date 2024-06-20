@@ -1,0 +1,33 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- For displaying categories in a catalogue or within a group.
+- To display non-interactive data on a page.
+
+### When not to use
+
+- To quickly filter and select categories, use [`Pill`](/salt/components/pill).
+- To display counts, notifications or if you need a small, compact piece of information to be displayed inline. Instead, use [`Badge`](/salt/components/badge).
+
+## Import
+
+To import `Tag` from the core Salt package, use:
+
+```
+import { Tag } from “@salt-ds/lab”;
+```
+
+## Props
+
+<PropsTable componentName="Tag" packageName="lab" />
