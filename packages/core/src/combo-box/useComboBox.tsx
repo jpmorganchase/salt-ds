@@ -70,7 +70,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     setSelectedState(newSelected);
     const newValue = getOptionsMatching((option) =>
       newSelected.includes(option.value)
-    ).map((option) => listControl.valueToString(option.value));
+    ).map((option) => listControl.valueToString(option.value.value));
     setValueState(multiselect ? "" : newValue[0]);
     onSelectionChange?.(event, newSelected);
 

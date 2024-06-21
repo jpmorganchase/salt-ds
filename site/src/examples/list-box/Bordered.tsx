@@ -5,7 +5,7 @@ import { shortColorData } from "./exampleData";
 
 export const Bordered = (): ReactElement => {
   return (
-    <ListBox bordered style={{ width: "30%" }}>
+    <ListBox bordered style={{ width: "10em" }}>
       {shortColorData.slice(0, 5).map((color) => (
         <Option value={color} key={color} />
       ))}

@@ -9,6 +9,7 @@ const {
   DefaultSelectedSingleSelect,
   DefaultSelectedMultiselect,
   Grouped,
+  Scrolling,
 } = composeStories(listBoxStories);
 
 describe("GIVEN a List box", () => {
@@ -59,7 +60,7 @@ describe("GIVEN a List box", () => {
   });
 
   it("should support keyboard navigation", () => {
-    cy.mount(<SingleSelect />);
+    cy.mount(<Scrolling />);
 
     cy.realPress(["Tab"]);
     cy.findAllByRole("option").eq(0).should("be.activeDescendant");
@@ -73,18 +74,18 @@ describe("GIVEN a List box", () => {
 
     // should try to go down 10, but only 9 items in list
     cy.realPress(["PageDown"]);
+    cy.findAllByRole("option").eq(8).should("be.activeDescendant");
+
+    // should try to go up 10, but only 9 items in list
+    cy.realPress(["PageUp"]);
+    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
+
+    // should go to the last item
+    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     // should not wrap
     cy.realPress(["ArrowDown"]);
-    cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
-
-    // should try to go up 10, but only 9 items in list
-    cy.realPress(["PageUp"]);
-    cy.findAllByRole("option").eq(0).should("be.activeDescendant");
-
-    // should go to the last item
-    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     cy.realPress(["ArrowUp"]);

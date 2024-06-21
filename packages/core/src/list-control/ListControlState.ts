@@ -190,7 +190,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   );
 
   const getOptionAtIndex = (index: number) => {
-    return optionsRef.current[index]?.value;
+    return optionsRef.current[index];
   };
 
   const getIndexOfOption = (option: OptionValue<Item>) => {
@@ -200,9 +200,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   const getOptionsMatching = (
     predicate: (option: OptionValue<Item>) => boolean
   ) => {
-    return optionsRef.current
-      .filter((item) => predicate(item.value))
-      .map((item) => item.value);
+    return optionsRef.current.filter((item) => predicate(item.value));
   };
 
   const getOptionFromSearch = (
@@ -244,7 +242,76 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     return matches.find((option) => getIndexOfOption(option) >= startIndex);
   };
 
+  const getFirstOption = () => {
+    return getOptionAtIndex(0);
+  };
+
+  const getLastOption = () => {
+    return getOptionAtIndex(optionsRef.current.length - 1);
+  };
+
+  const getOptionBefore = (option: OptionValue<Item>) => {
+    const index = getIndexOfOption(option);
+    return getOptionAtIndex(index - 1);
+  };
+
+  const getOptionAfter = (option: OptionValue<Item>) => {
+    const index = getIndexOfOption(option);
+    return getOptionAtIndex(index + 1);
+  };
+
   const listRef = useRef<HTMLDivElement>(null);
+
+  const getOptionPageAbove = (start: OptionValue<Item>) => {
+    const list = listRef.current;
+    let option = optionsRef.current.find((option) => option.value === start);
+
+    if (!list || !option) {
+      return null;
+    }
+
+    const containerRect = list.getBoundingClientRect();
+    let optionRect = option.element.getBoundingClientRect();
+
+    let listY = containerRect.y - list.scrollTop;
+    let pageY = Math.max(
+      0,
+      optionRect.y - listY + optionRect.height - containerRect.height
+    );
+
+    while (option && optionRect.y - listY > pageY) {
+      option = getOptionBefore(option.value);
+      optionRect = option?.element.getBoundingClientRect();
+    }
+
+    return option ?? getFirstOption();
+  };
+
+  const getOptionPageBelow = (start: OptionValue<Item>) => {
+    const list = listRef.current;
+    let option = optionsRef.current.find((option) => option.value === start);
+
+    if (!list || !option) {
+      return null;
+    }
+
+    const containerRect = list.getBoundingClientRect();
+    let optionRect = option.element.getBoundingClientRect();
+
+    let listY = containerRect.y - list.scrollTop;
+    let pageY = Math.min(
+      list.scrollHeight,
+      optionRect.y - listY - optionRect.height + containerRect.height
+    );
+
+    while (option && optionRect.y - listY < pageY) {
+      option = getOptionAfter(option.value);
+      optionRect = option?.element.getBoundingClientRect();
+    }
+
+    return option ?? getLastOption();
+  };
+
   useEffect(() => {
     if (listRef.current) {
       const activeElement = optionsRef.current.find(
@@ -293,6 +360,12 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     getIndexOfOption,
     getOptionsMatching,
     getOptionFromSearch,
+    getOptionAfter,
+    getOptionBefore,
+    getOptionPageAbove,
+    getOptionPageBelow,
+    getFirstOption,
+    getLastOption,
     valueToString,
     disabled,
   };

@@ -5,16 +5,16 @@ import { largestCities } from "./exampleData";
 
 export const Scrolling = (): ReactElement => {
   return (
-    <ListBox
-      style={{
-        maxHeight:
-          "calc((var(--salt-size-base) + var(--salt-spacing-100)) * 8)",
-        width: "30%",
-      }}
-    >
-      {largestCities.map((city) => (
-        <Option value={city.name} key={city.name} />
-      ))}
-    </ListBox>
+    <div style={{ maxHeight: 500 }}>
+      <ListBox
+        style={{
+          width: "10em",
+        }}
+      >
+        {largestCities.map((city) => (
+          <Option value={city.name} key={city.name} />
+        ))}
+      </ListBox>
+    </div>
   );
 };

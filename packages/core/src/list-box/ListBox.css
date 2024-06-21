@@ -9,6 +9,7 @@
   box-sizing: border-box;
   isolation: isolate;
   position: relative;
+  max-height: inherit;
 }
 
 .saltListBox-bordered {

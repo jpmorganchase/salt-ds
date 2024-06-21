@@ -5,7 +5,7 @@ import { shortColorData } from "./exampleData";
 
 export const SingleSelect = (): ReactElement => {
   return (
-    <ListBox style={{ width: "30%" }}>
+    <ListBox style={{ width: "10em" }}>
       {shortColorData.slice(0, 5).map((color) => (
         <Option value={color} key={color} />
       ))}

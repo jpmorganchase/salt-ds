@@ -17,6 +17,7 @@ const {
   CustomValue,
   WithDefaultSelected,
   ObjectValue,
+  LongList,
 } = composeStories(dropdownStories);
 
 describe("Given a Dropdown", () => {
@@ -175,7 +176,7 @@ describe("Given a Dropdown", () => {
   });
 
   it("should support keyboard navigation", () => {
-    cy.mount(<Default />);
+    cy.mount(<LongList />);
 
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("exist");
@@ -190,18 +191,18 @@ describe("Given a Dropdown", () => {
 
     // should try to go down 10, but only 9 items in list
     cy.realPress(["PageDown"]);
+    cy.findAllByRole("option").eq(14).should("be.activeDescendant");
+
+    // should try to go up 10, but only 9 items in list
+    cy.realPress(["PageUp"]);
+    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
+
+    // should go to the last item
+    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     // should not wrap
     cy.realPress(["ArrowDown"]);
-    cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
-
-    // should try to go up 10, but only 9 items in list
-    cy.realPress(["PageUp"]);
-    cy.findAllByRole("option").eq(0).should("be.activeDescendant");
-
-    // should go to the last item
-    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     cy.realPress(["ArrowUp"]);

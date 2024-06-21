@@ -85,7 +85,12 @@ export const ListBox = forwardRef(function ListBox<Item>(
     getIndexOfOption,
     getOptionsMatching,
     getOptionFromSearch,
-    options,
+    getFirstOption,
+    getLastOption,
+    getOptionAfter,
+    getOptionBefore,
+    getOptionPageAbove,
+    getOptionPageBelow,
     selectedState,
     select,
     setFocusVisibleState,
@@ -118,8 +123,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
-    const count = options.length - 1;
+    const activeOption = activeState ?? getFirstOption().value;
 
     if (
       event.key.length === 1 &&
@@ -135,22 +139,22 @@ export const ListBox = forwardRef(function ListBox<Item>(
     let newActive;
     switch (event.key) {
       case "ArrowDown":
-        newActive = getOptionAtIndex(Math.min(count, currentIndex + 1));
+        newActive = getOptionAfter(activeOption) ?? getLastOption();
         break;
       case "ArrowUp":
-        newActive = getOptionAtIndex(Math.max(0, currentIndex - 1));
+        newActive = getOptionBefore(activeOption) ?? getFirstOption();
         break;
       case "Home":
-        newActive = getOptionAtIndex(0);
+        newActive = getFirstOption();
         break;
       case "End":
-        newActive = getOptionAtIndex(count);
+        newActive = getLastOption();
         break;
       case "PageUp":
-        newActive = getOptionAtIndex(Math.max(0, currentIndex - 10));
+        newActive = getOptionPageAbove(activeOption);
         break;
       case "PageDown":
-        newActive = getOptionAtIndex(Math.min(count, currentIndex + 10));
+        newActive = getOptionPageBelow(activeOption);
         break;
       case "Enter":
       case " ":
@@ -172,9 +176,9 @@ export const ListBox = forwardRef(function ListBox<Item>(
         break;
     }
 
-    if (newActive && newActive?.id != activeState?.id) {
+    if (newActive && newActive.value.id != activeState?.id) {
       event.preventDefault();
-      setActive(newActive);
+      setActive(newActive.value);
       setFocusVisibleState(true);
     }
 
@@ -217,7 +221,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       newActive = getOptionAtIndex(0);
     }
 
-    setActive(newActive);
+    setActive(newActive.value);
     setFocusedState(true);
     onFocus?.(event);
   };

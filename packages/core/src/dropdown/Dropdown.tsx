@@ -17,7 +17,6 @@ import {
 } from "../list-control/ListControlState";
 import {
   makePrefixer,
-  useFloatingComponent,
   useFloatingUI,
   UseFloatingUIProps,
   useForkRef,
@@ -169,11 +168,15 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     openState,
     setOpen,
     openKey,
-    getOptionAtIndex,
     getIndexOfOption,
     getOptionsMatching,
     getOptionFromSearch,
-    options,
+    getFirstOption,
+    getLastOption,
+    getOptionAfter,
+    getOptionBefore,
+    getOptionPageAbove,
+    getOptionPageBelow,
     selectedState,
     select,
     setFocusVisibleState,
@@ -189,8 +192,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const valueText = isEmptyReadOnly
     ? emptyReadOnlyMarker
     : value ?? selectedValue;
-
-  const { Component: FloatingComponent } = useFloatingComponent();
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
@@ -259,8 +260,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
-    const count = options.length - 1;
+    const activeOption = activeState ?? getFirstOption().value;
 
     if (readOnly) {
       return;
@@ -287,22 +287,22 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     let newActive;
     switch (event.key) {
       case "ArrowDown":
-        newActive = getOptionAtIndex(Math.min(count, currentIndex + 1));
+        newActive = getOptionAfter(activeOption) ?? getLastOption();
         break;
       case "ArrowUp":
-        newActive = getOptionAtIndex(Math.max(0, currentIndex - 1));
+        newActive = getOptionBefore(activeOption) ?? getFirstOption();
         break;
       case "Home":
-        newActive = getOptionAtIndex(0);
+        newActive = getFirstOption();
         break;
       case "End":
-        newActive = getOptionAtIndex(count);
+        newActive = getLastOption();
         break;
       case "PageUp":
-        newActive = getOptionAtIndex(Math.max(0, currentIndex - 10));
+        newActive = getOptionPageAbove(activeOption);
         break;
       case "PageDown":
-        newActive = getOptionAtIndex(Math.min(count, currentIndex + 10));
+        newActive = getOptionPageBelow(activeOption);
         break;
       case "Enter":
       case " ":
@@ -329,9 +329,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         break;
     }
 
-    if (newActive && newActive?.id != activeState?.id) {
+    if (newActive && newActive.value.id != activeState?.id) {
       event.preventDefault();
-      setActive(newActive);
+      setActive(newActive.value);
       setFocusVisibleState(true);
     }
 
@@ -382,18 +382,18 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     // If we still don't have an active item, we should check if the list has been opened with the keyboard
     if (!newActive) {
       if (openKey.current === "ArrowDown") {
-        newActive = getOptionAtIndex(0);
+        newActive = getFirstOption();
       } else if (openKey.current === "ArrowUp") {
-        newActive = getOptionAtIndex(options.length - 1);
+        newActive = getLastOption();
       }
     }
 
     // If we still don't have an active item, we should just select the first item
     if (!newActive) {
-      newActive = getOptionAtIndex(0);
+      newActive = getFirstOption();
     }
 
-    setActive(newActive);
+    setActive(newActive.value);
     /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 

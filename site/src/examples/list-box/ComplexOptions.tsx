@@ -5,7 +5,7 @@ import { shortColorWithHex } from "./exampleData";
 
 export const ComplexOptions = (): ReactElement => {
   return (
-    <ListBox style={{ width: "30%" }}>
+    <ListBox style={{ width: "10em" }}>
       {shortColorWithHex.slice(0, 5).map(({ color, hex }) => (
         <Option value={color} key={color}>
           <StackLayout gap={0.5} align="start">

@@ -38,12 +38,7 @@ Multiselect.args = {
 };
 
 export const Grouped: StoryFn<typeof ListBox> = (args) => (
-  <ListBox
-    {...args}
-    style={{
-      maxHeight: "calc((var(--salt-size-base) + var(--salt-spacing-100)) * 10)",
-    }}
-  >
+  <ListBox {...args}>
     {Object.entries(groupByFirstLetter(shortStatesData)).map(
       ([firstLetter, options]) => (
         <OptionGroup label={firstLetter} key={firstLetter}>
@@ -57,12 +52,7 @@ export const Grouped: StoryFn<typeof ListBox> = (args) => (
 );
 
 export const DisabledOption: StoryFn<typeof ListBox> = (args) => (
-  <ListBox
-    {...args}
-    style={{
-      maxHeight: "calc((var(--salt-size-base) + var(--salt-spacing-100)) * 10)",
-    }}
-  >
+  <ListBox {...args}>
     {shortStatesData.map((state) => (
       <Option disabled={state === "Arizona"} key={state} value={state} />
     ))}
@@ -75,22 +65,19 @@ Bordered.args = {
 };
 
 export const Scrolling: StoryFn<typeof ListBox> = (args) => (
-  <ListBox
-    {...args}
-    style={{
-      maxHeight: "calc((var(--salt-size-base) + var(--salt-spacing-100)) * 10)",
-    }}
-  >
-    {Object.entries(groupByFirstLetter(usStateExampleData)).map(
-      ([firstLetter, options]) => (
-        <OptionGroup label={firstLetter} key={firstLetter}>
-          {options.map((state) => (
-            <Option value={state} key={state} />
-          ))}
-        </OptionGroup>
-      )
-    )}
-  </ListBox>
+  <div style={{ maxHeight: 400 }}>
+    <ListBox {...args}>
+      {Object.entries(groupByFirstLetter(usStateExampleData)).map(
+        ([firstLetter, options]) => (
+          <OptionGroup label={firstLetter} key={firstLetter}>
+            {options.map((state) => (
+              <Option value={state} key={state} />
+            ))}
+          </OptionGroup>
+        )
+      )}
+    </ListBox>
+  </div>
 );
 
 export const DefaultSelectedSingleSelect = Template.bind({});
