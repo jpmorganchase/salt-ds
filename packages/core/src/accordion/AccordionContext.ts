@@ -18,7 +18,7 @@ export const AccordionContext = createContext<AccordionContextValue>(
     expanded: false,
     toggle: () => undefined,
     disabled: false,
-    arrowAlignment: "right",
+    arrowAlignment: "left",
     id: "",
   }
 );

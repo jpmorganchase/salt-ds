@@ -12,7 +12,7 @@ import {
 export const ArrowAlignment = (): ReactElement => {
   return (
     <div style={{ width: "80%", height: "100%" }}>
-      <Accordion value="accordion-example" arrowAlignment="left">
+      <Accordion value="accordion-example" arrowAlignment="right">
         <AccordionHeader>Internal form</AccordionHeader>
         <AccordionPanel>
           <FlowLayout>
