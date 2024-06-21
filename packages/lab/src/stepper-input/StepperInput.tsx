@@ -71,7 +71,6 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       onChange,
       onFocus,
       readOnly,
-      step,
       ...rest
     } = props;
 
