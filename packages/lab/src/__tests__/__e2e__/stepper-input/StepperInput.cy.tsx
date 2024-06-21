@@ -140,7 +140,7 @@ describe("Stepper Input", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      15
+      "15"
     );
   });
 
@@ -160,7 +160,7 @@ describe("Stepper Input", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      -109.44
+      "-109.44"
     );
   });
 
