@@ -5,7 +5,6 @@ import {
   MouseEvent,
   MutableRefObject,
   SyntheticEvent,
-  useState,
 } from "react";
 import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
