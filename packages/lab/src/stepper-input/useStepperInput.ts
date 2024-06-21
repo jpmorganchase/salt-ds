@@ -39,10 +39,6 @@ const toFloat = (inputValue: number | string) => {
 const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
-const isIntermediateInput = (numberString: string) => {
-  return parseFloat(numberString).toString() !== numberString;
-};
-
 export const useStepperInput = (
   props: StepperInputProps,
   inputRef: MutableRefObject<HTMLInputElement | null>
@@ -62,16 +58,9 @@ export const useStepperInput = (
 
   const [currentValue, setCurrentValue, isControlled] = useControlled({
     controlled: value,
-    default: defaultValue,
+    default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
     name: "stepper-input",
   });
-
-  const [inputValue, setInputValue] = useState<number | string>(
-    toFixedDecimalPlaces(
-      isControlled && value !== undefined ? value : defaultValue,
-      decimalPlaces
-    )
-  );
 
   const inputId = useId(idProp);
 
@@ -82,39 +71,51 @@ export const useStepperInput = (
 
   const isAtMax = () => {
     if (currentValue === undefined) return true;
-    return toFloat(currentValue) >= max;
+    return toFloat(currentValue) >= max || (max === 0 && currentValue === "");
   };
 
   const isAtMin = () => {
     if (currentValue === undefined) return true;
-    return toFloat(currentValue) <= min;
+    return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
   };
 
   const decrement = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
-    let nextValue = toFloat(currentValue) - step;
-    if (nextValue < min) nextValue = min;
+    let nextValue = currentValue === "" ? -step : toFloat(currentValue) - step;
+
+    // Set value to `max` if it's currently out of range
+    if (max !== undefined && isOutOfRange()) nextValue = max;
     setNextValue(nextValue, event);
   };
 
   const decrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
-    let nextValue = toFloat(currentValue) - step * block;
-    if (nextValue < min) nextValue = min;
+    let nextValue =
+      currentValue === ""
+        ? block * -step
+        : toFloat(currentValue) - step * block;
+
+    // Set value to `max` if it's currently out of range
+    if (max !== undefined && isOutOfRange()) nextValue = max;
     setNextValue(nextValue, event);
   };
 
   const increment = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
-    let nextValue = toFloat(currentValue) + step;
-    if (nextValue > max) nextValue = max;
+    let nextValue = currentValue === "" ? step : toFloat(currentValue) + step;
+
+    // Set value to `min` if it's currently out of range
+    if (min !== undefined && isOutOfRange()) nextValue = min;
     setNextValue(nextValue, event);
   };
 
   const incrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
-    let nextValue = toFloat(currentValue) + step * block;
-    if (nextValue > max) nextValue = max;
+    let nextValue =
+      currentValue === "" ? block * step : toFloat(currentValue) + step * block;
+
+    // Set value to `min` if it's currently out of range
+    if (min !== undefined && isOutOfRange()) nextValue = min;
     setNextValue(nextValue, event);
   };
 
@@ -128,13 +129,11 @@ export const useStepperInput = (
     if (isNaN(toFloat(roundedValue))) return;
 
     if (!isControlled) {
-      setCurrentValue(toFloat(roundedValue));
-      setInputValue(roundedValue);
+      setCurrentValue(roundedValue);
     }
 
     if (onChange && event) {
-      onChange(event, toFloat(roundedValue));
-      setInputValue(roundedValue);
+      onChange(event, roundedValue);
     }
   };
 
@@ -158,32 +157,29 @@ export const useStepperInput = (
       decimalPlaces
     );
 
-    if (!isAllowedNonNumeric(currentValue) && !isControlled) {
-      setCurrentValue(toFloat(roundedValue));
+    if (
+      currentValue !== "" &&
+      !isAllowedNonNumeric(currentValue) &&
+      !isControlled
+    ) {
+      setCurrentValue(roundedValue);
     }
 
     if (onChange) {
-      onChange(event, toFloat(roundedValue));
+      onChange(event, roundedValue);
     }
-    setInputValue(roundedValue);
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    const sanitizedValue = sanitizedInput(value);
-    const floatValue = toFloat(sanitizedValue);
+    const changedValue = event.target.value;
 
     if (!isControlled) {
-      setCurrentValue(floatValue);
+      setCurrentValue(sanitizedInput(changedValue));
     }
 
-    if (!isIntermediateInput(sanitizedValue)) {
-      if (onChange) {
-        onChange(event, floatValue);
-      }
+    if (onChange) {
+      onChange(event, sanitizedInput(changedValue));
     }
-
-    setInputValue(sanitizedValue);
   };
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
@@ -245,7 +241,7 @@ export const useStepperInput = (
       onFocus: inputProps.onFocus,
       onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
       textAlign: inputProps.textAlign,
-      value: inputValue,
+      value: String(currentValue),
     };
   };
 

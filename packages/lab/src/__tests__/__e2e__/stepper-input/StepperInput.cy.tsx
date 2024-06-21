@@ -164,30 +164,6 @@ describe("Stepper Input", () => {
     );
   });
 
-  it("does not call the `onChange` callback when the value is intermediate", () => {
-    const changeSpy = cy.stub().as("changeSpy");
-
-    cy.mount(<StepperInput defaultValue={15} onChange={changeSpy} />);
-
-    cy.findByRole("spinbutton").clear().type("1");
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      1
-    );
-
-    cy.findByRole("spinbutton").type(".");
-    cy.get("@changeSpy").should("have.callCount", 1);
-
-    cy.findByRole("spinbutton").type("1");
-
-    cy.get("@changeSpy").should(
-      "have.been.calledWith",
-      Cypress.sinon.match.any,
-      1.1
-    );
-  });
-
   it("allows maximum safe integer", () => {
     cy.mount(<StepperInput defaultValue={Number.MAX_SAFE_INTEGER} />);
 

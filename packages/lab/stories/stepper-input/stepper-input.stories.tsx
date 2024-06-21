@@ -44,7 +44,7 @@ export const DecimalPlaces: StoryFn = (args) => {
 };
 
 export const Controlled: StoryFn = (args) => {
-  const [value, setValue] = useState<number>(1.11);
+  const [value, setValue] = useState<number | string>(1.11);
 
   return (
     <FormField>
@@ -74,7 +74,7 @@ export const Controlled: StoryFn = (args) => {
 };
 
 export const MinAndMaxValue: StoryFn = (args) => {
-  const [value, setValue] = useState<number>(2);
+  const [value, setValue] = useState<number | string>(2);
   const max = 5;
   const min = 0;
 
@@ -133,7 +133,7 @@ export const Alignment: StoryFn = (args) => (
 );
 
 export const RefreshAdornment: StoryFn = (args) => {
-  const [value, setValue] = useState<number>(10);
+  const [value, setValue] = useState<number | string>(10);
 
   return (
     <FormField>
@@ -160,7 +160,7 @@ export const RefreshAdornment: StoryFn = (args) => {
 };
 
 export const HideButtons: StoryFn = (args) => {
-  const [value, setValue] = useState<number>(10);
+  const [value, setValue] = useState<number | string>(10);
 
   return (
     <FormField>
@@ -176,7 +176,11 @@ export const HideButtons: StoryFn = (args) => {
         startAdornment={
           <Button
             aria-label="decrement value"
-            onClick={() => setValue(value - 1)}
+            onClick={() =>
+              setValue(
+                typeof value === "string" ? parseFloat(value) - 1 : value - 1
+              )
+            }
           >
             <RemoveIcon aria-hidden />
           </Button>
@@ -184,7 +188,11 @@ export const HideButtons: StoryFn = (args) => {
         endAdornment={
           <Button
             aria-label="increment value"
-            onClick={() => setValue(value + 1)}
+            onClick={() =>
+              setValue(
+                typeof value === "string" ? parseFloat(value) + 1 : value + 1
+              )
+            }
           >
             <AddIcon aria-hidden />
           </Button>

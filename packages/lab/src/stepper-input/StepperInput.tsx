@@ -43,7 +43,7 @@ export interface StepperInputProps
   /**
    * Callback when stepper input value is changed.
    */
-  onChange?: (event: SyntheticEvent, value: number) => void;
+  onChange?: (event: SyntheticEvent, value: number | string) => void;
   /**
    * Callback when stepper input gains focus.
    */
@@ -59,7 +59,7 @@ export interface StepperInputProps
   /**
    * The value of the stepper input. The component will be controlled if this prop is provided.
    */
-  value?: number;
+  value?: number | string;
 }
 
 export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
