@@ -1,8 +1,9 @@
+import { makePrefixer } from "../utils";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import tagCss from "./Tag.css";
+
 import { clsx } from "clsx";
 
 const withBaseName = makePrefixer("saltTag");

@@ -1,11 +1,10 @@
-import { Tag } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerProps } from "docs/components";
 import { NotificationIcon } from "@salt-ds/icons";
-import { FlexLayout } from "@salt-ds/core";
+import { Tag, FlexLayout } from "@salt-ds/core";
 
 export default {
-  title: "Lab/Tag/QA",
+  title: "Core/Tag/QA",
   component: Tag,
 } as Meta<typeof Tag>;
 

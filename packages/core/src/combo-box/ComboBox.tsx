@@ -385,7 +385,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   return (
     <ListControlContext.Provider value={listControl}>
       <PillInput
-        tabIndex={-1}
+        // Ensures that the field is focused when you don't directly click on the input.
+        tabIndex={!disabled ? -1 : undefined}
         className={clsx(
           withBaseName(),
           {

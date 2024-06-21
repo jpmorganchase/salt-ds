@@ -3,6 +3,7 @@ import * as dropdownStories from "@stories/dropdown/dropdown.stories";
 import { Dropdown } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
+import { useState } from "react";
 
 const {
   Default,
@@ -224,7 +225,7 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").should("have.text", "California");
   });
 
-  it("should not receive focus if it is disabled", () => {
+  it("should not receive focus via tab if it is disabled", () => {
     cy.mount(
       <div>
         <button>start</button>
@@ -238,6 +239,36 @@ describe("Given a Dropdown", () => {
     cy.realPress("Tab");
     cy.findByRole("combobox").should("not.be.focused");
     cy.findByRole("button", { name: "end" }).should("be.focused");
+  });
+
+  it("should not receive focus via mouse click if it is disabled", () => {
+    cy.mount(<Disabled />);
+    cy.findByRole("combobox").realClick();
+
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("should not stay focus if disabled after option selection", () => {
+    // Regression - #3369
+    const DisabledAfterSelection = () => {
+      const [disabled, setDisabled] = useState(false);
+      const handleSelectionChange = () => {
+        setDisabled(true);
+      };
+      return (
+        <Default
+          disabled={disabled}
+          onSelectionChange={handleSelectionChange}
+        />
+      );
+    };
+    cy.mount(<DisabledAfterSelection />);
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.realPress("Enter");
+
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
   });
 
   it("should not allow you to select a disabled option", () => {

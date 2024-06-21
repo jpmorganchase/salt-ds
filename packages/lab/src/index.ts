@@ -60,7 +60,6 @@ export * from "./stepped-tracker";
 export * from "./stepper-input";
 export * from "./tabs";
 export * from "./tabs-next";
-export * from "./tag";
 export * from "./toast-group";
 export * from "./tokenized-input";
 export * from "./tokenized-input-next";
