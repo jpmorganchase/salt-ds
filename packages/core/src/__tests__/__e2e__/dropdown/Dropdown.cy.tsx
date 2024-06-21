@@ -189,11 +189,11 @@ describe("Given a Dropdown", () => {
     cy.realPress(["ArrowDown"]);
     cy.findAllByRole("option").eq(1).should("be.activeDescendant");
 
-    // should try to go down 10, but only 9 items in list
+    // should try to go down by the number of visible items in list
     cy.realPress(["PageDown"]);
     cy.findAllByRole("option").eq(14).should("be.activeDescendant");
 
-    // should try to go up 10, but only 9 items in list
+    // should try to go up by the number of visible items in list
     cy.realPress(["PageUp"]);
     cy.findAllByRole("option").eq(1).should("be.activeDescendant");
 

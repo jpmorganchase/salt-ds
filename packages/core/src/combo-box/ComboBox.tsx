@@ -205,8 +205,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    const activeOption = activeState ?? getFirstOption().value;
-
     if (readOnly) {
       return;
     }
@@ -217,6 +215,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         return;
       }
     }
+
+    const activeOption = activeState ?? getFirstOption()?.data;
 
     let newActive;
     switch (event.key) {
@@ -272,9 +272,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    if (newActive && newActive.value.id != activeState?.id) {
+    if (newActive && newActive.data.id != activeState?.id) {
       event.preventDefault();
-      setActive(newActive.value);
+      setActive(newActive.data);
     }
 
     onKeyDown?.(event);
@@ -308,7 +308,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       if (value != "") {
         const newOption = getFirstOption();
         if (newOption) {
-          setActive(newOption.value);
+          setActive(newOption.data);
         }
       } else {
         setActive(undefined);
@@ -375,7 +375,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       newActive = getFirstOption();
     }
 
-    setActive(newActive.value);
+    setActive(newActive?.data);
     /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 

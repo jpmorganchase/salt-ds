@@ -260,8 +260,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
-    const activeOption = activeState ?? getFirstOption().value;
-
     if (readOnly) {
       return;
     }
@@ -283,6 +281,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       event.stopPropagation();
       handleTypeahead(event);
     }
+
+    const activeOption = activeState ?? getFirstOption().data;
 
     let newActive;
     switch (event.key) {
@@ -329,9 +329,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         break;
     }
 
-    if (newActive && newActive.value.id != activeState?.id) {
+    if (newActive && newActive.data.id != activeState?.id) {
       event.preventDefault();
-      setActive(newActive.value);
+      setActive(newActive.data);
       setFocusVisibleState(true);
     }
 
@@ -393,7 +393,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       newActive = getFirstOption();
     }
 
-    setActive(newActive.value);
+    setActive(newActive?.data);
     /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 

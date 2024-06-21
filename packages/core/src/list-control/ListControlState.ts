@@ -158,13 +158,13 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   };
 
   const optionsRef = useRef<
-    { value: OptionValue<Item>; element: HTMLElement }[]
+    { data: OptionValue<Item>; element: HTMLElement }[]
   >([]);
 
   const register = useCallback(
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const { id } = optionValue;
-      const option = optionsRef.current.find((item) => item.value.id === id);
+      const option = optionsRef.current.find((item) => item.data.id === id);
       const index = optionsRef.current.findIndex((option) => {
         return (
           option.element.compareDocumentPosition(element) &
@@ -174,15 +174,15 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
       if (!option) {
         if (index === -1) {
-          optionsRef.current.push({ value: optionValue, element });
+          optionsRef.current.push({ data: optionValue, element });
         } else {
-          optionsRef.current.splice(index, 0, { value: optionValue, element });
+          optionsRef.current.splice(index, 0, { data: optionValue, element });
         }
       }
 
       return () => {
         optionsRef.current = optionsRef.current.filter(
-          (item) => item.value.id !== id
+          (item) => item.data.id !== id
         );
       };
     },
@@ -194,13 +194,13 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   };
 
   const getIndexOfOption = (option: OptionValue<Item>) => {
-    return optionsRef.current.findIndex((item) => item.value.id === option.id);
+    return optionsRef.current.findIndex((item) => item.data.id === option.id);
   };
 
   const getOptionsMatching = (
     predicate: (option: OptionValue<Item>) => boolean
   ) => {
-    return optionsRef.current.filter((item) => predicate(item.value));
+    return optionsRef.current.filter((item) => predicate(item.data));
   };
 
   const getOptionFromSearch = (
@@ -213,7 +213,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     });
 
     const startIndex = startFrom ? getIndexOfOption(startFrom) + 1 : 0;
-    const searchList = optionsRef.current.map((item) => item.value);
+    const searchList = optionsRef.current.map((item) => item.data);
 
     let matches = searchList.filter(
       (option) =>
@@ -264,7 +264,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
   const getOptionPageAbove = (start: OptionValue<Item>) => {
     const list = listRef.current;
-    let option = optionsRef.current.find((option) => option.value === start);
+    let option = optionsRef.current.find((option) => option.data === start);
 
     if (!list || !option) {
       return null;
@@ -280,7 +280,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     );
 
     while (option && optionRect.y - listY > pageY) {
-      option = getOptionBefore(option.value);
+      option = getOptionBefore(option.data);
       optionRect = option?.element.getBoundingClientRect();
     }
 
@@ -289,7 +289,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
   const getOptionPageBelow = (start: OptionValue<Item>) => {
     const list = listRef.current;
-    let option = optionsRef.current.find((option) => option.value === start);
+    let option = optionsRef.current.find((option) => option.data === start);
 
     if (!list || !option) {
       return null;
@@ -305,7 +305,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     );
 
     while (option && optionRect.y - listY < pageY) {
-      option = getOptionAfter(option.value);
+      option = getOptionAfter(option.data);
       optionRect = option?.element.getBoundingClientRect();
     }
 
@@ -315,7 +315,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   useEffect(() => {
     if (listRef.current) {
       const activeElement = optionsRef.current.find(
-        (option) => option.value === activeState
+        (option) => option.data === activeState
       )?.element;
 
       if (!activeElement) {

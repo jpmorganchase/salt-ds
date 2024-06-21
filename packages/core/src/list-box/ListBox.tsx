@@ -123,8 +123,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const activeOption = activeState ?? getFirstOption().value;
-
     if (
       event.key.length === 1 &&
       !event.ctrlKey &&
@@ -135,6 +133,8 @@ export const ListBox = forwardRef(function ListBox<Item>(
       event.stopPropagation();
       handleTypeahead(event);
     }
+
+    const activeOption = activeState ?? getFirstOption().data;
 
     let newActive;
     switch (event.key) {
@@ -176,9 +176,9 @@ export const ListBox = forwardRef(function ListBox<Item>(
         break;
     }
 
-    if (newActive && newActive.value.id != activeState?.id) {
+    if (newActive && newActive.data.id != activeState?.id) {
       event.preventDefault();
-      setActive(newActive.value);
+      setActive(newActive.data);
       setFocusVisibleState(true);
     }
 
@@ -221,7 +221,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       newActive = getOptionAtIndex(0);
     }
 
-    setActive(newActive.value);
+    setActive(newActive?.data);
     setFocusedState(true);
     onFocus?.(event);
   };
@@ -265,5 +265,5 @@ export const ListBox = forwardRef(function ListBox<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: ListBoxProps<Item> & { ref?: Ref<HTMLButtonElement> }
+  props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> }
 ) => JSX.Element;
