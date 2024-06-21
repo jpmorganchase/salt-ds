@@ -49,10 +49,18 @@ export const DividerExamples: StoryFn<QAContainerProps> = (props) => (
       <Divider style={{ width: 60 }} variant="secondary" />
       <Divider style={{ width: 60 }} variant="tertiary" />
     </StackLayout>
-    <StackLayout direction="row" style={{ height: 100 }}>
-      <Divider orientation="vertical" />
-      <Divider orientation="vertical" variant="secondary" />
-      <Divider orientation="vertical" variant="tertiary" />
+    <StackLayout direction="row">
+      <Divider style={{ height: 100 }} orientation="vertical" />
+      <Divider
+        style={{ height: 100 }}
+        orientation="vertical"
+        variant="secondary"
+      />
+      <Divider
+        style={{ height: 100 }}
+        orientation="vertical"
+        variant="tertiary"
+      />
     </StackLayout>
   </QAContainer>
 );
