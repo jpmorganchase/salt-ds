@@ -65,7 +65,7 @@
   transition: transform 0.2s linear 0s;
   transform-origin: left center;
   width: auto;
-  animation: 1.8s linear infinite indeterminate-progress-bar;
+  animation: 1.8s ease-in-out infinite indeterminate-progress-bar;
 }
 
 @keyframes indeterminate-progress-bar {
