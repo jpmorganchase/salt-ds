@@ -136,14 +136,8 @@ export const useStepperInput = (
     }
   };
 
-  const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
-    useSpinner((event?: SyntheticEvent) => decrementBlock(event), isAtMin());
-
   const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
     useSpinner((event?: SyntheticEvent) => decrement(event), isAtMin());
-
-  const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
-    useSpinner((event?: SyntheticEvent) => incrementBlock(event), isAtMax());
 
   const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
     useSpinner((event?: SyntheticEvent) => increment(event), isAtMax());
@@ -184,15 +178,11 @@ export const useStepperInput = (
   const handleInputKeyDown = (event: KeyboardEvent) => {
     if (["ArrowUp", "ArrowDown"].includes(event.key)) {
       event.preventDefault();
-      event.key === "ArrowUp"
-        ? incrementSpinner(event)
-        : decrementSpinner(event);
+      event.key === "ArrowUp" ? increment(event) : decrement(event);
     }
     if (["PageUp", "PageDown"].includes(event.key)) {
       event.preventDefault();
-      event.key === "PageUp"
-        ? incrementSpinnerBlock(event)
-        : decrementSpinnerBlock(event);
+      event.key === "PageUp" ? incrementBlock(event) : decrementBlock(event);
     }
   };
 
@@ -245,9 +235,9 @@ export const useStepperInput = (
   };
 
   return {
-    decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
+    decrementButtonDown: arrowDownButtonDown,
     getButtonProps,
     getInputProps,
-    incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
+    incrementButtonDown: arrowUpButtonDown,
   };
 };
