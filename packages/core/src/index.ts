@@ -54,6 +54,7 @@ export * from "./toast";
 export * from "./salt-provider";
 export * from "./split-layout";
 export * from "./switch";
+export * from "./tag";
 export * from "./toggle-button";
 export * from "./toggle-button-group";
 export * from "./tooltip";

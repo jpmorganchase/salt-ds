@@ -1,13 +1,13 @@
-import { useEffect, useRef } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { Dropdown, SelectionChangeHandler, SelectHandler } from "@salt-ds/lab";
-import { useWindow } from "@salt-ds/window";
+import { Dropdown, SelectHandler, SelectionChangeHandler } from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useEffect, useRef } from "react";
 
+import { CellFrame } from "./CellFrame";
+import { CornerTag } from "./CornerTag";
 import { useEditorContext } from "./EditorContext";
 import { GridColumnModel, GridRowModel } from "./Grid";
-import { CornerTag } from "./CornerTag";
-import { Cell } from "./internal";
 
 import dropdownCellEditorCss from "./DropdownCellEditor.css";
 
@@ -66,7 +66,7 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
   );
 
   return (
-    <Cell separator={column?.separator} className={withBaseName()}>
+    <CellFrame separator={column?.separator} className={withBaseName()}>
       <div className={withBaseName("dropdownContainer")}>
         {options && options.length > 0 ? (
           <Dropdown
@@ -83,6 +83,6 @@ export function DropdownCellEditor<T>(props: DropdownCellEditorProps<T>) {
         )}
       </div>
       <CornerTag />
-    </Cell>
+    </CellFrame>
   );
 }

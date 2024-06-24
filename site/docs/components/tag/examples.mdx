@@ -1,0 +1,46 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="tag" exampleName="Variants">
+
+## Variants
+
+Tag has two variants: primary and secondary. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
+
+</LivePreview>
+<LivePreview componentName="tag" exampleName="Bordered">
+
+## Bordered
+
+To add a border, simply pass the `bordered` prop to the component.
+
+</LivePreview>
+<LivePreview componentName="tag" exampleName="WithIcon">
+
+## With icon
+
+Display icons inside a tag by passing an icon as children to visually reinforce its content for quick recognition.
+
+</LivePreview>
+<LivePreview componentName="tag" exampleName="Categories">
+
+## Categories
+
+To differentiate between different categories, set a category by passing a value from 1 to 20 to the `category` prop.
+
+Note that if a category outside the range is passed, the styles will default to category 1.
+
+### Best practices
+
+- Be consistent when assigning categories. For example, avoid assigning two different categories to the same piece of metadata.
+
+</LivePreview> 
+</LivePreviewControls>

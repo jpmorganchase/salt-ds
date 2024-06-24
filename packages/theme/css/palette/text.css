@@ -2,6 +2,9 @@
   --salt-palette-text-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
   --salt-palette-text-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
+  --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-openSans);
+
+  --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
 
   --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-palette-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);

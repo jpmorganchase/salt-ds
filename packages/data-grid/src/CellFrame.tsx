@@ -4,9 +4,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { forwardRef, HTMLAttributes } from "react";
 import { clsx } from "clsx";
 
-import { ColumnSeparatorType } from "../Grid";
+import { ColumnSeparatorType } from "./Grid";
 
-import cellCss from "./Cell.css";
+import cellCss from "./CellFrame.css";
 
 export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   isSelected?: boolean;
@@ -14,9 +14,11 @@ export interface CellProps extends HTMLAttributes<HTMLTableCellElement> {
   separator?: ColumnSeparatorType;
 }
 
+// TODO: rename the prefix in next major version to match component name.
 const withBaseName = makePrefixer("saltGridCell");
 
-export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
+/** Cell frame used for creating custom cells and editors */
+export const CellFrame = forwardRef<HTMLTableCellElement, CellProps>(
   function CellFrame(props, ref) {
     const {
       children,
@@ -50,7 +52,7 @@ export const Cell = forwardRef<HTMLTableCellElement, CellProps>(
         )}
         {...tdProps}
       >
-        <div className={withBaseName("body")}>{props.children}</div>
+        <div className={withBaseName("body")}>{children}</div>
         <div className={withBaseName("columnSeparator")} />
         <div className={withBaseName("rowSeparator")} />
         <div className={withBaseName("topSeparator")} />
