@@ -2,6 +2,6 @@
 "@salt-ds/core": minor
 ---
 
-Added variant prop to `LinearProgress` component. It defaults to `determinate` and the new `indeterminate` variant will display a moving line to represent an unspecified wait time.
+Updated `LinearProgress` to display a moving line to represent an unspecified wait time, when no `value` is set.
 
-`<LinearProgress variant="indeterminate" />`
+`<LinearProgress />`

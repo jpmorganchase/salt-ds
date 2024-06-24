@@ -34,11 +34,6 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
    * Value between 0 and max.
    */
   value?: number;
-  /**
-   * The variant to use.
-   * Defaults to "determinate".
-   */
-  variant?: "determinate" | "indeterminate";
 }
 
 const INDETERMINATE_BAR_WIDTH = 66;
@@ -50,9 +45,8 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       hideLabel = false,
       max = 100,
       min = 0,
-      value = 0,
+      value,
       bufferValue = 0,
-      variant = "determinate",
       ...rest
     },
     ref
@@ -64,7 +58,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       window: targetWindow,
     });
 
-    const isIndeterminate = variant === "indeterminate";
+    const isIndeterminate = value === undefined;
     const progress = isIndeterminate
       ? INDETERMINATE_BAR_WIDTH
       : ((value - min) / (max - min)) * 100;
@@ -89,7 +83,9 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       >
         <div className={withBaseName("barContainer")}>
           <div
-            className={clsx(withBaseName("bar"), withBaseName(variant))}
+            className={clsx(withBaseName("bar"), {
+              [withBaseName("indeterminate")]: isIndeterminate,
+            })}
             style={barStyle}
           />
           {bufferValue > 0 ? (

@@ -6,7 +6,6 @@ import {
   StackLayout,
   CircularProgress,
   LinearProgress,
-  LinearProgressProps,
   ValidationStatus,
   Toast,
   ToastContent,
@@ -100,17 +99,11 @@ export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
 );
 
 export const Indeterminate = Default.bind({});
-Indeterminate.args = {
-  variant: "indeterminate",
-};
 
 export const IndeterminateToDeterminate: StoryFn<
   typeof LinearProgress
 > = () => {
-  const [variant, setVariant] =
-    useState<LinearProgressProps["variant"]>("indeterminate");
-
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<number | undefined>(undefined);
 
   const [toastStatus, setToastStatus] = useState<{
     header: string;
@@ -123,19 +116,19 @@ export const IndeterminateToDeterminate: StoryFn<
   });
 
   useEffect(() => {
-    const timer = setTimeout(() => setVariant("determinate"), 4000);
+    const timer = setTimeout(() => setValue(0), 4000);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    if (variant === "determinate" && value < 100) {
+    if (value !== undefined && value < 100) {
       const interval = setInterval(
-        () => setValue((currentValue) => currentValue + 1),
+        () => setValue((currentValue) => (currentValue ?? 0) + 1),
         20
       );
       return () => clearInterval(interval);
     }
-  }, [value, variant]);
+  }, [value]);
 
   useEffect(() => {
     if (value === 100) {
@@ -156,11 +149,7 @@ export const IndeterminateToDeterminate: StoryFn<
           </Text>
           <div>{toastStatus.message}</div>
           {value !== 100 && (
-            <LinearProgress
-              aria-label="Download"
-              variant={variant}
-              value={value}
-            />
+            <LinearProgress aria-label="Download" value={value} />
           )}
         </div>
       </ToastContent>
