@@ -41,7 +41,6 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         aria-label="Download"
         className="noAnimation"
         style={{ padding: "50px" }}
-        variant="indeterminate"
       />
     </QAContainer>
   );
