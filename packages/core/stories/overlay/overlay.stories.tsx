@@ -11,6 +11,7 @@ import {
   OverlayTrigger,
   OverlayPanelCloseButton,
   OverlayPanelContent,
+  Divider,
 } from "@salt-ds/core";
 import React, { ChangeEvent, useState } from "react";
 import { StoryFn, Meta } from "@storybook/react";
@@ -137,14 +138,6 @@ export const LongContent = () => {
   );
 };
 
-const Divider = () => {
-  return (
-    <div className="divider-container">
-      <div className="divider" />
-    </div>
-  );
-};
-
 const checkboxesData = [
   {
     label: "Overlay",
@@ -209,14 +202,14 @@ const WithActionsContent = ({
       <h3 id={id} style={{ marginTop: 0 }}>
         Export
       </h3>
-      <div>
+      <StackLayout gap={1}>
         <Checkbox
           indeterminate={indeterminate}
           checked={!indeterminate}
           label={`${controlledValues.length} of 2 selected`}
           onChange={handleChange}
         />
-        <Divider />
+        <Divider variant="secondary" />
         <CheckboxGroup
           checkedValues={controlledValues}
           onChange={handleGroupChange}
@@ -225,14 +218,14 @@ const WithActionsContent = ({
             <Checkbox key={data.value} {...data} />
           ))}
         </CheckboxGroup>
-        <Divider />
+        <Divider variant="secondary" />
         <Button
           style={{ float: "right", marginRight: 2 }}
           onClick={handleExport}
         >
           Export
         </Button>
-      </div>
+      </StackLayout>
     </>
   );
 };
