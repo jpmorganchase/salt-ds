@@ -5,6 +5,8 @@ import {
   StepDefaultIcon,
   StepSuccessIcon,
   WarningSolidIcon,
+  SuccessIcon,
+  ProgressInprogressIcon,
 } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -23,6 +25,7 @@ const withBaseName = makePrefixer("saltTrackerStep");
 
 type StageOptions = "pending" | "completed";
 type StatusOptions = Extract<ValidationStatus, "warning" | "error">;
+type Depth = 0 | 1 | 2;
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
@@ -35,6 +38,10 @@ export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
    * If the stage is completed or active, the status prop will be ignored
    */
   status?: StatusOptions;
+  /**
+   * The nesting depth of the TrackerStep
+   */
+  depth?: Depth;
 }
 
 const iconMap = {
@@ -43,6 +50,8 @@ const iconMap = {
   completed: StepSuccessIcon,
   warning: WarningSolidIcon,
   error: ErrorSolidIcon,
+  "completed-sub": SuccessIcon,
+  inprogress: ProgressInprogressIcon,
 };
 
 const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
@@ -80,6 +89,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       style,
       className,
       children,
+      depth = 0,
       ...restProps
     } = props;
 
@@ -102,6 +112,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     const Icon = iconMap[iconName];
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
+    const depthClass = withBaseName(`depth-${depth}`);
 
     const innerStyle = {
       ...style,
@@ -115,6 +126,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
           withBaseName(`stage-${stage}`),
           withBaseName(`status-${status}`),
           { [withBaseName("active")]: isActive },
+          depthClass,
           className,
         )}
         style={innerStyle}
@@ -122,7 +134,9 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         ref={ref}
         {...restProps}
       >
-        <Icon />
+        <div className={withBaseName("indicator")}>
+          <Icon />
+        </div>
         {hasConnector && <TrackerConnector state={connectorState} />}
         <div className={withBaseName("body")}>{children}</div>
       </li>
