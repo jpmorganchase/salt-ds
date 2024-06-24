@@ -5841,7 +5841,7 @@ __metadata:
     eslint-config-prettier: "npm:^9.0.0"
     eslint-plugin-cypress: "npm:^3.0.0"
     eslint-plugin-import: "npm:^2.28.1"
-    eslint-plugin-local-rules: "npm:^2.0.0"
+    eslint-plugin-local-rules: "npm:^3.0.0"
     eslint-plugin-storybook: "npm:^0.8.0"
     mockdate: "npm:^3.0.5"
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch"
@@ -15180,10 +15180,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-local-rules@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "eslint-plugin-local-rules@npm:2.0.0"
-  checksum: 10/597a052a93de1fe9e9bfc7187db43f8ed66ceaf0e12bb759a931fe02607da42a70d1e1029bef2ee6ac221ad205ab63c18827e375ae5e88061bf7f24325479c11
+"eslint-plugin-local-rules@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "eslint-plugin-local-rules@npm:3.0.2"
+  checksum: 10/6ec5a9e6d5a0a8f56ed22307761d1bc2bebee75ebfc9518e0eeed0d334c45c84713aff1969eefa5ac0fdeca63e427fee53b3912333caa9e70cc1f87e4c198f11
   languageName: node
   linkType: hard
 
