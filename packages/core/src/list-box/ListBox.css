@@ -1,0 +1,22 @@
+.saltListBox {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-border);
+  background: var(--salt-container-primary-background);
+  overflow: auto;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  box-sizing: border-box;
+  isolation: isolate;
+  position: relative;
+  max-height: inherit;
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+.saltListBox-bordered {
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+}
+
+.saltListBox:focus-visible {
+  outline: none;
+}
