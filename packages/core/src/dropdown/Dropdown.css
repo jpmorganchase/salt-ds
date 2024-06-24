@@ -88,7 +88,6 @@
   --dropdown-color: var(--salt-content-primary-foreground-disabled);
   --dropdown-cursor: var(--salt-selectable-cursor-disabled);
   --dropdown-borderWidth: var(--salt-size-border);
-  outline: none;
 }
 
 .saltDropdown[aria-readonly="true"] {
