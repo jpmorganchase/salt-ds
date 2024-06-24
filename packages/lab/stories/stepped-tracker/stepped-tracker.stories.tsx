@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, FlexLayout, StackLayout, Tooltip } from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text, Tooltip } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -119,18 +119,83 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
 
 export const SingleVertical: StoryFn<typeof SteppedTracker> = () => {
   return (
-    <SteppedTracker orientation="vertical" activeStep={1}>
+    <SteppedTracker
+      orientation="vertical"
+      activeStep={2}
+      style={{ width: 400 }}
+    >
       <TrackerStep stage="completed">
         <StepLabel>Step One</StepLabel>
+        <Text color="secondary">
+          A label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
+        </Text>
       </TrackerStep>
       <TrackerStep stage="completed">
         <StepLabel>Step Two</StepLabel>
       </TrackerStep>
       <TrackerStep>
         <StepLabel>Step Three</StepLabel>
+        <Text color="secondary">This one has an extra label</Text>
       </TrackerStep>
       <TrackerStep>
         <StepLabel>Step Four</StepLabel>
+      </TrackerStep>
+    </SteppedTracker>
+  );
+};
+
+export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <SteppedTracker
+      orientation="vertical"
+      activeStep={8}
+      style={{ width: 400 }}
+    >
+      <TrackerStep state="completed">
+        <StepLabel>Step 1</StepLabel>
+        <Text color="secondary">
+          A label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
+        </Text>
+      </TrackerStep>
+      <TrackerStep depth={1} state="completed">
+        <StepLabel>Step 1.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2} state="completed">
+        <StepLabel>Step 1.1.1</StepLabel>
+        <Text color="secondary">This one has an extra label</Text>
+      </TrackerStep>
+      <TrackerStep depth={2} state="completed">
+        <StepLabel>Step 1.1.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep state="completed">
+        <StepLabel>Step 2</StepLabel>
+      </TrackerStep>
+      <TrackerStep state="inprogress">
+        <StepLabel>Step 3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} state="inprogress">
+        <StepLabel>Step 3.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2} state="completed">
+        <StepLabel>Step 3.1.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2}>
+        <StepLabel>Step 3.1.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2}>
+        <StepLabel>Step 3.1.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 3.2</StepLabel>
+        <Text color="secondary">This one has an extra label</Text>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 3.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep state="default">
+        <StepLabel>Step 4</StepLabel>
       </TrackerStep>
     </SteppedTracker>
   );
