@@ -10,10 +10,6 @@ export const TagInCard = (): ReactElement => (
     }}
     accent="top"
   >
-    {/* in your css:
-            .category3 {
-              --saltCard-accent-color: rgb(70, 118, 191);
-            }*/}
     <StackLayout>
       <StackLayout gap={1}>
         <H3>
