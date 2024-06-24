@@ -37,10 +37,6 @@
   height: var(--salt-size-base);
 }
 
-.saltAccordionHeader[aria-expanded="true"] > .saltAccordionHeader-icon {
-  transform: rotate(180deg);
-}
-
 .saltAccordionHeader-error {
   background: var(--salt-status-error-background);
 }

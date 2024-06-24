@@ -132,12 +132,28 @@ const UI = () => (
             <FormLabel>Disclosure ID</FormLabel>
             <Input />
           </FormField>
+        </FlowLayout>
+      </AccordionPanel>
+    </Accordion>
+    <Accordion value="default" expanded>
+      <AccordionHeader>Left align arrow</AccordionHeader>
+      <AccordionPanel>
+        <FlowLayout>
+          This is content inside of an Accordion.
           <FormField labelPlacement="left">
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Disclosure ID</FormLabel>
             <Input />
           </FormField>
+        </FlowLayout>
+      </AccordionPanel>
+    </Accordion>
+    <Accordion value="default" arrowAlignment="right" expanded>
+      <AccordionHeader>Right align arrow</AccordionHeader>
+      <AccordionPanel>
+        <FlowLayout>
+          This is content inside of an Accordion.
           <FormField labelPlacement="left">
-            <FormLabel>Justification</FormLabel>
+            <FormLabel>Disclosure ID</FormLabel>
             <Input />
           </FormField>
         </FlowLayout>
