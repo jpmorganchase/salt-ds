@@ -391,7 +391,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           withBaseName(),
           {
             [withBaseName("focused")]: focusedState,
-            "saltPillInput-focused": focusedState,
             [withBaseName("focusVisible")]: focusVisibleState,
           },
           className
