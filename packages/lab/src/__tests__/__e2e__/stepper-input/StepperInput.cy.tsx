@@ -161,7 +161,6 @@ describe("Stepper Input", () => {
       "have.been.calledWith",
       "-109.44",
       Cypress.sinon.match.any
-
     );
   });
 

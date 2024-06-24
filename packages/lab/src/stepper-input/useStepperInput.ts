@@ -176,13 +176,12 @@ export const useStepperInput = (
   };
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
-    if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+    if (event.shiftKey && ["ArrowUp", "ArrowDown"].includes(event.key)) {
       event.preventDefault();
-      event.key === "ArrowUp" ? increment(event) : decrement(event);
-    }
-    if (["PageUp", "PageDown"].includes(event.key)) {
+      event.key === "ArrowUp" ? incrementBlock() : decrementBlock();
+    } else if (["ArrowUp", "ArrowDown"].includes(event.key)) {
       event.preventDefault();
-      event.key === "PageUp" ? incrementBlock(event) : decrementBlock(event);
+      event.key === "ArrowUp" ? increment() : decrement();
     }
   };
 

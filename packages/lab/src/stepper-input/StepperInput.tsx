@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltStepperInput");
 export interface StepperInputProps
   extends Omit<InputProps, "onChange" | "emptyReadOnlyMarker"> {
   /**
-   * A multiplier applied to the `step` when the value is incremented or decremented using the PageDown/PageUp keys.
+   * A multiplier applied to the `step` when the value is incremented or decremented while holding shift and pressing up arrow or down arrow keys.
    */
   block?: number;
   /**
