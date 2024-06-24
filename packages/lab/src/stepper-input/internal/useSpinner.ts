@@ -1,17 +1,19 @@
 import { useEffect, useState, SyntheticEvent, useCallback } from "react";
 import { useInterval } from "./useInterval";
 
-const INTERVAL_DELAY = 300;
+const INITIAL_DELAY = 500;
+const INTERVAL_DELAY = 100;
 
 function useSpinner(
   activationFn: (event?: SyntheticEvent) => void,
   isAtLimit: boolean
 ) {
   const [buttonDown, setButtonDown] = useState(false);
-  const [event, setEvent] = useState<SyntheticEvent | null>(null);
+  const [delay, setDelay] = useState(INITIAL_DELAY);
 
   const cancelInterval = () => {
-    setEvent(null);
+    setButtonDown(false);
+    setDelay(INITIAL_DELAY);
   };
 
   useEffect(() => {
@@ -29,16 +31,18 @@ function useSpinner(
     activationFn(event);
     if (event.type === "mousedown") {
       setButtonDown(true);
-      setEvent(event);
     }
   };
+
   useInterval(
     () => {
-      if (buttonDown && event) {
-        activationFn(event);
+      if (!buttonDown) return;
+      activationFn();
+      if (delay == INITIAL_DELAY) {
+        setDelay(INTERVAL_DELAY);
       }
     },
-    buttonDown ? INTERVAL_DELAY : null
+    buttonDown ? delay : null
   );
 
   return { activate, buttonDown };

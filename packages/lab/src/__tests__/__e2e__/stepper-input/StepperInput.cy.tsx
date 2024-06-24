@@ -139,8 +139,8 @@ describe("Stepper Input", () => {
     cy.findByLabelText("decrement value").realClick();
     cy.get("@changeSpy").should(
       "have.been.calledWith",
-      Cypress.sinon.match.any,
-      "15"
+      "15",
+      Cypress.sinon.match.any
     );
   });
 
@@ -159,8 +159,9 @@ describe("Stepper Input", () => {
     cy.findByLabelText("increment value").realClick();
     cy.get("@changeSpy").should(
       "have.been.calledWith",
-      Cypress.sinon.match.any,
-      "-109.44"
+      "-109.44",
+      Cypress.sinon.match.any
+
     );
   });
 

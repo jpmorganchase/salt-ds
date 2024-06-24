@@ -2,13 +2,13 @@
 "@salt-ds/lab": minor
 ---
 
-Changed `StepperInput`'s `onChange` to return an event and value.
+Changed `StepperInput`'s `onChange` to return a value and an optional event.
 
 ```tsx
 <StepperInput
   value={value}
-  onChange={(_event, value) => {
+  onChange={(value, event) => {
     setValue(value);
-  }}
+  }
 />
 ```

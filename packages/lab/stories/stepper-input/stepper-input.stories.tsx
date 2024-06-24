@@ -53,7 +53,7 @@ export const Controlled: StoryFn = (args) => {
         {...args}
         decimalPlaces={2}
         value={value}
-        onChange={(_event, value) => {
+        onChange={(value) => {
           setValue(value);
         }}
         endAdornment={
@@ -98,7 +98,7 @@ export const MinAndMaxValue: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onChange={(_event, value) => {
+        onChange={(_value) => {
           setValue(value);
         }}
         max={max}
@@ -141,7 +141,7 @@ export const RefreshAdornment: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onChange={(_event, value) => {
+        onChange={(_value) => {
           setValue(value);
         }}
         endAdornment={
@@ -169,7 +169,7 @@ export const HideButtons: StoryFn = (args) => {
         {...args}
         hideButtons
         textAlign="center"
-        onChange={(_event, value) => {
+        onChange={(_value) => {
           setValue(value);
         }}
         value={value}
