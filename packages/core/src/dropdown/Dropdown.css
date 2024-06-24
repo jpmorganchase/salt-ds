@@ -40,10 +40,12 @@
 
 .saltDropdown:active {
   --dropdown-background: var(--saltDropdown-background-active, var(--dropdown-background-active));
+  --dropdown-borderColor: var(--dropdown-outlineColor);
+  --dropdown-borderWidth: var(--salt-editable-borderWidth-active);
+  --dropdown-borderStyle: var(--salt-editable-borderStyle-active);
 }
 
-.saltDropdown:focus,
-.saltDropdown:active {
+.saltDropdown:focus {
   outline: var(--salt-focused-outline);
   --dropdown-borderColor: var(--dropdown-outlineColor);
   --dropdown-borderWidth: var(--salt-editable-borderWidth-active);
