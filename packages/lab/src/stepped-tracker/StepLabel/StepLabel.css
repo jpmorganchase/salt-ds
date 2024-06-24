@@ -8,4 +8,6 @@
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltStepLabel {
   text-align: left;
+  height: var(--salt-size-base);
+  line-height: var(--salt-size-base);
 }

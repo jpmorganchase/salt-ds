@@ -22,9 +22,9 @@
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerConnector {
-  top: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
+  top: var(--salt-size-base);
   left: calc((var(--saltIcon-size) / 2) - (var(--trackerConnector-thickness) / 2));
-  height: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
+  bottom: 0;
   border-left-width: var(--trackerConnector-thickness);
   border-left-style: var(--trackerConnector-style-border);
   border-left-color: var(--trackerConnector-color);
