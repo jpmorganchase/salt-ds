@@ -12,9 +12,9 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import { makePrefixer, useForkRef } from "../utils";
-import { defaultValueToString } from "../list-control/ListControlState";
 import { ListControlContext } from "../list-control/ListControlContext";
 import {
+  defaultValueToString,
   useListControl,
   ListControlProps,
 } from "../list-control/ListControlState";

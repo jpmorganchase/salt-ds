@@ -29,7 +29,7 @@ import {
   SortAlphaDescendIcon,
 } from "@salt-ds/icons";
 import { usStateExampleData } from "../../assets/exampleData";
-import "./list-box.stories.css";
+import "./list-builder.stories.css";
 
 export default {
   title: "Patterns/List builder",
@@ -353,7 +353,11 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
   };
 
   return (
-    <StackLayout direction={orientation} gap={1} style={{ maxWidth: "30em" }}>
+    <StackLayout
+      className={`container-${orientation}`}
+      direction={orientation}
+      gap={1}
+    >
       <List
         title="Available"
         options={filteredAvailableOptions}

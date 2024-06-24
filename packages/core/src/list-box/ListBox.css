@@ -10,6 +10,7 @@
   isolation: isolate;
   position: relative;
   max-height: inherit;
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltListBox-bordered {
