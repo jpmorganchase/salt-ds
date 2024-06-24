@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.5
+
+### Patch Changes
+
+- 4b35339: Exported `EditorContext` and `CellFrame` to create custom cell and cell editors
+
 ## 1.0.4-alpha.10
 
 ### Patch Changes

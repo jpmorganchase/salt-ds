@@ -1,5 +1,33 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.48
+
+### Minor Changes
+
+- c759347: Added `visibleMonths` to control the number of visible months in a range `DatePicker`. The supports values are `1` or `2` (default).
+
+  ```tsx
+  <DatePicker selectionVariant="range" visibleMonths={1} />
+  ```
+
+- 6cde7ea: Removed `Divider` from lab and promoted to core.
+
+### Patch Changes
+
+- 50b03f5: Fix Range date picker cursor position after selection
+- ba1dc07: - Exposed input values in dateInput's `onChange`.
+
+  ```tsx
+  <DatePicker onChange={(event, selectedDateInputValue: string | undefined) => {}}/>
+
+   <DatePicker selectionVariant="range"
+    onChange={(event, startDateInputValue: string | undefined, endDateInputValue: string | undefined) => {}}
+  />
+  ```
+
+  - Removed `startDate`, `defaultStartDate`, `endDate`, and `defaultEndDate` in DatePicker.
+  - Added `selectedDate`, `defaultSelectedDate` and `defaultOpen` in DatePicker.
+
 ## 1.0.0-alpha.47
 
 ### Minor Changes
