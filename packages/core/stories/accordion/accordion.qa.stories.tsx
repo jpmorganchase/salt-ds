@@ -123,8 +123,8 @@ const UI = () => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-    <Accordion value="default" arrowAlignment="right">
-      <AccordionHeader>Right align arrow</AccordionHeader>
+    <Accordion value="default" indicatorSide="right">
+      <AccordionHeader>Right align indicator</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.
@@ -136,7 +136,7 @@ const UI = () => (
       </AccordionPanel>
     </Accordion>
     <Accordion value="default" expanded>
-      <AccordionHeader>Left align arrow</AccordionHeader>
+      <AccordionHeader>Left align indicator</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.
@@ -147,8 +147,8 @@ const UI = () => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-    <Accordion value="default" arrowAlignment="right" expanded>
-      <AccordionHeader>Right align arrow</AccordionHeader>
+    <Accordion value="default" indicatorSide="right" expanded>
+      <AccordionHeader>Right align indicator</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.

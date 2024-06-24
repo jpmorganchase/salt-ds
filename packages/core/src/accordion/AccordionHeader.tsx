@@ -39,7 +39,7 @@ export const AccordionHeader = forwardRef<
   AccordionHeaderProps
 >(function AccordionHeader(props, ref) {
   const { children, className, onClick, ...rest } = props;
-  const { value, expanded, toggle, arrowAlignment, disabled, id, status } =
+  const { value, expanded, toggle, indicatorSide, disabled, id, status } =
     useAccordion();
 
   const targetWindow = useWindow();
@@ -71,7 +71,7 @@ export const AccordionHeader = forwardRef<
       type="button"
       {...rest}
     >
-      {arrowAlignment === "left" && <ExpansionIcon expanded={expanded} />}
+      {indicatorSide === "left" && <ExpansionIcon expanded={expanded} />}
       <div className={withBaseName("content")}>{children}</div>
       {status && (
         <StatusIndicator
@@ -79,7 +79,7 @@ export const AccordionHeader = forwardRef<
           status={status}
         />
       )}
-      {arrowAlignment === "right" && <ExpansionIcon expanded={expanded} />}
+      {indicatorSide === "right" && <ExpansionIcon expanded={expanded} />}
     </button>
   );
 });
