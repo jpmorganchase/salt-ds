@@ -1,0 +1,12 @@
+.listBuilderList {
+  max-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * 10);
+  min-height: calc((var(--salt-size-base) + var(--salt-spacing-100)) * 10);
+}
+
+.container-column {
+  max-width: 30em;
+}
+
+.container-column .listBuilderList {
+  min-width: 10em;
+}

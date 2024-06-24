@@ -42,7 +42,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
   const {
     className,
     children,
-    disabled,
+    disabled: disabledProp,
     onClick,
     id: idProp,
     value,
@@ -68,7 +68,10 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(function Option(
     selectedState,
     focusVisibleState,
     valueToString,
+    disabled: listDisabled,
   } = useListControlContext();
+
+  const disabled = disabledProp || listDisabled;
 
   const selected = selectedState.includes(value);
   const active = activeState?.id === id;
