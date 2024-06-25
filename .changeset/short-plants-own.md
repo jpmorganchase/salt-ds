@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Added `error` and `warning` status options to TrackerStep's `state` prop.
+Replaced TrackerStep's `state` prop with new `TBC_PROP_NAME` prop, and added `error` and `warning` to the options.

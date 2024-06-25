@@ -24,30 +24,30 @@ export const Vertical = (): ReactElement => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2} orientation="vertical">
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep TBC_PROP_NAME="pending">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep TBC_PROP_NAME="pending">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={3} orientation="vertical">
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>

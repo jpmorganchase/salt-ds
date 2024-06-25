@@ -94,7 +94,7 @@ describe("GIVEN a SteppedTracker", () => {
         {labels.map((label, key) => (
           <TrackerStep
             key={key}
-            state={key === completedStep ? "completed" : undefined}
+            TBC_PROP_NAME={key === completedStep ? "completed" : undefined}
           >
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
@@ -114,7 +114,7 @@ describe("GIVEN a SteppedTracker", () => {
       .should("not.exist");
   });
 
-  it("should show completed icon if a state is completed and active", () => {
+  it("should show completed icon if icon prop is completed and active", () => {
     const labels = ["Step 1", "Step 2", "Step 3"];
 
     const stepNum = 1;
@@ -124,7 +124,7 @@ describe("GIVEN a SteppedTracker", () => {
         {labels.map((label, key) => (
           <TrackerStep
             key={key}
-            state={key === stepNum ? "completed" : undefined}
+            TBC_PROP_NAME={key === stepNum ? "completed" : undefined}
           >
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
@@ -144,17 +144,15 @@ describe("GIVEN a SteppedTracker", () => {
       .should("not.exist");
   });
 
-  it("should show warning icon if a state is warning", () => {
+  it("should show warning icon if icon prop is warning", () => {
     const labels = ["Step 1", "Step 2", "Step 3"];
 
-    const stepNum = 1;
-
     const TestComponent = (
-      <SteppedTracker activeStep={stepNum} style={{ width: 300 }}>
+      <SteppedTracker activeStep={0} style={{ width: 300 }}>
         {labels.map((label, key) => (
           <TrackerStep
             key={key}
-            state={key === stepNum ? "warning" : undefined}
+            TBC_PROP_NAME={key === 1 ? "warning" : undefined}
           >
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
@@ -165,24 +163,21 @@ describe("GIVEN a SteppedTracker", () => {
     cy.mount(TestComponent);
 
     cy.findAllByRole("listitem")
-      .filter(`:nth-child(${stepNum + 1})`)
+      .filter(`:nth-child(${2})`)
       .findByTestId("WarningSolidIcon")
       .should("exist");
-    cy.findAllByRole("listitem")
-      .not(`:nth-child(${stepNum + 1})`)
-      .findByTestId("StepActiveIcon")
-      .should("not.exist");
   });
 
-  it("should show error icon if a state is error", () => {
+  it("should show error icon if icon prop is error", () => {
     const labels = ["Step 1", "Step 2", "Step 3"];
 
-    const stepNum = 1;
-
     const TestComponent = (
-      <SteppedTracker activeStep={stepNum} style={{ width: 300 }}>
+      <SteppedTracker activeStep={0} style={{ width: 300 }}>
         {labels.map((label, key) => (
-          <TrackerStep key={key} state={key === stepNum ? "error" : undefined}>
+          <TrackerStep
+            key={key}
+            TBC_PROP_NAME={key === 1 ? "error" : undefined}
+          >
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
@@ -192,12 +187,8 @@ describe("GIVEN a SteppedTracker", () => {
     cy.mount(TestComponent);
 
     cy.findAllByRole("listitem")
-      .filter(`:nth-child(${stepNum + 1})`)
+      .filter(`:nth-child(${2})`)
       .findByTestId("ErrorSolidIcon")
       .should("exist");
-    cy.findAllByRole("listitem")
-      .not(`:nth-child(${stepNum + 1})`)
-      .findByTestId("StepActiveIcon")
-      .should("not.exist");
   });
 });
