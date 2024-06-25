@@ -1,27 +1,17 @@
-import { StackLayout, Text } from "@salt-ds/core";
+import { StackLayout, Text, Divider } from "@salt-ds/core";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const CustomDivider = () => {
-  return (
-    <hr
-      style={{
-        height: "var(--salt-text-fontSize)",
-        lineHeight: "var(--salt-text-fontSize)",
-        display: "inline-block",
-        margin: 0,
-        borderStyle: "none solid none none",
-        borderColor: "var(--salt-separable-secondary-borderColor)",
-      }}
-    />
-  );
-};
 const CustomClickableStatusBar = () => {
   return (
     <StackLayout direction="row" align="center" gap={1}>
-      <CustomDivider />
+      <Divider
+        orientation="vertical"
+        variant="secondary"
+        style={{ height: "var(--salt-text-fontSize)", alignSelf: "center" }}
+      />
       {/* In status bar, line height being size base keeps text in the middle */}
       <Text variant="secondary" style={{ lineHeight: "var(--salt-size-base)" }}>
         Custom Component

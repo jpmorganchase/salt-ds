@@ -1,0 +1,66 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Accessibility
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+If focus is above the list, Tab moves focus to one of the following options depending on previous user interaction:
+
+- The last selected option
+- The first option in the list
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+If focus is below the list, this action moves focus to one of the following options depending on previous user interaction:
+
+- The last selected option
+- The last option in the list
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space / Enter">
+
+When focus is on an option, this action selects the option and if the list box is single-select deselects the previously selected option, if any.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up arrow">
+
+Up arrow moves focus to the previous option in the list. Focus doesn't wrap.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Down arrow">
+
+Down arrow moves focus to the next item in the list. Focus doesn't wrap.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page up">
+
+When focus is within the dropdown, this action moves focus to the item before the first visible option.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page down">
+
+When focus is within the dropdown, this action moves focus to the item after the last visible option.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+When focus is within the list, Home moves focus to the first option.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+When focus is within the list, End moves focus to the last option.
+
+</KeyboardControl>
+</KeyboardControls>
