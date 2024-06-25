@@ -258,7 +258,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("application").should("have.length", 1);
     });
-    it.only("should show hover all the first month when hovering through the second one ", () => {
+    it("should show hover all the first month when hovering through the second one ", () => {
       cy.mount(<Range />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("button", {
