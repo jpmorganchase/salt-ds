@@ -30,10 +30,11 @@
 }
 
 .saltOption[aria-selected="true"] {
+  z-index: var(--salt-zIndex-default);
   background: var(--salt-selectable-background-selected);
 }
 
-.saltOption[aria-selected="true"]::before {
+.saltOption[aria-selected="true"]::after {
   content: "";
   display: block;
   position: absolute;
@@ -43,7 +44,7 @@
   width: 100%;
 }
 
-.saltOption[aria-selected="true"]::before {
+.saltOption[aria-selected="true"]::after {
   border-top: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
   border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
 }

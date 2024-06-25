@@ -21,6 +21,8 @@ import {
   DialogActions,
   DialogContent,
   DialogHeader,
+  ListBox,
+  Option,
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
 import {
@@ -29,7 +31,6 @@ import {
   SaltShakerIcon,
   SaltShakerSolidIcon,
 } from "@salt-ds/icons";
-import { ListNext, ListItemNext } from "@salt-ds/lab";
 import {
   DefaultGroup as AccordionDefault,
   Status as AccordionStatus,
@@ -371,14 +372,14 @@ export const Example1 = () => {
         </StackLayout>
       </StackLayout>
       <StackLayout>
-        <ListNext selected="blue">
-          <ListItemNext value="green">Green</ListItemNext>
-          <ListItemNext disabled value="red">
+        <ListBox selected={["blue"]}>
+          <Option value="green">Green</Option>
+          <Option disabled value="red">
             Red
-          </ListItemNext>
-          <ListItemNext value="blue">Blue</ListItemNext>
-          <ListItemNext value="purple">Purple</ListItemNext>
-        </ListNext>
+          </Option>
+          <Option value="blue">Blue</Option>
+          <Option value="purple">Purple</Option>
+        </ListBox>
       </StackLayout>
       <AgGridThemeDefault
         columnDefs={[
