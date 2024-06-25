@@ -1,4 +1,4 @@
-import { useEffect, useState, SyntheticEvent, useCallback } from "react";
+import { useEffect, useState, SyntheticEvent } from "react";
 import { useInterval } from "./useInterval";
 
 const INITIAL_DELAY = 500;
