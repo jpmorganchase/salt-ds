@@ -1,4 +1,4 @@
-import { useEffect, useState, SyntheticEvent } from "react";
+import { useEffect, useState, SyntheticEvent, useCallback } from "react";
 import { useInterval } from "./useInterval";
 
 const INITIAL_DELAY = 500;
@@ -11,10 +11,10 @@ function useSpinner(
   const [buttonDown, setButtonDown] = useState(false);
   const [delay, setDelay] = useState(INITIAL_DELAY);
 
-  const cancelInterval = () => {
+  const cancelInterval = useCallback(() => {
     setButtonDown(false);
     setDelay(INITIAL_DELAY);
-  };
+  }, []);
 
   useEffect(() => {
     if (isAtLimit) cancelInterval();
