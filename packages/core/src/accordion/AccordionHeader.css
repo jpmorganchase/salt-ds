@@ -35,11 +35,6 @@
 
 .saltAccordionHeader .saltAccordionHeader-icon {
   height: var(--salt-size-base);
-  transition: transform var(--salt-duration-perceptible) ease-in-out;
-}
-
-.saltAccordionHeader[aria-expanded="true"] > .saltAccordionHeader-icon {
-  transform: rotate(90deg);
 }
 
 .saltAccordionHeader-error {
