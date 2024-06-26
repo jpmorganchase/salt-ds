@@ -41,12 +41,12 @@ data:
 ## Step and Block
 
 - You can customize the amount the value is changed by when pressing the buttons or arrow keys with the `step` prop.
-- Holding down the Shift key when pressing Up Arrow or Down Arrow keys applies a block multiplier to the step. You can customize this multiplier with the `block` prop.
+- Holding down the Shift key when pressing Up Arrow or Down Arrow key changes the value by the amount defined by the `block` prop.
 
 ### Best practices
 
 - Select a `step` value that aligns with the precision required by the use case.
-- Set the `block` value to a reasonable multiple of the step value, allowing users to make larger adjustments.
+- Set the `block` value to a reasonable size compared to the `step`, allowing users to make larger adjustments.
 
 </LivePreview>
 <LivePreview componentName="stepper-input" exampleName="Decimals" >
