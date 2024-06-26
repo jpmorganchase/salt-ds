@@ -37,6 +37,29 @@ You can use `Accordion`'s controlled API to allow only one accordion to be expan
 Use the `disabled` prop to disable an accordion. The user can't expand, collapse or focus a disabled accordion.
 
 </LivePreview>
+<LivePreview componentName="accordion" exampleName="IndicatorSide" >
+
+## Indicator side
+
+Use the `indicatorSide` prop to customise which side the indicator is displayed in accordion header.
+
+The chevron indicator icon in the Accordion header can be displayed on the right-hand side by setting the `indicatorSide` prop to `right`.
+_Note that the content left aligns to the text in accordion header, so moving the indicator to the right side will also change the content's left padding._
+
+Positioning the indicator icon on the right side may be suitable if you are:
+
+- Using descriptive icons consistently next to accordion labels.
+- Building mobile experiences, where the chevron is often displayed within (right-hand) thumb reach.
+- Implementing a drag-and-drop reorder behaviour, and building a drag handle into the left side of each Accordion.
+
+The right position should be avoided:
+
+- In exceptionally wide accordions for accessibility to ensure the chevron is visible next to the label on browser zoom.
+- Where there is heavy use of form fields, to clearly distinguish the accordion from surrounding fields and clearly identify form sections.
+
+The indicator icon is positioned on the far right of the accordion. Additional elements, such as a secondary label or validation icons (error, warning, success), will be positioned between the accordion label and the chevron icon.
+
+</LivePreview>
 <LivePreview componentName="accordion" exampleName="Status" >
 
 ## Status

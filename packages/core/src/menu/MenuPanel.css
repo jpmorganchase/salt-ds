@@ -5,7 +5,7 @@
   overflow-y: auto;
   min-width: 10em;
   position: relative;
-  z-index: var(--salt-zIndex-popout);
+  z-index: var(--salt-zIndex-flyover);
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
 }

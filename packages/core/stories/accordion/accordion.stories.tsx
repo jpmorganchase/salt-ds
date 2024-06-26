@@ -13,7 +13,6 @@ import {
   StackLayout,
   Text,
   SplitLayout,
-  Label,
   FormFieldLabel,
   CheckboxGroup,
   Checkbox,
@@ -234,7 +233,7 @@ export const AdditionalLabels: StoryFn = () => {
     <div style={{ width: "80%", height: "100%" }}>
       <AccordionGroup>
         {Object.values(features).map(({ name, description, id }) => (
-          <Accordion value={id}>
+          <Accordion value={id} key={name}>
             <AccordionHeader>
               <StackLayout gap={0.5}>
                 <SplitLayout
@@ -268,6 +267,7 @@ export const AdditionalLabels: StoryFn = () => {
                       label={`${name} (...${number})`}
                       name={id}
                       value={number}
+                      key={name}
                     />
                   ))}
                 </CheckboxGroup>

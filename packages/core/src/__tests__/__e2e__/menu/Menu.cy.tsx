@@ -12,6 +12,9 @@ describe("Given a Menu", () => {
     cy.findByRole("menu").should("not.exist");
     cy.findByRole("button", { name: "Open Menu" }).realClick();
     cy.findByRole("menu").should("exist");
+    // Regression - #3636
+    cy.get(".saltMenuPanel").should("have.css", "z-index", "1500");
+
     cy.get("@openChangeSpy").should("have.been.calledWith", true);
     cy.findByRole("menuitem", { name: "Copy" }).realClick();
     cy.on("window:alert", (str) => {

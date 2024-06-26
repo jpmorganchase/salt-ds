@@ -20,10 +20,14 @@
 }
 
 .saltAccordionPanel-content {
-  padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
+  padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
   padding-top: var(--salt-spacing-300);
   padding-bottom: var(--salt-spacing-300);
+}
+
+.saltAccordionPanel-content.saltAccordionPanel-indentedContent {
+  padding-left: calc(var(--salt-spacing-200) + var(--salt-size-icon));
 }
 
 @media (prefers-reduced-motion: reduce) {
