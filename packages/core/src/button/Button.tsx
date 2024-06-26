@@ -10,7 +10,11 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
+export const AppearanceValues = ["solid", "outline", "transparent"] as const;
+export const ButtonColorValues = ["accent", "neutral"] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
+export type Appearance = (typeof AppearanceValues)[number];
+export type ButtonColor = (typeof ButtonColorValues)[number];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
@@ -26,6 +30,14 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * 'primary' is the default value.
    */
   variant?: ButtonVariant;
+  /**
+   * The type of the button. Options are 'solid', 'outline', and 'transparent'.
+   */
+  appearance?: Appearance;
+  /**
+   * The color of the button. Options are 'accent' and 'neutral'.
+   */
+  color?: ButtonColor;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -39,6 +51,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onKeyDown,
       onBlur,
       onClick,
+      appearance,
+      color,
       type = "button",
       variant = "primary",
       ...restProps
@@ -61,6 +75,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       window: targetWindow,
     });
 
+    const variantStyles = {
+      primary: { defaultAppearance: "solid", defaultColor: "neutral" },
+      secondary: { defaultAppearance: "transparent", defaultColor: "neutral" },
+      cta: { defaultAppearance: "solid", defaultColor: "accent" },
+    };
+
+    const { defaultAppearance, defaultColor } = variantStyles[variant];
+    const resolvedAppearance = appearance ?? defaultAppearance;
+    const resolvedColor = color ?? defaultColor;
+
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;
@@ -73,6 +97,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("active")]: active,
+            [withBaseName(`${resolvedAppearance}-${resolvedColor}`)]:
+              resolvedAppearance,
           },
           className
         )}

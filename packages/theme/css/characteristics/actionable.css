@@ -44,4 +44,6 @@
   --salt-actionable-secondary-borderColor-hover: transparent; /* TBD when adding bordered button */
   --salt-actionable-secondary-borderColor-active: transparent; /* TBD when adding bordered button */
   --salt-actionable-secondary-borderColor-disabled: transparent; /* TBD when adding bordered button */
+
+  --salt-actionable-accent-background: var(--salt-palette-interact-cta-background);
 }

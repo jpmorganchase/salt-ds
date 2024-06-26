@@ -34,7 +34,7 @@ export const FileDropZoneTrigger = forwardRef<
   HTMLButtonElement,
   FileDropZoneTriggerProps
 >(function FileDropZoneTrigger(
-  { accept, children, disabled, multiple = false, onChange, ...rest },
+  { accept, children, disabled, multiple = false, onChange, color, ...rest },
   ref
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);

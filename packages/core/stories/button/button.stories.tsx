@@ -168,3 +168,50 @@ export const FullWidth: StoryFn<typeof Button> = () => {
     </StackLayout>
   );
 };
+
+export const TypeCheckButton: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button appearance="solid" color="accent">
+        <SettingsSolidIcon aria-hidden />
+        filledAccent
+      </Button>
+      <Button appearance="solid" color="accent" disabled>
+        <SettingsSolidIcon aria-hidden />
+        filledNeutral
+      </Button>
+      <Button appearance="outline" color="accent">
+        <SettingsSolidIcon aria-hidden />
+        outlineAccent
+      </Button>
+      <Button appearance="outline" color="accent" disabled>
+        <SettingsSolidIcon aria-hidden />
+        outlineNeutral
+      </Button>
+      <Button appearance="transparent" color="accent">
+        transparentAccent
+      </Button>
+      <Button appearance="transparent" color="accent" disabled>
+        transparentNeutral
+      </Button>
+      <Button appearance="solid" color="neutral">
+        solidneutral
+      </Button>
+      <Button appearance="solid" color="neutral" disabled>
+        solidneutral
+      </Button>
+      <Button appearance="outline" color="neutral">
+        outlineneutral
+      </Button>
+      <Button appearance="outline" color="neutral" disabled>
+        outlineneutral
+      </Button>
+      <Button appearance="transparent" color="neutral">
+        transparentneutral
+      </Button>
+      <Button appearance="transparent" color="neutral" disabled>
+        transparentneutral
+      </Button>
+    </>
+  );
+};
