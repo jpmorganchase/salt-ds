@@ -43,7 +43,10 @@ export interface StepperInputProps
   /**
    * Callback when stepper input value is changed.
    */
-  onChange?: (value: number | string, event?: SyntheticEvent) => void;
+  onChange?: (
+    event: SyntheticEvent | undefined,
+    value: number | string
+  ) => void;
   /**
    * Callback when stepper input gains focus.
    */

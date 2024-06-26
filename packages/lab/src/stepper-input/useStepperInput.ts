@@ -132,7 +132,7 @@ export const useStepperInput = (
     }
 
     if (onChange) {
-      onChange(roundedValue, event);
+      onChange(event, roundedValue);
     }
   };
 
@@ -159,7 +159,7 @@ export const useStepperInput = (
     }
 
     if (onChange) {
-      onChange(roundedValue, event);
+      onChange(event, roundedValue);
     }
   };
 
@@ -171,7 +171,7 @@ export const useStepperInput = (
     }
 
     if (onChange) {
-      onChange(sanitizedInput(changedValue), event);
+      onChange(event, sanitizedInput(changedValue));
     }
   };
 

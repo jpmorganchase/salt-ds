@@ -8,7 +8,7 @@
 ```tsx
 <StepperInput
   value={value}
-  onChange={(value, event) => {
+  onChange={(_event, value) => {
     setValue(value);
   }
 />
