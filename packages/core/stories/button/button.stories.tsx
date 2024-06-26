@@ -122,6 +122,54 @@ export const Secondary: StoryFn<typeof Button> = () => {
   );
 };
 
+export const AccentSolid: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="accent" appearance="solid">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const AccentOutline: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="accent" appearance="outline">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const AccentTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="accent" appearance="transparent">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const NeutralSolid: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="neutral" appearance="solid">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const NeutralOutline: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="neutral" appearance="outline">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const NeutralTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="neutral" appearance="transparent">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
 export const FeatureButton = SingleButtonTemplate.bind({});
 FeatureButton.args = {
   children: "Activate",
