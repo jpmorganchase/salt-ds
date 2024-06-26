@@ -5,6 +5,7 @@ import {
   CalendarDate,
   DateFormatter,
   DateValue,
+  endOfMonth,
   getLocalTimeZone,
   startOfMonth,
   today,
@@ -257,7 +258,21 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("application").should("have.length", 1);
     });
-
+    it("should show hover all the first month when hovering through the second one ", () => {
+      cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 15 })),
+      }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(
+          startOfMonth(today(localTimeZone)).add({ days: 15, months: 1 })
+        ),
+      }).realHover();
+      cy.findByRole("button", {
+        name: formatDay(endOfMonth(today(localTimeZone))),
+      }).should("have.class", "saltCalendarDay-hovered");
+    });
     it("should disable the first calendar's next month button and the second calendar's previous month button when a start date has been selected", () => {
       cy.mount(<Range />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
