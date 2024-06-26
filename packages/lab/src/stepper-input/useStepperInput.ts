@@ -89,10 +89,7 @@ export const useStepperInput = (
 
   const decrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMin()) return;
-    let nextValue =
-      currentValue === ""
-        ? block * -step
-        : toFloat(currentValue) - step * block;
+    let nextValue = currentValue === "" ? block : toFloat(currentValue) - block;
 
     // Set value to `max` if it's currently out of range
     if (max !== undefined && isOutOfRange()) nextValue = max;
@@ -110,8 +107,7 @@ export const useStepperInput = (
 
   const incrementBlock = (event?: SyntheticEvent) => {
     if (currentValue === undefined || isAtMax()) return;
-    let nextValue =
-      currentValue === "" ? block * step : toFloat(currentValue) + step * block;
+    let nextValue = currentValue === "" ? block : toFloat(currentValue) + block;
 
     // Set value to `min` if it's currently out of range
     if (min !== undefined && isOutOfRange()) nextValue = min;
