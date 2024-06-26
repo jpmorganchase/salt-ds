@@ -37,7 +37,7 @@ export const LoadingButtons = (): ReactElement => {
     >
       <Button
         variant="cta"
-        loadingText="Loading"
+        loadingText="Sending"
         loading={ctaLoadingState}
         onClick={handleCtaClick}
       >
@@ -46,7 +46,7 @@ export const LoadingButtons = (): ReactElement => {
       </Button>
       <Button
         variant="secondary"
-        loadingText="Loading"
+        loadingText="Syncing"
         loading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
@@ -55,7 +55,7 @@ export const LoadingButtons = (): ReactElement => {
       </Button>
       <Button
         variant="primary"
-        loadingText="Loading"
+        loadingText="Refreshing"
         loading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >

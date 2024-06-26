@@ -222,12 +222,13 @@ export const LoadingButtons: StoryFn<typeof Button> = () => {
         gridGap: 10,
       }}
     >
-      <Button variant="cta" loading={ctaLoadingState} onClick={handleCtaClick}>
+      <Button variant="cta" loadingText="Sending" loading={ctaLoadingState} onClick={handleCtaClick}>
         <SendIcon aria-hidden />
         Send
       </Button>
       <Button
         variant="primary"
+        loadingText="Syncing"
         loading={primaryLoadingState}
         onClick={handlePrimaryClick}
       >
@@ -236,6 +237,7 @@ export const LoadingButtons: StoryFn<typeof Button> = () => {
       </Button>
       <Button
         variant="secondary"
+        loadingText="Refreshing"
         loading={secondaryLoadingState}
         onClick={handleSecondaryClick}
       >
