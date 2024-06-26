@@ -534,7 +534,7 @@ describe("Given a ComboBox", () => {
     cy.findAllByRole("option").should("have.length", 1);
     cy.findByRole("option").should(
       "have.text",
-      `No results found for "Missing"`
+      `No results found for "Yellloww"`
     );
   });
 
