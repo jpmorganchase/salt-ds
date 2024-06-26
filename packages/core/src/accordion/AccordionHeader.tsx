@@ -6,7 +6,7 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { StatusIndicator } from "../status-indicator";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
@@ -25,12 +25,22 @@ export interface AccordionHeaderProps
 
 const withBaseName = makePrefixer("saltAccordionHeader");
 
+const ExpansionIcon = ({ expanded }: { expanded: boolean }) =>
+  expanded ? (
+    <ChevronUpIcon aria-hidden="true" className={clsx(withBaseName("icon"))} />
+  ) : (
+    <ChevronDownIcon
+      aria-hidden="true"
+      className={clsx(withBaseName("icon"))}
+    />
+  );
 export const AccordionHeader = forwardRef<
   HTMLButtonElement,
   AccordionHeaderProps
 >(function AccordionHeader(props, ref) {
   const { children, className, onClick, ...rest } = props;
-  const { value, expanded, toggle, disabled, id, status } = useAccordion();
+  const { value, expanded, toggle, indicatorSide, disabled, id, status } =
+    useAccordion();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -61,7 +71,7 @@ export const AccordionHeader = forwardRef<
       type="button"
       {...rest}
     >
-      <ChevronRightIcon aria-hidden="true" className={withBaseName("icon")} />
+      {indicatorSide === "left" && <ExpansionIcon expanded={expanded} />}
       <div className={withBaseName("content")}>{children}</div>
       {status && (
         <StatusIndicator
@@ -69,6 +79,7 @@ export const AccordionHeader = forwardRef<
           status={status}
         />
       )}
+      {indicatorSide === "right" && <ExpansionIcon expanded={expanded} />}
     </button>
   );
 });
