@@ -28,7 +28,7 @@ data:
 
 - By default users can enter a number within the bounds of the maximum and minimum floating-point number.
 - If you need to limit the range of accepted values, you can set the `min` and/or `max` props.
-- The respective up or down buttons will be disabled when at the limit, and users will not be able to exceed them via keyboard controls.
+- The respective up or down buttons will be disabled when at the limit, and users will not be able to exceed them via keyboard controls. When a value above or below the range is entered, the bottom or top arrow buttons (respectively) remain enabled. Clicking this arrow button will return the value to the closest limit.
 
 ### Best practices
 
@@ -64,8 +64,8 @@ data:
 
 ## Custom buttons
 
-- Hide the default stepper buttons with the `hideButtons` prop if you wish to customize the appearance of the controls.
-- Ensure you provide alternative controls for adjusting the value to maintain usability and accessibility.
+- Hide the default stepper buttons with the `hideButtons` prop if you wish to customize the appearance of the controls or if number input is required withput the granular stepper button interaction.
+- When providing custom buttons, set `aria-hidden="true"` and `tabIndex={-1}` to ensure accessibilty. Keyboard users can adjust the value when focus is on the stepper input via Up arrow and Down arrow keys.
 
 ### Best practices
 
