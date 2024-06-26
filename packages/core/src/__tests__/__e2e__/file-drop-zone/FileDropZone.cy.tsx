@@ -53,6 +53,23 @@ describe("Given a file drop zone", () => {
       "saltFileDropZone-success"
     );
   });
+  it("should allow selecting the same file from the button after reset", () => {
+    const file = {
+      contents: Cypress.Buffer.from("image1"),
+      fileName: "image1",
+      mimeType: "image/jpg",
+      lastModified: Date.now(),
+    };
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<Default multiple onChange={changeSpy} />);
+    cy.get("input[type=file]").selectFile(file, { force: true });
+    cy.get("@changeSpy").should("have.been.calledOnce");
+    cy.findByRole("button", { name: "Reset" }).realClick();
+    cy.get("input[type=file]").selectFile(file, { force: true });
+    // Note: this could be a false positive, test will pass regardless whether the fix is there
+    // have the test here to note the behaviour we want, #3591
+    cy.get("@changeSpy").should("have.been.calledTwice");
+  });
   it("should trigger onDrop when files are dropped", () => {
     const dropSpy = cy.stub().as("dropSpy");
     cy.mount(<Default onDrop={dropSpy} />);

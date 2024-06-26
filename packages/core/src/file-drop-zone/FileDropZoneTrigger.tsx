@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   FocusEvent,
   forwardRef,
   HTMLAttributes,
@@ -27,7 +28,7 @@ export interface FileDropZoneTriggerProps
   /**
    * Callback for input change event
    */
-  onChange?: (event: SyntheticEvent<HTMLInputElement>, files: File[]) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
 }
 
 export const FileDropZoneTrigger = forwardRef<
@@ -53,8 +54,11 @@ export const FileDropZoneTrigger = forwardRef<
     fileInputRef.current?.click();
   };
 
-  const handleChange = (event: SyntheticEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from((event.target as HTMLInputElement).files ?? []);
+    // Allow selecting the same file multiple times - #3591
+    // User would still be able to put back the value in onChange, if necessary
+    event.target.value = "";
     onChange?.(event, files);
   };
   return (
