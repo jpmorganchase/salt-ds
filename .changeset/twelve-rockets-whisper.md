@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added `bordered` prop for Combo Box. When set, a full border will be applied.
+Added `bordered` prop for `ComboBox`. When set, a full border will be applied.
 
 ```tsx
 <ComboBox bordered>
