@@ -59,11 +59,12 @@
   background: var(--salt-color-gray-20);
 }
 
-/* 
+/*
  * This is to make sure Salt components will work ok with UITK
  * https://github.com/jpmorganchase/salt-ds/issues/2671
  */
 body {
+  box-sizing: content-box;
   font-weight: 400;
   font-family: Roboto;
   font-size: 14px;
