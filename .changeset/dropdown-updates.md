@@ -7,3 +7,5 @@ Updated outline color & background when in focus/active state for validation sta
 Updated border color when in hover state for validation status `Dropdown` to match the color of the status.
 
 Added corner support for theme next for `Dropdown`.
+
+For `Dropdown`, focus ring will be shown on focus instead of focus-visible.
