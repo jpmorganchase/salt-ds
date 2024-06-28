@@ -135,7 +135,7 @@
   --button-borderColor: var(--salt-actionable-border);
   --button-borderColor-hover: var(--salt-actionable-subtle-border);
   --button-borderColor-active: var(--salt-actionable-border);
-  --button-borderColor-disabled: ar(--salt-actionable-subtle-border);
+  --button-borderColor-disabled: var(--salt-actionable-subtle-border);
 }
 
 .saltButton-outline-neutral {
