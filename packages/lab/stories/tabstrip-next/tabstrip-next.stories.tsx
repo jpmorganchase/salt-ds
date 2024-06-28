@@ -6,9 +6,10 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabstripNext, type TabstripNextProps } from "@salt-ds/lab";
+import { TabstripNext, TabNext, type TabstripNextProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { type ComponentType, useState } from "react";
+
 import "./tabstrip-next.stories.css";
 
 export default {

@@ -1,22 +1,21 @@
-import { Overflow } from "@fluentui/react-overflow";
-import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
+import { capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
 import clsx from "clsx";
 import {
-  type ComponentPropsWithoutRef,
-  type KeyboardEvent,
-  type ReactNode,
-  type SyntheticEvent,
+  ComponentPropsWithoutRef,
   forwardRef,
-  useCallback,
+  ReactNode,
+  SyntheticEvent,
+  KeyboardEvent,
   useMemo,
   useRef,
-  useState,
 } from "react";
-import { OverflowMenu } from "./OverflowMenu";
-import { TabsContext } from "./TabNextContext";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import tabstripCss from "./TabstripNext.css";
+import { TabsContext } from "./TabNextContext";
+import { useTabstrip } from "./useTabstrip";
+import { TabOverflowList } from "./TabOverflowList";
+import { useOverflow } from "./useOverflow";
 
 const withBaseName = makePrefixer("saltTabstripNext");
 
@@ -29,16 +28,11 @@ export interface TabstripNextProps
   /* Value for the uncontrolled version. */
   value?: string;
   /* Callback for the controlled version. */
-  onChange?: (e: SyntheticEvent, data: { value: string }) => void;
+  onChange?: (event: SyntheticEvent, value: string) => void;
   /* Initial value for the uncontrolled version. */
   defaultValue?: string;
   /* The Tabs variant */
   variant?: "main" | "inline";
-}
-
-interface TabValue {
-  value: string;
-  label: ReactNode;
 }
 
 export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
@@ -48,7 +42,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       align = "left",
       children,
       className,
-      value: valueProp,
+      value,
       defaultValue,
       onChange,
       onKeyDown,
@@ -65,126 +59,34 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
-
-    const [value, setValue] = useControlled({
-      controlled: valueProp,
-      default: defaultValue,
-      name: "TabstripNext",
-      state: "selected",
+    const {
+      registerItem,
+      setActive,
+      setSelected,
+      selected,
+      active,
+      handleKeyDown,
+    } = useTabstrip({
+      container: tabstripRef.current,
+      defaultSelected: defaultValue,
+      selected: value,
     });
-    const [focusable, setFocusableState] = useState<string | undefined>(value);
 
-    const activate = useCallback(
-      (event: SyntheticEvent<HTMLButtonElement>) => {
-        const newValue = event.currentTarget.value;
-        setValue(newValue);
-        if (value !== newValue) {
-          onChange?.(event, { value: newValue });
-        }
-      },
-      [onChange, value],
-    );
-
-    const isActive = useCallback(
-      (id: string | undefined) => {
-        return value === id;
-      },
-      [value],
-    );
-
-    const setFocusable = useCallback((id: string | undefined) => {
-      setFocusableState(id);
-    }, []);
-
-    const isFocusable = useCallback(
-      (id: string | undefined) => {
-        return focusable === id || !focusable;
-      },
-      [focusable],
-    );
-
-    const [tabList, setTabList] = useState<TabValue[]>([]);
-    const registerTab = useCallback((tab: TabValue) => {
-      setTabList((list) => list.concat([tab]));
-    }, []);
-
-    const unregisterTab = useCallback((id: string) => {
-      setTabList((list) => list.filter((item) => item.value !== id));
-    }, []);
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      const elements: HTMLElement[] = Array.from(
-        tabstripRef.current?.querySelectorAll(
-          `div:not([data-overflowing]) > [role="tab"]:not([disabled])`,
-        ) ?? [],
-      );
-
-      const currentIndex = elements.findIndex(
-        (element) => element === targetWindow?.document.activeElement,
-      );
-
-      if (currentIndex < 0) return;
-
-      switch (event.key) {
-        case "ArrowDown":
-        case "ArrowRight":
-          elements[Math.min(currentIndex + 1, elements.length)]?.focus();
-          break;
-        case "ArrowUp":
-        case "ArrowLeft":
-          elements[Math.max(0, currentIndex - 1)]?.focus();
-          break;
-        case "Home":
-          elements[0]?.focus();
-          break;
-        case "End":
-          elements[elements.length - 1]?.focus();
-      }
-
-      onKeyDown?.(event);
-    };
-
-    const handleOverflowItemClick = (
-      event: SyntheticEvent,
-      itemValue: string,
-    ) => {
-      if (itemValue) {
-        setValue(itemValue);
-        setTimeout(() => {
-          const element = tabstripRef.current?.querySelector(
-            `[value="${itemValue}"]`,
-          );
-          if (element instanceof HTMLElement) {
-            element?.focus();
-          }
-        }, 50);
-        if (value !== itemValue) {
-          onChange?.(event, { value: itemValue });
-        }
-      }
-    };
+    const [visible, hidden] = useOverflow({
+      container: tabstripRef.current,
+      children,
+      selected,
+    });
 
     const contextValue = useMemo(
       () => ({
-        activate,
-        isActive,
-        setFocusable,
-        isFocusable,
-        registerTab,
-        unregisterTab,
+        registerItem,
         variant,
-        activeColor,
+        setSelected,
+        selected,
+        active,
       }),
-      [
-        activate,
-        isActive,
-        setFocusable,
-        isFocusable,
-        registerTab,
-        unregisterTab,
-        variant,
-        activeColor,
-      ],
+      [variant, setSelected, selected, active, registerItem]
     );
 
     const tabstripStyle = {
@@ -194,28 +96,24 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
 
     return (
       <TabsContext.Provider value={contextValue}>
-        <div className={clsx(withBaseName("container"), withBaseName(variant))}>
-          <Overflow ref={handleRef}>
-            <div
-              role="tablist"
-              className={clsx(
-                withBaseName(),
-                withBaseName("horizontal"),
-                className,
-              )}
-              onKeyDown={handleKeyDown}
-              style={tabstripStyle}
-              {...rest}
-            >
-              {children}
-              <OverflowMenu
-                tabs={tabList}
-                onItemClick={handleOverflowItemClick}
-              />
-            </div>
-          </Overflow>
+        <div
+          role="tablist"
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            withBaseName("horizontal"),
+            withBaseName(`activeColor${capitalize(activeColor)}`),
+            className
+          )}
+          style={tabstripStyle}
+          ref={handleRef}
+          onKeyDown={handleKeyDown}
+          {...rest}
+        >
+          {visible}
+          <TabOverflowList>{hidden}</TabOverflowList>
         </div>
       </TabsContext.Provider>
     );
-  },
+  }
 );

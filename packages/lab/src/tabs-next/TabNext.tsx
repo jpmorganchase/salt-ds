@@ -1,19 +1,17 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  type ComponentPropsWithoutRef,
-  type FocusEvent,
-  type MouseEvent,
-  type ReactElement,
   forwardRef,
+  ReactElement,
+  ComponentPropsWithoutRef,
   useEffect,
+  useRef,
 } from "react";
-
-import { OverflowItem } from "@fluentui/react-overflow";
 import clsx from "clsx";
-import tabCss from "./TabNext.css";
+
 import { useTabs } from "./TabNextContext";
+import tabCss from "./TabNext.css";
 
 const withBaseName = makePrefixer("saltTabNext");
 
@@ -22,79 +20,62 @@ export interface TabNextProps extends ComponentPropsWithoutRef<"button"> {
   value: string;
 }
 
-export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(
-  function Tab(props, ref): ReactElement<TabNextProps> {
-    const {
-      children,
-      className,
-      disabled: disabledProp,
-      onClick,
-      onFocus,
-      value,
-      ...rest
-    } = props;
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-tab-next",
-      css: tabCss,
-      window: targetWindow,
-    });
-    const {
-      activeColor,
-      isActive,
-      activate,
-      isFocusable,
-      setFocusable,
-      disabled: tabstripDisabled,
-      unregisterTab,
-      registerTab,
-      variant,
-    } = useTabs();
-    const active = isActive(value);
-    const focusable = isFocusable(value);
-    const disabled = tabstripDisabled || disabledProp;
+export const TabNext = forwardRef<HTMLButtonElement, TabNextProps>(function Tab(
+  props,
+  ref
+): ReactElement<TabNextProps> {
+  const {
+    children,
+    className,
+    disabled: disabledProp,
+    onClick,
+    onFocus,
+    value,
+    ...rest
+  } = props;
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-tab-next",
+    css: tabCss,
+    window: targetWindow,
+  });
+  const {
+    disabled: tabstripDisabled,
+    registerItem,
+    variant,
+    setSelected,
+    selected,
+    active,
+  } = useTabs();
+  const disabled = tabstripDisabled || disabledProp;
 
-    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      activate(event);
-      onClick?.(event);
-    };
+  const tabRef = useRef<HTMLButtonElement>(null);
+  const handleRef = useForkRef(ref, tabRef);
 
-    const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
-      setFocusable(value);
-      onFocus?.(event);
-    };
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
+    setSelected(value);
+  };
 
-    useEffect(() => {
-      registerTab({ value, label: children });
-      return () => unregisterTab(value);
-    }, [children, registerTab, unregisterTab, value]);
+  useEffect(() => {
+    return registerItem({ id: value, element: tabRef.current });
+  }, [value]);
 
-    return (
-      <OverflowItem id={value} priority={active ? 2 : 1}>
-        <div className={withBaseName("wrapper")}>
-          <button
-            className={clsx(
-              withBaseName(),
-              withBaseName(variant),
-              withBaseName(activeColor),
-              className,
-            )}
-            data-value={value}
-            aria-selected={active}
-            disabled={disabled}
-            value={value}
-            ref={ref}
-            role="tab"
-            onClick={handleClick}
-            onFocus={handleFocus}
-            tabIndex={focusable && !disabled ? 0 : -1}
-            type="button"
-            {...rest}
-          >
-            {children}
-          </button>
-        </div>
-      </OverflowItem>
-    );
-  },
-);
+  return (
+    <button
+      className={clsx(withBaseName(), withBaseName(variant), className)}
+      data-value={value}
+      aria-selected={selected === value || undefined}
+      disabled={disabled}
+      tabIndex={active === value ? 0 : -1}
+      value={value}
+      ref={handleRef}
+      role="tab"
+      type="button"
+      onClick={handleClick}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+});

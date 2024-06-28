@@ -11,6 +11,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  gap: var(--salt-spacing-100);
 }
 .saltTabstripNext-container {
   display: block;
@@ -36,4 +37,12 @@
 .saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
   padding-right: var(--salt-spacing-100);
   box-sizing: border-box;
+}
+
+.saltTabstripNext-activeColorPrimary {
+  --saltTabstripNext-activeColor: var(--salt-container-primary-background);
+}
+
+.saltTabstripNext-activeColorSecondary {
+  --saltTabstripNext-activeColor: var(--salt-container-secondary-background);
 }
