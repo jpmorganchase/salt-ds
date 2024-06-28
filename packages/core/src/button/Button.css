@@ -135,9 +135,6 @@
 }
 
 .saltButton-solid-accent {
-  font-weight: var(--salt-text-action-fontWeight);
-  text-transform: var(--salt-text-action-textTransform);
-  text-align: var(--salt-text-textAlign-embedded);
   --button-text-color: var(--salt-content-bold-foreground);
   --button-background: var(--salt-actionable-accent-background);
   --button-background-active: var(--salt-actionable-accent-background-active);
@@ -150,9 +147,6 @@
 }
 
 .saltButton-outline-accent {
-  font-weight: var(--salt-text-action-fontWeight);
-  text-transform: var(--salt-text-action-textTransform);
-  text-align: var(--salt-text-textAlign-embedded);
   --button-text-color: var(--salt-content-primary-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
@@ -166,9 +160,6 @@
 }
 
 .saltButton-transparent-accent {
-  font-weight: var(--salt-text-action-fontWeight);
-  text-transform: var(--salt-text-action-textTransform);
-  text-align: var(--salt-text-textAlign-embedded);
   --button-text-color: var(--salt-content-primary-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
@@ -182,9 +173,6 @@
 }
 
 .saltButton-solid-neutral {
-  font-weight: var(--salt-text-action-fontWeight);
-  text-transform: var(--salt-text-action-textTransform);
-  text-align: var(--salt-text-textAlign-embedded);
   --button-text-color: var(--salt-content-bold-foreground);
   --button-background: var(--salt-actionable-background);
   --button-background-active: var(--salt-actionable-background-active);
@@ -192,14 +180,11 @@
   --button-background-hover: var(--salt-actionable-background-hover);
   --button-borderColor: var(--salt-actionable-border);
   --button-borderColor-hover: var(--salt-actionable-subtle-border);
-  --button-borderColor-active: var(--salt-actionable-accent-border);
-  --button-borderColor-disabled: var(--salt-actionable-subtle-border);
+  --button-borderColor-active: var(--salt-actionable-border);
+  --button-borderColor-disabled: ar(--salt-actionable-subtle-border);
 }
 
 .saltButton-outline-neutral {
-  font-weight: var(--salt-text-action-fontWeight);
-  text-transform: var(--salt-text-action-textTransform);
-  text-align: var(--salt-text-textAlign-embedded);
   --button-text-color: var(--salt-content-primary-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
@@ -208,14 +193,11 @@
   --button-background-hover: var(--salt-actionable-background-hover);
   --button-borderColor: var(--salt-actionable-border);
   --button-borderColor-hover: var(--salt-actionable-subtle-border);
-  --button-borderColor-active: var(--salt-actionable-accent-border);
+  --button-borderColor-active: var(--salt-actionable-border);
   --button-borderColor-disabled: var(--salt-actionable-border-disabled);
 }
 
 .saltButton-transparent-neutral {
-  font-weight: var(--salt-text-action-fontWeight);
-  text-transform: var(--salt-text-action-textTransform);
-  text-align: var(--salt-text-textAlign-embedded);
   --button-text-color: var(--salt-content-primary-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
