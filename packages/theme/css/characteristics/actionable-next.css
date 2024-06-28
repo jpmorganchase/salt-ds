@@ -51,17 +51,15 @@
   --salt-actionable-accent-background-hover: var(--salt-palette-accent-action-hover);
   --salt-actionable-accent-background-active: var(--salt-palette-accent-action-active);
   --salt-actionable-accent-background-disabled: var(--salt-palette-accent-disabled);
-  --salt-actionable-subtle-border: transparent;
-
-  --salt-actionable-subtle-background: transparent;
-
-  --salt-actionable-accent-border: var(--salt-palette-accent-border);
-  --salt-actionable-accent-border-disabled: var(--salt-palette-accent-disabled);
-
   --salt-actionable-background: var(--salt-palette-neutral);
   --salt-actionable-background-hover: var(--salt-palette-neutral-action-hover);
   --salt-actionable-background-active: var(--salt-palette-neutral-action-active);
   --salt-actionable-background-disabled: var(--salt-palette-neutral-disabled);
-  --salt-actionable-border: yellow;
-  --salt-actionable-border-disabled: red;
+  --salt-actionable-subtle-background: transparent;
+
+  --salt-actionable-accent-border: var(--salt-palette-accent-border);
+  --salt-actionable-accent-border-disabled: var(--salt-palette-accent-disabled);
+  --salt-actionable-subtle-border: transparent;
+  --salt-actionable-border: var(--salt-palette-neutral);
+  --salt-actionable-border-disabled: var(--salt-palette-neutral-disabled);
 }

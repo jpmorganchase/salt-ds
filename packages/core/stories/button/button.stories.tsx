@@ -212,6 +212,10 @@ export const TypeCheckButton: StoryFn<typeof Button> = () => {
       <Button appearance="transparent" color="neutral" disabled>
         transparentneutral
       </Button>
+      <div>Existing Ones</div>
+      <Button variant="primary">primary</Button>
+      <Button variant="secondary">secondary</Button>
+      <Button variant="cta">cta</Button>
     </>
   );
 };
