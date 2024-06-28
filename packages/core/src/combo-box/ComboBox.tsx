@@ -64,7 +64,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     endAdornment,
     readOnly: readOnlyProp,
     multiselect,
-    selectOnTab = multiselect ? false : true,
+    selectOnTab = !multiselect,
     onSelectionChange,
     selected,
     defaultSelected,
@@ -123,10 +123,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     openState,
     setOpen,
     openKey,
-    getOptionAtIndex,
     getIndexOfOption,
     getOptionsMatching,
-    options,
+    getFirstOption,
+    getLastOption,
+    getOptionAfter,
+    getOptionBefore,
+    getOptionPageAbove,
+    getOptionPageBelow,
     selectedState,
     select,
     clear,
@@ -202,9 +206,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    const currentIndex = activeState ? getIndexOfOption(activeState) : -1;
-    const count = options.length - 1;
-
     if (readOnly) {
       return;
     }
@@ -216,25 +217,27 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       }
     }
 
+    const activeOption = activeState ?? getFirstOption()?.data;
+
     let newActive;
     switch (event.key) {
       case "ArrowDown":
-        newActive = getOptionAtIndex(Math.min(count, currentIndex + 1));
+        newActive = getOptionAfter(activeOption) ?? getLastOption();
         break;
       case "ArrowUp":
-        newActive = getOptionAtIndex(Math.max(0, currentIndex - 1));
+        newActive = getOptionBefore(activeOption) ?? getFirstOption();
         break;
       case "Home":
-        newActive = getOptionAtIndex(0);
+        newActive = getFirstOption();
         break;
       case "End":
-        newActive = getOptionAtIndex(count);
+        newActive = getLastOption();
         break;
       case "PageUp":
-        newActive = getOptionAtIndex(Math.max(0, currentIndex - 10));
+        newActive = getOptionPageAbove(activeOption);
         break;
       case "PageDown":
-        newActive = getOptionAtIndex(Math.min(count, currentIndex + 10));
+        newActive = getOptionPageBelow(activeOption);
         break;
       case "Enter":
         if (openState && activeState?.disabled) {
@@ -270,9 +273,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    if (newActive && newActive?.id != activeState?.id) {
+    if (newActive && newActive.data.id != activeState?.id) {
       event.preventDefault();
-      setActive(newActive);
+      setActive(newActive.data);
     }
 
     onKeyDown?.(event);
@@ -304,9 +307,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     // Wait for the filter to happen
     queueMicrotask(() => {
       if (value != "") {
-        const newOption = getOptionAtIndex(0);
+        const newOption = getFirstOption();
         if (newOption) {
-          setActive(newOption);
+          setActive(newOption.data);
         }
       } else {
         setActive(undefined);
@@ -360,20 +363,20 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     // If we still don't have an active item, we should check if the list has been opened with the keyboard
     if (!newActive) {
       if (openKey.current === "ArrowDown") {
-        newActive = getOptionAtIndex(0);
+        newActive = getFirstOption();
         setFocusVisibleState(true);
       } else if (openKey.current === "ArrowUp") {
-        newActive = getOptionAtIndex(options.length - 1);
+        newActive = getLastOption();
         setFocusVisibleState(true);
       }
     }
 
     // If we still don't have an active item, we should just select the first item
     if (!newActive) {
-      newActive = getOptionAtIndex(0);
+      newActive = getFirstOption();
     }
 
-    setActive(newActive);
+    setActive(newActive?.data);
     /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 

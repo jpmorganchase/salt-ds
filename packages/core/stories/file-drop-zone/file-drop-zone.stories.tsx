@@ -1,4 +1,10 @@
-import { useState, useCallback, SyntheticEvent, DragEvent } from "react";
+import {
+  useState,
+  useCallback,
+  SyntheticEvent,
+  DragEvent,
+  ChangeEvent,
+} from "react";
 
 import { Meta, StoryFn } from "@storybook/react";
 import {
@@ -36,8 +42,10 @@ const statusTitles = {
 const FileDropzoneTemplate: StoryFn<
   FileDropZoneProps &
     FileDropZoneIconProps &
-    FileDropZoneTriggerProps & { validate: readonly FilesValidator[] }
-> = ({ accept, children, disabled, validate, onDrop, ...rest }) => {
+    FileDropZoneTriggerProps & {
+      validate: readonly FilesValidator[];
+    }
+> = ({ accept, children, disabled, validate, onDrop, onChange, ...rest }) => {
   const [result, setResult] = useState<{
     files?: readonly File[];
     errors?: readonly string[];
@@ -77,6 +85,14 @@ const FileDropzoneTemplate: StoryFn<
     onDrop?.(event, files);
   };
 
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    files: File[]
+  ) => {
+    addFiles(event, files);
+    onChange?.(event, files);
+  };
+
   const reset = () => {
     setStatus(undefined);
     setResult({});
@@ -98,7 +114,7 @@ const FileDropzoneTemplate: StoryFn<
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
-          onChange={addFiles}
+          onChange={handleChange}
           data-testid="file-input-trigger"
         />
         {children}

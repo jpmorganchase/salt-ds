@@ -1,0 +1,51 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  label: Usage
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the components
+
+### When to use
+
+- To present a set of selectable options that allow users to make a choice for an onward action, such as filtering a data grid, selecting a country or assigning a task.
+
+### When not to use
+
+- If the list items provide navigation, consider using stacked [`NavigationItem`s](../navigation-item) to form a vertical navigation pattern.
+- If the list is likely to contain five items or fewer, consider using [`RadioButtonGroup`](../radio-button).
+- If the list is likely to contain between five and 10 items and doesn't need to be visible at all times, consider placing the list of items within [`Dropdown`](../dropdown).
+- If the list contains more than 10 items and you have limited screen space, consider using a [`ComboBox`](../combo-box).
+
+## Import
+
+To import `ListBox`, `Option` and `OptionGroup` from the core Salt package, use:
+
+```js
+import { ListBox, Option, OptionGroup } from "@salt-ds/core";
+```
+
+## Props
+
+### `ListBox`
+
+<PropsTable packageName="core" componentName="ListBox" />
+
+### `Option`
+
+<PropsTable packageName="core" componentName="Option" />
+
+### `OptionGroup`
+
+<PropsTable packageName="core" componentName="OptionGroup" />
+
+## References
+
+- Listboxes vs. Dropdown Lists, ( https://www.nngroup.com/articles/listbox-dropdown/ ) NN Group, April 12, 2020
+- Listbox patterns, (https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) W3C
+- Scrollable Listbox, (https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) W3C

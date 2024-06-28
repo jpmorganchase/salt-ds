@@ -5,18 +5,20 @@ import {
   Children,
   useEffect,
   useMemo,
+  SyntheticEvent,
 } from "react";
 import {
-  List,
-  SelectionChangeHandler,
-  FormField,
+  ListBox,
+  Option,
   Dropdown,
-} from "@salt-ds/lab";
+  FormField,
+  FormFieldLabel,
+} from "@salt-ds/core";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { formatComponentExampleName } from "./formatComponentExampleName";
 
 import styles from "./ExamplesListView.module.css";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 type ExamplesListViewProps = { examples: ReactElement[] };
 
@@ -26,7 +28,6 @@ function exampleNameToHash(exampleName: string) {
 
 const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
   const params = useParams();
-  const router = useRouter();
 
   const examplesList: string[] = useMemo(
     () =>
@@ -36,7 +37,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     [examples]
   );
 
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string[]>([]);
 
   useEffect(() => {
     // window.location.hash could be #hash?query=string and we only want the #hash part.
@@ -44,20 +45,24 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     const exampleInHash = examplesList.find(
       (example) => exampleNameToHash(example) === hash
     );
-    setSelectedItem(exampleInHash ?? examplesList[0]);
+    setSelectedItem((old) => {
+      if (exampleInHash) {
+        return [exampleInHash];
+      }
+
+      return [examplesList[0]];
+    });
   }, [examplesList, params]);
 
   const isMobileView = useIsMobileView();
 
-  const handleSelect: SelectionChangeHandler = (_, selectedItem) => {
-    setSelectedItem(selectedItem);
+  const handleSelectionChange = (_: SyntheticEvent, newSelected: string[]) => {
+    const selectedItem = newSelected[0];
+    setSelectedItem(newSelected);
+
     if (selectedItem) {
       const hash = `#${exampleNameToHash(selectedItem)}`;
-      if (window.history.pushState) {
-        window.history.pushState(null, "", hash);
-      } else {
-        window.location.hash = hash;
-      }
+      window.history.pushState(null, "", hash);
     }
   };
 
@@ -67,7 +72,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     examplesArray.find(
       ({ props }) =>
         formatComponentExampleName(props.exampleName, props.displayName) ===
-        selectedItem
+        selectedItem[0]
     ) || examplesArray[0];
 
   const {
@@ -76,25 +81,30 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
   } = selectedExample;
 
   const list = isMobileView ? (
-    <FormField label="Select an example">
-      <Dropdown
-        source={examplesList}
-        selected={selectedItem}
-        onSelectionChange={handleSelect}
-      />
-    </FormField>
+    <Dropdown
+      aria-label="Select an example"
+      selected={selectedItem}
+      onSelectionChange={handleSelectionChange}
+    >
+      {examplesList.map((example) => (
+        <Option value={example} key={example} />
+      ))}
+    </Dropdown>
   ) : (
     <div className={styles.list}>
       <div className={styles.label}>
         <span>Select an example</span>
       </div>
-      <List
+      <ListBox
+        className={styles.exampleList}
         aria-label="Examples list"
-        borderless
-        source={examplesList}
-        onSelect={handleSelect}
+        onSelectionChange={handleSelectionChange}
         selected={selectedItem}
-      />
+      >
+        {examplesList.map((example) => (
+          <Option value={example} key={example} />
+        ))}
+      </ListBox>
     </div>
   );
 

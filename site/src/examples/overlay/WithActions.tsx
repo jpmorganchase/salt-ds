@@ -8,17 +8,10 @@ import {
   OverlayPanel,
   OverlayTrigger,
   OverlayPanelContent,
+  StackLayout,
+  Divider,
 } from "@salt-ds/core";
 import React from "react";
-import styles from "./index.module.css";
-
-const Divider = () => {
-  return (
-    <div className={styles.dividerContainer}>
-      <div className={styles.divider} />
-    </div>
-  );
-};
 
 const checkboxesData = [
   {
@@ -83,14 +76,14 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
       <h3 id={id} style={{ marginTop: 0, paddingBottom: 10 }}>
         Export
       </h3>
-      <div>
+      <StackLayout gap={1}>
         <Checkbox
           indeterminate={indeterminate}
           checked={!indeterminate}
           label={`${controlledValues.length} of 2 selected`}
           onChange={handleChange}
         />
-        <Divider />
+        <Divider variant="secondary" />
         <CheckboxGroup
           checkedValues={controlledValues}
           onChange={handleGroupChange}
@@ -99,14 +92,14 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
             <Checkbox key={data.value} {...data} />
           ))}
         </CheckboxGroup>
-        <Divider />
+        <Divider variant="secondary" />
         <Button
           style={{ float: "right", marginRight: 2 }}
           onClick={handleExport}
         >
           Export
         </Button>
-      </div>
+      </StackLayout>
     </>
   );
 };

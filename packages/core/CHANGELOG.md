@@ -1,5 +1,54 @@
 # @salt-ds/core
 
+## 1.30.0
+
+### Minor Changes
+
+- e35a976: Added `Tag` component to core. Tags are non-interactive visual adornments that represent metadata or keywords associated with content, drawing the user's attention to categories without requiring interaction.
+
+  ```typescript
+    <Tag>Tag</Tag>
+    <Tag bordered>Tag</Tag>
+    <Tag variant="secondary">Tag</Tag>
+    <Tag category={2}>Tag</Tag>
+  ```
+
+- f89189d: Added a new `actionFont` prop to `UNSTABLE_SaltProviderNext` with `"Open Sans"` or `"Amplitude"` option. To try it out, use
+
+  ```
+  <UNSTABLE_SaltProviderNext actionFont="Amplitude">
+  ```
+
+  Refer to [documentation](https://storybook.saltdesignsystem.com/?path=/docs/experimental-theme-next--docs) for more information.
+
+- 0715454: Added `ListBox` component to core. `ListBox` allows the user to select an item from an array of options. Selected items are visually distinct from nonselected items. To ensure efficient space usage, long lists of items are in a scrolling pane that can provide access to options not immediately visible to the user.
+
+  ```tsx
+  <ListBox>
+    <Option value="red" />
+    <Option value="orange" />
+    <Option value="yellow" />
+    <Option value="green" />
+    <Option value="blue" />
+    <Option value="indigo" />
+    <Option value="violet" />
+  </ListBox>
+  ```
+
+- 6cde7ea: Added `Divider`.
+
+  ```tsx
+  <Divider />
+  <Divider variant={variant} orientation={orientation} />
+  ```
+
+### Patch Changes
+
+- 4697c25: Fixed content alignment of Option, OptionGroup, MenuItem and MenuGroup.
+- 0486cbc: Added line-height, letter-spacing and font-family to Dropdown, MenuItem, Option and OptionGroup.
+- f125982: Fixed Combo Box not picking `defaultValue` when `defaultSelected` is not set. Closes #3579.
+- 55e7ced: Fixed combo box can be focused when disabled. Fixes #3369
+
 ## 1.29.0
 
 ### Minor Changes
