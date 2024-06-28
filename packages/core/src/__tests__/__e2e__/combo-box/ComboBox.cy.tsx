@@ -531,11 +531,10 @@ describe("Given a ComboBox", () => {
   it("should allow showing an empty message when there are no options", () => {
     cy.mount(<EmptyMessage />);
     cy.findByRole("combobox").realClick();
-    cy.realType("Missing");
     cy.findAllByRole("option").should("have.length", 1);
     cy.findByRole("option").should(
       "have.text",
-      `No results found for "Missing"`
+      `No results found for "Yelloww"`
     );
   });
 
