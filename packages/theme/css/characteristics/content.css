@@ -5,6 +5,9 @@
   --salt-content-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-content-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
 
+  --salt-content-bold-foreground: var(--salt-palette-interact-cta-foreground);
+  --salt-content-bold-foreground-disabled: var(--salt-palette-interact-cta-foreground-disabled);
+
   --salt-content-foreground-hover: var(--salt-palette-navigate-foreground-hover);
   --salt-content-foreground-active: var(--salt-palette-navigate-foreground-active);
   --salt-content-foreground-visited: var(--salt-palette-navigate-foreground-visited);
