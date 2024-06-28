@@ -5,6 +5,7 @@ import { AllRenderer } from "docs/components";
 export default {
   title: "Lab/Tokenized Input/QA",
   component: TokenizedInput,
+  chromatic: { disableSnapshot: false, delay: 200 },
 } as Meta<typeof TokenizedInput>;
 
 export const ExamplesGrid: StoryFn<typeof TokenizedInput> = (props) => {
@@ -38,8 +39,4 @@ export const ExamplesGrid: StoryFn<typeof TokenizedInput> = (props) => {
       </div>
     </AllRenderer>
   );
-};
-
-ExamplesGrid.parameters = {
-  chromatic: { disableSnapshot: false },
 };

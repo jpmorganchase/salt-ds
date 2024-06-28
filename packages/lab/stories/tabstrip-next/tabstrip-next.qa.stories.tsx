@@ -7,6 +7,7 @@ import "./tabstrip-next.stories.css";
 export default {
   title: "Lab/Tabs Next/Tabstrip Next/Tabstrip Next QA",
   component: TabstripNext,
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 type TabstripStory = StoryFn<
@@ -71,8 +72,4 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
       </TabstripNext>
     </QAContainer>
   );
-};
-
-LotsOfTabsTabstrip.parameters = {
-  chromatic: { disableSnapshot: false },
 };

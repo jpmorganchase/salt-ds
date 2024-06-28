@@ -4,8 +4,9 @@ import { QAContainer, QAContainerProps } from "docs/components";
 import "docs/story.css";
 
 export default {
-  title: "Lab/Tokenized Input Next/QA",
+  title: "Lab/Tokenized Input Next/Tokenized Input Next QA",
   component: TokenizedInputNext,
+  chromatic: { disableSnapshot: false, delay: 200 },
 } as Meta<typeof TokenizedInputNext>;
 
 export const QA: StoryFn<QAContainerProps> = () => (

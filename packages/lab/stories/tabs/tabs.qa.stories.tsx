@@ -5,8 +5,9 @@ import { QAContainer, QAContainerProps } from "docs/components";
 import "docs/story.css";
 
 export default {
-  title: "Lab/Tabs/QA",
+  title: "Lab/Tabs/Tabs QA",
   component: Tabstrip,
+  chromatic: { disableSnapshot: false, delay: 200 },
 };
 
 const initialTabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -23,6 +24,3 @@ export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
     />
   </QAContainer>
 );
-QA.parameters = {
-  chromatic: { disableSnapshot: false },
-};

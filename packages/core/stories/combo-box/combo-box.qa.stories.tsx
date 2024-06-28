@@ -14,6 +14,7 @@ import { usStateExampleData } from "../assets/exampleData";
 export default {
   title: "Core/Combo Box/Combo Box QA",
   component: ComboBox,
+  chromatic: { disableSnapshot: false, delay: 200 },
 } as Meta<typeof ComboBox>;
 
 const groupedOptions = usStateExampleData.slice(0, 5).reduce((acc, option) => {
@@ -47,10 +48,6 @@ export const OpenExamples: StoryFn<QAContainerProps> = () => (
   </QAContainer>
 );
 
-OpenExamples.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
 export const OpenMultiselectExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity>
     <FormField>
@@ -66,10 +63,6 @@ export const OpenMultiselectExamples: StoryFn<QAContainerProps> = () => (
     </FormField>
   </QAContainer>
 );
-
-OpenMultiselectExamples.parameters = {
-  chromatic: { disableSnapshot: false },
-};
 
 export const ClosedExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity vertical width={1200}>
@@ -163,7 +156,3 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
     </FormField>
   </QAContainer>
 );
-
-ClosedExamples.parameters = {
-  chromatic: { disableSnapshot: false },
-};
