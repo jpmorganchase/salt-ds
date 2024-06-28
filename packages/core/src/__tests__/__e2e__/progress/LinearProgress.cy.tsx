@@ -19,6 +19,13 @@ describe("GIVEN a LinearProgress", () => {
     cy.findByRole("progressbar").should("not.contain.text", "0"); // test regression #3202
   });
 
+  it("SHOULD render progress bar with bufferValue provided", () => {
+    cy.mount(<Default bufferValue={50} />);
+    cy.findByRole("progressbar")
+      .get(".saltLinearProgress-buffer")
+      .should("exist");
+  });
+
   it("SHOULD render indeterminate progress bar", () => {
     cy.mount(<Indeterminate />);
     cy.findByRole("progressbar").should("have.attr", "aria-valuemax", "100");

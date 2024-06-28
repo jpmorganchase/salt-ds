@@ -46,7 +46,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       max = 100,
       min = 0,
       value,
-      bufferValue = 0,
+      bufferValue,
       ...rest
     },
     ref
@@ -58,13 +58,13 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       window: targetWindow,
     });
 
-    const isIndeterminate = value === undefined;
-    const progress = isIndeterminate
-      ? INDETERMINATE_BAR_WIDTH
-      : ((value - min) / (max - min)) * 100;
-    const buffer = isIndeterminate
-      ? 0
-      : ((bufferValue - min) / (max - min)) * 100;
+    const isIndeterminate = value === undefined && bufferValue === undefined;
+    const progress =
+      value === undefined
+        ? INDETERMINATE_BAR_WIDTH
+        : ((value - min) / (max - min)) * 100;
+    const buffer =
+      bufferValue === undefined ? 0 : ((bufferValue - min) / (max - min)) * 100;
     const barStyle: CSSProperties = {};
     const bufferStyle: CSSProperties = {};
 
@@ -78,7 +78,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         role="progressbar"
         aria-valuemax={max}
         aria-valuemin={min}
-        aria-valuenow={isIndeterminate ? undefined : Math.round(value)}
+        aria-valuenow={value === undefined ? undefined : Math.round(value)}
         {...rest}
       >
         <div className={withBaseName("barContainer")}>
@@ -88,7 +88,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
             })}
             style={barStyle}
           />
-          {bufferValue > 0 ? (
+          {bufferValue && bufferValue > 0 ? (
             <div className={withBaseName("buffer")} style={bufferStyle} />
           ) : null}
           <div className={withBaseName("track")} />
