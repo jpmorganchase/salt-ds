@@ -178,7 +178,7 @@ export const TypeCheckButton: StoryFn<typeof Button> = () => {
       </Button>
       <Button appearance="solid" color="accent" disabled>
         <SettingsSolidIcon aria-hidden />
-        filledNeutral
+        filledNeutralDisabled
       </Button>
       <Button appearance="outline" color="accent">
         <SettingsSolidIcon aria-hidden />
@@ -186,36 +186,45 @@ export const TypeCheckButton: StoryFn<typeof Button> = () => {
       </Button>
       <Button appearance="outline" color="accent" disabled>
         <SettingsSolidIcon aria-hidden />
-        outlineNeutral
+        outlineNeutraldisabled
       </Button>
       <Button appearance="transparent" color="accent">
         transparentAccent
       </Button>
       <Button appearance="transparent" color="accent" disabled>
-        transparentNeutral
+        transparentNeutraldisabled
       </Button>
       <Button appearance="solid" color="neutral">
         solidneutral
       </Button>
       <Button appearance="solid" color="neutral" disabled>
-        solidneutral
+        solidneutraldisabled
       </Button>
       <Button appearance="outline" color="neutral">
         outlineneutral
       </Button>
       <Button appearance="outline" color="neutral" disabled>
-        outlineneutral
+        outlineneutraldisabled
       </Button>
       <Button appearance="transparent" color="neutral">
         transparentneutral
       </Button>
       <Button appearance="transparent" color="neutral" disabled>
-        transparentneutral
+        transparentneutraldisabled
       </Button>
       <div>Existing Ones</div>
       <Button variant="primary">primary</Button>
+      <Button variant="primary" disabled>
+        primarydisabled
+      </Button>
       <Button variant="secondary">secondary</Button>
+      <Button variant="secondary" disabled>
+        secondarydisabled
+      </Button>
       <Button variant="cta">cta</Button>
+      <Button variant="cta" disabled>
+        ctadisabled
+      </Button>
     </>
   );
 };
