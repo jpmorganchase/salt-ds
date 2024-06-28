@@ -584,7 +584,9 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
 };
 
 export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
-  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+  const [value, setValue] = useState(
+    args.defaultValue?.toString() ?? "Yelloww"
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     // React 16 backwards compatibility

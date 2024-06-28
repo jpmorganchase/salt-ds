@@ -4,7 +4,7 @@ import { shortColorData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const EmptyMessage = (): ReactElement => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("Yelloww");
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

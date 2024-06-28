@@ -43,7 +43,7 @@ const actions: TabsMenu = [
   },
   {
     title: "Github repository",
-    link: "https://github.com/salt-ds/github",
+    link: "https://github.com/jpmorganchase/salt-ds",
     type: TabMenuItemType.LINK,
   },
 ];
