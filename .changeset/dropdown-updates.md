@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": minor
+"@salt-ds/core": patch
 ---
 
 Updated outline color & background when in focus/active state for validation status `Dropdown` to match the color of the status.
