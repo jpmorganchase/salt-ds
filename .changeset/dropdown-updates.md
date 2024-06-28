@@ -8,4 +8,4 @@ Updated border color when in hover state for validation status `Dropdown` to mat
 
 Added corner support for theme next for `Dropdown`.
 
-For `Dropdown`, focus ring will be shown on focus instead of focus-visible.
+Updates focus styling for `Dropdown`. Focus ring is shown on focus instead of focus-visible.
