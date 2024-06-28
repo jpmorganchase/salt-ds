@@ -88,6 +88,8 @@
 
 .saltButton-solid-accent {
   --button-text-color: var(--salt-content-bold-foreground);
+  --button-text-color-hover: var(--salt-content-bold-foreground);
+  --button-text-color-active: var(--salt-content-bold-foreground);
   --button-text-color-disabled: var(--salt-content-bold-foreground-disabled);
   --button-background: var(--salt-actionable-accent-background);
   --button-background-active: var(--salt-actionable-accent-background-active);
@@ -101,6 +103,8 @@
 
 .saltButton-outline-accent {
   --button-text-color: var(--salt-content-primary-foreground);
+  --button-text-color-hover: var(--salt-content-bold-foreground);
+  --button-text-color-active: var(--salt-content-bold-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
   --button-background-active: var(--salt-actionable-accent-background-active);
@@ -114,6 +118,8 @@
 
 .saltButton-transparent-accent {
   --button-text-color: var(--salt-content-primary-foreground);
+  --button-text-color-hover: var(--salt-content-bold-foreground);
+  --button-text-color-active: var(--salt-content-bold-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
   --button-background-active: var(--salt-actionable-accent-background-active);
@@ -127,6 +133,8 @@
 
 .saltButton-solid-neutral {
   --button-text-color: var(--salt-content-bold-foreground);
+  --button-text-color-hover: var(--salt-content-bold-foreground);
+  --button-text-color-active: var(--salt-content-bold-foreground);
   --button-text-color-disabled: var(--salt-content-bold-foreground-disabled);
   --button-background: var(--salt-actionable-background);
   --button-background-active: var(--salt-actionable-background-active);
@@ -140,6 +148,8 @@
 
 .saltButton-outline-neutral {
   --button-text-color: var(--salt-content-primary-foreground);
+  --button-text-color-hover: var(--salt-content-primary-foreground);
+  --button-text-color-active: var(--salt-content-primary-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
   --button-background-active: var(--salt-actionable-background-active);
@@ -153,6 +163,8 @@
 
 .saltButton-transparent-neutral {
   --button-text-color: var(--salt-content-primary-foreground);
+  --button-text-color-hover: var(--salt-content-bold-foreground);
+  --button-text-color-active: var(--salt-content-bold-foreground);
   --button-text-color-disabled: var(--salt-content-primary-foreground-disabled);
   --button-background: var(--salt-actionable-subtle-background);
   --button-background-active: var(--salt-actionable-background-active);
