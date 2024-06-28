@@ -162,7 +162,7 @@
 .saltDropdown-bordered[aria-readonly="true"],
 .saltDropdown-bordered[aria-readonly="true"]:hover,
 .saltDropdown[aria-readonly="true"]:focus,
-.saltDropdown-bordered.saltDropdown-disabled,
-.saltDropdown-bordered.saltDropdown-disabled:hover {
+.saltDropdown-bordered.saltDropdown:disabled,
+.saltDropdown-bordered.saltDropdown:disabled:hover {
   --dropdown-borderWidth: 0;
 }
