@@ -59,10 +59,11 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const isIndeterminate = value === undefined && bufferValue === undefined;
-    const progress =
-      value === undefined
-        ? INDETERMINATE_BAR_WIDTH
-        : ((value - min) / (max - min)) * 100;
+    const progress = isIndeterminate
+      ? INDETERMINATE_BAR_WIDTH
+      : value === undefined
+      ? 0
+      : ((value - min) / (max - min)) * 100;
     const buffer =
       bufferValue === undefined ? 0 : ((bufferValue - min) / (max - min)) * 100;
     const barStyle: CSSProperties = {};
