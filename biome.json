@@ -21,5 +21,14 @@
     "rules": {
       "recommended": true
     }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "lineWidth": 200
+    },
+    "linter": {
+      "enabled": true
+    }
   }
 }
