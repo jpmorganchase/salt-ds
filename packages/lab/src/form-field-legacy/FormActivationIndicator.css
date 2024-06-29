@@ -36,9 +36,9 @@
   height: var(--saltFormFieldLegacy-activationIndicator-icon-size, var(--formFieldLegacy-activationIndicator-icon-size));
   fill: var(--saltFormFieldLegacy-activationIndicator-icon-color, var(--formFieldLegacy-activationIndicator-color));
   /**
- * It's only a solid icon showing different color for validation states.
- * Applying opacity instead of re-defining all colors.
- */
+   * It's only a solid icon showing different color for validation states.
+   * Applying opacity instead of re-defining all colors.
+   */
   opacity: var(--saltFormFieldLegacy-activationIndicator-opacity, 1);
   position: absolute;
   bottom: 3px;
