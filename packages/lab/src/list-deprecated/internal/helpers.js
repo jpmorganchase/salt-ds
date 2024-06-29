@@ -21,7 +21,7 @@ export const calcPreferredListHeight = (props = {}) => {
   if (typeof getItemHeight === "function") {
     preferredHeight += Array.from({ length: preferredItemCount }).reduce(
       (total, _, index) => total + Number(getItemHeight(index)),
-      0
+      0,
     );
   } else {
     preferredHeight += preferredItemCount * Number(itemHeight);

@@ -1,11 +1,11 @@
-import { ReactNode, useMemo } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { type ReactNode, useMemo } from "react";
 import { createHandleStyles, createSliderRailMarksStyle } from "./styles";
 import { isMarkAtMax } from "./utils";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import sliderCss from "../Slider.css";
 
 const withBaseName = makePrefixer("saltSliderRailMarks");
@@ -35,12 +35,12 @@ export function SliderRailMarks(props: SliderRailMarksProps) {
 
   const style = useMemo(
     () => createSliderRailMarksStyle(min, max, marks),
-    [min, max, marks]
+    [min, max, marks],
   );
   const marksLength = marks.length;
   const markStyles = useMemo(
     () => createHandleStyles(marksLength),
-    [marksLength]
+    [marksLength],
   );
 
   return (

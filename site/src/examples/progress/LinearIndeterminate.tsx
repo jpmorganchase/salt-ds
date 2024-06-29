@@ -6,7 +6,7 @@ import {
   ToastContent,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 export const LinearIndeterminate = (): ReactElement => {
   return (

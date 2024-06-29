@@ -1,12 +1,12 @@
 import { ToggleButton } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import { FavoriteSolidIcon, HomeIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
-import { FavoriteSolidIcon, HomeIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Toggle Button/Toggle Button QA",
@@ -39,7 +39,7 @@ AllVariantsGrid.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection height={500} width={1000} {...props}>
     <ToggleButton aria-label="favorite" value="Icon only">

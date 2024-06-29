@@ -1,7 +1,7 @@
-import { cloneElement, Fragment, ReactElement } from "react";
 import { DensityValues, SaltProvider } from "@salt-ds/core";
-import { DocGrid } from "./DocGrid";
+import { Fragment, type ReactElement, cloneElement } from "react";
 import { BackgroundBlock } from "./BackgroundBlock";
+import { DocGrid } from "./DocGrid";
 
 /**
  * Helper component to render a component in all density and theme for Visual Regression tests

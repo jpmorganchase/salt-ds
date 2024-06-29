@@ -1,7 +1,7 @@
 import {
   Profiler,
-  ProfilerOnRenderCallback,
-  PropsWithChildren,
+  type ProfilerOnRenderCallback,
+  type PropsWithChildren,
   useRef,
 } from "react";
 
@@ -20,7 +20,7 @@ export function PerformanceTester({
   const handleRender: ProfilerOnRenderCallback = (
     id,
     phase,
-    actualDuration
+    actualDuration,
   ) => {
     if (phase === "mount") {
       cumulativeDuration.current = 0;
@@ -29,7 +29,7 @@ export function PerformanceTester({
 
     renderCount.current = renderCount.current + 1;
     cumulativeDuration.current = Number(
-      (cumulativeDuration.current + actualDuration).toFixed(2)
+      (cumulativeDuration.current + actualDuration).toFixed(2),
     );
 
     onRender &&
@@ -45,5 +45,3 @@ export function PerformanceTester({
     </Profiler>
   );
 }
-
-export {};

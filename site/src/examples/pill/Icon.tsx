@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
 import { Pill } from "@salt-ds/core";
 import { FavoriteIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 const handleClick = () => {
   console.log("clicked");

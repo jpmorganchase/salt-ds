@@ -1,9 +1,9 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  StatusIndicator,
   FlowLayout,
+  StatusIndicator,
   VALIDATION_NAMED_STATUS as status,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Status Indicator",

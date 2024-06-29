@@ -1,7 +1,7 @@
 import {
+  ARIA_ANNOUNCE_DELAY,
   AriaAnnouncerProvider,
   useAriaAnnouncer,
-  ARIA_ANNOUNCE_DELAY,
 } from "@salt-ds/core";
 import { mount } from "cypress/react18";
 
@@ -50,7 +50,7 @@ describe("Given a AriaAnnouncerProvider", () => {
         <AriaAnnouncerProvider>
           <div style={{ height: "100%", width: "100%" }} />
         </AriaAnnouncerProvider>
-      </div>
+      </div>,
     );
 
     cy.document().then((doc) => {
@@ -74,7 +74,9 @@ describe("Given a AriaAnnouncerProvider", () => {
   });
   it.skip("should allow for style overrides on the [aria-live] element", () => {
     mount(
-      <AriaAnnouncerProvider style={{ borderWidth: 1 }}></AriaAnnouncerProvider>
+      <AriaAnnouncerProvider
+        style={{ borderWidth: 1 }}
+      ></AriaAnnouncerProvider>,
     );
 
     // TODO: figure out why this doesn't work
@@ -87,7 +89,7 @@ describe("Given useAriaAnnouncer", () => {
     mount(
       <AriaAnnouncerProvider>
         <TestComponent announcement="test" />
-      </AriaAnnouncerProvider>
+      </AriaAnnouncerProvider>,
     );
     cy.findByText(BUTTON_TEXT).click();
 
@@ -99,7 +101,7 @@ describe("Given useAriaAnnouncer", () => {
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test" delay={500} />
-        </AriaAnnouncerProvider>
+        </AriaAnnouncerProvider>,
       );
       cy.findByText(BUTTON_TEXT_WAIT).click();
 
@@ -116,7 +118,7 @@ describe("Given useAriaAnnouncer", () => {
       mount(
         <AriaAnnouncerProvider>
           <TestComponent announcement="test" debounce={500} />
-        </AriaAnnouncerProvider>
+        </AriaAnnouncerProvider>,
       );
       cy.findByText(BUTTON_TEXT).click();
 
@@ -139,7 +141,7 @@ describe("Given useAriaAnnouncer", () => {
               return `test ${increment}`;
             }}
           />
-        </AriaAnnouncerProvider>
+        </AriaAnnouncerProvider>,
       );
       cy.findByText(BUTTON_TEXT).click().click();
 

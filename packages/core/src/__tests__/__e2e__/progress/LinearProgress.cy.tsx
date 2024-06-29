@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as linearProgressStories from "@stories/progress/linear-progress.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(linearProgressStories);
 const { Default, Indeterminate } = composedStories;

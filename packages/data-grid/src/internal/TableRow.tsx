@@ -1,22 +1,22 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   Children,
+  type MouseEventHandler,
   cloneElement,
   isValidElement,
-  MouseEventHandler,
 } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer } from "@salt-ds/core";
 
 import { BaseCell } from "../BaseCell";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import type { GridColumnModel, GridRowModel } from "../Grid";
+import type { CellValidationState } from "../GridColumn";
 import { useGridContext } from "../GridContext";
-import { CellValidationState } from "../GridColumn";
 import { RowValidationStatusContext } from "../RowValidationStatus";
 
-import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
+import { FakeCell } from "./FakeCell";
 
 import tableRowCss from "./TableRow.css";
 

@@ -1,6 +1,6 @@
 import type {
-  MosaicAppProps,
   MiddlewarePresetsProps,
+  MosaicAppProps,
 } from "@jpmorganchase/mosaic-site-middleware";
 
 /**

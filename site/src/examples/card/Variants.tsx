@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Card, StackLayout, Text } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const Variants = (): ReactElement => {

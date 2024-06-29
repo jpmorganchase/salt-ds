@@ -1,15 +1,15 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
 import {
-  StackLayout,
   FlexItem,
-  FLEX_ALIGNMENT_BASE as flexAlignment,
   FormField,
   FormFieldLabel,
-  RadioButtonGroup,
   RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  FLEX_ALIGNMENT_BASE as flexAlignment,
 } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import layoutAlignmentStyles from "./LayoutAlignment.module.css";
+import styles from "./index.module.css";
 
 type FlexAlignment = (typeof flexAlignment)[number];
 type FlexAlign = FlexAlignment | "stretch" | "baseline";
@@ -47,7 +47,7 @@ export const LayoutAlignment = (): ReactElement => {
             <RadioButton
               key={alignment}
               label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                1
+                1,
               )}`}
               value={alignment}
             />

@@ -1,7 +1,7 @@
-import { useMemo } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useMemo } from "react";
 
 import columDropTargetCss from "./ColumnDropTarget.css";
 

@@ -1,8 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
-import { CSSProperties, useMemo, useRef } from "react";
-import { ListItem, ListItemProps, ListItemType } from "../../list";
-import { QueryInputCategory } from "../queryInputTypes";
+import { type CSSProperties, useMemo, useRef } from "react";
+import { ListItem, type ListItemProps, type ListItemType } from "../../list";
+import type { QueryInputCategory } from "../queryInputTypes";
 import { useCategoryListContext } from "./CategoryListContext";
 
 const withBaseName = makePrefixer("saltCategoryListItem");
@@ -21,7 +21,7 @@ export const CategoryListItem: ListItemType<QueryInputCategory> =
       () => ({
         minWidth: context.width,
       }),
-      [context.width]
+      [context.width],
     );
 
     return (

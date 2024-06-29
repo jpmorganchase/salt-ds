@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Button,
   Menu,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 const features = [
   {

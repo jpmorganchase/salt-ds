@@ -1,4 +1,11 @@
+import { useIdMemo } from "@salt-ds/core";
 import { useCallback, useRef } from "react";
+import { partition } from "../utils";
+import type {
+  OverflowHookProps,
+  OverflowHookResult,
+  OverflowItem,
+} from "./overflowTypes";
 import {
   addAll,
   allExceptOverflowIndicator,
@@ -8,13 +15,6 @@ import {
   notOverflowed,
   popNextItemByPriority,
 } from "./overflowUtils";
-import {
-  OverflowItem,
-  OverflowHookProps,
-  OverflowHookResult,
-} from "./overflowTypes";
-import { partition } from "../utils";
-import { useIdMemo } from "@salt-ds/core";
 
 const NO_OVERFLOW_INDICATOR = { size: 0 };
 
@@ -58,7 +58,7 @@ export const useOverflow = ({
         }
       }
     },
-    [orientation, overflowContainerRef]
+    [orientation, overflowContainerRef],
   );
 
   const getAllOverflowedItems = useCallback(
@@ -80,7 +80,7 @@ export const useOverflow = ({
       }
       return overflowedItems;
     },
-    [overflowItemsRef]
+    [overflowItemsRef],
   );
 
   const getOverflowedItems = useCallback(
@@ -107,7 +107,7 @@ export const useOverflow = ({
       }
       return newlyOverflowedItems;
     },
-    [overflowItemsRef]
+    [overflowItemsRef],
   );
 
   const getReinstatedItems = useCallback(
@@ -117,7 +117,7 @@ export const useOverflow = ({
 
       const [overflowedItems, visibleItems] = partition(
         managedItems,
-        isOverflowed
+        isOverflowed,
       );
       const overflowCount = overflowedItems.length;
       // TODO calculate this without using fullWidth if we have OVERFLOW
@@ -127,20 +127,20 @@ export const useOverflow = ({
       // When we are dealing with overflowed items, we just use the current width of collapsed items.
       let visibleContentSize = visibleItems.reduce(
         allExceptOverflowIndicator,
-        0
+        0,
       );
       let diff = containerSize - visibleContentSize;
       const { size: overflowSize = 0 } =
         getOverflowIndicator(managedItems) || NO_OVERFLOW_INDICATOR;
       const totalOverflowedSize = overflowedItems.reduce(
         (sum, item) => sum + item.size,
-        0
+        0,
       );
       // It is important to make this check first, because the overflow indicator may have larger size than
       // individual overflowed item(s).
       if (totalOverflowedSize <= diff) {
         reinstatedItems.push(
-          ...overflowedItems.map((item) => ({ ...item, overflowed: false }))
+          ...overflowedItems.map((item) => ({ ...item, overflowed: false })),
         );
       } else {
         while (overflowedItems.length > 0) {
@@ -170,7 +170,7 @@ export const useOverflow = ({
       }
       return [overflowCount, reinstatedItems];
     },
-    []
+    [],
   );
 
   const resetMeasurements = useCallback(
@@ -179,7 +179,7 @@ export const useOverflow = ({
         const { current: managedItems } = overflowItemsRef;
         const renderedSize = managedItems.reduce(allExceptOverflowIndicator, 0);
         const overflowIndicator = managedItems.find(
-          (i) => i.isOverflowIndicator
+          (i) => i.isOverflowIndicator,
         );
         if (
           overflowIndicator &&
@@ -191,7 +191,7 @@ export const useOverflow = ({
         const existingOverflow = managedItems.filter(isOverflowed);
         const updates = getAllOverflowedItems(
           renderedSize,
-          innerContainerSize - overflowIndicatorSize.current
+          innerContainerSize - overflowIndicatorSize.current,
         );
 
         existingOverflow.forEach((item) => {
@@ -232,7 +232,13 @@ export const useOverflow = ({
         }
       }
     },
-    [dispatch, getAllOverflowedItems, id, overflowItemsRef, setContainerMinSize]
+    [
+      dispatch,
+      getAllOverflowedItems,
+      id,
+      overflowItemsRef,
+      setContainerMinSize,
+    ],
   );
 
   const updateOverflow = useCallback(
@@ -247,7 +253,7 @@ export const useOverflow = ({
         }
       }
     },
-    [dispatch, getOverflowedItems]
+    [dispatch, getOverflowedItems],
   );
 
   const removeOverflow = useCallback(
@@ -267,18 +273,18 @@ export const useOverflow = ({
         }
       }
     },
-    [dispatch, getReinstatedItems]
+    [dispatch, getReinstatedItems],
   );
 
   const handleResize = useCallback(
     (size: number, containerHasGrown?: boolean) => {
       const { current: managedItems } = overflowItemsRef;
       const wasOverflowing = managedItems.some(
-        (item) => item.isOverflowIndicator
+        (item) => item.isOverflowIndicator,
       );
       const { isOverflowing } = measureContainerOverflow(
         overflowContainerRef,
-        orientation
+        orientation,
       );
 
       innerContainerSizeRef.current = size;
@@ -308,7 +314,7 @@ export const useOverflow = ({
       removeOverflow,
       resetMeasurements,
       updateOverflow,
-    ]
+    ],
   );
 
   return {

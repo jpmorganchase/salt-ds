@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
 import { Badge, FlexLayout, NavigationItem } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const WithBadge = (): ReactElement => {
   const [horizontalActive, setHorizontalActive] = useState(false);

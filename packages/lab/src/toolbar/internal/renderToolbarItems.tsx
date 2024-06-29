@@ -1,16 +1,16 @@
-import React, { HTMLAttributes, ReactElement } from "react";
+import React, { type HTMLAttributes, type ReactElement } from "react";
 
-import { ToolbarAlignmentProps } from "../ToolbarProps";
-import { ToolbarField, ToolbarFieldProps } from "../toolbar-field";
+import type { ToolbarAlignmentProps } from "../ToolbarProps";
+import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
 
 import { Tooltray } from "../Tooltray";
 
 import {
+  type OverflowCollectionHookResult,
+  type OverflowItem,
   isCollapsedOrCollapsing,
   liftResponsivePropsToFormField,
-  orientationType,
-  OverflowCollectionHookResult,
-  OverflowItem,
+  type orientationType,
 } from "../../responsive";
 
 // These are the props we use for item alignment, either from individual element
@@ -27,7 +27,7 @@ interface ToolbarElementProps
 export const renderToolbarItems = (
   collectionHook: OverflowCollectionHookResult,
   overflowedItems: OverflowItem[] = [],
-  orientation: orientationType
+  orientation: orientationType,
 ): JSX.Element[] => {
   let centerAlign = false;
   let rightAlign = false;

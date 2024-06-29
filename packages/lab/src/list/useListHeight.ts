@@ -1,5 +1,9 @@
-import { useMemo, useState, useCallback, RefObject } from "react";
-import { useResizeObserver, HeightOnly, ResizeHandler } from "../responsive";
+import { type RefObject, useCallback, useMemo, useState } from "react";
+import {
+  HeightOnly,
+  type ResizeHandler,
+  useResizeObserver,
+} from "../responsive";
 
 export interface ListHeightHookProps {
   borderless?: boolean;
@@ -46,7 +50,7 @@ export const useListHeight = ({
           .fill(0)
           .reduce<number>(
             (total, _, index) => total + getItemHeight(index) + itemGapSize,
-            0
+            0,
           ) -
         // We don't want gap after the last item
         itemGapSize;

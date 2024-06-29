@@ -1,8 +1,8 @@
-import { ChangeEvent } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import type { ChangeEvent } from "react";
 import { AlphaInput } from "./AlphaInputField";
-import { RGBAValue } from "./Color";
+import type { RGBAValue } from "./Color";
 import { RGBInput } from "./RGBAInputField";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -19,7 +19,7 @@ interface RGBAInputProps {
   rgbaValue: RGBAValue;
   onSubmitRgb: (
     rgbaValue: RGBAValue,
-    e?: ChangeEvent<Element> | undefined
+    e?: ChangeEvent<Element> | undefined,
   ) => void;
   onSubmitAlpha: (alpha: number, e?: ChangeEvent<Element> | undefined) => void;
 }
@@ -57,7 +57,7 @@ export const RGBAInput = ({
         <div className={clsx(withBaseName("rgbaInputDiv"))}>
           <span className={clsx(withBaseName("rgbaText"))}>A</span>
           <AlphaInput
-            alphaValue={parseFloat(rgbaValue.a.toFixed(2))}
+            alphaValue={Number.parseFloat(rgbaValue.a.toFixed(2))}
             onSubmit={onSubmitAlpha}
           />
         </div>

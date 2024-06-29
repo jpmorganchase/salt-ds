@@ -1,20 +1,20 @@
 import {
   Children,
+  type ReactElement,
+  type ReactNode,
   cloneElement,
   isValidElement,
-  ReactElement,
-  ReactNode,
   useCallback,
   useMemo,
 } from "react";
 import { TabPanel } from "./TabPanel";
-import { TabDescriptor } from "./TabsTypes";
+import type { TabDescriptor } from "./TabsTypes";
 
 type TabMap = { [key: string]: TabDescriptor };
 
 export const useItemsWithIds = (
   children: ReactNode,
-  id = "root"
+  id = "root",
 ): [TabDescriptor[], (id: string) => TabDescriptor] => {
   const normalizeItems = useCallback(
     (items: ReactNode): [TabDescriptor[], TabMap] => {
@@ -53,7 +53,7 @@ export const useItemsWithIds = (
         });
       return [tabDescriptors, sourceMap];
     },
-    [id]
+    [id],
   );
 
   const [sourceWithIds, sourceMap] = useMemo(() => {
@@ -62,7 +62,7 @@ export const useItemsWithIds = (
 
   const itemById = useCallback(
     (id: string) => sourceMap[id],
-    [sourceWithIds, sourceMap]
+    [sourceWithIds, sourceMap],
   );
 
   return [sourceWithIds, itemById];

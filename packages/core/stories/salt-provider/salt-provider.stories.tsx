@@ -1,14 +1,14 @@
-import { SyntheticEvent, useState } from "react";
 import {
   Button,
   Card,
   Checkbox,
-  Density,
-  Mode,
+  type Density,
+  type Mode,
   SaltProvider,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
+import { type SyntheticEvent, useState } from "react";
 
 import "docs/story.css";
 
@@ -86,7 +86,7 @@ export const NestedProviders = () => {
   };
 
   const handleChangeOuterDensity = (
-    event: SyntheticEvent<HTMLButtonElement>
+    event: SyntheticEvent<HTMLButtonElement>,
   ) => {
     setOuterDensity(event.currentTarget.value as Density);
   };
@@ -95,7 +95,7 @@ export const NestedProviders = () => {
     setInnerMode(event.currentTarget.value as Mode);
   };
   const handleChangeInnerDensity = (
-    event: SyntheticEvent<HTMLButtonElement>
+    event: SyntheticEvent<HTMLButtonElement>,
   ) => {
     setInnerDensity(event.currentTarget.value as Density);
   };

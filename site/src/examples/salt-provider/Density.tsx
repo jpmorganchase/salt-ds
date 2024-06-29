@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { useDensity, StackLayout, Text, capitalize } from "@salt-ds/core";
+import { StackLayout, Text, capitalize, useDensity } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./Density.module.css";
 
 function Square() {

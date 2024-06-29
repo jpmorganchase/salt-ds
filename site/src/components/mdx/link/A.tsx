@@ -1,8 +1,8 @@
-import React from "react";
+import type React from "react";
 
 import {
   Link as LinkComponent,
-  LinkProps,
+  type LinkProps,
 } from "@jpmorganchase/mosaic-components";
 import styles from "./A.module.css";
 

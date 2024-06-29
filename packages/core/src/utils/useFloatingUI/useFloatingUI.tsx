@@ -1,11 +1,11 @@
 import {
   FloatingFocusManager,
-  FloatingFocusManagerProps,
+  type FloatingFocusManagerProps,
   FloatingPortal,
-  Middleware,
-  Platform,
-  Strategy,
-  UseFloatingOptions,
+  type Middleware,
+  type Platform,
+  type Strategy,
+  type UseFloatingOptions,
   autoUpdate,
   flip,
   limitShift,
@@ -14,8 +14,8 @@ import {
   useFloating,
 } from "@floating-ui/react";
 import {
-  ComponentPropsWithoutRef,
-  ReactNode,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
   createContext,
   forwardRef,
   useContext,
@@ -118,7 +118,7 @@ export interface FloatingComponentProviderProps
 }
 
 export function FloatingComponentProvider(
-  props: FloatingComponentProviderProps
+  props: FloatingComponentProviderProps,
 ) {
   const { Component, children } = props;
   const value = useMemo(() => ({ Component }), [Component]);
@@ -163,7 +163,7 @@ const defaultFloatingPlaform: FloatingPlatformContextType = {
 };
 
 const FloatingPlatformContext = createContext<FloatingPlatformContextType>(
-  defaultFloatingPlaform
+  defaultFloatingPlaform,
 );
 
 export interface FloatingPlatformProviderProps {
@@ -187,7 +187,7 @@ export function FloatingPlatformProvider(props: FloatingPlatformProviderProps) {
       middleware: middleware ?? defaultGetMiddleware,
       animationFrame: animationFrame || false,
     }),
-    [platformProp, middleware, animationFrame]
+    [platformProp, middleware, animationFrame],
   );
 
   return (
@@ -224,7 +224,7 @@ export function useFloatingUI(props: UseFloatingUIProps): UseFloatingUIReturn {
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     open,
     boolean,
-    reason
+    reason,
   ) => {
     update();
     onOpenChange?.(open, boolean, reason);

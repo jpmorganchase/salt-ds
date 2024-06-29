@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import React, { createContext, useContext, useState, useRef } from "react";
 
 // //////////////////////////////////////////////////////////////////////////////
 // SUPER HACKS AHEAD: The React team will hate this enough to hopefully give us

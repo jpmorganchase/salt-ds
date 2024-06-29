@@ -1,10 +1,10 @@
-import { ReactElement } from "react";
-import { Text, FlowLayout, MultilineInput } from "@salt-ds/core";
+import { FlowLayout, MultilineInput, Text } from "@salt-ds/core";
 import {
   BankCheckSolidIcon,
   EditSolidIcon,
   HelpSolidIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const StaticAdornments = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>

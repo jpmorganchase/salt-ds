@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { ToggleButtonGroup, ToggleButton } from "@salt-ds/core";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const ToggleButtonGroupDefault = (): ReactElement => (
   <ToggleButtonGroup>

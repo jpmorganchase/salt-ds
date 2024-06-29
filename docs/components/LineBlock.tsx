@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ReplacementToken } from "./ReplacementToken";
 
 import "./LineBlock.css";
@@ -42,8 +42,8 @@ export const LineBlock = ({
               lineStyle === "dashed"
                 ? "10,10"
                 : lineStyle === "dotted"
-                ? "3,3"
-                : "0"
+                  ? "3,3"
+                  : "0"
             }
           />
         </svg>

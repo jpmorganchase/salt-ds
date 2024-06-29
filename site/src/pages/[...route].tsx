@@ -1,11 +1,11 @@
-import React from "react";
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { Body } from "@jpmorganchase/mosaic-site-components";
 import {
+  type MiddlewareResult,
   createMiddlewareRunner,
-  MiddlewareResult,
   middlewarePresets,
 } from "@jpmorganchase/mosaic-site-middleware";
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import React from "react";
 
 import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
 
@@ -21,11 +21,11 @@ import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
  */
 const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>(
   {},
-  middlewarePresets
+  middlewarePresets,
 );
 
 export async function getServerSideProps(
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ): Promise<Partial<GetServerSidePropsResult<MiddlewareResult<MyAppProps>>>> {
   const props = await middlewareRunner(context, {});
   return props;
@@ -37,6 +37,6 @@ const MyApp = (
     [x: string]: any;
     components?: {} | undefined;
     type: any;
-  }
+  },
 ) => <Body {...props} />;
 export default MyApp;

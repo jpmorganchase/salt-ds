@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Banner,
   BannerActions,
   BannerContent,
-  BannerProps,
+  type BannerProps,
   Button,
+  FlexItem,
+  FlowLayout,
   Link,
   StackLayout,
   Text,
-  ValidationStatus,
-  FlowLayout,
-  FlexItem,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
 
 export default {
   title: "Core/Banner",

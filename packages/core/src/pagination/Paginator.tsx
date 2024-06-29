@@ -1,13 +1,13 @@
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, MouseEventHandler } from "react";
+import { type HTMLAttributes, type MouseEventHandler, forwardRef } from "react";
 import { Button } from "../button";
 import { makePrefixer } from "../utils";
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { PageRanges } from "./PageRanges";
 import { usePaginationContext } from "./usePaginationContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import paginatorCss from "./Paginator.css";
 
@@ -27,7 +27,7 @@ export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
 export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
   function Paginator(
     { className, boundaryCount, siblingCount, ...restProps },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -72,5 +72,5 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
         </Button>
       </div>
     );
-  }
+  },
 );

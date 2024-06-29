@@ -1,10 +1,10 @@
-import { forwardRef, ReactNode } from "react";
-import { clsx } from "clsx";
-import { Button, ButtonProps, makePrefixer } from "@salt-ds/core";
+import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
 import { ChevronDownIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import { type ReactNode, forwardRef } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import menuButtonTrigger from "./MenuButtonTrigger.css";
 
@@ -22,7 +22,7 @@ export const MenuButtonTrigger = forwardRef<
   MenuButtonTriggerProps
 >(function MenuButtonTrigger(
   { className, hideCaret, isMenuOpen, children, ...rest },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

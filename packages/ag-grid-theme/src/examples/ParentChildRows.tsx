@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import parentChildExampleColumns from "../dependencies/parentChildExampleColumns";
 import parentChildExampleData from "../dependencies/parentChildExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";

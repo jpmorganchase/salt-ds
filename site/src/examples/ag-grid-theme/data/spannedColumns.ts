@@ -1,4 +1,4 @@
-import { ColDef, ColSpanParams } from "ag-grid-community";
+import type { ColDef, ColSpanParams } from "ag-grid-community";
 
 export const spannedColumns: ColDef[] = [
   {

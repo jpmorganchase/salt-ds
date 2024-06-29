@@ -1,6 +1,6 @@
-import { MenuButton, MenuDescriptor } from "@salt-ds/lab";
 import { MicroMenuIcon, UserSolidIcon } from "@salt-ds/icons";
-import { StoryFn } from "@storybook/react";
+import { MenuButton, type MenuDescriptor } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/MenuButton",
@@ -8,7 +8,7 @@ export default {
 };
 
 const makeMenuItems = (levels: number, count: number): MenuDescriptor[] => {
-  const f = (level: number = 0, parentName?: string) =>
+  const f = (level = 0, parentName?: string) =>
     [...Array(count).keys()].map((i) => {
       const name = parentName ? [parentName, `${i + 1}`].join(".") : `${i + 1}`;
       const item: MenuDescriptor = {
@@ -24,7 +24,7 @@ const makeMenuItems = (levels: number, count: number): MenuDescriptor[] => {
 
 const initialSource = { menuItems: makeMenuItems(3, 3) };
 
-interface PrimaryStoryProps {}
+type PrimaryStoryProps = {};
 
 const PrimaryStory: StoryFn<PrimaryStoryProps> = (props) => {
   return (
@@ -40,7 +40,7 @@ const PrimaryStory: StoryFn<PrimaryStoryProps> = (props) => {
 
 export const Primary = PrimaryStory.bind({});
 
-interface SecondaryStoryProps {}
+type SecondaryStoryProps = {};
 
 const SecondaryStory: StoryFn<SecondaryStoryProps> = (props) => {
   return (
@@ -55,7 +55,7 @@ const SecondaryStory: StoryFn<SecondaryStoryProps> = (props) => {
 
 export const Secondary = SecondaryStory.bind({});
 
-interface HideCaretStoryProps {}
+type HideCaretStoryProps = {};
 
 const HideCaretStory: StoryFn<HideCaretStoryProps> = (props) => (
   <MenuButton

@@ -9,7 +9,7 @@ export interface EditorContext {
 }
 
 export const EditorContext = createContext<EditorContext | undefined>(
-  undefined
+  undefined,
 );
 export const useEditorContext = () => {
   const c = useContext(EditorContext);

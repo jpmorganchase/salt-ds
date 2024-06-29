@@ -1,6 +1,6 @@
 export function getAnnouncement(
   itemCount = 0,
-  firstItem: string | null
+  firstItem: string | null,
 ): string {
   return itemCount === 0
     ? "no results"

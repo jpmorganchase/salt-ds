@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useCalendar } from "../useCalendar";
+import type { useCalendar } from "../useCalendar";
 
 interface CalendarState {
   state: ReturnType<typeof useCalendar>["state"];

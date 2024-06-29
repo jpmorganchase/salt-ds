@@ -8,7 +8,7 @@ import {
 import { BeakerIcon, CheckIcon } from "@storybook/icons";
 import { useGlobals } from "@storybook/manager-api";
 import { clsx } from "clsx";
-import React, { AnchorHTMLAttributes } from "react";
+import React, { type AnchorHTMLAttributes } from "react";
 
 import "./ThemeNextToolbar.css";
 
@@ -100,7 +100,7 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
           };
         }),
       ];
-    }
+    },
   );
 
   return (

@@ -1,27 +1,27 @@
 import {
+  type UseFloatingUIProps,
   useFloatingUI,
-  UseFloatingUIProps,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { forwardRef, useCallback, useEffect, useMemo, useState } from "react";
+import { List, type ListProps } from "../list-deprecated";
 import { Portal } from "../portal";
-import { List, ListProps } from "../list-deprecated";
 
-import { DefaultMenuItem, MenuItemProps } from "./CascadingMenuItem";
+import { useWindow as usePortalWindow } from "../window";
+import { DefaultMenuItem, type MenuItemProps } from "./CascadingMenuItem";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
 import { getKeyDownHandlers } from "./internal/keydownHandlers";
 import {
   getHeight,
   getMaxHeight,
-  screenBounds,
+  type screenBounds,
 } from "./internal/menuPositioning";
-import { hasIcon, hasSubMenu, menuState } from "./internal/stateUtils";
+import { hasIcon, hasSubMenu, type menuState } from "./internal/stateUtils";
 import { useMouseHandlers } from "./internal/useMouseHandlers";
-import { refsManager } from "./internal/useRefsManager";
+import type { refsManager } from "./internal/useRefsManager";
 import { stateChangeTypes } from "./stateChangeTypes";
-import { useWindow as usePortalWindow } from "../window";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -101,7 +101,7 @@ export const CascadingMenuList = forwardRef<
     (node: HTMLElement) => {
       refsManager.set(menuId, node);
     },
-    [refsManager, menuId]
+    [refsManager, menuId],
   );
 
   // TODO removed useCharacteristic here
@@ -159,12 +159,12 @@ export const CascadingMenuList = forwardRef<
   const [handleMouseMove, handleMouseOut] = useMouseHandlers(
     props,
     isMenuActiveState,
-    menuRef
+    menuRef,
   );
 
   const hasEndAdornment = useMemo(
     () => data.menuItems.some(hasSubMenu),
-    [data]
+    [data],
   );
   const hasStartAdornment = useMemo(() => data.menuItems.some(hasIcon), [data]);
   const rowHeight = rowHeightProp != null ? rowHeightProp : defaultRowHeight;
@@ -187,8 +187,8 @@ export const CascadingMenuList = forwardRef<
           : parentElement.querySelector(
               `#${
                 parentElement.getAttribute("aria-activedescendant") as string
-              }`
-            )
+              }`,
+            ),
       );
     }
   }, [reference, isRoot, parentElement]);

@@ -1,19 +1,19 @@
+import { clsx } from "clsx";
 import {
   Children,
+  type ElementType,
+  type ReactElement,
   forwardRef,
-  ReactElement,
   useEffect,
-  ElementType,
 } from "react";
-import { clsx } from "clsx";
 
-import { GridLayout, GridLayoutProps } from "../grid-layout";
+import type { BorderItemProps } from "../border-item";
+import { GridLayout, type GridLayoutProps } from "../grid-layout";
 import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
   makePrefixer,
-  PolymorphicRef,
-  PolymorphicComponentPropWithRef,
 } from "../utils";
-import { BorderItemProps } from "../border-item";
 
 export type BorderLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -43,17 +43,17 @@ const withBaseName = makePrefixer("saltBorderLayout");
 const numberOfColumns = 3;
 
 type BorderLayoutComponent = <T extends ElementType = "div">(
-  props: BorderLayoutProps<T>
+  props: BorderLayoutProps<T>,
 ) => ReactElement | null;
 
 export const BorderLayout: BorderLayoutComponent = forwardRef(
   <T extends ElementType>(
     { children, className, gap, style, ...rest }: BorderLayoutProps<T>,
-    ref?: PolymorphicRef<T>
+    ref?: PolymorphicRef<T>,
   ) => {
     const borderAreas = Children.map(
       children,
-      (child: ReactElement<BorderItemProps<T>>) => child.props.position
+      (child: ReactElement<BorderItemProps<T>>) => child.props.position,
     );
 
     const topSection = borderAreas.includes("north")
@@ -78,7 +78,7 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
       if (process.env.NODE_ENV !== "production") {
         if (!hasMainSection) {
           console.warn(
-            "No main section has been found. A main section should be provided."
+            "No main section has been found. A main section should be provided.",
           );
         }
       }
@@ -101,5 +101,5 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
         {children}
       </GridLayout>
     );
-  }
+  },
 );

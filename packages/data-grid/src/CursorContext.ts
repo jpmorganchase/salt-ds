@@ -12,7 +12,7 @@ export interface CursorContext {
 }
 
 export const CursorContext = createContext<CursorContext | undefined>(
-  undefined
+  undefined,
 );
 export const useCursorContext = () => {
   const c = useContext(CursorContext);

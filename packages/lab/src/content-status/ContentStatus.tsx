@@ -1,20 +1,26 @@
 import {
   Button,
-  makePrefixer,
   Text,
+  makePrefixer,
   useAriaAnnouncer,
   useId,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, MouseEvent, Ref, useEffect } from "react";
+import {
+  type HTMLAttributes,
+  type MouseEvent,
+  type Ref,
+  forwardRef,
+  useEffect,
+} from "react";
 
 import {
   StatusIndicator,
-  StatusIndicatorProps,
+  type StatusIndicatorProps,
 } from "./internal/StatusIndicator";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import contentStatusCss from "./ContentStatus.css";
 
@@ -45,7 +51,7 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
       value,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -121,5 +127,5 @@ export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
         )}
       </div>
     );
-  }
+  },
 );

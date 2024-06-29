@@ -1,3 +1,5 @@
+import { FlexLayout } from "@salt-ds/core";
+import { useState } from "react";
 import {
   Grid,
   GridColumn,
@@ -5,10 +7,8 @@ import {
   RowSelectionCheckboxColumn,
 } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
-import { useState } from "react";
-import { FlexLayout } from "@salt-ds/core";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Data Grid",

@@ -1,5 +1,5 @@
-import { Suspense } from "react";
 import { LazyCountrySymbol } from "@salt-ds/countries";
+import { Suspense } from "react";
 
 const code = "AD" as const;
 

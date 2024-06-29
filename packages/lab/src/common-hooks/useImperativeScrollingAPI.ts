@@ -1,10 +1,10 @@
 import {
-  ForwardedRef,
-  MutableRefObject,
+  type ForwardedRef,
+  type MutableRefObject,
   useImperativeHandle,
   useMemo,
 } from "react";
-import { CollectionHookResult, CollectionItem } from "./collectionTypes";
+import type { CollectionHookResult, CollectionItem } from "./collectionTypes";
 
 export interface ScrollingAPI<Item> {
   scrollToIndex: (itemIndex: number) => void;
@@ -51,7 +51,7 @@ export const useImperativeScrollingAPI = <Item>({
         }
       },
     }),
-    [collectionHook.data, collectionHook.toCollectionItem, scrollIntoView]
+    [collectionHook.data, collectionHook.toCollectionItem, scrollIntoView],
   );
 
   useImperativeHandle(
@@ -63,6 +63,6 @@ export const useImperativeScrollingAPI = <Item>({
         return noScrolling;
       }
     },
-    [scrollHandles]
+    [scrollHandles],
   );
 };

@@ -4,7 +4,7 @@ import {
   LinearProgress,
   StackLayout,
 } from "@salt-ds/core";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 export const HiddenLabel = (): ReactElement => {
   return (

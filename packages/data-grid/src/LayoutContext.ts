@@ -8,7 +8,7 @@ export interface LayoutContext {
 }
 
 export const LayoutContext = createContext<LayoutContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const useLayoutContext = () => {

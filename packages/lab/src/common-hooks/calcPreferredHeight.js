@@ -22,7 +22,7 @@ export const calcPreferredHeight = (props = {}) => {
     preferredHeight +=
       Array.from({ length: preferredItemCount }).reduce(
         (total, _, index) => total + Number(getItemHeight(index)) + gapSize,
-        0
+        0,
       ) -
       // We don't want gap after the last item
       gapSize;

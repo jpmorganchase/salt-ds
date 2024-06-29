@@ -1,16 +1,16 @@
-import { StoryFn } from "@storybook/react";
-import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
 import { HomeIcon, TreeIcon } from "@salt-ds/icons";
+import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Breadcrumbs",
   component: "Bread",
 };
 
-interface BasicBreadcrumbsStoryProps {}
+type BasicBreadcrumbsStoryProps = {};
 
 const BasicBreadcrumbsTemplate: StoryFn<BasicBreadcrumbsStoryProps> = (
-  props
+  props,
 ) => {
   return (
     <Breadcrumbs>
@@ -23,10 +23,10 @@ const BasicBreadcrumbsTemplate: StoryFn<BasicBreadcrumbsStoryProps> = (
 
 export const Basic = BasicBreadcrumbsTemplate.bind({});
 
-interface BreadcrumbsWrappingStoryProps {}
+type BreadcrumbsWrappingStoryProps = {};
 
 const BreadcrumbsWrappingTemplate: StoryFn<BreadcrumbsWrappingStoryProps> = (
-  props
+  props,
 ) => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" style={{ width: 250 }} wrap>
@@ -39,7 +39,7 @@ const BreadcrumbsWrappingTemplate: StoryFn<BreadcrumbsWrappingStoryProps> = (
 
 export const WithWrap = BreadcrumbsWrappingTemplate.bind({});
 
-interface IconDescriptorsStoryProps {}
+type IconDescriptorsStoryProps = {};
 
 const IconDescriptorsStory: StoryFn<IconDescriptorsStoryProps> = (props) => (
   <Breadcrumbs data-testid="breadcrumbs-example">
@@ -55,7 +55,7 @@ const IconDescriptorsStory: StoryFn<IconDescriptorsStoryProps> = (props) => (
 
 export const IconDescriptors = IconDescriptorsStory.bind({});
 
-interface MaximumItemWidthAndTruncationStoryProps {}
+type MaximumItemWidthAndTruncationStoryProps = {};
 
 const MaximumItemWidthAndTruncationStory: StoryFn<
   MaximumItemWidthAndTruncationStoryProps
@@ -72,10 +72,10 @@ const MaximumItemWidthAndTruncationStory: StoryFn<
 export const MaximumItemWidthAndTruncation =
   MaximumItemWidthAndTruncationStory.bind({});
 
-interface WithoutCurrentLevelStoryProps {}
+type WithoutCurrentLevelStoryProps = {};
 
 const WithoutCurrentLevelStory: StoryFn<WithoutCurrentLevelStoryProps> = (
-  props
+  props,
 ) => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" hideCurrentLevel>
@@ -88,7 +88,7 @@ const WithoutCurrentLevelStory: StoryFn<WithoutCurrentLevelStoryProps> = (
 
 export const WithoutCurrentLevel = WithoutCurrentLevelStory.bind({});
 
-interface WithOverflowMenuStoryProps {}
+type WithOverflowMenuStoryProps = {};
 
 const WithOverflowMenuStory: StoryFn<WithOverflowMenuStoryProps> = (props) => {
   return (
@@ -131,7 +131,7 @@ const WithOverflowMenuStory: StoryFn<WithOverflowMenuStoryProps> = (props) => {
 
 export const WithOverflowMenu = WithOverflowMenuStory.bind({});
 
-interface OverflowAtFirstPositionStoryProps {}
+type OverflowAtFirstPositionStoryProps = {};
 
 const OverflowAtFirstPositionStory: StoryFn<
   OverflowAtFirstPositionStoryProps

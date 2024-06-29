@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
 import {
-  FormField,
   Checkbox,
-  StackLayout,
-  FormFieldLabel,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   Input,
-  InputProps,
+  type InputProps,
+  StackLayout,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const GroupedWithVariant = (): ReactElement => {
   const groupedControlProps = { variant: "secondary" } as Partial<InputProps>;

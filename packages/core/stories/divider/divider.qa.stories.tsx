@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
-import { StackLayout, Divider } from "@salt-ds/core";
+import { Divider, StackLayout } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Divider/Divider QA",

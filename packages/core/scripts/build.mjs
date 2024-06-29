@@ -1,10 +1,10 @@
-import esbuild from "esbuild";
-import path, { dirname } from "node:path";
-import fs from "node:fs";
-import { deleteSync } from "del";
-import { fileURLToPath } from "node:url";
-import glob from "fast-glob";
 import crypto from "node:crypto";
+import fs from "node:fs";
+import path, { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import { deleteSync } from "del";
+import esbuild from "esbuild";
+import glob from "fast-glob";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildFolder = path.join(__dirname, "../../../dist/salt-ds-core/css");
@@ -31,9 +31,9 @@ function createCssEntryFile(callback) {
     writeLine(
       `@import "${path.posix.relative(
         path.posix.dirname(entryFile),
-        cssFile
+        cssFile,
       )}";`,
-      index
+      index,
     );
   });
 
@@ -62,7 +62,7 @@ function runBuild() {
       fs.mkdirSync(cssFolder, { recursive: true });
       fs.copyFileSync(
         path.join(buildFolder, outfileName),
-        path.join(cssFolder, outfileName)
+        path.join(cssFolder, outfileName),
       );
     })
     .finally(() => {

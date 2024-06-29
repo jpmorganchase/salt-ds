@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { FlowLayout, StackLayout, StatusIndicator, Label } from "@salt-ds/core";
+import { FlowLayout, Label, StackLayout, StatusIndicator } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Labelling = (): ReactElement => (
   <FlowLayout gap={10}>

@@ -1,5 +1,5 @@
+import { ToggleButton, type ToggleButtonProps } from "@salt-ds/core";
 import { HomeIcon } from "@salt-ds/icons";
-import { ToggleButton, ToggleButtonProps } from "@salt-ds/core";
 import { useState } from "react";
 
 describe("GIVEN a ToggleButton with Icon and Text", () => {
@@ -44,7 +44,7 @@ describe("GIVEN a disabled ToggleButton with Icon and Text", () => {
       <ToggleButton disabled value="home" onChange={selectionChangeSpy}>
         <HomeIcon aria-hidden />
         Home
-      </ToggleButton>
+      </ToggleButton>,
     );
 
     cy.findByRole("button").should("have.text", "Home");

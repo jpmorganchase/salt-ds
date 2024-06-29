@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useRef, useState } from "react";
-import { StoryFn } from "@storybook/react";
 import { Button, SaltProvider, Text } from "@salt-ds/core";
 import { TabPanel, Tabs } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { CloseTabWarningDialog } from "../components";
 
 export default {
@@ -51,7 +51,7 @@ export const Overflow: TabsStory = () => {
       "Virtual Branch",
       "More Services",
     ],
-    []
+    [],
   );
   return (
     <SaltProvider>
@@ -81,7 +81,7 @@ export const WithoutOverflow: TabsStory = () => {
       "Virtual Branch",
       "More Services",
     ],
-    []
+    [],
   );
   return (
     <SaltProvider>
@@ -148,7 +148,7 @@ export const Controlled: TabsStory = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [closingTabIndex, setClosingTabIndex] = useState<number | undefined>(
-    undefined
+    undefined,
   );
   const [tabs, setTabs] = useState([
     { label: "Home", closeable: false },
@@ -164,7 +164,7 @@ export const Controlled: TabsStory = () => {
       setIsDialogOpen(true);
       setClosingTabIndex(tabIndex);
     },
-    [setClosingTabIndex, setIsDialogOpen]
+    [setClosingTabIndex, setIsDialogOpen],
   );
 
   const onTabDidClose = useCallback(() => {
@@ -278,7 +278,7 @@ export const AddNewNoFocus: TabsStory = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [closingTabIndex, setClosingTabIndex] = useState<number | undefined>(
-    undefined
+    undefined,
   );
   const [tabs, setTabs] = useState([
     { label: "Home" },
@@ -292,7 +292,7 @@ export const AddNewNoFocus: TabsStory = () => {
       setIsDialogOpen(true);
       setClosingTabIndex(tabIndex);
     },
-    [setClosingTabIndex, setIsDialogOpen]
+    [setClosingTabIndex, setIsDialogOpen],
   );
 
   const onTabDidClose = useCallback(() => {
@@ -421,7 +421,7 @@ export const Close: TabsStory = () => {
       { label: "More Services", enableClose: true },
     ],
 
-    []
+    [],
   );
   const [tabs, setTabs] = useState(initialTabs);
 
@@ -443,7 +443,7 @@ export const Close: TabsStory = () => {
         }
       }
     },
-    [activeTabIndex, tabs]
+    [activeTabIndex, tabs],
   );
 
   const resetTabs = () => setTabs(initialTabs);

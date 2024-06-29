@@ -1,26 +1,31 @@
 import { useIdMemo as useId } from "@salt-ds/core";
-import { ForwardedRef, forwardRef, ReactElement, useCallback } from "react";
+import {
+  type ForwardedRef,
+  type ReactElement,
+  forwardRef,
+  useCallback,
+} from "react";
 
-import { DropdownBase, DropdownBaseProps } from "../dropdown";
-import { List, ListProps } from "../list";
+import { DropdownBase, type DropdownBaseProps } from "../dropdown";
 import {
   InputLegacy as Input,
-  InputLegacyProps as InputProps,
+  type InputLegacyProps as InputProps,
 } from "../input-legacy";
+import { List, type ListProps } from "../list";
 
 import {
-  CollectionItem,
+  type CollectionItem,
   CollectionProvider,
-  SelectionProps,
-  SelectionStrategy,
-  SingleSelectionStrategy,
+  type SelectionProps,
+  type SelectionStrategy,
+  type SingleSelectionStrategy,
   useCollectionItems,
 } from "../common-hooks";
 import { useCombobox } from "./useCombobox";
 
 export interface ComboBoxProps<
   Item = string,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > extends Omit<
       DropdownBaseProps,
       "triggerComponent" | "onBlur" | "onChange" | "onFocus"
@@ -48,7 +53,7 @@ export interface ComboBoxProps<
 
 export const ComboBox = forwardRef(function Combobox<
   Item = string,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 >(
   {
     InputProps,
@@ -77,7 +82,7 @@ export const ComboBox = forwardRef(function Combobox<
     width = 180,
     ...props
   }: ComboBoxProps<Item, Selection>,
-  forwardedRef: ForwardedRef<HTMLDivElement>
+  forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
   const id = useId(idProp);
 
@@ -126,7 +131,7 @@ export const ComboBox = forwardRef(function Combobox<
 
   const collectionItemsToItem = useCallback(
     (
-      sel?: CollectionItem<Item> | null | CollectionItem<Item>[]
+      sel?: CollectionItem<Item> | null | CollectionItem<Item>[],
     ):
       | undefined
       | (Selection extends SingleSelectionStrategy ? Item | null : Item[]) => {
@@ -141,7 +146,7 @@ export const ComboBox = forwardRef(function Combobox<
         return sel as returnType;
       }
     },
-    []
+    [],
   );
 
   return (
@@ -181,5 +186,5 @@ export const ComboBox = forwardRef(function Combobox<
 }) as <Item, Selection extends SelectionStrategy = "default">(
   props: ComboBoxProps<Item, Selection> & {
     ref?: ForwardedRef<HTMLDivElement>;
-  }
+  },
 ) => ReactElement<ComboBoxProps<Item, Selection>>;

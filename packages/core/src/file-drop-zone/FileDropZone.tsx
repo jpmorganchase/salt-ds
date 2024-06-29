@@ -1,20 +1,20 @@
 import { clsx } from "clsx";
 import {
-  DragEventHandler,
+  type ComponentPropsWithoutRef,
+  type DragEvent,
+  type DragEventHandler,
   forwardRef,
-  DragEvent,
   useRef,
   useState,
-  ComponentPropsWithoutRef,
 } from "react";
 import { containsFiles, extractFiles } from "./internal/utils";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
-import fileDropZoneCss from "./FileDropZone.css";
-import { ValidationStatus } from "../status-indicator";
+import type { ValidationStatus } from "../status-indicator";
 import { makePrefixer, useForkRef } from "../utils";
+import fileDropZoneCss from "./FileDropZone.css";
 
 export interface FileDropZoneProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onDrop"> {
@@ -46,7 +46,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
       onDrop,
       ...restProps
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -112,7 +112,7 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
             [withBaseName("active")]: isActive,
             [withBaseName("disabled")]: disabled,
           },
-          className
+          className,
         )}
         aria-disabled={disabled}
         onDragLeave={handleDragLeave}
@@ -124,5 +124,5 @@ export const FileDropZone = forwardRef<HTMLDivElement, FileDropZoneProps>(
         {children}
       </div>
     );
-  }
+  },
 );

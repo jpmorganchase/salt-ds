@@ -1,22 +1,27 @@
 // TODO close button needs to be a button. Hence tab needs to include 2 buttons
-import { Button, ButtonProps, makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  Button,
+  type ButtonProps,
+  makePrefixer,
+  useForkRef,
+} from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  FocusEvent,
-  ForwardedRef,
-  KeyboardEvent,
-  MouseEvent,
-  ReactElement,
+  type FocusEvent,
+  type ForwardedRef,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactElement,
   forwardRef,
   useCallback,
   useRef,
   useState,
 } from "react";
-import { EditableLabel, EditableLabelProps } from "../editable-label";
-import { TabProps } from "./TabsTypes";
+import { EditableLabel, type EditableLabelProps } from "../editable-label";
+import type { TabProps } from "./TabsTypes";
 
 import tabCss from "./Tab.css";
 
@@ -67,11 +72,11 @@ export const Tab = forwardRef(function Tab(
     tabIndex,
     ...props
   }: TabProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ): ReactElement<TabProps> {
   if (index === undefined || onClick === undefined || onKeyDown === undefined) {
     throw Error(
-      "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip"
+      "index, onClick, onKeyUp, onKeyDown are required props, they would nornally be injected by Tabstrip, are you creating a Tab outside of a Tabstrip",
     );
   }
   const targetWindow = useWindow();
@@ -92,7 +97,7 @@ export const Tab = forwardRef(function Tab(
         onClick(e, index);
       }
     },
-    [editing, index, onClick]
+    [editing, index, onClick],
   );
   const handleKeyDownMain = (e: KeyboardEvent<HTMLElement>) => {
     onKeyDown(e);
@@ -101,7 +106,7 @@ export const Tab = forwardRef(function Tab(
   const handleOnExitEditMode: EditableLabelProps["onExitEditMode"] = (
     originalValue = "",
     editedValue = "",
-    allowDeactivation = true
+    allowDeactivation = true,
   ) => onExitEditMode(originalValue, editedValue, allowDeactivation, index);
 
   const handleKeyUp = (e: KeyboardEvent) => {
@@ -157,7 +162,7 @@ export const Tab = forwardRef(function Tab(
     if (editableRef.current) {
       const editable = editableRef.current as HTMLElement;
       const input = editable.querySelector(
-        ".saltEditableLabel-input"
+        ".saltEditableLabel-input",
       ) as HTMLInputElement;
       input?.focus();
     }

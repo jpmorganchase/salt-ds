@@ -1,5 +1,6 @@
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
+import { CallIcon, ChatIcon, MessageIcon } from "@salt-ds/icons";
 import {
   ContactAction,
   ContactActions,
@@ -13,8 +14,7 @@ import {
   ContactTertiaryInfo,
   MailLinkComponent,
 } from "@salt-ds/lab";
-import { CallIcon, ChatIcon, MessageIcon } from "@salt-ds/icons";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 import avatar1 from "../assets/avatar1.png";
 
 export default {
@@ -78,8 +78,8 @@ const getComponent = (props: { variant?: string; className?: string }) => {
           variant === "compact"
             ? "compact"
             : variant === "mini"
-            ? "mini"
-            : "default"
+              ? "mini"
+              : "default"
         }
       >
         {!!avatar && <ContactAvatar>{avatar1}</ContactAvatar>}

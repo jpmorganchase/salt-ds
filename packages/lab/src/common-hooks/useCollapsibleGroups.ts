@@ -1,7 +1,7 @@
-import { MouseEvent, useCallback } from "react";
+import { type MouseEvent, useCallback } from "react";
+import type { CollectionHookResult, CollectionItem } from "./collectionTypes";
 import { ArrowLeft, ArrowRight, Enter } from "./keyUtils";
-import { ListHandlers } from "./selectionTypes";
-import { CollectionHookResult, CollectionItem } from "./collectionTypes";
+import type { ListHandlers } from "./selectionTypes";
 
 const NO_HANDLERS = {};
 const canToggleItem = (item: CollectionItem<unknown>) =>
@@ -11,7 +11,7 @@ const canSelectItem = (item: CollectionItem<unknown>) => true;
 
 const toggleIconClicked = (el: HTMLElement) => {
   const closestToggle = el.closest(
-    "[data-toggle],[aria-expanded]"
+    "[data-toggle],[aria-expanded]",
   ) as HTMLElement;
   return closestToggle.dataset.toggle === "true";
 };
@@ -63,7 +63,7 @@ export const useCollapsibleGroups = <Item>({
       collectionHook.data,
       collectionHook.expandGroupItem,
       highlightedIdx,
-    ]
+    ],
   );
 
   const handleClick = useCallback(
@@ -92,7 +92,7 @@ export const useCollapsibleGroups = <Item>({
       collectionHook.data,
       collectionHook.expandGroupItem,
       highlightedIdx,
-    ]
+    ],
   );
 
   /**

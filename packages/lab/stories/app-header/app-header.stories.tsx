@@ -1,14 +1,3 @@
-import { useState } from "react";
-import { AdjustableFlexbox as Flexbox } from "../components";
-import {
-  AppHeader,
-  Logo,
-  LogoImage,
-  Tab,
-  Tabstrip,
-  TabstripProps,
-  Tooltray /*, Toolbar */,
-} from "@salt-ds/lab";
 import { Badge, Button, Text } from "@salt-ds/core";
 import {
   FilterIcon,
@@ -17,12 +6,23 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@salt-ds/icons";
+import {
+  AppHeader,
+  Logo,
+  LogoImage,
+  Tab,
+  Tabstrip,
+  type TabstripProps,
+  Tooltray /*, Toolbar */,
+} from "@salt-ds/lab";
+import { useState } from "react";
+import { AdjustableFlexbox as Flexbox } from "../components";
 
 import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 import "docs/story.css";
 import "./Flexbox.css";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/App Header",

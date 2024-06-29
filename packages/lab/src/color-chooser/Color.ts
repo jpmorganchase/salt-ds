@@ -32,7 +32,7 @@ export class Color {
       this.color.toHex8String(),
       false,
       undefined,
-      true
+      true,
     );
   }
 

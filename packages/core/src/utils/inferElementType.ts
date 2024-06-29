@@ -1,4 +1,4 @@
-import type { DetailedHTMLProps, AnchorHTMLAttributes } from "react";
+import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
 
 export type inferElementType<T> = T extends keyof JSX.IntrinsicElements
   ? JSX.IntrinsicElements[T] extends DetailedHTMLProps<

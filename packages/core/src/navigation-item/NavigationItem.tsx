@@ -1,11 +1,15 @@
-import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
-import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
-import { ExpansionIcon } from "./ExpansionIcon";
+import {
+  type ComponentPropsWithoutRef,
+  type MouseEventHandler,
+  forwardRef,
+} from "react";
+import { makePrefixer } from "../utils";
 import { ConditionalWrapper } from "./ConditionalWrapper";
+import { ExpansionIcon } from "./ExpansionIcon";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import navigationItemCss from "./NavigationItem.css";
 
@@ -90,7 +94,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
               [withBaseName("blurActive")]: blurActive,
               [withBaseName("rootItem")]: level === 0,
             },
-            withBaseName(orientation)
+            withBaseName(orientation),
           )}
           parent={parent}
           expanded={expanded}
@@ -105,5 +109,5 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         </ConditionalWrapper>
       </div>
     );
-  }
+  },
 );

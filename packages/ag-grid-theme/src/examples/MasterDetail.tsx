@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useCallback, useRef } from "react";
 import rowData from "../dependencies/dataGridExampleData";
 import columnDefs from "../dependencies/masterDetailExampleData";
@@ -10,7 +10,7 @@ const MasterDetail = (props: AgGridReactProps) => {
   const gridRef = useRef<AgGridReact>(null);
 
   const onFirstDataRendered = useCallback(() => {
-    requestAnimationFrame(function () {
+    requestAnimationFrame(() => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const node = gridRef.current?.api.getDisplayedRowAtIndex(0);
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access

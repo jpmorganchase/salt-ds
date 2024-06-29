@@ -1,8 +1,8 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { RefObject, useCallback, useRef, useState } from "react";
+import { type RefObject, useCallback, useRef, useState } from "react";
 
 export function useWidth<Element extends HTMLElement>(
-  responsive: boolean
+  responsive: boolean,
 ): [RefObject<Element>, number] {
   const [width, setWidth] = useState<number>();
   const ref = useRef<Element>();
@@ -22,7 +22,7 @@ export function useWidth<Element extends HTMLElement>(
       const observer = new ResizeObserver(
         ([{ contentRect }]: ResizeObserverEntry[]) => {
           handleResize(contentRect);
-        }
+        },
       );
       observer.observe(ref.current);
 

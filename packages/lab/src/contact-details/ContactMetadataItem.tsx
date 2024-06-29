@@ -1,8 +1,8 @@
-import { makePrefixer, Text } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
-import { ComponentType, forwardRef, HTMLAttributes } from "react";
+import { Text, makePrefixer } from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
+import { type ComponentType, type HTMLAttributes, forwardRef } from "react";
 import { MailLinkComponent } from "./MailLinkComponent";
-import { ValueComponentProps } from "./types";
+import type { ValueComponentProps } from "./types";
 
 const withBaseName = makePrefixer("saltContactMetadataItem");
 

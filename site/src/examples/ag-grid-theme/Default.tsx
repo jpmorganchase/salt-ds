@@ -1,7 +1,7 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import { GridReadyEvent } from "ag-grid-community";
+import type { GridReadyEvent } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { ReactElement, useMemo } from "react";
+import { type ReactElement, useMemo } from "react";
 import { defaultData } from "./data";
 
 const columnDefs = [

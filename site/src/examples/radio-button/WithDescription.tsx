@@ -1,10 +1,10 @@
-import { ReactElement } from "react";
 import {
-  Text,
-  StackLayout,
   RadioButton,
   RadioButtonGroup,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const WithDescription = (): ReactElement => {
   return (

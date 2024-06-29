@@ -1,7 +1,11 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 import { makePrefixer, useId } from "../utils";
 import menuGroupCss from "./MenuGroup.css";
 
@@ -47,5 +51,5 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
         {children}
       </div>
     );
-  }
+  },
 );

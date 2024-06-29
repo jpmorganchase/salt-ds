@@ -1,8 +1,8 @@
-import { ForwardedRef, forwardRef, InputHTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import inputRuler from "./InputRuler.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { type ForwardedRef, type InputHTMLAttributes, forwardRef } from "react";
+import inputRuler from "./InputRuler.css";
 
 const withBaseName = makePrefixer("saltInputRuler");
 
@@ -12,7 +12,7 @@ const withBaseName = makePrefixer("saltInputRuler");
  */
 export const InputRuler = forwardRef(function InputRuler(
   props: { value: InputHTMLAttributes<HTMLInputElement>["value"] },
-  ref: ForwardedRef<HTMLSpanElement>
+  ref: ForwardedRef<HTMLSpanElement>,
 ) {
   const { value } = props;
 

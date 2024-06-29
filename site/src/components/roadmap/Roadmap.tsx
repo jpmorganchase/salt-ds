@@ -1,13 +1,13 @@
 import {
   Banner,
   BannerContent,
-  GridLayout,
-  H3,
   FormField,
   FormFieldLabel,
+  GridLayout,
+  H3,
   Input,
   InteractableCard,
-  InteractableCardProps,
+  type InteractableCardProps,
   Spinner,
   Text,
 } from "@salt-ds/core";
@@ -16,7 +16,7 @@ import {
   ProgressInprogressIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { Heading4 } from "../mdx/h4";
 
 import styles from "./style.module.css";
@@ -57,7 +57,7 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
   const filteredRoadmapData = roadmapData.filter(
     (r) =>
       (r.quarter !== null || r.startSprint !== null || r.endSprint !== null) &&
-      r.title.match(new RegExp(searchQuery, "i"))
+      r.title.match(new RegExp(searchQuery, "i")),
   );
 
   useEffect(() => {

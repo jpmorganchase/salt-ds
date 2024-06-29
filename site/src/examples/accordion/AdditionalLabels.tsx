@@ -1,18 +1,18 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import {
   Accordion,
   AccordionGroup,
   AccordionHeader,
   AccordionPanel,
-  CheckboxGroup,
   Checkbox,
+  CheckboxGroup,
+  FormField,
+  FormFieldLabel,
   Label,
   SplitLayout,
   StackLayout,
   Text,
-  FormField,
-  FormFieldLabel,
 } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const accounts = [
   { name: "Account 1", number: "8736" },

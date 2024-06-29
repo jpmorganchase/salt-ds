@@ -1,6 +1,12 @@
-import { CSSProperties, useRef, useState, useReducer, ReactNode } from "react";
 import { Button } from "@salt-ds/core";
-import { Input, InputProps } from "@salt-ds/lab";
+import { Input, type InputProps } from "@salt-ds/lab";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
 export interface AdjustableFlexboxProps {
   children?: ReactNode;
@@ -27,7 +33,7 @@ export const AdjustableFlexbox = ({
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
   const [width, setWidth] = useState(widthProp);
   const handleWidthChange: InputProps["onChange"] = (e, value) => {
-    const newValue = parseInt(value);
+    const newValue = Number.parseInt(value);
     widthRef.current = isNaN(newValue) ? 0 : newValue;
     forceUpdate();
   };

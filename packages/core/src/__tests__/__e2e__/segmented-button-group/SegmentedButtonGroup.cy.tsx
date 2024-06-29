@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as segmentedButtonStories from "@stories/segmented-button-group/segmented-button-group.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(segmentedButtonStories);
 
@@ -12,7 +12,7 @@ describe("GIVEN a SegmentedButton", () => {
 
       cy.get(".saltSegmentedButtonGroup").should(
         "have.class",
-        "saltSegmentedButtonGroup"
+        "saltSegmentedButtonGroup",
       );
     });
   });

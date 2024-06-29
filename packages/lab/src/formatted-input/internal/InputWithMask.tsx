@@ -1,20 +1,20 @@
 import { useId } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, InputHTMLAttributes } from "react";
-import { FormattedInputProps } from "../FormattedInput";
+import { type InputHTMLAttributes, forwardRef } from "react";
+import type { FormattedInputProps } from "../FormattedInput";
 
 export const baseName = "saltFormattedInput";
 
 function getClippedMask(
   mask: FormattedInputProps["mask"],
   value: FormattedInputProps["value"],
-  textAlign: FormattedInputProps["textAlign"]
+  textAlign: FormattedInputProps["textAlign"],
 ) {
   if (mask) {
     if (textAlign === "right") {
       return mask.substring(
         0,
-        value ? mask.length - value.length : mask.length
+        value ? mask.length - value.length : mask.length,
       );
     }
 
@@ -42,7 +42,7 @@ export const InputWithMask = forwardRef<HTMLInputElement, InputWithMaskProps>(
       textAlign,
       ...other
     },
-    ref
+    ref,
   ) {
     const id = useId(idProp);
 
@@ -74,5 +74,5 @@ export const InputWithMask = forwardRef<HTMLInputElement, InputWithMaskProps>(
         </span>
       </div>
     );
-  }
+  },
 );

@@ -1,27 +1,27 @@
 import {
-  StackLayout,
   Avatar,
-  Text,
-  Card,
   Button,
-  Tooltip,
+  Card,
+  Dropdown,
+  type DropdownProps,
   FlexLayout,
   FlowLayout,
-  SplitLayout,
-  Dropdown,
-  DropdownProps,
   Option,
+  SplitLayout,
+  StackLayout,
+  Text,
+  Tooltip,
 } from "@salt-ds/core";
 import {
-  MessageIcon,
-  LocationIcon,
   CallIcon,
   ChatIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  LocationIcon,
+  MessageIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 import { useState } from "react";
 import persona from "../../assets/avatar.png";
 import persona2 from "../../assets/avatar2.png";
@@ -367,7 +367,7 @@ export const List = () => {
 
   const handleSelectionChange: DropdownProps<Contact>["onSelectionChange"] = (
     event,
-    newSelected
+    newSelected,
   ) => {
     setSelectedContact(newSelected);
   };

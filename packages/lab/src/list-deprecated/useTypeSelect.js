@@ -38,7 +38,7 @@ export function useTypeSelect(options) {
 
       return null;
     },
-    [itemCount, itemToString, getItemAtIndex]
+    [itemCount, itemToString, getItemAtIndex],
   );
 
   const state = useRef({
@@ -76,7 +76,7 @@ export function useTypeSelect(options) {
     // always jumping around.
     let index = getItemIndexForSearch(
       state.search,
-      state.search.length > 1 ? highlightedIndex : highlightedIndex + 1
+      state.search.length > 1 ? highlightedIndex : highlightedIndex + 1,
     );
 
     // If no key found, search from the top.

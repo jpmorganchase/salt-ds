@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 
-import { flattenedMenuState, menuState } from "./stateUtils";
-import { CascadingMenuAction, menuAction } from "./CascadingMenuAction";
+import { CascadingMenuAction, type menuAction } from "./CascadingMenuAction";
+import type { flattenedMenuState, menuState } from "./stateUtils";
 
 export type stateItem = {
   id: string;
@@ -38,14 +38,14 @@ function menuPositionReducer(state: state, action: menuAction, level: number) {
 
 export function useStateReducer(
   menusDataById: flattenedMenuState = {},
-  isNavigatingWithKeyboard: boolean
+  isNavigatingWithKeyboard: boolean,
 ) {
   return useCallback(
     (state: state, action: menuAction): state => {
       let newState = [...state];
       const { type, targetId, highlightedItemIndex = null } = action;
       const { level, childMenus = [] } = Object(
-        menusDataById[targetId]
+        menusDataById[targetId],
       ) as menuState;
       const childId =
         typeof highlightedItemIndex === "number"
@@ -86,6 +86,6 @@ export function useStateReducer(
       }
       return newState;
     },
-    [isNavigatingWithKeyboard, menusDataById]
+    [isNavigatingWithKeyboard, menusDataById],
   );
 }

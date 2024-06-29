@@ -1,6 +1,7 @@
-import React, { createContext, useContext } from "react";
-import { SortOrder } from "./Grid";
-import { GridColumnProps } from "./GridColumn";
+import type React from "react";
+import { createContext, useContext } from "react";
+import type { SortOrder } from "./Grid";
+import type { GridColumnProps } from "./GridColumn";
 
 export interface ColumnSortContext {
   sortByColumnId?: GridColumnProps["id"];
@@ -11,7 +12,7 @@ export interface ColumnSortContext {
 }
 
 export const ColumnSortContext = createContext<ColumnSortContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const useColumnSortContext = () => {

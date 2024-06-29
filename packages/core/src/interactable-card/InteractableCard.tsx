@@ -1,20 +1,20 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
+  type MouseEvent,
+  type SyntheticEvent,
   forwardRef,
-  MouseEvent,
-  ComponentPropsWithoutRef,
-  SyntheticEvent,
   useRef,
 } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
-import { useInteractableCard } from "./useInteractableCard";
 import interactableCardCss from "./InteractableCard.css";
 import {
-  InteractableCardValue,
+  type InteractableCardValue,
   useInteractableCardGroup,
 } from "./InteractableCardGroupContext";
+import { useInteractableCard } from "./useInteractableCard";
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
@@ -159,7 +159,7 @@ export const InteractableCard = forwardRef<
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
         },
-        className
+        className,
       )}
       {...rest}
       onClick={handleClick}

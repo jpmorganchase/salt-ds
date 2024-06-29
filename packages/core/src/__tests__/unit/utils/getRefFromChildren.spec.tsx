@@ -1,6 +1,6 @@
 import { getRefFromChildren } from "@salt-ds/core";
-import { describe, it, expect } from "vitest";
 import { ReactNode } from "react";
+import { describe, expect, it } from "vitest";
 
 describe("getRefFromChildren", () => {
   it("should return null if child is not a valid element", () => {

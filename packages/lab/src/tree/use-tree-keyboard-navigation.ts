@@ -1,6 +1,6 @@
-import { KeyboardEvent, useCallback } from "react";
+import { type KeyboardEvent, useCallback } from "react";
+import type { CollectionHookResult, CollectionItem } from "../common-hooks";
 import { ArrowLeft } from "../common-hooks/keyUtils";
-import { CollectionItem, CollectionHookResult } from "../common-hooks";
 
 export const getNodeParentPath = ({ id }: CollectionItem<any>) => {
   let pos = id!.lastIndexOf("-");
@@ -46,12 +46,12 @@ export const useKeyboardNavigation = <Item>({
         const parentId = getNodeParentPath(node);
         if (parentId) {
           highlightItemAtIndex(
-            collectionHook.data.findIndex((item) => item.id === parentId)
+            collectionHook.data.findIndex((item) => item.id === parentId),
           );
         }
       }
     },
-    [highlightedIdx, highlightItemAtIndex]
+    [highlightedIdx, highlightItemAtIndex],
   );
 
   const listHandlers = {

@@ -1,7 +1,7 @@
-import { Meta, StoryFn } from "@storybook/react";
+import { AddDocumentIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 import { allIcons } from "./icon.all";
-import { AddDocumentIcon } from "@salt-ds/icons";
 import "@salt-ds/icons/saltIcons.css";
 export default {
   title: "Icons/Icon/Icon QA",
@@ -90,10 +90,10 @@ export const CssBackground: StoryFn = () => {
               key={iconName}
               className={`should-not-impact saltIcons-${iconName.replace(
                 "Icon",
-                ""
+                "",
               )}`}
             />
-          ) : null
+          ) : null,
         )}
       </div>
     </QAContainer>

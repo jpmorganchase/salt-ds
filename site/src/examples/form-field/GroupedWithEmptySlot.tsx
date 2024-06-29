@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
 import {
-  FormField,
   Checkbox,
-  GridLayout,
-  StackLayout,
-  FormFieldLabel,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
+  GridLayout,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const GroupedWithEmptySlot = (): ReactElement => (
   <StackLayout

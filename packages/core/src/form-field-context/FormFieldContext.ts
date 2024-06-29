@@ -28,5 +28,5 @@ export interface FormFieldContextValue {
 
 export const FormFieldContext = createContext(
   "FormFieldContext",
-  {} as FormFieldContextValue
+  {} as FormFieldContextValue,
 );

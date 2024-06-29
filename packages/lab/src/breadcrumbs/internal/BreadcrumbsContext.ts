@@ -8,14 +8,14 @@ export interface BreadcrumbsContext {
 }
 
 export const BreadcrumbsContext = createContext<BreadcrumbsContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const useBreadcrumbsContext = () => {
   const context = useContext(BreadcrumbsContext);
   if (!context) {
     throw new Error(
-      "BreadcrumbsItem compound components cannot be rendered outside the Breadcrumbs component"
+      "BreadcrumbsItem compound components cannot be rendered outside the Breadcrumbs component",
     );
   }
   return context;

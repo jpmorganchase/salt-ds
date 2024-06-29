@@ -1,17 +1,17 @@
-import { ComponentProps, memo, useEffect, useState } from "react";
 import {
   ComboBox,
-  ComboBoxProps,
-  escapeRegExp,
+  type ComboBoxProps,
   FormField,
   Highlighter,
   ListItem,
-  ListItemProps,
-  ListItemType,
+  type ListItemProps,
+  type ListItemType,
+  escapeRegExp,
 } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ComponentProps, memo, useEffect, useState } from "react";
 import {
-  LargeCity,
+  type LargeCity,
   largestCities,
   shortColorData,
   statesData,

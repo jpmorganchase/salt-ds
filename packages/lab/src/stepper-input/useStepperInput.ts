@@ -1,12 +1,12 @@
-import {
+import { type InputProps, useControlled, useId } from "@salt-ds/core";
+import type {
   ChangeEvent,
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
 } from "react";
-import { useControlled, useId, InputProps } from "@salt-ds/core";
+import type { StepperInputProps } from "./StepperInput";
 import { useSpinner } from "./internal/useSpinner";
-import { StepperInputProps } from "./StepperInput";
 
 // The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
@@ -30,7 +30,7 @@ const isAllowedNonNumeric = (inputCharacter: number | string) => {
 const toFloat = (inputValue: number | string) => {
   // Plus, minus, and empty characters are treated as 0
   if (isAllowedNonNumeric(inputValue)) return 0;
-  return parseFloat(inputValue.toString());
+  return Number.parseFloat(inputValue.toString());
 };
 
 const sanitizedInput = (numberString: string) =>
@@ -38,7 +38,7 @@ const sanitizedInput = (numberString: string) =>
 
 export const useStepperInput = (
   props: StepperInputProps,
-  inputRef: MutableRefObject<HTMLInputElement | null>
+  inputRef: MutableRefObject<HTMLInputElement | null>,
 ) => {
   const {
     block = 10,
@@ -153,7 +153,7 @@ export const useStepperInput = (
 
     const roundedValue = toFixedDecimalPlaces(
       toFloat(currentValue),
-      decimalPlaces
+      decimalPlaces,
     );
 
     if (
@@ -196,7 +196,7 @@ export const useStepperInput = (
 
   const handleButtonMouseDown = (
     event: MouseEvent<HTMLButtonElement>,
-    direction: string
+    direction: string,
   ) => {
     if (event.nativeEvent.button !== 0) return;
     direction === "increment" ? incrementSpinner() : decrementSpinner();
@@ -215,7 +215,7 @@ export const useStepperInput = (
   });
 
   const getInputProps = (
-    inputProps: InputProps = {}
+    inputProps: InputProps = {},
   ): InputProps | undefined => {
     if (currentValue === undefined) return undefined;
     return {
@@ -226,7 +226,7 @@ export const useStepperInput = (
         "aria-valuemax": toFloat(toFixedDecimalPlaces(max, decimalPlaces)),
         "aria-valuemin": toFloat(toFixedDecimalPlaces(min, decimalPlaces)),
         "aria-valuenow": toFloat(
-          toFixedDecimalPlaces(toFloat(currentValue), decimalPlaces)
+          toFixedDecimalPlaces(toFloat(currentValue), decimalPlaces),
         ),
         id: inputId,
         ...inputProps.inputProps,

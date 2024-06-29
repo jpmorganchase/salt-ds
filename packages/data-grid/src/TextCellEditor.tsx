@@ -2,8 +2,8 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  ChangeEventHandler,
-  KeyboardEventHandler,
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
   useEffect,
   useRef,
   useState,
@@ -12,7 +12,7 @@ import {
 import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
 import { useEditorContext } from "./EditorContext";
-import { GridColumnModel, GridRowModel } from "./Grid";
+import type { GridColumnModel, GridRowModel } from "./Grid";
 
 import textCellEditorCss from "./TextCellEditor.css";
 
@@ -38,7 +38,7 @@ export function TextCellEditor<T>(props: TextCellEditorProps<T>) {
   const { endEditMode, cancelEditMode, initialText } = useEditorContext();
 
   const [editorText, setEditorText] = useState<string>(
-    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
+    initialText != null ? initialText : column!.info.props.getValue!(row!.data),
   );
 
   const initialSelectionRef = useRef(!!initialText);

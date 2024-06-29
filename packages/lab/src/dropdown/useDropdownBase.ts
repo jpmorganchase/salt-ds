@@ -1,10 +1,10 @@
 import { useControlled } from "@salt-ds/core";
-import { KeyboardEvent, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 
-import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
-import { useClickAway } from "./useClickAway";
-import { measurements, useResizeObserver, WidthOnly } from "../responsive";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
+import { WidthOnly, type measurements, useResizeObserver } from "../responsive";
+import type { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
+import { useClickAway } from "./useClickAway";
 
 const NO_OBSERVER: string[] = [];
 
@@ -87,7 +87,7 @@ export const useDropdownBase = ({
       // Do not trigger menu open for 'Enter' and 'SPACE' key as they're handled in `handleKeyDown`
       if (
         ["Enter", " "].indexOf(
-          (e as unknown as KeyboardEvent<HTMLDivElement>).key
+          (e as unknown as KeyboardEvent<HTMLDivElement>).key,
         ) === -1
       ) {
         const newIsOpen = !isOpen;
@@ -95,7 +95,7 @@ export const useDropdownBase = ({
         onOpenChange?.(newIsOpen);
       }
     },
-    [isOpen, setIsOpen, onOpenChange]
+    [isOpen, setIsOpen, onOpenChange],
   );
 
   const handleKeydown = useCallback(
@@ -113,7 +113,7 @@ export const useDropdownBase = ({
         onKeyDownProp?.(evt);
       }
     },
-    [hideDropdown, isOpen, onKeyDownProp, showDropdown]
+    [hideDropdown, isOpen, onKeyDownProp, showDropdown],
   );
 
   const fullWidth = fullWidthProp ?? inFormField;
@@ -124,7 +124,7 @@ export const useDropdownBase = ({
 
   const getAriaLabelledBy = (
     labelledBy: string | undefined,
-    labelledByProp: string | undefined
+    labelledByProp: string | undefined,
   ): string | undefined => {
     if (labelledBy === undefined && labelledByProp === undefined) {
       return undefined;

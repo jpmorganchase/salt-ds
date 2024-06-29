@@ -1,5 +1,5 @@
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
 import "./CollapsibleToolbarItem.css";
 
 const withBaseName = makePrefixer("CollapsibleToolbarItem");

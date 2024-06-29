@@ -1,5 +1,5 @@
-import { HTMLAttributes, RefObject } from "react";
-import {
+import type { HTMLAttributes, RefObject } from "react";
+import type {
   CollectionHookResult,
   CollectionItem,
   ListHandlers,
@@ -7,7 +7,7 @@ import {
   SelectionProps,
   SelectionStrategy,
 } from "../common-hooks";
-import { ListControlProps } from "../list/listTypes";
+import type { ListControlProps } from "../list/listTypes";
 
 export interface TreeNode {
   checked?: boolean;

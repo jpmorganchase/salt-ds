@@ -1,8 +1,8 @@
 import { UserSolidIcon } from "@salt-ds/icons";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
 import { useAvatarImage } from "./useAvatarImage";
 
 import { makePrefixer } from "../utils";
@@ -57,7 +57,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     fallbackIcon = <UserSolidIcon aria-label="User Avatar" />,
     ...rest
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -97,7 +97,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       className={clsx(
         withBaseName(),
         { [withBaseName("withImage")]: hasImgNotFailing },
-        className
+        className,
       )}
       {...initialsProps}
       {...rest}

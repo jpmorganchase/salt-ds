@@ -8,7 +8,7 @@ describe("A declarative list", () => {
         <ListItem>list item 1</ListItem>
         <ListItem>list item 2</ListItem>
         <ListItem>list item 3</ListItem>
-      </List>
+      </List>,
     );
 
     cy.findByText("list item 1").should("exist");
@@ -23,7 +23,7 @@ describe("A declarative list", () => {
           <ListItem>list item 1</ListItem>
           <ListItem>list item 2</ListItem>
           <ListItem>list item 3</ListItem>
-        </List>
+        </List>,
       );
       cy.get("#list-item-1").trigger("mousemove");
       cy.get("#list-item-1").should("be.highlighted");
@@ -48,7 +48,7 @@ describe("A declarative list", () => {
                 <ListItem>list item 1</ListItem>
                 <ListItem>list item 2</ListItem>
                 <ListItem>list item 3</ListItem>
-              </List>
+              </List>,
             );
 
             cy.get("#list-item-1").click();
@@ -57,15 +57,15 @@ describe("A declarative list", () => {
             cy.get("@selectionChangeHandler").should(
               "have.been.calledWith",
               Cypress.sinon.match.any,
-              "list item 2"
+              "list item 2",
             );
             cy.get("@selectHandler").should(
               "have.been.calledWith",
               Cypress.sinon.match.any,
-              "list item 2"
+              "list item 2",
             );
           }
-        : undefined
+        : undefined,
     );
   });
 });
@@ -79,7 +79,7 @@ describe("A declarative list with a disabled item", () => {
         <ListItem>list item 1</ListItem>
         <ListItem disabled>list item 2</ListItem>
         <ListItem>list item 3</ListItem>
-      </List>
+      </List>,
     );
   });
 
@@ -112,7 +112,7 @@ describe("A disabled declarative list", () => {
         <ListItem>list item 1</ListItem>
         <ListItem>list item 2</ListItem>
         <ListItem>list item 3</ListItem>
-      </List>
+      </List>,
     );
   });
 

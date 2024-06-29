@@ -1,10 +1,10 @@
-import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, useMemo, useRef } from "react";
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
-import { LayoutAnimation } from "../deck-layout";
+import { clsx } from "clsx";
+import { type HTMLAttributes, forwardRef, useMemo, useRef } from "react";
+import type { LayoutAnimation } from "../deck-layout";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import deckItemCss from "./DeckItem.css";
 
@@ -29,7 +29,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
       id: idProp,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -64,7 +64,7 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
             [withBaseName(getActiveClasses[classesIndex])]:
               animation === "fade",
           },
-          className
+          className,
         )}
         ref={useForkRef(ref, sliderRef)}
         role={role}
@@ -75,5 +75,5 @@ export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
         {children}
       </div>
     );
-  }
+  },
 );

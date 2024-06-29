@@ -1,7 +1,7 @@
-import { StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
-import { Calendar } from "@salt-ds/lab";
 import { parseDate } from "@internationalized/date";
+import { Calendar } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Calendar/Calendar QA",

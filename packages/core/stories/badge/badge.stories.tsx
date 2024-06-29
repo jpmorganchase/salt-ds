@@ -1,15 +1,15 @@
-import { List, ListItem } from "@salt-ds/lab";
 import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
+import { List, ListItem } from "@salt-ds/lab";
 
 import {
-  SettingsSolidIcon,
   MessageIcon,
   NotificationIcon,
+  SettingsSolidIcon,
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
 
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Badge",

@@ -1,18 +1,18 @@
 import {
+  type KeyboardEvent,
+  type MouseEvent,
   isValidElement,
-  KeyboardEvent,
-  MouseEvent,
   useCallback,
   useRef,
 } from "react";
 import {
+  type CollectionItem,
+  type ListHandlers,
+  type SelectHandler,
+  type SelectionChangeHandler,
+  type SelectionStrategy,
   closestListItemIndex,
-  CollectionItem,
-  ListHandlers,
-  selectedType,
-  SelectHandler,
-  SelectionChangeHandler,
-  SelectionStrategy,
+  type selectedType,
   useCollapsibleGroups,
   useKeyboardNavigation,
   useSelection,
@@ -20,7 +20,11 @@ import {
   useViewportTracking,
 } from "../common-hooks";
 
-import { ListHookProps, ListHookResult, ListControlProps } from "./listTypes";
+import type {
+  ListControlProps,
+  ListHookProps,
+  ListHookResult,
+} from "./listTypes";
 
 export const useList = <Item, Selection extends SelectionStrategy = "default">({
   collapsibleHeaders,
@@ -67,7 +71,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
         }
       }
     },
-    [onSelect]
+    [onSelect],
   );
 
   const handleSelectionChange = useCallback<
@@ -79,16 +83,16 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
           evt,
           Array.isArray(selected)
             ? (selected.map((s) =>
-                isValidElement(s.value) ? s.label : s.value
+                isValidElement(s.value) ? s.label : s.value,
               ) as selectedItem)
             : selected &&
                 ((isValidElement(selected.value)
                   ? selected.label
-                  : selected.value) as any)
+                  : selected.value) as any),
         );
       }
     },
-    [onSelectionChange]
+    [onSelectionChange],
   );
 
   const {
@@ -166,7 +170,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
       onKeyDown,
       selectionHook.listHandlers,
       typeaheadOnKeyDown,
-    ]
+    ],
   );
 
   // This is only appropriate when we are directly controlling a List,
@@ -201,7 +205,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
       navigationMouseMove,
       highlightedIndex,
       dataHook.data,
-    ]
+    ],
   );
 
   const getActiveDescendant = () =>

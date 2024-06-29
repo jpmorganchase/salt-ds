@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { ComboBox, Option, StackLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import { shortColorData } from "./exampleData";
 
 export const Bordered = (): ReactElement => {

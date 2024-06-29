@@ -1,4 +1,4 @@
-import { createContext, MouseEventHandler, useContext } from "react";
+import { type MouseEventHandler, createContext, useContext } from "react";
 
 export interface ColumnDragContext {
   columnMove?: boolean;
@@ -6,7 +6,7 @@ export interface ColumnDragContext {
 }
 
 export const ColumnDragContext = createContext<ColumnDragContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const useColumnDragContext = () => {

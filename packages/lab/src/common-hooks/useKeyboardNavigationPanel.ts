@@ -1,8 +1,8 @@
 import { useControlled } from "@salt-ds/core";
-import { KeyboardEvent, useCallback, useMemo, useRef } from "react";
+import { type KeyboardEvent, useCallback, useMemo, useRef } from "react";
+import type { CollectionItem } from "./collectionTypes";
 import { Tab } from "./keyUtils";
-import { CollectionItem } from "./collectionTypes";
-import { NavigationProps, NavigationHookResult } from "./navigationTypes";
+import type { NavigationHookResult, NavigationProps } from "./navigationTypes";
 
 type NavigationDirection = "FWD" | "BWD";
 
@@ -10,7 +10,7 @@ function nextItemIdx(
   count: number,
   direction: NavigationDirection,
   idx: number,
-  cycleFocus = false
+  cycleFocus = false,
 ) {
   if (direction === "BWD") {
     if (idx > 0) {
@@ -63,19 +63,19 @@ export const useKeyboardNavigationPanel = ({
         targetEl?.focus();
       }
     },
-    [focusOnHighlight, indexPositions, onHighlight, setHighlightedIdx]
+    [focusOnHighlight, indexPositions, onHighlight, setHighlightedIdx],
   );
 
   const nextFocusableItemIdx = useCallback(
     (
       direction: NavigationDirection = "FWD",
-      idx = direction === "FWD" ? -1 : indexPositions.length
+      idx = direction === "FWD" ? -1 : indexPositions.length,
     ) => {
       let nextIdx = nextItemIdx(
         indexPositions.length,
         direction,
         idx,
-        cycleFocus
+        cycleFocus,
       );
       while (
         ((direction === "FWD" && nextIdx < indexPositions.length) ||
@@ -86,12 +86,12 @@ export const useKeyboardNavigationPanel = ({
           indexPositions.length,
           direction,
           nextIdx,
-          cycleFocus
+          cycleFocus,
         );
       }
       return nextIdx;
     },
-    [cycleFocus, indexPositions]
+    [cycleFocus, indexPositions],
   );
 
   // does this belong here or should it be a method passed in?
@@ -123,7 +123,7 @@ export const useKeyboardNavigationPanel = ({
       nextFocusableItemIdx,
       onKeyboardNavigation,
       setHighlightedIndex,
-    ]
+    ],
   );
 
   const handleKeyDown = useCallback(
@@ -135,7 +135,7 @@ export const useKeyboardNavigationPanel = ({
         navigateChildItems(evt);
       }
     },
-    [indexPositions, navigateChildItems]
+    [indexPositions, navigateChildItems],
   );
 
   const listProps = useMemo(
@@ -166,7 +166,7 @@ export const useKeyboardNavigationPanel = ({
         setHighlightedIndex(-1);
       },
     }),
-    [handleFocus, handleKeyDown, setHighlightedIndex]
+    [handleFocus, handleKeyDown, setHighlightedIndex],
   );
 
   return {

@@ -1,9 +1,9 @@
-import { DependencyList, EffectCallback, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { type DependencyList, type EffectCallback, useRef } from "react";
 export const useLayoutEffectOnce = (
   condition: boolean,
   callback: EffectCallback,
-  dependencies: DependencyList
+  dependencies: DependencyList,
 ): void => {
   const hasRun = useRef(false);
   useIsomorphicLayoutEffect(() => {

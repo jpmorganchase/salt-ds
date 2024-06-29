@@ -1,9 +1,9 @@
 import {
+  CompactInput,
+  CompactPaginator,
+  GoToInput,
   Pagination,
   Paginator,
-  GoToInput,
-  CompactPaginator,
-  CompactInput,
 } from "@salt-ds/core";
 
 describe("GIVEN an Pagination", () => {
@@ -13,7 +13,7 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={1}>
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("navigation").should("not.exist");
@@ -27,14 +27,14 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={1}>
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findAllByRole("button", { name: /Page 1/i })
           .first()
           .should("have.attr", "aria-current", "page");
         cy.findByRole("button", { name: "Previous Page" }).should(
-          "be.disabled"
+          "be.disabled",
         );
       });
     });
@@ -43,13 +43,13 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={10}>
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("button", { name: /Page 10/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.findByRole("button", { name: "Next Page" }).should("be.disabled");
       });
@@ -60,19 +60,19 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("button", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.findByRole("button", { name: /Page 4/i }).realClick();
         cy.findByRole("button", { name: /Page 4/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
@@ -83,19 +83,19 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("button", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.findByRole("button", { name: /Page 2/i }).realClick();
         cy.findByRole("button", { name: /Page 2/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
@@ -106,19 +106,19 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("button", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.findByRole("button", { name: /Page 5/i }).realClick();
         cy.findByRole("button", { name: /Page 5/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.get("@pageChangeSpy").should("have.been.calledOnce");
       });
@@ -130,20 +130,20 @@ describe("GIVEN an Pagination", () => {
           cy.mount(
             <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
               <Paginator />
-            </Pagination>
+            </Pagination>,
           );
 
           cy.findByRole("button", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
-            "page"
+            "page",
           );
 
           cy.findByRole("button", { name: "Next Page" }).realClick();
           cy.findByRole("button", { name: /Page 4/i }).should(
             "have.attr",
             "aria-current",
-            "page"
+            "page",
           );
 
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
@@ -155,20 +155,20 @@ describe("GIVEN an Pagination", () => {
           cy.mount(
             <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
               <Paginator />
-            </Pagination>
+            </Pagination>,
           );
 
           cy.findByRole("button", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
-            "page"
+            "page",
           );
           cy.findByRole("button", { name: "Previous Page" }).focus();
           cy.realPress("Enter");
           cy.findByRole("button", { name: /Page 2/i }).should(
             "have.attr",
             "aria-current",
-            "page"
+            "page",
           );
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
@@ -179,20 +179,20 @@ describe("GIVEN an Pagination", () => {
           cy.mount(
             <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
               <Paginator />
-            </Pagination>
+            </Pagination>,
           );
 
           cy.findByRole("button", { name: /Page 3/i }).should(
             "have.attr",
             "aria-current",
-            "page"
+            "page",
           );
           cy.findByRole("button", { name: /Page 5/i }).focus();
           cy.realPress("Enter");
           cy.findByRole("button", { name: /Page 5/i }).should(
             "have.attr",
             "aria-current",
-            "page"
+            "page",
           );
           cy.get("@pageChangeSpy").should("have.been.calledOnce");
         });
@@ -207,7 +207,7 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
             <CompactPaginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByText("3").should("exist");
@@ -222,7 +222,7 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
             <CompactPaginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByText("3").should("exist");
@@ -237,7 +237,7 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
             <CompactPaginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findAllByText("10").should("exist").and("have.length", 1);
@@ -253,7 +253,7 @@ describe("GIVEN an Pagination", () => {
           cy.mount(
             <Pagination count={10} onPageChange={pageChangeSpy}>
               <CompactPaginator />
-            </Pagination>
+            </Pagination>,
           );
 
           cy.findByText("1").should("exist");
@@ -269,7 +269,7 @@ describe("GIVEN an Pagination", () => {
           cy.mount(
             <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
               <CompactPaginator />
-            </Pagination>
+            </Pagination>,
           );
 
           cy.findByText("3").should("exist");
@@ -285,7 +285,7 @@ describe("GIVEN an Pagination", () => {
           cy.mount(
             <Pagination count={10} defaultPage={3} onPageChange={pageChangeSpy}>
               <CompactPaginator />
-            </Pagination>
+            </Pagination>,
           );
 
           cy.findByText("3").should("exist");
@@ -304,7 +304,7 @@ describe("GIVEN an Pagination", () => {
             <CompactPaginator>
               <CompactInput />
             </CompactPaginator>
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("textbox").should("have.value", "3");
@@ -323,7 +323,7 @@ describe("GIVEN an Pagination", () => {
             <CompactPaginator>
               <CompactInput />
             </CompactPaginator>
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("textbox").should("have.value", "3");
@@ -344,12 +344,12 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={11}>
             <Paginator siblingCount={3} />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findAllByRole("button", { name: /^Page.*/ }).should(
           "have.length",
-          11
+          11,
         );
       });
 
@@ -357,12 +357,12 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={12}>
             <Paginator siblingCount={3} />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findAllByRole("button", { name: /^Page.*/ }).should(
           "have.length",
-          10
+          10,
         );
       });
     });
@@ -374,12 +374,12 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={20}>
             <Paginator boundaryCount={2} />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findAllByRole("button", { name: /^Page.*/ }).should(
           "have.length",
-          10
+          10,
         );
       });
 
@@ -387,12 +387,12 @@ describe("GIVEN an Pagination", () => {
         cy.mount(
           <Pagination count={20} defaultPage={10}>
             <Paginator boundaryCount={2} />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findAllByRole("button", { name: /^Page.*/ }).should(
           "have.length",
-          9
+          9,
         );
       });
     });
@@ -405,14 +405,14 @@ describe("GIVEN an Pagination", () => {
           <Pagination count={10} defaultPage={3}>
             <GoToInput />
             <Paginator data-testid="paginator" />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("textbox").then((input) => {
           cy.findByTestId("paginator").then((paginator) => {
             cy.wrap(
               input[0].compareDocumentPosition(paginator[0]) &
-                Node.DOCUMENT_POSITION_PRECEDING
+                Node.DOCUMENT_POSITION_PRECEDING,
             ).should("equal", 0);
           });
         });
@@ -423,14 +423,14 @@ describe("GIVEN an Pagination", () => {
           <Pagination count={10} defaultPage={3}>
             <Paginator data-testid="paginator" />
             <GoToInput />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("textbox").then((input) => {
           cy.findByTestId("paginator").then((paginator) => {
             cy.wrap(
               input[0].compareDocumentPosition(paginator[0]) &
-                Node.DOCUMENT_POSITION_FOLLOWING
+                Node.DOCUMENT_POSITION_FOLLOWING,
             ).should("equal", 0);
           });
         });
@@ -443,7 +443,7 @@ describe("GIVEN an Pagination", () => {
           <Pagination count={10} defaultPage={3}>
             <GoToInput />
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("textbox").focus();
@@ -462,13 +462,13 @@ describe("GIVEN an Pagination", () => {
           <Pagination count={10} defaultPage={3}>
             <GoToInput />
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("button", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.findByRole("textbox").focus();
         cy.realType("abc");
@@ -477,7 +477,7 @@ describe("GIVEN an Pagination", () => {
         cy.findByRole("button", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
       });
 
@@ -486,13 +486,13 @@ describe("GIVEN an Pagination", () => {
           <Pagination count={10} defaultPage={3}>
             <GoToInput />
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("button", { name: /Page 3/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
         cy.findByRole("textbox").focus();
         cy.realType("5");
@@ -501,7 +501,7 @@ describe("GIVEN an Pagination", () => {
         cy.findByRole("button", { name: /Page 5/i }).should(
           "have.attr",
           "aria-current",
-          "page"
+          "page",
         );
       });
 
@@ -510,7 +510,7 @@ describe("GIVEN an Pagination", () => {
           <Pagination count={10} defaultPage={3}>
             <GoToInput />
             <Paginator />
-          </Pagination>
+          </Pagination>,
         );
 
         cy.findByRole("textbox").focus();

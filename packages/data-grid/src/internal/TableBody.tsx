@@ -1,11 +1,11 @@
-import { MouseEventHandler, useCallback, useMemo } from "react";
-import { TableRow } from "./TableRow";
-import { GridColumnModel, GridRowModel } from "../Grid";
-import { getRowKeyAttribute } from "./utils";
-import { useSelectionContext } from "../SelectionContext";
-import { useEditorContext } from "../EditorContext";
+import { type MouseEventHandler, useCallback, useMemo } from "react";
 import { useCursorContext } from "../CursorContext";
-import { CellValidationState } from "../GridColumn";
+import { useEditorContext } from "../EditorContext";
+import type { GridColumnModel, GridRowModel } from "../Grid";
+import type { CellValidationState } from "../GridColumn";
+import { useSelectionContext } from "../SelectionContext";
+import { TableRow } from "./TableRow";
+import { getRowKeyAttribute } from "./utils";
 
 export interface TableBodyProps<T> {
   columns: GridColumnModel<T>[];
@@ -15,7 +15,7 @@ export interface TableBodyProps<T> {
   gap?: number;
   zebra?: boolean;
   getRowValidationStatus?: (
-    row: GridRowModel<T>
+    row: GridRowModel<T>,
   ) => CellValidationState | undefined;
 }
 
@@ -48,7 +48,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
         colIdx <= maxColIdx
       );
     },
-    [selectedCellRange]
+    [selectedCellRange],
   );
 
   const { cursorRowIdx, cursorColIdx, focusedPart, headerIsFocusable } =

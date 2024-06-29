@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { FormField, FormFieldLabel, Switch } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const LeftAlignedLabel = (): ReactElement => (
   <div>

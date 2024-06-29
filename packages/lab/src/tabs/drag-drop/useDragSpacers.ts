@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from "react";
-import { MeasuredDropTarget } from "./drag-utils";
 import { createDragSpacer } from "./Draggable";
-import { Direction } from "./dragDropTypes";
+import type { MeasuredDropTarget } from "./drag-utils";
+import type { Direction } from "./dragDropTypes";
 
 export const useDragSpacers = () => {
   const animationFrame = useRef(0);
@@ -10,13 +10,13 @@ export const useDragSpacers = () => {
   const spacers = useMemo(
     // We only need to listen for transition end on one of the spacers
     () => [createDragSpacer(transitioning), createDragSpacer()],
-    []
+    [],
   );
 
   const clearSpacers = useCallback(
     () =>
       spacers.forEach((spacer) => spacer.parentElement?.removeChild(spacer)),
-    []
+    [],
   );
 
   const animateTransition = useCallback((size: number) => {
@@ -42,7 +42,7 @@ export const useDragSpacers = () => {
       item: MeasuredDropTarget | null = null,
       size: number,
       useTransition = false,
-      direction?: Direction
+      direction?: Direction,
     ) => {
       if (item) {
         const [spacer1, spacer2] = spacers;
@@ -71,7 +71,7 @@ export const useDragSpacers = () => {
         }
       }
     },
-    []
+    [],
   );
   const displaceLastItem = useCallback(
     (item: MeasuredDropTarget, size: number, useTransition = false) => {
@@ -86,16 +86,16 @@ export const useDragSpacers = () => {
 
           item.element.parentElement?.insertBefore(
             spacer1,
-            item.element.previousElementSibling
+            item.element.previousElementSibling,
           );
           item.element.parentElement?.insertBefore(
             spacer2,
-            item.element.nextElementSibling
+            item.element.nextElementSibling,
           );
         } else {
           item.element.parentElement?.insertBefore(
             spacer2,
-            item.element.nextElementSibling
+            item.element.nextElementSibling,
           );
         }
         animateTransition(size);
@@ -103,11 +103,11 @@ export const useDragSpacers = () => {
         spacer1.style.cssText = `width: ${size}px`;
         item.element.parentElement?.insertBefore(
           spacer1,
-          item.element.nextElementSibling
+          item.element.nextElementSibling,
         );
       }
     },
-    []
+    [],
   );
 
   return {

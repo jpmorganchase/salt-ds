@@ -1,8 +1,13 @@
 import { Button } from "@salt-ds/core";
-import { ChangeHandler, TokenizedInput, FormField, Input } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  ChangeEventHandler,
+  type ChangeHandler,
+  FormField,
+  Input,
+  TokenizedInput,
+} from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type ChangeEventHandler,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -66,7 +71,7 @@ export const Controlled: StoryFn<typeof TokenizedInput> = () => {
 
   const handleAddRandomOption = () => {
     setSelectedItems((prevSelectedItems) =>
-      prevSelectedItems.concat(String(option))
+      prevSelectedItems.concat(String(option)),
     );
     setOption(getRandomNumber());
   };
@@ -185,7 +190,7 @@ export const WithValidation: StoryFn<typeof TokenizedInput> = () => {
         const result = validate(newItems as string[]);
         return result != null ? results.concat(result) : results;
       },
-      []
+      [],
     );
 
     if (newExceptions.length === 0) {

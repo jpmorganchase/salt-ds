@@ -7,20 +7,20 @@ import {
 } from "@salt-ds/core";
 
 import {
-  AriaAttributes,
-  Dispatch,
-  FocusEvent,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEvent,
-  Ref,
-  SetStateAction,
+  type AriaAttributes,
+  type Dispatch,
+  type FocusEvent,
+  type KeyboardEvent,
+  type KeyboardEventHandler,
+  type MouseEvent,
+  type Ref,
+  type SetStateAction,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
-import {
+import type {
   ListMultiSelectionVariant,
   ListProps,
   ListSelectionVariant,
@@ -37,7 +37,7 @@ interface listBoxAriaProps
 }
 export interface ListState<
   Item = string,
-  Variant extends ListSelectionVariant = "default"
+  Variant extends ListSelectionVariant = "default",
 > {
   id?: string;
   focusVisible: boolean;
@@ -50,7 +50,7 @@ export interface ListState<
 
 export interface ListHelpers<
   Item = string,
-  Variant extends ListSelectionVariant = "default"
+  Variant extends ListSelectionVariant = "default",
 > {
   setFocusVisible: (visible: boolean) => void;
   setSelectedItem: Dispatch<
@@ -62,14 +62,14 @@ export interface ListHelpers<
   handleSelect: (
     event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
     index: number | undefined,
-    item: Item
+    item: Item,
   ) => void;
   keyDownHandlers: { [key: string]: KeyboardEventHandler };
   // TODO: Form Field
 }
 
 export function useList<Item, Variant extends ListSelectionVariant>(
-  props: ListProps<Item, Variant> = {}
+  props: ListProps<Item, Variant> = {},
 ): {
   focusedRef: Ref<any>;
   listProps: Partial<ListProps<Item, Variant>> & listBoxAriaProps;
@@ -114,26 +114,26 @@ export function useList<Item, Variant extends ListSelectionVariant>(
   } = useIsFocusVisible();
 
   const { current: isDeselectable } = useRef(
-    selectionVariant === "deselectable"
+    selectionVariant === "deselectable",
   );
   const { current: isMultiSelect } = useRef(
     selectionVariant === "multiple" ||
       selectionVariant === "extended" ||
       Array.isArray(initialSelectedItem) ||
-      Array.isArray(selectedItemProp)
+      Array.isArray(selectedItemProp),
   );
 
   const { current: isExtendedSelect } = useRef(selectionVariant === "extended");
 
   let getItemIndex = useCallback(
     (item: Item) => source.indexOf(item),
-    [source]
+    [source],
   );
   let getItemAtIndex = useCallback((index: number) => source[index], [source]);
 
   const indexComparator = useCallback(
     (a: Item, b: Item) => getItemIndex(a) - getItemIndex(b),
-    [getItemIndex]
+    [getItemIndex],
   );
 
   // Only use getItemIndex and getItemAtIndex if both are defined; otherwise keep the defaults
@@ -177,7 +177,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
     (
       event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
       index: number | undefined,
-      item: Item
+      item: Item,
     ) => {
       const isSelected = item === selectedItem;
       let nextItem;
@@ -194,13 +194,13 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       }
 
       setSelectedItem(
-        nextItem as Variant extends ListMultiSelectionVariant ? Item[] : Item
+        nextItem as Variant extends ListMultiSelectionVariant ? Item[] : Item,
       );
 
       if (onChange) {
         onChange(
           event,
-          nextItem as Variant extends ListMultiSelectionVariant ? Item[] : Item
+          nextItem as Variant extends ListMultiSelectionVariant ? Item[] : Item,
         );
       }
     },
@@ -210,14 +210,14 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       selectedItem,
       setHighlightedIndex,
       setSelectedItem,
-    ]
+    ],
   );
 
   const handleMultiSelect = useCallback(
     (
       event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
       index: number | undefined,
-      item: Item
+      item: Item,
     ) => {
       const isSelected = (selectedItem as Item[]).indexOf(item as Item) !== -1;
       let nextItems = selectedItem as Item[];
@@ -230,13 +230,15 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       }
 
       setSelectedItem(
-        nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item
+        nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item,
       );
 
       if (onChange) {
         onChange(
           event,
-          nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item
+          nextItems as Variant extends ListMultiSelectionVariant
+            ? Item[]
+            : Item,
         );
       }
     },
@@ -246,13 +248,13 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       selectedItem,
       setHighlightedIndex,
       setSelectedItem,
-    ]
+    ],
   );
 
   const handleRangeSelect = useCallback(
     (
       event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
-      index?: number
+      index?: number,
     ) => {
       const currentSelection =
         event.ctrlKey || event.metaKey ? selectedItem : ([] as Item[]);
@@ -260,17 +262,17 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       const lastSelectedItemIndex =
         (selectedItem as Item[]).length > 0
           ? getItemIndex(
-              (selectedItem as Item[])[(selectedItem as Item[]).length - 1]
+              (selectedItem as Item[])[(selectedItem as Item[]).length - 1],
             )
           : 0;
 
       const startRegion = Math.min(
         index ?? lastSelectedItemIndex,
-        lastSelectedItemIndex
+        lastSelectedItemIndex,
       );
       const endRegion = Math.max(
         index ?? lastSelectedItemIndex,
-        lastSelectedItemIndex
+        lastSelectedItemIndex,
       );
       const rangeSelection = source.slice(startRegion, endRegion + 1);
       // concat the current selection with a new selection and remove duplicates for overlaps
@@ -280,24 +282,26 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       // remove text selection caused by shift clicking
       ownerDocument(event.currentTarget).getSelection()?.removeAllRanges();
       setSelectedItem(
-        nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item
+        nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item,
       );
 
       if (onChange) {
         onChange(
           event,
-          nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item
+          nextItems as Variant extends ListMultiSelectionVariant
+            ? Item[]
+            : Item,
         );
       }
     },
-    [getItemIndex, onChange, selectedItem, setSelectedItem, source]
+    [getItemIndex, onChange, selectedItem, setSelectedItem, source],
   );
 
   const handleExtendedSelect = useCallback(
     (
       event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
       index: number | undefined,
-      item: Item
+      item: Item,
     ) => {
       let nextItems = selectedItem as Item[];
       if (event.shiftKey) {
@@ -312,7 +316,9 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       } else {
         nextItems = [item] as Item[];
         setSelectedItem(
-          nextItems as Variant extends ListMultiSelectionVariant ? Item[] : Item
+          nextItems as Variant extends ListMultiSelectionVariant
+            ? Item[]
+            : Item,
         );
 
         if (onChange) {
@@ -320,7 +326,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
             event,
             nextItems as Variant extends ListMultiSelectionVariant
               ? Item[]
-              : Item
+              : Item,
           );
         }
       }
@@ -331,14 +337,14 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       onChange,
       selectedItem,
       setSelectedItem,
-    ]
+    ],
   );
 
   const handleSelect = useCallback(
     (
       event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>,
       index: number | undefined,
-      item: Item | null
+      item: Item | null,
     ) => {
       if (item == null || (item as any).disabled) {
         return;
@@ -364,7 +370,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       isExtendedSelect,
       isMultiSelect,
       onSelect,
-    ]
+    ],
   );
 
   const saveFocusedIndex = (index: number) => {
@@ -376,15 +382,15 @@ export function useList<Item, Variant extends ListSelectionVariant>(
     ArrowUp: (event) => {
       event.preventDefault();
       setHighlightedIndex((prevHighlightedIndex?: number) =>
-        saveFocusedIndex(Math.max(0, (prevHighlightedIndex ?? itemCount) - 1))
+        saveFocusedIndex(Math.max(0, (prevHighlightedIndex ?? itemCount) - 1)),
       );
     },
     ArrowDown: (event) => {
       event.preventDefault();
       setHighlightedIndex((prevHighlightedIndex?: number) =>
         saveFocusedIndex(
-          Math.min(itemCount - 1, (prevHighlightedIndex ?? -1) + 1)
-        )
+          Math.min(itemCount - 1, (prevHighlightedIndex ?? -1) + 1),
+        ),
       );
     },
     PageUp: (event) => {
@@ -393,9 +399,9 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         saveFocusedIndex(
           Math.max(
             0,
-            (prevHighlightedIndex ?? displayedItemCount) - displayedItemCount
-          )
-        )
+            (prevHighlightedIndex ?? displayedItemCount) - displayedItemCount,
+          ),
+        ),
       );
     },
     PageDown: (event) => {
@@ -404,9 +410,9 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         saveFocusedIndex(
           Math.min(
             itemCount - 1,
-            (prevHighlightedIndex ?? 0) + displayedItemCount
-          )
-        )
+            (prevHighlightedIndex ?? 0) + displayedItemCount,
+          ),
+        ),
       );
     },
     Home: (event) => {
@@ -424,7 +430,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         highlightedIndex,
         highlightedIndex != null && highlightedIndex > -1
           ? getItemAtIndex(highlightedIndex)
-          : null
+          : null,
       );
     },
     " ": (event) => {
@@ -434,7 +440,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         highlightedIndex,
         highlightedIndex != null && highlightedIndex > -1
           ? getItemAtIndex(highlightedIndex)
-          : null
+          : null,
       );
     },
     Tab: (event) => {
@@ -444,7 +450,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
           highlightedIndex,
           highlightedIndex != null && highlightedIndex > -1
             ? getItemAtIndex(highlightedIndex)
-            : null
+            : null,
         );
       } else {
         setHighlightedIndex(undefined);
@@ -485,10 +491,10 @@ export function useList<Item, Variant extends ListSelectionVariant>(
           restoreLastFocus
             ? lastFocusedIndex
             : firstSelectedItem
-            ? getItemIndex(firstSelectedItem)
-            : -1,
-          0
-        )
+              ? getItemIndex(firstSelectedItem)
+              : -1,
+          0,
+        ),
       );
     }
 
@@ -596,7 +602,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
 }
 
 const validateProps = <Item, Variant extends ListSelectionVariant>(
-  props: ListProps<Item, Variant>
+  props: ListProps<Item, Variant>,
 ) => {
   if (process.env.NODE_ENV !== "production") {
     const { source, itemCount, getItemIndex, getItemAtIndex } = props;
@@ -619,13 +625,13 @@ const validateProps = <Item, Variant extends ListSelectionVariant>(
     useEffect(() => {
       if (!hasNoIndexer && !hasIndexer) {
         console.error(
-          "useList needs to have both `getItemIndex` and `getItemAtIndex`."
+          "useList needs to have both `getItemIndex` and `getItemAtIndex`.",
         );
       }
 
       if (!hasNoIndexer && itemCount === undefined) {
         console.error(
-          "useList needs to have `itemCount` if an indexer is used."
+          "useList needs to have `itemCount` if an indexer is used.",
         );
       }
     }, [hasIndexer, hasNoIndexer, itemCount]);

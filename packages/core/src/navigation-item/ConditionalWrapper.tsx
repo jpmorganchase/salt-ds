@@ -1,5 +1,5 @@
-import { MouseEvent, ReactNode } from "react";
-import { NavigationItemProps } from "./NavigationItem";
+import type { MouseEvent, ReactNode } from "react";
+import type { NavigationItemProps } from "./NavigationItem";
 
 interface ConditionalWrapperProps
   extends Pick<

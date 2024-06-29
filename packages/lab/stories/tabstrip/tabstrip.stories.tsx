@@ -1,13 +1,13 @@
-import { useCallback, useMemo, useRef, useState } from "react";
 import {
   Button,
   FlexLayout,
   Link,
+  ParentChildLayout,
   SaltProvider,
   Text,
-  ParentChildLayout,
 } from "@salt-ds/core";
-import { EditableLabel, Tab, TabDescriptor, Tabstrip } from "@salt-ds/lab";
+import { EditableLabel, Tab, type TabDescriptor, Tabstrip } from "@salt-ds/lab";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { AdjustableFlexbox, CloseTabWarningDialog } from "../components";
 
 export default {
@@ -31,14 +31,14 @@ const _colours = [
 
 const getTabColours = (tabs: string[] | TabDescriptor[]): colourMap => {
   const tabStrings: string[] = tabs.map((tab: string | TabDescriptor) =>
-    typeof tab === "string" ? tab : tab.label
+    typeof tab === "string" ? tab : tab.label,
   );
   return tabStrings.reduce(
     (map: colourMap, tab: string, i: number) => ({
       ...map,
       [tab]: _colours[i],
     }),
-    {} as colourMap
+    {} as colourMap,
   );
 };
 
@@ -258,7 +258,7 @@ export const TheFullMonty = () => {
     { label: "Liquidity" },
   ]);
   const [closingTabIndex, setClosingTabIndex] = useState<number | undefined>(
-    undefined
+    undefined,
   );
 
   //TODO add confirmation dialog
@@ -443,7 +443,7 @@ export const TabstripControlledAddNew = () => {
     setTabs((state) =>
       state.concat([
         `New Tab${newTabCount.current > 1 ? ` ${newTabCount.current}` : ""}`,
-      ])
+      ]),
     );
     setSelectedTabIndex(tabCount);
   };
@@ -499,7 +499,7 @@ export const TabstripControlledAddAndDelete = () => {
     newTabCount.current += 1;
     const labelWithCount = ` ${newTabCount.current}`;
     setTabs((state) =>
-      state.concat([`New Tab${newTabCount.current > 1 ? labelWithCount : ""}`])
+      state.concat([`New Tab${newTabCount.current > 1 ? labelWithCount : ""}`]),
     );
     setSelectedTabIndex(tabCount);
   };
@@ -540,7 +540,7 @@ export const TabstripAddNewWithRename = () => {
     newTabCount.current += 1;
     const labelWithCount = ` ${newTabCount.current}`;
     setTabs((state) =>
-      state.concat([`New Tab${newTabCount.current > 1 ? labelWithCount : ""}`])
+      state.concat([`New Tab${newTabCount.current > 1 ? labelWithCount : ""}`]),
     );
   };
 
@@ -621,7 +621,7 @@ export const TabstripAddNewAlternativeDefaultName = () => {
     newTabCount.current += 1;
     const labelWithCount = ` ${newTabCount.current}`;
     setTabs((state) =>
-      state.concat([`New Tab${newTabCount.current > 1 ? labelWithCount : ""}`])
+      state.concat([`New Tab${newTabCount.current > 1 ? labelWithCount : ""}`]),
     );
   };
 
@@ -964,7 +964,7 @@ export const DraggableTabs = () => {
         setTabs(newTabs);
       }
     },
-    [tabs]
+    [tabs],
   );
   return (
     <div style={{ height: 300, width: 700 }}>
@@ -1014,12 +1014,12 @@ export const DraggableTabsWithOverflow = () => {
         setTabs(newTabs);
       }
     },
-    [tabs]
+    [tabs],
   );
 
   const childTabs = useMemo(
     () => tabs.map((label, i) => <Tab label={label} key={i} />),
-    [tabs]
+    [tabs],
   );
 
   return (

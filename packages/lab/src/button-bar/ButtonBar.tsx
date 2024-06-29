@@ -1,19 +1,19 @@
+import { clsx } from "clsx";
 import {
   Children,
+  type HTMLAttributes,
+  type ReactNode,
   forwardRef,
-  HTMLAttributes,
-  ReactNode,
   useMemo,
 } from "react";
-import { clsx } from "clsx";
 
+import { type ButtonVariant, makePrefixer } from "@salt-ds/core";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
-import { ButtonVariant, makePrefixer } from "@salt-ds/core";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import buttonBarCss from "./ButtonBar.css";
 
@@ -50,7 +50,7 @@ type OrderedButtonData = { variant?: ButtonVariant } & PartialRecord<
 
 function getPriorityForButton(
   item: OrderedButtonData,
-  field: ButtonBarOrderKey
+  field: ButtonBarOrderKey,
 ) {
   const variant = item?.variant || "primary";
   return item?.[field] ?? DefaultButtonsOrderByVariant[variant][field];
@@ -59,7 +59,7 @@ const createComparatorForField = (
   field: ButtonBarOrderKey,
   sort: ButtonBarSortOrder,
   alignLeft: boolean,
-  childrenData: Array<OrderedButtonData>
+  childrenData: Array<OrderedButtonData>,
 ) => {
   let equalityResult: number;
   if (field === "order" || field === "stackOrder") {
@@ -96,12 +96,12 @@ const createComparatorForField = (
 function alignSecondaryChild(
   orderedChildrenData: Array<OrderedButtonData & { index: number }>,
   sortOrder: ButtonBarSortOrder,
-  alignLeft: boolean
+  alignLeft: boolean,
 ): { index?: number; align?: "left" | "right" } {
   const noSecondaryChildren = { index: undefined, align: undefined };
   if (sortOrder === "asc" || alignLeft) {
     const firstSecondaryChildIndex = orderedChildrenData.findIndex(
-      (childData) => childData.variant === "secondary"
+      (childData) => childData.variant === "secondary",
     );
 
     if (firstSecondaryChildIndex !== -1) {
@@ -182,7 +182,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
       stackAtBreakpoint = "xs",
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -201,19 +201,19 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
       "stackOrder",
       sortStackOrder,
       alignLeft,
-      childrenData
+      childrenData,
     );
     const orderComparator = createComparatorForField(
       "order",
       sortOrder,
       alignLeft,
-      childrenData
+      childrenData,
     );
     const alignLeftComparator = createComparatorForField(
       "alignLeftOrder",
       sortAlignLeft,
       alignLeft,
-      childrenData
+      childrenData,
     );
 
     let orderedChildrenIndexes: number[];
@@ -224,7 +224,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
       orderedChildrenIndexes = matches
         ? childrenIndexes.sort(stackOrderComparator)
         : childrenIndexes.sort(
-            alignLeft ? alignLeftComparator : orderComparator
+            alignLeft ? alignLeftComparator : orderComparator,
           );
     }
 
@@ -240,16 +240,16 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
           ...childrenData[index],
         })),
         sortOrder,
-        alignLeft
+        alignLeft,
       );
     }
 
     const hasSecondaryButtons = childrenData.some(
-      (buttonData) => buttonData.variant === "secondary"
+      (buttonData) => buttonData.variant === "secondary",
     );
 
     const orderedChildren = orderedChildrenIndexes.map(
-      (index) => childrenArray[index]
+      (index) => childrenArray[index],
     );
 
     const buttonBarContextValue = useMemo(
@@ -258,7 +258,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
         alignedIndex: secondaryChildAlignment.index,
         align: secondaryChildAlignment.align,
       }),
-      [matches, secondaryChildAlignment.align, secondaryChildAlignment.index]
+      [matches, secondaryChildAlignment.align, secondaryChildAlignment.index],
     );
 
     return (
@@ -274,7 +274,7 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
                 [withBaseName("autoAligning")]:
                   hasSecondaryButtons && !disableAutoAlignment,
               },
-              className
+              className,
             )}
             ref={ref}
             role="region"
@@ -285,5 +285,5 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
         </DescendantProvider>
       </ButtonBarContext.Provider>
     );
-  }
+  },
 );

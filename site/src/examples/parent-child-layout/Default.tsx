@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { ParentChildLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 import styles from "./Default.module.css";
 

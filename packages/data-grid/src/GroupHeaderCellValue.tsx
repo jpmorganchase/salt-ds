@@ -1,4 +1,4 @@
-import { ColumnGroupCellValueProps } from "./ColumnGroup";
+import type { ColumnGroupCellValueProps } from "./ColumnGroup";
 
 export function GroupHeaderCellValue(props: ColumnGroupCellValueProps) {
   const { group } = props;

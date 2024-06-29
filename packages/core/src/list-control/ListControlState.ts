@@ -1,12 +1,12 @@
 import {
-  SyntheticEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { useControlled } from "../utils";
-import { OptionValue } from "./ListControlContext";
+import type { OptionValue } from "./ListControlContext";
 
 export type OpenChangeReason = "input" | "manual";
 
@@ -83,7 +83,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   }, [disabled, focusedState, setFocusedState]);
 
   const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
-    undefined
+    undefined,
   );
 
   const setActive = (option?: OptionValue<Item>) => {
@@ -106,7 +106,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   const setOpen = (
     newOpen: boolean,
     reason?: OpenChangeReason,
-    key?: string
+    key?: string,
   ) => {
     if (disabled || readOnly) {
       return;
@@ -182,11 +182,11 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
       return () => {
         optionsRef.current = optionsRef.current.filter(
-          (item) => item.data.id !== id
+          (item) => item.data.id !== id,
         );
       };
     },
-    []
+    [],
   );
 
   const getOptionAtIndex = (index: number) => {
@@ -198,14 +198,14 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   };
 
   const getOptionsMatching = (
-    predicate: (option: OptionValue<Item>) => boolean
+    predicate: (option: OptionValue<Item>) => boolean,
   ) => {
     return optionsRef.current.filter((item) => predicate(item.data));
   };
 
   const getOptionFromSearch = (
     search: string,
-    startFrom?: OptionValue<Item>
+    startFrom?: OptionValue<Item>,
   ) => {
     const collator = new Intl.Collator("en", {
       usage: "search",
@@ -219,8 +219,8 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       (option) =>
         collator.compare(
           valueToString(option.value).substring(0, search.length),
-          search
-        ) === 0
+          search,
+        ) === 0,
     );
 
     if (matches.length === 0) {
@@ -233,8 +233,8 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
           (option) =>
             collator.compare(
               valueToString(option.value)[0].toLowerCase(),
-              letters[0]
-            ) === 0
+              letters[0],
+            ) === 0,
         );
       }
     }
@@ -273,10 +273,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     const containerRect = list.getBoundingClientRect();
     let optionRect = option.element.getBoundingClientRect();
 
-    let listY = containerRect.y - list.scrollTop;
-    let pageY = Math.max(
+    const listY = containerRect.y - list.scrollTop;
+    const pageY = Math.max(
       0,
-      optionRect.y - listY + optionRect.height - containerRect.height
+      optionRect.y - listY + optionRect.height - containerRect.height,
     );
 
     while (option && optionRect.y - listY > pageY) {
@@ -298,10 +298,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     const containerRect = list.getBoundingClientRect();
     let optionRect = option.element.getBoundingClientRect();
 
-    let listY = containerRect.y - list.scrollTop;
-    let pageY = Math.min(
+    const listY = containerRect.y - list.scrollTop;
+    const pageY = Math.min(
       list.scrollHeight,
-      optionRect.y - listY - optionRect.height + containerRect.height
+      optionRect.y - listY - optionRect.height + containerRect.height,
     );
 
     while (option && optionRect.y - listY < pageY) {
@@ -315,7 +315,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   useEffect(() => {
     if (listRef.current) {
       const activeElement = optionsRef.current.find(
-        (option) => option.data === activeState
+        (option) => option.data === activeState,
       )?.element;
 
       if (!activeElement) {

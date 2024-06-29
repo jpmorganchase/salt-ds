@@ -1,5 +1,5 @@
 import {
-  ComponentPropsWithoutRef,
+  type ComponentPropsWithoutRef,
   createContext,
   forwardRef,
   useContext,
@@ -11,7 +11,7 @@ export type WindowProps = {
 
 export const Window = forwardRef<HTMLDivElement, WindowProps>(function Window(
   { children, open, ...props },
-  ref
+  ref,
 ) {
   return (
     <div {...props} ref={ref}>

@@ -1,4 +1,4 @@
-import { ListNext, ListItemNext, ListNextProps } from "@salt-ds/lab";
+import { ListItemNext, ListNext, type ListNextProps } from "@salt-ds/lab";
 
 type ItemType = { label: string; value: string };
 
@@ -38,7 +38,7 @@ describe("GIVEN a list", () => {
         <SingleSelectList
           onChange={cy.spy().as("onChange")}
           onSelect={cy.spy().as("onSelect")}
-        />
+        />,
       );
 
       cy.findByRole("option", { name: ITEMS[1].label })
@@ -53,7 +53,7 @@ describe("GIVEN a list", () => {
         <SingleSelectList
           onChange={cy.spy().as("onChange")}
           onSelect={cy.spy().as("onSelect")}
-        />
+        />,
       );
 
       cy.findByRole("option", { name: ITEMS[1].label })
@@ -80,7 +80,7 @@ describe("GIVEN a list", () => {
       cy.findByRole("option", { name: ITEMS[1].label }).should(
         "not.have.attr",
         "aria-selected",
-        "true"
+        "true",
       );
     });
 
@@ -92,7 +92,7 @@ describe("GIVEN a list", () => {
           cy.findAllByRole("option").should(
             "have.attr",
             "aria-disabled",
-            "true"
+            "true",
           );
         });
       });
@@ -114,13 +114,13 @@ describe("GIVEN a list", () => {
                   </ListItemNext>
                 </>
               }
-            />
+            />,
           );
 
           cy.findByRole("option", { name: ITEMS[1].label }).click();
           cy.findByRole("option", { name: ITEMS[1].label }).should(
             "not.have.attr",
-            "aria-selected"
+            "aria-selected",
           );
         });
       });
@@ -150,7 +150,7 @@ describe("GIVEN a list", () => {
           cy.findByRole("listbox").focus();
           cy.findByRole("option", { name: ITEMS[0].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });
@@ -163,14 +163,14 @@ describe("GIVEN a list", () => {
           cy.realPress("ArrowDown");
           cy.findByRole("option", { name: ITEMS[1].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
           cy.findByRole("listbox").blur(); // remove focus
           cy.findByRole("listbox").focus(); // focus again
           // focus should be back on the previously focused item
           cy.findByRole("option", { name: ITEMS[1].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });
@@ -186,13 +186,13 @@ describe("GIVEN a list", () => {
           // focus on last list item
           cy.findByRole("option", { name: ITEMS[2].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
           cy.realPress("ArrowDown");
           // focus do not wrap
           cy.findByRole("option", { name: ITEMS[2].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });
@@ -206,7 +206,7 @@ describe("GIVEN a list", () => {
           // focus do not wrap
           cy.findByRole("option", { name: ITEMS[0].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });
@@ -220,7 +220,7 @@ describe("GIVEN a list", () => {
           cy.realPress("Home");
           cy.findByRole("option", { name: ITEMS[0].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });
@@ -233,7 +233,7 @@ describe("GIVEN a list", () => {
           cy.realPress("End");
           cy.findByRole("option", { name: ITEMS[2].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });
@@ -247,7 +247,7 @@ describe("GIVEN a list", () => {
           // focus on first list item
           cy.findByRole("option", { name: ITEMS[1].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
 
           // mouse to click on another list item
@@ -258,7 +258,7 @@ describe("GIVEN a list", () => {
           // focus should be on item previously selected using mouse
           cy.findByRole("option", { name: ITEMS[2].label }).should(
             "have.class",
-            "saltListItemNext-focused"
+            "saltListItemNext-focused",
           );
         });
       });

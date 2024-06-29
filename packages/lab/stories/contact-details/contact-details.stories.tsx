@@ -1,12 +1,12 @@
 import {
   Button,
   Card,
-  Tooltip,
   Overlay,
   OverlayPanel,
-  OverlayTrigger,
-  OverlayPanelContent,
   OverlayPanelCloseButton,
+  OverlayPanelContent,
+  OverlayTrigger,
+  Tooltip,
 } from "@salt-ds/core";
 import {
   CallIcon,
@@ -27,14 +27,14 @@ import {
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
-  ListItem,
-  ListItemType,
-  SelectionChangeHandler,
-  ValueComponentProps,
   FormField,
+  ListItem,
+  type ListItemType,
+  type SelectionChangeHandler,
+  type ValueComponentProps,
 } from "@salt-ds/lab";
-import { StoryFn } from "@storybook/react";
-import { forwardRef, Fragment, ReactNode } from "react";
+import type { StoryFn } from "@storybook/react";
+import { Fragment, type ReactNode, forwardRef } from "react";
 
 import "./contact-details.stories.css";
 
@@ -105,7 +105,7 @@ const MultiLineAddressRenderer = forwardRef<HTMLElement, ValueComponentProps>(
         ))}
       </span>
     );
-  }
+  },
 );
 
 const ObscureEmailRenderer = forwardRef<HTMLElement, ValueComponentProps>(
@@ -116,11 +116,11 @@ const ObscureEmailRenderer = forwardRef<HTMLElement, ValueComponentProps>(
     return (
       <span {...restProps} ref={ref}>
         {`${value.slice(0, 3)}${"x".repeat(indexOfAt - 3)}${value.slice(
-          indexOfAt
+          indexOfAt,
         )}`}
       </span>
     );
-  }
+  },
 );
 
 const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
@@ -133,7 +133,7 @@ const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
         {`${"x".repeat(lengthToObscure)}${value.slice(lengthToObscure)}`}
       </span>
     );
-  }
+  },
 );
 
 const contactToString = (nameEmail: NameEmail) =>
@@ -637,7 +637,7 @@ const ExportToFileTemplate: StoryFn = () => {
       },
       () => {
         console.log("Clipboard write failed");
-      }
+      },
     );
   };
 

@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 import "./QueryResultTable.css";
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";

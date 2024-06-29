@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "../../utils";
-import { Text } from "../../text";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { Text } from "../../text";
+import { makePrefixer } from "../../utils";
 
 import linearProgressCss from "./LinearProgress.css";
 
@@ -49,7 +49,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       bufferValue,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -99,5 +99,5 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         )}
       </div>
     );
-  }
+  },
 );

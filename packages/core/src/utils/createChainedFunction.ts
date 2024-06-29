@@ -20,6 +20,6 @@ export function createChainedFunction<Args extends any[], This>(
       };
     },
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    () => {}
+    () => {},
   );
 }

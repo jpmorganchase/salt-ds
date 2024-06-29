@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { useBreakpoints, useCurrentBreakpoint } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Breakpoints = (): ReactElement => {
   const breakpoints = useBreakpoints();

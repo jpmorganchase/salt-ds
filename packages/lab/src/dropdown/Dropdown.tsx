@@ -1,33 +1,33 @@
 import { useForkRef, useIdMemo as useId } from "@salt-ds/core";
 import {
+  type ForwardedRef,
+  type ReactElement,
   cloneElement,
-  ForwardedRef,
   forwardRef,
-  ReactElement,
   useCallback,
   useRef,
 } from "react";
 
 import {
-  CollectionItem,
+  type CollectionItem,
   CollectionProvider,
+  type SelectionProps,
+  type SelectionStrategy,
+  type SingleSelectionStrategy,
   itemToString as defaultItemToString,
-  SelectionProps,
-  SelectionStrategy,
-  SingleSelectionStrategy,
   useCollectionItems,
 } from "../common-hooks";
 import { List } from "../list/List";
-import { ListProps } from "../list/listTypes";
-import { DropdownBase, MaybeChildProps } from "./DropdownBase";
-import { DropdownButton } from "./DropdownButton";
-import { DropdownBaseProps } from "./dropdownTypes";
-import { useDropdown } from "./useDropdown";
+import type { ListProps } from "../list/listTypes";
 import { forwardCallbackProps } from "../utils";
+import { DropdownBase, type MaybeChildProps } from "./DropdownBase";
+import { DropdownButton } from "./DropdownButton";
+import type { DropdownBaseProps } from "./dropdownTypes";
+import { useDropdown } from "./useDropdown";
 
 export interface DropdownProps<
   Item = string,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > extends DropdownBaseProps,
     Pick<
       ListProps<Item, Selection>,
@@ -42,7 +42,7 @@ export interface DropdownProps<
 
 export const Dropdown = forwardRef(function Dropdown<
   Item = string,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 >(
   {
     "aria-label": ariaLabel,
@@ -64,7 +64,7 @@ export const Dropdown = forwardRef(function Dropdown<
     width = 180,
     ...props
   }: DropdownProps<Item, Selection>,
-  forwardedRef: ForwardedRef<HTMLDivElement>
+  forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
   const id = useId(idProp);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -111,7 +111,7 @@ export const Dropdown = forwardRef(function Dropdown<
 
   const collectionItemsToItem = useCallback(
     (
-      itemOrItems?: CollectionItem<Item> | null | CollectionItem<Item>[]
+      itemOrItems?: CollectionItem<Item> | null | CollectionItem<Item>[],
     ):
       | undefined
       | (Selection extends SingleSelectionStrategy ? Item | null : Item[]) => {
@@ -124,7 +124,7 @@ export const Dropdown = forwardRef(function Dropdown<
         return itemOrItems.value as returnType;
       }
     },
-    []
+    [],
   );
 
   const getTriggerComponent = () => {
@@ -141,7 +141,7 @@ export const Dropdown = forwardRef(function Dropdown<
         forwardCallbackProps(ownProps, {
           ...(dropdownListHook.isOpen ? listControlProps : {}),
           ...ariaProps,
-        })
+        }),
       );
     } else {
       return (
@@ -183,5 +183,5 @@ export const Dropdown = forwardRef(function Dropdown<
 }) as <Item, Selection extends SelectionStrategy = "default">(
   props: DropdownProps<Item, Selection> & {
     ref?: ForwardedRef<HTMLDivElement>;
-  }
+  },
 ) => ReactElement<DropdownProps<Item, Selection>>;

@@ -1,13 +1,13 @@
+import { LinearProgress } from "@salt-ds/core";
 import { useCallback, useMemo } from "react";
 import {
   Grid,
-  GridCellValueProps,
+  type GridCellValueProps,
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@salt-ds/core";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Data Grid",
@@ -77,7 +77,7 @@ const CellCustomizationTemplate: StoryFn<{}> = () => {
 
   const rowKeyGetter = useCallback(
     (row: CurrencyPairRow) => row.currencyPair,
-    []
+    [],
   );
 
   return (
