@@ -1,16 +1,16 @@
 import {
-  DateValue,
+  type DateValue,
   getLocalTimeZone,
   isSameDay,
   isSameMonth,
   isToday,
 } from "@internationalized/date";
 import {
-  ComponentPropsWithoutRef,
-  FocusEventHandler,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  RefObject,
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+  type RefObject,
   useEffect,
 } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
@@ -35,7 +35,7 @@ export interface useCalendarDayProps {
 
 export function useCalendarDay(
   { date, month }: useCalendarDayProps,
-  ref: RefObject<HTMLElement>
+  ref: RefObject<HTMLElement>,
 ) {
   const {
     state: { focusedDate, hideOutOfRangeDates, calendarFocused },

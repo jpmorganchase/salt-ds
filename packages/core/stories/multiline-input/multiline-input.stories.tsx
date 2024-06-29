@@ -1,24 +1,24 @@
 import {
-  FormField,
   Button,
   FlowLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
   Label,
   MultilineInput,
   Text,
-  FormFieldLabel,
-  FormFieldHelperText,
 } from "@salt-ds/core";
 import {
   BookmarkSolidIcon,
+  CloseIcon,
   FilterClearIcon,
   FlagIcon,
   PinSolidIcon,
   RefreshIcon,
   SendIcon,
-  CloseIcon,
 } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
-import { ChangeEvent, useState } from "react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Core/Multiline Input",
@@ -57,7 +57,7 @@ export const Controlled: StoryFn<typeof MultilineInput> = (args) => {
 };
 
 export const ControlledWithAdornment: StoryFn<typeof MultilineInput> = (
-  args
+  args,
 ) => {
   const [value, setValue] = useState("Value");
 

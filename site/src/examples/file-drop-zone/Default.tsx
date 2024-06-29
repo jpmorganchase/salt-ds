@@ -1,10 +1,10 @@
-import { ReactElement, SyntheticEvent } from "react";
 import {
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneTrigger,
   Text,
 } from "@salt-ds/core";
+import type { ReactElement, SyntheticEvent } from "react";
 
 const validate = (event: SyntheticEvent, files: File[]) => {
   console.log("validate files", files);

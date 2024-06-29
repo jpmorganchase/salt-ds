@@ -1,12 +1,12 @@
 import { Spinner } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useEffect } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultData, infiniteScrollColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const generateData = function generateData<T extends { name: string }>(
-  lst: T[]
+  lst: T[],
 ) {
   return lst.reduce((result, row) => {
     const data = [];
@@ -33,7 +33,7 @@ export const InfiniteScroll = (props: AgGridReactProps) => {
           setTimeout(() => {
             successCallback(
               dataSourceRows.slice(startRow, endRow),
-              dataSourceRows.length
+              dataSourceRows.length,
             );
           }, 500);
         },

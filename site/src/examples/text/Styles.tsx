@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import {
+  Code,
   Display1,
   Display2,
   Display3,
@@ -7,13 +7,13 @@ import {
   H2,
   H3,
   H4,
-  Text,
   Label,
   StackLayout,
-  TextNotation,
+  Text,
   TextAction,
-  Code,
+  TextNotation,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Styles = (): ReactElement => (
   <StackLayout>

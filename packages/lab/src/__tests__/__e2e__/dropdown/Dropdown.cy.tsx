@@ -8,12 +8,12 @@ describe("GIVEN a Dropdown component", () => {
       cy.mount(
         <FormField label="Dropdown" id="dropdown-in-form-field">
           <Dropdown source={testSource} />
-        </FormField>
+        </FormField>,
       );
       cy.findByLabelText("Dropdown").focus();
       cy.get(".saltFormFieldLegacy").should(
         "have.class",
-        "saltFormFieldLegacy-focused"
+        "saltFormFieldLegacy-focused",
       );
     });
   });

@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
 import { NavigationItem } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const Default = (): ReactElement => {
   const [active, setActive] = useState(false);

@@ -1,15 +1,13 @@
-import { ChangeEvent, CSSProperties, useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  StackLayout,
-  Card,
   Button,
-  SplitLayout,
-  Text,
+  Card,
+  Input,
   ListBox,
   Option,
-  Input,
+  SplitLayout,
+  StackLayout,
   StatusIndicator,
+  Text,
   Tooltip,
 } from "@salt-ds/core";
 import {
@@ -18,16 +16,18 @@ import {
   ChevronRightIcon,
   ChevronUpIcon,
   CloseIcon,
+  DoubleChevronDownIcon,
   DoubleChevronLeftIcon,
   DoubleChevronRightIcon,
-  DoubleChevronDownIcon,
   DoubleChevronUpIcon,
   FilterIcon,
-  IconProps,
-  SortableAlphaIcon,
+  type IconProps,
   SortAlphaAscendIcon,
   SortAlphaDescendIcon,
+  SortableAlphaIcon,
 } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type CSSProperties, type ChangeEvent, useState } from "react";
 import { usStateExampleData } from "../../assets/exampleData";
 import "./list-builder.stories.css";
 
@@ -71,7 +71,7 @@ function sortData(data: string[], sort: SortType): string[] {
   if (!sort) return data;
   // @ts-ignore
   return data.toSorted((a, b) =>
-    sort === "asc" ? a.localeCompare(b) : b.localeCompare(a)
+    sort === "asc" ? a.localeCompare(b) : b.localeCompare(a),
   );
 }
 
@@ -302,7 +302,7 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
 }) => {
   const [picked, setPicked] = useState<string[]>([]);
   const availableOptions = usStateExampleData.filter(
-    (state) => !picked.includes(state)
+    (state) => !picked.includes(state),
   );
 
   const [optionsToAdd, setOptionsToAdd] = useState<string[]>([]);
@@ -314,22 +314,22 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
   const filteredAvailableOptions = availableOptions.filter((option) =>
     addFilter != ""
       ? option.toLowerCase().startsWith(addFilter.toLowerCase())
-      : true
+      : true,
   );
 
   const filteredPickedOptions = picked.filter((option) =>
     removeFilter != ""
       ? option.toLowerCase().startsWith(removeFilter.toLowerCase())
-      : true
+      : true,
   );
 
   const handlePickedReorder = (direction: "up" | "down") => {
-    let arr = [...picked];
+    const arr = [...picked];
     if (direction === "up") {
       picked.forEach((item, index) => {
         if (optionsToRemove.includes(item)) {
           const prevIndex = Math.max(0, index - 1);
-          let temp = arr[prevIndex];
+          const temp = arr[prevIndex];
           if (!optionsToRemove.includes(temp)) {
             arr[prevIndex] = item;
             arr[index] = temp;
@@ -341,7 +341,7 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
         const item = picked[index];
         if (optionsToRemove.includes(item)) {
           const nextIndex = Math.min(arr.length - 1, index + 1);
-          let temp = arr[nextIndex];
+          const temp = arr[nextIndex];
           if (!optionsToRemove.includes(temp)) {
             arr[nextIndex] = item;
             arr[index] = temp;
@@ -384,7 +384,7 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
         addDisabled={optionsToAdd.length === 0}
         onRemove={() => {
           setPicked((old) =>
-            old.filter((item) => !optionsToRemove.includes(item))
+            old.filter((item) => !optionsToRemove.includes(item)),
           );
           setOptionsToRemove([]);
         }}

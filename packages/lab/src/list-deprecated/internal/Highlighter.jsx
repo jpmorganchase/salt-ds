@@ -1,9 +1,9 @@
 import React from "react";
 import { escapeRegExp } from "../../utils";
 
-import highlighterCss from "./Highlighter.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import highlighterCss from "./Highlighter.css";
 
 const baseName = "saltHighlighter";
 
@@ -28,7 +28,7 @@ export const Highlighter = (props) => {
           </strong>
         ) : (
           part
-        )
+        ),
       )}
     </>
   );

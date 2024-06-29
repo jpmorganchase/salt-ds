@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { FlowLayout, StatusIndicator } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Status = (): ReactElement => (
   <FlowLayout>

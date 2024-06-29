@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import clsx from "clsx";
-import { SaltProvider } from "@salt-ds/core";
-import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import { useBreakpoint } from "@jpmorganchase/mosaic-components";
+import { Sidebar } from "@jpmorganchase/mosaic-site-components";
+import { SaltProvider } from "@salt-ds/core";
+import clsx from "clsx";
+import React, { type ReactNode } from "react";
 import styles from "./LayoutColumns.module.css";
 
 export const LayoutColumns = ({

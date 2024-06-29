@@ -1,6 +1,11 @@
-import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import { ComboBox, Option } from "@salt-ds/core";
-import { largestCities, LargeCity } from "./exampleData";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
+import { type LargeCity, largestCities } from "./exampleData";
 
 /**
  * type LargeCity = {
@@ -19,7 +24,7 @@ export const ObjectValues = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: LargeCity[]
+    newSelected: LargeCity[],
   ) => {
     if (newSelected.length === 1) {
       setValue(newSelected[0].name);
@@ -38,7 +43,7 @@ export const ObjectValues = (): ReactElement => {
     >
       {largestCities
         .filter((city) =>
-          city.name.toLowerCase().includes(value.trim().toLowerCase())
+          city.name.toLowerCase().includes(value.trim().toLowerCase()),
         )
         .map((city) => (
           <Option value={city} key={city.name} />

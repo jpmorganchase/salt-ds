@@ -1,42 +1,42 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  FocusEvent,
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type InputHTMLAttributes,
+  type KeyboardEvent,
+  type ReactNode,
+  type RefObject,
+  type SyntheticEvent,
   forwardRef,
-  InputHTMLAttributes,
-  KeyboardEvent,
-  ReactNode,
-  RefObject,
-  SyntheticEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
-import dateInputCss from "./DateInput.css";
 import {
-  makePrefixer,
+  CalendarDate,
+  DateFormatter,
+  type DateValue,
+  getLocalTimeZone,
+  parseAbsoluteToLocal,
+} from "@internationalized/date";
+import {
   StatusAdornment,
+  makePrefixer,
   useForkRef,
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
 import {
-  CalendarDate,
-  DateFormatter,
-  DateValue,
-  getLocalTimeZone,
-  parseAbsoluteToLocal,
-} from "@internationalized/date";
-import { useDatePickerContext } from "../date-picker/DatePickerContext";
-import {
+  type RangeSelectionValueType,
+  type SingleSelectionValueType,
   isRangeOrOffsetSelectionWithStartDate,
-  RangeSelectionValueType,
-  SingleSelectionValueType,
 } from "../calendar";
+import { useDatePickerContext } from "../date-picker/DatePickerContext";
+import dateInputCss from "./DateInput.css";
 
 const withBaseName = makePrefixer("saltDateInput");
 const isInvalidDate = (value: string) =>
@@ -123,7 +123,7 @@ export interface DateInputProps<SelectionVariantType>
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    selectedDate?: SelectionVariantType
+    selectedDate?: SelectionVariantType,
   ) => void;
   /**
    * Callback fired when the input value change.
@@ -131,12 +131,12 @@ export interface DateInputProps<SelectionVariantType>
   onChange?: SelectionVariantType extends SingleSelectionValueType
     ? (
         event: ChangeEvent<HTMLInputElement>,
-        selectedDateInputValue?: string
+        selectedDateInputValue?: string,
       ) => void
     : (
         event: ChangeEvent<HTMLInputElement>,
         startDateInputValue?: string,
-        endDateInputValue?: string
+        endDateInputValue?: string,
       ) => void;
 }
 
@@ -163,7 +163,7 @@ export const DateInput = forwardRef<
     onChange,
     ...rest
   },
-  ref
+  ref,
 ) {
   const wrapperRef = useRef(null);
   const inputRef = useForkRef<HTMLDivElement>(ref, wrapperRef);
@@ -199,15 +199,15 @@ export const DateInput = forwardRef<
     dateFormatter(
       isRangeOrOffsetSelectionWithStartDate(selectedDate)
         ? selectedDate?.startDate
-        : selectedDate
-    )
+        : selectedDate,
+    ),
   );
   const [endDateStringValue, setEndDateStringValue] = useState<string>(
     dateFormatter(
       isRangeOrOffsetSelectionWithStartDate(selectedDate)
         ? selectedDate?.endDate
-        : undefined
-    )
+        : undefined,
+    ),
   );
 
   const {
@@ -328,7 +328,7 @@ export const DateInput = forwardRef<
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName(validationStatus ?? "")]: validationStatus,
         },
-        className
+        className,
       )}
       onClick={(event) => handleInputClick(event)}
       onKeyDown={onKeyDown}
@@ -342,7 +342,7 @@ export const DateInput = forwardRef<
         aria-labelledby={clsx(
           formFieldLabelledBy,
           dateInputLabelledBy,
-          startDateInputID
+          startDateInputID,
         )}
         aria-label={clsx("Start date", ariaLabel)}
         id={startDateInputID}
@@ -374,7 +374,7 @@ export const DateInput = forwardRef<
             aria-labelledby={clsx(
               formFieldLabelledBy,
               dateInputLabelledBy,
-              endDateInputID
+              endDateInputID,
             )}
             aria-label={clsx("End date", ariaLabel)}
             id={endDateInputID}

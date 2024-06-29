@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox.stories";
+import { composeStories } from "@storybook/react";
 
 const { Default /*, MultiSelect*/ } = composeStories(comboBoxStories);
 
@@ -22,7 +22,7 @@ describe("A combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      "Alaska"
+      "Alaska",
     );
   });
 
@@ -122,7 +122,7 @@ describe("A combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      null
+      null,
     );
   });
 });

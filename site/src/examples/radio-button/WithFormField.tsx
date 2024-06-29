@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import {
-  FormField,
-  FormFieldLabel,
-  FormFieldHelperText,
   FlexLayout,
-  RadioButtonGroup,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
   RadioButton,
+  RadioButtonGroup,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const WithFormField = (): ReactElement => {
   return (

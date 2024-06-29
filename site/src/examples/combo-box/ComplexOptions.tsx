@@ -1,5 +1,5 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import { ComboBox, Option, StackLayout, Text } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 type Contact = {
   firstName: string;
@@ -183,7 +183,7 @@ export const ComplexOptions = (): ReactElement => {
         .filter((contact) =>
           contact.displayName
             .toLowerCase()
-            .includes(filter.trim().toLowerCase())
+            .includes(filter.trim().toLowerCase()),
         )
         .map((contact) => (
           <ContactOption value={contact} key={contact.id} />

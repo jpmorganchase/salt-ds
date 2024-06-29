@@ -1,7 +1,12 @@
-import { ChangeEvent, ReactElement, useState, SyntheticEvent } from "react";
-import { ComboBox, Button, Option } from "@salt-ds/core";
-import { shortColorData } from "./exampleData";
+import { Button, ComboBox, Option } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
+import { shortColorData } from "./exampleData";
 
 export const ClearSelection = (): ReactElement => {
   const [value, setValue] = useState("");
@@ -14,14 +19,14 @@ export const ClearSelection = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     setSelected(newSelected);
     setValue("");
   };
 
   const filteredOptions = shortColorData.filter((data) =>
-    data.toLowerCase().includes(value.trim().toLowerCase())
+    data.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
   const handleClear = () => {

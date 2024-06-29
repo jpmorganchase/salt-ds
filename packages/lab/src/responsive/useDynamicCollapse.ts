@@ -1,10 +1,10 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useCallback, useState } from "react";
-import {
-  ElementRef,
-  OverflowItem,
-  OverflowHookProps,
+import type {
   DynamicCollapseHookResult,
+  ElementRef,
+  OverflowHookProps,
+  OverflowItem,
 } from "./overflowTypes";
 import {
   byDescendingPriority,
@@ -23,7 +23,7 @@ const hasUncollapsedDynamicItems = (containerRef: ElementRef) =>
   containerRef.current!.querySelector(UNCOLLAPSED_DYNAMIC_ITEMS) !== null;
 
 const thereAreCollapsibleItemsAndTheyAreAllCollapsed = (
-  items: OverflowItem[]
+  items: OverflowItem[],
 ) => {
   const collapsibleItems = items.filter(isCollapsible);
   return collapsibleItems.length > 0 && collapsibleItems.every(isCollapsed);
@@ -64,7 +64,7 @@ export const useDynamicCollapse = ({
         minSize,
       });
     },
-    [dispatch, orientation]
+    [dispatch, orientation],
   );
 
   const checkDynamicContent = useCallback(
@@ -72,10 +72,11 @@ export const useDynamicCollapse = ({
       const { current: managedItems } = managedItemsRef;
       // The order must matter here
       const collapsingChild = managedItems.find(
-        ({ collapsible, collapsing }) => collapsible === "dynamic" && collapsing
+        ({ collapsible, collapsing }) =>
+          collapsible === "dynamic" && collapsing,
       );
       const collapsedChild = managedItems.find(
-        ({ collapsible, collapsed }) => collapsible === "dynamic" && collapsed
+        ({ collapsible, collapsed }) => collapsible === "dynamic" && collapsed,
       );
 
       if (!collapsingChild && !collapsedChild) {
@@ -112,12 +113,12 @@ export const useDynamicCollapse = ({
           const [padStart, padEnd] = getRuntimePadding(
             collapsingElement,
             "left",
-            "right"
+            "right",
           );
           //TODO we don't really want to measure the last item in the collapsing container
           // we want to measure the width of the item that will be the last to overflow.
           const lastTooltrayItem = collapsingElement.querySelector(
-            ".Responsive-inner > :last-child"
+            ".Responsive-inner > :last-child",
           );
           if (lastTooltrayItem) {
             const { [dimension]: childMinSize } =
@@ -127,7 +128,7 @@ export const useDynamicCollapse = ({
               collapseCollapsingItem(
                 collapsingChild,
                 collapsingElement,
-                minSize
+                minSize,
               );
             }
           }
@@ -141,7 +142,7 @@ export const useDynamicCollapse = ({
       orientation,
       ref,
       restoreCollapsingItem,
-    ]
+    ],
   );
 
   const handleResize = useCallback(
@@ -149,7 +150,7 @@ export const useDynamicCollapse = ({
       const { current: managedItems } = managedItemsRef;
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
-        orientation
+        orientation,
       );
 
       const collapsingItem = managedItems.find((item) => item.collapsing);
@@ -164,7 +165,7 @@ export const useDynamicCollapse = ({
         checkDynamicContent(true);
       }
     },
-    [checkDynamicContent, managedItemsRef, orientation, ref]
+    [checkDynamicContent, managedItemsRef, orientation, ref],
   );
 
   const resetMeasurements = useCallback(() => {

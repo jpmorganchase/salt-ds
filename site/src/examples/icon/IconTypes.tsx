@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { AddDocumentIcon, AddDocumentSolidIcon } from "@salt-ds/icons";
 import { FlowLayout } from "@salt-ds/core";
+import { AddDocumentIcon, AddDocumentSolidIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const IconTypes = (): ReactElement => (
   <FlowLayout>

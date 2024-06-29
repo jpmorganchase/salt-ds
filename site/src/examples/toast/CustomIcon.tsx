@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import { Button, Text, Toast, ToastContent } from "@salt-ds/core";
 import {
   CloseIcon,
@@ -7,6 +6,7 @@ import {
   StepSuccessIcon,
   WarningIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const CustomIcon = (): ReactElement => (
   <div style={{ display: "flex", flexDirection: "column" }}>

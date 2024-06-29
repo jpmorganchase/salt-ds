@@ -1,12 +1,12 @@
-import {
-  ComponentPropsWithoutRef,
-  useRef,
-  cloneElement,
-  CSSProperties,
-  ReactNode,
-} from "react";
-import clsx from "clsx";
 import { Link } from "@jpmorganchase/mosaic-site-components";
+import clsx from "clsx";
+import {
+  type CSSProperties,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  cloneElement,
+  useRef,
+} from "react";
 
 import { useViewport } from "@salt-ds/core";
 

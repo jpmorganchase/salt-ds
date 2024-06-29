@@ -1,5 +1,5 @@
-import { ChangeEvent, ReactElement, useState } from "react";
-import { ComboBox, ComboBoxProps, Option } from "@salt-ds/core";
+import { ComboBox, type ComboBoxProps, Option } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 import { shortColorData } from "./exampleData";
 
 export const Truncation = (): ReactElement => {
@@ -25,7 +25,7 @@ export const Truncation = (): ReactElement => {
     >
       {shortColorData
         .filter((color) =>
-          color.toLowerCase().includes(value.trim().toLowerCase())
+          color.toLowerCase().includes(value.trim().toLowerCase()),
         )
         .map((color) => (
           <Option value={color} key={color} />

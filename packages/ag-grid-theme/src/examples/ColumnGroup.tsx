@@ -1,5 +1,5 @@
-import { ColDef, ColGroupDef } from "ag-grid-community";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import type { ColDef, ColGroupDef } from "ag-grid-community";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 

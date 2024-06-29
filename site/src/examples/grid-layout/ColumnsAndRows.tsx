@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { GridLayout, GridItem } from "@salt-ds/core";
+import { GridItem, GridLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const ColumnsAndRows = (): ReactElement => (

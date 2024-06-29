@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { useCallback, useRef, RefObject } from "react";
+import { type RefObject, useCallback, useRef } from "react";
 export const WidthHeight = ["height", "width"];
 export const HeightOnly = ["height"];
 export const WidthOnly = ["width"];
@@ -24,7 +24,7 @@ const observedMap = new WeakMap<HTMLElement, observedDetails>();
 const getTargetSize = (
   element: HTMLElement,
   contentRect: DOMRectReadOnly,
-  dimension: measuredDimension
+  dimension: measuredDimension,
 ): number => {
   switch (dimension) {
     case "height":
@@ -53,7 +53,7 @@ const resizeObserver =
               const newSize = getTargetSize(
                 target as HTMLElement,
                 contentRect,
-                dimension as measuredDimension
+                dimension as measuredDimension,
               );
               if (newSize !== size) {
                 sizeChanged = true;
@@ -76,7 +76,7 @@ export function useResizeObserver(
   ref: RefObject<Element | HTMLElement | null>,
   dimensions: string[],
   onResize: ResizeHandler,
-  reportInitialSize = false
+  reportInitialSize = false,
 ): void {
   const dimensionsRef = useRef(dimensions);
   const measure = useCallback((target: HTMLElement): measurements<number> => {
@@ -86,7 +86,7 @@ export function useResizeObserver(
         map[dim] = getTargetSize(target, rect, dim as measuredDimension);
         return map;
       },
-      {}
+      {},
     );
   }, []);
 
@@ -134,7 +134,7 @@ export function useResizeObserver(
       // TODO might we want multiple callers to attach a listener to the same element ?
       if (observedMap.has(target)) {
         throw Error(
-          "useResizeObserver attemping to observe same element twice"
+          "useResizeObserver attemping to observe same element twice",
         );
       }
       void registerObserver();

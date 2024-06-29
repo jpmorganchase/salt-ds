@@ -43,7 +43,7 @@ function extractVariables(folder, outputFile) {
   const jsonData = JSON.stringify(allCharacteristicsVariables, null, 2);
   const cssFolderPath = path.resolve(
     __dirname,
-    "../site/src/components/css-display"
+    "../site/src/components/css-display",
   );
 
   const outputPath = path.join(cssFolderPath, outputFile);
@@ -57,6 +57,6 @@ function extractVariables(folder, outputFile) {
 
 extractVariables(
   "../packages/theme/css/characteristics",
-  "cssCharacteristics.json"
+  "cssCharacteristics.json",
 );
 extractVariables("../packages/theme/css/foundations", "cssFoundations.json");

@@ -33,7 +33,7 @@ const ITEMS_PER_PAGE = 2;
             </List>
           ) : (
             <List<ItemWithLabel> id="list" source={ITEMS} {...listProps} />
-          )
+          ),
         );
       });
 
@@ -53,7 +53,7 @@ const ITEMS_PER_PAGE = 2;
                 <List />
               ) : (
                 <List<ItemWithLabel, "deselectable"> source={[]} />
-              )
+              ),
             );
             cy.findByRole("listbox").focus();
             cy.findByRole("listbox").should("have.focusVisible");
@@ -106,12 +106,12 @@ const ITEMS_PER_PAGE = 2;
           cy.get("@selectionChangeHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
           cy.get("@selectHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
         });
       });
@@ -145,12 +145,12 @@ const ITEMS_PER_PAGE = 2;
           cy.get("@selectionChangeHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
           cy.get("@selectHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
         });
       });
@@ -183,7 +183,7 @@ const ITEMS_PER_PAGE = 2;
                 defaultSelected={ITEMS[2]}
                 source={ITEMS}
               />
-            )
+            ),
           );
 
           cy.findByRole("listbox").focus();
@@ -214,7 +214,7 @@ const ITEMS_PER_PAGE = 2;
                   source={ITEMS}
                 />
               </>
-            )
+            ),
           );
 
           cy.findByRole("listbox").focus();
@@ -255,7 +255,7 @@ const ITEMS_PER_PAGE = 2;
               restoreLastFocus
               source={ITEMS}
             />
-          )
+          ),
         );
       });
       describe("when focused", () => {
@@ -314,7 +314,7 @@ const ITEMS_PER_PAGE = 2;
                   restoreLastFocus
                   source={ITEMS}
                 />
-              )
+              ),
             );
             cy.findByRole("listbox").focus();
             cy.get("#list-item-2")
@@ -339,7 +339,7 @@ const ITEMS_PER_PAGE = 2;
                   restoreLastFocus
                   source={ITEMS}
                 />
-              )
+              ),
             );
             cy.findByRole("listbox").focus();
             cy.realPress("ArrowUp");
@@ -373,7 +373,7 @@ const ITEMS_PER_PAGE = 2;
             id="list"
             source={ITEMS}
           />
-        )
+        ),
       );
     });
     describe("when the 'End' key is pressed", () => {
@@ -506,7 +506,7 @@ const ITEMS_PER_PAGE = 2;
           </List>
         ) : (
           <List {...listProps} source={FancyItems} />
-        )
+        ),
       );
       cy.findByRole("listbox").focus();
     });
@@ -592,7 +592,7 @@ const ITEMS_PER_PAGE = 2;
       cy.get("@selectionChangeHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        "Foo Bar"
+        "Foo Bar",
       );
     });
     it("resets the search text after a timeout", () => {
@@ -682,7 +682,7 @@ const ITEMS_PER_PAGE = 2;
             id="list"
             source={FancyItems}
           />
-        )
+        ),
       );
       cy.findByRole("listbox").focus();
       cy.realType("F");
@@ -709,7 +709,7 @@ const ITEMS_PER_PAGE = 2;
           </List>
         ) : (
           <List<ItemWithLabel> id="list" source={ITEMS} tabToSelect />
-        )
+        ),
       );
     });
 

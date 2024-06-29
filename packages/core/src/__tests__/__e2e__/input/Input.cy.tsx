@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from "react";
-import { Input, FormField, FormFieldLabel, Button } from "@salt-ds/core";
+import { Button, FormField, FormFieldLabel, Input } from "@salt-ds/core";
+import { type ChangeEvent, useState } from "react";
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -22,7 +22,7 @@ describe("GIVEN an Input", () => {
           changeSpy(event);
         };
         cy.mount(
-          <Input defaultValue="The default value" onChange={onChange} />
+          <Input defaultValue="The default value" onChange={onChange} />,
         );
         cy.findByRole("textbox").click().clear().type("new value");
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
@@ -75,7 +75,7 @@ describe("GIVEN an Input", () => {
           <Input
             startAdornment={<Button>Test</Button>}
             defaultValue={"Value"}
-          />
+          />,
         );
         cy.findByRole("button").should("be.visible");
         cy.findByRole("button").should("have.class", "saltButton");
@@ -90,7 +90,7 @@ describe("GIVEN an Input", () => {
               defaultValue="Value"
               data-testid="test-id-3"
             />
-          </FormField>
+          </FormField>,
         );
 
         cy.realPress("Tab");
@@ -108,7 +108,7 @@ describe("GIVEN an Input", () => {
               endAdornment={<Button>Test</Button>}
               data-testid="test-id-3"
             />
-          </FormField>
+          </FormField>,
         );
 
         cy.realPress("Tab");
@@ -125,7 +125,7 @@ describe("GIVEN an Input", () => {
         <Input
           defaultValue="The default value"
           inputProps={{ required: true }}
-        />
+        />,
       );
       cy.findByRole("textbox").should("have.attr", "required");
     });
@@ -173,12 +173,12 @@ describe("GIVEN an Input", () => {
           <FormField disabled>
             <FormFieldLabel>Disabled form field</FormFieldLabel>
             <Input defaultValue="Value" />
-          </FormField>
+          </FormField>,
         );
         cy.wait(1000);
         cy.findByLabelText("Disabled form field").should(
           "have.attr",
-          "disabled"
+          "disabled",
         );
       });
     });
@@ -189,12 +189,12 @@ describe("GIVEN an Input", () => {
           <FormField necessity="required">
             <FormFieldLabel>Form Field</FormFieldLabel>
             <Input defaultValue="Value" />
-          </FormField>
+          </FormField>,
         );
         cy.wait(1000);
         cy.findByLabelText("Form Field (Required)").should(
           "have.attr",
-          "required"
+          "required",
         );
       });
     });
@@ -205,7 +205,7 @@ describe("GIVEN an Input", () => {
           <FormField necessity="asterisk">
             <FormFieldLabel>Form Field</FormFieldLabel>
             <Input defaultValue="Value" />
-          </FormField>
+          </FormField>,
         );
         cy.wait(1000);
         cy.findByLabelText("Form Field *").should("have.attr", "required");
@@ -218,12 +218,12 @@ describe("GIVEN an Input", () => {
           <FormField necessity="optional">
             <FormFieldLabel>Form Field</FormFieldLabel>
             <Input defaultValue="Value" />
-          </FormField>
+          </FormField>,
         );
         cy.wait(1000);
         cy.findByLabelText("Form Field (Optional)").should(
           "not.have.attr",
-          "required"
+          "required",
         );
       });
     });
@@ -234,12 +234,12 @@ describe("GIVEN an Input", () => {
           <FormField readOnly>
             <FormFieldLabel>Readonly form field</FormFieldLabel>
             <Input defaultValue="Value" />
-          </FormField>
+          </FormField>,
         );
         cy.wait(1000);
         cy.findByLabelText("Readonly form field").should(
           "have.attr",
-          "readonly"
+          "readonly",
         );
       });
     });

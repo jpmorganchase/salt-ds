@@ -5,8 +5,8 @@ import {
   GridLayout,
   SaltProvider,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
 import { ThumbsUpIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 
 export default {

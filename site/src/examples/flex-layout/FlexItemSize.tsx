@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { FlexLayout, FlexItem } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import flexItemSizeStyles from "./FlexItemSize.module.css";
+import styles from "./index.module.css";
 
 export const FlexItemSize = (): ReactElement => (
   <FlexLayout className={flexItemSizeStyles.flexLayout}>

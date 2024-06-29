@@ -1,10 +1,10 @@
-import { forwardRef, ComponentPropsWithoutRef } from "react";
-import clsx from "clsx";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import pillCss from "./Pill.css";
-import { makePrefixer } from "../utils";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { useButton } from "../button";
+import { makePrefixer } from "../utils";
+import pillCss from "./Pill.css";
 
 const withBaseName = makePrefixer("saltPill");
 
@@ -22,7 +22,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
     onBlur,
     ...rest
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -49,7 +49,7 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
         withBaseName(),
         withBaseName("clickable"),
         { [withBaseName("active")]: active },
-        className
+        className,
       )}
       type="button"
       {...restButtonProps}

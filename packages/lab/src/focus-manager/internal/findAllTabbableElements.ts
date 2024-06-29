@@ -21,14 +21,14 @@ type HTMLElementOrNull = HTMLElement | null;
 export function findAllTabbableElements(
   rootNode: HTMLElementOrNull | ShadowRoot,
   selector: string,
-  elementsToIgnore: HTMLElementOrNull[] = []
+  elementsToIgnore: HTMLElementOrNull[] = [],
 ): HTMLElement[] {
   if (!rootNode) {
     return [];
   }
 
   const nodes = Array.from<HTMLElement | HTMLSlotElement>(
-    rootNode.querySelectorAll(anyKeyboardFocusedElementSelector)
+    rootNode.querySelectorAll(anyKeyboardFocusedElementSelector),
   ).slice();
 
   return nodes.reduce((foundNodes, node) => {
@@ -53,7 +53,7 @@ export function findAllTabbableElements(
       typeof node.assignedElements === "function"
     ) {
       return foundNodes.concat(
-        node.assignedElements().filter((n) => !n.shadowRoot) as HTMLElement[]
+        node.assignedElements().filter((n) => !n.shadowRoot) as HTMLElement[],
       );
     }
 
@@ -61,12 +61,12 @@ export function findAllTabbableElements(
       // If this element is inside a shadowRoot then the host not the element itself is needed.
       const rootNode = node.parentNode?.getRootNode();
       return foundNodes.concat(
-        rootNode instanceof ShadowRoot ? (rootNode.host as HTMLElement) : node
+        rootNode instanceof ShadowRoot ? (rootNode.host as HTMLElement) : node,
       );
     }
     if (node.shadowRoot) {
       return foundNodes.concat(
-        findAllTabbableElements(node.shadowRoot, selector, elementsToIgnore)
+        findAllTabbableElements(node.shadowRoot, selector, elementsToIgnore),
       );
     }
 

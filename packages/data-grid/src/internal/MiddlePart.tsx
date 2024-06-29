@@ -1,13 +1,13 @@
-import { RefObject } from "react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import type { RefObject } from "react";
 
-import { GridColumnModel, GridRowModel } from "../Grid";
-import { CellValidationState } from "../GridColumn";
+import type { GridColumnModel, GridRowModel } from "../Grid";
+import type { CellValidationState } from "../GridColumn";
 
-import { TableColGroup } from "./TableColGroup";
 import { TableBody } from "./TableBody";
+import { TableColGroup } from "./TableColGroup";
 import { useActiveOnWheel } from "./gridHooks";
 
 import middlePartCss from "./MiddlePart.css";
@@ -24,7 +24,7 @@ export interface MiddlePartProps<T> {
   midGap: number;
   zebra?: boolean;
   getRowValidationStatus?: (
-    row: GridRowModel<T>
+    row: GridRowModel<T>,
   ) => CellValidationState | undefined;
 }
 

@@ -1,4 +1,4 @@
-import { HTMLAttributes, Ref, SyntheticEvent } from "react";
+import type { HTMLAttributes, Ref, SyntheticEvent } from "react";
 
 export type ListSingleSelectionVariant = "default" | "deselectable";
 export type ListMultiSelectionVariant = "multiple" | "extended";
@@ -8,15 +8,15 @@ export type ListSelectionVariant =
 
 export type ListChangeHandler<
   Item = string,
-  Variant extends ListSelectionVariant = "default"
+  Variant extends ListSelectionVariant = "default",
 > = (
   event: SyntheticEvent,
-  item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item)
+  item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item),
 ) => void;
 
 export type ListSelectHandler<Item = string> = (
   event: SyntheticEvent,
-  item: Item | null
+  item: Item | null,
 ) => void;
 
 export interface ListBaseProps<Item = string>
@@ -171,7 +171,7 @@ export interface ListBaseProps<Item = string>
 
 export interface ListProps<
   Item = string,
-  Variant extends ListSelectionVariant = "default"
+  Variant extends ListSelectionVariant = "default",
 > extends ListBaseProps<Item> {
   disableTypeToSelect?: boolean;
   getItemIndex?: (item: Item) => number;

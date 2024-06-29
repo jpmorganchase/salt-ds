@@ -72,7 +72,7 @@ describe("GIVEN Content Status", () => {
         actionLabel="My Label"
         id="1"
         onActionClick={cy.spy().as("onActionClickSpy")}
-      />
+      />,
     );
 
     cy.findByRole("region").children().should("have.length", 1);
@@ -87,7 +87,7 @@ describe("GIVEN Content Status", () => {
 
   it("DOES NOT render actions WHEN actionLabel IS NOT passed", () => {
     cy.mount(
-      <ContentStatus id="1" onActionClick={cy.spy().as("onActionClickSpy")} />
+      <ContentStatus id="1" onActionClick={cy.spy().as("onActionClickSpy")} />,
     );
 
     cy.findByRole("region").should("not.exist");
@@ -109,7 +109,7 @@ describe("GIVEN Content Status", () => {
     cy.mount(
       <ContentStatus id="1">
         <div>Test Children</div>
-      </ContentStatus>
+      </ContentStatus>,
     );
 
     cy.findByRole("region").children().should("have.length", 1);
@@ -124,7 +124,7 @@ describe("GIVEN Content Status", () => {
         buttonRef={cy.spy().as("buttonRefSpy")}
         id="1"
         onActionClick={cy.spy().as("onActionClickSpy")}
-      />
+      />,
     );
 
     cy.findByRole("region").children().should("have.length", 1);
@@ -144,7 +144,7 @@ describe("GIVEN Content Status", () => {
     // Disabled completion announcement from spinner
     cy.get('[aria-live="assertive"]').should(
       "not.announce",
-      "finished loading"
+      "finished loading",
     );
     cy.get('[aria-live="assertive"]').should("contain", "success");
   });
@@ -163,7 +163,7 @@ describe("GIVEN Content Status", () => {
         <ContentStatus
           SpinnerProps={{ "aria-label": ariaLabel, announcerInterval: 2000 }}
           status="loading"
-        />
+        />,
       );
 
       cy.wait(2500);

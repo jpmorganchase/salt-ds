@@ -1,15 +1,5 @@
-import type { Meta, Decorator, StoryFn } from "@storybook/react";
+import type { Decorator, Meta, StoryFn } from "@storybook/react";
 
-import {
-  ChangeEventHandler,
-  CSSProperties,
-  memo,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
 import {
   Button,
   FlexItem,
@@ -20,20 +10,30 @@ import {
   useDensity,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import {
+  type CSSProperties,
+  type ChangeEventHandler,
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import {
+  FormField,
+  Input,
   List,
   ListItem,
   ListItemGroup,
-  ListItemProps,
-  ListItemType,
-  ListProps,
-  ListScrollHandles,
+  type ListItemProps,
+  type ListItemType,
+  type ListProps,
+  type ListScrollHandles,
+  type SelectHandler,
+  type SelectionChangeHandler,
   VirtualizedList,
-  SelectionChangeHandler,
-  FormField,
-  Input,
-  SelectHandler,
 } from "@salt-ds/lab";
 
 import { usa_states } from "./list.data";
@@ -163,13 +163,13 @@ export const Controlled: StoryFn<ListProps> = (props) => {
 
   const handleArrowDown = () => {
     setHighlightedIndex((prevHighlightedIndex) =>
-      Math.min(usa_states.length - 1, prevHighlightedIndex + 1)
+      Math.min(usa_states.length - 1, prevHighlightedIndex + 1),
     );
   };
 
   const handleArrowUp = () => {
     setHighlightedIndex((prevHighlightedIndex) =>
-      Math.max(0, prevHighlightedIndex - 1)
+      Math.max(0, prevHighlightedIndex - 1),
     );
   };
 
@@ -223,9 +223,9 @@ export const Disabled: StoryFn<ListProps<CustomItem>> = (props) => {
         (label, index): CustomItem => ({
           label,
           ...(index % 4 === 3 && { disabled: true }),
-        })
+        }),
       ),
-    []
+    [],
   );
 
   const buttonsRef = useRef<HTMLDivElement>(null);
@@ -240,7 +240,7 @@ export const Disabled: StoryFn<ListProps<CustomItem>> = (props) => {
 
   const handleChange: SelectionChangeHandler<CustomItem> = (
     _,
-    selectedItem
+    selectedItem,
   ) => {
     console.log("selection changed", selectedItem);
   };
@@ -415,9 +415,11 @@ export const ScrollToIndex: StoryFn<ListProps> = () => {
     const inputValue = event.target.value;
 
     if (NUMBER_REGEX.test(inputValue)) {
-      listScrollRef.current?.scrollToIndex(parseInt(inputValue, 10) || 0);
+      listScrollRef.current?.scrollToIndex(
+        Number.parseInt(inputValue, 10) || 0,
+      );
       virtualizedListScrollRef.current?.scrollToIndex(
-        parseInt(inputValue, 10) || 0
+        Number.parseInt(inputValue, 10) || 0,
       );
     }
   };
@@ -459,7 +461,7 @@ export const VariableHeight: StoryFn<ListProps> = () => {
       low: 36,
       touch: 36,
     }),
-    []
+    [],
   );
 
   const density = useDensity();
@@ -540,7 +542,7 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
         { name: "Wisconsin", abbrev: "WI" },
         { name: "Wyoming", abbrev: "WY" },
       ] as ReadonlyArray<State>,
-    []
+    [],
   );
 
   const stateItemToString = (item?: State) =>
@@ -557,7 +559,7 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
           <label>{label}</label>
         </ListItem>
       );
-    }
+    },
   );
 
   const CustomListItem: ListItemType<State> = ({
@@ -569,8 +571,8 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
         ({
           ...styleProp,
           fontStyle: "italic",
-        } as CSSProperties),
-      [styleProp]
+        }) as CSSProperties,
+      [styleProp],
     );
     return <MemoizedItem style={style} {...props} />;
   };
@@ -677,7 +679,7 @@ export const WithTextHighlight: StoryFn<ListProps> = () => {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const inputValue = event.target.value;
     setHighlightIndex(
-      inputValue ? new RegExp(`(${inputValue})`, "gi") : undefined
+      inputValue ? new RegExp(`(${inputValue})`, "gi") : undefined,
     );
   };
 
@@ -749,7 +751,7 @@ export const WithTextHighlightDeclarative: StoryFn<ListProps> = () => {
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
     const inputValue = event.target.value;
     setHighlightIndex(
-      inputValue ? new RegExp(`(${inputValue})`, "gi") : undefined
+      inputValue ? new RegExp(`(${inputValue})`, "gi") : undefined,
     );
   };
 

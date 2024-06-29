@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, FC, ReactNode } from "react";
 import styles from "./Heading3.module.css";
 
 interface Heading3Props extends ComponentPropsWithoutRef<"h3"> {

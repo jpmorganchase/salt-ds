@@ -55,8 +55,8 @@ module.exports = {
     config.plugins.push(
       new webpack.NormalModuleReplacementPlugin(
         /^buble$/,
-        require.resolve("@philpl/buble")
-      )
+        require.resolve("@philpl/buble"),
+      ),
     );
     // Required by MDX-JS
     if (config.resolve.fallback) {

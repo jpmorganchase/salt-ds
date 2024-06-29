@@ -1,15 +1,15 @@
-import { ChangeEventHandler, ReactElement, useState } from "react";
 import {
-  FormField,
   Checkbox,
   CheckboxGroup,
+  FlowLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
-  FlowLayout,
-  FormFieldLabel,
-  FormFieldHelperText,
   Switch,
 } from "@salt-ds/core";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 
 const radioData = [
   {
@@ -51,7 +51,7 @@ export const WithControls = (): ReactElement => {
   };
 
   const handleCheckboxChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     if (checkboxGroupValue.indexOf(value) === -1) {
@@ -62,8 +62,8 @@ export const WithControls = (): ReactElement => {
     } else {
       setCheckboxGroupValue((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
   };

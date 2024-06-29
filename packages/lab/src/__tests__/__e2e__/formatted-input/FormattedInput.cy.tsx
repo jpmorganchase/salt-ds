@@ -20,7 +20,7 @@ describe("GIVEN FormattedInput", () => {
           <FormattedInput
             defaultValue="The default value"
             onChange={changeSpy}
-          />
+          />,
         );
 
         cy.findByRole("textbox").click().clear().type("new value");
@@ -127,12 +127,12 @@ describe("GIVEN FormattedInput", () => {
         <FormattedInput
           mask="XX-XX-XX"
           inputProps={{ "aria-label": "fakelabel" }}
-        />
+        />,
       );
       cy.findByRole("textbox").should(
         "not.have.attr",
         "aria-label",
-        "fakelabel"
+        "fakelabel",
       );
     });
   });
@@ -144,7 +144,7 @@ describe("GIVEN FormattedInput", () => {
           mask="XX-XX-XX"
           id="staticId"
           inputProps={{ "aria-labelledby": "fakeId" }}
-        />
+        />,
       );
       cy.findByRole("textbox")
         .should("have.attr", "aria-labelledby", "fakeId staticId")
@@ -157,7 +157,7 @@ describe("GIVEN FormattedInput", () => {
       cy.mount(
         <FormattedInput
           rifmOptions={{ replace: (string) => string.toUpperCase() }}
-        />
+        />,
       );
       cy.findByRole("textbox")
         .click()

@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
 import {
+  BorderItem,
+  BorderLayout,
   Button,
   FlexItem,
   FlexLayout,
-  StackLayout,
-  BorderLayout,
-  BorderItem,
   NavigationItem,
+  StackLayout,
 } from "@salt-ds/core";
 import {
-  SymphonyIcon,
-  StackoverflowIcon,
   GithubIcon,
   LineChartIcon,
   NotificationIcon,
   PinIcon,
   ReceiptIcon,
   SearchIcon,
+  StackoverflowIcon,
+  SymphonyIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react";
+import { useEffect, useState } from "react";
 import logo from "../../assets/logo.svg";
 
 export default {
@@ -83,7 +83,7 @@ export const Navigation = () => {
     },
   ];
   const [activeVerticalNav, setActiveVerticalNav] = useState(
-    verticalNavigationData[0].name
+    verticalNavigationData[0].name,
   );
   const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
   const [offset, setOffset] = useState(0);

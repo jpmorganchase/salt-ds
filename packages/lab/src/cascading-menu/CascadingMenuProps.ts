@@ -1,14 +1,14 @@
-import { IconProps } from "@salt-ds/icons";
-import { UseFloatingUIProps } from "@salt-ds/core";
-import {
+import type { UseFloatingUIProps } from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
+import type {
   ComponentType,
   HTMLAttributes,
-  ReactNode,
-  MouseEvent,
   KeyboardEvent,
+  MouseEvent,
+  ReactNode,
 } from "react";
-import { ItemToStringFunction } from "../list-deprecated";
-import { CascadingMenuListProps } from "./CascadingMenuList";
+import type { ItemToStringFunction } from "../list-deprecated";
+import type { CascadingMenuListProps } from "./CascadingMenuList";
 
 export interface ScreenBounds {
   clientHeight: number;
@@ -106,7 +106,7 @@ export interface CascadingMenuProps extends HTMLAttributes<HTMLElement> {
    */
   onItemClick?: (
     sourceItem: MenuDescriptor,
-    event: MouseEvent | KeyboardEvent
+    event: MouseEvent | KeyboardEvent,
   ) => void;
   /**
    * Callback that fires when menu opens.

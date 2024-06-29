@@ -1,4 +1,3 @@
-import { StoryFn } from "@storybook/react";
 import { Button, Pill, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
@@ -11,17 +10,18 @@ import {
   SwapIcon,
   TearOutIcon,
 } from "@salt-ds/icons";
+import type { StoryFn } from "@storybook/react";
 
 import {
   Dropdown,
-  Toolbar,
-  ToolbarButton,
-  Tooltray,
   FormField,
   Input,
   StaticInputAdornment,
+  Toolbar,
+  ToolbarButton,
+  Tooltray,
 } from "@salt-ds/lab";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "docs/story.css";
 

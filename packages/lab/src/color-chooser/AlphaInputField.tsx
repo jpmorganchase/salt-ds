@@ -1,10 +1,10 @@
+import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useEffect, useState } from "react";
-import { makePrefixer } from "@salt-ds/core";
 import { InputLegacy as Input } from "../input-legacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import rgbaInputCss from "./RGBAInput.css";
 
@@ -29,7 +29,7 @@ export const AlphaInput = ({
   });
 
   const [alphaInputValue, setAlphaInputValue] = useState<string>(
-    !isNaN(alphaValue) ? alphaValue.toString() : ""
+    !isNaN(alphaValue) ? alphaValue.toString() : "",
   );
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const AlphaInput = ({
 
   const handleAlphaInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    value: string
+    value: string,
   ): void => {
     value = value.replace("%", "");
     let alpha: string = value;
@@ -48,7 +48,7 @@ export const AlphaInput = ({
     }
 
     if (showAsOpacity && Number.parseFloat(value)) {
-      alpha = (parseFloat(value) / 100).toString();
+      alpha = (Number.parseFloat(value) / 100).toString();
     }
 
     if (value.charAt(1) === "." || value.charAt(0) === ".") {
@@ -59,12 +59,12 @@ export const AlphaInput = ({
   };
 
   const handleKeyDownAlpha = (
-    e: React.KeyboardEvent<HTMLInputElement>
+    e: React.KeyboardEvent<HTMLInputElement>,
   ): void => {
     if (e.key === "Enter") {
       const alpha =
         alphaInputValue.trim().replace("%", "") !== ""
-          ? parseFloat(alphaInputValue)
+          ? Number.parseFloat(alphaInputValue)
           : 0;
       const validatedAlpha = Math.max(0, Math.min(alpha, 1));
       setAlphaInputValue(validatedAlpha.toString());
@@ -75,7 +75,7 @@ export const AlphaInput = ({
   const handleOnBlurAlpha = (e: React.FocusEvent<HTMLInputElement>): void => {
     // Guard against parseFloat('') becoming NaN
     const alpha =
-      alphaInputValue.trim() !== "" ? parseFloat(alphaInputValue) : 0;
+      alphaInputValue.trim() !== "" ? Number.parseFloat(alphaInputValue) : 0;
 
     const validatedAlpha = Math.max(0, Math.min(alpha, 1));
     setAlphaInputValue(validatedAlpha.toString());
@@ -95,7 +95,7 @@ export const AlphaInput = ({
       value={
         showAsOpacity
           ? alphaInputValue
-            ? (parseFloat(alphaInputValue) * 100).toString() + "%"
+            ? (Number.parseFloat(alphaInputValue) * 100).toString() + "%"
             : "%"
           : alphaInputValue
       }

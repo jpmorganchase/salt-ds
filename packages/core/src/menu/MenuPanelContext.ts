@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { MenuContextValue } from "./MenuContext";
 import { createContext } from "../utils";
+import type { MenuContextValue } from "./MenuContext";
 
 export interface MenuPanelContextValue
   extends Pick<
@@ -14,7 +14,7 @@ export const MenuPanelContext = createContext<MenuPanelContextValue>(
     activeIndex: null,
     getItemProps: () => ({}),
     setFocusInside: () => undefined,
-  }
+  },
 );
 
 export function useMenuPanelContext() {

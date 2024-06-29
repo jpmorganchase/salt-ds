@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
+import type { VirtualElement as FloatingUIVirtualElement } from "@floating-ui/react";
 import { Card, Menu, MenuItem, MenuPanel } from "@salt-ds/core";
-import { VirtualElement as FloatingUIVirtualElement } from "@floating-ui/react";
+import { type ReactElement, useState } from "react";
 
 export const VirtualElement = (): ReactElement => {
   const [virtualElement, setVirtualElement] =

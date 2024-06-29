@@ -1,10 +1,10 @@
 import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
+  type ChangeEventHandler,
+  type HTMLAttributes,
+  type KeyboardEventHandler,
+  type Ref,
   forwardRef,
-  HTMLAttributes,
-  KeyboardEventHandler,
-  Ref,
   useState,
 } from "react";
 import { FormField, FormFieldLabel } from "../form-field";
@@ -12,8 +12,8 @@ import { Input } from "../input";
 import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import goToInputCss from "./GoToInput.css";
 
@@ -42,7 +42,7 @@ export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
       label = "Go to",
       ...restProps
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -104,5 +104,5 @@ export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
         />
       </FormField>
     );
-  }
+  },
 );

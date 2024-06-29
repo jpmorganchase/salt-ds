@@ -1,5 +1,5 @@
 import { Banner, BannerContent, Link, StackLayout } from "@salt-ds/core";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 export const SecondaryVariant = (): ReactElement => (
   <StackLayout>

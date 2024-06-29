@@ -1,7 +1,7 @@
 import {
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
   useEffect,
   useState,
 } from "react";

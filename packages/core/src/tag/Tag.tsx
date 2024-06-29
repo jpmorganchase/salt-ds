@@ -1,7 +1,7 @@
-import { makePrefixer } from "../utils";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 import tagCss from "./Tag.css";
 
 import { clsx } from "clsx";
@@ -25,7 +25,7 @@ export interface TagProps extends ComponentPropsWithoutRef<"div"> {
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(function Tag(
   { children, className, variant = "primary", category = 1, bordered, ...rest },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -44,7 +44,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(function Tag(
         {
           [withBaseName("bordered")]: bordered,
         },
-        className
+        className,
       )}
       {...rest}
     >

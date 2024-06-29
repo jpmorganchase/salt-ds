@@ -1,6 +1,6 @@
-import React, { FC, Dispatch, SetStateAction } from "react";
 import { Button } from "@salt-ds/core";
-import { OverflowMenuIcon, CloseIcon } from "@salt-ds/icons";
+import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import React, { type FC, type Dispatch, type SetStateAction } from "react";
 
 import layoutStyles from "../index.module.css";
 import styles from "./TitleWithDrawer.module.css";

@@ -1,10 +1,10 @@
-import { forwardRef, ReactNode, CSSProperties } from "react";
-import {
-  FloatingComponentProps,
-  SaltProvider,
-  FloatingComponentProvider,
-} from "@salt-ds/core";
 import { FloatingPortal } from "@floating-ui/react";
+import {
+  type FloatingComponentProps,
+  FloatingComponentProvider,
+  SaltProvider,
+} from "@salt-ds/core";
+import { type CSSProperties, type ReactNode, forwardRef } from "react";
 
 export const FLOATING_TEST_ID = "FLOATING_TEST_ID";
 

@@ -5,12 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "repository": "https://github.com/jpmorganchase/salt-ds",
-  "workspaces": [
-    "packages/**",
-    "tooling/**",
-    "docs",
-    "site"
-  ],
+  "workspaces": ["packages/**", "tooling/**", "docs", "site"],
   "modular": {
     "type": "root"
   },
@@ -129,12 +124,7 @@
     "@jpmorganchase/mosaic-content-editor-plugin@npm:^0.1.0-beta.65": "patch:@jpmorganchase/mosaic-content-editor-plugin@npm%3A0.1.0-beta.65#~/.yarn/patches/@jpmorganchase-mosaic-content-editor-plugin-npm-0.1.0-beta.65-5b63b22b12.patch"
   },
   "browserslist": {
-    "production": [
-      "chrome 79",
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": ["chrome 79", ">0.2%", "not dead", "not op_mini all"],
     "development": [
       "chrome 79",
       "last 1 chrome version",

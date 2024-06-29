@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Button, StackLayout, Tooltip } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Placement = (): ReactElement => (
   <StackLayout direction="row">

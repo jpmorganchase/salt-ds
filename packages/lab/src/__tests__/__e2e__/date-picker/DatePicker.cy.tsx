@@ -1,16 +1,16 @@
-import { composeStories } from "@storybook/react";
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import {
   CalendarDate,
   DateFormatter,
-  DateValue,
+  type DateValue,
   endOfMonth,
   getLocalTimeZone,
   startOfMonth,
   today,
 } from "@internationalized/date";
-import { ChangeEvent, useState } from "react";
+import * as datePickerStories from "@stories/date-picker/date-picker.stories";
+import { composeStories } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(datePickerStories);
 const { Default, Range } = composedStories;
@@ -53,7 +53,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("textbox").blur();
       cy.findByRole("textbox").should(
         "have.value",
-        formatInput(testDate.add({ days: 1 }))
+        formatInput(testDate.add({ days: 1 })),
       );
     });
     it("THEN should not format invalid dates on blur", () => {
@@ -114,7 +114,7 @@ describe("GIVEN a DatePicker", () => {
         <Default
           defaultSelectedDate={testDate}
           CalendarProps={{ visibleMonth: testDate }}
-        />
+        />,
       );
       cy.findByRole("textbox").click().clear();
       cy.findByRole("textbox").blur();
@@ -122,7 +122,7 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("button", { name: formatDay(testDate) }).should(
         "not.have.attr",
         "aria-pressed",
-        "true"
+        "true",
       );
     });
     it("should allow a controlled open state", () => {
@@ -166,7 +166,7 @@ describe("GIVEN a DatePicker", () => {
             startDate: testDate,
             endDate: testDate.add({ months: 1 }),
           }}
-        />
+        />,
       );
       cy.findAllByRole("textbox")
         .eq(0)
@@ -215,7 +215,7 @@ describe("GIVEN a DatePicker", () => {
             startDate: testDate,
             endDate: testDate.add({ months: 1 }),
           }}
-        />
+        />,
       );
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("combobox")
@@ -225,7 +225,7 @@ describe("GIVEN a DatePicker", () => {
         .eq(2)
         .should(
           "have.text",
-          formatDate(testDate.add({ months: 1 }), { month: "short" })
+          formatDate(testDate.add({ months: 1 }), { month: "short" }),
         );
       cy.findByRole("button", {
         name: formatDay(testDate.add({ months: 1, days: 1 })),
@@ -237,13 +237,13 @@ describe("GIVEN a DatePicker", () => {
         .eq(0)
         .should(
           "have.text",
-          formatDate(testDate.add({ months: 1 }), { month: "short" })
+          formatDate(testDate.add({ months: 1 }), { month: "short" }),
         );
       cy.findAllByRole("combobox")
         .eq(2)
         .should(
           "have.text",
-          formatDate(testDate.add({ months: 2 }), { month: "short" })
+          formatDate(testDate.add({ months: 2 }), { month: "short" }),
         );
     });
 
@@ -266,7 +266,7 @@ describe("GIVEN a DatePicker", () => {
       }).realClick();
       cy.findByRole("button", {
         name: formatDay(
-          startOfMonth(today(localTimeZone)).add({ days: 15, months: 1 })
+          startOfMonth(today(localTimeZone)).add({ days: 15, months: 1 }),
         ),
       }).realHover();
       cy.findByRole("button", {
@@ -296,12 +296,12 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("button", { name: "Next Month" }).should(
         "not.have.attr",
         "aria-disabled",
-        "true"
+        "true",
       );
       cy.findByRole("button", { name: "Previous Month" }).should(
         "not.have.attr",
         "aria-disabled",
-        "true"
+        "true",
       );
     });
     it("THEN should mount with specified date if controlled", () => {
@@ -311,7 +311,7 @@ describe("GIVEN a DatePicker", () => {
             startDate: testDate,
             endDate: testDate.add({ months: 1 }),
           }}
-        />
+        />,
       );
       cy.findAllByRole("textbox")
         .eq(0)
@@ -327,7 +327,7 @@ describe("GIVEN a DatePicker", () => {
             startDate: testDate,
             endDate: testDate.add({ months: 1 }),
           }}
-        />
+        />,
       );
       cy.findAllByRole("textbox").eq(0).clear().click().type("2 fev");
       cy.findAllByRole("textbox").eq(0).blur();
@@ -341,7 +341,7 @@ describe("GIVEN a DatePicker", () => {
         const onChange = (
           event: ChangeEvent<HTMLInputElement>,
           startDate?: string,
-          endDate?: string
+          endDate?: string,
         ) => {
           // React 16 backwards compatibility
           event.persist();
@@ -359,7 +359,7 @@ describe("GIVEN a DatePicker", () => {
       cy.get("@changeSpy").should(
         "have.been.calledWith",
         testInput,
-        rangeTestInput
+        rangeTestInput,
       );
     });
   });

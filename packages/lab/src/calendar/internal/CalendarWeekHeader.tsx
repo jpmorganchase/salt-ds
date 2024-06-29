@@ -1,11 +1,11 @@
-import { ComponentPropsWithRef, forwardRef } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 import { daysForLocale } from "./utils";
 
-import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
 
 export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div">;
 

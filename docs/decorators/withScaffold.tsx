@@ -1,5 +1,5 @@
+import { H1, H2, Link, StackLayout, Text } from "@salt-ds/core";
 import type { Decorator } from "@storybook/react";
-import { H1, H2, Text, Link, StackLayout } from "@salt-ds/core";
 
 /** A storybook decorator that adds a scaffold around a story */
 export const withScaffold: Decorator = (Story, context) => {

@@ -1,17 +1,20 @@
-import { Option, OptionGroup, ListBox } from "@salt-ds/core";
-import { ReactElement } from "react";
+import { ListBox, Option, OptionGroup } from "@salt-ds/core";
+import type { ReactElement } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/list-box/exampleData.ts
 import { shortColorData } from "./exampleData";
 
 function groupByFirstLetter(data: string[]) {
-  return data.reduce((acc, option) => {
-    const groupName = option[0];
-    if (!acc[groupName]) {
-      acc[groupName] = [];
-    }
-    acc[groupName].push(option);
-    return acc;
-  }, {} as Record<string, string[]>);
+  return data.reduce(
+    (acc, option) => {
+      const groupName = option[0];
+      if (!acc[groupName]) {
+        acc[groupName] = [];
+      }
+      acc[groupName].push(option);
+      return acc;
+    },
+    {} as Record<string, string[]>,
+  );
 }
 
 const colorGroups = groupByFirstLetter(shortColorData.slice(0, 8));

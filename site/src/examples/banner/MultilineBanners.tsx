@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
 import {
   Banner,
   BannerContent,
-  FlowLayout,
-  Text,
   Button,
-  StackLayout,
+  FlowLayout,
   Link,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const MultilineBanners = (): ReactElement => (
   <StackLayout style={{ width: "80%" }}>

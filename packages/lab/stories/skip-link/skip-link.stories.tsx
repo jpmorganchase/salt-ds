@@ -1,7 +1,7 @@
-import { useRef } from "react";
 import { Button } from "@salt-ds/core";
 import { SkipLink, SkipLinks } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useRef } from "react";
 import "./skip-link.stories.css";
 
 export default {

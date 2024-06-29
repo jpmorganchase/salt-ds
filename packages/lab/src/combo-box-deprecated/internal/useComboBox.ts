@@ -5,23 +5,23 @@ import {
   useIsFocusVisible,
 } from "@salt-ds/core";
 import {
-  ChangeEvent,
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
-  SyntheticEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import type { InputLegacyProps as InputProps } from "../../input-legacy";
 import { useList } from "../../list-deprecated";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
-import { DefaultComboBoxProps } from "./DefaultComboBox";
+import type { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
-import { InputLegacyProps as InputProps } from "../../input-legacy";
 
 export type UseComboBoxProps<Item> = Omit<
   DefaultComboBoxProps<Item>,
@@ -91,7 +91,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
   const labels = useMemo(
     () => sourceProp.map(itemToString),
-    [sourceProp, itemToString]
+    [sourceProp, itemToString],
   );
 
   const source = useMemo(() => {
@@ -107,7 +107,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       inputValue && inputValue.trim().length
         ? getFilterRegex(inputValue)
         : undefined,
-    [inputValue, getFilterRegex]
+    [inputValue, getFilterRegex],
   );
 
   const { focusedRef, state, helpers, listProps } = useList({

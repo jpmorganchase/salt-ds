@@ -7,5 +7,5 @@ export type AriaAnnouncer = {
 };
 
 export const AriaAnnouncerContext = createContext<AriaAnnouncer | undefined>(
-  undefined
+  undefined,
 );

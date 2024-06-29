@@ -1,4 +1,4 @@
-import { ReactElement, cloneElement, useRef, useEffect } from "react";
+import { type ReactElement, cloneElement, useEffect, useRef } from "react";
 import styles from "./IconsTable.module.css";
 
 type IconsTableProps = { children: ReactElement; caption: string };

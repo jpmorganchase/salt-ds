@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { NavigationItemProps } from "./NavigationItem";
+import type { NavigationItemProps } from "./NavigationItem";
 
 const iconExpansionMap = {
   vertical: {

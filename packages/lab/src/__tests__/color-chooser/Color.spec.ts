@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { Color } from "../../color-chooser";
 
 describe("Color", () => {
@@ -96,7 +96,7 @@ describe("Color", () => {
 
   describe("setAlpha", () => {
     it("should override the alpha value in a color created from rgba", () => {
-      let newColor = Color.makeColorFromRGB(70, 14, 19, 0.7).setAlpha(0.3);
+      const newColor = Color.makeColorFromRGB(70, 14, 19, 0.7).setAlpha(0.3);
       expect(newColor).toEqual({
         color: expect.objectContaining({
           _a: 0.3,

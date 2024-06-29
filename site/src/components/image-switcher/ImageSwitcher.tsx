@@ -1,7 +1,7 @@
-import styles from "./ImageSwitcher.module.css";
-import { Switch } from "@salt-ds/core";
-import { ChangeEvent, useState } from "react";
 import { Image } from "@jpmorganchase/mosaic-site-components";
+import { Switch } from "@salt-ds/core";
+import { type ChangeEvent, useState } from "react";
+import styles from "./ImageSwitcher.module.css";
 
 export interface ImageSwitcherProps {
   label: string;

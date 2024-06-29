@@ -7,12 +7,12 @@ describe("GIVEN a NavItem", () => {
       cy.mount(
         <NavigationItem href="https://www.saltdesignsystem.com">
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByRole("link").should(
         "have.attr",
         "href",
-        "https://www.saltdesignsystem.com"
+        "https://www.saltdesignsystem.com",
       );
     });
   });
@@ -29,7 +29,7 @@ describe("GIVEN a NavItem", () => {
       cy.mount(
         <NavigationItem href="#" active={true}>
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByRole("link").should("have.attr", "aria-current", "page");
     });
@@ -38,7 +38,7 @@ describe("GIVEN a NavItem", () => {
       cy.mount(
         <NavigationItem href="#" active={false}>
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByRole("link").should("not.have.attr", "aria-current");
     });
@@ -57,7 +57,7 @@ describe("GIVEN a NavItem", () => {
         <NavigationItem>
           <NotificationIcon />
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.get('[data-testid="NotificationIcon"]').should("exist");
     });
@@ -70,7 +70,7 @@ describe("GIVEN a NavItem", () => {
       cy.findByRole("button", { name: "expand" }).should(
         "have.attr",
         "aria-expanded",
-        "false"
+        "false",
       );
     });
 
@@ -79,7 +79,7 @@ describe("GIVEN a NavItem", () => {
       cy.mount(
         <NavigationItem parent={true} onExpand={expandSpy}>
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByRole("button", { name: "expand" }).realClick();
       cy.get("@expandSpy").should("have.been.calledOnce");
@@ -90,12 +90,12 @@ describe("GIVEN a NavItem", () => {
         cy.mount(
           <NavigationItem parent={true} expanded={true}>
             Navigation Item
-          </NavigationItem>
+          </NavigationItem>,
         );
         cy.findByRole("button", { name: "expand" }).should(
           "have.attr",
           "aria-expanded",
-          "true"
+          "true",
         );
       });
     });

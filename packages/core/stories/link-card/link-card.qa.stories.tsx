@@ -1,11 +1,11 @@
-import { H1, Text, LinkCard } from "@salt-ds/core";
+import { H1, LinkCard, Text } from "@salt-ds/core";
 
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
 
 export default {
@@ -40,7 +40,7 @@ AllExamplesUsingText.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection itemPadding={10} itemWidthAuto {...props}>
     <LinkCard>

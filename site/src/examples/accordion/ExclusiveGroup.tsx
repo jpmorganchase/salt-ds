@@ -1,4 +1,3 @@
-import { ReactElement, SyntheticEvent, useState } from "react";
 import {
   Accordion,
   AccordionGroup,
@@ -9,6 +8,7 @@ import {
   FormFieldLabel,
   Input,
 } from "@salt-ds/core";
+import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const ExclusiveGroup = (): ReactElement => {
   const [expanded, setExpanded] = useState<string>("");

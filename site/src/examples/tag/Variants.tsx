@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { FlowLayout, Tag } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Variants = (): ReactElement => (
   <FlowLayout>

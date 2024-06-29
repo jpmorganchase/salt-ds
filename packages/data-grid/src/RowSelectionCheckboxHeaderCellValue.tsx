@@ -1,15 +1,15 @@
-import { KeyboardEventHandler, MouseEventHandler } from "react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { Checkbox } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import type { KeyboardEventHandler, MouseEventHandler } from "react";
 
+import type { GridHeaderValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-import { GridHeaderValueProps } from "./GridColumn";
 
 import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionCheckboxHeaderCellValue<T>(
-  props: GridHeaderValueProps<T>
+  props: GridHeaderValueProps<T>,
 ) {
   const { isFocused } = props;
 

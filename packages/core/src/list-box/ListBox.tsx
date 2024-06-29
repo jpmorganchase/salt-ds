@@ -1,23 +1,23 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
-  FocusEvent,
-  ForwardedRef,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type ForwardedRef,
+  type KeyboardEvent,
+  type ReactNode,
+  type Ref,
   forwardRef,
-  KeyboardEvent,
-  ReactNode,
-  Ref,
   useRef,
 } from "react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { clsx } from "clsx";
-import { makePrefixer, useForkRef } from "../utils";
 import { ListControlContext } from "../list-control/ListControlContext";
 import {
+  type ListControlProps,
   defaultValueToString,
   useListControl,
-  ListControlProps,
 } from "../list-control/ListControlState";
+import { makePrefixer, useForkRef } from "../utils";
 
 import listBoxCss from "./ListBox.css";
 
@@ -45,7 +45,7 @@ const withBaseName = makePrefixer("saltListBox");
 
 export const ListBox = forwardRef(function ListBox<Item>(
   props: ListBoxProps<Item>,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   const {
     bordered,
@@ -212,7 +212,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
     // If we have selected an item, we should make that the active item
     if (selectedState.length > 0) {
       newActive = getOptionsMatching(
-        (option) => option.value === selectedState[0]
+        (option) => option.value === selectedState[0],
       ).pop();
     }
 
@@ -245,7 +245,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
         className={clsx(
           withBaseName(),
           { [withBaseName("bordered")]: bordered },
-          className
+          className,
         )}
         role="listbox"
         aria-activedescendant={activeState?.id}
@@ -265,5 +265,5 @@ export const ListBox = forwardRef(function ListBox<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> }
+  props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
 ) => JSX.Element;

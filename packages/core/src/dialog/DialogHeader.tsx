@@ -1,11 +1,15 @@
-import { ReactNode, ComponentPropsWithoutRef, forwardRef } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import { ValidationStatus, StatusIndicator } from "../status-indicator";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { H2, Text } from "../text";
 import { makePrefixer } from "../utils";
 import { useDialogContext } from "./DialogContext";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogHeaderCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogHeader");
@@ -58,7 +62,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
             [withBaseName("withAccent")]: !disableAccent && !status,
             [withBaseName(status ?? "")]: !!status,
           },
-          className
+          className,
         )}
         ref={ref}
         {...rest}
@@ -74,5 +78,5 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
         </H2>
       </div>
     );
-  }
+  },
 );

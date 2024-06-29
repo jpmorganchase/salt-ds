@@ -1,4 +1,4 @@
-import {
+import type {
   AriaAttributes,
   HTMLAttributes,
   KeyboardEvent,
@@ -6,9 +6,9 @@ import {
   ReactElement,
 } from "react";
 
-import { orientationType, OverflowSource } from "../responsive";
-import { EditableLabelProps } from "../editable-label";
-import { ExitEditModeHandler } from "./useEditableItem";
+import type { EditableLabelProps } from "../editable-label";
+import type { OverflowSource, orientationType } from "../responsive";
+import type { ExitEditModeHandler } from "./useEditableItem";
 
 export interface FocusAPI {
   focus: () => void;
@@ -88,7 +88,7 @@ export type exitEditHandler = (
   originalValue: string,
   editedValue: string,
   allowDeactivation: boolean,
-  tabIndex: number
+  tabIndex: number,
 ) => void;
 
 export interface responsiveDataAttributes {

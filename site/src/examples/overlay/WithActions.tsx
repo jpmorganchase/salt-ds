@@ -1,16 +1,16 @@
-import { ChangeEvent } from "react";
 import {
   Button,
-  CheckboxGroup,
   Checkbox,
-  useId,
+  CheckboxGroup,
+  Divider,
   Overlay,
   OverlayPanel,
-  OverlayTrigger,
   OverlayPanelContent,
+  OverlayTrigger,
   StackLayout,
-  Divider,
+  useId,
 } from "@salt-ds/core";
+import type { ChangeEvent } from "react";
 import React from "react";
 
 const checkboxesData = [
@@ -58,8 +58,8 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
     } else {
       setControlledValues((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
   };

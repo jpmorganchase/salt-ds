@@ -13,7 +13,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("xl,lg,md,sm,xs");
-    }
+    },
   );
 
   it(
@@ -22,7 +22,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("lg,md,sm,xs");
-    }
+    },
   );
 
   it(
@@ -31,7 +31,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("lg,md,sm,xs");
-    }
+    },
   );
 
   it(
@@ -40,7 +40,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("md,sm,xs");
-    }
+    },
   );
 
   it(
@@ -49,7 +49,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("md,sm,xs");
-    }
+    },
   );
 
   it(
@@ -58,7 +58,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("sm,xs");
-    }
+    },
   );
 
   it(
@@ -67,7 +67,7 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("sm,xs");
-    }
+    },
   );
 
   it(
@@ -76,6 +76,6 @@ describe("Given a BreakpointProvider", () => {
     () => {
       cy.mount(<TestComponent />);
       cy.findByText("xs");
-    }
+    },
   );
 });

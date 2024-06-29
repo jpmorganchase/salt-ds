@@ -40,7 +40,7 @@ export function useProgressingValue(updateInterval = 100) {
         handleStop();
       }
     },
-    [handleStop, value]
+    [handleStop, value],
   );
 
   return {

@@ -1,17 +1,20 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const generateData = (states: typeof dataGridExampleData) =>
-  states.reduce((result, row) => {
-    const data = [];
-    data.push(row);
-    for (let i = 0; i < 20; i++) {
-      data.push({ ...row, name: `${row.name} ${i}` });
-    }
-    return [...result, ...data];
-  }, [] as typeof dataGridExampleData);
+  states.reduce(
+    (result, row) => {
+      const data = [];
+      data.push(row);
+      for (let i = 0; i < 20; i++) {
+        data.push({ ...row, name: `${row.name} ${i}` });
+      }
+      return [...result, ...data];
+    },
+    [] as typeof dataGridExampleData,
+  );
 
 const Pagination = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();

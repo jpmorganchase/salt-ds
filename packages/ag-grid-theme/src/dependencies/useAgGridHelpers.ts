@@ -1,9 +1,15 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
+import type { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
-import { AgGridReactProps } from "ag-grid-react";
+import type { AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
-import { HTMLAttributes, useCallback, useMemo, useRef, useState } from "react";
+import {
+  type HTMLAttributes,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -58,7 +64,7 @@ export function useAgGridHelpers({
 
   const className = clsx(
     containerClassName,
-    `ag-theme-salt${compact && density === "high" ? `-compact` : ``}-${mode}`
+    `ag-theme-salt${compact && density === "high" ? `-compact` : ``}-${mode}`,
   );
 
   const onGridReady = useCallback(({ api, columnApi }: GridReadyEvent) => {

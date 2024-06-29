@@ -1,10 +1,10 @@
-import { ReactElement } from "react";
-import { DatePicker } from "@salt-ds/lab";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import { DatePicker } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const VisibleMonths = (): ReactElement => (
   <FormField style={{ width: "250px" }}>

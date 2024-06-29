@@ -1,20 +1,20 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  FormField,
   Button,
+  ComboBox,
+  type ComboBoxProps,
+  FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  StackLayout,
-  ComboBox,
-  ComboBoxProps,
   Option,
   OptionGroup,
+  StackLayout,
   Text,
 } from "@salt-ds/core";
+import { type CountryCode, countryMetaMap } from "@salt-ds/countries";
 import { CloseIcon } from "@salt-ds/icons";
-import { CountryCode, countryMetaMap } from "@salt-ds/countries";
+import type { Meta, StoryFn } from "@storybook/react";
 import "@salt-ds/countries/saltCountries.css";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
@@ -56,7 +56,7 @@ const Template: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -85,7 +85,7 @@ const Template: StoryFn<ComboBoxProps> = (args) => {
     >
       {usStates
         .filter((state) =>
-          state.toLowerCase().includes(value.trim().toLowerCase())
+          state.toLowerCase().includes(value.trim().toLowerCase()),
         )
         .map((state) => (
           <Option value={state} key={state} />
@@ -136,7 +136,7 @@ export const DisabledOption: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -157,7 +157,7 @@ export const DisabledOption: StoryFn<ComboBoxProps> = (args) => {
     >
       {usStates
         .filter((state) =>
-          state.toLowerCase().includes(value.trim().toLowerCase())
+          state.toLowerCase().includes(value.trim().toLowerCase()),
         )
         .map((state) => (
           <Option value={state} key={state} disabled={state === "California"} />
@@ -193,7 +193,7 @@ export const WithFormField: StoryFn = () => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -215,7 +215,7 @@ export const WithFormField: StoryFn = () => {
       >
         {usStates
           .filter((state) =>
-            state.toLowerCase().includes(value.trim().toLowerCase())
+            state.toLowerCase().includes(value.trim().toLowerCase()),
           )
           .map((state) => (
             <Option value={state} key={state} />
@@ -239,7 +239,7 @@ export const Grouped: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -280,16 +280,19 @@ export const Grouped: StoryFn<ComboBoxProps> = (args) => {
 
   const groupedOptions = options
     .filter((city) =>
-      city.value.trim().toLowerCase().includes(value.trim().toLowerCase())
+      city.value.trim().toLowerCase().includes(value.trim().toLowerCase()),
     )
-    .reduce((acc, option) => {
-      const country = option.country;
-      if (!acc[country]) {
-        acc[country] = [];
-      }
-      acc[country].push(option);
-      return acc;
-    }, {} as Record<string, typeof options>);
+    .reduce(
+      (acc, option) => {
+        const country = option.country;
+        if (!acc[country]) {
+          acc[country] = [];
+        }
+        acc[country].push(option);
+        return acc;
+      },
+      {} as Record<string, typeof options>,
+    );
 
   return (
     <ComboBox
@@ -473,7 +476,7 @@ export const ComplexOption: StoryFn<ComboBoxProps<Contact>> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: Contact[]
+    newSelected: Contact[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -496,7 +499,9 @@ export const ComplexOption: StoryFn<ComboBoxProps<Contact>> = (args) => {
     >
       {contacts
         .filter((contact) =>
-          contact.displayName.toLowerCase().includes(value.trim().toLowerCase())
+          contact.displayName
+            .toLowerCase()
+            .includes(value.trim().toLowerCase()),
         )
         .map((contact) => (
           <Option value={contact} key={contact.id}>
@@ -525,7 +530,7 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: CountryCode[]
+    newSelected: CountryCode[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -533,8 +538,8 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
     if (newSelected.length === 1) {
       setValue(
         Object.values(countryMetaMap).find(
-          (country) => country.countryCode === newSelected[0]
-        )?.countryName ?? ""
+          (country) => country.countryCode === newSelected[0],
+        )?.countryName ?? "",
       );
     } else {
       setValue("");
@@ -552,14 +557,17 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
       );
     });
 
-  const groupedOptions = options.reduce((acc, option) => {
-    const groupName = option.countryName[0];
-    if (!acc[groupName]) {
-      acc[groupName] = [];
-    }
-    acc[groupName].push(option);
-    return acc;
-  }, {} as Record<string, typeof options>);
+  const groupedOptions = options.reduce(
+    (acc, option) => {
+      const groupName = option.countryName[0];
+      if (!acc[groupName]) {
+        acc[groupName] = [];
+      }
+      acc[groupName].push(option);
+      return acc;
+    },
+    {} as Record<string, typeof options>,
+  );
 
   return (
     <ComboBox<CountryCode>
@@ -585,7 +593,7 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
 
 export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
   const [value, setValue] = useState(
-    args.defaultValue?.toString() ?? "Yelloww"
+    args.defaultValue?.toString() ?? "Yelloww",
   );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -598,7 +606,7 @@ export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -615,7 +623,7 @@ export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
   };
 
   const filteredOptions = usStates.filter((state) =>
-    state.toLowerCase().includes(value.trim().toLowerCase())
+    state.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
   return (
@@ -659,7 +667,7 @@ export const CustomFiltering: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -680,7 +688,7 @@ export const CustomFiltering: StoryFn<ComboBoxProps> = (args) => {
 
   const handleOpenChange: ComboBoxProps["onOpenChange"] = (
     _newOpen,
-    reason
+    reason,
   ) => {
     if (reason === "manual") {
       setShowAll(true);
@@ -688,7 +696,7 @@ export const CustomFiltering: StoryFn<ComboBoxProps> = (args) => {
   };
 
   const filteredOptions = usStates.filter((state) =>
-    state.toLowerCase().includes(value.trim().toLowerCase())
+    state.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
   const options = showAll ? usStates : filteredOptions;
@@ -735,7 +743,7 @@ export const ObjectValue: StoryFn<ComboBoxProps<Person>> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: Person[]
+    newSelected: Person[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -748,7 +756,7 @@ export const ObjectValue: StoryFn<ComboBoxProps<Person>> = (args) => {
   const options = people.filter(
     (person) =>
       person.firstName.toLowerCase().includes(value.trim().toLowerCase()) ||
-      person.lastName.toLowerCase().includes(value.trim().toLowerCase())
+      person.lastName.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
   return (
@@ -795,7 +803,7 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     // React 16 backwards compatibility
     event.persist();
@@ -817,7 +825,7 @@ export const FreeText: StoryFn<ComboBoxProps> = (args) => {
     >
       {Array.from(new Set(usStates.concat(selectedValues)))
         .filter((state) =>
-          state.toLowerCase().includes(value.trim().toLowerCase())
+          state.toLowerCase().includes(value.trim().toLowerCase()),
         )
         .map((state) => (
           <Option value={state} key={state} />
@@ -848,7 +856,7 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     setSelected(newSelected);
     args.onSelectionChange?.(event, newSelected);
@@ -856,7 +864,7 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
   };
 
   const filteredOptions = usStates.filter((state) =>
-    state.toLowerCase().includes(value.trim().toLowerCase())
+    state.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
   const handleClear = () => {

@@ -1,12 +1,12 @@
-import { ForwardedRef, forwardRef } from "react";
-import { ToolbarFieldProps } from "./toolbarFieldTypes";
+import { type ForwardedRef, forwardRef } from "react";
+import type { ToolbarFieldProps } from "./toolbarFieldTypes";
 import { useToolbarField } from "./useToolbarField";
 
 import { FormFieldLegacy as FormField } from "../../form-field-legacy";
 
 export const ToolbarField = forwardRef(function ToolbarField(
   props: ToolbarFieldProps,
-  forwardedRef?: ForwardedRef<HTMLDivElement>
+  forwardedRef?: ForwardedRef<HTMLDivElement>,
 ) {
   const toolbarFieldProps = useToolbarField(props);
   return <FormField {...toolbarFieldProps} ref={forwardedRef} />;

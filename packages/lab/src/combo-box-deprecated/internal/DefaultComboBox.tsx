@@ -1,35 +1,35 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
 import { useAriaAnnouncer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import {
-  ComponentType,
-  HTMLAttributes,
-  ReactNode,
-  Ref,
-  RefObject,
+  type ComponentType,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
+  type RefObject,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { Portal } from "../../portal";
-import {
-  IndexedListItemProps,
-  ListBase,
-  ListProps,
-  ListSelectionVariant,
-  ListStateContext,
-} from "../../list-deprecated";
-import { GetFilterRegex } from "../filterHelpers";
-import { getAnnouncement } from "./getAnnouncement";
-import { useComboBox } from "./useComboBox";
-import { isDesktop, Window, WindowProps } from "../../window";
 import {
   InputLegacy as Input,
-  InputLegacyProps as InputProps,
+  type InputLegacyProps as InputProps,
 } from "../../input-legacy";
+import {
+  type IndexedListItemProps,
+  ListBase,
+  type ListProps,
+  type ListSelectionVariant,
+  ListStateContext,
+} from "../../list-deprecated";
+import { Portal } from "../../portal";
+import { Window, type WindowProps, isDesktop } from "../../window";
+import type { GetFilterRegex } from "../filterHelpers";
+import { getAnnouncement } from "./getAnnouncement";
+import { useComboBox } from "./useComboBox";
 
 export type BaseComboBoxProps<
   Item,
-  Variant extends ListSelectionVariant = "default"
+  Variant extends ListSelectionVariant = "default",
 > = Omit<
   HTMLAttributes<HTMLDivElement>,
   "children" | "onChange" | "onSelect" | "onFocus" | "onBlur" | "onClick"
@@ -77,7 +77,7 @@ export interface DefaultComboBoxProps<Item>
 }
 
 export const DefaultComboBox = function DefaultComboBox<Item>(
-  props: DefaultComboBoxProps<Item>
+  props: DefaultComboBoxProps<Item>,
 ): ReactNode {
   const {
     ListItem,
@@ -124,7 +124,7 @@ export const DefaultComboBox = function DefaultComboBox<Item>(
   }, [firstItem, value, itemCount, announce]);
 
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
-    undefined
+    undefined,
   );
   const middleware = isDesktop
     ? []

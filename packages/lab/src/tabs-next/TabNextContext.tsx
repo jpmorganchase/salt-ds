@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import { ReactNode, SyntheticEvent, useContext } from "react";
+import { type ReactNode, type SyntheticEvent, useContext } from "react";
 
 interface TabValue {
   value: string;

@@ -1,6 +1,6 @@
-import { factory, primaryKey } from "@mswjs/data";
 import { faker } from "@faker-js/faker";
-import { RowKeyGetter } from "../src";
+import { factory, primaryKey } from "@mswjs/data";
+import type { RowKeyGetter } from "../src";
 
 faker.seed(5417);
 
@@ -54,7 +54,7 @@ export const db = factory({
     id: primaryKey(() => faker.string.uuid()),
     name: () =>
       `${faker.helpers.arrayElement(fruits)} ${faker.helpers.arrayElement(
-        types
+        types,
       )} ${faker.helpers.arrayElement(suffixes)}`,
     location: () => faker.helpers.arrayElement(allLocations),
     cohort: () => faker.helpers.arrayElement(cohorts),

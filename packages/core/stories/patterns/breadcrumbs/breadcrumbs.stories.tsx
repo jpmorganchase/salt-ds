@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { Meta } from "@storybook/react";
 import {
-  Link,
   Button,
-  Text,
   FlowLayout,
+  Link,
   Menu,
   MenuItem,
   MenuPanel,
   MenuTrigger,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
-import { OverflowMenuIcon, ChevronRightIcon } from "@salt-ds/icons";
+import { ChevronRightIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import type { Meta } from "@storybook/react";
+import { useState } from "react";
 
 export default {
   title: "Patterns/Breadcrumbs",

@@ -1,4 +1,4 @@
-import { ComponentType, useEffect } from "react";
+import { type ComponentType, useEffect } from "react";
 
 import { useAriaAnnouncer } from "./useAriaAnnouncer";
 

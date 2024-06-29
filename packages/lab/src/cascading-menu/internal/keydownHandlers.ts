@@ -1,8 +1,8 @@
+import type { Dispatch, KeyboardEvent, SetStateAction } from "react";
+import type { CascadingMenuListProps } from "../CascadingMenuList";
 import { stateChangeTypes } from "../stateChangeTypes";
 import { CascadingMenuAction } from "./CascadingMenuAction";
 import { hasSubMenu, isMenuItem } from "./stateUtils";
-import { CascadingMenuListProps } from "../CascadingMenuList";
-import { Dispatch, SetStateAction, KeyboardEvent } from "react";
 
 interface getKeyDownHandlersProps extends CascadingMenuListProps {
   keyDownHandlersOverride?: Record<string, (event: Event) => void>;
@@ -10,7 +10,7 @@ interface getKeyDownHandlersProps extends CascadingMenuListProps {
 
 export function getKeyDownHandlers(
   props: getKeyDownHandlersProps,
-  setIsMenuActive: Dispatch<SetStateAction<boolean>>
+  setIsMenuActive: Dispatch<SetStateAction<boolean>>,
 ) {
   const {
     keyDownHandlersOverride,

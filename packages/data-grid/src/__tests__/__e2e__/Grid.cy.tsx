@@ -1,21 +1,21 @@
-import { composeStories } from "@storybook/react";
-import * as gridStories from "@stories/grid.stories";
-import * as gridEditableStories from "@stories/grid-editableCells.stories";
-import * as variantsStories from "@stories/grid-variants.stories";
-import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stories";
-import * as cellValidationStories from "@stories/grid-cellValidation.stories";
-import * as rowSelectionControlledStories from "@stories/grid-rowSelectionControlled.stories";
+import { ColumnGroup, Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
+import { Investor, db } from "@stories/dummyData";
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
+import * as cellValidationStories from "@stories/grid-cellValidation.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";
-import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
+import * as gridEditableStories from "@stories/grid-editableCells.stories";
 import * as gridPaginationStories from "@stories/grid-pagination.stories";
-import { Grid, GridColumn, ColumnGroup, SortOrder } from "@salt-ds/data-grid";
-import { db, Investor } from "@stories/dummyData";
+import * as rowSelectionControlledStories from "@stories/grid-rowSelectionControlled.stories";
+import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stories";
+import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
+import * as variantsStories from "@stories/grid-variants.stories";
+import * as gridStories from "@stories/grid.stories";
+import { composeStories } from "@storybook/react";
 
 const { GridVariants } = composeStories(variantsStories);
 const { CellCustomization } = composeStories(cellCustomizationStories);
 const { RowSelectionControlled } = composeStories(
-  rowSelectionControlledStories
+  rowSelectionControlledStories,
 );
 const { GridPagination } = composeStories(gridPaginationStories);
 const { RowSelectionModes } = composeStories(rowSelectionModesStories);
@@ -37,7 +37,7 @@ const findCell = (row: number, col: number) => {
 
 function checkAriaDescription(
   cell: Cypress.Chainable<JQuery<HTMLElement>>,
-  desc: string
+  desc: string,
 ) {
   cell.then(($el) => {
     cy.get(`#${$el.attr("aria-describedby")!}`).should("have.text", desc);
@@ -818,7 +818,7 @@ describe("Grid", () => {
           data-testid="scroll-past"
           style={{ height: "10px", width: "10px", background: "red" }}
         />
-      </div>
+      </div>,
     );
     assertGridReady();
 

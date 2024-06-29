@@ -179,7 +179,7 @@ export const groupByInitialLetter = (list, groupMode = "headers-only") => {
   let char;
   let items = result;
 
-  for (let item of sortedList) {
+  for (const item of sortedList) {
     const label = item?.label ?? item;
     if (char !== label[0]) {
       if (groupMode === "headers-only") {

@@ -1,5 +1,5 @@
+import type { SearchIndex } from "@jpmorganchase/mosaic-store";
 import Fuse from "fuse.js";
-import { SearchIndex } from "@jpmorganchase/mosaic-store";
 
 interface BestIndex {
   index: Fuse.RangeTuple;
@@ -13,7 +13,7 @@ export interface SearchResult {
 }
 
 export const calculateBestIndex = (
-  indices: readonly Fuse.RangeTuple[]
+  indices: readonly Fuse.RangeTuple[],
 ): BestIndex => {
   const sorted = Array.from(indices)
     .sort((a, b) => {
@@ -49,7 +49,7 @@ export const highlightMatch = (text: string, index: Fuse.RangeTuple) => {
 
 export const getBestMatch = (
   matches: readonly Fuse.FuseResultMatch[],
-  fallback: string
+  fallback: string,
 ) => {
   const matchesWithIndex = matches
     .filter((match) => match.key !== "title" && match.key !== "route")
@@ -76,7 +76,7 @@ export const getBestMatch = (
 export const performSearch = (
   index: SearchIndex,
   term: string,
-  config: Fuse.IFuseOptions<unknown>
+  config: Fuse.IFuseOptions<unknown>,
 ) => {
   const fuse = new Fuse(index, config);
   const results = fuse.search(term);

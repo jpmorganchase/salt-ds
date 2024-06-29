@@ -1,11 +1,11 @@
-import { ReactElement } from "react";
 import { FlowLayout, Input, Text } from "@salt-ds/core";
 import {
-  FilterIcon,
   CallIcon,
-  FlagIcon,
   FilterClearIcon,
+  FilterIcon,
+  FlagIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const StaticAdornments = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>

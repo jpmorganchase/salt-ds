@@ -1,17 +1,17 @@
-import { ChangeEvent, useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   Card,
+  type CardProps,
   H3,
-  Text,
+  Label,
   Link,
-  StackLayout,
   RadioButton,
   RadioButtonGroup,
-  Label,
-  CardProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 import exampleImage from "./../assets/exampleImage1x.png";
 
 import "./card.stories.css";

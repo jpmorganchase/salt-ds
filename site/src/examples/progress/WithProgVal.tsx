@@ -1,14 +1,14 @@
-import { ReactElement, useState, useEffect, useCallback } from "react";
 import {
   Button,
+  CircularProgress,
   FlexItem,
   FlexLayout,
   FlowLayout,
+  LinearProgress,
   RadioButton,
   RadioButtonGroup,
-  CircularProgress,
-  LinearProgress,
 } from "@salt-ds/core";
+import { type ReactElement, useCallback, useEffect, useState } from "react";
 
 function useProgressingValue(updateInterval = 100) {
   const [value, setValue] = useState(0);
@@ -45,7 +45,7 @@ function useProgressingValue(updateInterval = 100) {
         handleStop();
       }
     },
-    [handleStop, value]
+    [handleStop, value],
   );
 
   return {

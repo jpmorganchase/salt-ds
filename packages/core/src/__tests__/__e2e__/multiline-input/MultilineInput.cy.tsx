@@ -1,6 +1,6 @@
-import { composeStories } from "@storybook/react";
 import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
-import { ChangeEvent } from "react";
+import { composeStories } from "@storybook/react";
+import type { ChangeEvent } from "react";
 
 const {
   Default,
@@ -53,7 +53,7 @@ describe("GIVEN an MultilineInput", () => {
         <button>start</button>
         <Default disabled />
         <button>end</button>
-      </div>
+      </div>,
     );
     cy.findByRole("textbox").should("be.disabled");
     cy.realPress("Tab");
@@ -78,7 +78,7 @@ describe("GIVEN an MultilineInput", () => {
     cy.findByRole("textbox").should("have.accessibleName", "Comments");
     cy.findByRole("textbox").should(
       "have.accessibleDescription",
-      "Please leave feedback about your experience."
+      "Please leave feedback about your experience.",
     );
   });
 
@@ -101,7 +101,7 @@ describe("GIVEN an MultilineInput", () => {
     cy.mount(<WithFormField necessity="optional" />);
     cy.findByLabelText("Comments (Optional)").should(
       "not.have.attr",
-      "required"
+      "required",
     );
   });
 

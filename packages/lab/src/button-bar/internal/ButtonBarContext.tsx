@@ -10,5 +10,5 @@ export const ButtonBarContext = createContext<ButtonBarContextValue>(
   "ButtonBarContext",
   {
     matches: false,
-  }
+  },
 );

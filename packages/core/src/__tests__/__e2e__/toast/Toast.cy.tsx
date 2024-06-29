@@ -1,8 +1,8 @@
-import { composeStories } from "@storybook/react";
 import { Toast, ToastContent } from "@salt-ds/core";
-import * as toastStories from "@stories/toast/toast.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { LinkedIcon } from "@salt-ds/icons";
+import * as toastStories from "@stories/toast/toast.stories";
+import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(toastStories);
 
@@ -13,7 +13,7 @@ describe("Given a Toast", () => {
     cy.mount(
       <Toast>
         <ToastContent>Toast content</ToastContent>
-      </Toast>
+      </Toast>,
     );
     cy.findByRole("img").should("not.exist");
   });
@@ -22,7 +22,7 @@ describe("Given a Toast", () => {
     cy.mount(
       <Toast status="info">
         <ToastContent>Toast content</ToastContent>
-      </Toast>
+      </Toast>,
     );
     cy.findByRole("img", { name: "info" }).should("exist");
   });
@@ -31,7 +31,7 @@ describe("Given a Toast", () => {
     cy.mount(
       <Toast status="error">
         <ToastContent>Toast content</ToastContent>
-      </Toast>
+      </Toast>,
     );
     cy.findByRole("img", { name: "error" }).should("exist");
   });
@@ -40,7 +40,7 @@ describe("Given a Toast", () => {
     cy.mount(
       <Toast status="warning">
         <ToastContent>Toast content</ToastContent>
-      </Toast>
+      </Toast>,
     );
     cy.findByRole("img", { name: "warning" }).should("exist");
   });
@@ -49,7 +49,7 @@ describe("Given a Toast", () => {
     cy.mount(
       <Toast status="success">
         <ToastContent>Toast content</ToastContent>
-      </Toast>
+      </Toast>,
     );
     cy.findByRole("img", { name: "success" }).should("exist");
   });
@@ -58,7 +58,7 @@ describe("Given a Toast", () => {
     cy.mount(
       <Toast icon={<LinkedIcon aria-label="success" />} status={"success"}>
         <ToastContent>Toast content</ToastContent>
-      </Toast>
+      </Toast>,
     );
     cy.findAllByTestId("LinkedIcon").should("exist");
   });

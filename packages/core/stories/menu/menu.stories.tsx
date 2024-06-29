@@ -10,7 +10,7 @@ import {
   Text,
 } from "@salt-ds/core";
 
-import { Meta, StoryFn } from "@storybook/react";
+import type { VirtualElement } from "@floating-ui/react";
 import {
   CopyIcon,
   ExportIcon,
@@ -18,8 +18,8 @@ import {
   PasteIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { VirtualElement } from "@floating-ui/react";
 
 export default {
   title: "Core/Menu",
@@ -289,7 +289,7 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
 
 export const ContextMenu: StoryFn = () => {
   const [virtualElement, setVirtualElement] = useState<VirtualElement | null>(
-    null
+    null,
   );
   const [open, setOpen] = useState(false);
   return (

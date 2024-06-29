@@ -1,7 +1,7 @@
-import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import { capitalize, makePrefixer } from "../utils";
 
@@ -36,47 +36,46 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   variant?: "primary" | "secondary";
 }
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
-  props,
-  ref
-) {
-  const {
-    accent,
-    children,
-    className,
-    disabled,
-    interactable,
-    hoverable,
-    variant = "primary",
-    ...rest
-  } = props;
+export const Card = forwardRef<HTMLDivElement, CardProps>(
+  function Card(props, ref) {
+    const {
+      accent,
+      children,
+      className,
+      disabled,
+      interactable,
+      hoverable,
+      variant = "primary",
+      ...rest
+    } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-card",
-    css: cardCss,
-    window: targetWindow,
-  });
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-card",
+      css: cardCss,
+      window: targetWindow,
+    });
 
-  return (
-    <div
-      className={clsx(
-        withBaseName(),
-        withBaseName(variant),
-        {
-          [withBaseName("accent")]: accent,
-          [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
-          [withBaseName("hoverable")]: hoverable,
-          /* **Deprecated:** InteractableCard should be used instead for these features */
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("interactable")]: interactable,
-        },
-        className
-      )}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </div>
-  );
-});
+    return (
+      <div
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("accent")]: accent,
+            [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+            [withBaseName("hoverable")]: hoverable,
+            /* **Deprecated:** InteractableCard should be used instead for these features */
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("interactable")]: interactable,
+          },
+          className,
+        )}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </div>
+    );
+  },
+);

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext } from "react";
+import { type SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 import { defaultValueToString } from "./ListControlState";
 
@@ -15,7 +15,7 @@ export interface ListControlContextValue<Item> {
   setOpen: (newOpen: boolean, openChangeReason?: OpenChangeReason) => void;
   register: (
     optionValue: OptionValue<Item>,
-    element: HTMLElement
+    element: HTMLElement,
   ) => () => void;
   selectedState: unknown[];
   select: (event: SyntheticEvent, option: OptionValue<Item>) => void;
@@ -50,7 +50,7 @@ export const ListControlContext = createContext<ListControlContextValue<any>>(
     focusVisibleState: false,
     valueToString: defaultValueToString,
     disabled: false,
-  }
+  },
 );
 
 export function useListControlContext<Item>() {

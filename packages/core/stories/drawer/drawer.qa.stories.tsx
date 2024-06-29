@@ -1,6 +1,6 @@
-import { H2, Text, StackLayout, Drawer, DrawerProps } from "@salt-ds/core";
-import { StoryFn, Meta } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { Drawer, type DrawerProps, H2, StackLayout, Text } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Drawer/Drawer QA",

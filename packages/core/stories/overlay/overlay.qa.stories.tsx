@@ -2,12 +2,12 @@ import {
   Button,
   Overlay,
   OverlayPanel,
-  OverlayTrigger,
-  OverlayPanelContent,
   OverlayPanelCloseButton,
+  OverlayPanelContent,
+  OverlayTrigger,
 } from "@salt-ds/core";
-import { StoryFn, Meta } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "./overlay.stories.css";
 

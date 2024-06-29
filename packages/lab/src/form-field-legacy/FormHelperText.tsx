@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef } from "react";
-import { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
+import type { ComponentPropsWithoutRef } from "react";
+import type { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import formHelperTextCss from "./FormHelperText.css";
 

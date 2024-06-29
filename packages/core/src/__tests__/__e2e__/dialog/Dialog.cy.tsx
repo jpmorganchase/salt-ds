@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as dialogStories from "@stories/dialog/dialog.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(dialogStories);
 
@@ -54,7 +54,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button").click();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
-      }
+      },
     );
   });
 
@@ -100,7 +100,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button").click();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-large-xl");
-      }
+      },
     );
 
     it(
@@ -115,7 +115,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button").click();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-small-xs");
-      }
+      },
     );
   });
 

@@ -1,6 +1,6 @@
-import { composeStories } from "@storybook/react";
-import { ChangeEvent } from "react";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
+import { composeStories } from "@storybook/react";
+import type { ChangeEvent } from "react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 const composedStories = composeStories(dateInputStories);
 const { Default, Range } = composedStories;
@@ -40,7 +40,7 @@ describe("GIVEN a DateInput", () => {
         const onChange = (
           event: ChangeEvent<HTMLInputElement>,
           startDateInputValue?: string,
-          endDateInputValue?: string
+          endDateInputValue?: string,
         ) => {
           // React 16 backwards compatibility
           event.persist();
@@ -62,7 +62,7 @@ describe("GIVEN a DateInput", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           testStartInputDate,
-          testEndInputDate
+          testEndInputDate,
         );
       });
     });

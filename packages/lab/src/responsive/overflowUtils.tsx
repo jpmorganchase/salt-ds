@@ -1,8 +1,8 @@
 import {
+  type ElementRef,
+  type OverflowItem,
   collapsibleType,
-  ElementRef,
-  OverflowItem,
-  orientationType,
+  type orientationType,
 } from "./overflowTypes";
 
 export const DropdownPlaceholder = () => null;
@@ -35,7 +35,7 @@ export const getIsOverflowed = (managedItems: OverflowItem[]) =>
 
 export const measureContainer = (
   ref: ElementRef,
-  orientation: orientationType = "horizontal"
+  orientation: orientationType = "horizontal",
 ): {
   innerContainerSize: number;
   rootContainerDepth: number;
@@ -69,7 +69,7 @@ const isContainerOverflowing = (
   containerDepth: number,
   parentContainerDepth: number,
   innerElement: HTMLElement,
-  orientation: orientationType
+  orientation: orientationType,
 ) => {
   const isHorizontal = orientation === "horizontal";
   // If true, this is a reliable indication of content wrapping, but the containerDepth
@@ -84,7 +84,7 @@ const isContainerOverflowing = (
         const rect = (child as HTMLElement).getBoundingClientRect();
         return Math.max(isHorizontal ? rect.bottom : rect.right, maxVal);
       },
-      isHorizontal ? bottom : right
+      isHorizontal ? bottom : right,
     );
     return isHorizontal ? maxPos > bottom : maxPos > right;
   }
@@ -92,7 +92,7 @@ const isContainerOverflowing = (
 
 export const measureContainerOverflow = (
   ref: ElementRef,
-  orientation: orientationType = "horizontal"
+  orientation: orientationType = "horizontal",
 ): {
   isOverflowing: boolean;
   innerContainerSize: number;
@@ -105,7 +105,7 @@ export const measureContainerOverflow = (
     innerContainerDepth,
     rootContainerDepth,
     innerElement,
-    orientation
+    orientation,
   );
 
   return { isOverflowing, innerContainerSize, rootContainerDepth };
@@ -119,7 +119,7 @@ export const measureContainerOverflow = (
 export function measureElementSize(
   element: HTMLElement,
   dimension: heightOrWidth = "width",
-  includeAutoMargin = false
+  includeAutoMargin = false,
 ): number {
   const { [dimension]: size } = element.getBoundingClientRect();
   const { padEnd = false, padStart = false } = element.dataset;
@@ -128,16 +128,16 @@ export function measureElementSize(
   const marginStart =
     padStart && !includeAutoMargin
       ? 0
-      : parseInt(style.getPropertyValue(`margin-${start}`), 10);
+      : Number.parseInt(style.getPropertyValue(`margin-${start}`), 10);
   const marginEnd =
     padEnd && !includeAutoMargin
       ? 0
-      : parseInt(style.getPropertyValue(`margin-${end}`), 10);
+      : Number.parseInt(style.getPropertyValue(`margin-${end}`), 10);
 
   let minWidth = size;
-  const flexShrink = parseInt(style.getPropertyValue("flex-shrink"), 10);
+  const flexShrink = Number.parseInt(style.getPropertyValue("flex-shrink"), 10);
   if (flexShrink > 0) {
-    const flexBasis = parseInt(style.getPropertyValue("flex-basis"), 10);
+    const flexBasis = Number.parseInt(style.getPropertyValue("flex-basis"), 10);
     // TODO should we consider percentage values ?
     // TODO are we still using flexBasis ?
     if (!isNaN(flexBasis) && flexBasis > 0) {
@@ -188,7 +188,7 @@ export const getOverflowIndicator = (managedItems: OverflowItem[]) =>
 const getPriority = (item: OverflowItem) => item.priority;
 
 export const popNextItemByPriority = (
-  items: OverflowItem[]
+  items: OverflowItem[],
 ): OverflowItem | null => {
   const maxPriority = Math.max(...items.map(getPriority));
   for (let i = items.length - 1; i >= 0; i--) {
@@ -201,7 +201,7 @@ export const popNextItemByPriority = (
 
 export const measureOverflowItems = (
   items: OverflowItem[],
-  dimension: heightOrWidth
+  dimension: heightOrWidth,
 ): OverflowItem[] => {
   const measurements = items.map(({ id }) => {
     const childElement = document.getElementById(id);
@@ -216,7 +216,7 @@ export const measureOverflowItems = (
         : {
             ...item,
             size: measurements[i],
-          }
+          },
     );
   } else {
     return items;
@@ -227,7 +227,7 @@ export const addAll = (sum: number, m: OverflowItem): number => sum + m.size;
 
 export const getElementForItem = (ref: ElementRef, item: OverflowItem) =>
   ref.current!.querySelector(
-    `:scope > [data-index='${item.index}']`
+    `:scope > [data-index='${item.index}']`,
   ) as HTMLElement;
 
 type dimension = "left" | "right" | "top" | "bottom";
@@ -238,6 +238,6 @@ export const getRuntimePadding = (
 ): number[] => {
   const targetStyle = getComputedStyle(el);
   return dimensions.map((dimension) =>
-    parseInt(targetStyle.getPropertyValue(`padding-${dimension}`), 10)
+    Number.parseInt(targetStyle.getPropertyValue(`padding-${dimension}`), 10),
   );
 };

@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
 import { FlowLayout } from "@salt-ds/core";
 import { MX } from "@salt-ds/countries";
+import type { ReactElement } from "react";
 
 export const Size = (): ReactElement => (
   <FlowLayout>

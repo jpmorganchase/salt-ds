@@ -1,15 +1,15 @@
-import { Meta } from "@storybook/react";
 import {
   Button,
   FlowLayout,
+  StackLayout,
   Text,
   Toast,
   ToastContent,
-  StackLayout,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { ToastGroup } from "@salt-ds/lab";
-import { Fragment, ReactNode, useState } from "react";
+import type { Meta } from "@storybook/react";
+import { Fragment, type ReactNode, useState } from "react";
 
 export default {
   title: "Lab/Toast Group",

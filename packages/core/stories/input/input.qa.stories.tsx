@@ -1,17 +1,17 @@
 import { Button, Input, Text } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
-import {
-  QAContainer,
-  QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
-} from "docs/components";
 import {
   CloseIcon,
   CreditCardIcon,
   FilterClearIcon,
   FlagIcon,
 } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
+} from "docs/components";
 
 export default {
   title: "Core/Input/Input QA",
@@ -159,7 +159,7 @@ AllVariantsGrid.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection
     height={500}

@@ -1,13 +1,13 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
-import { DateValue, isSameMonth } from "@internationalized/date";
-import { CalendarMonth, CalendarMonthProps } from "./CalendarMonth";
+import { type DateValue, isSameMonth } from "@internationalized/date";
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { useCalendarContext } from "./CalendarContext";
+import { CalendarMonth, type CalendarMonthProps } from "./CalendarMonth";
 
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import calendarCarouselCss from "./CalendarCarousel.css";
 import { formatDate, monthDiff } from "./utils";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type CalendarCarouselProps = Omit<CalendarMonthProps, "date">;
 

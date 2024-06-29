@@ -1,11 +1,11 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
+  type CircularProgress,
   FlowLayout,
-  StackLayout,
-  CircularProgress,
   LinearProgress,
+  StackLayout,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";

@@ -1,6 +1,6 @@
-import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
-import styles from "./Resources.module.css";
+import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import { LinkList } from "../../components/link-list/LinkList";
+import styles from "./Resources.module.css";
 
 type Resources = {
   href: string;
@@ -21,7 +21,7 @@ function splitResources(resources: Resources) {
     { internal: [], external: [] } as {
       internal: Resources;
       external: Resources;
-    }
+    },
   );
 }
 

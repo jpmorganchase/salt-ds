@@ -1,8 +1,12 @@
-import { useState } from "react";
 import { Button } from "@salt-ds/core";
-import { DropdownBase, DropdownBaseProps, DropdownButton } from "@salt-ds/lab";
+import {
+  DropdownBase,
+  type DropdownBaseProps,
+  DropdownButton,
+} from "@salt-ds/lab";
+import { useState } from "react";
 
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Dropdown Base",

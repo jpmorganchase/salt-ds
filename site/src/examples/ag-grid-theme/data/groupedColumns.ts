@@ -1,7 +1,7 @@
-import { ColDef, ColGroupDef } from "ag-grid-community";
+import type { ColDef, ColGroupDef } from "ag-grid-community";
 
 export const groupedColumns = (
-  groupName: string
+  groupName: string,
 ): Array<ColGroupDef | ColDef> => [
   {
     headerName: "",

@@ -1,17 +1,17 @@
 import {
+  type CSSProperties,
   Children,
+  type ComponentType,
+  type KeyboardEvent,
+  type ReactNode,
   cloneElement,
-  ComponentType,
-  CSSProperties,
   isValidElement,
-  KeyboardEvent,
-  ReactNode,
   useEffect,
   useRef,
   useState,
 } from "react";
+import type { GridColumnModel, GridRowModel, SortOrder } from "./Grid";
 import { useGridContext } from "./GridContext";
-import { GridColumnModel, GridRowModel, SortOrder } from "./Grid";
 
 export type GridColumnPin = "left" | "right" | null;
 
@@ -127,7 +127,7 @@ export interface GridColumnProps<T = any> {
    * If you require a custom validation status, you can achieve that by providing a custom cell component.
    * */
   getValidationStatus?: (
-    value: GridCellValueProps<T>
+    value: GridCellValueProps<T>,
   ) => CellValidationState | undefined;
   /**
    * Cell validation status message getter. Should return a string description of the validation state that can be used for the screen reader.
@@ -181,12 +181,12 @@ export interface GridColumnInfo<T> {
 }
 
 export const GridColumn = function GridColumn<T = any>(
-  props: GridColumnProps<T>
+  props: GridColumnProps<T>,
 ) {
   const { defaultWidth } = props;
   const indexRef = useRef<number>();
   const [width, setWidth] = useState<number>(
-    defaultWidth !== undefined ? defaultWidth : 100
+    defaultWidth !== undefined ? defaultWidth : 100,
   );
 
   const grid = useGridContext();
@@ -217,7 +217,7 @@ export const GridColumn = function GridColumn<T = any>(
       {Children.map(props.children, (ch) =>
         isValidElement(ch)
           ? cloneElement(ch, { columnId: props.id } as any)
-          : ch
+          : ch,
       )}
     </>
   );

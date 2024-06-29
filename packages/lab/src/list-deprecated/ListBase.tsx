@@ -7,32 +7,32 @@ import {
 import { clsx } from "clsx";
 import {
   Children,
-  ComponentType,
+  type ComponentType,
+  type ForwardedRef,
+  type HTMLAttributes,
+  type ReactElement,
+  type Ref,
   createContext,
-  ForwardedRef,
   forwardRef,
-  HTMLAttributes,
   memo,
-  ReactElement,
-  Ref,
   useContext,
   useImperativeHandle,
   useMemo,
   useRef,
 } from "react";
-import { areEqual, FixedSizeList, VariableSizeList } from "react-window";
+import { FixedSizeList, VariableSizeList, areEqual } from "react-window";
+import { ListItemBase } from "./ListItemBase";
+import { ListItemContext } from "./ListItemContext";
+import type { ListBaseProps } from "./ListProps";
+import { useListStateContext } from "./ListStateContext";
 import { calcPreferredListHeight } from "./internal/calcPreferredListHeight";
 import { scrollIntoView } from "./internal/scrollIntoView";
 import { useListAutoSizer } from "./internal/useListAutoSizer";
 import { itemToString as defaultItemToString } from "./itemToString";
-import { ListItemBase } from "./ListItemBase";
-import { ListItemContext } from "./ListItemContext";
-import { ListBaseProps } from "./ListProps";
-import { useListStateContext } from "./ListStateContext";
 import { useListItem, useVirtualizedListItem } from "./useListItem";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import listCss from "./List.css";
 
@@ -59,12 +59,11 @@ const DefaultItem = memo(function DefaultItem(props: any) {
 }, areEqual);
 
 const DefaultVirtualizedItem = memo(function DefaultVirtualizedItem(
-  props: any
+  props: any,
 ) {
   const { item, itemToString, itemProps } = useVirtualizedListItem(props);
   return <ListItemBase {...itemProps}>{itemToString(item)}</ListItemBase>;
-},
-areEqual);
+}, areEqual);
 
 export interface ListboxProps extends HTMLAttributes<HTMLDivElement> {
   onScroll?: (evt: any) => void;
@@ -77,54 +76,53 @@ export interface ListboxProps extends HTMLAttributes<HTMLDivElement> {
  * forwardRef gives `react-window` a way to attach a ref to listen to "scroll" events.
  * And `onScroll` is added by `react-window` so we pass it on.
  */
-const Listbox: ComponentType<ListboxProps> = forwardRef(function Listbox(
-  props,
-  ref
-) {
-  const { style, onScroll, children } = props;
+const Listbox: ComponentType<ListboxProps> = forwardRef(
+  function Listbox(props, ref) {
+    const { style, onScroll, children } = props;
 
-  const {
-    className,
-    borderless,
-    disabled,
-    disableFocus,
-    listRef,
-    style: styleProp,
-    onScroll: onScrollProp,
-    ...restListProps
-  } = useContext<ListboxContextProps<any>>(ListboxContext);
+    const {
+      className,
+      borderless,
+      disabled,
+      disableFocus,
+      listRef,
+      style: styleProp,
+      onScroll: onScrollProp,
+      ...restListProps
+    } = useContext<ListboxContextProps<any>>(ListboxContext);
 
-  const setListRef = useForkRef(ref, listRef);
+    const setListRef = useForkRef(ref, listRef);
 
-  const handleScroll = (event: any) => {
-    if (onScroll) {
-      onScroll(event);
-    }
+    const handleScroll = (event: any) => {
+      if (onScroll) {
+        onScroll(event);
+      }
 
-    if (onScrollProp) {
-      onScrollProp(event);
-    }
-  };
+      if (onScrollProp) {
+        onScrollProp(event);
+      }
+    };
 
-  return (
-    <div
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-        },
-        className
-      )}
-      onScroll={handleScroll}
-      ref={setListRef}
-      style={{ ...style, ...styleProp }}
-      tabIndex={disabled || disableFocus ? undefined : 0}
-      {...restListProps}
-    >
-      {children}
-    </div>
-  );
-});
+    return (
+      <div
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+          },
+          className,
+        )}
+        onScroll={handleScroll}
+        ref={setListRef}
+        style={{ ...style, ...styleProp }}
+        tabIndex={disabled || disableFocus ? undefined : 0}
+        {...restListProps}
+      >
+        {children}
+      </div>
+    );
+  },
+);
 
 export interface ListScrollHandles<Item> {
   scrollToIndex: (itemIndex: number) => void;
@@ -140,7 +138,7 @@ const noScrolling: ListScrollHandles<unknown> = {
 
 export const ListBase = forwardRef(function ListBase<Item>(
   props: ListBaseProps<Item>,
-  ref: ForwardedRef<ListScrollHandles<Item>>
+  ref: ForwardedRef<ListScrollHandles<Item>>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -161,7 +159,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
   // Removed useCharacteristic here
   const sizeStackable = "36px";
   const defaultItemHeight =
-    sizeStackable === null ? 36 : parseInt(sizeStackable, 10);
+    sizeStackable === null ? 36 : Number.parseInt(sizeStackable, 10);
 
   const hasIndexer = typeof props.getItemAtIndex === "function";
   const hasVariableHeight = typeof props.getItemHeight === "function";
@@ -228,7 +226,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
   const scrollToIndex = (itemIndex: number) => {
     scrollIntoView(
       listRef.current?.querySelector(`[data-option-index="${itemIndex}"]`),
-      listRef
+      listRef,
     );
   };
 
@@ -244,7 +242,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
         }
       },
     }),
-    [getItemIndex]
+    [getItemIndex],
   );
 
   const virtualizedScrollHandles: ListScrollHandles<Item> = useMemo(
@@ -261,7 +259,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
         virtualizedListRef.current.scrollTo(scrollOffset);
       },
     }),
-    [getItemIndex]
+    [getItemIndex],
   );
 
   useImperativeHandle(
@@ -275,7 +273,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
         return noScrolling;
       }
     },
-    [virtualized, scrollHandles, virtualizedScrollHandles]
+    [virtualized, scrollHandles, virtualizedScrollHandles],
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -361,7 +359,7 @@ export const ListBase = forwardRef(function ListBase<Item>(
                 item={hasIndexer ? getItemAtIndex!(index) : item}
                 key={getItemId(index)}
               />
-            )
+            ),
           )}
         </ListItemContext.Provider>
       </Listbox>
@@ -402,5 +400,5 @@ export const ListBase = forwardRef(function ListBase<Item>(
     </div>
   );
 }) as <Item>(
-  p: ListBaseProps<Item> & { ref?: ForwardedRef<ListScrollHandles<Item>> }
+  p: ListBaseProps<Item> & { ref?: ForwardedRef<ListScrollHandles<Item>> },
 ) => ReactElement<ListBaseProps<Item>>;

@@ -1,5 +1,5 @@
-import { GetContextMenuItemsParams } from "ag-grid-community";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import type { GetContextMenuItemsParams } from "ag-grid-community";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import mac from "../dependencies/mac.png";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { QAContainer, QAContainerProps } from "./QAContainer";
+import { QAContainer, type QAContainerProps } from "./QAContainer";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -36,7 +36,7 @@ export interface QAContainerNoStyleInjectionProps extends QAContainerProps {
 }
 
 export const QAContainerNoStyleInjection = (
-  props: QAContainerNoStyleInjectionProps
+  props: QAContainerNoStyleInjectionProps,
 ) => {
   // order is important!
   useDynamicStyleSheet(String(iconCss), "salt-icon-css");

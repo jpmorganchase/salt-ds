@@ -1,5 +1,9 @@
-import { FormField, FormattedInput, FormattedInputProps } from "@salt-ds/lab";
-import { StoryFn } from "@storybook/react";
+import {
+  FormField,
+  FormattedInput,
+  type FormattedInputProps,
+} from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 const parseDigits = (string: string) => (string.match(/(\d+)/g) || []).join("");
@@ -10,7 +14,7 @@ const formatValue = (string: string) => {
   return chars
     .reduce(
       (r, v, index) => (index === 3 || index === 6 ? `${r}-${v}` : `${r}${v}`),
-      ""
+      "",
     )
     .substring(0, 11);
 };

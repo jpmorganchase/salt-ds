@@ -1,6 +1,6 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useCallback, useMemo } from "react";
-import {
+import type {
   InstantCollapseHookResult,
   OverflowHookProps,
   OverflowItem,
@@ -21,7 +21,9 @@ type MinMaxSize = {
 const newlyCollapsed = (overflowItems: OverflowItem[]) =>
   overflowItems.some(
     (item) =>
-      item.collapsible === "instant" && item.collapsed && item.fullSize === null
+      item.collapsible === "instant" &&
+      item.collapsed &&
+      item.fullSize === null,
   );
 
 const findItemToCollapse = (items: OverflowItem[]) => {
@@ -96,7 +98,7 @@ export const useInstantCollapse = ({
         }
       }
     },
-    [dispatch, overflowItemsRef]
+    [dispatch, overflowItemsRef],
   );
 
   const handleResize = useCallback(
@@ -104,7 +106,7 @@ export const useInstantCollapse = ({
       const { current: managedItems } = overflowItemsRef;
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
-        orientation
+        orientation,
       );
 
       const collapsedItems = managedItems.filter((item) => item.collapsed);
@@ -135,7 +137,7 @@ export const useInstantCollapse = ({
       overflowItemsRef,
       ref,
       updateCollapse,
-    ]
+    ],
   );
 
   const resetMeasurements = useCallback(
@@ -154,7 +156,7 @@ export const useInstantCollapse = ({
         }
       }
     },
-    [dispatch, overflowItemsRef]
+    [dispatch, overflowItemsRef],
   );
 
   const setMinSize = useCallback(
@@ -166,14 +168,14 @@ export const useInstantCollapse = ({
         minMaxSizes.set(item.index, { maxSize: null, minSize: size });
       }
     },
-    [minMaxSizes]
+    [minMaxSizes],
   );
 
   const measureCollapsedItem = useCallback(() => {
     const { current: managedItems } = overflowItemsRef;
     const dimension = orientation === "horizontal" ? "width" : "height";
     const [collapsedItem] = managedItems.filter(
-      (item) => item.collapsible === "instant" && item.collapsed
+      (item) => item.collapsible === "instant" && item.collapsed,
     );
     console.log(`measureCollapsedItem ${collapsedItem.index}`);
     if (collapsedItem.fullSize === null) {
@@ -195,7 +197,7 @@ export const useInstantCollapse = ({
             {
               ...managedItem,
               collapsed: true,
-            }
+            },
           );
         } else {
           updates.push({

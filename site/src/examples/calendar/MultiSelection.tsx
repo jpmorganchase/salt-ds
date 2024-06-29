@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { Calendar } from "@salt-ds/lab";
 import { getLocalTimeZone, today } from "@internationalized/date";
+import { Calendar } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 const localTimeZone = getLocalTimeZone();
 export const MultiSelection = (): ReactElement => (
   <Calendar

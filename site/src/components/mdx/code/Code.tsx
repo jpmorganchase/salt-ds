@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./Code.module.css";
 
 export const Code = ({ children }: { children: ReactNode }) => (

@@ -2,11 +2,11 @@ import { useCallback, useRef, useState } from "react";
 
 import {
   dimensions,
+  getDraggedItem,
+  getNextDropTarget,
   isDraggedElement,
   measureDropTargets,
   moveDragItem,
-  getDraggedItem,
-  getNextDropTarget,
 } from "./drag-utils";
 
 import { renderDraggable } from "./Draggable";
@@ -45,7 +45,7 @@ export const useDragDrop = ({
         displacedItem.current = item;
       }
     },
-    [orientation]
+    [orientation],
   );
 
   const clearDisplacedItem = useCallback(() => {
@@ -74,7 +74,7 @@ export const useDragDrop = ({
       const fwd = canScrollFwd && mousePos - mouseOffset.current >= viewportEnd;
       return bwd ? "bwd" : fwd ? "fwd" : "";
     },
-    [containerRef, orientation]
+    [containerRef, orientation],
   );
 
   const stopScrolling = useCallback(() => {
@@ -89,7 +89,7 @@ export const useDragDrop = ({
     measuredDropTargets.current = dropTargets = measureDropTargets(
       containerRef.current,
       orientation,
-      draggedItem
+      draggedItem,
     );
     const newDraggedItem = getDraggedItem(dropTargets);
     // const displacedItemOffset = scrollDirection === 'bwd' ? 0 : 1;
@@ -126,7 +126,7 @@ export const useDragDrop = ({
         }, 100);
       }
     },
-    [containerRef, stopScrolling]
+    [containerRef, stopScrolling],
   );
 
   const dragMouseMoveHandler = useCallback(
@@ -135,19 +135,19 @@ export const useDragDrop = ({
       const { [POS]: clientPos } = evt;
       const { current: lastClientPos } = previousPos;
       const { current: currentDropTarget } = dropTarget;
-      let { current: dropTargets } = measuredDropTargets;
+      const { current: dropTargets } = measuredDropTargets;
       const draggedItem = getDraggedItem(dropTargets);
 
       if (Math.abs(lastClientPos - clientPos) > 0) {
         previousPos.current = clientPos;
 
-        let moveDistance = clientPos - startPos.current;
+        const moveDistance = clientPos - startPos.current;
         const scrollDirection = getScrollDirection(clientPos);
 
         const pos = startPos.current - mouseOffset.current + moveDistance;
         const renderPos = Math.max(
           dragLimits.current.start,
-          Math.min(dragLimits.current.end, pos)
+          Math.min(dragLimits.current.end, pos),
         );
 
         if (scrollDirection && isScrollable.current && !isScrolling.current) {
@@ -170,7 +170,7 @@ export const useDragDrop = ({
           const nextDropTarget = getNextDropTarget(
             dropTargets,
             leadingEdge,
-            direction
+            direction,
           );
           if (
             nextDropTarget &&
@@ -207,7 +207,7 @@ export const useDragDrop = ({
       orientation,
       startScrolling,
       stopScrolling,
-    ]
+    ],
   );
 
   const dragMouseUpHandler = useCallback(() => {
@@ -233,12 +233,12 @@ export const useDragDrop = ({
     (evt) => {
       const { DIMENSION, POS, START } = dimensions(orientation);
       const { [POS]: clientPos } = evt;
-      let mouseMoveDistance = Math.abs(clientPos - startPos.current);
+      const mouseMoveDistance = Math.abs(clientPos - startPos.current);
       if (mouseMoveDistance > dragThreshold && containerRef.current) {
         document.removeEventListener(
           "mousemove",
           preDragMouseMoveHandler,
-          false
+          false,
         );
         document.removeEventListener("mouseup", preDragMouseUpHandler, false);
 
@@ -250,7 +250,7 @@ export const useDragDrop = ({
             orientation,
             {
               element: dragElement,
-            }
+            },
           );
           const draggedItem = dropTargets.find(isDraggedElement);
           if (draggedItem) {
@@ -275,8 +275,8 @@ export const useDragDrop = ({
                 draggableRef,
                 dragElement.cloneNode(true),
                 "list",
-                draggableRect
-              )
+                draggableRect,
+              ),
             );
 
             dragElement.dataset.dragging = "true";
@@ -302,7 +302,7 @@ export const useDragDrop = ({
       dragMouseUpHandler,
       itemQuery,
       orientation,
-    ]
+    ],
   );
 
   const preDragMouseUpHandler = useCallback(() => {
@@ -326,7 +326,7 @@ export const useDragDrop = ({
         document.addEventListener("mouseup", preDragMouseUpHandler, false);
       }
     },
-    [containerRef, orientation, preDragMouseMoveHandler, preDragMouseUpHandler]
+    [containerRef, orientation, preDragMouseMoveHandler, preDragMouseUpHandler],
   );
 
   const isDragging = dragPortal !== null;

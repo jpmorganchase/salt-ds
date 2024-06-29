@@ -1,5 +1,10 @@
-import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import { ComboBox, Option, OptionGroup } from "@salt-ds/core";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
 import { citiesWithCountries } from "./exampleData";
 
 export const Grouped = (): ReactElement => {
@@ -12,7 +17,7 @@ export const Grouped = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     if (newSelected.length === 1) {
       setValue(newSelected[0]);
@@ -23,16 +28,19 @@ export const Grouped = (): ReactElement => {
 
   const groupedOptions = citiesWithCountries
     .filter((city) =>
-      city.value.trim().toLowerCase().includes(value.trim().toLowerCase())
+      city.value.trim().toLowerCase().includes(value.trim().toLowerCase()),
     )
-    .reduce((acc, option) => {
-      const country = option.country;
-      if (!acc[country]) {
-        acc[country] = [];
-      }
-      acc[country].push(option);
-      return acc;
-    }, {} as Record<string, typeof citiesWithCountries>);
+    .reduce(
+      (acc, option) => {
+        const country = option.country;
+        if (!acc[country]) {
+          acc[country] = [];
+        }
+        acc[country].push(option);
+        return acc;
+      },
+      {} as Record<string, typeof citiesWithCountries>,
+    );
 
   return (
     <ComboBox

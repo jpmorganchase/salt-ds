@@ -1,20 +1,20 @@
-import { ChangeEvent, useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  H3,
-  Text,
-  StackLayout,
-  RadioButton,
-  RadioButtonGroup,
-  Label,
-  InteractableCard,
-  InteractableCardGroup,
-  InteractableCardProps,
-  InteractableCardValue,
   Avatar,
   CheckboxIcon,
+  H3,
+  InteractableCard,
+  InteractableCardGroup,
+  type InteractableCardProps,
+  type InteractableCardValue,
+  Label,
+  RadioButton,
+  RadioButtonGroup,
   RadioButtonIcon,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
 
@@ -193,7 +193,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
 );
 
 export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
-  args
+  args,
 ) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
 
@@ -250,7 +250,7 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
 };
 
 export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
-  args
+  args,
 ) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
 

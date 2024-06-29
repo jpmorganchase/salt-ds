@@ -1,7 +1,11 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
-import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactElement,
+  forwardRef,
+} from "react";
 import { makePrefixer } from "../utils";
 
 import buttonCss from "./Button.css";
@@ -43,7 +47,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       variant = "primary",
       ...restProps
     },
-    ref?
+    ref?,
   ): ReactElement<ButtonProps> {
     const { active, buttonProps } = useButton({
       disabled,
@@ -74,7 +78,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             [withBaseName("disabled")]: disabled,
             [withBaseName("active")]: active,
           },
-          className
+          className,
         )}
         {...restProps}
         ref={ref}
@@ -83,5 +87,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );

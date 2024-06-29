@@ -1,14 +1,14 @@
-import { ChangeEvent } from "react";
-import { ColorResult, SketchPicker } from "react-color";
-import { clsx } from "clsx";
 import { Button, makePrefixer } from "@salt-ds/core";
-import { Color, RGBAValue } from "./Color";
+import { clsx } from "clsx";
+import type { ChangeEvent } from "react";
+import { type ColorResult, SketchPicker } from "react-color";
+import { Color, type RGBAValue } from "./Color";
 import { hexValueWithoutAlpha } from "./ColorHelpers";
 import { HexInput } from "./HexInput";
 import { RGBAInput } from "./RGBAInput";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import colorPickerCss from "./ColorPicker.css";
 
@@ -21,7 +21,7 @@ export interface ColorPickerProps {
   onChange: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: ChangeEvent
+    e?: ChangeEvent,
   ) => void;
   onDialogClosed: () => void;
 }
@@ -59,20 +59,20 @@ export const ColorPicker = ({
       rgbaValue.r,
       rgbaValue.g,
       rgbaValue.b,
-      Math.max(0, Math.min(alpha, 1))
+      Math.max(0, Math.min(alpha, 1)),
     );
     onChange(newColor, false, e);
   };
 
   const onSketchPickerChange = (
     colorResult: ColorResult,
-    e: ChangeEvent
+    e: ChangeEvent,
   ): void => {
     const newColor = Color.makeColorFromRGB(
       colorResult.rgb.r,
       colorResult.rgb.g,
       colorResult.rgb.b,
-      colorResult.rgb.a ?? alpha
+      colorResult.rgb.a ?? alpha,
     );
     onChange(newColor, false, e);
   };

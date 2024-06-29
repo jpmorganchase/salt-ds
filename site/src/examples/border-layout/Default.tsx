@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { BorderLayout, BorderItem } from "@salt-ds/core";
+import { BorderItem, BorderLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const Default = (): ReactElement => (

@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { NotificationIcon } from "@salt-ds/icons";
 import { GridLayout, Tag } from "@salt-ds/core";
+import { NotificationIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Tag",

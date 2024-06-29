@@ -1,12 +1,12 @@
-import { ReactElement, useState } from "react";
 import {
   FlowLayout,
-  StackLayout,
-  Input,
   FormField,
   FormFieldLabel,
+  Input,
+  StackLayout,
   Text,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 import { allIcons } from "./allIconsList";
 
 export const AllIcons = (): ReactElement => {

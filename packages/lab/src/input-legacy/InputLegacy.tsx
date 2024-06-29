@@ -1,26 +1,26 @@
+import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  AriaAttributes,
-  ChangeEvent,
-  ElementType,
-  FocusEvent,
-  FocusEventHandler,
+  type AriaAttributes,
+  type ChangeEvent,
+  type ElementType,
+  type FocusEvent,
+  type FocusEventHandler,
+  type HTMLAttributes,
+  type InputHTMLAttributes,
+  type KeyboardEventHandler,
+  type MouseEvent,
+  type MouseEventHandler,
+  type ReactNode,
   forwardRef,
-  HTMLAttributes,
-  InputHTMLAttributes,
-  KeyboardEventHandler,
-  MouseEvent,
-  MouseEventHandler,
-  ReactNode,
   useRef,
   useState,
 } from "react";
-import { makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { useCursorOnFocus } from "./useCursorOnFocus";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import inputLegacyCss from "./InputLegacy.css";
 
@@ -109,11 +109,11 @@ function mergeA11yProps(
     ReturnType<typeof useFormFieldLegacyProps>["a11yProps"]
   > = {},
   inputProps: InputLegacyProps["inputProps"] = {},
-  misplacedAriaProps: AriaAttributes
+  misplacedAriaProps: AriaAttributes,
 ) {
   const ariaLabelledBy = clsx(
     a11yProps["aria-labelledby"],
-    inputProps["aria-labelledby"]
+    inputProps["aria-labelledby"],
   );
 
   return {
@@ -163,7 +163,7 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
       type = "text",
       ...other
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -201,7 +201,7 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
     const inputProps = mergeA11yProps(
       restA11y,
       inputPropsProp,
-      misplacedAriaProps
+      misplacedAriaProps,
     );
     const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
     const defaultValue = isEmptyReadOnly
@@ -263,7 +263,7 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
             [withBaseName("inputAdornedStart")]: startAdornment,
             [withBaseName("inputAdornedEnd")]: endAdornment,
           },
-          classNameProp
+          classNameProp,
         )}
         style={style}
         {...other}
@@ -298,5 +298,5 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
         {renderSuffix?.({ disabled, focused })}
       </div>
     );
-  }
+  },
 );

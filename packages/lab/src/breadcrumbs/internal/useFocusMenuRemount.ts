@@ -1,5 +1,5 @@
-import { useRef, useEffect } from "react";
 import { usePrevious } from "@salt-ds/core";
+import { useEffect, useRef } from "react";
 
 export function useFocusMenuRemount<T extends HTMLElement>(key: string) {
   const ref = useRef<T>(null);

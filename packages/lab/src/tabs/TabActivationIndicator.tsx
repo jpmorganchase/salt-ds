@@ -3,8 +3,8 @@ import React, { useRef } from "react";
 
 import { useActivationIndicator } from "./useActivationIndicator";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import tabActivationIndicatorCss from "./TabActivationIndicator.css";
 

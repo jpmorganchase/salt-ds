@@ -1,13 +1,13 @@
 import {
-  StackLayout,
-  Text,
   Display1,
   Display2,
   Display3,
   Link,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
-import { ArrowUpIcon, ArrowDownIcon } from "@salt-ds/icons";
-import { Meta } from "@storybook/react";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import type { Meta } from "@storybook/react";
 
 export default {
   title: "Patterns/Metric",

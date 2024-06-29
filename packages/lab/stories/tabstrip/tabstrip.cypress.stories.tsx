@@ -1,7 +1,7 @@
+import { Tabstrip, type TabstripProps } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { StoryFn } from "@storybook/react";
-import { Tabstrip, TabstripProps } from "@salt-ds/lab";
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "../components";
+import { AdjustableFlexbox, type AdjustableFlexboxProps } from "../components";
 
 export default {
   title: "Lab/Tabs/Cypress Test Fixtures",

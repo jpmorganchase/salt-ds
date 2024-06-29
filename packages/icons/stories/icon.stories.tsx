@@ -1,13 +1,13 @@
-import { createElement, ElementType, useMemo, useState } from "react";
+import { FlexLayout, StackLayout } from "@salt-ds/core";
 import {
   AddDocumentIcon,
   AddDocumentSolidIcon,
   Icon,
-  IconProps,
+  type IconProps,
 } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
-import { FlexLayout, StackLayout } from "@salt-ds/core";
 import { FormField, Input } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ElementType, createElement, useMemo, useState } from "react";
 import { allIcons } from "./icon.all";
 
 const formatIconName = (icon: string) => {
@@ -72,7 +72,7 @@ export const CustomSVGIcon: StoryFn<typeof Icon> = () => {
         </Icon>
       );
     },
-    []
+    [],
   );
 
   return <IconGrid Icon={CustomIcon} />;
@@ -90,7 +90,7 @@ export const CustomIconFullSVG: StoryFn<typeof Icon> = () => {
         </Icon>
       );
     },
-    []
+    [],
   );
 
   return <IconGrid Icon={CustomIcon} />;

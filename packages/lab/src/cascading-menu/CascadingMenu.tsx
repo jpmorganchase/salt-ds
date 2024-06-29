@@ -1,27 +1,27 @@
 import {
+  ownerWindow,
   useControlled,
   useDensity,
   useForkRef,
-  ownerWindow,
   usePrevious,
 } from "@salt-ds/core";
 import {
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
   cloneElement,
   forwardRef,
   isValidElement,
-  ReactNode,
   useCallback,
   useEffect,
   useMemo,
   useReducer,
   useRef,
   useState,
-  MouseEvent,
-  KeyboardEvent,
 } from "react";
 import { useEventCallback } from "../utils";
 
-import { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
+import type { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
 
 import { CascadingMenuList } from "./CascadingMenuList";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
@@ -71,7 +71,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
     const childrenRef = useRef<HTMLElement | null>(null);
     const getMenuTriggerRef = useCallback(
       (): HTMLElement | null => anchorRefProp || childrenRef.current,
-      [anchorRefProp]
+      [anchorRefProp],
     );
 
     const [menuSource] = useControlled({
@@ -86,18 +86,18 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
 
     const menusDataById = useMemo(
       () => (menuSource ? deriveFlatStateFromTree(menuSource) : {}),
-      [menuSource]
+      [menuSource],
     );
 
     const rootMenuId = useMemo(
       () =>
         Object.keys(menusDataById).find((id) => menusDataById[id].level === 0),
-      [menusDataById]
+      [menusDataById],
     );
 
     const stateReducer = useStateReducer(
       menusDataById,
-      isNavigatingWithKeyboard
+      isNavigatingWithKeyboard,
     );
     const [state, dispatch] = useReducer(stateReducer, []);
     const rootMenuState = state[0];
@@ -125,7 +125,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
           cause: stateChangeTypes.MOUSE_TOGGLE,
           targetId: rootMenuId!,
         }),
-      [rootMenuId]
+      [rootMenuId],
     );
     // do not re-render every time if prop does not change
     useEffect(() => {
@@ -138,7 +138,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       ? null
       : () =>
           [getMenuTriggerRef(), ...refsManager.values()].filter(
-            (node) => node !== null
+            (node) => node !== null,
           ) as HTMLElement[];
     useClickAway(
       clickAwayNodes,
@@ -152,7 +152,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       },
       () => {
         setIsNavigatingWithKeyboard(false);
-      }
+      },
     );
 
     const handleResize = useEventCallback(() => {
@@ -187,7 +187,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
           });
         }
       },
-      [isNavigatingWithKeyboard, onItemClick, rootMenuId]
+      [isNavigatingWithKeyboard, onItemClick, rootMenuId],
     );
 
     // Set up event handlers on menu trigger if passed
@@ -198,7 +198,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       //TODO get to bottom of this
       // @ts-ignore
       isValidElement(children) ? children.ref : noop,
-      setMenuTriggerRef
+      setMenuTriggerRef,
     );
 
     const [onMenuTriggerClick, onMenuTriggerKeydown] = useMenuTriggerHandlers({
@@ -289,5 +289,5 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
         })}
       </>
     ) : null;
-  }
+  },
 );

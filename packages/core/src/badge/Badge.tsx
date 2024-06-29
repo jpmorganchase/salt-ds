@@ -1,7 +1,7 @@
-import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
 import { makePrefixer } from "../utils";
 
 import badgeCss from "./Badge.css";
@@ -24,7 +24,7 @@ const withBaseName = makePrefixer("saltBadge");
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   { value, max = 999, className, children, ...rest },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

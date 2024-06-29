@@ -1,9 +1,17 @@
+import {
+  CalendarDate,
+  type DateValue,
+  isSameDay,
+} from "@internationalized/date";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
+import type {
+  KeyboardEventHandler,
+  MouseEventHandler,
+  SyntheticEvent,
+} from "react";
 import { isPlainObject } from "../utils";
 import { useCalendarContext } from "./internal/CalendarContext";
-import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 
 interface BaseUseSelectionCalendarProps<SelectionVariantType> {
   hoveredDate?: DateValue | null;
@@ -11,12 +19,12 @@ interface BaseUseSelectionCalendarProps<SelectionVariantType> {
   defaultSelectedDate?: SelectionVariantType;
   onSelectedDateChange?: (
     event: SyntheticEvent,
-    selectedDate: SelectionVariantType
+    selectedDate: SelectionVariantType,
   ) => void;
   isDaySelectable: (date?: DateValue) => boolean;
   onHoveredDateChange?: (
     event: SyntheticEvent,
-    hoveredDate: DateValue | null
+    hoveredDate: DateValue | null,
   ) => void;
 }
 
@@ -71,7 +79,7 @@ export type useSelectionCalendarProps =
 
 function addOrRemoveFromArray(
   array: AllSelectionValueType | null = [],
-  item: DateValue
+  item: DateValue,
 ) {
   if (Array.isArray(array)) {
     if (array.find((element) => isSameDay(element, item))) {
@@ -85,13 +93,13 @@ function addOrRemoveFromArray(
 const defaultOffset = (date: DateValue) => date;
 
 export function isRangeOrOffsetSelectionValue(
-  selectionValue?: AllSelectionValueType
+  selectionValue?: AllSelectionValueType,
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return selectionValue != null && isPlainObject(selectionValue);
 }
 
 export function isRangeOrOffsetSelectionWithStartDate(
-  selectionValue?: AllSelectionValueType
+  selectionValue?: AllSelectionValueType,
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
@@ -138,7 +146,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
 
   const setSelectedDate = (
     event: SyntheticEvent<HTMLButtonElement>,
-    newSelectedDate: DateValue
+    newSelectedDate: DateValue,
   ) => {
     if (isDaySelectable(newSelectedDate)) {
       switch (props.selectionVariant) {

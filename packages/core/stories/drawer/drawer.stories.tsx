@@ -1,8 +1,11 @@
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import {
   Button,
   Card,
   Checkbox,
+  ComboBox,
+  Drawer,
+  DrawerCloseButton,
+  type DrawerProps,
   FlexItem,
   FlexLayout,
   FlowLayout,
@@ -10,16 +13,18 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   H2,
-  Text,
   Input,
-  StackLayout,
-  Drawer,
-  DrawerCloseButton,
-  ComboBox,
   Option,
-  DrawerProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type ChangeEvent,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 
 export default {
   title: "Core/Drawer",
@@ -309,7 +314,7 @@ export const OptionalCloseAction = () => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     return newSelected.length === 1 ? setValue(newSelected[0]) : setValue("");
   };

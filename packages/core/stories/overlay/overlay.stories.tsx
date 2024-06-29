@@ -2,19 +2,19 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  Divider,
+  Overlay,
+  OverlayPanel,
+  OverlayPanelCloseButton,
+  OverlayPanelContent,
+  type OverlayProps,
+  OverlayTrigger,
   StackLayout,
   Tooltip,
   useId,
-  Overlay,
-  OverlayPanel,
-  OverlayProps,
-  OverlayTrigger,
-  OverlayPanelCloseButton,
-  OverlayPanelContent,
-  Divider,
 } from "@salt-ds/core";
-import React, { ChangeEvent, useState } from "react";
-import { StoryFn, Meta } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import React, { type ChangeEvent, useState } from "react";
 
 import "./overlay.stories.css";
 
@@ -184,8 +184,8 @@ const WithActionsContent = ({
     } else {
       setControlledValues((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
   };

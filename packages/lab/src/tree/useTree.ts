@@ -1,15 +1,20 @@
-import { KeyboardEvent, useCallback, useRef, MouseEvent } from "react";
 import {
+  type KeyboardEvent,
+  type MouseEvent,
+  useCallback,
+  useRef,
+} from "react";
+import {
+  type ListHandlers,
+  type SelectionStrategy,
   closestListItemIndex,
-  ListHandlers,
-  SelectionStrategy,
   useCollapsibleGroups,
   useKeyboardNavigation,
   useSelection,
   useViewportTracking,
 } from "../common-hooks";
-import { ListControlProps } from "../list/listTypes";
-import { TreeHookProps, TreeHookResult } from "./treeTypes";
+import type { ListControlProps } from "../list/listTypes";
+import type { TreeHookProps, TreeHookResult } from "./treeTypes";
 import { useKeyboardNavigation as useTreeNavigation } from "./use-tree-keyboard-navigation";
 
 export const useTree = <Item, Selection extends SelectionStrategy = "default">({
@@ -73,7 +78,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
         selectionHook.listHandlers.onClick?.(evt);
       }
     },
-    [collapsibleHook, selectionHook]
+    [collapsibleHook, selectionHook],
   );
 
   const handleKeyDown = useCallback(
@@ -95,7 +100,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
       keyboardHook.listProps,
       selectionHook.listHandlers,
       treeNavigationHook.listHandlers,
-    ]
+    ],
   );
 
   // This is only appropriate whan we are directly controlling a List,
@@ -128,7 +133,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
       keyboardHook.setHighlightedIndex,
       highlightedIdx,
       isScrolling,
-    ]
+    ],
   );
 
   const getActiveDescendant = () =>

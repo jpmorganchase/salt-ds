@@ -5,10 +5,10 @@ export function listItemIndex(listItemEl?: HTMLElement) {
   if (listItemEl) {
     let idx: string | null | undefined = listItemEl.dataset.idx;
     if (idx) {
-      return parseInt(idx, 10);
+      return Number.parseInt(idx, 10);
       // eslint-disable-next-line no-cond-assign
     } else if ((idx = listItemEl.ariaPosInSet)) {
-      return parseInt(idx, 10) - 1;
+      return Number.parseInt(idx, 10) - 1;
     }
   }
   return -1;

@@ -1,17 +1,17 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
-import clsx from "clsx";
 import {
-  BorderLayout,
   BorderItem,
-  BORDER_POSITION as borderPosition,
-  BorderPosition,
-  RadioButtonGroup,
-  RadioButton,
+  BorderLayout,
+  type BorderPosition,
   FormField,
   FormFieldLabel,
+  RadioButton,
+  RadioButtonGroup,
+  BORDER_POSITION as borderPosition,
 } from "@salt-ds/core";
-import styles from "./index.module.css";
+import clsx from "clsx";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import borderItemPositionStyles from "./BorderItemPosition.module.css";
+import styles from "./index.module.css";
 
 export const BorderItemPosition = (): ReactElement => {
   const [position, setPosition] = useState<BorderPosition>("west");
@@ -79,7 +79,7 @@ export const BorderItemPosition = (): ReactElement => {
               <RadioButton
                 key={position}
                 label={`${position.charAt(0).toUpperCase()}${position.slice(
-                  1
+                  1,
                 )}`}
                 value={position}
               />

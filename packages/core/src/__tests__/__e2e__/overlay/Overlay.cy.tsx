@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as overlayStories from "@stories/overlay/overlay.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Checkbox, CheckboxGroup } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Readonly = (): ReactElement => {
   return (

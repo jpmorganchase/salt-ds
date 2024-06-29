@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react";
+import type { MutableRefObject } from "react";
 
 export function setRef<T>(
   ref:
@@ -6,7 +6,7 @@ export function setRef<T>(
     | ((instance: T | null) => void)
     | null
     | undefined,
-  value: T | null
+  value: T | null,
 ): void {
   if (typeof ref === "function") {
     ref(value);

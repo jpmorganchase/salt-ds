@@ -1,6 +1,7 @@
 import {
   arrow,
   flip,
+  limitShift,
   offset,
   safePolygon,
   shift,
@@ -9,10 +10,13 @@ import {
   useHover,
   useInteractions,
   useRole,
-  limitShift,
 } from "@floating-ui/react";
-import { HTMLProps, useRef } from "react";
-import { useControlled, UseFloatingUIProps, useFloatingUI } from "../utils";
+import { type HTMLProps, useRef } from "react";
+import {
+  type UseFloatingUIProps,
+  useControlled,
+  useFloatingUI,
+} from "../utils";
 import { useAriaAnnounce } from "./useAriaAnnounce";
 
 export interface UseTooltipProps

@@ -1,19 +1,19 @@
-import { FC, useState } from "react";
 import {
-  BorderLayout,
   BorderItem,
+  BorderLayout,
   NavigationItem,
   StackLayout,
 } from "@salt-ds/core";
-import { Meta } from "@storybook/react";
 import {
   LineChartIcon,
   NotificationIcon,
   PinIcon,
-  SearchIcon,
   ReceiptIcon,
+  SearchIcon,
   UserIcon,
 } from "@salt-ds/icons";
+import type { Meta } from "@storybook/react";
+import { type FC, useState } from "react";
 
 export default {
   title: "Patterns/Vertical Navigation",
@@ -141,13 +141,13 @@ export const Nested = () => {
     setExpanded(
       isExpanded
         ? expanded.filter((name) => name !== item.name)
-        : [...expanded, item.name]
+        : [...expanded, item.name],
     );
   };
 
   const isParentOfActiveItem = (
     children: NavigationItemData[],
-    activeName: string
+    activeName: string,
   ): boolean => {
     return children.some((child: NavigationItemData) => {
       if (child.name === activeName) return true;

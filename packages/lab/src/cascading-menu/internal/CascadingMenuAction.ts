@@ -1,4 +1,4 @@
-import { stateChangeCause } from "../stateChangeTypes";
+import type { stateChangeCause } from "../stateChangeTypes";
 
 export type menuActionType =
   | "setCurrentInteractedItem"

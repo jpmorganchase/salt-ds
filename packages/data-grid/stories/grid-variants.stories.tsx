@@ -1,11 +1,4 @@
 import {
-  Grid,
-  GridColumn,
-  NumericColumn,
-  RowSelectionCheckboxColumn,
-} from "../src";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
-import {
   Checkbox,
   FlexItem,
   FlexLayout,
@@ -13,10 +6,17 @@ import {
   ToggleButtonGroup,
   useDensity,
 } from "@salt-ds/core";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import {
+  Grid,
+  GridColumn,
+  NumericColumn,
+  RowSelectionCheckboxColumn,
+} from "../src";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
+import type { StoryFn } from "@storybook/react";
 import { clsx } from "clsx";
+import { type DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 
 export default {
   title: "Lab/Data Grid",

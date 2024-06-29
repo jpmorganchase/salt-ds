@@ -1,11 +1,11 @@
-import {
+import type {
   FloatingArrowProps,
   FloatingContext,
   ReferenceType,
   Strategy,
 } from "@floating-ui/react";
-import { createContext, useFloatingUI } from "../utils";
 import { useContext } from "react";
+import { createContext, type useFloatingUI } from "../utils";
 
 type FloatingReturn = ReturnType<typeof useFloatingUI>;
 type FloatingStyleProps = {
@@ -24,10 +24,10 @@ export interface OverlayContextValue {
   reference?: (node: ReferenceType | null) => void;
   floating?: (node: HTMLElement | null) => void;
   getFloatingProps: (
-    userProps?: React.HTMLProps<HTMLElement> | undefined
+    userProps?: React.HTMLProps<HTMLElement> | undefined,
   ) => Record<string, unknown>;
   getReferenceProps: (
-    userProps?: React.HTMLProps<Element> | undefined
+    userProps?: React.HTMLProps<Element> | undefined,
   ) => Record<string, unknown>;
 }
 
@@ -50,7 +50,7 @@ export const OverlayContext = createContext<OverlayContextValue>(
     getReferenceProps() {
       return {} as Record<string, unknown>;
     },
-  }
+  },
 );
 
 export function useOverlayContext() {

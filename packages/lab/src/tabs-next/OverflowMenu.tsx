@@ -1,9 +1,9 @@
-import { forwardRef, ReactNode } from "react";
 import { Button, useForkRef } from "@salt-ds/core";
 import { OverflowMenuIcon } from "@salt-ds/icons";
+import { type ReactNode, forwardRef } from "react";
 
 import { useOverflowContext, useOverflowMenu } from "@fluentui/react-overflow";
-import { Dropdown, DropdownProps } from "../dropdown";
+import { Dropdown, type DropdownProps } from "../dropdown";
 
 type TabValue = {
   value: string;
@@ -21,7 +21,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
       useOverflowMenu<HTMLDivElement>();
     const handleRef = useForkRef(ref, forwardedRef);
     const itemVisibility = useOverflowContext(
-      (context) => context.itemVisibility
+      (context) => context.itemVisibility,
     );
 
     const tabList = tabs.filter(({ value }) => !itemVisibility[value]);
@@ -43,5 +43,5 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
         {...rest}
       />
     );
-  }
+  },
 );

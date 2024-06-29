@@ -1,14 +1,14 @@
-import { CSSProperties } from "react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import type { CSSProperties } from "react";
 
-import { GridColumnModel, GridRowModel } from "../Grid";
+import type { GridColumnModel, GridRowModel } from "../Grid";
 
-import { TableColGroup } from "./TableColGroup";
 import { HeaderRow } from "./HeaderRow";
 import { TableBody } from "./TableBody";
-import { ColumnDragState } from "./gridHooks";
+import { TableColGroup } from "./TableColGroup";
+import type { ColumnDragState } from "./gridHooks";
 
 import columnGhostCss from "./ColumnGhost.css";
 

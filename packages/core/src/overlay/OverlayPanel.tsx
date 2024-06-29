@@ -1,10 +1,14 @@
-import { forwardRef, ComponentPropsWithoutRef, ReactNode } from "react";
-import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
-import { clsx } from "clsx";
-import { useOverlayContext } from "./OverlayContext";
 import { FloatingArrow } from "@floating-ui/react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
+import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
+import { useOverlayContext } from "./OverlayContext";
 import overlayPanelCss from "./OverlayPanel.css";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
@@ -74,5 +78,5 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         />
       </FloatingComponent>
     );
-  }
+  },
 );

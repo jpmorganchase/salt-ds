@@ -1,36 +1,36 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  ForwardedRef,
+  type ForwardedRef,
+  type MouseEvent,
+  type ReactElement,
   forwardRef,
   isValidElement,
-  MouseEvent,
-  ReactElement,
   useCallback,
   useRef,
 } from "react";
 
 import {
+  type CollectionIndexer,
+  type CollectionItem,
+  GROUP_SELECTION_NONE,
+  type SelectHandler,
+  type SelectionChangeHandler,
+  type SelectionStrategy,
+  type SingleSelectionStrategy,
   calcPreferredHeight,
   closestListItemIndex,
-  CollectionIndexer,
-  CollectionItem,
-  GROUP_SELECTION_NONE,
   isSelected,
-  SelectHandler,
-  SelectionChangeHandler,
-  SelectionStrategy,
-  SingleSelectionStrategy,
   useAutoSizer,
   useCollectionItems,
 } from "../common-hooks";
-import { TreeProps } from "./treeTypes";
+import type { TreeProps } from "./treeTypes";
 
-import { useTree } from "./useTree";
 import { TreeNode } from "./TreeNode";
+import { useTree } from "./useTree";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import treeCss from "./Tree.css";
 
@@ -39,11 +39,11 @@ const withBaseName = makePrefixer("saltTree");
 const getSelectedItemsFromSource = (
   source: any[],
   selectionStrategy: SelectionStrategy,
-  result: any[] = []
+  result: any[] = [],
 ) => {
   const isSingleSelection =
     selectionStrategy === "default" || selectionStrategy === "deselectable";
-  for (let item of source) {
+  for (const item of source) {
     if (item.selected === true) {
       result.push(item);
       if (isSingleSelection) {
@@ -63,7 +63,7 @@ const getSelectedItemsFromSource = (
 
 export const Tree = forwardRef(function Tree<
   Item,
-  Selection extends SelectionStrategy = "deselectable"
+  Selection extends SelectionStrategy = "deselectable",
 >(
   {
     className,
@@ -84,7 +84,7 @@ export const Tree = forwardRef(function Tree<
     width,
     ...htmlAttributes
   }: TreeProps<Item, Selection>,
-  forwardedRef?: ForwardedRef<HTMLDivElement>
+  forwardedRef?: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -137,7 +137,7 @@ export const Tree = forwardRef(function Tree<
         }
       }
     },
-    [onSelect]
+    [onSelect],
   );
 
   const handleSelectionChange = useCallback<
@@ -152,11 +152,11 @@ export const Tree = forwardRef(function Tree<
           evt,
           Array.isArray(selected)
             ? (selected.map((s) => s.value) as returnType)
-            : selected && (selected.value as returnType)
+            : selected && (selected.value as returnType),
         );
       }
     },
-    [onSelectionChange]
+    [onSelectionChange],
   );
 
   // const getSelected = (
@@ -237,7 +237,7 @@ export const Tree = forwardRef(function Tree<
   function addLeafNode(
     list: ReactElement[],
     item: CollectionItem<Item>,
-    idx: CollectionIndexer
+    idx: CollectionIndexer,
   ) {
     const itemProps = {
       "aria-disabled": disabled || item.disabled,
@@ -260,7 +260,7 @@ export const Tree = forwardRef(function Tree<
         label={item.label}
       >
         {/* {item.icon ? <span className={`${classBase}Node-icon`} /> : null} */}
-      </TreeNode>
+      </TreeNode>,
     );
     idx.value += 1;
   }
@@ -270,7 +270,7 @@ export const Tree = forwardRef(function Tree<
     items: CollectionItem<Item>[],
     idx: CollectionIndexer,
     id: string,
-    title: string
+    title: string,
   ) {
     const { value: i } = idx;
     const item = items[i];
@@ -301,14 +301,14 @@ export const Tree = forwardRef(function Tree<
             {renderItems(items, idx, item.level! + 1)}
           </ul>
         ) : null}
-      </TreeNode>
+      </TreeNode>,
     );
   }
 
   const renderItems = (
     items: CollectionItem<Item>[],
     idx: CollectionIndexer = { value: 0 },
-    level = 1
+    level = 1,
   ): ReactElement[] => {
     const listItems: ReactElement[] = [];
     while (idx.value < items.length) {

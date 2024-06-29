@@ -1,11 +1,11 @@
+import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useEffect, useState } from "react";
-import { makePrefixer } from "@salt-ds/core";
-import { isValidHex } from "./ColorHelpers";
 import { InputLegacy as Input } from "../input-legacy";
+import { isValidHex } from "./ColorHelpers";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import hexInputCss from "./HexInput.css";
 
@@ -30,7 +30,7 @@ export const HexInput = ({
   });
 
   const [hexInputValue, setHexInputValue] = useState<string | undefined>(
-    hexValue
+    hexValue,
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export const HexInput = ({
 
   const handleHexInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    value: string
+    value: string,
   ): void => {
     if (disableAlphaChooser && value.length < 7) {
       setHexInputValue("#" + value);

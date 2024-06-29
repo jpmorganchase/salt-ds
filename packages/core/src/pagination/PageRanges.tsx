@@ -1,11 +1,11 @@
-import { ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 import { makePrefixer } from "../utils";
 import { PageButton } from "./PageButton";
-import { PageRange, usePagination } from "./usePagination";
+import { type PageRange, usePagination } from "./usePagination";
 import { usePaginationContext } from "./usePaginationContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import pageRangesCss from "./PageRanges.css";
 
@@ -46,14 +46,14 @@ export function PageRanges({
       mapRange(range, (i) => (
         <PageButton key={i} page={i} selected={page === i} />
       )),
-    [page]
+    [page],
   );
 
   const [leftPages, middlePages, rightPages] = usePagination(
     page,
     count,
     Math.max(1, boundaryCount),
-    siblingCount
+    siblingCount,
   );
 
   return (

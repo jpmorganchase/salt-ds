@@ -8,12 +8,12 @@ export const validateFiles = ({
   validate
     .reduce(
       (result, validator) => result.concat(validator(files)),
-      [] as (string | undefined)[]
+      [] as (string | undefined)[],
     )
     .filter(Boolean) as string[];
 
 export type FilesValidator<ErrorType = string> = (
-  files: readonly File[]
+  files: readonly File[],
 ) =>
   | readonly (ErrorType | string | undefined)[]
   | ErrorType

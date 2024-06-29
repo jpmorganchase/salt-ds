@@ -1,16 +1,21 @@
-import { forwardRef, ElementType, ReactElement, CSSProperties } from "react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
+  type CSSProperties,
+  type ElementType,
+  type ReactElement,
+  forwardRef,
+} from "react";
+import { useBreakpoint } from "../breakpoints";
+import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+  type ResponsiveProp,
   makePrefixer,
-  ResponsiveProp,
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
   resolveResponsiveValue,
 } from "../utils";
 import flexItemCss from "./FlexItem.css";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useBreakpoint } from "../breakpoints";
 
 const withBaseName = makePrefixer("saltFlexItem");
 export const FLEX_ITEM_ALIGNMENTS = [
@@ -46,7 +51,7 @@ export type FlexItemProps<T extends ElementType> =
   >;
 
 type FlexItemComponent = <T extends ElementType = "div">(
-  props: FlexItemProps<T>
+  props: FlexItemProps<T>,
 ) => ReactElement | null;
 
 export const FlexItem: FlexItemComponent = forwardRef(
@@ -62,7 +67,7 @@ export const FlexItem: FlexItemComponent = forwardRef(
       style,
       ...rest
     }: FlexItemProps<T>,
-    ref?: PolymorphicRef<T>
+    ref?: PolymorphicRef<T>,
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -94,5 +99,5 @@ export const FlexItem: FlexItemComponent = forwardRef(
         {children}
       </Component>
     );
-  }
+  },
 );

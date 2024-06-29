@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { type RefObject, useEffect } from "react";
 
 export type ClickawayHook = (props: {
   popperRef: RefObject<HTMLElement>;

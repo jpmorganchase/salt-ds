@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import { Button, FlowLayout, Input } from "@salt-ds/core";
 import {
-  NoteIcon,
-  SendIcon,
-  FlagIcon,
-  RefreshIcon,
   CloseIcon,
+  FlagIcon,
+  NoteIcon,
+  RefreshIcon,
+  SendIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const ButtonAdornments = (): ReactElement => (
   <FlowLayout style={{ width: "266px" }}>

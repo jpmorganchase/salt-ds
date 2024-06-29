@@ -1,12 +1,12 @@
-import React, { FC } from "react";
 import { Sidebar } from "@jpmorganchase/mosaic-site-components";
+import React, { type FC } from "react";
 import { TableOfContents } from "../../components/toc";
 import { DetailBase } from "../DetailBase";
-import { LayoutProps } from "../types/index";
-import { Resources } from "./Resources";
+import type { LayoutProps } from "../types/index";
 import { Components } from "./Components";
 import styles from "./DetailPattern.module.css";
 import { RelatedPatterns } from "./RelatedPatterns";
+import { Resources } from "./Resources";
 
 export const DetailPattern: FC<LayoutProps> = ({ children }) => {
   return (

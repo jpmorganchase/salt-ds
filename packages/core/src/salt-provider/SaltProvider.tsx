@@ -1,32 +1,32 @@
 import { clsx } from "clsx";
 import React, {
   createContext,
-  HTMLAttributes,
-  ReactElement,
-  ReactNode,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
   useContext,
   useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
-  Breakpoints,
-  DEFAULT_BREAKPOINTS,
   BreakpointProvider,
+  type Breakpoints,
+  DEFAULT_BREAKPOINTS,
   useMatchedBreakpoints,
 } from "../breakpoints";
-import { Density, Mode, ThemeName, UNSTABLE_ActionFont } from "../theme";
-import { ViewportProvider } from "../viewport";
+import type { Density, Mode, ThemeName, UNSTABLE_ActionFont } from "../theme";
 import { useIsomorphicLayoutEffect } from "../utils";
+import { ViewportProvider } from "../viewport";
 
-import saltProviderCss from "./SaltProvider.css";
-import { useWindow, WindowContextType } from "@salt-ds/window";
 import {
-  useComponentCssInjection,
   StyleInjectionProvider,
+  useComponentCssInjection,
 } from "@salt-ds/styles";
-import { UNSTABLE_Corner } from "../theme/Corner";
-import { UNSTABLE_HeadingFont } from "../theme/HeadingFont";
-import { UNSTABLE_Accent } from "../theme/Accent";
+import { type WindowContextType, useWindow } from "@salt-ds/window";
+import type { UNSTABLE_Accent } from "../theme/Accent";
+import type { UNSTABLE_Corner } from "../theme/Corner";
+import type { UNSTABLE_HeadingFont } from "../theme/HeadingFont";
+import saltProviderCss from "./SaltProvider.css";
 
 export const DEFAULT_DENSITY = "medium";
 
@@ -74,11 +74,9 @@ const getThemeNames = (themeName: ThemeName, themeNext?: boolean) => {
       ? [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME]
       : [DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName];
   } else {
-    {
-      return themeName === DEFAULT_THEME_NAME
-        ? [DEFAULT_THEME_NAME]
-        : [DEFAULT_THEME_NAME, themeName];
-    }
+    return themeName === DEFAULT_THEME_NAME
+      ? [DEFAULT_THEME_NAME]
+      : [DEFAULT_THEME_NAME, themeName];
   }
 };
 
@@ -120,7 +118,7 @@ const createThemedChildren = ({
         className: clsx(
           children.props?.className,
           ...themeNames,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         ),
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -131,7 +129,7 @@ const createThemedChildren = ({
       console.warn(
         `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
         Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        div element will wrap your child elements`
+        div element will wrap your child elements`,
       );
       return children;
     }
@@ -141,7 +139,7 @@ const createThemedChildren = ({
         className={clsx(
           `salt-provider`,
           ...themeNames,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         )}
         data-mode={mode}
         {...(themeNext ? themeNextProps : {})}
@@ -252,7 +250,7 @@ function InternalSaltProvider({
       headingFont,
       accent,
       actionFont,
-    ]
+    ],
   );
 
   const themedChildren = createThemedChildren({
@@ -276,7 +274,7 @@ function InternalSaltProvider({
         // add the styles we want to apply
         targetWindow.document.documentElement.classList.add(
           ...themeNames,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         );
         targetWindow.document.documentElement.dataset.mode = mode;
         if (themeNext) {
@@ -288,7 +286,7 @@ function InternalSaltProvider({
         }
       } else {
         console.warn(
-          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
         );
       }
     }
@@ -297,7 +295,7 @@ function InternalSaltProvider({
         // When unmounting/remounting, remove the applied styles from the root
         targetWindow.document.documentElement.classList.remove(
           ...themeNames,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         );
         targetWindow.document.documentElement.dataset.mode = undefined;
         if (themeNext) {

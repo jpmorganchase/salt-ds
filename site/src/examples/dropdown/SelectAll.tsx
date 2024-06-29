@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
-import { Dropdown, Option, DropdownProps } from "@salt-ds/core";
+import { Dropdown, type DropdownProps, Option } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 import { shortColorData } from "./exampleData";
 
 export const SelectAll = (): ReactElement => {
@@ -8,12 +8,12 @@ export const SelectAll = (): ReactElement => {
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
-    newSelected
+    newSelected,
   ) => {
     let newOptionsSelected = [...newSelected];
     const allWasPreviousSelected = selected.includes(allSelectedOptionValue);
     const allIsCurrentlySelected = newOptionsSelected.includes(
-      allSelectedOptionValue
+      allSelectedOptionValue,
     );
 
     // If all was unselected
@@ -25,7 +25,7 @@ export const SelectAll = (): ReactElement => {
       newOptionsSelected.length - 1 !== shortColorData.length
     ) {
       newOptionsSelected = newOptionsSelected.filter(
-        (el) => el !== allSelectedOptionValue
+        (el) => el !== allSelectedOptionValue,
       );
       // If all was selected or all options are now selected
     } else if (
@@ -47,8 +47,8 @@ export const SelectAll = (): ReactElement => {
         selected.length < 2
           ? selected[0]
           : selected.includes("all")
-          ? "All Selected"
-          : `${selected.length} items selected`
+            ? "All Selected"
+            : `${selected.length} items selected`
       }
       onSelectionChange={handleSelectionChange}
       multiselect

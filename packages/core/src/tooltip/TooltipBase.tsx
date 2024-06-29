@@ -1,12 +1,12 @@
-import { StatusIndicator, ValidationStatus } from "../status-indicator";
-import { FloatingArrow, FloatingArrowProps } from "@floating-ui/react";
-import { TooltipProps } from "./Tooltip";
-import { makePrefixer } from "../utils";
+import { FloatingArrow, type FloatingArrowProps } from "@floating-ui/react";
 import { useFormFieldProps } from "../form-field-context";
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
+import { makePrefixer } from "../utils";
+import type { TooltipProps } from "./Tooltip";
 
-import tooltipCss from "./Tooltip.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import tooltipCss from "./Tooltip.css";
 
 const withBaseName = makePrefixer("saltTooltip");
 

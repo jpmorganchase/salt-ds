@@ -1,7 +1,7 @@
 import { Link, Text } from "@salt-ds/core";
 
 import { isEmail } from "../utils";
-import { ValueComponentProps } from "./types";
+import type { ValueComponentProps } from "./types";
 
 export const MailLinkComponent = (props: ValueComponentProps) => {
   const { value, ...restProps } = props;

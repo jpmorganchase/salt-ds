@@ -1,9 +1,9 @@
-import { createContext, ReactNode, useContext } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
 export type WindowContextType = Window | null;
 
 const WindowContext = createContext<WindowContextType | null>(
-  typeof window !== "undefined" ? window : null
+  typeof window !== "undefined" ? window : null,
 );
 
 if (process.env.NODE_ENV !== "production") {

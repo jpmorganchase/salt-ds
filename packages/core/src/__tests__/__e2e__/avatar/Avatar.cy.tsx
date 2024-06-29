@@ -1,7 +1,7 @@
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
-import { composeStories } from "@storybook/react";
 import * as avatarStories from "@stories/avatar/avatar.stories";
+import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(avatarStories);
 const { Default } = composedStories;
@@ -38,7 +38,7 @@ describe("Given an Avatar", () => {
       cy.mount(
         <Default>
           <img src={"blah.png"} alt="" />
-        </Default>
+        </Default>,
       );
       cy.findAllByRole("img").should("exist");
       cy.findAllByRole("img").eq(0).should("have.attr", "src", "blah.png");

@@ -1,5 +1,5 @@
-import { ReactNode, useState } from "react";
 import { mount } from "cypress/react18";
+import { type ReactNode, useState } from "react";
 
 import {
   AriaAnnounce,
@@ -74,7 +74,7 @@ describe("aria-announcer", () => {
       mount(
         <TestWrapper>
           <SimpleTestContent announcement={ANNOUNCEMENT} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       cy.findByText(BUTTON_TEXT).realClick();
@@ -87,7 +87,7 @@ describe("aria-announcer", () => {
       mount(
         <TestWrapper>
           <SimpleTestContent getAnnouncement={getAnnouncement} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       cy.findByText(BUTTON_TEXT).realClick();
@@ -104,7 +104,7 @@ describe("aria-announcer", () => {
       mount(
         <TestWrapper>
           <AriaAnnounceContent announcement={ANNOUNCEMENT} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       cy.findByText(ANNOUNCEMENT).should("not.exist");
@@ -121,7 +121,7 @@ describe("aria-announcer", () => {
       mount(
         <TestWrapper>
           <SimpleTestContent debounce={100} getAnnouncement={getAnnouncement} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       cy.findByText(BUTTON_TEXT).realClick(); // 'Announcement 1'
@@ -138,7 +138,7 @@ describe("aria-announcer", () => {
       mount(
         <TestWrapper>
           <SimpleTestContent announcement={ANNOUNCEMENT} delay={500} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       cy.clock();
@@ -165,7 +165,7 @@ describe("aria-announcer", () => {
       mount(
         <TestWrapper>
           <SimpleTestContent delay={500} getAnnouncement={getAnnouncement} />
-        </TestWrapper>
+        </TestWrapper>,
       );
 
       // Because the first announcement is delayed, the second message will be announced first

@@ -1,11 +1,11 @@
-import { ChangeEventHandler, useState } from "react";
 import {
   RadioButton,
   RadioButtonGroup,
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEventHandler, useState } from "react";
 
 export default {
   title: "Core/Radio Button",

@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Accordion,
   AccordionGroup,
@@ -9,6 +8,7 @@ import {
   FormFieldLabel,
   Input,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Group = (): ReactElement => (
   <div style={{ width: "80%", height: "100%" }}>

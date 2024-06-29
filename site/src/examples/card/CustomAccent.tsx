@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { H3, Text, StackLayout, Card } from "@salt-ds/core";
+import { Card, H3, StackLayout, Text } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const CustomAccent = (): ReactElement => {

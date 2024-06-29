@@ -1,6 +1,6 @@
 // TODO rename ?
-import { ReactElement, ReactNode, RefObject } from "react";
-import { OverflowAction as overflowAction2 } from "./OverflowReducer";
+import type { ReactElement, ReactNode, RefObject } from "react";
+import type { OverflowAction as overflowAction2 } from "./OverflowReducer";
 
 type dimension = "width" | "height" | "scrollWidth" | "scrollHeight";
 
@@ -143,7 +143,7 @@ export interface OverflowHookResult {
   onResize: (size: number, containerHasGrown?: boolean) => void;
   resetMeasurements?: (
     isOverflowing: boolean,
-    innerContainerSize: number
+    innerContainerSize: number,
   ) => boolean | undefined;
 }
 export interface InstantCollapseHookResult

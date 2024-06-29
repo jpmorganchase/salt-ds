@@ -1,4 +1,4 @@
-import { cloneElement, isValidElement, ReactNode } from "react";
+import { type ReactNode, cloneElement, isValidElement } from "react";
 import { mergeProps, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 
@@ -14,7 +14,7 @@ export function OverlayTrigger(props: OverlayTriggerProps) {
   const triggerRef = useForkRef(
     // @ts-ignore error TS2339 missing property ref
     isValidElement(children) ? children.ref : null,
-    reference
+    reference,
   );
 
   if (!children || !isValidElement(children)) {

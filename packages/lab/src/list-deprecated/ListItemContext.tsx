@@ -1,4 +1,4 @@
-import { createContext, useContext, Context } from "react";
+import { type Context, createContext, useContext } from "react";
 
 export interface ListItemContextProps<Item> {
   disableMouseDown?: boolean;
@@ -14,14 +14,12 @@ export const ListItemContext = createContext<
   ListItemContextProps<unknown> | undefined
 >(undefined);
 
-export const useListItemContext = function <
-  Item
->(): ListItemContextProps<Item> {
+export const useListItemContext = <Item,>(): ListItemContextProps<Item> => {
   const contextValue = useContext(ListItemContext);
 
   if (contextValue === undefined) {
     throw new Error(
-      "useListItemContext must be used inside of a List or ListBase component."
+      "useListItemContext must be used inside of a List or ListBase component.",
     );
   }
 

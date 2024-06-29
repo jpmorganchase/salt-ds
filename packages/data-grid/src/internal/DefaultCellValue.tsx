@@ -1,10 +1,10 @@
-import { ReactNode } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import type { ReactNode } from "react";
 
-import { GridCellValueProps } from "../GridColumn";
+import type { GridCellValueProps } from "../GridColumn";
 
 import defaultCellValueCss from "./DefaultCellValue.css";
 

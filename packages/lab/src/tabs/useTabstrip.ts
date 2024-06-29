@@ -1,32 +1,36 @@
 import {
+  type KeyboardEvent,
+  type MouseEvent,
+  type RefObject,
   createElement,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
-  useEffect,
   useCallback,
+  useEffect,
   useRef,
 } from "react";
+import type { OverflowCollectionHookResult } from "../responsive";
 import { Tab } from "./Tab";
 import {
-  ContainerNavigationProps,
+  type DragHookResult,
+  type dragStrategy,
+  useDragDrop,
+} from "./drag-drop";
+import {
+  type EditableItemHookResult,
+  type ExitEditModeHandler,
+  useEditableItem,
+} from "./useEditableItem";
+import {
+  type ContainerNavigationProps,
   useKeyboardNavigation,
 } from "./useKeyboardNavigation";
-import { dragStrategy, useDragDrop, DragHookResult } from "./drag-drop";
 import { useSelection } from "./useSelection";
-import {
-  ExitEditModeHandler,
-  useEditableItem,
-  EditableItemHookResult,
-} from "./useEditableItem";
-import { OverflowCollectionHookResult } from "../responsive";
 
-import {
+import type {
+  TabDescriptor,
+  TabElement,
   composableTabProps,
   exitEditHandler,
   navigationProps,
-  TabDescriptor,
-  TabElement,
 } from "./TabsTypes";
 
 interface tabstripHookProps {
@@ -87,7 +91,7 @@ export const useTabstrip = ({
   const lastSelection = useRef(
     activeTabIndexProp === null
       ? null
-      : activeTabIndexProp || defaultActiveTabIndex || 0
+      : activeTabIndexProp || defaultActiveTabIndex || 0,
   );
   const pendingNewTab = useRef<string | null>(null);
 
@@ -133,7 +137,7 @@ export const useTabstrip = ({
         }
       }
     },
-    [onMoveTab, selectionHook]
+    [onMoveTab, selectionHook],
   );
 
   const dragDropHook = useDragDrop({
@@ -159,7 +163,7 @@ export const useTabstrip = ({
         originalValue,
         editedValue,
         allowDeactivation,
-        tabIndex
+        tabIndex,
       );
       if (!allowDeactivation) {
         // this indicates that Enter or Esc key has been pressed, hence we
@@ -168,7 +172,7 @@ export const useTabstrip = ({
         keyboardHook.focusTab(tabIndex, false, true);
       }
     },
-    [editableHook, keyboardHook]
+    [editableHook, keyboardHook],
   );
 
   const handleClick = useCallback(
@@ -179,7 +183,7 @@ export const useTabstrip = ({
         selectionHook.onClick(evt, tabIndex);
       }
     },
-    [dragDropHook.isDragging, keyboardHook, selectionHook]
+    [dragDropHook.isDragging, keyboardHook, selectionHook],
   );
 
   const handleKeyDown = useCallback(
@@ -192,7 +196,7 @@ export const useTabstrip = ({
         editableHook.onKeyDown(evt);
       }
     },
-    [keyboardHook, selectionHook, editableHook]
+    [keyboardHook, selectionHook, editableHook],
   );
 
   const navigationProps = {
@@ -212,10 +216,10 @@ export const useTabstrip = ({
       const tabId =
         (pendingNewTab.current = `${idRoot}-${collectionHook.data.length}`);
       const overflowIndicator = collectionHook.data.find(
-        (i) => i.isOverflowIndicator
+        (i) => i.isOverflowIndicator,
       );
       const newTabs = collectionHook.data.filter((item) =>
-        item.label?.startsWith("New Tab")
+        item.label?.startsWith("New Tab"),
       );
       const count = newTabs.length + 1;
       collectionHook.dispatch({
@@ -229,7 +233,7 @@ export const useTabstrip = ({
         indexPosition: overflowIndicator ? indexPosition - 1 : indexPosition,
       });
     },
-    [collectionHook, idRoot]
+    [collectionHook, idRoot],
   );
 
   const selectNewTab = useCallback(
@@ -251,7 +255,7 @@ export const useTabstrip = ({
       keyboardHook,
       promptForNewTabName,
       selectionHook,
-    ]
+    ],
   );
 
   const closeTab = useCallback(
@@ -282,7 +286,7 @@ export const useTabstrip = ({
         onCloseTab?.(indexPosition);
       }
     },
-    [collectionHook, onCloseTab, selectionHook]
+    [collectionHook, onCloseTab, selectionHook],
   );
 
   useEffect(() => {

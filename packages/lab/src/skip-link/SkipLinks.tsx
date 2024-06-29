@@ -1,9 +1,9 @@
-import { forwardRef, HTMLAttributes } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { type HTMLAttributes, forwardRef } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import skipLinksCss from "./SkipLinks.css";
 

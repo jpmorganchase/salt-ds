@@ -1,28 +1,31 @@
 import { useControlled } from "@salt-ds/core";
 import {
-  FocusEvent,
-  KeyboardEvent,
+  type FocusEvent,
+  type KeyboardEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
+import type { CollectionItem } from "./collectionTypes";
 import {
   ArrowDown,
   ArrowUp,
   End,
   Home,
-  isCharacterKey,
-  isNavigationKey,
   PageDown,
   PageUp,
+  isCharacterKey,
+  isNavigationKey,
 } from "./keyUtils";
-import { CollectionItem } from "./collectionTypes";
-import { NavigationHookProps, NavigationHookResult } from "./navigationTypes";
+import type {
+  NavigationHookProps,
+  NavigationHookResult,
+} from "./navigationTypes";
 import {
+  type SelectionStrategy,
   getFirstSelectedItem,
   hasSelection,
-  SelectionStrategy,
 } from "./selectionTypes";
 
 export const LIST_FOCUS_VISIBLE = -2;
@@ -47,7 +50,7 @@ function nextItemIdx(count: number, key: string, idx: number) {
 
 const getIndexOfSelectedItem = (
   items: CollectionItem<unknown>[],
-  selected?: CollectionItem<unknown> | null | CollectionItem<unknown>[]
+  selected?: CollectionItem<unknown> | null | CollectionItem<unknown>[],
 ) => {
   const selectedItem = getFirstSelectedItem(selected);
   if (selectedItem) {
@@ -61,7 +64,7 @@ const getStartIdx = (
   key: string,
   idx: number,
   selectedIdx: number,
-  length: number
+  length: number,
 ) => {
   if (key === End) {
     return length;
@@ -80,7 +83,7 @@ const getItemRect = (item: CollectionItem<unknown>) => {
     return el.getBoundingClientRect();
   } else {
     throw Error(
-      `useKeyboardNavigation.getItemRect no element found for item  #${item?.id}`
+      `useKeyboardNavigation.getItemRect no element found for item  #${item?.id}`,
     );
   }
 };
@@ -89,14 +92,14 @@ const pageDown = (
   containerEl: HTMLElement,
   itemEl: HTMLElement,
   indexPositions: CollectionItem<unknown>[],
-  index: number
+  index: number,
 ): number | undefined => {
   const { top: itemTop } = itemEl.getBoundingClientRect();
   const { scrollTop, clientHeight, scrollHeight } = containerEl;
   const lastIndexPosition = indexPositions.length - 1;
   const newScrollTop = Math.min(
     scrollTop + clientHeight,
-    scrollHeight - clientHeight
+    scrollHeight - clientHeight,
   );
   if (newScrollTop !== scrollTop && index < lastIndexPosition) {
     containerEl.scrollTo(0, newScrollTop);
@@ -115,7 +118,7 @@ const pageUp = async (
   containerEl: HTMLElement,
   itemEl: HTMLElement,
   indexPositions: CollectionItem<unknown>[],
-  index: number
+  index: number,
 ): Promise<number | undefined> => {
   const { top: itemTop } = itemEl.getBoundingClientRect();
   const { scrollTop, clientHeight } = containerEl;
@@ -145,7 +148,7 @@ const isFocusable = <Item>(item: CollectionItem<Item>) =>
 
 export const useKeyboardNavigation = <
   Item,
-  Selection extends SelectionStrategy
+  Selection extends SelectionStrategy,
 >({
   containerRef,
   defaultHighlightedIndex = -1,
@@ -174,7 +177,7 @@ export const useKeyboardNavigation = <
         lastFocus.current = idx;
       }
     },
-    [onHighlight, setHighlightedIdx]
+    [onHighlight, setHighlightedIdx],
   );
 
   const nextPageItemIdx = useCallback(
@@ -193,20 +196,20 @@ export const useKeyboardNavigation = <
       }
       return result ?? index;
     },
-    [containerRef, indexPositions]
+    [containerRef, indexPositions],
   );
 
   const nextFocusableItemIdx = useCallback(
     (
       key = ArrowDown,
-      idx: number = key === ArrowDown ? -1 : indexPositions.length
+      idx: number = key === ArrowDown ? -1 : indexPositions.length,
     ) => {
       if (indexPositions.length === 0) {
         return -1;
       } else {
         const indexOfSelectedItem = getIndexOfSelectedItem(
           indexPositions,
-          selected
+          selected,
         );
         // The start index is generally the highlightedIdx (passed in as idx).
         // We don't need it for Home and End navigation.
@@ -216,7 +219,7 @@ export const useKeyboardNavigation = <
           key,
           idx,
           indexOfSelectedItem,
-          indexPositions.length
+          indexPositions.length,
         );
 
         let nextIdx = nextItemIdx(indexPositions.length, key, startIdx);
@@ -239,7 +242,7 @@ export const useKeyboardNavigation = <
         return nextIdx;
       }
     },
-    [indexPositions, selected]
+    [indexPositions, selected],
   );
 
   // does this belong here or should it be a method passed in?
@@ -268,7 +271,7 @@ export const useKeyboardNavigation = <
           } else {
             const selectedItemIdx = getIndexOfSelectedItem(
               indexPositions,
-              selected
+              selected,
             );
             if (selectedItemIdx !== -1) {
               setHighlightedIndex(selectedItemIdx);
@@ -279,7 +282,7 @@ export const useKeyboardNavigation = <
         } else if (hasSelection(selected)) {
           const selectedItemIdx = getIndexOfSelectedItem(
             indexPositions,
-            selected
+            selected,
           );
           setHighlightedIndex(selectedItemIdx);
         } else if (disableHighlightOnFocus !== true) {
@@ -295,7 +298,7 @@ export const useKeyboardNavigation = <
       restoreLastFocus,
       selected,
       setHighlightedIndex,
-    ]
+    ],
   );
 
   const navigateChildItems = useCallback(
@@ -319,7 +322,7 @@ export const useKeyboardNavigation = <
       nextPageItemIdx,
       onKeyboardNavigation,
       setHighlightedIndex,
-    ]
+    ],
   );
 
   const handleKeyDown = useCallback(
@@ -333,7 +336,7 @@ export const useKeyboardNavigation = <
         keyboardNavigation.current = true;
       }
     },
-    [indexPositions, navigateChildItems]
+    [indexPositions, navigateChildItems],
   );
 
   const listProps = useMemo(() => {

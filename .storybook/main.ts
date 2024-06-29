@@ -1,7 +1,7 @@
 import { dirname, join } from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
-import type { UserConfig } from "vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
+import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 import { cssInline } from "../tooling/css-inline-plugin";
 
@@ -38,7 +38,7 @@ const config: StorybookConfig = {
 
     if (configType === "PRODUCTION") {
       customConfig.plugins!.push(
-        typescriptTurbosnap({ rootDir: config.root! })
+        typescriptTurbosnap({ rootDir: config.root! }),
       );
     }
 

@@ -1,8 +1,8 @@
+import { FormField, Tooltip } from "@salt-ds/core";
+import { InfoIcon } from "@salt-ds/icons";
 import * as tooltipStories from "@stories/tooltip/tooltip.stories";
 import { composeStories } from "@storybook/react";
-import { InfoIcon } from "@salt-ds/icons";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import { Tooltip, FormField } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -62,7 +62,7 @@ describe("GIVEN a Tooltip", () => {
       cy.mount(
         <FormField>
           <Open disabled />
-        </FormField>
+        </FormField>,
       );
       cy.findByRole("tooltip").should("not.exist");
     });
@@ -70,7 +70,7 @@ describe("GIVEN a Tooltip", () => {
       cy.mount(
         <FormField disabled>
           <Open />
-        </FormField>
+        </FormField>,
       );
       cy.findByRole("tooltip").should("not.exist");
     });
@@ -80,7 +80,7 @@ describe("GIVEN a Tooltip", () => {
       cy.mount(
         <div onKeyDown={keyDownSpy}>
           <Open disabled />
-        </div>
+        </div>,
       );
 
       cy.findByRole("button").focus();
@@ -235,7 +235,7 @@ describe("GIVEN a Tooltip", () => {
           <Tooltip open content="tooltip">
             <InfoIcon />
           </Tooltip>
-        </h3>
+        </h3>,
       );
       cy.findByText("tooltip")
         .should("be.visible")
@@ -251,7 +251,7 @@ describe("GIVEN a Tooltip", () => {
           <Tooltip open content="tooltip">
             <InfoIcon />
           </Tooltip>
-        </CustomFloatingComponentProvider>
+        </CustomFloatingComponentProvider>,
       );
 
       cy.findByTestId(FLOATING_TEST_ID).should("exist");

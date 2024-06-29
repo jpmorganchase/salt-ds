@@ -1,15 +1,15 @@
-import { clsx } from "clsx";
-import { ElementType, HTMLAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { FormFieldValidationStatus } from "./FormFieldLegacy";
+import { clsx } from "clsx";
+import type { ElementType, HTMLAttributes } from "react";
+import type { FormFieldValidationStatus } from "./FormFieldLegacy";
 import {
   NecessityIndicator as DefaultNecessityIndicator,
-  NecessityIndicatorOptions,
+  type NecessityIndicatorOptions,
 } from "./NecessityIndicator";
-import { StatusIndicator, StatusIndicatorProps } from "./StatusIndicator";
+import { StatusIndicator, type StatusIndicatorProps } from "./StatusIndicator";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import formLabelCss from "./FormLabel.css";
 

@@ -1,9 +1,9 @@
-import type { Plugin } from "vite";
+import { type PathLike, promises } from "fs";
 import path from "path";
-import glob from "glob-promise";
-import { PathLike, promises } from "fs";
 import { findLast, generate, parse, walk } from "css-tree";
+import glob from "glob-promise";
 import * as ts from "typescript";
+import type { Plugin } from "vite";
 
 const { readFile } = promises;
 
@@ -24,8 +24,8 @@ function matchGlob(globs: string[] = []) {
       filename &&
         matches.find(
           (match) =>
-            path.normalize(filename) === path.join(process.cwd(), match)
-        )
+            path.normalize(filename) === path.join(process.cwd(), match),
+        ),
     );
   };
 }
@@ -55,7 +55,7 @@ function createClassNameDefinition(className: string, value: ClassName) {
   const setStringLiteralField = (fieldName: string, fieldValue: string) =>
     ts.factory.createPropertyAssignment(
       ts.factory.createStringLiteral(fieldName),
-      ts.factory.createStringLiteral(fieldValue)
+      ts.factory.createStringLiteral(fieldValue),
     );
 
   /**
@@ -80,7 +80,7 @@ function createClassNameDefinition(className: string, value: ClassName) {
     ts.factory.createObjectLiteralExpression([
       setDescription(value.description),
       setName(value.name),
-    ])
+    ]),
   );
 }
 
@@ -93,14 +93,14 @@ function createCSSVariablesApiDefinition(name: string, value: CSSVariable) {
   const setStringLiteralField = (fieldName: string, fieldValue: string) =>
     ts.factory.createPropertyAssignment(
       ts.factory.createStringLiteral(fieldName),
-      ts.factory.createStringLiteral(fieldValue)
+      ts.factory.createStringLiteral(fieldValue),
     );
 
   /** Set a property with a null value */
   const setNullField = (fieldName: string) =>
     ts.factory.createPropertyAssignment(
       ts.factory.createStringLiteral(fieldName),
-      ts.factory.createNull()
+      ts.factory.createNull(),
     );
 
   /**
@@ -137,7 +137,7 @@ function createCSSVariablesApiDefinition(name: string, value: CSSVariable) {
       setName(value.name),
       setType(value.property),
       setDefaultValue(value.fallbackValue),
-    ])
+    ]),
   );
 }
 
@@ -157,7 +157,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
         const sourceFile = ts.createSourceFile(
           id,
           code,
-          ts.ScriptTarget.ESNext
+          ts.ScriptTarget.ESNext,
         );
 
         ts.forEachChild(sourceFile, (node) => {
@@ -171,14 +171,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
               path.resolve(
                 path.dirname(id),
                 // @ts-ignore
-                node.moduleSpecifier.text.replace("?inline", "")
-              )
+                node.moduleSpecifier.text.replace("?inline", ""),
+              ),
             );
           }
         });
 
         const safeReadFile = async (
-          path: Parameters<typeof readFile>[0]
+          path: Parameters<typeof readFile>[0],
         ): Promise<{
           path: PathLike | promises.FileHandle;
           contents: string;
@@ -193,7 +193,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
 
         const cssFiles = (
           await Promise.all(
-            cssImports.map((cssImport) => safeReadFile(cssImport))
+            cssImports.map((cssImport) => safeReadFile(cssImport)),
           )
         ).filter(Boolean);
 
@@ -225,7 +225,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                 const name = generate(node);
                 if (
                   !comments[this.selector.loc.start.line - 1].includes(
-                    "@ignore"
+                    "@ignore",
                   )
                 ) {
                   classNames[name] = {
@@ -247,14 +247,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                       name: node.property,
                       value: generate(
                         findLast(node.value, (node) =>
-                          valueTypes.includes(node.type)
-                        ) ?? node.value
+                          valueTypes.includes(node.type),
+                        ) ?? node.value,
                       ),
                     };
                   } catch (e) {
                     console.warn(
                       e,
-                      `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`
+                      `Encountered issue parsing CSS variable declaration "${node.property}" in "${path}"`,
                     );
                   }
                 }
@@ -274,14 +274,14 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                     fallbackValue: this.declaration
                       ? generate(
                           findLast(this.declaration, (node) =>
-                            valueTypes.includes(node.type)
-                          )
+                            valueTypes.includes(node.type),
+                          ),
                         )
                       : undefined,
                   };
                 } catch (e) {
                   console.warn(
-                    `Encountered issue parsing CSS variable "${name}" in "${path}"`
+                    `Encountered issue parsing CSS variable "${name}" in "${path}"`,
                   );
                 }
               }
@@ -291,7 +291,7 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
 
         const resolveProperty = (
           identifierMap: Record<string, CSSVariable>,
-          property: string | undefined
+          property: string | undefined,
         ): string | undefined => {
           if (!property || !identifierMap[property]) {
             return property;
@@ -303,12 +303,12 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
 
           return resolveProperty(
             identifierMap,
-            identifierMap[property].property
+            identifierMap[property].property,
           );
         };
 
         const resolveValue = (
-          value: string | undefined
+          value: string | undefined,
         ): string | undefined => {
           if (!value || !privateVariableMap[value]) {
             return value;
@@ -324,15 +324,15 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           const identifier = identifierMap[key];
           identifierMap[key].property = resolveProperty(
             identifierMap,
-            identifier.property
+            identifier.property,
           );
           identifierMap[key].fallbackValue = resolveValue(
-            identifier.fallbackValue
+            identifier.fallbackValue,
           );
         });
 
         const transformer = <T extends ts.Node>(
-          context: ts.TransformationContext
+          context: ts.TransformationContext,
         ) => {
           return (rootNode: T) => {
             function visit(node: ts.Node): ts.Node {
@@ -353,19 +353,19 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
                       ts.factory.createStringLiteral("classNames"),
                       ts.factory.createObjectLiteralExpression(
                         Object.entries(classNames).map(([className, value]) =>
-                          createClassNameDefinition(className, value)
-                        )
-                      )
+                          createClassNameDefinition(className, value),
+                        ),
+                      ),
                     ),
                     ts.factory.createPropertyAssignment(
                       ts.factory.createStringLiteral("cssVariablesApi"),
                       ts.factory.createObjectLiteralExpression(
                         Object.entries(identifierMap).map(([name, value]) =>
-                          createCSSVariablesApiDefinition(name, value)
-                        )
-                      )
+                          createCSSVariablesApiDefinition(name, value),
+                        ),
+                      ),
                     ),
-                  ])
+                  ]),
                 );
               }
 

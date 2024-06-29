@@ -1,18 +1,18 @@
-import { forwardRef, ReactElement, ElementType } from "react";
 import { clsx } from "clsx";
+import { type ElementType, type ReactElement, forwardRef } from "react";
 
 import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+  type ResponsiveProp,
   makePrefixer,
-  ResponsiveProp,
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
   resolveResponsiveValue,
 } from "../utils";
 
-import gridLayoutCss from "./GridLayout.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { useBreakpoint } from "../breakpoints";
+import gridLayoutCss from "./GridLayout.css";
 
 export type GridLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -42,7 +42,7 @@ export type GridLayoutProps<T extends ElementType> =
   >;
 
 type GridLayoutComponent = <T extends ElementType = "div">(
-  props: GridLayoutProps<T>
+  props: GridLayoutProps<T>,
 ) => ReactElement | null;
 
 const withBaseName = makePrefixer("saltGridLayout");
@@ -77,7 +77,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(
       style,
       ...rest
     }: GridLayoutProps<T>,
-    ref?: PolymorphicRef<T>
+    ref?: PolymorphicRef<T>,
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -117,5 +117,5 @@ export const GridLayout: GridLayoutComponent = forwardRef(
         {children}
       </Component>
     );
-  }
+  },
 );

@@ -1,5 +1,5 @@
-import { Metric, MetricHeader, MetricContent } from "@salt-ds/lab";
 import { DoubleChevronDownIcon } from "@salt-ds/icons";
+import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
 
 describe("Metric - by default", () => {
   it("should NOT render the indicator", () => {
@@ -7,7 +7,7 @@ describe("Metric - by default", () => {
       <Metric>
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetricContent-indicator").should("not.exist");
   });
@@ -17,11 +17,11 @@ describe("Metric - by default", () => {
       <Metric>
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetric").should(
       "have.class",
-      "saltMetric-orientation-vertical"
+      "saltMetric-orientation-vertical",
     );
   });
 
@@ -30,7 +30,7 @@ describe("Metric - by default", () => {
       <Metric>
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltText-display2").should("exist");
   });
@@ -45,7 +45,7 @@ describe("Metric - Indicator", () => {
           value="$801.9B"
           IndicatorIconComponent={DoubleChevronDownIcon}
         />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetricContent-indicator").should("exist");
   });
@@ -54,7 +54,7 @@ describe("Metric - Indicator", () => {
       <Metric showIndicator>
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetricContent-indicator").should("not.exist");
   });
@@ -66,7 +66,7 @@ describe("Metric - Indicator Direction", () => {
       <Metric showIndicator direction="up">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.findByTestId(`ArrowUpIcon`).should("exist");
   });
@@ -76,7 +76,7 @@ describe("Metric - Indicator Direction", () => {
       <Metric showIndicator direction="down">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.findByTestId(`ArrowDownIcon`).should("exist");
   });
@@ -88,7 +88,7 @@ describe("Metric - Indicator Position", () => {
       <Metric showIndicator direction="up" indicatorPosition="start">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
 
     cy.get(".saltMetricContent-indicator").then((icon) => {
@@ -104,7 +104,7 @@ describe("Metric - Indicator Position", () => {
       <Metric showIndicator direction="up" indicatorPosition="end">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
 
     cy.get(".saltMetricContent-indicator").then((icon) => {
@@ -122,7 +122,7 @@ describe("Metric - Size", () => {
       <Metric size="large">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltText-display1").should("exist");
   });
@@ -131,7 +131,7 @@ describe("Metric - Size", () => {
       <Metric size="medium">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltText-display2").should("exist");
   });
@@ -140,7 +140,7 @@ describe("Metric - Size", () => {
       <Metric size="small">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltText-display3").should("exist");
   });
@@ -152,11 +152,11 @@ describe("Metric - Orientation", () => {
       <Metric orientation="horizontal">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetric").should(
       "have.class",
-      `saltMetric-orientation-horizontal`
+      `saltMetric-orientation-horizontal`,
     );
   });
   it(`should render with correct classes for VERTICAL orientation`, () => {
@@ -164,11 +164,11 @@ describe("Metric - Orientation", () => {
       <Metric orientation="vertical">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetric").should(
       "have.class",
-      `saltMetric-orientation-vertical`
+      `saltMetric-orientation-vertical`,
     );
   });
 });
@@ -180,7 +180,7 @@ describe("Metric - Accessibility", () => {
         <div>Some text</div>
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
 
     cy.get(".saltMetricContent").should("have.attr", "aria-labelledby");
@@ -191,7 +191,7 @@ describe("Metric - Accessibility", () => {
         <MetricContent value="$801.9B" />
         <div>Some text</div>
         <MetricHeader title="Revenue YTD" />
-      </Metric>
+      </Metric>,
     );
 
     cy.get(".saltMetricContent").should("have.attr", "aria-labelledby");
@@ -204,7 +204,7 @@ describe("Metric Header - Alignment", () => {
       <Metric align="left">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetricHeader").should("have.css", "align-items", "flex-start");
   });
@@ -213,7 +213,7 @@ describe("Metric Header - Alignment", () => {
       <Metric align="center">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetricHeader").should("have.css", "align-items", "center");
   });
@@ -222,7 +222,7 @@ describe("Metric Header - Alignment", () => {
       <Metric align="right">
         <MetricHeader title="Revenue YTD" />
         <MetricContent value="$801.9B" />
-      </Metric>
+      </Metric>,
     );
     cy.get(".saltMetricHeader").should("have.css", "align-items", "flex-end");
   });
@@ -249,7 +249,7 @@ describe("MetricContent", () => {
       cy.mount(
         <Metric direction="up" showIndicator={true} indicatorPosition="end">
           <MetricContent value="$801.9B" />
-        </Metric>
+        </Metric>,
       );
 
       cy.findByTestId("ArrowUpIcon").should("exist");
@@ -259,7 +259,7 @@ describe("MetricContent", () => {
       cy.mount(
         <Metric direction="down" showIndicator={true} indicatorPosition="end">
           <MetricContent value="$801.9B" />
-        </Metric>
+        </Metric>,
       );
 
       cy.findByTestId("ArrowDownIcon").should("exist");

@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { Button, Tooltip, SegmentedButtonGroup } from "@salt-ds/core";
-import { CallIcon, MessageIcon, ChatGroupIcon } from "@salt-ds/icons";
+import { Button, SegmentedButtonGroup, Tooltip } from "@salt-ds/core";
+import { CallIcon, ChatGroupIcon, MessageIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const IconOnly = (): ReactElement => (
   <SegmentedButtonGroup>

@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { makePalette, getColorPalettes } from "../../color-chooser";
+import { describe, expect, it } from "vitest";
+import { getColorPalettes, makePalette } from "../../color-chooser";
 
 describe("getColorPalettes", () => {
   describe("makePalette", () => {

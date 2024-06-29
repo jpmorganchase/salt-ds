@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { StackLayout, FlexItem } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { FlexItem, StackLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import flexItemStyles from "./FlexItemSize.module.css";
+import styles from "./index.module.css";
 
 export const FlexItemSize = (): ReactElement => (
   <StackLayout className={flexItemStyles.stackLayout}>

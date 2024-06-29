@@ -1,12 +1,12 @@
-import { Decorator } from "@storybook/react";
 import {
-  getCharacteristicValue,
   ModeValues,
   Panel,
   SaltProvider,
-  useTheme,
   UNSTABLE_SaltProviderNext,
+  getCharacteristicValue,
+  useTheme,
 } from "@salt-ds/core";
+import type { Decorator } from "@storybook/react";
 import { useEffect } from "react";
 
 // Modified from storybook background addon
@@ -40,13 +40,13 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
       theme,
       "text",
       "primary-foreground",
-      document.querySelector(".salt-theme") as HTMLElement
+      document.querySelector(".salt-theme") as HTMLElement,
     );
     const background = getCharacteristicValue(
       theme,
       "container",
       "primary-background",
-      document.querySelector(".salt-theme") as HTMLElement
+      document.querySelector(".salt-theme") as HTMLElement,
     );
 
     addBackgroundStyle(
@@ -57,7 +57,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
           color: ${color || "unset"};
           transition: background-color 0.3s;
         }
-      `
+      `,
     );
   }, [selectorId, selector, mode, theme]);
 

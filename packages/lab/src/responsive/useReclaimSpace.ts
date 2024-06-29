@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import {
-  OverflowItem,
+import type {
   OverflowHookProps,
   OverflowHookResult,
+  OverflowItem,
 } from "./overflowTypes";
 
 import {
@@ -67,7 +67,7 @@ export const useReclaimSpace = ({
 }: OverflowHookProps): OverflowHookResult => {
   const getAllOverflowedItems = useCallback(
     (visibleContentSize: number, containerSize: number) => {
-      let newlyOverflowedItems = [];
+      const newlyOverflowedItems = [];
       const { current: managedItems } = managedItemsRef;
       const visibleItems = managedItems.slice();
       while (visibleContentSize > containerSize) {
@@ -81,7 +81,7 @@ export const useReclaimSpace = ({
       }
       return newlyOverflowedItems;
     },
-    []
+    [],
   );
 
   const releaseReclaimedSpace = useCallback(() => {
@@ -108,7 +108,7 @@ export const useReclaimSpace = ({
     (size: number, containerHasGrown?: boolean) => {
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
-        orientation
+        orientation,
       );
       const { current: managedItems } = managedItemsRef;
 
@@ -135,7 +135,7 @@ export const useReclaimSpace = ({
         }
       }
     },
-    []
+    [],
   );
 
   return {

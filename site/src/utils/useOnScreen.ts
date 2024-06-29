@@ -1,8 +1,8 @@
-import { useEffect, useState, MutableRefObject } from "react";
+import { type MutableRefObject, useEffect, useState } from "react";
 
 const useOnScreen = <T extends Element>(
   ref: MutableRefObject<T | null>,
-  rootMargin: string = "0px"
+  rootMargin = "0px",
 ): boolean => {
   const [isIntersecting, setIntersecting] = useState<boolean>(false);
   useEffect(() => {
@@ -12,7 +12,7 @@ const useOnScreen = <T extends Element>(
       },
       {
         rootMargin,
-      }
+      },
     );
 
     ref.current && observer.observe(ref.current);

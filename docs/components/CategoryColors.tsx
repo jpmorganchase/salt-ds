@@ -1,6 +1,6 @@
 import { H2, StackLayout } from "@salt-ds/core";
-import { ColorContainer } from "./ColorContainer";
 import { ColorItem, ColorPalette } from "@storybook/blocks";
+import { ColorContainer } from "./ColorContainer";
 
 export const CategoryColors = () => {
   return (

@@ -29,13 +29,13 @@ describe("GIVEN a Checkbox", () => {
         cy.findByRole("checkbox").realClick();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
-          Cypress.sinon.match.any
+          Cypress.sinon.match.any,
         );
         cy.findByRole("checkbox").should("be.checked");
         cy.findByRole("checkbox").realClick();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
-          Cypress.sinon.match.any
+          Cypress.sinon.match.any,
         );
         cy.findByRole("checkbox").should("not.be.checked");
       });
@@ -52,14 +52,14 @@ describe("GIVEN a Checkbox", () => {
       it("THEN should call onChange and not change the selection state", () => {
         const changeSpy = cy.stub().as("changeSpy");
         cy.mount(
-          <Checkbox onChange={changeSpy} checked={false} value="test" />
+          <Checkbox onChange={changeSpy} checked={false} value="test" />,
         );
         cy.findByRole("checkbox").should("not.be.checked");
         cy.get("@changeSpy").should("have.not.been.called");
         cy.findByRole("checkbox").realClick();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
-          Cypress.sinon.match.any
+          Cypress.sinon.match.any,
         );
         cy.findByRole("checkbox").should("not.be.checked");
       });

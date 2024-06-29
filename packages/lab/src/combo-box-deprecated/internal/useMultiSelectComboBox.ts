@@ -7,24 +7,27 @@ import {
   usePrevious,
 } from "@salt-ds/core";
 import {
-  ChangeEvent,
-  FocusEvent,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  MouseEvent,
-  RefObject,
-  SyntheticEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type KeyboardEventHandler,
+  type MouseEvent,
+  type RefObject,
+  type SyntheticEvent,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { useList } from "../../list-deprecated";
-import { ExpandButtonProps, useTokenizedInput } from "../../tokenized-input";
+import {
+  type ExpandButtonProps,
+  useTokenizedInput,
+} from "../../tokenized-input";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
-import { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
+import type { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
 
 const REQUIRE_PREV_HIGHLIGHT = ["ArrowUp", "ArrowDown", "PageUp", "PageDown"];
@@ -35,7 +38,7 @@ export type UseMultiSelectComboBoxProps<Item> = Omit<
 > & { expandButtonRef: RefObject<HTMLElement> };
 
 export const useMultiSelectComboBox = <Item>(
-  props: Omit<UseMultiSelectComboBoxProps<Item>, "rootRef" | "classes">
+  props: Omit<UseMultiSelectComboBoxProps<Item>, "rootRef" | "classes">,
 ) => {
   // Deconstruct valid props for List, everything else will be passed to `useTokenizedInput` using `restProps`
   const {
@@ -97,7 +100,7 @@ export const useMultiSelectComboBox = <Item>(
 
   const labels = useMemo(
     () => sourceProp.map(itemToString),
-    [sourceProp, itemToString]
+    [sourceProp, itemToString],
   );
 
   const source = useMemo(() => {
@@ -113,7 +116,7 @@ export const useMultiSelectComboBox = <Item>(
       inputValue && inputValue.trim().length
         ? getFilterRegex(inputValue)
         : undefined,
-    [inputValue, getFilterRegex]
+    [inputValue, getFilterRegex],
   );
 
   const {
@@ -169,7 +172,7 @@ export const useMultiSelectComboBox = <Item>(
   };
 
   const handleInputBlur = (
-    event: FocusEvent<HTMLDivElement | HTMLInputElement>
+    event: FocusEvent<HTMLDivElement | HTMLInputElement>,
   ) => {
     handleBlurVisible();
     setAllowAnnouncement(false);
@@ -270,7 +273,7 @@ export const useMultiSelectComboBox = <Item>(
   useIsomorphicLayoutEffect(() => {
     if (
       selectedItems.some(
-        (item) => !(previousSelectedItems || []).includes(item)
+        (item) => !(previousSelectedItems || []).includes(item),
       )
     ) {
       setInputValue("");
@@ -352,7 +355,7 @@ export const useMultiSelectComboBox = <Item>(
   };
 
   const handleInputKeyDown = (
-    event: KeyboardEvent<HTMLInputElement | HTMLButtonElement | HTMLDivElement>
+    event: KeyboardEvent<HTMLInputElement | HTMLButtonElement | HTMLDivElement>,
   ) => {
     if ("Escape" === event.key) {
       setInputValue("");
@@ -366,7 +369,7 @@ export const useMultiSelectComboBox = <Item>(
     } else {
       if (inputProps.onKeyDown) {
         inputProps.onKeyDown(
-          event as KeyboardEvent<HTMLInputElement | HTMLButtonElement>
+          event as KeyboardEvent<HTMLInputElement | HTMLButtonElement>,
         );
       }
     }
@@ -379,7 +382,7 @@ export const useMultiSelectComboBox = <Item>(
       event.preventDefault();
       // Initialize list highlight if there's no previous value
       setHighlightedListIndex(
-        Math.min(quickSelection ? 1 : 0, source.length - 1)
+        Math.min(quickSelection ? 1 : 0, source.length - 1),
       );
       setQuickSelection(false);
       setSelectionChanged(false);
@@ -394,7 +397,7 @@ export const useMultiSelectComboBox = <Item>(
 
   const handleListClick = (event: MouseEvent<HTMLDivElement>) => {
     clearTimeout(
-      inputBlurTimeout.current == null ? undefined : inputBlurTimeout.current
+      inputBlurTimeout.current == null ? undefined : inputBlurTimeout.current,
     );
     const inputEl = inputRef && (inputRef as RefObject<HTMLElement>).current;
     if (inputEl) {

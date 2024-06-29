@@ -1,14 +1,14 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  FlexLayout,
-  GoToInput,
   CompactInput,
   CompactPaginator,
+  FlexLayout,
+  GoToInput,
   Pagination,
-  PaginationProps,
+  type PaginationProps,
   Paginator,
-  PaginatorProps,
+  type PaginatorProps,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Pagination",
@@ -23,7 +23,7 @@ interface StoryProps {
 }
 
 const Template: StoryFn<PaginationProps & PaginatorProps & StoryProps> = (
-  args
+  args,
 ) => {
   const {
     count,

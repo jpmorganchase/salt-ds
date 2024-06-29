@@ -1,7 +1,7 @@
-import { composeStories } from "@storybook/react";
-import * as tabstripStories from "@stories/tabstrip/tabstrip.cypress.stories";
+import { TabPanel, Tabs } from "@salt-ds/lab";
 import * as tabsStories from "@stories/tabs/tabs.stories";
-import { Tabs, TabPanel } from "@salt-ds/lab";
+import * as tabstripStories from "@stories/tabstrip/tabstrip.cypress.stories";
+import { composeStories } from "@storybook/react";
 import { version } from "react";
 
 const { SimpleTabstrip, SimpleTabstripAddRemoveTab } =
@@ -44,7 +44,7 @@ describe("Responsive rendering, Given a Tabstrip", () => {
           .should("have.length", 4);
         cy.get(OVERFLOWED_ITEMS).should("have.length", 1);
         cy.get(
-          '.saltTabstrip-inner > *:nth-child(5)[data-overflowed="true"]'
+          '.saltTabstrip-inner > *:nth-child(5)[data-overflowed="true"]',
         ).should("have.length", 1);
         cy.get(OVERFLOW_IND).should("have.length", 1);
       });
@@ -60,7 +60,7 @@ describe("Responsive rendering, Given a Tabstrip", () => {
           .should("have.length", 4);
         cy.get(OVERFLOWED_ITEMS).should("have.length", 1);
         cy.get(
-          '.saltTabstrip-inner > *:nth-child(4)[data-overflowed="true"]'
+          '.saltTabstrip-inner > *:nth-child(4)[data-overflowed="true"]',
         ).should("have.length", 1);
         cy.get(OVERFLOW_IND).should("have.length", 1);
       });
@@ -88,7 +88,7 @@ describe("Tab selection, Given a Tabstrip", () => {
         it("THEN the first tab will be selected", () => {
           cy.mount(<SimpleTabstrip width={400} />);
           cy.get(".saltTabstrip-inner > *:first-child").should(
-            "have.ariaSelected"
+            "have.ariaSelected",
           );
         });
       });
@@ -131,7 +131,7 @@ describe("Navigation, Given a Tabstrip", () => {
           cy.findByTestId("tabstop-1").focus();
           cy.get(".saltTabstrip-inner > *:first-child").realClick();
           cy.get(".saltTabstrip-inner > *:first-child").should(
-            "not.be.focusVisible"
+            "not.be.focusVisible",
           );
           cy.get(".saltTab").eq(0).should("be.focused");
         });
@@ -141,12 +141,12 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.mount(<SimpleTabstrip width={400} />);
             cy.get(".saltTabstrip-inner > *:nth-child(1)").realClick();
             cy.get(".saltTabstrip-inner > *:nth-child(1)").should(
-              "not.be.focusVisible"
+              "not.be.focusVisible",
             );
             cy.wait(100); // ArrowRight need some time to move focus after click
             cy.realPress("ArrowLeft");
             cy.get(".saltTabstrip-inner > *:nth-child(1)").should(
-              "be.focusVisible"
+              "be.focusVisible",
             );
           });
         });
@@ -173,7 +173,7 @@ describe("Navigation, Given a Tabstrip", () => {
             cy.findByTestId("tabstop-2").should("be.focused");
             cy.get(".saltTabstrip-inner > .saltFocusVisible").should(
               "have.length",
-              0
+              0,
             );
           });
         });
@@ -238,7 +238,7 @@ describe("Navigation, Given a Tabstrip", () => {
               cy.realPress("ArrowRight");
               cy.get(`${OVERFLOW_IND} > .saltButton`).should("be.focused");
             }
-          : undefined
+          : undefined,
       );
     });
   });
@@ -265,10 +265,10 @@ describe("Editable Tabs", () => {
       cy.realPress("Enter");
       cy.get(".saltTabstrip-inner  > *:nth-child(2) .saltEditableLabel").should(
         "have.class",
-        "saltEditableLabel-editing"
+        "saltEditableLabel-editing",
       );
       cy.get(
-        ".saltTabstrip-inner  > *:nth-child(2) .saltEditableLabel-input"
+        ".saltTabstrip-inner  > *:nth-child(2) .saltEditableLabel-input",
       ).should("be.focused");
     });
   });
@@ -280,10 +280,10 @@ describe("Editable Tabs", () => {
       cy.realPress("Enter");
       cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.class",
-        "saltEditableLabel-editing"
+        "saltEditableLabel-editing",
       );
       cy.get(
-        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input",
       ).should("be.focused");
     });
   });
@@ -294,10 +294,10 @@ describe("Editable Tabs", () => {
       cy.get(".saltTabstrip-inner > *:first-child").dblclick();
       cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.class",
-        "saltEditableLabel-editing"
+        "saltEditableLabel-editing",
       );
       cy.get(
-        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input",
       ).should("be.focused");
     });
   });
@@ -309,7 +309,7 @@ describe("Editable Tabs", () => {
       cy.realPress("Enter");
       cy.realType("test");
       cy.get(
-        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input",
       ).should("have.attr", "value", "test");
     });
   });
@@ -321,11 +321,11 @@ describe("Editable Tabs", () => {
       cy.realType("test");
       cy.realPress("Enter");
       cy.get(
-        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input",
       ).should("have.length", 0);
       cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.text",
-        "test"
+        "test",
       );
       cy.get(".saltTabstrip-inner  > *:first-child").should("be.focused");
     });
@@ -338,11 +338,11 @@ describe("Editable Tabs", () => {
       cy.realType("test");
       cy.realPress("Escape");
       cy.get(
-        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input"
+        ".saltTabstrip-inner  > *:first-child .saltEditableLabel-input",
       ).should("have.length", 0);
       cy.get(".saltTabstrip-inner  > *:first-child .saltEditableLabel").should(
         "have.text",
-        "Home"
+        "Home",
       );
       cy.get(".saltTabstrip-inner  > *:first-child").should("be.focused");
     });
@@ -356,7 +356,7 @@ describe("Removing Tabs.", () => {
         cy.mount(<SimpleTabstripAddRemoveTab enableCloseTab width={600} />);
         cy.get(".saltTabstrip-inner .saltTab-closeButton").should(
           "have.length",
-          5
+          5,
         );
       });
 
@@ -364,7 +364,7 @@ describe("Removing Tabs.", () => {
         it("THEN tab is closed", () => {
           cy.mount(<SimpleTabstripAddRemoveTab enableCloseTab width={600} />);
           cy.get(
-            ".saltTabstrip-inner > *:first-child .saltTab-closeButton"
+            ".saltTabstrip-inner > *:first-child .saltTab-closeButton",
           ).realClick();
           cy.get(".saltTabstrip-inner > .saltTab").should("have.length", 4);
         });
@@ -398,7 +398,7 @@ describe("Removing Tabs.", () => {
         cy.mount(<Close />);
         cy.get(".saltTab:not([data-overflowed]) .saltTab-closeButton").should(
           "have.length",
-          3
+          3,
         );
       });
     });
@@ -414,7 +414,7 @@ describe("Adding Tabs", () => {
         cy.get(".saltTabstrip-inner > *:nth-child(6)").should(
           "have.attr",
           "aria-label",
-          "Create Tab"
+          "Create Tab",
         );
       });
       it("THEN add button is included in navigation", () => {
@@ -433,25 +433,25 @@ describe("Adding Tabs", () => {
               enableAddTab
               enableRenameTab
               width={600}
-            />
+            />,
           );
           cy.get(ADD_BUTTON).realClick();
           cy.get(".saltTabstrip-inner > *").should("have.length", 7);
           cy.get(
-            ".saltTabstrip-inner > *:nth-child(6) .saltEditableLabel-input"
+            ".saltTabstrip-inner > *:nth-child(6) .saltEditableLabel-input",
           ).should("have.value", "Tab 6");
           cy.get(".saltTabstrip-inner > *:nth-child(6)").should(
             "have.attr",
-            "aria-selected"
+            "aria-selected",
           );
           cy.get(
-            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel-input"
+            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel-input",
           ).should("be.focused");
 
           cy.get(".saltTabstrip-inner > *:nth-child(7)").should(
             "have.attr",
             "aria-label",
-            "Create Tab"
+            "Create Tab",
           );
         });
       });
@@ -462,7 +462,7 @@ describe("Adding Tabs", () => {
               enableAddTab
               enableRenameTab
               width={600}
-            />
+            />,
           );
           cy.get(".saltTab").eq(4).realClick();
           cy.wait(100);
@@ -471,14 +471,14 @@ describe("Adding Tabs", () => {
           cy.realPress("Enter");
           cy.get(".saltTabstrip-inner > *").should("have.length", 7);
           cy.get(
-            ".saltTabstrip-inner > *:nth-child(6) .saltEditableLabel-input"
+            ".saltTabstrip-inner > *:nth-child(6) .saltEditableLabel-input",
           ).should("have.value", "Tab 6");
           cy.get(".saltTabstrip-inner > *:nth-child(6)").should(
             "have.attr",
-            "aria-selected"
+            "aria-selected",
           );
           cy.get(
-            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel-input"
+            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel-input",
           ).should("be.focused");
         });
       });
@@ -491,11 +491,11 @@ describe("Adding Tabs", () => {
               enableRenameTab
               promptForNewTabName={false}
               width={600}
-            />
+            />,
           );
           cy.get(ADD_BUTTON).realClick();
           cy.get(
-            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel"
+            ".saltTabstrip-inner  > *:nth-child(6) .saltEditableLabel",
           ).should("not.have.class", "saltEditableLabel-editing");
         });
 
@@ -531,7 +531,7 @@ describe("Adding Tabs", () => {
         cy.mount(
           <Tabs enableAddTab onAddTab={onAddTab} style={{ width: 600 }}>
             <TabPanel label="test" />
-          </Tabs>
+          </Tabs>,
         );
         cy.findByRole("button", { name: "Create Tab" }).should("be.visible");
         cy.findByRole("button", { name: "Create Tab" }).realClick();
@@ -548,7 +548,7 @@ describe("Adding Tabs", () => {
         cy.get(".saltTabstrip-inner > *:nth-child(7)").should(
           "have.attr",
           "aria-label",
-          "Create Tab"
+          "Create Tab",
         );
       });
     });
@@ -570,7 +570,7 @@ describe("Adding Tabs", () => {
         cy.get(".saltTabstrip-inner > *:nth-child(7)").should(
           "have.attr",
           "aria-label",
-          "Create Tab"
+          "Create Tab",
         );
       });
     });
@@ -593,7 +593,7 @@ describe("Adding Tabs", () => {
         cy.get(".saltTabstrip-inner > *:nth-child(9)").should(
           "have.attr",
           "aria-label",
-          "Create Tab"
+          "Create Tab",
         );
       });
     });
@@ -614,12 +614,12 @@ describe("Adding Tabs", () => {
         cy.get(".saltTabstrip-inner > *:nth-child(10)").should(
           "have.attr",
           "data-overflow-indicator",
-          "true"
+          "true",
         );
         cy.get(".saltTabstrip-inner > *:nth-child(11)").should(
           "have.attr",
           "aria-label",
-          "Create Tab"
+          "Create Tab",
         );
       });
       it("THEN new tab is selected and remains visible", () => {
@@ -667,7 +667,7 @@ describe("Adding Tabs", () => {
                   cy.get(".saltTab").eq(9).should("be.focused");
                 });
             }
-          : undefined
+          : undefined,
       );
     });
   });
@@ -679,10 +679,10 @@ describe("7) Focus management", () => {
       cy.mount(<SimpleTabstrip enableAddTab width={600} />);
       cy.get('.saltTabstrip-inner > .saltTab[tabindex="-1"]').should(
         "have.length",
-        4
+        4,
       );
       cy.get(
-        '.saltTabstrip-inner > .saltTab[tabindex="0"][aria-selected="true"]'
+        '.saltTabstrip-inner > .saltTab[tabindex="0"][aria-selected="true"]',
       ).should("have.length", 1);
     });
   });
@@ -693,10 +693,10 @@ describe("7) Focus management", () => {
       cy.get(".saltTabstrip-inner > *:first-child").realClick();
       cy.get('.saltTabstrip-inner > .saltTab[tabindex="-1"]').should(
         "have.length",
-        5
+        5,
       );
       cy.get(
-        '.saltTabstrip-inner > .saltTab[tabindex="-1"][aria-selected="true"]'
+        '.saltTabstrip-inner > .saltTab[tabindex="-1"][aria-selected="true"]',
       ).should("have.length", 1);
     });
   });
@@ -709,10 +709,10 @@ describe("7) Focus management", () => {
       cy.realPress("Tab");
       cy.get('.saltTabstrip-inner > .saltTab[tabindex="-1"]').should(
         "have.length",
-        4
+        4,
       );
       cy.get(
-        '.saltTabstrip-inner > .saltTab[tabindex="0"][aria-selected="true"]'
+        '.saltTabstrip-inner > .saltTab[tabindex="0"][aria-selected="true"]',
       ).should("have.length", 1);
     });
   });

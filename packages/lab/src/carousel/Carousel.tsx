@@ -1,27 +1,27 @@
 import {
   Button,
   GridLayout,
-  makePrefixer,
   RadioButton,
   RadioButtonGroup,
+  makePrefixer,
   useId,
 } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
+  type ChangeEventHandler,
   Children,
+  type HTMLAttributes,
+  type ReactElement,
   forwardRef,
-  HTMLAttributes,
-  ReactElement,
   useEffect,
 } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { DeckLayout } from "../deck-layout";
-import { clsx } from "clsx";
 
-import { useSlideSelection } from "../utils";
-import { CarouselSlideProps } from "./CarouselSlide";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useSlideSelection } from "../utils";
+import type { CarouselSlideProps } from "./CarouselSlide";
 
 import carouselCss from "./Carousel.css";
 
@@ -73,7 +73,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       id: idProp,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -108,7 +108,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       if (process.env.NODE_ENV !== "production") {
         if (slidesCount < 1) {
           console.warn(
-            "Carousel component requires more than one children to render. At least two elements should be provided."
+            "Carousel component requires more than one children to render. At least two elements should be provided.",
           );
         }
       }
@@ -126,7 +126,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         className={clsx(
           withBaseName(),
           compact && withBaseName("compact"),
-          className
+          className,
         )}
         {...rest}
       >
@@ -167,5 +167,5 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         </div>
       </GridLayout>
     );
-  }
+  },
 );

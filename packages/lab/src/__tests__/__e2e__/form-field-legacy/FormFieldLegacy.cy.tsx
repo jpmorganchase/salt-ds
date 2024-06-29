@@ -1,4 +1,4 @@
-import { Input, FormField, useFormFieldLegacyProps } from "@salt-ds/lab";
+import { FormField, Input, useFormFieldLegacyProps } from "@salt-ds/lab";
 
 const MockControl = ({ ...rest }: any) => {
   const FormFieldLegacyProps = useFormFieldLegacyProps();
@@ -21,14 +21,14 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="A label" LabelProps={{ id: "label-id" }}>
           <MockControl />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByLabelText("A label").should("exist");
       cy.findByText("Child Component").should(
         "have.attr",
         "aria-labelledby",
-        "label-id"
+        "label-id",
       );
     });
   });
@@ -38,7 +38,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Disabled form field" disabled>
           <MockControl />
-        </FormField>
+        </FormField>,
       );
       cy.findByText("Child Component").should("have.attr", "disabled");
     });
@@ -54,7 +54,7 @@ describe("GIVEN a FormField", () => {
           HelperTextProps={{ id: "helper-text" }}
         >
           <MockControl />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByText("Helper Text").should("exist");
@@ -69,7 +69,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="A label">
           <MockControl />
-        </FormField>
+        </FormField>,
       );
       cy.findByText("Helper Text").should("not.exist");
     });
@@ -80,7 +80,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Readonly form field" readOnly>
           <MockControl />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByText("Child Component").should("have.attr", "readonly");
@@ -92,12 +92,12 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Required form field" required>
           <MockControl />
-        </FormField>
+        </FormField>,
       );
       cy.findByText("Child Component").should(
         "have.attr",
         "aria-required",
-        "true"
+        "true",
       );
       cy.findByLabelText(/Required/i).should("contain.text", "Child Component");
     });
@@ -108,7 +108,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Form field label" required={false}>
           <MockControl />
-        </FormField>
+        </FormField>,
       );
       cy.findByLabelText(/Required/i).should("not.exist");
     });
@@ -122,11 +122,11 @@ describe("GIVEN a FormField", () => {
             LabelProps={{ displayedNecessity: "optional" }}
           >
             <MockControl />
-          </FormField>
+          </FormField>,
         );
         cy.findByLabelText(/Optional/i).should(
           "contain.text",
-          "Child Component"
+          "Child Component",
         );
       });
     });
@@ -137,11 +137,11 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Warning validation status" validationStatus="warning">
           <Input defaultValue="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByTestId("WarningIndicatorIcon").should(
         "have.class",
-        "saltFormActivationIndicator-icon"
+        "saltFormActivationIndicator-icon",
       );
     });
 
@@ -153,7 +153,7 @@ describe("GIVEN a FormField", () => {
           hasStatusIndicator
         >
           <Input defaultValue="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByTestId("WarningIndicatorIcon").should("not.exist");
     });
@@ -164,11 +164,11 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Error validation status" validationStatus="error">
           <Input defaultValue="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByTestId("ErrorIndicatorIcon").should(
         "have.class",
-        "saltFormActivationIndicator-icon"
+        "saltFormActivationIndicator-icon",
       );
     });
 
@@ -180,7 +180,7 @@ describe("GIVEN a FormField", () => {
           hasStatusIndicator
         >
           <Input defaultValue="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByTestId("ErrorIndicatorIcon").should("not.exist");
     });
@@ -191,7 +191,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField label="Warning validation status">
           <Input defaultValue="Value" data-testid="test-id-1" />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByRole("textbox").focus();
@@ -203,14 +203,14 @@ describe("GIVEN a FormField", () => {
         cy.mount(
           <FormField label="Warning validation status">
             <Input defaultValue="Value" data-testid="test-id-1" />
-          </FormField>
+          </FormField>,
         );
 
         cy.findByRole("textbox").focus();
         cy.get(".saltFormFieldLegacy-focused").should("exist");
         cy.findByTestId("test-id-1").should(
           "not.have.class",
-          "saltInputLegacy-focused"
+          "saltInputLegacy-focused",
         );
       });
     });
