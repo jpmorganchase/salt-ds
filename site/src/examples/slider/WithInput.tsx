@@ -1,19 +1,19 @@
-import { ReactElement, useState, ChangeEvent } from "react";
+import { ReactElement, useState } from "react";
 import { Slider, SliderValue, SliderChangeHandler } from "@salt-ds/lab";
 import {
   StackLayout,
   FormField,
   FormFieldLabel,
   FlexLayout,
-  Input,
 } from "@salt-ds/core";
+
+import { StepperInput } from "@salt-ds/lab";
 
 export const SingleWithInput = () => {
   const [value, setValue] = useState<SliderValue>([20]);
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setValue([+inputValue]);
+  const handleInputChange = (value: number) => {
+    setValue([value]);
   };
 
   const handleChange: SliderChangeHandler = (value: number[]) => {
@@ -30,10 +30,10 @@ export const SingleWithInput = () => {
           alignItems: "center",
         }}
       >
-        <Input
-          placeholder={`${value[0]}`}
-          value={`${value[0]}`}
-          style={{ width: "1px", margin: "5px" }}
+        <StepperInput
+          step={10}
+          value={value[0]}
+          style={{ width: "60px", margin: "5px" }}
           onChange={handleInputChange}
         />
         <Slider
@@ -49,56 +49,65 @@ export const SingleWithInput = () => {
   );
 };
 
-function validate(minValue: number, maxValue: number) {
+function validate(minValue: number | string, maxValue: number | string) {
+  minValue = Number(minValue);
+  maxValue = Number(maxValue);
+
+  if (minValue < 0) return false;
+  if (maxValue > 100) return false;
   if (minValue > maxValue) return false;
-  else return true;
+  return true;
 }
 
 const RangeWithInput = () => {
   const [value, setValue] = useState([20, 60]);
-  const [minValue, setMinValue] = useState(`${value[0]}`);
-  const [maxValue, setMaxValue] = useState(`${value[1]}`);
-  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
-    undefined
-  );
+  const [minValue, setMinValue] = useState<number>(value[0]);
+  const [maxValue, setMaxValue] = useState<number>(value[1]);
+  const [validationMinStatus, setMinValidationStatus] = useState<
+    undefined | "error"
+  >(undefined);
+  const [validationMaxStatus, setMaxValidationStatus] = useState<
+    undefined | "error"
+  >(undefined);
 
-  const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setMinValue(inputValue);
+  const handleMinInputChange = (inputValue: number) => {
+    if (validate(inputValue, maxValue)) {
+      setMinValidationStatus(undefined);
+      setValue([inputValue, maxValue]);
+      setMinValue(inputValue);
+    } else {
+      setMinValidationStatus("error");
+    }
   };
 
-  const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setMaxValue(inputValue);
-  };
-
-  const handleInputBlur = () => {
-    const minNumVal = parseFloat(minValue);
-    const maxNumVal = parseFloat(maxValue);
-    const validated = validate(minNumVal, maxNumVal);
-    validated
-      ? (setValue([minNumVal, maxNumVal]), setValidationStatus(undefined))
-      : setValidationStatus("error");
+  const handleMaxInputChange = (inputValue: number) => {
+    if (validate(minValue, inputValue)) {
+      setMaxValidationStatus(undefined);
+      setValue([minValue, inputValue]);
+      setMaxValue(inputValue);
+    } else {
+      setMaxValidationStatus("error");
+    }
   };
 
   const handleSliderChange: SliderChangeHandler = (value: number[]) => {
     setValue(value);
-    setMinValue(`${value[0]}`);
-    setMaxValue(`${value[1]}`);
+    setMinValue(value[0]);
+    setMaxValue(value[1]);
   };
 
   return (
     <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Slider with Input</FormFieldLabel>
       <FlexLayout gap={2} align="center">
-        <Input
-          placeholder={`${minValue}`}
-          value={minValue}
-          style={{ width: "10px", margin: "5px" }}
-          onBlur={handleInputBlur}
+        <StepperInput
+          step={10}
+          value={value[0]}
+          style={{ width: "60px", margin: "5px" }}
           onChange={handleMinInputChange}
-          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
-          validationStatus={validationStatus}
+          validationStatus={validationMinStatus}
+          min={0}
+          max={100}
         />
         <Slider
           style={{ flexGrow: 1 }}
@@ -108,14 +117,14 @@ const RangeWithInput = () => {
           onChange={handleSliderChange}
           aria-label="withInput"
         />
-        <Input
-          placeholder={`${maxValue}`}
-          value={maxValue}
-          style={{ width: "10px" }}
-          onBlur={handleInputBlur}
+        <StepperInput
+          step={10}
+          value={value[1]}
+          style={{ width: "60px", margin: "5px" }}
           onChange={handleMaxInputChange}
-          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
-          validationStatus={validationStatus}
+          validationStatus={validationMaxStatus}
+          min={0}
+          max={100}
         />
       </FlexLayout>
     </FormField>
