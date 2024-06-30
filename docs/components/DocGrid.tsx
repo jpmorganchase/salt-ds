@@ -17,8 +17,8 @@ export const DocGrid = ({
   return (
     <div
       className={clsx("saltDocGrid", className, {
-        ["saltDocGrid-textExample"]: textExample,
-        ["saltDocGrid-withNotes"]: withNotes,
+        "saltDocGrid-textExample": textExample,
+        "saltDocGrid-withNotes": withNotes,
       })}
     >
       {children}

@@ -6,6 +6,6 @@ export const InteractableCardExample = (): ReactElement => {
     <InteractableCard
       accent="top"
       style={{ width: "260px", height: "144px" }}
-    ></InteractableCard>
+    />
   );
 };

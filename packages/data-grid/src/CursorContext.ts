@@ -17,7 +17,7 @@ export const CursorContext = createContext<CursorContext | undefined>(
 export const useCursorContext = () => {
   const c = useContext(CursorContext);
   if (!c) {
-    throw new Error(`useCursorContext invoked outside of a Grid`);
+    throw new Error("useCursorContext invoked outside of a Grid");
   }
   return c;
 };

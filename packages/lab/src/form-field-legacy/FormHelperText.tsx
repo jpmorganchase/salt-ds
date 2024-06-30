@@ -31,13 +31,12 @@ export const FormHelperText = <E extends React.ElementType = "p">({
           {helperText}
         </p>
       );
-    } else if (helperTextPlacement === "tooltip") {
+    }
+    if (helperTextPlacement === "tooltip") {
       console.warn("helperTextPlacement tooltip has not yet implemented");
       return null;
-    } else {
-      return null;
     }
-  } else {
     return null;
   }
+  return null;
 };

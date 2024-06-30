@@ -102,9 +102,8 @@ export const getDraggedItem = (
   const result = measuredItems.find((item) => item.isDraggedElement);
   if (result) {
     return result;
-  } else {
-    throw Error("measuredItems do not contain a draggedElement");
   }
+  throw Error("measuredItems do not contain a draggedElement");
 };
 
 export const moveDragItem = (
@@ -186,9 +185,11 @@ export const getNextDropTarget = (
       const { start, mid, end } = dropTarget;
       if (pos > end) {
         continue;
-      } else if (pos > mid) {
+      }
+      if (pos > mid) {
         return dropTarget.isDraggedElement ? null : dropTarget;
-      } else if (pos > start) {
+      }
+      if (pos > start) {
         dropTarget = dropTargets[index - 1];
         return dropTarget.isDraggedElement ? null : dropTarget;
       }
@@ -199,9 +200,11 @@ export const getNextDropTarget = (
       const { start, mid, end } = dropTarget;
       if (pos < start) {
         continue;
-      } else if (pos < mid) {
+      }
+      if (pos < mid) {
         return dropTarget.isDraggedElement ? null : dropTarget;
-      } else if (pos < end) {
+      }
+      if (pos < end) {
         dropTarget = dropTargets[Math.min(len - 1, index + 1)];
         return dropTarget.isDraggedElement ? null : dropTarget;
       }

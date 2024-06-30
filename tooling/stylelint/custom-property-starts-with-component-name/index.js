@@ -1,6 +1,6 @@
 const valueParser = require("postcss-value-parser");
 const stylelint = require("stylelint");
-const path = require("path");
+const path = require("node:path");
 const glob = require("fast-glob");
 
 const { report, ruleMessages } = stylelint.utils;
@@ -17,14 +17,14 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
   return [
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop && raws.prop.prefix,
+    raws.prop?.prefix,
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    (raws.prop && raws.prop.raw) || decl.prop,
+    raws.prop?.raw || decl.prop,
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop && raws.prop.suffix,
+    raws.prop?.suffix,
     raws.between || ":",
     // @ts-expect-error -- TS2339: Property 'prefix' does not exist on type '{ value: string; raw: string; }'.
-    raws.value && raws.value.prefix,
+    raws.value?.prefix,
   ].reduce((count, str) => {
     if (str) {
       return count + str.length;
@@ -40,7 +40,7 @@ const ruleName = "salt/custom-property-starts-with-component-name";
 
 const messages = ruleMessages(ruleName, {
   expected: (pattern) =>
-    `Local tokens should start with --componentName, CSS API variables should start with --saltComponentName`, // Can encode option in error message if needed
+    "Local tokens should start with --componentName, CSS API variables should start with --saltComponentName", // Can encode option in error message if needed
 });
 
 const meta = {

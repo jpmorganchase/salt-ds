@@ -52,7 +52,6 @@ export const liftResponsivePropsToFormField = (
       },
       [{}, {}],
     );
-  } else {
-    return [{}, props];
   }
+  return [{}, props];
 };

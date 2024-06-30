@@ -76,7 +76,7 @@ const GridVariantsTemplate: StoryFn<{}> = () => {
       <Grid
         rowData={rowData}
         rowKeyGetter={dummyRowKeyGetter}
-        className={clsx("grid", { ["grid-uhd"]: uhd })}
+        className={clsx("grid", { "grid-uhd": uhd })}
         variant={variant !== "zebra" ? variant : "primary"}
         zebra={variant === "zebra"}
         columnSeparators={separators}

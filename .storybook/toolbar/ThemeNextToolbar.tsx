@@ -81,9 +81,7 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
         },
         ...globalOptions[globalKey].items.map((value) => {
           const disabled =
-            globalKey === "themeNext"
-              ? false
-              : globals["themeNext"] !== "enable";
+            globalKey === "themeNext" ? false : globals.themeNext !== "enable";
           const active = globals[globalKey] === value;
 
           return {

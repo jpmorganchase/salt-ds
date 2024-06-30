@@ -170,10 +170,10 @@ const generateCountrySymbolComponents = ({
     let viewBox;
     let sharpViewBox;
 
-    const newFilePath = path.join(componentsPath, countryCode + ".tsx");
+    const newFilePath = path.join(componentsPath, `${countryCode}.tsx`);
     const newSharpFilePath = path.join(
       componentsPath,
-      countryCode + "_Sharp.tsx",
+      `${countryCode}_Sharp.tsx`,
     );
 
     countryMetaMap[countryCode] = {
@@ -229,10 +229,9 @@ const generateCountrySymbolComponents = ({
                       typeof value === "string" &&
                       value.includes("mask-type:")
                     ) {
-                      newAttributes["style"] =
-                        `${REPLACE_START}{{ maskType: '${value.slice(
-                          10,
-                        )}' }}${REPLACE_END}`;
+                      newAttributes.style = `${REPLACE_START}{{ maskType: '${value.slice(
+                        10,
+                      )}' }}${REPLACE_END}`;
                       // Allow each component instance to use unique ids for masks
                     } else if (name === "id") {
                       newAttributes[svgAttributeMap[name] || name] =
@@ -334,7 +333,7 @@ const generateCountrySymbolComponents = ({
     });
     const sharpFileContents = Mustache.render(template, {
       svgElements: sharpSvgPaths.data,
-      componentName: countryCodeToComponentName(countryCode) + "_Sharp",
+      componentName: `${countryCodeToComponentName(countryCode)}_Sharp`,
       ariaLabel: countryName,
       viewBox: sharpViewBox ?? "0 0 72 50",
       sharp: true,

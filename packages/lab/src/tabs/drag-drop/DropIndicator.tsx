@@ -21,7 +21,7 @@ export const DropIndicator = forwardRef<
   return (
     <Portal>
       <div
-        className={`saltDropIndicator`}
+        className={"saltDropIndicator"}
         ref={forwardedRef}
         style={{ left, top, width, height }}
       />

@@ -80,7 +80,7 @@ const Icons = () => {
   return (
     <div className={className}>
       {providedIcons.map((x) => (
-        <div key={x} className={"ag-icon-" + x}>
+        <div key={x} className={`ag-icon-${x}`}>
           {x}
         </div>
       ))}

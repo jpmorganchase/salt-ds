@@ -152,9 +152,8 @@ const getCities = (state) => {
     return usa_cities[state].map((city) => ({
       label: city,
     }));
-  } else {
-    return [];
   }
+  return [];
 };
 
 export const usa_states_cities = usa_states.map((state) => ({

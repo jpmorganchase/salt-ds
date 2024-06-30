@@ -259,9 +259,9 @@ export function useTokenizedInput<Item>(
     }
 
     if (newExpanded) {
-      onExpand && onExpand();
+      onExpand?.();
     } else {
-      onCollapse && onCollapse();
+      onCollapse?.();
     }
 
     if (popoutMode && popoutActions) {
@@ -545,7 +545,7 @@ export function useTokenizedInput<Item>(
   const handleCtrlModifierKeyDown: InputHTMLAttributes<HTMLInputElement>["onKeyDown"] =
     (event) => {
       const win = ownerWindow(event.target as HTMLElement);
-      const supportClipboard = win.navigator && win.navigator.clipboard;
+      const supportClipboard = win.navigator?.clipboard;
 
       switch (event.key.toUpperCase()) {
         case "A":

@@ -36,9 +36,9 @@ export const NecessityIndicator = ({
     necessityText = necessityTextProp;
   } else {
     if (required && displayedNecessity === "required") {
-      necessityText = `(Required)`;
+      necessityText = "(Required)";
     } else if (!required && displayedNecessity === "optional") {
-      necessityText = `(Optional)`;
+      necessityText = "(Optional)";
     }
   }
 

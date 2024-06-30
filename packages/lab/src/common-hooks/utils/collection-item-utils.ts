@@ -66,7 +66,8 @@ export const countChildItems = <Item>(
 ): number => {
   if (item.childNodes) {
     return item.childNodes.length;
-  } else if (item.header) {
+  }
+  if (item.header) {
     let i = idx + 1;
     let count = 0;
     while (i < items.length && !items[i].header) {
@@ -74,9 +75,8 @@ export const countChildItems = <Item>(
       i++;
     }
     return count;
-  } else {
-    return 0;
   }
+  return 0;
 };
 
 export const getChildLabel = (
@@ -88,9 +88,11 @@ export const getChildLabel = (
 ): string | undefined => {
   if (typeof element.props.children === "string") {
     return element.props.children;
-  } else if (element.props.title) {
+  }
+  if (element.props.title) {
     return element.props.title;
-  } else if (element.props.label) {
+  }
+  if (element.props.label) {
     return element.props.label;
   }
 };
@@ -104,9 +106,8 @@ export const childIsGroup = (child: ReactElement): boolean =>
 const childIsSelectable = (child: ReactElement) => {
   if (childItemHasProp(child, "selectable")) {
     return (child as SelectableElement).props.selectable === true;
-  } else {
-    return !childIsGroup(child) && !childIsHeader(child);
   }
+  return !childIsGroup(child) && !childIsHeader(child);
 };
 
 export const getChildNodes = (
@@ -157,23 +158,23 @@ export const sourceItems = <T>(
           value: null,
         },
       ];
-    } else {
-      return source.map(
-        (item: { description?: string; expanded?: boolean }, index) =>
-          ({
-            childNodes: sourceItems(
-              (item as unknown as SourceGroup<T>).childNodes,
-              options,
-            ),
-            description: item.description,
-            expanded: item.expanded,
-            value: item,
-            label:
-              options?.itemToString?.(item as T) ?? defaultItemToString(item),
-          }) as CollectionItemWithoutId<T>,
-      );
     }
-  } else if (source) {
+    return source.map(
+      (item: { description?: string; expanded?: boolean }, index) =>
+        ({
+          childNodes: sourceItems(
+            (item as unknown as SourceGroup<T>).childNodes,
+            options,
+          ),
+          description: item.description,
+          expanded: item.expanded,
+          value: item,
+          label:
+            options?.itemToString?.(item as T) ?? defaultItemToString(item),
+        }) as CollectionItemWithoutId<T>,
+    );
+  }
+  if (source) {
     throw Error("list-child-items expects source to be an array");
   }
 };
@@ -217,9 +218,8 @@ const PATH_SEPARATORS = new Set([".", "/"]);
 function isDescendantOf(basePath: string, targetPath: string) {
   if (!targetPath.startsWith(basePath)) {
     return false;
-  } else {
-    return PATH_SEPARATORS.has(targetPath.charAt(basePath.length));
   }
+  return PATH_SEPARATORS.has(targetPath.charAt(basePath.length));
 }
 
 export function replaceCollectionItem<Item>(
@@ -234,15 +234,15 @@ export function replaceCollectionItem<Item>(
         ...node,
         ...props,
       };
-    } else if (isDescendantOf(node.id, id) && node.childNodes) {
+    }
+    if (isDescendantOf(node.id, id) && node.childNodes) {
       childNodes = replaceCollectionItem<Item>(node.childNodes, id, props);
       return {
         ...node,
         childNodes,
       };
-    } else {
-      return node;
     }
+    return node;
   });
 
   return newNodes;

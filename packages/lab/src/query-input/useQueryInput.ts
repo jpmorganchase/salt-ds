@@ -91,13 +91,11 @@ export function useQueryInput(
       inputRef.current.focus();
       return;
     }
-    const isFocusWithinBody =
-      bodyRef.current && bodyRef.current.contains(relatedTarget);
+    const isFocusWithinBody = bodyRef.current?.contains(relatedTarget);
     if (isFocusWithinBody) {
       return;
     }
-    const isFocusWithinPopper =
-      popperRef.current && popperRef.current.contains(relatedTarget);
+    const isFocusWithinPopper = popperRef.current?.contains(relatedTarget);
     if (isFocusWithinPopper) {
       inputRef.current.focus();
       return;
@@ -117,13 +115,11 @@ export function useQueryInput(
     if (isBodyFocused) {
       return;
     }
-    const isFocusWithinBody =
-      bodyRef.current && bodyRef.current.contains(relatedTarget);
+    const isFocusWithinBody = bodyRef.current?.contains(relatedTarget);
     if (isFocusWithinBody) {
       return;
     }
-    const isFocusWithinPopper =
-      popperRef.current && popperRef.current.contains(relatedTarget);
+    const isFocusWithinPopper = popperRef.current?.contains(relatedTarget);
     if (isFocusWithinPopper) {
       return;
     }
@@ -132,11 +128,9 @@ export function useQueryInput(
   };
 
   const onSelectedItemsChange = (newItems: QueryInputItem[] | undefined) => {
-    const newItem =
-      newItems &&
-      newItems.find(
-        (item) => item.category == null && item.value === inputValue,
-      );
+    const newItem = newItems?.find(
+      (item) => item.category == null && item.value === inputValue,
+    );
     if (newItem) {
       setInputValue("");
     }
@@ -482,13 +476,14 @@ function nextSearchItemIndex(
   // Note: allow 1 for the extra ListItem we append to end of List
   if (nextIndex === indexPositions.length + 1) {
     return index;
-  } else if (nextIndex === indexPositions.length) {
-    return nextIndex;
-  } else if (typeof indexPositions[nextIndex] === "string") {
-    return nextIndex;
-  } else {
-    return nextIndex + 1;
   }
+  if (nextIndex === indexPositions.length) {
+    return nextIndex;
+  }
+  if (typeof indexPositions[nextIndex] === "string") {
+    return nextIndex;
+  }
+  return nextIndex + 1;
 }
 
 function prevSearchItemIndex(
@@ -498,9 +493,9 @@ function prevSearchItemIndex(
   const nextIndex = index - 1;
   if (nextIndex === 0) {
     return index;
-  } else if (typeof indexPositions[nextIndex] === "string") {
-    return nextIndex;
-  } else {
-    return nextIndex - 1;
   }
+  if (typeof indexPositions[nextIndex] === "string") {
+    return nextIndex;
+  }
+  return nextIndex - 1;
 }

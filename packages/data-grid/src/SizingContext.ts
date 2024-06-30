@@ -13,7 +13,7 @@ export const SizingContext = createContext<SizingContext | undefined>(
 export const useSizingContext = () => {
   const c = useContext(SizingContext);
   if (!c) {
-    throw new Error(`useSizingContext invoked outside of a Grid`);
+    throw new Error("useSizingContext invoked outside of a Grid");
   }
   return c;
 };

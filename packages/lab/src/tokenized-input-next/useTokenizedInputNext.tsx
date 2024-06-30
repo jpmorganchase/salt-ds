@@ -547,7 +547,7 @@ export function useTokenizedInputNext<Item>(
                   .filter(Boolean)
                   .join(primaryDelimiter)
               : highlightedIndex !== undefined
-                ? String(selectedItems[highlightedIndex] + ",")
+                ? String(`${selectedItems[highlightedIndex]},`)
                 : "";
           copy(textToCopy)
             .then((result) => {

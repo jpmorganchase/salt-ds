@@ -45,23 +45,23 @@ const isNavigationKey = (
 function nextItemIdx(count: number, direction: directionType, idx: number) {
   if (direction === "start") {
     return 0;
-  } else if (direction === "end") {
+  }
+  if (direction === "end") {
     return count - 1;
-  } else if (direction === "bwd") {
+  }
+  if (direction === "bwd") {
     if (idx > 0) {
       return idx - 1;
-    } else {
-      return idx;
     }
-  } else {
-    if (idx === null) {
-      return 0;
-    } else if (idx === count - 1) {
-      return idx;
-    } else {
-      return idx + 1;
-    }
+    return idx;
   }
+  if (idx === null) {
+    return 0;
+  }
+  if (idx === count - 1) {
+    return idx;
+  }
+  return idx + 1;
 }
 
 const isFocusable = (item: OverflowItem) => !item.overflowed;
@@ -207,9 +207,8 @@ export const useKeyboardNavigation = ({
         );
         if (newIdx === nextIdx) {
           break;
-        } else {
-          nextIdx = newIdx;
         }
+        nextIdx = newIdx;
       }
       return nextIdx;
     },

@@ -64,7 +64,7 @@ export function useAgGridHelpers({
 
   const className = clsx(
     containerClassName,
-    `ag-theme-salt${compact && density === "high" ? `-compact` : ``}-${mode}`,
+    `ag-theme-salt${compact && density === "high" ? "-compact" : ""}-${mode}`,
   );
 
   const onGridReady = useCallback(({ api, columnApi }: GridReadyEvent) => {

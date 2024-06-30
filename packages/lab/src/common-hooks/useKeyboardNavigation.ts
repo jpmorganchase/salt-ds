@@ -34,18 +34,16 @@ function nextItemIdx(count: number, key: string, idx: number) {
   if (key === ArrowUp || key === End) {
     if (idx > 0) {
       return idx - 1;
-    } else {
-      return idx;
     }
-  } else {
-    if (idx === null) {
-      return 0;
-    } else if (idx === count - 1) {
-      return idx;
-    } else {
-      return idx + 1;
-    }
+    return idx;
   }
+  if (idx === null) {
+    return 0;
+  }
+  if (idx === count - 1) {
+    return idx;
+  }
+  return idx + 1;
 }
 
 const getIndexOfSelectedItem = (
@@ -55,9 +53,8 @@ const getIndexOfSelectedItem = (
   const selectedItem = getFirstSelectedItem(selected);
   if (selectedItem) {
     return items.indexOf(selectedItem);
-  } else {
-    return -1;
   }
+  return -1;
 };
 
 const getStartIdx = (
@@ -68,24 +65,24 @@ const getStartIdx = (
 ) => {
   if (key === End) {
     return length;
-  } else if (key === Home) {
-    return -1;
-  } else if (idx !== -1) {
-    return idx;
-  } else {
-    return selectedIdx;
   }
+  if (key === Home) {
+    return -1;
+  }
+  if (idx !== -1) {
+    return idx;
+  }
+  return selectedIdx;
 };
 
 const getItemRect = (item: CollectionItem<unknown>) => {
   const el = document.getElementById(item.id);
   if (el) {
     return el.getBoundingClientRect();
-  } else {
-    throw Error(
-      `useKeyboardNavigation.getItemRect no element found for item  #${item?.id}`,
-    );
   }
+  throw Error(
+    `useKeyboardNavigation.getItemRect no element found for item  #${item?.id}`,
+  );
 };
 
 const pageDown = (
@@ -206,41 +203,36 @@ export const useKeyboardNavigation = <
     ) => {
       if (indexPositions.length === 0) {
         return -1;
-      } else {
-        const indexOfSelectedItem = getIndexOfSelectedItem(
-          indexPositions,
-          selected,
-        );
-        // The start index is generally the highlightedIdx (passed in as idx).
-        // We don't need it for Home and End navigation.
-        // Special case where we have selection, but no highlighting - begin
-        // navigation from selected item.
-        const startIdx = getStartIdx(
-          key,
-          idx,
-          indexOfSelectedItem,
-          indexPositions.length,
-        );
-
-        let nextIdx = nextItemIdx(indexPositions.length, key, startIdx);
-        // Guard against returning zero, when first item is a header or group
-        if (
-          nextIdx === 0 &&
-          key === ArrowUp &&
-          !isFocusable(indexPositions[0])
-        ) {
-          return idx;
-        }
-        while (
-          (((key === ArrowDown || key === Home) &&
-            nextIdx < indexPositions.length) ||
-            ((key === ArrowUp || key === End) && nextIdx > 0)) &&
-          !isFocusable(indexPositions[nextIdx])
-        ) {
-          nextIdx = nextItemIdx(indexPositions.length, key, nextIdx);
-        }
-        return nextIdx;
       }
+      const indexOfSelectedItem = getIndexOfSelectedItem(
+        indexPositions,
+        selected,
+      );
+      // The start index is generally the highlightedIdx (passed in as idx).
+      // We don't need it for Home and End navigation.
+      // Special case where we have selection, but no highlighting - begin
+      // navigation from selected item.
+      const startIdx = getStartIdx(
+        key,
+        idx,
+        indexOfSelectedItem,
+        indexPositions.length,
+      );
+
+      let nextIdx = nextItemIdx(indexPositions.length, key, startIdx);
+      // Guard against returning zero, when first item is a header or group
+      if (nextIdx === 0 && key === ArrowUp && !isFocusable(indexPositions[0])) {
+        return idx;
+      }
+      while (
+        (((key === ArrowDown || key === Home) &&
+          nextIdx < indexPositions.length) ||
+          ((key === ArrowUp || key === End) && nextIdx > 0)) &&
+        !isFocusable(indexPositions[nextIdx])
+      ) {
+        nextIdx = nextItemIdx(indexPositions.length, key, nextIdx);
+      }
+      return nextIdx;
     },
     [indexPositions, selected],
   );

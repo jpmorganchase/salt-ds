@@ -285,10 +285,8 @@ const announces: ChaiPlugin = (_chai, utils) => {
       const isCompatibleMessage = checkMessage(announcement, msgMatcher);
       this.assert(
         isCompatibleMessage,
-        "expected to announce message " +
-          placeholder +
-          " #{exp} but got #{act}",
-        "expected to not announce message " + placeholder + " #{exp}",
+        `expected to announce message ${placeholder} #{exp} but got #{act}`,
+        `expected to not announce message ${placeholder} #{exp}`,
         msgMatcher,
         announcement,
       );
@@ -432,7 +430,7 @@ const isInTheViewport: ChaiPlugin = (_chai, utils) => {
       `Expected an Element but got '${String(root)}'`,
     ).to.equal(1);
 
-    const viewportHeight = Cypress.config(`viewportHeight`);
+    const viewportHeight = Cypress.config("viewportHeight");
     const rect = root.getBoundingClientRect();
 
     this.assert(

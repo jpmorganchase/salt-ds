@@ -169,7 +169,7 @@ export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
           value={selectedItem}
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
-        ></Input>
+        />
       )}
       <ListNext
         {...rest}

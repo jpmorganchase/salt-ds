@@ -95,7 +95,7 @@ export const AlphaInput = ({
       value={
         showAsOpacity
           ? alphaInputValue
-            ? (Number.parseFloat(alphaInputValue) * 100).toString() + "%"
+            ? `${(Number.parseFloat(alphaInputValue) * 100).toString()}%`
             : "%"
           : alphaInputValue
       }

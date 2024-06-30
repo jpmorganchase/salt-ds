@@ -83,10 +83,9 @@ const makeFilterFunction = (
   if (booleanOperator === "or") {
     return (row: QueryResultRow) =>
       items.some((item) => matchQueryItem(row, item));
-  } else {
-    return (row: QueryResultRow) =>
-      items.every((item) => matchQueryItem(row, item));
   }
+  return (row: QueryResultRow) =>
+    items.every((item) => matchQueryItem(row, item));
 };
 
 const DevelopmentStory: StoryFn<StoryProps> = (props) => {

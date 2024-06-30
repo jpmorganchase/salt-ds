@@ -7,6 +7,6 @@ export const DisabledInteractableCard = (): ReactElement => {
       accent="top"
       style={{ width: "260px", height: "144px" }}
       disabled
-    ></InteractableCard>
+    />
   );
 };

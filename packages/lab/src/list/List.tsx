@@ -294,17 +294,15 @@ export const List = forwardRef(function List<
           {emptyMessage ?? defaultEmptyMessage}
         </span>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 
   const renderContent = () => {
     if (collectionHook.data.length) {
       return renderCollectionItems(collectionHook.data);
-    } else {
-      renderEmpty();
     }
+    renderEmpty();
   };
 
   const contentHeight = "auto";

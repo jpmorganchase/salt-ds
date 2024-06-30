@@ -37,12 +37,12 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
 
     const handleOpen = useCallback(() => {
       setMenuOpen(true);
-      onOpen && onOpen();
+      onOpen?.();
     }, [onOpen]);
 
     const handleClose = useCallback(() => {
       setMenuOpen(false);
-      onClose && onClose();
+      onClose?.();
     }, [onClose]);
 
     return (

@@ -71,11 +71,11 @@ const Content = () => {
   const getButtonLabel = () => {
     if (delay) {
       return `Increment count with ${delay}ms delay`;
-    } else if (debounce) {
-      return `Increment count with ${debounce}ms debounce`;
-    } else {
-      return "Increment count, nothing fancy";
     }
+    if (debounce) {
+      return `Increment count with ${debounce}ms debounce`;
+    }
+    return "Increment count, nothing fancy";
   };
 
   return (

@@ -84,7 +84,7 @@ export const EditableLabel = forwardRef(function EditableLabel(
   const enterEditMode = useCallback(() => {
     setEditing(true);
     // ignoreBlur.current = false;
-    onEnterEditMode && onEnterEditMode();
+    onEnterEditMode?.();
   }, [onEnterEditMode, setEditing]);
 
   const exitEditMode = ({
@@ -100,13 +100,13 @@ export const EditableLabel = forwardRef(function EditableLabel(
         initialValue.current = value;
       }
     }
-    onExitEditMode && onExitEditMode(originalValue, value, allowDeactivation);
+    onExitEditMode?.(originalValue, value, allowDeactivation);
   };
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setValue(value);
-    onChange && onChange(value);
+    onChange?.(value);
   };
 
   const handleDoubleClick = () => {

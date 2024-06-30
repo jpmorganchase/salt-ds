@@ -131,17 +131,15 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const getStartDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.startDateOffset) {
       return props.startDateOffset(date);
-    } else {
-      return defaultOffset(date);
     }
+    return defaultOffset(date);
   };
 
   const getEndDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.endDateOffset) {
       return props.endDateOffset(date);
-    } else {
-      return defaultOffset(date);
     }
+    return defaultOffset(date);
   };
 
   const setSelectedDate = (

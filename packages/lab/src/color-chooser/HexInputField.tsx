@@ -37,10 +37,10 @@ export const HexInput = ({
     value: string,
   ): void => {
     if (disableAlphaChooser && value.length < 7) {
-      setHexInputValue("#" + value);
+      setHexInputValue(`#${value}`);
     }
     if (!disableAlphaChooser) {
-      setHexInputValue("#" + value);
+      setHexInputValue(`#${value}`);
     }
   };
 

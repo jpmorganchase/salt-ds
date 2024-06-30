@@ -22,14 +22,14 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
   return [
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop && raws.prop.prefix,
+    raws.prop?.prefix,
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    (raws.prop && raws.prop.raw) || decl.prop,
+    raws.prop?.raw || decl.prop,
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop && raws.prop.suffix,
+    raws.prop?.suffix,
     raws.between || ":",
     // @ts-expect-error -- TS2339: Property 'prefix' does not exist on type '{ value: string; raw: string; }'.
-    raws.value && raws.value.prefix,
+    raws.value?.prefix,
   ].reduce((count, str) => {
     if (str) {
       return count + str.length;
@@ -44,7 +44,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/custom-property-attributes-kebab-case";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
+  expected: (pattern) => "CSS attributes in tokens should be kebab case", // Can encode option in error message if needed
 });
 
 const meta = {

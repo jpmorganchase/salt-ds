@@ -27,7 +27,7 @@ export const GridContext = createContext<GridContext<any> | undefined>(
 export const useGridContext = () => {
   const c = useContext(GridContext);
   if (!c) {
-    throw new Error(`useGridContext invoked outside of a Grid`);
+    throw new Error("useGridContext invoked outside of a Grid");
   }
   return c;
 };

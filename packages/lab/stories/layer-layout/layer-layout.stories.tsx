@@ -427,7 +427,7 @@ RightSimpleUsage.args = {
 
 const ArticleExample = () => (
   <StackLayout className="layer-article-container">
-    <div className="layer-article-image"></div>
+    <div className="layer-article-image" />
     <h3>Laborum in sit officia consecte</h3>
     <p>
       Do excepteur id ipsum qui dolor irure dolore commodo labore. Minim sunt

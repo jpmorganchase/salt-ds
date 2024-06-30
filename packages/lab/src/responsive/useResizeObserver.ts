@@ -61,7 +61,7 @@ const resizeObserver =
               }
             }
             if (sizeChanged) {
-              onResize && onResize(measurements);
+              onResize?.(measurements);
             }
           }
         }

@@ -41,7 +41,7 @@ const ITEMS_PER_PAGE = 2;
         describe("with ListItems", () => {
           it("should highlight the first item with a focus ring", () => {
             cy.findByRole("listbox").focus();
-            cy.get(`#list-item-0`)
+            cy.get("#list-item-0")
               .should("be.highlighted")
               .should("have.focusVisible");
           });
@@ -511,73 +511,73 @@ const ITEMS_PER_PAGE = 2;
       cy.findByRole("listbox").focus();
     });
     it("supports focusing items by typing letters in rapid succession", () => {
-      cy.get(`#list-item-0`)
+      cy.get("#list-item-0")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       // Prioritize next available option starting with B from the cyclic effect
       cy.realType("B");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       cy.realType("A");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       cy.realType("R");
-      cy.get(`#list-item-0`)
+      cy.get("#list-item-0")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     // TODO:
     it.skip("supports the space character in a search", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realPress("Space");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("B");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("A");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("R");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
 
     it("supports item selection using the Spacebar after search times out", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realPress("Space");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       // Verify no selection was been made
@@ -597,12 +597,12 @@ const ITEMS_PER_PAGE = 2;
     });
     it("resets the search text after a timeout", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.wait(1500);
       cy.realType("B");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
@@ -611,55 +611,55 @@ const ITEMS_PER_PAGE = 2;
       cy.realType("B");
       cy.realType("A");
       cy.realType("Z");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.wait(1500);
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     it("cycles through options when typing the first character repeatedly", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("F");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     it("does not cycle through options when typing repeated characters after the first char", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     it("supports clicking item first then by typing letters in rapid succession", () => {
       cy.get("#list-item-0").click();
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
@@ -687,7 +687,7 @@ const ITEMS_PER_PAGE = 2;
       cy.findByRole("listbox").focus();
       cy.realType("F");
 
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("not.be.highlighted")
         .should("not.have.focusVisible");
     });

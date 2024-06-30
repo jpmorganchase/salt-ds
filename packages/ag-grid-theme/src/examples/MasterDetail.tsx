@@ -23,11 +23,7 @@ const MasterDetail = (props: AgGridReactProps) => {
       className={containerProps.className}
       style={{ height: "100%", padding: 20 }}
     >
-      <AgGridReact
-        columnDefs={columnDefs}
-        rowData={rowData}
-        {...agGridProps}
-      ></AgGridReact>
+      <AgGridReact columnDefs={columnDefs} rowData={rowData} {...agGridProps} />
     </div>
   );
 

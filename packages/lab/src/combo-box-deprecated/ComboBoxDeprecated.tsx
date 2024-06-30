@@ -112,7 +112,7 @@ export const ComboBoxDeprecated = forwardRef<
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,
-          [withBaseName(`field`)]: inFormField,
+          [withBaseName("field")]: inFormField,
         },
         className,
       )}

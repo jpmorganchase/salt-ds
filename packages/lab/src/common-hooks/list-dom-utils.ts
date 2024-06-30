@@ -7,7 +7,8 @@ export function listItemIndex(listItemEl?: HTMLElement) {
     if (idx) {
       return Number.parseInt(idx, 10);
       // eslint-disable-next-line no-cond-assign
-    } else if ((idx = listItemEl.ariaPosInSet)) {
+    }
+    if ((idx = listItemEl.ariaPosInSet)) {
       return Number.parseInt(idx, 10) - 1;
     }
   }

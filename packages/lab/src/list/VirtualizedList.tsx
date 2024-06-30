@@ -213,17 +213,15 @@ export const VirtualizedList = forwardRef(function List<
           {emptyMessage ?? defaultEmptyMessage}
         </span>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 
   const renderContent = () => {
     if (data.length) {
       return renderItems(data);
-    } else {
-      renderEmpty();
     }
+    renderEmpty();
   };
 
   const sizeStyles = {

@@ -52,7 +52,7 @@ export function getKeyDownHandlers(
             cause: stateChangeTypes.ITEM_KEYDOWN_ENTER,
             targetId: menuId,
           });
-          if (menuTriggerRef && menuTriggerRef.focus) {
+          if (menuTriggerRef?.focus) {
             menuTriggerRef.focus();
           }
         } else if (hasSubMenu(selectedItem)) {
@@ -125,7 +125,7 @@ export function getKeyDownHandlers(
           cause: stateChangeTypes.ITEM_KEYDOWN_TAB,
           targetId: menuId,
         });
-        if (menuTriggerRef && menuTriggerRef.focus) {
+        if (menuTriggerRef?.focus) {
           menuTriggerRef.focus();
         }
       },

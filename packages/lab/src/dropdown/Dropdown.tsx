@@ -120,7 +120,8 @@ export const Dropdown = forwardRef(function Dropdown<
         : Item[];
       if (Array.isArray(itemOrItems)) {
         return itemOrItems.map((i) => i.value) as returnType;
-      } else if (itemOrItems) {
+      }
+      if (itemOrItems) {
         return itemOrItems.value as returnType;
       }
     },
@@ -143,15 +144,14 @@ export const Dropdown = forwardRef(function Dropdown<
           ...ariaProps,
         }),
       );
-    } else {
-      return (
-        <DropdownButton
-          label={triggerLabel}
-          {...(dropdownListHook.isOpen ? listControlProps : {})}
-          {...ariaProps}
-        />
-      );
     }
+    return (
+      <DropdownButton
+        label={triggerLabel}
+        {...(dropdownListHook.isOpen ? listControlProps : {})}
+        {...ariaProps}
+      />
+    );
   };
 
   return (

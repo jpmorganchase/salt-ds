@@ -137,9 +137,8 @@ export const useCollectionItems = <Item>({
   const getFilter = useCallback(() => {
     if (filterPattern.current) {
       return getDefaultFilter(filterPattern.current, getFilterRegex);
-    } else {
-      return null;
     }
+    return null;
   }, [getFilterRegex]);
 
   const collectVisibleItems = useCallback(
@@ -244,7 +243,8 @@ export const useCollectionItems = <Item>({
       if (sourceWithId?.id === id) {
         //TODO do we need the flattered source at all ?
         return flattenedSource?.[sourceWithId.index!] as Item;
-      } else if (sourceWithId) {
+      }
+      if (sourceWithId) {
         return itemById(id, sourceWithId.childNodes);
       }
       throw Error(`useCollectionData itemById, id ${id} not found `);
@@ -263,7 +263,7 @@ export const useCollectionItems = <Item>({
       if (collectionItem) {
         return collectionItem;
       }
-      throw Error(`useCollectionData toCollectionItem, item not found `);
+      throw Error("useCollectionData toCollectionItem, item not found ");
     },
     [],
   );
@@ -285,14 +285,16 @@ export const useCollectionItems = <Item>({
 
       if (sel === null) {
         return null as returnType;
-      } else if (Array.isArray(sel)) {
+      }
+      if (Array.isArray(sel)) {
         const result: CollectionItem<Item>[] = [];
         for (const item of sel) {
           const collectionItem = toCollectionItem(item);
           result.push(collectionItem);
         }
         return result as returnType;
-      } else if (sel !== undefined) {
+      }
+      if (sel !== undefined) {
         return toCollectionItem(sel as Item) as returnType;
       }
 
@@ -329,7 +331,8 @@ export const useCollectionItems = <Item>({
 
       if (value === null) {
         return null as returnType;
-      } else if (Array.isArray(value)) {
+      }
+      if (Array.isArray(value)) {
         const result: CollectionItem<Item>[] = [];
         for (const item of value) {
           const collectionItem = toCollectionItem(item);
@@ -338,7 +341,8 @@ export const useCollectionItems = <Item>({
           }
         }
         return result as returnType;
-      } else if (value !== undefined) {
+      }
+      if (value !== undefined) {
         return toCollectionItem(value) as returnType;
       }
 

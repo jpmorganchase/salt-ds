@@ -14,7 +14,7 @@ export const LayoutContext = createContext<LayoutContext | undefined>(
 export const useLayoutContext = () => {
   const c = useContext(LayoutContext);
   if (!c) {
-    throw new Error(`useLayoutContext invoked outside of a Grid`);
+    throw new Error("useLayoutContext invoked outside of a Grid");
   }
   return c;
 };

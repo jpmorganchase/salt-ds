@@ -65,7 +65,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
   const grid = useGridContext();
 
   if (!row.key) {
-    throw new Error(`Invalid row`);
+    throw new Error("Invalid row");
   }
 
   const ariaRowIndex = headerIsFocusable ? row.index + 2 : row.index + 1;
@@ -114,8 +114,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
             ? column.info.props.getValue(row.data)
             : null;
         const isFocused = cursorColIdx === column.index;
-        const isSelected =
-          isCellSelected && isCellSelected(row.index, column.index);
+        const isSelected = isCellSelected?.(row.index, column.index);
         const validationFnArg = {
           row,
           column,

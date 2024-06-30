@@ -95,7 +95,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   );
 
   const source = useMemo(() => {
-    if (inputValue && inputValue.trim().length) {
+    if (inputValue?.trim().length) {
       const itemFilter = getDefaultFilter(inputValue, getFilterRegex);
       return sourceProp.filter((item) => itemFilter(itemToString(item)));
     }
@@ -103,10 +103,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   }, [inputValue, sourceProp, getFilterRegex, itemToString]);
 
   const itemTextHighlightPattern = useMemo(
-    () =>
-      inputValue && inputValue.trim().length
-        ? getFilterRegex(inputValue)
-        : undefined,
+    () => (inputValue?.trim().length ? getFilterRegex(inputValue) : undefined),
     [inputValue, getFilterRegex],
   );
 
@@ -163,7 +160,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
     if (nextItem !== selectedItem) {
       setSelectedItem(nextItem);
-      onChange && onChange(event, nextItem);
+      onChange?.(event, nextItem);
     }
   };
 
@@ -235,7 +232,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
     // Clear the selection when input is cleared
     if (newValue.length === 0) {
       setSelectedItem(undefined);
-      onChange && onChange(event, null);
+      onChange?.(event, null);
     }
 
     if (inputProps.onChange) {
@@ -244,7 +241,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   };
 
   const handleInputSelect = (event: SyntheticEvent<HTMLDivElement>) => {
-    console.log(`handleInputSelect setSelectionChanged = true`);
+    console.log("handleInputSelect setSelectionChanged = true");
     setSelectionChanged(true);
     if (inputProps.onSelect) {
       inputProps.onSelect(event);
@@ -274,8 +271,8 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       quickSelection
     ) {
       setSelectedItem(source[0]);
-      onSelect && onSelect(event, source[0]);
-      onChange && onChange(event as ChangeEvent, source[0]);
+      onSelect?.(event, source[0]);
+      onChange?.(event as ChangeEvent, source[0]);
     }
   };
 

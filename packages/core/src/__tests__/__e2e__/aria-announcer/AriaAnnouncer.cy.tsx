@@ -73,11 +73,7 @@ describe("Given a AriaAnnouncerProvider", () => {
     });
   });
   it.skip("should allow for style overrides on the [aria-live] element", () => {
-    mount(
-      <AriaAnnouncerProvider
-        style={{ borderWidth: 1 }}
-      ></AriaAnnouncerProvider>,
-    );
+    mount(<AriaAnnouncerProvider style={{ borderWidth: 1 }} />);
 
     // TODO: figure out why this doesn't work
     cy.get("[aria-live]").should("have.css", "border-width", "1px");

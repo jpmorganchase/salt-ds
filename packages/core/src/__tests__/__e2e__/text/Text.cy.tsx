@@ -124,7 +124,7 @@ COLORS.forEach((color) => {
 });
 it(`GIVEN a Text component with color="inherit", it should NOT have color class `, () => {
   cy.mount(<Text color="inherit">{textExample}</Text>);
-  cy.get(".saltText").should("not.have.class", `saltText-inherit`);
+  cy.get(".saltText").should("not.have.class", "saltText-inherit");
 });
 
 // styleAs

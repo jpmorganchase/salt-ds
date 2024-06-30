@@ -514,7 +514,7 @@ const testSource = ["Bar", "Foo", "Foo Bar", "Baz"];
                 onKeyDown={keyDownSpy}
               />
             }
-          ></Dropdown>,
+          />,
         );
         cy.get("#custom-button").focus();
         cy.realPress("ArrowDown");

@@ -21,7 +21,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
   const mountedRef = useRef(true);
   const baseAnnounce = useCallback(
     (announcement: string, delay?: number) => {
-      const isReactAnnouncerInstalled = context && context.announce;
+      const isReactAnnouncerInstalled = context?.announce;
 
       if (process.env.NODE_ENV !== "production") {
         if (isReactAnnouncerInstalled && warnedOnce) {

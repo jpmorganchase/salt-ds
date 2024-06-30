@@ -30,9 +30,8 @@ const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
         })}
       />
     );
-  } else {
-    return null;
   }
+  return null;
 };
 
 export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
@@ -107,13 +106,13 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     };
     const interactionClasses = isNavigatingWithKeyboard
       ? {
-          [withBaseName(`menuItemKeyboardActive`)]:
+          [withBaseName("menuItemKeyboardActive")]:
             !isDisabled && isInteracted && !blurSelected,
-          [withBaseName(`menuItemKeyboardDisabled`)]:
+          [withBaseName("menuItemKeyboardDisabled")]:
             isDisabled && isInteracted,
         }
       : {
-          [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
+          [withBaseName("menuItemHover")]: !isDisabled && !blurSelected,
         };
 
     const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;

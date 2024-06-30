@@ -32,11 +32,10 @@ export function PerformanceTester({
       (cumulativeDuration.current + actualDuration).toFixed(2),
     );
 
-    onRender &&
-      onRender({
-        renderCount: renderCount.current,
-        renderTime: cumulativeDuration.current,
-      });
+    onRender?.({
+      renderCount: renderCount.current,
+      renderTime: cumulativeDuration.current,
+    });
   };
 
   return (

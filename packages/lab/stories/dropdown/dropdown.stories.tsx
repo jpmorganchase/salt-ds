@@ -116,7 +116,7 @@ export const CustomButton: StoryFn<DropdownProps> = (props) => {
           label={selectedValue}
         />
       }
-    ></Dropdown>
+    />
   );
 };
 
