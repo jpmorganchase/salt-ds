@@ -89,6 +89,9 @@
         "rules": {
           "a11y": {
             "useButtonType": "off"
+          },
+          "complexity": {
+            "noForEach": "off"
           }
         }
       }

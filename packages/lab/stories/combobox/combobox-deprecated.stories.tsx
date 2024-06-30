@@ -411,7 +411,7 @@ export const Scrolling: StoryFn<typeof ComboBoxDeprecated> = (args) => {
         }}
       >
         {["top", "middle", "bottom"].map((pos) => (
-          <Button onClick={() => setPosition(pos)}>
+          <Button onClick={() => setPosition(pos)} key={pos}>
             Position near the {pos}
           </Button>
         ))}

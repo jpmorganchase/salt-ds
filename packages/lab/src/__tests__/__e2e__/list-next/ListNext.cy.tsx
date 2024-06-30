@@ -100,21 +100,17 @@ describe("GIVEN a list", () => {
       describe("WHEN list item is disabled", () => {
         it("THEN it's not selectable", () => {
           cy.mount(
-            <SingleSelectList
-              children={
-                <>
-                  <ListItemNext value={ITEMS[0].value}>
-                    {ITEMS[0].label}
-                  </ListItemNext>
-                  <ListItemNext value={ITEMS[1].value} disabled>
-                    {ITEMS[1].label}
-                  </ListItemNext>
-                  <ListItemNext value={ITEMS[2].value}>
-                    {ITEMS[2].label}
-                  </ListItemNext>
-                </>
-              }
-            />,
+            <SingleSelectList>
+              <ListItemNext value={ITEMS[0].value}>
+                {ITEMS[0].label}
+              </ListItemNext>
+              <ListItemNext value={ITEMS[1].value} disabled>
+                {ITEMS[1].label}
+              </ListItemNext>
+              <ListItemNext value={ITEMS[2].value}>
+                {ITEMS[2].label}
+              </ListItemNext>
+            </SingleSelectList>,
           );
 
           cy.findByRole("option", { name: ITEMS[1].label }).click();

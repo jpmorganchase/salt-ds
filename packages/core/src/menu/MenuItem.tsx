@@ -66,7 +66,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
             const element = event.currentTarget;
             onKeyDown?.(event);
             if (
-              (event.key == " " || event.key == "Enter") &&
+              (event.key === " " || event.key === "Enter") &&
               !triggersSubmenu &&
               !disabled
             ) {

@@ -249,7 +249,7 @@ function List({
         <Input
           style={{
             visibility:
-              sortedOptions.length == total && sortedOptions.length == 0
+              sortedOptions.length === total && sortedOptions.length === 0
                 ? "hidden"
                 : undefined,
           }}
@@ -312,13 +312,13 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
   const [removeFilter, setRemoveFilter] = useState("");
 
   const filteredAvailableOptions = availableOptions.filter((option) =>
-    addFilter != ""
+    addFilter !== ""
       ? option.toLowerCase().startsWith(addFilter.toLowerCase())
       : true,
   );
 
   const filteredPickedOptions = picked.filter((option) =>
-    removeFilter != ""
+    removeFilter !== ""
       ? option.toLowerCase().startsWith(removeFilter.toLowerCase())
       : true,
   );

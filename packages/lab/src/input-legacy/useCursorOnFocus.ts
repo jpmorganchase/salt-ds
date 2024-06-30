@@ -91,7 +91,7 @@ export function useCursorOnFocus(
         return;
       }
 
-      if (typeof originalCursorPosition.current == "number") {
+      if (typeof originalCursorPosition.current === "number") {
         // Allows continued highlighted if the mouse down is part of a selection.
         inputRef.current?.setSelectionRange(
           originalCursorPosition.current,

@@ -131,8 +131,8 @@ const createThemedChildren = ({
     }
     console.warn(
       `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
-      Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-      div element will wrap your child elements`,
+        Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
+        div element will wrap your child elements`,
     );
     return children;
   }
@@ -305,7 +305,7 @@ function InternalSaltProvider({
     const themeNames = themeNamesString.split(" ");
 
     if (applyClassesTo === "root" && targetWindow) {
-      if (inheritedWindow != targetWindow) {
+      if (inheritedWindow !== targetWindow) {
         // add the styles we want to apply
         targetWindow.document.documentElement.classList.add(
           ...themeNames,

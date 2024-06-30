@@ -84,7 +84,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     );
 
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-      if (disabled || id == undefined) {
+      if (disabled || id === undefined) {
         return;
       }
 

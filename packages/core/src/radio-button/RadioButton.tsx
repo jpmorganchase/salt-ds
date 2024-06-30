@@ -171,7 +171,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         <input
           aria-describedby={
             clsx(
-              radioGroup == undefined
+              radioGroup === undefined
                 ? formFieldA11yProps?.["aria-describedby"]
                 : undefined,
               inputDescribedBy,
@@ -179,7 +179,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           }
           aria-labelledby={
             clsx(
-              radioGroup == undefined
+              radioGroup === undefined
                 ? formFieldA11yProps?.["aria-labelledby"]
                 : undefined,
               inputLabelledBy,

@@ -60,10 +60,9 @@ const GroupWrapper = ({
   children,
 }: AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return (
-    <div
-      className={clsx(className, "theme-next-toolbar-group-wrapper")}
-      children={children}
-    />
+    <div className={clsx(className, "theme-next-toolbar-group-wrapper")}>
+      {children}
+    </div>
   );
 };
 

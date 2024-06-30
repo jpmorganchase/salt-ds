@@ -13,8 +13,8 @@ const componentPackages = [
 
 console.log("Generating props in packages:", componentPackages);
 
-const componentFiles = componentPackages.map((package) =>
-  path.join(__dirname, "..", "packages", package, "src", "index.ts")
+const componentFiles = componentPackages.map((pkg) =>
+  path.join(__dirname, "..", "packages", pkg, "src", "index.ts"),
 );
 
 const options = {
@@ -23,11 +23,11 @@ const options = {
 };
 
 const components = componentFiles.map((component) =>
-  docgen.parse(component, options)
+  docgen.parse(component, options),
 );
 
 const filePaths = componentPackages.map(
-  (package) => `./src/props/${package}-props.json`
+  (pkg) => `./src/props/${pkg}-props.json`,
 );
 
 components.forEach((component, index) =>
@@ -37,5 +37,5 @@ components.forEach((component, index) =>
       return;
     }
     console.log(`${filePaths[index]} successfully generated`);
-  })
+  }),
 );

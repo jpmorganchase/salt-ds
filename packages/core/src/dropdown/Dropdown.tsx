@@ -11,6 +11,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  Children,
   type ComponentPropsWithoutRef,
   type FocusEvent,
   type ForwardedRef,
@@ -209,7 +210,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && children != undefined,
+      open: openState && !readOnly && Children.count(children) > 0,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       middleware: [
@@ -333,7 +334,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         break;
     }
 
-    if (newActive && newActive.data.id != activeState?.id) {
+    if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
@@ -452,7 +453,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
-        open={(openState || focusedState) && !readOnly && children != undefined}
+        open={
+          (openState || focusedState) &&
+          !readOnly &&
+          Children.count(children) > 0
+        }
         {...getFloatingProps({
           onMouseOver: handleListMouseOver,
           onFocus: handleFocusButton,

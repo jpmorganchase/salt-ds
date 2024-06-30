@@ -43,12 +43,12 @@ variants.forEach((variant) => {
           <ContactTertiaryInfo text={tertiaryText} />
           <ContactActions>
             {actionLabels.map((label) => (
-              <ContactAction label={label} onClick={actionSpy} />
+              <ContactAction label={label} onClick={actionSpy} key={label} />
             ))}
           </ContactActions>
           <ContactMetadata>
             {metadata.map(([label, value]) => (
-              <ContactMetadataItem value={value} label={label} />
+              <ContactMetadataItem value={value} label={label} key={label} />
             ))}
           </ContactMetadata>
         </ContactDetails>,

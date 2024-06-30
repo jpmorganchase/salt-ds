@@ -73,7 +73,7 @@ export const makeMapDeleter =
     deleteMapItem(old, k);
 
 export const clamp = (x: number | undefined, min: number, max: number) => {
-  if (x == undefined) {
+  if (x === undefined) {
     x = 0;
   }
   if (x < min) {

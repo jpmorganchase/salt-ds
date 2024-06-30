@@ -103,7 +103,7 @@ export const Variant: StoryFn<typeof InteractableCard> = (args) => {
     <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {
         return (
-          <StackLayout align="end">
+          <StackLayout align="end" key={variant}>
             <StackLayout direction="row" key={variant}>
               <InteractableCard {...args} variant={variant}>
                 <StackLayout gap={1}>

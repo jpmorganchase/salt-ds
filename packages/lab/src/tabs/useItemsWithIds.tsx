@@ -38,7 +38,7 @@ export const useItemsWithIds = (
             child.type === TabPanel ? (
               cloneElement(child, props)
             ) : (
-              <TabPanel {...props} label={label}>
+              <TabPanel {...props} label={label} key={tabId}>
                 {child}
               </TabPanel>
             );

@@ -37,7 +37,7 @@ export const Default: StoryFn<typeof Card> = (args) => (
 export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
   <Card {...args} style={{ width: "260px" }}>
     <StackLayout gap={3}>
-      <img alt="example image" src={exampleImage} style={{ width: "100%" }} />
+      <img alt="example" src={exampleImage} style={{ width: "100%" }} />
       <StackLayout gap={1}>
         <H3>Sustainable investing products</H3>
         <Text>
@@ -136,7 +136,7 @@ export const Variants: StoryFn<typeof Card> = (args) => {
     <StackLayout style={{ width: 600 }}>
       {variants.map((variant) => {
         return (
-          <StackLayout align="end">
+          <StackLayout align="end" key={variants}>
             <StackLayout direction="row" key={variant}>
               <Card {...args} variant={variant}>
                 <StackLayout gap={1}>

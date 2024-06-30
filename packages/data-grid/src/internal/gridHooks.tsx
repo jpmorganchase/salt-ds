@@ -496,7 +496,7 @@ export function useColumnResize<T>(
 // Map values to array.
 export function useFlatten<T>(map: Map<number, T>): T[] {
   return useMemo(() => {
-    const entries = [...map.entries()].filter(([index, value]) => !!value);
+    const entries = [...map.entries()].filter(([, value]) => !!value);
     entries.sort((a, b) => a[0] - b[0]);
     return entries.map((x) => x[1]);
   }, [map]);
@@ -620,7 +620,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const onColumnRemoved = useCallback(
     (index: number, columnInfo: GridColumnInfo<T>) => {
-      const { id, pinned } = columnInfo.props;
+      const { pinned } = columnInfo.props;
       getColMapSet(pinned)(makeMapDeleter(index));
       // console.log(`Column removed: "${columnInfo.props.id}"`);
     },
@@ -642,7 +642,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const onColumnGroupRemoved = useCallback(
     (index: number, colGroupProps: ColumnGroupProps) => {
-      const { id, pinned } = colGroupProps;
+      const { pinned } = colGroupProps;
       getGrpMapSet(pinned)(makeMapDeleter(index));
       // console.log(`Group removed: "${colGroupProps.name}"`);
     },
@@ -724,14 +724,14 @@ export function useRowSelection<T>(
   onRowSelected?: (selectedRowIdxs: number[]) => void,
 ) {
   const selectedRowIdxsProp = useMemo(() => {
-    if (selectedRowIdxs == undefined) {
+    if (selectedRowIdxs === undefined) {
       return undefined;
     }
     return new Set(selectedRowIdxs);
   }, [selectedRowIdxs]);
 
   const defaultSelectedRowIdxsProp = useMemo(() => {
-    if (defaultSelectedRowIdxs == undefined) {
+    if (defaultSelectedRowIdxs === undefined) {
       return new Set([]);
     }
     return new Set(defaultSelectedRowIdxs);
@@ -928,17 +928,14 @@ export function useColumnMove<T = any>(
     (columnIndex: number, x: number, y: number) => {
       setDragState({ columnIndex, x, y });
     },
-    [setDragState],
+    [],
   );
 
-  const columnDrag = useCallback(
-    (x: number, y: number) => {
-      setDragState((old) => {
-        return { ...old!, x, y };
-      });
-    },
-    [setDragState],
-  );
+  const columnDrag = useCallback((x: number, y: number) => {
+    setDragState((old) => {
+      return { ...old!, x, y };
+    });
+  }, []);
 
   const columnDrop = useCallback(() => {
     const toIndex = activeTargetRef.current?.columnIndex;
@@ -1001,7 +998,11 @@ export function useColumnMove<T = any>(
           event.target as HTMLElement,
           "data-column-index",
         );
-        const rootElement = rootRef.current!;
+        const rootElement = rootRef.current;
+
+        if (!rootElement) {
+          return;
+        }
 
         document.addEventListener("mouseup", onMouseUp);
         document.addEventListener("mousemove", onMouseMove);
@@ -1010,7 +1011,7 @@ export function useColumnMove<T = any>(
         const columnId = cols[columnIndex].info.props.id;
 
         const thRect = thElement.getBoundingClientRect();
-        const rootRect = rootElement!.getBoundingClientRect();
+        const rootRect = rootElement.getBoundingClientRect();
 
         const x = thRect.x - rootRect.x;
         const y = thRect.y - rootRect.y;
@@ -1039,7 +1040,7 @@ export function useColumnMove<T = any>(
     setDragState(undefined);
     moveRef.current?.unsubscribe();
     moveRef.current = undefined;
-  }, [setDragState]);
+  }, []);
 
   const targets = useMemo(() => {
     if (!dragState) {
@@ -1047,7 +1048,7 @@ export function useColumnMove<T = any>(
     }
     const ts: Target[] = [];
     let x = 0;
-    leftCols.forEach((c, i) => {
+    leftCols.forEach((c) => {
       ts.push({ columnIndex: c.index, x });
       x += c.info.width;
     });
@@ -1068,7 +1069,7 @@ export function useColumnMove<T = any>(
     }
     if (rightCols.length > 0) {
       x += w;
-      rightCols.forEach((c, i) => {
+      rightCols.forEach((c) => {
         ts.push({ columnIndex: c.index, x });
         x += c.info.width;
       });

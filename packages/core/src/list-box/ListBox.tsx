@@ -176,7 +176,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
         break;
     }
 
-    if (newActive && newActive.data.id != activeState?.id) {
+    if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);

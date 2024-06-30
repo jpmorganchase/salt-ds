@@ -161,7 +161,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
             {Array.from({ length: slidesCount }, (_, index) => ({
               value: `${index}`,
             })).map((radio) => (
-              <RadioButton {...radio} />
+              <RadioButton {...radio} key={radio.value} />
             ))}
           </RadioButtonGroup>
         </div>

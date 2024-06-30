@@ -46,7 +46,7 @@ const DefaultStory: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 5 }, (_, index) => (
-        <div key={index} className="layout-content">
+        <div key={`item-${index + 1}`} className="layout-content">
           <p>Item {index + 1}</p>
         </div>
       ))}
@@ -61,7 +61,7 @@ const SeparatedItemsStory: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>
       {Array.from({ length: 3 }, (_, index) => (
-        <div key={index} className="layout-content">
+        <div key={`item-${index + 1}`} className="layout-content">
           <p>Item {index + 1}</p>
         </div>
       ))}
@@ -83,7 +83,7 @@ const Responsive: StoryFn<typeof FlexLayout> = (args) => {
         {Array.from({ length: 6 }, (_, index) => (
           <div
             className="layout-content"
-            key={index}
+            key={`item-${index + 1}`}
             style={{ width: "200px" }}
           >
             <p>Item {index + 1}</p>
@@ -138,7 +138,9 @@ export const PolymorphicList: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args} as="ol" direction="column">
       {Array.from({ length: flagsList.length }, (_, index) => (
-        <FlexItem as="li">{flagsList[index]}</FlexItem>
+        <FlexItem as="li" key={flagsList[index]}>
+          {flagsList[index]}
+        </FlexItem>
       ))}
     </FlexLayout>
   );

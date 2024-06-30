@@ -186,6 +186,7 @@ export const Nested = () => {
           item.children.map((child) => (
             <RecursiveNavItem
               item={{ ...child, level: (item.level || 0) + 1 }}
+              key={item.name}
             />
           ))}
       </li>
@@ -213,7 +214,7 @@ export const Nested = () => {
               style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
               {navigationData.map((item) => (
-                <RecursiveNavItem item={item} />
+                <RecursiveNavItem item={item} key={item.name} />
               ))}
             </StackLayout>
           </nav>

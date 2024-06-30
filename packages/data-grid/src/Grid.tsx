@@ -587,7 +587,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   };
 
   const startEditMode = (text?: string) => {
-    if (editMode || cursorRowIdx == undefined || cursorColIdx == undefined) {
+    if (editMode || cursorRowIdx === undefined || cursorColIdx === undefined) {
       return;
     }
     const c = cols[cursorColIdx];
@@ -602,13 +602,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     if (!editMode) {
       return;
     }
-    if (cursorColIdx == undefined) {
+    if (cursorColIdx === undefined) {
       console.error("endEditMode: cursorColIdx is undefined in edit mode");
       return;
     }
     const c = cols[cursorColIdx];
     const handler = c.info.props.onChange;
-    if (cursorRowIdx == undefined) {
+    if (cursorRowIdx === undefined) {
       console.error("endEditMode: cursorRowIdx is undefined in edit mode");
       return;
     }
@@ -741,19 +741,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const [isFocused, setFocused] = useState<boolean>(false);
 
-  const onFocus = useCallback(
-    (event: React.FocusEvent<HTMLDivElement>) => {
-      setFocused(true);
-    },
-    [setFocused],
-  );
+  const onFocus = useCallback(() => {
+    setFocused(true);
+  }, []);
 
-  const onBlur = useCallback(
-    (event: React.FocusEvent<HTMLDivElement>) => {
-      setFocused(false);
-    },
-    [setFocused],
-  );
+  const onBlur = useCallback(() => {
+    setFocused(false);
+  }, []);
 
   const cursorContext: CursorContext = useMemo(
     () => ({
@@ -885,14 +879,14 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         case " ":
           if (focusedPart === "body") {
             if (event.ctrlKey) {
-              if (cursorColIdx != undefined) {
+              if (cursorColIdx !== undefined) {
                 rangeSelection.selectRange({
                   start: { rowIdx: 0, colIdx: cursorColIdx },
                   end: { rowIdx: sortedRowData.length, colIdx: cursorColIdx },
                 });
               }
             } else {
-              if (cursorRowIdx != undefined) {
+              if (cursorRowIdx !== undefined) {
                 selectRows({
                   rowIndex: cursorRowIdx,
                   isRange: false,
@@ -951,8 +945,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           const row = sortedRowData[r];
           const rowText: string[] = [];
           for (let c = minCol; c <= maxCol; ++c) {
-            const col = cols[c]!;
-            const cellValue = col.info.props.getValue!(row);
+            const col = cols[c];
+            const cellValue = col?.info.props.getValue?.(row);
             rowText.push(cellValue);
           }
           text.push(rowText.join("\t"));
@@ -1067,7 +1061,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             !event.altKey &&
             !event.shiftKey
           ) {
-            if (cursorRowIdx == undefined) {
+            if (cursorRowIdx === undefined) {
               moveCursor(focusedPart, 0, 0);
             } else {
               moveCursor(focusedPart, cursorRowIdx + 1, cursorColIdx);
@@ -1110,7 +1104,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
 
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
     (event) => {
-      if (cursorColIdx != undefined && cursorRowIdx != undefined) {
+      if (cursorColIdx !== undefined && cursorRowIdx !== undefined) {
         const column = cols[cursorColIdx];
         if (column.info.props.onKeyDown) {
           column.info.props.onKeyDown(event, cursorRowIdx);

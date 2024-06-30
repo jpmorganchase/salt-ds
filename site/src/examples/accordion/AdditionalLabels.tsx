@@ -54,7 +54,7 @@ export const AdditionalLabels = (): ReactElement => {
     <div style={{ width: "80%", height: "100%" }}>
       <AccordionGroup>
         {Object.values(features).map(({ name, description, id }) => (
-          <Accordion value={id}>
+          <Accordion value={id} key={id}>
             <AccordionHeader>
               <StackLayout gap={0.5}>
                 <SplitLayout
@@ -88,6 +88,7 @@ export const AdditionalLabels = (): ReactElement => {
                       label={`${name} (...${number})`}
                       name={id}
                       value={number}
+                      key={number}
                     />
                   ))}
                 </CheckboxGroup>

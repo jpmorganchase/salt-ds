@@ -42,7 +42,7 @@ export const RGBAInput = ({
     <>
       <span className={clsx(withBaseName("textDivOverrides"))}>{rgbaText}</span>
       {["r", "g", "b"].map((value) => (
-        <div className={withBaseName("rgbaInputDiv")}>
+        <div className={withBaseName("rgbaInputDiv")} key={value}>
           <span className={withBaseName("rgbaText")}>
             {value.toUpperCase()}
           </span>

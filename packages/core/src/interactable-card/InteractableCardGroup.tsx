@@ -157,7 +157,7 @@ export const InteractableCardGroup = forwardRef<
     const nextIndex = (currentIndex + 1) % elements.length;
     const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
 
-    if (event.key == " ") {
+    if (event.key === " ") {
       event.preventDefault();
       select(
         event,
@@ -171,18 +171,22 @@ export const InteractableCardGroup = forwardRef<
       switch (event.key) {
         case "ArrowDown":
         case "ArrowRight":
-          const nextValue = elements[nextIndex].getAttribute(
-            "data-value",
-          ) as InteractableCardValue;
-          select(event, nextValue);
+          select(
+            event,
+            elements[nextIndex].getAttribute(
+              "data-value",
+            ) as InteractableCardValue,
+          );
           elements[nextIndex]?.focus();
           break;
         case "ArrowUp":
         case "ArrowLeft":
-          const prevValue = elements[prevIndex].getAttribute(
-            "data-value",
-          ) as InteractableCardValue;
-          select(event, prevValue);
+          select(
+            event,
+            elements[prevIndex].getAttribute(
+              "data-value",
+            ) as InteractableCardValue,
+          );
           elements[prevIndex]?.focus();
           break;
       }

@@ -93,6 +93,7 @@ export const Default = () => {
           <Tab
             label={label}
             ariaControls={i === activeTabIndex ? `ts-panel-${i}` : undefined}
+            key={label}
           />
         ))}
       </Tabstrip>
@@ -137,8 +138,8 @@ export const ActiveTabDefinedByProp = () => {
         onActiveChange={handleTabSelection}
         activeTabIndex={selectedTab}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -164,8 +165,8 @@ export const TabstripWithOverflow = () => {
   return (
     <AdjustableFlexbox>
       <Tabstrip onActiveChange={handleTabSelection}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -192,8 +193,8 @@ export const TabstripWithoutOverflow = () => {
   return (
     <div style={{ height: 300, width: 600 }}>
       <Tabstrip onActiveChange={handleTabSelection} overflowMenu={false}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -218,8 +219,8 @@ export const TabstripCentered = () => {
         onActiveChange={handleTabSelection}
         overflowMenu={false}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -239,8 +240,8 @@ export const TertiaryTabstrip = () => {
         overflowMenu={false}
         activeTabIndex={selectedTab}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -388,7 +389,7 @@ export const TheFullMontyNoConfirmation = () => {
 };
 
 // TODO related to how we handle custom tabs
-export const TabstripLink = ({ height }: { height: number }) => {
+export const TabstripLink = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Google"];
 
@@ -410,7 +411,7 @@ export const TabstripLink = ({ height }: { height: number }) => {
   );
 };
 
-export const CustomTabContent = ({ height }: { height: number }) => {
+export const CustomTabContent = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Google"];
 
@@ -456,8 +457,8 @@ export const TabstripControlledAddNew = () => {
         onActiveChange={setSelectedTabIndex}
         activeTabIndex={activeTabIndex}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />
@@ -474,8 +475,8 @@ export const TabstripAddNew = () => {
   return (
     <div style={{ height: 300, width: 250 }}>
       <Tabstrip enableAddTab onActiveChange={setSelectedTabIndex}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />
@@ -523,8 +524,8 @@ export const TabstripControlledAddAndDelete = () => {
         onCloseTab={handleCloseTab}
         activeTabIndex={activeTabIndex}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />
@@ -553,8 +554,8 @@ export const TabstripAddNewWithRename = () => {
         onActiveChange={handleTabSelection}
         defaultActiveTabIndex={0}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -562,11 +563,7 @@ export const TabstripAddNewWithRename = () => {
   );
 };
 
-export const TabstripUncontrolledStringTabsAddNewWithRename = ({
-  height,
-}: {
-  height: number;
-}) => {
+export const TabstripUncontrolledStringTabsAddNewWithRename = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const tabs = ["Home", "Transactions"];
   //TODO add confirmation dialog
@@ -602,8 +599,8 @@ export const TabstripAddNewWithoutAscendingNumber = () => {
         overflowMenu={false}
         activeTabIndex={selectedTab}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -634,8 +631,8 @@ export const TabstripAddNewAlternativeDefaultName = () => {
         overflowMenu={false}
         activeTabIndex={selectedTab}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -644,7 +641,7 @@ export const TabstripAddNewAlternativeDefaultName = () => {
 };
 
 // TODO BUG after we close from overflow
-export const TabstripCloseConfigured = ({ height }: { height: number }) => {
+export const TabstripCloseConfigured = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const [tabs, setTabs] = useState([
     { label: "Home", closeable: false },
@@ -679,13 +676,7 @@ export const TabstripCloseConfigured = ({ height }: { height: number }) => {
   );
 };
 
-export const TabstripCloseDeclarative = ({
-  height,
-  width = 1000,
-}: {
-  height: number;
-  width?: number;
-}) => {
+export const TabstripCloseDeclarative = () => {
   const [selectedTab, handleTabSelection] = useTabSelection();
   const [tabs, setTabs] = useState([
     { label: "Home", closeable: false },
@@ -767,8 +758,8 @@ export const TabstripRename = () => {
         overflowMenu={false}
         activeTabIndex={selectedTab}
       >
-        {tabs.map((label, i) => (
-          <Tab editable label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab editable label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -784,8 +775,8 @@ export const VerticalTabs = () => {
       child={<TabPanel tabs={tabs} activeTabIndex={activeTabIndex} />}
       parent={
         <Tabstrip onActiveChange={setActiveTabIndex} orientation="vertical">
-          {tabs.map((label, i) => (
-            <Tab label={label} key={i} />
+          {tabs.map((label) => (
+            <Tab label={label} key={label} />
           ))}
         </Tabstrip>
       }
@@ -973,8 +964,8 @@ export const DraggableTabs = () => {
         onActiveChange={setSelectedTab}
         onMoveTab={handleDrop}
       >
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <TabPanel tabs={tabs} activeTabIndex={selectedTab} />
@@ -996,7 +987,7 @@ export const DraggableTabsWithOverflow = () => {
     "More Services",
   ]);
 
-  const tabColours = useMemo(() => getTabColours(tabs), []);
+  const tabColours = useMemo(() => getTabColours(tabs), [tabs]);
 
   const handleDrop = useCallback(
     (fromIndex: number, toIndex: number) => {
@@ -1018,7 +1009,7 @@ export const DraggableTabsWithOverflow = () => {
   );
 
   const childTabs = useMemo(
-    () => tabs.map((label, i) => <Tab label={label} key={i} />),
+    () => tabs.map((label) => <Tab label={label} key={label} />),
     [tabs],
   );
 
@@ -1053,8 +1044,8 @@ export const NullTabIndex = () => {
         <Button onClick={() => setActiveTabIndex(1)}>1</Button>
       </FlexLayout>
       <Tabstrip activeTabIndex={activeTabIndex} style={{ width: 600 }} id="ts">
-        {tabs.map((label, i) => (
-          <Tab label={label} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
     </SaltProvider>

@@ -143,7 +143,11 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
               formFieldProps,
             );
           }
-          return <ToolbarField {...formFieldProps}>{item.value}</ToolbarField>;
+          return (
+            <ToolbarField {...formFieldProps} key={item.id}>
+              {item.value}
+            </ToolbarField>
+          );
         })}
       </div>
     </DropdownBase>

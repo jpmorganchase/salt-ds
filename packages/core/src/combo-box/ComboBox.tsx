@@ -12,6 +12,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
+  Children,
   type FocusEvent,
   type ForwardedRef,
   type KeyboardEvent,
@@ -150,11 +151,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     reason,
   ) => {
     const focusNotBlur = reason === "focus" && newOpen;
-    if (reason == "focus") {
+    if (reason === "focus") {
       setFocusedState(newOpen);
     }
 
-    if (reason == "focus" && !newOpen) {
+    if (reason === "focus" && !newOpen) {
       setFocusVisibleState(false);
     }
 
@@ -168,7 +169,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && children != undefined,
+      open: openState && !readOnly && Children.count(children) > 0,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       strategy: "fixed",
@@ -273,7 +274,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    if (newActive && newActive.data.id != activeState?.id) {
+    if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
     }
@@ -306,7 +307,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     // Wait for the filter to happen
     queueMicrotask(() => {
-      if (value != "") {
+      if (value !== "") {
         const newOption = getFirstOption();
         if (newOption) {
           setActive(newOption.data);
@@ -457,7 +458,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }
       />
       <OptionList
-        open={(openState || focusedState) && !readOnly && children != undefined}
+        open={
+          (openState || focusedState) &&
+          !readOnly &&
+          Children.count(children) > 0
+        }
         collapsed={!openState}
         ref={handleListRef}
         id={listId}

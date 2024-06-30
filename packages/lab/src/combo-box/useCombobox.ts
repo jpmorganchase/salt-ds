@@ -64,7 +64,6 @@ export const useCombobox = <
   collectionHook,
   defaultIsOpen,
   defaultValue,
-  disabled,
   onBlur,
   onFocus,
   onChange,
@@ -374,7 +373,6 @@ export const useCombobox = <
     (evt: FocusEvent) => {
       const element = evt.relatedTarget as HTMLElement;
       return element?.id === `${id}-list`;
-      return true;
     },
     [id],
   );
@@ -406,7 +404,7 @@ export const useCombobox = <
             console.log("we have a new item");
           }
         }
-        // Hoiw do we check if string is Item
+        // How do we check if string is Item
       }
     },
     [onSelectionChange, selected, stringToItem, stringToCollectionItem, value],

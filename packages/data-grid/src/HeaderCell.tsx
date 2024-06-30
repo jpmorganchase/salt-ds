@@ -180,7 +180,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
     const width = valueContainerRef.current
       ? valueContainerRef.current.offsetWidth
       : undefined;
-    if (width != undefined && width !== column.info.width) {
+    if (width !== undefined && width !== column.info.width) {
       resizeColumn(column.index, width);
     }
   });

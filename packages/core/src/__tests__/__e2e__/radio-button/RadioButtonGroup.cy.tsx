@@ -1,6 +1,4 @@
 import {
-  Checkbox,
-  CheckboxGroup,
   FormField,
   FormFieldLabel,
   RadioButton,
@@ -34,7 +32,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
           value="button one"
         >
           {radios.map((radio) => (
-            <RadioButton {...radio} />
+            <RadioButton {...radio} key={radio.value} />
           ))}
         </RadioButtonGroup>,
       );

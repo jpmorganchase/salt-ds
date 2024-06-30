@@ -186,7 +186,7 @@ export const PillInput = forwardRef(function PillInput(
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const target = event.currentTarget;
-    if (target.selectionStart === 0 && target.selectionEnd == 0) {
+    if (target.selectionStart === 0 && target.selectionEnd === 0) {
       const lastPillIndex = pills.length - 1;
       const lastPill = pills[lastPillIndex];
       if (event.key === "Backspace" && lastPill) {
@@ -217,7 +217,7 @@ export const PillInput = forwardRef(function PillInput(
       } else {
         pillElementsRef.current[index + 1]?.focus();
       }
-    } else if (event.key == "Delete" || event.key === "Backspace") {
+    } else if (event.key === "Delete" || event.key === "Backspace") {
       event.preventDefault();
       onPillRemove?.(event, index);
 
@@ -275,7 +275,7 @@ export const PillInput = forwardRef(function PillInput(
           id={pillListId}
         >
           {visiblePills?.map((pill, index) => (
-            <div role="listitem" key={index}>
+            <div role="listitem" key={pill}>
               <Pill
                 data-index={index}
                 disabled={disabled}

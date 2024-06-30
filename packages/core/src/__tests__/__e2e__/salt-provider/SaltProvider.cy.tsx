@@ -283,7 +283,7 @@ describe("Given a SaltProvider", () => {
     }, []);
 
     return (
-      <iframe ref={handleFrameRef}>
+      <iframe ref={handleFrameRef} title="Fake Window">
         <WindowProvider window={ownerWindow(mountNode)}>
           {mountNode && createPortal(children, mountNode)}
         </WindowProvider>
