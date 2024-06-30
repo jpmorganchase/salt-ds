@@ -7,7 +7,7 @@
     "defaultBranch": "main"
   },
   "files": {
-    "ignore": [".next", "mockServiceWorker.js"]
+    "ignore": [".next", "mockServiceWorker.js", "*-props.json"]
   },
   "organizeImports": {
     "enabled": true
@@ -19,7 +19,55 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "style": {
+        "useNodejsImportProtocol": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useTemplate": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noUnusedTemplateLiteral": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noUselessElse": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useExponentiationOperator": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useSelfClosingElements": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "warn"
+      },
+      "nursery": {
+        "noUselessStringConcat": { "level": "error", "fix": "safe" }
+      },
+      "complexity": {
+        "useOptionalChain": { "level": "error", "fix": "safe" },
+        "useLiteralKeys": { "level": "error", "fix": "safe" },
+        "noForEach": "warn"
+      },
+      "a11y": {
+        "noAutofocus": "off",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noNoninteractiveTabindex": "off",
+        "noSvgWithoutTitle": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "warn"
+      }
     }
   },
   "css": {
@@ -29,6 +77,21 @@
     },
     "linter": {
       "enabled": true
+    },
+    "parser": {
+      "cssModules": true
     }
-  }
+  },
+  "overrides": [
+    {
+      "include": ["__tests__/**", "*.stories.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useButtonType": "off"
+          }
+        }
+      }
+    }
+  ]
 }

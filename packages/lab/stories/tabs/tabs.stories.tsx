@@ -199,7 +199,7 @@ export const Controlled: TabsStory = () => {
   };
 
   const handleAddTab = () => {
-    console.log(`handleAddTab`);
+    console.log("handleAddTab");
     const count = tabs.length;
     setTabs((state) => state.concat([{ label: `Tab ${state.length + 1}` }]));
     setActiveTabIndex(count);
@@ -326,7 +326,7 @@ export const AddNewNoFocus: TabsStory = () => {
   };
 
   const handleAddTab = () => {
-    setTabs((state) => state.concat([{ label: `My Tab` }]));
+    setTabs((state) => state.concat([{ label: "My Tab" }]));
   };
 
   return (

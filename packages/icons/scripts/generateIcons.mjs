@@ -242,10 +242,8 @@ const generateIconAll = async ({ icons, allPath }) => {
     .sort((a, b) => a.localeCompare(b))
     .map((componentName) => `${componentName}Icon,`);
 
-  const importsStatements =
-    "import {\n" + sortedIcons.join("\n") + `\n} from "@salt-ds/icons";\n`;
-  const exportStatements =
-    "export const allIcons = [" + sortedIcons.join("\n") + "\n];\n";
+  const importsStatements = `import {\n${sortedIcons.join("\n")}\n} from "@salt-ds/icons";\n`;
+  const exportStatements = `export const allIcons = [${sortedIcons.join("\n")}\n];\n`;
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,
@@ -270,10 +268,8 @@ const generateIconAllSite = async ({ icons, siteAllPath }) => {
     .sort((a, b) => a.localeCompare(b))
     .map((componentName) => `${componentName}Icon,`);
 
-  const importsStatements =
-    "import {\n" + sortedIcons.join("\n") + `\n} from "@salt-ds/icons";\n`;
-  const exportStatements =
-    "export const allIcons = {" + sortedIcons.join("\n") + "\n};\n";
+  const importsStatements = `import {\n${sortedIcons.join("\n")}\n} from "@salt-ds/icons";\n`;
+  const exportStatements = `export const allIcons = {${sortedIcons.join("\n")}\n};\n`;
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,

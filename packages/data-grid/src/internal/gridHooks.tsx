@@ -1180,7 +1180,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
 
   const onMouseUp = useCallback((event: MouseEvent) => {
     if (!mouseSelectionRef.current) {
-      throw new Error(`useRangeSelection state is not initialized`);
+      throw new Error("useRangeSelection state is not initialized");
     }
     mouseSelectionRef.current.unsubscribe();
     mouseSelectionRef.current = undefined;

@@ -7,7 +7,8 @@ const isPlainObject = (obj: unknown) =>
 export function itemToString(item: unknown): string {
   if (typeof item === "string") {
     return item;
-  } else if (!isPlainObject(item)) {
+  }
+  if (!isPlainObject(item)) {
     return String(item);
   }
 

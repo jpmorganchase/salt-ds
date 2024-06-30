@@ -23,7 +23,7 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref) {
     const {
       className,
-      ["aria-labelledby"]: ariaLabelledby,
+      "aria-labelledby": ariaLabelledby,
       children,
       ...rest
     } = props;

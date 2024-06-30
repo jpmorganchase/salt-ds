@@ -12,7 +12,7 @@ export const ColumnDragContext = createContext<ColumnDragContext | undefined>(
 export const useColumnDragContext = () => {
   const c = useContext(ColumnDragContext);
   if (!c) {
-    throw new Error(`useColumnDragContext invoked outside of a Grid`);
+    throw new Error("useColumnDragContext invoked outside of a Grid");
   }
   return c;
 };

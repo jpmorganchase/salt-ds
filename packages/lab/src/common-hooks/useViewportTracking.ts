@@ -31,19 +31,17 @@ const getItemTop = (
   if (transform.startsWith("matrix")) {
     const pos = transform.lastIndexOf(",");
     return Number.parseInt(transform.slice(pos + 1));
-  } else {
-    let offsetParent = element.offsetParent as HTMLElement;
-    if (offsetParent === offsetContainer || offsetContainer === null) {
-      return element.offsetTop;
-    } else {
-      let top = element.offsetTop;
-      while (offsetParent !== null && offsetParent !== offsetContainer) {
-        top += offsetParent.offsetTop;
-        offsetParent = offsetParent.offsetParent as HTMLElement;
-      }
-      return top;
-    }
   }
+  let offsetParent = element.offsetParent as HTMLElement;
+  if (offsetParent === offsetContainer || offsetContainer === null) {
+    return element.offsetTop;
+  }
+  let top = element.offsetTop;
+  while (offsetParent !== null && offsetParent !== offsetContainer) {
+    top += offsetParent.offsetTop;
+    offsetParent = offsetParent.offsetParent as HTMLElement;
+  }
+  return top;
 };
 
 export interface ViewportTrackingProps<Item> {

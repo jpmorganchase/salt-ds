@@ -76,7 +76,7 @@ const resizeColumn = (col: number, dx: number) => {
 };
 
 const expectFakeColumnWidth = (w: number) => {
-  cy.findByTestId(`grid-fake-column-header`).should(($el) => {
+  cy.findByTestId("grid-fake-column-header").should(($el) => {
     expect($el[0].getBoundingClientRect().width).equal(w);
   });
 };

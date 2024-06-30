@@ -21,18 +21,18 @@ const getChildElementName = (element: ReactNode): string => {
     const { type } = element;
     if (typeof type === "string") {
       return type;
-    } else if (typeof type.name === "string") {
-      return type.name;
-    } else if ("displayName" in type) {
-      return (type as TypeWithDisplayName).displayName;
-    } else {
-      return "";
     }
-  } else {
-    throw Error(
-      "useToolbarField, child of ToolbarField is not valid ReactElememnt",
-    );
+    if (typeof type.name === "string") {
+      return type.name;
+    }
+    if ("displayName" in type) {
+      return (type as TypeWithDisplayName).displayName;
+    }
+    return "";
   }
+  throw Error(
+    "useToolbarField, child of ToolbarField is not valid ReactElememnt",
+  );
 };
 
 // ToolbarButton gets special styling treatment in the OverflowPanel but styling is

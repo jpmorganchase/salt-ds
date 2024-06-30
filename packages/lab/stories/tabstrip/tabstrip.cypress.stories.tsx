@@ -51,7 +51,7 @@ export const SimpleTabstripAddRemoveTab: TabstripStory = ({
   const [editing, setEditing] = useState(false);
 
   const handleAddTab = () => {
-    console.log(`handleAddTab`);
+    console.log("handleAddTab");
     const count = tabs.length;
     setTabs((state) => state.concat([`Tab ${state.length + 1}`]));
     setActiveTabIndex(count);

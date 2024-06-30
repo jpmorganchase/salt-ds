@@ -93,11 +93,9 @@ export const InteractableCard = forwardRef<
       : "radio"
     : "button";
 
-  const isMultiselect =
-    interactableCardGroup && interactableCardGroup.multiSelect;
+  const isMultiselect = interactableCardGroup?.multiSelect;
 
-  const isFirstChild =
-    interactableCardGroup && interactableCardGroup.isFirstChild(value);
+  const isFirstChild = interactableCardGroup?.isFirstChild(value);
 
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;

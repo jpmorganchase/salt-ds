@@ -41,7 +41,7 @@ describe("A highlighter", () => {
         </span>,
       );
 
-      cy.get(`.saltHighlighter-highlight`).should("have.length", 2);
+      cy.get(".saltHighlighter-highlight").should("have.length", 2);
       // And full text is returned
       cy.findByTestId("test-string").should(
         "have.text",

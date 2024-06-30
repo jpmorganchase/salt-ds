@@ -50,39 +50,37 @@ export const renderTrayTools = (
         key: index,
         ...toolbarItemProps,
       });
-    } else {
-      if (Object.keys(props).some(isResponsiveAttribute)) {
-        const [toolbarProps, restProps] = liftResponsivePropsToFormField(props);
-        return (
-          <ToolbarField
-            {...toolbarProps}
-            {...toolbarItemProps}
-            // don't think we need the data-index
-            data-index={index}
-            data-priority={2}
-            key={index}
-            data-orientation={orientation}
-          >
-            {/* We clone here just to remove the responsive props */}
-            {React.cloneElement(item.element, { ...restProps })}
-          </ToolbarField>
-        );
-      } else {
-        return (
-          <ToolbarField
-            {...toolbarItemProps}
-            data-index={index}
-            data-overflowed={overflowed}
-            data-priority={2}
-            key={index}
-            data-orientation={orientation}
-          >
-            {React.cloneElement(item.element, {
-              id: `tooltray-control-${item.id}`,
-            })}
-          </ToolbarField>
-        );
-      }
     }
+    if (Object.keys(props).some(isResponsiveAttribute)) {
+      const [toolbarProps, restProps] = liftResponsivePropsToFormField(props);
+      return (
+        <ToolbarField
+          {...toolbarProps}
+          {...toolbarItemProps}
+          // don't think we need the data-index
+          data-index={index}
+          data-priority={2}
+          key={index}
+          data-orientation={orientation}
+        >
+          {/* We clone here just to remove the responsive props */}
+          {React.cloneElement(item.element, { ...restProps })}
+        </ToolbarField>
+      );
+    }
+    return (
+      <ToolbarField
+        {...toolbarItemProps}
+        data-index={index}
+        data-overflowed={overflowed}
+        data-priority={2}
+        key={index}
+        data-orientation={orientation}
+      >
+        {React.cloneElement(item.element, {
+          id: `tooltray-control-${item.id}`,
+        })}
+      </ToolbarField>
+    );
   });
 };

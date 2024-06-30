@@ -108,18 +108,16 @@ function alignSecondaryChild(
       const originalChildIndex =
         orderedChildrenData[firstSecondaryChildIndex].index;
       return { index: originalChildIndex, align: "right" };
-    } else {
-      return noSecondaryChildren;
-    }
-  } else {
-    let index = orderedChildrenData.length;
-    while (index--) {
-      if (orderedChildrenData[index].variant === "secondary") {
-        return { index: orderedChildrenData[index].index, align: "left" };
-      }
     }
     return noSecondaryChildren;
   }
+  let index = orderedChildrenData.length;
+  while (index--) {
+    if (orderedChildrenData[index].variant === "secondary") {
+      return { index: orderedChildrenData[index].index, align: "left" };
+    }
+  }
+  return noSecondaryChildren;
 }
 
 export interface ButtonBarProps extends HTMLAttributes<HTMLDivElement> {

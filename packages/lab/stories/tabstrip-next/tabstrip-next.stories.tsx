@@ -81,7 +81,7 @@ export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
           );
         })}
       </TabstripNext>
-      <div className="inner-container primary-container"></div>
+      <div className="inner-container primary-container" />
     </div>
   );
 };
@@ -113,7 +113,7 @@ export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
           );
         })}
       </TabstripNext>
-      <div className="inner-container secondary-container"></div>
+      <div className="inner-container secondary-container" />
     </div>
   );
 };

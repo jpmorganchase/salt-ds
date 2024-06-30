@@ -31,7 +31,7 @@ export const AllRenderer = ({
             <SaltProvider
               density={d}
               mode="light"
-              key={"theme-light-" + d}
+              key={`theme-light-${d}`}
               applyClassesTo={"child"}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
@@ -40,7 +40,7 @@ export const AllRenderer = ({
               applyClassesTo={"child"}
               density={d}
               mode="dark"
-              key={"theme-dark-" + d}
+              key={`theme-dark-${d}`}
             >
               <BackgroundBlock>{cloneElement(children)}</BackgroundBlock>
             </SaltProvider>

@@ -280,7 +280,7 @@ export const FormFieldLegacy = forwardRef(
               [withBaseName(focusClass)]: states.focused,
               [withBaseName("labelTop")]: labelTop,
               [withBaseName("labelLeft")]: labelLeft,
-              [withBaseName(`withHelperText`)]: inlineHelperText,
+              [withBaseName("withHelperText")]: inlineHelperText,
               [withBaseName(variant)]: variant,
             },
             className,

@@ -129,25 +129,21 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
           const { type } = item.value as ReactElement;
           if (type === OverflowSeparator) {
             return item.value;
-          } else {
-            const formFieldProps = {
-              id: item.id,
-              inOverflowPanel: true,
-              key: item.id,
-              onClick: handleItemClick,
-            } as ToolbarFieldProps;
-
-            if (type === ToolbarField) {
-              return React.cloneElement(
-                item.value as ReactElement,
-                formFieldProps,
-              );
-            } else {
-              return (
-                <ToolbarField {...formFieldProps}>{item.value}</ToolbarField>
-              );
-            }
           }
+          const formFieldProps = {
+            id: item.id,
+            inOverflowPanel: true,
+            key: item.id,
+            onClick: handleItemClick,
+          } as ToolbarFieldProps;
+
+          if (type === ToolbarField) {
+            return React.cloneElement(
+              item.value as ReactElement,
+              formFieldProps,
+            );
+          }
+          return <ToolbarField {...formFieldProps}>{item.value}</ToolbarField>;
         })}
       </div>
     </DropdownBase>

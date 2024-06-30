@@ -53,16 +53,14 @@ export const measureContainer = (
         rootContainerDepth: height,
         innerContainerDepth: innerHeight,
       };
-    } else {
-      return {
-        innerContainerSize: innerHeight,
-        rootContainerDepth: width,
-        innerContainerDepth: innerWidth,
-      };
     }
-  } else {
-    throw Error("measureContainer, innerContainer has no parent element");
+    return {
+      innerContainerSize: innerHeight,
+      rootContainerDepth: width,
+      innerContainerDepth: innerWidth,
+    };
   }
+  throw Error("measureContainer, innerContainer has no parent element");
 };
 
 const isContainerOverflowing = (
@@ -76,18 +74,17 @@ const isContainerOverflowing = (
   // is not always correct
   if (containerDepth > parentContainerDepth) {
     return true;
-  } else {
-    // ... hence - expensive, but catches those situations where the containerDepth is wrong
-    const { bottom, right } = innerElement.getBoundingClientRect();
-    const maxPos = Array.from(innerElement.childNodes).reduce<number>(
-      (maxVal, child) => {
-        const rect = (child as HTMLElement).getBoundingClientRect();
-        return Math.max(isHorizontal ? rect.bottom : rect.right, maxVal);
-      },
-      isHorizontal ? bottom : right,
-    );
-    return isHorizontal ? maxPos > bottom : maxPos > right;
   }
+  // ... hence - expensive, but catches those situations where the containerDepth is wrong
+  const { bottom, right } = innerElement.getBoundingClientRect();
+  const maxPos = Array.from(innerElement.childNodes).reduce<number>(
+    (maxVal, child) => {
+      const rect = (child as HTMLElement).getBoundingClientRect();
+      return Math.max(isHorizontal ? rect.bottom : rect.right, maxVal);
+    },
+    isHorizontal ? bottom : right,
+  );
+  return isHorizontal ? maxPos > bottom : maxPos > right;
 };
 
 export const measureContainerOverflow = (
@@ -218,9 +215,8 @@ export const measureOverflowItems = (
             size: measurements[i],
           },
     );
-  } else {
-    return items;
   }
+  return items;
 };
 
 export const addAll = (sum: number, m: OverflowItem): number => sum + m.size;

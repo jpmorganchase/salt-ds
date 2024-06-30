@@ -76,11 +76,10 @@ const getThemeNames = (
     return themeName === DEFAULT_THEME_NAME
       ? clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME)
       : clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName);
-  } else {
-    return themeName === DEFAULT_THEME_NAME
-      ? themeName
-      : clsx(DEFAULT_THEME_NAME, themeName);
   }
+  return themeName === DEFAULT_THEME_NAME
+    ? themeName
+    : clsx(DEFAULT_THEME_NAME, themeName);
 };
 
 interface ThemeNextProps {
@@ -115,7 +114,8 @@ const createThemedChildren = ({
   };
   if (applyClassesTo === "root") {
     return children;
-  } else if (applyClassesTo === "child") {
+  }
+  if (applyClassesTo === "child") {
     if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
       return React.cloneElement(children, {
         className: clsx(
@@ -128,29 +128,27 @@ const createThemedChildren = ({
         "data-mode": mode,
         ...(themeNext ? themeNextProps : {}),
       });
-    } else {
-      console.warn(
-        `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
-        Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        div element will wrap your child elements`,
-      );
-      return children;
     }
-  } else {
-    return (
-      <div
-        className={clsx(
-          "salt-provider",
-          themeNamesString,
-          `salt-density-${density}`,
-        )}
-        data-mode={mode}
-        {...(themeNext ? themeNextProps : {})}
-      >
-        {children}
-      </div>
+    console.warn(
+      `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
+      Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
+      div element will wrap your child elements`,
     );
+    return children;
   }
+  return (
+    <div
+      className={clsx(
+        "salt-provider",
+        themeNamesString,
+        `salt-density-${density}`,
+      )}
+      data-mode={mode}
+      {...(themeNext ? themeNextProps : {})}
+    >
+      {children}
+    </div>
+  );
 };
 
 type TargetElement = "root" | "scope" | "child";
@@ -373,9 +371,8 @@ function InternalSaltProvider({
 
   if (isRootProvider) {
     return <AriaAnnouncerProvider>{saltProvider}</AriaAnnouncerProvider>;
-  } else {
-    return saltProvider;
   }
+  return saltProvider;
 }
 
 export function SaltProvider({

@@ -117,7 +117,7 @@ export const CascadingMenuList = forwardRef<
   const handleRef = useForkRef(setMenuRef, listRef);
 
   useEffect(() => {
-    if (menuRef && menuRef.focus) {
+    if (menuRef?.focus) {
       // timeout prevents scrolling issue by waiting a split second
       // and menu should be correctly positioned by then and
       // focusing popper content offscreen will not scroll page

@@ -5,12 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "repository": "https://github.com/jpmorganchase/salt-ds",
-  "workspaces": [
-    "packages/**",
-    "tooling/**",
-    "docs",
-    "site"
-  ],
+  "workspaces": ["packages/**", "tooling/**", "docs", "site"],
   "modular": {
     "type": "root"
   },
@@ -125,12 +120,7 @@
     "recursive-readdir": "2.2.3"
   },
   "browserslist": {
-    "production": [
-      "chrome 79",
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": ["chrome 79", ">0.2%", "not dead", "not op_mini all"],
     "development": [
       "chrome 79",
       "last 1 chrome version",

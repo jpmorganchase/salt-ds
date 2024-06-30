@@ -426,7 +426,7 @@ const CustomHeadersStoryContext = createContext<
 const useCustomHeadersStoryContext = () => {
   const c = useContext(CustomHeadersStoryContext);
   if (!c) {
-    throw new Error(`CustomHeadersStoryContext not found`);
+    throw new Error("CustomHeadersStoryContext not found");
   }
   return c;
 };
@@ -538,7 +538,7 @@ const CustomCellsStoryContext = createContext<
 const useCustomCellsStoryContext = () => {
   const c = useContext(CustomCellsStoryContext);
   if (!c) {
-    throw new Error(`CustomCellsStoryContext not found`);
+    throw new Error("CustomCellsStoryContext not found");
   }
   return c;
 };
@@ -700,14 +700,13 @@ const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
           col,
           ...old.slice(toIndex),
         ];
-      } else {
-        return [
-          ...old.slice(0, toIndex),
-          col,
-          ...old.slice(toIndex, fromIndex),
-          ...old.slice(fromIndex + 1),
-        ];
       }
+      return [
+        ...old.slice(0, toIndex),
+        col,
+        ...old.slice(toIndex, fromIndex),
+        ...old.slice(fromIndex + 1),
+      ];
     });
   };
 

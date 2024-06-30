@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
 import react from "@vitejs/plugin-react";

@@ -293,7 +293,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
 function FakeWindow({ children }: PropsWithChildren) {
   return (
     <div className="fakeDialogWindow">
-      <div className="fakeDialogWindowHeader"></div>
+      <div className="fakeDialogWindowHeader" />
       {children}
     </div>
   );

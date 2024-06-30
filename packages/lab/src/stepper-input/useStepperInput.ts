@@ -14,7 +14,7 @@ const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
 const callAll =
   (...fns: any[]) =>
   (...args: any[]) =>
-    fns.forEach((fn) => fn && fn(...args));
+    fns.forEach((fn) => fn?.(...args));
 
 const toFixedDecimalPlaces = (inputNumber: number, decimalPlaces: number) =>
   inputNumber.toFixed(decimalPlaces);

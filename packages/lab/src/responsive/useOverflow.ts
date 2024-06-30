@@ -227,9 +227,8 @@ export const useOverflow = ({
             });
           }
           return true;
-        } else {
-          return false;
         }
+        return false;
       }
     },
     [

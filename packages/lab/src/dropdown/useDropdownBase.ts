@@ -128,9 +128,8 @@ export const useDropdownBase = ({
   ): string | undefined => {
     if (labelledBy === undefined && labelledByProp === undefined) {
       return undefined;
-    } else {
-      return [labelledBy, labelledByProp].filter((x) => !!x).join(" ");
     }
+    return [labelledBy, labelledByProp].filter((x) => !!x).join(" ");
   };
 
   // TODO do we use aria-popup - valid values are menu, disloag, grid, tree, listbox

@@ -50,7 +50,7 @@ export const useDragDrop = ({
 
   const clearDisplacedItem = useCallback(() => {
     if (displacedItem.current) {
-      displacedItem.current.element.style.cssText = ``;
+      displacedItem.current.element.style.cssText = "";
       displacedItem.current = null;
     }
   }, []);
@@ -160,7 +160,7 @@ export const useDragDrop = ({
         if (!isScrolling.current) {
           // Have to redefine the following here as we're using it as a style type not a DOMRect type
           const START = orientation === "horizontal" ? "left" : "top";
-          draggableRef.current.style[START] = renderPos + "px";
+          draggableRef.current.style[START] = `${renderPos}px`;
 
           const direction = lastClientPos < clientPos ? "fwd" : "bwd";
 

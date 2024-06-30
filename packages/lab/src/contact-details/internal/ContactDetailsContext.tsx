@@ -33,7 +33,7 @@ export const useContactDetailsContext = (): ContactDetailsContext => {
   const context = useContext(ContactDetailsContext);
   if (!context && process.env.NODE_ENV !== "production") {
     console.error(
-      `useContactDetailsContext should be used inside of ContactDetails`,
+      "useContactDetailsContext should be used inside of ContactDetails",
     );
   }
   return context!;

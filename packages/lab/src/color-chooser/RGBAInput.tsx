@@ -62,7 +62,7 @@ export const RGBAInput = ({
           />
         </div>
       ) : (
-        <div className={clsx(withBaseName("alphaSpacerDiv"))}></div>
+        <div className={clsx(withBaseName("alphaSpacerDiv"))} />
       )}
     </>
   );

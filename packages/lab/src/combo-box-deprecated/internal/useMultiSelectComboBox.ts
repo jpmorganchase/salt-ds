@@ -104,7 +104,7 @@ export const useMultiSelectComboBox = <Item>(
   );
 
   const source = useMemo(() => {
-    if (inputValue && inputValue.trim().length) {
+    if (inputValue?.trim().length) {
       const itemFilter = getDefaultFilter(inputValue, getFilterRegex);
       return sourceProp.filter((item: Item) => itemFilter(itemToString(item)));
     }
@@ -112,10 +112,7 @@ export const useMultiSelectComboBox = <Item>(
   }, [inputValue, sourceProp, getFilterRegex, itemToString]);
 
   const itemTextHighlightPattern = useMemo(
-    () =>
-      inputValue && inputValue.trim().length
-        ? getFilterRegex(inputValue)
-        : undefined,
+    () => (inputValue?.trim().length ? getFilterRegex(inputValue) : undefined),
     [inputValue, getFilterRegex],
   );
 
@@ -202,7 +199,7 @@ export const useMultiSelectComboBox = <Item>(
   const handleItemsChange = (newItems: Item[] | undefined) => {
     const uniqueItems = Array.from(new Set(newItems));
     setSelectedItems(uniqueItems);
-    onChange && onChange(null as unknown as ChangeEvent, uniqueItems);
+    onChange?.(null as unknown as ChangeEvent, uniqueItems);
   };
 
   const handleInputSelect = (event: SyntheticEvent<HTMLInputElement>) => {
@@ -300,7 +297,7 @@ export const useMultiSelectComboBox = <Item>(
     }
   }, [inputState.highlightedIndex, setHighlightedListIndex, setQuickSelection]);
 
-  const highlightedIndex = listState && listState.highlightedIndex;
+  const highlightedIndex = listState?.highlightedIndex;
 
   // Remove highlight from pills if a list item is highlighted
   useEffect(() => {
@@ -326,8 +323,8 @@ export const useMultiSelectComboBox = <Item>(
           ? selectedItems.concat(source.slice(0, 1))
           : selectedItems.filter((item) => item !== newItem);
       setSelectedItems(newSelectedItems);
-      onSelect && onSelect(event, newItem);
-      onChange && onChange(event as ChangeEvent, newSelectedItems);
+      onSelect?.(event, newItem);
+      onChange?.(event as ChangeEvent, newSelectedItems);
     }
   };
 
@@ -412,7 +409,7 @@ export const useMultiSelectComboBox = <Item>(
   const mergedInputProps = {
     ...inputProps.InputProps,
     inputProps: {
-      ...(inputProps.InputProps || {}).inputProps,
+      ...inputProps.InputProps?.inputProps,
       role: "textbox",
       "aria-roledescription": "MultiSelect Combobox",
     },

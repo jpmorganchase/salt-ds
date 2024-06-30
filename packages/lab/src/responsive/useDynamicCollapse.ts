@@ -180,9 +180,8 @@ export const useDynamicCollapse = ({
         overflowItem: collapsingItem,
       });
       return true;
-    } else {
-      return false;
     }
+    return false;
   }, [dispatch, managedItemsRef, ref]);
 
   useIsomorphicLayoutEffect(() => {

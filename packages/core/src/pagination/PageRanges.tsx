@@ -17,7 +17,7 @@ export interface PageRangesProps {
 }
 
 const Ellipsis = () => {
-  return <div className={withBaseName("ellipsis")}>{`\u2026`}</div>;
+  return <div className={withBaseName("ellipsis")}>{"\u2026"}</div>;
 };
 
 const mapRange = (range: PageRange, fn: (i: number) => ReactElement) => {

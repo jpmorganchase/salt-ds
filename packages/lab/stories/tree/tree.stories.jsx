@@ -124,7 +124,7 @@ export const Default = () => {
 
 export const Cypress = () => {
   const handleSelectionChange = (evt, selected) => {
-    console.log(`selectionChange`, { selected });
+    console.log("selectionChange", { selected });
   };
 
   return (

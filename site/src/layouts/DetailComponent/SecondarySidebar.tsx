@@ -43,9 +43,8 @@ const PackageInfo: FC<{ packageInfo: Data["package"] | undefined }> = ({
         </Text>
       </div>
     );
-  } else {
-    return null;
   }
+  return null;
 };
 
 const SecondarySidebar: FC<SecondarySidebarProps> = ({

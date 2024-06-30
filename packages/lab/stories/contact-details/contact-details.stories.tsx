@@ -608,7 +608,7 @@ const ExportToFileTemplate: StoryFn = () => {
       `N:${personaA.name}`,
       `TEL;TYPE=WORK,VOICE:${personaA.officePhone}`,
       `EMAIL:${personaA.email}`,
-      `END:VCARD`,
+      "END:VCARD",
     ].join("\n");
 
   const generateCopyText = () =>

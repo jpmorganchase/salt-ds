@@ -70,7 +70,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
     const onPageChange = useCallback(
       (event: SyntheticEvent, page: number) => {
         setPageState(page);
-        onPageChangeProp && onPageChangeProp(event, page);
+        onPageChangeProp?.(event, page);
       },
       [onPageChangeProp, setPageState],
     );

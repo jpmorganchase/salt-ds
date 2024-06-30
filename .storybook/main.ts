@@ -1,4 +1,4 @@
-import { dirname, join } from "path";
+import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import type { UserConfig } from "vite";

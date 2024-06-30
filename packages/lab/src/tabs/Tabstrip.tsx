@@ -54,8 +54,7 @@ const ADD_TAB_LABEL = "Create Tab";
 const tabDescriptors = (
   tabs: TabsSource | undefined,
 ): TabDescriptor[] | undefined =>
-  tabs &&
-  tabs.map((tab: string | TabDescriptor) =>
+  tabs?.map((tab: string | TabDescriptor) =>
     typeof tab === "string" ? { label: tab } : tab,
   );
 
@@ -150,9 +149,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const getChildren = (): TabElement[] | undefined => {
     if (React.Children.count(children) === 0) {
       return undefined;
-    } else {
-      return React.Children.toArray(children) as TabElement[];
     }
+    return React.Children.toArray(children) as TabElement[];
   };
 
   const [innerContainerRef, switchOverflowPriorities] = useOverflowLayout({
@@ -375,17 +373,15 @@ export const Tabstrip = forwardRef(function Tabstrip(
         if (React.isValidElement(element)) {
           if (element.type === Tab) {
             return React.cloneElement(element, { ...baseProps, ...tabProps });
-          } else {
-            return React.cloneElement(element, baseProps);
           }
-        } else {
-          //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
-          return React.createElement(Tab, {
-            ...baseProps,
-            ...tabProps,
-            label: tab.label,
-          });
+          return React.cloneElement(element, baseProps);
         }
+        //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
+        return React.createElement(Tab, {
+          ...baseProps,
+          ...tabProps,
+          label: tab.label,
+        });
       });
 
     const overflowCount = overflowedItems.length;

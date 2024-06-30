@@ -1,5 +1,5 @@
-import { type PathLike, promises } from "fs";
-import path from "path";
+import { type PathLike, promises } from "node:fs";
+import path from "node:path";
 import { findLast, generate, parse, walk } from "css-tree";
 import glob from "glob-promise";
 import * as ts from "typescript";

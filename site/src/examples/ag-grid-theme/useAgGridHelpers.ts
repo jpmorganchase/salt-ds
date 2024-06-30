@@ -41,7 +41,7 @@ export function useAgGridHelpers(compact = false): {
   }, [density, compact]);
 
   const className = `ag-theme-salt${
-    compact && density === "high" ? `-compact` : ``
+    compact && density === "high" ? "-compact" : ""
   }-${mode}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {

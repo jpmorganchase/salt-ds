@@ -151,9 +151,8 @@ export const useInstantCollapse = ({
             overflowItem,
           });
           return true;
-        } else {
-          return false;
         }
+        return false;
       }
     },
     [dispatch, overflowItemsRef],

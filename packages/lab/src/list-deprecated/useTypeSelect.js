@@ -26,10 +26,7 @@ export function useTypeSelect(options) {
       while (index < itemCount) {
         const item = getItemAtIndex(index);
         const textValue = itemToString ? itemToString(item) : item;
-        if (
-          textValue &&
-          textValue.match(new RegExp(`^${escapeRegExp(searchTerm)}`, "i"))
-        ) {
+        if (textValue?.match(new RegExp(`^${escapeRegExp(searchTerm)}`, "i"))) {
           return index;
         }
 

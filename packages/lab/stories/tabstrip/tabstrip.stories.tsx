@@ -698,7 +698,7 @@ export const TabstripCloseDeclarative = ({
     { label: "More Services", closeable: true },
   ]);
   const handleDeleteTab = (tabIndex: number) => {
-    console.log(`handle delete in story`);
+    console.log("handle delete in story");
     // remove the color as well, else they will appear on different tabs
     // colours.splice(tabIndex, 1);
     setTabs((state) => state.filter((tab, i) => i !== tabIndex));
@@ -800,7 +800,7 @@ export const EditableLabelUncontrolledValueUncontrolledEditing = () => {
   };
 
   const handleExitEditMode = (value?: string) => {
-    console.log(`handleExitEditMode `, { value });
+    console.log("handleExitEditMode ", { value });
   };
 
   return (

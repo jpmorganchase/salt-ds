@@ -59,9 +59,8 @@ export const useImperativeScrollingAPI = <Item>({
     () => {
       if (scrollableRef.current) {
         return scrollHandles;
-      } else {
-        return noScrolling;
       }
+      return noScrolling;
     },
     [scrollHandles],
   );

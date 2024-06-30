@@ -31,9 +31,9 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
   const selectorId =
     viewMode === "docs"
       ? `addon-backgrounds-docs-${id}`
-      : `addon-backgrounds-color`;
+      : "addon-backgrounds-color";
 
-  const selector = viewMode === "docs" ? `.docs-story` : ".sb-show-main";
+  const selector = viewMode === "docs" ? ".docs-story" : ".sb-show-main";
 
   useEffect(() => {
     const color = getCharacteristicValue(

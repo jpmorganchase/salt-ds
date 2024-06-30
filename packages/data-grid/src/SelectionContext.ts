@@ -18,7 +18,7 @@ export const SelectionContext = createContext<SelectionContext | undefined>(
 export const useSelectionContext = () => {
   const c = useContext(SelectionContext);
   if (!c) {
-    throw new Error(`useSelectionContext invoked outside of a Grid`);
+    throw new Error("useSelectionContext invoked outside of a Grid");
   }
   return c;
 };

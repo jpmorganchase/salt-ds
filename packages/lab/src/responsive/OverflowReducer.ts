@@ -210,12 +210,11 @@ const createInjectedContent = (
       const injectedItem = sourceItem(source, id, index);
       injectedItem.isInjectedItem = true;
       return injectedItem;
-    } else {
-      const { element } = item as InjectedChildItem;
-      const injectedItem = childItem(element, id, index);
-      injectedItem.isInjectedItem = true;
-      return injectedItem;
     }
+    const { element } = item as InjectedChildItem;
+    const injectedItem = childItem(element, id, index);
+    injectedItem.isInjectedItem = true;
+    return injectedItem;
   });
 };
 
@@ -325,15 +324,15 @@ const restoreCollapsingItem = (items: OverflowItem[]) => {
         ...item,
         collapsing: false,
       };
-    } else if (item === collapsedItem) {
+    }
+    if (item === collapsedItem) {
       return {
         ...item,
         collapsed: false,
         collapsing: true,
       };
-    } else {
-      return item;
     }
+    return item;
   });
 };
 
@@ -356,14 +355,14 @@ const collapseDynamicItem = (
         minSize,
         size: collapsedSize,
       };
-    } else if (item === lastUncollapsedItem) {
+    }
+    if (item === lastUncollapsedItem) {
       return {
         ...item,
         collapsing: true,
       };
-    } else {
-      return item;
     }
+    return item;
   });
 };
 
@@ -394,12 +393,10 @@ const addOverflowIndicator = (
         .slice(0, -1)
         .concat({ ...overflowItem, index: addTab.index })
         .concat({ ...addTab, index: overflowItem.index });
-    } else {
-      return items.concat(overflowItem);
     }
-  } else {
-    return items;
+    return items.concat(overflowItem);
   }
+  return items;
 };
 
 export const overflowReducer: OverflowReducer = (state, action) => {

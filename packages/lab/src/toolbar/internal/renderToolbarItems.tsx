@@ -86,31 +86,30 @@ export const renderToolbarItems = (
 
       if (item.element.type === Tooltray) {
         return React.cloneElement(item.element, toolbarItemProps);
-      } else {
-        switch (item.element.type) {
-          case ToolbarField:
-            const props = item.element.props as ToolbarFieldProps;
-            return React.cloneElement(item.element, {
-              ...toolbarItemProps,
-              children: React.cloneElement(props.children as ReactElement, {
+      }
+      switch (item.element.type) {
+        case ToolbarField:
+          const props = item.element.props as ToolbarFieldProps;
+          return React.cloneElement(item.element, {
+            ...toolbarItemProps,
+            children: React.cloneElement(props.children as ReactElement, {
+              // Inject an id that nested Control can use to query status via context
+              id: `toolbar-control-${item.id}`,
+            }),
+          } as ToolbarFieldProps);
+        default:
+          const [responsiveProps, componentProps] =
+            liftResponsivePropsToFormField(item.element.props);
+
+          return (
+            <ToolbarField {...responsiveProps} {...toolbarItemProps}>
+              {React.cloneElement(item.element, {
+                ...componentProps,
                 // Inject an id that nested Control can use to query status via context
                 id: `toolbar-control-${item.id}`,
-              }),
-            } as ToolbarFieldProps);
-          default:
-            const [responsiveProps, componentProps] =
-              liftResponsivePropsToFormField(item.element.props);
-
-            return (
-              <ToolbarField {...responsiveProps} {...toolbarItemProps}>
-                {React.cloneElement(item.element, {
-                  ...componentProps,
-                  // Inject an id that nested Control can use to query status via context
-                  id: `toolbar-control-${item.id}`,
-                })}
-              </ToolbarField>
-            );
-        }
+              })}
+            </ToolbarField>
+          );
       }
     });
 };

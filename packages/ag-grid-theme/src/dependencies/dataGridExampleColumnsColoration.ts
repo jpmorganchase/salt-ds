@@ -24,9 +24,8 @@ const dataGridExampleColumnsColoration = [
           color: "var(--salt-color-gray-900)",
           backgroundColor: "var(--salt-color-orange-20)",
         };
-      } else {
-        return null;
       }
+      return null;
     },
   },
   {

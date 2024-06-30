@@ -38,9 +38,8 @@ export function deriveFlatStateFromTree(
           generatedChildId,
         );
         return { ...menuStructure, ...innerState };
-      } else {
-        return menuStructure;
       }
+      return menuStructure;
     },
     // Initialize the structure with the root menu
     {

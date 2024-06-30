@@ -62,9 +62,8 @@ const infiniteScrollComponents = {
     if (params.value !== undefined) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
       return params.value;
-    } else {
-      return <Spinner size="default" />;
     }
+    return <Spinner size="default" />;
   },
 };
 

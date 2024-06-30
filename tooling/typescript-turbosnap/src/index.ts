@@ -3,8 +3,8 @@
  * Reason, Module and Stats types; isUserCode, normalize, the plugin shell and generateBundle are copied.
  */
 
-import path from "path";
-import { writeFile } from "fs/promises";
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
 import { Project } from "ts-morph";
 import type { Plugin } from "vite";
 import { normalizePath } from "vite";

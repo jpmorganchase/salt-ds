@@ -267,11 +267,11 @@ export const ListBase = forwardRef(function ListBase<Item>(
     () => {
       if (virtualized && virtualizedListRef.current) {
         return virtualizedScrollHandles;
-      } else if (listRef.current) {
-        return scrollHandles;
-      } else {
-        return noScrolling;
       }
+      if (listRef.current) {
+        return scrollHandles;
+      }
+      return noScrolling;
     },
     [virtualized, scrollHandles, virtualizedScrollHandles],
   );

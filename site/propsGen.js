@@ -1,6 +1,6 @@
 const docgen = require("react-docgen-typescript");
-const path = require("path");
-const { writeFile } = require("fs");
+const path = require("node:path");
+const { writeFile } = require("node:fs");
 
 const componentPackages = [
   "lab",

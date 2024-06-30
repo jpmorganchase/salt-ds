@@ -140,7 +140,7 @@ WithFileTypeValidation.args = {
 
 const validateFileType = createFileTypeValidator({ accept: "image/*" });
 const validateTotalSize = createTotalSizeValidator({
-  maxSize: 500 * Math.pow(2, 10),
+  maxSize: 500 * 2 ** 10,
   getError: () => "The file/s exceed the maximum upload limit of 500KB.",
 });
 const validateFileName: FilesValidator = (files) =>

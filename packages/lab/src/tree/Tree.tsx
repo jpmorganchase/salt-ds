@@ -341,9 +341,8 @@ export const Tree = forwardRef(function Tree<
   const renderContent = () => {
     if (collectionHook.data.length) {
       return renderItems(collectionHook.data);
-    } else {
-      renderEmpty();
     }
+    renderEmpty();
   };
 
   return (

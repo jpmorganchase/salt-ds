@@ -294,13 +294,13 @@ const CssVariablesTemplate: StoryFn<{}> = () => {
               disabled={changes.length === 0}
             >
               <UndoIcon />
-              {` Undo`}
+              {" Undo"}
             </Button>
           </FlexItem>
           <FlexItem>
             <Button variant="secondary" onClick={onReset}>
               <DeleteIcon />
-              {` Reset`}
+              {" Reset"}
             </Button>
           </FlexItem>
         </FlexLayout>

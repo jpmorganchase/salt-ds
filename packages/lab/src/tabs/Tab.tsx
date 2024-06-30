@@ -115,17 +115,17 @@ export const Tab = forwardRef(function Tab(
       case "Delete":
         if (closeable && !editing) {
           e.stopPropagation();
-          onClose && onClose(index);
+          onClose?.(index);
         }
         break;
       default:
-        onKeyUp && onKeyUp(e, index);
+        onKeyUp?.(e, index);
     }
   };
 
   const handleCloseButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    onClose && onClose(index);
+    onClose?.(index);
   };
 
   const handleCloseButtonEnter = () => {
@@ -153,9 +153,8 @@ export const Tab = forwardRef(function Tab(
           ref={editableRef}
         />
       );
-    } else {
-      return label;
     }
+    return label;
   };
 
   const handleFocus = (evt: FocusEvent<HTMLElement>) => {
@@ -180,7 +179,7 @@ export const Tab = forwardRef(function Tab(
         [withBaseName("dragAway")]: dragging,
         [withBaseName("editing")]: editing,
         [withBaseName("vertical")]: orientation === "vertical",
-        [`saltFocusVisible`]: focusVisible,
+        saltFocusVisible: focusVisible,
       })}
       data-editable={editable || undefined}
       onClick={handleClick}

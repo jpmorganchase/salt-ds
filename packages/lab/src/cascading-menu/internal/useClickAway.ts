@@ -53,13 +53,10 @@ export const useClickAway: clickAwayHook = (
       // node could be null, e.g. left click on surrounding area of context menu examples
       node ? node.ownerDocument : false,
     );
-    const doc =
-      containingDocument ||
-      (ownerDocumentNode && ownerDocumentNode.ownerDocument);
+    const doc = containingDocument || ownerDocumentNode?.ownerDocument;
 
     if (
-      doc.documentElement &&
-      doc.documentElement.contains(event.target as HTMLElement) &&
+      doc.documentElement?.contains(event.target as HTMLElement) &&
       !isEventComingFromNodes
     ) {
       onClickAway(event);

@@ -40,7 +40,7 @@ const ARIA_SELECTED = "aria-selected";
         cy.findByRole("listbox").should(
           "have.attr",
           "aria-activedescendant",
-          `list-item-1`,
+          "list-item-1",
         );
       });
     });
@@ -61,7 +61,7 @@ const ARIA_SELECTED = "aria-selected";
         cy.findByRole("listbox").should(
           "have.attr",
           "aria-activedescendant",
-          `list-item-0`,
+          "list-item-0",
         );
       });
     });

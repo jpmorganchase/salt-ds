@@ -603,13 +603,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       return;
     }
     if (cursorColIdx == undefined) {
-      console.error(`endEditMode: cursorColIdx is undefined in edit mode`);
+      console.error("endEditMode: cursorColIdx is undefined in edit mode");
       return;
     }
     const c = cols[cursorColIdx];
     const handler = c.info.props.onChange;
     if (cursorRowIdx == undefined) {
-      console.error(`endEditMode: cursorRowIdx is undefined in edit mode`);
+      console.error("endEditMode: cursorRowIdx is undefined in edit mode");
       return;
     }
     if (!handler) {
@@ -850,9 +850,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
           if (editMode) {
             cancelEditMode();
             break;
-          } else {
-            return false;
           }
+          return false;
         default:
           if (
             !editMode &&
@@ -903,9 +902,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
               }
             }
             break;
-          } else {
-            return false;
           }
+          return false;
         case "a":
           if (event.ctrlKey || event.metaKey) {
             rangeSelection.selectRange({
@@ -914,9 +912,8 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             });
             selectAll();
             return true;
-          } else {
-            return false;
           }
+          return false;
         default:
           return false;
       }

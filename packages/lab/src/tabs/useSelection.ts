@@ -4,7 +4,7 @@ import { type KeyboardEvent, type MouseEvent, useCallback } from "react";
 const defaultSelectionKeys = ["Enter", " "];
 
 export const isTabElement = (el: HTMLElement): boolean =>
-  el && el.matches('[class*="saltTab "]');
+  el?.matches('[class*="saltTab "]');
 
 // TODO use SelectionProps
 export const useSelection = ({

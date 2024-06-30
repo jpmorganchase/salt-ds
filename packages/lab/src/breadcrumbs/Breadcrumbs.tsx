@@ -37,12 +37,11 @@ function insertSeparators(
           {separator}
         </li>,
       );
-    } else {
-      const skipLastElement =
-        (hideCurrentLevel && shouldRenderAllItems) ||
-        (hideCurrentLevel && !shouldRenderAllItems && itemsAfterCollapse !== 0);
-      return skipLastElement ? acc : acc.concat(current);
     }
+    const skipLastElement =
+      (hideCurrentLevel && shouldRenderAllItems) ||
+      (hideCurrentLevel && !shouldRenderAllItems && itemsAfterCollapse !== 0);
+    return skipLastElement ? acc : acc.concat(current);
   }, []);
 }
 

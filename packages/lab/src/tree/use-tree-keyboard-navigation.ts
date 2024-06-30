@@ -11,11 +11,11 @@ export const getNodeParentPath = ({ id }: CollectionItem<any>) => {
     const steps = path.split(".");
     if (steps.length === 1) {
       return null;
-    } else {
-      steps.pop();
-      return `${id!.slice(0, pos)}-${steps.join(".")}`;
     }
-  } else if ((pos = id!.lastIndexOf("/")) !== -1) {
+    steps.pop();
+    return `${id!.slice(0, pos)}-${steps.join(".")}`;
+  }
+  if ((pos = id!.lastIndexOf("/")) !== -1) {
     // using a path scheme step/step/step
     return id!.slice(0, pos);
   }

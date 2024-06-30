@@ -140,11 +140,11 @@ export const ComboBox = forwardRef(function Combobox<
         : Item[];
       if (Array.isArray(sel)) {
         return sel.map((i) => i.value) as returnType;
-      } else if (sel) {
-        return sel.value as returnType;
-      } else {
-        return sel as returnType;
       }
+      if (sel) {
+        return sel.value as returnType;
+      }
+      return sel as returnType;
     },
     [],
   );

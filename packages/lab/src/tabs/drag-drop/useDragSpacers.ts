@@ -52,7 +52,7 @@ export const useDragSpacers = () => {
             clearSpacers();
 
             spacer1.style.cssText = `width: ${size}px`;
-            spacer2.style.cssText = `width: 0px`;
+            spacer2.style.cssText = "width: 0px";
 
             const target =
               direction === "fwd"
@@ -82,7 +82,7 @@ export const useDragSpacers = () => {
           clearSpacers();
 
           spacer1.style.cssText = `width: ${size}px`;
-          spacer2.style.cssText = `width: 0px`;
+          spacer2.style.cssText = "width: 0px";
 
           item.element.parentElement?.insertBefore(
             spacer1,

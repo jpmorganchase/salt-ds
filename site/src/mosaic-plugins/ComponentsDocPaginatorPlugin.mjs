@@ -48,8 +48,7 @@ const ComponentsDocPaginatorPlugin = {
       if (page.route.endsWith("/index")) {
         // Don't care about index page, they are not displayed
       } else {
-        const indexPageRoute =
-          page.route.substring(0, page.route.lastIndexOf("/")) + "/index";
+        const indexPageRoute = `${page.route.substring(0, page.route.lastIndexOf("/"))}/index`;
 
         if (componentRouteToName[indexPageRoute]) {
           page.navigation = componentRouteToName[indexPageRoute];

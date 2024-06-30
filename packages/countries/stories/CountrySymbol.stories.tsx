@@ -98,8 +98,8 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
                       {...args}
                     />
                     <LazyCountrySymbol
-                      key={countryCode + "sharp"}
-                      code={(countryCode + "_Sharp") as CountryCode}
+                      key={`${countryCode}sharp`}
+                      code={`${countryCode}_Sharp` as CountryCode}
                       {...args}
                     />
                   </StackLayout>

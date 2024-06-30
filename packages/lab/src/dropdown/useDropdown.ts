@@ -112,18 +112,17 @@ export const useDropdown = <
       const selectedItems = listHook.selected as CollectionItem<Item>[];
       if (selectedItems.length === 0) {
         return undefined;
-      } else if (selectedItems.length === 1) {
+      }
+      if (selectedItems.length === 1) {
         const { value } = selectedItems[0];
         return value === null ? undefined : itemToString(value);
-      } else {
-        return `${selectedItems.length} items selected`;
       }
-    } else {
-      const selectedItem = listHook.selected as CollectionItem<Item>;
-      return selectedItem == null || selectedItem.value === null
-        ? undefined
-        : itemToString(selectedItem.value);
+      return `${selectedItems.length} items selected`;
     }
+    const selectedItem = listHook.selected as CollectionItem<Item>;
+    return selectedItem == null || selectedItem.value === null
+      ? undefined
+      : itemToString(selectedItem.value);
   }, [isMultiSelect, itemToString, listHook.selected]);
 
   return {

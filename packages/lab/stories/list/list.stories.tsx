@@ -708,7 +708,7 @@ export const WithTextHighlight: StoryFn<ListProps> = () => {
 
 export const DisableTypeToSelect: StoryFn<ListProps> = () => {
   const handleChange: SelectionChangeHandler = (evt, selected) => {
-    console.log(`selectionChanged`, selected);
+    console.log("selectionChanged", selected);
   };
 
   return (

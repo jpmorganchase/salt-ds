@@ -15,18 +15,16 @@ function nextItemIdx(
   if (direction === "BWD") {
     if (idx > 0) {
       return idx - 1;
-    } else {
-      return cycleFocus ? count - 1 : idx;
     }
-  } else {
-    if (idx === null) {
-      return 0;
-    } else if (idx === count - 1) {
-      return cycleFocus ? 0 : idx;
-    } else {
-      return idx + 1;
-    }
+    return cycleFocus ? count - 1 : idx;
   }
+  if (idx === null) {
+    return 0;
+  }
+  if (idx === count - 1) {
+    return cycleFocus ? 0 : idx;
+  }
+  return idx + 1;
 }
 
 const isLeaf = <Item>(item: CollectionItem<Item>): boolean =>
