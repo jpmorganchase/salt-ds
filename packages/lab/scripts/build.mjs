@@ -25,7 +25,7 @@ function createCssEntryFile(callback) {
   });
 
   const writeLine = (line, index) =>
-    index == 0 ? entry.write(line) : entry.write(`\n${line}`);
+    index === 0 ? entry.write(line) : entry.write(`\n${line}`);
 
   cssFiles.forEach((cssFile, index) => {
     writeLine(

@@ -19,7 +19,7 @@ interface RGBAInputProps {
   rgbaValue: RGBAValue;
   onSubmitRgb: (
     rgbaValue: RGBAValue,
-    e?: ChangeEvent<Element> | undefined,
+    e?: ChangeEvent<Element> | undefined
   ) => void;
   onSubmitAlpha: (alpha: number, e?: ChangeEvent<Element> | undefined) => void;
 }
@@ -42,7 +42,7 @@ export const RGBAInput = ({
     <>
       <span className={clsx(withBaseName("textDivOverrides"))}>{rgbaText}</span>
       {["r", "g", "b"].map((value) => (
-        <div className={withBaseName("rgbaInputDiv")}>
+        <div className={withBaseName("rgbaInputDiv")} key={value}>
           <span className={withBaseName("rgbaText")}>
             {value.toUpperCase()}
           </span>

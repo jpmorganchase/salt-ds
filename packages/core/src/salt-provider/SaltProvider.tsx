@@ -118,7 +118,7 @@ const createThemedChildren = ({
         className: clsx(
           children.props?.className,
           ...themeNames,
-          `salt-density-${density}`,
+          `salt-density-${density}`
         ),
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -129,7 +129,7 @@ const createThemedChildren = ({
     console.warn(
       `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
         Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        div element will wrap your child elements`,
+        div element will wrap your child elements`
     );
     return children;
   }
@@ -138,7 +138,7 @@ const createThemedChildren = ({
       className={clsx(
         "salt-provider",
         ...themeNames,
-        `salt-density-${density}`,
+        `salt-density-${density}`
       )}
       data-mode={mode}
       {...(themeNext ? themeNextProps : {})}
@@ -248,7 +248,7 @@ function InternalSaltProvider({
       headingFont,
       accent,
       actionFont,
-    ],
+    ]
   );
 
   const themedChildren = createThemedChildren({
@@ -268,11 +268,11 @@ function InternalSaltProvider({
     const themeNames = getThemeNames(themeName, themeNext);
 
     if (applyClassesTo === "root" && targetWindow) {
-      if (inheritedWindow != targetWindow) {
+      if (inheritedWindow !== targetWindow) {
         // add the styles we want to apply
         targetWindow.document.documentElement.classList.add(
           ...themeNames,
-          `salt-density-${density}`,
+          `salt-density-${density}`
         );
         targetWindow.document.documentElement.dataset.mode = mode;
         if (themeNext) {
@@ -284,7 +284,7 @@ function InternalSaltProvider({
         }
       } else {
         console.warn(
-          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
+          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
         );
       }
     }
@@ -293,7 +293,7 @@ function InternalSaltProvider({
         // When unmounting/remounting, remove the applied styles from the root
         targetWindow.document.documentElement.classList.remove(
           ...themeNames,
-          `salt-density-${density}`,
+          `salt-density-${density}`
         );
         targetWindow.document.documentElement.dataset.mode = undefined;
         if (themeNext) {

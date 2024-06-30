@@ -289,7 +289,7 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
 
 export const ContextMenu: StoryFn = () => {
   const [virtualElement, setVirtualElement] = useState<VirtualElement | null>(
-    null,
+    null
   );
   const [open, setOpen] = useState(false);
   return (
@@ -366,7 +366,7 @@ export const Descriptions: StoryFn<typeof Menu> = (args) => {
       </MenuTrigger>
       <MenuPanel>
         {Object.values(features).map(({ name, description, id }) => (
-          <MenuItem id={id}>
+          <MenuItem id={id} key={id}>
             <StackLayout
               gap={0.5}
               style={{

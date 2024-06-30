@@ -1,4 +1,4 @@
-import { type MouseEventHandler, useCallback, useMemo } from "react";
+import { type MouseEventHandler, useCallback } from "react";
 import { useCursorContext } from "../CursorContext";
 import { useEditorContext } from "../EditorContext";
 import type { GridColumnModel, GridRowModel } from "../Grid";
@@ -15,7 +15,7 @@ export interface TableBodyProps<T> {
   gap?: number;
   zebra?: boolean;
   getRowValidationStatus?: (
-    row: GridRowModel<T>,
+    row: GridRowModel<T>
   ) => CellValidationState | undefined;
 }
 
@@ -48,7 +48,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
         colIdx <= maxColIdx
       );
     },
-    [selectedCellRange],
+    [selectedCellRange]
   );
 
   const { cursorRowIdx, cursorColIdx, focusedPart, headerIsFocusable } =
@@ -62,11 +62,11 @@ export function TableBody<T>(props: TableBodyProps<T>) {
     setHoverRowKey(rowKey);
   };
 
-  const onMouseLeave: MouseEventHandler<HTMLTableSectionElement> = (event) => {
+  const onMouseLeave: MouseEventHandler<HTMLTableSectionElement> = () => {
     setHoverRowKey(undefined);
   };
 
-  const onDoubleClick: MouseEventHandler<HTMLTableSectionElement> = (event) => {
+  const onDoubleClick: MouseEventHandler<HTMLTableSectionElement> = () => {
     startEditMode();
   };
 
@@ -89,7 +89,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
             isSelected={isSelected}
             cursorColIdx={cursorIdx}
             gap={gap}
-            zebra={zebra && row.index % 2 == 0}
+            zebra={zebra && row.index % 2 === 0}
             editorColIdx={editorColIdx}
             isCellSelected={isCellInSelectedRange}
             headerIsFocusable={headerIsFocusable}

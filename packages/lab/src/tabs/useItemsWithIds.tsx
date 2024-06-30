@@ -14,7 +14,7 @@ type TabMap = { [key: string]: TabDescriptor };
 
 export const useItemsWithIds = (
   children: ReactNode,
-  id = "root",
+  id = "root"
 ): [TabDescriptor[], (id: string) => TabDescriptor] => {
   const normalizeItems = useCallback(
     (items: ReactNode): [TabDescriptor[], TabMap] => {
@@ -38,7 +38,7 @@ export const useItemsWithIds = (
             child.type === TabPanel ? (
               cloneElement(child, props)
             ) : (
-              <TabPanel {...props} label={label}>
+              <TabPanel {...props} label={label} key={tabId}>
                 {child}
               </TabPanel>
             );
@@ -53,7 +53,7 @@ export const useItemsWithIds = (
         });
       return [tabDescriptors, sourceMap];
     },
-    [id],
+    [id]
   );
 
   const [sourceWithIds, sourceMap] = useMemo(() => {
@@ -62,7 +62,7 @@ export const useItemsWithIds = (
 
   const itemById = useCallback(
     (id: string) => sourceMap[id],
-    [sourceWithIds, sourceMap],
+    [sourceWithIds, sourceMap]
   );
 
   return [sourceWithIds, itemById];

@@ -13,7 +13,7 @@ export const LayoutColumns = ({
   children?: ReactNode;
 }) => {
   const breakpoint = useBreakpoint();
-  const showDrawer = breakpoint === "mobile" || breakpoint == "tablet";
+  const showDrawer = breakpoint === "mobile" || breakpoint === "tablet";
   return (
     <div className={styles.root}>
       {!showDrawer && PrimarySidebar && (

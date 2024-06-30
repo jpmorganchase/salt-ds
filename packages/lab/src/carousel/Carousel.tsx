@@ -73,7 +73,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       id: idProp,
       ...rest
     },
-    ref,
+    ref
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -108,7 +108,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       if (process.env.NODE_ENV !== "production") {
         if (slidesCount < 1) {
           console.warn(
-            "Carousel component requires more than one children to render. At least two elements should be provided.",
+            "Carousel component requires more than one children to render. At least two elements should be provided."
           );
         }
       }
@@ -126,7 +126,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         className={clsx(
           withBaseName(),
           compact && withBaseName("compact"),
-          className,
+          className
         )}
         {...rest}
       >
@@ -161,11 +161,11 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
             {Array.from({ length: slidesCount }, (_, index) => ({
               value: `${index}`,
             })).map((radio) => (
-              <RadioButton {...radio} />
+              <RadioButton {...radio} key={radio.value} />
             ))}
           </RadioButtonGroup>
         </div>
       </GridLayout>
     );
-  },
+  }
 );

@@ -20,6 +20,7 @@ import {
   forwardRef,
   useEffect,
   useRef,
+  Children,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { ListControlContext } from "../list-control/ListControlContext";
@@ -100,7 +101,7 @@ const withBaseName = makePrefixer("saltDropdown");
 
 export const Dropdown = forwardRef(function Dropdown<Item>(
   props: DropdownProps<Item>,
-  ref: ForwardedRef<HTMLButtonElement>,
+  ref: ForwardedRef<HTMLButtonElement>
 ) {
   const {
     "aria-labelledby": ariaLabelledBy,
@@ -200,7 +201,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
     _event,
-    reason,
+    reason
   ) => {
     const focusNotBlur = reason === "focus" && newOpen;
     if (readOnly || focusNotBlur) return;
@@ -209,7 +210,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && children != undefined,
+      open: openState && !readOnly && Children.count(children) > 0,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       middleware: [
@@ -333,7 +334,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         break;
     }
 
-    if (newActive && newActive.data.id != activeState?.id) {
+    if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
@@ -379,7 +380,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     // If we have selected an item, we should make that the active item
     if (selectedState.length > 0) {
       newActive = getOptionsMatching(
-        (option) => option.value === selectedState[0],
+        (option) => option.value === selectedState[0]
       ).pop();
     }
 
@@ -416,7 +417,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
             [withBaseName(validationStatus ?? "")]: validationStatus,
             [withBaseName("bordered")]: bordered,
           },
-          className,
+          className
         )}
         ref={handleButtonRef}
         role="combobox"
@@ -452,7 +453,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
-        open={(openState || focusedState) && !readOnly && children != undefined}
+        open={
+          (openState || focusedState) &&
+          !readOnly &&
+          Children.count(children) > 0
+        }
         {...getFloatingProps({
           onMouseOver: handleListMouseOver,
           onFocus: handleFocusButton,
@@ -472,5 +477,5 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
+  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> }
 ) => JSX.Element;

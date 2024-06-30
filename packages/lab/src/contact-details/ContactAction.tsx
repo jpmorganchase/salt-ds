@@ -25,7 +25,7 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
   function ContactAction(props, ref) {
     const { label, icon, accessibleText, tooltipProps, ...restProps } = props;
 
-    const Icon = icon!;
+    const Icon = icon;
 
     return (
       <Tooltip
@@ -34,9 +34,9 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
         content={accessibleText}
       >
         <Button variant="secondary" ref={ref} {...restProps}>
-          {label ? label : <Icon />}
+          {label ? label : Icon ? <Icon /> : null}
         </Button>
       </Tooltip>
     );
-  },
+  }
 );

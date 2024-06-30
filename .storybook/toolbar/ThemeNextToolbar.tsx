@@ -62,8 +62,9 @@ const GroupWrapper = ({
   return (
     <div
       className={clsx(className, "theme-next-toolbar-group-wrapper")}
-      children={children}
-    />
+    >
+      {children}
+    </div>
   );
 };
 

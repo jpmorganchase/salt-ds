@@ -30,6 +30,7 @@ export const ConditionalWrapper = ({
       aria-expanded={expanded}
       className={className}
       onClick={handleExpand}
+      type="button"
     >
       {children}
     </button>

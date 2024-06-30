@@ -163,7 +163,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
             [withBaseName("error")]: error /* **Deprecated** */,
             [withBaseName(validationStatus || "")]: validationStatus,
           },
-          className,
+          className
         )}
         ref={ref}
         {...rest}
@@ -171,18 +171,18 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         <input
           aria-describedby={
             clsx(
-              radioGroup == undefined
+              radioGroup === undefined
                 ? formFieldA11yProps?.["aria-describedby"]
                 : undefined,
-              inputDescribedBy,
+              inputDescribedBy
             ) || undefined
           }
           aria-labelledby={
             clsx(
-              radioGroup == undefined
+              radioGroup === undefined
                 ? formFieldA11yProps?.["aria-labelledby"]
                 : undefined,
-              inputLabelledBy,
+              inputLabelledBy
             ) || undefined
           }
           className={clsx(withBaseName("input"), inputClassName)}
@@ -207,5 +207,5 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {label}
       </label>
     );
-  },
+  }
 );

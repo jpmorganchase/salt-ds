@@ -10,7 +10,7 @@ export const Breakpoints = (): ReactElement => {
       Breakpoints:
       <ul>
         {Object.entries(breakpoints).map(([key, value]) => (
-          <li>
+          <li key={`${key}-${value}`}>
             {key} - {value}
           </li>
         ))}
