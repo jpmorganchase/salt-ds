@@ -5,6 +5,7 @@ import {
   FormFieldLabel,
   Option,
   OptionGroup,
+  StackLayout,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -151,4 +152,30 @@ ClosedExamples.parameters = {
       },
     },
   },
+};
+
+export const OpenWithSingleSelectionExamples: StoryFn<
+  QAContainerProps
+> = () => (
+  <QAContainer cols={2} itemPadding={12} width={800} vertical>
+    <StackLayout gap={8.5}>
+      <Dropdown placeholder="State" open defaultSelected={["Alaska"]}>
+        <Option value={"Alaska"} />
+      </Dropdown>
+      <Dropdown multiselect open defaultSelected={["Alaska"]}>
+        <Option value={"Alaska"} />
+      </Dropdown>
+    </StackLayout>
+    <Dropdown open defaultSelected={["Alaska"]} style={{ marginBottom: 280 }}>
+      <OptionGroup label={"A"}>
+        <Option value={"Alaska"} />
+      </OptionGroup>
+      {/* empty group to ensure borders are not overlapping */}
+      <OptionGroup label={"C"} />
+    </Dropdown>
+  </QAContainer>
+);
+
+OpenWithSingleSelectionExamples.parameters = {
+  chromatic: { disableSnapshot: false },
 };
