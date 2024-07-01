@@ -1,5 +1,5 @@
 name: Feature request 💡
-description: Suggest new functionality, components or ideas for the Salt Design System.
+description: Want to suggest new functionality, components or ideas?
 labels:
   - "type: enhancement 💡"
   - "status: awaiting triage"
@@ -8,41 +8,37 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report.
-  - type: dropdown
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report. If you are an internal JPM user, please also look at your [internal options](go/salt-ds-support).
+  - type: markdown
     attributes:
-      label: Area
-      description: |
-        Which aspect(s) of the Salt Design System does your proposed feature relate to? Select all that apply.
-      multiple: true
-      options:
-        - UI Components
-        - Documentation
-        - Process
-        - Tools
-        - Website
+      value: Thanks for taking the time to report a bug! Before you start, please check that your feature isn’t already requested by searching the [existing issues](https://github.com/jpmorganchase/salt-ds/issues?q=sort%3Aupdated-desc+is%3Aissue).
+  - type: textarea
+    attributes:
+      label: Description
+      description: Provide a clear and concise description of the feature.
     validations:
       required: true
   - type: textarea
     attributes:
-      label: The problem
-      description: |
-        Provide a clear and concise description of what the problem is. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: The solution
+      label: Expected behavior
       description: Tell us what functionality or behavior, for example, you would prefer instead. Feel free to attach  design mock ups or specifications you may have.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Alternatives and examples
-      description: |
-        Describe or share alternative solutions or features you've considered that you may have seen elsewhere. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+      description: Describe or share alternative solutions or features you've considered that you may have seen elsewhere.
     validations:
       required: true
+  - type: textarea
+    attributes:
+      label: Context
+      description: Providing context helps us understand the problem you're trying to solve. For example, what are you trying to accomplish? How does this feature fit into your workflow?
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "## Other"
   - type: checkboxes
     attributes:
       label: Are you a JPMorgan Chase & Co. employee?
