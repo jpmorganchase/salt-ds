@@ -141,13 +141,13 @@ export const Nested = () => {
     setExpanded(
       isExpanded
         ? expanded.filter((name) => name !== item.name)
-        : [...expanded, item.name]
+        : [...expanded, item.name],
     );
   };
 
   const isParentOfActiveItem = (
     children: NavigationItemData[],
-    activeName: string
+    activeName: string,
   ): boolean => {
     return children.some((child: NavigationItemData) => {
       if (child.name === activeName) return true;

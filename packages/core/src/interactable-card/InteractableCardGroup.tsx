@@ -45,7 +45,7 @@ export interface InteractableCardGroupProps
    */
   onChange?: (
     event: SyntheticEvent<HTMLDivElement>,
-    value: InteractableCardValue
+    value: InteractableCardValue,
   ) => void;
 }
 
@@ -89,8 +89,8 @@ export const InteractableCardGroup = forwardRef<
   useEffect(() => {
     const childElements: HTMLElement[] = Array.from(
       groupRef.current?.querySelectorAll(
-        ".saltInteractableCard:not([disabled])"
-      ) ?? []
+        ".saltInteractableCard:not([disabled])",
+      ) ?? [],
     );
     setElements(childElements);
   }, [children]);
@@ -98,7 +98,7 @@ export const InteractableCardGroup = forwardRef<
   const select = useCallback(
     (
       event: SyntheticEvent<HTMLDivElement>,
-      newValue: InteractableCardValue
+      newValue: InteractableCardValue,
     ) => {
       if (multiSelect) {
         const currentValues = Array.isArray(value) ? value : [];
@@ -116,7 +116,7 @@ export const InteractableCardGroup = forwardRef<
         }
       }
     },
-    [onChange, value, setValue, multiSelect]
+    [onChange, value, setValue, multiSelect],
   );
 
   const isSelected = useCallback(
@@ -124,18 +124,18 @@ export const InteractableCardGroup = forwardRef<
       multiSelect
         ? Array.isArray(value) && value.includes(cardValue)
         : cardValue !== undefined && value === cardValue,
-    [value, multiSelect]
+    [value, multiSelect],
   );
 
   const isFirstChild = useCallback(
     (cardValue: InteractableCardValue) => {
       return (
         elements.findIndex(
-          (element) => element.getAttribute("data-value") === cardValue
+          (element) => element.getAttribute("data-value") === cardValue,
         ) === 0
       );
     },
-    [elements]
+    [elements],
   );
 
   const contextValue = useMemo(
@@ -147,12 +147,12 @@ export const InteractableCardGroup = forwardRef<
       multiSelect,
       value,
     }),
-    [select, isSelected, disabled, multiSelect, isFirstChild, value]
+    [select, isSelected, disabled, multiSelect, isFirstChild, value],
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const currentIndex = elements.findIndex(
-      (element) => element === document.activeElement
+      (element) => element === document.activeElement,
     );
     const nextIndex = (currentIndex + 1) % elements.length;
     const prevIndex = (currentIndex - 1 + elements.length) % elements.length;
@@ -162,8 +162,8 @@ export const InteractableCardGroup = forwardRef<
       select(
         event,
         elements[currentIndex].getAttribute(
-          "data-value"
-        ) as InteractableCardValue
+          "data-value",
+        ) as InteractableCardValue,
       );
     }
 
@@ -174,8 +174,8 @@ export const InteractableCardGroup = forwardRef<
           select(
             event,
             elements[nextIndex].getAttribute(
-              "data-value"
-            ) as InteractableCardValue
+              "data-value",
+            ) as InteractableCardValue,
           );
           elements[nextIndex]?.focus();
           break;
@@ -184,8 +184,8 @@ export const InteractableCardGroup = forwardRef<
           select(
             event,
             elements[prevIndex].getAttribute(
-              "data-value"
-            ) as InteractableCardValue
+              "data-value",
+            ) as InteractableCardValue,
           );
           elements[prevIndex]?.focus();
           break;

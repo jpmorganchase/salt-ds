@@ -8,7 +8,7 @@ import {
 
 function getSelectionRange(
   input: HTMLInputElement,
-  { highlightOnFocus, cursorPositionOnFocus }: useCursorOnFocusProps
+  { highlightOnFocus, cursorPositionOnFocus }: useCursorOnFocusProps,
 ): [number | null, number | null] {
   // highlightOnFocus highlight first so it takes priority over position on focus
   if (highlightOnFocus === true) {
@@ -64,7 +64,7 @@ export interface useCursorOnFocusProps {
 
 export function useCursorOnFocus(
   inputRef: MutableRefObject<HTMLInputElement | null>,
-  { cursorPositionOnFocus, highlightOnFocus }: useCursorOnFocusProps
+  { cursorPositionOnFocus, highlightOnFocus }: useCursorOnFocusProps,
 ) {
   const wasClick = useRef(false);
   const timeoutRef = useRef<number>(-1);
@@ -95,7 +95,7 @@ export function useCursorOnFocus(
         // Allows continued highlighted if the mouse down is part of a selection.
         inputRef.current?.setSelectionRange(
           originalCursorPosition.current,
-          originalCursorPosition.current
+          originalCursorPosition.current,
         );
       }
 

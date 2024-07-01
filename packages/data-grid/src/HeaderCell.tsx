@@ -96,8 +96,8 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
     sortOrder === SortOrder.ASC
       ? SortOrder.DESC
       : sortOrder === SortOrder.DESC
-      ? SortOrder.NONE
-      : SortOrder.ASC;
+        ? SortOrder.NONE
+        : SortOrder.ASC;
 
   const withSortOrder = sortOrder !== SortOrder.NONE && sortByColumnId === id;
 
@@ -113,7 +113,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   };
 
   const onKeyDown: KeyboardEventHandler<HTMLTableHeaderCellElement> = (
-    event
+    event,
   ) => {
     if (event.key === "Enter" || event.key === " ") {
       onClick();

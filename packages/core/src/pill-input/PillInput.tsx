@@ -106,7 +106,7 @@ export const PillInput = forwardRef(function PillInput(
     truncate,
     ...other
   }: PillInputProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -250,7 +250,7 @@ export const PillInput = forwardRef(function PillInput(
           [withBaseName("truncate")]: truncate,
           [withBaseName(validationStatus ?? "")]: validationStatus,
         },
-        classNameProp
+        classNameProp,
       )}
       ref={ref}
       style={inputStyle}
@@ -279,7 +279,7 @@ export const PillInput = forwardRef(function PillInput(
                     pillElementsRef.current[index] = element;
                   } else {
                     pillElementsRef.current = pillElementsRef.current.filter(
-                      (pillEl) => pillEl !== element
+                      (pillEl) => pillEl !== element,
                     );
                   }
                 }}

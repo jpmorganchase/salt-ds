@@ -71,7 +71,7 @@ function sortData(data: string[], sort: SortType): string[] {
   if (!sort) return data;
   // @ts-ignore
   return data.toSorted((a, b) =>
-    sort === "asc" ? a.localeCompare(b) : b.localeCompare(a)
+    sort === "asc" ? a.localeCompare(b) : b.localeCompare(a),
   );
 }
 
@@ -302,7 +302,7 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
 }) => {
   const [picked, setPicked] = useState<string[]>([]);
   const availableOptions = usStateExampleData.filter(
-    (state) => !picked.includes(state)
+    (state) => !picked.includes(state),
   );
 
   const [optionsToAdd, setOptionsToAdd] = useState<string[]>([]);
@@ -314,13 +314,13 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
   const filteredAvailableOptions = availableOptions.filter((option) =>
     addFilter !== ""
       ? option.toLowerCase().startsWith(addFilter.toLowerCase())
-      : true
+      : true,
   );
 
   const filteredPickedOptions = picked.filter((option) =>
     removeFilter !== ""
       ? option.toLowerCase().startsWith(removeFilter.toLowerCase())
-      : true
+      : true,
   );
 
   const handlePickedReorder = (direction: "up" | "down") => {
@@ -384,7 +384,7 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
         addDisabled={optionsToAdd.length === 0}
         onRemove={() => {
           setPicked((old) =>
-            old.filter((item) => !optionsToRemove.includes(item))
+            old.filter((item) => !optionsToRemove.includes(item)),
           );
           setOptionsToRemove([]);
         }}

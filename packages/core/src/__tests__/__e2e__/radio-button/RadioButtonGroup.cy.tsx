@@ -34,7 +34,7 @@ describe("GIVEN a RadioButtonGroup component", () => {
           {radios.map((radio) => (
             <RadioButton {...radio} key={radio.value} />
           ))}
-        </RadioButtonGroup>
+        </RadioButtonGroup>,
       );
       cy.findAllByRole("radio").should("have.length", 3);
     });
@@ -49,13 +49,13 @@ describe("GIVEN a RadioButtonGroup component", () => {
         >
           <RadioButton label="Spot" value="spot" />
           <RadioButton label="Forward" value="forward" />
-        </RadioButtonGroup>
+        </RadioButtonGroup>,
       );
       cy.get(".saltRadioButtonGroup-horizontal").should("exist");
       cy.get(".saltRadioButtonGroup-horizontal").should(
         "have.css",
         "flex-direction",
-        "row"
+        "row",
       );
     });
   });
@@ -78,7 +78,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
             label="Option (disabled)"
             value="option"
           />
-        </RadioButtonGroup>
+        </RadioButtonGroup>,
       );
       cy.findByRole("radio", { name: "Forward" }).should("be.checked");
     });
@@ -96,7 +96,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
       <RadioButtonGroup onChange={handleChange}>
         <RadioButton label="Spot" value="spot" />
         <RadioButton label="Forward" value="forward" />
-      </RadioButtonGroup>
+      </RadioButtonGroup>,
     );
 
     cy.findByRole("radio", { name: "Spot" }).should("not.be.checked");
@@ -129,7 +129,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
             <RadioButton label="Spot" value="spot" />
             <RadioButton label="Forward" value="forward" />
           </RadioButtonGroup>
-        </FormField>
+        </FormField>,
       );
 
       cy.findAllByRole("radio").eq(0).should("have.attr", "disabled");
@@ -144,7 +144,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
             <RadioButton label="Spot" value="spot" />
             <RadioButton label="Forward" value="forward" />
           </RadioButtonGroup>
-        </FormField>
+        </FormField>,
       );
 
       cy.findAllByRole("radio").eq(0).should("have.attr", "readonly");
@@ -159,7 +159,7 @@ describe("GIVEN a RadioButtonGroup uncontrolled component with children", () => 
             <RadioButton label="Spot" value="spot" />
             <RadioButton label="Forward" value="forward" />
           </RadioButtonGroup>
-        </FormField>
+        </FormField>,
       );
 
       cy.findAllByRole("radio").eq(0).should("have.accessibleName", "Spot");

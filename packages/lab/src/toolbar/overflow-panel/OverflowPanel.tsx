@@ -52,7 +52,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
     triggerButtonLabel,
     ...props
   }: DropdownPanelProps,
-  forwardedRef?: ForwardedRef<HTMLDivElement>
+  forwardedRef?: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -140,7 +140,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
           if (type === ToolbarField) {
             return React.cloneElement(
               item.value as ReactElement,
-              formFieldProps
+              formFieldProps,
             );
           }
           return (

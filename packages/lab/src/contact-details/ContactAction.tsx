@@ -38,5 +38,5 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
         </Button>
       </Tooltip>
     );
-  }
+  },
 );

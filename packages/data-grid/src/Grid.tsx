@@ -86,7 +86,7 @@ export type RowKeyGetter<T> = (row: T, index: number) => string;
 export type GridColumnMoveHandler = (
   columnId: string,
   fromIndex: number,
-  toIndex: number
+  toIndex: number,
 ) => void;
 
 export interface GridProps<T = any> {
@@ -159,7 +159,7 @@ export interface GridProps<T = any> {
   headerIsFocusable?: boolean;
 
   getRowValidationStatus?: (
-    row: GridRowModel<T>
+    row: GridRowModel<T>,
   ) => CellValidationState | undefined;
 }
 
@@ -250,7 +250,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const [cursorRowIdx, setCursorRowIdx] = useState<number>(0);
   const [cursorColIdx, setCursorColIdx] = useState<number>(0);
   const [focusedPart, setFocusedPart] = useState<FocusedPart>(
-    headerIsFocusable ? "header" : "body"
+    headerIsFocusable ? "header" : "body",
   );
 
   const [sortByColumnId, setSortByColumnId] =
@@ -264,7 +264,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     (dimensions) => {
       setDimensions(dimensions);
     },
-    []
+    [],
   );
 
   const {
@@ -280,9 +280,11 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const midColsById = useMemo(
     () =>
       new Map<string, GridColumnModel<T>>(
-        midCols.map((c) => [c.info.props.id, c] as [string, GridColumnModel<T>])
+        midCols.map(
+          (c) => [c.info.props.id, c] as [string, GridColumnModel<T>],
+        ),
       ),
-    [midCols]
+    [midCols],
   );
 
   // Width of all columns pinned to left
@@ -319,7 +321,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const bodyVisColRng = useBodyVisibleColumnRange(
     midCols,
     scrollLeft,
-    clientMidWidth
+    clientMidWidth,
   );
 
   const midGrpByColId = useMemo(() => {
@@ -337,7 +339,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     bodyVisColRng,
     midCols,
     midGrpByColId,
-    leftGroups.length
+    leftGroups.length,
   );
 
   const visColGrps = useMemo(() => {
@@ -348,7 +350,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     bodyVisColRng,
     visColGrps,
     midColsById,
-    leftCols.length
+    leftCols.length,
   );
 
   const bodyScrOutColWh = useLeftScrolledOutWidth(midCols, bodyVisColRng);
@@ -359,13 +361,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
   const clientMidHeight = useClientMidHeight(
     clientHeight,
     topHeight,
-    botHeight
+    botHeight,
   );
   const visRowRng = useVisibleRowRange(
     scrollTop,
     clientMidHeight,
     rowHeight,
-    rowCount
+    rowCount,
   );
 
   const bodyVisAreaTop = useBodyVisibleAreaTop(rowHeight, visRowRng, topHeight);
@@ -408,7 +410,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       headVisAreaLeft,
       scrollBarHeight,
       scrollBarWidth,
-    ]
+    ],
   );
 
   const onWheel: EventListener = useCallback(
@@ -435,34 +437,34 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         }
       }
     },
-    [scrollableRef.current]
+    [scrollableRef.current],
   );
 
   const cols = useMemo(
     () => [...leftCols, ...midCols, ...rightCols],
-    [leftCols, midCols, rightCols]
+    [leftCols, midCols, rightCols],
   );
 
   const colsById = useMemo(
     () =>
       new Map<string, GridColumnModel<T>>(
-        cols.map((c) => [c.info.props.id, c] as [string, GridColumnModel<T>])
+        cols.map((c) => [c.info.props.id, c] as [string, GridColumnModel<T>]),
       ),
-    [cols]
+    [cols],
   );
 
   const getColById = useCallback(
     (id: string) => {
       return colsById.get(id);
     },
-    [colsById]
+    [colsById],
   );
 
   const columnDataContext: ColumnDataContext<T> = useMemo(
     () => ({
       getColById,
     }),
-    [getColById]
+    [getColById],
   );
 
   const isSortMode = sortByColumnId && sortOrder !== SortOrder.NONE;
@@ -486,7 +488,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
 
     const sortedData = [...rowData].sort((a, b) =>
-      valueGetter(a) < valueGetter(b) ? -1 : 1
+      valueGetter(a) < valueGetter(b) ? -1 : 1,
     );
 
     if (sortOrder === SortOrder.DESC) {
@@ -522,7 +524,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         setSortOrder(SortOrder.ASC);
       }
     },
-    [sortByColumnId, sortOrder]
+    [sortByColumnId, sortOrder],
   );
 
   const columnSortContext: ColumnSortContext = useMemo(
@@ -539,7 +541,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       sortOrder,
       setSortOrder,
       onClickSortColumn,
-    ]
+    ],
   );
 
   const scroll = useCallback(
@@ -552,7 +554,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         setScrollTop(top);
       }
     },
-    [setScrollLeft, setScrollTop, setScrollSource]
+    [setScrollLeft, setScrollTop, setScrollSource],
   );
 
   const scrollToCell = useScrollToCell(
@@ -562,13 +564,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     midCols,
     bodyVisColRng,
     clientMidWidth,
-    scroll
+    scroll,
   );
 
   const focusCellElement = (
     part: FocusedPart,
     rowIdx: number,
-    colIdx: number
+    colIdx: number,
   ) => {
     setTimeout(() => {
       const selector =
@@ -612,7 +614,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     }
     if (!handler) {
       console.warn(
-        `onChange is not specified for editable column "${c.info.props.id}".`
+        `onChange is not specified for editable column "${c.info.props.id}".`,
       );
     } else {
       handler(sortedRowData[cursorRowIdx], cursorRowIdx, value);
@@ -645,7 +647,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     defaultSelectedRowIdxs,
     selectedRowIdxs,
     rowSelectionMode,
-    onRowSelected
+    onRowSelected,
   );
 
   const rangeSelection = useRangeSelection(cellSelectionMode);
@@ -654,7 +656,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     (part: FocusedPart, rowIdx: number, colIdx: number) => {
       if (!headerIsFocusable && part === "header") {
         console.warn(
-          `Cannot move focus to the header. "headerIsFocusable" prop is false.`
+          `Cannot move focus to the header. "headerIsFocusable" prop is false.`,
         );
         return;
       }
@@ -688,7 +690,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       rangeSelection.onCursorMove,
       focusedPart,
       headerIsFocusable,
-    ]
+    ],
   );
 
   const rows = useRowModels(rowKeyGetter, sortedRowData, visRowRng);
@@ -702,7 +704,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       const col = cols[colIdx];
       col.info.onWidthChanged(width);
     },
-    [cols]
+    [cols],
   );
 
   const onResizeHandleMouseDown = useColumnResize(cols, resizeColumn);
@@ -713,7 +715,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       rowHeight,
       onResizeHandleMouseDown,
     }),
-    [resizeColumn, rowHeight, onResizeHandleMouseDown]
+    [resizeColumn, rowHeight, onResizeHandleMouseDown],
   );
 
   const layoutContext: LayoutContext = useMemo(
@@ -723,7 +725,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       clientWidth,
       clientHeight,
     }),
-    [totalHeight, totalWidth]
+    [totalHeight, totalWidth],
   );
 
   const editorContext: EditorContext = useMemo(
@@ -734,7 +736,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       endEditMode,
       cancelEditMode,
     }),
-    [editMode, startEditMode, endEditMode, cancelEditMode, initialText]
+    [editMode, startEditMode, endEditMode, cancelEditMode, initialText],
   );
 
   const [isFocused, setFocused] = useState<boolean>(false);
@@ -763,13 +765,13 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       isFocused,
       focusedPart,
       headerIsFocusable,
-    ]
+    ],
   );
 
   const onColumnMove: GridColumnMoveHandler = (
     columnId,
     fromIndex,
-    toIndex
+    toIndex,
   ) => {
     if (onColumnMoved && fromIndex !== toIndex) {
       onColumnMoved(columnId, fromIndex, toIndex);
@@ -790,7 +792,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
     cols,
     scrollLeft,
     clientMidWidth,
-    onColumnMove
+    onColumnMove,
   );
 
   const columnDragContext: ColumnDragContext = useMemo(
@@ -798,7 +800,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       columnMove,
       onColumnMoveHandleMouseDown,
     }),
-    [columnMove, onColumnMoveHandleMouseDown]
+    [columnMove, onColumnMoveHandleMouseDown],
   );
 
   const onMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
@@ -824,7 +826,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
         rangeSelection.onKeyboardRangeSelectionEnd();
       }
     },
-    [rangeSelection.onKeyboardRangeSelectionEnd]
+    [rangeSelection.onKeyboardRangeSelectionEnd],
   );
 
   const editModeKeyHandler = useCallback(
@@ -861,7 +863,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       event.stopPropagation();
       return true;
     },
-    [startEditMode, editMode, cancelEditMode]
+    [startEditMode, editMode, cancelEditMode],
   );
 
   const selectionKeyHandler = useCallback(
@@ -923,7 +925,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       sortedRowData.length,
       cols.length,
       focusedPart,
-    ]
+    ],
   );
 
   const clipboardKeyHandler = useCallback(
@@ -956,7 +958,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       }
       return false;
     },
-    [rangeSelection.selectedCellRange]
+    [rangeSelection.selectedCellRange],
   );
 
   const pageSize = Math.max(1, visRowRng.length - 1);
@@ -992,7 +994,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             moveCursor(
               focusedPart,
               (cursorRowIdx || 0) - pageSize,
-              cursorColIdx
+              cursorColIdx,
             );
           }
           break;
@@ -1003,7 +1005,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
             moveCursor(
               focusedPart,
               (cursorRowIdx || 0) + pageSize,
-              cursorColIdx
+              cursorColIdx,
             );
           }
           break;
@@ -1083,7 +1085,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       sortedRowData.length,
       headerIsFocusable,
       pageSize,
-    ]
+    ],
   );
 
   const columnMoveKeyHandler = useCallback(
@@ -1097,7 +1099,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       }
       return false;
     },
-    []
+    [],
   );
 
   const onKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(
@@ -1129,7 +1131,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       selectionKeyHandler,
       editModeKeyHandler,
       columnMoveKeyHandler,
-    ]
+    ],
   );
 
   const selectionContext: SelectionContext = useMemo(
@@ -1150,7 +1152,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
       selectAll,
       unselectAll,
       rangeSelection?.selectedCellRange,
-    ]
+    ],
   );
 
   useEffect(() => {
@@ -1184,7 +1186,7 @@ export const Grid = function Grid<T>(props: GridProps<T>) {
                             [withBaseName("secondaryBackground")]:
                               variant === "secondary",
                           },
-                          className
+                          className,
                         )}
                         style={rootStyle}
                         ref={rootRef}

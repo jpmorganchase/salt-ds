@@ -105,7 +105,7 @@ const MultiLineAddressRenderer = forwardRef<HTMLElement, ValueComponentProps>(
         ))}
       </span>
     );
-  }
+  },
 );
 
 const ObscureEmailRenderer = forwardRef<HTMLElement, ValueComponentProps>(
@@ -116,11 +116,11 @@ const ObscureEmailRenderer = forwardRef<HTMLElement, ValueComponentProps>(
     return (
       <span {...restProps} ref={ref}>
         {`${value.slice(0, 3)}${"x".repeat(indexOfAt - 3)}${value.slice(
-          indexOfAt
+          indexOfAt,
         )}`}
       </span>
     );
-  }
+  },
 );
 
 const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
@@ -133,7 +133,7 @@ const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
         {`${"x".repeat(lengthToObscure)}${value.slice(lengthToObscure)}`}
       </span>
     );
-  }
+  },
 );
 
 const contactToString = (nameEmail: NameEmail) =>
@@ -637,7 +637,7 @@ const ExportToFileTemplate: StoryFn = () => {
       },
       () => {
         console.log("Clipboard write failed");
-      }
+      },
     );
   };
 

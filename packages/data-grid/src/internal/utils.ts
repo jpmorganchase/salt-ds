@@ -2,7 +2,7 @@ import type { FocusedPart } from "../CursorContext";
 
 export function getAttribute(
   element: HTMLElement,
-  attributeName: string
+  attributeName: string,
 ): [string, HTMLElement] {
   if (!element || !element.hasAttribute) {
     throw new Error(`Attribute "${attributeName}" not found`);
@@ -30,7 +30,7 @@ export function getFocusablePosition(element: HTMLElement): {
 } {
   const [columnIndexAttr, cellElement] = getAttribute(
     element,
-    "data-column-index"
+    "data-column-index",
   );
   const columnIndex = Number.parseInt(columnIndexAttr, 10);
   const role = cellElement.getAttribute("role");

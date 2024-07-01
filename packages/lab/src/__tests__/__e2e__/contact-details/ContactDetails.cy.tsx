@@ -51,7 +51,7 @@ variants.forEach((variant) => {
               <ContactMetadataItem value={value} label={label} key={label} />
             ))}
           </ContactMetadata>
-        </ContactDetails>
+        </ContactDetails>,
       );
     });
     variant !== "mini" &&
@@ -112,19 +112,19 @@ variants.forEach((variant) => {
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle isFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected",
       );
 
       cy.mount(
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle isFavorite={true} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should("have.class", "saltContactFavoriteToggle-selected");
@@ -135,18 +135,18 @@ variants.forEach((variant) => {
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle defaultIsFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected",
       );
 
       cy.findByLabelText("Favorite").click();
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselecting"
+        "saltContactFavoriteToggle-deselecting",
       );
     });
 
@@ -155,12 +155,12 @@ variants.forEach((variant) => {
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle defaultIsFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected",
       );
 
       cy.realPress("Tab");

@@ -193,7 +193,7 @@ export const InteractableCardGroupMultiSelect: StoryFn<
 );
 
 export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
-  args
+  args,
 ) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
 
@@ -250,7 +250,7 @@ export const InteractableCardGroupRadio: StoryFn<typeof InteractableCard> = (
 };
 
 export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
-  args
+  args,
 ) => {
   const [selected, setSelected] = useState<InteractableCardValue>();
 

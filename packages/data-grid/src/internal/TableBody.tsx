@@ -15,7 +15,7 @@ export interface TableBodyProps<T> {
   gap?: number;
   zebra?: boolean;
   getRowValidationStatus?: (
-    row: GridRowModel<T>
+    row: GridRowModel<T>,
   ) => CellValidationState | undefined;
 }
 
@@ -48,7 +48,7 @@ export function TableBody<T>(props: TableBodyProps<T>) {
         colIdx <= maxColIdx
       );
     },
-    [selectedCellRange]
+    [selectedCellRange],
   );
 
   const { cursorRowIdx, cursorColIdx, focusedPart, headerIsFocusable } =

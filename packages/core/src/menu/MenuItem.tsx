@@ -56,7 +56,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           {
             [withBaseName("blurActive")]: blurActive,
           },
-          className
+          className,
         )}
         role="menuitem"
         aria-disabled={disabled || undefined}
@@ -74,7 +74,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               const { view, ...eventInit } = event;
               queueMicrotask(() => {
                 element.dispatchEvent(
-                  new window.MouseEvent("click", eventInit)
+                  new window.MouseEvent("click", eventInit),
                 );
               });
               tree?.events.emit("click");
@@ -103,5 +103,5 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         )}
       </div>
     );
-  }
+  },
 );

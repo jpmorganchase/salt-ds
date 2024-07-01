@@ -19,7 +19,7 @@ interface RGBAInputProps {
   rgbaValue: RGBAValue;
   onSubmitRgb: (
     rgbaValue: RGBAValue,
-    e?: ChangeEvent<Element> | undefined
+    e?: ChangeEvent<Element> | undefined,
   ) => void;
   onSubmitAlpha: (alpha: number, e?: ChangeEvent<Element> | undefined) => void;
 }
