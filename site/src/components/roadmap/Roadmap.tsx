@@ -54,13 +54,13 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
   const [roadmapData, setRoadmapData] = useState<RoadmapData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [status, setStatus] = useState<"pending" | "success" | "error">(
-    "pending"
+    "pending",
   );
 
   const filteredRoadmapData = roadmapData.filter(
     (r) =>
       (r.quarter !== null || r.startSprint !== null || r.endSprint !== null) &&
-      r.title.match(new RegExp(searchQuery, "i"))
+      r.title.match(new RegExp(searchQuery, "i")),
   );
 
   useEffect(() => {

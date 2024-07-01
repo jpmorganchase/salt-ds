@@ -48,6 +48,6 @@ module.exports = config;
 
 function getAbsolutePath<Value>(value: string): Value {
   return dirname(
-    require.resolve(join(value, "package.json"))
+    require.resolve(join(value, "package.json")),
   ) as unknown as Value;
 }
