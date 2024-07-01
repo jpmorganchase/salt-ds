@@ -16,9 +16,7 @@ data:
 
 Selection of a single value from a horizontally oriented slider track. Values can be displayed either inline or below the track.
 
-### Best practices
-
-If the slider does not display multiple values along the track, use a tooltip to show the selected values on cursor drag and focus. This is especially important for the inline variant which only displays two values either end of the track.
+A tooltip is displayed when the thumb is dragged to ensure that incremental values remain visible when the number increments are not displayed along the track (i.e., with vertical label position).
 
 </LivePreview>
 
@@ -31,6 +29,14 @@ Selection of a range of values from a horizontally oriented slider track. This d
 ### Best practices
 
 The default minimum range is set to 1 step, therefore thumbs cannot pass or overlap.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="CustomStep">
+
+## Custom Step
+
+By default, the slider step increment is set to 1. This can be customised by configuring the ‘step’ prop. We recommend using an increment most suitable to your use case by using a step relative to the granularity of the scale. This prevents slider selections from becoming tedious and difficult to manage.
 
 </LivePreview>
 
