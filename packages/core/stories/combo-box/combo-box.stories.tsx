@@ -81,7 +81,7 @@ const Template: StoryFn<ComboBoxProps> = (args) => {
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
-      style={{ width: 150 }}
+      style={{ width: 152 }}
     >
       {usStates
         .filter((state) =>
