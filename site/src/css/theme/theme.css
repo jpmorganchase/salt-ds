@@ -21,5 +21,6 @@
 .salt-theme[data-mode="dark"] {
   --salt-palette-text-fontFamily: var(--site-font-family);
   --salt-palette-text-fontFamily-heading: var(--site-font-family);
+  --salt-palette-text-fontFamily-action: var(--site-font-family);
   --salt-palette-text-fontFamily-code: var(--site-font-family-code);
 }

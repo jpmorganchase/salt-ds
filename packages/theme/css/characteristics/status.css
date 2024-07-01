@@ -23,6 +23,11 @@
   --salt-status-warning-background: var(--salt-palette-warning-background);
   --salt-status-success-background: var(--salt-palette-success-background);
 
+  --salt-status-info-bold-background: var(--salt-palette-info-bold-background);
+  --salt-status-error-bold-background: var(--salt-palette-error-bold-background);
+  --salt-status-warning-bold-background: var(--salt-palette-warning-bold-background);
+  --salt-status-success-bold-background: var(--salt-palette-success-bold-background);
+
   --salt-status-error-background-selected: var(--salt-palette-error-background-selected);
   --salt-status-warning-background-selected: var(--salt-palette-warning-background-selected);
   --salt-status-success-background-selected: var(--salt-palette-success-background-selected);

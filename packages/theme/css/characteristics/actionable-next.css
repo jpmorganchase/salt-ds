@@ -45,8 +45,6 @@
   --salt-actionable-secondary-borderColor-disabled: transparent;
   /* TBD when adding bordered button */
 
-  --salt-content-bold-foreground: var(--salt-palette-foreground-primary-alt);
-  --salt-content-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-accent-background: var(--salt-palette-accent);
   --salt-actionable-accent-background-hover: var(--salt-palette-accent-action-hover);
   --salt-actionable-accent-background-active: var(--salt-palette-accent-action-active);

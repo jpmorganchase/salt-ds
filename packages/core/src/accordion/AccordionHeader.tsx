@@ -25,15 +25,14 @@ export interface AccordionHeaderProps
 
 const withBaseName = makePrefixer("saltAccordionHeader");
 
-const ExpansionIcon = ({ expanded }: { expanded: boolean }) =>
-  expanded ? (
-    <ChevronUpIcon aria-hidden="true" className={clsx(withBaseName("icon"))} />
-  ) : (
-    <ChevronDownIcon
-      aria-hidden="true"
-      className={clsx(withBaseName("icon"))}
-    />
-  );
+function ExpansionIcon({ expanded }: { expanded: boolean }) {
+  if (expanded) {
+    return <ChevronUpIcon aria-hidden className={withBaseName("icon")} />;
+  }
+
+  return <ChevronDownIcon aria-hidden className={withBaseName("icon")} />;
+}
+
 export const AccordionHeader = forwardRef<
   HTMLButtonElement,
   AccordionHeaderProps
@@ -72,7 +71,7 @@ export const AccordionHeader = forwardRef<
       {...rest}
     >
       {indicatorSide === "left" && <ExpansionIcon expanded={expanded} />}
-      <div className={withBaseName("content")}>{children}</div>
+      <span className={withBaseName("content")}>{children}</span>
       {status && (
         <StatusIndicator
           className={withBaseName("statusIndicator")}

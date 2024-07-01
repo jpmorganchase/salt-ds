@@ -22,7 +22,7 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { withDateMock } from "docs/decorators/withDateMock";
-import { SaltProvider } from "@salt-ds/core";
+import { SaltProvider, UNSTABLE_SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 import { initialize, mswLoader } from "msw-storybook-addon";
 
@@ -147,20 +147,29 @@ export const parameters: Parameters = {
       children,
       context,
       ...rest
-    }: ComponentProps<typeof DocsContainer>) => (
-      <DocsContainer context={context} {...rest}>
-        <SaltProvider
-          /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-          mode={context.store.globals.globals?.mode}
-          enableStyleInjection={
+    }: ComponentProps<typeof DocsContainer>) => {
+      const ChosenProvider =
+        /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+        context.store.globals.globals?.themeNext === "enable"
+          ? UNSTABLE_SaltProviderNext
+          : SaltProvider;
+      return (
+        <DocsContainer context={context} {...rest}>
+          <ChosenProvider
             /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-            context.store.globals.globals?.styleInjection === "enable"
-          }
-        >
-          {children}
-        </SaltProvider>
-      </DocsContainer>
-    ),
+            mode={context.store.globals.globals?.mode}
+            enableStyleInjection={
+              /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+              context.store.globals.globals?.styleInjection === "enable"
+            }
+            /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+            accent={context.store.globals.globals?.accent}
+          >
+            {children}
+          </ChosenProvider>
+        </DocsContainer>
+      );
+    },
   },
   // disables snapshotting on a global level
   chromatic: { disableSnapshot: true },
