@@ -102,7 +102,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       >
         {marks !== "all" && (
           <Label
-            className={clsx({
+            className={clsx(withBaseName("label"), {
               [withBaseName("labelMinBottom")]: marks !== "inline",
             })}
           >
@@ -112,7 +112,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         <SliderTrack />
         {marks !== "all" && (
           <Label
-            className={clsx({
+            className={clsx(withBaseName("label"), {
               [withBaseName("labelMaxBottom")]: marks !== "inline",
             })}
           >
