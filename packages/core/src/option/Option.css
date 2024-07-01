@@ -38,10 +38,13 @@
   content: "";
   display: block;
   position: absolute;
-  top: -1px;
-  bottom: -1px;
+  top: -1px; /* HERE */
+  bottom: -1px; /* HERE */
   left: 0;
   width: 100%;
+}
+.saltOption:only-of-type::after {
+  display: none;
 }
 
 .saltOption[aria-selected="true"]::after {
@@ -49,11 +52,13 @@
   border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
 }
 
-.saltOption[aria-selected="true"]:first-of-type::before {
+.saltOption[aria-selected="true"]:first-of-type::before,
+.saltOption[aria-selected="true"]:first-of-type::after {
   border-top: unset;
   top: 0;
 }
-.saltOption[aria-selected="true"]:last-of-type::before {
+.saltOption[aria-selected="true"]:last-of-type::before,
+.saltOption[aria-selected="true"]:last-of-type::after {
   border-bottom: unset;
   bottom: 0;
 }
