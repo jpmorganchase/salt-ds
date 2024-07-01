@@ -3,6 +3,7 @@ import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
 import { ComboBox, Option } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
+import { useState } from "react";
 
 const {
   Default,
@@ -19,6 +20,7 @@ const {
   MultiplePills,
   MultiplePillsTruncated,
   SelectOnTab,
+  LongList,
 } = composeStories(comboBoxStories);
 
 describe("Given a ComboBox", () => {
@@ -240,7 +242,7 @@ describe("Given a ComboBox", () => {
   });
 
   it("should support keyboard navigation", () => {
-    cy.mount(<Default />);
+    cy.mount(<LongList />);
 
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("exist");
@@ -253,20 +255,20 @@ describe("Given a ComboBox", () => {
     cy.realPress(["ArrowDown"]);
     cy.findAllByRole("option").eq(1).should("be.activeDescendant");
 
-    // should try to go down 10, but only 9 items in list
+    // should try to go down by the number of visible items in list
     cy.realPress(["PageDown"]);
+    cy.findAllByRole("option").eq(11).should("be.activeDescendant");
+
+    // should try to go up by the number of visible items in list
+    cy.realPress(["PageUp"]);
+    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
+
+    // should go to the last item
+    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     // should not wrap
     cy.realPress(["ArrowDown"]);
-    cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
-
-    // should try to go up 10, but only 9 items in list
-    cy.realPress(["PageUp"]);
-    cy.findAllByRole("option").eq(0).should("be.activeDescendant");
-
-    // should go to the last item
-    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     cy.realPress(["ArrowUp"]);
@@ -290,7 +292,7 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").should("have.value", "California");
   });
 
-  it("should not receive focus if it is disabled", () => {
+  it("should not receive focus via tab if it is disabled", () => {
     cy.mount(
       <div>
         <button>start</button>
@@ -298,12 +300,46 @@ describe("Given a ComboBox", () => {
         <button>end</button>
       </div>
     );
+
     cy.findByRole("combobox").should("be.disabled");
     cy.realPress("Tab");
     cy.findByRole("button", { name: "start" }).should("be.focused");
     cy.realPress("Tab");
     cy.findByRole("combobox").should("not.be.focused");
     cy.findByRole("button", { name: "end" }).should("be.focused");
+  });
+
+  it("should not receive focus via mouse click if it is disabled", () => {
+    cy.mount(<Disabled />);
+    cy.findByRole("combobox").realClick();
+    // Regression - #3369
+    cy.get(".saltComboBox").should("not.have.class", "saltComboBox-focused");
+
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
+  });
+
+  it("should not stay focus if disabled after option selection", () => {
+    // Regression - #3369
+    const DisabledAfterSelection = () => {
+      const [disabled, setDisabled] = useState(false);
+      const handleSelectionChange = () => {
+        setDisabled(true);
+      };
+      return (
+        <Default
+          disabled={disabled}
+          onSelectionChange={handleSelectionChange}
+        />
+      );
+    };
+
+    cy.mount(<DisabledAfterSelection />);
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.realPress("Enter");
+
+    cy.get(".saltComboBox").should("not.have.class", "saltComboBox-focused");
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
   });
 
   it("should not allow you to select a disabled option", () => {
@@ -495,11 +531,10 @@ describe("Given a ComboBox", () => {
   it("should allow showing an empty message when there are no options", () => {
     cy.mount(<EmptyMessage />);
     cy.findByRole("combobox").realClick();
-    cy.realType("Missing");
     cy.findAllByRole("option").should("have.length", 1);
     cy.findByRole("option").should(
       "have.text",
-      `No results found for "Missing"`
+      `No results found for "Yelloww"`
     );
   });
 

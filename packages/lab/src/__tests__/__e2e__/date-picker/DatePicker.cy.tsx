@@ -5,6 +5,7 @@ import {
   CalendarDate,
   DateFormatter,
   DateValue,
+  endOfMonth,
   getLocalTimeZone,
   startOfMonth,
   today,
@@ -57,9 +58,15 @@ describe("GIVEN a DatePicker", () => {
     });
     it("THEN should not format invalid dates on blur", () => {
       cy.mount(<Default defaultSelectedDate={testDate} />);
-      cy.findByRole("textbox").click().clear().type("date");
+      cy.findByRole("textbox").click().clear().type("2 fev");
       cy.findByRole("textbox").blur();
-      cy.findByRole("textbox").should("have.value", "date");
+      cy.findByRole("textbox").should("have.value", "2 fev");
+    });
+    it("THEN should not format invalid dates on blur if controlled", () => {
+      cy.mount(<Default selectedDate={testDate} />);
+      cy.findByRole("textbox").click().clear().type("2 fev");
+      cy.findByRole("textbox").blur();
+      cy.findByRole("textbox").should("have.value", "2 fev");
     });
     it("THEN clicking the calendar button should open the panel", () => {
       cy.mount(<Default defaultSelectedDate={testDate} />);
@@ -79,6 +86,7 @@ describe("GIVEN a DatePicker", () => {
         name: formatDay(testDate.add({ days: 11 })),
       }).realClick();
       cy.findByRole("application").should("not.exist");
+      cy.findByRole("textbox").should("have.focus");
     });
     it("THEN open button should be disabled when component is disabled", () => {
       cy.mount(<Default defaultSelectedDate={testDate} disabled />);
@@ -94,9 +102,12 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("textbox").click().clear().type(testInput);
       cy.findByRole("textbox").blur();
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
+      cy.findAllByRole("combobox")
+        .eq(0)
+        .should("have.text", formatDate(testDate, { month: "short" }));
+      cy.findAllByRole("combobox")
+        .eq(1)
+        .should("have.text", formatDate(testDate, { year: "numeric" }));
     });
     it("THEN it should clear the date if an empty input is submitted", () => {
       cy.mount(
@@ -119,6 +130,31 @@ describe("GIVEN a DatePicker", () => {
       cy.findAllByRole("application").should("exist");
       cy.realPress("Escape");
       cy.findAllByRole("application").should("exist");
+    });
+    it("THEN should mount with specified date if controlled", () => {
+      cy.mount(<Default selectedDate={testDate} />);
+      cy.findByRole("textbox").should("have.value", formatInput(testDate));
+    });
+    it("should call onChange with the new controlled value", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      function ControlledPicker() {
+        const [date, setDate] = useState(testDate);
+        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          setDate(testDate);
+          changeSpy(event);
+        };
+
+        return <Default selectedDate={date} onChange={onChange} />;
+      }
+
+      cy.mount(<ControlledPicker />);
+      cy.findByRole("textbox").click().clear().type(testInput);
+      cy.get("@changeSpy").should("have.been.calledWithMatch", {
+        target: { value: testInput },
+      });
     });
   });
 
@@ -170,6 +206,7 @@ describe("GIVEN a DatePicker", () => {
         name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 12 })),
       }).realClick();
       cy.findByRole("application").should("not.exist");
+      cy.findAllByRole("textbox").eq(1).should("have.focus");
     });
     it("THEN it should move both months forward if selecting a starting date in the second calendar", () => {
       cy.mount(
@@ -221,7 +258,21 @@ describe("GIVEN a DatePicker", () => {
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("application").should("have.length", 1);
     });
-
+    it("should show hover all the first month when hovering through the second one ", () => {
+      cy.mount(<Range />);
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(startOfMonth(today(localTimeZone)).add({ days: 15 })),
+      }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(
+          startOfMonth(today(localTimeZone)).add({ days: 15, months: 1 })
+        ),
+      }).realHover();
+      cy.findByRole("button", {
+        name: formatDay(endOfMonth(today(localTimeZone))),
+      }).should("have.class", "saltCalendarDay-hovered");
+    });
     it("should disable the first calendar's next month button and the second calendar's previous month button when a start date has been selected", () => {
       cy.mount(<Range />);
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -253,38 +304,7 @@ describe("GIVEN a DatePicker", () => {
         "true"
       );
     });
-  });
-  describe("WHEN mounted as a controlled component", () => {
-    it("THEN should mount with specified date", () => {
-      cy.mount(<Default selectedDate={testDate} />);
-      cy.findByRole("textbox").should("have.value", formatInput(testDate));
-    });
-    describe("WHEN the date is updated", () => {
-      it("should call onChange with the new value", () => {
-        const changeSpy = cy.stub().as("changeSpy");
-
-        function ControlledPicker() {
-          const [date, setDate] = useState(testDate);
-          const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-            // React 16 backwards compatibility
-            event.persist();
-            setDate(testDate);
-            changeSpy(event);
-          };
-
-          return <Default selectedDate={date} onChange={onChange} />;
-        }
-
-        cy.mount(<ControlledPicker />);
-        cy.findByRole("textbox").click().clear().type(testInput);
-        cy.get("@changeSpy").should("have.been.calledWithMatch", {
-          target: { value: testInput },
-        });
-      });
-    });
-  });
-  describe("WHEN range is mounted as a controlled component", () => {
-    it("THEN should mount with specified date", () => {
+    it("THEN should mount with specified date if controlled", () => {
       cy.mount(
         <Range
           selectedDate={{
@@ -300,35 +320,47 @@ describe("GIVEN a DatePicker", () => {
         .eq(1)
         .should("have.value", formatInput(testDate.add({ months: 1 })));
     });
-    describe("WHEN the date is updated", () => {
-      it("should call onChange with the new value", () => {
-        const changeSpy = cy.stub().as("changeSpy");
+    it("THEN should not format invalid dates on blur if controlled", () => {
+      cy.mount(
+        <Range
+          selectedDate={{
+            startDate: testDate,
+            endDate: testDate.add({ months: 1 }),
+          }}
+        />
+      );
+      cy.findAllByRole("textbox").eq(0).clear().click().type("2 fev");
+      cy.findAllByRole("textbox").eq(0).blur();
+      cy.findAllByRole("textbox").eq(0).should("have.value", "2 fev");
+    });
+    it("should call onChange with the new controlled value", () => {
+      const changeSpy = cy.stub().as("changeSpy");
 
-        function ControlledRangePicker() {
-          const [date, setDate] = useState(testDate);
-          const onChange = (
-            event: ChangeEvent<HTMLInputElement>,
-            startDate?: string,
-            endDate?: string
-          ) => {
-            // React 16 backwards compatibility
-            event.persist();
-            setDate(testDate);
-            changeSpy(startDate, endDate);
-          };
+      function ControlledRangePicker() {
+        const [date, setDate] = useState(testDate);
+        const onChange = (
+          event: ChangeEvent<HTMLInputElement>,
+          startDate?: string,
+          endDate?: string
+        ) => {
+          // React 16 backwards compatibility
+          event.persist();
+          setDate(testDate);
+          changeSpy(startDate, endDate);
+        };
 
-          return <Range selectedDate={date} onChange={onChange} />;
-        }
+        return <Range selectedDate={date} onChange={onChange} />;
+      }
 
-        cy.mount(<ControlledRangePicker />);
-        cy.findAllByRole("textbox").eq(0).click().clear().type(testInput);
-        cy.findAllByRole("textbox").eq(1).click().clear().type(rangeTestInput);
-        cy.get("@changeSpy").should(
-          "have.been.calledWith",
-          testInput,
-          rangeTestInput
-        );
-      });
+      cy.mount(<ControlledRangePicker />);
+      cy.findAllByRole("textbox").eq(0).click().clear().type(testInput);
+      cy.get("@changeSpy").should("have.been.calledWith", testInput);
+      cy.findAllByRole("textbox").eq(1).click().clear().type(rangeTestInput);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        testInput,
+        rangeTestInput
+      );
     });
   });
 });

@@ -3,6 +3,7 @@ import * as dropdownStories from "@stories/dropdown/dropdown.stories";
 import { Dropdown } from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
+import { useState } from "react";
 
 const {
   Default,
@@ -16,6 +17,7 @@ const {
   CustomValue,
   WithDefaultSelected,
   ObjectValue,
+  LongList,
 } = composeStories(dropdownStories);
 
 describe("Given a Dropdown", () => {
@@ -174,7 +176,7 @@ describe("Given a Dropdown", () => {
   });
 
   it("should support keyboard navigation", () => {
-    cy.mount(<Default />);
+    cy.mount(<LongList />);
 
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("exist");
@@ -187,20 +189,20 @@ describe("Given a Dropdown", () => {
     cy.realPress(["ArrowDown"]);
     cy.findAllByRole("option").eq(1).should("be.activeDescendant");
 
-    // should try to go down 10, but only 9 items in list
+    // should try to go down by the number of visible items in list
     cy.realPress(["PageDown"]);
+    cy.findAllByRole("option").eq(14).should("be.activeDescendant");
+
+    // should try to go up by the number of visible items in list
+    cy.realPress(["PageUp"]);
+    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
+
+    // should go to the last item
+    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     // should not wrap
     cy.realPress(["ArrowDown"]);
-    cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
-
-    // should try to go up 10, but only 9 items in list
-    cy.realPress(["PageUp"]);
-    cy.findAllByRole("option").eq(0).should("be.activeDescendant");
-
-    // should go to the last item
-    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     cy.realPress(["ArrowUp"]);
@@ -224,7 +226,7 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").should("have.text", "California");
   });
 
-  it("should not receive focus if it is disabled", () => {
+  it("should not receive focus via tab if it is disabled", () => {
     cy.mount(
       <div>
         <button>start</button>
@@ -240,6 +242,36 @@ describe("Given a Dropdown", () => {
     cy.findByRole("button", { name: "end" }).should("be.focused");
   });
 
+  it("should not receive focus via mouse click if it is disabled", () => {
+    cy.mount(<Disabled />);
+    cy.findByRole("combobox").realClick();
+
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
+    cy.findByRole("listbox").should("not.exist");
+  });
+
+  it("should not stay focus if disabled after option selection", () => {
+    // Regression - #3369
+    const DisabledAfterSelection = () => {
+      const [disabled, setDisabled] = useState(false);
+      const handleSelectionChange = () => {
+        setDisabled(true);
+      };
+      return (
+        <Default
+          disabled={disabled}
+          onSelectionChange={handleSelectionChange}
+        />
+      );
+    };
+    cy.mount(<DisabledAfterSelection />);
+    cy.realPress("Tab");
+    cy.realPress("ArrowDown");
+    cy.realPress("Enter");
+
+    cy.findByRole("combobox").should("be.disabled").should("not.be.focused");
+  });
+
   it("should not allow you to select a disabled option", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
     cy.mount(<DisabledOption onSelectionChange={selectionChangeSpy} />);
@@ -250,6 +282,9 @@ describe("Given a Dropdown", () => {
       "true"
     );
     cy.realType("California");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
     cy.realPress("Enter");
     cy.get("@selectionChange").should("not.have.been.called");
     cy.findByRole("option", { name: "California" }).realClick();
@@ -398,6 +433,27 @@ describe("Given a Dropdown", () => {
   it("should show a placeholder when the value is empty", () => {
     cy.mount(<Dropdown placeholder="Placeholder" value="" />);
     cy.findByRole("combobox").should("have.text", "Placeholder");
+  });
+
+  it("should support typeahead", () => {
+    cy.mount(<Default />);
+    cy.realPress("Tab");
+    cy.realType("A");
+    cy.findByRole("listbox").should("exist");
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
+
+    cy.wait(500);
+
+    cy.realType("Co");
+    cy.findByRole("option", { name: "Connecticut" }).should(
+      "be.activeDescendant"
+    );
   });
 
   it("should render the custom floating component", () => {

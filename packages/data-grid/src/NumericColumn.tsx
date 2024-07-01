@@ -1,3 +1,5 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import {
   ChangeEventHandler,
   KeyboardEventHandler,
@@ -6,14 +8,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
-import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
-import { GridColumnModel, GridRowModel } from "./Grid";
-import { useEditorContext } from "./EditorContext";
+import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
-import { Cell } from "./internal";
+import { useEditorContext } from "./EditorContext";
+import { GridColumnModel, GridRowModel } from "./Grid";
+import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
 
 import numericColumnCss from "./NumericColumn.css";
 
@@ -104,7 +104,10 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   }, [endEditMode, editorText]);
 
   return (
-    <Cell separator={column?.separator} className="saltGridNumericCellEditor">
+    <CellFrame
+      separator={column?.separator}
+      className="saltGridNumericCellEditor"
+    >
       <div className="saltGridNumericCellEditor-inputContainer">
         <input
           ref={inputRef}
@@ -116,7 +119,7 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
         />
       </div>
       <CornerTag />
-    </Cell>
+    </CellFrame>
   );
 }
 

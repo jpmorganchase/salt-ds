@@ -22,9 +22,11 @@ import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { withDateMock } from "docs/decorators/withDateMock";
-import { SaltProvider } from "@salt-ds/core";
+import { SaltProvider, UNSTABLE_SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 import { initialize, mswLoader } from "msw-storybook-addon";
+
+import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -107,57 +109,7 @@ export const globalTypes: GlobalTypes = {
       title: "Component Style Injection",
     },
   },
-  themeNext: {
-    name: "Experimental theme next",
-    description: "Turn on/off theme next",
-    defaultValue: "disable",
-    toolbar: {
-      icon: "beaker",
-      items: ["disable", "enable"],
-      title: "Theme Next",
-    },
-  },
-  corner: {
-    name: "Experimental corner",
-    description: "Switch corner to sharp / rounded",
-    defaultValue: "sharp",
-    // if: { global: "themeNext", eq: "enable" }, // todo: why if doesn't work?
-    toolbar: {
-      icon: "beaker",
-      items: ["sharp", "rounded"],
-      title: "Corner",
-    },
-  },
-  headingFont: {
-    name: "Experimental heading font",
-    description: "Switch heading font to open sans / amplitude",
-    defaultValue: "Open Sans",
-    toolbar: {
-      icon: "beaker",
-      items: ["Open Sans", "Amplitude"],
-      title: "Heading font",
-    },
-  },
-  accent: {
-    name: "Experimental accent",
-    description: "Switch accent to blue / teal",
-    defaultValue: "blue",
-    toolbar: {
-      icon: "beaker",
-      items: ["blue", "teal"],
-      title: "Accent",
-    },
-  },
-  actionFont: {
-    name: "Experimental action font",
-    description: "Switch action font to open sans / amplitude",
-    defaultValue: "Open Sans",
-    toolbar: {
-      icon: "beaker",
-      items: ["Open Sans", "Amplitude"],
-      title: "Action font",
-    },
-  },
+  ...themeNextGlobals,
 };
 
 export const argTypes: ArgTypes = {
@@ -195,20 +147,29 @@ export const parameters: Parameters = {
       children,
       context,
       ...rest
-    }: ComponentProps<typeof DocsContainer>) => (
-      <DocsContainer context={context} {...rest}>
-        <SaltProvider
-          /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-          mode={context.store.globals.globals?.mode}
-          enableStyleInjection={
+    }: ComponentProps<typeof DocsContainer>) => {
+      const ChosenProvider =
+        /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+        context.store.globals.globals?.themeNext === "enable"
+          ? UNSTABLE_SaltProviderNext
+          : SaltProvider;
+      return (
+        <DocsContainer context={context} {...rest}>
+          <ChosenProvider
             /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-            context.store.globals.globals?.styleInjection === "enable"
-          }
-        >
-          {children}
-        </SaltProvider>
-      </DocsContainer>
-    ),
+            mode={context.store.globals.globals?.mode}
+            enableStyleInjection={
+              /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+              context.store.globals.globals?.styleInjection === "enable"
+            }
+            /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+            accent={context.store.globals.globals?.accent}
+          >
+            {children}
+          </ChosenProvider>
+        </DocsContainer>
+      );
+    },
   },
   // disables snapshotting on a global level
   chromatic: { disableSnapshot: true },

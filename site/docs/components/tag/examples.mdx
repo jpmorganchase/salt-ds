@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="tag" exampleName="Variants">
+
+## Variants
+
+Tag has two variants: primary and secondary. The primary variant is set by default. Set to secondary with `variant=”secondary”`.
+
+</LivePreview>
+<LivePreview componentName="tag" exampleName="Bordered">
+
+## Bordered
+
+To add a border to tag, simply pass the `bordered` prop to the component.
+
+Secondary tags have the ability to theme the border, although the border is not visible by default in the Salt theme.
+
+</LivePreview>
+<LivePreview componentName="tag" exampleName="WithIcon">
+
+## With icon
+
+Use an icon inside a tag to visually reinforce its content for quick recognition. Icons should be displayed before the label.
+
+</LivePreview>
+<LivePreview componentName="tag" exampleName="Categories">
+
+## Categories
+
+To differentiate between different categories, set a category by passing a value from 1 to 20 to the `category` prop.
+
+Note that if a category outside the range is passed, the styles will default to category 1.
+
+### Best practices
+
+- Be consistent when assigning categories. For example, avoid assigning two different categories to the same piece of metadata.
+
+</LivePreview> 
+<LivePreview componentName="tag" exampleName="TagInCard">
+
+## Tag in card
+
+When using more than one tag next to each other, for example in a Card, apply `--salt-spacing-50` between them.
+
+</LivePreview> 
+</LivePreviewControls>

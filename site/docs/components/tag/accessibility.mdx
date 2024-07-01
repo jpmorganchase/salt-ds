@@ -1,0 +1,13 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+Tag is not interactive therefore doesn't receive focus. You should pass aria-hidden="true" to make screen readers skip it.
