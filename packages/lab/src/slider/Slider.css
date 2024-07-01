@@ -5,8 +5,18 @@
   user-select: none;
 }
 
+.saltSlider-label {
+  height: var(--salt-size-base);
+  display: flex;
+  align-items: center;
+}
+
 .saltSlider-bottomLabel {
   grid-template-columns: 1fr;
+  gap: 0;
+}
+.saltSlider-bottomLabel .saltSlider-label {
+  height: auto;
 }
 
 .saltSlider-labelMinBottom {
@@ -28,6 +38,7 @@
   position: relative;
   cursor: pointer;
   align-items: center;
+  height: var(--salt-size-base);
 }
 
 .saltSliderTrack-rail {
