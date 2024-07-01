@@ -1,5 +1,5 @@
 ---
-"@salt-ds/core": minor
+"@salt-ds/core": patch
 ---
 
 Updated background color prop of Validation status `PillInput` to reflect the color of the status.
