@@ -75,7 +75,6 @@ export const useReclaimSpace = ({
         if (overflowedItem === null) {
           break;
         }
-        // eslint-disable-next-line no-param-reassign
         visibleContentSize -= overflowedItem.size;
         newlyOverflowedItems.push(overflowedItem);
       }
@@ -89,8 +88,8 @@ export const useReclaimSpace = ({
 
     const claimant = managedItems.find(hasReclaimedSpace);
     if (claimant) {
-      // Might not always need to collapse, if there is enough available space for it to still be collapsing
-      // collapse the claimant and turn off recvlaimed
+      // Might not always need to collapse, if there is enough available space for it to still be collapsing then
+      // collapse the claimant and turn off reclaimed
       collectionHook.dispatch({
         type: "replace-item",
         overflowItem: {

@@ -103,6 +103,7 @@ export function isRangeOrOffsetSelectionWithStartDate(
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
+    // biome-ignore lint/suspicious/noPrototypeBuiltins: will replace with hasOwn when we update min browser
     selectionValue?.hasOwnProperty("startDate")
   );
 }
@@ -152,12 +153,13 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
           setSelectedDateState(newSelectedDate);
           props.onSelectedDateChange?.(event, newSelectedDate);
           break;
-        case "multiselect":
+        case "multiselect": {
           const newDates = addOrRemoveFromArray(selectedDate, newSelectedDate);
           setSelectedDateState(newDates);
           props.onSelectedDateChange?.(event, newDates);
           break;
-        case "range":
+        }
+        case "range": {
           let base = selectedDate;
           if (isRangeOrOffsetSelectionValue(base)) {
             if (base?.startDate && base?.endDate) {
@@ -176,13 +178,15 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
           setSelectedDateState(base);
           props.onSelectedDateChange?.(event, base);
           break;
-        case "offset":
+        }
+        case "offset": {
           const newRange = {
             startDate: getStartDateOffset(newSelectedDate),
             endDate: getEndDateOffset(newSelectedDate),
           };
           setSelectedDateState(newRange);
           props.onSelectedDateChange?.(event, newRange);
+        }
       }
     }
   };
@@ -383,7 +387,7 @@ export function useSelectionDay({ date }: { date: DateValue }) {
         selected || selectedEnd || selectedStart || selectedSpan
           ? "true"
           : undefined,
-      "aria-disabled": !!isDayUnselectable(date) ? "true" : undefined,
+      "aria-disabled": isDayUnselectable(date) ? "true" : undefined,
     },
   };
 }

@@ -537,7 +537,7 @@ export function useTokenizedInputNext<Item>(
             Array.from({ length: selectedItems.length }, (_, index) => index),
           );
           break;
-        case "C":
+        case "C": {
           // Copy
           const textToCopy =
             activeIndices.length > 0
@@ -558,6 +558,7 @@ export function useTokenizedInputNext<Item>(
               console.error(error);
             });
           break;
+        }
         case "V":
           // Paste - do nothing and let handleChange deal with it
           break;

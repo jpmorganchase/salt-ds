@@ -33,8 +33,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
 
   if (!mountNode) {
     const win = window.open("", id);
-    (win as Window).document.write(
-      // eslint-disable-next-line no-restricted-globals
+    win?.document.write(
       `<html lang="en"><head><title>${id}</title><base href="${location.origin}"><style>body {margin: 0;}</style></head><body></body></html>`,
     );
     document.head.querySelectorAll("style").forEach((htmlElement) => {
@@ -48,10 +47,8 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   const parentWindow = useWindowParentContext();
 
   const closeWindow = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       ipcRenderer.send("window-close", { id: id });
     }
   }, [id]);
@@ -61,13 +58,9 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   useEffect(() => {
     setTimeout(() => {
       if (windowRoot.current) {
-        // @ts-ignore
         const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const { ipcRenderer } = global as any;
         if (ipcRenderer) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
           ipcRenderer.send("window-size", {
             id: id,
             height: Math.ceil(height + 1),
@@ -81,11 +74,9 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   // The timeout is required to allow the window time to be moved into position and scaled
   // before being shown to the user,
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ipcRenderer.send("window-ready", { id: id });
       }, 100);
     }
@@ -99,10 +90,8 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   // otherwise the window will be smaller than expected
   useIsomorphicLayoutEffect(() => {
     setTimeout(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const { ipcRenderer } = global as any;
       if (ipcRenderer) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ipcRenderer.send("window-position", {
           id: id,
           parentWindowID: parentWindow.id,

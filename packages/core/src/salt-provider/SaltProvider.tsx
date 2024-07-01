@@ -123,7 +123,6 @@ const createThemedChildren = ({
           themeNamesString,
           `salt-density-${density}`,
         ),
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         "data-mode": mode,
         ...(themeNext ? themeNextProps : {}),
@@ -409,7 +408,6 @@ export function UNSTABLE_SaltProviderNext({
 }
 
 export const useTheme = (): ThemeContextProps => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { window, ...contextWithoutWindow } = useContext(ThemeContext);
 
   return contextWithoutWindow;

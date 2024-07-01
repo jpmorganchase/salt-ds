@@ -8,7 +8,7 @@ function getDocument(floating: HTMLElement | null) {
 }
 
 // TODO: Check whether can be anything more restrictive than `any`
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: see comment above
 function getWindow(value: any) {
   return getDocument(value).defaultView ?? window;
 }

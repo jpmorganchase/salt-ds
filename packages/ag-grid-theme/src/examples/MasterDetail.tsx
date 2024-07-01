@@ -11,9 +11,7 @@ const MasterDetail = (props: AgGridReactProps) => {
 
   const onFirstDataRendered = useCallback(() => {
     requestAnimationFrame(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const node = gridRef.current?.api.getDisplayedRowAtIndex(0);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       node?.setExpanded(true);
     });
   }, []);
@@ -37,7 +35,6 @@ const MasterDetail = (props: AgGridReactProps) => {
         detailCellRenderer={detailCellRenderer}
         detailCellRendererParams={{
           detailGridOptions: { columnDefs },
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-explicit-any
           getDetailRowData: (params: any) => params.successCallback(rowData),
         }}
         masterDetail={true}

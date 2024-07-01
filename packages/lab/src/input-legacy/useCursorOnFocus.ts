@@ -26,7 +26,7 @@ function getSelectionRange(
     return [input.value.length, input.value.length];
   }
 
-  if (cursorPositionOnFocus != null && !isNaN(cursorPositionOnFocus)) {
+  if (cursorPositionOnFocus != null && !Number.isNaN(cursorPositionOnFocus)) {
     return [cursorPositionOnFocus, cursorPositionOnFocus];
   }
   return [null, null];

@@ -1,5 +1,4 @@
 //TODO remove when popout code has been migrated
-/* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
 import { ownerWindow, useControlled, useDensity, useId } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
@@ -624,7 +623,7 @@ export function useTokenizedInput<Item>(
     ) {
       handleCtrlModifierKeyDown(event);
     } else {
-      let handler;
+      let handler: KeyboardEventHandler<HTMLInputElement> | undefined;
 
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
@@ -706,9 +705,11 @@ const validateProps = function validateProps<Item>(
       : isChar(delimiter);
 
     useEffect(() => {
-      console.warn(
-        "TokenizedInput delimiter should be a single character or an array of single characters",
-      );
+      if (invalidDelimiter) {
+        console.warn(
+          "TokenizedInput delimiter should be a single character or an array of single characters",
+        );
+      }
     }, [invalidDelimiter]);
   }
 };

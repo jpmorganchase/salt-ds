@@ -79,7 +79,6 @@ export const FoundationColorView = ({
 
   useEffect(() => {
     const fetchJsonData = () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const data = require("./cssFoundations.json") as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
         /^--salt-color-\w+(-\d+)?$/.test(x),

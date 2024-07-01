@@ -35,6 +35,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
 
   const selector = viewMode === "docs" ? ".docs-story" : ".sb-show-main";
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mode is needed.
   useEffect(() => {
     const color = getCharacteristicValue(
       theme,

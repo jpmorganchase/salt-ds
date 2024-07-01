@@ -34,7 +34,7 @@ export const AdjustableFlexbox = ({
   const [width, setWidth] = useState(widthProp);
   const handleWidthChange: InputProps["onChange"] = (e, value) => {
     const newValue = Number.parseInt(value);
-    widthRef.current = isNaN(newValue) ? 0 : newValue;
+    widthRef.current = Number.isNaN(newValue) ? 0 : newValue;
     forceUpdate();
   };
   const applyWidth = () => {

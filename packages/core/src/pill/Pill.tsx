@@ -8,7 +8,6 @@ import pillCss from "./Pill.css";
 
 const withBaseName = makePrefixer("saltPill");
 
-/* eslint-disable @typescript-eslint/no-empty-interface */
 export interface PillProps extends ComponentPropsWithoutRef<"button"> {}
 
 export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
@@ -39,7 +38,6 @@ export const Pill = forwardRef<HTMLButtonElement, PillProps>(function Pill(
   });
   // we do not want to spread tab index in this case because the button element
   // does not require tabindex="0" attribute
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { tabIndex, ...restButtonProps } = buttonProps;
   return (
     <button

@@ -63,7 +63,7 @@ export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
         const pageValue = Number(inputValue);
         if (
           !inputValue.startsWith("0") &&
-          !isNaN(pageValue) &&
+          !Number.isNaN(pageValue) &&
           pageValue > 0 &&
           pageValue <= count
         ) {

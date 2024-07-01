@@ -62,7 +62,7 @@ export const measureElementSizeAndPosition = (
   const flexShrink = Number.parseInt(style.getPropertyValue("flex-shrink"), 10);
   if (flexShrink > 0) {
     const flexBasis = Number.parseInt(style.getPropertyValue("flex-basis"), 10);
-    if (!isNaN(flexBasis) && flexBasis > 0) {
+    if (!Number.isNaN(flexBasis) && flexBasis > 0) {
       minWidth = flexBasis;
     }
   }

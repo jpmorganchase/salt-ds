@@ -19,7 +19,6 @@ import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-// eslint-disable import/no-duplicates
 import { type ReactNode, useMemo } from "react";
 import "@salt-ds/theme/index.css";
 import "@jpmorganchase/mosaic-theme/index.css";

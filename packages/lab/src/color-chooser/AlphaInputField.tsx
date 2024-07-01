@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltColorChooser");
 interface AlphaInputProps {
   alphaValue: number;
   showAsOpacity?: boolean;
-  onSubmit: (alpha: number, e?: React.ChangeEvent) => void;
+  onSubmit: (alpha: number, e?: ChangeEvent) => void;
 }
 
 export const AlphaInput = ({
@@ -29,18 +29,18 @@ export const AlphaInput = ({
   });
 
   const [alphaInputValue, setAlphaInputValue] = useState<string>(
-    !isNaN(alphaValue) ? alphaValue.toString() : "",
+    !Number.isNaN(alphaValue) ? alphaValue.toString() : "",
   );
 
   useEffect(() => {
-    setAlphaInputValue(!isNaN(alphaValue) ? alphaValue.toString() : "");
+    setAlphaInputValue(!Number.isNaN(alphaValue) ? alphaValue.toString() : "");
   }, [alphaValue]);
 
   const handleAlphaInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    value: string,
+    event: ChangeEvent<HTMLInputElement>,
+    newValue: string,
   ): void => {
-    value = value.replace("%", "");
+    const value = newValue.replace("%", "");
     let alpha: string = value;
 
     if (value.trim() === "" || Number.isNaN(value)) {

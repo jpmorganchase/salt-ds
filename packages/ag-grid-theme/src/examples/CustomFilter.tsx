@@ -10,59 +10,57 @@ const CustomFilter = (props: AgGridReactProps) => {
   const { api, agGridProps, containerProps } = useAgGridHelpers();
 
   const handlePopMt100kClick = () => {
-    const popMt100kComponent = api!.getFilterInstance("population")!;
-    api!.setFilterModel(null);
+    const popMt100kComponent = api?.getFilterInstance("population");
+    api?.setFilterModel(null);
 
-    popMt100kComponent.setModel({
+    popMt100kComponent?.setModel({
       type: "greaterThan",
       filter: 100000,
       filterTo: null,
     });
 
-    api!.onFilterChanged();
+    api?.onFilterChanged();
     setHasSavedState(false);
   };
 
   const handlePopLt100kClick = () => {
-    const popLt100kComponent = api!.getFilterInstance("population")!;
-    api!.setFilterModel(null);
+    const popLt100kComponent = api?.getFilterInstance("population");
+    api?.setFilterModel(null);
 
-    popLt100kComponent.setModel({
+    popLt100kComponent?.setModel({
       type: "lessThan",
       filter: 100000,
       filterTo: null,
     });
 
-    api!.onFilterChanged();
+    api?.onFilterChanged();
     setHasSavedState(false);
   };
 
   const filterNewYork = () => {
-    const filterNewYork = api!.getFilterInstance("name")!;
-    api!.setFilterModel(null);
-    filterNewYork.setModel({
+    const filterNewYork = api?.getFilterInstance("name");
+    api?.setFilterModel(null);
+    filterNewYork?.setModel({
       type: "equals",
       filter: "New York",
       filterTo: null,
     });
-    api!.onFilterChanged();
+    api?.onFilterChanged();
     setHasSavedState(false);
   };
 
   const saveState = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
-    (window as any).filterState = api!.getFilterModel();
+    (window as any).filterState = api?.getFilterModel();
     setHasSavedState(false);
   };
 
   const restoreState = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-    api!.setFilterModel((window as any).filterState);
+    api?.setFilterModel((window as any).filterState);
     setHasSavedState(true);
   };
 
   const clearState = () => {
-    api!.setFilterModel(null);
+    api?.setFilterModel(null);
     setHasSavedState(true);
   };
 

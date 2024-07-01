@@ -63,10 +63,18 @@
         "noSvgWithoutTitle": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "warn",
+        "noSwitchDeclarations": {
+          "level": "error",
+          "fix": "safe"
+        }
       },
       "suspicious": {
-        "noArrayIndexKey": "warn"
+        "noArrayIndexKey": "warn",
+        "noGlobalIsNan": {
+          "level": "error",
+          "fix": "safe"
+        }
       }
     }
   },
@@ -84,7 +92,7 @@
   },
   "overrides": [
     {
-      "include": ["__tests__/**", "*.stories.tsx"],
+      "include": ["__tests__/**", "stories/**"],
       "linter": {
         "rules": {
           "a11y": {
@@ -92,6 +100,33 @@
           },
           "complexity": {
             "noForEach": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "lab/src/responsive/**",
+        "packages/data-grid/**",
+        "lab/src/common-hooks/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noParameterAssign": "off"
+          },
+          "suspicious": {
+            "noAssignInExpressions": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["utils/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
           }
         }
       }

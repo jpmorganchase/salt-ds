@@ -71,7 +71,6 @@ export const useOverflow = ({
         if (overflowedItem === null) {
           break;
         }
-        // eslint-disable-next-line no-param-reassign
         renderedSize -= overflowedItem.size;
         overflowedItems.push({
           ...overflowedItem,

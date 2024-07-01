@@ -62,7 +62,7 @@ export const useListHeight = ({
 
     // list height will be undefined if the item height can not be
     // converted to a number, for example rem or a percentage string
-    return isNaN(result) ? undefined : result;
+    return Number.isNaN(result) ? undefined : result;
   }, [
     borderless,
     displayedItemCount,

@@ -45,19 +45,17 @@ export const CustomFilter = () => {
   };
 
   const saveState = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-    (window as any).filterState = api!.getFilterModel();
+    (window as any).filterState = api?.getFilterModel();
     setHasSavedState(false);
   };
 
   const restoreState = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
-    api!.setFilterModel((window as any).filterState);
+    api?.setFilterModel((window as any).filterState);
     setHasSavedState(true);
   };
 
   const clearState = () => {
-    api!.setFilterModel(null);
+    api?.setFilterModel(null);
     setHasSavedState(true);
   };
 

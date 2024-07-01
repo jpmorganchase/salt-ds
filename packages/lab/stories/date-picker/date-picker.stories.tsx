@@ -23,7 +23,7 @@ export default {
 } as Meta<typeof DatePicker>;
 
 const isInvalidDate = (value: string) =>
-  value && isNaN(new Date(value).getDay());
+  value && Number.isNaN(new Date(value).getDay());
 
 const getDateValidationStatus = (value: string | undefined) =>
   value && isInvalidDate(value) ? "error" : undefined;

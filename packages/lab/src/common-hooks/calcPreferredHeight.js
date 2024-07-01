@@ -34,5 +34,5 @@ export const calcPreferredHeight = (props = {}) => {
 
   // list height will be undefined if the item height can not be
   // converted to a number, for example rem or a percentage string
-  return isNaN(preferredHeight) ? undefined : preferredHeight;
+  return Number.isNaN(preferredHeight) ? undefined : preferredHeight;
 };

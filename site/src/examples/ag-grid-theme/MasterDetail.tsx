@@ -13,9 +13,7 @@ export const MasterDetail = (props: AgGridReactProps) => {
 
   const onFirstDataRendered = useCallback(() => {
     requestAnimationFrame(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const node = gridRef.current?.api.getDisplayedRowAtIndex(0);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       node?.setExpanded(true);
     });
   }, []);

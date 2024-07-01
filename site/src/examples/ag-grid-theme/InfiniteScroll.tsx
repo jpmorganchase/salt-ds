@@ -15,7 +15,7 @@ const generateData = function generateData<T extends { name: string }>(
       const o = { ...row, name: `${row.name} ${i}` };
       data.push(o);
     }
-    return [...result, ...data];
+    return result.concat(data);
   }, [] as T[]);
 };
 
@@ -28,7 +28,7 @@ export const InfiniteScroll = (props: AgGridReactProps) => {
 
   useEffect(() => {
     if (isGridReady) {
-      api!.setGridOption("datasource", {
+      api?.setGridOption("datasource", {
         getRows: ({ startRow, endRow, successCallback }) => {
           setTimeout(() => {
             successCallback(
@@ -56,11 +56,8 @@ export const InfiniteScroll = (props: AgGridReactProps) => {
 };
 
 const infiniteScrollComponents = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loadingRenderer(params: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  loadingRenderer(params: { value: unknown }) {
     if (params.value !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
       return params.value;
     }
     return <Spinner size="default" />;

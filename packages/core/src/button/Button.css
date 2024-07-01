@@ -124,8 +124,7 @@
 /* Pseudo-class applied to the root element if disabled={true} */
 .saltButton:disabled,
 .saltButton-disabled,
-/* Overrides to apply the disabled style when the button is focusable while also disabled */
-  .saltButton-disabled:active,
+.saltButton-disabled:active,
 .saltButton-disabled:focus-visible,
 .saltButton-disabled:hover {
   background: var(--saltButton-background-disabled, var(--button-background-disabled));

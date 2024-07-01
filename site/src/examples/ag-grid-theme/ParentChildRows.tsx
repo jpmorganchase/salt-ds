@@ -16,9 +16,7 @@ export const ParentChildRows = (props: AgGridReactProps) => {
         {...agGridProps}
         {...props}
         columnDefs={parentChildColumns}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getDataPath={(data: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
+        getDataPath={(data) => {
           return data.orgHierarchy;
         }}
         groupDefaultExpanded={-1}

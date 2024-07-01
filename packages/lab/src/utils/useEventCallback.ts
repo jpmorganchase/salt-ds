@@ -13,7 +13,7 @@ export function useEventCallback<Args extends unknown[], Return>(
   });
   return useCallback(
     (...args: Args) =>
-      // tslint:disable-next-line:ban-comma-operator
+      // biome-ignore lint/style/noCommaOperator: This is a valid use case for the comma operator
       (void 0, ref.current)(...args),
     [],
   );

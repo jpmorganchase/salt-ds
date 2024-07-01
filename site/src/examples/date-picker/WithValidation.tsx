@@ -8,7 +8,7 @@ import { DatePicker } from "@salt-ds/lab";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
 const isInvalidDate = (value: string) =>
-  value && isNaN(new Date(value).getDay());
+  value && Number.isNaN(new Date(value).getDay());
 const getDateValidationStatus = (value: string | undefined) =>
   value && isInvalidDate(value) ? "error" : undefined;
 export const WithValidation = (): ReactElement => {

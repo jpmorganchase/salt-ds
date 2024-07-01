@@ -118,17 +118,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
     () =>
       forwardRef<HTMLDivElement, RootComponentProps>(
         function FloatingUIComponent(
-          {
-            style,
-            open,
-            top,
-            left,
-            width,
-            height,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            position,
-            ...rest
-          },
+          { style, open, top, left, width, height, position, ...rest },
           ref,
         ) {
           const FloatingRoot = (

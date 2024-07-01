@@ -80,7 +80,7 @@ export function typescriptTurbosnap({
     }
 
     moduleMap[normalizedFilePath].reasons =
-      moduleMap[normalizedFilePath].reasons!.concat(normalizedReasons);
+      moduleMap[normalizedFilePath].reasons?.concat(normalizedReasons);
   }
 
   const project = new Project({
