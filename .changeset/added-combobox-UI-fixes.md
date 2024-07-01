@@ -2,6 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Updated background color prop of Validation status `PillInput` to reflect the color of the status.
-
-Updated status adornment for Validation status `PillInput` to be visible for `readonly` state.
+Updated `ComboBox` to show validation status when it's in a read-only state.
