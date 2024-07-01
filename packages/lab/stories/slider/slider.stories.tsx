@@ -70,16 +70,10 @@ export const WithInput = () => {
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
+      <FlexLayout gap={1}>
         <Input
-          placeholder={`${value}`}
-          style={{ width: "1px", margin: "5px" }}
+          value={`${value}`}
+          style={{ width: "10px" }}
           onChange={handleInputChange}
         />
         <Slider
@@ -90,7 +84,7 @@ export const WithInput = () => {
           onChange={handleChange}
           aria-label="withInput"
         />
-      </div>
+      </FlexLayout>
     </FormField>
   );
 };
@@ -156,11 +150,11 @@ export const RangeWithInput = () => {
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FormFieldHelperText>Helper text</FormFieldHelperText>
-      <FlexLayout gap={3} align="center">
+      <FlexLayout gap={1} align="center">
         <Input
           placeholder={`${minValue}`}
           value={minValue}
-          style={{ width: "10px", margin: "5px" }}
+          style={{ width: "10px" }}
           onBlur={handleInputBlur}
           onChange={handleMinInputChange}
           onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
