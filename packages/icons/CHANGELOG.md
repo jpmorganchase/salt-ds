@@ -1,5 +1,11 @@
 # @salt-ds/icons
 
+## 1.12.1
+
+### Patch Changes
+
+- 89c26bc: Fixed Icon as CSS background not working when another className is in front. Closes #3583.
+
 ## 1.12.0
 
 ### Minor Changes

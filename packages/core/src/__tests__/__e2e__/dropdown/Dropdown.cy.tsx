@@ -17,6 +17,7 @@ const {
   CustomValue,
   WithDefaultSelected,
   ObjectValue,
+  LongList,
 } = composeStories(dropdownStories);
 
 describe("Given a Dropdown", () => {
@@ -175,7 +176,7 @@ describe("Given a Dropdown", () => {
   });
 
   it("should support keyboard navigation", () => {
-    cy.mount(<Default />);
+    cy.mount(<LongList />);
 
     cy.findByRole("combobox").realClick();
     cy.findByRole("listbox").should("exist");
@@ -188,20 +189,20 @@ describe("Given a Dropdown", () => {
     cy.realPress(["ArrowDown"]);
     cy.findAllByRole("option").eq(1).should("be.activeDescendant");
 
-    // should try to go down 10, but only 9 items in list
+    // should try to go down by the number of visible items in list
     cy.realPress(["PageDown"]);
+    cy.findAllByRole("option").eq(14).should("be.activeDescendant");
+
+    // should try to go up by the number of visible items in list
+    cy.realPress(["PageUp"]);
+    cy.findAllByRole("option").eq(1).should("be.activeDescendant");
+
+    // should go to the last item
+    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     // should not wrap
     cy.realPress(["ArrowDown"]);
-    cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
-
-    // should try to go up 10, but only 9 items in list
-    cy.realPress(["PageUp"]);
-    cy.findAllByRole("option").eq(0).should("be.activeDescendant");
-
-    // should go to the last item
-    cy.realPress(["End"]);
     cy.findAllByRole("option").eq(-1).should("be.activeDescendant");
 
     cy.realPress(["ArrowUp"]);
@@ -281,6 +282,9 @@ describe("Given a Dropdown", () => {
       "true"
     );
     cy.realType("California");
+    cy.findByRole("option", { name: "California" }).should(
+      "be.activeDescendant"
+    );
     cy.realPress("Enter");
     cy.get("@selectionChange").should("not.have.been.called");
     cy.findByRole("option", { name: "California" }).realClick();
@@ -429,6 +433,27 @@ describe("Given a Dropdown", () => {
   it("should show a placeholder when the value is empty", () => {
     cy.mount(<Dropdown placeholder="Placeholder" value="" />);
     cy.findByRole("combobox").should("have.text", "Placeholder");
+  });
+
+  it("should support typeahead", () => {
+    cy.mount(<Default />);
+    cy.realPress("Tab");
+    cy.realType("A");
+    cy.findByRole("listbox").should("exist");
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+
+    cy.realType("A");
+    cy.findByRole("option", { name: "Arizona" }).should("be.activeDescendant");
+
+    cy.wait(500);
+
+    cy.realType("Co");
+    cy.findByRole("option", { name: "Connecticut" }).should(
+      "be.activeDescendant"
+    );
   });
 
   it("should render the custom floating component", () => {

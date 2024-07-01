@@ -24,6 +24,7 @@ export interface ListControlContextValue<Item> {
   multiselect: boolean;
   focusVisibleState: boolean;
   valueToString: (item: Item) => string;
+  disabled?: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Need to use any here as a winder type but it gets narrowed when using the useListControl hook.
@@ -48,6 +49,7 @@ export const ListControlContext = createContext<ListControlContextValue<any>>(
     multiselect: false,
     focusVisibleState: false,
     valueToString: defaultValueToString,
+    disabled: false,
   }
 );
 

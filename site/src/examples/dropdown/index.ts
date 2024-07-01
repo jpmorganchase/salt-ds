@@ -13,3 +13,4 @@ export * from "./Variants";
 export * from "./WithFormField";
 export * from "./ObjectValues";
 export * from "./SelectAll";
+export * from "./Bordered";

@@ -19,6 +19,10 @@ export interface AccordionProps extends ComponentPropsWithoutRef<"div"> {
    */
   defaultExpanded?: boolean;
   /**
+   * Side to align the Accordion's indicator. Defaults to `left`.
+   */
+  indicatorSide?: "left" | "right";
+  /**
    * Callback fired when the accordion is toggled.
    */
   onToggle?: (event: SyntheticEvent<HTMLButtonElement>) => void;
@@ -41,6 +45,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       defaultExpanded,
       expanded: expandedProp,
       disabled,
+      indicatorSide = "left",
       id: idProp,
       onToggle,
       status,
@@ -74,6 +79,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           value,
           toggle,
           expanded,
+          indicatorSide,
           disabled: Boolean(disabled),
           id: id ?? "",
           status,

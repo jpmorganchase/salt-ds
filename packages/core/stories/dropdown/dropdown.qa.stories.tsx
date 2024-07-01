@@ -73,9 +73,66 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
       </Dropdown>
       <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
+    <FormField>
+      <FormFieldLabel>Bordered example</FormFieldLabel>
+      <Dropdown bordered>
+        {usStateExampleData.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Bordered Validation Error example</FormFieldLabel>
+      <Dropdown bordered validationStatus="error">
+        {usStateExampleData.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Bordered Validation Warning example</FormFieldLabel>
+      <Dropdown bordered validationStatus="warning">
+        {usStateExampleData.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Bordered Validation Success example</FormFieldLabel>
+      <Dropdown bordered validationStatus="success">
+        {usStateExampleData.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </Dropdown>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
   </QAContainer>
 );
 
 ClosedExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disabled",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };

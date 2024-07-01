@@ -12,12 +12,9 @@ import {
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import {
-  CountryCode,
-  countryMetaMap,
-  LazyCountrySymbol,
-} from "@salt-ds/countries";
-import { ChangeEvent, Suspense, SyntheticEvent, useState } from "react";
+import { CountryCode, countryMetaMap } from "@salt-ds/countries";
+import "@salt-ds/countries/saltCountries.css";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {
@@ -576,9 +573,7 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
         <OptionGroup label={firstLetter} key={firstLetter}>
           {options.map((country) => (
             <Option value={country.countryCode} key={country.countryCode}>
-              <Suspense fallback="">
-                <LazyCountrySymbol aria-hidden code={country.countryCode} />
-              </Suspense>
+              <div className={`saltCountry-${country.countryCode}`} />
               {country.countryName}
             </Option>
           ))}
@@ -589,7 +584,9 @@ export const LongList: StoryFn<ComboBoxProps<CountryCode>> = (args) => {
 };
 
 export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
-  const [value, setValue] = useState(args.defaultValue?.toString() ?? "");
+  const [value, setValue] = useState(
+    args.defaultValue?.toString() ?? "Yelloww"
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     // React 16 backwards compatibility

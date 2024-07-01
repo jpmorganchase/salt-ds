@@ -20,14 +20,16 @@ Tag has two variants: primary and secondary. The primary variant is set by defau
 
 ## Bordered
 
-To add a border, simply pass the `bordered` prop to the component.
+To add a border to tag, simply pass the `bordered` prop to the component.
+
+Secondary tags have the ability to theme the border, although the border is not visible by default in the Salt theme.
 
 </LivePreview>
 <LivePreview componentName="tag" exampleName="WithIcon">
 
 ## With icon
 
-Display icons inside a tag by passing an icon as children to visually reinforce its content for quick recognition.
+Use an icon inside a tag to visually reinforce its content for quick recognition. Icons should be displayed before the label.
 
 </LivePreview>
 <LivePreview componentName="tag" exampleName="Categories">
@@ -41,6 +43,13 @@ Note that if a category outside the range is passed, the styles will default to 
 ### Best practices
 
 - Be consistent when assigning categories. For example, avoid assigning two different categories to the same piece of metadata.
+
+</LivePreview> 
+<LivePreview componentName="tag" exampleName="TagInCard">
+
+## Tag in card
+
+When using more than one tag next to each other, for example in a Card, apply `--salt-spacing-50` between them.
 
 </LivePreview> 
 </LivePreviewControls>
