@@ -82,6 +82,10 @@
   display: block;
 }
 
+.saltSliderThumb-container:hover .saltSliderThumb-tooltip {
+  display: block;
+}
+
 .saltSliderThumb {
   position: relative;
   width: var(--salt-size-indicator);
