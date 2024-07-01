@@ -1,20 +1,2 @@
 .saltOverlayPanelCloseButton {
-  position: absolute;
-  right: 0;
-  z-index: 1;
-}
-
-.saltOverlayPanelCloseButton-button.saltButton-secondary {
-  position: sticky;
-  right: 0;
-  top: 0;
-}
-
-.saltOverlayPanelCloseButton ~ .saltOverlayPanelContent {
-  /* (button-padding * 2) + button-icon-size + (button-borderWidth * 2) */
-  --overlayPanelCloseButton-width: calc(
-    (var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--salt-size-border, 0)))) * 2) + var(--salt-size-icon) +
-      (var(--saltButton-borderWidth, var(--salt-size-border, 0)) * 2)
-  );
-  margin-right: var(--overlayPanelCloseButton-width);
 }
