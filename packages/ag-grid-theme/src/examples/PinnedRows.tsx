@@ -20,8 +20,7 @@ export const aggregates = {
 const fields = <T,>(fieldName: keyof T, rows: T[]) =>
   rows.map((row) => row[fieldName]);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const headerRow: any[] = [
+const headerRow: AgGridReactProps["pinnedTopRowData"] = [
   {
     name: "Top",
     code: "Top",
@@ -49,7 +48,9 @@ const PinnedRowsExample = function PinnedRowsExample({
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   const getColumnData = () => {
-    return fields(aggregateColumn, rowData!).filter(
+    if (!rowData) return [];
+
+    return fields(aggregateColumn, rowData).filter(
       (field) => typeof field === "number",
     ) as number[];
   };

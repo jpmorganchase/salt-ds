@@ -75,7 +75,7 @@ export function useActivationIndicator({
       }
       return {};
     },
-    [orientation, rootRef],
+    [rootRef, getTabPos],
   );
 
   const onResize = useCallback(() => {
@@ -99,7 +99,8 @@ export function useActivationIndicator({
         const tabEl = document.getElementById(tabId);
         const { hasChanged, ...newStyle } = createIndicatorStyle(tabEl);
         if (hasChanged) {
-          setStyle((styleRef.current = newStyle));
+          styleRef.current = newStyle;
+          setStyle(newStyle);
         }
       }, 50);
     }

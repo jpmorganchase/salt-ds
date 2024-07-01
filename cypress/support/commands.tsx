@@ -16,8 +16,6 @@ type SupportedDensity = (typeof SupportedDensityValues)[number];
 // Must be declared global to be detected by typescript (allows import/export)
 declare global {
   namespace Cypress {
-    // unsure why this Subject is unused, nor what to do with it...
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
       /**
        * Set Theme Mode

@@ -71,7 +71,6 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               !disabled
             ) {
               event.preventDefault();
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars -- view is unused.
               const { view, ...eventInit } = event;
               queueMicrotask(() => {
                 element.dispatchEvent(

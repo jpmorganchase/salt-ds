@@ -14,7 +14,7 @@ import { type Dispatch, type MutableRefObject, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../index";
 import { useEventCallback } from "./useEventCallback";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: third-party code
 type SetValueAction<S> = (prev: S) => Generator<any, void, unknown>;
 
 // This hook works like `useState`, but when setting the value, you pass a generator function

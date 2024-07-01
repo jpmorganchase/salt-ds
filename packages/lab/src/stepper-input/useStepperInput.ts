@@ -125,7 +125,7 @@ export const useStepperInput = (
     if (nextValue > max) nextValue = max;
 
     const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-    if (isNaN(toFloat(roundedValue))) return;
+    if (Number.isNaN(toFloat(roundedValue))) return;
 
     if (!isControlled) {
       setCurrentValue(roundedValue);

@@ -64,8 +64,7 @@ HeaderTooltip.play = async ({ canvasElement }) => {
   for (const cell of headerCells) {
     const gridRoot: HTMLElement = cell.closest(".ag-root-wrapper")!;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unnecessary-type-assertion
-    (cell.closest(".ag-header-cell")! as HTMLElement).focus();
+    cell.closest<HTMLElement>(".ag-header-cell")?.focus();
 
     // Snapshot the tooltip, mainly ensuring bg color match
     await expect(

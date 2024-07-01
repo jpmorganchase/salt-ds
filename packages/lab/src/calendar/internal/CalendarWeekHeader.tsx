@@ -34,7 +34,7 @@ export const CalendarWeekHeader = forwardRef<
     >
       {weekdaysShort.map((day, index) => (
         <small
-          aria-hidden="true"
+          aria-hidden
           key={weekdaysLong[index]}
           className={withBaseName("dayOfWeek")}
         >

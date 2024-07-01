@@ -114,7 +114,7 @@ export function useTooltip(props?: UseTooltipProps) {
   };
 
   const getTooltipProps = (): HTMLProps<HTMLDivElement> => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- tabIndex raises false positives because it is set to "-1".
+    // tabIndex raises false positives because it is set to "-1".
     const { tabIndex, ...tooltipProps } = getFloatingProps({
       // @ts-expect-error - `data-*` props need extra typing when not used on a DOM element.
       "data-placement": placement,

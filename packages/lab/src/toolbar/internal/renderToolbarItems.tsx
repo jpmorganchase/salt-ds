@@ -26,7 +26,7 @@ interface ToolbarElementProps
 
 export const renderToolbarItems = (
   collectionHook: OverflowCollectionHookResult,
-  overflowedItems: OverflowItem[] = [],
+  overflowedItems: OverflowItem[],
   orientation: orientationType,
 ): JSX.Element[] => {
   let centerAlign = false;
@@ -88,7 +88,7 @@ export const renderToolbarItems = (
         return React.cloneElement(item.element, toolbarItemProps);
       }
       switch (item.element.type) {
-        case ToolbarField:
+        case ToolbarField: {
           const props = item.element.props as ToolbarFieldProps;
           return React.cloneElement(item.element, {
             ...toolbarItemProps,
@@ -97,7 +97,8 @@ export const renderToolbarItems = (
               id: `toolbar-control-${item.id}`,
             }),
           } as ToolbarFieldProps);
-        default:
+        }
+        default: {
           const [responsiveProps, componentProps] =
             liftResponsivePropsToFormField(item.element.props);
 
@@ -110,6 +111,7 @@ export const renderToolbarItems = (
               })}
             </ToolbarField>
           );
+        }
       }
     });
 };

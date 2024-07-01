@@ -72,12 +72,12 @@ export function useListItem<Item>(
     ...restProps
   } = props;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: JSON.stringify is used to compare objects
   const style = useMemo(
     () => ({
       height: itemHeight,
       ...styleProp,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [itemHeight, JSON.stringify(styleProp)],
   );
 
@@ -148,7 +148,7 @@ export function useListItem<Item>(
       highlighted,
       itemTextHighlightPattern,
       focusVisible: focusVisible && highlighted,
-      tooltipText: itemToString(item!),
+      tooltipText: item ? itemToString(item) : undefined,
       ...ariaProps,
       ...restProps,
       ...(disabled ? {} : eventHandlers),

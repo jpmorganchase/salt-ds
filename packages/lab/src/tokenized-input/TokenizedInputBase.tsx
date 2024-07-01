@@ -88,7 +88,7 @@ const getItemsAriaLabel = (itemCount: number) =>
     ? "no item selected"
     : `${itemCount} ${itemCount > 1 ? "items" : "item"}`;
 
-const hasHelpers = (helpers: any) => {
+function hasHelpers<Item>(helpers: TokenizedInputHelpers<Item>) {
   if (process.env.NODE_ENV !== "production") {
     if (helpers == null) {
       console.warn(
@@ -97,7 +97,7 @@ const hasHelpers = (helpers: any) => {
     }
   }
   return helpers != null;
-};
+}
 
 export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   props: TokenizedInputBaseProps<Item>,

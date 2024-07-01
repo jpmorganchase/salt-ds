@@ -11,6 +11,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  Children,
   type ComponentPropsWithoutRef,
   type FocusEvent,
   type ForwardedRef,
@@ -20,7 +21,6 @@ import {
   forwardRef,
   useEffect,
   useRef,
-  Children,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { ListControlContext } from "../list-control/ListControlContext";

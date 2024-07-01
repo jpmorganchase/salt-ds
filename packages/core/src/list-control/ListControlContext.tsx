@@ -27,7 +27,7 @@ export interface ListControlContextValue<Item> {
   disabled?: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Need to use any here as a winder type but it gets narrowed when using the useListControl hook.
+// biome-ignore lint/suspicious/noExplicitAny: Need to use any here as a wider type but it gets narrowed when using the useListControl hook.
 export const ListControlContext = createContext<ListControlContextValue<any>>(
   "ListControlContext",
   {

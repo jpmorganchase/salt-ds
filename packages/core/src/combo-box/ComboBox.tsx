@@ -12,6 +12,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
+  Children,
   type FocusEvent,
   type ForwardedRef,
   type KeyboardEvent,
@@ -22,7 +23,6 @@ import {
   forwardRef,
   useEffect,
   useRef,
-  Children,
 } from "react";
 import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";

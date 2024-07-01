@@ -5,7 +5,7 @@ const MockControl = ({ ...rest }: any) => {
 
   return (
     <div
-      tabIndex={1}
+      tabIndex={0}
       {...rest}
       {...FormFieldLegacyProps.a11yProps}
       id="child-component"

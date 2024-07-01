@@ -12,10 +12,8 @@ const ContextMenu = (props: AgGridReactProps) => {
   const getContextMenuItems = (params: GetContextMenuItemsParams) => {
     const result = [
       {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         name: `Alert ${params.value}`,
         action() {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           window.alert(`Alerting about ${params.value}`);
         },
         cssClasses: ["redFont", "bold"],
@@ -115,7 +113,7 @@ const ContextMenu = (props: AgGridReactProps) => {
         action() {
           console.log("Windows Item Selected");
         },
-        icon: `<img src='${windows}' />`,
+        icon: `<img src='${windows}' alt="" />`,
       },
       {
         name: "Mac",
@@ -123,7 +121,7 @@ const ContextMenu = (props: AgGridReactProps) => {
         action() {
           console.log("Mac Item Selected");
         },
-        icon: `<img src='${mac}' />`,
+        icon: `<img src='${mac}' alt="" />`,
       },
       "separator",
       {
@@ -132,7 +130,7 @@ const ContextMenu = (props: AgGridReactProps) => {
         action() {
           console.log("Checked Selected");
         },
-        icon: `<img src='${windows}' />`,
+        icon: `<img src='${windows}' alt="" />`,
       },
       "copy",
     ];

@@ -40,7 +40,7 @@ import dateInputCss from "./DateInput.css";
 
 const withBaseName = makePrefixer("saltDateInput");
 const isInvalidDate = (value: string) =>
-  value && isNaN(new Date(value).getDay());
+  value && Number.isNaN(new Date(value).getDay());
 const createDate = (date: string): Date | null => {
   if (!date || isInvalidDate(date)) {
     return null;

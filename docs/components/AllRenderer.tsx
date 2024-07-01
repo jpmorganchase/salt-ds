@@ -25,9 +25,9 @@ export const AllRenderer = ({
 }): JSX.Element => {
   return (
     <DocGrid className={className}>
-      {DensityValues.map((d, i) => {
+      {DensityValues.map((d) => {
         return (
-          <Fragment key={i}>
+          <Fragment key={d}>
             <SaltProvider
               density={d}
               mode="light"

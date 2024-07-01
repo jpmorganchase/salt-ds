@@ -70,7 +70,6 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
         mq.removeEventListener("change", handler);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supportsMatchMedia]);
 
   return Object.keys(matchedBreakpoints).filter(

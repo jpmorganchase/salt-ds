@@ -42,7 +42,7 @@ const Content = () => {
     (type: interval) => {
       const value = type === "delay" ? delay : debounce;
       const maybeNumber = Number.parseInt(value, 10);
-      return isNaN(maybeNumber) ? undefined : maybeNumber;
+      return Number.isNaN(maybeNumber) ? undefined : maybeNumber;
     },
     [debounce, delay],
   );

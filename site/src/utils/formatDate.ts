@@ -1,5 +1,5 @@
 export const formatDate = (date: Date): string => {
-  if (isNaN(date.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return "Not yet defined";
   }
   const formatter = new Intl.DateTimeFormat(undefined, {

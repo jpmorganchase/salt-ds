@@ -43,7 +43,6 @@ export function useTypeSelect(options) {
     timeout: null,
   }).current;
 
-  // eslint-disable-next-line complexity
   const onKeyDownCapture = (event) => {
     const character = getStringForKey(event.key);
     if (!character || event.ctrlKey || event.metaKey) {

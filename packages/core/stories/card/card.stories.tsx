@@ -136,8 +136,8 @@ export const Variants: StoryFn<typeof Card> = (args) => {
     <StackLayout style={{ width: 600 }}>
       {variants.map((variant) => {
         return (
-          <StackLayout align="end" key={variants}>
-            <StackLayout direction="row" key={variant}>
+          <StackLayout align="end" key={variant}>
+            <StackLayout direction="row">
               <Card {...args} variant={variant}>
                 <StackLayout gap={1}>
                   <H3>Sustainable investing products</H3>

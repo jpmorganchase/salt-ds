@@ -17,7 +17,7 @@ describe("GIVEN a Drawer", () => {
       cy.findByRole("dialog").should("be.visible");
 
       cy.get("@consoleSpy").then((spy) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: Cypress types
         const callCount = (spy as any).callCount;
 
         cy.findByRole("button", { name: "Close Drawer" }).click();

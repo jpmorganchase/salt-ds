@@ -6,7 +6,6 @@ export function listItemIndex(listItemEl?: HTMLElement) {
     let idx: string | null | undefined = listItemEl.dataset.idx;
     if (idx) {
       return Number.parseInt(idx, 10);
-      // eslint-disable-next-line no-cond-assign
     }
     if ((idx = listItemEl.ariaPosInSet)) {
       return Number.parseInt(idx, 10) - 1;

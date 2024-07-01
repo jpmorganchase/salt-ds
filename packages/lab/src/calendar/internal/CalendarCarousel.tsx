@@ -48,6 +48,7 @@ export const CalendarCarousel = forwardRef<
 
   const [months, setMonths] = useState(() => getMonths(visibleMonth));
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: uses formatData to change visibleMonth into string
   useEffect(() => {
     setMonths((oldMonths) => {
       const newMonths = getMonths(visibleMonth).filter((month) => {
@@ -58,7 +59,7 @@ export const CalendarCarousel = forwardRef<
     });
     setMonths(getMonths(visibleMonth));
     return undefined;
-  }, [formatDate(visibleMonth)]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [formatDate(visibleMonth)]);
 
   return (
     <div

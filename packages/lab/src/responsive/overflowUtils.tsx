@@ -137,7 +137,7 @@ export function measureElementSize(
     const flexBasis = Number.parseInt(style.getPropertyValue("flex-basis"), 10);
     // TODO should we consider percentage values ?
     // TODO are we still using flexBasis ?
-    if (!isNaN(flexBasis) && flexBasis > 0) {
+    if (!Number.isNaN(flexBasis) && flexBasis > 0) {
       minWidth = flexBasis;
     }
   }

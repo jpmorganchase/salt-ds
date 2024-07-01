@@ -6,7 +6,6 @@ import { TableWrapper } from "./TableWrapper";
 import { getClassNames } from "./utils";
 
 export function CSSClassTable(props: { of: Of }): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { of } = props;
 
   const resolved = useOf(of);
