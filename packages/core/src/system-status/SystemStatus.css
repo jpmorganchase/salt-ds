@@ -1,0 +1,48 @@
+/* Styles applied to root component */
+.saltSystemStatus {
+  --saltIcon-color: var(--salt-content-bold-foreground);
+
+  background: var(--saltSystemStatus-background, var(--systemStatus-background));
+  border-color: var(--saltSystemStatus-borderColor, var(--systemStatus-borderColor));
+  border-width: var(--saltSystemStatus-borderWidth, var(--salt-size-border));
+  border-style: var(--saltSystemStatus-borderStyle, var(--salt-container-borderStyle));
+  box-sizing: border-box;
+  display: inline-flex;
+  gap: var(--salt-spacing-75);
+  padding: var(--saltSystemStatus-padding, var(--salt-spacing-50) var(--salt-spacing-100));
+  width: 100%;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  line-height: var(--salt-text-lineHeight);
+}
+
+/* Styles applied to icon */
+.saltSystemStatus-icon.saltIcon {
+  min-height: var(--salt-size-base);
+}
+
+/* Styles applied when state = "info" */
+.saltSystemStatus-info {
+  --systemStatus-borderColor: var(--salt-status-info-bold-background);
+  --systemStatus-background: var(--salt-status-info-bold-background);
+}
+
+/* Styles applied when state = "error" */
+.saltSystemStatus-error {
+  --systemStatus-borderColor: var(--salt-status-error-bold-background);
+  --systemStatus-background: var(--salt-status-error-bold-background);
+}
+
+/* Styles applied when state = "warning" */
+.saltSystemStatus-warning {
+  --systemStatus-borderColor: var(--salt-status-warning-bold-background);
+  --systemStatus-background: var(--salt-status-warning-bold-background);
+}
+
+/* Styles applied when state = "success" */
+.saltSystemStatus-success {
+  --systemStatus-borderColor: var(--salt-status-success-bold-background);
+  --systemStatus-background: var(--salt-status-success-bold-background);
+}

@@ -1,0 +1,15 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Use the aria-live="assertive" attribute for error messages to ensure they are announced immediately, interrupting any ongoing speech to alert the user to critical issues requiring immediate attention.
+
+- Use the aria-live="polite" attribute for informational and warning messages, allowing the screen reader to announce these messages at the next available pause, ensuring the user is informed without disrupting their current task.
