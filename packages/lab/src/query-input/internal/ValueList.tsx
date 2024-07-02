@@ -1,9 +1,9 @@
-import { QueryInputCategory } from "../queryInputTypes";
-import { Dispatch, ReactElement, SetStateAction } from "react";
 import { makePrefixer } from "@salt-ds/core";
 import { ChevronLeftIcon } from "@salt-ds/icons";
+import type { Dispatch, ReactElement, SetStateAction } from "react";
+import type { SelectHandler } from "../../common-hooks";
 import { List, ListItem } from "../../list";
-import { SelectHandler } from "../../common-hooks";
+import type { QueryInputCategory } from "../queryInputTypes";
 
 const withBaseName = makePrefixer("saltQueryInputValueList");
 

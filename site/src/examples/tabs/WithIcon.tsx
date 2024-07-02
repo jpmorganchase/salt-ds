@@ -1,5 +1,3 @@
-import { ReactElement, ComponentType } from "react";
-import { TabstripNext, TabNext } from "@salt-ds/lab";
 import {
   BankCheckIcon,
   CreditCardIcon,
@@ -7,6 +5,8 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
+import { TabNext, TabstripNext } from "@salt-ds/lab";
+import type { ComponentType, ReactElement } from "react";
 
 export const WithIcon = (): ReactElement => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];

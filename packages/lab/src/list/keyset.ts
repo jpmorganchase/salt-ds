@@ -15,9 +15,8 @@ export class KeySet {
   next(): number {
     if (this.free.length) {
       return this.free.pop()!;
-    } else {
-      return this.nextKeyValue++;
     }
+    return this.nextKeyValue++;
   }
 
   reset(from: number, to: number) {

@@ -1,5 +1,5 @@
 import { Button, SaltProvider } from "@salt-ds/core";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Style Injection",

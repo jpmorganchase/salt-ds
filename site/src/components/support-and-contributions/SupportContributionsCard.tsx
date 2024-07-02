@@ -1,13 +1,13 @@
-import { ForwardRefExoticComponent, RefAttributes } from "react";
 import { GridItem } from "@salt-ds/core";
 import {
   DiamondIcon,
   DocumentIcon,
   FlagIcon,
+  type IconProps,
   MessageIcon,
-  IconProps,
 } from "@salt-ds/icons";
-import { Card, CardProps } from "../card";
+import type { ForwardRefExoticComponent, RefAttributes } from "react";
+import { Card, type CardProps } from "../card";
 
 type IconType = ForwardRefExoticComponent<
   IconProps & RefAttributes<SVGSVGElement>

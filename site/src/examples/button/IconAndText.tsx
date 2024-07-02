@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
 import { Button } from "@salt-ds/core";
 import { RefreshIcon, SearchIcon, SendIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const IconAndText = (): ReactElement => (
   <>

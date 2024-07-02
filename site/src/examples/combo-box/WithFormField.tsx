@@ -1,11 +1,16 @@
-import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import {
+  ComboBox,
+  FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  FormField,
-  ComboBox,
   Option,
 } from "@salt-ds/core";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
 import { shortColorData } from "./exampleData";
 
 export const WithFormField = (): ReactElement => {
@@ -18,7 +23,7 @@ export const WithFormField = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     if (newSelected.length === 1) {
       setValue(newSelected[0]);
@@ -37,7 +42,7 @@ export const WithFormField = (): ReactElement => {
       >
         {shortColorData
           .filter((color) =>
-            color.toLowerCase().includes(value.trim().toLowerCase())
+            color.toLowerCase().includes(value.trim().toLowerCase()),
           )
           .map((color) => (
             <Option value={color} key={color} />

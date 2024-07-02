@@ -1,5 +1,3 @@
-import { ChangeEvent, useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   FormField,
   FormFieldHelperText,
@@ -8,6 +6,8 @@ import {
   StackLayout,
   Switch,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Core/Switch",

@@ -2,11 +2,11 @@ import { saltColorMap } from "./colorMap";
 
 export function makePalette(
   colorScheme: string,
-  saltColorOverrides?: Record<string, string>
+  saltColorOverrides?: Record<string, string>,
 ): string[] {
   //Doesn't matter which theme you use here as the color names are the same
   const colorNames = Array.from(
-    Object.keys(saltColorOverrides ?? saltColorMap)
+    Object.keys(saltColorOverrides ?? saltColorMap),
   );
 
   const colorArray: string[] = [];
@@ -15,7 +15,7 @@ export function makePalette(
       colorArray.push(
         saltColorOverrides
           ? saltColorOverrides[colorName]
-          : saltColorMap[colorName]
+          : saltColorMap[colorName],
       );
     }
   }
@@ -38,7 +38,7 @@ const grayPalette = (saltColorOverrides?: Record<string, string>) =>
   makePalette("gray", saltColorOverrides);
 
 export function getColorPalettes(
-  saltColorOverrides?: Record<string, string>
+  saltColorOverrides?: Record<string, string>,
 ): string[][] {
   return [
     bluePalette(saltColorOverrides).slice(0, 7),

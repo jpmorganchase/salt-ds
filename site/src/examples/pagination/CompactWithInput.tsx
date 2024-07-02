@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Pagination, CompactPaginator, CompactInput } from "@salt-ds/core";
+import { CompactInput, CompactPaginator, Pagination } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const CompactWithInput = (): ReactElement => (
   <Pagination count={20}>

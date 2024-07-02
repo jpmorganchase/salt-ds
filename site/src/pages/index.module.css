@@ -61,7 +61,7 @@
 }
 
 .heroBanner .heroLink:focus-visible,
-.heroBanner .heroLink:focus-visible(:active) {
+.heroBanner .heroLink:focus-visible:active {
   background: var(--button-background);
   color: var(--button-text-color);
 }

@@ -2,11 +2,11 @@ import type { StoryObj } from "@storybook/react";
 import { expect, userEvent, within } from "@storybook/test";
 import { AgGridReact } from "ag-grid-react";
 import {
-  Default,
-  ToolPanel,
   ColumnGroup,
   ContextMenu as ContextMenuGrid,
   CustomFilter,
+  Default,
+  ToolPanel,
 } from "../src/examples";
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -64,12 +64,11 @@ HeaderTooltip.play = async ({ canvasElement }) => {
   for (const cell of headerCells) {
     const gridRoot: HTMLElement = cell.closest(".ag-root-wrapper")!;
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unnecessary-type-assertion
-    (cell.closest(".ag-header-cell")! as HTMLElement).focus();
+    cell.closest<HTMLElement>(".ag-header-cell")?.focus();
 
     // Snapshot the tooltip, mainly ensuring bg color match
     await expect(
-      await within(gridRoot).findByRole("dialog", { name: "Tooltip" })
+      await within(gridRoot).findByRole("dialog", { name: "Tooltip" }),
     ).toBeInTheDocument();
   }
 };
@@ -89,7 +88,7 @@ ColumnMenuGeneral.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!
+        .querySelector(".ag-icon.ag-icon-menu")!,
     );
 
     const dialog = within(gridRoot).getByRole("dialog", {
@@ -97,7 +96,7 @@ ColumnMenuGeneral.play = async ({ canvasElement }) => {
     });
 
     await userEvent.hover(
-      within(dialog).getByRole("treeitem", { name: /Pin Column/i })
+      within(dialog).getByRole("treeitem", { name: /Pin Column/i }),
     );
 
     // snapshot the menu
@@ -120,7 +119,7 @@ ColumnMenuFilter.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!
+        .querySelector(".ag-icon.ag-icon-menu")!,
     );
 
     const dialog = within(gridRoot).getByRole("dialog", {
@@ -156,7 +155,7 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!
+        .querySelector(".ag-icon.ag-icon-menu")!,
     );
 
     const dialog = within(gridRoot).getByRole("dialog", {
@@ -164,7 +163,7 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
     });
 
     await userEvent.click(
-      within(dialog).getByRole("tab", { name: /columns/i })
+      within(dialog).getByRole("tab", { name: /columns/i }),
     );
 
     // snapshot the menu
@@ -187,7 +186,7 @@ ColumnMenuNumberFilter.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!
+        .querySelector(".ag-icon.ag-icon-menu")!,
     );
 
     const dialog = within(gridRoot).getByRole("dialog", {
@@ -199,14 +198,14 @@ ColumnMenuNumberFilter.play = async ({ canvasElement }) => {
     await userEvent.click(
       await within(dialog).findByRole("combobox", {
         name: "Filtering operator",
-      })
+      }),
     );
 
     const dropDown = within(gridRoot).getByRole("listbox", {
       name: "Select Field",
     });
     await userEvent.click(
-      within(dropDown).getByRole("option", { name: "Not blank" })
+      within(dropDown).getByRole("option", { name: "Not blank" }),
     );
 
     // Snapshot radio buttons, which comes from icon in v31
@@ -261,7 +260,7 @@ ContextMenu.play = async ({ canvasElement }) => {
 
     const gridRoot: HTMLElement = cell.closest(".ag-root-wrapper")!;
     await expect(
-      within(gridRoot).getByRole("presentation", { name: "Context Menu" })
+      within(gridRoot).getByRole("presentation", { name: "Context Menu" }),
     ).toBeInTheDocument();
   }
 };

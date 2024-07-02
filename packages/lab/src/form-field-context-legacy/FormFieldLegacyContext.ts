@@ -1,6 +1,11 @@
-import { Dispatch, FocusEventHandler, RefObject, SetStateAction } from "react";
 import { createContext } from "@salt-ds/core";
-import { useA11yValueValue } from "../form-field-legacy";
+import type {
+  Dispatch,
+  FocusEventHandler,
+  RefObject,
+  SetStateAction,
+} from "react";
+import type { useA11yValueValue } from "../form-field-legacy";
 export interface FormFieldLegacyContextValue {
   inFormField: true;
   ref: RefObject<HTMLDivElement>;
@@ -13,5 +18,5 @@ export interface FormFieldLegacyContextValue {
 
 export const FormFieldLegacyContext = createContext(
   "FormFieldContext",
-  {} as FormFieldLegacyContextValue
+  {} as FormFieldLegacyContextValue,
 );

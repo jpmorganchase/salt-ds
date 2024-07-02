@@ -1,8 +1,8 @@
 import { SaltProvider } from "@salt-ds/core";
-import { ColorChooser, Color } from "@salt-ds/lab";
-import { useState, useCallback } from "react";
+import { Color, ColorChooser } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useCallback, useState } from "react";
 import { customColorMap } from "./custom-color-map";
-import { StoryFn, Meta } from "@storybook/react";
 
 export default {
   title: "Lab/Color Chooser",
@@ -24,7 +24,7 @@ export const Default: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(defaultColor);
@@ -49,7 +49,7 @@ export const WithAlphaDisabled: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(defaultColor);
@@ -75,7 +75,7 @@ export const WithDefaultAlpha: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(undefined);
@@ -101,7 +101,7 @@ export const WithNullDefaultColor: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(undefined);
@@ -120,7 +120,7 @@ export const WithCustomColors: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(undefined);
@@ -146,7 +146,7 @@ export const ReadOnly: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(undefined);
@@ -174,7 +174,7 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: St
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(defaultColor);
@@ -197,7 +197,7 @@ export const JustSwatches: StoryFn<typeof ColorChooser> = () => {
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(defaultColor);
@@ -218,13 +218,13 @@ export const JustSwatches: StoryFn<typeof ColorChooser> = () => {
 export const JustColorPicker: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromRGB(10, 40, 67);
   const [selectedColor, setSelectedColor] = useState<Color | undefined>(
-    defaultColor
+    defaultColor,
   );
   const onSelect = useCallback(
     (color?: Color) => {
       setSelectedColor(color);
     },
-    [setSelectedColor]
+    [setSelectedColor],
   );
   const onClear = () => {
     setSelectedColor(defaultColor);

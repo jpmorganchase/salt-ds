@@ -1,12 +1,12 @@
 import {
   Button,
   Card,
-  Tooltip,
   Overlay,
   OverlayPanel,
-  OverlayTrigger,
-  OverlayPanelContent,
   OverlayPanelCloseButton,
+  OverlayPanelContent,
+  OverlayTrigger,
+  Tooltip,
 } from "@salt-ds/core";
 import {
   CallIcon,
@@ -27,14 +27,14 @@ import {
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
-  ListItem,
-  ListItemType,
-  SelectionChangeHandler,
-  ValueComponentProps,
   FormField,
+  ListItem,
+  type ListItemType,
+  type SelectionChangeHandler,
+  type ValueComponentProps,
 } from "@salt-ds/lab";
-import { StoryFn } from "@storybook/react";
-import { forwardRef, Fragment, ReactNode } from "react";
+import type { StoryFn } from "@storybook/react";
+import { Fragment, type ReactNode, forwardRef } from "react";
 
 import "./contact-details.stories.css";
 
@@ -97,15 +97,15 @@ const MultiLineAddressRenderer = forwardRef<HTMLElement, ValueComponentProps>(
     const { value = "", ...restProps } = props;
     return (
       <span {...restProps} ref={ref}>
-        {value.split("\n").map((v, i) => (
-          <Fragment key={`address-line-${i}`}>
+        {value.split("\n").map((v) => (
+          <Fragment key={v}>
             {v}
             <br />
           </Fragment>
         ))}
       </span>
     );
-  }
+  },
 );
 
 const ObscureEmailRenderer = forwardRef<HTMLElement, ValueComponentProps>(
@@ -116,11 +116,11 @@ const ObscureEmailRenderer = forwardRef<HTMLElement, ValueComponentProps>(
     return (
       <span {...restProps} ref={ref}>
         {`${value.slice(0, 3)}${"x".repeat(indexOfAt - 3)}${value.slice(
-          indexOfAt
+          indexOfAt,
         )}`}
       </span>
     );
-  }
+  },
 );
 
 const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
@@ -133,7 +133,7 @@ const ObscurePhoneNumberRenderer = forwardRef<HTMLElement, ValueComponentProps>(
         {`${"x".repeat(lengthToObscure)}${value.slice(lengthToObscure)}`}
       </span>
     );
-  }
+  },
 );
 
 const contactToString = (nameEmail: NameEmail) =>
@@ -326,11 +326,11 @@ const FavoriteToggleTemplate: StoryFn = () => {
 const FastActionsTemplate: StoryFn = () => {
   const renderAllButActions = () => {
     return [
-      <ContactPrimaryInfo text={personaD.name} />,
-      <ContactAvatar />,
-      <ContactSecondaryInfo text={personaD.role} />,
-      <ContactTertiaryInfo text={personaD.code} />,
-      <ContactMetadata>
+      <ContactPrimaryInfo text={personaD.name} key="name" />,
+      <ContactAvatar key="avatar" />,
+      <ContactSecondaryInfo text={personaD.role} key="role" />,
+      <ContactTertiaryInfo text={personaD.code} key="code" />,
+      <ContactMetadata key="metadata">
         <ContactMetadataItem value={personaD.email} label="Email" />
         <ContactMetadataItem value={personaD.teams[0]} label="Primary" />
         <ContactMetadataItem value={personaD.teams[1]} label="Secondary" />
@@ -454,7 +454,7 @@ const WithinTileTemplate: StoryFn = () => {
   return (
     <>
       {[personaA, personaE, personaF, personaD].map((contact, index) => (
-        <Tile key={index} className="withinTile-tile">
+        <Tile key={contact.name} className="withinTile-tile">
           <ContactDetails embedded={true} variant={"compact"}>
             <ContactPrimaryInfo text={contact.name} />
             <ContactSecondaryInfo text={contact.email} />
@@ -608,7 +608,7 @@ const ExportToFileTemplate: StoryFn = () => {
       `N:${personaA.name}`,
       `TEL;TYPE=WORK,VOICE:${personaA.officePhone}`,
       `EMAIL:${personaA.email}`,
-      `END:VCARD`,
+      "END:VCARD",
     ].join("\n");
 
   const generateCopyText = () =>
@@ -637,7 +637,7 @@ const ExportToFileTemplate: StoryFn = () => {
       },
       () => {
         console.log("Clipboard write failed");
-      }
+      },
     );
   };
 

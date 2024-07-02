@@ -1,22 +1,22 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   Children,
+  type MouseEventHandler,
   cloneElement,
   isValidElement,
-  MouseEventHandler,
 } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { makePrefixer } from "@salt-ds/core";
 
 import { BaseCell } from "../BaseCell";
-import { GridColumnModel, GridRowModel } from "../Grid";
+import type { GridColumnModel, GridRowModel } from "../Grid";
+import type { CellValidationState } from "../GridColumn";
 import { useGridContext } from "../GridContext";
-import { CellValidationState } from "../GridColumn";
 import { RowValidationStatusContext } from "../RowValidationStatus";
 
-import { FakeCell } from "./FakeCell";
 import { DefaultCellValue } from "./DefaultCellValue";
+import { FakeCell } from "./FakeCell";
 
 import tableRowCss from "./TableRow.css";
 
@@ -65,7 +65,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
   const grid = useGridContext();
 
   if (!row.key) {
-    throw new Error(`Invalid row`);
+    throw new Error("Invalid row");
   }
 
   const ariaRowIndex = headerIsFocusable ? row.index + 2 : row.index + 1;
@@ -114,8 +114,7 @@ export function TableRow<T>(props: TableRowProps<T>) {
             ? column.info.props.getValue(row.data)
             : null;
         const isFocused = cursorColIdx === column.index;
-        const isSelected =
-          isCellSelected && isCellSelected(row.index, column.index);
+        const isSelected = isCellSelected?.(row.index, column.index);
         const validationFnArg = {
           row,
           column,

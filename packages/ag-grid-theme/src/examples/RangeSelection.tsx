@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useEffect } from "react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -29,9 +29,7 @@ export const RangeSelection = (props: AgGridReactProps) => {
         enableRangeSelection
         onFirstDataRendered={(params) => {
           params.api.forEachNode((node, index) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (node.data && index < 7 && index > 2) {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
               node.setSelected(true);
             }
           });

@@ -1,10 +1,10 @@
 import { StatusIndicator } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
 
 export default {
@@ -31,7 +31,7 @@ AllVariantsGrid.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection height={500} width={1000} cols={4} {...props}>
     <StatusIndicator status="info" />

@@ -1,5 +1,5 @@
+import type { StoryFn } from "@storybook/react";
 import { useCallback, useState } from "react";
-import { StoryFn } from "@storybook/react";
 
 import { Button, Tooltip } from "@salt-ds/core";
 import {
@@ -10,13 +10,13 @@ import {
 } from "@salt-ds/icons";
 
 import {
-  FormField,
   Dropdown,
   DropdownButton,
-  DropdownProps,
+  type DropdownProps,
+  FormField,
   ListItem,
-  ListItemType,
-  SelectionChangeHandler,
+  type ListItemType,
+  type SelectionChangeHandler,
 } from "@salt-ds/lab";
 import { usa_states } from "../list/list.data";
 
@@ -40,11 +40,11 @@ export const Default: StoryFn<DropdownProps> = (props) => {
 };
 
 export const MultiSelect: StoryFn<DropdownProps<string, "multiple">> = (
-  props
+  props,
 ) => {
   const handleChange: SelectionChangeHandler<string, "multiple"> = (
     _e,
-    items
+    items,
   ) => {
     console.log({ selected: items });
     props.onSelectionChange?.(_e, items);
@@ -73,7 +73,7 @@ const objectOptionsExampleData: objectOptionType[] = [
 ];
 
 export const ItemToString: StoryFn<DropdownProps<objectOptionType>> = (
-  props
+  props,
 ) => {
   const itemToString = (item: objectOptionType) => {
     return item ? item.text : "";
@@ -116,7 +116,7 @@ export const CustomButton: StoryFn<DropdownProps> = (props) => {
           label={selectedValue}
         />
       }
-    ></Dropdown>
+    />
   );
 };
 
@@ -269,13 +269,13 @@ export const FullyControlled: StoryFn<DropdownProps> = (props) => {
 
   const handleArrowDown = () => {
     setHighlightedIndex((prevHighlightedIndex) =>
-      Math.min(usa_states.length - 1, prevHighlightedIndex + 1)
+      Math.min(usa_states.length - 1, prevHighlightedIndex + 1),
     );
   };
 
   const handleArrowUp = () => {
     setHighlightedIndex((prevHighlightedIndex) =>
-      Math.max(0, prevHighlightedIndex - 1)
+      Math.max(0, prevHighlightedIndex - 1),
     );
   };
 

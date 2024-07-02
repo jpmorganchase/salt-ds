@@ -1,7 +1,7 @@
-import { SaltProvider, H3 } from "@salt-ds/core";
-import { Dropdown, FormField, FormFieldProps, Input } from "@salt-ds/lab";
+import { H3, SaltProvider } from "@salt-ds/core";
+import { Dropdown, FormField, type FormFieldProps, Input } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import { usStateExampleData } from "../assets/exampleData";
 
 export default {

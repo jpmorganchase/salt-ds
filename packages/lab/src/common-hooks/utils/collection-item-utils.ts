@@ -1,13 +1,18 @@
-import { isValidElement, Children, ReactElement, ReactNode } from "react";
-
 import {
+  Children,
+  type ReactElement,
+  type ReactNode,
+  isValidElement,
+} from "react";
+
+// TODO how do we configure these
+import { ListItemGroup } from "../../list/ListItemGroup";
+import { ListItemHeader } from "../../list/ListItemHeader";
+import type {
   CollectionItem,
   CollectionOptions,
   SourceGroup,
 } from "../collectionTypes";
-// TODO how do we configure these
-import { ListItemGroup } from "../../list/ListItemGroup";
-import { ListItemHeader } from "../../list/ListItemHeader";
 import { itemToString as defaultItemToString } from "../itemToString";
 
 type NonFocusableElement = ReactElement<{ focusable: false }>;
@@ -16,7 +21,7 @@ type SelectableElement = ReactElement<{ selectable: boolean }>;
 
 export const sourceItemHasProp = (
   item: unknown,
-  propertyName: string
+  propertyName: string,
 ): boolean => {
   return (
     item !== null && Object.prototype.hasOwnProperty.call(item, propertyName)
@@ -57,11 +62,12 @@ export const isFocusable = (item: unknown): boolean => {
 export const countChildItems = <Item>(
   item: CollectionItem<Item>,
   items: CollectionItem<Item>[],
-  idx: number
+  idx: number,
 ): number => {
   if (item.childNodes) {
     return item.childNodes.length;
-  } else if (item.header) {
+  }
+  if (item.header) {
     let i = idx + 1;
     let count = 0;
     while (i < items.length && !items[i].header) {
@@ -69,9 +75,8 @@ export const countChildItems = <Item>(
       i++;
     }
     return count;
-  } else {
-    return 0;
   }
+  return 0;
 };
 
 export const getChildLabel = (
@@ -79,13 +84,15 @@ export const getChildLabel = (
     children?: ReactNode;
     label?: string;
     title?: string;
-  }>
+  }>,
 ): string | undefined => {
   if (typeof element.props.children === "string") {
     return element.props.children;
-  } else if (element.props.title) {
+  }
+  if (element.props.title) {
     return element.props.title;
-  } else if (element.props.label) {
+  }
+  if (element.props.label) {
     return element.props.label;
   }
 };
@@ -99,13 +106,12 @@ export const childIsGroup = (child: ReactElement): boolean =>
 const childIsSelectable = (child: ReactElement) => {
   if (childItemHasProp(child, "selectable")) {
     return (child as SelectableElement).props.selectable === true;
-  } else {
-    return !childIsGroup(child) && !childIsHeader(child);
   }
+  return !childIsGroup(child) && !childIsHeader(child);
 };
 
 export const getChildNodes = (
-  element: ReactElement
+  element: ReactElement,
 ): CollectionItem<ReactElement>[] | undefined => {
   if (childIsGroup(element)) {
     const {
@@ -119,7 +125,7 @@ export const getChildNodes = (
 
 const mapReactElementChildren = (
   children: ReactNode,
-  fn: (el: ReactElement) => CollectionItem<ReactElement>
+  fn: (el: ReactElement) => CollectionItem<ReactElement>,
 ): CollectionItem<ReactElement>[] => {
   const childElements: CollectionItem<ReactElement>[] = [];
   Children.forEach(children, (child) => {
@@ -142,7 +148,7 @@ type CollectionItemWithoutId<T> = Omit<CollectionItem<T>, "id">;
 
 export const sourceItems = <T>(
   source?: ReadonlyArray<T>,
-  options?: CollectionOptions<T>
+  options?: CollectionOptions<T>,
 ): CollectionItemWithoutId<T>[] | undefined => {
   if (Array.isArray(source)) {
     if (source.length === 0 && options?.noChildrenLabel) {
@@ -152,29 +158,29 @@ export const sourceItems = <T>(
           value: null,
         },
       ];
-    } else {
-      return source.map(
-        (item: { description?: string; expanded?: boolean }, index) =>
-          ({
-            childNodes: sourceItems(
-              (item as unknown as SourceGroup<T>).childNodes,
-              options
-            ),
-            description: item.description,
-            expanded: item.expanded,
-            value: item,
-            label:
-              options?.itemToString?.(item as T) ?? defaultItemToString(item),
-          } as CollectionItemWithoutId<T>)
-      );
     }
-  } else if (source) {
+    return source.map(
+      (item: { description?: string; expanded?: boolean }, index) =>
+        ({
+          childNodes: sourceItems(
+            (item as unknown as SourceGroup<T>).childNodes,
+            options,
+          ),
+          description: item.description,
+          expanded: item.expanded,
+          value: item,
+          label:
+            options?.itemToString?.(item as T) ?? defaultItemToString(item),
+        }) as CollectionItemWithoutId<T>,
+    );
+  }
+  if (source) {
     throw Error("list-child-items expects source to be an array");
   }
 };
 
 export const childItems = (
-  children: ReactNode
+  children: ReactNode,
 ): CollectionItem<ReactElement>[] | undefined => {
   if (children) {
     return mapReactElementChildren(children, (child) => {
@@ -212,15 +218,14 @@ const PATH_SEPARATORS = new Set([".", "/"]);
 function isDescendantOf(basePath: string, targetPath: string) {
   if (!targetPath.startsWith(basePath)) {
     return false;
-  } else {
-    return PATH_SEPARATORS.has(targetPath.charAt(basePath.length));
   }
+  return PATH_SEPARATORS.has(targetPath.charAt(basePath.length));
 }
 
 export function replaceCollectionItem<Item>(
   nodes: CollectionItem<Item>[],
   id: string,
-  props: Partial<CollectionItem<Item>>
+  props: Partial<CollectionItem<Item>>,
 ): CollectionItem<Item>[] {
   let childNodes: CollectionItem<Item>[];
   const newNodes: CollectionItem<Item>[] = nodes.map((node) => {
@@ -229,15 +234,15 @@ export function replaceCollectionItem<Item>(
         ...node,
         ...props,
       };
-    } else if (isDescendantOf(node.id, id) && node.childNodes) {
+    }
+    if (isDescendantOf(node.id, id) && node.childNodes) {
       childNodes = replaceCollectionItem<Item>(node.childNodes, id, props);
       return {
         ...node,
         childNodes,
       };
-    } else {
-      return node;
     }
+    return node;
   });
 
   return newNodes;

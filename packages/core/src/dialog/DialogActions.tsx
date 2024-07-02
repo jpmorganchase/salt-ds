@@ -1,8 +1,8 @@
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "../utils";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 
 import dialogActionsCss from "./DialogActions.css";
 
@@ -30,5 +30,5 @@ export const DialogActions = forwardRef<HTMLDivElement, DialogActionsProps>(
         {children}
       </div>
     );
-  }
+  },
 );

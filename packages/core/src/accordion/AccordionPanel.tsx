@@ -1,7 +1,11 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 
 import { makePrefixer } from "../utils";
 import { useAccordion } from "./AccordionContext";
@@ -51,5 +55,5 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
         </div>
       </div>
     );
-  }
+  },
 );

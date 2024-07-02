@@ -1,9 +1,9 @@
-import { composeStories } from "@storybook/react";
-import * as dropdownStories from "@stories/dropdown/dropdown.stories";
 import { Dropdown } from "@salt-ds/core";
+import * as dropdownStories from "@stories/dropdown/dropdown.stories";
+import { composeStories } from "@storybook/react";
 
-import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 import { useState } from "react";
+import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const {
   Default,
@@ -38,7 +38,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alaska"]),
     );
   });
 
@@ -58,7 +58,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alaska"]),
     );
   });
 
@@ -76,7 +76,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
   });
 
@@ -94,7 +94,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
   });
 
@@ -160,7 +160,7 @@ describe("Given a Dropdown", () => {
     cy.realPress("ArrowDown");
     cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "California" }).should(
-      "be.activeDescendant"
+      "be.activeDescendant",
     );
   });
 
@@ -171,7 +171,7 @@ describe("Given a Dropdown", () => {
     cy.realPress("ArrowUp");
     cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "California" }).should(
-      "be.activeDescendant"
+      "be.activeDescendant",
     );
   });
 
@@ -232,7 +232,7 @@ describe("Given a Dropdown", () => {
         <button>start</button>
         <Disabled />
         <button>end</button>
-      </div>
+      </div>,
     );
     cy.findByRole("combobox").should("be.disabled");
     cy.realPress("Tab");
@@ -279,11 +279,11 @@ describe("Given a Dropdown", () => {
     cy.findByRole("option", { name: "California" }).should(
       "have.attr",
       "aria-disabled",
-      "true"
+      "true",
     );
     cy.realType("California");
     cy.findByRole("option", { name: "California" }).should(
-      "be.activeDescendant"
+      "be.activeDescendant",
     );
     cy.realPress("Enter");
     cy.get("@selectionChange").should("not.have.been.called");
@@ -297,21 +297,21 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").should(
       "have.attr",
       "aria-multiselectable",
-      "true"
+      "true",
     );
     cy.findByRole("combobox").realClick();
     cy.findByRole("option", { name: "Alabama" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
     cy.findByRole("option", { name: "Alaska" }).should("be.ariaSelected");
     cy.findByRole("listbox").should("exist");
@@ -327,7 +327,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.realPress("ArrowDown");
@@ -335,7 +335,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.text", "Alabama, Alaska");
@@ -346,7 +346,7 @@ describe("Given a Dropdown", () => {
     cy.findByRole("combobox").should("have.accessibleName", "State");
     cy.findByRole("combobox").should(
       "have.accessibleDescription",
-      "Pick a US state"
+      "Pick a US state",
     );
   });
 
@@ -398,7 +398,7 @@ describe("Given a Dropdown", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
   });
 
@@ -452,7 +452,7 @@ describe("Given a Dropdown", () => {
 
     cy.realType("Co");
     cy.findByRole("option", { name: "Connecticut" }).should(
-      "be.activeDescendant"
+      "be.activeDescendant",
     );
   });
 
@@ -460,7 +460,7 @@ describe("Given a Dropdown", () => {
     cy.mount(
       <CustomFloatingComponentProvider>
         <Default open />
-      </CustomFloatingComponentProvider>
+      </CustomFloatingComponentProvider>,
     );
 
     cy.findByTestId(FLOATING_TEST_ID).should("exist");

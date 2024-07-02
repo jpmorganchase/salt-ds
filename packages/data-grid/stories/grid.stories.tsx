@@ -1,13 +1,3 @@
-import { StoryFn } from "@storybook/react";
-import {
-  ChangeEvent,
-  createContext,
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
 import { Card, Checkbox, FlexLayout } from "@salt-ds/core";
 import {
   ArrowDownIcon,
@@ -16,27 +6,37 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "@salt-ds/icons";
+import type { StoryFn } from "@storybook/react";
+import {
+  type CSSProperties,
+  type ChangeEvent,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import {
   CellEditor,
   ColumnGroup,
   DropdownCellEditor,
   Grid,
-  GridCellValueProps,
+  type GridCellValueProps,
   GridColumn,
-  GridHeaderValueProps,
-  GridProps,
+  type GridHeaderValueProps,
+  type GridProps,
   NumericCellEditor,
   NumericColumn,
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
 } from "../src";
-import { randomString, randomText } from "./utils";
 import {
+  type Investor,
   allLocations,
   createDummyInvestors,
-  Investor,
   investorKeyGetter,
 } from "./dummyData";
+import { randomString, randomText } from "./utils";
 import "./grid.stories.css";
 
 export default {
@@ -48,7 +48,7 @@ export default {
 const dummyInvestors = createDummyInvestors();
 
 const onAmountChange = (row: Investor, rowIndex: number, value: string) => {
-  dummyInvestors[rowIndex].amount = parseFloat(value);
+  dummyInvestors[rowIndex].amount = Number.parseFloat(value);
 };
 
 const onLocationChange = (row: Investor, rowIndex: number, value: string) => {
@@ -426,7 +426,7 @@ const CustomHeadersStoryContext = createContext<
 const useCustomHeadersStoryContext = () => {
   const c = useContext(CustomHeadersStoryContext);
   if (!c) {
-    throw new Error(`CustomHeadersStoryContext not found`);
+    throw new Error("CustomHeadersStoryContext not found");
   }
   return c;
 };
@@ -480,7 +480,7 @@ const CustomHeadersTemplate: StoryFn<GridProps> = (props) => {
         setSortDesc(false);
       }
     },
-    [sortBy, setSortBy, sortDesc, setSortDesc]
+    [sortBy, setSortBy, sortDesc, setSortDesc],
   );
 
   const contextValue: CustomHeadersStoryContext = useMemo(() => {
@@ -538,7 +538,7 @@ const CustomCellsStoryContext = createContext<
 const useCustomCellsStoryContext = () => {
   const c = useContext(CustomCellsStoryContext);
   if (!c) {
-    throw new Error(`CustomCellsStoryContext not found`);
+    throw new Error("CustomCellsStoryContext not found");
   }
   return c;
 };
@@ -629,7 +629,7 @@ const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
       dataById.get(rowKey)!.expanded = expand;
       setData([...data]);
     },
-    [dataById, setData]
+    [dataById, setData],
   );
 
   const visibleRows = useMemo(() => {
@@ -650,7 +650,7 @@ const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
     () => ({
       expand,
     }),
-    [expand]
+    [expand],
   );
 
   return (
@@ -688,7 +688,7 @@ const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
   const onColumnMoved = (
     columnId: string,
     fromIndex: number,
-    toIndex: number
+    toIndex: number,
   ) => {
     console.log(`Column "${columnId}" moved from ${fromIndex} to ${toIndex}`);
     setColumnIds((old) => {
@@ -700,14 +700,13 @@ const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
           col,
           ...old.slice(toIndex),
         ];
-      } else {
-        return [
-          ...old.slice(0, toIndex),
-          col,
-          ...old.slice(toIndex, fromIndex),
-          ...old.slice(fromIndex + 1),
-        ];
       }
+      return [
+        ...old.slice(0, toIndex),
+        col,
+        ...old.slice(toIndex, fromIndex),
+        ...old.slice(fromIndex + 1),
+      ];
     });
   };
 

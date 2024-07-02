@@ -3,8 +3,8 @@ import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Heading4 } from "../mdx/h4";
 import { Link } from "../mdx/link";
 
-import styles from "./LinkList.module.css";
 import { Text } from "@salt-ds/core";
+import styles from "./LinkList.module.css";
 
 type LinkData = { href: string; label: string };
 

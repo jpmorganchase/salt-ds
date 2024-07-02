@@ -1,16 +1,16 @@
 import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
-  ComponentPropsWithoutRef,
+  type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
 import { makePrefixer, useControlled, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 
-import radioButtonGroupCss from "./RadioButtonGroup.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
+import radioButtonGroupCss from "./RadioButtonGroup.css";
 
 const withBaseName = makePrefixer("saltRadioButtonGroup");
 
@@ -123,7 +123,7 @@ export const RadioButtonGroup = forwardRef<
         {
           [withBaseName("noWrap")]: !wrap,
         },
-        className
+        className,
       )}
       data-testid="radio-button-group"
       ref={ref}

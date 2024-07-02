@@ -1,7 +1,7 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { FlexLayout, Tag } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
-import { Tag, FlexLayout } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Tag/QA",

@@ -1,19 +1,19 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
-  FocusEvent,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type SyntheticEvent,
   forwardRef,
-  KeyboardEvent,
-  MouseEvent,
-  SyntheticEvent,
   useRef,
 } from "react";
-import { clsx } from "clsx";
-import { useList } from "./useList";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import listNextCss from "./ListNext.css";
 import { ListNextContext } from "./ListNextContext";
+import { useList } from "./useList";
 
 const withBaseName = makePrefixer("saltListNext");
 
@@ -32,7 +32,7 @@ export interface ListNextProps
   /* Callback for change event. Returns current selection.*/
   onChange?: (
     event: SyntheticEvent,
-    data: { value: string | undefined }
+    data: { value: string | undefined },
   ) => void;
   /* Callback for select event. Returns new selected item.*/
   onSelect?: (event: SyntheticEvent, data: { value: string }) => void;
@@ -59,7 +59,7 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
       onChange,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -138,5 +138,5 @@ export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
         </ul>
       </ListNextContext.Provider>
     );
-  }
+  },
 );

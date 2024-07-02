@@ -1,6 +1,6 @@
-import { AdornmentValidationStatus } from "../../status-adornment";
-import { CheckboxGroupProps } from "../CheckboxGroup";
+import type { AdornmentValidationStatus } from "../../status-adornment";
 import { createContext } from "../../utils";
+import type { CheckboxGroupProps } from "../CheckboxGroup";
 
 export interface CheckboxGroupState {
   disabled?: boolean;
@@ -13,7 +13,7 @@ export interface CheckboxGroupState {
 
 const CheckboxGroupContext = createContext<CheckboxGroupState | undefined>(
   "CheckboxGroupContext",
-  undefined
+  undefined,
 );
 
 export { CheckboxGroupContext };

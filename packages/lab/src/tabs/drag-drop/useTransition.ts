@@ -6,7 +6,7 @@ export const useTransition = () => {
     (element: HTMLElement, property: string, value: string) => {
       element.style.cssText = `${property}: ${value};transition: ${property} ${animationDuration};`;
     },
-    []
+    [],
   );
 
   return {

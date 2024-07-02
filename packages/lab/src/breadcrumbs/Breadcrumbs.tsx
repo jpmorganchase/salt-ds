@@ -1,19 +1,19 @@
 import { makePrefixer } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
+import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import React, {
-  HTMLAttributes,
+  type HTMLAttributes,
   isValidElement,
-  ReactNode,
+  type ReactNode,
   useMemo,
 } from "react";
-import { BreadcrumbProps } from "./Breadcrumb";
+import type { BreadcrumbProps } from "./Breadcrumb";
 import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import breadcrumbsCss from "./Breadcrumbs.css";
 
@@ -27,7 +27,7 @@ function insertSeparators(
   separator?: ReactNode,
   hideCurrentLevel?: boolean,
   shouldRenderAllItems?: boolean,
-  itemsAfterCollapse?: number
+  itemsAfterCollapse?: number,
 ) {
   return items.reduce((acc: ReactNode[], current: ReactNode, index: number) => {
     if (index < items.length - 1) {
@@ -35,14 +35,13 @@ function insertSeparators(
         current,
         <li aria-hidden className={className} key={`separator-${index}`}>
           {separator}
-        </li>
+        </li>,
       );
-    } else {
-      const skipLastElement =
-        (hideCurrentLevel && shouldRenderAllItems) ||
-        (hideCurrentLevel && !shouldRenderAllItems && itemsAfterCollapse !== 0);
-      return skipLastElement ? acc : acc.concat(current);
     }
+    const skipLastElement =
+      (hideCurrentLevel && shouldRenderAllItems) ||
+      (hideCurrentLevel && !shouldRenderAllItems && itemsAfterCollapse !== 0);
+    return skipLastElement ? acc : acc.concat(current);
   }, []);
 }
 
@@ -96,7 +95,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
         itemsMaxWidth,
         liClass: withBaseName("li"),
       }),
-      [wrap, itemsMaxWidth, itemsMinWidth]
+      [wrap, itemsMaxWidth, itemsMinWidth],
     );
 
     const separator = separatorProp || (
@@ -125,14 +124,14 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
           [
             "You have provided an invalid combination of properties to the Breadcrumbs.",
             `itemsAfterCollapse={${itemsAfterCollapse}} +itemsBeforeCollapse={${itemsBeforeCollapse}} >= maxItems={${maxItems}}`,
-          ].join("\n")
+          ].join("\n"),
         );
         return allItems;
       }
 
       const hiddenItems = allItems.slice(
         itemsBeforeCollapse,
-        allItems.length - itemsAfterCollapse
+        allItems.length - itemsAfterCollapse,
       );
       return [
         ...allItems.slice(0, itemsBeforeCollapse),
@@ -148,7 +147,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
         </li>,
         ...allItems.slice(
           allItems.length - itemsAfterCollapse,
-          allItems.length
+          allItems.length,
         ),
       ];
     };
@@ -176,11 +175,11 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
               separator,
               hideCurrentLevel,
               shouldRenderAllItems,
-              itemsAfterCollapse
+              itemsAfterCollapse,
             )}
           </ol>
         </nav>
       </BreadcrumbsContext.Provider>
     );
-  }
+  },
 );

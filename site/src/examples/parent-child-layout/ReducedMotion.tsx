@@ -1,14 +1,14 @@
-import { ReactElement, useState } from "react";
 import {
+  Label,
+  ParentChildLayout,
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  Label,
-  ParentChildLayout,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
-import styles from "./Default.module.css";
 import clsx from "clsx";
+import styles from "./Default.module.css";
 
 const parent = <div className={styles.parentContent}>Parent</div>;
 
@@ -38,7 +38,7 @@ export const ReducedMotion = (): ReactElement => {
         child={child}
         className={clsx(
           styles["parent-child-layout"],
-          styles["reduced-motion"]
+          styles["reduced-motion"],
         )}
       />
       <StackLayout align="center" gap={1}>

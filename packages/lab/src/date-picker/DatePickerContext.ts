@@ -1,7 +1,10 @@
-import { createContext, UseFloatingUIReturn } from "@salt-ds/core";
+import type { DateValue } from "@internationalized/date";
+import { type UseFloatingUIReturn, createContext } from "@salt-ds/core";
 import { useContext } from "react";
-import { DateValue } from "@internationalized/date";
-import { RangeSelectionValueType, SingleSelectionValueType } from "../calendar";
+import type {
+  RangeSelectionValueType,
+  SingleSelectionValueType,
+} from "../calendar";
 
 export interface DatePickerContextValue<SelectionVariantType>
   extends Partial<Pick<UseFloatingUIReturn, "context">> {

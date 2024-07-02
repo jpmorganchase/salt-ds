@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as toolbarStories from "@stories/toolbar/toolbar.cypress.stories";
+import { composeStories } from "@storybook/react";
 import { version } from "react";
 
 const {
@@ -32,7 +32,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         toolbar.should("have.class", "saltToolbar");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          0
+          0,
         );
       });
       it("THEN no overflow indicator will be present", () => {
@@ -41,7 +41,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         toolbar.should("have.class", "saltToolbar");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          0
+          0,
         );
       });
     });
@@ -68,13 +68,13 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          2
+          2,
         );
         cy.mount(<SimpleToolbarOverflowLabel />);
         cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          3
+          3,
         );
       });
       it("THEN overflowIndicator will be rendered", () => {
@@ -82,13 +82,13 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          1
+          1,
         );
         cy.mount(<SimpleToolbarOverflowLabel />);
         cy.get(".saltToolbar").invoke("css", "width", "350px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          1
+          1,
         );
       });
     });
@@ -107,7 +107,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "300px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          3
+          3,
         );
       });
       it("THEN overflowIndicator will still be rendered", () => {
@@ -115,7 +115,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "300px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          1
+          1,
         );
       });
     });
@@ -134,7 +134,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "50px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          10
+          10,
         );
       });
       it("THEN overflowIndicator will still be rendered", () => {
@@ -142,7 +142,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "50px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          1
+          1,
         );
       });
     });
@@ -161,7 +161,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "30px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          10
+          10,
         );
       });
       it("THEN overflowIndicator will still be rendered", () => {
@@ -169,7 +169,7 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "30px");
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          1
+          1,
         );
       });
 
@@ -221,20 +221,20 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.mount(<SimpleToolbar width={350} />);
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          2
+          2,
         );
         cy.get(
-          '.Responsive-inner > *[data-overflowed="true"][data-index="8"]'
+          '.Responsive-inner > *[data-overflowed="true"][data-index="8"]',
         ).should("have.length", 1);
         cy.get(
-          '.Responsive-inner > *[data-overflowed="true"][data-index="9"]'
+          '.Responsive-inner > *[data-overflowed="true"][data-index="9"]',
         ).should("have.length", 1);
       });
       it("THEN overflowIndicator will be rendered", () => {
         cy.mount(<SimpleToolbar width={350} />);
         cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
           "have.length",
-          1
+          1,
         );
       });
     });
@@ -245,22 +245,22 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
       cy.mount(<SimpleToolbar width={250} />);
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
-        5
+        5,
       );
       cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
         "have.length",
-        1
+        1,
       );
       cy.get(".saltToolbar").invoke("css", "width", "350px");
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
-        2
+        2,
       );
       cy.get(
-        '.Responsive-inner > *[data-overflowed="true"][data-index="8"]'
+        '.Responsive-inner > *[data-overflowed="true"][data-index="8"]',
       ).should("have.length", 1);
       cy.get(
-        '.Responsive-inner > *[data-overflowed="true"][data-index="9"]'
+        '.Responsive-inner > *[data-overflowed="true"][data-index="9"]',
       ).should("have.length", 1);
     });
   });
@@ -276,10 +276,10 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
           .should("have.length", 10);
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          1
+          1,
         );
         cy.get(
-          '.Responsive-inner > *:nth-child(9)[data-overflowed="true"]'
+          '.Responsive-inner > *:nth-child(9)[data-overflowed="true"]',
         ).should("have.length", 1);
       });
     });
@@ -295,13 +295,13 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
           .should("have.length", 9);
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          2
+          2,
         );
         cy.get(
-          '.Responsive-inner > *:nth-child(8)[data-overflowed="true"]'
+          '.Responsive-inner > *:nth-child(8)[data-overflowed="true"]',
         ).should("have.length", 1);
         cy.get(
-          '.Responsive-inner > *:nth-child(9)[data-overflowed="true"]'
+          '.Responsive-inner > *:nth-child(9)[data-overflowed="true"]',
         ).should("have.length", 1);
       });
     });
@@ -319,16 +319,16 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
           .should("have.length", 8);
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          3
+          3,
         );
         cy.get(
-          '.Responsive-inner > *:nth-child(4)[data-overflowed="true"]'
+          '.Responsive-inner > *:nth-child(4)[data-overflowed="true"]',
         ).should("have.length", 1);
         cy.get(
-          '.Responsive-inner > *:nth-child(8)[data-overflowed="true"]'
+          '.Responsive-inner > *:nth-child(8)[data-overflowed="true"]',
         ).should("have.length", 1);
         cy.get(
-          '.Responsive-inner > *:nth-child(9)[data-overflowed="true"]'
+          '.Responsive-inner > *:nth-child(9)[data-overflowed="true"]',
         ).should("have.length", 1);
       });
     });
@@ -342,11 +342,11 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
           .should("have.length", 5);
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          6
+          6,
         );
         // The 4 visible items should all be priority 2
         cy.get(
-          `.Responsive-inner > *${NOT_OVERFLOW_IND}${NOT_OVERFLOWED}[data-priority="2"]`
+          `.Responsive-inner > *${NOT_OVERFLOW_IND}${NOT_OVERFLOWED}[data-priority="2"]`,
         ).should("have.length", 4);
       });
     });
@@ -384,13 +384,13 @@ describe("GIVEN a Toolbar component, with overflow behaviour", () => {
         cy.get(".saltToolbar").invoke("css", "width", "470px");
         cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
           "have.length",
-          2
+          2,
         );
         // The 2 remaining overflowed items should both be priority 5
         cy.get(`.Responsive-inner > *${OVERFLOWED}`).should("have.length", 2);
         cy.get(`.Responsive-inner > *${OVERFLOWED}[data-priority="5"]`).should(
           "have.length",
-          2
+          2,
         );
       });
     });
@@ -410,18 +410,18 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
-        0
+        0,
       );
       cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
         "have.length",
-        0
+        0,
       );
     });
     it("THEN no overflow indicator will be present", () => {
       cy.mount(<SimpleToolbarCollapsibleItems width={500} />);
       cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
         "have.length",
-        0
+        0,
       );
     });
   });
@@ -437,15 +437,15 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         .should("have.length", 5);
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
-        0
+        0,
       );
       cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
         "have.length",
-        1
+        1,
       );
       cy.get('.Responsive-inner > *:last-child[data-collapsed="true"]').should(
         "have.length",
-        1
+        1,
       );
     });
   });
@@ -461,18 +461,18 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         .should("have.length", 5);
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
-        0
+        0,
       );
       cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
         "have.length",
-        2
+        2,
       );
       cy.get('.Responsive-inner > *:last-child[data-collapsed="true"]').should(
         "have.length",
-        1
+        1,
       );
       cy.get(
-        '.Responsive-inner > *:nth-last-child(2)[data-collapsed="true"]'
+        '.Responsive-inner > *:nth-last-child(2)[data-collapsed="true"]',
       ).should("have.length", 1);
     });
   });
@@ -489,15 +489,15 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         .should("have.length", 5);
       cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
         "have.length",
-        0
+        0,
       );
       cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
         "have.length",
-        5
+        5,
       );
       cy.get('.Responsive-inner > *[data-overflow-indicator="true"]').should(
         "have.length",
-        0
+        0,
       );
     });
   });
@@ -523,17 +523,17 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
               .should("have.length", 4);
             cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
               "have.length",
-              2
+              2,
             );
             cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
               "have.length",
-              5
+              5,
             );
             cy.get(
-              '.Responsive-inner > *[data-overflow-indicator="true"]'
+              '.Responsive-inner > *[data-overflow-indicator="true"]',
             ).should("have.length", 1);
           }
-        : undefined
+        : undefined,
     );
   });
   describe("WHEN resized directly from full size to beyond minimum that can still render all", () => {
@@ -550,17 +550,17 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
               .should("have.length", 4);
             cy.get('.Responsive-inner > *[data-overflowed="true"]').should(
               "have.length",
-              2
+              2,
             );
             cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
               "have.length",
-              5
+              5,
             );
             cy.get(
-              '.Responsive-inner > *[data-overflow-indicator="true"]'
+              '.Responsive-inner > *[data-overflow-indicator="true"]',
             ).should("have.length", 1);
           }
-        : undefined
+        : undefined,
     );
   });
   describe("WHEN resized to trigger collapse, then restored to original size, collapsed items are uncollapsed", () => {
@@ -576,7 +576,7 @@ describe("GIVEN a Toolbar with 'instant' collapse child items", () => {
         .should("have.length", 5);
       cy.get('.Responsive-inner > *[data-collapsed="true"]').should(
         "have.length",
-        0
+        0,
       );
     });
   });
@@ -600,26 +600,26 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(`${TOOLBAR_ITEMS_SELECTOR}[data-overflowed="true"]`).should(
           "have.length",
-          0
+          0,
         );
       });
       it("THEN no overflow indicator will be present on the Toolbar", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(
-          `${TOOLBAR_ITEMS_SELECTOR}[data-overflow-indicator="true"]`
+          `${TOOLBAR_ITEMS_SELECTOR}[data-overflow-indicator="true"]`,
         ).should("have.length", 0);
       });
       it("THEN the Toolbar Responsive inner will be collapsing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(
-          `.saltToolbar > .Responsive-inner[data-collapsing="true"]`
+          `.saltToolbar > .Responsive-inner[data-collapsing="true"]`,
         ).should("have.length", 1);
       });
       it("THEN the tooltray will be collapsing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(`${TOOLBAR_ITEMS_SELECTOR}[data-collapsing="true"]`).should(
           "have.length",
-          1
+          1,
         );
       });
       it("THEN all of the tooltray contents will be visible", () => {
@@ -633,13 +633,13 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(`${TOOLTRAY_ITEMS_SELECTOR}[data-overflowed="true"]`).should(
           "have.length",
-          0
+          0,
         );
       });
       it("THEN no overflow indicator will be present on the Tooltray", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={368} />);
         cy.get(
-          `${TOOLTRAY_ITEMS_SELECTOR}[data-overflow-indicator="true"]`
+          `${TOOLTRAY_ITEMS_SELECTOR}[data-overflow-indicator="true"]`,
         ).should("have.length", 0);
       });
     });
@@ -659,26 +659,26 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(`${TOOLBAR_ITEMS_SELECTOR}[data-overflowed="true"]`).should(
           "have.length",
-          0
+          0,
         );
       });
       it("THEN no overflow indicator will be present on the Toolbar", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(
-          `${TOOLBAR_ITEMS_SELECTOR}[data-overflow-indicator="true"]`
+          `${TOOLBAR_ITEMS_SELECTOR}[data-overflow-indicator="true"]`,
         ).should("have.length", 0);
       });
       it("THEN the Toolbar Responsive inner will be collapsing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(
-          `.saltToolbar > .Responsive-inner[data-collapsing="true"]`
+          `.saltToolbar > .Responsive-inner[data-collapsing="true"]`,
         ).should("have.length", 1);
       });
       it("THEN the tooltray will be collapsing", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(`${TOOLBAR_ITEMS_SELECTOR}[data-collapsing="true"]`).should(
           "have.length",
-          1
+          1,
         );
       });
       it("THEN not all of the tooltray contents will be visible", () => {
@@ -692,13 +692,13 @@ describe("GIVEN a Toolbar with a single 'dynamic' collapse Tooltray", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(`${TOOLTRAY_ITEMS_SELECTOR}[data-overflowed="true"]`).should(
           "have.length",
-          5
+          5,
         );
       });
       it("THEN an overflow indicator will be present on the Tooltray", () => {
         cy.mount(<SingleDynamicCollapseTooltray width={200} />);
         cy.get(
-          `${TOOLTRAY_ITEMS_SELECTOR}[data-overflow-indicator="true"]`
+          `${TOOLTRAY_ITEMS_SELECTOR}[data-overflow-indicator="true"]`,
         ).should("have.length", 1);
       });
     });

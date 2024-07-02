@@ -1,14 +1,14 @@
 import {
-  makePrefixer,
   StatusIndicator as BaseStatusIndicator,
-  StatusIndicatorProps as BaseStatusIndicatorProps,
+  type StatusIndicatorProps as BaseStatusIndicatorProps,
   Spinner,
-  SpinnerProps,
+  type SpinnerProps,
+  makePrefixer,
 } from "@salt-ds/core";
-import { ReactElement } from "react";
 import { clsx } from "clsx";
+import type { ReactElement } from "react";
 
-import { CircularProgress, CircularProgressProps } from "@salt-ds/core";
+import { CircularProgress, type CircularProgressProps } from "@salt-ds/core";
 
 export interface StatusIndicatorProps
   extends Pick<SpinnerProps, "disableAnnouncer">,
@@ -43,7 +43,7 @@ export function StatusIndicator({
           aria-label={title || message}
           className={clsx(
             withBaseName("determinateLoading"),
-            circularProgressClassName
+            circularProgressClassName,
           )}
           value={value}
           {...restCircularProgressProps}

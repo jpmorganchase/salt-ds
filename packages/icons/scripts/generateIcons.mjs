@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import glob from "glob";
-import prettier from "prettier";
-import Mustache from "mustache";
-import { optimize } from "svgo";
 import { fileURLToPath } from "node:url";
+import glob from "glob";
+import Mustache from "mustache";
+import prettier from "prettier";
+import { optimize } from "svgo";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
 const PRETTIER_SETTINGS = {
@@ -22,11 +22,11 @@ const CSS_GENERATED_WARNING_COMMENT =
 
 /** Change kebab casing to Pascal casing */
 function pascalCase(str) {
-  let arr = str.split("-");
-  let capital = arr.map(
+  const arr = str.split("-");
+  const capital = arr.map(
     (item) =>
       item.charAt(0).toLocaleUpperCase("en-US") +
-      item.slice(1).toLocaleLowerCase("en-US")
+      item.slice(1).toLocaleLowerCase("en-US"),
   );
 
   return capital.join("");
@@ -54,9 +54,9 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
       const iconName = pascalCase(filenameWithoutExtension);
 
       return `.saltIcons-${iconName}{mask-image:url("data:image/svg+xml,${encodeURIComponent(
-        svgString
+        svgString,
       )}");-webkit-mask-image:url("data:image/svg+xml,${encodeURIComponent(
-        svgString
+        svgString,
       )}");}`;
     })
     .join("\n");
@@ -66,7 +66,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const formattedResult = prettier.format(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, iconCss),
-    { ...PRETTIER_SETTINGS, parser: "css" }
+    { ...PRETTIER_SETTINGS, parser: "css" },
   );
 
   fs.writeFileSync(cssOutputPath, formattedResult, {
@@ -143,7 +143,7 @@ const generateIconComponents = async ({
                     const newAttributes = {};
                     // preserve an order of attributes
                     for (const [name, value] of Object.entries(
-                      node.attributes
+                      node.attributes,
                     )) {
                       newAttributes[svgAttributeMap[name] || name] = value;
                     }
@@ -195,7 +195,7 @@ const generateIconComponents = async ({
 
       const formattedResult = prettier.format(
         GENERATED_WARNING_COMMENT.concat(fileContents),
-        PRETTIER_SETTINGS
+        PRETTIER_SETTINGS,
       );
 
       await fs.promises.writeFile(newFilePath, formattedResult, {
@@ -203,7 +203,7 @@ const generateIconComponents = async ({
       });
 
       return componentName;
-    })
+    }),
   );
 };
 
@@ -242,10 +242,8 @@ const generateIconAll = async ({ icons, allPath }) => {
     .sort((a, b) => a.localeCompare(b))
     .map((componentName) => `${componentName}Icon,`);
 
-  const importsStatements =
-    "import {\n" + sortedIcons.join("\n") + `\n} from "@salt-ds/icons";\n`;
-  const exportStatements =
-    "export const allIcons = [" + sortedIcons.join("\n") + "\n];\n";
+  const importsStatements = `import {\n${sortedIcons.join("\n")}\n} from "@salt-ds/icons";\n`;
+  const exportStatements = `export const allIcons = [${sortedIcons.join("\n")}\n];\n`;
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,
@@ -270,10 +268,8 @@ const generateIconAllSite = async ({ icons, siteAllPath }) => {
     .sort((a, b) => a.localeCompare(b))
     .map((componentName) => `${componentName}Icon,`);
 
-  const importsStatements =
-    "import {\n" + sortedIcons.join("\n") + `\n} from "@salt-ds/icons";\n`;
-  const exportStatements =
-    "export const allIcons = {" + sortedIcons.join("\n") + "\n};\n";
+  const importsStatements = `import {\n${sortedIcons.join("\n")}\n} from "@salt-ds/icons";\n`;
+  const exportStatements = `export const allIcons = {${sortedIcons.join("\n")}\n};\n`;
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,
@@ -300,7 +296,7 @@ const templatePath = path.join(__dirname, "./templateIcon.mustache");
 const allPath = path.join(basePath, "../stories/icon.all.ts");
 const siteAllPath = path.join(
   basePath,
-  "../../../site/src/examples/icon/allIconsList.ts"
+  "../../../site/src/examples/icon/allIconsList.ts",
 );
 
 await fs.promises.mkdir(componentsPath, { recursive: true });

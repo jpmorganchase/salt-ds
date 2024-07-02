@@ -1,9 +1,9 @@
-import { SVGAttributes } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
+import type { SVGAttributes } from "react";
+import type { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import formActivationIndicatorCss from "./FormActivationIndicator.css";
 
@@ -41,11 +41,11 @@ const ActivationIndicatorIcon = ({
 }: Pick<FormFieldProps, "validationStatus"> & SVGAttributes<SVGSVGElement>) => {
   if (validationStatus === "error") {
     return <ErrorIndicatorIcon {...restSvgProps} />;
-  } else if (validationStatus === "warning") {
-    return <WarningIndicatorIcon {...restSvgProps} />;
-  } else {
-    return null;
   }
+  if (validationStatus === "warning") {
+    return <WarningIndicatorIcon {...restSvgProps} />;
+  }
+  return null;
 };
 
 // Removed `enabled` prop, it's better to let parent to control render

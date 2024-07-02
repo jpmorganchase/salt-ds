@@ -1,13 +1,13 @@
-import { saltColorMap } from "./colorMap";
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
+import { saltColorMap } from "./colorMap";
 
 export function getColorNameByHexValue(
   hexValue: string | undefined,
   disableAlpha = false,
   saltColorOverrides?: Record<string, string>,
   /** When disabled, color names not recognized will be undefined instead of hex values */
-  disableFallBackToHex = false
+  disableFallBackToHex = false,
 ): string | undefined {
   const hexNoAlpha = hexValueWithoutAlpha(hexValue);
   const saltColors = saltColorOverrides ?? saltColorMap;
@@ -42,7 +42,7 @@ export function getColorNameByHexValue(
 }
 
 export function hexValueWithoutAlpha(
-  hexValue: string | undefined
+  hexValue: string | undefined,
 ): string | undefined {
   if (hexValue === undefined) return undefined;
   return isValidHex(hexValue)
@@ -52,7 +52,7 @@ export function hexValueWithoutAlpha(
 
 export function getHexValue(
   hexValue: string | undefined,
-  disableAlpha: boolean
+  disableAlpha: boolean,
 ): string | undefined {
   if (hexValue === undefined) return undefined;
   return disableAlpha ? hexValueWithoutAlpha(hexValue) : hexValue;
@@ -74,6 +74,6 @@ export const convertColorMapValueToHex = (color: string): string => {
     Number(r),
     Number(g),
     Number(b),
-    a ? Number(a) : 1
+    a ? Number(a) : 1,
   ).hex;
 };

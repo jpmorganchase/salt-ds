@@ -3,7 +3,7 @@
   --card-background: var(--salt-container-primary-background);
   --card-color: var(--salt-content-primary-foreground);
   --card-icon-background: var(--salt-container-secondary-background);
-  --saltIcon-color: var(---salt-content-primary-foreground);
+  --saltIcon-color: var(--salt-content-primary-foreground);
 }
 
 .cardTitle h2 {

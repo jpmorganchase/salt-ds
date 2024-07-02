@@ -1,11 +1,11 @@
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
 import { AlphaInput } from "./AlphaInputField";
-import { Color } from "./Color";
+import type { Color } from "./Color";
 import { SwatchesPicker } from "./SwatchesPicker";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import swatchesCss from "./Swatches.css";
 
@@ -18,7 +18,7 @@ export interface SwatchesTabProps {
   handleColorChange: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: React.ChangeEvent
+    e?: React.ChangeEvent,
   ) => void;
   displayColorName: string | undefined;
   placeholder: string | undefined;

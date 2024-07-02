@@ -1,16 +1,16 @@
 import { useForkRef } from "@salt-ds/core";
 
 import {
-  ForwardedRef,
+  type ForwardedRef,
+  type KeyboardEvent,
+  type ReactElement,
   forwardRef,
-  KeyboardEvent,
-  ReactElement,
   useContext,
   useRef,
 } from "react";
 
-import { ListBase, ListScrollHandles } from "./ListBase";
-import { ListProps, ListSelectionVariant } from "./ListProps";
+import { ListBase, type ListScrollHandles } from "./ListBase";
+import type { ListProps, ListSelectionVariant } from "./ListProps";
 import { ListStateContext } from "./ListStateContext";
 import { useList } from "./useList";
 import { useTypeSelect } from "./useTypeSelect";
@@ -22,10 +22,10 @@ import {
 
 const ListWithDescendants = forwardRef(function ListWithDescendants<
   Item,
-  Variant extends ListSelectionVariant
+  Variant extends ListSelectionVariant,
 >(
   props: ListProps<Item, Variant>,
-  ref?: ForwardedRef<ListScrollHandles<Item>>
+  ref?: ForwardedRef<ListScrollHandles<Item>>,
 ) {
   const { items } = useContext(DescendantContext);
 
@@ -89,15 +89,15 @@ const ListWithDescendants = forwardRef(function ListWithDescendants<
 }) as <Item, Variant extends ListSelectionVariant>(
   props: ListProps<Item, Variant> & {
     ref?: ForwardedRef<ListScrollHandles<Item>>;
-  }
+  },
 ) => ReactElement<ListProps<Item, Variant>>;
 
 export const List = forwardRef(function List<
   Item,
-  Variant extends ListSelectionVariant
+  Variant extends ListSelectionVariant,
 >(
   props: ListProps<Item, Variant>,
-  ref?: ForwardedRef<ListScrollHandles<Item>>
+  ref?: ForwardedRef<ListScrollHandles<Item>>,
 ) {
   const itemsRef = useRef([]);
 
@@ -109,5 +109,5 @@ export const List = forwardRef(function List<
 }) as <Item = string, Variant extends ListSelectionVariant = "default">(
   props: ListProps<Item, Variant> & {
     ref?: ForwardedRef<ListScrollHandles<Item>>;
-  }
+  },
 ) => ReactElement<ListProps<Item, Variant>>;

@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { useEffect, useRef } from "react";
 
 function getActiveElement(doc: DocumentOrShadowRoot): HTMLElement | null {
   if (!doc) {

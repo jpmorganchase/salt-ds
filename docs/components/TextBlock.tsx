@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type { CSSProperties } from "react";
 
 import "./TextBlock.css";

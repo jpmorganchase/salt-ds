@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Button,
   Menu,
@@ -14,6 +13,7 @@ import {
   PasteIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 function EditStylingMenu() {
   return (

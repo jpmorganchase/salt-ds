@@ -1,0 +1,135 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignore": [".next", "mockServiceWorker.js", "*-props.json"]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useNodejsImportProtocol": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useTemplate": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noUnusedTemplateLiteral": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noUselessElse": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useExponentiationOperator": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "useSelfClosingElements": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "warn"
+      },
+      "nursery": {
+        "noUselessStringConcat": { "level": "error", "fix": "safe" }
+      },
+      "complexity": {
+        "useOptionalChain": { "level": "error", "fix": "safe" },
+        "useLiteralKeys": { "level": "error", "fix": "safe" },
+        "noForEach": "warn"
+      },
+      "a11y": {
+        "noAutofocus": "off",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noNoninteractiveTabindex": "off",
+        "noSvgWithoutTitle": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "warn",
+        "noSwitchDeclarations": {
+          "level": "error",
+          "fix": "safe"
+        }
+      },
+      "suspicious": {
+        "noArrayIndexKey": "warn",
+        "noGlobalIsNan": {
+          "level": "error",
+          "fix": "safe"
+        }
+      }
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "lineWidth": 200
+    },
+    "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "cssModules": true
+    }
+  },
+  "overrides": [
+    {
+      "include": ["__tests__/**", "stories/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useButtonType": "off"
+          },
+          "complexity": {
+            "noForEach": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "lab/src/responsive/**",
+        "packages/data-grid/**",
+        "lab/src/common-hooks/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noParameterAssign": "off"
+          },
+          "suspicious": {
+            "noAssignInExpressions": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["utils/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    }
+  ]
+}

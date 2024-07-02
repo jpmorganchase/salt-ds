@@ -1,6 +1,6 @@
-import { ReactElement, CSSProperties } from "react";
-import { H3, Text, StackLayout, Card, Link } from "@salt-ds/core";
 import { Image } from "@jpmorganchase/mosaic-site-components";
+import { Card, H3, Link, StackLayout, Text } from "@salt-ds/core";
+import type { CSSProperties, ReactElement } from "react";
 
 export const FullWidthImage = (): ReactElement => {
   return (

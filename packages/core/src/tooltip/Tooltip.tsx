@@ -1,24 +1,27 @@
 import { clsx } from "clsx";
 import {
+  type HTMLAttributes,
+  type ReactNode,
   cloneElement,
   forwardRef,
-  HTMLAttributes,
   isValidElement,
-  ReactNode,
 } from "react";
 
-import { ValidationStatus, VALIDATION_NAMED_STATUS } from "../status-indicator";
 import {
+  VALIDATION_NAMED_STATUS,
+  type ValidationStatus,
+} from "../status-indicator";
+import {
+  type UseFloatingUIProps,
   makePrefixer,
   mergeProps,
-  UseFloatingUIProps,
-  useForkRef,
   useFloatingComponent,
+  useForkRef,
 } from "../utils";
 
-import { useTooltip, UseTooltipProps } from "./useTooltip";
 import { useFormFieldProps } from "../form-field-context";
 import { TooltipBase } from "./TooltipBase";
+import { type UseTooltipProps, useTooltip } from "./useTooltip";
 
 const withBaseName = makePrefixer("saltTooltip");
 
@@ -120,11 +123,11 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const triggerRef = useForkRef(
       // @ts-expect-error children.ref cannot currently be typed.
       isValidElement(children) ? children.ref : null,
-      reference
+      reference,
     );
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
-    const hasContent = content != undefined && content !== "";
+    const hasContent = content !== undefined && content !== "";
 
     return (
       <>
@@ -138,7 +141,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           className={clsx(
             withBaseName(),
             { [withBaseName(status ?? "")]: status },
-            className
+            className,
           )}
           open={open && !disabled && hasContent}
           {...getTooltipProps()}
@@ -155,5 +158,5 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
         </FloatingComponent>
       </>
     );
-  }
+  },
 );

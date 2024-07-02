@@ -1,8 +1,8 @@
 import {
-  AccordionGroup,
-  AccordionPanel,
   Accordion,
+  AccordionGroup,
   AccordionHeader,
+  AccordionPanel,
 } from "@salt-ds/core";
 
 import styles from "./Accordion.module.css";

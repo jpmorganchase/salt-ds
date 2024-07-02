@@ -1,8 +1,8 @@
-import { forwardRef, SVGAttributes } from "react";
 import { clsx } from "clsx";
+import { type SVGAttributes, forwardRef } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import iconCss from "./Icon.css";
 // Duplicate from core/util to avoid circular dependency
@@ -35,7 +35,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
     style: styleProp,
     ...rest
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -54,7 +54,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
       className={clsx(
         withBaseName(),
         { [withBaseName(color)]: color !== "inherit" },
-        className
+        className,
       )}
       style={style}
       role="img"

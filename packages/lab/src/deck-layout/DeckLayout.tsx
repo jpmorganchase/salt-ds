@@ -1,18 +1,18 @@
+import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
+  type CSSProperties,
   Children,
-  CSSProperties,
+  type HTMLAttributes,
   forwardRef,
-  HTMLAttributes,
   useCallback,
   useState,
 } from "react";
-import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { DeckItem, DeckItemProps } from "../deck-item";
+import { DeckItem, type DeckItemProps } from "../deck-item";
 import { useWidth } from "../responsive";
 
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 
 import deckLayoutCss from "./DeckLayout.css";
 
@@ -53,7 +53,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
       deckItemProps,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -67,11 +67,10 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
     const [deckItemHeight, setDeckItemHeight] = useState<number>(0);
 
     const handleResize = useCallback(function handleResize(
-      contentRect: DOMRect
+      contentRect: DOMRect,
     ) {
       setDeckItemHeight(contentRect.height);
-    },
-    []);
+    }, []);
 
     useIsomorphicLayoutEffect(() => {
       if (!deckItemRef.current) {
@@ -83,7 +82,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
       const observer = new ResizeObserver(
         ([{ contentRect }]: ResizeObserverEntry[]) => {
           handleResize(contentRect);
-        }
+        },
       );
       observer.observe(deckItemRef.current);
 
@@ -116,7 +115,7 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
             },
             {
               [withBaseName(`${animation || "slide"}-${direction}`)]: animation,
-            }
+            },
           )}
           style={innerStyles}
         >
@@ -136,5 +135,5 @@ export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
         </div>
       </div>
     );
-  }
+  },
 );

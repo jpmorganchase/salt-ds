@@ -1,13 +1,4 @@
 import {
-  CellEditor,
-  ColumnGroup,
-  Grid,
-  GridColumn,
-  RowKeyGetter,
-  TextCellEditor,
-} from "../src";
-import { ChangeEvent, SyntheticEvent, useMemo, useState } from "react";
-import {
   Button,
   Checkbox,
   FlexItem,
@@ -16,8 +7,22 @@ import {
   ToggleButtonGroup,
 } from "@salt-ds/core";
 import { DeleteIcon, UndoIcon } from "@salt-ds/icons";
+import {
+  type ChangeEvent,
+  type SyntheticEvent,
+  useMemo,
+  useState,
+} from "react";
+import {
+  CellEditor,
+  ColumnGroup,
+  Grid,
+  GridColumn,
+  type RowKeyGetter,
+  TextCellEditor,
+} from "../src";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 type Variant = "primary" | "secondary" | "zebra";
 
@@ -289,13 +294,13 @@ const CssVariablesTemplate: StoryFn<{}> = () => {
               disabled={changes.length === 0}
             >
               <UndoIcon />
-              {` Undo`}
+              {" Undo"}
             </Button>
           </FlexItem>
           <FlexItem>
             <Button variant="secondary" onClick={onReset}>
               <DeleteIcon />
-              {` Reset`}
+              {" Reset"}
             </Button>
           </FlexItem>
         </FlexLayout>

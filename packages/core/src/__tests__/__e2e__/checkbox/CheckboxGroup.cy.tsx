@@ -1,11 +1,11 @@
 import {
   Checkbox,
   CheckboxGroup,
-  CheckboxGroupProps,
+  type CheckboxGroupProps,
   FormField,
   FormFieldLabel,
 } from "@salt-ds/core";
-import { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 const ControlledGroup = ({ onChange, disabled }: CheckboxGroupProps) => {
   const [controlledValues, setControlledValues] = useState<string[]>([]);
@@ -20,8 +20,8 @@ const ControlledGroup = ({ onChange, disabled }: CheckboxGroupProps) => {
     } else {
       setControlledValues((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
     onChange?.(event);
@@ -46,7 +46,7 @@ describe("GIVEN a CheckboxGroup", () => {
         <Checkbox label="one" value="one" />
         <Checkbox label="two" value="two" />
         <Checkbox label="three" value="three" />
-      </CheckboxGroup>
+      </CheckboxGroup>,
     );
 
     cy.findAllByRole("checkbox").should("have.length", 3);
@@ -62,7 +62,7 @@ describe("GIVEN a CheckboxGroup", () => {
           <Checkbox label="one" value="one" />
           <Checkbox label="two" value="two" />
           <Checkbox label="three" value="three" />
-        </CheckboxGroup>
+        </CheckboxGroup>,
       );
 
       cy.realPress("Tab");
@@ -75,7 +75,7 @@ describe("GIVEN a CheckboxGroup", () => {
           <Checkbox label="one" value="one" />
           <Checkbox label="two" value="two" />
           <Checkbox label="three" value="three" />
-        </CheckboxGroup>
+        </CheckboxGroup>,
       );
 
       cy.realPress("Tab");
@@ -91,7 +91,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="three" value="three" />
           </CheckboxGroup>
           <button>end</button>
-        </>
+        </>,
       );
 
       cy.realPress("Tab");
@@ -114,7 +114,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="three" value="three" />
           </CheckboxGroup>
           <button>end</button>
-        </>
+        </>,
       );
 
       cy.findByRole("button", { name: "end" }).realClick();
@@ -135,7 +135,7 @@ describe("GIVEN a CheckboxGroup", () => {
           <Checkbox label="one" value="one" disabled />
           <Checkbox label="two" value="two" />
           <Checkbox label="three" value="three" />
-        </CheckboxGroup>
+        </CheckboxGroup>,
       );
 
       cy.realPress("Tab");
@@ -150,7 +150,7 @@ describe("GIVEN a CheckboxGroup", () => {
           <Checkbox label="one" value="one" />
           <Checkbox label="two" value="two" />
           <Checkbox label="three" value="three" />
-        </CheckboxGroup>
+        </CheckboxGroup>,
       );
       cy.findByRole("checkbox", { name: "one" }).should("be.checked");
       cy.findByRole("checkbox", { name: "two" }).should("not.be.checked");
@@ -164,7 +164,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="one" value="one" />
             <Checkbox label="two" value="two" />
             <Checkbox label="three" value="three" />
-          </CheckboxGroup>
+          </CheckboxGroup>,
         );
 
         cy.findByRole("checkbox", { name: "one" }).should("not.be.checked");
@@ -199,7 +199,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="one" value="one" />
             <Checkbox label="two" value="two" />
             <Checkbox label="three" value="three" />
-          </CheckboxGroup>
+          </CheckboxGroup>,
         );
 
         cy.findByRole("checkbox", { name: "two" }).realClick();
@@ -217,7 +217,7 @@ describe("GIVEN a CheckboxGroup", () => {
               <Checkbox label="one" value="one" disabled />
               <Checkbox label="two" value="two" />
               <Checkbox label="three" value="three" />
-            </CheckboxGroup>
+            </CheckboxGroup>,
           );
 
           cy.findByRole("checkbox", { name: "one" })
@@ -236,7 +236,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="one" value="one" />
             <Checkbox label="two" value="two" />
             <Checkbox label="three" value="three" />
-          </CheckboxGroup>
+          </CheckboxGroup>,
         );
 
         cy.findByRole("checkbox", { name: "one" }).should("not.be.checked");
@@ -279,7 +279,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="one" value="one" />
             <Checkbox label="two" value="two" />
             <Checkbox label="three" value="three" />
-          </CheckboxGroup>
+          </CheckboxGroup>,
         );
 
         cy.realPress("Tab");
@@ -297,7 +297,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="one" value="one" />
             <Checkbox label="two" value="two" />
             <Checkbox label="three" value="three" />
-          </CheckboxGroup>
+          </CheckboxGroup>,
         );
 
         cy.findByRole("checkbox", { name: "one" }).should("not.be.checked");
@@ -315,7 +315,7 @@ describe("GIVEN a CheckboxGroup", () => {
           <Checkbox label="one" value="one" />
           <Checkbox label="two" value="two" />
           <Checkbox label="three" value="three" />
-        </CheckboxGroup>
+        </CheckboxGroup>,
       );
       cy.findByRole("checkbox", { name: "one" }).should("be.checked");
       cy.findByRole("checkbox", { name: "two" }).should("not.be.checked");
@@ -410,7 +410,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="two" value="two" disabled />
             <Checkbox label="three" value="three" />
           </CheckboxGroup>
-        </FormField>
+        </FormField>,
       );
 
       cy.findAllByRole("checkbox").should("have.attr", "disabled");
@@ -425,7 +425,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="two" value="two" readOnly />
             <Checkbox label="three" value="three" />
           </CheckboxGroup>
-        </FormField>
+        </FormField>,
       );
 
       cy.findAllByRole("checkbox").should("have.attr", "readonly");
@@ -440,7 +440,7 @@ describe("GIVEN a CheckboxGroup", () => {
             <Checkbox label="two" value="two" readOnly />
             <Checkbox label="three" value="three" />
           </CheckboxGroup>
-        </FormField>
+        </FormField>,
       );
 
       cy.findAllByRole("checkbox").eq(0).should("have.accessibleName", "one");

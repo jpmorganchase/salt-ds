@@ -1,14 +1,14 @@
-import { ReactElement, useState } from "react";
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
   H3,
   StackLayout,
   useId,
-  Dialog,
-  DialogHeader,
-  DialogActions,
-  DialogContent,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const Default = (): ReactElement => {
   const [open, setOpen] = useState(false);

@@ -3,12 +3,12 @@ import {
   ContactActions,
   ContactAvatar,
   ContactDetails,
-  ContactDetailsProps,
-  ContactDetailsVariant,
+  type ContactDetailsProps,
+  type ContactDetailsVariant,
   ContactFavoriteToggle,
   ContactMetadata,
   ContactMetadataItem,
-  ContactMetadataProps,
+  type ContactMetadataProps,
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
@@ -93,7 +93,7 @@ variants.forEach((variant) => {
 
         it("can configure aria level", () => {
           cy.mount(
-            <PersonaAContactDetails headingAriaLevel={4} variant={variant} />
+            <PersonaAContactDetails headingAriaLevel={4} variant={variant} />,
           );
           cy.findByRole("heading").should("have.attr", "aria-level", "4");
         });
@@ -109,7 +109,7 @@ variants.forEach((variant) => {
                     .invoke("attr", "id")
                     .then((secondaryId) => {
                       expect(headingLabelledBy).contain(
-                        `${headingId} ${secondaryId}`
+                        `${headingId} ${secondaryId}`,
                       );
 
                       if (variant === "default") {
@@ -117,7 +117,7 @@ variants.forEach((variant) => {
                           .invoke("attr", "id")
                           .then((tertiaryId) => {
                             expect(headingLabelledBy).contain(
-                              `${headingId} ${secondaryId} ${tertiaryId}`
+                              `${headingId} ${secondaryId} ${tertiaryId}`,
                             );
                           });
                       }
@@ -170,7 +170,7 @@ describe("Given a default collapsible ContactDetails", () => {
               cy.findByLabelText("Expand").should(
                 "have.attr",
                 "aria-labelledby",
-                `${buttonId} ${primaryId}`
+                `${buttonId} ${primaryId}`,
               );
             });
         });

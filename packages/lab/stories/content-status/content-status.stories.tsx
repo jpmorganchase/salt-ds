@@ -1,12 +1,12 @@
-import { useCallback, useState } from "react";
 import {
   AriaAnnouncerProvider,
   Button,
   Card,
   useAriaAnnouncer,
 } from "@salt-ds/core";
-import { ContentStatus, ContentStatusProps } from "@salt-ds/lab";
-import { StoryFn, Meta } from "@storybook/react";
+import { ContentStatus, type ContentStatusProps } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useCallback, useState } from "react";
 
 export default {
   title: "Lab/Content Status",

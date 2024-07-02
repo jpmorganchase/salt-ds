@@ -1,25 +1,25 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Dropdown,
   FlexItem,
-  StackLayoutProps,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   Input,
   MultilineInput,
+  Option,
   SplitLayout,
   StackLayout,
+  type StackLayoutProps,
   useResponsiveProp,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  Dropdown,
-  Option,
 } from "@salt-ds/core";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
-import { Meta } from "@storybook/react";
-import { ElementType, useState } from "react";
+import type { Meta } from "@storybook/react";
+import { type ElementType, useState } from "react";
 
 export default {
   title: "Patterns/Button Bar",

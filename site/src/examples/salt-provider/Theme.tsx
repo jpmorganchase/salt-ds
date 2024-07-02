@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { SaltProvider, useTheme } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Theme = (): ReactElement => {
   const { theme } = useTheme();

@@ -22,7 +22,7 @@ export const calcPreferredHeight = (props = {}) => {
     preferredHeight +=
       Array.from({ length: preferredItemCount }).reduce(
         (total, _, index) => total + Number(getItemHeight(index)) + gapSize,
-        0
+        0,
       ) -
       // We don't want gap after the last item
       gapSize;
@@ -34,5 +34,5 @@ export const calcPreferredHeight = (props = {}) => {
 
   // list height will be undefined if the item height can not be
   // converted to a number, for example rem or a percentage string
-  return isNaN(preferredHeight) ? undefined : preferredHeight;
+  return Number.isNaN(preferredHeight) ? undefined : preferredHeight;
 };

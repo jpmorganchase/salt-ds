@@ -2,7 +2,7 @@ const exampleNameRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
 
 export const formatComponentExampleName = (
   exampleName: string,
-  displayName?: string
+  displayName?: string,
 ) => {
   if (displayName) {
     return displayName;

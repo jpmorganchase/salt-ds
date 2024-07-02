@@ -1,24 +1,24 @@
-import { FC, ReactNode, useEffect, useState } from "react";
 import {
+  BorderItem,
+  BorderLayout,
   Button,
+  Drawer,
   FlexItem,
   FlexLayout,
-  StackLayout,
-  BorderLayout,
-  BorderItem,
   NavigationItem,
-  useResponsiveProp,
+  StackLayout,
   Text,
-  Drawer,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import {
-  SymphonyIcon,
-  StackoverflowIcon,
+  CloseIcon,
   GithubIcon,
   MenuIcon,
-  CloseIcon,
+  StackoverflowIcon,
+  SymphonyIcon,
 } from "@salt-ds/icons";
-import { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 import logo from "../../assets/logo.svg";
 
 export default {

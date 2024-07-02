@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const positiveLookUp = [
   '[aria-live="polite"]',
@@ -14,7 +14,7 @@ const walkTheDOM = (node: Element, handler: (node: Element) => void) => {
   if (node.nodeType === 1) {
     handler(node);
     if (node.children.length) {
-      for (let childNode of node.children) {
+      for (const childNode of node.children) {
         walkTheDOM(childNode, handler);
       }
     }
@@ -26,9 +26,9 @@ export function AnnouncementListener(props: {
 }) {
   const { onAnnouncement } = props;
   const handleAnnouncement: MutationCallback = (mutations) => {
-    for (let mutation of mutations) {
+    for (const mutation of mutations) {
       if (mutation.type !== "attributes") {
-        let regionNode = mutation.target as HTMLElement;
+        const regionNode = mutation.target as HTMLElement;
         // if (regionNode.innerText) {
         onAnnouncement?.(regionNode.innerText);
         // }

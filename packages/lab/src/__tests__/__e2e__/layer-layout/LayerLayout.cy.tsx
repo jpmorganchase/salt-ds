@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as layerStories from "@stories/layer-layout/layer-layout.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(layerStories);
 
@@ -84,9 +84,9 @@ describe("GIVEN a Layer", () => {
 
         cy.get(".saltLayerLayout").should(
           "have.class",
-          "saltLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen",
         );
-      }
+      },
     );
   });
 
@@ -104,9 +104,9 @@ describe("GIVEN a Layer", () => {
 
         cy.get(".saltLayerLayout").should(
           "have.class",
-          "saltLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen",
         );
-      }
+      },
     );
 
     it(
@@ -122,9 +122,9 @@ describe("GIVEN a Layer", () => {
 
         cy.get(".saltLayerLayout").should(
           "have.class",
-          "saltLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen",
         );
-      }
+      },
     );
   });
 
@@ -140,7 +140,7 @@ describe("GIVEN a Layer", () => {
 
       cy.get(".saltLayerLayout").should(
         "have.class",
-        "saltLayerLayout-exit-animation"
+        "saltLayerLayout-exit-animation",
       );
 
       cy.get(".saltLayerLayout").should("not.exist");
@@ -163,13 +163,13 @@ describe("GIVEN a Layer", () => {
 
         cy.get(".saltLayerLayout").should(
           "have.class",
-          "saltLayerLayout-fullScreen"
+          "saltLayerLayout-fullScreen",
         );
 
         cy.findByRole("button", { name: /Close Layer/i }).click();
 
         cy.get(".saltLayerLayout").should("not.exist");
-      }
+      },
     );
   });
 });

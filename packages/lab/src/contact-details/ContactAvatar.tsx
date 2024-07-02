@@ -1,14 +1,14 @@
-import { forwardRef, useEffect } from "react";
-import { makePrefixer, Avatar, AvatarProps } from "@salt-ds/core";
-import { useContactDetailsContext } from "./internal";
+import { Avatar, type AvatarProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { forwardRef, useEffect } from "react";
+import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactAvatar");
 
 export type ContactAvatarProps = AvatarProps;
 
 export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
-  function (props, ref) {
+  (props, ref) => {
     const { className, ...restProps } = props;
     const context = useContactDetailsContext();
     const { variant, primary, isStacked, setHasAvatar } = context;
@@ -35,7 +35,7 @@ export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
           {
             [withBaseName("stacked")]: isStacked,
           },
-          className
+          className,
         )}
         size={avatarSize}
       >
@@ -47,5 +47,5 @@ export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
           : null}
       </Avatar>
     );
-  }
+  },
 );

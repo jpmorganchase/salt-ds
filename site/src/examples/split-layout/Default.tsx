@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { SplitLayout, FlexItem, FlowLayout } from "@salt-ds/core";
+import { FlexItem, FlowLayout, SplitLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 const startItem = (

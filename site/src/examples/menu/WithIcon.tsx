@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import { Button, Menu, MenuItem, MenuPanel, MenuTrigger } from "@salt-ds/core";
 import {
   CopyIcon,
@@ -6,6 +5,7 @@ import {
   MicroMenuIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const WithIcon = (): ReactElement => {
   return (

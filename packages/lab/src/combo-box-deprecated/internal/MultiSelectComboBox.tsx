@@ -1,13 +1,16 @@
 import { flip, limitShift, shift, size } from "@floating-ui/react";
 import { useAriaAnnouncer, useFloatingUI, useForkRef } from "@salt-ds/core";
 import { useEffect, useRef, useState } from "react";
-import { Portal } from "../../portal";
 import { ListBase, ListStateContext } from "../../list-deprecated";
-import { TokenizedInputBase, TokenizedInputProps } from "../../tokenized-input";
-import { BaseComboBoxProps } from "./DefaultComboBox";
+import { Portal } from "../../portal";
+import {
+  TokenizedInputBase,
+  type TokenizedInputProps,
+} from "../../tokenized-input";
+import { isDesktop, useWindow } from "../../window";
+import type { BaseComboBoxProps } from "./DefaultComboBox";
 import { getAnnouncement } from "./getAnnouncement";
 import { useMultiSelectComboBox } from "./useMultiSelectComboBox";
-import { isDesktop, useWindow } from "../../window";
 
 export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   Item,
@@ -31,7 +34,7 @@ export type MultiSelectComboBoxProps<Item> = BaseComboBoxProps<
   };
 
 export function MultiSelectComboBox<Item>(
-  props: MultiSelectComboBoxProps<Item>
+  props: MultiSelectComboBoxProps<Item>,
 ) {
   const {
     ListItem,
@@ -75,7 +78,7 @@ export function MultiSelectComboBox<Item>(
   }, [value, firstItem, itemCount, announce]);
 
   const [maxListHeight, setMaxListHeight] = useState<number | undefined>(
-    undefined
+    undefined,
   );
   const middleware = isDesktop
     ? []

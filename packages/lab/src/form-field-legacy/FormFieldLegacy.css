@@ -73,7 +73,8 @@
 .saltFormFieldLegacy-fullWidth.saltFormFieldLegacy-withHelperText {
   --formFieldLegacy-helperText-marginTop: var(--formFieldLegacy-helperText-marginTop-fullWidth);
   --formFieldLegacy-activationIndicator-offsetBottom: calc(
-    var(--formFieldLegacy-helperText-marginTop-fullWidth) + var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height))
+    var(--formFieldLegacy-helperText-marginTop-fullWidth) +
+    var(--saltFormFieldLegacy-helperText-lineHeight, var(--formFieldLegacy-helperText-height))
   );
 }
 

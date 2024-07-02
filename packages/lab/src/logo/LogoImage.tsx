@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import logoImageCss from "./LogoImage.css";
 
 export interface LogoImageProps
@@ -31,5 +31,5 @@ export const LogoImage = forwardRef<HTMLImageElement, LogoImageProps>(
         ref={ref}
       />
     );
-  }
+  },
 );

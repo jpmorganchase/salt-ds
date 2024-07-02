@@ -12,7 +12,7 @@ export const ColumnDataContext = createContext<
 export const useColumnDataContext = () => {
   const c = useContext(ColumnDataContext);
   if (!c) {
-    throw new Error(`useColumnDataContext invoked outside of a Grid`);
+    throw new Error("useColumnDataContext invoked outside of a Grid");
   }
   return c;
 };

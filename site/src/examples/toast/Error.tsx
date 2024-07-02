@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
 import { Button, Text, Toast, ToastContent } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const Error = (): ReactElement => (
   <Toast status="error" style={{ width: 260 }}>

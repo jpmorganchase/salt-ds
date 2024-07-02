@@ -1,8 +1,6 @@
-import { composeStories } from "@storybook/react";
-import * as calendarStories from "@stories/calendar/calendar.stories";
 import {
   DateFormatter,
-  DateValue,
+  type DateValue,
   endOfMonth,
   endOfWeek,
   endOfYear,
@@ -13,6 +11,8 @@ import {
   startOfYear,
   today,
 } from "@internationalized/date";
+import * as calendarStories from "@stories/calendar/calendar.stories";
+import { composeStories } from "@storybook/react";
 
 const {
   Default,
@@ -52,7 +52,7 @@ describe("GIVEN a Calendar", () => {
         formatDate(today(localTimeZone), {
           month: "long",
           year: "numeric",
-        })
+        }),
       );
       cy.findByRole("button", {
         name: formatDay(today(localTimeZone)),
@@ -90,7 +90,7 @@ describe("GIVEN a Calendar", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate, { month: "short" })
+          formatDate(testDate, { month: "short" }),
         );
         cy.findByRole("combobox", {
           name: "Month Dropdown",
@@ -102,7 +102,7 @@ describe("GIVEN a Calendar", () => {
           .realClick();
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate.set({ month: 4 }), { month: "short" })
+          formatDate(testDate.set({ month: 4 }), { month: "short" }),
         );
         cy.findByRole("button", {
           name: formatDay(testDate.set({ month: 4 })),
@@ -113,7 +113,7 @@ describe("GIVEN a Calendar", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("combobox", { name: "Year Dropdown" }).should(
           "have.text",
-          formatDate(testDate, { year: "numeric" })
+          formatDate(testDate, { year: "numeric" }),
         );
         cy.findByRole("combobox", {
           name: "Year Dropdown",
@@ -125,7 +125,7 @@ describe("GIVEN a Calendar", () => {
           .realClick();
         cy.findByRole("combobox", { name: "Year Dropdown" }).should(
           "have.text",
-          formatDate(testDate.add({ years: 1 }), { year: "numeric" })
+          formatDate(testDate.add({ years: 1 }), { year: "numeric" }),
         );
         cy.findByRole("button", {
           name: formatDay(testDate.add({ years: 1 })),
@@ -138,14 +138,14 @@ describe("GIVEN a Calendar", () => {
         cy.mount(<Default defaultVisibleMonth={testDate} />);
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate, { month: "short" })
+          formatDate(testDate, { month: "short" }),
         );
         cy.findByRole("button", {
           name: formatDay(endOfMonth(testDate).add({ days: 1 })),
         }).realClick();
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate.add({ months: 1 }), { month: "short" })
+          formatDate(testDate.add({ months: 1 }), { month: "short" }),
         );
       });
     });
@@ -249,7 +249,7 @@ describe("GIVEN a Calendar", () => {
   describe("Single Selection", () => {
     it("SHOULD move to selected date if it is within the visible month", () => {
       cy.mount(
-        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
+        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -261,7 +261,7 @@ describe("GIVEN a Calendar", () => {
     });
     it("SHOULD move to selected date when navigating back to selection month", () => {
       cy.mount(
-        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />
+        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -283,7 +283,7 @@ describe("GIVEN a Calendar", () => {
         <Default
           selectedDate={todayTestDate.subtract({ months: 2 })}
           defaultVisibleMonth={todayTestDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -324,7 +324,7 @@ describe("GIVEN a Calendar", () => {
     it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
       const todayTestDate = today(localTimeZone);
       cy.mount(
-        <Default defaultVisibleMonth={todayTestDate.add({ months: 1 })} />
+        <Default defaultVisibleMonth={todayTestDate.add({ months: 1 })} />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -355,7 +355,7 @@ describe("GIVEN a Calendar", () => {
       cy.findByRole("button", { name: formatDay(testDate) }).should(
         "have.attr",
         "aria-pressed",
-        "true"
+        "true",
       );
 
       cy.findByRole("button", {
@@ -363,7 +363,7 @@ describe("GIVEN a Calendar", () => {
       }).realClick();
       cy.findByRole("button", { name: formatDay(testDate) }).should(
         "not.have.attr",
-        "aria-pressed"
+        "aria-pressed",
       );
       cy.findByRole("button", {
         name: formatDay(testDate.add({ days: 1 })),
@@ -382,7 +382,7 @@ describe("GIVEN a Calendar", () => {
       cy.findByRole("button", { name: formatDay(testDate) }).should(
         "have.attr",
         "aria-pressed",
-        "true"
+        "true",
       );
     });
   });
@@ -397,7 +397,7 @@ describe("GIVEN a Calendar", () => {
             testDate,
           ]}
           defaultVisibleMonth={testDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -413,7 +413,7 @@ describe("GIVEN a Calendar", () => {
         <MultiSelection
           selectedDate={[todayTestDate.subtract({ months: 2 })]}
           defaultVisibleMonth={todayTestDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -439,7 +439,7 @@ describe("GIVEN a Calendar", () => {
       cy.mount(
         <MultiSelection
           defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -458,7 +458,7 @@ describe("GIVEN a Calendar", () => {
       cy.findByRole("button", { name: formatDay(testDate) }).should(
         "have.attr",
         "aria-pressed",
-        "true"
+        "true",
       );
 
       cy.findByRole("button", {
@@ -518,12 +518,12 @@ describe("GIVEN a Calendar", () => {
         // @ts-ignore
         baseDate,
         // @ts-ignore
-        OffsetSelection.args?.endDateOffset(baseDate)
+        OffsetSelection.args?.endDateOffset(baseDate),
       );
       cy.findByRole("button", {
         name: formatDay(baseDate),
       }).realHover();
-      for (let dateInRange of datesInRange) {
+      for (const dateInRange of datesInRange) {
         cy.findByRole("button", {
           name: formatDay(dateInRange),
         }).should("have.class", "saltCalendarDay-hoveredOffset");
@@ -533,7 +533,7 @@ describe("GIVEN a Calendar", () => {
         name: formatDay(baseDate),
       }).realClick();
 
-      for (let dateInRange of datesInRange) {
+      for (const dateInRange of datesInRange) {
         cy.findByRole("button", {
           name: formatDay(dateInRange),
         }).should("have.attr", "aria-pressed", "true");
@@ -543,19 +543,19 @@ describe("GIVEN a Calendar", () => {
       const datesInNewRange = getAllDatesInRange(
         newBaseDate,
         // @ts-ignore
-        OffsetSelection.args?.endDateOffset(newBaseDate)
+        OffsetSelection.args?.endDateOffset(newBaseDate),
       );
 
       cy.findByRole("button", {
         name: formatDay(baseDate.add({ weeks: 1 })),
       }).realClick();
-      for (let dateInRange of datesInNewRange) {
+      for (const dateInRange of datesInNewRange) {
         cy.findByRole("button", {
           name: formatDay(dateInRange),
         }).should("have.attr", "aria-pressed", "true");
       }
 
-      for (let dateInRange of datesInRange) {
+      for (const dateInRange of datesInRange) {
         cy.findByRole("button", {
           name: formatDay(dateInRange),
         }).should("not.have.attr", "aria-pressed");
@@ -563,7 +563,7 @@ describe("GIVEN a Calendar", () => {
 
       cy.realPress("ArrowUp");
       cy.realPress("Enter");
-      for (let dateInRange of datesInRange) {
+      for (const dateInRange of datesInRange) {
         cy.findByRole("button", {
           name: formatDay(dateInRange),
         }).should("have.attr", "aria-pressed", "true");
@@ -581,7 +581,7 @@ describe("GIVEN a Calendar", () => {
             endDate: endOfMonth(todayTestDate),
           }}
           defaultVisibleMonth={todayTestDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -600,7 +600,7 @@ describe("GIVEN a Calendar", () => {
             endDate: endOfMonth(todayTestDate),
           }}
           defaultVisibleMonth={todayTestDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -621,7 +621,7 @@ describe("GIVEN a Calendar", () => {
             }),
           }}
           defaultVisibleMonth={todayTestDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -648,7 +648,7 @@ describe("GIVEN a Calendar", () => {
         <RangeSelection
           defaultVisibleMonth={todayTestDate}
           selectedDate={{ startDate: undefined, endDate: undefined }}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -663,7 +663,7 @@ describe("GIVEN a Calendar", () => {
       cy.mount(
         <RangeSelection
           defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -684,7 +684,7 @@ describe("GIVEN a Calendar", () => {
             endDate: testDate.add({ months: 2 }),
           }}
           defaultVisibleMonth={testDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Next Month",
@@ -808,7 +808,7 @@ describe("GIVEN a Calendar", () => {
           defaultVisibleMonth={testDate}
           minDate={minDate}
           maxDate={maxDate}
-        />
+        />,
       );
       cy.findByRole("button", {
         name: "Previous Month",
@@ -824,7 +824,7 @@ describe("GIVEN a Calendar", () => {
       }).realHover();
       cy.findByRole("tooltip").should(
         "have.text",
-        "Past dates are out of range"
+        "Past dates are out of range",
       );
 
       cy.findByRole("combobox", { name: "Month Dropdown" }).realClick();
@@ -839,7 +839,7 @@ describe("GIVEN a Calendar", () => {
 
       cy.findByRole("tooltip").should(
         "have.text",
-        "This month is out of range"
+        "This month is out of range",
       );
 
       cy.findByRole("button", {
@@ -862,7 +862,7 @@ describe("GIVEN a Calendar", () => {
       }).realHover();
       cy.findByRole("tooltip").should(
         "have.text",
-        "Future dates are out of range"
+        "Future dates are out of range",
       );
 
       cy.findByRole("combobox", { name: "Month Dropdown" }).realClick();
@@ -884,7 +884,7 @@ describe("GIVEN a Calendar", () => {
     it("SHOULD hide the days not in the current month from be displayed when set to true", () => {
       cy.mount(<HideOutOfRangeDays defaultVisibleMonth={testDate} />);
       const lastPreviousOutOfRangeDate = formatDay(
-        endOfMonth(testDate.subtract({ months: 1 }))
+        endOfMonth(testDate.subtract({ months: 1 })),
       );
       cy.get(`[aria-label="${lastPreviousOutOfRangeDate}"]`)
         .eq(1)
@@ -892,7 +892,7 @@ describe("GIVEN a Calendar", () => {
         .and("have.attr", "aria-hidden", "true");
 
       const firstNextOutOfRangeDate = formatDay(
-        startOfMonth(testDate.add({ months: 1 }))
+        startOfMonth(testDate.add({ months: 1 })),
       );
       cy.get(`[aria-label="${firstNextOutOfRangeDate}"]`)
         .eq(0)
@@ -945,7 +945,7 @@ describe("GIVEN a Calendar", () => {
         }).realHover();
         cy.findByRole("tooltip").should(
           "have.text",
-          "Past dates are out of range"
+          "Past dates are out of range",
         );
       });
 
@@ -967,7 +967,7 @@ describe("GIVEN a Calendar", () => {
         }).realHover();
         cy.findByRole("tooltip").should(
           "have.text",
-          "Future dates are out of range"
+          "Future dates are out of range",
         );
       });
     });

@@ -1,12 +1,18 @@
-import { useState, useRef, Ref, DependencyList, useCallback } from "react";
 import {
   debounce,
   ownerWindow,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
+import {
+  type DependencyList,
+  type Ref,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 
 export function useOverflowDetection<Element extends HTMLElement>(
-  dependencies: DependencyList = []
+  dependencies: DependencyList = [],
 ): [Ref<Element>, boolean] {
   const targetRef = useRef<Element>(null);
   const [isOverflowed, setOverflowed] = useState(false);
@@ -23,7 +29,7 @@ export function useOverflowDetection<Element extends HTMLElement>(
 
       setOverflowed(current.offsetWidth < current.scrollWidth);
     }),
-    [targetRef, isOverflowed]
+    [targetRef, isOverflowed],
   );
 
   // check on resizing
@@ -39,7 +45,6 @@ export function useOverflowDetection<Element extends HTMLElement>(
   }, [targetRef, handleResize]);
 
   // We don't put handleResize in the dependency array as it's been handled by the `useLayoutEffect` above
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useIsomorphicLayoutEffect(handleResize, dependencies);
 
   return [targetRef, isOverflowed];

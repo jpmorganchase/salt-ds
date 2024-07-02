@@ -1,9 +1,9 @@
-import { clsx } from "clsx";
-import { forwardRef } from "react";
-import { IconProps } from "@salt-ds/icons";
+import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { ValidationStatus } from "../status-indicator";
+import { clsx } from "clsx";
+import { forwardRef } from "react";
+import type { ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
 import { ErrorAdornmentIcon } from "./ErrorAdornment";
 import { SuccessAdornmentIcon } from "./SuccessAdornment";
@@ -54,5 +54,5 @@ export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
         ref={ref}
       />
     );
-  }
+  },
 );

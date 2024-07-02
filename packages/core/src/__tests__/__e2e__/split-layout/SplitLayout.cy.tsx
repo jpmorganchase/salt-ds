@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as splitStories from "@stories/split-layout/split-layout.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(splitStories);
@@ -24,9 +24,9 @@ describe("GIVEN a Split", () => {
         cy.get(".saltFlexLayout").should(
           "have.css",
           "flex-direction",
-          "column"
+          "column",
         );
-      }
+      },
     );
 
     it("THEN it should render with a default gap", () => {

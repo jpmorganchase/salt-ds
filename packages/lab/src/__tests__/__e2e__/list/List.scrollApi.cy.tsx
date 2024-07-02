@@ -1,4 +1,4 @@
-import { List, ListProps, ListScrollHandles } from "@salt-ds/lab";
+import { List, type ListProps, type ListScrollHandles } from "@salt-ds/lab";
 import { useRef } from "react";
 
 type ItemType = { label: string; value: string };

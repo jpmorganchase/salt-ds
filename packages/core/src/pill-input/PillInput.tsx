@@ -1,25 +1,25 @@
-import { clsx } from "clsx";
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  SyntheticEvent,
-  ComponentPropsWithoutRef,
-  MouseEvent,
-  ForwardedRef,
-  forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
-  Ref,
-  useState,
-  useRef,
-} from "react";
+import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
-import { makePrefixer, useControlled, useId, useForkRef } from "../utils";
+import { clsx } from "clsx";
+import {
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type ForwardedRef,
+  type InputHTMLAttributes,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  type Ref,
+  type SyntheticEvent,
+  forwardRef,
+  useRef,
+  useState,
+} from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { StatusAdornment } from "../status-adornment";
 import { Pill } from "../pill";
+import { StatusAdornment } from "../status-adornment";
+import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
 import { useTruncatePills } from "./useTruncatePills";
 
 import pillInputCss from "./PillInput.css";
@@ -110,7 +110,7 @@ export const PillInput = forwardRef(function PillInput(
     bordered = false,
     ...other
   }: PillInputProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -186,7 +186,7 @@ export const PillInput = forwardRef(function PillInput(
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const target = event.currentTarget;
-    if (target.selectionStart === 0 && target.selectionEnd == 0) {
+    if (target.selectionStart === 0 && target.selectionEnd === 0) {
       const lastPillIndex = pills.length - 1;
       const lastPill = pills[lastPillIndex];
       if (event.key === "Backspace" && lastPill) {
@@ -217,7 +217,7 @@ export const PillInput = forwardRef(function PillInput(
       } else {
         pillElementsRef.current[index + 1]?.focus();
       }
-    } else if (event.key == "Delete" || event.key === "Backspace") {
+    } else if (event.key === "Delete" || event.key === "Backspace") {
       event.preventDefault();
       onPillRemove?.(event, index);
 
@@ -255,7 +255,7 @@ export const PillInput = forwardRef(function PillInput(
           [withBaseName(validationStatus ?? "")]: validationStatus,
           [withBaseName("bordered")]: bordered,
         },
-        classNameProp
+        classNameProp,
       )}
       ref={ref}
       style={inputStyle}
@@ -275,7 +275,7 @@ export const PillInput = forwardRef(function PillInput(
           id={pillListId}
         >
           {visiblePills?.map((pill, index) => (
-            <div role="listitem" key={index}>
+            <div role="listitem" key={pill}>
               <Pill
                 data-index={index}
                 disabled={disabled}
@@ -284,7 +284,7 @@ export const PillInput = forwardRef(function PillInput(
                     pillElementsRef.current[index] = element;
                   } else {
                     pillElementsRef.current = pillElementsRef.current.filter(
-                      (pillEl) => pillEl !== element
+                      (pillEl) => pillEl !== element,
                     );
                   }
                 }}

@@ -1,9 +1,14 @@
 import { ownerDocument } from "@salt-ds/core";
-import { MouseEvent, MutableRefObject, useEffect, useRef } from "react";
+import {
+  type MouseEvent,
+  type MutableRefObject,
+  useEffect,
+  useRef,
+} from "react";
 
 function getSelectionRange(
   input: HTMLInputElement,
-  { highlightOnFocus, cursorPositionOnFocus }: useCursorOnFocusProps
+  { highlightOnFocus, cursorPositionOnFocus }: useCursorOnFocusProps,
 ): [number | null, number | null] {
   // highlightOnFocus highlight first so it takes priority over position on focus
   if (highlightOnFocus === true) {
@@ -21,7 +26,7 @@ function getSelectionRange(
     return [input.value.length, input.value.length];
   }
 
-  if (cursorPositionOnFocus != null && !isNaN(cursorPositionOnFocus)) {
+  if (cursorPositionOnFocus != null && !Number.isNaN(cursorPositionOnFocus)) {
     return [cursorPositionOnFocus, cursorPositionOnFocus];
   }
   return [null, null];
@@ -59,7 +64,7 @@ export interface useCursorOnFocusProps {
 
 export function useCursorOnFocus(
   inputRef: MutableRefObject<HTMLInputElement | null>,
-  { cursorPositionOnFocus, highlightOnFocus }: useCursorOnFocusProps
+  { cursorPositionOnFocus, highlightOnFocus }: useCursorOnFocusProps,
 ) {
   const wasClick = useRef(false);
   const timeoutRef = useRef<number>(-1);
@@ -86,11 +91,11 @@ export function useCursorOnFocus(
         return;
       }
 
-      if (typeof originalCursorPosition.current == "number") {
+      if (typeof originalCursorPosition.current === "number") {
         // Allows continued highlighted if the mouse down is part of a selection.
         inputRef.current?.setSelectionRange(
           originalCursorPosition.current,
-          originalCursorPosition.current
+          originalCursorPosition.current,
         );
       }
 

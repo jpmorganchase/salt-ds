@@ -1,5 +1,5 @@
-import { ReactElement, useEffect, useState } from "react";
-import { Spinner, StackLayout, Text, Button } from "@salt-ds/core";
+import { Button, Spinner, StackLayout, Text } from "@salt-ds/core";
+import { type ReactElement, useEffect, useState } from "react";
 
 const LOADING_DELAY = 2000;
 

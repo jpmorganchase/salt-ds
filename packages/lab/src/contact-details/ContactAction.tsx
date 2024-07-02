@@ -1,6 +1,11 @@
-import { Button, ButtonProps, Tooltip, TooltipProps } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
-import { ComponentType, forwardRef } from "react";
+import {
+  Button,
+  type ButtonProps,
+  Tooltip,
+  type TooltipProps,
+} from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
+import { type ComponentType, forwardRef } from "react";
 
 export type ContactActionProps = ButtonProps & {
   accessibleText?: string;
@@ -20,7 +25,7 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
   function ContactAction(props, ref) {
     const { label, icon, accessibleText, tooltipProps, ...restProps } = props;
 
-    const Icon = icon!;
+    const Icon = icon;
 
     return (
       <Tooltip
@@ -29,9 +34,9 @@ export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
         content={accessibleText}
       >
         <Button variant="secondary" ref={ref} {...restProps}>
-          {label ? label : <Icon />}
+          {label ? label : Icon ? <Icon /> : null}
         </Button>
       </Tooltip>
     );
-  }
+  },
 );

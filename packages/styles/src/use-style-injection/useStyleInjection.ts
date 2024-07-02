@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useInsertionPoint } from "./InsertionPointProvider";
 import { useStyleInjection } from "../style-injection-provider";
+import { useInsertionPoint } from "./InsertionPointProvider";
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any -- Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985 */
 const maybeUseInsertionEffect: typeof React.useLayoutEffect =
@@ -53,7 +53,7 @@ export function useComponentCssInjection({
 
       targetWindow.document.head.insertBefore(
         styleMap.styleElement,
-        insertionPoint || targetWindow.document.head.firstChild
+        insertionPoint || targetWindow.document.head.firstChild,
       );
     } else {
       styleMap.styleElement.textContent = css;

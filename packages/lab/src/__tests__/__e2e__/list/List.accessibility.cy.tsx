@@ -17,7 +17,7 @@ const ARIA_SELECTED = "aria-selected";
           </List>
         ) : (
           <List source={ITEMS} />
-        )
+        ),
       );
 
       cy.findByRole("listbox").should("have.attr", "tabindex", "0");
@@ -33,14 +33,14 @@ const ARIA_SELECTED = "aria-selected";
             </List>
           ) : (
             <List id="list" source={ITEMS} />
-          )
+          ),
         );
 
         cy.get("#list-item-1").trigger("mousemove");
         cy.findByRole("listbox").should(
           "have.attr",
           "aria-activedescendant",
-          `list-item-1`
+          "list-item-1",
         );
       });
     });
@@ -55,13 +55,13 @@ const ARIA_SELECTED = "aria-selected";
             </List>
           ) : (
             <List id="list" source={ITEMS} />
-          )
+          ),
         );
         cy.findByRole("listbox").focus();
         cy.findByRole("listbox").should(
           "have.attr",
           "aria-activedescendant",
-          `list-item-0`
+          "list-item-0",
         );
       });
     });
@@ -79,13 +79,13 @@ const ARIA_SELECTED = "aria-selected";
                 </List>
               ) : (
                 <List id="list" source={ITEMS} />
-              )
+              ),
             );
             cy.get("#list-item-1").click();
             cy.get("#list-item-0").should("not.have.attr", ARIA_SELECTED);
             cy.get("#list-item-1").should("have.attr", ARIA_SELECTED);
           }
-        : undefined
+        : undefined,
     );
 
     it("should set aria-disabled for disabled item", () => {
@@ -103,7 +103,7 @@ const ARIA_SELECTED = "aria-selected";
               { label: "list item 2", disabled: true },
             ]}
           />
-        )
+        ),
       );
       cy.get("#list-item-0").should("not.have.attr", "aria-disabled");
       cy.get("#list-item-1").should("have.attr", "aria-disabled");
@@ -119,7 +119,7 @@ const ARIA_SELECTED = "aria-selected";
             </List>
           ) : (
             <List disabled id="list" source={ITEMS} />
-          )
+          ),
         );
       });
 
@@ -143,7 +143,7 @@ const ARIA_SELECTED = "aria-selected";
             </List>
           ) : (
             <List selectionStrategy="multiple" source={ITEMS} />
-          )
+          ),
         );
 
         cy.findByRole("listbox").should("have.attr", "aria-multiselectable");
@@ -162,7 +162,7 @@ const ARIA_SELECTED = "aria-selected";
                   </List>
                 ) : (
                   <List id="list" selectionStrategy="multiple" source={ITEMS} />
-                )
+                ),
               );
 
               cy.get("#list-item-0").click();
@@ -170,7 +170,7 @@ const ARIA_SELECTED = "aria-selected";
               cy.get("#list-item-0").should("have.attr", "aria-selected");
               cy.get("#list-item-1").should("not.have.attr", "aria-selected");
             }
-          : undefined
+          : undefined,
       );
     });
   });

@@ -21,7 +21,7 @@ export const calcPreferredListHeight = (props = {}) => {
   if (typeof getItemHeight === "function") {
     preferredHeight += Array.from({ length: preferredItemCount }).reduce(
       (total, _, index) => total + Number(getItemHeight(index)),
-      0
+      0,
     );
   } else {
     preferredHeight += preferredItemCount * Number(itemHeight);
@@ -29,5 +29,5 @@ export const calcPreferredListHeight = (props = {}) => {
 
   // list height will be undefined if the item height can not be
   // converted to a number, for example rem or a percentage string
-  return isNaN(preferredHeight) ? undefined : preferredHeight;
+  return Number.isNaN(preferredHeight) ? undefined : preferredHeight;
 };

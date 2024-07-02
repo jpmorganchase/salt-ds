@@ -1,22 +1,22 @@
-import { clsx } from "clsx";
-import {
-  ChangeEventHandler,
-  FocusEventHandler,
-  forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
-  useRef,
-} from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  type InputHTMLAttributes,
+  type ReactNode,
+  forwardRef,
+  useRef,
+} from "react";
+import { useFormFieldProps } from "../form-field-context";
+import type { AdornmentValidationStatus } from "../status-adornment";
 import {
   makePrefixer,
   useControlled,
   useIsomorphicLayoutEffect,
 } from "../utils";
 import { CheckboxIcon } from "./CheckboxIcon";
-import { useFormFieldProps } from "../form-field-context";
-import { AdornmentValidationStatus } from "../status-adornment";
 import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 
 import checkboxCss from "./Checkbox.css";
@@ -106,7 +106,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       readOnly: readOnlyProp,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -185,7 +185,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
             [withBaseName("error")]: error /* **Deprecated** */,
             [withBaseName(validationStatus ?? "")]: validationStatus,
           },
-          className
+          className,
         )}
         ref={ref}
         {...rest}
@@ -196,13 +196,13 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
             checkboxGroup === undefined
               ? formFieldA11yProps?.["aria-describedby"]
               : undefined,
-            inputDescribedBy
+            inputDescribedBy,
           )}
           aria-labelledby={clsx(
             checkboxGroup === undefined
               ? formFieldA11yProps?.["aria-labelledby"]
               : undefined,
-            inputLabelledBy
+            inputLabelledBy,
           )}
           name={name}
           value={value}
@@ -230,5 +230,5 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         {label}
       </label>
     );
-  }
+  },
 );

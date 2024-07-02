@@ -1,14 +1,14 @@
-import { useState } from "react";
 import {
-  H3,
-  Text,
-  StackLayout,
   Card,
-  CardProps,
-  RadioButtonGroup,
-  RadioButton,
+  type CardProps,
+  H3,
   Link,
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import { useState } from "react";
 
 export const Accents = () => {
   const [placement, setPlacement] = useState<CardProps["accent"]>("top");

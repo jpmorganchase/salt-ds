@@ -1,4 +1,4 @@
-import { Middleware } from "@floating-ui/core";
+import type { Middleware } from "@floating-ui/core";
 
 export const margin = (value = 0): Middleware => ({
   name: "margin",

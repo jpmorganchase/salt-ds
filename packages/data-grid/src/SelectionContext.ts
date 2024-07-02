@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { CellRange, SelectRowsOptions } from "./internal";
+import type { CellRange, SelectRowsOptions } from "./internal";
 
 export interface SelectionContext {
   selectedCellRange: CellRange | undefined;
@@ -12,13 +12,13 @@ export interface SelectionContext {
 }
 
 export const SelectionContext = createContext<SelectionContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const useSelectionContext = () => {
   const c = useContext(SelectionContext);
   if (!c) {
-    throw new Error(`useSelectionContext invoked outside of a Grid`);
+    throw new Error("useSelectionContext invoked outside of a Grid");
   }
   return c;
 };

@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
+import { BorderItem, BorderLayout } from "@salt-ds/core";
 import clsx from "clsx";
-import { BorderLayout, BorderItem } from "@salt-ds/core";
-import styles from "./index.module.css";
+import type { ReactElement } from "react";
 import hideRegionsStyles from "./HideRegions.module.css";
+import styles from "./index.module.css";
 
 export const HideRegions = (): ReactElement => (
   <BorderLayout className={hideRegionsStyles.borderLayout}>

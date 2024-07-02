@@ -1,5 +1,5 @@
 import {
-  DateValue,
+  type DateValue,
   endOfMonth,
   endOfYear,
   getLocalTimeZone,
@@ -10,22 +10,22 @@ import {
   today,
 } from "@internationalized/date";
 import { useControlled } from "@salt-ds/core";
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
+  type UseMultiSelectionCalendarProps,
+  type UseOffsetSelectionCalendarProps,
+  type UseRangeSelectionCalendarProps,
+  type UseSingleSelectionCalendarProps,
   isRangeOrOffsetSelectionWithStartDate,
-  UseMultiSelectionCalendarProps,
-  UseOffsetSelectionCalendarProps,
-  UseRangeSelectionCalendarProps,
   useSelectionCalendar,
-  useSelectionCalendarProps,
-  UseSingleSelectionCalendarProps,
+  type useSelectionCalendarProps,
 } from "./useSelection";
 
 interface BaseUseCalendarProps {
   defaultVisibleMonth?: DateValue;
   onVisibleMonthChange?: (
     event: SyntheticEvent,
-    visibleMonth: DateValue
+    visibleMonth: DateValue,
   ) => void;
   isDayUnselectable?: (date: DateValue) => string | false | void;
   isDayHighlighted?: (date: DateValue) => string | false | void;
@@ -88,7 +88,7 @@ export function useCalendar(props: useCalendarProps) {
         (maxDate != null && date.compare(maxDate) > 0)
       );
     },
-    [maxDate, minDate]
+    [maxDate, minDate],
   );
 
   const isOutsideAllowedMonths = (date: DateValue) => {
@@ -113,7 +113,7 @@ export function useCalendar(props: useCalendarProps) {
           isDayDisabled(date) ||
           isOutsideAllowedDates(date))
       ),
-    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates]
+    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates],
   );
 
   const selectionManager = useSelectionCalendar({
@@ -137,7 +137,7 @@ export function useCalendar(props: useCalendarProps) {
   const [calendarFocused, setCalendarFocused] = useState(false);
 
   const isInVisibleMonth = (
-    date: DateValue | undefined | null
+    date: DateValue | undefined | null,
   ): date is DateValue => date != null && isSameMonth(date, visibleMonth);
 
   const getInitialFocusedDate = (): DateValue => {
@@ -189,7 +189,7 @@ export function useCalendar(props: useCalendarProps) {
   };
 
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
-    getInitialFocusedDate
+    getInitialFocusedDate,
   );
 
   const isDayVisible = useCallback(
@@ -202,7 +202,7 @@ export function useCalendar(props: useCalendarProps) {
 
       return !(date.compare(endInsideDays) > 0);
     },
-    [visibleMonth]
+    [visibleMonth],
   );
 
   const setVisibleMonth = useCallback(
@@ -210,7 +210,7 @@ export function useCalendar(props: useCalendarProps) {
       setVisibleMonthState(newVisibleMonth);
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [onVisibleMonthChange, setVisibleMonthState]
+    [onVisibleMonthChange, setVisibleMonthState],
   );
 
   const setFocusedDate = useCallback(
@@ -233,7 +233,7 @@ export function useCalendar(props: useCalendarProps) {
       isDayVisible,
       isOutsideAllowedDates,
       setVisibleMonth,
-    ]
+    ],
   );
 
   useEffect(() => {

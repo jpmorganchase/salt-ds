@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
-import { type CountryCode } from "@salt-ds/countries";
+import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
+import type { CountryCode } from "@salt-ds/countries";
+import type { Meta, StoryFn } from "@storybook/react";
 import { Suspense } from "react";
 
 export default {
@@ -24,7 +24,7 @@ export const AllLazyCountrySymbols: StoryFn = () => {
         >
           {Object.keys(countryMetaMap)
             .map(
-              (componentCode) => countryMetaMap[componentCode as CountryCode]
+              (componentCode) => countryMetaMap[componentCode as CountryCode],
             )
             .map(({ countryCode }) => (
               <LazyCountrySymbol

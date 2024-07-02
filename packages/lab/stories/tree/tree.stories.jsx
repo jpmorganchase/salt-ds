@@ -1,5 +1,5 @@
+import { Tree } from "@salt-ds/lab";
 import React from "react";
-import { Tree as Tree } from "@salt-ds/lab";
 import { groupByInitialLetter, usa_states_cities } from "../list/list.data";
 import { folderData } from "./tree.data";
 
@@ -51,7 +51,7 @@ function createSampleTreeData(autoExpanded = true, wideLeafNodeParentId = "") {
                             description: "description",
                           },
                         ]
-                      : []
+                      : [],
                   ),
                 },
               ],
@@ -124,7 +124,7 @@ export const Default = () => {
 
 export const Cypress = () => {
   const handleSelectionChange = (evt, selected) => {
-    console.log(`selectionChange`, { selected });
+    console.log("selectionChange", { selected });
   };
 
   return (

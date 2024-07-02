@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
-  isValidHex,
-  hexValueWithoutAlpha,
-  getColorNameByHexValue,
   convertColorMapValueToHex,
+  getColorNameByHexValue,
+  hexValueWithoutAlpha,
+  isValidHex,
 } from "../../color-chooser";
 
 describe("Color chooser helpers", () => {
@@ -56,17 +56,17 @@ describe("Color chooser helpers", () => {
     describe("WHEN disableFallBackToHex", () => {
       it("should get the correct Salt color name if passed 6 digit hex", () => {
         expect(
-          getColorNameByHexValue("#D1F4C9", false, undefined, true)
+          getColorNameByHexValue("#D1F4C9", false, undefined, true),
         ).toEqual("Green10");
       });
       it("should get the correct Salt color name if passed 8 digit hex", () => {
         expect(
-          getColorNameByHexValue("#D1F4C980", false, undefined, true)
+          getColorNameByHexValue("#D1F4C980", false, undefined, true),
         ).toEqual("Green10");
       });
       it("should just return undefined if it is not a Salt color and alpha slider is disabled", () => {
         expect(
-          getColorNameByHexValue("#D1F4C780", true, undefined, true)
+          getColorNameByHexValue("#D1F4C780", true, undefined, true),
         ).toBeUndefined();
       });
     });
@@ -74,14 +74,14 @@ describe("Color chooser helpers", () => {
   describe("convertColorMapValueToHex", () => {
     it("Should convert rgb string into hex value", () => {
       expect(convertColorMapValueToHex("rgb(217, 221, 227)")).toEqual(
-        "#d9dde3"
+        "#d9dde3",
       );
       expect(convertColorMapValueToHex("rgb(162, 217, 218)")).toEqual(
-        "#a2d9da"
+        "#a2d9da",
       );
       expect(convertColorMapValueToHex("rgb(0, 0, 0)")).toEqual("#000000");
       expect(convertColorMapValueToHex("rgba(0, 34, 67, 0.9)")).toEqual(
-        "#002243e6"
+        "#002243e6",
       );
     });
     it("should not convert a string that does not start with rgb/rgba to hex", () => {

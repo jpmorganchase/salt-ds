@@ -1,24 +1,16 @@
 import { useEffect } from "react";
-import { QAContainer, QAContainerProps } from "./QAContainer";
+import { QAContainer, type QAContainerProps } from "./QAContainer";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line import/no-unresolved
 import coreCss from "../css/salt-core.css?inline";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line import/no-unresolved
 import iconCss from "../../packages/icons/src/icon/Icon.css?inline";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line import/no-unresolved
 import labCss from "../css/salt-lab.css?inline";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-// eslint-disable-next-line import/no-unresolved
 import countriesCss from "../css/salt-countries.css?inline";
 
 export const useDynamicStyleSheet = (styleSheet: string, id: string): void => {
@@ -36,7 +28,7 @@ export interface QAContainerNoStyleInjectionProps extends QAContainerProps {
 }
 
 export const QAContainerNoStyleInjection = (
-  props: QAContainerNoStyleInjectionProps
+  props: QAContainerNoStyleInjectionProps,
 ) => {
   // order is important!
   useDynamicStyleSheet(String(iconCss), "salt-icon-css");

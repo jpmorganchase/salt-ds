@@ -1,17 +1,17 @@
 import {
-  makePrefixer,
-  Mode,
+  type Mode,
   SaltProvider,
   UNSTABLE_SaltProviderNext,
+  makePrefixer,
   useTheme,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
+  type CSSProperties,
   Children,
-  CSSProperties,
-  DetailedHTMLProps,
+  type DetailedHTMLProps,
   Fragment,
-  HTMLAttributes,
+  type HTMLAttributes,
 } from "react";
 import { DraggableImg } from "./DraggableSnapshot";
 

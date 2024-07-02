@@ -50,7 +50,7 @@ const saltConfig = {
     },
     {
       modulePath: require.resolve(
-        "./src/mosaic-plugins/LabsComponentPlugin.mjs"
+        "./src/mosaic-plugins/LabsComponentPlugin.mjs",
       ),
       options: {
         labPackageName: "@salt-ds/lab",
@@ -60,7 +60,7 @@ const saltConfig = {
     },
     {
       modulePath: require.resolve(
-        "./src/mosaic-plugins/ComponentsDocPaginatorPlugin.mjs"
+        "./src/mosaic-plugins/ComponentsDocPaginatorPlugin.mjs",
       ),
     },
   ],

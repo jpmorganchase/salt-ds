@@ -42,7 +42,7 @@ describe("GIVEN a Pill", () => {
         cy.mount(
           <Pill onClick={clickSpy} disabled>
             Pill disabled
-          </Pill>
+          </Pill>,
         );
         cy.findByRole("button").should("have.attr", "disabled");
       });

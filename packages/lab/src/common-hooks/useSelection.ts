@@ -1,7 +1,12 @@
 import { useControlled } from "@salt-ds/core";
-import { KeyboardEvent, MouseEvent, useCallback, useRef } from "react";
-import { CollectionItem } from "./collectionTypes";
 import {
+  type KeyboardEvent,
+  type MouseEvent,
+  useCallback,
+  useRef,
+} from "react";
+import type { CollectionItem } from "./collectionTypes";
+import type {
   SelectionHookProps,
   SelectionHookResult,
   SelectionStrategy,
@@ -23,16 +28,16 @@ const isSelectable = (item?: CollectionItem<unknown>) =>
 
 const byItemIndex = (
   i1: CollectionItem<unknown>,
-  i2: CollectionItem<unknown>
+  i2: CollectionItem<unknown>,
 ) => (i1.index ?? 0) - (i2.index ?? 0);
 
 export const groupSelectionEnabled = (
-  groupSelection: GroupSelectionMode
+  groupSelection: GroupSelectionMode,
 ): boolean => groupSelection && groupSelection !== GROUP_SELECTION_NONE;
 
 export const useSelection = <
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 >({
   defaultSelected,
   disableSelection = false,
@@ -60,11 +65,11 @@ export const useSelection = <
 
   const isSelectionEvent = useCallback(
     (evt: KeyboardEvent) => selectionKeys.includes(evt.key),
-    [selectionKeys]
+    [selectionKeys],
   );
 
   const emptyValue = useCallback(<
-    Item
+    Item,
   >(): Selection extends SingleSelectionStrategy
     ? null
     : CollectionItem<Item>[] => {
@@ -93,13 +98,13 @@ export const useSelection = <
         ? selected.includes(item)
         : selected === item;
     },
-    [selected]
+    [selected],
   );
 
   const selectDefault = useCallback((item: collectionItem) => item, []);
   const selectDeselectable = useCallback(
     (item: collectionItem) => (isItemSelected(item) ? null : item),
-    [isItemSelected]
+    [isItemSelected],
   );
   const selectMultiple = useCallback(
     (item: collectionItem) => {
@@ -109,7 +114,7 @@ export const useSelection = <
       nextItems.sort(byItemIndex);
       return nextItems;
     },
-    [isItemSelected, selected]
+    [isItemSelected, selected],
   );
   const selectRange = useCallback(
     (idx: number, preserveExistingSelection?: boolean) => {
@@ -130,7 +135,7 @@ export const useSelection = <
       nextItems.sort(byItemIndex);
       return nextItems;
     },
-    [indexPositions, selected]
+    [indexPositions, selected],
   );
 
   const selectItemAtIndex = useCallback(
@@ -139,7 +144,7 @@ export const useSelection = <
       idx: number,
       item: collectionItem,
       rangeSelect: boolean,
-      preserveExistingSelection?: boolean
+      preserveExistingSelection?: boolean,
     ) => {
       type returnType = Selection extends SingleSelectionStrategy
         ? CollectionItem<Item> | null
@@ -153,7 +158,7 @@ export const useSelection = <
         } else if (rangeSelect) {
           newSelected = selectRange(
             idx,
-            preserveExistingSelection
+            preserveExistingSelection,
           ) as returnType;
         } else {
           newSelected = [item] as returnType;
@@ -189,7 +194,7 @@ export const useSelection = <
       selectDefault,
       setSelected,
       onSelectionChange,
-    ]
+    ],
   );
 
   const handleKeyDown = useCallback(
@@ -207,7 +212,7 @@ export const useSelection = <
             highlightedIdx,
             item,
             false,
-            evt.ctrlKey || evt.metaKey
+            evt.ctrlKey || evt.metaKey,
           );
           if (isExtendedSelect) {
             lastActive.current = highlightedIdx;
@@ -222,7 +227,7 @@ export const useSelection = <
       tabToSelect,
       selectItemAtIndex,
       isExtendedSelect,
-    ]
+    ],
   );
 
   const handleKeyboardNavigation = useCallback(
@@ -234,7 +239,7 @@ export const useSelection = <
         }
       }
     },
-    [isExtendedSelect, indexPositions, selectItemAtIndex]
+    [isExtendedSelect, indexPositions, selectItemAtIndex],
   );
 
   const handleClick = useCallback(
@@ -249,7 +254,7 @@ export const useSelection = <
           highlightedIdx,
           item,
           evt.shiftKey,
-          evt.ctrlKey || evt.metaKey
+          evt.ctrlKey || evt.metaKey,
         );
         if (isExtendedSelect) {
           lastActive.current = highlightedIdx;
@@ -263,7 +268,7 @@ export const useSelection = <
       highlightedIdx,
       indexPositions,
       selectItemAtIndex,
-    ]
+    ],
   );
 
   const listHandlers = {

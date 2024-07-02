@@ -12,12 +12,12 @@ try {
   await mkdir(cssFolder, { recursive: true });
   await copyFile(
     path.join(srcFolder, "/country-symbol/CountrySymbol.css"),
-    path.join(cssFolder, "/salt-countries.css")
+    path.join(cssFolder, "/salt-countries.css"),
   );
   console.log(`salt-countries.css copied to: ${cssFolder} `);
   await copyFile(
     path.join(srcFolder, "/country-symbol/CountrySymbol.css"),
-    path.join(storybookFolder, "/salt-countries.css")
+    path.join(storybookFolder, "/salt-countries.css"),
   );
   console.log(`salt-countries.css copied to: ${storybookFolder} `);
 } catch (err) {

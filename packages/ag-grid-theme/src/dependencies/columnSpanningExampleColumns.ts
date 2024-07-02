@@ -1,4 +1,4 @@
-import { ColDef, ColSpanParams } from "ag-grid-community";
+import type { ColDef, ColSpanParams } from "ag-grid-community";
 
 const columnSpanningExampleColumns: ColDef[] = [
   {
@@ -14,11 +14,11 @@ const columnSpanningExampleColumns: ColDef[] = [
       const code = param.data.code;
       if (code === "AL") {
         return 2;
-      } else if (code === "CA") {
-        return 3;
-      } else {
-        return 1;
       }
+      if (code === "CA") {
+        return 3;
+      }
+      return 1;
     },
   },
   {

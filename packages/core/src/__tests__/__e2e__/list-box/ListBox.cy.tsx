@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as listBoxStories from "@stories/list-box/list-box.stories";
+import { composeStories } from "@storybook/react";
 
 const {
   SingleSelect,
@@ -25,7 +25,7 @@ describe("GIVEN a List box", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alaska"]),
     );
   });
 
@@ -43,7 +43,7 @@ describe("GIVEN a List box", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alaska"]),
     );
   });
 
@@ -102,7 +102,7 @@ describe("GIVEN a List box", () => {
         <button>start</button>
         <Disabled />
         <button>end</button>
-      </div>
+      </div>,
     );
     cy.findByRole("listbox").should("have.attr", "aria-disabled", "true");
     cy.realPress("Tab");
@@ -118,7 +118,7 @@ describe("GIVEN a List box", () => {
     cy.findByRole("option", { name: "Arizona" }).should(
       "have.attr",
       "aria-disabled",
-      "true"
+      "true",
     );
     cy.realPress("Tab");
     cy.realPress("ArrowDown");
@@ -137,30 +137,30 @@ describe("GIVEN a List box", () => {
     cy.findByRole("listbox").should(
       "have.attr",
       "aria-multiselectable",
-      "true"
+      "true",
     );
 
     cy.findByRole("option", { name: "Alabama" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
     cy.findByRole("option", { name: "Alabama" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
     cy.findByRole("option", { name: "Alaska" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
   });
 
@@ -172,24 +172,24 @@ describe("GIVEN a List box", () => {
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama"])
+      Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
     cy.findByRole("option", { name: "Alabama" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
     cy.realPress("ArrowDown");
     cy.realPress("Enter");
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"])
+      Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
     cy.findByRole("option", { name: "Alaska" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
   });
 

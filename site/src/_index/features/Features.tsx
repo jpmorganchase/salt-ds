@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef } from "react";
 import { SuccessIcon } from "@salt-ds/icons";
+import type { ComponentPropsWithoutRef } from "react";
 import splitArray from "src/utils/splitArray";
 import styles from "./Features.module.css";
 
@@ -25,13 +25,13 @@ const Features = ({ heading, listItems }: FeaturesProps): JSX.Element => {
       <div className={styles.featuresContainer}>
         <h2>{heading}</h2>
         <ul className={styles.listItems}>
-          {firstHalf.map((item, index) => (
-            <ListItem key={index} item={item} />
+          {firstHalf.map((item) => (
+            <ListItem key={item} item={item} />
           ))}
         </ul>
         <ul className={styles.listItems}>
-          {secondHalf.map((item, index) => (
-            <ListItem key={index} item={item} />
+          {secondHalf.map((item) => (
+            <ListItem key={item} item={item} />
           ))}
         </ul>
       </div>

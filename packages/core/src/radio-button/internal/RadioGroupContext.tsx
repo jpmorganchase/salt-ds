@@ -1,5 +1,5 @@
-import { ChangeEventHandler } from "react";
-import { AdornmentValidationStatus } from "../../status-adornment";
+import type { ChangeEventHandler } from "react";
+import type { AdornmentValidationStatus } from "../../status-adornment";
 import { createContext } from "../../utils";
 
 export interface RadioGroupContextValue {

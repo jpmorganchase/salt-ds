@@ -1,14 +1,17 @@
+import { ownerDocument, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
-  FocusEvent,
-  ReactNode,
-  RefObject,
+  type FocusEvent,
+  type ReactNode,
+  type RefObject,
   useCallback,
   useRef,
   useState,
 } from "react";
-import { ownerDocument, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { findAllTabbableElements } from "./internal/findAllTabbableElements";
-import { useReturnFocus, UseReturnFocusProps } from "./internal/useReturnFocus";
+import {
+  type UseReturnFocusProps,
+  useReturnFocus,
+} from "./internal/useReturnFocus";
 
 const defaultSelector = `
 [tabindex="0"],
@@ -96,14 +99,14 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
 
         if (element?.shadowRoot) {
           return element.shadowRoot.querySelector<HTMLElement>(
-            tabEnabledSelectors
+            tabEnabledSelectors,
           );
         }
 
         return element;
       }
     },
-    [tabEnabledSelectors]
+    [tabEnabledSelectors],
   );
 
   /**
@@ -113,7 +116,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
     const tabbableElements = findAllTabbableElements(
       containerRef.current,
       tabEnabledSelectors,
-      [trapEndRef.current, trapStartRef.current]
+      [trapEndRef.current, trapStartRef.current],
     );
     return resolveElementAtIndex(tabbableElements, 0);
   }, [resolveElementAtIndex, tabEnabledSelectors]);
@@ -125,7 +128,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
     const tabbableElements = findAllTabbableElements(
       containerRef.current,
       tabEnabledSelectors,
-      [trapEndRef.current, trapStartRef.current]
+      [trapEndRef.current, trapStartRef.current],
     );
     return resolveElementAtIndex(tabbableElements, tabbableElements.length - 1);
   };
@@ -181,7 +184,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
       if (!nodeToFocus) {
         // This will always be the case when we're applying the shim in a desktop window. Need to consider how to fix.
         console.error(
-          "Your focus trap needs to contain at least once focused node."
+          "Your focus trap needs to contain at least once focused node.",
         );
       } else if (nodeToFocus !== ownerDocument(nodeToFocus).activeElement) {
         tryFocus(nodeToFocus);

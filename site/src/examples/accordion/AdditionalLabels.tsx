@@ -1,18 +1,18 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import {
   Accordion,
   AccordionGroup,
   AccordionHeader,
   AccordionPanel,
-  CheckboxGroup,
   Checkbox,
+  CheckboxGroup,
+  FormField,
+  FormFieldLabel,
   Label,
   SplitLayout,
   StackLayout,
   Text,
-  FormField,
-  FormFieldLabel,
 } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const accounts = [
   { name: "Account 1", number: "8736" },
@@ -54,7 +54,7 @@ export const AdditionalLabels = (): ReactElement => {
     <div style={{ width: "80%", height: "100%" }}>
       <AccordionGroup>
         {Object.values(features).map(({ name, description, id }) => (
-          <Accordion value={id}>
+          <Accordion value={id} key={id}>
             <AccordionHeader>
               <StackLayout gap={0.5}>
                 <SplitLayout
@@ -88,6 +88,7 @@ export const AdditionalLabels = (): ReactElement => {
                       label={`${name} (...${number})`}
                       name={id}
                       value={number}
+                      key={number}
                     />
                   ))}
                 </CheckboxGroup>

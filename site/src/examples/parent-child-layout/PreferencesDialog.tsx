@@ -1,21 +1,20 @@
-import { useState } from "react";
 import {
   Button,
+  Dialog,
+  DialogCloseButton,
+  DialogContent,
+  Dropdown,
   FlexLayout,
   FormField,
   FormFieldLabel,
   H2,
   Input,
   NavigationItem,
+  Option,
+  ParentChildLayout,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-  Dropdown,
-  Option,
-  Dialog,
-  DialogContent,
-  DialogCloseButton,
-  ParentChildLayout,
 } from "@salt-ds/core";
 import {
   ChevronLeftIcon,
@@ -23,6 +22,7 @@ import {
   LaptopIcon,
   UserIcon,
 } from "@salt-ds/icons";
+import { useState } from "react";
 
 import styles from "./PreferencesDialog.module.css";
 

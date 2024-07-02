@@ -1,10 +1,10 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, useState } from "react";
+import { type HTMLAttributes, forwardRef, useState } from "react";
 import { ContactDetailsContext, useComponentSize } from "./internal";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import contactDetailsCss from "./ContactDetails.css";
 
@@ -94,7 +94,7 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
               [withBaseName("embedded")]: embedded,
               [withBaseName("noAvatar")]: showNoAvatar,
             },
-            className
+            className,
           )}
           role="article"
           aria-roledescription="Contact Card"
@@ -106,5 +106,5 @@ export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
         </div>
       </ContactDetailsContext.Provider>
     );
-  }
+  },
 );

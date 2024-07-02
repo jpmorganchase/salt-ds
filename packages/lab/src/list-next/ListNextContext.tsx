@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import { SyntheticEvent, useContext } from "react";
+import { type SyntheticEvent, useContext } from "react";
 
 export interface ListNextContextValue {
   disabled?: boolean;
@@ -13,7 +13,7 @@ export interface ListNextContextValue {
 
 export const ListNextContext = createContext<ListNextContextValue | undefined>(
   "ListNextContext",
-  undefined
+  undefined,
 );
 
 export function useListItem() {

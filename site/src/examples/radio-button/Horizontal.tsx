@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { RadioButton, RadioButtonGroup } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Horizontal = (): ReactElement => (
   <RadioButtonGroup direction="horizontal">

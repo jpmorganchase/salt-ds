@@ -1,8 +1,8 @@
+import { Button, type ButtonProps } from "@salt-ds/core";
 import { forwardRef } from "react";
-import { Button, ButtonProps } from "@salt-ds/core";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import toolbarButtonCss from "./ToolbarButton.css";
 
@@ -29,5 +29,5 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         ref={forwardedRef}
       />
     );
-  }
+  },
 );

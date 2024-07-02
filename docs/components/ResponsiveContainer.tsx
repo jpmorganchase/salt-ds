@@ -1,7 +1,7 @@
-import { useState, ReactNode, SyntheticEvent } from "react";
+import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
+import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
 import { Slider, StepperInput } from "@salt-ds/lab";
-import { Tooltip, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 
 export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
   const [containerWidth, setWidth] = useState(90);

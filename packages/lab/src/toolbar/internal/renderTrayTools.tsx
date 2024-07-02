@@ -1,5 +1,5 @@
-import React, { ReactNode } from "react";
-import {
+import React, { type ReactNode } from "react";
+import type {
   OverflowCollectionHookResult,
   OverflowItem,
 } from "../../responsive/overflowTypes";
@@ -7,8 +7,8 @@ import {
   isResponsiveAttribute,
   liftResponsivePropsToFormField,
 } from "../../responsive/utils";
+import type { OrientationShape } from "../ToolbarProps";
 import { ToolbarField } from "../toolbar-field/ToolbarField";
-import { OrientationShape } from "../ToolbarProps";
 
 type TooltrayItem = {
   "data-priority"?: number | string;
@@ -19,7 +19,7 @@ export const renderTrayTools = (
   collectionHook: OverflowCollectionHookResult,
   overflowedItems: OverflowItem[],
   orientation: OrientationShape,
-  collapsed?: boolean | string
+  collapsed?: boolean | string,
 ): ReactNode => {
   if (collapsed) {
     return [];
@@ -50,39 +50,37 @@ export const renderTrayTools = (
         key: index,
         ...toolbarItemProps,
       });
-    } else {
-      if (Object.keys(props).some(isResponsiveAttribute)) {
-        const [toolbarProps, restProps] = liftResponsivePropsToFormField(props);
-        return (
-          <ToolbarField
-            {...toolbarProps}
-            {...toolbarItemProps}
-            // don't think we need the data-index
-            data-index={index}
-            data-priority={2}
-            key={index}
-            data-orientation={orientation}
-          >
-            {/* We clone here just to remove the responsive props */}
-            {React.cloneElement(item.element, { ...restProps })}
-          </ToolbarField>
-        );
-      } else {
-        return (
-          <ToolbarField
-            {...toolbarItemProps}
-            data-index={index}
-            data-overflowed={overflowed}
-            data-priority={2}
-            key={index}
-            data-orientation={orientation}
-          >
-            {React.cloneElement(item.element, {
-              id: `tooltray-control-${item.id}`,
-            })}
-          </ToolbarField>
-        );
-      }
     }
+    if (Object.keys(props).some(isResponsiveAttribute)) {
+      const [toolbarProps, restProps] = liftResponsivePropsToFormField(props);
+      return (
+        <ToolbarField
+          {...toolbarProps}
+          {...toolbarItemProps}
+          // don't think we need the data-index
+          data-index={index}
+          data-priority={2}
+          key={index}
+          data-orientation={orientation}
+        >
+          {/* We clone here just to remove the responsive props */}
+          {React.cloneElement(item.element, { ...restProps })}
+        </ToolbarField>
+      );
+    }
+    return (
+      <ToolbarField
+        {...toolbarItemProps}
+        data-index={index}
+        data-overflowed={overflowed}
+        data-priority={2}
+        key={index}
+        data-orientation={orientation}
+      >
+        {React.cloneElement(item.element, {
+          id: `tooltray-control-${item.id}`,
+        })}
+      </ToolbarField>
+    );
   });
 };

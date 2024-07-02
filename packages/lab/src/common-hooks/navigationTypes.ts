@@ -1,6 +1,9 @@
-import { FocusEvent, KeyboardEvent, RefObject } from "react";
-import { CollectionItem } from "./collectionTypes";
-import { SelectionStrategy, SingleSelectionStrategy } from "./selectionTypes";
+import type { FocusEvent, KeyboardEvent, RefObject } from "react";
+import type { CollectionItem } from "./collectionTypes";
+import type {
+  SelectionStrategy,
+  SingleSelectionStrategy,
+} from "./selectionTypes";
 
 export interface NavigationProps<Item = unknown> {
   cycleFocus?: boolean;

@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useRef } from "react";
-import {
+import type {
   ElementRef,
   ManagedListRef,
   OverflowItem,
   OverflowLayoutHookProps,
 } from "./overflowTypes";
 
+import { type ResizeHandler, useResizeObserver } from "../responsive";
 import { getIsOverflowed, measureContainerOverflow } from "./overflowUtils";
 import { useDynamicCollapse } from "./useDynamicCollapse";
 import { useInstantCollapse } from "./useInstantCollapse";
 import { useOverflow } from "./useOverflow";
 import { useReclaimSpace } from "./useReclaimSpace";
-import { ResizeHandler, useResizeObserver } from "../responsive";
 
 const MONITORED_DIMENSIONS: { [key: string]: string[] } = {
   horizontal: ["width", "scrollHeight"],
@@ -117,13 +117,13 @@ export const useOverflowLayout = ({
       onOverflowResize,
       onReclaimResize,
       orientation,
-    ]
+    ],
   );
 
   const measureAndInitialize = useCallback(() => {
     const { isOverflowing, ...contentWidthAndDepth } = measureContainerOverflow(
       overflowContainerRef,
-      orientation
+      orientation,
     );
 
     measurement.current = contentWidthAndDepth;
@@ -159,7 +159,7 @@ export const useOverflowLayout = ({
         setTimeout(measureAndInitialize, 0);
       }
     },
-    [dispatch, measureAndInitialize]
+    [dispatch, measureAndInitialize],
   );
 
   // Important that we register our resize handler before we measure and
@@ -168,7 +168,7 @@ export const useOverflowLayout = ({
   useResizeObserver(
     overflowContainerRef,
     MONITORED_DIMENSIONS[disableOverflow ? "none" : orientation],
-    resizeHandler
+    resizeHandler,
   );
 
   // This hook runs after a measurememnt cycle, not after every single change to

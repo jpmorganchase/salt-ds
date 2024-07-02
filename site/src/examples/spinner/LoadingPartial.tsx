@@ -1,19 +1,19 @@
 import {
-  ComponentPropsWithoutRef,
-  ReactElement,
+  Button,
+  FlexLayout,
+  GridItem,
+  GridLayout,
+  Spinner,
+  StackLayout,
+} from "@salt-ds/core";
+import cx from "classnames";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactElement,
   ReactNode,
   useEffect,
   useState,
 } from "react";
-import {
-  Spinner,
-  Button,
-  StackLayout,
-  FlexLayout,
-  GridLayout,
-  GridItem,
-} from "@salt-ds/core";
-import cx from "classnames";
 
 import styles from "./LoadingPartial.module.css";
 

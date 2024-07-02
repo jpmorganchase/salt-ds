@@ -32,7 +32,7 @@ export class Color {
       this.color.toHex8String(),
       false,
       undefined,
-      true
+      true,
     );
   }
 
@@ -42,9 +42,8 @@ export class Color {
 
     if (colorObj.color.isValid()) {
       return colorObj;
-    } else {
-      return undefined;
     }
+    return undefined;
   }
 
   static makeColorFromRGB(r: number, g: number, b: number, a?: number): Color {

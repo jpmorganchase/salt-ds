@@ -1,5 +1,5 @@
 import type { ElementProps, FloatingContext } from "@floating-ui/react";
-import { PointerEvent, useEffect, useRef } from "react";
+import { type PointerEvent, useEffect, useRef } from "react";
 import { useAriaAnnouncer } from "../aria-announcer";
 import { useIsomorphicLayoutEffect } from "../utils";
 
@@ -8,7 +8,7 @@ function getDocument(floating: HTMLElement | null) {
 }
 
 // TODO: Check whether can be anything more restrictive than `any`
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: see comment above
 function getWindow(value: any) {
   return getDocument(value).defaultView ?? window;
 }
@@ -20,7 +20,7 @@ function isElement(value: unknown): value is HTMLElement {
 function getDelay(
   value: Props["delay"],
   prop: "open" | "close",
-  pointerType?: PointerEvent["pointerType"]
+  pointerType?: PointerEvent["pointerType"],
 ) {
   if (pointerType && pointerType !== "mouse") {
     return 0;
@@ -39,7 +39,7 @@ type Props = {
 
 export const useAriaAnnounce = (
   context: FloatingContext,
-  { delay = 0 }: Props
+  { delay = 0 }: Props,
 ): ElementProps => {
   const { open, dataRef, refs } = context;
 
@@ -75,9 +75,12 @@ export const useAriaAnnounce = (
       dataRef.current.openEvent = event;
 
       if (delay) {
-        timeoutRef.current = window.setTimeout(() => {
-          announceFloating();
-        }, getDelay(delay, "open", pointerTypeRef.current));
+        timeoutRef.current = window.setTimeout(
+          () => {
+            announceFloating();
+          },
+          getDelay(delay, "open", pointerTypeRef.current),
+        );
       } else {
         announceFloating();
       }

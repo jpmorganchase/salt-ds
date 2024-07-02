@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { LinkCard } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const LinkCardExample = (): ReactElement => {
   return (
@@ -8,6 +8,6 @@ export const LinkCardExample = (): ReactElement => {
       target="_blank"
       style={{ width: "260px", height: "144px" }}
       accent="top"
-    ></LinkCard>
+    />
   );
 };

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext } from "react";
+import { type SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 import { defaultValueToString } from "./ListControlState";
 
@@ -15,7 +15,7 @@ export interface ListControlContextValue<Item> {
   setOpen: (newOpen: boolean, openChangeReason?: OpenChangeReason) => void;
   register: (
     optionValue: OptionValue<Item>,
-    element: HTMLElement
+    element: HTMLElement,
   ) => () => void;
   selectedState: unknown[];
   select: (event: SyntheticEvent, option: OptionValue<Item>) => void;
@@ -27,7 +27,7 @@ export interface ListControlContextValue<Item> {
   disabled?: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Need to use any here as a winder type but it gets narrowed when using the useListControl hook.
+// biome-ignore lint/suspicious/noExplicitAny: Need to use any here as a wider type but it gets narrowed when using the useListControl hook.
 export const ListControlContext = createContext<ListControlContextValue<any>>(
   "ListControlContext",
   {
@@ -50,7 +50,7 @@ export const ListControlContext = createContext<ListControlContextValue<any>>(
     focusVisibleState: false,
     valueToString: defaultValueToString,
     disabled: false,
-  }
+  },
 );
 
 export function useListControlContext<Item>() {

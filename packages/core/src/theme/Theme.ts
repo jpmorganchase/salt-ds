@@ -22,7 +22,7 @@ export const getCharacteristicValue = (
   themeName: ThemeName,
   characteristicName: characteristic,
   variant: string,
-  scopeElement?: HTMLElement
+  scopeElement?: HTMLElement,
 ): string | null => {
   const cssVariableName = `--salt-${characteristicName}-${variant}`;
   const scopeTarget =

@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import logoSeparatorCss from "./LogoSeparator.css";
 
@@ -25,5 +25,5 @@ export const LogoSeparator = forwardRef<HTMLImageElement, LogoSeparatorProps>(
     return (
       <span {...rest} className={clsx(withBaseName(), className)} ref={ref} />
     );
-  }
+  },
 );

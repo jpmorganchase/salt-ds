@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox-deprecated.stories";
+import { composeStories } from "@storybook/react";
 
 const {
   Default,
@@ -33,7 +33,7 @@ describe("A combo box", () => {
         cy.wrap(item).should(
           "have.attr",
           "id",
-          `my-combo-box-list-item-${index}`
+          `my-combo-box-list-item-${index}`,
         );
       });
     });
@@ -58,7 +58,7 @@ describe("A combo box", () => {
     cy.findAllByRole("option").should("have.length", 1);
     cy.findByRole("option").should(
       "have.class",
-      "saltListItemDeprecated-selected"
+      "saltListItemDeprecated-selected",
     );
   });
 
@@ -69,7 +69,7 @@ describe("A combo box", () => {
           Default.args!.source![0],
           Default.args!.source![1],
         ]}
-      />
+      />,
     );
 
     cy.findByRole("textbox").realClick();
@@ -121,7 +121,7 @@ describe("A combo box", () => {
       cy.findByRole("combobox").clear();
       cy.findAllByRole("option").should(
         "have.length",
-        Default.args!.source!.length
+        Default.args!.source!.length,
       );
     });
 
@@ -149,7 +149,7 @@ describe("A multi-select combo box", () => {
     cy.findByRole("textbox").should(
       "have.attr",
       "id",
-      "my-combo-box-input-input"
+      "my-combo-box-input-input",
     );
     cy.findByRole("listbox").should("have.attr", "id", "my-combo-box-list");
 
@@ -158,7 +158,7 @@ describe("A multi-select combo box", () => {
         cy.wrap(item).should(
           "have.attr",
           "id",
-          `my-combo-box-input-pill-${index}`
+          `my-combo-box-input-pill-${index}`,
         );
       });
     });
@@ -170,7 +170,7 @@ describe("A multi-select combo box", () => {
           cy.wrap(item).should(
             "have.attr",
             "id",
-            `my-combo-box-list-item-${index}`
+            `my-combo-box-list-item-${index}`,
           );
         });
       });
@@ -199,7 +199,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
+      ["Alabama", "Alaska"],
     );
   });
 });

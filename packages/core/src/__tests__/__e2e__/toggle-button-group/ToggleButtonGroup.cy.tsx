@@ -1,11 +1,11 @@
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import {
   HomeIcon,
   NotificationIcon,
   PrintIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 
 describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (uncontrolled)", () => {
   it("THEN it should have radiogroup as role", () => {
@@ -27,14 +27,14 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
           <PrintIcon aria-hidden />
           Print
         </ToggleButton>
-      </ToggleButtonGroup>
+      </ToggleButtonGroup>,
     );
 
     cy.findByRole("radiogroup").should("exist");
     cy.findByRole("radiogroup").should(
       "have.attr",
       "aria-label",
-      "Toggle options"
+      "Toggle options",
     );
   });
 
@@ -57,7 +57,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
           <PrintIcon aria-hidden />
           Print
         </ToggleButton>
-      </ToggleButtonGroup>
+      </ToggleButtonGroup>,
     );
 
     cy.findByRole("radio", { name: "Alert" })
@@ -104,7 +104,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
           <PrintIcon aria-hidden />
           Print
         </ToggleButton>
-      </ToggleButtonGroup>
+      </ToggleButtonGroup>,
     );
 
     cy.findByRole("radio", { name: "Search" }).realClick();
@@ -146,7 +146,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
           <PrintIcon aria-hidden />
           Print
         </ToggleButton>
-      </ToggleButtonGroup>
+      </ToggleButtonGroup>,
     );
 
     // Click toggled button
@@ -158,7 +158,7 @@ describe("GIVEN a ToggleButtonGroup with ToggleButtons are passed as children (u
     cy.findByRole("radio", { name: "Print" }).should(
       "have.attr",
       "aria-checked",
-      "true"
+      "true",
     );
   });
 });

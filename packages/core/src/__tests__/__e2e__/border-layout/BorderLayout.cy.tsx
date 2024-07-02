@@ -1,7 +1,7 @@
-import { composeStories } from "@storybook/react";
-import * as borderStories from "@stories/border-layout/border-layout.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { BORDER_POSITION as borderAreas } from "@salt-ds/core";
+import * as borderStories from "@stories/border-layout/border-layout.stories";
+import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(borderStories);
 const { AllPanels } = composedStories;
@@ -16,7 +16,7 @@ describe("GIVEN a Border", () => {
       cy.get(".saltBorderLayout").should(
         "have.css",
         "grid-template-areas",
-        '"north north north" "west center east" "south south south"'
+        '"north north north" "west center east" "south south south"',
       );
 
       cy.get(".saltBorderLayout > .saltBorderItem").then((items) => {
@@ -24,19 +24,19 @@ describe("GIVEN a Border", () => {
           cy.wrap(item).should(
             "have.css",
             "grid-column-start",
-            borderAreas[index]
+            borderAreas[index],
           );
 
           cy.wrap(item).should(
             "have.css",
             "grid-column-end",
-            borderAreas[index]
+            borderAreas[index],
           );
 
           cy.wrap(item).should(
             "have.css",
             "grid-row-start",
-            borderAreas[index]
+            borderAreas[index],
           );
 
           cy.wrap(item).should("have.css", "grid-row-end", borderAreas[index]);

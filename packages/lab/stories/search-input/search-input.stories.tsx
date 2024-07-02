@@ -3,8 +3,8 @@
 
 import { NotificationIcon } from "@salt-ds/icons";
 import { FormField, SearchInput } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
-import { SyntheticEvent, useState } from "react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type SyntheticEvent, useState } from "react";
 
 export default {
   title: "Lab/SearchInput",

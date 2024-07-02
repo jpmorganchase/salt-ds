@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 type ChainedFunction<Args extends any[], This> =
   | ((this: This, ...args: Args) => any)
   | undefined
@@ -19,7 +17,6 @@ export function createChainedFunction<Args extends any[], This>(
         func.apply(this, args);
       };
     },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    () => {}
+    () => {},
   );
 }

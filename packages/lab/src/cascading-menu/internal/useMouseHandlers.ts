@@ -1,15 +1,15 @@
 import {
+  type Dispatch,
+  type MouseEvent,
+  type SetStateAction,
   useCallback,
-  useRef,
   useEffect,
-  Dispatch,
-  SetStateAction,
-  MouseEvent,
+  useRef,
 } from "react";
 
-import { CascadingMenuListProps } from "../CascadingMenuList";
-import { CascadingMenuAction } from "./CascadingMenuAction";
+import type { CascadingMenuListProps } from "../CascadingMenuList";
 import { stateChangeTypes } from "../stateChangeTypes";
+import { CascadingMenuAction } from "./CascadingMenuAction";
 
 function isOrContainsNode(parent: HTMLElement | null, child: HTMLElement) {
   return parent === child || !!parent?.contains?.(child);
@@ -18,7 +18,7 @@ function isOrContainsNode(parent: HTMLElement | null, child: HTMLElement) {
 export function useMouseHandlers(
   props: CascadingMenuListProps,
   isMenuActiveState: [boolean, Dispatch<SetStateAction<boolean>>],
-  menuRef: HTMLElement | null
+  menuRef: HTMLElement | null,
 ) {
   const [isMenuActive, setIsMenuActive] = isMenuActiveState;
   const {
@@ -42,7 +42,7 @@ export function useMouseHandlers(
         clearTimeout(mouseEnterTimer.current);
         clearTimeout(mouseOutTimer.current);
       },
-    []
+    [],
   );
 
   const handleMouseMove = useCallback(
@@ -76,7 +76,7 @@ export function useMouseHandlers(
       delay,
       dispatch,
       menuId,
-    ]
+    ],
   );
   const handleMouseOut = useCallback(
     (event: MouseEvent<HTMLElement>) => {
@@ -93,11 +93,11 @@ export function useMouseHandlers(
 
       const mouseMovedToSameMenu = isOrContainsNode(
         menuRef,
-        relatedTarget as HTMLElement
+        relatedTarget as HTMLElement,
       );
       const mouseMovedToParentMenu = isOrContainsNode(
         parentElement ?? null,
-        relatedTarget as HTMLElement
+        relatedTarget as HTMLElement,
       );
 
       if (mouseMovedToParentMenu) {
@@ -144,7 +144,7 @@ export function useMouseHandlers(
       isMenuActive,
       delay,
       setIsMenuActive,
-    ]
+    ],
   );
   return [handleMouseMove, handleMouseOut] as const;
 }

@@ -152,9 +152,8 @@ const getCities = (state) => {
     return usa_cities[state].map((city) => ({
       label: city,
     }));
-  } else {
-    return [];
   }
+  return [];
 };
 
 export const usa_states_cities = usa_states.map((state) => ({
@@ -179,7 +178,7 @@ export const groupByInitialLetter = (list, groupMode = "headers-only") => {
   let char;
   let items = result;
 
-  for (let item of sortedList) {
+  for (const item of sortedList) {
     const label = item?.label ?? item;
     if (char !== label[0]) {
       if (groupMode === "headers-only") {

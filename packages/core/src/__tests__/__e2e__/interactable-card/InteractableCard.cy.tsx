@@ -1,13 +1,13 @@
-import { composeStories } from "@storybook/react";
-import * as cardStories from "@stories/interactable-card/interactable-card.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import {
-  InteractableCardGroupProps,
-  InteractableCardValue,
-  InteractableCardGroup,
   InteractableCard,
+  InteractableCardGroup,
+  type InteractableCardGroupProps,
+  type InteractableCardValue,
 } from "@salt-ds/core";
-import { useState, SyntheticEvent } from "react";
+import * as cardStories from "@stories/interactable-card/interactable-card.stories";
+import { composeStories } from "@storybook/react";
+import { type SyntheticEvent, useState } from "react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(cardStories);
 const { Default } = composedStories;
@@ -22,7 +22,7 @@ const ControlledGroup = ({
 
   const handleChange = (
     event: SyntheticEvent<HTMLDivElement>,
-    value: InteractableCardValue
+    value: InteractableCardValue,
   ) => {
     setControlledValues(value);
     onChange?.(event, value);
@@ -49,7 +49,7 @@ describe("Given an Interactable Card", () => {
     cy.mount(<Default />);
     cy.findByText("Sustainable investing products").should("be.visible");
     cy.findByText(
-      "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values."
+      "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
     ).should("be.visible");
   });
 });
@@ -61,7 +61,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         <InteractableCard value="one">One</InteractableCard>
         <InteractableCard value="two">Two</InteractableCard>
         <InteractableCard value="three">Three</InteractableCard>
-      </InteractableCardGroup>
+      </InteractableCardGroup>,
     );
 
     cy.findAllByRole("checkbox").should("have.length", 3);
@@ -77,7 +77,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
 
       cy.realPress("Tab");
@@ -93,7 +93,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="three">Three</InteractableCard>
           </InteractableCardGroup>
           <button>end</button>
-        </>
+        </>,
       );
 
       cy.realPress("Tab");
@@ -116,7 +116,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="three">Three</InteractableCard>
           </InteractableCardGroup>
           <button>end</button>
-        </>
+        </>,
       );
 
       cy.findByRole("button", { name: "end" }).realClick();
@@ -137,7 +137,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           <InteractableCard value="one" disabled />
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
 
       cy.realPress("Tab");
@@ -152,22 +152,22 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
       cy.get('[role="checkbox"][data-value="one"]').should(
         "have.attr",
         "aria-checked",
-        "true"
+        "true",
       );
       cy.get('[role="checkbox"][data-value="two"]').should(
         "have.attr",
         "aria-checked",
-        "false"
+        "false",
       );
       cy.get('[role="checkbox"][data-value="three"]').should(
         "have.attr",
         "aria-checked",
-        "false"
+        "false",
       );
     });
 
@@ -178,35 +178,35 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
-          "not.be.checked"
+          "not.be.checked",
         );
 
         cy.get('[role="checkbox"][data-value="one"]').realClick();
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
 
         cy.get('[role="checkbox"][data-value="one"]').realClick();
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
 
         cy.get('[role="checkbox"][data-value="one"]').realClick();
@@ -215,17 +215,17 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
       });
 
@@ -234,7 +234,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
 
         const handleChange = (
           event: SyntheticEvent<HTMLDivElement>,
-          value: InteractableCardValue
+          value: InteractableCardValue,
         ) => {
           event.persist();
           changeSpy(value);
@@ -245,7 +245,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.get('[role="checkbox"][data-value="two"]').realClick();
@@ -262,7 +262,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
               <InteractableCard value="one" disabled />
               <InteractableCard value="two">Two</InteractableCard>
               <InteractableCard value="three">Three</InteractableCard>
-            </InteractableCardGroup>
+            </InteractableCardGroup>,
           );
 
           cy.get('[role="checkbox"][data-value="one"]')
@@ -281,21 +281,21 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
-          "not.be.checked"
+          "not.be.checked",
         );
 
         cy.realPress("Tab");
@@ -304,21 +304,21 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.realPress("Space");
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
 
         cy.realPress("Space");
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
 
         cy.realPress("Tab");
@@ -330,17 +330,17 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
       });
 
@@ -348,7 +348,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         const changeSpy = cy.stub().as("changeSpy");
         const handleChange = (
           event: SyntheticEvent<HTMLDivElement>,
-          value: InteractableCardValue
+          value: InteractableCardValue,
         ) => {
           event.persist();
           changeSpy(value);
@@ -359,7 +359,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.realPress("Tab");
@@ -375,20 +375,20 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.realPress("Tab");
         cy.realPress("Enter");
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
       });
     });
@@ -402,31 +402,31 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
 
         cy.get('[role="checkbox"][data-value="one"]').realClick();
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
 
         cy.get('[role="checkbox"][data-value="one"]').realClick();
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
 
         cy.get('[role="checkbox"][data-value="one"]').realClick();
@@ -435,17 +435,17 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
       });
 
@@ -454,7 +454,7 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
           const changeSpy = cy.stub().as("changeSpy");
 
           cy.mount(
-            <ControlledGroup onChange={changeSpy} disabled multiSelect />
+            <ControlledGroup onChange={changeSpy} disabled multiSelect />,
           );
 
           cy.get('[role="checkbox"][data-value="one"]')
@@ -473,15 +473,15 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
-          "not.be.checked"
+          "not.be.checked",
         );
 
         cy.realPress("Tab");
@@ -490,21 +490,21 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.realPress("Space");
 
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
 
         cy.realPress("Space");
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
 
         cy.realPress("Tab");
@@ -516,17 +516,17 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="checkbox"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
       });
 
@@ -536,14 +536,14 @@ describe("GIVEN a multiselect InteractableCardGroup", () => {
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.realPress("Tab");
         cy.realPress("Enter");
         cy.get('[role="checkbox"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
       });
     });
@@ -557,7 +557,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
         <InteractableCard value="one">One</InteractableCard>
         <InteractableCard value="two">Two</InteractableCard>
         <InteractableCard value="three">Three</InteractableCard>
-      </InteractableCardGroup>
+      </InteractableCardGroup>,
     );
 
     cy.findAllByRole("radio").should("have.length", 3);
@@ -573,7 +573,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
 
       cy.realPress("Tab");
@@ -589,7 +589,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
             <InteractableCard value="three">Three</InteractableCard>
           </InteractableCardGroup>
           <button>end</button>
-        </>
+        </>,
       );
 
       cy.realPress("Tab");
@@ -608,7 +608,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
             <InteractableCard value="three">Three</InteractableCard>
           </InteractableCardGroup>
           <button>end</button>
-        </>
+        </>,
       );
 
       cy.findByRole("button", { name: "end" }).realClick();
@@ -625,7 +625,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           <InteractableCard value="one" disabled />
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
 
       cy.realPress("Tab");
@@ -640,7 +640,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
 
       cy.realPress("Tab");
@@ -671,7 +671,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
 
       cy.realPress("Tab");
@@ -689,22 +689,22 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           <InteractableCard value="one">One</InteractableCard>
           <InteractableCard value="two">Two</InteractableCard>
           <InteractableCard value="three">Three</InteractableCard>
-        </InteractableCardGroup>
+        </InteractableCardGroup>,
       );
       cy.get('[role="radio"][data-value="one"]').should(
         "have.attr",
         "aria-checked",
-        "true"
+        "true",
       );
       cy.get('[role="radio"][data-value="two"]').should(
         "have.attr",
         "aria-checked",
-        "false"
+        "false",
       );
       cy.get('[role="radio"][data-value="three"]').should(
         "have.attr",
         "aria-checked",
-        "false"
+        "false",
       );
     });
 
@@ -715,42 +715,42 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.get('[role="radio"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="radio"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
         cy.get('[role="radio"][data-value="three"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
 
         cy.get('[role="radio"][data-value="one"]').realClick();
         cy.get('[role="radio"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
 
         cy.get('[role="radio"][data-value="two"]').realClick();
         cy.get('[role="radio"][data-value="two"]').should(
           "have.attr",
           "aria-checked",
-          "true"
+          "true",
         );
         cy.get('[role="radio"][data-value="one"]').should(
           "have.attr",
           "aria-checked",
-          "false"
+          "false",
         );
       });
 
@@ -759,7 +759,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
 
         const handleChange = (
           event: SyntheticEvent<HTMLDivElement>,
-          value: InteractableCardValue
+          value: InteractableCardValue,
         ) => {
           event.persist();
           changeSpy(value);
@@ -770,7 +770,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
             <InteractableCard value="one">One</InteractableCard>
             <InteractableCard value="two">Two</InteractableCard>
             <InteractableCard value="three">Three</InteractableCard>
-          </InteractableCardGroup>
+          </InteractableCardGroup>,
         );
 
         cy.get('[role="radio"][data-value="two"]').realClick();
@@ -787,7 +787,7 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
               <InteractableCard value="one" disabled />
               <InteractableCard value="two">Two</InteractableCard>
               <InteractableCard value="three">Three</InteractableCard>
-            </InteractableCardGroup>
+            </InteractableCardGroup>,
           );
 
           cy.get('[role="radio"][data-value="one"]')
@@ -807,38 +807,38 @@ describe("GIVEN a single selection InteractableCardGroup", () => {
           cy.get('[role="radio"][data-value="one"]').should(
             "have.attr",
             "aria-checked",
-            "false"
+            "false",
           );
           cy.get('[role="radio"][data-value="two"]').should(
             "have.attr",
             "aria-checked",
-            "false"
+            "false",
           );
           cy.get('[role="radio"][data-value="three"]').should(
             "have.attr",
             "aria-checked",
-            "false"
+            "false",
           );
 
           cy.get('[role="radio"][data-value="one"]').realClick();
           cy.get('[role="radio"][data-value="one"]').should(
             "have.attr",
             "aria-checked",
-            "true"
+            "true",
           );
 
           cy.get('[role="radio"][data-value="two"]').realClick();
           cy.get('[role="radio"][data-value="one"]').should(
             "have.attr",
             "aria-checked",
-            "false"
+            "false",
           );
 
           cy.get('[role="radio"][data-value="one"]').realClick();
           cy.get('[role="radio"][data-value="one"]').should(
             "have.attr",
             "aria-checked",
-            "true"
+            "true",
           );
         });
 

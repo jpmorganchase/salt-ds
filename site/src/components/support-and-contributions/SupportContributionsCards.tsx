@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import { GridLayout } from "@salt-ds/core";
+import type { ReactNode } from "react";
 
 import styles from "./SupportContributionsCards.module.css";
 

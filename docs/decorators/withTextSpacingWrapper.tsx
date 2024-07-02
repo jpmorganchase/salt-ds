@@ -1,4 +1,4 @@
-import { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 import "./text-spacing.css";
 import { useEffect } from "react";
 

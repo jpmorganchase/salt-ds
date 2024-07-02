@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Text, StackLayout } from "@salt-ds/core";
+import { StackLayout, Text } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Variant = (): ReactElement => (
   <StackLayout>

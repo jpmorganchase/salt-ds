@@ -3,15 +3,15 @@ import { clsx } from "clsx";
 import { cloneElement } from "react";
 import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 
-import { TooltrayProps } from "./TooltrayProps";
+import type { TooltrayProps } from "./TooltrayProps";
 
 import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
 import { useOverflowLayout } from "../responsive/useOverflowLayout";
 
 import { renderTrayTools } from "./internal/renderTrayTools";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import tooltrayCss from "./Tooltray.css";
 
@@ -48,7 +48,7 @@ export const Tooltray = (props: TooltrayProps) => {
     "saltTooltray",
     classNameProp,
     `saltTooltray-${orientation}`,
-    { "saltTooltray-tooltrayOverflowed": isInsidePanel }
+    { "saltTooltray-tooltrayOverflowed": isInsidePanel },
   );
 
   const collectionHook = useOverflowCollectionItems({
@@ -73,12 +73,12 @@ export const Tooltray = (props: TooltrayProps) => {
       cloneElement(collectionHook.data[i.index].element, {
         "data-is-inside-panel": true,
         key: i.index,
-      })
+      }),
     )
     .reverse();
 
   const overflowIndicator = collectionHook.data.find(
-    (i) => i.isOverflowIndicator
+    (i) => i.isOverflowIndicator,
   );
 
   // bring them back when we get into overflow
@@ -95,7 +95,7 @@ export const Tooltray = (props: TooltrayProps) => {
           collectionHook,
           overflowedItems,
           orientation,
-          collapsed
+          collapsed,
         )}
         {overflowIndicator || collapsed ? (
           <OverflowPanel

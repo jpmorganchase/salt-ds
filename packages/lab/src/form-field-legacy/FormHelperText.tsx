@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef } from "react";
-import { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
+import type { ComponentPropsWithoutRef } from "react";
+import type { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import formHelperTextCss from "./FormHelperText.css";
 
@@ -31,13 +31,12 @@ export const FormHelperText = <E extends React.ElementType = "p">({
           {helperText}
         </p>
       );
-    } else if (helperTextPlacement === "tooltip") {
+    }
+    if (helperTextPlacement === "tooltip") {
       console.warn("helperTextPlacement tooltip has not yet implemented");
       return null;
-    } else {
-      return null;
     }
-  } else {
     return null;
   }
+  return null;
 };

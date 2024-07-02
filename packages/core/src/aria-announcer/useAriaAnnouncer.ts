@@ -1,12 +1,15 @@
 import { useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import { debounce } from "../utils";
-import { AriaAnnouncer, AriaAnnouncerContext } from "./AriaAnnouncerContext";
+import {
+  type AriaAnnouncer,
+  AriaAnnouncerContext,
+} from "./AriaAnnouncerContext";
 
 export type useAnnouncerOptions = {
   debounce?: number;
 };
 export type useAriaAnnouncerHook = (
-  options?: useAnnouncerOptions
+  options?: useAnnouncerOptions,
 ) => AriaAnnouncer;
 
 let warnedOnce = false;
@@ -18,12 +21,12 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
   const mountedRef = useRef(true);
   const baseAnnounce = useCallback(
     (announcement: string, delay?: number) => {
-      const isReactAnnouncerInstalled = context && context.announce;
+      const isReactAnnouncerInstalled = context?.announce;
 
       if (process.env.NODE_ENV !== "production") {
         if (isReactAnnouncerInstalled && warnedOnce) {
           console.warn(
-            "useAriaAnnouncer is being used without an AriaAnnouncerProvider. Your application should be wrapped in an AriaAnnouncerProvider"
+            "useAriaAnnouncer is being used without an AriaAnnouncerProvider. Your application should be wrapped in an AriaAnnouncerProvider",
           );
           warnedOnce = true;
         }
@@ -43,7 +46,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
         makeAnnouncement();
       }
     },
-    [context]
+    [context],
   );
 
   const announce = useMemo(
@@ -51,7 +54,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       debounceInterval > 0
         ? debounce(baseAnnounce, debounceInterval)
         : baseAnnounce,
-    [baseAnnounce, debounceInterval]
+    [baseAnnounce, debounceInterval],
   );
 
   const ariaAnnouncer = useMemo(
@@ -59,7 +62,7 @@ export const useAriaAnnouncer: useAriaAnnouncerHook = ({
       ...context,
       announce,
     }),
-    [context, announce]
+    [context, announce],
   );
 
   useEffect(() => {

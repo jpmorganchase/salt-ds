@@ -1,12 +1,12 @@
 import "@testing-library/cypress/add-commands";
-import { mount as cypressMount } from "cypress/react18";
 import type { MountOptions, MountReturn } from "cypress/react";
+import { mount as cypressMount } from "cypress/react18";
 import "cypress-axe";
-import { Options } from "cypress-axe";
-import { PerformanceResult, PerformanceTester } from "./PerformanceTester";
-import { ReactNode } from "react";
 import { SaltProvider } from "@salt-ds/core";
+import type { Options } from "cypress-axe";
+import type { ReactNode } from "react";
 import { AnnouncementListener } from "./AnnouncementListener";
+import { type PerformanceResult, PerformanceTester } from "./PerformanceTester";
 
 const SupportedThemeModeValues = ["light", "dark"] as const;
 type SupportedThemeMode = (typeof SupportedThemeModeValues)[number];
@@ -16,8 +16,6 @@ type SupportedDensity = (typeof SupportedDensityValues)[number];
 // Must be declared global to be detected by typescript (allows import/export)
 declare global {
   namespace Cypress {
-    // unsure why this Subject is unused, nor what to do with it...
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface Chainable<Subject> {
       /**
        * Set Theme Mode
@@ -41,12 +39,12 @@ declare global {
        */
       checkAxeComponent(
         options?: Options,
-        enableFailures?: boolean
+        enableFailures?: boolean,
       ): Chainable<void>;
 
       mountPerformance: (
         jsx: ReactNode,
-        options?: MountOptions
+        options?: MountOptions,
       ) => Chainable<MountReturn>;
       mount: (jsx: ReactNode, options?: MountOptions) => Chainable<MountReturn>;
 
@@ -91,9 +89,9 @@ Cypress.Commands.add(
           }
         }
       },
-      !enableFailures
+      !enableFailures,
     );
-  }
+  },
 );
 
 Cypress.Commands.add("mount", function (children, options) {
@@ -107,11 +105,11 @@ Cypress.Commands.add("mount", function (children, options) {
       {children}
       <AnnouncementListener onAnnouncement={handleAnnouncement} />
     </SaltProvider>,
-    options
+    options,
   );
 });
 
-Cypress.Commands.add("mountPerformance", function (children, options) {
+Cypress.Commands.add("mountPerformance", (children, options) => {
   const handleRender = (result: PerformanceResult) => {
     // @ts-ignore
     cy.state("performanceResult", result);
@@ -119,16 +117,16 @@ Cypress.Commands.add("mountPerformance", function (children, options) {
 
   return cy.mount(
     <PerformanceTester onRender={handleRender}>{children}</PerformanceTester>,
-    options
+    options,
   );
 });
 
-Cypress.Commands.add("getRenderTime", function () {
+Cypress.Commands.add("getRenderTime", () => {
   // @ts-ignore
   return cy.state("performanceResult").renderTime;
 });
 
-Cypress.Commands.add("getRenderCount", function () {
+Cypress.Commands.add("getRenderCount", () => {
   // @ts-ignore
   return cy.state("performanceResult").renderCount;
 });
@@ -137,7 +135,7 @@ Cypress.Commands.add("paste", { prevSubject: "element" }, (input, value) => {
   // taken from https://stackoverflow.com/a/69552958/11217233
   const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
     window.HTMLInputElement.prototype,
-    "value"
+    "value",
   )?.set;
 
   if (nativeInputValueSetter) {
@@ -147,7 +145,7 @@ Cypress.Commands.add("paste", { prevSubject: "element" }, (input, value) => {
         new Event("input", {
           bubbles: true,
           composed: true,
-        })
+        }),
       );
     });
   }
@@ -161,5 +159,3 @@ Cypress.on("uncaught:exception", (err) => {
     return false;
   }
 });
-
-export {};

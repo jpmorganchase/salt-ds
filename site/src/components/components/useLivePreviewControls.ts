@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import {
-  LivePreviewContextType,
   LivePreviewContext,
+  type LivePreviewContextType,
 } from "./LivePreviewControls";
 
 export const useLivePreviewControls = (): LivePreviewContextType => {

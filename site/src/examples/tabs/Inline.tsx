@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { TabstripNext, TabNext } from "@salt-ds/lab";
+import { TabNext, TabstripNext } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const Inline = (): ReactElement => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];

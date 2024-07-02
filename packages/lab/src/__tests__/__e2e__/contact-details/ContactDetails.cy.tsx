@@ -1,16 +1,16 @@
 import {
+  ContactAction,
+  ContactActions,
+  ContactAvatar,
   ContactDetails,
-  ContactDetailsVariant,
-  MailLinkComponent,
+  type ContactDetailsVariant,
+  ContactFavoriteToggle,
+  ContactMetadata,
+  ContactMetadataItem,
   ContactPrimaryInfo,
   ContactSecondaryInfo,
   ContactTertiaryInfo,
-  ContactActions,
-  ContactAction,
-  ContactMetadata,
-  ContactMetadataItem,
-  ContactFavoriteToggle,
-  ContactAvatar,
+  MailLinkComponent,
 } from "@salt-ds/lab";
 
 const variants: ContactDetailsVariant[] = ["default", "compact", "mini"];
@@ -43,15 +43,15 @@ variants.forEach((variant) => {
           <ContactTertiaryInfo text={tertiaryText} />
           <ContactActions>
             {actionLabels.map((label) => (
-              <ContactAction label={label} onClick={actionSpy} />
+              <ContactAction label={label} onClick={actionSpy} key={label} />
             ))}
           </ContactActions>
           <ContactMetadata>
             {metadata.map(([label, value]) => (
-              <ContactMetadataItem value={value} label={label} />
+              <ContactMetadataItem value={value} label={label} key={label} />
             ))}
           </ContactMetadata>
-        </ContactDetails>
+        </ContactDetails>,
       );
     });
     variant !== "mini" &&
@@ -112,19 +112,19 @@ variants.forEach((variant) => {
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle isFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected",
       );
 
       cy.mount(
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle isFavorite={true} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should("have.class", "saltContactFavoriteToggle-selected");
@@ -135,18 +135,18 @@ variants.forEach((variant) => {
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle defaultIsFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected",
       );
 
       cy.findByLabelText("Favorite").click();
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselecting"
+        "saltContactFavoriteToggle-deselecting",
       );
     });
 
@@ -155,12 +155,12 @@ variants.forEach((variant) => {
         <ContactDetails variant={variant}>
           <ContactFavoriteToggle defaultIsFavorite={false} />
           <ContactPrimaryInfo text={primaryText} />
-        </ContactDetails>
+        </ContactDetails>,
       );
 
       cy.get("svg").should(
         "have.class",
-        "saltContactFavoriteToggle-deselected"
+        "saltContactFavoriteToggle-deselected",
       );
 
       cy.realPress("Tab");

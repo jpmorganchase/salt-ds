@@ -1,14 +1,14 @@
+import { useControlled, useIsFocusVisible } from "@salt-ds/core";
 import {
-  FocusEvent,
-  KeyboardEvent,
-  RefObject,
-  SyntheticEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type RefObject,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { useControlled, useIsFocusVisible } from "@salt-ds/core";
 
 export interface UseListProps {
   /**
@@ -44,13 +44,13 @@ export const useList = ({
   const getOptions: () => HTMLElement[] = useCallback(() => {
     return Array.from(
       ref.current?.querySelectorAll('[role="option"]:not([aria-disabled])') ??
-        []
+        [],
     );
   }, [ref]);
 
   const [focusVisible, setFocusVisible] = useState(false);
   const [activeDescendant, setActiveDescendant] = useState<string | undefined>(
-    undefined
+    undefined,
   );
 
   const [highlightedItem, setHighlightedItem] = useControlled({
@@ -87,7 +87,7 @@ export const useList = ({
         list.scrollTop = offsetTop + offsetHeight - listHeight;
       }
     },
-    [ref]
+    [ref],
   );
 
   const updateHighlighted = useCallback(
@@ -96,7 +96,7 @@ export const useList = ({
       setActiveDescendant(element.id);
       updateScroll(element);
     },
-    [setHighlightedItem, updateScroll]
+    [setHighlightedItem, updateScroll],
   );
 
   const selectItem = useCallback(
@@ -107,7 +107,7 @@ export const useList = ({
         updateHighlighted(element);
       }
     },
-    [setSelectedItem, updateHighlighted]
+    [setSelectedItem, updateHighlighted],
   );
 
   // Effect to move the cursor when items change controlled.
@@ -115,7 +115,7 @@ export const useList = ({
   useEffect(() => {
     const activeOptions = getOptions();
     const highlightedIndex = activeOptions.findIndex(
-      (i) => i.dataset.value === highlightedItem
+      (i) => i.dataset.value === highlightedItem,
     );
     if (highlightedIndex) {
       setActiveDescendant(activeOptions[highlightedIndex]?.id);
@@ -143,7 +143,7 @@ export const useList = ({
 
   const findNextOption = (
     currentOption: HTMLElement | null,
-    moves: number
+    moves: number,
   ): HTMLElement => {
     const activeOptions = getOptions();
     // Returns next item, if no current option it will return 0
@@ -157,12 +157,12 @@ export const useList = ({
 
   const findPreviousOption = (
     currentOption: HTMLElement,
-    moves: number
+    moves: number,
   ): HTMLElement => {
     // Return the previous option if it exists; otherwise, returns first option
     const activeOptions = getOptions();
     const currentOptionIndex = activeOptions.findIndex(
-      (i) => i.id === currentOption.id
+      (i) => i.id === currentOption.id,
     );
     return activeOptions[currentOptionIndex - moves] || activeOptions[0];
   };
@@ -182,35 +182,35 @@ export const useList = ({
         }
       }
     },
-    [selectItem, selectedItem, onChange, onSelect, getOptions]
+    [selectItem, selectedItem, onChange, onSelect, getOptions],
   );
 
   const isSelected = useCallback(
     (value: string) => selectedItem === value,
-    [selectedItem]
+    [selectedItem],
   );
 
   const highlight = useCallback(
     (event: SyntheticEvent<HTMLLIElement>) => {
       setHighlightedItem(event.currentTarget.dataset.value);
     },
-    [setHighlightedItem]
+    [setHighlightedItem],
   );
 
   const isHighlighted = useCallback(
     (value: string) => highlightedItem === value,
-    [highlightedItem]
+    [highlightedItem],
   );
 
   const isFocused = useCallback(
     (value: string) => isHighlighted(value) && focusVisible,
-    [focusVisible, isHighlighted]
+    [focusVisible, isHighlighted],
   );
 
   const getActiveItem = () => {
     const activeOptions = getOptions();
     const activeIndex = activeOptions.findIndex(
-      (i) => i.id === activeDescendant
+      (i) => i.id === activeDescendant,
     );
     return activeOptions[activeIndex];
   };
@@ -304,7 +304,7 @@ export const useList = ({
       highlight,
       isHighlighted,
     }),
-    [disabled, id, select, isSelected, isFocused, highlight, isHighlighted]
+    [disabled, id, select, isSelected, isFocused, highlight, isHighlighted],
   );
 
   return {

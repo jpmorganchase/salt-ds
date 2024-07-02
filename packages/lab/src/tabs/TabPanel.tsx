@@ -1,8 +1,8 @@
-import { ForwardedRef, forwardRef, HTMLAttributes } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ForwardedRef, type HTMLAttributes, forwardRef } from "react";
 
 import tabPanelCss from "./TabPanel.css";
 
@@ -15,7 +15,7 @@ export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
 
 export const TabPanel = forwardRef(function TabPanel(
   { children, className, enableClose, ...htmlAttributes }: TabPanelProps,
-  forwardedRef: ForwardedRef<HTMLDivElement>
+  forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

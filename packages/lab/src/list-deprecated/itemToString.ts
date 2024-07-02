@@ -16,7 +16,7 @@ export function itemToString(item: any) {
     [
       "itemToString: you've likely forgotten to set the label prop on the item object.",
       "You can also provide your own `itemToString` implementation.",
-    ].join("\n")
+    ].join("\n"),
   );
 
   return "";

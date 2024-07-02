@@ -1,13 +1,13 @@
 import {
-  ChangeEvent,
-  FocusEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type HTMLAttributes,
+  type SyntheticEvent,
   forwardRef,
-  HTMLAttributes,
-  SyntheticEvent,
   useRef,
 } from "react";
-import { useForkRef } from "../utils";
 import { Button } from "../button";
+import { useForkRef } from "../utils";
 
 export interface FileDropZoneTriggerProps
   extends Omit<HTMLAttributes<HTMLButtonElement>, "onChange"> {
@@ -36,7 +36,7 @@ export const FileDropZoneTrigger = forwardRef<
   FileDropZoneTriggerProps
 >(function FileDropZoneTrigger(
   { accept, children, disabled, multiple = false, onChange, ...rest },
-  ref
+  ref,
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);

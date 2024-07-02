@@ -1,10 +1,10 @@
-import {
-  SteppedTracker,
-  TrackerStep,
-  StepLabel,
-} from "../../../stepped-tracker";
 import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
 import { composeStories } from "@storybook/react";
+import {
+  StepLabel,
+  SteppedTracker,
+  TrackerStep,
+} from "../../../stepped-tracker";
 
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

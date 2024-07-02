@@ -1,14 +1,14 @@
-import { ReactElement } from "react";
 import {
-  Tooltip,
   Button,
-  useId,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
-  OverlayProps,
+  type OverlayProps,
   OverlayTrigger,
+  Tooltip,
+  useId,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const OverlayTemplate = (props: OverlayProps): ReactElement => {

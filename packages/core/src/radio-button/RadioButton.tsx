@@ -1,21 +1,21 @@
 import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
-  ComponentPropsWithoutRef,
-  FocusEventHandler,
+  type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  type InputHTMLAttributes,
+  type ReactNode,
   forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
 } from "react";
 import { makePrefixer, useControlled } from "../utils";
-import { useRadioGroup } from "./internal/useRadioGroup";
 import { RadioButtonIcon } from "./RadioButtonIcon";
+import { useRadioGroup } from "./internal/useRadioGroup";
 
-import radioButtonCss from "./RadioButton.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
-import { AdornmentValidationStatus } from "../status-adornment";
+import type { AdornmentValidationStatus } from "../status-adornment";
+import radioButtonCss from "./RadioButton.css";
 
 const withBaseName = makePrefixer("saltRadioButton");
 
@@ -163,7 +163,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
             [withBaseName("error")]: error /* **Deprecated** */,
             [withBaseName(validationStatus || "")]: validationStatus,
           },
-          className
+          className,
         )}
         ref={ref}
         {...rest}
@@ -171,18 +171,18 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         <input
           aria-describedby={
             clsx(
-              radioGroup == undefined
+              radioGroup === undefined
                 ? formFieldA11yProps?.["aria-describedby"]
                 : undefined,
-              inputDescribedBy
+              inputDescribedBy,
             ) || undefined
           }
           aria-labelledby={
             clsx(
-              radioGroup == undefined
+              radioGroup === undefined
                 ? formFieldA11yProps?.["aria-labelledby"]
                 : undefined,
-              inputLabelledBy
+              inputLabelledBy,
             ) || undefined
           }
           className={clsx(withBaseName("input"), inputClassName)}
@@ -207,5 +207,5 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {label}
       </label>
     );
-  }
+  },
 );

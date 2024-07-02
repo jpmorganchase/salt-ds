@@ -1,8 +1,8 @@
 import { useCallback } from "react";
-import {
-  OverflowItem,
+import type {
   OverflowHookProps,
   OverflowHookResult,
+  OverflowItem,
 } from "./overflowTypes";
 
 import {
@@ -67,7 +67,7 @@ export const useReclaimSpace = ({
 }: OverflowHookProps): OverflowHookResult => {
   const getAllOverflowedItems = useCallback(
     (visibleContentSize: number, containerSize: number) => {
-      let newlyOverflowedItems = [];
+      const newlyOverflowedItems = [];
       const { current: managedItems } = managedItemsRef;
       const visibleItems = managedItems.slice();
       while (visibleContentSize > containerSize) {
@@ -75,13 +75,12 @@ export const useReclaimSpace = ({
         if (overflowedItem === null) {
           break;
         }
-        // eslint-disable-next-line no-param-reassign
         visibleContentSize -= overflowedItem.size;
         newlyOverflowedItems.push(overflowedItem);
       }
       return newlyOverflowedItems;
     },
-    []
+    [],
   );
 
   const releaseReclaimedSpace = useCallback(() => {
@@ -89,8 +88,8 @@ export const useReclaimSpace = ({
 
     const claimant = managedItems.find(hasReclaimedSpace);
     if (claimant) {
-      // Might not always need to collapse, if there is enough available space for it to still be collapsing
-      // collapse the claimant and turn off recvlaimed
+      // Might not always need to collapse, if there is enough available space for it to still be collapsing then
+      // collapse the claimant and turn off reclaimed
       collectionHook.dispatch({
         type: "replace-item",
         overflowItem: {
@@ -108,7 +107,7 @@ export const useReclaimSpace = ({
     (size: number, containerHasGrown?: boolean) => {
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
-        orientation
+        orientation,
       );
       const { current: managedItems } = managedItemsRef;
 
@@ -135,7 +134,7 @@ export const useReclaimSpace = ({
         }
       }
     },
-    []
+    [],
   );
 
   return {

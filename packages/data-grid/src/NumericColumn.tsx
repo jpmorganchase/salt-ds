@@ -1,9 +1,9 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  ChangeEventHandler,
-  KeyboardEventHandler,
-  ReactNode,
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
+  type ReactNode,
   useEffect,
   useRef,
   useState,
@@ -12,8 +12,12 @@ import {
 import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
 import { useEditorContext } from "./EditorContext";
-import { GridColumnModel, GridRowModel } from "./Grid";
-import { GridCellValueProps, GridColumn, GridColumnProps } from "./GridColumn";
+import type { GridColumnModel, GridRowModel } from "./Grid";
+import {
+  type GridCellValueProps,
+  GridColumn,
+  type GridColumnProps,
+} from "./GridColumn";
 
 import numericColumnCss from "./NumericColumn.css";
 
@@ -54,7 +58,7 @@ export function NumericCellEditor<T>(props: NumericEditorProps<T>) {
   const { endEditMode, cancelEditMode, initialText } = useEditorContext();
 
   const [editorText, setEditorText] = useState<string>(
-    initialText != null ? initialText : column!.info.props.getValue!(row!.data)
+    initialText != null ? initialText : column!.info.props.getValue!(row!.data),
   );
 
   const initialSelectionRef = useRef(!!initialText);

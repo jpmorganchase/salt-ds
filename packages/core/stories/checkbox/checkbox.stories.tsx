@@ -1,5 +1,3 @@
-import { ChangeEvent, useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   Checkbox,
@@ -7,6 +5,8 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Core/Checkbox",
@@ -292,8 +292,8 @@ export const ControlledGroup: StoryFn<typeof CheckboxGroup> = (args) => {
     } else {
       setControlledValues((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
   };

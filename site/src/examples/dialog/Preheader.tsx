@@ -1,16 +1,16 @@
-import { ReactElement, useState } from "react";
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogCloseButton,
+  DialogContent,
+  DialogHeader,
   FormField,
   FormFieldLabel,
   Input,
   useId,
-  Dialog,
-  DialogHeader,
-  DialogActions,
-  DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const Preheader = (): ReactElement => {
   const [open, setOpen] = useState(false);

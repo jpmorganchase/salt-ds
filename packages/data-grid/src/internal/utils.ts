@@ -1,8 +1,8 @@
-import { FocusedPart } from "../CursorContext";
+import type { FocusedPart } from "../CursorContext";
 
 export function getAttribute(
   element: HTMLElement,
-  attributeName: string
+  attributeName: string,
 ): [string, HTMLElement] {
   if (!element || !element.hasAttribute) {
     throw new Error(`Attribute "${attributeName}" not found`);
@@ -15,7 +15,7 @@ export function getAttribute(
 
 export function getRowIndexAttribute(element: HTMLElement): number {
   const [attribute] = getAttribute(element, "data-row-index");
-  return parseInt(attribute, 10);
+  return Number.parseInt(attribute, 10);
 }
 
 export function getRowKeyAttribute(element: HTMLElement): string {
@@ -30,23 +30,23 @@ export function getFocusablePosition(element: HTMLElement): {
 } {
   const [columnIndexAttr, cellElement] = getAttribute(
     element,
-    "data-column-index"
+    "data-column-index",
   );
-  const columnIndex = parseInt(columnIndexAttr, 10);
+  const columnIndex = Number.parseInt(columnIndexAttr, 10);
   const role = cellElement.getAttribute("role");
   if (role === "columnheader") {
     return { part: "header", columnIndex, rowIndex: 0 };
   }
   const [rowIndexAttr] = getAttribute(element, "data-row-index");
-  const rowIndex = parseInt(rowIndexAttr, 10);
+  const rowIndex = Number.parseInt(rowIndexAttr, 10);
   return { part: "body", rowIndex, columnIndex };
 }
 
 export function getCellPosition(element: HTMLElement): [number, number] {
   const [rowIndexAttr] = getAttribute(element, "data-row-index");
   const [columnIndexAttr] = getAttribute(element, "data-column-index");
-  const rowIndex = parseInt(rowIndexAttr, 10);
-  const columnIndex = parseInt(columnIndexAttr, 10);
+  const rowIndex = Number.parseInt(rowIndexAttr, 10);
+  const columnIndex = Number.parseInt(columnIndexAttr, 10);
   return [rowIndex, columnIndex];
 }
 
@@ -73,7 +73,7 @@ export const makeMapDeleter =
     deleteMapItem(old, k);
 
 export const clamp = (x: number | undefined, min: number, max: number) => {
-  if (x == undefined) {
+  if (x === undefined) {
     x = 0;
   }
   if (x < min) {

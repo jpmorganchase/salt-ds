@@ -1,13 +1,13 @@
 import { clsx } from "clsx";
 import {
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode,
   isValidElement,
-  MouseEvent,
-  ReactElement,
-  ReactNode,
   useCallback,
 } from "react";
 import { ToolbarButton } from "../ToolbarButton";
-import { ToolbarFieldProps } from "./toolbarFieldTypes";
+import type { ToolbarFieldProps } from "./toolbarFieldTypes";
 
 type TypeWithDisplayName = { displayName: string };
 type ActivationIndicator = ToolbarFieldProps["ActivationIndicatorComponent"];
@@ -21,18 +21,18 @@ const getChildElementName = (element: ReactNode): string => {
     const { type } = element;
     if (typeof type === "string") {
       return type;
-    } else if (typeof type.name === "string") {
-      return type.name;
-    } else if ("displayName" in type) {
-      return (type as TypeWithDisplayName).displayName;
-    } else {
-      return "";
     }
-  } else {
-    throw Error(
-      "useToolbarField, child of ToolbarField is not valid ReactElememnt"
-    );
+    if (typeof type.name === "string") {
+      return type.name;
+    }
+    if ("displayName" in type) {
+      return (type as TypeWithDisplayName).displayName;
+    }
+    return "";
   }
+  throw Error(
+    "useToolbarField, child of ToolbarField is not valid ReactElememnt",
+  );
 };
 
 // ToolbarButton gets special styling treatment in the OverflowPanel but styling is
@@ -44,7 +44,7 @@ const isToolbarButton = (element: ReactElement): boolean =>
 // the FormField.
 export const getToolbarFormFieldProps = (
   child: ReactNode,
-  isOverflowPanel = false
+  isOverflowPanel = false,
 ): ToolbarFieldProps => {
   let activationIndicator: ActivationIndicator = NullActivationIndicator;
   let variant: ToolbarFormFieldVariant = "tertiary";
@@ -71,7 +71,7 @@ export const getToolbarFormFieldProps = (
 const InteractiveComponents = ["Input", "Dropdown"];
 
 export const useToolbarField = (
-  props: ToolbarFieldProps
+  props: ToolbarFieldProps,
 ): ToolbarFieldProps => {
   const {
     ActivationIndicatorComponent: ActivationIndicatorComponentProp,
@@ -97,7 +97,7 @@ export const useToolbarField = (
         onClick(e);
       }
     },
-    [childElementName, onClick]
+    [childElementName, onClick],
   );
   return {
     ActivationIndicatorComponent:

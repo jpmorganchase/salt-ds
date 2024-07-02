@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
-import { Button, StackLayout, Drawer, DrawerCloseButton } from "@salt-ds/core";
+import { Button, Drawer, DrawerCloseButton, StackLayout } from "@salt-ds/core";
 
 export const DisableScrim = (): ReactElement => {
   const [open, setOpen] = useState(false);

@@ -1,19 +1,19 @@
 import {
   Button,
-  StackLayout,
+  Dialog,
+  DialogActions,
+  DialogCloseButton,
+  DialogContent,
+  DialogContext,
+  DialogHeader,
+  type DialogProps,
   FormField,
   FormFieldLabel,
   Input,
-  Dialog,
-  DialogHeader,
-  DialogActions,
-  DialogContent,
-  DialogCloseButton,
-  DialogProps,
-  DialogContext,
+  StackLayout,
 } from "@salt-ds/core";
-import { StoryFn, Meta } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "./dialog.stories.css";
 

@@ -6,7 +6,7 @@ describe("GIVEN a DropdownButton component", () => {
       cy.mount(<DropdownButton label="button" />);
       cy.findByRole("option").should(
         "have.class",
-        "saltDropdownButton-buttonLabel"
+        "saltDropdownButton-buttonLabel",
       );
       cy.get(".saltDropdownButton-content").within(() => {
         cy.findByTestId("ChevronDownIcon").should("exist");
@@ -24,7 +24,7 @@ describe("GIVEN a DropdownButton component", () => {
           label="button"
           onKeyDown={keyDownSpy}
           onKeyUp={keyUpSpy}
-        />
+        />,
       );
       cy.get("#test-button").focus();
       cy.realPress("B");

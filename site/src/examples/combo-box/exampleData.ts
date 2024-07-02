@@ -1,4 +1,4 @@
-import { CountryCode } from "@salt-ds/countries";
+import type { CountryCode } from "@salt-ds/countries";
 
 export const shortColorData = [
   "Baby blue",

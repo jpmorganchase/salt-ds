@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
 import { NavigationItem, StackLayout } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
+import { type ReactElement, useState } from "react";
 
 const multipleLevelNesting = [
   {
@@ -47,8 +47,8 @@ export const VerticalNestedGroup = (): ReactElement => {
                     active === `${name} - ${item.name}` ||
                     item.subNav.some(
                       (nestedItem) =>
-                        active === `${name} - ${item.name} - ${nestedItem}`
-                    )
+                        active === `${name} - ${item.name} - ${nestedItem}`,
+                    ),
                 )
               }
               href="#"
@@ -89,7 +89,7 @@ export const VerticalNestedGroup = (): ReactElement => {
                           active === itemValue ||
                           (!expanded.includes(item.name) &&
                             item.subNav?.some(
-                              (item) => active === `${name} - ${item}`
+                              (item) => active === `${name} - ${item}`,
                             ))
                         }
                         blurActive={
@@ -97,7 +97,7 @@ export const VerticalNestedGroup = (): ReactElement => {
                           item.subNav?.some(
                             (nestedItem) =>
                               active ===
-                              `${name} - ${item.name} - ${nestedItem}`
+                              `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
                         href="#"
@@ -107,8 +107,8 @@ export const VerticalNestedGroup = (): ReactElement => {
                           if (expanded.includes(item.name)) {
                             setExpanded(
                               expanded.filter(
-                                (element) => element !== item.name
-                              )
+                                (element) => element !== item.name,
+                              ),
                             );
                           } else {
                             setExpanded([...expanded, item.name]);

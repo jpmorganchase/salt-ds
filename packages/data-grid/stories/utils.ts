@@ -24,8 +24,8 @@ export function randomNumber(min: number, max: number, precision = 2) {
 }
 
 export function randomAmount(min = 0, max = 10000000, precision = 2) {
-  const m = max * Math.pow(10, precision);
-  const d = Math.pow(10, -precision);
+  const m = max * 10 ** precision;
+  const d = 10 ** -precision;
   return Math.round(Math.random() * m) * d;
 }
 
@@ -62,6 +62,6 @@ export function randomCurrency(): string {
 
 export function randomDate(start: Date, end: Date) {
   return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
   );
 }

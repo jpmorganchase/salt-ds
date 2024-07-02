@@ -1,4 +1,5 @@
-import React, {
+import type React from "react";
+import type {
   FocusEventHandler,
   ForwardedRef,
   HTMLAttributes,
@@ -10,7 +11,7 @@ import React, {
   RefObject,
 } from "react";
 
-import {
+import type {
   CollectionHookResult,
   CollectionItem,
   ListHandlers,
@@ -25,7 +26,7 @@ import {
 } from "../common-hooks";
 
 export type ComponentType<T = unknown> = (
-  props: PropsWithChildren<T>
+  props: PropsWithChildren<T>,
 ) => JSX.Element;
 
 export type ListItemType<T = unknown> = ComponentType<
@@ -56,7 +57,7 @@ export interface ListScrollHandles<Item> {
 
 export interface ListProps<
   Item = string,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > extends SelectionProps<Item, Selection>,
     Omit<HTMLAttributes<HTMLDivElement>, "onSelect" | "defaultValue"> {
   /**
@@ -222,7 +223,7 @@ export interface ListHookProps<Item, Selection extends SelectionStrategy>
   onHighlight?: (index: number) => void;
   onKeyboardNavigation?: (
     event: React.KeyboardEvent,
-    currentIndex: number
+    currentIndex: number,
   ) => void;
   onKeyDown?: (evt: KeyboardEvent) => void;
   onSelect?: SelectHandler<Item>;

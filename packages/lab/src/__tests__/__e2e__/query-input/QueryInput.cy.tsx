@@ -1,5 +1,5 @@
-import { QueryInput, QueryInputCategory } from "@salt-ds/lab";
 import { Button } from "@salt-ds/core";
+import { QueryInput, type QueryInputCategory } from "@salt-ds/lab";
 
 const fakeCategories: QueryInputCategory[] = [
   { name: "A", values: ["A1", "A2", "A3"] },
@@ -109,7 +109,7 @@ describe("GIVEN a QueryInput component", () => {
         <div>
           <Button data-testid="previous-control">PreviousControl</Button>
           <QueryInput categories={fakeCategories} />
-        </div>
+        </div>,
       );
       cy.findByRole("textbox").focus();
       cy.realPress(["Shift", "Tab"]);

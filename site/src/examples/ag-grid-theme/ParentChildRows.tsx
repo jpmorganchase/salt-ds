@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { parentChildColumns, parentChildData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
@@ -16,9 +16,7 @@ export const ParentChildRows = (props: AgGridReactProps) => {
         {...agGridProps}
         {...props}
         columnDefs={parentChildColumns}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getDataPath={(data: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
+        getDataPath={(data) => {
           return data.orgHierarchy;
         }}
         groupDefaultExpanded={-1}

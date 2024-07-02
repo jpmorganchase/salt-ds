@@ -1,12 +1,12 @@
-import { ComponentType, forwardRef, ReactElement } from "react";
+import { type IconProps, TearOutIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { IconProps, TearOutIcon } from "@salt-ds/icons";
+import { type ComponentType, type ReactElement, forwardRef } from "react";
+import { Text, type TextProps } from "../text";
 import { makePrefixer } from "../utils";
-import { Text, TextProps } from "../text";
 
-import linkCss from "./Link.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import linkCss from "./Link.css";
 
 const withBaseName = makePrefixer("saltLink");
 
@@ -31,7 +31,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     target = "_self",
     ...rest
   },
-  ref
+  ref,
 ): ReactElement<LinkProps> {
   const targetWindow = useWindow();
   useComponentCssInjection({

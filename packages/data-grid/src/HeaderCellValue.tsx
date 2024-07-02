@@ -1,5 +1,5 @@
 import { makePrefixer } from "@salt-ds/core";
-import { GridHeaderValueProps } from "./GridColumn";
+import type { GridHeaderValueProps } from "./GridColumn";
 
 const withBaseName = makePrefixer("saltGridHeaderCell");
 

@@ -1,5 +1,5 @@
-import { Decorator } from "@storybook/react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import type { Decorator } from "@storybook/react";
 import MockDate from "mockdate";
 
 export const withDateMock: Decorator = (Story, context) => {

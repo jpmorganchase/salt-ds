@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { FlowLayout, Input } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Validation = (): ReactElement => (
   <FlowLayout style={{ maxWidth: "256px" }}>

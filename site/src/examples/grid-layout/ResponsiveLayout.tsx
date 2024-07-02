@@ -1,14 +1,14 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
 import {
-  GridLayout,
-  GridItem,
   FormField,
   FormFieldLabel,
-  RadioButtonGroup,
+  GridItem,
+  GridLayout,
   RadioButton,
+  RadioButtonGroup,
 } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
+import styles from "./index.module.css";
 
 const columnsOptions = [6, 4, 2, 1];
 

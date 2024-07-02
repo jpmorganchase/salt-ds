@@ -1,13 +1,13 @@
+import { Button } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
+  type CSSProperties,
+  type KeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
   useCallback,
   useRef,
   useState,
-  CSSProperties,
-  MouseEvent as ReactMouseEvent,
-  KeyboardEvent,
 } from "react";
-import { clsx } from "clsx";
-import { Button } from "@salt-ds/core";
 
 import "./DraggableSnapshot.css";
 
@@ -64,7 +64,7 @@ export const DraggableImg = ({
       lastMousePos.current[1] = screenY;
       moveSnapshot(xDiff, yDiff);
     },
-    [moveSnapshot]
+    [moveSnapshot],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -78,7 +78,7 @@ export const DraggableImg = ({
       window.addEventListener("mousemove", handleMouseMove);
       window.addEventListener("mouseup", handleMouseUp);
     },
-    [handleMouseMove, handleMouseUp]
+    [handleMouseMove, handleMouseUp],
   );
 
   const handleKeyDown = useCallback(
@@ -92,7 +92,7 @@ export const DraggableImg = ({
         moveSnapshot(...moveBy);
       }
     },
-    [moveSnapshot]
+    [moveSnapshot],
   );
 
   const alignImages = useCallback(() => {

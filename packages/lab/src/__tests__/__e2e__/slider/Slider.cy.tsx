@@ -10,7 +10,7 @@ describe("Given a Slider with a single value", () => {
         step={5}
         pageStep={25}
         defaultValue={100}
-      />
+      />,
     );
     cy.findByRole("slider")
       .should("have.attr", "aria-valuemin", "5")
@@ -29,7 +29,7 @@ describe("Given a Slider with a single value", () => {
         pageStep={25}
         defaultValue={100}
         onChange={changeSpy}
-      />
+      />,
     );
 
     cy.findByRole("slider").focus();
@@ -66,13 +66,13 @@ describe("Given a Slider with a range value", () => {
         max={100}
         step={10}
         defaultValue={[20, 40]}
-      />
+      />,
     );
 
     cy.findByRole("group").should(
       "have.attr",
       "aria-label",
-      "TestLabel slider from -100 to 100"
+      "TestLabel slider from -100 to 100",
     );
 
     cy.findAllByRole("slider").should("have.length", 2);
@@ -98,13 +98,13 @@ describe("Given a Slider with more than 2 items in the value", () => {
         max={110}
         step={1}
         defaultValue={[20, 40, 100]}
-      />
+      />,
     );
 
     cy.findByRole("group").should(
       "have.attr",
       "aria-label",
-      "TestLabel slider from -10 to 110"
+      "TestLabel slider from -10 to 110",
     );
 
     cy.findAllByRole("slider").should("have.length", 3);
@@ -140,7 +140,7 @@ describe("Given a pushable range slider", () => {
         pushable
         pushDistance={3}
         onChange={changeSpy}
-      />
+      />,
     );
 
     cy.findAllByRole("slider").should("have.length", 3);
@@ -176,7 +176,7 @@ describe("Given a non-pushable range slider", () => {
         pageStep={4}
         defaultValue={[-1, 3, 7]}
         onChange={changeSpy}
-      />
+      />,
     );
 
     cy.findAllByRole("slider").should("have.length", 3);

@@ -1,10 +1,8 @@
-"use strict";
-
 const allProperties = require("known-css-properties").all;
 
 /* excluding `accent-color` property so `--card-accent-color` is allowed */
 const properties = allProperties.filter(
-  (property) => property !== "accent-color"
+  (property) => property !== "accent-color",
 );
 
 const stylelint = require("stylelint");
@@ -24,14 +22,14 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 
   return [
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop && raws.prop.prefix,
+    raws.prop?.prefix,
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    (raws.prop && raws.prop.raw) || decl.prop,
+    raws.prop?.raw || decl.prop,
     // @ts-expect-error -- TS2571: Object is of type 'unknown'.
-    raws.prop && raws.prop.suffix,
+    raws.prop?.suffix,
     raws.between || ":",
     // @ts-expect-error -- TS2339: Property 'prefix' does not exist on type '{ value: string; raw: string; }'.
-    raws.value && raws.value.prefix,
+    raws.value?.prefix,
   ].reduce((count, str) => {
     if (str) {
       return count + str.length;
@@ -46,7 +44,7 @@ const declarationValueIndex = function declarationValueIndex(decl) {
 const ruleName = "salt/custom-property-attributes-kebab-case";
 
 const messages = ruleMessages(ruleName, {
-  expected: (pattern) => `CSS attributes in tokens should be kebab case`, // Can encode option in error message if needed
+  expected: (pattern) => "CSS attributes in tokens should be kebab case", // Can encode option in error message if needed
 });
 
 const meta = {
@@ -57,23 +55,20 @@ const meta = {
 const cssAttributes = properties
   .filter((x) => !x.startsWith("-")) /* e.g. -webkit- */
   .filter((x) =>
-    x.includes("-")
+    x.includes("-"),
   ); /* only need to check properting needing kebab case */
 
 /**
  * Test whether a property contains CSS attr
  */
-const includesCssAttribute = function (property) {
-  return (
-    property.startsWith("--") &&
-    cssAttributes.find(
-      (attr) =>
-        property.includes(`-${attr}-`) ||
-        (property.endsWith(`-${attr}`) &&
-          property !== `--salt-${attr}`) /* --salt-animation-duration */
-    )
+const includesCssAttribute = (property) =>
+  property.startsWith("--") &&
+  cssAttributes.find(
+    (attr) =>
+      property.includes(`-${attr}-`) ||
+      (property.endsWith(`-${attr}`) &&
+        property !== `--salt-${attr}`) /* --salt-animation-duration */,
   );
-};
 
 module.exports = stylelint.createPlugin(
   ruleName,
@@ -107,7 +102,7 @@ module.exports = stylelint.createPlugin(
           complain(
             declarationValueIndex(decl) + firstNode.sourceIndex,
             firstNode.value.length,
-            decl
+            decl,
           );
         });
 
@@ -129,7 +124,7 @@ module.exports = stylelint.createPlugin(
         });
       }
     };
-  }
+  },
 );
 
 module.exports.ruleName = ruleName;

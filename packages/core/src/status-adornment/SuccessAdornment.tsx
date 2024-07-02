@@ -1,5 +1,5 @@
+import type { IconProps } from "@salt-ds/icons";
 import { forwardRef } from "react";
-import { IconProps } from "@salt-ds/icons";
 
 export type SuccessAdornmentIconProps = IconProps;
 
@@ -8,7 +8,7 @@ export const SuccessAdornmentIcon = forwardRef<
   SuccessAdornmentIconProps
 >(function SuccessAdornmentIcon(
   { children, className, ...rest }: SuccessAdornmentIconProps,
-  ref
+  ref,
 ) {
   return (
     <svg

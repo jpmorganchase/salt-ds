@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import { Link } from "@salt-ds/core";
+import { composeStories } from "@storybook/react";
 
 import * as linkStories from "@stories/link/link.stories";
 
@@ -12,7 +12,7 @@ describe("GIVEN a link", () => {
     cy.mount(
       <Link href="#root" data-testid={testId}>
         hello world
-      </Link>
+      </Link>,
     );
     cy.findByTestId(testId).should("exist");
   });
@@ -21,7 +21,7 @@ describe("GIVEN a link", () => {
     cy.mount(
       <Link href="#root" target="_blank">
         Action
-      </Link>
+      </Link>,
     );
 
     cy.findByTestId(/TearOutIcon/i).should("exist");
@@ -37,7 +37,7 @@ describe("GIVEN a link", () => {
     cy.mount(
       <Link href="#root" target="blank">
         Action
-      </Link>
+      </Link>,
     );
 
     cy.findByTestId(/TearOutIcon/i).should("not.exist");

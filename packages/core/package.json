@@ -31,7 +31,5 @@
   "scripts": {
     "bundle:css": "yarn node ./scripts/build.mjs"
   },
-  "files": [
-    "css"
-  ]
+  "files": ["css"]
 }

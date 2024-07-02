@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import parentChildExampleColumns from "../dependencies/parentChildExampleColumns";
 import parentChildExampleData from "../dependencies/parentChildExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -14,9 +14,7 @@ const ParentChildRows = (props: AgGridReactProps) => {
         animateRows
         treeData
         columnDefs={parentChildExampleColumns}
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        getDataPath={(data: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+        getDataPath={(data) => {
           return data.orgHierarchy;
         }}
         groupDefaultExpanded={-1}

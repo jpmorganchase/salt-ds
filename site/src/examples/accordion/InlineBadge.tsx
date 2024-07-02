@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Accordion,
   AccordionHeader,
@@ -11,6 +10,7 @@ import {
   Input,
   SplitLayout,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const InlineBadge = (): ReactElement => (
   <FlexLayout style={{ width: "80%", height: "100%" }}>

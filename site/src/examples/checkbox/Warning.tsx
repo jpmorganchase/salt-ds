@@ -1,5 +1,5 @@
-import { ChangeEvent, ReactElement, useState } from "react";
-import { Checkbox, CheckboxGroup, Button, StackLayout } from "@salt-ds/core";
+import { Button, Checkbox, CheckboxGroup, StackLayout } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 export const Warning = (): ReactElement => {
   const [warningState, setWarningState] = useState(true);

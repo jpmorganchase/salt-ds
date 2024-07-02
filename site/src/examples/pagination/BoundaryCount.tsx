@@ -1,11 +1,11 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import { Pagination, Paginator, StackLayout } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 export const BoundaryCount = (): ReactElement => {
   const [boundaryCount, setBoundaryCount] = useState(1);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
+    const value = Number.parseInt(event.target.value);
     setBoundaryCount(value);
   };
 

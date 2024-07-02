@@ -1,17 +1,17 @@
-import { clsx } from "clsx";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { useDensity } from "../salt-provider";
-import { AdornmentValidationStatus } from "../status-adornment";
-import { makePrefixer } from "../utils";
-import checkboxIconCss from "./CheckboxIcon.css";
 import {
-  IconProps,
+  type IconProps,
   SuccessIcon,
   SuccessSmallIcon,
   SuccessSmallSolidIcon,
   SuccessSolidIcon,
 } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { useDensity } from "../salt-provider";
+import type { AdornmentValidationStatus } from "../status-adornment";
+import { makePrefixer } from "../utils";
+import checkboxIconCss from "./CheckboxIcon.css";
 
 export interface CheckboxIconProps {
   checked?: boolean;
@@ -75,7 +75,7 @@ export const CheckboxIcon = ({
           [withBaseName("indeterminate")]: indeterminate,
           [withBaseName("readOnly")]: readOnly,
         },
-        className
+        className,
       )}
     >
       {checked && !indeterminate && !readOnly && (

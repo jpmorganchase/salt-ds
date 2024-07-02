@@ -1,10 +1,10 @@
-import { Link, LinkProps, makePrefixer, Text } from "@salt-ds/core";
+import { Link, type LinkProps, Text, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, useCallback } from "react";
+import { type HTMLAttributes, forwardRef, useCallback } from "react";
 import { useMetricContext } from "./internal";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import metricHeaderCss from "./MetricHeader.css";
 
@@ -30,7 +30,7 @@ const withBaseName = makePrefixer("saltMetricHeader");
 export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   function MetricHeader(
     { SubtitleLinkProps, className, title, subtitle, ...restProps },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -83,5 +83,5 @@ export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
         {renderSubtitle()}
       </div>
     );
-  }
+  },
 );

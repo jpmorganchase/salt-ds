@@ -1,13 +1,13 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
 import {
   Dropdown,
   FormField,
-  FormFieldLabel,
   FormFieldHelperText,
+  FormFieldLabel,
   Option,
   OptionGroup,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import { usStateExampleData } from "../assets/exampleData";
 
@@ -16,14 +16,17 @@ export default {
   component: Dropdown,
 } as Meta<typeof Dropdown>;
 
-const groupedOptions = usStateExampleData.slice(0, 5).reduce((acc, option) => {
-  const groupName = option[0];
-  if (!acc[groupName]) {
-    acc[groupName] = [];
-  }
-  acc[groupName].push(option);
-  return acc;
-}, {} as Record<string, typeof usStateExampleData>);
+const groupedOptions = usStateExampleData.slice(0, 5).reduce(
+  (acc, option) => {
+    const groupName = option[0];
+    if (!acc[groupName]) {
+      acc[groupName] = [];
+    }
+    acc[groupName].push(option);
+    return acc;
+  },
+  {} as Record<string, typeof usStateExampleData>,
+);
 
 export const OpenExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} itemPadding={12} transposeDensity>

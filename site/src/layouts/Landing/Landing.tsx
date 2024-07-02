@@ -1,10 +1,10 @@
-import React, { FC } from "react";
-import { Footer, AppHeader } from "../../components";
+import React, { type FC } from "react";
+import { AppHeader, Footer } from "../../components";
 
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
 import { LayoutFullWidth } from "../LayoutFullWidth";
-import { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
+import type { LayoutProps } from "../types/index";
 
 export const Landing: FC<LayoutProps> = ({ FooterProps, children }) => (
   <LayoutBase Header={<AppHeader />} className={layoutStyles.base}>

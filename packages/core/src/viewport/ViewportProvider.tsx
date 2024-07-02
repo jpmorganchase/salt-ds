@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, ReactNode } from "react";
+import { type ReactNode, createContext, useContext, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../utils";
 
 const ViewportContext = createContext<number | null>(null);
@@ -22,7 +22,7 @@ const ViewportProvider = ({ children }: ViewportProviderProps) => {
       observer = new ResizeObserver(
         (observerEntries: ResizeObserverEntry[]) => {
           setViewport(observerEntries[0].contentRect.width);
-        }
+        },
       );
 
       observer.observe(document.body);

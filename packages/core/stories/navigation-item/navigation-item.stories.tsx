@@ -2,11 +2,11 @@ import {
   Badge,
   FlexLayout,
   NavigationItem,
-  NavigationItemProps,
+  type NavigationItemProps,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
 
 import "./navigation-item.stories.css";
 
@@ -348,8 +348,8 @@ export const VerticalNestedGroup = () => {
                     active === `${name} - ${item.name}` ||
                     item.subNav.some(
                       (nestedItem) =>
-                        active === `${name} - ${item.name} - ${nestedItem}`
-                    )
+                        active === `${name} - ${item.name} - ${nestedItem}`,
+                    ),
                 )
               }
               href="#"
@@ -384,7 +384,7 @@ export const VerticalNestedGroup = () => {
                           active === itemValue ||
                           (!expanded.includes(item.name) &&
                             item.subNav?.some(
-                              (item) => active === `${name} - ${item}`
+                              (item) => active === `${name} - ${item}`,
                             ))
                         }
                         blurActive={
@@ -392,7 +392,7 @@ export const VerticalNestedGroup = () => {
                           item.subNav?.some(
                             (nestedItem) =>
                               active ===
-                              `${name} - ${item.name} - ${nestedItem}`
+                              `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
                         href="#"
@@ -406,8 +406,8 @@ export const VerticalNestedGroup = () => {
                           if (expanded.includes(item.name)) {
                             setExpanded(
                               expanded.filter(
-                                (element) => element !== item.name
-                              )
+                                (element) => element !== item.name,
+                              ),
                             );
                           } else {
                             setExpanded([...expanded, item.name]);
@@ -479,8 +479,8 @@ export const VerticalNestedGroupNoIcon = () => {
                     active === `${name} - ${item.name}` ||
                     item.subNav.some(
                       (nestedItem) =>
-                        active === `${name} - ${item.name} - ${nestedItem}`
-                    )
+                        active === `${name} - ${item.name} - ${nestedItem}`,
+                    ),
                 )
               }
               href="#"
@@ -514,7 +514,7 @@ export const VerticalNestedGroupNoIcon = () => {
                           active === itemValue ||
                           (!expanded.includes(item.name) &&
                             item.subNav?.some(
-                              (item) => active === `${name} - ${item}`
+                              (item) => active === `${name} - ${item}`,
                             ))
                         }
                         blurActive={
@@ -522,7 +522,7 @@ export const VerticalNestedGroupNoIcon = () => {
                           item.subNav?.some(
                             (nestedItem) =>
                               active ===
-                              `${name} - ${item.name} - ${nestedItem}`
+                              `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
                         href="#"
@@ -536,8 +536,8 @@ export const VerticalNestedGroupNoIcon = () => {
                           if (expanded.includes(item.name)) {
                             setExpanded(
                               expanded.filter(
-                                (element) => element !== item.name
-                              )
+                                (element) => element !== item.name,
+                              ),
                             );
                           } else {
                             setExpanded([...expanded, item.name]);

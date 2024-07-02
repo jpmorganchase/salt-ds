@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import { SplitLayout, StackLayout, FlexItem } from "@salt-ds/core";
+import { FlexItem, SplitLayout, StackLayout } from "@salt-ds/core";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import type { ReactElement } from "react";
 import flexItemSizeStyles from "./FlexItemSize.module.css";
+import styles from "./index.module.css";
 
 const startItem = (
   <StackLayout direction="row" className={flexItemSizeStyles.stackLayout}>

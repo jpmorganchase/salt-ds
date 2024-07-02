@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from "@storybook/react";
 import { StackLayout } from "@salt-ds/core";
-import { MX, AD, GB, US, countryMetaMap } from "@salt-ds/countries";
+import { AD, GB, MX, US, countryMetaMap } from "@salt-ds/countries";
+import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 
 import "@salt-ds/countries/saltCountries.css";

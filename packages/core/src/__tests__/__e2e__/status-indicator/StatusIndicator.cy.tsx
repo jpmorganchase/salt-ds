@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as statusIndicatorStories from "@stories/status-indicator/status-indicator.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(statusIndicatorStories);
@@ -13,7 +13,7 @@ describe("Given a Status Indicator", () => {
       cy.mount(<Default status="error" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
-        "saltStatusIndicator-error"
+        "saltStatusIndicator-error",
       );
       cy.get(".saltStatusIndicator").should("have.attr", "aria-label", "error");
     });
@@ -22,12 +22,12 @@ describe("Given a Status Indicator", () => {
       cy.mount(<Default status="success" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
-        "saltStatusIndicator-success"
+        "saltStatusIndicator-success",
       );
       cy.get(".saltStatusIndicator").should(
         "have.attr",
         "aria-label",
-        "success"
+        "success",
       );
     });
 
@@ -35,12 +35,12 @@ describe("Given a Status Indicator", () => {
       cy.mount(<Default status="warning" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
-        "saltStatusIndicator-warning"
+        "saltStatusIndicator-warning",
       );
       cy.get(".saltStatusIndicator").should(
         "have.attr",
         "aria-label",
-        "warning"
+        "warning",
       );
     });
 
@@ -48,7 +48,7 @@ describe("Given a Status Indicator", () => {
       cy.mount(<Default status="info" />);
       cy.get(".saltStatusIndicator").should(
         "have.class",
-        "saltStatusIndicator-info"
+        "saltStatusIndicator-info",
       );
       cy.get(".saltStatusIndicator").should("have.attr", "aria-label", "info");
     });

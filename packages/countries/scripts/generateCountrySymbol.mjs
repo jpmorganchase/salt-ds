@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
-import glob from "glob";
-import prettier from "prettier";
-import Mustache from "mustache";
-import { optimize } from "svgo";
 import { fileURLToPath } from "node:url";
+import glob from "glob";
+import Mustache from "mustache";
+import prettier from "prettier";
+import { optimize } from "svgo";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
 const PRETTIER_SETTINGS = {
@@ -29,11 +29,11 @@ function countryCodeToComponentName(countryCode) {
 
 /** Change kebab casing to Pascal casing */
 function pascalCase(str) {
-  let arr = str.split(" ");
-  let capital = arr.map(
+  const arr = str.split(" ");
+  const capital = arr.map(
     (item) =>
       item.charAt(0).toLocaleUpperCase("en-US") +
-      item.slice(1).toLocaleLowerCase("en-US")
+      item.slice(1).toLocaleLowerCase("en-US"),
   );
 
   return capital.join("");
@@ -73,7 +73,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
         .toUpperCase();
 
       return `.saltCountry-${countryCode}{background-image:url("data:image/svg+xml,${encodeURIComponent(
-        svgString
+        svgString,
       )}")}`;
     })
     .join("\n");
@@ -82,7 +82,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const formattedResult = prettier.format(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
-    { ...PRETTIER_SETTINGS, parser: "css" }
+    { ...PRETTIER_SETTINGS, parser: "css" },
   );
 
   fs.writeFileSync(cssOutputPath, formattedResult, {
@@ -111,7 +111,7 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
       const countryCode = path.parse(fileName).name.toUpperCase();
 
       return `.saltCountrySharp-${countryCode}{background-image:url("data:image/svg+xml,${encodeURIComponent(
-        svgString
+        svgString,
       )}")}`;
     })
     .join("\n");
@@ -120,7 +120,7 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 
   const formattedResult = prettier.format(
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
-    { ...PRETTIER_SETTINGS, parser: "css" }
+    { ...PRETTIER_SETTINGS, parser: "css" },
   );
 
   fs.writeFileSync(cssOutputPath, formattedResult, {
@@ -170,10 +170,10 @@ const generateCountrySymbolComponents = ({
     let viewBox;
     let sharpViewBox;
 
-    const newFilePath = path.join(componentsPath, countryCode + ".tsx");
+    const newFilePath = path.join(componentsPath, `${countryCode}.tsx`);
     const newSharpFilePath = path.join(
       componentsPath,
-      countryCode + "_Sharp.tsx"
+      `${countryCode}_Sharp.tsx`,
     );
 
     countryMetaMap[countryCode] = {
@@ -229,19 +229,16 @@ const generateCountrySymbolComponents = ({
                       typeof value === "string" &&
                       value.includes("mask-type:")
                     ) {
-                      newAttributes[
-                        "style"
-                      ] = `${REPLACE_START}{{ maskType: '${value.slice(
-                        10
+                      newAttributes.style = `${REPLACE_START}{{ maskType: '${value.slice(
+                        10,
                       )}' }}${REPLACE_END}`;
                       // Allow each component instance to use unique ids for masks
                     } else if (name === "id") {
-                      newAttributes[
-                        svgAttributeMap[name] || name
-                      ] = `${REPLACE_START}{\`${getUidString(
-                        countryCode,
-                        value
-                      )}\`}${REPLACE_END}`;
+                      newAttributes[svgAttributeMap[name] || name] =
+                        `${REPLACE_START}{\`${getUidString(
+                          countryCode,
+                          value,
+                        )}\`}${REPLACE_END}`;
                     } else {
                       newAttributes[svgAttributeMap[name] || name] = value;
                     }
@@ -254,7 +251,7 @@ const generateCountrySymbolComponents = ({
 
                     const newValue = `${REPLACE_START}{\`url(#${getUidString(
                       countryCode,
-                      maskId
+                      maskId,
                     )})\`}${REPLACE_END}`;
 
                     newAttributes[svgAttributeMap[name] || name] = newValue;
@@ -336,7 +333,7 @@ const generateCountrySymbolComponents = ({
     });
     const sharpFileContents = Mustache.render(template, {
       svgElements: sharpSvgPaths.data,
-      componentName: countryCodeToComponentName(countryCode) + "_Sharp",
+      componentName: `${countryCodeToComponentName(countryCode)}_Sharp`,
       ariaLabel: countryName,
       viewBox: sharpViewBox ?? "0 0 72 50",
       sharp: true,
@@ -352,12 +349,12 @@ const generateCountrySymbolComponents = ({
 
     const formattedResult = prettier.format(
       GENERATED_WARNING_COMMENT.concat(replacedText),
-      PRETTIER_SETTINGS
+      PRETTIER_SETTINGS,
     );
 
     const formattedSharpResult = prettier.format(
       GENERATED_WARNING_COMMENT.concat(replacedSharpText),
-      PRETTIER_SETTINGS
+      PRETTIER_SETTINGS,
     );
 
     fs.writeFileSync(newFilePath, formattedResult, {
@@ -387,7 +384,7 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
   const contentWithMetaExport = [...content];
 
   const joinedText = [GENERATED_WARNING_COMMENT, ...contentWithMetaExport].join(
-    "\n"
+    "\n",
   );
 
   const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
@@ -396,14 +393,9 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
 
   console.log("creating index at:", outputFile);
 
-  fs.writeFile(
-    outputFile,
-    formattedResult,
-    { encoding: "utf8" },
-    function (err) {
-      if (err) return console.log(err);
-    }
-  );
+  fs.writeFile(outputFile, formattedResult, { encoding: "utf8" }, (err) => {
+    if (err) return console.log(err);
+  });
 };
 
 // Generate countryMetaMap for use in stories and by consumers to map code to countryMeta
@@ -439,14 +431,9 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
 
   const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
 
-  fs.writeFile(
-    outputFile,
-    formattedResult,
-    { encoding: "utf8" },
-    function (err) {
-      if (err) return console.log(err);
-    }
-  );
+  fs.writeFile(outputFile, formattedResult, { encoding: "utf8" }, (err) => {
+    if (err) return console.log(err);
+  });
 };
 
 // generate lazyMap for use in the LazyCountrySymbol component
@@ -456,7 +443,7 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
   const outputFile = path.join(
     basePath,
     "./lazy-country-symbol/",
-    "lazyMap.ts"
+    "lazyMap.ts",
   );
 
   const importText = `
@@ -482,14 +469,9 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
 
   const formattedResult = prettier.format(joinedText, PRETTIER_SETTINGS);
 
-  fs.writeFile(
-    outputFile,
-    formattedResult,
-    { encoding: "utf8" },
-    function (err) {
-      if (err) return console.log(err);
-    }
-  );
+  fs.writeFile(outputFile, formattedResult, { encoding: "utf8" }, (err) => {
+    if (err) return console.log(err);
+  });
 };
 
 // Run the script

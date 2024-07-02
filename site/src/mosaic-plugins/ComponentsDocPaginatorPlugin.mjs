@@ -5,7 +5,7 @@ const COMPONENT_OVERVIEW = {
 
 function buildRouteNavigationData(pages) {
   const allComponentIndexPages = pages
-    .filter((p) => new RegExp("components/[\\w-]+/index").test(p.route))
+    .filter((p) => /components\/[\w-]+\/index/.test(p.route))
     .sort((a, b) => a.route.localeCompare(b.route));
 
   const pageIndexToNavigation = {};
@@ -41,15 +41,14 @@ const ComponentsDocPaginatorPlugin = {
 
     for (const page of pages) {
       // Only work with components route
-      if (!new RegExp(`/components/`).test(page.route)) {
+      if (!/\/components\//.test(page.route)) {
         continue;
       }
 
       if (page.route.endsWith("/index")) {
         // Don't care about index page, they are not displayed
       } else {
-        const indexPageRoute =
-          page.route.substring(0, page.route.lastIndexOf("/")) + "/index";
+        const indexPageRoute = `${page.route.substring(0, page.route.lastIndexOf("/"))}/index`;
 
         if (componentRouteToName[indexPageRoute]) {
           page.navigation = componentRouteToName[indexPageRoute];

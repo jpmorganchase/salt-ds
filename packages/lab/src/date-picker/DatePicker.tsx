@@ -1,12 +1,18 @@
 import { clsx } from "clsx";
 import {
-  ChangeEvent,
+  type ChangeEvent,
+  type SyntheticEvent,
   forwardRef,
-  SyntheticEvent,
   useRef,
   useState,
 } from "react";
 
+import { flip, useDismiss, useInteractions } from "@floating-ui/react";
+import {
+  type DateValue,
+  getLocalTimeZone,
+  today,
+} from "@internationalized/date";
 import {
   Button,
   makePrefixer,
@@ -15,18 +21,16 @@ import {
   useForkRef,
   useFormFieldProps,
 } from "@salt-ds/core";
-import { DatePickerContext } from "./DatePickerContext";
-import { DatePickerPanel } from "./DatePickerPanel";
-import { flip, useDismiss, useInteractions } from "@floating-ui/react";
-import { DateInput, DateInputProps } from "../date-input";
-import { DateValue, getLocalTimeZone, today } from "@internationalized/date";
 import { CalendarIcon } from "@salt-ds/icons";
 import {
-  CalendarProps,
+  type CalendarProps,
+  type RangeSelectionValueType,
+  type SingleSelectionValueType,
   isRangeOrOffsetSelectionWithStartDate,
-  RangeSelectionValueType,
-  SingleSelectionValueType,
 } from "../calendar";
+import { DateInput, type DateInputProps } from "../date-input";
+import { DatePickerContext } from "./DatePickerContext";
+import { DatePickerPanel } from "./DatePickerPanel";
 
 const withBaseName = makePrefixer("saltDatePicker");
 
@@ -91,7 +95,7 @@ export interface DatePickerProps<SelectionVariantType>
    */
   onSelectionChange?: (
     event: SyntheticEvent,
-    selectedDate?: SelectionVariantType
+    selectedDate?: SelectionVariantType,
   ) => void;
   /**
    * Callback fired when the input value change.
@@ -99,12 +103,12 @@ export interface DatePickerProps<SelectionVariantType>
   onChange?: SelectionVariantType extends SingleSelectionValueType
     ? (
         event: ChangeEvent<HTMLInputElement>,
-        selectedDateInputValue?: string
+        selectedDateInputValue?: string,
       ) => void
     : (
         event: ChangeEvent<HTMLInputElement>,
         startDateInputValue?: string,
-        endDateInputValue?: string
+        endDateInputValue?: string,
       ) => void;
   /**
    * Number of Calendars to be shown if selectionVariant is range.
@@ -137,7 +141,7 @@ export const DatePicker = forwardRef<
     visibleMonths = 2,
     ...rest
   },
-  ref
+  ref,
 ) {
   const [open, setOpen] = useControlled({
     controlled: openProp,
@@ -158,13 +162,13 @@ export const DatePicker = forwardRef<
   >(
     (isRangeOrOffsetSelectionWithStartDate(selectedDate)
       ? selectedDate?.startDate
-      : selectedDate) ?? today(getLocalTimeZone())
+      : selectedDate) ?? today(getLocalTimeZone()),
   );
 
   const [endVisibleMonth, setEndVisibleMonth] = useState<DateValue | undefined>(
     (isRangeOrOffsetSelectionWithStartDate(selectedDate)
       ? selectedDate.startDate?.add({ months: 1 })
-      : selectedDate) ?? today(getLocalTimeZone()).add({ months: 1 })
+      : selectedDate) ?? today(getLocalTimeZone()).add({ months: 1 }),
   );
 
   const onOpenChange = (newState: boolean) => {
@@ -205,7 +209,7 @@ export const DatePicker = forwardRef<
   // Handlers
   const handleSelect = (
     event: SyntheticEvent,
-    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue }
+    selectedDate?: DateValue | { startDate?: DateValue; endDate?: DateValue },
   ) => {
     if (selectionVariant === "default" && selectedDate) {
       startInputRef?.current?.focus();

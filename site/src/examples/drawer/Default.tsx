@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
-import { Button, StackLayout, Drawer, DrawerCloseButton } from "@salt-ds/core";
+import { Button, Drawer, DrawerCloseButton, StackLayout } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const Default = (): ReactElement => {
   const [openPrimary, setOpenPrimary] = useState(false);

@@ -1,10 +1,10 @@
-import { Color } from "./Color";
-import { Swatch } from "./Swatch";
+import type { Color } from "./Color";
 import { convertColorMapValueToHex } from "./ColorHelpers";
+import { Swatch } from "./Swatch";
 import { isTransparent } from "./color-utils";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import swatchCSS from "./Swatch.css";
 
@@ -15,7 +15,7 @@ interface SwatchesPickerProps {
   onChange: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: React.ChangeEvent
+    e?: React.ChangeEvent,
   ) => void;
   onDialogClosed: () => void;
 }
@@ -27,7 +27,7 @@ interface SwatchesGroupProps {
   onClick: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: React.ChangeEvent
+    e?: React.ChangeEvent,
   ) => void;
   onDialogClosed: () => void;
 }

@@ -1,5 +1,5 @@
+import type { IconProps } from "@salt-ds/icons";
 import { forwardRef } from "react";
-import { IconProps } from "@salt-ds/icons";
 
 export type ErrorAdornmentIconProps = IconProps;
 
@@ -8,7 +8,7 @@ export const ErrorAdornmentIcon = forwardRef<
   ErrorAdornmentIconProps
 >(function ErrorAdornmentIcon(
   { children, className, ...rest }: ErrorAdornmentIconProps,
-  ref
+  ref,
 ) {
   return (
     <svg className={className} {...rest} role="img" ref={ref} viewBox="0 0 8 8">

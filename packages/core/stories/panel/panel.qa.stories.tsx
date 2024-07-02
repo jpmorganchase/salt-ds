@@ -1,10 +1,10 @@
-import { Meta, StoryFn } from "@storybook/react";
 import { Panel } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
 
 export default {
@@ -25,7 +25,7 @@ ExamplesGrid.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection
     cols={1}

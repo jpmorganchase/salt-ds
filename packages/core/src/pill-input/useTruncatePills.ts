@@ -1,10 +1,10 @@
+import { useWindow } from "@salt-ds/window";
 import { useCallback, useRef } from "react";
 import {
   useIsomorphicLayoutEffect,
-  useValueEffect,
   useResizeObserver,
+  useValueEffect,
 } from "../utils";
-import { useWindow } from "@salt-ds/window";
 
 export function useTruncatePills({
   pills,
@@ -27,12 +27,14 @@ export function useTruncatePills({
 
       if (pillList && targetWindow) {
         const pillElements = Array.from(
-          pillList.querySelectorAll('[role="listitem"]')
+          pillList.querySelectorAll('[role="listitem"]'),
         );
         const maxWidth = pillList.getBoundingClientRect().width;
-        const listGap = parseInt(targetWindow.getComputedStyle(pillList).gap);
+        const listGap = Number.parseInt(
+          targetWindow.getComputedStyle(pillList).gap,
+        );
         const isShowingOverflow = pillList.querySelector(
-          "[data-overflowindicator]"
+          "[data-overflowindicator]",
         );
 
         let currentSize = 0;

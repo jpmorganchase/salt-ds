@@ -5,7 +5,7 @@ describe("A highlighter", () => {
     cy.mount(
       <span data-testid="test-string">
         <Highlighter text="" />
-      </span>
+      </span>,
     );
     cy.findByTestId("test-string").should("have.text", "");
   });
@@ -14,7 +14,7 @@ describe("A highlighter", () => {
     cy.mount(
       <span data-testid="test-string">
         <Highlighter text="Lorem ipsum dolor sit amet" />
-      </span>
+      </span>,
     );
 
     cy.findByText("Lorem ipsum dolor sit amet").should("exist");
@@ -28,7 +28,7 @@ describe("A highlighter", () => {
             matchPattern="not found"
             text="Lorem ipsum dolor sit amet"
           />
-        </span>
+        </span>,
       );
 
       cy.findByText("Lorem ipsum dolor sit amet").should("exist");
@@ -38,14 +38,14 @@ describe("A highlighter", () => {
       cy.mount(
         <span data-testid="test-string">
           <Highlighter matchPattern="OR" text="Lorem ipsum dolor sit amet" />
-        </span>
+        </span>,
       );
 
-      cy.get(`.saltHighlighter-highlight`).should("have.length", 2);
+      cy.get(".saltHighlighter-highlight").should("have.length", 2);
       // And full text is returned
       cy.findByTestId("test-string").should(
         "have.text",
-        "Lorem ipsum dolor sit amet"
+        "Lorem ipsum dolor sit amet",
       );
     });
 
@@ -57,7 +57,7 @@ describe("A highlighter", () => {
               matchPattern={/(not found)/gi}
               text="Lorem ipsum dolor sit amet"
             />
-          </span>
+          </span>,
         );
         cy.findByText("Lorem ipsum dolor sit amet").should("exist");
       });
@@ -69,7 +69,7 @@ describe("A highlighter", () => {
               matchPattern={/(\w{1,2}m)/gi}
               text="Lorem ipsum dolor sit amet"
             />
-          </span>
+          </span>,
         );
 
         cy.findByText("rem").should("have.class", "saltHighlighter-highlight");
@@ -79,7 +79,7 @@ describe("A highlighter", () => {
         // And full text is returned
         cy.findByTestId("test-string").should(
           "have.text",
-          "Lorem ipsum dolor sit amet"
+          "Lorem ipsum dolor sit amet",
         );
       });
     });

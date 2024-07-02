@@ -1,8 +1,8 @@
-import { composeStories } from "@storybook/react";
 import { Button, Toast, ToastContent } from "@salt-ds/core";
-import { ToastGroup } from "@salt-ds/lab";
 import { CloseIcon } from "@salt-ds/icons";
+import { ToastGroup } from "@salt-ds/lab";
 import * as toastGroupStories from "@stories/toast-group/toast-group.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(toastGroupStories);
@@ -20,7 +20,7 @@ describe("Given a ToastGroup", () => {
               <CloseIcon />
             </Button>
           </Toast>
-        </ToastGroup>
+        </ToastGroup>,
       );
       cy.get(".saltToastGroup-top-right")
         .should("exist")
@@ -38,7 +38,7 @@ describe("Given a ToastGroup", () => {
               <CloseIcon />
             </Button>
           </Toast>
-        </ToastGroup>
+        </ToastGroup>,
       );
       cy.get(".saltToastGroup-bottom-right")
         .should("exist")

@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import { StatusIndicator } from "../status-indicator";
-import { Text, TextProps } from "../text";
-import { makePrefixer } from "../utils";
 import { useFormFieldProps } from "../form-field-context";
+import { StatusIndicator } from "../status-indicator";
+import { Text, type TextProps } from "../text";
+import { makePrefixer } from "../utils";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import formFieldHelperTextCss from "./FormFieldHelperText.css";
 
@@ -31,7 +31,7 @@ export const FormFieldHelperText = ({
       className={clsx(
         withBaseName(),
         { [withBaseName("withValidation")]: validationStatus },
-        className
+        className,
       )}
     >
       {!disabled && !readOnly && validationStatus && (

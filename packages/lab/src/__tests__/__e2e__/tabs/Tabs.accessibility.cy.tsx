@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as tabstripStories from "@stories/tabstrip/tabstrip.cypress.stories";
+import { composeStories } from "@storybook/react";
 
 const { SimpleTabstrip } = composeStories(tabstripStories);
 

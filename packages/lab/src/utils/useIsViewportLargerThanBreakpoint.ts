@@ -1,11 +1,11 @@
 import {
+  type Breakpoints,
   useCurrentBreakpoint,
   useOrderedBreakpoints,
-  Breakpoints,
 } from "@salt-ds/core";
 
 export const useIsViewportLargerThanBreakpoint = (
-  targetedBreakpoint: keyof Breakpoints
+  targetedBreakpoint: keyof Breakpoints,
 ): boolean => {
   const orderedBreakpoints = useOrderedBreakpoints();
   const index = orderedBreakpoints.indexOf(targetedBreakpoint);

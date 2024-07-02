@@ -1,6 +1,6 @@
-import { FC, ReactElement } from "react";
-import clsx from "clsx";
 import { SaltProvider } from "@salt-ds/core";
+import clsx from "clsx";
+import type { FC, ReactElement } from "react";
 
 import styles from "./MobileDrawer.module.css";
 

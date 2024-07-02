@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
 // Purely used as markers, props will be extracted
 export interface ListItemGroupProps extends HTMLAttributes<HTMLDivElement> {

@@ -79,15 +79,14 @@ export const FoundationColorView = ({
 
   useEffect(() => {
     const fetchJsonData = () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const data = require("./cssFoundations.json") as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
-        new RegExp(`^--salt-color-\\w+(-\\d+)?$`).test(x)
+        /^--salt-color-\w+(-\d+)?$/.test(x),
       );
       const regex = new RegExp(
         (group === "categorical" ? categoricalColors : foundationColors).join(
-          "|"
-        )
+          "|",
+        ),
       );
       setData(
         colorKeys
@@ -95,7 +94,7 @@ export const FoundationColorView = ({
           .reduce<CssVariableData>((prev, current) => {
             prev[current] = data[current];
             return prev;
-          }, {})
+          }, {}),
       );
     };
 

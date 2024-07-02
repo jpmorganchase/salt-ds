@@ -1,9 +1,13 @@
-import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "../../utils";
-import { Text } from "../../text";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type CSSProperties,
+  type ComponentPropsWithoutRef,
+  forwardRef,
+} from "react";
+import { Text } from "../../text";
+import { makePrefixer } from "../../utils";
 
 import circularProgressCSS from "./CircularProgress.css";
 
@@ -53,7 +57,7 @@ export const CircularProgress = forwardRef<
     bufferValue = 0,
     ...rest
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -127,7 +131,7 @@ export const CircularProgress = forwardRef<
             <div
               className={clsx(
                 withBaseName("bufferSubOverlay"),
-                withBaseName("bufferSubOverlayLeft")
+                withBaseName("bufferSubOverlayLeft"),
               )}
               style={bufferSubOverlayLeftStyle}
             >

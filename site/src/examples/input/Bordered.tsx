@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Input, FlowLayout } from "@salt-ds/core";
+import { FlowLayout, Input } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Bordered = (): ReactElement => (
   <FlowLayout style={{ maxWidth: "256px" }}>

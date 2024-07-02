@@ -1,20 +1,20 @@
-import { KeyboardEventHandler, useRef } from "react";
-import { clsx } from "clsx";
 import {
-  FlexContentAlignment,
+  type FlexContentAlignment,
   makePrefixer,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import { type KeyboardEventHandler, useRef } from "react";
 
-import { ColumnSeparatorType, SortOrder } from "./Grid";
-import { useSizingContext } from "./SizingContext";
 import { useColumnDragContext } from "./ColumnDragContext";
-import { Cursor, useFocusableContent } from "./internal";
-import { HeaderCellProps } from "./GridColumn";
 import { useColumnSortContext } from "./ColumnSortContext";
+import { type ColumnSeparatorType, SortOrder } from "./Grid";
+import type { HeaderCellProps } from "./GridColumn";
+import { useSizingContext } from "./SizingContext";
+import { Cursor, useFocusableContent } from "./internal";
 
 import headerCellCss from "./HeaderCell.css";
 
@@ -96,8 +96,8 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
     sortOrder === SortOrder.ASC
       ? SortOrder.DESC
       : sortOrder === SortOrder.DESC
-      ? SortOrder.NONE
-      : SortOrder.ASC;
+        ? SortOrder.NONE
+        : SortOrder.ASC;
 
   const withSortOrder = sortOrder !== SortOrder.NONE && sortByColumnId === id;
 
@@ -113,7 +113,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   };
 
   const onKeyDown: KeyboardEventHandler<HTMLTableHeaderCellElement> = (
-    event
+    event,
   ) => {
     if (event.key === "Enter" || event.key === " ") {
       onClick();
@@ -180,7 +180,7 @@ export function AutoSizeHeaderCell<T>(props: HeaderCellProps<T>) {
     const width = valueContainerRef.current
       ? valueContainerRef.current.offsetWidth
       : undefined;
-    if (width != undefined && width !== column.info.width) {
+    if (width !== undefined && width !== column.info.width) {
       resizeColumn(column.index, width);
     }
   });

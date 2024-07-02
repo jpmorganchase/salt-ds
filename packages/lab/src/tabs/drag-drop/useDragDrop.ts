@@ -1,4 +1,4 @@
-import { DragDropHook } from "./dragDropTypes";
+import type { DragDropHook } from "./dragDropTypes";
 import { useDragDropNaturalMovement } from "./useDragDropNaturalMovement";
 
 const NULL_DRAG_DROP_RESULT = {

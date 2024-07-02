@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
 import { FlexLayout, NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
+import { type ReactElement, useState } from "react";
 
 export const WithIcon = (): ReactElement => {
   const [horizontalActive, setHorizontalActive] = useState(false);

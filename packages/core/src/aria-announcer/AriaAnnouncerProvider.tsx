@@ -1,6 +1,6 @@
 import {
-  CSSProperties,
-  ReactNode,
+  type CSSProperties,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -60,7 +60,7 @@ export function AriaAnnouncerProvider({
         announceAll();
       }
     },
-    [announceAll]
+    [announceAll],
   );
 
   useEffect(() => {

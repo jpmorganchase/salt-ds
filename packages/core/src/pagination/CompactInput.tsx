@@ -1,17 +1,17 @@
 import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
-  KeyboardEventHandler,
+  type ChangeEventHandler,
+  type KeyboardEventHandler,
   forwardRef,
   useEffect,
   useState,
 } from "react";
-import { Input, InputProps } from "../input";
+import { Input, type InputProps } from "../input";
 import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import compactInputCss from "./CompactInput.css";
 
@@ -43,7 +43,7 @@ export const CompactInput = forwardRef<
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
     if (event.key === "Enter") {
       const pageValue = Number(inputValue);
-      if (!isNaN(pageValue) && pageValue <= count && pageValue > 0) {
+      if (!Number.isNaN(pageValue) && pageValue <= count && pageValue > 0) {
         onPageChange(event, pageValue);
       } else {
         setInputValue(`${page}`);

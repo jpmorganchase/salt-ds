@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import {
-  FormField,
-  Tooltip,
   FlowLayout,
-  FormFieldLabel,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   Input,
+  Tooltip,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Validation = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>

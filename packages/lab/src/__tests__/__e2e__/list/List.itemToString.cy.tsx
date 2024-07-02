@@ -14,7 +14,7 @@ const testCases = [
 
 describe("defaultItemToString", () => {
   it("supports all data types", () => {
-    for (let [input, expectedOutput] of testCases) {
+    for (const [input, expectedOutput] of testCases) {
       expect(itemToString(input)).to.eq(expectedOutput);
     }
   });

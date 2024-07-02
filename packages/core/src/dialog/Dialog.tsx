@@ -1,31 +1,31 @@
 import {
-  forwardRef,
-  HTMLAttributes,
-  useEffect,
-  useMemo,
-  useState,
-  ComponentProps,
-  ReactNode,
-} from "react";
-import { clsx } from "clsx";
-import {
-  FloatingFocusManager,
+  type FloatingFocusManager,
   useClick,
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentProps,
+  type HTMLAttributes,
+  type ReactNode,
+  forwardRef,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { Scrim } from "../scrim";
+import type { ValidationStatus } from "../status-indicator";
 import {
   makePrefixer,
+  useCurrentBreakpoint,
   useFloatingComponent,
   useFloatingUI,
-  useCurrentBreakpoint,
   useForkRef,
   useId,
 } from "../utils";
-import { Scrim } from "../scrim";
-import { ValidationStatus } from "../status-indicator";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
 
@@ -80,99 +80,98 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltDialog");
 
-export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
-  props,
-  ref
-) {
-  const {
-    children,
-    className,
-    open = false,
-    onOpenChange,
-    status,
-    disableDismiss,
-    size = "medium",
-    disableScrim,
-    idProp,
-    ...rest
-  } = props;
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-dialog",
-    css: dialogCss,
-    window: targetWindow,
-  });
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
+  function Dialog(props, ref) {
+    const {
+      children,
+      className,
+      open = false,
+      onOpenChange,
+      status,
+      disableDismiss,
+      size = "medium",
+      disableScrim,
+      idProp,
+      ...rest
+    } = props;
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-dialog",
+      css: dialogCss,
+      window: targetWindow,
+    });
 
-  const id = useId(idProp);
+    const id = useId(idProp);
 
-  const currentbreakpoint = useCurrentBreakpoint();
+    const currentbreakpoint = useCurrentBreakpoint();
 
-  const [showComponent, setShowComponent] = useState(false);
+    const [showComponent, setShowComponent] = useState(false);
 
-  const { context, floating, elements } = useFloatingUI({
-    open: showComponent,
-    onOpenChange,
-  });
+    const { context, floating, elements } = useFloatingUI({
+      open: showComponent,
+      onOpenChange,
+    });
 
-  const { getFloatingProps } = useInteractions([
-    useClick(context),
-    useDismiss(context, { enabled: !disableDismiss }),
-  ]);
+    const { getFloatingProps } = useInteractions([
+      useClick(context),
+      useDismiss(context, { enabled: !disableDismiss }),
+    ]);
 
-  const { Component: FloatingComponent } = useFloatingComponent();
+    const { Component: FloatingComponent } = useFloatingComponent();
 
-  const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
+    const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
-  useEffect(() => {
-    if (open && !showComponent) {
-      setShowComponent(true);
-    }
+    useEffect(() => {
+      if (open && !showComponent) {
+        setShowComponent(true);
+      }
 
-    if (!open && showComponent) {
-      const animate = setTimeout(() => {
-        setShowComponent(false);
-      }, 300); // var(--salt-duration-perceptible)
-      return () => clearTimeout(animate);
-    }
-  }, [open, showComponent, setShowComponent]);
+      if (!open && showComponent) {
+        const animate = setTimeout(() => {
+          setShowComponent(false);
+        }, 300); // var(--salt-duration-perceptible)
+        return () => clearTimeout(animate);
+      }
+    }, [open, showComponent, setShowComponent]);
 
-  const contextValue = useMemo(() => ({ status, id }), [status, id]);
+    const contextValue = useMemo(() => ({ status, id }), [status, id]);
 
-  return (
-    <DialogContext.Provider value={contextValue}>
-      <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
-        <FloatingComponent
-          open={showComponent}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={id}
-          ref={floatingRef}
-          width={elements.floating?.offsetWidth}
-          height={elements.floating?.offsetHeight}
-          focusManagerProps={{
-            context: context,
-          }}
-          className={clsx(
-            withBaseName(),
-            withBaseName(size, currentbreakpoint),
-            {
-              [withBaseName("enterAnimation")]: open,
-              [withBaseName("exitAnimation")]: !open,
-              [withBaseName(status as string)]: status,
-            },
-            className
-          )}
-          onAnimationEnd={() => {
-            if (!open && showComponent) {
-              setShowComponent(false);
-            }
-          }}
-          {...getFloatingProps()}
-          {...rest}
-        >
-          {children}
-        </FloatingComponent>
-      </ConditionalScrimWrapper>
-    </DialogContext.Provider>
-  );
-});
+    return (
+      <DialogContext.Provider value={contextValue}>
+        <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
+          <FloatingComponent
+            open={showComponent}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={id}
+            ref={floatingRef}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
+            focusManagerProps={{
+              context: context,
+            }}
+            className={clsx(
+              withBaseName(),
+              withBaseName(size, currentbreakpoint),
+              {
+                [withBaseName("enterAnimation")]: open,
+                [withBaseName("exitAnimation")]: !open,
+                [withBaseName(status as string)]: status,
+              },
+              className,
+            )}
+            onAnimationEnd={() => {
+              if (!open && showComponent) {
+                setShowComponent(false);
+              }
+            }}
+            {...getFloatingProps()}
+            {...rest}
+          >
+            {children}
+          </FloatingComponent>
+        </ConditionalScrimWrapper>
+      </DialogContext.Provider>
+    );
+  },
+);

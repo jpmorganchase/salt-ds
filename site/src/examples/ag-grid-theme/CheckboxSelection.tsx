@@ -1,7 +1,7 @@
 import { AgGridReact } from "ag-grid-react";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
+import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const CheckboxSelection = () => {
   // We've created a local custom hook to set the rows and column sizes.

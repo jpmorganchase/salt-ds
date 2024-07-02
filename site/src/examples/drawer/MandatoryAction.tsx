@@ -1,19 +1,24 @@
-import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import {
   Button,
   Checkbox,
+  ComboBox,
+  Drawer,
   FlexItem,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  Input,
-  StackLayout,
   H2,
-  useId,
-  Drawer,
-  ComboBox,
+  Input,
   Option,
+  StackLayout,
+  useId,
 } from "@salt-ds/core";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
 
 export const MandatoryAction = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -41,7 +46,7 @@ export const MandatoryAction = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     setValue(newSelected.length === 1 ? newSelected[0] : "");
   };

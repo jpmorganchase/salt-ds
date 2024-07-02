@@ -13,7 +13,7 @@ describe("GIVEN a Divider", () => {
     cy.findAllByRole("separator").should(
       "have.attr",
       "aria-orientation",
-      "horizontal"
+      "horizontal",
     );
   });
 
@@ -22,7 +22,7 @@ describe("GIVEN a Divider", () => {
     cy.findAllByRole("separator").should(
       "have.attr",
       "aria-orientation",
-      "vertical"
+      "vertical",
     );
   });
 });

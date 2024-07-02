@@ -1,22 +1,22 @@
 import {
-  ComponentProps,
-  PropsWithChildren,
-  ReactNode,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogCloseButton,
+  DialogContent,
+  type DialogContentProps,
+  DialogHeader,
+  type DialogProps,
+  StackLayout,
+} from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type ComponentProps,
+  type PropsWithChildren,
+  type ReactNode,
   useEffect,
   useState,
 } from "react";
-import {
-  Button,
-  StackLayout,
-  Dialog,
-  DialogHeader,
-  DialogActions,
-  DialogContent,
-  DialogCloseButton,
-  DialogProps,
-  DialogContentProps,
-} from "@salt-ds/core";
-import { StoryFn, Meta } from "@storybook/react";
 import "./dialog.stories.css";
 
 export default {
@@ -293,7 +293,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
 function FakeWindow({ children }: PropsWithChildren) {
   return (
     <div className="fakeDialogWindow">
-      <div className="fakeDialogWindowHeader"></div>
+      <div className="fakeDialogWindowHeader" />
       {children}
     </div>
   );

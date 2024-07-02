@@ -1,7 +1,7 @@
 import {
-  Dispatch,
+  type Dispatch,
+  type SetStateAction,
   isValidElement,
-  SetStateAction,
   useCallback,
   useEffect,
   useRef,
@@ -53,11 +53,10 @@ export function useControlled<S>({
               isControlled ? "un" : ""
             }controlled.`,
             "Elements should not switch from uncontrolled to controlled (or vice versa).",
-            `Decide between using a controlled or uncontrolled ${name} ` +
-              "element for the lifetime of the component.",
+            `Decide between using a controlled or uncontrolled ${name} element for the lifetime of the component.`,
             "The nature of the state is determined during the first render, it's considered controlled if the value is not `undefined`.",
             "More info: https://fb.me/react-controlled-components",
-          ].join("\n")
+          ].join("\n"),
         );
       }
     }
@@ -72,7 +71,7 @@ export function useControlled<S>({
           [
             `Salt: A component is changing the default ${state} state of an uncontrolled ${name} after being initialized. ` +
               `To suppress this warning opt to use a controlled ${name}.`,
-          ].join("\n")
+          ].join("\n"),
         );
       }
     }
@@ -86,7 +85,7 @@ export function useControlled<S>({
         setValue(newValue);
       }
     },
-    [isControlled]
+    [isControlled],
   );
 
   return [value, setValueIfUncontrolled, isControlled];

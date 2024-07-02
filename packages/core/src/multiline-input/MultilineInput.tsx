@@ -1,19 +1,19 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  FocusEvent,
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type ReactNode,
+  type Ref,
+  type TextareaHTMLAttributes,
   forwardRef,
-  ReactNode,
-  Ref,
-  TextareaHTMLAttributes,
   useCallback,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
@@ -91,7 +91,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       variant = "primary",
       ...other
     },
-    ref
+    ref,
   ) {
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const handleRef = useForkRef(inputRef, textAreaRef);
@@ -207,7 +207,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus ?? "")]: validationStatus,
           },
-          classNameProp
+          classNameProp,
         )}
         ref={ref}
         style={multilineInputStyles}
@@ -253,5 +253,5 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         <div className={withBaseName("activationIndicator")} />
       </div>
     );
-  }
+  },
 );

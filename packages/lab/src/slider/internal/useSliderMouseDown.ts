@@ -1,12 +1,12 @@
 import {
-  MouseEvent as ReactMouseEvent,
-  RefObject,
+  type MouseEvent as ReactMouseEvent,
+  type RefObject,
   useCallback,
   useEffect,
   useRef,
 } from "react";
-import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundValue, UpdateValueItem } from "./utils";
+import type { SliderChangeHandler, SliderValue } from "../types";
+import { type UpdateValueItem, clampValue, roundValue } from "./utils";
 
 interface MouseContext {
   min: number;
@@ -54,7 +54,7 @@ export function useSliderMouseDown(
   step: number,
   updateValueItem: UpdateValueItem,
   setValue: SliderChangeHandler,
-  onChange?: SliderChangeHandler
+  onChange?: SliderChangeHandler,
 ) {
   const mouseContext = useRef<MouseContext>({
     min,
