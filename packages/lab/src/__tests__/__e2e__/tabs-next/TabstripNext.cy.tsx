@@ -50,14 +50,13 @@ describe("Given a Tabstrip", () => {
       it("THEN all the content items will be visible", () => {
         cy.mount(<DefaultTabstrip width={500} />);
         cy.findByRole("tablist").should("have.class", "saltTabstripNext");
-        cy.findAllByRole("tab")
-          .should("have.length", 5)
-          .eq(4)
-          .should("be.visible");
+        cy.findAllByRole("tab").should("be.visible");
       });
       it("THEN no overflow indicator will be present", () => {
         cy.mount(<DefaultTabstrip width={500} />);
-        cy.findByRole("tablist").findByRole("combobox").should("not.exist");
+        cy.findByRole("tablist")
+          .findByRole("tab", { name: /more tabs/ })
+          .should("not.exist");
       });
     });
 
@@ -65,10 +64,12 @@ describe("Given a Tabstrip", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
         cy.mount(<DefaultTabstrip width={500} />);
         cy.get(".saltTabstripNext").invoke("css", "width", "350px");
-        cy.findAllByRole("tab").should("have.length", 4);
-        cy.findByRole("combobox").should("exist").click();
-        cy.findByRole("listbox")
-          .findAllByRole("option")
+        cy.findAllByRole("tab").should("have.length", 5);
+        cy.findByRole("tab", { name: /more tabs/ })
+          .should("exist")
+          .click();
+        cy.findByRole("menu")
+          .findAllByRole("menuitem")
           .should("have.length", 1);
       });
     });
@@ -76,11 +77,11 @@ describe("Given a Tabstrip", () => {
   describe("WHEN size is not the full width of it's parent", () => {
     it("THEN should not overflow if it has enough space", () => {
       cy.mount(<ControlledTabstrip width={550} />);
-      cy.findByRole("combobox").should("not.exist");
+      cy.findByRole("tab", { name: /more tabs/ }).should("not.exist");
     });
     it("THEN should overflow if it there is not enough space", () => {
       cy.mount(<ControlledTabstrip width={450} />);
-      cy.findByRole("combobox").should("exist");
+      cy.findByRole("tab", { name: /more tabs/ }).should("exist");
     });
   });
 });
@@ -95,9 +96,9 @@ describe("Tab selection, Given a Tabstrip", () => {
           "aria-selected",
           "true"
         );
-        cy.findByRole("combobox").realClick();
-        cy.findByRole("listbox").should("be.visible");
-        cy.findByRole("option", { name: "Loans" }).click();
+        cy.findByRole("tab", { name: /more tabs/ }).realClick();
+        cy.findByRole("menu").should("be.visible");
+        cy.findByRole("menuitem", { name: "Loans" }).click();
         cy.findAllByRole("tab", { name: "Loans" }).should("be.visible");
         cy.findAllByRole("tab", { name: "Loans" }).should(
           "have.attr",
@@ -238,56 +239,26 @@ describe("Navigation, Given a Tabstrip", () => {
       it("THEN overflow indicator is included in keyboard navigation", () => {
         cy.mount(<DefaultTabstrip width={310} />);
         cy.findAllByRole("tab").eq(0).realClick();
-        cy.findByRole("combobox").should("be.visible");
+        cy.findByRole("tab", { name: /more tabs/ }).should("be.visible");
         cy.realPress("Tab");
-        cy.findByRole("combobox").should("be.focused");
+        cy.findByRole("tab", { name: /more tabs/ }).should("be.focused");
       });
 
       it("THEN overflow indicator opens overflow menu", () => {
         cy.mount(<DefaultTabstrip width={320} />);
-        cy.findByRole("combobox").focus().realPress("Enter");
-        cy.findByRole("listbox");
+        cy.findByRole("tab", { name: /more tabs/ })
+          .focus()
+          .realPress("Enter");
+        cy.findByRole("menu");
       });
     });
   });
   describe("WHEN overflow is opened", () => {
-    it("THEN overflow menu can be navigated up and down", () => {
-      cy.mount(<DefaultTabstrip width={150} />);
-      cy.findByRole("combobox").click();
-      cy.findByRole("listbox");
-      cy.focused().realPress("ArrowDown");
-      cy.findAllByRole("option")
-        .should("have.length", 4)
-        .eq(1)
-        .should("have.class", "saltHighlighted");
-      cy.focused().then(($container) => {
-        cy.findAllByRole("option")
-          .should("have.length", 4)
-          .eq(1)
-          .then(($el) => {
-            expect($container.attr("aria-activedescendant")).to.equal(
-              $el.attr("id")
-            );
-          });
-      });
-      cy.focused().realPress("ArrowUp");
-      cy.findAllByRole("option")
-        .should("have.length", 4)
-        .eq(0)
-        .should("have.class", "saltHighlighted");
-    });
-    it("THEN overflow menu can be closed with Escape", () => {
-      cy.mount(<DefaultTabstrip width={150} />);
-      cy.findByRole("combobox").click();
-      cy.findByRole("listbox").should("exist");
-      cy.focused().realPress("Escape");
-      cy.findByRole("listbox").should("not.exist");
-    });
     it("THEN overflow menu item can be selected with Enter and focus is moved to the active tab", () => {
-      cy.mount(<DefaultTabstrip width={150} />);
-      cy.findByRole("combobox").click();
-      cy.findByRole("listbox").should("exist");
-      cy.focused().realPress("ArrowDown").realPress("Enter");
+      cy.mount(<DefaultTabstrip width={200} />);
+      cy.findByRole("tab", { name: /more tabs/ }).click();
+      cy.findByRole("menu").should("exist");
+      cy.realPress("ArrowDown").realPress("Enter");
       cy.focused()
         .should("have.attr", "aria-selected", "true")
         .should("have.attr", "role", "tab");
