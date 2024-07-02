@@ -5,5 +5,7 @@ export * from "./WithIcon";
 export * from "./WithBadge";
 export * from "./WithNestedItems";
 export * from "./HorizontalGroup";
+export * from "./RenderElement";
+export * from "./RenderProp";
 export * from "./VerticalGroup";
 export * from "./VerticalNestedGroup";

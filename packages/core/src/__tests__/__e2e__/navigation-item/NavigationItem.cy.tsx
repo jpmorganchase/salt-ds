@@ -100,4 +100,93 @@ describe("GIVEN a NavItem", () => {
       });
     });
   });
+
+  describe("AND `render` is passed a render function", () => {
+    it("should call `render` to create parent item", () => {
+      const mockRender = cy
+        .stub()
+        .as("render")
+        .returns(<button>Parent Button</button>);
+      cy.mount(
+        <NavigationItem
+          active={true}
+          expanded={true}
+          href="https://www.saltdesignsystem.com"
+          level={2}
+          parent={true}
+          orientation="vertical"
+          render={mockRender}
+        >
+          Navigation Item
+        </NavigationItem>
+      );
+      cy.findByText("Parent Button").should("exist");
+      cy.get("@render").should("have.been.calledWithMatch", {
+        parent: true,
+        active: true,
+        linkProps: undefined,
+        parentProps: {
+          "aria-expanded": true,
+          "aria-label": "expand",
+          className: Cypress.sinon.match.string,
+          children: Cypress.sinon.match.any,
+        },
+        expanded: true,
+        level: 2,
+        orientation: "vertical",
+      });
+    });
+    it("should call `render` to create child item", () => {
+      const mockRender = cy
+        .stub()
+        .as("render")
+        .returns(<a>Navigation Link</a>);
+      cy.mount(
+        <NavigationItem
+          active={true}
+          expanded={true}
+          href="https://www.saltdesignsystem.com"
+          level={2}
+          parent={false}
+          orientation="vertical"
+          render={mockRender}
+        >
+          Navigation Item
+        </NavigationItem>
+      );
+      cy.findByText("Navigation Link").should("exist");
+      cy.get("@render").should("have.been.calledWithMatch", {
+        parent: false,
+        active: true,
+        linkProps: {
+          "aria-current": "page",
+          "aria-label": "change page",
+          className: Cypress.sinon.match.string,
+          children: Cypress.sinon.match.any,
+          href: "https://www.saltdesignsystem.com",
+        },
+        parentProps: undefined,
+        expanded: true,
+        level: 2,
+        orientation: "vertical",
+      });
+    });
+  });
+
+  describe("AND `render` is given a JSX element", () => {
+    it("should merge the props and render the JSX element ", () => {
+      cy.mount(
+        <NavigationItem parent={true} render={<button>Button Children</button>}>
+          Navigation Item
+        </NavigationItem>
+      );
+      cy.findByRole("button", { name: "expand" }).should("exist");
+      cy.findByRole("button", { name: "expand" }).should(
+        "have.attr",
+        "aria-expanded",
+        "false"
+      );
+      cy.findByText("Button Children").should("exist");
+    });
+  });
 });

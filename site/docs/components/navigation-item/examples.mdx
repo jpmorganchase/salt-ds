@@ -93,4 +93,41 @@ When the user collapses a vertical nested group, and there is an active nested i
 
 </LivePreview>
 
+  <LivePreview componentName="navigation-item" exampleName="RenderElement">
+## Render prop element
+
+Using the `render` prop, you can customize the element rendered by the `NavigationItem`.
+Props defined on the JSX element will be merged with props from the `NavigationItem`.
+
+A `NavigationItem` will either act as a link, or an expandable group for other `NavigationItem` elements.
+When a parent group is clicked, the group will expand or collapse.
+When a link is clicked, navigates the user to the specified `href` URL.
+
+The default element for parent groups is a `<button>`, whilst a link will use a `<a>`.
+
+### Prop merging
+
+```
+<NavigationItem href="/your-page" render={<a target="_blank"/>} />
+```
+
+will be created in the DOM as an `<a/>` with merged props
+
+```
+<a href="/your-page" target="_blank">...</a>
+```
+
+</LivePreview>
+
+  <LivePreview componentName="navigation-item" exampleName="RenderProp">
+## Render prop callback
+
+Using the `render` prop, you can customize the element rendered by the `NavigationItem`.
+
+The render prop can also accept a function. This approach allows more control over how props are merged, allowing for more precise customization of the component's behavior.
+
+When a function is passed to the render prop, it's your responsibility to merge props within the function itself.
+
+</LivePreview>
+
 </LivePreviewControls>
