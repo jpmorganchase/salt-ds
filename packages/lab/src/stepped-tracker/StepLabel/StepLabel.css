@@ -3,9 +3,16 @@
 }
 
 .saltSteppedTracker.saltSteppedTracker-horizontal .saltStepLabel {
-  text-align: center;
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltStepLabel {
   text-align: left;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignLeft .saltStepLabel {
+  text-align: left;
+}
+
+.saltSteppedTracker.saltSteppedTracker-horizontal.saltSteppedTracker-alignCenter .saltStepLabel {
+  text-align: center;
 }
