@@ -1,5 +1,52 @@
 # @salt-ds/core
 
+## 1.31.0
+
+### Minor Changes
+
+- 1d4d209: Added `bordered` prop to Dropdown. When set, a full border will be applied.
+
+  ```tsx
+  <Dropdown bordered />
+  ```
+
+  Dropdown is updated to be an inline element, aligning with other form controls like Input.
+
+- ad6f7b4: - Added `indicatorSide` to `accordion` to allow right alignment.
+  - Removed arrow animation in accordion.
+  - Changed direction of accordion's arrow to be consistent with salt's expandable components.
+    - Changed direction when `expanded=false` from right to down.
+    - Changed direction when `expanded=true` from down to up.
+- b199888: Added `bordered` prop for `ComboBox`. When set, a full border will be applied.
+
+  ```tsx
+  <ComboBox bordered>
+    <Option value="Red" />
+    <Option value="Blue" />
+  </ComboBox>
+  ```
+
+  Added corner support for theme next.
+
+### Patch Changes
+
+- b199888: Updated `ComboBox` to show validation status when it's in a read-only state.
+- 1d4d209: Updated outline color & background when in focus/active state for validation status `Dropdown` to match the color of the status.
+
+  Updated border color when in hover state for validation status `Dropdown` to match the color of the status.
+
+  Added corner support for theme next for `Dropdown`.
+
+  Updates focus styling for `Dropdown`. Focus ring is shown on focus instead of focus-visible.
+
+- 59da3f3: Fixed invalid HTML structure in AccordionHeader.
+- 904ffa1: Fixed file drop zone not allowing the same file to be selected via `onChange` of `FileDropZoneTrigger`.
+  Updated first argument event type of `onChange` to `ChangeEvent`, to better align with underlying event.
+
+  Closes #3591.
+
+- db527bc: Fixed Menu showing behind Drawer (#3636).
+
 ## 1.30.0
 
 ### Minor Changes

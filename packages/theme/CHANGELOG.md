@@ -1,5 +1,27 @@
 # @salt-ds/theme
 
+## 1.20.0
+
+### Minor Changes
+
+- fc60301: Added status bold background and content bold foreground tokens
+
+  ```
+  --salt-status-info-bold-background
+  --salt-status-error-bold-background
+  --salt-status-warning-bold-background
+  --salt-status-success-bold-background
+
+  --salt-content-bold-foreground
+  --salt-content-bold-foreground-disabled
+  ```
+
+### Patch Changes
+
+- baa5aaa: Added `--salt-overlayable-rangeSelection` variable in theme next, pointing to the same underlying value as before.
+
+  Closes #3517.
+
 ## 1.19.0
 
 ### Minor Changes
