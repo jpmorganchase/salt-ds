@@ -40,8 +40,8 @@ export const FormFieldHelperText = ({
       <Text
         disabled={disabled}
         id={a11yProps?.["aria-describedby"]}
-        variant="secondary"
         styleAs="label"
+        color={validationStatus ?? "secondary"}
         {...restProps}
       >
         {children}
