@@ -168,3 +168,63 @@ export const FullWidth: StoryFn<typeof Button> = () => {
     </StackLayout>
   );
 };
+
+export const TypeCheckButton: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button appearance="solid" color="accent">
+        <SettingsSolidIcon aria-hidden />
+        filledAccent
+      </Button>
+      <Button appearance="solid" color="accent" disabled>
+        <SettingsSolidIcon aria-hidden />
+        filledNeutralDisabled
+      </Button>
+      <Button appearance="outline" color="accent">
+        <SettingsSolidIcon aria-hidden />
+        outlineAccent
+      </Button>
+      <Button appearance="outline" color="accent" disabled>
+        <SettingsSolidIcon aria-hidden />
+        outlineNeutraldisabled
+      </Button>
+      <Button appearance="transparent" color="accent">
+        transparentAccent
+      </Button>
+      <Button appearance="transparent" color="accent" disabled>
+        transparentNeutraldisabled
+      </Button>
+      <Button appearance="solid" color="neutral">
+        solidneutral
+      </Button>
+      <Button appearance="solid" color="neutral" disabled>
+        solidneutraldisabled
+      </Button>
+      <Button appearance="outline" color="neutral">
+        outlineneutral
+      </Button>
+      <Button appearance="outline" color="neutral" disabled>
+        outlineneutraldisabled
+      </Button>
+      <Button appearance="transparent" color="neutral">
+        transparentneutral
+      </Button>
+      <Button appearance="transparent" color="neutral" disabled>
+        transparentneutraldisabled
+      </Button>
+      <div>Existing Ones</div>
+      <Button variant="primary">primary</Button>
+      <Button variant="primary" disabled>
+        primarydisabled
+      </Button>
+      <Button variant="secondary">secondary</Button>
+      <Button variant="secondary" disabled>
+        secondarydisabled
+      </Button>
+      <Button variant="cta">cta</Button>
+      <Button variant="cta" disabled>
+        ctadisabled
+      </Button>
+    </>
+  );
+};
