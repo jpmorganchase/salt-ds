@@ -6,9 +6,16 @@ data:
   package:
     name: "@salt-ds/core"
     initialVersion: "1.0.0"
-  alsoKnownAs:
-    [ "System Message"]
-  relatedComponents:[]
+  alsoKnownAs: ["System Message"]
+  relatedComponents:
+    [
+      { name: "Content status", relationship: "similarTo" },
+      { name: "Dialog", relationship: "similarTo" },
+      { name: "Toast", relationship: "similarTo" },
+      { name: "Tooltip", relationship: "similarTo" },
+      { name: "Icon", relationship: "contains" },
+      { name: "Status indicator", relationship: "contains" },
+    ]
 
 layout: DetailComponent
 ---
