@@ -25,31 +25,48 @@ export const Basic = (): ReactElement => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2}>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep TBC_PROP_NAME="pending">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep TBC_PROP_NAME="pending">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={3}>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep TBC_PROP_NAME="completed">
           <StepLabel>Step Four</StepLabel>
+        </TrackerStep>
+      </SteppedTracker>
+      <SteppedTracker activeStep={2}>
+        <TrackerStep TBC_PROP_NAME="completed">
+          <StepLabel>Completed</StepLabel>
+        </TrackerStep>
+        <TrackerStep TBC_PROP_NAME="pending">
+          <StepLabel>Active</StepLabel>
+        </TrackerStep>
+        <TrackerStep TBC_PROP_NAME="warning">
+          <StepLabel>Warning</StepLabel>
+        </TrackerStep>
+        <TrackerStep TBC_PROP_NAME="error">
+          <StepLabel>Error</StepLabel>
+        </TrackerStep>
+        <TrackerStep TBC_PROP_NAME="pending">
+          <StepLabel>Default</StepLabel>
         </TrackerStep>
       </SteppedTracker>
     </StackLayout>

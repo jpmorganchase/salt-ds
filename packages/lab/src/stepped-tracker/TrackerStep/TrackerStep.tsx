@@ -7,6 +7,8 @@ import {
   StepActiveIcon,
   StepDefaultIcon,
   StepSuccessIcon,
+  WarningSolidIcon,
+  ErrorSolidIcon,
 } from "@salt-ds/icons";
 import { TrackerConnector } from "../TrackerConnector";
 
@@ -19,46 +21,21 @@ import trackerStepCss from "./TrackerStep.css";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
-type State = "default" | "completed";
-
-type StateWithActive = State | "active";
+type TBC_PROP_NAMEOptions = "pending" | "completed" | "warning" | "error";
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
-   * The state of the TrackerStep
+   * The slug of the icon to be displayed in the TrackerStep
    */
-  state?: State;
+  TBC_PROP_NAME?: TBC_PROP_NAMEOptions;
 }
 
 const iconMap = {
-  default: StepDefaultIcon,
+  pending: StepDefaultIcon,
+  active: StepActiveIcon,
   completed: StepSuccessIcon,
-};
-
-const getStateIcon = ({
-  isActive,
-  state,
-}: {
-  isActive: boolean;
-  state: State;
-}) => {
-  if (state === "default" && isActive) {
-    return StepActiveIcon;
-  }
-  return iconMap[state];
-};
-
-const getState = ({
-  isActive,
-  state,
-}: {
-  isActive: boolean;
-  state: State;
-}): StateWithActive => {
-  if (state === "default" && isActive) {
-    return "active";
-  }
-  return state;
+  warning: WarningSolidIcon,
+  error: ErrorSolidIcon,
 };
 
 const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
@@ -73,10 +50,16 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   }, [isWithinSteppedTracker]);
 };
 
+const parseIconSlug = (iconSlug: TBC_PROP_NAMEOptions, active: boolean) => {
+  if (iconSlug === "completed") return iconSlug;
+  if (active) return "active";
+  return iconSlug;
+};
+
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref) {
     const {
-      state = "default",
+      TBC_PROP_NAME = "pending",
       style,
       className,
       children,
@@ -97,8 +80,9 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
     const isActive = activeStep === stepNumber;
-    const Icon = getStateIcon({ isActive, state });
-    const resolvedState = getState({ isActive, state });
+    const iconSlug = parseIconSlug(TBC_PROP_NAME, isActive);
+
+    const Icon = iconMap[iconSlug];
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
 
@@ -109,10 +93,10 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     return (
       <li
-        className={clsx(withBaseName(), withBaseName(resolvedState), className)}
+        className={clsx(withBaseName(), withBaseName(iconSlug), className)}
         style={innerStyle}
         aria-current={isActive ? "step" : undefined}
-        data-state={state}
+        data-state={iconSlug}
         ref={ref}
         {...restProps}
       >

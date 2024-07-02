@@ -5,7 +5,7 @@ import { RefreshIcon } from "@salt-ds/icons";
 
 type Step = {
   label: string;
-  state: "default" | "completed";
+  state: "pending" | "completed";
 };
 
 type Steps = Step[];
@@ -13,19 +13,19 @@ type Steps = Step[];
 const sampleSteps: Steps = [
   {
     label: "Step One",
-    state: "default",
+    state: "pending",
   },
   {
     label: "Step Two",
-    state: "default",
+    state: "pending",
   },
   {
     label: "Step Three",
-    state: "default",
+    state: "pending",
   },
   {
     label: "Step Four",
-    state: "default",
+    state: "pending",
   },
 ];
 
@@ -64,7 +64,7 @@ export const StepProgression = (): ReactElement => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
-          <TrackerStep state={state} key={key}>
+          <TrackerStep TBC_PROP_NAME={state} key={key}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
