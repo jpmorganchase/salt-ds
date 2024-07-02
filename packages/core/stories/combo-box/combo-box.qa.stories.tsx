@@ -16,6 +16,7 @@ export default {
   component: ComboBox,
 } as Meta<typeof ComboBox>;
 
+const usStates = usStateExampleData.slice(0, 5);
 const groupedOptions = usStateExampleData.slice(0, 5).reduce((acc, option) => {
   const groupName = option[0];
   if (!acc[groupName]) {
@@ -212,4 +213,20 @@ ClosedExamples.parameters = {
       },
     },
   },
+};
+
+export const OpenWithSelectedExamples: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={4} itemPadding={12} transposeDensity>
+    <FormField>
+      <FormFieldLabel>Default example</FormFieldLabel>
+      <ComboBox placeholder="State" open defaultSelected={["Alaska"]}>
+        <Option value={"Alaska"} />
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+  </QAContainer>
+);
+
+OpenWithSelectedExamples.parameters = {
+  chromatic: { disableSnapshot: false },
 };

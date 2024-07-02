@@ -43,17 +43,22 @@
   left: 0;
   width: 100%;
 }
+.saltOption:only-of-type::after {
+  display: none;
+}
 
 .saltOption[aria-selected="true"]::after {
   border-top: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
   border-bottom: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
 }
 
-.saltOption[aria-selected="true"]:first-of-type::before {
+.saltOption[aria-selected="true"]:first-of-type::before,
+.saltOption[aria-selected="true"]:first-of-type::after {
   border-top: unset;
   top: 0;
 }
-.saltOption[aria-selected="true"]:last-of-type::before {
+.saltOption[aria-selected="true"]:last-of-type::before,
+.saltOption[aria-selected="true"]:last-of-type::after {
   border-bottom: unset;
   bottom: 0;
 }
