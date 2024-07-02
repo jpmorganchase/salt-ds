@@ -38,8 +38,8 @@
   content: "";
   display: block;
   position: absolute;
-  top: -1px; /* HERE */
-  bottom: -1px; /* HERE */
+  top: -1px;
+  bottom: -1px;
   left: 0;
   width: 100%;
 }
