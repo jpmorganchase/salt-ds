@@ -18,3 +18,8 @@
   z-index: var(--saltOverlay-zIndex, var(--salt-zIndex-flyover));
   width: max-content;
 }
+
+.saltOverlayPanel-inner {
+  display: flex;
+  flex-direction: row-reverse;
+}
