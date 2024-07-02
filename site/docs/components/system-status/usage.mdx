@@ -1,0 +1,61 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+The primary purpose of the `SystemStatus` is to provide information and, if necessary, prompt further action.
+
+We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
+
+### When to use
+
+- To show a notification that applies to the user’s current task or workflow.
+
+### When not to use
+
+- To inform users about critical system-wide issues, security updates or vulnerabilities that require immediate attention.
+- To notify users about new system-wide features or enhancements.
+- To alert users about planned maintenance schedules and potential service disruptions affecting the entire platform.
+
+### When not to use
+
+- For general updates or information that requires immediate user action.
+- For inline messaging. Instead, use `Banner`.
+- To show a notification that applies to the user’s current task or workflow. Use `Banner` instead.
+- To communicate when content is loading, instead use the Content Status pattern.
+- When the notification requires immediate action and relates to the user’s current task. Instead, use `Dialog` to interrupt the user's workflow.
+
+## Content
+
+A `SystemStatus` typically has one or two lines of text. Make content short, clear, and concise, allowing users to quickly understand the situation and/or next steps.
+
+Body Default applies to the content, however, if titles are necessary, configure them to display the Body Strong typography style across densities. See the typography foundation for more information.
+
+## Import
+
+To import `SystemStatus` and related components from the core Salt package, use:
+
+```
+import { SystemStatus, SystemStatusContent, SystemStatusActions } from "@salt-ds/core";
+```
+
+## Props
+
+### `SystemStatus`
+
+<PropsTable componentName="SystemStatus" />
+
+### `SystemStatusContent`
+
+<PropsTable componentName="SystemStatusContent" />
+
+### `SystemStatusActions`
+
+<PropsTable componentName="SystemStatusActions" />

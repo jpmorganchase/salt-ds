@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+  <LivePreview componentName="system-status" exampleName="Info" >
+
+## Info
+
+Use the info `SystemStatus` status to communicate important updates or new features that do not require immediate action.
+
+  </LivePreview>
+
+  <LivePreview componentName="system-status" exampleName="Error" >
+
+## Error
+
+Use error `SystemStatus` for critical issues that affect the user's ability to access or use the platform. When relevant, add a secondary action to help resolve the issue.
+
+  </LivePreview>
+
+  <LivePreview componentName="system-status" exampleName="Warning" >
+
+## Warning
+
+Warnings announce scheduled outages or events that might impact the product experience, but don't prevent the user from using the application or completing their current workflow.
+
+Use warning `SystemStatus` to alert users about potential issues.
+
+  </LivePreview>
+
+  <LivePreview componentName="system-status" exampleName="Success" >
+
+## Success
+
+Use success `SystemStatus` to communicate successfully completed system actions.
+
+  </LivePreview>
+
+  <LivePreview componentName="system-status" exampleName="WithTitle" >
+
+## With Title
+
+Use a title in a `SystemStatus` to highlight important information, and use description text to provide supporting details.
+
+  </LivePreview>
+
+</LivePreviewControls>
