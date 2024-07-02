@@ -1,5 +1,6 @@
 export * from "./Circular";
 export * from "./Linear";
+export * from "./LinearIndeterminate";
 export * from "./HiddenLabel";
 export * from "./WithBuffer";
 export * from "./WithMaxVal";

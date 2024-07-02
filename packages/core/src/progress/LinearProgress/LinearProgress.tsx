@@ -36,6 +36,8 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   value?: number;
 }
 
+const INDETERMINATE_BAR_WIDTH = 66;
+
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
     {
@@ -43,8 +45,8 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       hideLabel = false,
       max = 100,
       min = 0,
-      value = 0,
-      bufferValue = 0,
+      value,
+      bufferValue,
       ...rest
     },
     ref
@@ -56,8 +58,14 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       window: targetWindow,
     });
 
-    const progress = ((value - min) / (max - min)) * 100;
-    const buffer = ((bufferValue - min) / (max - min)) * 100;
+    const isIndeterminate = value === undefined && bufferValue === undefined;
+    const progress = isIndeterminate
+      ? INDETERMINATE_BAR_WIDTH
+      : value === undefined
+      ? 0
+      : ((value - min) / (max - min)) * 100;
+    const buffer =
+      bufferValue === undefined ? 0 : ((bufferValue - min) / (max - min)) * 100;
     const barStyle: CSSProperties = {};
     const bufferStyle: CSSProperties = {};
 
@@ -71,19 +79,24 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         role="progressbar"
         aria-valuemax={max}
         aria-valuemin={min}
-        aria-valuenow={Math.round(value)}
+        aria-valuenow={value === undefined ? undefined : Math.round(value)}
         {...rest}
       >
         <div className={withBaseName("barContainer")}>
-          <div className={withBaseName("bar")} style={barStyle} />
-          {bufferValue > 0 ? (
+          <div
+            className={clsx(withBaseName("bar"), {
+              [withBaseName("indeterminate")]: isIndeterminate,
+            })}
+            style={barStyle}
+          />
+          {bufferValue && bufferValue > 0 ? (
             <div className={withBaseName("buffer")} style={bufferStyle} />
           ) : null}
           <div className={withBaseName("track")} />
         </div>
         {!hideLabel && (
           <Text styleAs="h2" className={withBaseName("progressLabel")}>
-            {`${Math.round(progress)} %`}
+            {isIndeterminate ? `— %` : `${Math.round(progress)} %`}
           </Text>
         )}
       </div>
