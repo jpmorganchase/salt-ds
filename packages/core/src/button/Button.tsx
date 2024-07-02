@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "../utils";
+import { Spinner } from "../spinner";
 
 import buttonCss from "./Button.css";
 import { useButton } from "./useButton";
@@ -26,6 +27,19 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * 'primary' is the default value.
    */
   variant?: ButtonVariant;
+  /**
+   * To show a loading spinner.
+   */
+  loading?: boolean;
+  /**
+   * For the screen reader to announce while button is in loading state
+   * 'Loading' is the default value.
+   */
+  loadingText?: string;
+  /**
+   * If `true`, a loading text with spinner will be shown while button is in loading state.
+   */
+  showLoadingText?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -41,6 +55,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       type = "button",
       variant = "primary",
+      loading,
+      loadingText = "Loading",
+      showLoadingText,
       ...restProps
     },
     ref?
@@ -72,15 +89,40 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(variant),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName(`loading-${variant}`)]: loading,
             [withBaseName("active")]: active,
           },
           className
         )}
+        aria-live={loading !== undefined ? "assertive" : undefined}
         {...restProps}
         ref={ref}
         type={type}
       >
-        {children}
+        {loading ? (
+          <>
+            <span className={clsx(withBaseName("loading-overlay"), className)}>
+              <Spinner
+                size="small"
+                className={clsx(withBaseName("loading-spinner"), className)}
+                aria-label={!showLoadingText ? loadingText : ''}
+              />
+              {showLoadingText && (
+                <span className={clsx(withBaseName("loading-text"), className)}>
+                  {loadingText}
+                </span>
+              )}
+            </span>
+            <span
+              aria-hidden="true"
+              className={clsx(withBaseName("hidden-element"))}
+            >
+              {children}
+            </span>
+          </>
+        ) : (
+          children
+        )}
       </button>
     );
   }
