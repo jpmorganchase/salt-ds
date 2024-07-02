@@ -5,10 +5,12 @@
   /* apply icon margin based on the text line height so it's aligned on all densities */
   --tooltip-icon-marginTop: calc((var(--salt-text-lineHeight) - max(var(--salt-icon-size-base), 12px)) / 2);
   --tooltip-status-borderColor: var(--salt-container-primary-borderColor);
+  /* Single line height should be size-base */
   --tooltip-padding: calc(var(--salt-spacing-75) - var(--salt-size-border)) var(--salt-spacing-100);
 }
 
 .saltTooltip {
+  box-sizing: border-box;
   background: var(--tooltip-background);
   border-color: var(--saltTooltip-borderColor, var(--tooltip-status-borderColor));
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
