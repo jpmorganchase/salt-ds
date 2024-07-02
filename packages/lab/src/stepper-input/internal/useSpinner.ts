@@ -1,33 +1,49 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, SyntheticEvent, useCallback } from "react";
 import { useInterval } from "./useInterval";
 
-const INTERVAL_DELAY = 300;
+const INITIAL_DELAY = 500;
+const INTERVAL_DELAY = 100;
 
-function useSpinner(activationFn: () => void, isAtLimit: boolean) {
+function useSpinner(
+  activationFn: (event?: SyntheticEvent) => void,
+  isAtLimit: boolean
+) {
   const [buttonDown, setButtonDown] = useState(false);
+  const [delay, setDelay] = useState(INITIAL_DELAY);
 
-  const cancelInterval = () => setButtonDown(false);
+  const cancelInterval = useCallback(() => {
+    setButtonDown(false);
+    setDelay(INITIAL_DELAY);
+  }, []);
 
   useEffect(() => {
-    if (isAtLimit) setButtonDown(false);
+    if (isAtLimit) cancelInterval();
   }, [isAtLimit]);
 
   useEffect(() => {
-    window.addEventListener("keyup", cancelInterval);
     window.addEventListener("mouseup", cancelInterval);
     return () => {
-      window.removeEventListener("keyup", cancelInterval);
       window.removeEventListener("mouseup", cancelInterval);
     };
-  }, []);
+  }, [cancelInterval]);
 
-  const activate = () => {
-    activationFn();
-    setButtonDown(true);
+  const activate = (event: SyntheticEvent) => {
+    activationFn(event);
+    if (event.type === "mousedown") {
+      setButtonDown(true);
+    }
   };
 
-  useInterval(activationFn, buttonDown ? INTERVAL_DELAY : null);
+  useInterval(
+    () => {
+      if (!buttonDown) return;
+      activationFn();
+      if (delay == INITIAL_DELAY) {
+        setDelay(INTERVAL_DELAY);
+      }
+    },
+    buttonDown ? delay : null
+  );
 
   return { activate, buttonDown };
 }
