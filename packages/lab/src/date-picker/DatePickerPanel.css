@@ -8,6 +8,7 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
   display: flex;
+  border-radius: var(--salt-palette-corner, 0);
 }
 .saltDatePickerPanel-container {
   width: min-content;

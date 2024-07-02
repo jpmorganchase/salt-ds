@@ -44,8 +44,21 @@
 .saltCalendarDay-hoveredOffset:hover {
   background: var(--salt-selectable-background-hover);
 }
+
+.saltCalendarDay-selected {
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
 .saltCalendarDay-selectedStart {
   z-index: var(--salt-zIndex-default);
+
+  border-top-left-radius: var(--salt-palette-corner-weak, 0);
+  border-bottom-left-radius: var(--salt-palette-corner-weak, 0);
+}
+
+.saltCalendarDay-selectedEnd {
+  border-top-right-radius: var(--salt-palette-corner-weak, 0);
+  border-bottom-right-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltCalendarDay-selected,
@@ -83,7 +96,7 @@
   top: calc(var(--salt-spacing-100) * -1);
   right: calc(var(--salt-spacing-100) * -1);
   transform: rotate(45deg);
-  background: var(--salt-selectable-borderColor-selected);
+  background: var(--salt-accent-background);
   position: absolute;
 }
 
@@ -101,7 +114,7 @@
 .saltCalendarDay-today,
 .saltCalendarDay-today:hover,
 .saltCalendarDay-outOfRange .saltCalendarDay-today:hover {
-  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-foreground-active);
+  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-accent-borderColor);
   margin-bottom: calc(var(--salt-size-indicator) * -1);
 }
 
