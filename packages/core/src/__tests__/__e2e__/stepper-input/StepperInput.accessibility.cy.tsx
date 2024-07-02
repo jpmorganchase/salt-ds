@@ -1,5 +1,9 @@
-import { StepperInput } from "@salt-ds/lab";
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  StepperInput,
+} from "@salt-ds/core";
 
 describe("Stepper Input - Accessibility", () => {
   it("sets the correct default ARIA attributes on input", () => {

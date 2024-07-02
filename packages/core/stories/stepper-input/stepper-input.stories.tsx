@@ -4,14 +4,13 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
-  Text,
+  StepperInput,
 } from "@salt-ds/core";
-import { StepperInput } from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { useState } from "react";
 export default {
-  title: "Lab/Stepper Input",
+  title: "Core/Stepper Input",
   component: StepperInput,
 } as Meta<typeof StepperInput>;
 

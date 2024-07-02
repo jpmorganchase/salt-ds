@@ -4,9 +4,10 @@ import {
   MouseEvent,
   MutableRefObject,
 } from "react";
-import { useControlled, useId, InputProps } from "@salt-ds/core";
 import { useSpinner } from "./internal/useSpinner";
 import { StepperInputProps } from "./StepperInput";
+import { useControlled, useId } from "../utils";
+import { InputProps } from "../input";
 
 // The input should only accept numbers, decimal points, and plus/minus symbols
 const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
@@ -136,14 +137,18 @@ export const useStepperInput = (
     }
   };
 
-  const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
-    useSpinner(decrementBlock, isAtMin());
+  const {
+    activate: decrementSpinnerBlock,
+    buttonDown: shiftArrowDownButtonDown,
+  } = useSpinner(decrementBlock, isAtMin());
 
   const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
     useSpinner(decrement, isAtMin());
 
-  const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
-    useSpinner(incrementBlock, isAtMax());
+  const {
+    activate: incrementSpinnerBlock,
+    buttonDown: shiftArrowUpButtonDown,
+  } = useSpinner(incrementBlock, isAtMax());
 
   const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
     useSpinner(increment, isAtMax());
@@ -182,15 +187,14 @@ export const useStepperInput = (
   };
 
   const handleInputKeyDown = (event: KeyboardEvent) => {
-    if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+    if (event.shiftKey && ["ArrowUp", "ArrowDown"].includes(event.key)) {
       event.preventDefault();
-      event.key === "ArrowUp" ? incrementSpinner() : decrementSpinner();
-    }
-    if (["PageUp", "PageDown"].includes(event.key)) {
-      event.preventDefault();
-      event.key === "PageUp"
+      event.key === "ArrowUp"
         ? incrementSpinnerBlock()
         : decrementSpinnerBlock();
+    } else if (["ArrowUp", "ArrowDown"].includes(event.key)) {
+      event.preventDefault();
+      event.key === "ArrowUp" ? incrementSpinner() : decrementSpinner();
     }
   };
 
@@ -241,9 +245,9 @@ export const useStepperInput = (
   };
 
   return {
-    decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
+    decrementButtonDown: arrowDownButtonDown || shiftArrowDownButtonDown,
     getButtonProps,
     getInputProps,
-    incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
+    incrementButtonDown: arrowUpButtonDown || shiftArrowUpButtonDown,
   };
 };

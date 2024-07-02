@@ -1,4 +1,4 @@
-import { StepperInput } from "@salt-ds/lab";
+import { StepperInput } from "@salt-ds/core";
 
 describe("Stepper Input", () => {
   it("renders with default props", () => {

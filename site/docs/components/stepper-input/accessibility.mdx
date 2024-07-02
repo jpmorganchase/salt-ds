@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Wrap `StepperInput` in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+- `aria-valuenow`, `aria-valuemax`, and `aria-valuemin` attributes are set to provide users with information about the current value, and the allowable range of values.
+
+## Keyboard interactions
+
+Stepper input inherits keyboard interactions from [`Input`](/salt/components/input/accessibility).
+
+The following interactions are specific to Stepper Input.
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Up Arrow">
+
+When the input area has focus:
+
+- Increases the number by the increment value, up to the maximum value if set.
+- If the Up Arrow key is held down, it continues to increase the number by the increment value at a constant rate, after a 300ms delay.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Down Arrow">
+
+When the input area has focus:
+
+- Decresase the number by the increment value, up to the minimum value if set.
+- If the Down Arrow key is held down, it continues to decrease the number by the increment value at a constant rate, after a 300ms delay.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Up Arrow">
+ 
+When the input area has focus:
+
+- Increases the number by the block value, up to the maximum value if set.
+- If the Page Up key is held down, it continues to increase the number by the block value at a constant rate, after a 300ms delay.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Down Arrow">
+ 
+When the input area has focus:
+
+- Decreases the number by the block value, up to the maximum value if set.
+- If the Page Down key is held down, it continues to decrease the number by the block value at a constant rate, after a 300ms delay.
+
+</KeyboardControl>
+</KeyboardControls>

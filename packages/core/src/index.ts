@@ -54,6 +54,7 @@ export * from "./theme";
 export * from "./toast";
 export * from "./salt-provider";
 export * from "./split-layout";
+export * from "./stepper-input";
 export * from "./switch";
 export * from "./tag";
 export * from "./toggle-button";
