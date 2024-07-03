@@ -18,10 +18,6 @@ interface ExpansionIconProps {
    */
   expanded?: boolean;
   /**
-   * className
-   */
-  className?: string;
-  /**
    * The orientation of the navigation item.
    */
   orientation?: "horizontal" | "vertical";
