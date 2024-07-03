@@ -1,5 +1,4 @@
 import { ChevronDownIcon, ChevronRightIcon } from "@salt-ds/icons";
-import { FC } from "react";
 
 const iconExpansionMap = {
   vertical: {
@@ -23,10 +22,10 @@ interface ExpansionIconProps {
   orientation?: "horizontal" | "vertical";
 }
 
-export const ExpansionIcon: FC<ExpansionIconProps> = ({
+export const ExpansionIcon = ({
   expanded = false,
   orientation = "horizontal",
-}) => {
+}: ExpansionIconProps) => {
   const Icon =
     iconExpansionMap[orientation][expanded ? "expanded" : "collapsed"];
   return <Icon aria-hidden="true" />;

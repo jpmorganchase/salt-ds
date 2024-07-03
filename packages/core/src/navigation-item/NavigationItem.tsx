@@ -1,12 +1,14 @@
-import React, {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
+import {
   ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
   forwardRef,
   MouseEvent,
   MouseEventHandler,
   ReactElement,
   ReactNode,
+  cloneElement,
+  isValidElement,
+  ElementType,
 } from "react";
 import { makePrefixer, mergeProps } from "../utils";
 import { clsx } from "clsx";
@@ -19,7 +21,7 @@ import navigationItemCss from "./NavigationItem.css";
 
 type OptionalPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
 
-type RenderProp<P = React.HTMLAttributes<any>> = (props: P) => ReactNode;
+type RenderProp<P = ComponentPropsWithRef<any>> = (props: P) => ReactNode;
 
 export interface NavigationItemRenderProps
   extends OptionalPartial<
@@ -29,11 +31,11 @@ export interface NavigationItemRenderProps
   /**
    * Props to apply to the child row to render a link
    */
-  linkProps?: AnchorHTMLAttributes<HTMLAnchorElement>;
+  linkProps?: ComponentPropsWithoutRef<"a">;
   /**
    * Props to apply to the parent row to open and close the row
    */
-  parentProps?: ButtonHTMLAttributes<HTMLButtonElement>;
+  parentProps?: ComponentPropsWithoutRef<"button">;
 }
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
@@ -80,13 +82,13 @@ const withBaseName = makePrefixer("saltNavigationItem");
 type CreateElementProps = NavigationItemRenderProps &
   OptionalPartial<NavigationItemProps, "render">;
 
-function createElement(Type: React.ElementType, props: CreateElementProps) {
+function createElement(Type: ElementType, props: CreateElementProps) {
   const { render, ...rest } = props;
   const elementProps = props.parent ? props.parentProps : props.linkProps;
   let element: ReactElement;
-  if (React.isValidElement<any>(render)) {
+  if (isValidElement<any>(render)) {
     const renderProps = render.props;
-    element = React.cloneElement(
+    element = cloneElement(
       render,
       mergeProps(elementProps as Record<string, unknown>, renderProps)
     );
@@ -148,8 +150,8 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         </>
       ),
     };
-    let parentProps: Partial<ButtonHTMLAttributes<HTMLButtonElement>> = {};
-    let linkProps: Partial<AnchorHTMLAttributes<HTMLAnchorElement>> = {};
+    let parentProps: Partial<ComponentPropsWithoutRef<"button">> = {};
+    let linkProps: Partial<ComponentPropsWithoutRef<"a">> = {};
     if (isParent) {
       const handleExpand = onExpand
         ? (event: MouseEvent<HTMLButtonElement>) => {
