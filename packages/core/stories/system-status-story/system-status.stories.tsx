@@ -4,7 +4,15 @@ import {
   SystemStatusContent,
   StackLayout,
   Text,
+  UNSTABLE_SaltProviderNext,
+  Banner,
+  BannerContent,
+  BannerActions,
+  useTheme,
+  Button,
 } from "@salt-ds/core";
+
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/System Status",
@@ -68,3 +76,52 @@ export const WithTitle: StoryFn<typeof SystemStatus> = (props) => (
     </SystemStatus>
   </div>
 );
+
+export const FullWidth: StoryFn<typeof SystemStatus> = (props) => {
+  const { themeNext } = useTheme();
+
+  return (
+    <StackLayout
+      style={{
+        width: "98vw",
+        background: "var( --salt-container-primary-background)",
+      }}
+    >
+      {themeNext ? (
+        <UNSTABLE_SaltProviderNext corner={"sharp"}>
+          <SystemStatus {...props}>
+            <SystemStatusContent>
+              <Text color="inherit">New feature updates are available.</Text>
+            </SystemStatusContent>
+          </SystemStatus>
+        </UNSTABLE_SaltProviderNext>
+      ) : (
+        <SystemStatus {...props}>
+          <SystemStatusContent>
+            <Text color="inherit">New feature updates are available.</Text>
+          </SystemStatusContent>
+        </SystemStatus>
+      )}
+      <StackLayout
+        gap={4.5}
+        style={{
+          padding:
+            "var(--salt-spacing-100) var(--salt-spacing-300) calc(var(--salt-spacing-100)*4.5) ",
+        }}
+      >
+        <Text styleAs="display2"> Payment Activity</Text>
+        <Banner status="warning" variant="secondary">
+          <BannerContent role="status">
+            You have outstanding checks more than 30 days old. Review to prevent
+            fraud.
+          </BannerContent>
+          <BannerActions>
+            <Button aria-label="refresh" variant="secondary">
+              <CloseIcon />
+            </Button>
+          </BannerActions>
+        </Banner>
+      </StackLayout>
+    </StackLayout>
+  );
+};
