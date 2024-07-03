@@ -32,7 +32,7 @@ const createDrawerMenu = (menu: TabsMenu): SidebarItem[] =>
       data: { link: item.link },
     } as SidebarItem;
 
-    return [...result, parsedItem];
+    return result.concat(parsedItem);
   }, [] as SidebarItem[]);
 
 const actions: TabsMenu = [

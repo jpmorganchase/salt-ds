@@ -57,7 +57,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows],
+    [],
   );
 
   const setPrice = useCallback(
@@ -68,7 +68,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows],
+    [],
   );
 
   const setAmount = useCallback(
@@ -79,7 +79,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows],
+    [],
   );
 
   const setDiscount = useCallback(
@@ -90,13 +90,13 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows],
+    [],
   );
 
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
-const EditableCellsTemplate: StoryFn<{}> = () => {
+const EditableCellsTemplate: StoryFn = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
 

@@ -16,19 +16,22 @@ export const useDragSpacers = () => {
   const clearSpacers = useCallback(
     () =>
       spacers.forEach((spacer) => spacer.parentElement?.removeChild(spacer)),
-    [],
+    [spacers],
   );
 
-  const animateTransition = useCallback((size: number) => {
-    const [spacer1, spacer2] = spacers;
-    animationFrame.current = requestAnimationFrame(() => {
-      transitioning.current = true;
-      spacer1.style.cssText = "width: 0px";
-      spacer2.style.cssText = `width: ${size}px`;
-      spacers[0] = spacer2;
-      spacers[1] = spacer1;
-    });
-  }, []);
+  const animateTransition = useCallback(
+    (size: number) => {
+      const [spacer1, spacer2] = spacers;
+      animationFrame.current = requestAnimationFrame(() => {
+        transitioning.current = true;
+        spacer1.style.cssText = "width: 0px";
+        spacer2.style.cssText = `width: ${size}px`;
+        spacers[0] = spacer2;
+        spacers[1] = spacer1;
+      });
+    },
+    [spacers],
+  );
 
   const cancelAnyPendingAnimation = useCallback(() => {
     if (animationFrame.current) {
@@ -39,7 +42,7 @@ export const useDragSpacers = () => {
 
   const displaceItem = useCallback(
     (
-      item: MeasuredDropTarget | null = null,
+      item: MeasuredDropTarget | null,
       size: number,
       useTransition = false,
       direction?: Direction,
@@ -71,7 +74,7 @@ export const useDragSpacers = () => {
         }
       }
     },
-    [],
+    [animateTransition, cancelAnyPendingAnimation, clearSpacers, spacers],
   );
   const displaceLastItem = useCallback(
     (item: MeasuredDropTarget, size: number, useTransition = false) => {
@@ -107,7 +110,7 @@ export const useDragSpacers = () => {
         );
       }
     },
-    [],
+    [animateTransition, cancelAnyPendingAnimation, clearSpacers, spacers],
   );
 
   return {

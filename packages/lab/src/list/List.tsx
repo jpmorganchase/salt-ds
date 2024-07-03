@@ -274,9 +274,9 @@ export const List = forwardRef(function List<
     const listItems: ReactElement[] = [];
     while (idx.value < end) {
       const item = items[idx.value];
-      if (item.header) {
+      if (item.header && item.label != null) {
         listItems.push(
-          createHeader(idx, item.id, item.label!, item.expanded === false),
+          createHeader(idx, item.id, item.label, item.expanded === false),
         );
       } else if (item.childNodes) {
         addGroup(listItems, items, idx);

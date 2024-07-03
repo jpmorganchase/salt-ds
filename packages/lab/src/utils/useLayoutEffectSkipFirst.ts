@@ -6,12 +6,12 @@ export const useLayoutEffectSkipFirst = (
   dependencies: DependencyList,
 ): void => {
   const goodToGo = useRef(false);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: dependencies are forwarded to the hook
   useIsomorphicLayoutEffect(() => {
     if (goodToGo.current) {
       callback();
     } else {
       goodToGo.current = true;
     }
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, dependencies);
 };

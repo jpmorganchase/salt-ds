@@ -44,11 +44,13 @@ export const AdjustableFlexbox = ({
   const handleKeyDown: InputProps["onKeyDown"] = (e) => {
     if (e.key === "ArrowUp") {
       const amt = e.shiftKey ? 10 : 1;
-      setWidth((widthRef.current = widthRef.current + amt));
+      widthRef.current = widthRef.current + amt;
+      setWidth(widthRef.current);
       e.preventDefault();
     } else if (e.key === "ArrowDown") {
       const amt = e.shiftKey ? 10 : 1;
-      setWidth((widthRef.current = widthRef.current - amt));
+      widthRef.current = widthRef.current - amt;
+      setWidth(widthRef.current);
       e.preventDefault();
     }
   };

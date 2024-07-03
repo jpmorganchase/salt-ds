@@ -6,10 +6,8 @@ import cursorCss from "./Cursor.css";
 
 const withBaseName = makePrefixer("saltGridCursor");
 
-export type CursorProps = {};
-
 // This is probably obsolete. Cursor is rendered using cell borders now.
-export function Cursor(props: CursorProps) {
+export function Cursor() {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-cursor",

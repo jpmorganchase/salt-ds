@@ -88,7 +88,7 @@ export const ToggleButtonGroup = forwardRef<
         onChange?.(event);
       }
     },
-    [onChange, value, setValue],
+    [onChange, value],
   );
 
   const isSelected = useCallback(
@@ -98,9 +98,9 @@ export const ToggleButtonGroup = forwardRef<
     [value],
   );
 
-  const focus = (id: Value) => {
+  const focus = useCallback((id: Value) => {
     setFocused(id);
-  };
+  }, []);
 
   const isFocused = useCallback(
     (id: Value) => {
@@ -118,7 +118,7 @@ export const ToggleButtonGroup = forwardRef<
       disabled,
       orientation,
     }),
-    [select, isSelected, isFocused, disabled, orientation],
+    [select, isSelected, isFocused, disabled, orientation, focus],
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {

@@ -246,7 +246,7 @@ export const DateInput = forwardRef<
     } else {
       setStartDateStringValue(dateFormatter(selectedDate));
     }
-  }, [selectedDate, dateFormatter, selectionVariant]);
+  }, [selectedDate, dateFormatter]);
 
   const isRequired = formFieldRequired
     ? ["required", "asterisk"].includes(formFieldRequired)

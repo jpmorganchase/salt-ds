@@ -67,7 +67,7 @@ export const Controlled: StoryFn<typeof TokenizedInput> = () => {
     if (buttonsRef.current) {
       setOffsetHeight(buttonsRef.current.getBoundingClientRect().height);
     }
-  }, [buttonsRef]);
+  }, []);
 
   const handleAddRandomOption = () => {
     setSelectedItems((prevSelectedItems) =>

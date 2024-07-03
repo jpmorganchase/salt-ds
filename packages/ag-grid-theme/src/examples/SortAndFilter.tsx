@@ -48,7 +48,7 @@ const SortAndFilter = (props: AgGridReactProps) => {
     }
 
     void setFilter();
-  }, [isGridReady]);
+  }, [isGridReady, api]);
 
   return (
     <div {...containerProps}>

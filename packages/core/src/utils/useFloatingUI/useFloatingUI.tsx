@@ -60,10 +60,8 @@ const DefaultFloatingComponent = forwardRef<
     top,
     left,
     position,
-    /* eslint-disable @typescript-eslint/no-unused-vars */
     width,
     height,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
     focusManagerProps,
     ...rest
   } = props;

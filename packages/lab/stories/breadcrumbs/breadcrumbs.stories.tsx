@@ -7,11 +7,7 @@ export default {
   component: "Bread",
 };
 
-type BasicBreadcrumbsStoryProps = {};
-
-const BasicBreadcrumbsTemplate: StoryFn<BasicBreadcrumbsStoryProps> = (
-  props,
-) => {
+const BasicBreadcrumbsTemplate: StoryFn = () => {
   return (
     <Breadcrumbs>
       <Breadcrumb href="#">Root Level Entity</Breadcrumb>
@@ -23,11 +19,7 @@ const BasicBreadcrumbsTemplate: StoryFn<BasicBreadcrumbsStoryProps> = (
 
 export const Basic = BasicBreadcrumbsTemplate.bind({});
 
-type BreadcrumbsWrappingStoryProps = {};
-
-const BreadcrumbsWrappingTemplate: StoryFn<BreadcrumbsWrappingStoryProps> = (
-  props,
-) => {
+const BreadcrumbsWrappingTemplate: StoryFn = () => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" style={{ width: 250 }} wrap>
       <Breadcrumb href="#">Root Level Entity</Breadcrumb>
@@ -39,9 +31,7 @@ const BreadcrumbsWrappingTemplate: StoryFn<BreadcrumbsWrappingStoryProps> = (
 
 export const WithWrap = BreadcrumbsWrappingTemplate.bind({});
 
-type IconDescriptorsStoryProps = {};
-
-const IconDescriptorsStory: StoryFn<IconDescriptorsStoryProps> = (props) => (
+const IconDescriptorsStory: StoryFn = () => (
   <Breadcrumbs data-testid="breadcrumbs-example">
     <Breadcrumb href="#" overflowLabel="Home" Icon={HomeIcon} />
     <Breadcrumb href="#" overflowLabel="Level 2 Entity" Icon={TreeIcon}>
@@ -55,11 +45,7 @@ const IconDescriptorsStory: StoryFn<IconDescriptorsStoryProps> = (props) => (
 
 export const IconDescriptors = IconDescriptorsStory.bind({});
 
-type MaximumItemWidthAndTruncationStoryProps = {};
-
-const MaximumItemWidthAndTruncationStory: StoryFn<
-  MaximumItemWidthAndTruncationStoryProps
-> = (props) => {
+const MaximumItemWidthAndTruncationStory: StoryFn = () => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" itemsMaxWidth={60}>
       <Breadcrumb href="#">Root Level Entity</Breadcrumb>
@@ -72,11 +58,7 @@ const MaximumItemWidthAndTruncationStory: StoryFn<
 export const MaximumItemWidthAndTruncation =
   MaximumItemWidthAndTruncationStory.bind({});
 
-type WithoutCurrentLevelStoryProps = {};
-
-const WithoutCurrentLevelStory: StoryFn<WithoutCurrentLevelStoryProps> = (
-  props,
-) => {
+const WithoutCurrentLevelStory: StoryFn = () => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" hideCurrentLevel>
       <Breadcrumb href="#">Root Level Entity</Breadcrumb>
@@ -88,9 +70,7 @@ const WithoutCurrentLevelStory: StoryFn<WithoutCurrentLevelStoryProps> = (
 
 export const WithoutCurrentLevel = WithoutCurrentLevelStory.bind({});
 
-type WithOverflowMenuStoryProps = {};
-
-const WithOverflowMenuStory: StoryFn<WithOverflowMenuStoryProps> = (props) => {
+const WithOverflowMenuStory: StoryFn = () => {
   return (
     <Breadcrumbs data-testid="breadcrumbs-example" maxItems={2}>
       <Breadcrumb
@@ -131,11 +111,7 @@ const WithOverflowMenuStory: StoryFn<WithOverflowMenuStoryProps> = (props) => {
 
 export const WithOverflowMenu = WithOverflowMenuStory.bind({});
 
-type OverflowAtFirstPositionStoryProps = {};
-
-const OverflowAtFirstPositionStory: StoryFn<
-  OverflowAtFirstPositionStoryProps
-> = (props) => {
+const OverflowAtFirstPositionStory: StoryFn = () => {
   return (
     <Breadcrumbs
       data-testid="breadcrumbs-example"

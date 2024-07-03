@@ -24,9 +24,7 @@ const makeMenuItems = (levels: number, count: number): MenuDescriptor[] => {
 
 const initialSource = { menuItems: makeMenuItems(3, 3) };
 
-type PrimaryStoryProps = {};
-
-const PrimaryStory: StoryFn<PrimaryStoryProps> = (props) => {
+const PrimaryStory: StoryFn = () => {
   return (
     <MenuButton
       CascadingMenuProps={{ initialSource }}
@@ -40,9 +38,7 @@ const PrimaryStory: StoryFn<PrimaryStoryProps> = (props) => {
 
 export const Primary = PrimaryStory.bind({});
 
-type SecondaryStoryProps = {};
-
-const SecondaryStory: StoryFn<SecondaryStoryProps> = (props) => {
+const SecondaryStory: StoryFn = () => {
   return (
     <MenuButton
       CascadingMenuProps={{ initialSource }}
@@ -55,9 +51,7 @@ const SecondaryStory: StoryFn<SecondaryStoryProps> = (props) => {
 
 export const Secondary = SecondaryStory.bind({});
 
-type HideCaretStoryProps = {};
-
-const HideCaretStory: StoryFn<HideCaretStoryProps> = (props) => (
+const HideCaretStory: StoryFn = () => (
   <MenuButton
     CascadingMenuProps={{ initialSource }}
     data-testid="menu-button-example"

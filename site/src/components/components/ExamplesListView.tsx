@@ -1,10 +1,4 @@
-import {
-  Dropdown,
-  FormField,
-  FormFieldLabel,
-  ListBox,
-  Option,
-} from "@salt-ds/core";
+import { Dropdown, ListBox, Option } from "@salt-ds/core";
 import {
   Children,
   type FC,
@@ -45,7 +39,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     const exampleInHash = examplesList.find(
       (example) => exampleNameToHash(example) === hash,
     );
-    setSelectedItem((old) => {
+    setSelectedItem(() => {
       if (exampleInHash) {
         return [exampleInHash];
       }

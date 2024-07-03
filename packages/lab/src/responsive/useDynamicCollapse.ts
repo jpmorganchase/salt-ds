@@ -20,7 +20,7 @@ const UNCOLLAPSED_DYNAMIC_ITEMS =
   '[data-collapsible="dynamic"]:not([data-collapsed="true"]):not([data-collapsing="true"])';
 
 const hasUncollapsedDynamicItems = (containerRef: ElementRef) =>
-  containerRef.current!.querySelector(UNCOLLAPSED_DYNAMIC_ITEMS) !== null;
+  containerRef.current?.querySelector(UNCOLLAPSED_DYNAMIC_ITEMS) !== null;
 
 const thereAreCollapsibleItemsAndTheyAreAllCollapsed = (
   items: OverflowItem[],
@@ -34,8 +34,6 @@ const nextItemToCollapse = (listItems: OverflowItem[]): OverflowItem =>
 
 export const useDynamicCollapse = ({
   collectionHook,
-  innerContainerSize = 0,
-  label = "Toolbar",
   overflowItemsRef: managedItemsRef,
   overflowContainerRef: ref,
   orientation,

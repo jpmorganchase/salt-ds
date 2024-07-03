@@ -26,7 +26,6 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   });
 
   const [mountNode, setMountNode] = useState<Element | null>(null);
-  const [windowRef, setWindowRef] = useState<Window | null>(null);
   const windowRoot = useRef<HTMLDivElement>(null);
 
   const forkedRef = useForkRef(forwardedRef, windowRoot);
@@ -41,12 +40,12 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
     });
     const bodyElement = (win as Window).document.body;
     setMountNode(bodyElement);
-    setWindowRef(win);
   }
 
   const parentWindow = useWindowParentContext();
 
   const closeWindow = useCallback(() => {
+    // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       ipcRenderer.send("window-close", { id: id });
@@ -59,6 +58,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
     setTimeout(() => {
       if (windowRoot.current) {
         const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
+        // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
         const { ipcRenderer } = global as any;
         if (ipcRenderer) {
           ipcRenderer.send("window-size", {
@@ -74,6 +74,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   // The timeout is required to allow the window time to be moved into position and scaled
   // before being shown to the user,
   useEffect(() => {
+    // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       setTimeout(() => {
@@ -84,12 +85,13 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
     return () => {
       closeWindow();
     };
-  }, [closeWindow, windowRef, id]);
+  }, [closeWindow, id]);
 
   // The timeout is required to give the Dialog component time to report the correct height
   // otherwise the window will be smaller than expected
   useIsomorphicLayoutEffect(() => {
     setTimeout(() => {
+      // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
       const { ipcRenderer } = global as any;
       if (ipcRenderer) {
         ipcRenderer.send("window-position", {
@@ -100,7 +102,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
         });
       }
     }, 90);
-  }, [style]);
+  }, [style, id, parentWindow.id]);
 
   return mountNode
     ? ReactDOM.createPortal(

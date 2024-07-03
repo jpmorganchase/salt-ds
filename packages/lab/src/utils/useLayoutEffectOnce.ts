@@ -6,11 +6,11 @@ export const useLayoutEffectOnce = (
   dependencies: DependencyList,
 ): void => {
   const hasRun = useRef(false);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: dependencies are forwarded to the hook
   useIsomorphicLayoutEffect(() => {
     if (condition && !hasRun.current) {
       hasRun.current = true;
       callback();
     }
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, dependencies);
 };

@@ -111,7 +111,7 @@ export const InteractableCard = forwardRef<
     onClick?.(event);
   };
 
-  let tabIndex;
+  let tabIndex: number;
 
   if (interactableCardGroup) {
     if (disabled) {

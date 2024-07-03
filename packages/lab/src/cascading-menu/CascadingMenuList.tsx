@@ -241,7 +241,7 @@ export const CascadingMenuList = forwardRef<
                 isInteracted={isInteracted}
                 isNavigatingWithKeyboard={isNavigatingWithKeyboard}
                 itemToString={itemToString}
-                key={idx}
+                key={menuItem.id}
                 onItemClick={onItemClick}
                 onMouseMove={() => handleMouseMove(idx)}
                 sourceItem={menuItem}

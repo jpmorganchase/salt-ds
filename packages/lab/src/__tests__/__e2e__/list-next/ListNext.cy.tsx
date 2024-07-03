@@ -14,9 +14,9 @@ describe("GIVEN a list", () => {
       return (
         <ListNext {...props}>
           {props.children ||
-            ITEMS.map((item, index) => {
+            ITEMS.map((item) => {
               return (
-                <ListItemNext value={item.value} key={index}>
+                <ListItemNext value={item.value} key={item.label}>
                   {item.label}
                 </ListItemNext>
               );

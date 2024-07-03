@@ -184,9 +184,10 @@ export const groupByInitialLetter = (list, groupMode = "headers-only") => {
       if (groupMode === "headers-only") {
         items.push({ label: label[0], header });
       } else {
+        items = [];
         result.push({
           label: label[0],
-          childNodes: (items = []),
+          childNodes: items,
         });
       }
       char = label[0];

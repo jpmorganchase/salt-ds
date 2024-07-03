@@ -52,7 +52,7 @@ const getItemsIdentity = (
   source?: OverflowSource[],
   children?: ReactNode,
 ): string => {
-  let identity;
+  let identity: string;
   if (Array.isArray(defaultSource)) {
     identity = defaultSourceIdentity(defaultSource);
   } else if (Array.isArray(source)) {
@@ -185,7 +185,6 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
       measureManagedItems(true);
     }
     previousIdentityRef.current = identity;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [identity]);
 
   return {

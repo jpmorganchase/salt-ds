@@ -37,7 +37,7 @@ function menuPositionReducer(state: state, action: menuAction, level: number) {
 }
 
 export function useStateReducer(
-  menusDataById: flattenedMenuState = {},
+  menusDataById: flattenedMenuState,
   isNavigatingWithKeyboard: boolean,
 ) {
   return useCallback(

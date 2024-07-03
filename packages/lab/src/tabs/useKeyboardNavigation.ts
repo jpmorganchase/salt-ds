@@ -122,12 +122,10 @@ export const useKeyboardNavigation = ({
     name: "UseKeyboardNavigation",
   });
 
-  const setHighlightedIdx = useCallback(
-    (value: number) => {
-      _setHighlightedIdx((focusedRef.current = value));
-    },
-    [_setHighlightedIdx],
-  );
+  const setHighlightedIdx = useCallback((value: number) => {
+    focusedRef.current = value;
+    _setHighlightedIdx(value);
+  }, []);
 
   const keyboardNavigation = useRef(false);
 
@@ -263,19 +261,16 @@ export const useKeyboardNavigation = ({
     setHighlightedIdx(tabIndex);
   };
 
-  const handleFocus = useCallback(
-    (evt: FocusEvent) => {
-      if (!hasFocus) {
-        setHasFocus(true);
-        if (!mouseClickPending.current) {
-          keyboardNavigation.current = true;
-        } else {
-          mouseClickPending.current = false;
-        }
+  const handleFocus = () => {
+    if (!hasFocus) {
+      setHasFocus(true);
+      if (!mouseClickPending.current) {
+        keyboardNavigation.current = true;
+      } else {
+        mouseClickPending.current = false;
       }
-    },
-    [hasFocus],
-  );
+    }
+  };
 
   const handleContainerMouseDown = useCallback(
     (evt: MouseEvent) => {

@@ -51,7 +51,7 @@ export function CategoryList(props: CategoryListProps) {
         });
       }
     }, 0);
-  }, [categories, setMeasuredCategories, setContextValue]);
+  }, [categories]);
 
   const onSelect: SelectHandler<QueryInputCategory> = useCallback(
     (_, item) => {
@@ -65,9 +65,9 @@ export function CategoryList(props: CategoryListProps) {
   if (isMeasuring) {
     return (
       <div ref={measureRef} className={withBaseName("categoryWidthMeasure")}>
-        {categories.map((c, i) => {
+        {categories.map((c) => {
           return (
-            <div key={i} className={withBaseName("category")}>
+            <div key={c.name} className={withBaseName("category")}>
               {c.name}
             </div>
           );

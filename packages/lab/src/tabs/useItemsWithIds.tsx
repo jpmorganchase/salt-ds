@@ -60,10 +60,7 @@ export const useItemsWithIds = (
     return normalizeItems(children);
   }, [normalizeItems, children]);
 
-  const itemById = useCallback(
-    (id: string) => sourceMap[id],
-    [sourceWithIds, sourceMap],
-  );
+  const itemById = useCallback((id: string) => sourceMap[id], [sourceMap]);
 
   return [sourceWithIds, itemById];
 };

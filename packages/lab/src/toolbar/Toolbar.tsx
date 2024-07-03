@@ -92,7 +92,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
             ),
           );
           if (i < arr.length - 1) {
-            items.push(<OverflowSeparator key={`separator-${i}`} />);
+            items.push(<OverflowSeparator key={`separator-${id}`} />);
           }
         } else {
           items.push(

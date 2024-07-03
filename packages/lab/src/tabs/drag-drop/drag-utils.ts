@@ -155,20 +155,20 @@ export const measureDropTargets = (
     const dimension = orientation === "horizontal" ? "width" : "height";
     const [start, size] = measureElementSizeAndPosition(element, dimension);
 
-    dragThresholds.push(
-      (previousThreshold = {
-        currentIndex: index,
-        dataIndex: Number.parseInt(element.dataset.index ?? "-1"),
-        index,
-        isDraggedElement: element === draggedItem,
-        isOverflowIndicator: element.dataset.overflowIndicator === "true",
-        element: element as HTMLElement,
-        start,
-        end: start + size,
-        size,
-        mid: start + size / 2,
-      }),
-    );
+    previousThreshold = {
+      currentIndex: index,
+      dataIndex: Number.parseInt(element.dataset.index ?? "-1"),
+      index,
+      isDraggedElement: element === draggedItem,
+      isOverflowIndicator: element.dataset.overflowIndicator === "true",
+      element: element as HTMLElement,
+      start,
+      end: start + size,
+      size,
+      mid: start + size / 2,
+    };
+
+    dragThresholds.push(previousThreshold);
   }
   return dragThresholds;
 };

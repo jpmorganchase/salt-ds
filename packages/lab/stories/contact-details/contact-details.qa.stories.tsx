@@ -91,13 +91,12 @@ const getComponent = (props: { variant?: string; className?: string }) => {
         <ContactTertiaryInfo text={tertiary} />
 
         <ContactMetadata>
-          {metadata.map((item: any) => {
+          {metadata.map((item) => {
             return (
               <ContactMetadataItem
                 key={Math.random()}
                 value={item.value}
                 label={item.label}
-                icon={item.icon}
               />
             );
           })}
@@ -105,7 +104,7 @@ const getComponent = (props: { variant?: string; className?: string }) => {
 
         {!!actions && (
           <ContactActions>
-            {actions.map((item: any) => {
+            {actions.map((item) => {
               return (
                 <ContactAction
                   key={Math.random()}

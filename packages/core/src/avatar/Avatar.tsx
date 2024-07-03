@@ -66,7 +66,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     window: targetWindow,
   });
 
-  let children;
+  let children: ReactNode;
 
   const style = {
     ...styleProp,

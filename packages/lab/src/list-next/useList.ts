@@ -96,7 +96,7 @@ export const useList = ({
       setActiveDescendant(element.id);
       updateScroll(element);
     },
-    [setHighlightedItem, updateScroll],
+    [updateScroll],
   );
 
   const selectItem = useCallback(
@@ -107,7 +107,7 @@ export const useList = ({
         updateHighlighted(element);
       }
     },
-    [setSelectedItem, updateHighlighted],
+    [updateHighlighted],
   );
 
   // Effect to move the cursor when items change controlled.
@@ -190,12 +190,9 @@ export const useList = ({
     [selectedItem],
   );
 
-  const highlight = useCallback(
-    (event: SyntheticEvent<HTMLLIElement>) => {
-      setHighlightedItem(event.currentTarget.dataset.value);
-    },
-    [setHighlightedItem],
-  );
+  const highlight = useCallback((event: SyntheticEvent<HTMLLIElement>) => {
+    setHighlightedItem(event.currentTarget.dataset.value);
+  }, []);
 
   const isHighlighted = useCallback(
     (value: string) => highlightedItem === value,

@@ -306,37 +306,48 @@ export function useQueryInput(
         setHighlightedValueIndex(0);
         return;
       case "End":
-        setHighlightedValueIndex(selectedCategory!.values.length);
+        if (selectedCategory != null) {
+          setHighlightedValueIndex(selectedCategory.values.length);
+        }
         return;
       case "ArrowUp":
         setHighlightedValueIndex((i) => Math.max(0, i - 1));
         return;
       case "ArrowDown":
-        setHighlightedValueIndex((i) =>
-          Math.min(selectedCategory!.values.length, i + 1),
-        );
+        setHighlightedValueIndex((i) => {
+          if (selectedCategory != null) {
+            return Math.min(selectedCategory.values.length, i + 1);
+          }
+          return i;
+        });
         return;
       case "PageUp":
         setHighlightedValueIndex((i) => Math.max(0, i - displayedItemCount));
         return;
       case "PageDown":
-        setHighlightedValueIndex((i) =>
-          Math.min(selectedCategory!.values.length, i + displayedItemCount),
-        );
+        setHighlightedValueIndex((i) => {
+          if (selectedCategory != null) {
+            return Math.min(
+              selectedCategory.values.length,
+              i + displayedItemCount,
+            );
+          }
+          return i;
+        });
         return;
       case "Enter":
-        if (highlightedValueIndex === 0) {
+        if (highlightedValueIndex === 0 || selectedCategory == null) {
           setSelectedCategory(null);
         } else {
-          const value = selectedCategory!.values[highlightedValueIndex - 1];
+          const value = selectedCategory.values[highlightedValueIndex - 1];
           const newItems = selectedItems.filter(
             (item) =>
               !(
-                item.category === selectedCategory!.name && item.value === value
+                item.category === selectedCategory.name && item.value === value
               ),
           );
           if (newItems.length === selectedItems.length) {
-            newItems.push({ category: selectedCategory!.name, value });
+            newItems.push({ category: selectedCategory.name, value });
           }
           onSelectedItemsChange(newItems);
         }

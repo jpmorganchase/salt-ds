@@ -29,7 +29,7 @@ export function useOverflowDetection<Element extends HTMLElement>(
 
       setOverflowed(current.offsetWidth < current.scrollWidth);
     }),
-    [targetRef, isOverflowed],
+    [isOverflowed],
   );
 
   // check on resizing
@@ -42,7 +42,7 @@ export function useOverflowDetection<Element extends HTMLElement>(
       handleResize.clear();
       win.removeEventListener("resize", handleResize);
     };
-  }, [targetRef, handleResize]);
+  }, [handleResize]);
 
   // We don't put handleResize in the dependency array as it's been handled by the `useLayoutEffect` above
   useIsomorphicLayoutEffect(handleResize, dependencies);

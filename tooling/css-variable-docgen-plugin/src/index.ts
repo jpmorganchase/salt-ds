@@ -164,7 +164,6 @@ export function cssVariableDocgen(options: Options = {}): Plugin {
           if (
             ts.isImportDeclaration(node) &&
             // @ts-ignore
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             node.moduleSpecifier.text.endsWith(".css?inline")
           ) {
             cssImports.push(

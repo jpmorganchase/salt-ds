@@ -77,8 +77,8 @@ const WithTabStrip: StoryFn<typeof DeckLayout> = (args) => {
   return (
     <div>
       <Tabstrip onActiveChange={setActiveTabIndex}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <DeckLayout

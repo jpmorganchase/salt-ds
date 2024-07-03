@@ -16,7 +16,7 @@ export default {
   argTypes: {},
 };
 
-const RowSelectionControlledTemplate: StoryFn<{}> = () => {
+const RowSelectionControlledTemplate: StoryFn = () => {
   const [selection, setSelection] = useState<number[]>([]);
 
   const onRowSelected = (rowIndices: number[]) => {

@@ -70,15 +70,18 @@ export const useViewportTracking = <Item>({
     contentHeight: 0,
   });
 
-  const scrollTo = useCallback((scrollPos: number) => {
-    scrolling.current = true;
-    if (containerRef.current) {
-      containerRef.current.scrollTop = scrollPos;
-    }
-    setTimeout(() => {
-      scrolling.current = false;
-    });
-  }, []);
+  const scrollTo = useCallback(
+    (scrollPos: number) => {
+      scrolling.current = true;
+      if (containerRef.current) {
+        containerRef.current.scrollTop = scrollPos;
+      }
+      setTimeout(() => {
+        scrolling.current = false;
+      });
+    },
+    [containerRef],
+  );
 
   const scrollToStart = useCallback(() => scrollTo(0), [scrollTo]);
 

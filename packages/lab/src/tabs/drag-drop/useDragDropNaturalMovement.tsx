@@ -81,7 +81,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           ) {
             if (nextDropTarget.isOverflowIndicator) {
               // Does this belong in here or can we abstract it out
-              setShowOverflow((overflowMenuShowingRef.current = true));
+              overflowMenuShowingRef.current = true;
+              setShowOverflow(true);
             } else {
               const newDropTargets = moveDragItem(dropTargets, nextDropTarget);
               const draggedItem = getDraggedItem(newDropTargets);
@@ -101,7 +102,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
                 displaceLastItem(displacedItem, draggedItem.size, true);
               }
               measuredDropTargets.current = newDropTargets;
-              setShowOverflow((overflowMenuShowingRef.current = false));
+              overflowMenuShowingRef.current = false;
+              setShowOverflow(false);
             }
 
             dropTarget.current = nextDropTarget;
@@ -205,7 +207,6 @@ export const useDragDropNaturalMovement: DragDropHook = ({
       dragMouseUpHandler,
       itemQuery,
       orientation,
-      setIsDragging,
     ],
   );
 

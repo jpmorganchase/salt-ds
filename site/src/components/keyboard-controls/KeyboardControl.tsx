@@ -20,7 +20,7 @@ export interface KeyboardControlProps {
   className?: string;
 }
 
-const keyOrComboSeparator = /\s*([\+\/]|or)\s*/i;
+const keyOrComboSeparator = /\s*([+\/]|or)\s*/i;
 
 function splitCombo(keyOrCombo: string): string[] {
   return keyOrCombo.split(keyOrComboSeparator);
@@ -32,9 +32,9 @@ const Keys: FC<{ keyOrCombos: string }> = ({ keyOrCombos }) => {
       {splitCombo(keyOrCombos).map((keyOrSeparator, index) => {
         // Odd indexes will be the "+" or "/" separators
         if (index % 2 === 1) {
-          return <Fragment key={index}> {keyOrSeparator} </Fragment>;
+          return <Fragment key={keyOrSeparator}> {keyOrSeparator} </Fragment>;
         }
-        return <kbd key={index}>{keyOrSeparator}</kbd>;
+        return <kbd key={keyOrSeparator}>{keyOrSeparator}</kbd>;
       })}
     </>
   );

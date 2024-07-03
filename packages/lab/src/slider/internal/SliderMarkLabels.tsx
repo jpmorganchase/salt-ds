@@ -41,7 +41,11 @@ export function SliderMarkLabels(props: SliderMarkLabelsProps) {
     <div className={withBaseName()} style={style}>
       {marks.map((mark, i) => {
         return (
-          <div key={i} className={withBaseName("label")} style={labelStyles[i]}>
+          <div
+            key={isLabeledMark(mark) ? mark.value : mark}
+            className={withBaseName("label")}
+            style={labelStyles[i]}
+          >
             {isLabeledMark(mark) ? mark.label : `${mark}`}
           </div>
         );

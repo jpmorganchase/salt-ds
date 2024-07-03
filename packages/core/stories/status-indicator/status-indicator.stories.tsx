@@ -1,7 +1,7 @@
 import {
   FlowLayout,
   StatusIndicator,
-  VALIDATION_NAMED_STATUS as status,
+  VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 
@@ -23,8 +23,8 @@ const AllStatusIndicatorsStory: StoryFn<typeof StatusIndicator> = (args) => {
 
   return (
     <FlowLayout>
-      {status.map((status, index) => (
-        <StatusIndicator status={status} key={index} size={size} />
+      {VALIDATION_NAMED_STATUS.map((status) => (
+        <StatusIndicator status={status} key={status} size={size} />
       ))}
     </FlowLayout>
   );
@@ -37,4 +37,4 @@ const Template: StoryFn<typeof StatusIndicator> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = { status: status[3] };
+Default.args = { status: VALIDATION_NAMED_STATUS[3] };

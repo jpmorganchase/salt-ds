@@ -262,7 +262,7 @@ export const useMultiSelectComboBox = <Item>(
       setHighlightedListIndex(undefined);
       setQuickSelection(false);
     }
-  }, [isListOpen, setHighlightedListIndex, setQuickSelection]);
+  }, [isListOpen, setHighlightedListIndex]);
 
   const previousSelectedItems = usePrevious(selectedItems);
 
@@ -279,12 +279,7 @@ export const useMultiSelectComboBox = <Item>(
     if (!selectedItems.length) {
       setHighlightedListIndex(undefined);
     }
-  }, [
-    selectedItems,
-    previousSelectedItems,
-    setInputValue,
-    setHighlightedListIndex,
-  ]);
+  }, [selectedItems, previousSelectedItems, setHighlightedListIndex]);
 
   // Remove highlight from list if a pill is highlighted
   useEffect(() => {
@@ -295,7 +290,7 @@ export const useMultiSelectComboBox = <Item>(
       setHighlightedListIndex(undefined);
       setQuickSelection(false);
     }
-  }, [inputState.highlightedIndex, setHighlightedListIndex, setQuickSelection]);
+  }, [inputState.highlightedIndex, setHighlightedListIndex]);
 
   const highlightedIndex = listState?.highlightedIndex;
 

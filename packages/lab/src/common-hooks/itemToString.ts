@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ItemToStringFunction = (item: any) => string;
 
 const isPlainObject = (obj: unknown) =>

@@ -88,7 +88,7 @@ export function useSumRangeWidth<T>(
 }
 
 // Range memoization using Rng.equals comparator.
-function useMemoRng(fn: () => NumberRange, deps: any[]) {
+function useMemoRng(fn: () => NumberRange, deps: unknown[]) {
   const prevRef = useRef<NumberRange>(NumberRange.empty);
   const range = useMemo(fn, deps);
   if (!NumberRange.equals(prevRef.current, range)) {

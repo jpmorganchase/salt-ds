@@ -17,8 +17,8 @@ const HomepageHeader = () => {
       <header className={styles.heroBanner}>
         <div className={styles.content}>
           <h1 className={styles.heroTitle}>Welcome to Salt</h1>
-          {splitTagline.map((tagline, index) => (
-            <p key={index}>{tagline}</p>
+          {splitTagline.map((tagline) => (
+            <p key={tagline}>{tagline}</p>
           ))}
           <Link href="./getting-started" className={styles.heroLink}>
             Start using Salt
@@ -172,12 +172,12 @@ const Homepage = (): JSX.Element => {
       <HomepageHeader />
       <Features heading="What to expect" listItems={features} />
       <div className={styles.cardContainer}>
-        {cards.map((card, index) => {
+        {cards.map((card) => {
           const { icon, title, description, url, footerText, keylineColor } =
             card;
           return (
             <Card
-              key={index}
+              key={title}
               icon={icon}
               title={title}
               description={description}

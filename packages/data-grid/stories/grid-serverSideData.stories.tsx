@@ -49,7 +49,7 @@ const useInvestors = () => {
 };
 
 const queryClient = new QueryClient();
-const ServerSideDataTemplate: StoryFn<{}> = (props) => {
+const ServerSideDataTemplate: StoryFn = (props) => {
   const { fetchNextPage, data } = useInvestors();
   const rowData = data?.pages.flat() ?? [];
   const lastRow = rowData.length + 1;
@@ -59,7 +59,7 @@ const ServerSideDataTemplate: StoryFn<{}> = (props) => {
         void fetchNextPage();
       }
     },
-    [lastRow],
+    [lastRow, fetchNextPage],
   );
   return (
     <Grid

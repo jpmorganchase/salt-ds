@@ -41,7 +41,7 @@ export const useTabs = ({
       setActiveTabIndex(tabIndex);
       onActiveChange?.(tabIndex);
     },
-    [onActiveChange, setActiveTabIndex],
+    [onActiveChange],
   );
 
   return {

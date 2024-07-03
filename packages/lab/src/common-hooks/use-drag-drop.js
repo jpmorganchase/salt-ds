@@ -36,7 +36,7 @@ export const useDragDrop = ({
   const measuredDropTargets = useRef([]);
 
   const displaceItem = useCallback(
-    (item = null, size, displaceEnd) => {
+    (item, size, displaceEnd) => {
       if (item) {
         const { START, END } = dimensions(orientation);
         const pos = displaceEnd ? END : START;

@@ -67,7 +67,7 @@ export const useDropdown = <
       }
       onSelectionChange?.(evt, selected);
     },
-    [isMultiSelect, onOpenChange, onSelectionChange, setIsOpen],
+    [isMultiSelect, onOpenChange, onSelectionChange],
   );
 
   const handleSelect = useCallback<SelectHandler<Item>>(
@@ -78,7 +78,7 @@ export const useDropdown = <
       }
       onSelect?.(evt, selected);
     },
-    [isMultiSelect, onOpenChange, onSelect, setIsOpen],
+    [isMultiSelect, onOpenChange, onSelect],
   );
 
   const listHook = useList<Item, Selection>({
@@ -104,7 +104,7 @@ export const useDropdown = <
       setIsOpen(open);
       onOpenChange?.(open);
     },
-    [onOpenChange, setIsOpen],
+    [onOpenChange],
   );
 
   const triggerLabel = useMemo(() => {

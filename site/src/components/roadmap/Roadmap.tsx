@@ -90,6 +90,7 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
     };
   }, [endpoint]);
 
+  // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
   const mapRoadmapData = (responseItem: any): RoadmapData => {
     const data: RoadmapData = {
       id: responseItem.id,

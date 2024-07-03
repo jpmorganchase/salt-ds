@@ -49,5 +49,5 @@ export const useClickAway: ClickawayHook = ({
         document.body.removeEventListener("keydown", escapeKeyHandler, true);
       }
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, popperRef, rootRef]);
 };

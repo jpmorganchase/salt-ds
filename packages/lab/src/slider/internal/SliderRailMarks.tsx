@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ReactNode, useMemo } from "react";
 import { createHandleStyles, createSliderRailMarksStyle } from "./styles";
-import { isMarkAtMax } from "./utils";
+import { isLabeledMark, isMarkAtMax } from "./utils";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -48,7 +48,7 @@ export function SliderRailMarks(props: SliderRailMarksProps) {
       {marks.map((mark, i) => {
         return (
           <div
-            key={`Mark${i}`}
+            key={isLabeledMark(mark) ? mark.value : mark}
             className={clsx(withBaseName("mark"), {
               [withBaseName("max")]: isMarkAtMax(max, mark),
             })}

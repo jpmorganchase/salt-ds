@@ -16,7 +16,7 @@ export const RangeSelection = (props: AgGridReactProps) => {
         columnEnd: "population",
       });
     }
-  }, [isGridReady]);
+  }, [isGridReady, api]);
 
   return (
     <div {...containerProps}>

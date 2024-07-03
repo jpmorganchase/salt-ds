@@ -11,7 +11,7 @@ const generateData = (states: typeof dataGridExampleData) =>
       for (let i = 0; i < 20; i++) {
         data.push({ ...row, name: `${row.name} ${i}` });
       }
-      return [...result, ...data];
+      return result.concat(data);
     },
     [] as typeof dataGridExampleData,
   );

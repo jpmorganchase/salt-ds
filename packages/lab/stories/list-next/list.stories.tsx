@@ -25,7 +25,7 @@ const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
   usStateExampleData.map((item, index) => {
     return (
       <ListItemNext
-        key={index}
+        key={item}
         disabled={disabledItems.includes(index)}
         id={`controlled-list-item-${index}`}
         value={item}
@@ -190,7 +190,7 @@ export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
         {usStateExampleData.map((item, index) => {
           return (
             <ListItemNext
-              key={index}
+              key={item}
               onClick={() => handleClick(index)}
               onMouseMove={() => setHighlightedIndex(index)}
               value={item}

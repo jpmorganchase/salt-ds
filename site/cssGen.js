@@ -23,12 +23,13 @@ function getCssVariablesFromDir(dirPath) {
     ) {
       // Process CSS files
       const cssContent = fs.readFileSync(filePath, "utf8");
-      let match;
+      let match = cssVariableRegex.exec(cssContent);
 
-      while ((match = cssVariableRegex.exec(cssContent)) !== null) {
+      while (match !== null) {
         const variableName = match[1];
         const variableValue = match[2].trim();
         cssVariables[variableName] = variableValue;
+        match = cssVariableRegex.exec(cssContent);
       }
     }
   });

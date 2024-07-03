@@ -19,7 +19,6 @@ export const useDropdownBase = ({
   onOpenChange,
   onKeyDown: onKeyDownProp,
   openOnFocus,
-  popupComponent: { props: componentProps },
   popupWidth: popupWidthProp,
   rootRef,
   width,
@@ -49,12 +48,12 @@ export const useDropdownBase = ({
   const showDropdown = useCallback(() => {
     setIsOpen(true);
     onOpenChange?.(true);
-  }, [onOpenChange, setIsOpen]);
+  }, [onOpenChange]);
 
   const hideDropdown = useCallback(() => {
     setIsOpen(false);
     onOpenChange?.(false);
-  }, [onOpenChange, setIsOpen]);
+  }, [onOpenChange]);
 
   useClickAway({
     popperRef,
@@ -76,7 +75,7 @@ export const useDropdownBase = ({
         }, 1000);
       }
     }
-  }, [disabled, onOpenChange, openOnFocus, setFormFieldFocused, setIsOpen]);
+  }, [disabled, onOpenChange, openOnFocus, setFormFieldFocused]);
 
   const handleTriggerBlur = useCallback(() => {
     setFormFieldFocused?.(false);
@@ -95,7 +94,7 @@ export const useDropdownBase = ({
         onOpenChange?.(newIsOpen);
       }
     },
-    [isOpen, setIsOpen, onOpenChange],
+    [isOpen, onOpenChange],
   );
 
   const handleKeydown = useCallback(
@@ -132,7 +131,7 @@ export const useDropdownBase = ({
     return [labelledBy, labelledByProp].filter((x) => !!x).join(" ");
   };
 
-  // TODO do we use aria-popup - valid values are menu, disloag, grid, tree, listbox
+  // TODO do we use aria-popup - valid values are menu, dialog, grid, tree, listbox
   const triggerProps = {
     ...restA11yProps,
     "aria-expanded": isOpen,

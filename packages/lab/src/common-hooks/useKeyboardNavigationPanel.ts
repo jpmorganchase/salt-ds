@@ -1,7 +1,6 @@
 import { useControlled } from "@salt-ds/core";
 import { type KeyboardEvent, useCallback, useMemo, useRef } from "react";
 import type { CollectionItem } from "./collectionTypes";
-import { Tab } from "./keyUtils";
 import type { NavigationHookResult, NavigationProps } from "./navigationTypes";
 
 type NavigationDirection = "FWD" | "BWD";
@@ -61,7 +60,7 @@ export const useKeyboardNavigationPanel = ({
         targetEl?.focus();
       }
     },
-    [focusOnHighlight, indexPositions, onHighlight, setHighlightedIdx],
+    [focusOnHighlight, indexPositions, onHighlight],
   );
 
   const nextFocusableItemIdx = useCallback(
@@ -95,7 +94,10 @@ export const useKeyboardNavigationPanel = ({
   // does this belong here or should it be a method passed in?
   const keyboardNavigation = useRef(true);
   const ignoreFocus = useRef<boolean>(false);
-  const setIgnoreFocus = (value: boolean) => (ignoreFocus.current = value);
+  const setIgnoreFocus = useCallback(
+    (value: boolean) => (ignoreFocus.current = value),
+    [],
+  );
 
   const handleFocus = useCallback(() => {
     if (ignoreFocus.current) {
@@ -106,7 +108,7 @@ export const useKeyboardNavigationPanel = ({
   }, [nextFocusableItemIdx, setHighlightedIndex]);
 
   const navigateChildItems = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       const direction: NavigationDirection = e.shiftKey ? "BWD" : "FWD";
       const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
       console.log(`nextFocusableItem from ${highlightedIdx} is ${nextIdx}`);
@@ -164,7 +166,7 @@ export const useKeyboardNavigationPanel = ({
         setHighlightedIndex(-1);
       },
     }),
-    [handleFocus, handleKeyDown, setHighlightedIndex],
+    [handleFocus, handleKeyDown, setHighlightedIndex, setIgnoreFocus],
   );
 
   return {

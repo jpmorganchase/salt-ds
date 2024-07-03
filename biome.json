@@ -7,7 +7,7 @@
     "defaultBranch": "main"
   },
   "files": {
-    "ignore": [".next", "mockServiceWorker.js", "*-props.json"]
+    "ignore": [".next", "mockServiceWorker.js", "*-props.json", ".tmp"]
   },
   "organizeImports": {
     "enabled": true
@@ -45,8 +45,8 @@
           "level": "error",
           "fix": "safe"
         },
-        "noNonNullAssertion": "warn",
-        "noParameterAssign": "warn"
+        "noParameterAssign": "warn",
+        "noNonNullAssertion": "warn"
       },
       "nursery": {
         "noUselessStringConcat": { "level": "error", "fix": "safe" }
@@ -60,10 +60,26 @@
         "noAutofocus": "off",
         "noNoninteractiveElementToInteractiveRole": "off",
         "noNoninteractiveTabindex": "off",
-        "noSvgWithoutTitle": "off"
+        "noSvgWithoutTitle": "off",
+        "useAriaPropsForRole": "warn"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn",
+        "useExhaustiveDependencies": {
+          "level": "warn",
+          "options": {
+            "hooks": [
+              {
+                "name": "useIsomorphicLayoutEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1
+              },
+              {
+                "name": "useControlled",
+                "stableResult": [1]
+              }
+            ]
+          }
+        },
         "noSwitchDeclarations": {
           "level": "error",
           "fix": "safe"
@@ -74,7 +90,8 @@
         "noGlobalIsNan": {
           "level": "error",
           "fix": "safe"
-        }
+        },
+        "noExplicitAny": "warn"
       }
     }
   },
@@ -100,6 +117,9 @@
           },
           "complexity": {
             "noForEach": "off"
+          },
+          "suspicious": {
+            "noImplicitAnyLet": "off"
           }
         }
       }
@@ -127,6 +147,29 @@
         "rules": {
           "suspicious": {
             "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "packages/*/stories/*-layout/**",
+        "site/src/examples/*-layout/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["site/src/examples/**", "packages/*/stories/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noShadowRestrictedNames": "off"
           }
         }
       }

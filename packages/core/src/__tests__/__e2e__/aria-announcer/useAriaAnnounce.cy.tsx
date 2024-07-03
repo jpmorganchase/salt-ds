@@ -19,7 +19,7 @@ interface SimpleTestContentProps {
   announcement?: string;
   delay?: number;
   debounce?: number;
-  getAnnouncement?: Function;
+  getAnnouncement?: () => string;
 }
 
 const SimpleTestContent = ({
@@ -36,14 +36,16 @@ const SimpleTestContent = ({
     <>
       <button
         onClick={() => {
-          announce(getMessageToAnnounce());
+          const message = getMessageToAnnounce();
+          if (message != null) announce(message);
         }}
       >
         {BUTTON_TEXT}
       </button>
       <button
         onClick={() => {
-          announce(getMessageToAnnounce(), delay);
+          const message = getMessageToAnnounce();
+          if (message != null) announce(message, delay);
         }}
       >
         {BUTTON_TEXT_WAIT}

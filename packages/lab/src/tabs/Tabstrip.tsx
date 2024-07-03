@@ -305,6 +305,10 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   }, [children]);
 
+  /*
+   * biome-ignore lint/correctness/useExhaustiveDependencies: We only want the effect to run when value changes, not every time focusedTabIndex changes.
+   * It doesn't matter if focusedTabIndex is stale in between calls - it will be correct when value changes.
+   */
   useIsomorphicLayoutEffect(() => {
     if (
       activeTabIndex !== null &&
@@ -313,10 +317,6 @@ export const Tabstrip = forwardRef(function Tabstrip(
     ) {
       tabstripHook.focusTab(activeTabIndex);
     }
-
-    // We only want the effect to run when value changes, not every time focusedTabIndex changes.
-    // It doesn't matter if focusedTabIndex is stale in between calls - it will be correct when
-    // value changes.
   }, [activeTabIndex]);
 
   const renderContent = () => {

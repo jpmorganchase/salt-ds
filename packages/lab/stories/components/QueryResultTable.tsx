@@ -36,9 +36,9 @@ export const QueryResultTable = (props: QueryResultTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => {
+          {rows.map((row) => {
             return (
-              <tr key={i}>
+              <tr key={row.name}>
                 <td className={withBaseName("name")}>{row.name}</td>
                 <td className={withBaseName("role")}>{row.role}</td>
                 <td className={withBaseName("location")}>{row.location}</td>

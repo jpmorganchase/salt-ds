@@ -169,7 +169,7 @@ export const useOverflow = ({
       }
       return [overflowCount, reinstatedItems];
     },
-    [],
+    [overflowItemsRef],
   );
 
   const resetMeasurements = useCallback(

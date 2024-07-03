@@ -24,7 +24,7 @@ export const getCurrentBreakpoint = (
       if (breakpointWidth < width && breakpointWidth > accWidth) {
         return [breakpoint, breakpointWidth];
       }
-      return [...acc];
+      return acc;
     },
     breakpointList[0] as [keyof Breakpoints, number],
   );
@@ -50,7 +50,6 @@ export const useOrderedBreakpoints = () => {
 
 const isObject = <T>(
   value: T,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): value is Record<string | number | symbol, any> => {
   const type = typeof value;
   return value !== null && (type === "object" || type === "function");

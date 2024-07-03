@@ -5,6 +5,8 @@ export function getRefFromChildren(child: ReactNode) {
     return null;
   }
 
-  // @ts-expect-error - ref is not defined on ReactNode
-  return child.props.propertyIsEnumerable("ref") ? child.props.ref : child.ref;
+  return Object.prototype.propertyIsEnumerable.call(child.props, "ref")
+    ? child.props.ref
+    : // @ts-expect-error - ref is not defined on ReactNode
+      child.ref;
 }

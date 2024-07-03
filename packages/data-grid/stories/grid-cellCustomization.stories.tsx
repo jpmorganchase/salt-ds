@@ -55,7 +55,7 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
-const CellCustomizationTemplate: StoryFn<{}> = () => {
+const CellCustomizationTemplate: StoryFn = () => {
   const rowData: CurrencyPairRow[] = useMemo(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];

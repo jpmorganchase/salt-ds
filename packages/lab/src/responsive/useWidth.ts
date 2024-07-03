@@ -26,7 +26,7 @@ export function useWidth<Element extends HTMLElement>(
       return undefined;
     }
     handleResize(ref.current.getBoundingClientRect());
-  }, [handleResize, responsive]);
+  }, [handleResize]);
 
   return [ref, width] as [RefObject<Element>, number];
 }

@@ -500,8 +500,8 @@ const ITEMS_PER_PAGE = 2;
       cy.mount(
         isDeclarative ? (
           <List {...listProps} displayedItemCount={ITEMS_PER_PAGE}>
-            {FancyItems.map((x, i) => (
-              <ListItem key={`item-${i}`}>{x}</ListItem>
+            {FancyItems.map((x) => (
+              <ListItem key={x}>{x}</ListItem>
             ))}
           </List>
         ) : (
@@ -671,8 +671,8 @@ const ITEMS_PER_PAGE = 2;
             displayedItemCount={ITEMS_PER_PAGE}
             id="list"
           >
-            {FancyItems.map((x, i) => (
-              <ListItem key={`item-${i}`}>{x}</ListItem>
+            {FancyItems.map((x) => (
+              <ListItem key={x}>{x}</ListItem>
             ))}
           </List>
         ) : (

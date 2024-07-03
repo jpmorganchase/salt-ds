@@ -213,8 +213,9 @@ export const useTabstrip = ({
   const addTab = useCallback(
     // The -1 is to account for the AddTab button - we shouldn't assume this
     (indexPosition: number = collectionHook.data.length - 1) => {
-      const tabId =
-        (pendingNewTab.current = `${idRoot}-${collectionHook.data.length}`);
+      const tabId = `${idRoot}-${collectionHook.data.length}`;
+      pendingNewTab.current = tabId;
+
       const overflowIndicator = collectionHook.data.find(
         (i) => i.isOverflowIndicator,
       );

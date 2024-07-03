@@ -105,15 +105,13 @@ export interface InputLegacyProps
 }
 
 function mergeA11yProps(
-  a11yProps: Partial<
-    ReturnType<typeof useFormFieldLegacyProps>["a11yProps"]
-  > = {},
-  inputProps: InputLegacyProps["inputProps"] = {},
+  a11yProps: Partial<ReturnType<typeof useFormFieldLegacyProps>["a11yProps"]>,
+  inputProps: InputLegacyProps["inputProps"],
   misplacedAriaProps: AriaAttributes,
 ) {
   const ariaLabelledBy = clsx(
-    a11yProps["aria-labelledby"],
-    inputProps["aria-labelledby"],
+    a11yProps?.["aria-labelledby"],
+    inputProps?.["aria-labelledby"],
   );
 
   return {

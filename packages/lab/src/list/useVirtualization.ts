@@ -86,7 +86,7 @@ export const useVirtualization = <Item>({
         updateRows(0, viewport.rowCount);
       }
     }
-  }, [data, itemGapSize, keys, updateRows]);
+  }, [data, itemGapSize, updateRows, viewportRef]);
 
   const handleVerticalScroll = useCallback(
     (e: UIEvent<HTMLElement>) => {

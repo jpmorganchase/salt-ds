@@ -72,7 +72,7 @@ export const Pagination = forwardRef<HTMLElement, PaginationProps>(
         setPageState(page);
         onPageChangeProp?.(event, page);
       },
-      [onPageChangeProp, setPageState],
+      [onPageChangeProp],
     );
 
     const contextValue: PaginationContext = useMemo(

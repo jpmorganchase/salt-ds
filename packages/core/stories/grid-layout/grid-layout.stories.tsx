@@ -82,10 +82,10 @@ const footerLinks: Record<string, string[]> = {
 };
 
 const footerColumns = Object.keys(footerLinks).map((header, index) => (
-  <div key={index} className="footer-column">
+  <div key={header} className="footer-column">
     <p>{header}</p>
-    {footerLinks[header].map((link: string, i: number) => (
-      <p key={i}>{link}</p>
+    {footerLinks[header].map((link: string) => (
+      <p key={link}>{link}</p>
     ))}
   </div>
 ));

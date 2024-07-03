@@ -44,7 +44,7 @@ export const useEditableItem = ({
   const onEnterEditMode = useCallback(() => {
     setEditing(true);
     onEnterEditModeProp?.();
-  }, [onEnterEditModeProp, setEditing]);
+  }, [onEnterEditModeProp]);
 
   const onExitEditMode = (
     originalValue: string,

@@ -79,7 +79,10 @@ export function useTruncatePills({
     });
   }, [pills, setVisibleItems, enable, targetWindow]);
 
-  useIsomorphicLayoutEffect(updateOverflow, [updateOverflow, pills]);
+  useIsomorphicLayoutEffect(() => {
+    updateOverflow();
+  }, [updateOverflow]);
+
   useResizeObserver({
     ref: pillListRef,
     onResize: updateOverflow,

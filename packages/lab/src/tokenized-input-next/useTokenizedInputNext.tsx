@@ -276,7 +276,7 @@ export function useTokenizedInputNext<Item>(
         );
       }
     },
-    [isSelectionControlled, setSelectedItems, onChange, selectedItems],
+    [isSelectionControlled, onChange, selectedItems],
   );
 
   const updateExpanded = (event: SyntheticEvent, newExpanded: boolean) => {
@@ -413,15 +413,12 @@ export function useTokenizedInputNext<Item>(
     }
   };
 
-  const handleRemoveItem = useCallback(
-    (event: SyntheticEvent, itemIndex?: number) => {
-      focusInput();
-      if (itemIndex !== undefined && !readOnly && !readOnlyProp) {
-        removeItems(event, [itemIndex]);
-      }
-    },
-    [focusInput, removeItems],
-  );
+  const handleRemoveItem = (event: SyntheticEvent, itemIndex?: number) => {
+    focusInput();
+    if (itemIndex !== undefined && !readOnly && !readOnlyProp) {
+      removeItems(event, [itemIndex]);
+    }
+  };
 
   const handleClear = (event: ChangeEvent<HTMLTextAreaElement>) => {
     updateSelectedItems(event, []);
@@ -604,7 +601,7 @@ export function useTokenizedInputNext<Item>(
     if (isCtrlModifier(event)) {
       handleCtrlModifierKeyDown(event);
     } else {
-      let handler;
+      let handler: KeyboardEventHandler<HTMLTextAreaElement> | undefined;
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
         setActiveIndices([]);

@@ -41,7 +41,7 @@ export const useSelection = ({
       setSelected(tabIndex);
       onSelectionChange?.(tabIndex);
     },
-    [onSelectionChange, setSelected],
+    [onSelectionChange],
   );
 
   const handleKeyDown = useCallback(

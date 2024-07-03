@@ -173,7 +173,7 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
 
   useIsomorphicLayoutEffect(() => {
     if (active && !disableAutoFocus) {
-      let nodeToFocus;
+      let nodeToFocus: HTMLElement | null | undefined;
 
       if (autoFocusRef?.current) {
         nodeToFocus = autoFocusRef.current;

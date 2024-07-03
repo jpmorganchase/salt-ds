@@ -102,7 +102,7 @@ const pageDown = (
     containerEl.scrollTo(0, newScrollTop);
     // Might need to do this in a timeout, in case virtualized content has rendered
     let nextIdx = index;
-    let nextRect;
+    let nextRect: DOMRect;
     do {
       nextIdx += 1;
       nextRect = getItemRect(indexPositions[nextIdx]);
@@ -127,7 +127,7 @@ const pageUp = async (
       // we need to allow them to be rendered.
       requestAnimationFrame(() => {
         let nextIdx = index;
-        let nextRect;
+        let nextRect: DOMRect;
         do {
           nextIdx -= 1;
           nextRect = getItemRect(indexPositions[nextIdx]);
@@ -174,7 +174,7 @@ export const useKeyboardNavigation = <
         lastFocus.current = idx;
       }
     },
-    [onHighlight, setHighlightedIdx],
+    [onHighlight],
   );
 
   const nextPageItemIdx = useCallback(
@@ -240,58 +240,58 @@ export const useKeyboardNavigation = <
   // does this belong here or should it be a method passed in?
   const keyboardNavigation = useRef(false);
   const ignoreFocus = useRef<boolean>(false);
-  const setIgnoreFocus = (value: boolean) => (ignoreFocus.current = value);
+  const setIgnoreFocus = useCallback(
+    (value: boolean) => (ignoreFocus.current = value),
+    [],
+  );
 
-  const handleFocus = useCallback(
-    (e: FocusEvent) => {
-      // Ignore focus if mouse has been used
-      if (ignoreFocus.current) {
-        ignoreFocus.current = false;
-      } else {
-        // If mouse wan't used, then keyboard must have been
-        keyboardNavigation.current = true;
-        if (indexPositions.length === 0) {
-          setHighlightedIndex(LIST_FOCUS_VISIBLE);
-        } else if (highlightedIndex !== -1) {
-          // We need to force a render here. We're not changing the highlightedIdx, but we want to
-          // make sure we render with the correct focusVisible value. We don't store focusVisible
-          // in state, as there are places where we would double render, as highlightedIdx also changes.
-          forceRender({});
-        } else if (restoreLastFocus) {
-          if (lastFocus.current !== -1) {
-            setHighlightedIndex(lastFocus.current);
-          } else {
-            const selectedItemIdx = getIndexOfSelectedItem(
-              indexPositions,
-              selected,
-            );
-            if (selectedItemIdx !== -1) {
-              setHighlightedIndex(selectedItemIdx);
-            } else {
-              setHighlightedIndex(0);
-            }
-          }
-        } else if (hasSelection(selected)) {
+  const handleFocus = useCallback(() => {
+    // Ignore focus if mouse has been used
+    if (ignoreFocus.current) {
+      ignoreFocus.current = false;
+    } else {
+      // If mouse wan't used, then keyboard must have been
+      keyboardNavigation.current = true;
+      if (indexPositions.length === 0) {
+        setHighlightedIndex(LIST_FOCUS_VISIBLE);
+      } else if (highlightedIndex !== -1) {
+        // We need to force a render here. We're not changing the highlightedIdx, but we want to
+        // make sure we render with the correct focusVisible value. We don't store focusVisible
+        // in state, as there are places where we would double render, as highlightedIdx also changes.
+        forceRender({});
+      } else if (restoreLastFocus) {
+        if (lastFocus.current !== -1) {
+          setHighlightedIndex(lastFocus.current);
+        } else {
           const selectedItemIdx = getIndexOfSelectedItem(
             indexPositions,
             selected,
           );
-          setHighlightedIndex(selectedItemIdx);
-        } else if (disableHighlightOnFocus !== true) {
-          setHighlightedIndex(nextFocusableItemIdx());
+          if (selectedItemIdx !== -1) {
+            setHighlightedIndex(selectedItemIdx);
+          } else {
+            setHighlightedIndex(0);
+          }
         }
+      } else if (hasSelection(selected)) {
+        const selectedItemIdx = getIndexOfSelectedItem(
+          indexPositions,
+          selected,
+        );
+        setHighlightedIndex(selectedItemIdx);
+      } else if (disableHighlightOnFocus !== true) {
+        setHighlightedIndex(nextFocusableItemIdx());
       }
-    },
-    [
-      disableHighlightOnFocus,
-      highlightedIndex,
-      indexPositions,
-      nextFocusableItemIdx,
-      restoreLastFocus,
-      selected,
-      setHighlightedIndex,
-    ],
-  );
+    }
+  }, [
+    disableHighlightOnFocus,
+    highlightedIndex,
+    indexPositions,
+    nextFocusableItemIdx,
+    restoreLastFocus,
+    selected,
+    setHighlightedIndex,
+  ]);
 
   const navigateChildItems = useCallback(
     async (e: KeyboardEvent) => {
@@ -368,8 +368,8 @@ export const useKeyboardNavigation = <
     handleFocus,
     handleKeyDown,
     restoreLastFocus,
-    setHighlightedIdx,
     setHighlightedIndex,
+    setIgnoreFocus,
   ]);
 
   return {

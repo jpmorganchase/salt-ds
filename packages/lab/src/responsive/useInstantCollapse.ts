@@ -49,7 +49,7 @@ const uncollapseItems = (items: OverflowItem[], containerSize: number) => {
   const result: OverflowItem[] = [];
   while (collapsed.length) {
     const item = collapsed.pop() as OverflowItem;
-    const itemDiff = item.fullSize! - item.size;
+    const itemDiff = (item.fullSize ?? 0) - item.size;
     if (diff >= itemDiff) {
       result.push({
         ...item,
@@ -69,7 +69,6 @@ export const useInstantCollapse = ({
   collectionHook,
   hasOverflowedItems,
   innerContainerSize = 0,
-  label = "Toolbar",
   overflowContainerRef: ref,
   overflowItemsRef,
   orientation,

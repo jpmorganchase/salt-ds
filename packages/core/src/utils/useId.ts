@@ -2,7 +2,6 @@ import * as React from "react";
 
 // Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985
 // Without `toString()`, downstream library using webpack to re-bundle will error
-// biome-ignore lint/suspicious/noExplicitAny: see comment above
 const maybeReactUseId: undefined | (() => string) = (React as any)[
   "useId".toString()
 ];

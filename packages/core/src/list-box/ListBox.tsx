@@ -11,7 +11,10 @@ import {
   forwardRef,
   useRef,
 } from "react";
-import { ListControlContext } from "../list-control/ListControlContext";
+import {
+  ListControlContext,
+  type OptionValue,
+} from "../list-control/ListControlContext";
 import {
   type ListControlProps,
   defaultValueToString,
@@ -123,6 +126,8 @@ export const ListBox = forwardRef(function ListBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    onKeyDown?.(event);
+
     if (
       event.key.length === 1 &&
       !event.ctrlKey &&
@@ -136,7 +141,8 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
     const activeOption = activeState ?? getFirstOption().data;
 
-    let newActive;
+    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
+      null;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -181,8 +187,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
       setActive(newActive.data);
       setFocusVisibleState(true);
     }
-
-    onKeyDown?.(event);
   };
 
   const wasMouseDown = useRef(false);

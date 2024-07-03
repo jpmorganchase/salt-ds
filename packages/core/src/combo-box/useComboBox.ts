@@ -84,7 +84,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
       return;
     }
 
-    let newSelected;
+    let newSelected: Item[];
 
     if (selectedState.includes(itemToRemove)) {
       newSelected = selectedState.filter((item) => item !== itemToRemove);

@@ -180,7 +180,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       item: Item,
     ) => {
       const isSelected = item === selectedItem;
-      let nextItem;
+      let nextItem: Item | null;
 
       if (isSelected && !isDeselectable) {
         return;
@@ -204,13 +204,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         );
       }
     },
-    [
-      isDeselectable,
-      onChange,
-      selectedItem,
-      setHighlightedIndex,
-      setSelectedItem,
-    ],
+    [isDeselectable, onChange, selectedItem],
   );
 
   const handleMultiSelect = useCallback(
@@ -226,7 +220,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         nextItems = nextItems.concat([item]).sort(indexComparator);
         setHighlightedIndex(index);
       } else {
-        nextItems = nextItems.filter((selected: any) => selected !== item);
+        nextItems = nextItems.filter((selected) => selected !== item);
       }
 
       setSelectedItem(
@@ -242,13 +236,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         );
       }
     },
-    [
-      indexComparator,
-      onChange,
-      selectedItem,
-      setHighlightedIndex,
-      setSelectedItem,
-    ],
+    [indexComparator, onChange, selectedItem],
   );
 
   const handleRangeSelect = useCallback(
@@ -294,7 +282,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         );
       }
     },
-    [getItemIndex, onChange, selectedItem, setSelectedItem, source],
+    [getItemIndex, onChange, selectedItem, source],
   );
 
   const handleExtendedSelect = useCallback(
@@ -331,13 +319,7 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         }
       }
     },
-    [
-      handleMultiSelect,
-      handleRangeSelect,
-      onChange,
-      selectedItem,
-      setSelectedItem,
-    ],
+    [handleMultiSelect, handleRangeSelect, onChange, selectedItem],
   );
 
   const handleSelect = useCallback(

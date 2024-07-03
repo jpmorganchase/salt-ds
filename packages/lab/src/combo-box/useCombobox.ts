@@ -162,7 +162,7 @@ export const useCombobox = <
       setValue(value);
       setFilterPattern(value === "" ? undefined : value);
     },
-    [setFilterPattern, setValue],
+    [setFilterPattern],
   );
 
   const reconcileInput = useCallback(
@@ -192,13 +192,7 @@ export const useCombobox = <
       reconcileInput(selected);
       onSelectionChange?.(evt, collectionItemsToItem(selected ?? null));
     },
-    [
-      collectionItemsToItem,
-      isMultiSelect,
-      onSelectionChange,
-      reconcileInput,
-      setIsOpen,
-    ],
+    [collectionItemsToItem, isMultiSelect, onSelectionChange, reconcileInput],
   );
 
   const handleSelectionChange = useCallback<
@@ -306,7 +300,7 @@ export const useCombobox = <
       }
       onOpenChange?.(open);
     },
-    [onOpenChange, setIsOpen],
+    [onOpenChange],
   );
 
   const { onClick: listHandlersOnClick } = listHookListHandlers;
@@ -356,7 +350,7 @@ export const useCombobox = <
 
       inputOnChange?.(evt, newValue);
     },
-    [allowFreeText, inputOnChange, setFilterPattern, setIsOpen, setValue],
+    [allowFreeText, inputOnChange, setFilterPattern, onSelectionChange],
   );
 
   const { onFocus: listOnFocus } = listControlProps;
@@ -460,7 +454,7 @@ export const useCombobox = <
     if (indexPositions.length === 0) {
       setIsOpen(false);
     }
-  }, [highlightSelectedItem, indexPositions.length, setIsOpen]);
+  }, [highlightSelectedItem, indexPositions.length]);
 
   // const activeDescendant: string | undefined = selectionChanged
   //   ? ""

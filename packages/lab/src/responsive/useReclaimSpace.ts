@@ -8,7 +8,6 @@ import type {
 import {
   getOverflowIndicator,
   measureContainerOverflow,
-  popNextItemByPriority,
 } from "./overflowUtils";
 
 const getPriority = (item: OverflowItem) => item.priority;
@@ -39,7 +38,7 @@ const canReleaseReclaimedSpace = (size: number, items: OverflowItem[]) => {
   const overflowedItem = findNextOverflowedItem(items);
   if (claimant && overflowedItem) {
     const renderedSize = items.reduce(addAllVisible, 0);
-    const { size: indicatorSize } = getOverflowIndicator(items)!;
+    const { size: indicatorSize } = getOverflowIndicator(items) ?? { size: 0 };
     const { size: overflowedSize } = overflowedItem;
     // TODO we can discount the indicator size ONLY IF overflowed item is only overflowed item
     const reclaimableSpace = getReclaimableSpace(claimant);
@@ -65,24 +64,6 @@ export const useReclaimSpace = ({
   overflowContainerRef: ref,
   orientation,
 }: OverflowHookProps): OverflowHookResult => {
-  const getAllOverflowedItems = useCallback(
-    (visibleContentSize: number, containerSize: number) => {
-      const newlyOverflowedItems = [];
-      const { current: managedItems } = managedItemsRef;
-      const visibleItems = managedItems.slice();
-      while (visibleContentSize > containerSize) {
-        const overflowedItem = popNextItemByPriority(visibleItems);
-        if (overflowedItem === null) {
-          break;
-        }
-        visibleContentSize -= overflowedItem.size;
-        newlyOverflowedItems.push(overflowedItem);
-      }
-      return newlyOverflowedItems;
-    },
-    [],
-  );
-
   const releaseReclaimedSpace = useCallback(() => {
     const { current: managedItems } = managedItemsRef;
 
@@ -102,7 +83,8 @@ export const useReclaimSpace = ({
         },
       });
     }
-  }, []);
+  }, [managedItemsRef, collectionHook.dispatch]);
+
   const handleResize = useCallback(
     (size: number, containerHasGrown?: boolean) => {
       const { isOverflowing: willOverflow } = measureContainerOverflow(
@@ -134,7 +116,13 @@ export const useReclaimSpace = ({
         }
       }
     },
-    [],
+    [
+      ref,
+      managedItemsRef,
+      releaseReclaimedSpace,
+      collectionHook.dispatch,
+      orientation,
+    ],
   );
 
   return {

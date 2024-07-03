@@ -84,7 +84,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
           onChange?.(event, { value: newValue });
         }
       },
-      [onChange, value, setValue],
+      [onChange, value],
     );
 
     const isActive = useCallback(

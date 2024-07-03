@@ -86,6 +86,7 @@ export const InteractableCardGroup = forwardRef<
 
   const [elements, setElements] = useState<HTMLElement[]>([]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: queries the dom when children changes.
   useEffect(() => {
     const childElements: HTMLElement[] = Array.from(
       groupRef.current?.querySelectorAll(
@@ -116,7 +117,7 @@ export const InteractableCardGroup = forwardRef<
         }
       }
     },
-    [onChange, value, setValue, multiSelect],
+    [onChange, value, multiSelect],
   );
 
   const isSelected = useCallback(

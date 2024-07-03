@@ -175,7 +175,7 @@ const SummaryCellValue = (props: GridCellValueProps<ExampleRow>) => {
  * An example of how to use the `headerValueComponent` property of columns and
  * column groups.
  * */
-const HeaderCustomizationTemplate: StoryFn<{}> = () => {
+const HeaderCustomizationTemplate: StoryFn = () => {
   const rowData: ExampleRow[] = useMemo(() => {
     const names = [
       "Espresso",

@@ -33,6 +33,7 @@ function SearchResult({
         <Text>{result.title}</Text>
         {result.content && (
           <Text styleAs="label" color="secondary">
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: result.content is HTML we want to show */}
             <span dangerouslySetInnerHTML={{ __html: result.content }} />
           </Text>
         )}

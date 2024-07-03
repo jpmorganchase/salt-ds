@@ -6,7 +6,7 @@ import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessi
 const composedStories = composeStories(skipLinkStories);
 const { Default, MultipleLinks } = composedStories;
 
-export const NoTargetRef = () => {
+const NoTargetRef = () => {
   return (
     <>
       <div>

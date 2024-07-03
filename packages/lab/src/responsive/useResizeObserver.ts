@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { type RefObject, useCallback, useRef } from "react";
 export const WidthHeight = ["height", "width"];
@@ -111,10 +110,9 @@ export function useResizeObserver(
       // before fonts are ready and attempt to update entry
       observedMap.set(target, { measurements: {} as measurements<number> });
       cleanedUp = false;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const { fonts } = document as any;
+
+      const { fonts } = document;
       if (fonts) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         await fonts.ready;
       }
       if (!cleanedUp && resizeObserver) {

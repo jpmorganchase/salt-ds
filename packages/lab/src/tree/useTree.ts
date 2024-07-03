@@ -23,7 +23,6 @@ export const useTree = <Item, Selection extends SelectionStrategy = "default">({
   contentRef = containerRef,
   defaultSelected,
   disabled,
-  groupSelection,
   onSelect,
   onSelectionChange,
   onToggle,
@@ -95,7 +94,6 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
       }
     },
     [
-      collapsibleHook.onClick,
       collapsibleHook.onKeyDown,
       keyboardHook.listProps,
       selectionHook.listHandlers,
@@ -103,9 +101,9 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
     ],
   );
 
-  // This is only appropriate whan we are directly controlling a List,
+  // This is only appropriate when we are directly controlling a List,
   // not when a control is manipulating the list
-  const { isScrolling, scrollIntoView } = useViewportTracking({
+  const { isScrolling } = useViewportTracking({
     containerRef,
     contentRef,
     highlightedIdx,

@@ -20,12 +20,9 @@ export default {
 export const Default: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D65513");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(defaultColor);
   };
@@ -45,12 +42,9 @@ export const Default: StoryFn<typeof ColorChooser> = () => {
 export const WithAlphaDisabled: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D1F4C9");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(defaultColor);
   };
@@ -71,12 +65,9 @@ export const WithAlphaDisabled: StoryFn<typeof ColorChooser> = () => {
 export const WithDefaultAlpha: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#8224B1");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(undefined);
   };
@@ -97,12 +88,9 @@ export const WithDefaultAlpha: StoryFn<typeof ColorChooser> = () => {
 
 export const WithNullDefaultColor: StoryFn<typeof ColorChooser> = () => {
   const [selectedColor, setSelectedColor] = useState<Color | undefined>();
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(undefined);
   };
@@ -116,12 +104,9 @@ export const WithNullDefaultColor: StoryFn<typeof ColorChooser> = () => {
 export const WithCustomColors: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(undefined);
   };
@@ -142,12 +127,9 @@ export const WithCustomColors: StoryFn<typeof ColorChooser> = () => {
 export const ReadOnly: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#C9AAF0");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(undefined);
   };
@@ -170,12 +152,9 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: St
 > = () => {
   const defaultColor = Color.makeColorFromHex("#8644B1");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(defaultColor);
   };
@@ -193,12 +172,9 @@ export const ColorPickerAsDefaultTabIfSelectedColorIsNotInTheSwatchesLibrary: St
 export const JustSwatches: StoryFn<typeof ColorChooser> = () => {
   const defaultColor = Color.makeColorFromHex("#D65513");
   const [selectedColor, setSelectedColor] = useState(defaultColor);
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(defaultColor);
   };
@@ -220,12 +196,9 @@ export const JustColorPicker: StoryFn<typeof ColorChooser> = () => {
   const [selectedColor, setSelectedColor] = useState<Color | undefined>(
     defaultColor,
   );
-  const onSelect = useCallback(
-    (color?: Color) => {
-      setSelectedColor(color);
-    },
-    [setSelectedColor],
-  );
+  const onSelect = useCallback((color?: Color) => {
+    setSelectedColor(color);
+  }, []);
   const onClear = () => {
     setSelectedColor(defaultColor);
   };

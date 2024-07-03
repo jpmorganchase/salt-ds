@@ -61,9 +61,9 @@ export function useControlled<S>({
       }
     }
     return undefined;
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [state, name, controlled]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: uses JSON.stringify to compare defaultProp
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
       if (!isControlled && defaultValue !== defaultProp) {
@@ -76,7 +76,6 @@ export function useControlled<S>({
       }
     }
     return undefined;
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [JSON.stringify(defaultProp, ignoreReactElements)]);
 
   const setValueIfUncontrolled: Dispatch<SetStateAction<S>> = useCallback(
@@ -85,7 +84,7 @@ export function useControlled<S>({
         setValue(newValue);
       }
     },
-    [isControlled],
+    [],
   );
 
   return [value, setValueIfUncontrolled, isControlled];

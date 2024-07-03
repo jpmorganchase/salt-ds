@@ -3,21 +3,23 @@ import type { CollectionHookResult, CollectionItem } from "../common-hooks";
 import { ArrowLeft } from "../common-hooks/keyUtils";
 
 export const getNodeParentPath = ({ id }: CollectionItem<any>) => {
-  let pos = id!.lastIndexOf("-");
+  let pos = id.lastIndexOf("-");
   if (pos !== -1) {
     // using the built-in hierarchical id scheme
     // rootId-n-n.n
-    const path = id!.slice(pos + 1);
+    const path = id.slice(pos + 1);
     const steps = path.split(".");
     if (steps.length === 1) {
       return null;
     }
     steps.pop();
-    return `${id!.slice(0, pos)}-${steps.join(".")}`;
+    return `${id.slice(0, pos)}-${steps.join(".")}`;
   }
-  if ((pos = id!.lastIndexOf("/")) !== -1) {
+
+  pos = id.lastIndexOf("/");
+  if (pos !== -1) {
     // using a path scheme step/step/step
-    return id!.slice(0, pos);
+    return id.slice(0, pos);
   }
 };
 

@@ -249,7 +249,7 @@ export function useTokenizedInput<Item>(
         onChange(typeof action === "function" ? action(selectedItems) : action);
       }
     },
-    [isSelectionControlled, setSelectedItems, onChange, selectedItems],
+    [isSelectionControlled, onChange, selectedItems],
   );
 
   const updateExpanded = (newExpanded: boolean) => {

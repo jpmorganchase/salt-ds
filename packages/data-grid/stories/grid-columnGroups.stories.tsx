@@ -9,7 +9,7 @@ export default {
   argTypes: {},
 };
 
-const ColumnGroupsTemplate: StoryFn<{}> = () => {
+const ColumnGroupsTemplate: StoryFn = () => {
   return (
     <Grid
       rowData={rowData}

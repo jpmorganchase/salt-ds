@@ -1,6 +1,5 @@
 import { isPlainObject } from "./internal/helpers";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ItemToStringFunction = (item: any) => string;
 
 export function itemToString(item: any) {

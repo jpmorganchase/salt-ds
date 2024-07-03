@@ -26,7 +26,10 @@ import {
 } from "react";
 import { Button } from "../button";
 import { useFormFieldProps } from "../form-field-context";
-import { ListControlContext } from "../list-control/ListControlContext";
+import {
+  ListControlContext,
+  type OptionValue,
+} from "../list-control/ListControlContext";
 import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
 import { PillInput, type PillInputProps } from "../pill-input";
@@ -207,6 +210,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+
     if (readOnly) {
       return;
     }
@@ -220,7 +225,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     const activeOption = activeState ?? getFirstOption()?.data;
 
-    let newActive;
+    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
+      null;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -278,8 +284,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       event.preventDefault();
       setActive(newActive.data);
     }
-
-    onKeyDown?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -338,6 +342,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
@@ -378,7 +383,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
 
     setActive(newActive?.data);
-    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const buttonId = useId();

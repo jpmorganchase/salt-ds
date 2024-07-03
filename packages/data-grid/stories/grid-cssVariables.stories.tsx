@@ -40,7 +40,7 @@ interface GridCssVar {
 
 const cssVarKeyGetter: RowKeyGetter<GridCssVar> = (row: GridCssVar) => row.name;
 
-const CssVariablesTemplate: StoryFn<{}> = () => {
+const CssVariablesTemplate: StoryFn = () => {
   const [separators, setSeparators] = useState(false);
   const [pinnedSeparators, setPinnedSeparators] = useState(true);
   const [variant, setVariant] = useState<Variant>("primary");
@@ -234,9 +234,9 @@ const CssVariablesTemplate: StoryFn<{}> = () => {
 
   const onUndo = () => {
     const nextChanges = [...changes];
-    const change = nextChanges.pop()!;
+    const change = nextChanges.pop();
     setChanges(nextChanges);
-    change();
+    change?.();
   };
 
   const onReset = () => {

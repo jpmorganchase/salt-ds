@@ -9,6 +9,6 @@ export function usePrevious<T>(
 
   useEffect(() => {
     ref.current = value;
-  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
+  }, deps);
   return ref.current;
 }

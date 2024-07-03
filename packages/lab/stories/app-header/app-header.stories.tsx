@@ -72,8 +72,8 @@ export const Default: StoryFn<typeof AppHeader> = () => {
           data-priority={2}
           onActiveChange={handleTabSelection}
         >
-          {tabs.map((label, i) => (
-            <Tab label={label} key={i} />
+          {tabs.map((label) => (
+            <Tab label={label} key={label} />
           ))}
         </Tabstrip>
         <Tooltray
@@ -105,7 +105,7 @@ export const Default: StoryFn<typeof AppHeader> = () => {
       {tabs.map((label, idx) => (
         <div
           aria-hidden={selectedTab !== idx}
-          key={idx}
+          key={label}
           style={{ borderBottom: `solid 10px ${colours[idx]}` }}
         />
       ))}

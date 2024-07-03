@@ -101,8 +101,8 @@ const RealContent = (props: { messages: string[] }) => {
 
   return (
     <>
-      {messages.map((m, i) => (
-        <p key={i}>{m}</p>
+      {messages.map((m) => (
+        <p key={m}>{m}</p>
       ))}
     </>
   );

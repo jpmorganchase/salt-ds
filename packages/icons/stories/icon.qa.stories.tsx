@@ -34,8 +34,8 @@ export const AllIcons: StoryFn = () => {
             padding: "12px 0",
           }}
         >
-          {allIcons.map((IconComponent, i) => (
-            <IconComponent key={i} size={size} />
+          {allIcons.map((IconComponent) => (
+            <IconComponent key={IconComponent.displayName} size={size} />
           ))}
         </div>
       ))}

@@ -82,7 +82,7 @@ export function MenuBase(props: MenuBaseProps) {
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
     },
-    [setOpenState, onOpenChange],
+    [onOpenChange],
   );
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -117,7 +117,7 @@ export function MenuBase(props: MenuBaseProps) {
     if (getVirtualElement) {
       refs.setPositionReference(getVirtualElement());
     }
-  }, [getVirtualElement]);
+  }, [getVirtualElement, refs]);
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [

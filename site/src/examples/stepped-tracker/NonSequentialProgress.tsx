@@ -62,7 +62,7 @@ export const NonSequentialProgress = (): ReactElement => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
-          <TrackerStep state={state} key={key}>
+          <TrackerStep state={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

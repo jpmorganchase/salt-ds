@@ -51,7 +51,7 @@ export function useAutoSizer<Element extends HTMLElement>(
         }
       };
     }
-  }, [handleResize, responsive]);
+  }, [handleResize, responsive, ref]);
 
   return size;
 }

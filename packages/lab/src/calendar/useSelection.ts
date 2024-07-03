@@ -78,7 +78,7 @@ export type useSelectionCalendarProps =
   | UseOffsetSelectionCalendarProps;
 
 function addOrRemoveFromArray(
-  array: AllSelectionValueType | null = [],
+  array: AllSelectionValueType | null,
   item: DateValue,
 ) {
   if (Array.isArray(array)) {
@@ -103,8 +103,7 @@ export function isRangeOrOffsetSelectionWithStartDate(
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
-    // biome-ignore lint/suspicious/noPrototypeBuiltins: will replace with hasOwn when we update min browser
-    selectionValue?.hasOwnProperty("startDate")
+    Object.prototype.hasOwnProperty.call(selectionValue, "startDate")
   );
 }
 
@@ -154,7 +153,10 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
           props.onSelectedDateChange?.(event, newSelectedDate);
           break;
         case "multiselect": {
-          const newDates = addOrRemoveFromArray(selectedDate, newSelectedDate);
+          const newDates = addOrRemoveFromArray(
+            selectedDate ?? [],
+            newSelectedDate,
+          );
           setSelectedDateState(newDates);
           props.onSelectedDateChange?.(event, newDates);
           break;

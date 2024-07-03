@@ -216,7 +216,9 @@ export const Tree = forwardRef(function Tree<
     onMouseEnter: (evt: MouseEvent) => {
       // if (!isScrolling.current) {
       const idx = closestListItemIndex(evt.target as HTMLElement);
-      highlightItemAtIndex(idx!);
+      if (idx != null) {
+        highlightItemAtIndex(idx);
+      }
       // onMouseEnterListItem && onMouseEnterListItem(evt, idx);
       // }
     },
@@ -298,7 +300,7 @@ export const Tree = forwardRef(function Tree<
       >
         {item.expanded ? (
           <ul className={withBaseName("child-nodes")} role="group">
-            {renderItems(items, idx, item.level! + 1)}
+            {renderItems(items, idx, (item.level ?? 0) + 1)}
           </ul>
         ) : null}
       </TreeNode>,
@@ -313,11 +315,11 @@ export const Tree = forwardRef(function Tree<
     const listItems: ReactElement[] = [];
     while (idx.value < items.length) {
       const item = items[idx.value];
-      if (item.level! < level) {
+      if (item.level != null && item.level < level) {
         break;
       }
-      if (item.childNodes) {
-        addGroupNode(listItems, items, idx, item.id!, item.label!);
+      if (item.childNodes != null && item.id != null && item.label != null) {
+        addGroupNode(listItems, items, idx, item.id, item.label);
       } else {
         addLeafNode(listItems, item, idx);
       }

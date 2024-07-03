@@ -16,7 +16,9 @@ describe("A combo box", () => {
     const testId = "my-input";
 
     cy.mount(
-      <Default InputProps={{ inputProps: { "data-testid": testId } as any }} />,
+      <Default
+        InputProps={{ inputProps: { "data-testid": testId } as never }}
+      />,
     );
 
     cy.findByTestId(testId).should("have.attr", "role", "combobox");

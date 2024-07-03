@@ -23,7 +23,10 @@ import {
   useRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { ListControlContext } from "../list-control/ListControlContext";
+import {
+  ListControlContext,
+  type OptionValue,
+} from "../list-control/ListControlContext";
 import {
   type ListControlProps,
   defaultValueToString,
@@ -265,6 +268,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown?.(event);
+
     if (readOnly) {
       return;
     }
@@ -289,7 +294,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
     const activeOption = activeState ?? getFirstOption().data;
 
-    let newActive;
+    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
+      null;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -339,8 +345,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       setActive(newActive.data);
       setFocusVisibleState(true);
     }
-
-    onKeyDown?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
@@ -361,6 +365,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     buttonRef.current?.focus();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
@@ -399,7 +404,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     }
 
     setActive(newActive?.data);
-    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const listId = useId();

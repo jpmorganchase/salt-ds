@@ -4,7 +4,6 @@ import {
   BannerContent,
   type BannerProps,
   Button,
-  FlexItem,
   FlowLayout,
   Link,
   StackLayout,
@@ -175,8 +174,8 @@ export const StatusesPrimary: StoryFn<typeof Banner> = (props) => {
 
   return (
     <StackLayout style={{ width: 500 }}>
-      {statuses.map((example, i) => (
-        <Banner status={example.status} {...restProps} key={i}>
+      {statuses.map((example) => (
+        <Banner status={example.status} {...restProps} key={example.status}>
           <BannerContent>{example.content}</BannerContent>
         </Banner>
       ))}
@@ -257,8 +256,8 @@ export const MultipleLines = (props: BannerProps) => {
 export const MultipleBanners: StoryFn<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
-      {statuses.map((example, i) => (
-        <Banner status={example.status} key={i}>
+      {statuses.map((example) => (
+        <Banner status={example.status} key={example.status}>
           <BannerContent>{example.content}</BannerContent>
         </Banner>
       ))}

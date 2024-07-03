@@ -109,7 +109,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows],
+    [],
   );
 
   return { rows, setValue };

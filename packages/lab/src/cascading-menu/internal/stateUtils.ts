@@ -37,6 +37,7 @@ export function deriveFlatStateFromTree(
           level + 1,
           generatedChildId,
         );
+        // biome-ignore lint/performance/noAccumulatingSpread: reduce on object
         return { ...menuStructure, ...innerState };
       }
       return menuStructure;

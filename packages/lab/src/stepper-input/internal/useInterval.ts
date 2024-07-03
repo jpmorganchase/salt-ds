@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-type IntervalFunction = () => unknown | void;
+type IntervalFunction = () => void;
 
 // https://gist.github.com/iamBevan/171cce94431b8c95206086252ce0c6c7
 function useInterval(callback: IntervalFunction, delay: number | null) {

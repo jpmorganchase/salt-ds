@@ -27,8 +27,8 @@ interface BaseUseCalendarProps {
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
-  isDayUnselectable?: (date: DateValue) => string | false | void;
-  isDayHighlighted?: (date: DateValue) => string | false | void;
+  isDayUnselectable?: (date: DateValue) => string | false | undefined;
+  isDayHighlighted?: (date: DateValue) => string | false | undefined;
   isDayDisabled?: (date: DateValue) => boolean;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;

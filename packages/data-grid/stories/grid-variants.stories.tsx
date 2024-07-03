@@ -26,7 +26,7 @@ export default {
 
 type Variant = "primary" | "secondary" | "zebra";
 
-const GridVariantsTemplate: StoryFn<{}> = () => {
+const GridVariantsTemplate: StoryFn = () => {
   const [separators, setSeparators] = useState(false);
   const [uhd, setUhd] = useState(false);
   const [variant, setVariant] = useState<Variant>("primary");

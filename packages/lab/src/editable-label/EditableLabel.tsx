@@ -79,13 +79,13 @@ export const EditableLabel = forwardRef(function EditableLabel(
         inputRef.current.focus();
       }
     }
-  }, [editing, inputRef]);
+  }, [editing]);
 
   const enterEditMode = useCallback(() => {
     setEditing(true);
     // ignoreBlur.current = false;
     onEnterEditMode?.();
-  }, [onEnterEditMode, setEditing]);
+  }, [onEnterEditMode]);
 
   const exitEditMode = ({
     cancelEdit = false,

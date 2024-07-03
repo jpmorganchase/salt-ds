@@ -144,7 +144,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
   const reconcileInput = useCallback(() => {
     setInputValue(selectedItem == null ? "" : itemToString(selectedItem));
-  }, [selectedItem, itemToString, setInputValue]);
+  }, [selectedItem, itemToString]);
 
   const selectInputValue = (event: ChangeEvent) => {
     const nextIndex = inputValue ? labels.indexOf(inputValue.trim()) : -1;
@@ -169,7 +169,9 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   });
 
   // Reconcile input when the function is updated - most likely to be a selectItem change
-  useEffect(reconcileInput, [reconcileInput]);
+  useEffect(() => {
+    reconcileInput();
+  }, [reconcileInput]);
 
   // Reset highlight when list closes
   useEffect(() => {
@@ -177,7 +179,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       setHighlightedIndex(undefined);
       setQuickSelection(false);
     }
-  }, [isListOpen, setHighlightedIndex, quickSelection]);
+  }, [isListOpen, setHighlightedIndex]);
 
   const initHighlightedIndex = () => {
     setHighlightedIndex(selectedItem ? source.indexOf(selectedItem) : -1);

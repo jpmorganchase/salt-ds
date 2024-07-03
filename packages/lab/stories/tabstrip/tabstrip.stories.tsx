@@ -35,6 +35,7 @@ const getTabColours = (tabs: string[] | TabDescriptor[]): colourMap => {
   );
   return tabStrings.reduce(
     (map: colourMap, tab: string, i: number) => ({
+      // biome-ignore lint/performance/noAccumulatingSpread: reduce on object
       ...map,
       [tab]: _colours[i],
     }),

@@ -105,7 +105,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         }, 300); // var(--salt-duration-perceptible)
         return () => clearTimeout(animate);
       }
-    }, [open, showComponent, setShowComponent]);
+    }, [open, showComponent]);
 
     return (
       <ConditionalScrimWrapper condition={showComponent && !disableScrim}>

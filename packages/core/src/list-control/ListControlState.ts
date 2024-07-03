@@ -80,7 +80,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       setFocusedState(false);
       setFocusVisibleState(false);
     }
-  }, [disabled, focusedState, setFocusedState]);
+  }, [disabled, focusedState]);
 
   const [activeState, setActiveState] = useState<OptionValue<Item> | undefined>(
     undefined,

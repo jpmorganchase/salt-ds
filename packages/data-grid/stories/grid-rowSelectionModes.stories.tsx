@@ -23,7 +23,7 @@ export default {
   argTypes: {},
 };
 
-const RowSelectionModesTemplate: StoryFn<{}> = () => {
+const RowSelectionModesTemplate: StoryFn = () => {
   const [rowSelectionMode, setRowSelectionMode] =
     useState<GridRowSelectionMode>("multi");
 

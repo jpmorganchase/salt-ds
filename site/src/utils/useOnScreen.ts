@@ -20,7 +20,7 @@ const useOnScreen = <T extends Element>(
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [rootMargin, ref]);
   return isIntersecting;
 };
 

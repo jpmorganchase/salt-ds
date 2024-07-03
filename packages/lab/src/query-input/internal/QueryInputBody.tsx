@@ -90,8 +90,10 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
           disabled={disabled}
           className={withBaseName("input")}
           selectedItems={selectedItems}
-          itemToString={itemToString as any}
-          stringToItem={stringToItem as any}
+          // @ts-ignore
+          itemToString={itemToString}
+          // @ts-ignore
+          stringToItem={stringToItem}
           onInputFocus={onInputFocus}
           onInputBlur={onInputBlur}
           value={inputValue}
@@ -99,7 +101,8 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
           onInputChange={onInputChange}
           expanded={isFocused}
           onClear={onInputClear}
-          onChange={onSelectedItemsChange as any}
+          // @ts-ignore
+          onChange={onSelectedItemsChange}
           onKeyDown={onKeyDown}
         />
         <div className={withBaseName("separator")} />

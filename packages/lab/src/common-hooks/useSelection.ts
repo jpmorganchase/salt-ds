@@ -192,7 +192,6 @@ export const useSelection = <
       selectRange,
       selectDeselectable,
       selectDefault,
-      setSelected,
       onSelectionChange,
     ],
   );

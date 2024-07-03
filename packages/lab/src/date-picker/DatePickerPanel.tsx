@@ -144,7 +144,7 @@ export const DatePickerPanel = forwardRef<
     } else {
       setStartVisibleMonth(selectedDate);
     }
-  }, [selectedDate]);
+  }, [selectedDate, setEndVisibleMonth, setStartVisibleMonth]);
 
   const firstCalendarProps: CalendarProps = isRangePicker
     ? {
