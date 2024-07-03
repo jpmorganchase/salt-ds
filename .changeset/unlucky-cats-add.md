@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fixed tooltip not having correct height specificed by design
+Fixed `Tooltip` not having correct height.
