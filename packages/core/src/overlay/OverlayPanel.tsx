@@ -63,7 +63,9 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         }}
         aria-labelledby={ariaLabelledby}
       >
-        <div {...rest}> {children} </div>
+        <div className={clsx(withBaseName("inner"))} {...rest}>
+          {children}
+        </div>
         <FloatingArrow
           {...arrowProps}
           strokeWidth={1}
