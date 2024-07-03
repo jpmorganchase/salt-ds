@@ -12,7 +12,8 @@ const withBaseName = makePrefixer("saltLinearProgress");
 export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The value of the buffer indicator.
-   * Value between 0 and max.
+   * Value between `min` and `max`.
+   * When no `value` and `bufferValue` is passed in, show as indeterminate state.
    */
   bufferValue?: number;
   /**
@@ -31,7 +32,8 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   min?: number;
   /**
    * The value of the progress indicator.
-   * Value between 0 and max.
+   * Value between `min` and `max`.
+   * When no `value` and `bufferValue` is passed in, show as indeterminate state.
    */
   value?: number;
 }
