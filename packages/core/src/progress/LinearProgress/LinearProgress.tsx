@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "../../utils";
 import { Text } from "../../text";
@@ -36,8 +36,6 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
   value?: number;
 }
 
-const INDETERMINATE_BAR_WIDTH = 66;
-
 export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
   function LinearProgress(
     {
@@ -59,18 +57,16 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
     });
 
     const isIndeterminate = value === undefined && bufferValue === undefined;
-    const progress = isIndeterminate
-      ? INDETERMINATE_BAR_WIDTH
-      : value === undefined
-      ? 0
-      : ((value - min) / (max - min)) * 100;
+    const progress =
+      value === undefined ? 0 : ((value - min) / (max - min)) * 100;
     const buffer =
       bufferValue === undefined ? 0 : ((bufferValue - min) / (max - min)) * 100;
-    const barStyle: CSSProperties = {};
-    const bufferStyle: CSSProperties = {};
-
-    barStyle.width = `${progress}%`;
-    bufferStyle.width = `${buffer}%`;
+    const barStyle = {
+      width: isIndeterminate ? undefined : `${progress}%`,
+    };
+    const bufferStyle = {
+      width: `${buffer}%`,
+    };
 
     return (
       <div
