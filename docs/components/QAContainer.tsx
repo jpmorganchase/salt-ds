@@ -1,16 +1,16 @@
 import {
-  type Mode,
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
+  SaltProviderNext,
   makePrefixer,
   useTheme,
+  type Mode,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  type CSSProperties,
   Children,
-  type DetailedHTMLProps,
   Fragment,
+  type CSSProperties,
+  type DetailedHTMLProps,
   type HTMLAttributes,
 } from "react";
 import { DraggableImg } from "./DraggableSnapshot";
@@ -60,9 +60,7 @@ const DensityBlock = ({
   mode: Mode;
 }) => {
   const { themeNext } = useTheme();
-  const ChosenSaltProvider = themeNext
-    ? UNSTABLE_SaltProviderNext
-    : SaltProvider;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <BackgroundBlock background={mode === "light" ? "white" : undefined}>
@@ -99,9 +97,7 @@ export const QAContainer = ({
   } as CSSProperties;
 
   const { themeNext } = useTheme();
-  const ChosenSaltProvider = themeNext
-    ? UNSTABLE_SaltProviderNext
-    : SaltProvider;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <div

@@ -1,14 +1,14 @@
 import {
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
+  SaltProviderNext,
   ownerWindow,
   useAriaAnnouncer,
   useDensity,
-  useTheme,
+  useTheme
 } from "@salt-ds/core";
 import { WindowProvider } from "@salt-ds/window";
 import { mount } from "cypress/react18";
-import { type ReactNode, useCallback, useState } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 const TestComponent = ({
@@ -322,9 +322,9 @@ describe("Given a SaltProviderNext", () => {
   describe("with no props set", () => {
     it("should apply default theme attributes to the html element", () => {
       mount(
-        <UNSTABLE_SaltProviderNext>
+        <SaltProviderNext>
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>,
+        </SaltProviderNext>
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -342,9 +342,9 @@ describe("Given a SaltProviderNext", () => {
     });
     it("should read correct default values from provider and add an AriaAnnouncer", () => {
       mount(
-        <UNSTABLE_SaltProviderNext>
+        <SaltProviderNext>
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>,
+        </SaltProviderNext>
       );
       cy.get("#test-1")
         .should("exist")
@@ -367,7 +367,7 @@ describe("Given a SaltProviderNext", () => {
   describe("with props set", () => {
     it("should allow pass in multiple theme names", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
+        <SaltProviderNext
           density="high"
           mode="dark"
           corner="rounded"
@@ -375,7 +375,7 @@ describe("Given a SaltProviderNext", () => {
           theme="custom-theme-1 custom-theme-2"
         >
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>,
+        </SaltProviderNext>
       );
 
       cy.get("html")
@@ -403,7 +403,7 @@ describe("Given a SaltProviderNext", () => {
   describe("when nested", () => {
     it("should inherit values not passed as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
+        <SaltProviderNext
           density="high"
           mode="dark"
           corner="rounded"
@@ -412,10 +412,10 @@ describe("Given a SaltProviderNext", () => {
           actionFont="Amplitude"
         >
           <TestComponent />
-          <UNSTABLE_SaltProviderNext density="medium">
+          <SaltProviderNext density="medium">
             <TestComponent id="test-2" />
-          </UNSTABLE_SaltProviderNext>
-        </UNSTABLE_SaltProviderNext>,
+          </SaltProviderNext>
+        </SaltProviderNext>
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);
@@ -451,7 +451,7 @@ describe("Given a SaltProviderNext", () => {
     });
     it("should take different values set as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
+        <SaltProviderNext
           density="high"
           mode="dark"
           corner="rounded"
@@ -460,7 +460,7 @@ describe("Given a SaltProviderNext", () => {
           actionFont="Amplitude"
         >
           <TestComponent />
-          <UNSTABLE_SaltProviderNext
+          <SaltProviderNext
             density="medium"
             corner="sharp"
             accent="blue"
@@ -468,8 +468,8 @@ describe("Given a SaltProviderNext", () => {
             actionFont="Open Sans"
           >
             <TestComponent id="test-2" />
-          </UNSTABLE_SaltProviderNext>
-        </UNSTABLE_SaltProviderNext>,
+          </SaltProviderNext>
+        </SaltProviderNext>
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);

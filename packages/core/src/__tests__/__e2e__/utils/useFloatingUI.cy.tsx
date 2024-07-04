@@ -1,8 +1,8 @@
 import {
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
+  SaltProviderNext,
   useFloatingComponent,
-  useFloatingUI,
+  useFloatingUI
 } from "@salt-ds/core";
 import { mount } from "cypress/react18";
 
@@ -45,11 +45,11 @@ describe("Use useFloatingComponent", () => {
       cy.get("html.salt-theme").should("have.length", 1);
       cy.get("div.salt-provider.salt-theme").should("have.length", 1);
     });
-    it("should render a nested UNSTABLE_SaltProviderNext when used within another", () => {
+    it("should render a nested SaltProviderNext when used within another", () => {
       mount(
-        <UNSTABLE_SaltProviderNext>
+        <SaltProviderNext>
           <TestComponent focusManager={false} />
-        </UNSTABLE_SaltProviderNext>,
+        </SaltProviderNext>
       );
 
       cy.get("html.salt-theme.salt-theme-next").should("have.length", 1);
@@ -70,11 +70,11 @@ describe("Use useFloatingComponent", () => {
       cy.get("html.salt-theme").should("have.length", 1);
       cy.get("div.salt-provider.salt-theme").should("have.length", 1);
     });
-    it("should render a nested UNSTABLE_SaltProviderNext when used within another", () => {
+    it("should render a nested SaltProviderNext when used within another", () => {
       mount(
-        <UNSTABLE_SaltProviderNext>
+        <SaltProviderNext>
           <TestComponent focusManager={true} />
-        </UNSTABLE_SaltProviderNext>,
+        </SaltProviderNext>
       );
 
       cy.get("html.salt-theme.salt-theme-next").should("have.length", 1);

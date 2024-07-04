@@ -2,9 +2,9 @@ import {
   ModeValues,
   Panel,
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
+  SaltProviderNext,
   getCharacteristicValue,
-  useTheme,
+  useTheme
 } from "@salt-ds/core";
 import type { Decorator } from "@storybook/react";
 import { useEffect } from "react";
@@ -77,8 +77,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
     actionFont,
   } = context.globals;
 
-  const Provider =
-    themeNext === "enable" ? UNSTABLE_SaltProviderNext : SaltProvider;
+  const Provider = themeNext === "enable" ? SaltProviderNext : SaltProvider;
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";

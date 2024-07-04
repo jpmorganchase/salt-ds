@@ -35,7 +35,7 @@ import saltProviderCss from "./SaltProvider.css";
 export const DEFAULT_DENSITY = "medium";
 
 const DEFAULT_THEME_NAME = "salt-theme";
-const UNSTABLE_ADDITIONAL_THEME_NAME = "salt-theme-next";
+const DEFAULT_THEME_NAME_NEXT = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
 const DEFAULT_CORNER: Corner = "sharp";
@@ -90,8 +90,8 @@ const getThemeNames = (
 ): ThemeName => {
   if (themeNext) {
     return themeName === DEFAULT_THEME_NAME
-      ? clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME)
-      : clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName);
+      ? clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT)
+      : clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT, themeName);
   }
   return themeName === DEFAULT_THEME_NAME
     ? themeName
@@ -242,7 +242,7 @@ function InternalSaltProvider({
   accent: accentProp,
   actionFont: actionFontProp,
 }: Omit<
-  SaltProviderProps & ThemeNextProps & UNSTABLE_SaltProviderNextProps,
+  SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
 >) {
   const inheritedDensity = useContext(DensityContext);

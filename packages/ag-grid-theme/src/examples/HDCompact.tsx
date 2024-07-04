@@ -1,7 +1,7 @@
 import {
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
-  useTheme,
+  SaltProviderNext,
+  useTheme
 } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
@@ -27,7 +27,7 @@ const HDCompact = (props: AgGridReactProps) => {
     density: "high",
   });
 
-  const Provider = themeNext ? UNSTABLE_SaltProviderNext : SaltProvider;
+  const Provider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <Provider density="high">
