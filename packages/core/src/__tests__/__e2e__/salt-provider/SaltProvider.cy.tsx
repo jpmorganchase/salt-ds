@@ -22,9 +22,14 @@ const TestComponent = ({
   const {
     theme,
     mode,
+    themeNext,
+    corner,
+    accent,
+    actionFont,
+    headingFont,
+    // Test backwards compatibilty using `UNSTABLE_` variables
     UNSTABLE_corner,
     UNSTABLE_accent,
-    themeNext,
     UNSTABLE_actionFont,
     UNSTABLE_headingFont,
   } = useTheme();
@@ -39,11 +44,16 @@ const TestComponent = ({
       data-theme={theme}
       data-mode={mode}
       data-announcer={announcerPresent}
-      data-corner={UNSTABLE_corner}
-      data-accent={UNSTABLE_accent}
-      data-heading-font={UNSTABLE_headingFont}
-      data-action-font={UNSTABLE_actionFont}
+      data-corner={corner}
+      data-accent={accent}
+      data-heading-font={headingFont}
+      data-action-font={actionFont}
       data-themeNext={themeNext}
+      // Test backwards compatibilty using `UNSTABLE_` variables
+      data-unstable-corner={UNSTABLE_corner}
+      data-unstable-accent={UNSTABLE_accent}
+      data-unstable-heading-font={UNSTABLE_headingFont}
+      data-unstable-action-font={UNSTABLE_actionFont}
     />
   );
 };
@@ -341,11 +351,15 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-density", "medium")
         .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-announcer", "true")
+        .and("have.attr", "data-themeNext", "true")
         .and("have.attr", "data-corner", "sharp")
         .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-heading-font", "Open Sans")
         .and("have.attr", "data-action-font", "Open Sans")
-        .and("have.attr", "data-themeNext", "true");
+        .and("have.attr", "data-unstable-corner", "sharp")
+        .and("have.attr", "data-unstable-accent", "blue")
+        .and("have.attr", "data-unstable-heading-font", "Open Sans")
+        .and("have.attr", "data-unstable-action-font", "Open Sans");
       cy.get("[aria-live]").should("exist");
     });
   });
@@ -415,6 +429,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-unstable-corner", "rounded")
+        .and("have.attr", "data-unstable-accent", "teal")
+        .and("have.attr", "data-unstable-heading-font", "Amplitude")
+        .and("have.attr", "data-unstable-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -425,6 +443,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-unstable-corner", "rounded")
+        .and("have.attr", "data-unstable-accent", "teal")
+        .and("have.attr", "data-unstable-heading-font", "Amplitude")
+        .and("have.attr", "data-unstable-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
     });
     it("should take different values set as props", () => {
@@ -461,6 +483,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-unstable-corner", "rounded")
+        .and("have.attr", "data-unstable-accent", "teal")
+        .and("have.attr", "data-unstable-heading-font", "Amplitude")
+        .and("have.attr", "data-unstable-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -471,6 +497,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-heading-font", "Open Sans")
         .and("have.attr", "data-action-font", "Open Sans")
+        .and("have.attr", "data-unstable-corner", "sharp")
+        .and("have.attr", "data-unstable-accent", "blue")
+        .and("have.attr", "data-unstable-heading-font", "Open Sans")
+        .and("have.attr", "data-unstable-action-font", "Open Sans")
         .and("have.attr", "data-announcer", "true");
     });
   });

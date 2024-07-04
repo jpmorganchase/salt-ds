@@ -38,7 +38,21 @@ export const AllExamplesGrid: StoryFn<
 };
 
 AllExamplesGrid.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
@@ -66,7 +80,21 @@ export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
   </QAContainer>
 );
 FormFieldAlignments.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const NoStyleInjectionGrid: StoryFn<
