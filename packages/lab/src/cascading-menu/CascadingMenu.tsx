@@ -4,6 +4,7 @@ import {
   useForkRef,
   ownerWindow,
   usePrevious,
+  getRefFromChildren,
 } from "@salt-ds/core";
 import {
   cloneElement,
@@ -34,8 +35,6 @@ import { useStateReducer } from "./internal/useStateReducer";
 import { stateChangeTypes } from "./stateChangeTypes";
 
 const defaultItemToString = (item: any) => item?.title || String(item);
-
-const noop = () => undefined;
 
 export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
   function CascadingMenu(props, ref) {
@@ -195,9 +194,7 @@ export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
       childrenRef.current = node;
     }, []);
     const handleRef = useForkRef(
-      //TODO get to bottom of this
-      // @ts-ignore
-      isValidElement(children) ? children.ref : noop,
+      getRefFromChildren(children),
       setMenuTriggerRef
     );
 

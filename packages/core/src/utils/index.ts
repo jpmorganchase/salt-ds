@@ -21,3 +21,4 @@ export * from "./mergeProps";
 export * from "./useValueEffect";
 export * from "./useResizeObserver";
 export * from "./useEventCallback";
+export * from "./getRefFromChildren";

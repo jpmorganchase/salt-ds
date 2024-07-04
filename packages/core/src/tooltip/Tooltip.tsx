@@ -14,6 +14,7 @@ import {
   UseFloatingUIProps,
   useForkRef,
   useFloatingComponent,
+  getRefFromChildren,
 } from "../utils";
 
 import { useTooltip, UseTooltipProps } from "./useTooltip";
@@ -117,11 +118,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       getTooltipPosition,
     } = useTooltip(hookProps);
 
-    const triggerRef = useForkRef(
-      // @ts-expect-error children.ref cannot currently be typed.
-      isValidElement(children) ? children.ref : null,
-      reference
-    );
+    const triggerRef = useForkRef(getRefFromChildren(children), reference);
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
     const hasContent = content != undefined && content !== "";
