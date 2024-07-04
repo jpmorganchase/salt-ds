@@ -1,5 +1,6 @@
 /* Style applied to the root element */
 .saltPillInput {
+  --input-border: none;
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
@@ -19,6 +20,9 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border: var(--input-border);
+  overflow: hidden;
 }
 
 .saltPillInput-truncate {
@@ -72,6 +76,7 @@
   --input-background-hover: var(--salt-status-error-background);
   --input-borderColor: var(--salt-status-error-borderColor);
   --input-outlineColor: var(--salt-status-error-borderColor);
+  --input-background-readonly: var(--salt-status-error-background);
 }
 
 /* Style applied to input if `validationState="warning"` */
@@ -82,6 +87,7 @@
   --input-background-hover: var(--salt-status-warning-background);
   --input-borderColor: var(--salt-status-warning-borderColor);
   --input-outlineColor: var(--salt-status-warning-borderColor);
+  --input-background-readonly: var(--salt-status-warning-background);
 }
 
 /* Style applied to input if `validationState="success"` */
@@ -92,6 +98,7 @@
   --input-background-hover: var(--salt-status-success-background);
   --input-borderColor: var(--salt-status-success-borderColor);
   --input-outlineColor: var(--salt-status-success-borderColor);
+  --input-background-readonly: var(--salt-status-success-background);
 }
 
 /* Style applied to inner input component */
@@ -131,7 +138,8 @@
 }
 
 /* Styling when focused */
-.saltPillInput-focused {
+.saltPillInput-focused,
+.saltPillInput-focused:hover {
   --input-borderColor: var(--input-outlineColor);
   --input-borderWidth: var(--salt-editable-borderWidth-active);
 
@@ -185,6 +193,25 @@
   border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
 }
 
+/* Style applied if `bordered={true}` */
+.saltPillInput.saltPillInput-bordered {
+  --input-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--input-borderColor);
+  --input-borderWidth: 0;
+}
+
+/* Style applied if focused or active when `bordered={true}` */
+.saltPillInput-bordered.saltPillInput-focused,
+.saltPillInput-bordered:active {
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltPillInput-bordered.saltPillInput-readOnly,
+.saltPillInput-bordered.saltPillInput-disabled:hover,
+.saltPillInput-bordered.saltPillInput-disabled.saltPillInput-focused {
+  --input-borderWidth: 0;
+}
+
 /* Style applied to start adornments */
 .saltPillInput-startAdornmentContainer {
   align-items: center;
@@ -210,6 +237,7 @@
 .saltPillInput-startAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
+
 .saltPillInput-endAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
@@ -217,6 +245,7 @@
 .saltPillInput-startAdornmentContainer .saltButton:first-child {
   margin-left: calc(var(--salt-spacing-50) * -1);
 }
+
 .saltPillInput-endAdornmentContainer .saltButton:last-child {
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
@@ -225,6 +254,7 @@
 .saltPillInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
 
 .saltPillInput-inputWrapper {
@@ -238,6 +268,14 @@
   height: inherit;
   overflow-y: auto;
   box-sizing: border-box;
+}
+
+.saltPillInput-bordered > .saltPillInput-endAdornmentContainer {
+  padding-top: calc(var(--salt-spacing-50) - var(--salt-size-border));
+}
+
+.saltPillInput-bordered > .saltPillInput-inputWrapper {
+  padding: calc(var(--salt-spacing-50) - var(--salt-size-border)) 0;
 }
 
 .saltPillInput-pillList {

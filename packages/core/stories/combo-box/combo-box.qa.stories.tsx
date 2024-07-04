@@ -161,9 +161,55 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
       </ComboBox>
       <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
+    <FormField>
+      <FormFieldLabel>Default bordered example</FormFieldLabel>
+      <ComboBox bordered>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Disabled bordered example</FormFieldLabel>
+      <ComboBox bordered disabled>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Read-only bordered example</FormFieldLabel>
+      <ComboBox bordered readOnly>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
   </QAContainer>
 );
 
 ClosedExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disabled",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };

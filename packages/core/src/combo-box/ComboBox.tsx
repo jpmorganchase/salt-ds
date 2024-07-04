@@ -81,6 +81,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     defaultValue,
     valueToString = defaultValueToString,
     truncate,
+    bordered = false,
     ...rest
   } = props;
 
@@ -439,6 +440,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         inputRef={inputRef}
         value={valueState}
         ref={handleRef}
+        bordered={bordered}
         {...getReferenceProps({
           onBlur: handleBlur,
           onFocus: handleFocus,

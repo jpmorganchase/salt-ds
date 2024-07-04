@@ -81,7 +81,7 @@ const Template: StoryFn<ComboBoxProps> = (args) => {
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
-      style={{ width: 150 }}
+      style={{ width: 152 }}
     >
       {usStates
         .filter((state) =>
@@ -889,5 +889,17 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
         <Option value={state} key={state} />
       ))}
     </ComboBox>
+  );
+};
+
+export const Bordered = () => {
+  return (
+    <StackLayout>
+      <Template bordered />
+      <Template bordered variant="secondary" />
+      <Template bordered validationStatus="error" />
+      <Template bordered validationStatus="warning" />
+      <Template bordered validationStatus="success" />
+    </StackLayout>
   );
 };
