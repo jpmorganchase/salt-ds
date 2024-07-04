@@ -6,11 +6,8 @@ import {
   MouseEventHandler,
   ReactElement,
   ReactNode,
-  cloneElement,
-  isValidElement,
-  ElementType,
 } from "react";
-import { makePrefixer, mergeProps } from "../utils";
+import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
 
@@ -18,6 +15,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import navigationItemCss from "./NavigationItem.css";
+import { NavigationItemAction } from "./NavigationItemAction";
 
 type OptionalPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
 
@@ -79,27 +77,6 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltNavigationItem");
 
-type CreateElementProps = NavigationItemRenderProps &
-  OptionalPartial<NavigationItemProps, "render">;
-
-function createElement(Type: ElementType, props: CreateElementProps) {
-  const { render, ...rest } = props;
-  const elementProps = props.parent ? props.parentProps : props.linkProps;
-  let element: ReactElement;
-  if (isValidElement<any>(render)) {
-    const renderProps = render.props;
-    element = cloneElement(
-      render,
-      mergeProps(elementProps as Record<string, unknown>, renderProps)
-    );
-  } else if (render) {
-    element = render(rest) as ReactElement;
-  } else {
-    element = <Type {...elementProps} />;
-  }
-  return element;
-}
-
 export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
   function NavigationItem(props, ref) {
     const {
@@ -131,60 +108,12 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     };
 
     const isParent = parent || href === undefined;
-    const elementProps = {
-      className: clsx(
-        withBaseName("wrapper"),
-        {
-          [withBaseName("active")]: active || blurActive,
-          [withBaseName("blurActive")]: blurActive,
-          [withBaseName("rootItem")]: level === 0,
-        },
-        withBaseName(orientation)
-      ),
-      children: (
-        <>
-          <span className={withBaseName("label")}>{children}</span>
-          {isParent ? (
-            <ExpansionIcon expanded={expanded} orientation={orientation} />
-          ) : null}
-        </>
-      ),
-    };
-    let parentProps: Partial<ComponentPropsWithoutRef<"button">> = {};
-    let linkProps: Partial<ComponentPropsWithoutRef<"a">> = {};
-    if (isParent) {
-      const handleExpand = onExpand
-        ? (event: MouseEvent<HTMLButtonElement>) => {
-            event.stopPropagation();
-            onExpand(event);
-          }
-        : undefined;
-      parentProps = {
-        ...elementProps,
-        "aria-label": "expand",
-        "aria-expanded": expanded,
-        onClick: handleExpand,
-      };
-    } else {
-      linkProps = {
-        ...elementProps,
-        href,
-        "aria-label": "change page",
-        "aria-current": active ? "page" : undefined,
-      };
-    }
 
-    const defaultElementType = isParent ? "button" : "a";
-    const renderedElement = createElement(defaultElementType, {
-      active,
-      expanded,
-      parent: isParent,
-      level,
-      orientation,
-      render,
-      linkProps: !isParent ? linkProps : undefined,
-      parentProps: isParent ? parentProps : undefined,
-    });
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onExpand?.(event);
+    };
+
     return (
       <div
         ref={ref}
@@ -192,7 +121,27 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         style={style}
         {...rest}
       >
-        {renderedElement}
+        <NavigationItemAction
+          className={clsx(
+            withBaseName("wrapper"),
+            {
+              [withBaseName("active")]: active || blurActive,
+              [withBaseName("blurActive")]: blurActive,
+              [withBaseName("rootItem")]: level === 0,
+            },
+            withBaseName(orientation)
+          )}
+          render={render ?? isParent ? <button /> : undefined}
+          aria-expanded={isParent ? expanded : undefined}
+          onClick={handleClick}
+          aria-current={!isParent && active ? "page" : undefined}
+          href={href}
+        >
+          <span className={withBaseName("label")}>{children}</span>
+          {isParent ? (
+            <ExpansionIcon expanded={expanded} orientation={orientation} />
+          ) : null}
+        </NavigationItemAction>
       </div>
     );
   }
