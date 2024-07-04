@@ -1,4 +1,4 @@
-import { Input, FlowLayout, Text, Button, useId } from "@salt-ds/core";
+import { Input, FlowLayout, Text, Button } from "@salt-ds/core";
 import {
   CallIcon,
   CloseIcon,
@@ -148,46 +148,36 @@ export const Validation: StoryFn<typeof Input> = (args) => {
 };
 
 export const WithStaticAdornments: StoryFn<typeof Input> = (args) => {
-  const id = useId();
-
   return (
     <FlowLayout style={{ width: "266px" }}>
       <Input
-        inputProps={{ "aria-describedby": `${id}-filter-icon` }}
-        startAdornment={<FilterIcon id={`${id}-filter-icon`} />}
+        startAdornment={<FilterIcon />}
         defaultValue={args.defaultValue ?? "Value 1"}
         {...args}
       />
       <Input
         variant="secondary"
-        inputProps={{
-          "aria-describedby": `${id}-phone-icon + ${id}-country-code `,
-        }}
         startAdornment={
           <>
-            <CallIcon id={`${id}-phone-icon`} />
-            <Text id={`${id}-country-code`}>+1</Text>
+            <CallIcon />
+            <Text>+1</Text>
           </>
         }
         defaultValue={args.defaultValue ?? "Value 2"}
         {...args}
       />
       <Input
-        inputProps={{ "aria-describedby": `${id}-currency` }}
-        endAdornment={<Text id={`${id}-currency`}>USD</Text>}
+        endAdornment={<Text>USD</Text>}
         defaultValue={args.defaultValue ?? "Value 1"}
         {...args}
       />
       <Input
         variant="secondary"
-        inputProps={{
-          "aria-describedby": ` ${id}-flag-icon + ${id}-percentage + ${id}-clear-icon`,
-        }}
-        startAdornment={<FlagIcon id={`${id}-flag-icon`} />}
+        startAdornment={<FlagIcon />}
         endAdornment={
           <>
-            <Text id={`${id}-percentage`}>%</Text>
-            <FilterClearIcon id={`${id}-clear-icon`} />
+            <Text>%</Text>
+            <FilterClearIcon />
           </>
         }
         defaultValue={args.defaultValue ?? "Value 2"}
