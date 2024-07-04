@@ -36,41 +36,41 @@ export const Basic: StoryFn<QAContainerProps> = (props) => {
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="horizontal" activeStep={2}>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="pending">
+          <TrackerStep stage="pending">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="pending">
+          <TrackerStep stage="pending">
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="horizontal" activeStep={3}>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker activeStep={0}>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Completed</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="warning">
+          <TrackerStep status="warning">
             <StepLabel>Warning</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="error">
+          <TrackerStep status="error">
             <StepLabel>Error</StepLabel>
           </TrackerStep>
           <TrackerStep>
@@ -113,41 +113,41 @@ export const Vertical: StoryFn<QAContainerProps> = (props) => {
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="vertical" activeStep={2}>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="pending">
+          <TrackerStep stage="pending">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="pending">
+          <TrackerStep stage="pending">
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="vertical" activeStep={3}>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="vertical" activeStep={0}>
-          <TrackerStep TBC_PROP_NAME="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Completed</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="warning">
+          <TrackerStep status="warning">
             <StepLabel>Warning</StepLabel>
           </TrackerStep>
-          <TrackerStep TBC_PROP_NAME="error">
+          <TrackerStep status="error">
             <StepLabel>Error</StepLabel>
           </TrackerStep>
           <TrackerStep>

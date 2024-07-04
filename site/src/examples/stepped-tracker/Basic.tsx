@@ -25,47 +25,47 @@ export const Basic = (): ReactElement => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="pending">
+        <TrackerStep stage="pending">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="pending">
+        <TrackerStep stage="pending">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={3}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="pending">
+        <TrackerStep stage="pending">
           <StepLabel>Active</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="warning">
+        <TrackerStep status="warning">
           <StepLabel>Warning</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="error">
+        <TrackerStep status="error">
           <StepLabel>Error</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="pending">
+        <TrackerStep stage="pending">
           <StepLabel>Default</StepLabel>
         </TrackerStep>
       </SteppedTracker>

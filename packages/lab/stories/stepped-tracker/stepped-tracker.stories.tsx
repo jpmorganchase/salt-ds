@@ -60,10 +60,10 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
         <TrackerStep>
@@ -74,16 +74,16 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={3}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
@@ -100,16 +100,16 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={1}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
         </TrackerStep>
         <TrackerStep>
           <StepLabel>Active</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="warning">
+        <TrackerStep status="warning">
           <StepLabel>Warning</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="error">
+        <TrackerStep status="error">
           <StepLabel>Error</StepLabel>
         </TrackerStep>
         <TrackerStep>
@@ -123,10 +123,10 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
 export const SingleVertical: StoryFn<typeof SteppedTracker> = () => {
   return (
     <SteppedTracker orientation="vertical" activeStep={1}>
-      <TrackerStep TBC_PROP_NAME="completed">
+      <TrackerStep stage="completed">
         <StepLabel>Step One</StepLabel>
       </TrackerStep>
-      <TrackerStep TBC_PROP_NAME="completed">
+      <TrackerStep stage="completed">
         <StepLabel>Step Two</StepLabel>
       </TrackerStep>
       <TrackerStep>
@@ -162,10 +162,10 @@ export const BasicVertical: StoryFn<typeof SteppedTracker> = () => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker orientation="vertical" activeStep={2}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
         <TrackerStep>
@@ -176,16 +176,16 @@ export const BasicVertical: StoryFn<typeof SteppedTracker> = () => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker orientation="vertical" activeStep={3}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
@@ -228,7 +228,7 @@ export const AutoProgress: StoryFn<typeof SteppedTracker> = () => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
-          <TrackerStep TBC_PROP_NAME={state} key={key}>
+          <TrackerStep stage={state} key={key}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
@@ -308,7 +308,7 @@ export const NonSequentialProgress: StoryFn<typeof SteppedTracker> = () => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
-          <TrackerStep TBC_PROP_NAME={state} key={key}>
+          <TrackerStep stage={state} key={key}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

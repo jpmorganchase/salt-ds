@@ -62,7 +62,7 @@ export const NonSequentialProgress = (): ReactElement => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
-          <TrackerStep TBC_PROP_NAME={state} key={key}>
+          <TrackerStep stage={state} key={key}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

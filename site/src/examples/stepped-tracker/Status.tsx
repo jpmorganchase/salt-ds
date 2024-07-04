@@ -11,16 +11,16 @@ export const Status = (): ReactElement => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={1}>
-        <TrackerStep TBC_PROP_NAME="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
         </TrackerStep>
         <TrackerStep>
           <StepLabel>Active</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="warning">
+        <TrackerStep status="warning">
           <StepLabel>Warning</StepLabel>
         </TrackerStep>
-        <TrackerStep TBC_PROP_NAME="error">
+        <TrackerStep status="error">
           <StepLabel>Error</StepLabel>
         </TrackerStep>
         <TrackerStep>
