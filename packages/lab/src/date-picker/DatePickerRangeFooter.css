@@ -1,0 +1,33 @@
+.datePickerRangeFooter {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+}
+
+.datePickerRangeFooter-rangeLabel {
+  margin-right: var(--salt-spacing-100);
+}
+
+.datePickerRangeFooter-range {
+  flex-grow: 1;
+}
+
+.datePickerRangeFooter-noOfDaysSelected {
+  display: block;
+}
+
+.datePickerRangeFooter-action {
+  /* No margin needed here */
+}
+
+.datePickerRangeFooter-action + .datePickerRangeFooter-action {
+  margin-left: var(--salt-spacing-100);
+}
+
+

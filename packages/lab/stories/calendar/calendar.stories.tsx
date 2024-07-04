@@ -23,7 +23,7 @@ export default {
   title: "Lab/Calendar",
   component: Calendar,
   args: {
-    selectionVariant: "default",
+    selectionVariant: "single",
   },
 } as Meta<typeof Calendar>;
 
@@ -115,7 +115,7 @@ HideOutOfRangeDays.args = {
 export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
-    event,
+    _event,
     newHoveredDate,
   ) => {
     setHoveredDate(newHoveredDate);
@@ -123,7 +123,7 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   const [selectedDate, setSelectedDate] =
     useState<UseRangeSelectionCalendarProps["selectedDate"]>(null);
   const handleSelectedDateChange: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
-    (event, newSelectedDate) => {
+    (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
 
