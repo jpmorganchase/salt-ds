@@ -6,7 +6,6 @@
   border-color: var(--saltSystemStatus-borderColor, var(--systemStatus-borderColor));
   border-width: var(--saltSystemStatus-borderWidth, var(--salt-size-border));
   border-style: var(--saltSystemStatus-borderStyle, var(--salt-container-borderStyle));
-  border-radius: var(--saltSystemStatus-borderRadius, var(--salt-palette-corner, 0));
   box-sizing: border-box;
   display: inline-flex;
   gap: var(--salt-spacing-75);

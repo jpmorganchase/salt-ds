@@ -4,11 +4,9 @@ import {
   SystemStatusContent,
   StackLayout,
   Text,
-  UNSTABLE_SaltProviderNext,
   Banner,
   BannerContent,
   BannerActions,
-  useTheme,
   Button,
 } from "@salt-ds/core";
 
@@ -78,8 +76,6 @@ export const WithTitle: StoryFn<typeof SystemStatus> = (props) => (
 );
 
 export const FullWidth: StoryFn<typeof SystemStatus> = (props) => {
-  const { themeNext } = useTheme();
-
   return (
     <StackLayout
       style={{
@@ -87,21 +83,11 @@ export const FullWidth: StoryFn<typeof SystemStatus> = (props) => {
         background: "var( --salt-container-primary-background)",
       }}
     >
-      {themeNext ? (
-        <UNSTABLE_SaltProviderNext corner={"sharp"}>
-          <SystemStatus {...props}>
-            <SystemStatusContent>
-              <Text color="inherit">New feature updates are available.</Text>
-            </SystemStatusContent>
-          </SystemStatus>
-        </UNSTABLE_SaltProviderNext>
-      ) : (
-        <SystemStatus {...props}>
-          <SystemStatusContent>
-            <Text color="inherit">New feature updates are available.</Text>
-          </SystemStatusContent>
-        </SystemStatus>
-      )}
+      <SystemStatus {...props}>
+        <SystemStatusContent>
+          <Text color="inherit">New feature updates are available.</Text>
+        </SystemStatusContent>
+      </SystemStatus>
       <StackLayout
         gap={4.5}
         style={{
