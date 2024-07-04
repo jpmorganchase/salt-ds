@@ -1,15 +1,13 @@
 .saltOverlayPanelCloseButton {
-  position: absolute;
-  right: 0;
-  z-index: 1;
+  grid-column: 2 / 2;
+  grid-row: 1 / 1;
 }
 
-.saltOverlayPanel-inner:has(.saltOverlayPanelCloseButton) {
-  /* (button-padding * 2) + button-icon-size + (button-borderWidth * 2) */
-  --overlayPanelCloseButton-width: calc(
-    (var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--salt-size-border, 0)))) * 2) + var(--salt-size-icon) +
-      (var(--saltButton-borderWidth, var(--salt-size-border, 0)) * 2)
-  );
-  box-sizing: border-box;
-  padding-right: var(--overlayPanelCloseButton-width);
+.saltOverlayPanel-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.saltOverlayPanelContent {
+  grid-row: 1 / 1;
 }
