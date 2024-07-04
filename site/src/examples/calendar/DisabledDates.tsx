@@ -7,5 +7,5 @@ const isDayDisabled = (date: DateValue) =>
   getDayOfWeek(date, currentLocale) >= 5;
 
 export const DisabledDates = (): ReactElement => (
-  <Calendar selectionVariant="default" isDayDisabled={isDayDisabled} />
+  <Calendar selectionVariant="single" isDayDisabled={isDayDisabled} />
 );

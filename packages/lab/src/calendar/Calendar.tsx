@@ -11,7 +11,13 @@ import {
   type CalendarNavigationProps,
 } from "./internal/CalendarNavigation";
 import { CalendarWeekHeader } from "./internal/CalendarWeekHeader";
-import { useCalendar, type useCalendarProps } from "./useCalendar";
+import {
+  useCalendar,
+  UseCalendarSingleProps,
+  UseCalendarRangeProps,
+  UseCalendarMultiSelectProps,
+  UseCalendarOffsetProps,
+} from "./useCalendar";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -20,7 +26,7 @@ import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import calendarCss from "./Calendar.css";
 import { getCurrentLocale } from "./internal/utils";
 
-export type CalendarProps = useCalendarProps & {
+export type CalendarBaseProps = {
   className?: string;
   renderDayContents?: CalendarCarouselProps["renderDayContents"];
   hideYearDropdown?: CalendarNavigationProps["hideYearDropdown"];
@@ -28,6 +34,32 @@ export type CalendarProps = useCalendarProps & {
   TooltipProps?: CalendarCarouselProps["TooltipProps"];
   hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
 };
+export interface CalendarSingleProps
+  extends CalendarBaseProps,
+    UseCalendarSingleProps {
+  selectionVariant: "single";
+}
+export interface CalendarRangeProps
+  extends CalendarBaseProps,
+    UseCalendarRangeProps {
+  selectionVariant: "range";
+}
+export interface CalendarMultiSelectProps
+  extends CalendarBaseProps,
+    UseCalendarMultiSelectProps {
+  selectionVariant: "multiselect";
+}
+export interface CalendarOffsetProps
+  extends CalendarBaseProps,
+    UseCalendarOffsetProps {
+  selectionVariant: "offset";
+}
+
+export type CalendarProps =
+  | CalendarSingleProps
+  | CalendarRangeProps
+  | CalendarMultiSelectProps
+  | CalendarOffsetProps;
 
 const withBaseName = makePrefixer("saltCalendar");
 
@@ -95,5 +127,5 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         </div>
       </CalendarContext.Provider>
     );
-  },
+  }
 );

@@ -1,10 +1,10 @@
+import { ReactElement } from "react";
+import { DatePicker, DatePickerSinglePanel } from "@salt-ds/lab";
 import {
   DateFormatter,
-  type DateValue,
+  DateValue,
   getLocalTimeZone,
 } from "@internationalized/date";
-import { DatePicker } from "@salt-ds/lab";
-import type { ReactElement } from "react";
 
 export const CustomFormatter = (): ReactElement => {
   const customDateFormatter = (date: DateValue | undefined): string => {
@@ -19,9 +19,12 @@ export const CustomFormatter = (): ReactElement => {
 
   return (
     <DatePicker
+      selectionVariant="single"
       style={{ width: "200px" }}
       dateFormatter={customDateFormatter}
       placeholder={"YYYY-MM-DD"}
-    />
+    >
+      <DatePickerSinglePanel />
+    </DatePicker>
   );
 };

@@ -5,7 +5,7 @@ const localTimeZone = getLocalTimeZone();
 
 export const Default = (): ReactElement => (
   <Calendar
-    selectionVariant="default"
+    selectionVariant="single"
     defaultSelectedDate={today(localTimeZone)}
   />
 );

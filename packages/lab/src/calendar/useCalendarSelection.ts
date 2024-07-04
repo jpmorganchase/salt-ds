@@ -1,54 +1,61 @@
-import {
-  CalendarDate,
-  type DateValue,
-  isSameDay,
-} from "@internationalized/date";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
-import type {
-  KeyboardEventHandler,
-  MouseEventHandler,
-  SyntheticEvent,
-} from "react";
-import { isPlainObject } from "../utils";
+import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
+import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 
-interface BaseUseSelectionCalendarProps<SelectionVariantType> {
+export type SingleSelectionValueType = DateValue;
+export type MultiSelectValueType = DateValue[];
+export type RangeSelectionValueType = {
+  startDate?: DateValue;
+  endDate?: DateValue;
+};
+export type AllSelectionValueType =
+  | SingleSelectionValueType
+  | MultiSelectValueType
+  | RangeSelectionValueType
+  | null;
+
+export function isSingleSelectionValueType(value: any): value is DateValue {
+  return value instanceof CalendarDate;
+}
+
+export function isRangeSelectionValueType(
+  value: any
+): value is RangeSelectionValueType {
+  return value && typeof value === "object" && "startDate" in value;
+}
+
+export function isMultiSelectValueType(
+  value: any
+): value is MultiSelectValueType {
+  return (
+    Array.isArray(value) && value.every((item) => item instanceof CalendarDate)
+  );
+}
+
+interface UseCalendarSelectionBaseProps<SelectionVariantType> {
   hoveredDate?: DateValue | null;
   selectedDate?: SelectionVariantType | null;
   defaultSelectedDate?: SelectionVariantType;
   onSelectedDateChange?: (
     event: SyntheticEvent,
-    selectedDate: SelectionVariantType,
+    selectedDate: SelectionVariantType | null
   ) => void;
-  isDaySelectable: (date?: DateValue) => boolean;
+  isDaySelectable?: (date?: DateValue) => boolean;
   onHoveredDateChange?: (
     event: SyntheticEvent,
-    hoveredDate: DateValue | null,
+    hoveredDate: DateValue | null
   ) => void;
+  select?: (
+    currentSelectedDate: SelectionVariantType,
+    newSelectedDate: DateValue
+  ) => SelectionVariantType;
 }
 
-export type SingleSelectionValueType = DateValue;
-type MultiSelectionValueType = DateValue[];
-export type RangeSelectionValueType = {
-  startDate?: DateValue;
-  endDate?: DateValue;
-};
-type OffsetSelectionValueType = {
-  startDate?: DateValue;
-  endDate?: DateValue;
-};
-
-type AllSelectionValueType =
-  | SingleSelectionValueType
-  | MultiSelectionValueType
-  | RangeSelectionValueType
-  | OffsetSelectionValueType
-  | null;
-
-export interface UseOffsetSelectionCalendarProps
+export interface UseCalendarSelectionOffsetProps
   extends Omit<
-    BaseUseSelectionCalendarProps<OffsetSelectionValueType>,
+    UseCalendarSelectionBaseProps<RangeSelectionValueType>,
     "startDateOffset" | "endDateOffset"
   > {
   selectionVariant: "offset";
@@ -56,30 +63,30 @@ export interface UseOffsetSelectionCalendarProps
   endDateOffset?: (date: DateValue) => DateValue;
 }
 
-export interface UseRangeSelectionCalendarProps
-  extends BaseUseSelectionCalendarProps<RangeSelectionValueType> {
+export interface UseCalendarSelectionRangeProps
+  extends UseCalendarSelectionBaseProps<RangeSelectionValueType> {
   selectionVariant: "range";
 }
 
-export interface UseMultiSelectionCalendarProps
-  extends BaseUseSelectionCalendarProps<MultiSelectionValueType> {
+export interface UseCalendarSelectionMultiSelectProps
+  extends UseCalendarSelectionBaseProps<MultiSelectValueType> {
   selectionVariant: "multiselect";
 }
 
-export interface UseSingleSelectionCalendarProps
-  extends BaseUseSelectionCalendarProps<SingleSelectionValueType> {
-  selectionVariant: "default";
+export interface UseCalendarSelectionSingleProps
+  extends UseCalendarSelectionBaseProps<SingleSelectionValueType> {
+  selectionVariant: "single";
 }
 
-export type useSelectionCalendarProps =
-  | UseSingleSelectionCalendarProps
-  | UseMultiSelectionCalendarProps
-  | UseRangeSelectionCalendarProps
-  | UseOffsetSelectionCalendarProps;
+export type UseCalendarSelectionProps =
+  | UseCalendarSelectionSingleProps
+  | UseCalendarSelectionMultiSelectProps
+  | UseCalendarSelectionRangeProps
+  | UseCalendarSelectionOffsetProps;
 
 function addOrRemoveFromArray(
-  array: AllSelectionValueType | null,
-  item: DateValue,
+  array: AllSelectionValueType = [],
+  item: DateValue
 ) {
   if (Array.isArray(array)) {
     if (array.find((element) => isSameDay(element, item))) {
@@ -92,24 +99,50 @@ function addOrRemoveFromArray(
 
 const defaultOffset = (date: DateValue) => date;
 
-export function isRangeOrOffsetSelectionValue(
-  selectionValue?: AllSelectionValueType,
-): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
-  return selectionValue != null && isPlainObject(selectionValue);
-}
-
-export function isRangeOrOffsetSelectionWithStartDate(
-  selectionValue?: AllSelectionValueType,
-): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
-  return (
-    isRangeOrOffsetSelectionValue(selectionValue) &&
-    Object.prototype.hasOwnProperty.call(selectionValue, "startDate")
-  );
-}
-
 const withBaseName = makePrefixer("saltCalendarDay");
 
-export function useSelectionCalendar(props: useSelectionCalendarProps) {
+const defaultSingleSelectionHandler = (
+  _currentSelectedDate: DateValue,
+  newSelectedDate: DateValue
+): DateValue => {
+  return newSelectedDate;
+};
+
+const defaultMultiSelectHandler = (
+  currentSelectedDate: DateValue[],
+  newSelectedDate: DateValue
+): DateValue[] => {
+  return addOrRemoveFromArray(currentSelectedDate, newSelectedDate);
+};
+
+const defaultRangeSelectionHandler = (
+  currentSelectedDate: RangeSelectionValueType,
+  newSelectedDate: DateValue
+): RangeSelectionValueType => {
+  let base = { ...currentSelectedDate };
+  if (base?.startDate && base?.endDate) {
+    base = { startDate: newSelectedDate };
+  } else if (base?.startDate && newSelectedDate.compare(base.startDate) < 0) {
+    base = { startDate: newSelectedDate };
+  } else if (base?.startDate && newSelectedDate.compare(base.startDate) >= 0) {
+    base = { ...base, endDate: newSelectedDate };
+  } else {
+    base = { startDate: newSelectedDate };
+  }
+  return base;
+};
+
+const defaultOffsetSelectionHandler = (
+  _currentSelectedDate: RangeSelectionValueType,
+  newSelectedDate: DateValue
+): RangeSelectionValueType => {
+  return {
+    startDate: newSelectedDate,
+    endDate: newSelectedDate,
+  };
+};
+
+export function useCalendarSelection(props: UseCalendarSelectionProps) {
   const {
     hoveredDate: hoveredDateProp,
     selectedDate: selectedDateProp,
@@ -118,6 +151,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
     onHoveredDateChange,
     isDaySelectable,
     selectionVariant,
+    select: selectProp,
     // startDateOffset,
     // endDateOffset,
   } = props;
@@ -131,71 +165,68 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const getStartDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.startDateOffset) {
       return props.startDateOffset(date);
+    } else {
+      return defaultOffset(date);
     }
-    return defaultOffset(date);
   };
 
   const getEndDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.endDateOffset) {
       return props.endDateOffset(date);
+    } else {
+      return defaultOffset(date);
     }
-    return defaultOffset(date);
   };
 
   const setSelectedDate = (
     event: SyntheticEvent<HTMLButtonElement>,
-    newSelectedDate: DateValue,
+    newSelectedDate: DateValue
   ) => {
-    if (isDaySelectable(newSelectedDate)) {
-      switch (props.selectionVariant) {
-        case "default":
-          setSelectedDateState(newSelectedDate);
-          props.onSelectedDateChange?.(event, newSelectedDate);
-          break;
-        case "multiselect": {
-          const newDates = addOrRemoveFromArray(
-            selectedDate ?? [],
-            newSelectedDate,
+    if (!isDaySelectable || isDaySelectable(newSelectedDate)) {
+      switch (selectionVariant) {
+        case "single":
+          const singleSelect = selectProp || defaultSingleSelectionHandler;
+          const newSingleDate = singleSelect(
+            selectedDate as DateValue,
+            newSelectedDate
           );
-          setSelectedDateState(newDates);
-          props.onSelectedDateChange?.(event, newDates);
+          setSelectedDateState(newSingleDate);
+          props.onSelectedDateChange?.(event, newSingleDate);
           break;
-        }
-        case "range": {
-          let base = selectedDate;
-          if (isRangeOrOffsetSelectionValue(base)) {
-            if (base?.startDate && base?.endDate) {
-              base = { startDate: newSelectedDate };
-            } else if (
-              base?.startDate &&
-              newSelectedDate.compare(base.startDate) > 0
-            ) {
-              base = { ...base, endDate: newSelectedDate };
-            } else {
-              base = { startDate: newSelectedDate };
-            }
-          } else {
-            base = { startDate: newSelectedDate };
-          }
-          setSelectedDateState(base);
-          props.onSelectedDateChange?.(event, base);
+        case "multiselect":
+          const multiSelect = selectProp || defaultMultiSelectHandler;
+          const newMultiSelectDate = multiSelect(
+            selectedDate as DateValue[],
+            newSelectedDate
+          );
+          setSelectedDateState(newMultiSelectDate);
+          props.onSelectedDateChange?.(event, newMultiSelectDate);
           break;
-        }
-        case "offset": {
-          const newRange = {
-            startDate: getStartDateOffset(newSelectedDate),
-            endDate: getEndDateOffset(newSelectedDate),
-          };
-          setSelectedDateState(newRange);
-          props.onSelectedDateChange?.(event, newRange);
-        }
+        case "range":
+          const rangeSelect = selectProp || defaultRangeSelectionHandler;
+          const newRangeDate = rangeSelect(
+            selectedDate as RangeSelectionValueType,
+            newSelectedDate
+          );
+          setSelectedDateState(newRangeDate);
+          props.onSelectedDateChange?.(event, newRangeDate);
+          break;
+        case "offset":
+          const offsetSelect = selectProp || defaultOffsetSelectionHandler;
+          const newOffsetDate = offsetSelect(
+            selectedDate as RangeSelectionValueType,
+            newSelectedDate
+          );
+          setSelectedDateState(newOffsetDate);
+          props.onSelectedDateChange?.(event, newOffsetDate);
+          break;
       }
     }
   };
 
   const isSelected = (date: DateValue) => {
     switch (selectionVariant) {
-      case "default":
+      case "single":
         return (
           selectedDate instanceof CalendarDate && isSameDay(selectedDate, date)
         );
@@ -228,7 +259,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const isSelectedSpan = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isRangeOrOffsetSelectionValue(selectedDate) &&
+      isRangeSelectionValueType(selectedDate) &&
       selectedDate?.startDate &&
       selectedDate?.endDate
     ) {
@@ -242,7 +273,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const isHoveredSpan = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isRangeOrOffsetSelectionValue(selectedDate) &&
+      isRangeSelectionValueType(selectedDate) &&
       selectedDate.startDate &&
       !selectedDate.endDate &&
       hoveredDate
@@ -253,7 +284,8 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
           date.compare(hoveredDate) < 0) ||
           isSameDay(date, hoveredDate));
 
-      const isValidDayHovered = isDaySelectable(hoveredDate);
+      const isValidDayHovered =
+        !isDaySelectable || isDaySelectable(hoveredDate);
 
       return isForwardRange && isValidDayHovered;
     }
@@ -263,7 +295,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const isSelectedStart = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isRangeOrOffsetSelectionValue(selectedDate) &&
+      isRangeSelectionValueType(selectedDate) &&
       selectedDate.startDate
     ) {
       return isSameDay(selectedDate.startDate, date);
@@ -274,7 +306,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const isSelectedEnd = (date: DateValue) => {
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isRangeOrOffsetSelectionValue(selectedDate) &&
+      isRangeSelectionValueType(selectedDate) &&
       selectedDate.endDate
     ) {
       return isSameDay(selectedDate.endDate, date);
@@ -290,7 +322,7 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
       return (
         date.compare(startDate) >= 0 &&
         date.compare(endDate) <= 0 &&
-        isDaySelectable(date)
+        (!isDaySelectable || isDaySelectable(date))
       );
     }
 
@@ -312,11 +344,12 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
       isSelectedStart,
       isSelectedEnd,
       isHoveredOffset,
+      isDaySelectable
     },
   };
 }
 
-export function useSelectionDay({ date }: { date: DateValue }) {
+export function useCalendarSelectionDay({ date }: { date: DateValue }) {
   const {
     helpers: {
       setSelectedDate,
@@ -328,7 +361,7 @@ export function useSelectionDay({ date }: { date: DateValue }) {
       isSelectedEnd,
       isHovered,
       isHoveredOffset,
-      isDayUnselectable,
+      isDaySelectable
     },
   } = useCalendarContext();
 
@@ -389,7 +422,7 @@ export function useSelectionDay({ date }: { date: DateValue }) {
         selected || selectedEnd || selectedStart || selectedSpan
           ? "true"
           : undefined,
-      "aria-disabled": isDayUnselectable(date) ? "true" : undefined,
+      "aria-disabled": isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
     },
   };
 }

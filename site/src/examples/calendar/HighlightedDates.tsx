@@ -6,5 +6,5 @@ const isDayHighlighted = (day: { day: number }) => {
 };
 
 export const HighlightedDates = (): ReactElement => (
-  <Calendar selectionVariant="default" isDayHighlighted={isDayHighlighted} />
+  <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted} />
 );

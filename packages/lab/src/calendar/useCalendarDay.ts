@@ -15,7 +15,7 @@ import {
 } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
-import { useSelectionDay } from "./useSelection";
+import { useCalendarSelectionDay } from "./useCalendarSelection";
 
 export interface DayStatus {
   outOfRange?: boolean;
@@ -41,12 +41,13 @@ export function useCalendarDay(
     state: { focusedDate, hideOutOfRangeDates, calendarFocused },
     helpers: {
       isDayUnselectable,
+      isDaySelectable ,
       isDayHighlighted,
       isDayDisabled,
       isOutsideAllowedMonths,
     },
   } = useCalendarContext();
-  const selectionManager = useSelectionDay({ date });
+  const selectionManager = useCalendarSelectionDay({ date });
   const focusManager = useFocusManagement({ date });
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -84,7 +85,7 @@ export function useCalendarDay(
   const highlightedReason = isDayHighlighted(date);
 
   const disabled =
-    isDayDisabled(date) || (outOfRange && isOutsideAllowedMonths(date));
+    isDayDisabled(date) || (outOfRange && isOutsideAllowedMonths(date)) || (isDaySelectable && !isDaySelectable(date));
   const unselectable = Boolean(unselectableReason);
   const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates && outOfRange;

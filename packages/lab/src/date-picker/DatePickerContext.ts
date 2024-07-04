@@ -1,45 +1,66 @@
-import type { DateValue } from "@internationalized/date";
-import { type UseFloatingUIReturn, createContext } from "@salt-ds/core";
 import { useContext } from "react";
-import type {
-  RangeSelectionValueType,
-  SingleSelectionValueType,
-} from "../calendar";
+import { createContext, UseFloatingUIReturn } from "@salt-ds/core";
+import { RangeSelectionValueType, SingleSelectionValueType } from "../calendar";
+import { useDatePicker } from "./useDatePicker";
+import {DateValue} from "@internationalized/date";
 
-export interface DatePickerContextValue<SelectionVariantType>
-  extends Partial<Pick<UseFloatingUIReturn, "context">> {
-  openState: boolean;
-  setOpen: (newOpen: boolean) => void;
-  disabled: boolean;
-  //
-  selectedDate: SelectionVariantType | undefined;
-  defaultSelectedDate: SelectionVariantType | undefined;
-  setSelectedDate: (newStartDate: SelectionVariantType | undefined) => void;
-  startVisibleMonth: DateValue | undefined;
-  setStartVisibleMonth: (newStartDate: DateValue | undefined) => void;
-  endVisibleMonth: DateValue | undefined;
-  setEndVisibleMonth: (newStartDate: DateValue | undefined) => void;
-  selectionVariant: "default" | "range";
-  getPanelPosition: () => Record<string, unknown>;
+export interface DatePickerState<
+  SelectionVariantType = SingleSelectionValueType | RangeSelectionValueType
+> {
+  state: Omit<
+    ReturnType<typeof useDatePicker>["state"],
+    "floatingUIResult" | "selectedDate" | "minDate" | "maxDate"
+  > & {
+    floatingUIResult?: UseFloatingUIReturn;
+    selectedDate?: SelectionVariantType | null;
+    minDate?: DateValue,
+    maxDate?: DateValue,
+  };
+  helpers: Omit<
+    ReturnType<typeof useDatePicker>["helpers"],
+    "getFloatingProps"
+  > & {
+    getFloatingProps?: ReturnType<
+      typeof useDatePicker
+    >["helpers"]["getFloatingProps"];
+  };
 }
 
-export const DatePickerContext = createContext<
-  DatePickerContextValue<SingleSelectionValueType | RangeSelectionValueType>
->("DatePickerContext", {
-  openState: false,
-  setOpen: () => undefined,
-  disabled: false,
-  selectedDate: undefined,
-  defaultSelectedDate: undefined,
-  setSelectedDate: () => undefined,
-  startVisibleMonth: undefined,
-  setStartVisibleMonth: () => undefined,
-  endVisibleMonth: undefined,
-  setEndVisibleMonth: () => undefined,
-  selectionVariant: "default",
-  getPanelPosition: () => ({}),
-});
+function createDatePickerContext<SelectionVariantType>() {
+  return createContext<DatePickerState<SelectionVariantType>>(
+    "DatePickerContext",
+    {
+      state: {
+        selectionVariant: "single",
+        selectedDate: undefined,
+        focusedInput: null,
+        open: false,
+        readOnly: false,
+        disabled: false,
+        autoApplyDisabled: false,
+        containerRef: null,
+        minDate: undefined,
+        maxDate: undefined
+      },
+      helpers: {
+        setFocusedInput: () => undefined,
+        setOpen: () => undefined,
+        setSelectedDate: () => undefined,
+        getReferenceProps: () => ({}),
+        apply: () => undefined,
+        cancel: () => undefined,
+        setAutoApplyDisabled: () => undefined,
+      },
+    }
+  );
+}
 
-export function useDatePickerContext() {
-  return useContext(DatePickerContext);
+export const DatePickerContext = createDatePickerContext<
+  SingleSelectionValueType | RangeSelectionValueType
+>();
+
+export function useDatePickerContext<SelectionVariantType>() {
+  return useContext(
+    DatePickerContext
+  ) as unknown as DatePickerState<SelectionVariantType>;
 }

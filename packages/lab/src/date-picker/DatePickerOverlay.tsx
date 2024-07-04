@@ -1,0 +1,70 @@
+import { type ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
+import { clsx } from "clsx";
+import {
+  makePrefixer,
+  useFloatingComponent,
+  useForkRef,
+  useFormFieldProps,
+} from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useDatePickerContext } from "./DatePickerContext";
+import datePickerPanelCss from "./DatePickerPanel.css";
+
+const withBaseName = makePrefixer("saltDatePickerOverlay");
+
+export interface DatePickerOverlayProps
+  extends ComponentPropsWithoutRef<"div"> {
+  children: ReactNode;
+}
+
+export const DatePickerOverlay = forwardRef<
+  HTMLDivElement,
+  DatePickerOverlayProps
+>(function DatePickerOverlay({ className, children, ...rest }, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-date-picker-overlay",
+    css: datePickerPanelCss,
+    window: targetWindow,
+  });
+
+  const { Component: FloatingComponent } = useFloatingComponent();
+
+  const { a11yProps } = useFormFieldProps();
+
+  const {
+    state: { open, floatingUIResult },
+    helpers: { getFloatingProps },
+  } = useDatePickerContext();
+
+  const floatingRef = useForkRef<HTMLDivElement>(
+    ref,
+    floatingUIResult?.floating
+  );
+
+  return (
+    <FloatingComponent
+      className={clsx(withBaseName(), className)}
+      open={open || false}
+      aria-modal="true"
+      ref={floatingRef}
+      focusManagerProps={
+        floatingUIResult?.context
+          ? {
+              context: floatingUIResult.context,
+              initialFocus: 4,
+            }
+          : undefined
+      }
+      {...(getFloatingProps
+        ? getFloatingProps({
+            ...a11yProps,
+            ...rest,
+          })
+        : rest)}
+    >
+      {children}
+    </FloatingComponent>
+  );
+});

@@ -19,7 +19,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     vertical
   >
     <Calendar
-      selectionVariant="default"
+      selectionVariant="single"
       selectedDate={parseDate("2024-04-02")}
     />
     <Calendar

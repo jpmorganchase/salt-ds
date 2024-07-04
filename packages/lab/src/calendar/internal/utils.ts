@@ -28,7 +28,7 @@ export function formatDate(
   return formatter.format(date.toDate(localTimezone));
 }
 
-export function getCalender() {
+export function getCalendar() {
   const calendarIdentifier = getDateFormatter().resolvedOptions().calendar;
   return createCalendar(calendarIdentifier);
 }
@@ -47,7 +47,7 @@ export function daysForLocale(weekday: WeekdayFormat = "long") {
 }
 
 export function monthsForLocale(currentYear: DateValue) {
-  const calendar = getCalender();
+  const calendar = getCalendar();
   return [...Array(calendar.getMonthsInYear(currentYear)).keys()].map((month) =>
     startOfYear(currentYear).add({ months: month }),
   );
