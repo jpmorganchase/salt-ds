@@ -3,4 +3,4 @@ export * from "./Info";
 export * from "./Success";
 export * from "./Warning";
 export * from "./WithTitle";
-export * from "./FullWidth";
+export * from "./Placement";

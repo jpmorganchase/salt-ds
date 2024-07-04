@@ -75,7 +75,7 @@ export const WithTitle: StoryFn<typeof SystemStatus> = (props) => (
   </div>
 );
 
-export const FullWidth: StoryFn<typeof SystemStatus> = (props) => {
+export const Placement: StoryFn<typeof SystemStatus> = (props) => {
   return (
     <StackLayout
       style={{
