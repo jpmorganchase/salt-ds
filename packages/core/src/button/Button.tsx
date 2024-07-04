@@ -105,7 +105,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               <Spinner
                 size="small"
                 className={clsx(withBaseName("loading-spinner"), className)}
-                aria-label={!showLoadingText ? loadingText : ''}
+                aria-label={!showLoadingText ? loadingText : ""}
               />
               {showLoadingText && (
                 <span className={clsx(withBaseName("loading-text"), className)}>

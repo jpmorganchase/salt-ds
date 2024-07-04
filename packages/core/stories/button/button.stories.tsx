@@ -16,7 +16,6 @@ import {
   FormFieldLabel,
   Input,
 } from "@salt-ds/core";
-import { ChevronRightIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import {
   DownloadIcon,
   SearchIcon,
@@ -24,6 +23,8 @@ import {
   SettingsSolidIcon,
   SyncIcon,
   RefreshIcon,
+  ChevronRightIcon,
+  DoubleChevronRightIcon,
 } from "@salt-ds/icons";
 import { Meta, StoryFn } from "@storybook/react";
 
@@ -344,7 +345,6 @@ export const LoadingButtonRefreshExample: StoryFn<typeof Banner> = () => {
                 loading={loadingState}
                 showLoadingText
                 loadingText="Refreshing"
-                aria-describedby=""
                 onClick={handlePrimaryClick}
               >
                 <RefreshIcon aria-hidden /> Refresh Page
