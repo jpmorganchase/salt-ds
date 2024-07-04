@@ -21,13 +21,15 @@ import trackerStepCss from "./TrackerStep.css";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
-type TBC_PROP_NAMEOptions = "pending" | "completed" | "warning" | "error";
+type StageOptions = "pending" | "completed";
+type StatusOptions = "warning" | "error" | undefined;
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
    * The slug of the icon to be displayed in the TrackerStep
    */
-  TBC_PROP_NAME?: TBC_PROP_NAMEOptions;
+  stage?: StageOptions;
+  status?: StatusOptions;
 }
 
 const iconMap = {
@@ -50,16 +52,22 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   }, [isWithinSteppedTracker]);
 };
 
-const parseIconSlug = (iconSlug: TBC_PROP_NAMEOptions, active: boolean) => {
-  if (iconSlug === "completed") return iconSlug;
+const parseState = (
+  stage: StageOptions,
+  status: StatusOptions,
+  active: boolean
+) => {
+  if (stage === "completed") return "completed";
   if (active) return "active";
-  return iconSlug;
+  if (status) return status;
+  return stage;
 };
 
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref) {
     const {
-      TBC_PROP_NAME = "pending",
+      stage = "pending",
+      status,
       style,
       className,
       children,
@@ -80,9 +88,9 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
     const isActive = activeStep === stepNumber;
-    const iconSlug = parseIconSlug(TBC_PROP_NAME, isActive);
+    const state = parseState(stage, status, isActive);
 
-    const Icon = iconMap[iconSlug];
+    const Icon = iconMap[state];
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
 
@@ -93,10 +101,10 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     return (
       <li
-        className={clsx(withBaseName(), withBaseName(iconSlug), className)}
+        className={clsx(withBaseName(), withBaseName(state), className)}
         style={innerStyle}
         aria-current={isActive ? "step" : undefined}
-        data-state={iconSlug}
+        data-state={state}
         ref={ref}
         {...restProps}
       >
