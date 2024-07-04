@@ -2,4 +2,4 @@
 "@salt-ds/lab": minor
 ---
 
-Replaced TrackerStep's `state` prop with new `TBC_PROP_NAME` prop, and added `error` and `warning` to the options.
+Replaced TrackerStep's `state` prop with new `stage` and `status` props. Valid `stage` values are `"pending"` and `"completed"`. Valid `status` values are `"error"` and `"warning"`.
