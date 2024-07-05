@@ -10,7 +10,7 @@ export const WithTitle = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <SystemStatus status="error">
       <SystemStatusContent>
-        <StackLayout gap={0.75}>
+        <StackLayout gap={0.5}>
           <Text color="inherit">
             <strong>Connection interrupted</strong>
           </Text>
