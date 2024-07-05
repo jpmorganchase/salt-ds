@@ -22,7 +22,7 @@
     "gen:css": "yarn node './cssGen.js'"
   },
   "dependencies": {
-    "@jpmorganchase/mosaic-cli": "0.1.0-beta.78",
+    "@jpmorganchase/mosaic-cli": "0.1.0-beta.79",
     "@jpmorganchase/mosaic-components": "0.1.0-beta.78",
     "@jpmorganchase/mosaic-content-editor-plugin": "0.1.0-beta.78",
     "@jpmorganchase/mosaic-layouts": "0.1.0-beta.78",
