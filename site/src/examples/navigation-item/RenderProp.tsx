@@ -1,19 +1,5 @@
-import { FC, ReactElement, useState } from "react";
-import {
-  NavigationItem,
-  NavigationItemRenderProps,
-  StackLayout,
-} from "@salt-ds/core";
-
-const render: FC<NavigationItemRenderProps> = (props) => {
-  console.log("render NavigationItem with callback props", props);
-  const { parent, parentProps, linkProps } = props;
-  if (parent) {
-    return <button {...parentProps} />;
-  } else {
-    return <a {...linkProps} />;
-  }
-};
+import { ReactElement, useState } from "react";
+import { NavigationItem, StackLayout } from "@salt-ds/core";
 
 export const RenderProp = (): ReactElement => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -35,7 +21,7 @@ export const RenderProp = (): ReactElement => {
             onExpand={() => setExpanded(!expanded)}
             orientation="vertical"
             parent={true}
-            render={render}
+            render={(props) => <button {...props} />}
           >
             Render Prop Parent
           </NavigationItem>
@@ -46,7 +32,7 @@ export const RenderProp = (): ReactElement => {
               href="#"
               level={1}
               orientation="vertical"
-              render={render}
+              render={(props) => <a {...props} />}
             >
               Render Prop Child
             </NavigationItem>

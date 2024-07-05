@@ -17,24 +17,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import navigationItemCss from "./NavigationItem.css";
 import { NavigationItemAction } from "./NavigationItemAction";
 
-type OptionalPartial<T, K extends keyof T> = Partial<Pick<T, K>>;
-
 type RenderProp<P = ComponentPropsWithRef<any>> = (props: P) => ReactNode;
-
-export interface NavigationItemRenderProps
-  extends OptionalPartial<
-    NavigationItemProps,
-    "active" | "expanded" | "level" | "parent" | "orientation"
-  > {
-  /**
-   * Props to apply to the child row to render a link
-   */
-  linkProps?: ComponentPropsWithoutRef<"a">;
-  /**
-   * Props to apply to the parent row to open and close the row
-   */
-  parentProps?: ComponentPropsWithoutRef<"button">;
-}
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -64,7 +47,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Render prop to enable customisation of navigation item element.
    */
-  render?: RenderProp<NavigationItemRenderProps> | ReactElement;
+  render?: RenderProp | ReactElement;
   /**
    * Action to be triggered when the navigation item is expanded.
    */

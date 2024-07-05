@@ -122,18 +122,9 @@ describe("GIVEN a NavItem", () => {
       );
       cy.findByText("Parent Button").should("exist");
       cy.get("@render").should("have.been.calledWithMatch", {
-        parent: true,
-        active: true,
-        linkProps: undefined,
-        parentProps: {
-          "aria-expanded": true,
-          "aria-label": "expand",
-          className: Cypress.sinon.match.string,
-          children: Cypress.sinon.match.any,
-        },
-        expanded: true,
-        level: 2,
-        orientation: "vertical",
+        "aria-expanded": true,
+        className: Cypress.sinon.match.string,
+        children: Cypress.sinon.match.any,
       });
     });
     it("should call `render` to create child item", () => {
@@ -156,19 +147,10 @@ describe("GIVEN a NavItem", () => {
       );
       cy.findByText("Navigation Link").should("exist");
       cy.get("@render").should("have.been.calledWithMatch", {
-        parent: false,
-        active: true,
-        linkProps: {
-          "aria-current": "page",
-          "aria-label": "change page",
-          className: Cypress.sinon.match.string,
-          children: Cypress.sinon.match.any,
-          href: "https://www.saltdesignsystem.com",
-        },
-        parentProps: undefined,
-        expanded: true,
-        level: 2,
-        orientation: "vertical",
+        "aria-current": "page",
+        className: Cypress.sinon.match.string,
+        children: Cypress.sinon.match.any,
+        href: "https://www.saltdesignsystem.com",
       });
     });
   });

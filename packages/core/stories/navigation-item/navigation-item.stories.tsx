@@ -1,10 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import {
   Badge,
   FlexLayout,
   NavigationItem,
   NavigationItemProps,
-  NavigationItemRenderProps,
   StackLayout,
   Text,
 } from "@salt-ds/core";
@@ -589,7 +588,7 @@ export const VerticalNestedGroupNoIcon = () => {
   );
 };
 
-const CustomLinkImplementation = (props: NavigationItemRenderProps) => (
+const CustomLinkImplementation = (props: any) => (
   <a {...props} aria-label={"overridden-label"}>
     <Text>Your Own Link Implementation</Text>
   </a>
@@ -640,13 +639,11 @@ export const WithRenderElement = () => {
 export const WithRenderProp = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
 
-  const render: FC<NavigationItemRenderProps> = (props) => {
-    console.log("render NavigationItem with callback props", props);
-    const { parent, parentProps, linkProps } = props;
-    if (parent) {
-      return <button {...parentProps} />;
+  const render = (props: any) => {
+    if (props.href) {
+      return <a {...props} />;
     } else {
-      return <a {...linkProps} />;
+      return <button {...props} />;
     }
   };
 
