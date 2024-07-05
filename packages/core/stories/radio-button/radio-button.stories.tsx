@@ -27,7 +27,9 @@ export const WithDescription = () => {
       label={
         <StackLayout gap={0.5} align="start">
           <Text>Bonds</Text>
-          <Text color="secondary">Debt securities</Text>
+          <Text color="secondary" styleAs="label">
+            Debt securities
+          </Text>
         </StackLayout>
       }
     />
@@ -93,7 +95,9 @@ const GroupWithDescriptions: StoryFn<typeof RadioButtonGroup> = (args) => (
       label={
         <StackLayout gap={0.5} align="start">
           <Text>NAMR</Text>
-          <Text color="secondary">North America</Text>
+          <Text color="secondary" styleAs="label">
+            North America
+          </Text>
         </StackLayout>
       }
     />
@@ -102,7 +106,9 @@ const GroupWithDescriptions: StoryFn<typeof RadioButtonGroup> = (args) => (
       label={
         <StackLayout gap={0.5} align="start">
           <Text>APAC</Text>
-          <Text color="secondary">Asia–Pacific</Text>
+          <Text color="secondary" styleAs="label">
+            Asia–Pacific
+          </Text>
         </StackLayout>
       }
     />
@@ -111,7 +117,9 @@ const GroupWithDescriptions: StoryFn<typeof RadioButtonGroup> = (args) => (
       label={
         <StackLayout gap={0.5} align="start">
           <Text>EMEA</Text>
-          <Text color="secondary">Europe, Middle East, and Africa</Text>
+          <Text color="secondary" styleAs="label">
+            Europe, Middle East, and Africa
+          </Text>
         </StackLayout>
       }
     />

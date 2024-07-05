@@ -59,7 +59,9 @@ export const WithDescription: StoryFn<typeof Checkbox> = () => {
       label={
         <StackLayout gap={0.5} align="start">
           <Text>Bonds</Text>
-          <Text color="secondary">Debt securities</Text>
+          <Text color="secondary" styleAs="label">
+            Debt securities
+          </Text>
         </StackLayout>
       }
     />
@@ -191,7 +193,9 @@ const GroupWithDescriptions: StoryFn<typeof CheckboxGroup> = (args) => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Alternatives</Text>
-            <Text color="secondary">Other investments</Text>
+            <Text color="secondary" styleAs="label">
+              Other investments
+            </Text>
           </StackLayout>
         }
       />
@@ -200,7 +204,9 @@ const GroupWithDescriptions: StoryFn<typeof CheckboxGroup> = (args) => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Equities</Text>
-            <Text color="secondary">Company shares</Text>
+            <Text color="secondary" styleAs="label">
+              Company shares
+            </Text>
           </StackLayout>
         }
       />
@@ -209,7 +215,9 @@ const GroupWithDescriptions: StoryFn<typeof CheckboxGroup> = (args) => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Fixed income</Text>
-            <Text color="secondary">Interest-paying</Text>
+            <Text color="secondary" styleAs="label">
+              Interest-paying
+            </Text>
           </StackLayout>
         }
       />
@@ -218,7 +226,9 @@ const GroupWithDescriptions: StoryFn<typeof CheckboxGroup> = (args) => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Bonds</Text>
-            <Text color="secondary">Debt securities</Text>
+            <Text color="secondary" styleAs="label">
+              Debt securities
+            </Text>
           </StackLayout>
         }
       />

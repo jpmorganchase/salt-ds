@@ -103,9 +103,7 @@ export const ComplexOptions = (): ReactElement => {
       {shortColorWithHex.slice(0, 5).map(({ color, hex }) => (
         <Option value={color} key={color}>
           <StackLayout gap={0.5} align="start">
-            <Text>
-              <strong>{color}</strong>
-            </Text>
+            <Text>{color}</Text>
             <Text styleAs="label" color="secondary">
               {hex}
             </Text>
