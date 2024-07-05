@@ -1,11 +1,8 @@
 import {
   ComponentPropsWithoutRef,
-  ComponentPropsWithRef,
   forwardRef,
   MouseEvent,
   MouseEventHandler,
-  ReactElement,
-  ReactNode,
 } from "react";
 import { makePrefixer } from "../utils";
 import { clsx } from "clsx";
@@ -16,8 +13,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 
 import navigationItemCss from "./NavigationItem.css";
 import { NavigationItemAction } from "./NavigationItemAction";
-
-type RenderProp<P = ComponentPropsWithRef<any>> = (props: P) => ReactNode;
+import { RenderPropsType } from "../utils";
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -47,7 +43,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Render prop to enable customisation of navigation item element.
    */
-  render?: RenderProp | ReactElement;
+  render?: RenderPropsType["render"];
   /**
    * Action to be triggered when the navigation item is expanded.
    */
@@ -114,7 +110,8 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             },
             withBaseName(orientation)
           )}
-          render={render ?? isParent ? <button /> : undefined}
+          render={render ?? (isParent ? <button /> : undefined)}
+          aria-label={isParent ? "expand" : undefined}
           aria-expanded={isParent ? expanded : undefined}
           onClick={handleClick}
           aria-current={!isParent && active ? "page" : undefined}
