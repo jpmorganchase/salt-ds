@@ -19,10 +19,21 @@ export interface ScrimProps extends ComponentPropsWithoutRef<"div"> {
    * If `true` the scrim is shown.
    */
   open?: boolean;
+  /**
+   * Styling variant. Defaults to "primary".
+   */
+  variant?: "primary" | "secondary";
 }
 
 export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
-  { className, children, fixed = false, open = true, ...rest },
+  {
+    className,
+    children,
+    fixed = false,
+    open = true,
+    variant = "primary",
+    ...rest
+  },
   ref
 ) {
   const targetWindow = useWindow();
@@ -40,6 +51,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
     <div
       className={clsx(
         withBaseName(),
+        withBaseName(variant),
         {
           [withBaseName("fixed")]: fixed,
         },

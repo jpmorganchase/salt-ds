@@ -1,5 +1,6 @@
 .salt-theme {
-  --salt-palette-opacity-backdrop: var(--salt-opacity-70);
+  --salt-palette-opacity-primary-backdrop: var(--salt-opacity-70);
+  --salt-palette-opacity-secondary-backdrop: var(--salt-opacity-40);
   --salt-palette-opacity-disabled: var(--salt-opacity-40);
   --salt-palette-opacity-background-readonly: var(--salt-opacity-0);
   --salt-palette-opacity-border-readonly: var(--salt-opacity-15);

@@ -7,6 +7,8 @@
   --salt-overlayable-shadow-drag: var(--salt-shadow-400);
   --salt-overlayable-shadow-modal: var(--salt-shadow-500);
 
-  --salt-overlayable-background: var(--salt-palette-neutral-backdrop);
+  --salt-overlayable-primary-background: var(--salt-palette-neutral-primary-backdrop);
+  --salt-overlayable-secondary-background: var(--salt-palette-neutral-secondary-backdrop);
+
   --salt-overlayable-rangeSelection: var(--salt-palette-neutral-selection);
 }

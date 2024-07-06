@@ -11,7 +11,6 @@
   position: absolute;
   align-items: center;
   justify-content: center;
-  background: var(--saltScrim-background, var(--salt-overlayable-background));
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -22,4 +21,12 @@
 /* Style applied to the root element when fixed={true} */
 .saltScrim-fixed {
   position: fixed;
+}
+
+.saltScrim-primary {
+  background: var(--saltScrim-background, var(--salt-overlayable-primary-background));
+}
+
+.saltScrim-secondary {
+  background: var(--saltScrim-background, var(--salt-overlayable-secondary-background));
 }
