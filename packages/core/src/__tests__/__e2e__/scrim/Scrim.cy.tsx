@@ -22,4 +22,24 @@ describe("Given a Scrim", () => {
       cy.get("@clickSpy").should("have.callCount", 1);
     });
   });
+
+  describe("Test Scrim variants", () => {
+    it("should render primary scrim by default", () => {
+      cy.mount(<Scrim open>Click to close Scrim</Scrim>);
+      cy.get(".saltScrim").should("have.class", "saltScrim-primary");
+      cy.get(".saltScrim").should("not.have.class", "saltScrim-secondary");
+    });
+
+    it("should render primary scrim with variant prop", () => {
+      cy.mount(<Scrim open variant={"primary"}>Click to close Scrim</Scrim>);
+      cy.get(".saltScrim").should("have.class", "saltScrim-primary");
+      cy.get(".saltScrim").should("not.have.class", "saltScrim-secondary");
+    });
+
+    it("should render secondary scrim with variant prop", () => {
+      cy.mount(<Scrim open variant={"secondary"}>Click to close Scrim</Scrim>);
+      cy.get(".saltScrim").should("have.class", "saltScrim-secondary");
+      cy.get(".saltScrim").should("not.have.class", "saltScrim-primary");
+    });
+  });
 });
