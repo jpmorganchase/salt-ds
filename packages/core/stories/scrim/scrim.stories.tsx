@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Scrim, Spinner, Text, Card, StackLayout } from "@salt-ds/core";
+import { Button, Scrim, Spinner, Text, Card, StackLayout, Label } from "@salt-ds/core";
 import { StoryFn, Meta } from "@storybook/react";
 
 export default {
@@ -151,5 +151,37 @@ export const CoveredBorder: StoryFn<typeof Scrim> = () => {
         <Button onClick={handleClose}>Click to close scrim</Button>
       </Scrim>
     </div>
+  );
+};
+
+export const Variants: StoryFn<typeof Scrim> = () => {
+  const variants = ["primary", "secondary"] as const;
+  return (
+    <StackLayout style={{ width: 600 }}>
+      {variants.map((variant) => {
+        return (
+          <StackLayout align="end" key={variant}>
+            <StackLayout direction="row">
+              <Card style={{ position: "relative", width: "512px" }}>
+                <StackLayout>
+                  <Text>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </Text>
+                  <Scrim open={true} variant={variant} />
+                </StackLayout>
+              </Card>
+            </StackLayout>
+            <Label>Variant: {variant}</Label>
+          </StackLayout>
+        );
+      })}
+    </StackLayout>
   );
 };
