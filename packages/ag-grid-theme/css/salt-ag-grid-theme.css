@@ -32,7 +32,7 @@ div[class*="ag-theme-salt"] {
   --ag-invalid-color: var(--salt-status-error-foreground-informative);
   --ag-list-item-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-material-primary-color: var(--salt-editable-borderColor);
-  --ag-modal-overlay-background-color: var(--salt-overlayable-background);
+  --ag-modal-overlay-background-color: var(--salt-overlayable-primary-background);
   --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
   --ag-range-selection-background-color: var(--salt-overlayable-rangeSelection);
   --ag-range-selection-border-style: none;

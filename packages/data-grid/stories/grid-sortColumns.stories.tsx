@@ -105,7 +105,7 @@ export function ServerSideSort() {
       style={{
         position: "relative",
         // @ts-ignore
-        "--salt-overlayable-background":
+        "--salt-overlayable-primary-background":
           mode === "light"
             ? "var(--salt-color-gray-60-fade-background)"
             : "var(--salt-color-gray-300-fade-background)",
