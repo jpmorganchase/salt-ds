@@ -169,7 +169,6 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       linkProps = {
         ...elementProps,
         href,
-        "aria-label": "change page",
         "aria-current": active ? "page" : undefined,
       };
     }
