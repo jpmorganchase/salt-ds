@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
-import { Button, StackLayout, FlexLayout, Tooltip } from "@salt-ds/core";
+import { Button, StackLayout, FlexLayout, Text, Tooltip } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { StoryFn, Meta } from "@storybook/react";
 
@@ -204,6 +204,65 @@ export const AutoProgress: StoryFn<typeof SteppedTracker> = () => {
           </TrackerStep>
         ))}
       </SteppedTracker>
+      <FlexLayout justify="center" gap={1}>
+        <Button onClick={onComplete}>Complete Step</Button>
+        <Tooltip content="Reset">
+          <Button onClick={onRefresh}>
+            <RefreshIcon />
+          </Button>
+        </Tooltip>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const SingleLabel: StoryFn<typeof SteppedTracker> = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const [steps, setSteps] = useState(sampleSteps);
+  const totalSteps = steps.length;
+
+  const onComplete = () => {
+    if (activeStep < totalSteps - 1) {
+      setActiveStep((old) => old + 1);
+    }
+
+    setSteps((old) =>
+      old.map((step, i) =>
+        i === activeStep
+          ? {
+              ...step,
+              state: "completed",
+            }
+          : step
+      )
+    );
+  };
+
+  const onRefresh = () => {
+    setActiveStep(0);
+    setSteps(sampleSteps);
+  };
+
+  return (
+    <StackLayout
+      direction="column"
+      gap="0"
+      align="stretch"
+      style={{ width: "80%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+    >
+      <SteppedTracker alignment="left" activeStep={activeStep}>
+        {steps.map(({ label, state }, key) => (
+          <TrackerStep
+            aria-labelledby="stepper_label"
+            state={state}
+            key={key}
+          ></TrackerStep>
+        ))}
+      </SteppedTracker>
+      <Text id="stepper_label" style={{ marginTop: "var(--salt-spacing-100)" }}>
+        Step {activeStep + 1} of {steps.length}:
+        <strong>{steps[activeStep].label}</strong>
+      </Text>
       <FlexLayout justify="center" gap={1}>
         <Button onClick={onComplete}>Complete Step</Button>
         <Tooltip content="Reset">

@@ -116,9 +116,13 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         ref={ref}
         {...restProps}
       >
-        <Icon />
-        {hasConnector && <TrackerConnector state={connectorState} />}
-        <div className={withBaseName("body")}>{children}</div>
+        <div className={withBaseName("track")}>
+          <Icon className={withBaseName("icon")} />
+          {hasConnector && <TrackerConnector state={connectorState} />}
+        </div>
+        {children ? (
+          <div className={withBaseName("body")}>{children}</div>
+        ) : null}
       </li>
     );
   }
