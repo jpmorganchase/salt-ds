@@ -94,7 +94,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           },
           className
         )}
-        aria-live={loading !== undefined ? "assertive" : undefined}
         {...restProps}
         ref={ref}
         type={type}

@@ -60,10 +60,6 @@ describe("Given a Button", () => {
     cy.mount(<FeatureButton />);
     cy.findByRole("button").should("have.attr", "type", "button");
   });
-  it("should have an aria-live attribute as assertive when loading is true", () => {
-    cy.mount(<FeatureButton loading />);
-    cy.findByRole("button").should("have.attr", "aria-live", "assertive");
-  });
   it("should have overlay when loading is true", () => {
     cy.mount(<FeatureButton loading />);
     cy.get(".saltButton-loading-overlay").should("exist");
