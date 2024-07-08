@@ -4330,7 +4330,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-theme@npm:0.1.0-beta.78, @jpmorganchase/mosaic-theme@npm:^0.1.0-beta.78":
+"@jpmorganchase/mosaic-theme@npm:0.1.0-beta.78":
   version: 0.1.0-beta.78
   resolution: "@jpmorganchase/mosaic-theme@npm:0.1.0-beta.78"
   dependencies:
@@ -4345,6 +4345,24 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
   checksum: 10/14e8ae86dea1d92f3db40212f216b4a5a920d2e0411b931146f26ba4346611a0fd4234c0b46390941e349eb437756f379bda9d66947e108ccdb1d78d0db8a3a0
+  languageName: node
+  linkType: hard
+
+"@jpmorganchase/mosaic-theme@npm:0.1.0-beta.80, @jpmorganchase/mosaic-theme@npm:^0.1.0-beta.78":
+  version: 0.1.0-beta.80
+  resolution: "@jpmorganchase/mosaic-theme@npm:0.1.0-beta.80"
+  dependencies:
+    "@salt-ds/icons": "npm:^1.12.1"
+    "@vanilla-extract/css": "npm:^1.6.0"
+    "@vanilla-extract/css-utils": "npm:^0.1.1"
+    "@vanilla-extract/recipes": "npm:^0.2.1"
+    "@vanilla-extract/sprinkles": "npm:^1.3.0"
+    fast-deep-equal: "npm:^3.1.3"
+  peerDependencies:
+    "@types/react": ^18.0.26
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10/2ca203f01ec65ae2f16de148ba11c097b8fbfa59e1a43b15aefc42d3dbf733bca172c046eed8a15a3a38f9ba26cd04c634c6b0d0b78e6eb0dbac0ce7318d7aec
   languageName: node
   linkType: hard
 
@@ -5738,7 +5756,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/icons@npm:^1.11.1, @salt-ds/icons@workspace:packages/icons":
+"@salt-ds/icons@npm:^1.11.1, @salt-ds/icons@npm:^1.12.1, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
   dependencies:
@@ -5882,7 +5900,7 @@ __metadata:
     "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.78"
     "@jpmorganchase/mosaic-standard-generator": "npm:0.1.0-beta.78"
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.78"
-    "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.78"
+    "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.80"
     "@next/eslint-plugin-next": "npm:^14.2.2"
     "@philpl/buble": "npm:^0.19.7"
     "@types/node": "npm:^16.0.0"
