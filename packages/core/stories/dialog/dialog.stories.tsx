@@ -332,6 +332,21 @@ export const DesktopDialog = () => {
   );
 };
 
+export const FullBleedContent = () => {
+  return (
+    <Dialog size="small" open={true}>
+      <div
+        style={{
+          maxWidth: "100%",
+          height: "200px",
+          background: "grey",
+        }}
+      />
+      <DialogCloseButton />
+    </Dialog>
+  );
+};
+
 export const StickyFooter: StoryFn<typeof Dialog> = ({
   open: openProp = false,
 }) => {

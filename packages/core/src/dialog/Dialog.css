@@ -8,7 +8,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  padding-top: var(--salt-spacing-300);
+  padding-top: calc(var(--saltButton-height, var(--salt-size-base)) + (var(--salt-focused-outlineWidth) * 2));
   padding-bottom: var(--salt-spacing-300);
   background: var(--salt-container-primary-background);
   box-shadow: var(--salt-overlayable-shadow-modal);

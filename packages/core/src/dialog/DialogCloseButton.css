@@ -1,5 +1,5 @@
 .saltButton.saltDialogCloseButton {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: var(--salt-focused-outlineWidth);
+  right: var(--salt-focused-outlineWidth);
 }
