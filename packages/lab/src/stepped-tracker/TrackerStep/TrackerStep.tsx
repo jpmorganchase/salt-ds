@@ -26,9 +26,14 @@ type StatusOptions = "warning" | "error" | undefined;
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
-   * The slug of the icon to be displayed in the TrackerStep
+   * The stage of the step: "pending" or "completed" (note, "active" is derived from "activeStep" in parent SteppedTracker component)
    */
   stage?: StageOptions;
+  /**
+   * The status of the step: warning or error
+   *
+   * If the stage is completed or active, the status prop will be ignored
+   */
   status?: StatusOptions;
 }
 
