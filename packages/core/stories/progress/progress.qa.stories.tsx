@@ -3,6 +3,8 @@ import { Meta, StoryFn } from "@storybook/react";
 import { CircularProgress, LinearProgress } from "@salt-ds/core";
 import { QAContainer, QAContainerProps } from "docs/components";
 
+import "./progress.qa.stories.css";
+
 export default {
   title: "Core/Progress/Progress QA",
   component: CircularProgress,
@@ -35,6 +37,12 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         hideLabel
       />
       <CircularProgress aria-label="Download" value={38} hideLabel />
+      <LinearProgress
+        aria-label="Download"
+        // Chromatic doesn't work https://www.chromatic.com/docs/animations/#css-animations
+        className="noAnimation"
+        style={{ padding: "50px" }}
+      />
     </QAContainer>
   );
 };

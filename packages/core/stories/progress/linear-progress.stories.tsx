@@ -1,11 +1,11 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
-  FlowLayout,
-  StackLayout,
   CircularProgress,
+  FlowLayout,
   LinearProgress,
+  StackLayout,
 } from "@salt-ds/core";
+import { Meta, StoryFn } from "@storybook/react";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";
@@ -91,3 +91,5 @@ export const ProgressingValue: StoryFn<typeof LinearProgress> = () => (
 export const ProgressingBufferValue: StoryFn<typeof LinearProgress> = () => (
   <ProgressBufferWithControls ProgressComponent={LinearProgress} />
 );
+
+export const Indeterminate = Default.bind({});

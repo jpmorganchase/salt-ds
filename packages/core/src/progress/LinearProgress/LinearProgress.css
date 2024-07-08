@@ -56,3 +56,26 @@
   white-space: nowrap;
   padding-left: var(--salt-spacing-100);
 }
+
+.saltLinearProgress-indeterminate.saltLinearProgress-bar {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+  transform-origin: left center;
+  width: 66%;
+  animation: 1.8s ease-in-out infinite salt-indeterminate-progress-bar;
+}
+
+@keyframes salt-indeterminate-progress-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    /* 155% is slightly more than moving the bar off screen (with width of 66%) */
+    transform: translateX(155%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
