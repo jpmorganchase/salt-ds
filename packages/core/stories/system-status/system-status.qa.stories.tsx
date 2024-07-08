@@ -3,12 +3,12 @@ import {
   SystemStatus,
   SystemStatusProps,
   SystemStatusContent,
-} from "@salt-ds/core";
+} from "@salt-ds/lab";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
 export default {
-  title: "Core/System Status/System Status QA",
+  title: "Lab/System Status/System Status QA",
   component: SystemStatus,
 } as Meta<typeof SystemStatus>;
 

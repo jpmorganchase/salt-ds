@@ -1,7 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
 import {
-  SystemStatus,
-  SystemStatusContent,
   StackLayout,
   Text,
   Banner,
@@ -9,11 +7,12 @@ import {
   BannerActions,
   Button,
 } from "@salt-ds/core";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 
 import { CloseIcon } from "@salt-ds/icons";
 
 export default {
-  title: "Core/System Status",
+  title: "Lab/System Status",
   component: SystemStatus,
 } as Meta<typeof SystemStatus>;
 

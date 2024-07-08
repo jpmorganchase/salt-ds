@@ -1,6 +1,9 @@
 import { forwardRef, HTMLAttributes } from "react";
-import { makePrefixer } from "../utils";
-import { StatusIndicator, ValidationStatus } from "../status-indicator";
+import { makePrefixer } from "@salt-ds/core/src/utils";
+import {
+  StatusIndicator,
+  ValidationStatus,
+} from "@salt-ds/core/src/status-indicator";
 import { clsx } from "clsx";
 
 import { useWindow } from "@salt-ds/window";

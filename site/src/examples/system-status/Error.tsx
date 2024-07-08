@@ -1,11 +1,6 @@
 import { ReactElement } from "react";
-import {
-  SystemStatus,
-  SystemStatusContent,
-  Button,
-  StackLayout,
-  Text,
-} from "@salt-ds/core";
+import { Text } from "@salt-ds/core";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 
 export const Error = (): ReactElement => (
   <div style={{ width: "80%" }}>

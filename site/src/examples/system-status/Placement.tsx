@@ -1,6 +1,4 @@
 import {
-  SystemStatus,
-  SystemStatusContent,
   StackLayout,
   Text,
   Banner,
@@ -8,6 +6,7 @@ import {
   BannerActions,
   Button,
 } from "@salt-ds/core";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 
 import { CloseIcon } from "@salt-ds/icons";
 

@@ -1,9 +1,5 @@
-import {
-  SystemStatus,
-  SystemStatusContent,
-  StackLayout,
-  Text,
-} from "@salt-ds/core";
+import { StackLayout, Text } from "@salt-ds/core";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import { ReactElement } from "react";
 
 export const WithTitle = (): ReactElement => (

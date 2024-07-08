@@ -1,8 +1,8 @@
 ---
-"@salt-ds/core": minor
+"@salt-ds/lab": minor
 ---
 
-Added `SystemStatus`, `SystemStatusContent`, `SystemStatusActions` component.
+Added `SystemStatus`, `SystemStatusContent`, `SystemStatusActions` component to lab.
 
 ```tsx
 <SystemStatus {...props}>
