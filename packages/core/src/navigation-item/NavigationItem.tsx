@@ -161,7 +161,6 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         : undefined;
       parentProps = {
         ...elementProps,
-        "aria-label": "expand",
         "aria-expanded": expanded,
         onClick: handleExpand,
       };
