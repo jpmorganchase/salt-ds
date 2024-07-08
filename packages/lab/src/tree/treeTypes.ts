@@ -24,7 +24,7 @@ export interface TreeNode {
 
 export interface TreeProps<T, Selection extends SelectionStrategy>
   extends SelectionProps<T, Selection>,
-    Omit<HTMLAttributes<HTMLDivElement>, "onSelect"> {
+    Omit<HTMLAttributes<HTMLDivElement>, "onSelect" | "onToggle"> {
   disabled?: boolean;
   groupSelection?: string;
   height?: number;

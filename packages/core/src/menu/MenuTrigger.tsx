@@ -2,7 +2,7 @@ import { cloneElement, isValidElement, ReactNode } from "react";
 import { useMenuContext } from "./MenuContext";
 import { MenuTriggerContext } from "./MenuTriggerContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
-import { mergeProps, useForkRef } from "../utils";
+import { mergeProps, useForkRef, getRefFromChildren } from "../utils";
 
 export interface MenuTriggerProps {
   /**
@@ -19,8 +19,7 @@ export function MenuTrigger(props: MenuTriggerProps) {
   const { setFocusInside: setFocusInsideParent } = useMenuPanelContext();
 
   const handleRef = useForkRef(
-    // @ts-expect-error error TS2339 missing property ref
-    isValidElement(children) ? children.ref : null,
+    getRefFromChildren(children),
     refs?.setReference
   );
 
