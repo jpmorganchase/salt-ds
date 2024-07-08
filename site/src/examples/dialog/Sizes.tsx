@@ -190,7 +190,7 @@ const LargeDialog = (): ReactElement => {
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
-        size="medium"
+        size="large"
         aria-labelledby="wizard-dialog"
       >
         <SplitLayout
