@@ -22,7 +22,13 @@ import trackerStepCss from "./TrackerStep.css";
 const withBaseName = makePrefixer("saltTrackerStep");
 
 type StageOptions = "pending" | "completed";
-type StatusOptions = "warning" | "error" | undefined;
+type StatusOptions = "warning" | "error";
+
+interface ParseStateProps {
+  stage: StageOptions;
+  status?: StatusOptions;
+  active: boolean;
+}
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
@@ -57,11 +63,7 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   }, [isWithinSteppedTracker]);
 };
 
-const parseState = (
-  stage: StageOptions,
-  status: StatusOptions,
-  active: boolean
-) => {
+const parseState = ({ stage, status, active }: ParseStateProps) => {
   if (stage === "completed") return "completed";
   if (active) return "active";
   if (status) return status;
@@ -93,7 +95,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
     const isActive = activeStep === stepNumber;
-    const state = parseState(stage, status, isActive);
+    const state = parseState({ stage, status, active: isActive });
 
     const Icon = iconMap[state];
     const connectorState = activeStep > stepNumber ? "active" : "default";
