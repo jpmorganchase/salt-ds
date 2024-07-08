@@ -12,6 +12,7 @@ import {
   ownerDocument,
   useForkRef,
   useIsomorphicLayoutEffect,
+  getRefFromChildren,
 } from "@salt-ds/core";
 
 export interface PortalProps {
@@ -59,11 +60,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
 ) {
   const [mounted, setMounted] = useState(false);
   const portalRef = useRef<HTMLElement | null>(null);
-  const handleRef = useForkRef(
-    // @ts-ignore
-    isValidElement(children) ? children.ref : null,
-    ref
-  );
+  const handleRef = useForkRef(getRefFromChildren(children), ref);
 
   const container = getContainer(containerProp) ?? document.body;
 

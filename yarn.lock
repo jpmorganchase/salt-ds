@@ -5816,7 +5816,7 @@ __metadata:
     "@testing-library/react": "npm:^15.0.0"
     "@types/no-scroll": "npm:^2.1.0"
     "@types/node": "npm:^20.0.0"
-    "@types/react": "npm:^18.0.0"
+    "@types/react": "npm:^18.3.3"
     "@types/react-color": "npm:^3.0.6"
     "@types/react-dom": "npm:^18.0.0"
     "@types/tinycolor2": "npm:^1.4.3"
@@ -5847,9 +5847,9 @@ __metadata:
     msw-storybook-addon: "npm:^1.8.0"
     prettier: "npm:^2.6.2"
     pretty-quick: "npm:^3.1.3"
-    react: "npm:^18.0.0"
+    react: "npm:^18.3.1"
     react-docgen-typescript: "npm:2.2.2"
-    react-dom: "npm:^18.0.0"
+    react-dom: "npm:^18.3.1"
     rifm: "npm:^0.12.0"
     sass: "npm:^1.52.3"
     storybook: "npm:^8.1.10"
@@ -5884,7 +5884,7 @@ __metadata:
     "@next/eslint-plugin-next": "npm:^14.2.2"
     "@philpl/buble": "npm:^0.19.7"
     "@types/node": "npm:^16.0.0"
-    "@types/react": "npm:^18.0.26"
+    "@types/react": "npm:^18.3.3"
     concurrently: "npm:^8.0.0"
     cross-env: "npm:^7.0.3"
     dotenv-load: "npm:^2.0.1"
@@ -5894,8 +5894,8 @@ __metadata:
     next-auth: "npm:^4.24.7"
     node-fetch: "npm:^3.0.0"
     raw-loader: "npm:^4.0.2"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:^18.3.1"
+    react-dom: "npm:^18.3.1"
     react-markdown: "npm:^8.0.7"
   languageName: unknown
   linkType: soft
@@ -8807,14 +8807,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, @types/react@npm:^18.0.0, @types/react@npm:^18.0.26":
-  version: 18.0.28
-  resolution: "@types/react@npm:18.0.28"
+"@types/react@npm:*, @types/react@npm:>=16, @types/react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, @types/react@npm:^18.3.3":
+  version: 18.3.3
+  resolution: "@types/react@npm:18.3.3"
   dependencies:
     "@types/prop-types": "npm:*"
-    "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: 10/7a752e6c5e76139f258bc14827d2c574bb76d6e7eb1b240f24f79b269153cb88668c34ba7078d3de99ec1973b7022e1f788e71117bd52a287f382d24bb80be40
+  checksum: 10/68e203b7f1f91d6cf21f33fc7af9d6d228035a26c83f514981e54aa3da695d0ec6af10c277c6336de1dd76c4adbe9563f3a21f80c4462000f41e5f370b46e96c
   languageName: node
   linkType: hard
 
@@ -8856,13 +8855,6 @@ __metadata:
   version: 0.12.1
   resolution: "@types/retry@npm:0.12.1"
   checksum: 10/5f46b2556053655f78262bb33040dc58417c900457cc63ff37d6c35349814471453ef511af0cec76a540c601296cd2b22f64bab1ab649c0dacc0223765ba876c
-  languageName: node
-  linkType: hard
-
-"@types/scheduler@npm:*":
-  version: 0.16.2
-  resolution: "@types/scheduler@npm:0.16.2"
-  checksum: 10/b6b4dcfeae6deba2e06a70941860fb1435730576d3689225a421280b7742318d1548b3d22c1f66ab68e414f346a9542f29240bc955b6332c5b11e561077583bc
   languageName: node
   linkType: hard
 
@@ -25990,15 +25982,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react-dom@npm:^18.0.0, react-dom@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
+"react-dom@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react-dom@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "react-dom@npm:18.3.1"
   dependencies:
     loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
+    scheduler: "npm:^0.23.2"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10/ca5e7762ec8c17a472a3605b6f111895c9f87ac7d43a610ab7024f68cd833d08eda0625ce02ec7178cc1f3c957cf0b9273cdc17aa2cd02da87544331c43b1d21
+    react: ^18.3.1
+  checksum: 10/3f4b73a3aa083091173b29812b10394dd06f4ac06aff410b74702cfb3aa29d7b0ced208aab92d5272919b612e5cda21aeb1d54191848cf6e46e9e354f3541f81
   languageName: node
   linkType: hard
 
@@ -26380,12 +26372,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react@npm:^18.0.0, react@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
+"react@npm:^16.8.0 || ^17.0.0 || ^18.0.0, react@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "react@npm:18.3.1"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/b9214a9bd79e99d08de55f8bef2b7fc8c39630be97c4e29d7be173d14a9a10670b5325e94485f74cd8bff4966ef3c78ee53c79a7b0b9b70cba20aa8973acc694
+  checksum: 10/261137d3f3993eaa2368a83110466fc0e558bc2c7f7ae7ca52d94f03aac945f45146bd85e5f481044db1758a1dbb57879e2fcdd33924e2dde1bdc550ce73f7bf
   languageName: node
   linkType: hard
 
@@ -27660,12 +27652,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
+"scheduler@npm:^0.23.2":
+  version: 0.23.2
+  resolution: "scheduler@npm:0.23.2"
   dependencies:
     loose-envify: "npm:^1.1.0"
-  checksum: 10/0c4557aa37bafca44ff21dc0ea7c92e2dbcb298bc62eae92b29a39b029134f02fb23917d6ebc8b1fa536b4184934314c20d8864d156a9f6357f3398aaf7bfda8
+  checksum: 10/e8d68b89d18d5b028223edf090092846868a765a591944760942b77ea1f69b17235f7e956696efbb62c8130ab90af7e0949bfb8eba7896335507317236966bc9
   languageName: node
   linkType: hard
 

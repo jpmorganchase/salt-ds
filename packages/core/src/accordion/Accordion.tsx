@@ -5,7 +5,8 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useControlled, useId } from "../utils";
 import accordionCss from "./Accordion.css";
-export interface AccordionProps extends ComponentPropsWithoutRef<"div"> {
+export interface AccordionProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "onToggle"> {
   /**
    * AccordionGroup value.
    */
