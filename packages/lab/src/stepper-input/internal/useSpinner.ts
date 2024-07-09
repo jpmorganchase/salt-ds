@@ -7,13 +7,13 @@ const INTERVAL_DELAY = 300;
 function useSpinner(activationFn: () => void, isAtLimit: boolean) {
   const [buttonDown, setButtonDown] = useState(false);
 
-  const cancelInterval = () => setButtonDown(false);
-
   useEffect(() => {
     if (isAtLimit) setButtonDown(false);
   }, [isAtLimit]);
 
   useEffect(() => {
+    const cancelInterval = () => setButtonDown(false);
+
     window.addEventListener("keyup", cancelInterval);
     window.addEventListener("mouseup", cancelInterval);
     return () => {

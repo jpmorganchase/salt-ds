@@ -1,14 +1,14 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type MouseEvent,
   forwardRef,
   useRef,
-  MouseEvent,
-  FocusEvent,
-  ComponentPropsWithoutRef,
 } from "react";
-import { clsx } from "clsx";
 import { useToggleButtonGroup } from "../toggle-button-group";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
 
 import toggleButtonCss from "./ToggleButton.css";
@@ -94,5 +94,5 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );

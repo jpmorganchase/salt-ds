@@ -1,18 +1,18 @@
+import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
-  ForwardedRef,
+  type ForwardedRef,
   forwardRef,
   useCallback,
   useImperativeHandle,
   useRef,
 } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { useTabs } from "./useTabs";
+import type { FocusAPI, TabstripProps } from "./TabsTypes";
 import { Tabstrip } from "./Tabstrip";
-import { FocusAPI, TabstripProps } from "./TabsTypes";
+import { useTabs } from "./useTabs";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import tabsCss from "./Tabs.css";
 
@@ -42,7 +42,7 @@ export const Tabs = forwardRef(function Tabs(
     variant,
     ...htmlAttributes
   }: TabsProps,
-  forwardedRef: ForwardedRef<FocusAPI>
+  forwardedRef: ForwardedRef<FocusAPI>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -57,8 +57,8 @@ export const Tabs = forwardRef(function Tabs(
     () =>
       ({
         focus: () => tabstripRef.current?.focus(),
-      } as FocusAPI),
-    []
+      }) as FocusAPI,
+    [],
   );
 
   const { id, onActiveChange, activeTabIndex, tabPanel, tabs } = useTabs({
@@ -90,7 +90,7 @@ export const Tabs = forwardRef(function Tabs(
         return `${id}-${tabIndex}-panel`;
       }
     },
-    [id, activeTabIndex]
+    [id, activeTabIndex],
   );
 
   // TODO need to inject aria-controls

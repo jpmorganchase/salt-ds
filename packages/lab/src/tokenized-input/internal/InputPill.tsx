@@ -1,13 +1,13 @@
-import { clsx } from "clsx";
-import { memo, MutableRefObject, useRef } from "react";
 import {
+  Pill,
+  type PillProps,
   makePrefixer,
   useIsomorphicLayoutEffect,
-  Pill,
-  PillProps,
 } from "@salt-ds/core";
-import { getWidth } from "./useWidth";
 import { CloseIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import { type MutableRefObject, memo, useRef } from "react";
+import { getWidth } from "./useWidth";
 
 const withBaseName = makePrefixer("saltInputPill");
 
@@ -72,7 +72,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     () => () => {
       pillsRef.current[index] = undefined;
     },
-    [pillsRef, index]
+    [pillsRef, index],
   );
 
   const handleDelete = () => {
@@ -88,7 +88,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
           [withBaseName("pillLastVisible")]: lastVisible,
           [withBaseName("hidden")]: hidden,
         },
-        className
+        className,
       )}
       disabled={disabled}
       tabIndex={-1}

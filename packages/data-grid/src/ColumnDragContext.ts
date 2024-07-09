@@ -1,4 +1,4 @@
-import { createContext, MouseEventHandler, useContext } from "react";
+import { type MouseEventHandler, createContext, useContext } from "react";
 
 export interface ColumnDragContext {
   columnMove?: boolean;
@@ -6,13 +6,13 @@ export interface ColumnDragContext {
 }
 
 export const ColumnDragContext = createContext<ColumnDragContext | undefined>(
-  undefined
+  undefined,
 );
 
 export const useColumnDragContext = () => {
   const c = useContext(ColumnDragContext);
   if (!c) {
-    throw new Error(`useColumnDragContext invoked outside of a Grid`);
+    throw new Error("useColumnDragContext invoked outside of a Grid");
   }
   return c;
 };

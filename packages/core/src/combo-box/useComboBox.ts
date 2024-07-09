@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, SyntheticEvent } from "react";
+import type { ComponentPropsWithoutRef, SyntheticEvent } from "react";
+import type { OptionValue } from "../list-control/ListControlContext";
 import {
+  type ListControlProps,
   useListControl,
-  ListControlProps,
 } from "../list-control/ListControlState";
-import { OptionValue } from "../list-control/ListControlContext";
 import { useControlled } from "../utils";
 
 export type UseComboBoxProps<Item> = ListControlProps<Item> &
@@ -69,7 +69,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
 
     setSelectedState(newSelected);
     const newValue = getOptionsMatching((option) =>
-      newSelected.includes(option.value)
+      newSelected.includes(option.value),
     ).map((option) => listControl.valueToString(option.data.value));
     setValueState(multiselect ? "" : newValue[0]);
     onSelectionChange?.(event, newSelected);
@@ -84,7 +84,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
       return;
     }
 
-    let newSelected;
+    let newSelected: Item[];
 
     if (selectedState.includes(itemToRemove)) {
       newSelected = selectedState.filter((item) => item !== itemToRemove);

@@ -1,17 +1,22 @@
-import React, {
+import { useControlled } from "@salt-ds/core";
+import type React from "react";
+import {
   Children,
-  FocusEventHandler,
+  type FocusEventHandler,
+  type MouseEventHandler,
+  type ReactNode,
+  type RefObject,
   isValidElement,
-  MouseEventHandler,
-  ReactNode,
-  RefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
-import {
+import type { CellEditorInfo } from "../CellEditor";
+import type { ColumnGroupProps } from "../ColumnGroup";
+import type { FocusedPart } from "../CursorContext";
+import type {
   GridCellSelectionMode,
   GridColumnGroupModel,
   GridColumnModel,
@@ -20,19 +25,15 @@ import {
   GridRowSelectionMode,
   RowKeyGetter,
 } from "../Grid";
-import { ColumnGroupProps } from "../ColumnGroup";
+import type { GridColumnInfo, GridColumnPin } from "../GridColumn";
+import type { GridContext } from "../GridContext";
 import { NumberRange } from "../NumberRange";
-import { GridColumnInfo, GridColumnPin } from "../GridColumn";
 import {
   getAttribute,
   getCellPosition,
   makeMapAdder,
   makeMapDeleter,
 } from "./utils";
-import { GridContext } from "../GridContext";
-import { CellEditorInfo } from "../CellEditor";
-import { useControlled } from "@salt-ds/core";
-import { FocusedPart } from "../CursorContext";
 
 // Attaches active onWheel event to a table element
 // Grid needs to prevent default onWheel event handling for situations when a
@@ -81,13 +82,13 @@ function sumRangeWidth<T>(columns: GridColumnModel<T>[], range: NumberRange) {
 // Sum width of the given range of columns wrapped in useMemo.
 export function useSumRangeWidth<T>(
   columns: GridColumnModel<T>[],
-  range: NumberRange
+  range: NumberRange,
 ) {
   return useMemo(() => sumRangeWidth(columns, range), [columns, range]);
 }
 
 // Range memoization using Rng.equals comparator.
-function useMemoRng(fn: () => NumberRange, deps: any[]) {
+function useMemoRng(fn: () => NumberRange, deps: unknown[]) {
   const prevRef = useRef<NumberRange>(NumberRange.empty);
   const range = useMemo(fn, deps);
   if (!NumberRange.equals(prevRef.current, range)) {
@@ -100,7 +101,7 @@ function useMemoRng(fn: () => NumberRange, deps: any[]) {
 export function useBodyVisibleColumnRange<T>(
   midColumns: GridColumnModel<T>[],
   scrollLeft: number,
-  clientMidWidth: number
+  clientMidWidth: number,
 ): NumberRange {
   return useMemoRng(() => {
     if (clientMidWidth === 0 || midColumns.length === 0) {
@@ -138,11 +139,11 @@ export function useBodyVisibleColumnRange<T>(
 export function useClientMidWidth(
   clientWidth: number,
   leftWidth: number,
-  rightWidth: number
+  rightWidth: number,
 ) {
   return useMemo(
     () => clientWidth - leftWidth - rightWidth,
-    [clientWidth, leftWidth, rightWidth]
+    [clientWidth, leftWidth, rightWidth],
   );
 }
 
@@ -150,11 +151,11 @@ export function useClientMidWidth(
 export function useClientMidHeight(
   clientHeight: number,
   topHeight: number,
-  botHeight: number
+  botHeight: number,
 ) {
   return useMemo(
     () => clientHeight - topHeight - botHeight,
-    [clientHeight, topHeight, botHeight]
+    [clientHeight, topHeight, botHeight],
   );
 }
 
@@ -162,7 +163,7 @@ export function useClientMidHeight(
 export function useBodyVisibleAreaTop<T>(
   rowHeight: number,
   visibleRowRange: NumberRange,
-  topHeight: number
+  topHeight: number,
 ) {
   return useMemo(() => {
     let top = topHeight + visibleRowRange.start * rowHeight;
@@ -178,7 +179,7 @@ export function useVisibleRowRange(
   scrollTop: number,
   clientMidHeight: number,
   rowHeight: number,
-  rowCount: number
+  rowCount: number,
 ) {
   return useMemoRng(() => {
     if (rowHeight < 1) {
@@ -197,7 +198,7 @@ export function useVisibleRowRange(
     }
     const end = Math.min(
       rowCount,
-      Math.max(start, Math.ceil(endPos / rowHeight))
+      Math.max(start, Math.ceil(endPos / rowHeight)),
     );
 
     // Scroll Top not returning to 0 after pagination. Guard to ensure issues with ScrollTop throw error
@@ -211,7 +212,7 @@ export function useVisibleRowRange(
 
 export function useColumnRange<T>(
   columns: GridColumnModel<T>[],
-  range: NumberRange
+  range: NumberRange,
 ): GridColumnModel<T>[] {
   return useMemo(() => columns.slice(range.start, range.end), [columns, range]);
 }
@@ -219,7 +220,7 @@ export function useColumnRange<T>(
 // Total width of the columns scrolled out to the left of the visible area.
 export function useLeftScrolledOutWidth<T>(
   midColumns: GridColumnModel<T>[],
-  bodyVisibleColumnRange: NumberRange
+  bodyVisibleColumnRange: NumberRange,
 ) {
   return useMemo(() => {
     let w = 0;
@@ -234,7 +235,7 @@ export function useLeftScrolledOutWidth<T>(
 export function useRowIdxByKey<T>(rowKeyGetter: RowKeyGetter<T>, rowData: T[]) {
   return useMemo(() => {
     return new Map<string, number>(
-      rowData.map((r, i) => [rowKeyGetter(r, i), i])
+      rowData.map((r, i) => [rowKeyGetter(r, i), i]),
     );
   }, [rowData, rowKeyGetter]);
 }
@@ -245,7 +246,7 @@ export type SetState<T> = (v: T | ((p: T) => T)) => void;
 export function useRowModels<T>(
   getKey: RowKeyGetter<T>,
   rowData: T[],
-  visibleRowRange: NumberRange
+  visibleRowRange: NumberRange,
 ) {
   return useMemo(() => {
     const rows: GridRowModel<T>[] = [];
@@ -260,7 +261,7 @@ export function useRowModels<T>(
 // Creates column group models.
 export const useColumnGroups = (
   grpPs: ColumnGroupProps[],
-  startIdx: number
+  startIdx: number,
 ): GridColumnGroupModel[] =>
   useMemo(
     () =>
@@ -284,7 +285,7 @@ export const useColumnGroups = (
           rowSeparator: "regular",
         };
       }),
-    [grpPs, startIdx]
+    [grpPs, startIdx],
   );
 
 // Visible range of column groups.
@@ -292,7 +293,7 @@ export function useVisibleColumnGroupRange<T>(
   bodyVisColRng: NumberRange,
   midCols: GridColumnModel<T>[],
   midGrpByColId: Map<string, GridColumnGroupModel>,
-  leftGrpCount: number
+  leftGrpCount: number,
 ): NumberRange {
   return useMemoRng(() => {
     if (bodyVisColRng.length === 0) {
@@ -307,7 +308,7 @@ export function useVisibleColumnGroupRange<T>(
     }
     return new NumberRange(
       firstVisibleGroup.index - leftGrpCount,
-      lastVisibleGroup.index + 1 - leftGrpCount
+      lastVisibleGroup.index + 1 - leftGrpCount,
     );
   }, [bodyVisColRng, midCols, midGrpByColId, leftGrpCount]);
 }
@@ -321,7 +322,7 @@ export function useHeadVisibleColumnRange<T>(
   bodyVisColRng: NumberRange,
   visColGrps: GridColumnGroupModel[],
   midColsById: Map<string, GridColumnModel<T>>,
-  leftColCount: number
+  leftColCount: number,
 ) {
   return useMemoRng(() => {
     if (visColGrps.length === 0) {
@@ -338,7 +339,7 @@ export function useHeadVisibleColumnRange<T>(
     }
     return new NumberRange(
       firstColIdx - leftColCount,
-      lastColIdx + 1 - leftColCount
+      lastColIdx + 1 - leftColCount,
     );
   }, [bodyVisColRng, visColGrps, midColsById, leftColCount]);
 }
@@ -347,7 +348,7 @@ export function useHeadVisibleColumnRange<T>(
 export function useCols<T>(
   colInfos: GridColumnInfo<T>[],
   startIdx: number,
-  groups: GridColumnGroupModel[]
+  groups: GridColumnGroupModel[],
 ): GridColumnModel<T>[] {
   return useMemo(() => {
     const edgeColIds = new Set<string>();
@@ -371,7 +372,7 @@ export function useScrollToCell<T>(
   midCols: GridColumnModel<T>[],
   bodyVisColRng: NumberRange,
   clientMidWidth: number,
-  scroll: (left?: number, top?: number, source?: "user" | "table") => void
+  scroll: (left?: number, top?: number, source?: "user" | "table") => void,
 ) {
   return useCallback(
     (part: FocusedPart, rowIdx: number, colIdx: number) => {
@@ -387,7 +388,7 @@ export function useScrollToCell<T>(
         const extraBorder = rowIdx > 0 ? 1 : 0;
         y = Math.max(
           0,
-          rowHeight * rowIdx + extraBorder - clientMidHeight + rowHeight
+          rowHeight * rowIdx + extraBorder - clientMidHeight + rowHeight,
         );
       }
       const isMidCol =
@@ -422,7 +423,7 @@ export function useScrollToCell<T>(
       bodyVisColRng,
       clientMidWidth,
       scroll,
-    ]
+    ],
   );
 }
 
@@ -432,7 +433,7 @@ const MIN_COLUMN_WIDTH = 10;
 // TODO There might be some problems if column is removed while it is being resized
 export function useColumnResize<T>(
   cols: GridColumnModel<T>[],
-  resizeColumn: (columnIndex: number, width: number) => void
+  resizeColumn: (columnIndex: number, width: number) => void,
 ) {
   const columnResizeDataRef = useRef<{
     startX: number;
@@ -454,7 +455,7 @@ export function useColumnResize<T>(
     const { startX, columnIndex, initialColumnWidth, minWidth } =
       columnResizeDataRef.current!;
     const shift = x - startX;
-    let width = Math.max(minWidth, initialColumnWidth + shift);
+    const width = Math.max(minWidth, initialColumnWidth + shift);
     columnResizeDataRef.current!.resizeColumn(columnIndex, Math.round(width));
   }, []);
 
@@ -463,10 +464,10 @@ export function useColumnResize<T>(
       const targetElement = event.target as HTMLElement;
       const [columnIndexAttribute, thElement] = getAttribute(
         targetElement,
-        "data-column-index"
+        "data-column-index",
       );
 
-      const columnIndex = parseInt(columnIndexAttribute, 10);
+      const columnIndex = Number.parseInt(columnIndexAttribute, 10);
 
       document.addEventListener("mouseup", onMouseUp);
       document.addEventListener("mousemove", onMouseMove);
@@ -488,14 +489,14 @@ export function useColumnResize<T>(
 
       event.preventDefault();
     },
-    [resizeColumn]
+    [resizeColumn],
   );
 }
 
 // Map values to array.
 export function useFlatten<T>(map: Map<number, T>): T[] {
   return useMemo(() => {
-    const entries = [...map.entries()].filter(([index, value]) => !!value);
+    const entries = [...map.entries()].filter(([, value]) => !!value);
     entries.sort((a, b) => a[0] - b[0]);
     return entries.map((x) => x[1]);
   }, [map]);
@@ -523,7 +524,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
   const [midGrpMap, setMidGrpMap] = useGrpMap();
 
   const [editorMap, setEditorMap] = useState<Map<string, CellEditorInfo<T>>>(
-    new Map()
+    new Map(),
   );
 
   const leftColInfos = useFlatten(leftColMap);
@@ -538,7 +539,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
   const midGroups = useColumnGroups(midGrpPs, leftGroups.length);
   const rightGroups = useColumnGroups(
     rightGrpPs,
-    leftGroups.length + midGroups.length
+    leftGroups.length + midGroups.length,
   );
   if (leftGroups.length > 0) {
     last(leftGroups).columnSeparator = "pinned";
@@ -551,12 +552,12 @@ export function useColumnRegistry<T>(children: ReactNode) {
   const midCols: GridColumnModel<T>[] = useCols(
     midColInfos,
     leftCols.length,
-    midGroups
+    midGroups,
   );
   const rightCols: GridColumnModel<T>[] = useCols(
     rightColInfos,
     leftCols.length + midCols.length,
-    rightGroups
+    rightGroups,
   );
   if (leftCols.length > 0) {
     last(leftCols).separator = "pinned";
@@ -594,7 +595,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
       console.log(
         `Known ids: ${Array.from(chPosById.current.keys())
           .map((x) => `"${x}"`)
-          .join(", ")}`
+          .join(", ")}`,
       );
       throw new Error(`Unknown child id: "${id}"`);
     }
@@ -605,8 +606,8 @@ export function useColumnRegistry<T>(children: ReactNode) {
     pinned === "left"
       ? setLeftColMap
       : pinned === "right"
-      ? setRightColMap
-      : setMidColMap;
+        ? setRightColMap
+        : setMidColMap;
 
   const onColumnAdded = useCallback((columnInfo: GridColumnInfo<T>) => {
     // console.log(
@@ -619,19 +620,19 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const onColumnRemoved = useCallback(
     (index: number, columnInfo: GridColumnInfo<T>) => {
-      const { id, pinned } = columnInfo.props;
+      const { pinned } = columnInfo.props;
       getColMapSet(pinned)(makeMapDeleter(index));
       // console.log(`Column removed: "${columnInfo.props.id}"`);
     },
-    []
+    [],
   );
 
   const getGrpMapSet = (pinned?: GridColumnPin) =>
     pinned === "left"
       ? setLeftGrpMap
       : pinned === "right"
-      ? setRightGrpMap
-      : setMidGrpMap;
+        ? setRightGrpMap
+        : setMidGrpMap;
 
   const onColumnGroupAdded = useCallback((colGroupProps: ColumnGroupProps) => {
     const { id, pinned } = colGroupProps;
@@ -641,11 +642,11 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const onColumnGroupRemoved = useCallback(
     (index: number, colGroupProps: ColumnGroupProps) => {
-      const { id, pinned } = colGroupProps;
+      const { pinned } = colGroupProps;
       getGrpMapSet(pinned)(makeMapDeleter(index));
       // console.log(`Group removed: "${colGroupProps.name}"`);
     },
-    []
+    [],
   );
 
   const onEditorAdded = useCallback((info: CellEditorInfo<T>) => {
@@ -662,7 +663,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
 
   const getEditor = useCallback(
     (columnId: string) => editorMap.get(columnId),
-    [editorMap]
+    [editorMap],
   );
 
   const contextValue: GridContext<T> = useMemo(
@@ -685,7 +686,7 @@ export function useColumnRegistry<T>(children: ReactNode) {
       onEditorAdded,
       onEditorRemoved,
       getEditor,
-    ]
+    ],
   );
 
   return {
@@ -720,17 +721,17 @@ export function useRowSelection<T>(
   defaultSelectedRowIdxs?: number[],
   selectedRowIdxs?: number[],
   rowSelectionMode?: GridRowSelectionMode,
-  onRowSelected?: (selectedRowIdxs: number[]) => void
+  onRowSelected?: (selectedRowIdxs: number[]) => void,
 ) {
   const selectedRowIdxsProp = useMemo(() => {
-    if (selectedRowIdxs == undefined) {
+    if (selectedRowIdxs === undefined) {
       return undefined;
     }
     return new Set(selectedRowIdxs);
   }, [selectedRowIdxs]);
 
   const defaultSelectedRowIdxsProp = useMemo(() => {
-    if (defaultSelectedRowIdxs == undefined) {
+    if (defaultSelectedRowIdxs === undefined) {
       return new Set([]);
     }
     return new Set(defaultSelectedRowIdxs);
@@ -744,7 +745,7 @@ export function useRowSelection<T>(
   });
 
   const [lastSelRowIdx, setLastSelRowIdx] = useState<number | undefined>(
-    undefined
+    undefined,
   );
 
   useEffect(() => {
@@ -826,7 +827,7 @@ export function useRowSelection<T>(
       rowData,
       rowKeyGetter,
       onRowSelected,
-    ]
+    ],
   );
 
   const isAllSelected = selRowIdxs.size === rowData.length;
@@ -862,7 +863,7 @@ export function useRowSelection<T>(
         });
       } catch (e) {}
     },
-    [selectRows, rowSelectionMode]
+    [selectRows, rowSelectionMode],
   );
 
   return {
@@ -902,7 +903,7 @@ export function useColumnMove<T = any>(
   cols: GridColumnModel<T>[],
   scrollLeft: number,
   clientMidWidth: number,
-  onColumnMove: GridColumnMoveHandler
+  onColumnMove: GridColumnMoveHandler,
 ) {
   const moveRef = useRef<{
     unsubscribe: () => void;
@@ -920,24 +921,21 @@ export function useColumnMove<T = any>(
   const activeTargetRef = useRef<Target | undefined>(undefined);
 
   const [dragState, setDragState] = useState<ColumnDragState | undefined>(
-    undefined
+    undefined,
   );
 
   const columnDragStart = useCallback(
     (columnIndex: number, x: number, y: number) => {
       setDragState({ columnIndex, x, y });
     },
-    [setDragState]
+    [],
   );
 
-  const columnDrag = useCallback(
-    (x: number, y: number) => {
-      setDragState((old) => {
-        return { ...old!, x, y };
-      });
-    },
-    [setDragState]
-  );
+  const columnDrag = useCallback((x: number, y: number) => {
+    setDragState((old) => {
+      return { ...old!, x, y };
+    });
+  }, []);
 
   const columnDrop = useCallback(() => {
     const toIndex = activeTargetRef.current?.columnIndex;
@@ -990,7 +988,7 @@ export function useColumnMove<T = any>(
         columnDrag(x, y);
       }
     },
-    [columnDrag]
+    [columnDrag],
   );
 
   const onColumnMoveHandleMouseDown: MouseEventHandler<HTMLDivElement> =
@@ -998,18 +996,22 @@ export function useColumnMove<T = any>(
       (event) => {
         const [columnIndexAttribute, thElement] = getAttribute(
           event.target as HTMLElement,
-          "data-column-index"
+          "data-column-index",
         );
-        const rootElement = rootRef.current!;
+        const rootElement = rootRef.current;
+
+        if (!rootElement) {
+          return;
+        }
 
         document.addEventListener("mouseup", onMouseUp);
         document.addEventListener("mousemove", onMouseMove);
 
-        const columnIndex = parseInt(columnIndexAttribute, 10);
+        const columnIndex = Number.parseInt(columnIndexAttribute, 10);
         const columnId = cols[columnIndex].info.props.id;
 
         const thRect = thElement.getBoundingClientRect();
-        const rootRect = rootElement!.getBoundingClientRect();
+        const rootRect = rootElement.getBoundingClientRect();
 
         const x = thRect.x - rootRect.x;
         const y = thRect.y - rootRect.y;
@@ -1031,22 +1033,22 @@ export function useColumnMove<T = any>(
 
         event.preventDefault();
       },
-      [columnDragStart, cols]
+      [columnDragStart, cols],
     );
 
   const onColumnMoveCancel = useCallback(() => {
     setDragState(undefined);
     moveRef.current?.unsubscribe();
     moveRef.current = undefined;
-  }, [setDragState]);
+  }, []);
 
   const targets = useMemo(() => {
     if (!dragState) {
       return undefined;
     }
-    let ts: Target[] = [];
+    const ts: Target[] = [];
     let x = 0;
-    leftCols.forEach((c, i) => {
+    leftCols.forEach((c) => {
       ts.push({ columnIndex: c.index, x });
       x += c.info.width;
     });
@@ -1067,7 +1069,7 @@ export function useColumnMove<T = any>(
     }
     if (rightCols.length > 0) {
       x += w;
-      rightCols.forEach((c, i) => {
+      rightCols.forEach((c) => {
         ts.push({ columnIndex: c.index, x });
         x += c.info.width;
       });
@@ -1125,7 +1127,7 @@ export function cellPositionEquals(a: CellPosition, b: CellPosition) {
 
 export function cellRangeEquals(
   a: CellRange | undefined,
-  b: CellRange | undefined
+  b: CellRange | undefined,
 ) {
   if (!a) {
     return !b;
@@ -1179,7 +1181,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
 
   const onMouseUp = useCallback((event: MouseEvent) => {
     if (!mouseSelectionRef.current) {
-      throw new Error(`useRangeSelection state is not initialized`);
+      throw new Error("useRangeSelection state is not initialized");
     }
     mouseSelectionRef.current.unsubscribe();
     mouseSelectionRef.current = undefined;
@@ -1206,7 +1208,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
         setSelectedCellRange({ start: pos, end: pos });
       } catch (exc) {}
     },
-    [cellSelectionMode]
+    [cellSelectionMode],
   );
 
   const onKeyboardRangeSelectionStart = useCallback((pos: CellPosition) => {

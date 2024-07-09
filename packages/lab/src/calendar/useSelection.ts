@@ -1,9 +1,17 @@
+import {
+  CalendarDate,
+  type DateValue,
+  isSameDay,
+} from "@internationalized/date";
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { KeyboardEventHandler, MouseEventHandler, SyntheticEvent } from "react";
+import type {
+  KeyboardEventHandler,
+  MouseEventHandler,
+  SyntheticEvent,
+} from "react";
 import { isPlainObject } from "../utils";
 import { useCalendarContext } from "./internal/CalendarContext";
-import { CalendarDate, DateValue, isSameDay } from "@internationalized/date";
 
 interface BaseUseSelectionCalendarProps<SelectionVariantType> {
   hoveredDate?: DateValue | null;
@@ -11,12 +19,12 @@ interface BaseUseSelectionCalendarProps<SelectionVariantType> {
   defaultSelectedDate?: SelectionVariantType;
   onSelectedDateChange?: (
     event: SyntheticEvent,
-    selectedDate: SelectionVariantType
+    selectedDate: SelectionVariantType,
   ) => void;
   isDaySelectable: (date?: DateValue) => boolean;
   onHoveredDateChange?: (
     event: SyntheticEvent,
-    hoveredDate: DateValue | null
+    hoveredDate: DateValue | null,
   ) => void;
 }
 
@@ -70,8 +78,8 @@ export type useSelectionCalendarProps =
   | UseOffsetSelectionCalendarProps;
 
 function addOrRemoveFromArray(
-  array: AllSelectionValueType | null = [],
-  item: DateValue
+  array: AllSelectionValueType | null,
+  item: DateValue,
 ) {
   if (Array.isArray(array)) {
     if (array.find((element) => isSameDay(element, item))) {
@@ -85,17 +93,17 @@ function addOrRemoveFromArray(
 const defaultOffset = (date: DateValue) => date;
 
 export function isRangeOrOffsetSelectionValue(
-  selectionValue?: AllSelectionValueType
+  selectionValue?: AllSelectionValueType,
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return selectionValue != null && isPlainObject(selectionValue);
 }
 
 export function isRangeOrOffsetSelectionWithStartDate(
-  selectionValue?: AllSelectionValueType
+  selectionValue?: AllSelectionValueType,
 ): selectionValue is RangeSelectionValueType | OffsetSelectionValueType {
   return (
     isRangeOrOffsetSelectionValue(selectionValue) &&
-    selectionValue?.hasOwnProperty("startDate")
+    Object.prototype.hasOwnProperty.call(selectionValue, "startDate")
   );
 }
 
@@ -123,22 +131,20 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
   const getStartDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.startDateOffset) {
       return props.startDateOffset(date);
-    } else {
-      return defaultOffset(date);
     }
+    return defaultOffset(date);
   };
 
   const getEndDateOffset = (date: DateValue) => {
     if (props.selectionVariant === "offset" && props.endDateOffset) {
       return props.endDateOffset(date);
-    } else {
-      return defaultOffset(date);
     }
+    return defaultOffset(date);
   };
 
   const setSelectedDate = (
     event: SyntheticEvent<HTMLButtonElement>,
-    newSelectedDate: DateValue
+    newSelectedDate: DateValue,
   ) => {
     if (isDaySelectable(newSelectedDate)) {
       switch (props.selectionVariant) {
@@ -146,12 +152,16 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
           setSelectedDateState(newSelectedDate);
           props.onSelectedDateChange?.(event, newSelectedDate);
           break;
-        case "multiselect":
-          const newDates = addOrRemoveFromArray(selectedDate, newSelectedDate);
+        case "multiselect": {
+          const newDates = addOrRemoveFromArray(
+            selectedDate ?? [],
+            newSelectedDate,
+          );
           setSelectedDateState(newDates);
           props.onSelectedDateChange?.(event, newDates);
           break;
-        case "range":
+        }
+        case "range": {
           let base = selectedDate;
           if (isRangeOrOffsetSelectionValue(base)) {
             if (base?.startDate && base?.endDate) {
@@ -170,13 +180,15 @@ export function useSelectionCalendar(props: useSelectionCalendarProps) {
           setSelectedDateState(base);
           props.onSelectedDateChange?.(event, base);
           break;
-        case "offset":
+        }
+        case "offset": {
           const newRange = {
             startDate: getStartDateOffset(newSelectedDate),
             endDate: getEndDateOffset(newSelectedDate),
           };
           setSelectedDateState(newRange);
           props.onSelectedDateChange?.(event, newRange);
+        }
       }
     }
   };
@@ -377,7 +389,7 @@ export function useSelectionDay({ date }: { date: DateValue }) {
         selected || selectedEnd || selectedStart || selectedSpan
           ? "true"
           : undefined,
-      "aria-disabled": !!isDayUnselectable(date) ? "true" : undefined,
+      "aria-disabled": isDayUnselectable(date) ? "true" : undefined,
     },
   };
 }

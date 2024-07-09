@@ -1,13 +1,3 @@
-// eslint-disable import/no-duplicates
-import { useMemo, ReactNode } from "react";
-import { AppProps } from "next/app";
-import Head from "next/head";
-import {
-  BaseUrlProvider,
-  Image,
-  Link,
-  Metadata,
-} from "@jpmorganchase/mosaic-site-components";
 import {
   ImageProvider,
   LinkProvider,
@@ -16,11 +6,20 @@ import {
   withMarkdownSpacing,
 } from "@jpmorganchase/mosaic-components";
 import { LayoutProvider } from "@jpmorganchase/mosaic-layouts";
-import { useCreateStore, StoreProvider } from "@jpmorganchase/mosaic-store";
-import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
 import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
-import { SessionProvider } from "next-auth/react";
+import {
+  BaseUrlProvider,
+  Image,
+  Link,
+  Metadata,
+} from "@jpmorganchase/mosaic-site-components";
+import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
+import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
+import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import { type ReactNode, useMemo } from "react";
 import "@salt-ds/theme/index.css";
 import "@jpmorganchase/mosaic-theme/index.css";
 import "@jpmorganchase/mosaic-theme/baseline.css";
@@ -33,14 +32,14 @@ import "@jpmorganchase/mosaic-content-editor-plugin/index.css";
 import "prismjs/themes/prism.css";
 
 import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
-import { PT_Mono, Open_Sans } from "next/font/google";
+import { Open_Sans, PT_Mono } from "next/font/google";
 
 import "../css/index.css";
-import Homepage from "./index";
-import * as saltLayouts from "../layouts";
 import * as saltComponents from "../components";
+import * as saltLayouts from "../layouts";
+import Homepage from "./index";
 
-import { MyAppProps } from "../types/mosaic";
+import type { MyAppProps } from "../types/mosaic";
 
 const components = {
   ...getMarkdownComponents(),
@@ -58,7 +57,7 @@ const DensityProvider = ({ children }: { children: ReactNode }) => {
 
   const density = useMemo(
     () => (viewport === "xl" || viewport === "lg" ? "low" : "touch"),
-    [viewport]
+    [viewport],
   );
 
   return <SaltProvider density={density}>{children}</SaltProvider>;

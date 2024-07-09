@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Banner,
   BannerActions,
@@ -8,6 +7,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const Success = (): ReactElement => (
   <StackLayout gap={3} style={{ width: "80%" }}>

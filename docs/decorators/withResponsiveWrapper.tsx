@@ -1,4 +1,4 @@
-import { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 import { ResponsiveContainer } from "docs/components/ResponsiveContainer";
 
 export const withResponsiveWrapper: Decorator = (Story, context) => {

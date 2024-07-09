@@ -1,18 +1,18 @@
+import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { clsx } from "clsx";
 import React, {
-  ChangeEvent,
-  ForwardedRef,
+  type ChangeEvent,
+  type ForwardedRef,
   forwardRef,
-  KeyboardEvent,
-  ReactElement,
+  type KeyboardEvent,
+  type ReactElement,
   useCallback,
   useRef,
 } from "react";
-import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { InputLegacy as Input } from "../input-legacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import editableLabelCss from "./EditableLabel.css";
 
@@ -28,7 +28,7 @@ export interface EditableLabelProps {
   onExitEditMode: (
     originalLabel: string | undefined,
     editedLabel: string | undefined,
-    allowDeactivation?: boolean
+    allowDeactivation?: boolean,
   ) => void;
   defaultIsEditing?: boolean;
   value?: string;
@@ -45,7 +45,7 @@ export const EditableLabel = forwardRef(function EditableLabel(
     onExitEditMode,
     value: valueProp,
   }: EditableLabelProps,
-  forwardedRef: ForwardedRef<HTMLDivElement>
+  forwardedRef: ForwardedRef<HTMLDivElement>,
 ): ReactElement<EditableLabelProps> {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -79,13 +79,13 @@ export const EditableLabel = forwardRef(function EditableLabel(
         inputRef.current.focus();
       }
     }
-  }, [editing, inputRef]);
+  }, [editing]);
 
   const enterEditMode = useCallback(() => {
     setEditing(true);
     // ignoreBlur.current = false;
-    onEnterEditMode && onEnterEditMode();
-  }, [onEnterEditMode, setEditing]);
+    onEnterEditMode?.();
+  }, [onEnterEditMode]);
 
   const exitEditMode = ({
     cancelEdit = false,
@@ -100,13 +100,13 @@ export const EditableLabel = forwardRef(function EditableLabel(
         initialValue.current = value;
       }
     }
-    onExitEditMode && onExitEditMode(originalValue, value, allowDeactivation);
+    onExitEditMode?.(originalValue, value, allowDeactivation);
   };
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { value } = evt.target;
     setValue(value);
-    onChange && onChange(value);
+    onChange?.(value);
   };
 
   const handleDoubleClick = () => {

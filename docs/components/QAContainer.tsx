@@ -1,17 +1,17 @@
 import {
-  makePrefixer,
-  Mode,
+  type Mode,
   SaltProvider,
   UNSTABLE_SaltProviderNext,
+  makePrefixer,
   useTheme,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
+  type CSSProperties,
   Children,
-  CSSProperties,
-  DetailedHTMLProps,
+  type DetailedHTMLProps,
   Fragment,
-  HTMLAttributes,
+  type HTMLAttributes,
 } from "react";
 import { DraggableImg } from "./DraggableSnapshot";
 
@@ -66,8 +66,8 @@ const DensityBlock = ({
 
   return (
     <BackgroundBlock background={mode === "light" ? "white" : undefined}>
-      {DensityValues.map((d, i) => (
-        <ChosenSaltProvider mode={mode} density={d} key={i}>
+      {DensityValues.map((d) => (
+        <ChosenSaltProvider mode={mode} density={d} key={d}>
           <div className="background-item-wrapper">{children}</div>
         </ChosenSaltProvider>
       ))}
@@ -125,8 +125,8 @@ export const QAContainer = ({
           ))}
         </>
       ) : (
-        DensityValues.map((d, i) => (
-          <Fragment key={i}>
+        DensityValues.map((d) => (
+          <Fragment key={d}>
             <ChosenSaltProvider
               mode="light"
               density={d}

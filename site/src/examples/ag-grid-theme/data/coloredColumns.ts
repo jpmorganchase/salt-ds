@@ -1,4 +1,4 @@
-import { CellClassParams } from "ag-grid-community";
+import type { CellClassParams } from "ag-grid-community";
 
 export const coloredColumns = [
   {
@@ -24,9 +24,8 @@ export const coloredColumns = [
           color: "var(--salt-color-gray-900)",
           backgroundColor: "var(--salt-color-orange-20)",
         };
-      } else {
-        return null;
       }
+      return null;
     },
   },
   {

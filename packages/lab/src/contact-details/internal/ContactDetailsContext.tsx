@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ContactDetailsVariant } from "../ContactDetails";
+import type { ContactDetailsVariant } from "../ContactDetails";
 
 export interface ContactDetailsContext {
   variant: ContactDetailsVariant;
@@ -33,7 +33,7 @@ export const useContactDetailsContext = (): ContactDetailsContext => {
   const context = useContext(ContactDetailsContext);
   if (!context && process.env.NODE_ENV !== "production") {
     console.error(
-      `useContactDetailsContext should be used inside of ContactDetails`
+      "useContactDetailsContext should be used inside of ContactDetails",
     );
   }
   return context!;

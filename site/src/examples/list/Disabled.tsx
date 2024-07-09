@@ -1,5 +1,5 @@
 import { ListNext } from "@salt-ds/lab";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 import { getListItems } from "./exampleData";
 
 export const Disabled = (): ReactElement => {

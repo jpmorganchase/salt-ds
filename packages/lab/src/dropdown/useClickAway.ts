@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { type RefObject, useEffect } from "react";
 
 export type ClickawayHook = (props: {
   popperRef: RefObject<HTMLElement>;
@@ -49,5 +49,5 @@ export const useClickAway: ClickawayHook = ({
         document.body.removeEventListener("keydown", escapeKeyHandler, true);
       }
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, popperRef, rootRef]);
 };

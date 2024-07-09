@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as fileDropZoneStories from "@stories/file-drop-zone/file-drop-zone.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(fileDropZoneStories);
@@ -22,11 +22,11 @@ describe("Given a file drop zone", () => {
       },
       {
         action: "drag-drop",
-      }
+      },
     );
     cy.findByTestId("file-drop-zone-example").should(
       "have.class",
-      "saltFileDropZone-success"
+      "saltFileDropZone-success",
     );
   });
   it("should be able to accept multiple files", () => {
@@ -50,7 +50,7 @@ describe("Given a file drop zone", () => {
     cy.get("@dropSpy").should("have.been.calledOnce");
     cy.findByTestId("file-drop-zone-example").should(
       "have.class",
-      "saltFileDropZone-success"
+      "saltFileDropZone-success",
     );
   });
   it("should allow selecting the same file from the button after reset", () => {

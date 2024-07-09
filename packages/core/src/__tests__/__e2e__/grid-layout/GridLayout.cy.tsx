@@ -1,7 +1,7 @@
-import { composeStories } from "@storybook/react";
-import * as gridStories from "@stories/grid-layout/grid-layout.stories";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { SaltProvider } from "@salt-ds/core";
+import * as gridStories from "@stories/grid-layout/grid-layout.stories";
+import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(gridStories);
 const { Default, Nested } = composedStories;
@@ -95,7 +95,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(1));
-      }
+      },
     );
 
     it(
@@ -114,7 +114,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(4));
-      }
+      },
     );
 
     it(
@@ -133,7 +133,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(6));
-      }
+      },
     );
 
     it(
@@ -152,7 +152,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(12));
-      }
+      },
     );
   });
 
@@ -178,7 +178,7 @@ describe("GIVEN a Grid", () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
             <Default columns={columns} rows={rows} />
-          </SaltProvider>
+          </SaltProvider>,
         );
 
         cy.get(".saltGridLayout")
@@ -188,7 +188,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(1));
-      }
+      },
     );
 
     it(
@@ -201,7 +201,7 @@ describe("GIVEN a Grid", () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
             <Default columns={columns} rows={rows} />
-          </SaltProvider>
+          </SaltProvider>,
         );
 
         cy.get(".saltGridLayout")
@@ -211,7 +211,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(4));
-      }
+      },
     );
 
     it(
@@ -224,7 +224,7 @@ describe("GIVEN a Grid", () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
             <Default columns={columns} rows={rows} />
-          </SaltProvider>
+          </SaltProvider>,
         );
 
         cy.get(".saltGridLayout")
@@ -234,7 +234,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(6));
-      }
+      },
     );
 
     it(
@@ -247,7 +247,7 @@ describe("GIVEN a Grid", () => {
         cy.mount(
           <SaltProvider breakpoints={breakpoints}>
             <Default columns={columns} rows={rows} />
-          </SaltProvider>
+          </SaltProvider>,
         );
 
         cy.get(".saltGridLayout")
@@ -257,7 +257,7 @@ describe("GIVEN a Grid", () => {
         cy.get(".saltGridLayout")
           .invoke("css", "grid-template-rows")
           .should("match", testElementsNumber(12));
-      }
+      },
     );
   });
 });

@@ -1,11 +1,11 @@
 import { Checkbox } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
-import { GridCellValueProps } from "./GridColumn";
-import { useSelectionContext } from "./SelectionContext";
-import { MouseEventHandler } from "react";
+import type { MouseEventHandler } from "react";
 import { useCursorContext } from "./CursorContext";
+import type { GridCellValueProps } from "./GridColumn";
+import { useSelectionContext } from "./SelectionContext";
 
 import checkboxCellCss from "./CheckboxCell.css";
 

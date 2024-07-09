@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { FlexLayout, Pagination, Paginator, GoToInput } from "@salt-ds/core";
+import { FlexLayout, GoToInput, Pagination, Paginator } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const DefaultWithInput = (): ReactElement => (
   <Pagination count={20}>

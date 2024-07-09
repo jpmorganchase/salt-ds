@@ -1,13 +1,13 @@
 import { useMemo } from "react";
-import { SliderValue } from "../types";
-import { LabeledMark, SliderMark } from "./SliderRailMarks";
+import type { SliderValue } from "../types";
+import type { LabeledMark, SliderMark } from "./SliderRailMarks";
 
 const updateValueItemNotPushable = (
   oldValue: number[],
   index: number,
   valueItem: number,
   min: number,
-  max: number
+  max: number,
 ) => {
   const newValue = [...oldValue];
   if (valueItem < oldValue[index]) {
@@ -27,7 +27,7 @@ const updateValueItemPushable = (
   valueItem: number,
   min: number,
   max: number,
-  pushDistance: number
+  pushDistance: number,
 ) => {
   const newValue = [...oldValue];
   newValue[index] = valueItem;
@@ -66,14 +66,14 @@ const updateValueItemPushable = (
 export type UpdateValueItem = (
   oldValue: SliderValue,
   index: number,
-  valueItem: number
+  valueItem: number,
 ) => SliderValue;
 
 export function useValueUpdater(
   pushable: boolean | undefined,
   pushDistance: number,
   min: number,
-  max: number
+  max: number,
 ): UpdateValueItem {
   return useMemo(() => {
     const updater = pushable
@@ -84,7 +84,7 @@ export function useValueUpdater(
             valueItem,
             min,
             max,
-            pushDistance
+            pushDistance,
           )
       : (oldValue: number[], index: number, valueItem: number) =>
           updateValueItemNotPushable(oldValue, index, valueItem, min, max);
@@ -144,7 +144,7 @@ export function getSliderAriaLabel(count: number, index: number) {
 export function getHandleIndex(element: HTMLElement): number {
   const handleIndexAttribute = element.getAttribute("data-handle-index");
   if (handleIndexAttribute) {
-    return parseInt(handleIndexAttribute, 10);
+    return Number.parseInt(handleIndexAttribute, 10);
   }
   return getHandleIndex(element.parentElement as HTMLElement);
 }

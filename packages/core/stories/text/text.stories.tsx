@@ -1,7 +1,7 @@
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 import {
-  Text,
+  Code as CodeText,
   Display1,
   Display2,
   Display3,
@@ -10,9 +10,9 @@ import {
   H3,
   H4,
   Label as LabelText,
+  Text,
   TextAction,
   TextNotation,
-  Code as CodeText,
 } from "@salt-ds/core";
 
 export default {

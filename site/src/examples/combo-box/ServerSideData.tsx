@@ -1,12 +1,17 @@
-import { ChangeEvent, ReactElement, SyntheticEvent, useState } from "react";
 import {
   ComboBox,
   FormField,
-  FormFieldLabel,
   FormFieldHelperText,
+  FormFieldLabel,
   Option,
   Spinner,
 } from "@salt-ds/core";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
 import useSWR from "swr";
 import styles from "./index.module.css";
 
@@ -17,7 +22,7 @@ const fetcher = async (url: string, filter: string) => {
   const rawData = await fetch(url);
   const data = (await rawData.json()) as string[];
   return data.filter((state) =>
-    state.toLowerCase().includes(filter.trim().toLowerCase())
+    state.toLowerCase().includes(filter.trim().toLowerCase()),
   );
 };
 
@@ -29,7 +34,7 @@ export const ServerSideData = (): ReactElement => {
     (url: string) => fetcher(url, value),
     {
       fallbackData: [],
-    }
+    },
   );
 
   const loading = isLoading;
@@ -41,7 +46,7 @@ export const ServerSideData = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     if (newSelected.length === 1) {
       setValue(newSelected[0]);

@@ -1,9 +1,9 @@
-import { Ref, useMemo } from "react";
+import { type Ref, useMemo } from "react";
 import { setRef } from "./setRef";
 
 export function useForkRef<Instance>(
   refA: Ref<Instance> | null | undefined,
-  refB: Ref<Instance> | null | undefined
+  refB: Ref<Instance> | null | undefined,
 ): Ref<Instance> | null {
   /**
    * This will create a new function if the ref props change and are defined.

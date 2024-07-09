@@ -1,14 +1,14 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   FlowLayout,
+  Link,
   Text,
   Toast,
   ToastContent,
-  ToastProps,
-  Link,
+  type ToastProps,
 } from "@salt-ds/core";
 import { CloseIcon, GlobeIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Toast",

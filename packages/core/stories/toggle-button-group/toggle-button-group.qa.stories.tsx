@@ -1,11 +1,11 @@
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
 
 export default {
@@ -51,7 +51,7 @@ AllVariantsGrid.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection
     height={500}

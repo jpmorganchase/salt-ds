@@ -1,4 +1,4 @@
-import { Card, CardProps } from "../../card/Card";
+import { Card, type CardProps } from "../../card/Card";
 
 export const OverviewCard = ({
   keylineColor,

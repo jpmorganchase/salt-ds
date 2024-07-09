@@ -1,17 +1,17 @@
-import { ChangeEvent, useState } from "react";
-import { clsx } from "clsx";
 import {
   Button,
-  ButtonProps,
-  makePrefixer,
+  type ButtonProps,
   Overlay,
   OverlayPanel,
-  OverlayTrigger,
-  OverlayPanelContent,
   OverlayPanelCloseButton,
+  OverlayPanelContent,
+  OverlayTrigger,
+  makePrefixer,
 } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
-import { Color } from "./Color";
+import { clsx } from "clsx";
+import { type ChangeEvent, useState } from "react";
+import type { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 
 import {
@@ -20,13 +20,13 @@ import {
   getHexValue,
   hexValueWithoutAlpha,
 } from "./ColorHelpers";
-import { saltColorMap } from "./colorMap";
-import { ColorChooserTabs, DictTabs } from "./DictTabs";
+import { type ColorChooserTabs, DictTabs } from "./DictTabs";
 import { getColorPalettes } from "./GetColorPalettes";
+import { saltColorMap } from "./colorMap";
 import { createTabsMapping } from "./createTabsMapping";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import colorChooserCss from "./ColorChooser.css";
 
@@ -35,7 +35,7 @@ const withBaseName = makePrefixer("saltColorChooser");
 function getActiveTab(
   hexValue: string | undefined,
   tabs: ColorChooserTabs,
-  saltColorOverrides: Record<string, string> | undefined
+  saltColorOverrides: Record<string, string> | undefined,
 ): number {
   if (tabs.Swatches && tabs["Color Picker"]) {
     const hexNoAlpha: string | undefined = hexValueWithoutAlpha(hexValue);
@@ -46,7 +46,7 @@ function getActiveTab(
       !Object.keys(colors).find(
         (key: string) =>
           convertColorMapValueToHex(colors[key])?.toLowerCase() ===
-          hexNoAlpha?.toLowerCase()
+          hexNoAlpha?.toLowerCase(),
       )
     ) {
       return 1;
@@ -65,7 +65,7 @@ export interface ColorChooserProps {
   onSelect: (
     color: Color | undefined,
     finalSelection: boolean,
-    event?: ChangeEvent
+    event?: ChangeEvent,
   ) => void;
   placeholder?: string;
   buttonProps?: Partial<ButtonProps>;
@@ -107,7 +107,7 @@ export const ColorChooser = ({
     : getColorNameByHexValue(
         color?.hex,
         disableAlphaChooser,
-        saltColorOverrides
+        saltColorOverrides,
       );
 
   const handleOpenChange = (open: boolean) => setOpen(open);
@@ -132,7 +132,7 @@ export const ColorChooser = ({
   });
 
   const [activeTab, setActiveTab] = useState<number>(
-    getActiveTab(color?.hex, tabsMapping, saltColorOverrides)
+    getActiveTab(color?.hex, tabsMapping, saltColorOverrides),
   );
   const onDefaultSelected = (): void => {
     if (activeTab === 0 && showSwatches) {
@@ -190,7 +190,7 @@ export const ColorChooser = ({
                 [withBaseName("overlayButtonSwatchWithBorder")]:
                   color?.hex.startsWith("#ffffff"),
                 [withBaseName("overlayButtonSwatchTransparent")]: isTransparent(
-                  color?.hex
+                  color?.hex,
                 ),
               })}
               style={{

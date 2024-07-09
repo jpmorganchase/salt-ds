@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Banner, BannerContent } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Static = (): ReactElement => (
   <div style={{ width: "80%" }}>

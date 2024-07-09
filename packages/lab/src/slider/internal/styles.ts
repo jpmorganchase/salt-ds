@@ -1,6 +1,6 @@
-import { CSSProperties } from "react";
-import { SliderValue } from "../types";
-import { SliderMark } from "./SliderRailMarks";
+import type { CSSProperties } from "react";
+import type { SliderValue } from "../types";
+import type { SliderMark } from "./SliderRailMarks";
 import { isLabeledMark } from "./utils";
 
 function widthToPercentage(w: number, range: number) {
@@ -10,12 +10,12 @@ function widthToPercentage(w: number, range: number) {
 function createGridTemplateColumns(
   min: number,
   max: number,
-  values: number[]
+  values: number[],
 ): string {
   const range = max - min;
   const colWidths: number[] = [];
   let prev = min;
-  for (let v of values) {
+  for (const v of values) {
     colWidths.push(v - prev);
     prev = v;
   }
@@ -37,7 +37,7 @@ function createGridTemplateColumns(
 export function createTrackStyle(
   min: number,
   max: number,
-  value: SliderValue
+  value: SliderValue,
 ): CSSProperties {
   const values = Array.isArray(value) ? value : [value];
   return {
@@ -54,13 +54,13 @@ export function createHandleStyles(count: number) {
 export function createSliderRailMarksStyle(
   min: number,
   max: number,
-  marks: SliderMark[]
+  marks: SliderMark[],
 ): CSSProperties {
   return {
     gridTemplateColumns: createGridTemplateColumns(
       min,
       max,
-      marks.map((mark) => (isLabeledMark(mark) ? mark.value : mark))
+      marks.map((mark) => (isLabeledMark(mark) ? mark.value : mark)),
     ),
   };
 }
@@ -68,12 +68,12 @@ export function createSliderRailMarksStyle(
 export function createSliderMarkLabelsStyle(
   min: number,
   max: number,
-  marks: SliderMark[]
+  marks: SliderMark[],
 ): CSSProperties {
   const range = max - min;
   const colWidths: number[] = [];
   let prev = min;
-  for (let m of marks) {
+  for (const m of marks) {
     const w = isLabeledMark(m) ? m.value : m;
     colWidths.push(w - prev);
     colWidths.push(0);
@@ -98,7 +98,7 @@ export function createSliderMarkLabelsStyle(
 }
 
 export function createSliderMarkLabelStyles(
-  marks: SliderMark[]
+  marks: SliderMark[],
 ): CSSProperties[] {
   const styles: CSSProperties[] = [];
   marks.forEach((mark, i) => {

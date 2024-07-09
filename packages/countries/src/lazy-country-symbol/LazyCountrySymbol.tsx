@@ -1,5 +1,5 @@
-import { CountrySymbolProps } from "../country-symbol";
-import { CountryCode } from "../countryMetaMap";
+import type { CountrySymbolProps } from "../country-symbol";
+import type { CountryCode } from "../countryMetaMap";
 import { lazyMap } from "./lazyMap";
 
 export type LazyCountrySymbolProps = {
@@ -14,7 +14,7 @@ export const LazyCountrySymbol = ({
 
   if (!Component && process.env.NODE_ENV !== "production") {
     console.warn(
-      `Setting country code to ${code} which is invalid for <LazyCountrySymbol />`
+      `Setting country code to ${code} which is invalid for <LazyCountrySymbol />`,
     );
   }
 

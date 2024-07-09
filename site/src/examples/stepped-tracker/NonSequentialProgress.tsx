@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
 import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
+import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 type Step = {
   label: string;
@@ -49,8 +49,8 @@ export const NonSequentialProgress = (): ReactElement => {
               ...step,
               state: step.state === "default" ? "completed" : "default",
             }
-          : step
-      )
+          : step,
+      ),
     );
   };
 
@@ -62,7 +62,7 @@ export const NonSequentialProgress = (): ReactElement => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }, key) => (
-          <TrackerStep state={state} key={key}>
+          <TrackerStep state={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

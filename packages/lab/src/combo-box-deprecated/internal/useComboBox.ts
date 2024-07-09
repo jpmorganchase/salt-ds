@@ -5,23 +5,23 @@ import {
   useIsFocusVisible,
 } from "@salt-ds/core";
 import {
-  ChangeEvent,
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
-  SyntheticEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import type { InputLegacyProps as InputProps } from "../../input-legacy";
 import { useList } from "../../list-deprecated";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
-import { DefaultComboBoxProps } from "./DefaultComboBox";
+import type { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
-import { InputLegacyProps as InputProps } from "../../input-legacy";
 
 export type UseComboBoxProps<Item> = Omit<
   DefaultComboBoxProps<Item>,
@@ -91,11 +91,11 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
   const labels = useMemo(
     () => sourceProp.map(itemToString),
-    [sourceProp, itemToString]
+    [sourceProp, itemToString],
   );
 
   const source = useMemo(() => {
-    if (inputValue && inputValue.trim().length) {
+    if (inputValue?.trim().length) {
       const itemFilter = getDefaultFilter(inputValue, getFilterRegex);
       return sourceProp.filter((item) => itemFilter(itemToString(item)));
     }
@@ -103,11 +103,8 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   }, [inputValue, sourceProp, getFilterRegex, itemToString]);
 
   const itemTextHighlightPattern = useMemo(
-    () =>
-      inputValue && inputValue.trim().length
-        ? getFilterRegex(inputValue)
-        : undefined,
-    [inputValue, getFilterRegex]
+    () => (inputValue?.trim().length ? getFilterRegex(inputValue) : undefined),
+    [inputValue, getFilterRegex],
   );
 
   const { focusedRef, state, helpers, listProps } = useList({
@@ -147,7 +144,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
   const reconcileInput = useCallback(() => {
     setInputValue(selectedItem == null ? "" : itemToString(selectedItem));
-  }, [selectedItem, itemToString, setInputValue]);
+  }, [selectedItem, itemToString]);
 
   const selectInputValue = (event: ChangeEvent) => {
     const nextIndex = inputValue ? labels.indexOf(inputValue.trim()) : -1;
@@ -163,7 +160,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
 
     if (nextItem !== selectedItem) {
       setSelectedItem(nextItem);
-      onChange && onChange(event, nextItem);
+      onChange?.(event, nextItem);
     }
   };
 
@@ -172,7 +169,9 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   });
 
   // Reconcile input when the function is updated - most likely to be a selectItem change
-  useEffect(reconcileInput, [reconcileInput]);
+  useEffect(() => {
+    reconcileInput();
+  }, [reconcileInput]);
 
   // Reset highlight when list closes
   useEffect(() => {
@@ -180,7 +179,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       setHighlightedIndex(undefined);
       setQuickSelection(false);
     }
-  }, [isListOpen, setHighlightedIndex, quickSelection]);
+  }, [isListOpen, setHighlightedIndex]);
 
   const initHighlightedIndex = () => {
     setHighlightedIndex(selectedItem ? source.indexOf(selectedItem) : -1);
@@ -235,7 +234,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
     // Clear the selection when input is cleared
     if (newValue.length === 0) {
       setSelectedItem(undefined);
-      onChange && onChange(event, null);
+      onChange?.(event, null);
     }
 
     if (inputProps.onChange) {
@@ -244,7 +243,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
   };
 
   const handleInputSelect = (event: SyntheticEvent<HTMLDivElement>) => {
-    console.log(`handleInputSelect setSelectionChanged = true`);
+    console.log("handleInputSelect setSelectionChanged = true");
     setSelectionChanged(true);
     if (inputProps.onSelect) {
       inputProps.onSelect(event);
@@ -274,8 +273,8 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       quickSelection
     ) {
       setSelectedItem(source[0]);
-      onSelect && onSelect(event, source[0]);
-      onChange && onChange(event as ChangeEvent, source[0]);
+      onSelect?.(event, source[0]);
+      onChange?.(event as ChangeEvent, source[0]);
     }
   };
 

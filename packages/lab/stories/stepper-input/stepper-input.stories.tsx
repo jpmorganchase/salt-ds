@@ -6,9 +6,9 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { StepperInput } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
+import { StepperInput } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 export default {
   title: "Lab/Stepper Input",
@@ -55,7 +55,7 @@ export const MinAndMaxValue: StoryFn = (args) => {
         return "error";
       }
     } else {
-      const numericValue = parseFloat(value);
+      const numericValue = Number.parseFloat(value);
       if (numericValue > max || numericValue < min) {
         return "error";
       }
@@ -143,7 +143,9 @@ export const HideButtons: StoryFn = (args) => {
             aria-label="decerement value"
             onClick={() =>
               setValue(
-                typeof value === "string" ? parseFloat(value) - 1 : value - 1
+                typeof value === "string"
+                  ? Number.parseFloat(value) - 1
+                  : value - 1,
               )
             }
           >
@@ -155,7 +157,9 @@ export const HideButtons: StoryFn = (args) => {
             aria-label="increment value"
             onClick={() =>
               setValue(
-                typeof value === "string" ? parseFloat(value) + 1 : value + 1
+                typeof value === "string"
+                  ? Number.parseFloat(value) + 1
+                  : value + 1,
               )
             }
           >

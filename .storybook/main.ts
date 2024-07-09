@@ -1,7 +1,7 @@
-import { dirname, join } from "path";
+import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
-import type { UserConfig } from "vite";
 import { cssVariableDocgen } from "css-variable-docgen-plugin";
+import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 import { cssInline } from "../tooling/css-inline-plugin";
 
@@ -36,10 +36,8 @@ const config: StorybookConfig = {
       plugins: [cssInline(), cssVariableDocgen()],
     };
 
-    if (configType === "PRODUCTION") {
-      customConfig.plugins!.push(
-        typescriptTurbosnap({ rootDir: config.root! })
-      );
+    if (configType === "PRODUCTION" && config.root) {
+      customConfig.plugins?.push(typescriptTurbosnap({ rootDir: config.root }));
     }
 
     return mergeConfig(customConfig, config);
@@ -48,6 +46,8 @@ const config: StorybookConfig = {
 
 module.exports = config;
 
-function getAbsolutePath(value: string): any {
-  return dirname(require.resolve(join(value, "package.json")));
+function getAbsolutePath<Value>(value: string): Value {
+  return dirname(
+    require.resolve(join(value, "package.json")),
+  ) as unknown as Value;
 }

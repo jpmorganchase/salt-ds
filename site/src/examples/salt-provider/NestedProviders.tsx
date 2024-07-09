@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Card, SaltProvider, useDensity, useTheme } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./NestedProviders.module.css";
 
 const invertMode = (mode: string): "light" | "dark" =>

@@ -1,9 +1,9 @@
-import { ReactElement, useState } from "react";
-import { GridLayout, GridItem, Button } from "@salt-ds/core";
+import { Button, GridItem, GridLayout } from "@salt-ds/core";
 import { ExpandIcon, MinimizeIcon } from "@salt-ds/icons";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import { type ReactElement, useState } from "react";
 import expandingAndCollapsingItemsStyles from "./ExpandingAndCollapsingItems.module.css";
+import styles from "./index.module.css";
 
 export const ExpandingAndCollapsingItems = (): ReactElement => {
   const [expanded, setExpanded] = useState(false);

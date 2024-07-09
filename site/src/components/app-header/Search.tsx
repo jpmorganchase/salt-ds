@@ -1,26 +1,26 @@
+import { type SearchIndex, useSearchIndex } from "@jpmorganchase/mosaic-store";
 import {
+  Button,
   ComboBox,
-  ComboBoxProps,
+  type ComboBoxProps,
   Option,
+  OptionGroup,
   StackLayout,
   Text,
   capitalize,
-  OptionGroup,
-  Button,
 } from "@salt-ds/core";
-import {
-  ChangeEvent,
-  SyntheticEvent,
-  useMemo,
-  useState,
-  useDeferredValue,
-} from "react";
-import useSWR from "swr";
-import { SearchIndex, useSearchIndex } from "@jpmorganchase/mosaic-store";
-import { performSearch } from "./searchUtils";
-import styles from "./Search.module.css";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useRouter } from "next/navigation";
+import {
+  type ChangeEvent,
+  type SyntheticEvent,
+  useDeferredValue,
+  useMemo,
+  useState,
+} from "react";
+import useSWR from "swr";
+import styles from "./Search.module.css";
+import { performSearch } from "./searchUtils";
 
 function SearchResult({
   result,
@@ -33,6 +33,7 @@ function SearchResult({
         <Text>{result.title}</Text>
         {result.content && (
           <Text styleAs="label" color="secondary">
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: result.content is HTML we want to show */}
             <span dangerouslySetInnerHTML={{ __html: result.content }} />
           </Text>
         )}
@@ -83,25 +84,28 @@ export function Search(props: ComboBoxProps) {
         })
       : [];
 
-    return data.reduce((acc, option) => {
-      const category = capitalize(
-        option.route.split("/")[2].split("-").join(" ")
-      );
-      if (
-        !(
-          option.route.endsWith("accessibility") ||
-          option.route.endsWith("examples") ||
-          option.route.endsWith("usage")
-        )
-      ) {
-        if (!acc[category]) {
-          acc[category] = [];
-        }
+    return data.reduce(
+      (acc, option) => {
+        const category = capitalize(
+          option.route.split("/")[2].split("-").join(" "),
+        );
+        if (
+          !(
+            option.route.endsWith("accessibility") ||
+            option.route.endsWith("examples") ||
+            option.route.endsWith("usage")
+          )
+        ) {
+          if (!acc[category]) {
+            acc[category] = [];
+          }
 
-        acc[category].push(option);
-      }
-      return acc;
-    }, {} as Record<string, typeof data>);
+          acc[category].push(option);
+        }
+        return acc;
+      },
+      {} as Record<string, typeof data>,
+    );
   }, [searchConfig, searchIndex, query]);
 
   return (

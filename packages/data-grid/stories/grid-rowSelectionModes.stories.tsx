@@ -1,20 +1,20 @@
-import { StoryFn } from "@storybook/react";
-import {
-  Grid,
-  GridColumn,
-  GridRowSelectionMode,
-  NumericColumn,
-  RowSelectionCheckboxColumn,
-  RowSelectionRadioColumn,
-} from "../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
-import { SyntheticEvent, useState } from "react";
 import {
   FlexItem,
   FlexLayout,
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
+import type { StoryFn } from "@storybook/react";
+import { type SyntheticEvent, useState } from "react";
+import {
+  Grid,
+  GridColumn,
+  type GridRowSelectionMode,
+  NumericColumn,
+  RowSelectionCheckboxColumn,
+  RowSelectionRadioColumn,
+} from "../src";
+import { type DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import "./grid.stories.css";
 
 export default {
@@ -23,7 +23,7 @@ export default {
   argTypes: {},
 };
 
-const RowSelectionModesTemplate: StoryFn<{}> = () => {
+const RowSelectionModesTemplate: StoryFn = () => {
   const [rowSelectionMode, setRowSelectionMode] =
     useState<GridRowSelectionMode>("multi");
 

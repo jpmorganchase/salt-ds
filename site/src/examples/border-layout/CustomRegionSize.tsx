@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
+import { BorderItem, BorderLayout } from "@salt-ds/core";
 import clsx from "clsx";
-import { BorderLayout, BorderItem } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const CustomRegionSize = (): ReactElement => (

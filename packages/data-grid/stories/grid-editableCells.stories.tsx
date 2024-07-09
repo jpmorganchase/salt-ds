@@ -1,3 +1,5 @@
+import type { StoryFn } from "@storybook/react";
+import { useCallback, useState } from "react";
 import {
   CellEditor,
   DropdownCellEditor,
@@ -7,9 +9,7 @@ import {
   NumericColumn,
   TextCellEditor,
 } from "../src";
-import { StoryFn } from "@storybook/react";
 import { randomInt, randomNumber, randomText } from "./utils";
-import { useCallback, useState } from "react";
 import "./grid.stories.css";
 
 export default {
@@ -30,7 +30,7 @@ interface RowExample {
 }
 
 const discountMap: Map<string, number> = new Map(
-  discountOptions.map((n, i) => [n, discountValues[i]])
+  discountOptions.map((n, i) => [n, discountValues[i]]),
 );
 
 const getTotal = (r: RowExample) =>
@@ -46,7 +46,7 @@ const useExampleDataSource = () => {
         price: randomNumber(10, 100, 2),
         discount: "-",
       } as RowExample;
-    })
+    }),
   );
 
   const setName = useCallback(
@@ -57,7 +57,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows]
+    [],
   );
 
   const setPrice = useCallback(
@@ -68,7 +68,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows]
+    [],
   );
 
   const setAmount = useCallback(
@@ -79,7 +79,7 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows]
+    [],
   );
 
   const setDiscount = useCallback(
@@ -90,13 +90,13 @@ const useExampleDataSource = () => {
         return x;
       });
     },
-    [setRows]
+    [],
   );
 
   return { rows, setAmount, setName, setDiscount, setPrice };
 };
 
-const EditableCellsTemplate: StoryFn<{}> = () => {
+const EditableCellsTemplate: StoryFn = () => {
   const { setPrice, setDiscount, rows, setAmount, setName } =
     useExampleDataSource();
 

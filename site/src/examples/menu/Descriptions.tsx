@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Button,
   Menu,
@@ -9,6 +8,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 const features = [
   {
@@ -38,7 +38,7 @@ export const Descriptions = (): ReactElement => {
       </MenuTrigger>
       <MenuPanel>
         {Object.values(features).map(({ name, description, id }) => (
-          <MenuItem id={id}>
+          <MenuItem id={id} key={id}>
             <StackLayout
               gap={0.5}
               style={{

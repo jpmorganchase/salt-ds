@@ -3,9 +3,9 @@
  * Reason, Module and Stats types; isUserCode, normalize, the plugin shell and generateBundle are copied.
  */
 
-import { writeFile } from "fs/promises";
+import { writeFile } from "node:fs/promises";
+import path from "node:path";
 import { Project } from "ts-morph";
-import path from "path";
 import type { Plugin } from "vite";
 import { normalizePath } from "vite";
 
@@ -41,7 +41,7 @@ function isUserCode(moduleName: string) {
       !moduleName.startsWith("\x00") &&
       !moduleName.startsWith("\u0000") &&
       moduleName !== "react/jsx-runtime" &&
-      !/node_modules\//.exec(moduleName)
+      !/node_modules\//.exec(moduleName),
   );
 }
 
@@ -80,7 +80,7 @@ export function typescriptTurbosnap({
     }
 
     moduleMap[normalizedFilePath].reasons =
-      moduleMap[normalizedFilePath].reasons!.concat(normalizedReasons);
+      moduleMap[normalizedFilePath].reasons?.concat(normalizedReasons);
   }
 
   const project = new Project({
@@ -90,7 +90,7 @@ export function typescriptTurbosnap({
   return {
     name: "vite-plugin-typescript-turbosnap",
     enforce: "post",
-    moduleParsed: function (mod) {
+    moduleParsed: (mod) => {
       if (isUserCode(mod.id)) {
         const file = project.getSourceFile(path.resolve(mod.id));
 
@@ -106,11 +106,11 @@ export function typescriptTurbosnap({
                     references
                       .getReferences()
                       .map((reference) =>
-                        reference.getSourceFile().getFilePath()
-                      )
+                        reference.getSourceFile().getFilePath(),
+                      ),
                   )
-                  .filter((path) => path !== filePath)
-              )
+                  .filter((path) => path !== filePath),
+              ),
             );
 
             addFilesToModuleMap(filePath, x);
@@ -123,7 +123,7 @@ export function typescriptTurbosnap({
             .forEach((importDeclaration) => {
               const cssFile = path.resolve(
                 path.dirname(filePath),
-                importDeclaration.getModuleSpecifierValue()
+                importDeclaration.getModuleSpecifierValue(),
               );
               addFilesToModuleMap(cssFile, [filePath]);
             });

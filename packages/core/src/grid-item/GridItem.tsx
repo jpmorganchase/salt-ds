@@ -1,17 +1,17 @@
-import { forwardRef, ElementType, ReactElement } from "react";
 import { clsx } from "clsx";
+import { type ElementType, type ReactElement, forwardRef } from "react";
 
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useBreakpoint } from "../breakpoints";
 import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+  type ResponsiveProp,
   makePrefixer,
-  ResponsiveProp,
-  PolymorphicRef,
-  PolymorphicComponentPropWithRef,
   resolveResponsiveValue,
 } from "../utils";
 import gridItemCss from "./GridItem.css";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useBreakpoint } from "../breakpoints";
 
 export const GRID_ALIGNMENT_BASE = [
   "start",
@@ -54,7 +54,7 @@ const rowStart = "auto";
 const rowEnd = "auto";
 
 type GridItemComponent = <T extends ElementType = "div">(
-  props: GridItemProps<T>
+  props: GridItemProps<T>,
 ) => ReactElement | null;
 
 export const GridItem: GridItemComponent = forwardRef(
@@ -70,7 +70,7 @@ export const GridItem: GridItemComponent = forwardRef(
       style,
       ...rest
     }: GridItemProps<T>,
-    ref?: PolymorphicRef<T>
+    ref?: PolymorphicRef<T>,
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -116,5 +116,5 @@ export const GridItem: GridItemComponent = forwardRef(
         {children}
       </Component>
     );
-  }
+  },
 );

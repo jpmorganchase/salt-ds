@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogHeader,
 } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
@@ -15,7 +15,8 @@ const CustomDialog = () => {
     <div
       style={{
         paddingBlock: "var(--salt-spacing-300)",
-        border: `var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-status-error-borderColor)`,
+        border:
+          "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-status-error-borderColor)",
       }}
     >
       <DialogHeader status="error" header="Can`t move file" />

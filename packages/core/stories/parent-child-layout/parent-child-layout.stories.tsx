@@ -1,34 +1,34 @@
-import { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { fn } from "@storybook/test";
+import { useState } from "react";
 
+import {
+  Button,
+  Dialog,
+  DialogCloseButton,
+  DialogContent,
+  Dropdown,
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  H2,
+  Input,
+  Label,
+  NavigationItem,
+  Option,
+  ParentChildLayout,
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
 import {
   ChevronLeftIcon,
   ExportIcon,
   LaptopIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import {
-  Button,
-  FlexLayout,
-  FormField,
-  FormFieldLabel,
-  H2,
-  Input,
-  NavigationItem,
-  RadioButton,
-  RadioButtonGroup,
-  StackLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-  Dropdown,
-  Option,
-  Label,
-  Dialog,
-  DialogContent,
-  DialogCloseButton,
-  ParentChildLayout,
-} from "@salt-ds/core";
 
 import "./parent-child-layout.stories.css";
 

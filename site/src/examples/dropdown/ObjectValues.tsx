@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
 import { Dropdown, Option } from "@salt-ds/core";
-import { largestCities, LargeCity } from "./exampleData";
+import type { ReactElement } from "react";
+import { type LargeCity, largestCities } from "./exampleData";
 
 /**
  * type LargeCity = {

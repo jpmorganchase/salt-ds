@@ -1,12 +1,12 @@
 import {
-  MouseEvent as ReactMouseEvent,
-  RefObject,
+  type MouseEvent as ReactMouseEvent,
+  type RefObject,
   useCallback,
   useEffect,
   useRef,
 } from "react";
-import { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundValue, UpdateValueItem } from "./utils";
+import type { SliderChangeHandler, SliderValue } from "../types";
+import { type UpdateValueItem, clampValue, roundValue } from "./utils";
 
 interface MouseContext {
   min: number;
@@ -54,7 +54,7 @@ export function useSliderMouseDown(
   step: number,
   updateValueItem: UpdateValueItem,
   setValue: SliderChangeHandler,
-  onChange?: SliderChangeHandler
+  onChange?: SliderChangeHandler,
 ) {
   const mouseContext = useRef<MouseContext>({
     min,
@@ -95,31 +95,34 @@ export function useSliderMouseDown(
     }
   }, []);
 
-  const onMouseUp = useCallback((event: MouseEvent) => {
+  const onMouseUp = useCallback(() => {
     document.removeEventListener("mouseup", onMouseUp);
     document.removeEventListener("mousemove", onMouseMove);
     mouseContext.current.handleIndex = undefined;
-  }, []);
+  }, [onMouseMove]);
 
-  return useCallback((event: ReactMouseEvent) => {
-    const { value, setValue, onChange } = mouseContext.current;
-    document.addEventListener("mouseup", onMouseUp);
-    document.addEventListener("mousemove", onMouseMove);
+  return useCallback(
+    (event: ReactMouseEvent) => {
+      const { value, setValue, onChange } = mouseContext.current;
+      document.addEventListener("mouseup", onMouseUp);
+      document.addEventListener("mousemove", onMouseMove);
 
-    const { clientX } = event;
-    const clickValue = valueFromClientX(mouseContext.current, clientX);
+      const { clientX } = event;
+      const clickValue = valueFromClientX(mouseContext.current, clientX);
 
-    const handleIndex = getNearestHandle(value, clickValue);
-    mouseContext.current.handleIndex = handleIndex;
-    const newValue = updateValueItem(value, handleIndex, clickValue);
+      const handleIndex = getNearestHandle(value, clickValue);
+      mouseContext.current.handleIndex = handleIndex;
+      const newValue = updateValueItem(value, handleIndex, clickValue);
 
-    if (newValue !== value) {
-      setValue(newValue);
-      if (onChange) {
-        onChange(newValue);
+      if (newValue !== value) {
+        setValue(newValue);
+        if (onChange) {
+          onChange(newValue);
+        }
       }
-    }
 
-    event.preventDefault();
-  }, []);
+      event.preventDefault();
+    },
+    [onMouseMove, onMouseUp],
+  );
 }

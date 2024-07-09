@@ -1,6 +1,6 @@
+import { type ReactNode, useContext, useState } from "react";
 import { createContext, useIsomorphicLayoutEffect } from "../utils";
-import { ReactNode, useContext, useState } from "react";
-import { Breakpoints } from "./Breakpoints";
+import type { Breakpoints } from "./Breakpoints";
 
 type Breakpoint = keyof Breakpoints;
 
@@ -70,11 +70,10 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
         mq.removeEventListener("change", handler);
       });
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supportsMatchMedia]);
 
   return Object.keys(matchedBreakpoints).filter(
-    (bp) => matchedBreakpoints[bp as Breakpoint]
+    (bp) => matchedBreakpoints[bp as Breakpoint],
   ) as Breakpoint[];
 }
 

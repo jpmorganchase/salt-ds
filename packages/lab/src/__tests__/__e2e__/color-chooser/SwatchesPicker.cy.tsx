@@ -1,4 +1,4 @@
-import { Swatch, SwatchesPicker, Color } from "../../../color-chooser";
+import { Color, Swatch, SwatchesPicker } from "../../../color-chooser";
 
 const colorResult = Color.makeColorFromHex("#333333");
 describe("SwatchesPicker", () => {
@@ -9,7 +9,7 @@ describe("SwatchesPicker", () => {
         allColors={[["#ffffff"], ["#333333"]]}
         onChange={() => {}}
         onDialogClosed={() => {}}
-      />
+      />,
     );
     cy.findByTestId("swatches-picker").should("exist");
   });
@@ -22,12 +22,12 @@ describe("SwatchesPicker", () => {
         onChange={() => {}}
         alpha={0.1}
         onDialogClosed={() => {}}
-      />
+      />,
     );
     cy.findByTestId("swatch-#333333").should(
       "have.css",
       "background-color",
-      "rgba(51, 51, 51, 0.1)"
+      "rgba(51, 51, 51, 0.1)",
     );
   });
 
@@ -39,7 +39,7 @@ describe("SwatchesPicker", () => {
         allColors={[["#ffffff"], ["#333333"]]}
         onChange={changeSpy}
         onDialogClosed={() => {}}
-      />
+      />,
     );
     cy.get("@changeSpy").should("not.have.been.called");
     cy.findByTestId("swatch-#333333").realClick();
@@ -53,7 +53,7 @@ describe("SwatchesPicker", () => {
           _r: 51,
         },
       },
-      true
+      true,
     );
   });
 
@@ -67,12 +67,12 @@ describe("SwatchesPicker", () => {
           active={false}
           alpha={0.1}
           onDialogClosed={() => {}}
-        />
+        />,
       );
       cy.findByTestId("swatch-#333").should(
         "have.css",
         "background-color",
-        "rgba(51, 51, 51, 0.1)"
+        "rgba(51, 51, 51, 0.1)",
       );
     });
     it("Should render a div with a coloured background", () => {
@@ -83,12 +83,12 @@ describe("SwatchesPicker", () => {
           active={false}
           alpha={1}
           onDialogClosed={() => {}}
-        />
+        />,
       );
       cy.findByTestId("swatch-#333").should(
         "have.css",
         "background-color",
-        "rgb(51, 51, 51)"
+        "rgb(51, 51, 51)",
       );
     });
     it("Should call onClick callback if selected", () => {
@@ -100,7 +100,7 @@ describe("SwatchesPicker", () => {
           active={false}
           alpha={0.1}
           onDialogClosed={() => {}}
-        />
+        />,
       );
       cy.findByTestId("swatch-#333").realClick();
       cy.get("@clickSpy").should("have.been.called");
@@ -114,7 +114,7 @@ describe("SwatchesPicker", () => {
           active={false}
           alpha={0.1}
           onDialogClosed={dialogClosedSpy}
-        />
+        />,
       );
       cy.findByTestId("swatch-#333").realClick();
       cy.get("@dialogClosedSpy").should("have.been.called");
@@ -127,11 +127,11 @@ describe("SwatchesPicker", () => {
           active={true}
           alpha={0.1}
           onDialogClosed={() => {}}
-        />
+        />,
       );
       cy.findByTestId("swatch-#333").should(
         "have.class",
-        "saltColorChooserSwatch-active"
+        "saltColorChooserSwatch-active",
       );
     });
   });

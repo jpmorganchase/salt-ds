@@ -1,20 +1,23 @@
-import type { Meta, StoryFn } from "@storybook/react";
 import { ListBox, Option, OptionGroup, StackLayout, Text } from "@salt-ds/core";
-import { usStateExampleData, shortColorWithHex } from "../assets/exampleData";
+import type { Meta, StoryFn } from "@storybook/react";
+import { shortColorWithHex, usStateExampleData } from "../assets/exampleData";
 import "./list-box.stories.css";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 const shortStatesData = usStateExampleData.slice(0, 4);
 
 function groupByFirstLetter(data: typeof usStateExampleData) {
-  return data.reduce((acc, option) => {
-    const groupName = option[0];
-    if (!acc[groupName]) {
-      acc[groupName] = [];
-    }
-    acc[groupName].push(option);
-    return acc;
-  }, {} as Record<string, typeof usStateExampleData>);
+  return data.reduce(
+    (acc, option) => {
+      const groupName = option[0];
+      if (!acc[groupName]) {
+        acc[groupName] = [];
+      }
+      acc[groupName].push(option);
+      return acc;
+    },
+    {} as Record<string, typeof usStateExampleData>,
+  );
 }
 
 export default {
@@ -46,7 +49,7 @@ export const Grouped: StoryFn<typeof ListBox> = (args) => (
             <Option value={state} key={state} />
           ))}
         </OptionGroup>
-      )
+      ),
     )}
   </ListBox>
 );
@@ -74,7 +77,7 @@ export const Scrolling: StoryFn<typeof ListBox> = (args) => (
               <Option value={state} key={state} />
             ))}
           </OptionGroup>
-        )
+        ),
       )}
     </ListBox>
   </div>
@@ -100,9 +103,7 @@ export const ComplexOptions = (): ReactElement => {
       {shortColorWithHex.slice(0, 5).map(({ color, hex }) => (
         <Option value={color} key={color}>
           <StackLayout gap={0.5} align="start">
-            <Text>
-              <strong>{color}</strong>
-            </Text>
+            <Text>{color}</Text>
             <Text styleAs="label" color="secondary">
               {hex}
             </Text>

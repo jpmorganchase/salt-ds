@@ -1,6 +1,6 @@
+import { type IconProps, UploadIcon } from "@salt-ds/icons";
 import { forwardRef } from "react";
-import { IconProps, UploadIcon } from "@salt-ds/icons";
-import { StatusIndicator, ValidationStatus } from "../status-indicator";
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 
 export interface FileDropZoneIconProps extends IconProps {
   /**

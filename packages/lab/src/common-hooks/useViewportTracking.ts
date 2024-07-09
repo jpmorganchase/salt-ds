@@ -1,7 +1,12 @@
-import { MutableRefObject, RefObject, useCallback, useRef } from "react";
-import { CollectionItem } from "./collectionTypes";
-import { ResizeHandler, useResizeObserver } from "../responsive";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {
+  type MutableRefObject,
+  type RefObject,
+  useCallback,
+  useRef,
+} from "react";
+import { type ResizeHandler, useResizeObserver } from "../responsive";
+import type { CollectionItem } from "./collectionTypes";
 
 const HeightOnly = ["height"];
 const HeightWithScroll = ["height", "scrollHeight"];
@@ -20,25 +25,23 @@ const NULL_REF = { current: null };
 
 const getItemTop = (
   element: HTMLElement,
-  offsetContainer: HTMLElement | null
+  offsetContainer: HTMLElement | null,
 ) => {
   const { transform = "none" } = getComputedStyle(element);
   if (transform.startsWith("matrix")) {
     const pos = transform.lastIndexOf(",");
-    return parseInt(transform.slice(pos + 1));
-  } else {
-    let offsetParent = element.offsetParent as HTMLElement;
-    if (offsetParent === offsetContainer || offsetContainer === null) {
-      return element.offsetTop;
-    } else {
-      let top = element.offsetTop;
-      while (offsetParent !== null && offsetParent !== offsetContainer) {
-        top += offsetParent.offsetTop;
-        offsetParent = offsetParent.offsetParent as HTMLElement;
-      }
-      return top;
-    }
+    return Number.parseInt(transform.slice(pos + 1));
   }
+  let offsetParent = element.offsetParent as HTMLElement;
+  if (offsetParent === offsetContainer || offsetContainer === null) {
+    return element.offsetTop;
+  }
+  let top = element.offsetTop;
+  while (offsetParent !== null && offsetParent !== offsetContainer) {
+    top += offsetParent.offsetTop;
+    offsetParent = offsetParent.offsetParent as HTMLElement;
+  }
+  return top;
 };
 
 export interface ViewportTrackingProps<Item> {
@@ -67,15 +70,18 @@ export const useViewportTracking = <Item>({
     contentHeight: 0,
   });
 
-  const scrollTo = useCallback((scrollPos: number) => {
-    scrolling.current = true;
-    if (containerRef.current) {
-      containerRef.current.scrollTop = scrollPos;
-    }
-    setTimeout(() => {
-      scrolling.current = false;
-    });
-  }, []);
+  const scrollTo = useCallback(
+    (scrollPos: number) => {
+      scrolling.current = true;
+      if (containerRef.current) {
+        containerRef.current.scrollTop = scrollPos;
+      }
+      setTimeout(() => {
+        scrolling.current = false;
+      });
+    },
+    [containerRef],
+  );
 
   const scrollToStart = useCallback(() => scrollTo(0), [scrollTo]);
 
@@ -112,7 +118,7 @@ export const useViewportTracking = <Item>({
         }
       }
     },
-    [containerRef, contentRef, scrollTo, stickyHeaders]
+    [containerRef, contentRef, scrollTo, stickyHeaders],
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -146,7 +152,7 @@ export const useViewportTracking = <Item>({
         viewport.current.contentHeight = scrollHeight;
       }
     },
-    []
+    [],
   );
 
   const onContentResize: ResizeHandler = useCallback(({ height }) => {
@@ -159,7 +165,7 @@ export const useViewportTracking = <Item>({
   // contentRef will be null, so second call to observer will observe nothing.
   // If we have both container and content, then we observe the height of each.
   const [containerDimensions, contentDimensions] = getObservedDimensions(
-    contentRef === NULL_REF
+    contentRef === NULL_REF,
   );
   useResizeObserver(containerRef, containerDimensions, onContainerResize, true);
   useResizeObserver(contentRef, contentDimensions, onContentResize, true);

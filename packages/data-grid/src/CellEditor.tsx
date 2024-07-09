@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useMemo } from "react";
+import { type ReactNode, useEffect, useMemo } from "react";
 import { useGridContext } from "./GridContext";
 
 export interface CellEditorInfo<T> {
@@ -26,7 +26,7 @@ export function CellEditor<T>(props: CellEditorProps<T>) {
       columnId,
       children,
     }),
-    [columnId, children]
+    [columnId, children],
   );
 
   useEffect(() => {

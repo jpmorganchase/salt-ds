@@ -1,6 +1,6 @@
-import { composeStories } from "@storybook/react";
-import * as parentChildStories from "@stories/parent-child-layout/parent-child-layout.stories";
 import { SaltProvider } from "@salt-ds/core";
+import * as parentChildStories from "@stories/parent-child-layout/parent-child-layout.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(parentChildStories);
 
@@ -26,7 +26,7 @@ describe("GIVEN a ParentChildLayout", () => {
           expect($div).to.contain("Parent");
           expect($div).to.contain("Child");
         });
-      }
+      },
     );
 
     it(
@@ -37,7 +37,7 @@ describe("GIVEN a ParentChildLayout", () => {
         cy.get(".saltParentChildLayout").should(($div) => {
           expect($div).to.contain("Child");
         });
-      }
+      },
     );
   });
 
@@ -51,14 +51,14 @@ describe("GIVEN a ParentChildLayout", () => {
             breakpoints={{ xs: 0, sm: 960, md: 960, lg: 1800, xl: 1920 }}
           >
             <Default collapseAtBreakpoint="lg" />
-          </SaltProvider>
+          </SaltProvider>,
         );
 
         cy.get(".saltParentChildLayout").should(($div) => {
           expect($div).to.contain("Parent");
           expect($div).to.contain("Child");
         });
-      }
+      },
     );
 
     it(
@@ -70,13 +70,13 @@ describe("GIVEN a ParentChildLayout", () => {
             breakpoints={{ xs: 0, sm: 960, md: 960, lg: 1800, xl: 1920 }}
           >
             <Default collapseAtBreakpoint="lg" />
-          </SaltProvider>
+          </SaltProvider>,
         );
 
         cy.get(".saltParentChildLayout").should(($div) => {
           expect($div).to.contain("Child");
         });
-      }
+      },
     );
   });
 
@@ -90,7 +90,7 @@ describe("GIVEN a ParentChildLayout", () => {
         cy.get(".saltParentChildLayout-collapsed").should(($div) => {
           expect($div).to.contain("Child");
         });
-      }
+      },
     );
 
     it(
@@ -102,7 +102,7 @@ describe("GIVEN a ParentChildLayout", () => {
         cy.get(".saltParentChildLayout-collapsed").should(($div) => {
           expect($div).to.contain("Parent");
         });
-      }
+      },
     );
   });
 });

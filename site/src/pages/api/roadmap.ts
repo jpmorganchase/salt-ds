@@ -1,5 +1,5 @@
 require("dotenv").config();
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 import fetch from "node-fetch";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

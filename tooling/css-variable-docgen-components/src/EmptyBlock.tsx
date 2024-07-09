@@ -1,7 +1,7 @@
-import { styled } from "@storybook/theming";
 import { withReset } from "@storybook/components";
+import { styled } from "@storybook/theming";
 import { transparentize } from "polished";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 
 const Wrapper = styled.div(withReset, ({ theme }) => ({
   backgroundColor:

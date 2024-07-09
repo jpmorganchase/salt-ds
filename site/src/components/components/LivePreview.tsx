@@ -1,18 +1,18 @@
-import {
-  FC,
-  ChangeEvent,
-  useState,
-  ReactNode,
-  ReactElement,
-  useEffect,
-  ElementType,
-} from "react";
-import clsx from "clsx";
 import { Switch } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
+import clsx from "clsx";
+import {
+  type ChangeEvent,
+  type ElementType,
+  type FC,
+  type ReactElement,
+  type ReactNode,
+  useEffect,
+  useState,
+} from "react";
+import useIsMobileView from "../../utils/useIsMobileView";
 import { Pre } from "../mdx/pre";
 import { useLivePreviewControls } from "./useLivePreviewControls";
-import useIsMobileView from "../../utils/useIsMobileView";
 
 import styles from "./LivePreview.module.css";
 

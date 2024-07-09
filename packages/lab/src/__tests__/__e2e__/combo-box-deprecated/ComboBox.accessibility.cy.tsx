@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox-deprecated.stories";
+import { composeStories } from "@storybook/react";
 
 const {
   Default,
@@ -16,7 +16,9 @@ describe("A combo box", () => {
     const testId = "my-input";
 
     cy.mount(
-      <Default InputProps={{ inputProps: { "data-testid": testId } as any }} />
+      <Default
+        InputProps={{ inputProps: { "data-testid": testId } as never }}
+      />,
     );
 
     cy.findByTestId(testId).should("have.attr", "role", "combobox");
@@ -39,14 +41,14 @@ describe("A combo box", () => {
 
       cy.findByRole("combobox").should(
         "not.have.attr",
-        "aria-activedescendant"
+        "aria-activedescendant",
       );
       cy.realPress("Tab");
 
       cy.findByRole("combobox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-list-item-0`
+        `${mockId}-list-item-0`,
       );
     });
 
@@ -63,7 +65,7 @@ describe("A combo box", () => {
 
       cy.findByRole("combobox").should(
         "not.have.attr",
-        "aria-activedescendant"
+        "aria-activedescendant",
       );
     });
 
@@ -89,7 +91,7 @@ describe("A combo box", () => {
 
         cy.findByRole("combobox").should(
           "not.have.attr",
-          "aria-activedescendant"
+          "aria-activedescendant",
         );
 
         // // second time highlight
@@ -98,7 +100,7 @@ describe("A combo box", () => {
         cy.findByRole("combobox").should(
           "have.attr",
           "aria-activedescendant",
-          `${mockId}-list-item-${key === "ArrowDown" ? "1" : "0"}`
+          `${mockId}-list-item-${key === "ArrowDown" ? "1" : "0"}`,
         );
       });
     });
@@ -120,9 +122,9 @@ describe("A multi-select combo box", () => {
     cy.mount(
       <MultiSelect
         InputProps={{
-          InputProps: { inputProps: { "data-testid": testId } as any },
+          InputProps: { inputProps: { "data-testid": testId } as never },
         }}
-      />
+      />,
     );
 
     cy.findByTestId(testId)
@@ -136,7 +138,7 @@ describe("A multi-select combo box", () => {
     cy.findByRole("button").should(
       "have.attr",
       "aria-roledescription",
-      "Expand combobox button"
+      "Expand combobox button",
     );
   });
 
@@ -160,7 +162,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-list-item-1`
+        `${mockId}-list-item-1`,
       );
       cy.realPress("Home");
       cy.realPress("ArrowLeft");
@@ -168,7 +170,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-input-pill-4`
+        `${mockId}-input-pill-4`,
       );
     });
 
@@ -184,7 +186,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-input-pill-4`
+        `${mockId}-input-pill-4`,
       );
 
       // leave pills
@@ -197,7 +199,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-input-pill-4`
+        `${mockId}-input-pill-4`,
       );
     });
 
@@ -216,7 +218,7 @@ describe("A multi-select combo box", () => {
         cy.findByRole("textbox").should(
           "have.attr",
           "aria-activedescendant",
-          `${mockId}-input-pill-4`
+          `${mockId}-input-pill-4`,
         );
 
         // second time highlight
@@ -247,7 +249,7 @@ describe("A multi-select combo box", () => {
         <MultiSelectWithFormFieldWithInitialSelection
           id={mockId}
           LabelProps={{ id: mockLabelId }}
-        />
+        />,
       );
 
       cy.realPress("Tab");
@@ -255,7 +257,7 @@ describe("A multi-select combo box", () => {
       cy.findByRole("textbox").should(
         "have.attr",
         "aria-labelledby",
-        `${mockLabelId} ${mockInputId}`
+        `${mockLabelId} ${mockInputId}`,
       );
     });
 
@@ -268,13 +270,13 @@ describe("A multi-select combo box", () => {
         <MultiSelectWithFormFieldWithInitialSelection
           id={mockId}
           LabelProps={{ id: mockLabelId }}
-        />
+        />,
       );
 
       cy.findByRole("button").should(
         "have.attr",
         "aria-labelledby",
-        `${mockLabelId} ${mockInputId}`
+        `${mockLabelId} ${mockInputId}`,
       );
     });
   });

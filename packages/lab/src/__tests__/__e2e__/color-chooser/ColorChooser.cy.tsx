@@ -1,4 +1,4 @@
-import { ColorChooser, Color } from "@salt-ds/lab";
+import { Color, ColorChooser } from "@salt-ds/lab";
 
 const saltColor = Color.makeColorFromHex("#D1F4C9");
 const customColor = Color.makeColorFromHex("#30BC67");
@@ -6,14 +6,14 @@ const customColor = Color.makeColorFromHex("#30BC67");
 describe("ColorChooser", () => {
   it("Renders an overlay", () => {
     cy.mount(
-      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />,
     );
     cy.findByRole("button", { name: "Green10" }).should("be.visible");
   });
 
   it("Renders the SwatchesPicker upon clicking on the Swatches tab", () => {
     cy.mount(
-      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />,
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByText("Swatches").realClick();
@@ -22,26 +22,26 @@ describe("ColorChooser", () => {
 
   it("Selects the Swatches tab as default if no color is selected", () => {
     cy.mount(
-      <ColorChooser color={undefined} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={undefined} onSelect={() => {}} onClear={() => {}} />,
     );
     cy.findByRole("button", { name: "No color selected" }).realClick();
     cy.findByRole("tab", { name: "Swatches" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
     cy.findByTestId("swatches").should("be.visible");
   });
 
   it("Renders the Swatches tab first if a Salt color is selected", () => {
     cy.mount(
-      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />
+      <ColorChooser color={saltColor} onSelect={() => {}} onClear={() => {}} />,
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByRole("tab", { name: "Swatches" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
     cy.findByTestId("swatches-picker").should("be.visible");
   });
@@ -52,13 +52,13 @@ describe("ColorChooser", () => {
         color={customColor}
         onSelect={() => {}}
         onClear={() => {}}
-      />
+      />,
     );
     cy.findByRole("button", { name: "#30bc67" }).realClick();
     cy.findByRole("tab", { name: "Color Picker" }).should(
       "have.attr",
       "aria-selected",
-      "true"
+      "true",
     );
     cy.findByTestId("color-picker").should("be.visible");
   });
@@ -71,7 +71,7 @@ describe("ColorChooser", () => {
         disableAlphaChooser={true}
         onSelect={() => {}}
         onClear={() => {}}
-      />
+      />,
     );
     cy.findByRole("button", { name: "No color selected" }).realClick();
     cy.findByRole("tab", { name: "Color Picker" }).realClick();
@@ -89,7 +89,7 @@ describe("ColorChooser", () => {
         onSelect={() => {}}
         disableAlphaChooser={false}
         onClear={() => {}}
-      />
+      />,
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByRole("tab", { name: "Swatches" }).realClick();
@@ -105,7 +105,7 @@ describe("ColorChooser", () => {
         onSelect={() => {}}
         disableAlphaChooser={false}
         onClear={() => {}}
-      />
+      />,
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByRole("tab", { name: "Color Picker" }).realClick();
@@ -122,7 +122,7 @@ describe("ColorChooser", () => {
         onSelect={() => {}}
         disableAlphaChooser={false}
         onClear={() => {}}
-      />
+      />,
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByRole("tab", { name: "Color Picker" }).realClick();
@@ -138,7 +138,7 @@ describe("ColorChooser", () => {
         disableAlphaChooser={true}
         onSelect={() => {}}
         onClear={() => {}}
-      />
+      />,
     );
     cy.findByRole("button", { name: "Green10" }).realClick();
     cy.findByRole("tab", { name: "Swatches" }).realClick();

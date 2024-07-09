@@ -1,13 +1,3 @@
-import { StoryFn } from "@storybook/react";
-import {
-  ChangeEvent,
-  createContext,
-  CSSProperties,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
 import { Card, Checkbox, FlexLayout } from "@salt-ds/core";
 import {
   ArrowDownIcon,
@@ -16,27 +6,37 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "@salt-ds/icons";
+import type { StoryFn } from "@storybook/react";
+import {
+  type CSSProperties,
+  type ChangeEvent,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 import {
   CellEditor,
   ColumnGroup,
   DropdownCellEditor,
   Grid,
-  GridCellValueProps,
+  type GridCellValueProps,
   GridColumn,
-  GridHeaderValueProps,
-  GridProps,
+  type GridHeaderValueProps,
+  type GridProps,
   NumericCellEditor,
   NumericColumn,
   RowSelectionCheckboxColumn,
   RowSelectionRadioColumn,
 } from "../src";
-import { randomString, randomText } from "./utils";
 import {
+  type Investor,
   allLocations,
   createDummyInvestors,
-  Investor,
   investorKeyGetter,
 } from "./dummyData";
+import { randomString, randomText } from "./utils";
 import "./grid.stories.css";
 
 export default {
@@ -48,14 +48,14 @@ export default {
 const dummyInvestors = createDummyInvestors();
 
 const onAmountChange = (row: Investor, rowIndex: number, value: string) => {
-  dummyInvestors[rowIndex].amount = parseFloat(value);
+  dummyInvestors[rowIndex].amount = Number.parseFloat(value);
 };
 
 const onLocationChange = (row: Investor, rowIndex: number, value: string) => {
   dummyInvestors[rowIndex].location = value;
 };
 
-const GridStoryTemplate: StoryFn<GridProps> = (props) => {
+const GridStoryTemplate: StoryFn<GridProps> = () => {
   return (
     <Grid
       rowData={dummyInvestors}
@@ -117,7 +117,7 @@ const GridStoryTemplate: StoryFn<GridProps> = (props) => {
   );
 };
 
-const SingleRowSelectionTemplate: StoryFn<GridProps> = (props) => {
+const SingleRowSelectionTemplate: StoryFn<GridProps> = () => {
   return (
     <Grid
       rowData={dummyInvestors}
@@ -229,7 +229,7 @@ const SmallTemplate: StoryFn<GridProps> = () => {
   );
 };
 
-const PinnedColumnsTemplate: StoryFn<GridProps> = (props) => {
+const PinnedColumnsTemplate: StoryFn<GridProps> = () => {
   const [columnSeparators, setColumnSeparators] = useState<boolean>(false);
   const [pinnedSeparators, setPinnedSeparators] = useState<boolean>(true);
 
@@ -342,7 +342,7 @@ const dummyData = [...new Array(40).keys()].map((i) => {
 const rowIdGetter = (row: any) => row.id;
 
 const LotsOfColumnsTemplate: StoryFn<GridProps> = (props) => {
-  const { style, ...rest } = props;
+  const { style } = props;
   return (
     <Grid
       style={style}
@@ -385,7 +385,7 @@ dummyColumnNames.forEach((name) => {
   group.columns.push(name);
 });
 
-const LotsOfColumnGroupsTemplate: StoryFn<GridProps> = (props) => {
+const LotsOfColumnGroupsTemplate: StoryFn<GridProps> = () => {
   return (
     <Grid
       rowData={dummyData}
@@ -426,7 +426,7 @@ const CustomHeadersStoryContext = createContext<
 const useCustomHeadersStoryContext = () => {
   const c = useContext(CustomHeadersStoryContext);
   if (!c) {
-    throw new Error(`CustomHeadersStoryContext not found`);
+    throw new Error("CustomHeadersStoryContext not found");
   }
   return c;
 };
@@ -440,6 +440,7 @@ const CustomHeader = (props: GridHeaderValueProps<any>) => {
   };
 
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: not used
     <div onClick={onClick} className="customHeader">
       <FavoriteIcon />
       <div className="customHeaderText">{column.info.props.name}</div>
@@ -456,7 +457,7 @@ const CustomHeader = (props: GridHeaderValueProps<any>) => {
 
 const customHeadersColumnNames = dummyColumnNames.slice(0, 10);
 
-const CustomHeadersTemplate: StoryFn<GridProps> = (props) => {
+const CustomHeadersTemplate: StoryFn<GridProps> = () => {
   const [sortBy, setSortBy] = useState<string>("A");
   const [sortDesc, setSortDesc] = useState<boolean>(false);
 
@@ -480,7 +481,7 @@ const CustomHeadersTemplate: StoryFn<GridProps> = (props) => {
         setSortDesc(false);
       }
     },
-    [sortBy, setSortBy, sortDesc, setSortDesc]
+    [sortBy],
   );
 
   const contextValue: CustomHeadersStoryContext = useMemo(() => {
@@ -538,7 +539,7 @@ const CustomCellsStoryContext = createContext<
 const useCustomCellsStoryContext = () => {
   const c = useContext(CustomCellsStoryContext);
   if (!c) {
-    throw new Error(`CustomCellsStoryContext not found`);
+    throw new Error("CustomCellsStoryContext not found");
   }
   return c;
 };
@@ -577,6 +578,7 @@ const CustomCell = (props: GridCellValueProps<TreeRowData>) => {
   };
 
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: not used
     <div className="customTreeCell" onClick={onClick}>
       <div style={style} />
       {row.data.children.length > 0 ? (
@@ -609,7 +611,7 @@ for (let i = 0; i < 10; i++) {
   }
 }
 
-const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
+const CustomCellsTemplate: StoryFn<GridProps> = () => {
   const [data, setData] = useState(dummyTreeData);
 
   const dataById = useMemo(() => {
@@ -629,7 +631,7 @@ const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
       dataById.get(rowKey)!.expanded = expand;
       setData([...data]);
     },
-    [dataById, setData]
+    [dataById, data],
   );
 
   const visibleRows = useMemo(() => {
@@ -650,7 +652,7 @@ const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
     () => ({
       expand,
     }),
-    [expand]
+    [expand],
   );
 
   return (
@@ -678,7 +680,7 @@ const CustomCellsTemplate: StoryFn<GridProps> = (props) => {
   );
 };
 
-const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
+const ColumnDragAndDropTemplate: StoryFn<GridProps> = () => {
   const [columnIds, setColumnIds] = useState<string[]>([
     "name",
     "location",
@@ -688,7 +690,7 @@ const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
   const onColumnMoved = (
     columnId: string,
     fromIndex: number,
-    toIndex: number
+    toIndex: number,
   ) => {
     console.log(`Column "${columnId}" moved from ${fromIndex} to ${toIndex}`);
     setColumnIds((old) => {
@@ -700,14 +702,13 @@ const ColumnDragAndDropTemplate: StoryFn<GridProps> = (props) => {
           col,
           ...old.slice(toIndex),
         ];
-      } else {
-        return [
-          ...old.slice(0, toIndex),
-          col,
-          ...old.slice(toIndex, fromIndex),
-          ...old.slice(fromIndex + 1),
-        ];
       }
+      return [
+        ...old.slice(0, toIndex),
+        col,
+        ...old.slice(toIndex, fromIndex),
+        ...old.slice(fromIndex + 1),
+      ];
     });
   };
 

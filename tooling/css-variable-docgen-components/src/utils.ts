@@ -1,5 +1,5 @@
+import type { useOf } from "@storybook/addon-docs";
 import { getDocgenSection, isValidDocgenSection } from "@storybook/docs-tools";
-import { useOf } from "@storybook/addon-docs";
 
 const SALT_CHARACTERISTICS = [
   "accent",
@@ -50,7 +50,7 @@ export function getCharacteristics(resolved: ReturnType<typeof useOf>) {
             characteristicFoundationTokenMap[characteristicName] = [token];
           } else if (
             !characteristicFoundationTokenMap[characteristicName]?.includes(
-              token
+              token,
             )
           ) {
             characteristicFoundationTokenMap[characteristicName].push(token);
@@ -66,7 +66,7 @@ export function getCharacteristics(resolved: ReturnType<typeof useOf>) {
 }
 
 export function getClassNames(
-  resolved: ReturnType<typeof useOf>
+  resolved: ReturnType<typeof useOf>,
 ): Record<string, ClassName> {
   const classNames = getDocgenSection(resolved, "classNames") as Record<
     string,

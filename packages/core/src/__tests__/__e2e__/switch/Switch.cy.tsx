@@ -1,5 +1,5 @@
-import { Switch, SwitchProps } from "@salt-ds/core";
-import { useState, ChangeEvent } from "react";
+import { Switch, type SwitchProps } from "@salt-ds/core";
+import { type ChangeEvent, useState } from "react";
 
 function ControlledSwitch({ onChange, disabled }: SwitchProps) {
   const [checked, setChecked] = useState(false);

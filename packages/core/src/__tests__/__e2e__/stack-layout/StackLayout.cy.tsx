@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as stackStories from "@stories/stack-layout/stack-layout.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(stackStories);
@@ -44,7 +44,7 @@ describe("GIVEN a Stack", () => {
 
       cy.get(".saltFlexLayout").should(
         "have.class",
-        "saltStackLayout-separator"
+        "saltStackLayout-separator",
       );
     });
   });

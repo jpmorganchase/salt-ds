@@ -1,19 +1,19 @@
-import { makePrefixer, Tooltip } from "@salt-ds/core";
+import { Tooltip, makePrefixer } from "@salt-ds/core";
 import { ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
+  type KeyboardEvent,
+  type MouseEvent,
   forwardRef,
-  KeyboardEvent,
-  MouseEvent,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { ListItem, ListItemProps } from "../list-deprecated";
-import { MenuDescriptor } from "./CascadingMenuProps";
+import { ListItem, type ListItemProps } from "../list-deprecated";
+import type { MenuDescriptor } from "./CascadingMenuProps";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import cascadingMenuItemCss from "./CascadingMenuItem.css";
 
@@ -30,9 +30,8 @@ const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
         })}
       />
     );
-  } else {
-    return null;
   }
+  return null;
 };
 
 export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
@@ -48,7 +47,7 @@ export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
   itemToString: Required<ListItemProps<MenuDescriptor>>["itemToString"];
   onItemClick?: (
     sourceItem: MenuDescriptor,
-    event: MouseEvent | KeyboardEvent
+    event: MouseEvent | KeyboardEvent,
   ) => void;
   sourceItem: MenuDescriptor;
   tooltipEnterDelay: number;
@@ -56,7 +55,7 @@ export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
 }
 
 export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
-  function (props, ref) {
+  (props, ref) => {
     const {
       blurSelected,
       className,
@@ -107,13 +106,13 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     };
     const interactionClasses = isNavigatingWithKeyboard
       ? {
-          [withBaseName(`menuItemKeyboardActive`)]:
+          [withBaseName("menuItemKeyboardActive")]:
             !isDisabled && isInteracted && !blurSelected,
-          [withBaseName(`menuItemKeyboardDisabled`)]:
+          [withBaseName("menuItemKeyboardDisabled")]:
             isDisabled && isInteracted,
         }
       : {
-          [withBaseName(`menuItemHover`)]: !isDisabled && !blurSelected,
+          [withBaseName("menuItemHover")]: !isDisabled && !blurSelected,
         };
 
     const icon = hasStartAdornment ? getIcon(sourceItem, isDisabled) : null;
@@ -142,7 +141,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               ...interactionClasses,
               [withBaseName("menuItemWithScrollbar")]: hasScrollbar,
             },
-            className
+            className,
           )}
           disabled={isDisabled}
           role="menuitem"
@@ -181,5 +180,5 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         </ListItem>
       </Tooltip>
     );
-  }
+  },
 );

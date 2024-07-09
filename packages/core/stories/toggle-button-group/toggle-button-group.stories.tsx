@@ -1,12 +1,12 @@
-import { Tooltip, ToggleButtonGroup, ToggleButton } from "@salt-ds/core";
+import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
 import {
-  LightIcon,
-  DarkIcon,
   AppSwitcherIcon,
+  DarkIcon,
   FolderClosedIcon,
+  LightIcon,
   VisibleIcon,
 } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Toggle Button Group",

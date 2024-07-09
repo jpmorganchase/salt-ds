@@ -1,6 +1,12 @@
-import { CSSProperties, useRef, useState, useReducer, ReactNode } from "react";
 import { Button } from "@salt-ds/core";
-import { Input, InputProps } from "@salt-ds/lab";
+import { Input, type InputProps } from "@salt-ds/lab";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 
 export interface AdjustableFlexboxProps {
   children?: ReactNode;
@@ -27,8 +33,8 @@ export const AdjustableFlexbox = ({
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
   const [width, setWidth] = useState(widthProp);
   const handleWidthChange: InputProps["onChange"] = (e, value) => {
-    const newValue = parseInt(value);
-    widthRef.current = isNaN(newValue) ? 0 : newValue;
+    const newValue = Number.parseInt(value);
+    widthRef.current = Number.isNaN(newValue) ? 0 : newValue;
     forceUpdate();
   };
   const applyWidth = () => {
@@ -38,11 +44,13 @@ export const AdjustableFlexbox = ({
   const handleKeyDown: InputProps["onKeyDown"] = (e) => {
     if (e.key === "ArrowUp") {
       const amt = e.shiftKey ? 10 : 1;
-      setWidth((widthRef.current = widthRef.current + amt));
+      widthRef.current = widthRef.current + amt;
+      setWidth(widthRef.current);
       e.preventDefault();
     } else if (e.key === "ArrowDown") {
       const amt = e.shiftKey ? 10 : 1;
-      setWidth((widthRef.current = widthRef.current - amt));
+      widthRef.current = widthRef.current - amt;
+      setWidth(widthRef.current);
       e.preventDefault();
     }
   };

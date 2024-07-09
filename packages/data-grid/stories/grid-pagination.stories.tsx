@@ -1,7 +1,7 @@
-import { StoryFn } from "@storybook/react";
-import { SyntheticEvent, useMemo, useState } from "react";
-import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
 import { FlexLayout, Pagination, Paginator } from "@salt-ds/core";
+import type { StoryFn } from "@storybook/react";
+import { type SyntheticEvent, useMemo, useState } from "react";
+import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
 import { createDummyInvestors, investorKeyGetter } from "./dummyData";
 import "./grid.stories.css";
 
@@ -13,7 +13,7 @@ export default {
 
 const dummyInvestors = createDummyInvestors();
 
-const GridPaginationTemplate: StoryFn<{}> = (props) => {
+const GridPaginationTemplate: StoryFn = (props) => {
   const [page, setPage] = useState<number>(1);
   const pageSize = 7;
   const pageCount = Math.ceil(dummyInvestors.length / pageSize);
@@ -26,7 +26,7 @@ const GridPaginationTemplate: StoryFn<{}> = (props) => {
     const start = (page - 1) * pageSize;
     const end = Math.min(start + pageSize, dummyInvestors.length);
     return dummyInvestors.slice(start, end);
-  }, [pageSize, page]);
+  }, [page]);
 
   return (
     <FlexLayout direction={"column"} align={"end"}>

@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import {
   Banner,
   BannerActions,
@@ -7,6 +6,7 @@ import {
   Link,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const Interactive = (): ReactElement => (
   <div style={{ width: "80%" }}>

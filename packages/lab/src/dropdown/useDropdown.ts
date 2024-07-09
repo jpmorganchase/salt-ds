@@ -1,14 +1,14 @@
 import { useControlled } from "@salt-ds/core";
 import { useCallback, useMemo } from "react";
-import { ListHookProps, ListHookResult, useList } from "../list";
-import { DropdownHookResult, DropdownHookProps } from "./dropdownTypes";
 import {
-  CollectionItem,
+  type CollectionItem,
+  type SelectHandler,
+  type SelectionChangeHandler,
+  type SelectionStrategy,
   itemToString as defaultItemToString,
-  SelectionChangeHandler,
-  SelectHandler,
-  SelectionStrategy,
 } from "../common-hooks";
+import { type ListHookProps, type ListHookResult, useList } from "../list";
+import type { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 
 const NULL_REF = { current: null };
 
@@ -20,7 +20,7 @@ export interface DropdownListHookProps<Item, Strategy extends SelectionStrategy>
 
 export interface DropdownListHookResult<
   Item,
-  Selection extends SelectionStrategy
+  Selection extends SelectionStrategy,
 > extends Partial<ListHookResult<Item, Selection>>,
     Partial<DropdownHookResult> {
   onOpenChange: any;
@@ -29,7 +29,7 @@ export interface DropdownListHookResult<
 
 export const useDropdown = <
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 >({
   collectionHook,
   defaultHighlightedIndex: defaultHighlightedIndexProp,
@@ -67,7 +67,7 @@ export const useDropdown = <
       }
       onSelectionChange?.(evt, selected);
     },
-    [isMultiSelect, onOpenChange, onSelectionChange, setIsOpen]
+    [isMultiSelect, onOpenChange, onSelectionChange],
   );
 
   const handleSelect = useCallback<SelectHandler<Item>>(
@@ -78,7 +78,7 @@ export const useDropdown = <
       }
       onSelect?.(evt, selected);
     },
-    [isMultiSelect, onOpenChange, onSelect, setIsOpen]
+    [isMultiSelect, onOpenChange, onSelect],
   );
 
   const listHook = useList<Item, Selection>({
@@ -104,7 +104,7 @@ export const useDropdown = <
       setIsOpen(open);
       onOpenChange?.(open);
     },
-    [onOpenChange, setIsOpen]
+    [onOpenChange],
   );
 
   const triggerLabel = useMemo(() => {
@@ -112,18 +112,17 @@ export const useDropdown = <
       const selectedItems = listHook.selected as CollectionItem<Item>[];
       if (selectedItems.length === 0) {
         return undefined;
-      } else if (selectedItems.length === 1) {
+      }
+      if (selectedItems.length === 1) {
         const { value } = selectedItems[0];
         return value === null ? undefined : itemToString(value);
-      } else {
-        return `${selectedItems.length} items selected`;
       }
-    } else {
-      const selectedItem = listHook.selected as CollectionItem<Item>;
-      return selectedItem == null || selectedItem.value === null
-        ? undefined
-        : itemToString(selectedItem.value);
+      return `${selectedItems.length} items selected`;
     }
+    const selectedItem = listHook.selected as CollectionItem<Item>;
+    return selectedItem == null || selectedItem.value === null
+      ? undefined
+      : itemToString(selectedItem.value);
   }, [isMultiSelect, itemToString, listHook.selected]);
 
   return {

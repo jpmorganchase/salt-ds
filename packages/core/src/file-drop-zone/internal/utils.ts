@@ -1,4 +1,4 @@
-import { DragEvent } from "react";
+import type { DragEvent } from "react";
 
 export const containsFiles = (e: DragEvent) => {
   if (!e.dataTransfer) {
@@ -8,7 +8,7 @@ export const containsFiles = (e: DragEvent) => {
 
   return Array.prototype.some.call(
     e.dataTransfer.types,
-    (type) => type === "Files"
+    (type) => type === "Files",
   );
 };
 

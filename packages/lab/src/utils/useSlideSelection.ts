@@ -1,12 +1,12 @@
-import { LayoutAnimationTransition } from "../deck-layout";
 import { useState } from "react";
+import type { LayoutAnimationTransition } from "../deck-layout";
 
 export const useSlideSelection = (
-  initialValue?: number
+  initialValue?: number,
 ): [
   LayoutAnimationTransition | undefined,
   number,
-  (sliderIndex: number, transition?: LayoutAnimationTransition) => void
+  (sliderIndex: number, transition?: LayoutAnimationTransition) => void,
 ] => {
   const [selectedSlide, setSelectedSlide] = useState(initialValue || 0);
   const [selectedTransition, setSelectedTransition] = useState<
@@ -15,13 +15,13 @@ export const useSlideSelection = (
 
   const handleSlideSelection = (
     sliderIndex: number,
-    transition?: LayoutAnimationTransition
+    transition?: LayoutAnimationTransition,
   ) => {
     const newTransition = transition
       ? transition
       : selectedSlide < sliderIndex
-      ? "increase"
-      : "decrease";
+        ? "increase"
+        : "decrease";
     setSelectedSlide(sliderIndex);
     setSelectedTransition(newTransition);
   };

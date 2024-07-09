@@ -1,9 +1,9 @@
-import { forwardRef, HTMLAttributes, MouseEvent } from "react";
-import { clsx } from "clsx";
 import { makePrefixer, useIdMemo } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { type HTMLAttributes, type MouseEvent, forwardRef } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import listItemNextCss from "./ListItemNext.css";
 import { useListItem } from "./ListNextContext";
 
@@ -35,7 +35,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       onClick,
       ...props
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -87,7 +87,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
             [withBaseName("highlighted")]: highlighted,
             [withBaseName("focused")]: focused,
           },
-          className
+          className,
         )}
         role="option"
         aria-disabled={disabled || undefined}
@@ -101,5 +101,5 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
         {children}
       </li>
     );
-  }
+  },
 );

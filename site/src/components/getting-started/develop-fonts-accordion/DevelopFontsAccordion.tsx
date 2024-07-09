@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import Accordion, { AccordionBaseProps } from "../../accordion/Accordion";
+import type { ReactElement } from "react";
+import Accordion, { type AccordionBaseProps } from "../../accordion/Accordion";
 import styles from "./DevelopFontsAccordion.module.css";
 
 type DevelopFontsAccordionProps = {

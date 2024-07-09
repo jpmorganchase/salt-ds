@@ -1,9 +1,9 @@
 import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
+import type { GridColumnGroupModel } from "../Grid";
 import { GroupHeaderCell } from "../GroupHeaderCell";
-import { GridColumnGroupModel } from "../Grid";
 import { GroupHeaderCellValue } from "../GroupHeaderCellValue";
 
 import { FakeGroupCell } from "./FakeGroupCell";

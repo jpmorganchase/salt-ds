@@ -1,7 +1,7 @@
-import type { GridColumnInfo } from "./GridColumn";
 import { createContext, useContext } from "react";
-import type { ColumnGroupProps } from "./ColumnGroup";
 import type { CellEditorInfo } from "./CellEditor";
+import type { ColumnGroupProps } from "./ColumnGroup";
+import type { GridColumnInfo } from "./GridColumn";
 
 export interface GridContext<T> {
   getChildIndex: (columnId: string) => number;
@@ -11,7 +11,7 @@ export interface GridContext<T> {
   onColumnGroupAdded: (colGroupProps: ColumnGroupProps) => void;
   onColumnGroupRemoved: (
     index: number,
-    colGroupProps: ColumnGroupProps
+    colGroupProps: ColumnGroupProps,
   ) => void;
 
   onEditorAdded: (editorInfo: CellEditorInfo<T>) => void;
@@ -21,13 +21,13 @@ export interface GridContext<T> {
 }
 
 export const GridContext = createContext<GridContext<any> | undefined>(
-  undefined
+  undefined,
 );
 
 export const useGridContext = () => {
   const c = useContext(GridContext);
   if (!c) {
-    throw new Error(`useGridContext invoked outside of a Grid`);
+    throw new Error("useGridContext invoked outside of a Grid");
   }
   return c;
 };

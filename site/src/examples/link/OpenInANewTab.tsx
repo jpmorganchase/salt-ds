@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { StackLayout, Link } from "@salt-ds/core";
+import { Link, StackLayout } from "@salt-ds/core";
 import { GithubIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const OpenInANewTab = (): ReactElement => (

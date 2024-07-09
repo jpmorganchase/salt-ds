@@ -7,14 +7,14 @@ import {
 import { OverflowMenuIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import React, {
-  ForwardedRef,
+  type ForwardedRef,
   forwardRef,
-  MouseEvent,
-  ReactElement,
+  type MouseEvent,
+  type ReactElement,
   useCallback,
   useRef,
 } from "react";
-import { ToolbarField, ToolbarFieldProps } from "../toolbar-field";
+import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
 import { OverflowSeparator } from "./OverflowSeparator";
 
 import {
@@ -22,11 +22,11 @@ import {
   useKeyboardNavigationPanel,
 } from "../../common-hooks";
 
-import { DropdownBase, DropdownBaseProps } from "../../dropdown";
+import { DropdownBase, type DropdownBaseProps } from "../../dropdown";
 
-import overflowPanelCss from "./OverflowPanel.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import overflowPanelCss from "./OverflowPanel.css";
 
 const withBaseName = makePrefixer("saltOverflowPanel");
 
@@ -52,7 +52,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
     triggerButtonLabel,
     ...props
   }: DropdownPanelProps,
-  forwardedRef?: ForwardedRef<HTMLDivElement>
+  forwardedRef?: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -129,25 +129,25 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
           const { type } = item.value as ReactElement;
           if (type === OverflowSeparator) {
             return item.value;
-          } else {
-            const formFieldProps = {
-              id: item.id,
-              inOverflowPanel: true,
-              key: item.id,
-              onClick: handleItemClick,
-            } as ToolbarFieldProps;
-
-            if (type === ToolbarField) {
-              return React.cloneElement(
-                item.value as ReactElement,
-                formFieldProps
-              );
-            } else {
-              return (
-                <ToolbarField {...formFieldProps}>{item.value}</ToolbarField>
-              );
-            }
           }
+          const formFieldProps = {
+            id: item.id,
+            inOverflowPanel: true,
+            key: item.id,
+            onClick: handleItemClick,
+          } as ToolbarFieldProps;
+
+          if (type === ToolbarField) {
+            return React.cloneElement(
+              item.value as ReactElement,
+              formFieldProps,
+            );
+          }
+          return (
+            <ToolbarField {...formFieldProps} key={item.id}>
+              {item.value}
+            </ToolbarField>
+          );
         })}
       </div>
     </DropdownBase>

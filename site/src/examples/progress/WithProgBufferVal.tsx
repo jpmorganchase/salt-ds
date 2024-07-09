@@ -1,14 +1,12 @@
-import { ReactElement, useState, useEffect, useCallback } from "react";
 import {
   Button,
-  FlexItem,
-  FlexLayout,
-  FlowLayout,
-  RadioButton,
-  RadioButtonGroup,
   CircularProgress,
+  FlexItem,
+  FlowLayout,
   LinearProgress,
+  StackLayout,
 } from "@salt-ds/core";
+import { type ReactElement, useCallback, useEffect, useState } from "react";
 
 function useProgressingValue(updateInterval = 100) {
   const [bufferValue, setBufferValue] = useState(0);
@@ -45,7 +43,7 @@ function useProgressingValue(updateInterval = 100) {
         handleStop();
       }
     },
-    [bufferValue]
+    [bufferValue, handleStop],
   );
 
   return {
@@ -60,10 +58,9 @@ function useProgressingValue(updateInterval = 100) {
 export const WithProgBufferVal = (): ReactElement => {
   const { handleReset, handleStart, handleStop, isProgressing, bufferValue } =
     useProgressingValue();
-  const [selectedType, setSelectedType] = useState("circular");
 
   return (
-    <FlexLayout direction="column" align="center" style={{ height: "100%" }}>
+    <StackLayout align="center">
       <FlowLayout justify="center" gap={1}>
         <Button disabled={isProgressing} onClick={handleStart}>
           Start
@@ -74,26 +71,12 @@ export const WithProgBufferVal = (): ReactElement => {
         <Button onClick={handleReset}>Reset</Button>
       </FlowLayout>
 
-      <FlowLayout justify="center" gap={1}>
-        <RadioButtonGroup
-          direction="horizontal"
-          value={selectedType}
-          aria-label="Progress type control"
-          onChange={(e) => setSelectedType(e.target.value)}
-        >
-          <RadioButton label="Circular" value="circular" />
-          <RadioButton label="Linear" value="linear" />
-        </RadioButtonGroup>
-      </FlowLayout>
-
-      <FlexItem style={{ margin: "auto" }}>
-        {selectedType === "circular" && (
-          <CircularProgress aria-label="Download" bufferValue={bufferValue} />
-        )}
-        {selectedType === "linear" && (
-          <LinearProgress aria-label="Download" bufferValue={bufferValue} />
-        )}
+      <FlexItem>
+        <CircularProgress aria-label="Download" bufferValue={bufferValue} />
       </FlexItem>
-    </FlexLayout>
+      <FlexItem>
+        <LinearProgress aria-label="Download" bufferValue={bufferValue} />
+      </FlexItem>
+    </StackLayout>
   );
 };

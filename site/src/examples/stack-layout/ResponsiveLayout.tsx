@@ -1,14 +1,14 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
 import {
-  StackLayout,
   FlexItem,
   FormField,
   FormFieldLabel,
-  RadioButtonGroup,
   RadioButton,
+  RadioButtonGroup,
+  StackLayout,
 } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
+import styles from "./index.module.css";
 
 const viewportOptions = ["Large", "Small"] as const;
 type Viewport = (typeof viewportOptions)[number];

@@ -13,7 +13,7 @@ describe("GIVEN a FormLabel", () => {
   describe("WHEN required is true", () => {
     it("THEN Required is rendered if displayedNecessity is set to required", () => {
       cy.mount(
-        <FormLabel label="label text" required displayedNecessity="required" />
+        <FormLabel label="label text" required displayedNecessity="required" />,
       );
       cy.findByText(/Required/).should("exist");
     });
@@ -25,7 +25,7 @@ describe("GIVEN a FormLabel", () => {
 
     it("THEN Required is NOT rendered if displayedNecessity is set to optional", () => {
       cy.mount(
-        <FormLabel label="label text" required displayedNecessity="optional" />
+        <FormLabel label="label text" required displayedNecessity="optional" />,
       );
       cy.findByText(/Required/).should("not.exist");
     });
@@ -38,7 +38,7 @@ describe("GIVEN a FormLabel", () => {
           label="label text"
           required={false}
           displayedNecessity="optional"
-        />
+        />,
       );
       cy.findByText(/Optional/).should("exist");
     });
@@ -54,7 +54,7 @@ describe("GIVEN a FormLabel", () => {
           label="label text"
           required={false}
           displayedNecessity="required"
-        />
+        />,
       );
       cy.findByText(/Optional/).should("not.exist");
     });
@@ -72,7 +72,7 @@ describe("GIVEN a FormLabel", () => {
           label="label text"
           hasStatusIndicator
           validationStatus="warning"
-        />
+        />,
       );
       cy.findByTestId("WarningSolidIcon").should("exist");
     });
@@ -83,7 +83,7 @@ describe("GIVEN a FormLabel", () => {
           label="label text"
           hasStatusIndicator
           validationStatus="error"
-        />
+        />,
       );
       cy.findByTestId("ErrorSolidIcon").should("exist");
     });

@@ -1,21 +1,21 @@
 import { useControlled, useForkRef } from "@salt-ds/core";
 import {
-  ChangeEventHandler,
-  FocusEventHandler,
-  ForwardedRef,
-  KeyboardEventHandler,
-  Ref,
-  RefObject,
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  type ForwardedRef,
+  type KeyboardEventHandler,
+  type Ref,
+  type RefObject,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { QueryInputBodyProps } from "./internal/QueryInputBody";
-import { usePopperStatus } from "./internal/usePopperStatus";
-import { ValueSelectorProps } from "./internal/ValueSelector";
-import { QueryInputProps } from "./QueryInput";
-import { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
 import { useWidth } from "../responsive";
+import type { QueryInputProps } from "./QueryInput";
+import type { QueryInputBodyProps } from "./internal/QueryInputBody";
+import type { ValueSelectorProps } from "./internal/ValueSelector";
+import { usePopperStatus } from "./internal/usePopperStatus";
+import type { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
 
 export type BooleanOperator = "or" | "and";
 
@@ -31,7 +31,7 @@ export interface UseQueryInputResult {
 
 export function useQueryInput(
   props: QueryInputProps,
-  forwardedRef: ForwardedRef<HTMLDivElement>
+  forwardedRef: ForwardedRef<HTMLDivElement>,
 ): UseQueryInputResult {
   const bodyRef = useRef<HTMLDivElement>(null);
   const popperRef = useRef<HTMLDivElement>(null);
@@ -40,11 +40,11 @@ export function useQueryInput(
 
   const forkedRef1 = useForkRef<HTMLDivElement>(
     forwardedRef,
-    bodyRef
+    bodyRef,
   ) as RefObject<HTMLDivElement>;
   const queryInputBodyRef = useForkRef<HTMLDivElement>(
     forkedRef1,
-    widthBodyRef
+    widthBodyRef,
   );
 
   const [selectedItems, setSelectedItems] = useControlled({
@@ -73,7 +73,7 @@ export function useQueryInput(
   const [selectedCategory, setSelectedCategory] =
     useState<QueryInputCategory | null>(null);
   const searchListIndexPositions = useRef<Array<QueryInputCategory | string>>(
-    []
+    [],
   );
 
   const onInputFocus: FocusEventHandler<HTMLInputElement> = (event) => {
@@ -91,13 +91,11 @@ export function useQueryInput(
       inputRef.current.focus();
       return;
     }
-    const isFocusWithinBody =
-      bodyRef.current && bodyRef.current.contains(relatedTarget);
+    const isFocusWithinBody = bodyRef.current?.contains(relatedTarget);
     if (isFocusWithinBody) {
       return;
     }
-    const isFocusWithinPopper =
-      popperRef.current && popperRef.current.contains(relatedTarget);
+    const isFocusWithinPopper = popperRef.current?.contains(relatedTarget);
     if (isFocusWithinPopper) {
       inputRef.current.focus();
       return;
@@ -112,18 +110,16 @@ export function useQueryInput(
   };
 
   const onBlur: FocusEventHandler<HTMLDivElement> = (event) => {
-    let relatedTarget = event.relatedTarget as Node | null;
+    const relatedTarget = event.relatedTarget as Node | null;
     const isBodyFocused = bodyRef.current === relatedTarget;
     if (isBodyFocused) {
       return;
     }
-    const isFocusWithinBody =
-      bodyRef.current && bodyRef.current.contains(relatedTarget);
+    const isFocusWithinBody = bodyRef.current?.contains(relatedTarget);
     if (isFocusWithinBody) {
       return;
     }
-    const isFocusWithinPopper =
-      popperRef.current && popperRef.current.contains(relatedTarget);
+    const isFocusWithinPopper = popperRef.current?.contains(relatedTarget);
     if (isFocusWithinPopper) {
       return;
     }
@@ -132,11 +128,9 @@ export function useQueryInput(
   };
 
   const onSelectedItemsChange = (newItems: QueryInputItem[] | undefined) => {
-    const newItem =
-      newItems &&
-      newItems.find(
-        (item) => item.category == null && item.value === inputValue
-      );
+    const newItem = newItems?.find(
+      (item) => item.category == null && item.value === inputValue,
+    );
     if (newItem) {
       setInputValue("");
     }
@@ -166,7 +160,7 @@ export function useQueryInput(
   const searchListItems = useMemo(() => {
     const [searchListItems, indexPositions] = filterCategories(
       props.categories,
-      inputValue
+      inputValue,
     );
     searchListIndexPositions.current = indexPositions;
     return searchListItems;
@@ -182,7 +176,7 @@ export function useQueryInput(
   const searchListItemCount = useMemo(() => {
     return searchListItems.reduce(
       (acc, category) => acc + category.values.length,
-      0
+      0,
     );
   }, [searchListItems]);
 
@@ -219,18 +213,18 @@ export function useQueryInput(
         return;
       case "ArrowUp":
         setHighlightedIndex((i) =>
-          prevSearchItemIndex(i, searchListIndexPositions.current)
+          prevSearchItemIndex(i, searchListIndexPositions.current),
         );
         return;
       case "ArrowDown":
         // setHighlightedIndex((i) => Math.min(searchListItemCount, i + 1));
         setHighlightedIndex((i) =>
-          nextSearchItemIndex(i, searchListIndexPositions.current)
+          nextSearchItemIndex(i, searchListIndexPositions.current),
         );
         return;
       case "PageDown":
         setHighlightedIndex((i) =>
-          Math.min(searchListItemCount, i + displayedItemCount)
+          Math.min(searchListItemCount, i + displayedItemCount),
         );
         return;
       case "PageUp":
@@ -272,7 +266,7 @@ export function useQueryInput(
         return;
       case "ArrowDown":
         setHighlightedCategoryIndex((i) =>
-          Math.min(props.categories.length - 1, i + 1)
+          Math.min(props.categories.length - 1, i + 1),
         );
         return;
       case "PageUp":
@@ -280,7 +274,7 @@ export function useQueryInput(
         return;
       case "PageDown":
         setHighlightedCategoryIndex((i) =>
-          Math.min(props.categories.length - 1, i + displayedItemCount)
+          Math.min(props.categories.length - 1, i + displayedItemCount),
         );
         return;
       case "Enter":
@@ -312,37 +306,48 @@ export function useQueryInput(
         setHighlightedValueIndex(0);
         return;
       case "End":
-        setHighlightedValueIndex(selectedCategory!.values.length);
+        if (selectedCategory != null) {
+          setHighlightedValueIndex(selectedCategory.values.length);
+        }
         return;
       case "ArrowUp":
         setHighlightedValueIndex((i) => Math.max(0, i - 1));
         return;
       case "ArrowDown":
-        setHighlightedValueIndex((i) =>
-          Math.min(selectedCategory!.values.length, i + 1)
-        );
+        setHighlightedValueIndex((i) => {
+          if (selectedCategory != null) {
+            return Math.min(selectedCategory.values.length, i + 1);
+          }
+          return i;
+        });
         return;
       case "PageUp":
         setHighlightedValueIndex((i) => Math.max(0, i - displayedItemCount));
         return;
       case "PageDown":
-        setHighlightedValueIndex((i) =>
-          Math.min(selectedCategory!.values.length, i + displayedItemCount)
-        );
+        setHighlightedValueIndex((i) => {
+          if (selectedCategory != null) {
+            return Math.min(
+              selectedCategory.values.length,
+              i + displayedItemCount,
+            );
+          }
+          return i;
+        });
         return;
       case "Enter":
-        if (highlightedValueIndex === 0) {
+        if (highlightedValueIndex === 0 || selectedCategory == null) {
           setSelectedCategory(null);
         } else {
-          const value = selectedCategory!.values[highlightedValueIndex - 1];
+          const value = selectedCategory.values[highlightedValueIndex - 1];
           const newItems = selectedItems.filter(
             (item) =>
               !(
-                item.category === selectedCategory!.name && item.value === value
-              )
+                item.category === selectedCategory.name && item.value === value
+              ),
           );
           if (newItems.length === selectedItems.length) {
-            newItems.push({ category: selectedCategory!.name, value });
+            newItems.push({ category: selectedCategory.name, value });
           }
           onSelectedItemsChange(newItems);
         }
@@ -394,7 +399,7 @@ export function useQueryInput(
 
   const onValueToggle = (category: QueryInputCategory, value: string) => {
     const newItems = selectedItems.filter(
-      (item) => !(item.category === category.name && item.value === value)
+      (item) => !(item.category === category.name && item.value === value),
     );
     if (newItems.length === selectedItems.length) {
       newItems.push({ category: category.name, value });
@@ -451,7 +456,7 @@ export function useQueryInput(
 
 function filterCategories(
   categories: QueryInputCategory[],
-  inputValue?: string
+  inputValue?: string,
 ): [QueryInputCategory[], Array<QueryInputCategory | string>] {
   // Note: if there is no input value, this List would not be display
   if (!inputValue) {
@@ -476,31 +481,32 @@ function filterCategories(
 
 function nextSearchItemIndex(
   index: number,
-  indexPositions: Array<QueryInputCategory | string>
+  indexPositions: Array<QueryInputCategory | string>,
 ) {
   const nextIndex = index + 1;
   // Note: allow 1 for the extra ListItem we append to end of List
   if (nextIndex === indexPositions.length + 1) {
     return index;
-  } else if (nextIndex === indexPositions.length) {
-    return nextIndex;
-  } else if (typeof indexPositions[nextIndex] === "string") {
-    return nextIndex;
-  } else {
-    return nextIndex + 1;
   }
+  if (nextIndex === indexPositions.length) {
+    return nextIndex;
+  }
+  if (typeof indexPositions[nextIndex] === "string") {
+    return nextIndex;
+  }
+  return nextIndex + 1;
 }
 
 function prevSearchItemIndex(
   index: number,
-  indexPositions: Array<QueryInputCategory | string>
+  indexPositions: Array<QueryInputCategory | string>,
 ) {
   const nextIndex = index - 1;
   if (nextIndex === 0) {
     return index;
-  } else if (typeof indexPositions[nextIndex] === "string") {
-    return nextIndex;
-  } else {
-    return nextIndex - 1;
   }
+  if (typeof indexPositions[nextIndex] === "string") {
+    return nextIndex;
+  }
+  return nextIndex - 1;
 }

@@ -1,19 +1,18 @@
-import { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Banner,
   BannerActions,
   BannerContent,
-  BannerProps,
+  type BannerProps,
   Button,
+  FlowLayout,
   Link,
   StackLayout,
   Text,
-  ValidationStatus,
-  FlowLayout,
-  FlexItem,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
 
 export default {
   title: "Core/Banner",
@@ -175,8 +174,8 @@ export const StatusesPrimary: StoryFn<typeof Banner> = (props) => {
 
   return (
     <StackLayout style={{ width: 500 }}>
-      {statuses.map((example, i) => (
-        <Banner status={example.status} {...restProps} key={i}>
+      {statuses.map((example) => (
+        <Banner status={example.status} {...restProps} key={example.status}>
           <BannerContent>{example.content}</BannerContent>
         </Banner>
       ))}
@@ -257,8 +256,8 @@ export const MultipleLines = (props: BannerProps) => {
 export const MultipleBanners: StoryFn<typeof Banner> = () => {
   return (
     <StackLayout gap={3} style={{ width: 800 }}>
-      {statuses.map((example, i) => (
-        <Banner status={example.status} key={i}>
+      {statuses.map((example) => (
+        <Banner status={example.status} key={example.status}>
           <BannerContent>{example.content}</BannerContent>
         </Banner>
       ))}

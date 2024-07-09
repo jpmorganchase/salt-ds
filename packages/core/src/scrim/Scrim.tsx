@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
-import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { makePrefixer } from "../utils";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import scrimCss from "./Scrim.css";
 
@@ -23,7 +23,7 @@ export interface ScrimProps extends ComponentPropsWithoutRef<"div"> {
 
 export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
   { className, children, fixed = false, open = true, ...rest },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -43,7 +43,7 @@ export const Scrim = forwardRef<HTMLDivElement, ScrimProps>(function Scrim(
         {
           [withBaseName("fixed")]: fixed,
         },
-        className
+        className,
       )}
       data-testid="scrim"
       ref={ref}

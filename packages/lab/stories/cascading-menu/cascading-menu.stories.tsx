@@ -1,8 +1,8 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { MouseEvent, useMemo, useState } from "react";
 import { Button } from "@salt-ds/core";
 import { CallIcon, UserIcon } from "@salt-ds/icons";
-import { CascadingMenu, MenuDescriptor } from "@salt-ds/lab";
+import { CascadingMenu, type MenuDescriptor } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type MouseEvent, useMemo, useState } from "react";
 
 const initialSource: MenuDescriptor = {
   menuItems: [
@@ -124,7 +124,7 @@ export const MaximumWidth: StoryFn<typeof CascadingMenu> = () => {
         },
       ],
     }),
-    []
+    [],
   );
 
   return (
@@ -184,7 +184,7 @@ export const WithSeparators: StoryFn<typeof CascadingMenu> = () => {
         },
       ],
     }),
-    []
+    [],
   );
 
   return (
@@ -242,7 +242,7 @@ export const WithDisabledItems: StoryFn<typeof CascadingMenu> = () => {
         },
       ],
     }),
-    []
+    [],
   );
 
   return (
@@ -317,7 +317,7 @@ export const WithIcons: StoryFn<typeof CascadingMenu> = () => {
         },
       ],
     }),
-    []
+    [],
   );
 
   return (
@@ -385,7 +385,7 @@ export const ControlledOpenClose: StoryFn<typeof CascadingMenu> = () => {
         },
       ],
     }),
-    []
+    [],
   );
 
   const [open, setOpen] = useState(false);

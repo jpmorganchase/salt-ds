@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as dialogStories from "@stories/dialog/dialog.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(dialogStories);
 
@@ -54,7 +54,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button").click();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
-      }
+      },
     );
   });
 
@@ -100,7 +100,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button").click();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-large-xl");
-      }
+      },
     );
 
     it(
@@ -115,7 +115,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button").click();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-small-xs");
-      }
+      },
     );
   });
 
@@ -130,7 +130,7 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("dialog").should("be.visible");
 
       cy.get("@consoleSpy").then((spy) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: Cypress types
         const callCount = (spy as any).callCount;
 
         cy.findByLabelText("Close dialog").click();

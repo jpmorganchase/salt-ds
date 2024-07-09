@@ -1,22 +1,22 @@
+import { Button, useControlled, useForkRef } from "@salt-ds/core";
+import { CloseIcon, SearchIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import {
-  ChangeEvent,
-  ComponentType,
+  type ChangeEvent,
+  type ComponentType,
+  type KeyboardEvent,
+  type SyntheticEvent,
   forwardRef,
-  KeyboardEvent,
-  SyntheticEvent,
   useRef,
 } from "react";
-import { clsx } from "clsx";
-import { Button, useControlled, useForkRef } from "@salt-ds/core";
 import {
   InputLegacy as Input,
-  InputLegacyProps as InputProps,
+  type InputLegacyProps as InputProps,
   StaticInputAdornment,
 } from "../input-legacy";
-import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import searchInputCss from "./SearchInput.css";
 
@@ -58,7 +58,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       defaultValue,
       ...other
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -79,7 +79,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
     const handleChange = (
       event: ChangeEvent<HTMLInputElement>,
-      newValue: string
+      newValue: string,
     ) => {
       setValue(newValue);
       onChange?.(event, newValue);
@@ -133,5 +133,5 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
         {...other}
       />
     );
-  }
+  },
 );
