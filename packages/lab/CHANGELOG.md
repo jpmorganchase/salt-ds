@@ -1,5 +1,21 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.49
+
+### Minor Changes
+
+- 62d917d: Updated styling of date picker and calendar
+
+  - Corner radius support for date picker panel in theme next
+  - Corner radius support for calendar selected days in theme next
+  - Use accent color for today indicator and highlight color in calendar
+
+  Closes #3530.
+
+### Patch Changes
+
+- da92421: Fix warning logged when access a child ref on React 19.
+
 ## 1.0.0-alpha.48
 
 ### Minor Changes

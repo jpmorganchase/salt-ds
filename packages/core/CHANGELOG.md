@@ -1,5 +1,31 @@
 # @salt-ds/core
 
+## 1.32.0
+
+### Minor Changes
+
+- da92421: Added `getRefFromChildren`. This allows reading ref from a child component.
+- 8b43adf: Updated `LinearProgress` to display a moving line to represent an unspecified wait time, when `value` is `undefined`.
+
+  `<LinearProgress />`
+
+  _Note_: `value` and `bufferValue` are no longer default to `0`. Previously above code would render a 0% progress bar, which was not a good reflection of intent. You can still achieve it by passing in `value={0}`.
+
+- ce319ee: Added support for multiple themes to be passed to `SaltProvider`, e.g.,
+
+  ```
+  <SaltProvider theme="theme-1 theme-2">
+  ```
+
+- 9abf267: Marked `SaltProviderNext` being stable.
+
+  If you're using existing type or variable with `UNSTABLE_` prefix, they are now deprecated but will still work.
+
+### Patch Changes
+
+- da92421: Fix warning logged when access a child ref on React 19.
+- 7fa6e22: Fixed `Tooltip` not having correct height.
+
 ## 1.31.0
 
 ### Minor Changes
