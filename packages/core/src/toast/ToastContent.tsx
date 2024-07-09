@@ -1,12 +1,12 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
-  ForwardedRef,
+  type ComponentPropsWithoutRef,
+  type ForwardedRef,
+  type ReactNode,
   forwardRef,
-  ReactNode,
 } from "react";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer } from "../utils";
 
 import toastContentCss from "./ToastContent.css";
@@ -22,7 +22,7 @@ export interface ToastContentProps extends ComponentPropsWithoutRef<"div"> {
 
 export const ToastContent = forwardRef(function ToastContent(
   { children, className, ...restProps }: ToastContentProps,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

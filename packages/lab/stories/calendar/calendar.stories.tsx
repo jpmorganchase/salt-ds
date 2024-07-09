@@ -1,6 +1,6 @@
 import {
   DateFormatter,
-  DateValue,
+  type DateValue,
   endOfMonth,
   getDayOfWeek,
   getLocalTimeZone,
@@ -11,10 +11,10 @@ import {
 } from "@internationalized/date";
 import {
   Calendar,
-  CalendarProps,
-  UseRangeSelectionCalendarProps,
+  type CalendarProps,
+  type UseRangeSelectionCalendarProps,
 } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 import "./calendar.stories.css";
@@ -116,7 +116,7 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
     event,
-    newHoveredDate
+    newHoveredDate,
   ) => {
     setHoveredDate(newHoveredDate);
   };

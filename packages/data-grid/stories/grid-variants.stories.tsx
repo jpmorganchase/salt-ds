@@ -1,11 +1,4 @@
 import {
-  Grid,
-  GridColumn,
-  NumericColumn,
-  RowSelectionCheckboxColumn,
-} from "../src";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
-import {
   Checkbox,
   FlexItem,
   FlexLayout,
@@ -13,10 +6,17 @@ import {
   ToggleButtonGroup,
   useDensity,
 } from "@salt-ds/core";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import {
+  Grid,
+  GridColumn,
+  NumericColumn,
+  RowSelectionCheckboxColumn,
+} from "../src";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
+import type { StoryFn } from "@storybook/react";
 import { clsx } from "clsx";
+import { type DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 
 export default {
   title: "Lab/Data Grid",
@@ -26,7 +26,7 @@ export default {
 
 type Variant = "primary" | "secondary" | "zebra";
 
-const GridVariantsTemplate: StoryFn<{}> = () => {
+const GridVariantsTemplate: StoryFn = () => {
   const [separators, setSeparators] = useState(false);
   const [uhd, setUhd] = useState(false);
   const [variant, setVariant] = useState<Variant>("primary");
@@ -76,7 +76,7 @@ const GridVariantsTemplate: StoryFn<{}> = () => {
       <Grid
         rowData={rowData}
         rowKeyGetter={dummyRowKeyGetter}
-        className={clsx("grid", { ["grid-uhd"]: uhd })}
+        className={clsx("grid", { "grid-uhd": uhd })}
         variant={variant !== "zebra" ? variant : "primary"}
         zebra={variant === "zebra"}
         columnSeparators={separators}

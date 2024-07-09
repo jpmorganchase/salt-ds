@@ -1,9 +1,9 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "../../utils";
-import { Text } from "../../text";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { Text } from "../../text";
+import { makePrefixer } from "../../utils";
 
 import linearProgressCss from "./LinearProgress.css";
 
@@ -49,7 +49,7 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
       bufferValue,
       ...rest
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -94,10 +94,10 @@ export const LinearProgress = forwardRef<HTMLDivElement, LinearProgressProps>(
         </div>
         {!hideLabel && (
           <Text styleAs="h2" className={withBaseName("progressLabel")}>
-            {isIndeterminate ? `— %` : `${Math.round(progress)} %`}
+            {isIndeterminate ? "— %" : `${Math.round(progress)} %`}
           </Text>
         )}
       </div>
     );
-  }
+  },
 );

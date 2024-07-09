@@ -1,5 +1,5 @@
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import cornerTagCss from "./CornerTag.css";
 

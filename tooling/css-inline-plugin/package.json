@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "main": "src/index.ts",
-  "files": [
-    "README.md"
-  ],
+  "files": ["README.md"],
   "peerDependencies": {
     "vite": ">2.0.0-0"
   }

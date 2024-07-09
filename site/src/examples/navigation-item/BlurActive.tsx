@@ -1,6 +1,6 @@
-import { ReactElement, useState } from "react";
 import { NavigationItem } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
+import { type ReactElement, useState } from "react";
 
 const multipleLevelNesting = [
   {
@@ -15,7 +15,7 @@ const multipleLevelNesting = [
 
 export const BlurActive = (): ReactElement => {
   const [active, setActive] = useState<string>(
-    multipleLevelNesting[0].subNav[1].name
+    multipleLevelNesting[0].subNav[1].name,
   );
   const [expanded, setExpanded] = useState<boolean>();
   const orientation = "vertical";

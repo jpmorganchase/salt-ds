@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { type PropsWithChildren, useEffect, useRef, useState } from "react";
 
 export const LazyStoryCanvas = ({ children }: PropsWithChildren) => {
   const ref = useRef(null);

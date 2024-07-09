@@ -1,17 +1,17 @@
-import { ChangeEvent, useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   Card,
+  type CardProps,
   H3,
-  Text,
+  Label,
   Link,
-  StackLayout,
   RadioButton,
   RadioButtonGroup,
-  Label,
-  CardProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 import exampleImage from "./../assets/exampleImage1x.png";
 
 import "./card.stories.css";
@@ -37,7 +37,7 @@ export const Default: StoryFn<typeof Card> = (args) => (
 export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
   <Card {...args} style={{ width: "260px" }}>
     <StackLayout gap={3}>
-      <img alt="example image" src={exampleImage} style={{ width: "100%" }} />
+      <img alt="example" src={exampleImage} style={{ width: "100%" }} />
       <StackLayout gap={1}>
         <H3>Sustainable investing products</H3>
         <Text>
@@ -136,8 +136,8 @@ export const Variants: StoryFn<typeof Card> = (args) => {
     <StackLayout style={{ width: 600 }}>
       {variants.map((variant) => {
         return (
-          <StackLayout align="end">
-            <StackLayout direction="row" key={variant}>
+          <StackLayout align="end" key={variant}>
+            <StackLayout direction="row">
               <Card {...args} variant={variant}>
                 <StackLayout gap={1}>
                   <H3>Sustainable investing products</H3>

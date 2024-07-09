@@ -1,32 +1,32 @@
 import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
+  type ForwardedRef,
+  type ReactElement,
   cloneElement,
-  ForwardedRef,
   forwardRef,
   isValidElement,
-  ReactElement,
   useRef,
 } from "react";
 import {
-  CollectionIndexer,
-  CollectionItem,
-  isSelected,
-  itemToString as defaultItemToString,
+  type CollectionIndexer,
+  type CollectionItem,
   LIST_FOCUS_VISIBLE,
-  ScrollingAPI,
-  SelectionStrategy,
+  type ScrollingAPI,
+  type SelectionStrategy,
+  itemToString as defaultItemToString,
+  isSelected,
   useCollectionItems,
   useImperativeScrollingAPI,
 } from "../common-hooks";
 
 import { ListItem as DefaultListItem, ListItemProxy } from "./ListItem";
-import { ListItemProps, ListProps } from "./listTypes";
+import type { ListItemProps, ListProps } from "./listTypes";
 import { useList } from "./useList";
 import { useListHeight } from "./useListHeight";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import listCss from "./List.css";
 
@@ -36,7 +36,7 @@ const withBaseName = makePrefixer("saltList");
 
 export const List = forwardRef(function List<
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 >(
   {
     ListItem = DefaultListItem,
@@ -85,7 +85,7 @@ export const List = forwardRef(function List<
     width,
     ...htmlAttributes
   }: ListProps<Item, Selection>,
-  forwardedRef?: ForwardedRef<HTMLDivElement>
+  forwardedRef?: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -174,7 +174,7 @@ export const List = forwardRef(function List<
     idx: { value: number },
     headerId: string,
     title: string,
-    expanded?: boolean
+    expanded?: boolean,
   ) => ReactElement = function createHeader(idx, headerId, title, expanded) {
     const header = (
       <ListItem
@@ -203,7 +203,7 @@ export const List = forwardRef(function List<
   function renderCollectionItem(
     list: ReactElement[],
     item: CollectionItem<Item>,
-    idx: { value: number }
+    idx: { value: number },
   ) {
     // Note, a number of these props are specific to ListItem. What if user
     // implements a custom ListItem but neglects to handle all these props.
@@ -235,7 +235,7 @@ export const List = forwardRef(function List<
         cloneElement(value, listItemProps)
       ) : (
         <ListItem {...listItemProps} />
-      )
+      ),
     );
 
     idx.value += 1;
@@ -244,39 +244,39 @@ export const List = forwardRef(function List<
   const addGroup: (
     list: ReactElement[],
     items: CollectionItem<Item>[],
-    idx: { value: number }
+    idx: { value: number },
   ) => void = function addGroup(
     list: ReactElement[],
     items: CollectionItem<Item>[],
-    idx: { value: number }
+    idx: { value: number },
   ) {
     const { count = 0, id, expanded, label = "" } = items[idx.value];
     const header = createHeader(idx, id, label, expanded);
     const childItems: ReactElement | ReactElement[] =
       expanded !== false
         ? [header].concat(
-            renderCollectionItems(items, idx, idx.value + count) || []
+            renderCollectionItems(items, idx, idx.value + count) || [],
           )
         : header;
 
     list.push(
       <div key={id} role="group">
         {childItems}
-      </div>
+      </div>,
     );
   };
 
   const renderCollectionItems = (
     items: CollectionItem<Item>[],
     idx: CollectionIndexer = { value: 0 },
-    end = items.length
+    end = items.length,
   ): ReactElement[] | undefined => {
     const listItems: ReactElement[] = [];
     while (idx.value < end) {
       const item = items[idx.value];
-      if (item.header) {
+      if (item.header && item.label != null) {
         listItems.push(
-          createHeader(idx, item.id, item.label!, item.expanded === false)
+          createHeader(idx, item.id, item.label, item.expanded === false),
         );
       } else if (item.childNodes) {
         addGroup(listItems, items, idx);
@@ -294,17 +294,15 @@ export const List = forwardRef(function List<
           {emptyMessage ?? defaultEmptyMessage}
         </span>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 
   const renderContent = () => {
     if (collectionHook.data.length) {
       return renderCollectionItems(collectionHook.data);
-    } else {
-      renderEmpty();
     }
+    renderEmpty();
   };
 
   const contentHeight = "auto";
@@ -360,5 +358,5 @@ export const List = forwardRef(function List<
 }) as <Item = string, Selection extends SelectionStrategy = "default">(
   props: ListProps<Item, Selection> & {
     ref?: ForwardedRef<ScrollingAPI<Item>>;
-  }
+  },
 ) => ReactElement<ListProps<Item, Selection>>;

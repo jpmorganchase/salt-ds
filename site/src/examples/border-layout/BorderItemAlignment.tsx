@@ -1,15 +1,15 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
 import {
-  BorderLayout,
   BorderItem,
-  GRID_ALIGNMENT_BASE as borderItemAlignment,
-  RadioButtonGroup,
-  RadioButton,
+  BorderLayout,
   FormField,
   FormFieldLabel,
+  RadioButton,
+  RadioButtonGroup,
+  GRID_ALIGNMENT_BASE as borderItemAlignment,
 } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import borderItemAlignmentStyles from "./BorderItemAlignment.module.css";
+import styles from "./index.module.css";
 
 type BorderItemAlignmentType = (typeof borderItemAlignment)[number];
 
@@ -20,14 +20,14 @@ export const BorderItemAlignment = (): ReactElement => {
     useState<BorderItemAlignmentType>("stretch");
 
   const handleVerticalChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     setVerticalAlignment(value as BorderItemAlignmentType);
   };
 
   const handleHorizontalChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     setHorizontalAlignment(value as BorderItemAlignmentType);
@@ -65,7 +65,7 @@ export const BorderItemAlignment = (): ReactElement => {
               <RadioButton
                 key={alignment}
                 label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1
+                  1,
                 )}`}
                 value={alignment}
               />
@@ -86,7 +86,7 @@ export const BorderItemAlignment = (): ReactElement => {
               <RadioButton
                 key={alignment}
                 label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1
+                  1,
                 )}`}
                 value={alignment}
               />

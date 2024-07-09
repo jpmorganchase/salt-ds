@@ -1,18 +1,4 @@
 import {
-  ChangeEvent,
-  FocusEvent,
-  ForwardedRef,
-  forwardRef,
-  KeyboardEvent,
-  MouseEvent,
-  ReactNode,
-  Ref,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-} from "react";
-import { clsx } from "clsx";
-import {
   flip,
   size,
   useClick,
@@ -21,23 +7,41 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
+  type ChangeEvent,
+  Children,
+  type FocusEvent,
+  type ForwardedRef,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  type Ref,
+  type SyntheticEvent,
+  forwardRef,
+  useEffect,
+  useRef,
+} from "react";
+import { Button } from "../button";
+import { useFormFieldProps } from "../form-field-context";
+import {
+  ListControlContext,
+  type OptionValue,
+} from "../list-control/ListControlContext";
+import { defaultValueToString } from "../list-control/ListControlState";
+import { OptionList } from "../option/OptionList";
+import { PillInput, type PillInputProps } from "../pill-input";
+import {
+  type UseFloatingUIProps,
   makePrefixer,
   useFloatingUI,
-  UseFloatingUIProps,
   useForkRef,
   useId,
 } from "../utils";
-import { Button } from "../button";
-import { useFormFieldProps } from "../form-field-context";
-import { defaultValueToString } from "../list-control/ListControlState";
-import { ListControlContext } from "../list-control/ListControlContext";
-import { useComboBox, UseComboBoxProps } from "./useComboBox";
-import { OptionList } from "../option/OptionList";
-import { PillInput, PillInputProps } from "../pill-input";
 import comboBoxCss from "./ComboBox.css";
+import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
 export type ComboBoxProps<Item = string> = {
   /**
@@ -55,7 +59,7 @@ const withBaseName = makePrefixer("saltComboBox");
 
 export const ComboBox = forwardRef(function ComboBox<Item>(
   props: ComboBoxProps<Item>,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   const {
     children,
@@ -147,14 +151,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
     _event,
-    reason
+    reason,
   ) => {
     const focusNotBlur = reason === "focus" && newOpen;
-    if (reason == "focus") {
+    if (reason === "focus") {
       setFocusedState(newOpen);
     }
 
-    if (reason == "focus" && !newOpen) {
+    if (reason === "focus" && !newOpen) {
       setFocusVisibleState(false);
     }
 
@@ -168,7 +172,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && children != undefined,
+      open: openState && !readOnly && Children.count(children) > 0,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       strategy: "fixed",
@@ -206,6 +210,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    onKeyDown?.(event);
+
     if (readOnly) {
       return;
     }
@@ -219,7 +225,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     const activeOption = activeState ?? getFirstOption()?.data;
 
-    let newActive;
+    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
+      null;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -273,12 +280,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       setFocusVisibleState(true);
     }
 
-    if (newActive && newActive.data.id != activeState?.id) {
+    if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
     }
-
-    onKeyDown?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -306,7 +311,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     // Wait for the filter to happen
     queueMicrotask(() => {
-      if (value != "") {
+      if (value !== "") {
         const newOption = getFirstOption();
         if (newOption) {
           setActive(newOption.data);
@@ -337,6 +342,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     inputRef.current?.focus();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
@@ -356,7 +362,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     // If we have selected an item, we should make that the active item
     if (selectedState.length > 0) {
       newActive = getOptionsMatching(
-        (option) => option.value === selectedState[0]
+        (option) => option.value === selectedState[0],
       ).pop();
     }
 
@@ -377,7 +383,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
 
     setActive(newActive?.data);
-    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const buttonId = useId();
@@ -396,7 +401,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
             [withBaseName("focused")]: focusedState,
             [withBaseName("focusVisible")]: focusVisibleState,
           },
-          className
+          className,
         )}
         endAdornment={
           <>
@@ -457,7 +462,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }
       />
       <OptionList
-        open={(openState || focusedState) && !readOnly && children != undefined}
+        open={
+          (openState || focusedState) &&
+          !readOnly &&
+          Children.count(children) > 0
+        }
         collapsed={!openState}
         ref={handleListRef}
         id={listId}
@@ -479,5 +488,5 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> }
+  props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
 ) => JSX.Element;

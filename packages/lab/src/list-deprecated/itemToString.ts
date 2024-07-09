@@ -1,6 +1,5 @@
 import { isPlainObject } from "./internal/helpers";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ItemToStringFunction = (item: any) => string;
 
 export function itemToString(item: any) {
@@ -16,7 +15,7 @@ export function itemToString(item: any) {
     [
       "itemToString: you've likely forgotten to set the label prop on the item object.",
       "You can also provide your own `itemToString` implementation.",
-    ].join("\n")
+    ].join("\n"),
   );
 
   return "";

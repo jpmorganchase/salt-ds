@@ -1,25 +1,25 @@
 import { useControlled } from "@salt-ds/core";
 import {
-  ChangeEvent,
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
-  SyntheticEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { ListHookProps, ListHookResult, useList } from "../list";
-import { DropdownHookResult, DropdownHookProps } from "../dropdown";
 import {
-  CollectionItem,
+  type CollectionItem,
+  type SelectionChangeHandler,
+  type SelectionStrategy,
+  type SingleSelectionStrategy,
   itemToString as defaultItemToString,
-  SelectionChangeHandler,
-  SelectionStrategy,
-  SingleSelectionStrategy,
 } from "../common-hooks";
-import { InputLegacyProps as InputProps } from "../input-legacy";
+import type { DropdownHookProps, DropdownHookResult } from "../dropdown";
+import type { InputLegacyProps as InputProps } from "../input-legacy";
+import { type ListHookProps, type ListHookResult, useList } from "../list";
 
 const NULL_REF = { current: null };
 const EnterOnly = ["Enter"];
@@ -57,14 +57,13 @@ export interface ComboboxHookResult<Item, Selection extends SelectionStrategy>
 
 export const useCombobox = <
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 >({
   allowFreeText,
   ariaLabel,
   collectionHook,
   defaultIsOpen,
   defaultValue,
-  disabled,
   onBlur,
   onFocus,
   onChange,
@@ -91,7 +90,7 @@ export const useCombobox = <
     selectionStrategy === "multiple" || selectionStrategy === "extended";
 
   const selectedValue = collectionHook.stringToCollectionItem<Selection>(
-    valueProp ?? defaultValue ?? null
+    valueProp ?? defaultValue ?? null,
   );
 
   const {
@@ -124,20 +123,20 @@ export const useCombobox = <
 
   const collectionItemsToItem = useCallback(
     (
-      sel: CollectionItem<Item> | null | CollectionItem<Item>[]
+      sel: CollectionItem<Item> | null | CollectionItem<Item>[],
     ): Selection extends SingleSelectionStrategy ? Item | null : Item[] => {
       type returnType = Selection extends SingleSelectionStrategy
         ? Item | null
         : Item[];
       if (Array.isArray(sel)) {
         return sel.map((i) => i.value) as returnType;
-      } else if (sel) {
-        return sel.value as returnType;
-      } else {
-        return sel as returnType;
       }
+      if (sel) {
+        return sel.value as returnType;
+      }
+      return sel as returnType;
     },
-    []
+    [],
   );
 
   const [disableAriaActiveDescendant, setDisableAriaActiveDescendant] =
@@ -155,7 +154,7 @@ export const useCombobox = <
         setHighlightedIndexRef.current?.(indexOfSelectedItem);
       }
     },
-    [indexPositions]
+    [indexPositions],
   );
 
   const setTextValue = useCallback(
@@ -163,7 +162,7 @@ export const useCombobox = <
       setValue(value);
       setFilterPattern(value === "" ? undefined : value);
     },
-    [setFilterPattern, setValue]
+    [setFilterPattern],
   );
 
   const reconcileInput = useCallback(
@@ -181,7 +180,7 @@ export const useCombobox = <
         highlightSelectedItem(selected);
       }
     },
-    [highlightSelectedItem, itemToString, setTextValue]
+    [highlightSelectedItem, itemToString, setTextValue],
   );
 
   const applySelection = useCallback(
@@ -193,13 +192,7 @@ export const useCombobox = <
       reconcileInput(selected);
       onSelectionChange?.(evt, collectionItemsToItem(selected ?? null));
     },
-    [
-      collectionItemsToItem,
-      isMultiSelect,
-      onSelectionChange,
-      reconcileInput,
-      setIsOpen,
-    ]
+    [collectionItemsToItem, isMultiSelect, onSelectionChange, reconcileInput],
   );
 
   const handleSelectionChange = useCallback<
@@ -214,7 +207,7 @@ export const useCombobox = <
         applySelection(evt, selectedCollectionItem);
       }
     },
-    [applySelection, isMultiSelect, itemToCollectionItem]
+    [applySelection, isMultiSelect, itemToCollectionItem],
   );
 
   const handleFirstItemSelection = useCallback(
@@ -228,7 +221,7 @@ export const useCombobox = <
         applySelection(evt, firstItem as selectedCollectionType);
       }
     },
-    [allowFreeText, applySelection, indexPositions, quickSelection]
+    [allowFreeText, applySelection, indexPositions, quickSelection],
   );
 
   const {
@@ -263,7 +256,7 @@ export const useCombobox = <
       inputOnKeyDown,
       reconcileInput,
       setTextValue,
-    ]
+    ],
   );
 
   const handleKeyboardNavigation = useCallback(() => {
@@ -307,7 +300,7 @@ export const useCombobox = <
       }
       onOpenChange?.(open);
     },
-    [onOpenChange, setIsOpen]
+    [onOpenChange],
   );
 
   const { onClick: listHandlersOnClick } = listHookListHandlers;
@@ -328,7 +321,7 @@ export const useCombobox = <
 
       // notifyPopper(event);
     },
-    [id, listHandlersOnClick]
+    [id, listHandlersOnClick],
   );
 
   const handleInputChange = useCallback(
@@ -345,7 +338,7 @@ export const useCombobox = <
             evt,
             null as Selection extends SingleSelectionStrategy
               ? Item | null
-              : Item[]
+              : Item[],
           );
         }
         selectedRef.current = null as selectedCollectionType;
@@ -357,7 +350,7 @@ export const useCombobox = <
 
       inputOnChange?.(evt, newValue);
     },
-    [allowFreeText, inputOnChange, setFilterPattern, setIsOpen, setValue]
+    [allowFreeText, inputOnChange, setFilterPattern, onSelectionChange],
   );
 
   const { onFocus: listOnFocus } = listControlProps;
@@ -367,16 +360,15 @@ export const useCombobox = <
       listOnFocus?.(evt);
       inputOnFocus?.(evt);
     },
-    [inputOnFocus, listOnFocus]
+    [inputOnFocus, listOnFocus],
   );
 
   const listFocused = useCallback(
     (evt: FocusEvent) => {
       const element = evt.relatedTarget as HTMLElement;
       return element?.id === `${id}-list`;
-      return true;
     },
-    [id]
+    [id],
   );
 
   // When focus leaves a free text combo, check to see if the entered text is
@@ -386,7 +378,7 @@ export const useCombobox = <
       const text = value.trim();
       if (text) {
         const selectedCollectionItem = stringToCollectionItem<"default">(
-          text
+          text,
         ) as selectedCollectionType;
         if (selectedCollectionItem) {
           if (Array.isArray(selectedCollectionItem)) {
@@ -397,7 +389,7 @@ export const useCombobox = <
               evt,
               selectedCollectionItem.value as Selection extends SingleSelectionStrategy
                 ? Item | null
-                : Item[]
+                : Item[],
             );
           }
         } else if (stringToItem) {
@@ -406,10 +398,10 @@ export const useCombobox = <
             console.log("we have a new item");
           }
         }
-        // Hoiw do we check if string is Item
+        // How do we check if string is Item
       }
     },
-    [onSelectionChange, selected, stringToItem, stringToCollectionItem, value]
+    [onSelectionChange, selected, stringToItem, stringToCollectionItem, value],
   );
 
   const { onBlur: listOnBlur } = listControlProps;
@@ -436,7 +428,7 @@ export const useCombobox = <
       listOnBlur,
       reconcileInput,
       selectInputValue,
-    ]
+    ],
   );
 
   const handleInputSelect = useCallback(
@@ -448,7 +440,7 @@ export const useCombobox = <
       }
       inputOnSelect?.(event);
     },
-    [inputOnSelect]
+    [inputOnSelect],
   );
 
   // If we have selected item(s) and we filter down the list by typing,
@@ -462,7 +454,7 @@ export const useCombobox = <
     if (indexPositions.length === 0) {
       setIsOpen(false);
     }
-  }, [highlightSelectedItem, indexPositions.length, setIsOpen]);
+  }, [highlightSelectedItem, indexPositions.length]);
 
   // const activeDescendant: string | undefined = selectionChanged
   //   ? ""

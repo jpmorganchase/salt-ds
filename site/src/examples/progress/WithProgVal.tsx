@@ -6,7 +6,7 @@ import {
   LinearProgress,
   StackLayout,
 } from "@salt-ds/core";
-import { ReactElement, useCallback, useEffect, useState } from "react";
+import { type ReactElement, useCallback, useEffect, useState } from "react";
 
 function useProgressingValue(updateInterval = 100) {
   const [value, setValue] = useState(0);
@@ -43,7 +43,7 @@ function useProgressingValue(updateInterval = 100) {
         handleStop();
       }
     },
-    [handleStop, value]
+    [handleStop, value],
   );
 
   return {

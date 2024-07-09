@@ -1,6 +1,5 @@
 import { getRefFromChildren } from "@salt-ds/core";
-import { describe, it, expect } from "vitest";
-import { ReactNode } from "react";
+import { describe, expect, it } from "vitest";
 
 describe("getRefFromChildren", () => {
   it("should return null if child is not a valid element", () => {
@@ -8,6 +7,7 @@ describe("getRefFromChildren", () => {
     expect(getRefFromChildren(undefined)).toBeNull();
     expect(getRefFromChildren("string")).toBeNull();
     expect(getRefFromChildren(123)).toBeNull();
+    // biome-ignore lint/complexity/noUselessFragments: test file
     expect(getRefFromChildren(<></>)).toBeNull();
     expect(getRefFromChildren([])).toBeNull();
   });

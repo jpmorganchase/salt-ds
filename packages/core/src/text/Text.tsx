@@ -1,15 +1,15 @@
-import {
-  makePrefixer,
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from "../utils";
 import { clsx } from "clsx";
-import { ElementType, forwardRef, ReactElement } from "react";
+import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+  makePrefixer,
+} from "../utils";
 
-import textCss from "./Text.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { ValidationStatus } from "../status-indicator";
+import { useWindow } from "@salt-ds/window";
+import type { ValidationStatus } from "../status-indicator";
+import textCss from "./Text.css";
 
 export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
@@ -51,13 +51,13 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
 >;
 
 type TextComponent = <T extends ElementType = "div">(
-  props: TextProps<T>
+  props: TextProps<T>,
 ) => ReactElement | null;
 
 const withBaseName = makePrefixer("saltText");
 
 export const Text: TextComponent = forwardRef(function Text<
-  T extends ElementType = "div"
+  T extends ElementType = "div",
 >(
   {
     as,
@@ -71,7 +71,7 @@ export const Text: TextComponent = forwardRef(function Text<
     color: colorProp,
     ...restProps
   }: TextProps<T>,
-  ref?: PolymorphicRef<T>
+  ref?: PolymorphicRef<T>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -96,7 +96,7 @@ export const Text: TextComponent = forwardRef(function Text<
           [withBaseName(styleAs as string)]: styleAs,
           [withBaseName(color)]: color !== "inherit",
         },
-        className
+        className,
       )}
       {...restProps}
       ref={ref}

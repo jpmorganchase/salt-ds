@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { GridLayout, StackLayout, Tag } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Categories = (): ReactElement => (
   <StackLayout direction="row" gap={4}>

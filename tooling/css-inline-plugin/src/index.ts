@@ -1,6 +1,6 @@
+import MagicString from "magic-string";
 import type { Plugin } from "vite";
 import { createFilter } from "vite";
-import MagicString from "magic-string";
 
 export interface Options {
   /** Glob patterns to ignore */

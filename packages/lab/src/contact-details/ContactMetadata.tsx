@@ -1,7 +1,7 @@
 import { Button, makePrefixer, useId } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes, useState } from "react";
+import { type HTMLAttributes, forwardRef, useState } from "react";
 import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactMetadata");
@@ -58,5 +58,5 @@ export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
         ) : null}
       </>
     );
-  }
+  },
 );

@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import {
-  Tooltip,
-  FloatingPlatformProvider,
-  Button,
-  StackLayout,
-} from "@salt-ds/core";
-import { Platform } from "@floating-ui/react";
 import { platform } from "@floating-ui/dom";
+import type { Platform } from "@floating-ui/react";
+import {
+  Button,
+  FloatingPlatformProvider,
+  StackLayout,
+  Tooltip,
+} from "@salt-ds/core";
 
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

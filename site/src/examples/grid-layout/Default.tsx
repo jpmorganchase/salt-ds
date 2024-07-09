@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import { GridLayout, GridItem } from "@salt-ds/core";
+import { GridItem, GridLayout } from "@salt-ds/core";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import type { ReactElement } from "react";
 import defaultStyles from "./Default.module.css";
+import styles from "./index.module.css";
 
 export const Default = (): ReactElement => (
   <GridLayout>

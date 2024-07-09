@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import sliderCss from "../Slider.css";
 
 const withBaseName = makePrefixer("saltSliderSelection");

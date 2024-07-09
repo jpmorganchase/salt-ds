@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as circularProgressStories from "@stories/progress/circular-progress.stories";
+import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(circularProgressStories);
 const { Default } = composedStories;

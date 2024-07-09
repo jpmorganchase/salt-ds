@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Button, StackLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const FullWidth = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>

@@ -86,7 +86,7 @@ describe("Stepper Input", () => {
 
   it("increments by specified floating point `step` value", () => {
     cy.mount(
-      <StepperInput decimalPlaces={2} defaultValue={3.14} step={0.01} />
+      <StepperInput decimalPlaces={2} defaultValue={3.14} step={0.01} />,
     );
 
     cy.findByLabelText("increment value").realClick();
@@ -149,7 +149,7 @@ describe("Stepper Input", () => {
         defaultValue={-109.46}
         onChange={changeSpy}
         step={0.02}
-      />
+      />,
     );
 
     cy.findByLabelText("increment value").realClick();
@@ -161,7 +161,7 @@ describe("Stepper Input", () => {
 
     cy.findByRole("spinbutton").should(
       "have.value",
-      Number.MAX_SAFE_INTEGER.toString()
+      Number.MAX_SAFE_INTEGER.toString(),
     );
   });
 
@@ -170,7 +170,7 @@ describe("Stepper Input", () => {
 
     cy.findByRole("spinbutton").should(
       "have.value",
-      Number.MIN_SAFE_INTEGER.toString()
+      Number.MIN_SAFE_INTEGER.toString(),
     );
   });
 
@@ -181,7 +181,7 @@ describe("Stepper Input", () => {
       <StepperInput
         defaultValue={Number.MAX_SAFE_INTEGER}
         onChange={changeSpy}
-      />
+      />,
     );
 
     cy.findByLabelText("increment value").realClick();
@@ -190,7 +190,7 @@ describe("Stepper Input", () => {
     cy.get("@changeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
       "have.value",
-      Number.MAX_SAFE_INTEGER.toString()
+      Number.MAX_SAFE_INTEGER.toString(),
     );
   });
 
@@ -201,7 +201,7 @@ describe("Stepper Input", () => {
       <StepperInput
         defaultValue={Number.MIN_SAFE_INTEGER}
         onChange={changeSpy}
-      />
+      />,
     );
 
     cy.findByLabelText("decrement value").realClick();
@@ -210,7 +210,7 @@ describe("Stepper Input", () => {
     cy.get("@changeSpy").should("not.have.been.called");
     cy.findByRole("spinbutton").should(
       "have.value",
-      Number.MIN_SAFE_INTEGER.toString()
+      Number.MIN_SAFE_INTEGER.toString(),
     );
   });
 

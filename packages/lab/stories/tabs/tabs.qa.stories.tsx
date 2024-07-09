@@ -1,6 +1,6 @@
-import { StoryFn } from "@storybook/react";
 import { Tabstrip } from "@salt-ds/lab";
-import { QAContainer, QAContainerProps } from "docs/components";
+import type { StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "docs/story.css";
 

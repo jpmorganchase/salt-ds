@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 
-import { Text, TextProps } from "./Text";
+import { Text, type TextProps } from "./Text";
 
 export const H1 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h1">, "as">>(
   function H1({ children, ...rest }, ref) {
@@ -9,7 +9,7 @@ export const H1 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h1">, "as">>(
         {children}
       </Text>
     );
-  }
+  },
 );
 
 export const H2 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h2">, "as">>(
@@ -19,7 +19,7 @@ export const H2 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h2">, "as">>(
         {children}
       </Text>
     );
-  }
+  },
 );
 
 export const H3 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h3">, "as">>(
@@ -29,7 +29,7 @@ export const H3 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h3">, "as">>(
         {children}
       </Text>
     );
-  }
+  },
 );
 
 export const H4 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h4">, "as">>(
@@ -39,5 +39,5 @@ export const H4 = forwardRef<HTMLHeadingElement, Omit<TextProps<"h4">, "as">>(
         {children}
       </Text>
     );
-  }
+  },
 );

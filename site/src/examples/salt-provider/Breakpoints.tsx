@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { useBreakpoints, useCurrentBreakpoint } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Breakpoints = (): ReactElement => {
   const breakpoints = useBreakpoints();
@@ -10,7 +10,7 @@ export const Breakpoints = (): ReactElement => {
       Breakpoints:
       <ul>
         {Object.entries(breakpoints).map(([key, value]) => (
-          <li>
+          <li key={`${key}-${value}`}>
             {key} - {value}
           </li>
         ))}

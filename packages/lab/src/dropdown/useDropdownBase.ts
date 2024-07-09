@@ -1,10 +1,10 @@
 import { useControlled } from "@salt-ds/core";
-import { KeyboardEvent, useCallback, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 
-import { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
-import { useClickAway } from "./useClickAway";
-import { measurements, useResizeObserver, WidthOnly } from "../responsive";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
+import { WidthOnly, type measurements, useResizeObserver } from "../responsive";
+import type { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
+import { useClickAway } from "./useClickAway";
 
 const NO_OBSERVER: string[] = [];
 
@@ -19,7 +19,6 @@ export const useDropdownBase = ({
   onOpenChange,
   onKeyDown: onKeyDownProp,
   openOnFocus,
-  popupComponent: { props: componentProps },
   popupWidth: popupWidthProp,
   rootRef,
   width,
@@ -49,12 +48,12 @@ export const useDropdownBase = ({
   const showDropdown = useCallback(() => {
     setIsOpen(true);
     onOpenChange?.(true);
-  }, [onOpenChange, setIsOpen]);
+  }, [onOpenChange]);
 
   const hideDropdown = useCallback(() => {
     setIsOpen(false);
     onOpenChange?.(false);
-  }, [onOpenChange, setIsOpen]);
+  }, [onOpenChange]);
 
   useClickAway({
     popperRef,
@@ -76,7 +75,7 @@ export const useDropdownBase = ({
         }, 1000);
       }
     }
-  }, [disabled, onOpenChange, openOnFocus, setFormFieldFocused, setIsOpen]);
+  }, [disabled, onOpenChange, openOnFocus, setFormFieldFocused]);
 
   const handleTriggerBlur = useCallback(() => {
     setFormFieldFocused?.(false);
@@ -87,7 +86,7 @@ export const useDropdownBase = ({
       // Do not trigger menu open for 'Enter' and 'SPACE' key as they're handled in `handleKeyDown`
       if (
         ["Enter", " "].indexOf(
-          (e as unknown as KeyboardEvent<HTMLDivElement>).key
+          (e as unknown as KeyboardEvent<HTMLDivElement>).key,
         ) === -1
       ) {
         const newIsOpen = !isOpen;
@@ -95,7 +94,7 @@ export const useDropdownBase = ({
         onOpenChange?.(newIsOpen);
       }
     },
-    [isOpen, setIsOpen, onOpenChange]
+    [isOpen, onOpenChange],
   );
 
   const handleKeydown = useCallback(
@@ -113,7 +112,7 @@ export const useDropdownBase = ({
         onKeyDownProp?.(evt);
       }
     },
-    [hideDropdown, isOpen, onKeyDownProp, showDropdown]
+    [hideDropdown, isOpen, onKeyDownProp, showDropdown],
   );
 
   const fullWidth = fullWidthProp ?? inFormField;
@@ -124,16 +123,15 @@ export const useDropdownBase = ({
 
   const getAriaLabelledBy = (
     labelledBy: string | undefined,
-    labelledByProp: string | undefined
+    labelledByProp: string | undefined,
   ): string | undefined => {
     if (labelledBy === undefined && labelledByProp === undefined) {
       return undefined;
-    } else {
-      return [labelledBy, labelledByProp].filter((x) => !!x).join(" ");
     }
+    return [labelledBy, labelledByProp].filter((x) => !!x).join(" ");
   };
 
-  // TODO do we use aria-popup - valid values are menu, disloag, grid, tree, listbox
+  // TODO do we use aria-popup - valid values are menu, dialog, grid, tree, listbox
   const triggerProps = {
     ...restA11yProps,
     "aria-expanded": isOpen,

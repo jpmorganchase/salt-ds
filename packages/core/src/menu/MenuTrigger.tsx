@@ -1,8 +1,8 @@
-import { cloneElement, isValidElement, ReactNode } from "react";
+import { type ReactNode, cloneElement, isValidElement } from "react";
+import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useMenuContext } from "./MenuContext";
-import { MenuTriggerContext } from "./MenuTriggerContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
-import { mergeProps, useForkRef, getRefFromChildren } from "../utils";
+import { MenuTriggerContext } from "./MenuTriggerContext";
 
 export interface MenuTriggerProps {
   /**
@@ -20,7 +20,7 @@ export function MenuTrigger(props: MenuTriggerProps) {
 
   const handleRef = useForkRef(
     getRefFromChildren(children),
-    refs?.setReference
+    refs?.setReference,
   );
 
   if (!children || !isValidElement(children)) {
@@ -40,7 +40,7 @@ export function MenuTrigger(props: MenuTriggerProps) {
               setFocusInside(false);
             },
           }),
-          children.props
+          children.props,
         ),
         ref: handleRef,
       })}

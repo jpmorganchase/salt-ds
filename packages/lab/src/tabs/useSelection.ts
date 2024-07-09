@@ -1,10 +1,10 @@
 import { useControlled } from "@salt-ds/core";
-import { KeyboardEvent, MouseEvent, useCallback } from "react";
+import { type KeyboardEvent, type MouseEvent, useCallback } from "react";
 
 const defaultSelectionKeys = ["Enter", " "];
 
 export const isTabElement = (el: HTMLElement): boolean =>
-  el && el.matches('[class*="saltTab "]');
+  el?.matches('[class*="saltTab "]');
 
 // TODO use SelectionProps
 export const useSelection = ({
@@ -33,7 +33,7 @@ export const useSelection = ({
 
   const isSelectionEvent = useCallback(
     (evt: KeyboardEvent) => defaultSelectionKeys.includes(evt.key),
-    []
+    [],
   );
 
   const selectItem = useCallback(
@@ -41,7 +41,7 @@ export const useSelection = ({
       setSelected(tabIndex);
       onSelectionChange?.(tabIndex);
     },
-    [onSelectionChange, setSelected]
+    [onSelectionChange],
   );
 
   const handleKeyDown = useCallback(
@@ -57,7 +57,7 @@ export const useSelection = ({
         selectItem(highlightedIdx);
       }
     },
-    [isSelectionEvent, highlightedIdx, selected, selectItem]
+    [isSelectionEvent, highlightedIdx, selected, selectItem],
   );
 
   const onClick = useCallback(
@@ -66,7 +66,7 @@ export const useSelection = ({
         selectItem(tabIndex);
       }
     },
-    [selectItem, selected]
+    [selectItem, selected],
   );
 
   return {

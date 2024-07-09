@@ -9,25 +9,25 @@ import {
 } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
-  ChangeEvent,
-  FocusEvent,
-  InputHTMLAttributes,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  Ref,
-  SetStateAction,
-  SyntheticEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type InputHTMLAttributes,
+  type KeyboardEvent,
+  type KeyboardEventHandler,
+  type MutableRefObject,
+  type Ref,
+  type SetStateAction,
+  type SyntheticEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
-  MutableRefObject,
 } from "react";
 import { escapeRegExp } from "../utils";
-import { TokenizedInputNextProps } from "./TokenizedInputNext";
-import { getPadding, useWidth } from "./internal/useWidth";
-import { useResizeObserver } from "./internal/useResizeObserver";
+import type { TokenizedInputNextProps } from "./TokenizedInputNext";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
+import { useResizeObserver } from "./internal/useResizeObserver";
+import { getPadding, useWidth } from "./internal/useWidth";
 
 export interface TokenizedInputNextState<Item> {
   activeIndices: number[];
@@ -54,7 +54,7 @@ export interface TokenizedInputNextRefs {
 }
 
 const getCursorPosition = (
-  inputRef: MutableRefObject<HTMLTextAreaElement | null>
+  inputRef: MutableRefObject<HTMLTextAreaElement | null>,
 ) => {
   if (inputRef.current) {
     const { selectionStart, selectionEnd } = inputRef.current;
@@ -107,7 +107,7 @@ interface useTokenizedInputNextResult<Item> {
 }
 
 export function useTokenizedInputNext<Item>(
-  props: TokenizedInputNextProps<Item>
+  props: TokenizedInputNextProps<Item>,
 ): useTokenizedInputNextResult<Item> {
   const {
     disabled: formFieldDisabled,
@@ -155,7 +155,7 @@ export function useTokenizedInputNext<Item>(
   const [firstHiddenIndex, setFirstHiddenIndex] = useState<number | null>(null);
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
-    undefined
+    undefined,
   );
 
   const [expandButtonHookRef, expandButtonWidth] = useWidth(density);
@@ -173,7 +173,7 @@ export function useTokenizedInputNext<Item>(
   const primaryDelimiter = delimiters[0];
   const delimiterRegex = useMemo(
     () => new RegExp(delimiters.map(escapeRegExp).join("|"), "gi"),
-    [delimiters]
+    [delimiters],
   );
 
   const [value, setValue, isInputControlled] = useControlled<
@@ -211,8 +211,8 @@ export function useTokenizedInputNext<Item>(
         const padding = getPadding(containerRef.current);
         setPillGroupWidth(contentRect.width - padding - widthOffset);
       },
-      [widthOffset]
-    )
+      [widthOffset],
+    ),
   );
 
   useIsomorphicLayoutEffect(
@@ -221,7 +221,7 @@ export function useTokenizedInputNext<Item>(
       // readonly state before they are measured.
       setFirstHiddenIndex(null);
     },
-    [density]
+    [density],
   );
 
   // useIsomorphicLayoutEffect because of potential layout change
@@ -235,14 +235,14 @@ export function useTokenizedInputNext<Item>(
           calcFirstHiddenIndex({
             containerWidth: pillGroupWidth,
             pillWidths: Object.values(pillsRef.current).filter(
-              Boolean
+              Boolean,
             ) as number[],
-          })
+          }),
         );
       }
     },
     // Additional dependency on selectedItems is for the controlled version
-    [expanded, pillGroupWidth, selectedItems]
+    [expanded, pillGroupWidth, selectedItems],
   );
 
   const focusInput = useCallback(() => {
@@ -272,11 +272,11 @@ export function useTokenizedInputNext<Item>(
       } else {
         onChange?.(
           event,
-          typeof action === "function" ? action(selectedItems) : action
+          typeof action === "function" ? action(selectedItems) : action,
         );
       }
     },
-    [isSelectionControlled, setSelectedItems, onChange, selectedItems]
+    [isSelectionControlled, onChange, selectedItems],
   );
 
   const updateExpanded = (event: SyntheticEvent, newExpanded: boolean) => {
@@ -307,11 +307,11 @@ export function useTokenizedInputNext<Item>(
           (prevSelectedItems.length === 0
             ? prevSelectedItems
             : prevSelectedItems.filter(
-                (_, index) => itemIndices.indexOf(index) === -1
-              ))
+                (_, index) => itemIndices.indexOf(index) === -1,
+              )),
       );
     },
-    [updateSelectedItems]
+    [updateSelectedItems],
   );
 
   const handleInputFocus = (event: FocusEvent<HTMLTextAreaElement>) => {
@@ -325,8 +325,8 @@ export function useTokenizedInputNext<Item>(
       setActiveIndices(
         Array.from(
           { length: selectedItems ? selectedItems.length : 0 },
-          (_, index) => index
-        )
+          (_, index) => index,
+        ),
       );
       return;
     }
@@ -337,7 +337,7 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleBlur = (
-    event: FocusEvent<HTMLTextAreaElement | HTMLButtonElement>
+    event: FocusEvent<HTMLTextAreaElement | HTMLButtonElement>,
   ) => {
     onBlur?.(event);
     setFocused(false);
@@ -389,7 +389,7 @@ export function useTokenizedInputNext<Item>(
   const handleAddItems = (
     event: SyntheticEvent,
     newValue: string | undefined,
-    appendOnly?: boolean
+    appendOnly?: boolean,
   ) => {
     if (!newValue || newValue.length === 0) {
       return;
@@ -408,20 +408,17 @@ export function useTokenizedInputNext<Item>(
       updateSelectedItems(event, (prevSelectedItems = []) =>
         hasActiveItems && !appendOnly
           ? newItems
-          : prevSelectedItems.concat(newItems)
+          : prevSelectedItems.concat(newItems),
       );
     }
   };
 
-  const handleRemoveItem = useCallback(
-    (event: SyntheticEvent, itemIndex?: number) => {
-      focusInput();
-      if (itemIndex != undefined && !readOnly && !readOnlyProp) {
-        removeItems(event, [itemIndex]);
-      }
-    },
-    [focusInput, removeItems]
-  );
+  const handleRemoveItem = (event: SyntheticEvent, itemIndex?: number) => {
+    focusInput();
+    if (itemIndex !== undefined && !readOnly && !readOnlyProp) {
+      removeItems(event, [itemIndex]);
+    }
+  };
 
   const handleClear = (event: ChangeEvent<HTMLTextAreaElement>) => {
     updateSelectedItems(event, []);
@@ -445,7 +442,7 @@ export function useTokenizedInputNext<Item>(
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? selectedItems.length - 1
-          : Math.max(0, prevHighlightedIndex - 1)
+          : Math.max(0, prevHighlightedIndex - 1),
       );
     },
     ArrowRight: (event) => {
@@ -457,7 +454,7 @@ export function useTokenizedInputNext<Item>(
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? prevHighlightedIndex
-          : Math.min(selectedItems.length - 1, prevHighlightedIndex + 1)
+          : Math.min(selectedItems.length - 1, prevHighlightedIndex + 1),
       );
     },
     Backspace: (event) => {
@@ -466,7 +463,7 @@ export function useTokenizedInputNext<Item>(
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? prevHighlightedIndex
-          : Math.max(0, prevHighlightedIndex - 1)
+          : Math.max(0, prevHighlightedIndex - 1),
       );
     },
     Home: (event) => {
@@ -534,10 +531,10 @@ export function useTokenizedInputNext<Item>(
           // Select all
           setHighlightedIndex(undefined);
           setActiveIndices(
-            Array.from({ length: selectedItems.length }, (_, index) => index)
+            Array.from({ length: selectedItems.length }, (_, index) => index),
           );
           break;
-        case "C":
+        case "C": {
           // Copy
           const textToCopy =
             activeIndices.length > 0
@@ -547,8 +544,8 @@ export function useTokenizedInputNext<Item>(
                   .filter(Boolean)
                   .join(primaryDelimiter)
               : highlightedIndex !== undefined
-              ? String(selectedItems[highlightedIndex] + ",")
-              : "";
+                ? String(`${selectedItems[highlightedIndex]},`)
+                : "";
           copy(textToCopy)
             .then((result) => {
               preventBlurOnCopy.current = !supportClipboard;
@@ -558,6 +555,7 @@ export function useTokenizedInputNext<Item>(
               console.error(error);
             });
           break;
+        }
         case "V":
           // Paste - do nothing and let handleChange deal with it
           break;
@@ -594,7 +592,7 @@ export function useTokenizedInputNext<Item>(
   };
 
   const handleKeyDown: InputHTMLAttributes<HTMLTextAreaElement>["onKeyDown"] = (
-    event
+    event,
   ) => {
     onKeyDown?.(event);
     if (event.defaultPrevented) {
@@ -603,7 +601,7 @@ export function useTokenizedInputNext<Item>(
     if (isCtrlModifier(event)) {
       handleCtrlModifierKeyDown(event);
     } else {
-      let handler;
+      let handler: KeyboardEventHandler<HTMLTextAreaElement> | undefined;
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
         setActiveIndices([]);

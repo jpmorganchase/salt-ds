@@ -1,8 +1,7 @@
 import { useControlled } from "@salt-ds/core";
-import { KeyboardEvent, useCallback, useMemo, useRef } from "react";
-import { Tab } from "./keyUtils";
-import { CollectionItem } from "./collectionTypes";
-import { NavigationProps, NavigationHookResult } from "./navigationTypes";
+import { type KeyboardEvent, useCallback, useMemo, useRef } from "react";
+import type { CollectionItem } from "./collectionTypes";
+import type { NavigationHookResult, NavigationProps } from "./navigationTypes";
 
 type NavigationDirection = "FWD" | "BWD";
 
@@ -10,23 +9,21 @@ function nextItemIdx(
   count: number,
   direction: NavigationDirection,
   idx: number,
-  cycleFocus = false
+  cycleFocus = false,
 ) {
   if (direction === "BWD") {
     if (idx > 0) {
       return idx - 1;
-    } else {
-      return cycleFocus ? count - 1 : idx;
     }
-  } else {
-    if (idx === null) {
-      return 0;
-    } else if (idx === count - 1) {
-      return cycleFocus ? 0 : idx;
-    } else {
-      return idx + 1;
-    }
+    return cycleFocus ? count - 1 : idx;
   }
+  if (idx === null) {
+    return 0;
+  }
+  if (idx === count - 1) {
+    return cycleFocus ? 0 : idx;
+  }
+  return idx + 1;
 }
 
 const isLeaf = <Item>(item: CollectionItem<Item>): boolean =>
@@ -63,19 +60,19 @@ export const useKeyboardNavigationPanel = ({
         targetEl?.focus();
       }
     },
-    [focusOnHighlight, indexPositions, onHighlight, setHighlightedIdx]
+    [focusOnHighlight, indexPositions, onHighlight],
   );
 
   const nextFocusableItemIdx = useCallback(
     (
       direction: NavigationDirection = "FWD",
-      idx = direction === "FWD" ? -1 : indexPositions.length
+      idx = direction === "FWD" ? -1 : indexPositions.length,
     ) => {
       let nextIdx = nextItemIdx(
         indexPositions.length,
         direction,
         idx,
-        cycleFocus
+        cycleFocus,
       );
       while (
         ((direction === "FWD" && nextIdx < indexPositions.length) ||
@@ -86,18 +83,21 @@ export const useKeyboardNavigationPanel = ({
           indexPositions.length,
           direction,
           nextIdx,
-          cycleFocus
+          cycleFocus,
         );
       }
       return nextIdx;
     },
-    [cycleFocus, indexPositions]
+    [cycleFocus, indexPositions],
   );
 
   // does this belong here or should it be a method passed in?
   const keyboardNavigation = useRef(true);
   const ignoreFocus = useRef<boolean>(false);
-  const setIgnoreFocus = (value: boolean) => (ignoreFocus.current = value);
+  const setIgnoreFocus = useCallback(
+    (value: boolean) => (ignoreFocus.current = value),
+    [],
+  );
 
   const handleFocus = useCallback(() => {
     if (ignoreFocus.current) {
@@ -108,7 +108,7 @@ export const useKeyboardNavigationPanel = ({
   }, [nextFocusableItemIdx, setHighlightedIndex]);
 
   const navigateChildItems = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       const direction: NavigationDirection = e.shiftKey ? "BWD" : "FWD";
       const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
       console.log(`nextFocusableItem from ${highlightedIdx} is ${nextIdx}`);
@@ -123,7 +123,7 @@ export const useKeyboardNavigationPanel = ({
       nextFocusableItemIdx,
       onKeyboardNavigation,
       setHighlightedIndex,
-    ]
+    ],
   );
 
   const handleKeyDown = useCallback(
@@ -135,7 +135,7 @@ export const useKeyboardNavigationPanel = ({
         navigateChildItems(evt);
       }
     },
-    [indexPositions, navigateChildItems]
+    [indexPositions, navigateChildItems],
   );
 
   const listProps = useMemo(
@@ -166,7 +166,7 @@ export const useKeyboardNavigationPanel = ({
         setHighlightedIndex(-1);
       },
     }),
-    [handleFocus, handleKeyDown, setHighlightedIndex]
+    [handleFocus, handleKeyDown, setHighlightedIndex, setIgnoreFocus],
   );
 
   return {

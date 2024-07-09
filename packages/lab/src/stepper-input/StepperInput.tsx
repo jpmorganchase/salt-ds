@@ -1,9 +1,9 @@
-import { clsx } from "clsx";
-import { FocusEventHandler, forwardRef, useRef } from "react";
-import { Button, makePrefixer, Input, InputProps } from "@salt-ds/core";
+import { Button, Input, type InputProps, makePrefixer } from "@salt-ds/core";
+import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import { type FocusEventHandler, forwardRef, useRef } from "react";
 import { useStepperInput } from "./useStepperInput";
 
 import stepperInputCss from "./StepperInput.css";
@@ -114,5 +114,5 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         )}
       </div>
     );
-  }
+  },
 );

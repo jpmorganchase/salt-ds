@@ -1,4 +1,3 @@
-import { ReactElement, useState } from "react";
 import {
   Button,
   Card,
@@ -10,6 +9,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import { type ReactElement, useState } from "react";
 
 export const WithChild = (): ReactElement => {
   const [open, setOpen] = useState(false);

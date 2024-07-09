@@ -1,6 +1,6 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
 import { ComboBox, FormField } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import { usa_states } from "../list/list.data";
 

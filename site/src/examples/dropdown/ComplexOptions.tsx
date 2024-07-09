@@ -1,12 +1,12 @@
-import { ReactElement, useState } from "react";
 import {
   Dropdown,
-  DropdownProps,
+  type DropdownProps,
   Option,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { EditIcon, GuideClosedIcon, UserAdminIcon } from "@salt-ds/icons";
+import { type ReactElement, useState } from "react";
 
 type Permission = {
   icon: JSX.Element;
@@ -37,7 +37,7 @@ export const ComplexOptions = (): ReactElement => {
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
-    newSelected
+    newSelected,
   ) => {
     setSelected(newSelected);
   };

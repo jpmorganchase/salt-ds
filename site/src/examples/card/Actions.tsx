@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Card, H3, Text, Link, StackLayout, Button } from "@salt-ds/core";
+import { Button, Card, H3, Link, StackLayout, Text } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Actions = (): ReactElement => {
   return (

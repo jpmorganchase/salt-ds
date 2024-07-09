@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useMemo } from "react";
+import { type ReactNode, createContext, useContext, useMemo } from "react";
 
 export interface SteppedTrackerContextType {
   activeStep: number;
@@ -13,7 +13,7 @@ const defaultSteppedTrackerContext = {
 };
 
 const SteppedTrackerContext = createContext(
-  defaultSteppedTrackerContext as unknown as SteppedTrackerContextType
+  defaultSteppedTrackerContext as unknown as SteppedTrackerContextType,
 );
 
 type SteppedTrackerProviderProps = Omit<
@@ -34,7 +34,7 @@ export const SteppedTrackerProvider = ({
       totalSteps,
       isWithinSteppedTracker: true,
     }),
-    [activeStep, totalSteps]
+    [activeStep, totalSteps],
   );
 
   return (

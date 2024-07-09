@@ -1,6 +1,6 @@
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 
-import { OrientationShape, ToolbarAlignmentProps } from "./ToolbarProps";
+import type { OrientationShape, ToolbarAlignmentProps } from "./ToolbarProps";
 
 type collapsibleType = "dynamic" | "instant";
 type booleanAttribute = "true" | "false";

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { FormField, FormFieldLabel, Input, Tooltip } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const HelperTextAsTooltip = (): ReactElement => (
   <FormField style={{ width: "256px" }}>

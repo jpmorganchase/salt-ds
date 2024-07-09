@@ -1,7 +1,7 @@
-import { ReactElement, useState } from "react";
 import { Button, FlexLayout, StackLayout, Tooltip } from "@salt-ds/core";
-import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 import { RefreshIcon } from "@salt-ds/icons";
+import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 type Step = {
   label: string;
@@ -46,8 +46,8 @@ export const StepProgression = (): ReactElement => {
               ...step,
               state: "completed",
             }
-          : step
-      )
+          : step,
+      ),
     );
   };
 
@@ -63,8 +63,8 @@ export const StepProgression = (): ReactElement => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }, key) => (
-          <TrackerStep state={state} key={key}>
+        {steps.map(({ label, state }) => (
+          <TrackerStep state={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

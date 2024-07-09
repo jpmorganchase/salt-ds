@@ -1,6 +1,6 @@
-import { Fragment, ReactNode, useState } from "react";
 import { Button, StackLayout } from "@salt-ds/core";
 import { ToastGroup } from "@salt-ds/lab";
+import { Fragment, type ReactNode, useState } from "react";
 
 import {
   ErrorToast,

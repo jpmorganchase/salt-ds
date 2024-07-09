@@ -10,7 +10,7 @@ describe("GIVEN a logo", () => {
       <Logo>
         <LogoImage src={src} alt="Logo image" />
         <Text>{appTitle}</Text>
-      </Logo>
+      </Logo>,
     );
     cy.get("img").should("exist");
   });
@@ -21,7 +21,7 @@ describe("GIVEN a logo", () => {
         <LogoImage src={src} alt="Logo image" />
         <LogoSeparator />
         <Text>{appTitle}</Text>
-      </Logo>
+      </Logo>,
     );
     cy.get(".saltLogoSeparator").should("exist");
   });
@@ -31,7 +31,7 @@ describe("GIVEN a logo", () => {
       <Logo>
         <LogoImage src={src} alt="Logo image" />
         <Text>{appTitle}</Text>
-      </Logo>
+      </Logo>,
     );
     cy.findByText(appTitle).should("exist");
   });
@@ -42,7 +42,7 @@ describe("GIVEN a logo", () => {
         <Text>{src}</Text>
         <LogoSeparator />
         <Text>{appTitle}</Text>
-      </Logo>
+      </Logo>,
     );
     cy.findByText(src).should("exist");
     cy.get(".saltLogoSeparator").should("exist");

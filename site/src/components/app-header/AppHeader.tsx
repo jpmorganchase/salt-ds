@@ -1,20 +1,20 @@
-import React, { FC } from "react";
-import { Logo, LogoImage } from "@salt-ds/lab";
-import {
-  useBreakpoint,
-  Text,
-  NavigationItem,
-  StackLayout,
-  Tooltip,
-} from "@salt-ds/core";
 import { Link, TabMenuItemType } from "@jpmorganchase/mosaic-components";
 import type { TabsMenu } from "@jpmorganchase/mosaic-components";
-import { useRoute, SidebarItem } from "@jpmorganchase/mosaic-store";
 import { AppHeaderDrawer } from "@jpmorganchase/mosaic-site-components";
-import styles from "./AppHeader.module.css";
-import { HelpIcon, GithubIcon } from "@salt-ds/icons";
-import { Search } from "./Search";
+import { type SidebarItem, useRoute } from "@jpmorganchase/mosaic-store";
+import {
+  NavigationItem,
+  StackLayout,
+  Text,
+  Tooltip,
+  useBreakpoint,
+} from "@salt-ds/core";
+import { GithubIcon, HelpIcon } from "@salt-ds/icons";
+import { Logo, LogoImage } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
+import React, { type FC } from "react";
+import styles from "./AppHeader.module.css";
+import { Search } from "./Search";
 
 export interface AppHeaderProps {
   homeLink?: string;
@@ -32,7 +32,7 @@ const createDrawerMenu = (menu: TabsMenu): SidebarItem[] =>
       data: { link: item.link },
     } as SidebarItem;
 
-    return [...result, parsedItem];
+    return result.concat(parsedItem);
   }, [] as SidebarItem[]);
 
 const actions: TabsMenu = [
@@ -68,7 +68,7 @@ export const AppHeader: FC<AppHeaderProps> = ({
         <div className={styles.drawer}>
           <AppHeaderDrawer
             menu={createDrawerMenu(
-              menu.concat(isMobileOrTablet ? actions : [])
+              menu.concat(isMobileOrTablet ? actions : []),
             )}
           />
         </div>

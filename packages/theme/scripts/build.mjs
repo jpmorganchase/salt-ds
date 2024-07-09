@@ -1,8 +1,8 @@
-import esbuild from "esbuild";
-import path from "node:path";
-import { deleteSync } from "del";
 import fs from "node:fs";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { deleteSync } from "del";
+import esbuild from "esbuild";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildFolder = path.join(__dirname, "../../../dist/salt-ds-theme");
@@ -37,12 +37,12 @@ esbuild
         console.log(
           `${path.relative(
             process.cwd(),
-            path.resolve(__dirname, "../package.json")
+            path.resolve(__dirname, "../package.json"),
           )} copied to ${path.relative(
             process.cwd(),
-            path.join(buildFolder, "package.json")
-          )}`
+            path.join(buildFolder, "package.json"),
+          )}`,
         );
-      }
+      },
     );
   });

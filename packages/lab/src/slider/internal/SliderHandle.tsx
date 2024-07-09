@@ -1,10 +1,10 @@
-import { makePrefixer, Tooltip } from "@salt-ds/core";
+import { Tooltip, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { getSliderAriaLabel } from "./utils";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import sliderCss from "../Slider.css";
 
 const withBaseName = makePrefixer("saltSliderHandle");

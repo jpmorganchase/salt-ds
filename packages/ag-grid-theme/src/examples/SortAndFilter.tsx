@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useEffect } from "react";
 import rowData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -48,7 +48,7 @@ const SortAndFilter = (props: AgGridReactProps) => {
     }
 
     void setFilter();
-  }, [isGridReady]);
+  }, [isGridReady, api]);
 
   return (
     <div {...containerProps}>

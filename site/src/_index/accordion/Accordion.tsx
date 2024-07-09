@@ -1,12 +1,12 @@
-import { useRef } from "react";
 import clsx from "clsx";
+import { useRef } from "react";
 
-import PageIllustration from "./PageIllustration";
-import useOnScreen from "../../utils/useOnScreen";
 import Accordion, {
-  AccordionBaseProps,
+  type AccordionBaseProps,
 } from "../../components/accordion/Accordion";
+import useOnScreen from "../../utils/useOnScreen";
 import styles from "./Accordion.module.css";
+import PageIllustration from "./PageIllustration";
 
 type HomepageAccordionProps = {
   homePageInfo: AccordionBaseProps["accordionInfo"];

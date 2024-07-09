@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useCallback, MouseEvent } from "react";
-import { ListChildComponentProps } from "react-window";
+import { type MouseEvent, useCallback, useEffect, useMemo } from "react";
+import type { ListChildComponentProps } from "react-window";
 
-import { ListItemProps } from "./ListItem";
-import { ListItemBaseProps } from "./ListItemBase";
+import type { ListItemProps } from "./ListItem";
+import type { ListItemBaseProps } from "./ListItemBase";
 
-import { useListStateContext } from "./ListStateContext";
 import { useListItemContext } from "./ListItemContext";
+import { useListStateContext } from "./ListStateContext";
 
 type UseItemHookReturnType<Item> = {
   /**
@@ -36,7 +36,7 @@ export interface IndexedListItemProps<Item> extends ListItemProps<Item> {
 }
 
 export function useListItem<Item>(
-  props: IndexedListItemProps<Item>
+  props: IndexedListItemProps<Item>,
 ): UseItemHookReturnType<Item> {
   validateProps(props);
 
@@ -72,13 +72,13 @@ export function useListItem<Item>(
     ...restProps
   } = props;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: JSON.stringify is used to compare objects
   const style = useMemo(
     () => ({
       height: itemHeight,
       ...styleProp,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [itemHeight, JSON.stringify(styleProp)]
+    [itemHeight, JSON.stringify(styleProp)],
   );
 
   const highlighted = index === highlightedIndex;
@@ -94,7 +94,7 @@ export function useListItem<Item>(
         onClick(event);
       }
     },
-    [handleSelect, index, item, onClick]
+    [handleSelect, index, item, onClick],
   );
 
   const handleMouseMove = useCallback(
@@ -106,11 +106,11 @@ export function useListItem<Item>(
         onMouseMove(event);
       }
     },
-    [index, setFocusVisible, setHighlightedIndex, onMouseMove]
+    [index, setFocusVisible, setHighlightedIndex, onMouseMove],
   );
 
   const handleMouseDown = (
-    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
   ) => {
     if (context.disableMouseDown) {
       event.preventDefault();
@@ -148,7 +148,7 @@ export function useListItem<Item>(
       highlighted,
       itemTextHighlightPattern,
       focusVisible: focusVisible && highlighted,
-      tooltipText: itemToString(item!),
+      tooltipText: item ? itemToString(item) : undefined,
       ...ariaProps,
       ...restProps,
       ...(disabled ? {} : eventHandlers),

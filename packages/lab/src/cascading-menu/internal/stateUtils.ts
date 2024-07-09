@@ -1,4 +1,4 @@
-import { MenuDescriptor } from "../CascadingMenuProps";
+import type { MenuDescriptor } from "../CascadingMenuProps";
 
 const ID_SEPARATOR = "-";
 
@@ -22,7 +22,7 @@ export function deriveFlatStateFromTree(
   tree: MenuDescriptor,
   parentId: string | null = null,
   level = 0,
-  generatedId = "salt-cascading-menu"
+  generatedId = "salt-cascading-menu",
 ): flattenedMenuState {
   const { id = generatedId, menuItems = [] } = tree;
   return menuItems.reduce(
@@ -35,12 +35,12 @@ export function deriveFlatStateFromTree(
           menuItem,
           id,
           level + 1,
-          generatedChildId
+          generatedChildId,
         );
+        // biome-ignore lint/performance/noAccumulatingSpread: reduce on object
         return { ...menuStructure, ...innerState };
-      } else {
-        return menuStructure;
       }
+      return menuStructure;
     },
     // Initialize the structure with the root menu
     {
@@ -51,7 +51,7 @@ export function deriveFlatStateFromTree(
         menuItems: tree.menuItems,
         level,
       },
-    } as flattenedMenuState
+    } as flattenedMenuState,
   );
 }
 

@@ -1,19 +1,19 @@
-import {
-  ComponentPropsWithRef,
-  forwardRef,
-  MouseEvent,
-  SyntheticEvent,
-} from "react";
-import { clsx } from "clsx";
+import type { DateValue } from "@internationalized/date";
 import { makePrefixer } from "@salt-ds/core";
-import { DateValue } from "@internationalized/date";
-import { CalendarDay, CalendarDayProps } from "./CalendarDay";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithRef,
+  type MouseEvent,
+  type SyntheticEvent,
+  forwardRef,
+} from "react";
+import { CalendarDay, type CalendarDayProps } from "./CalendarDay";
 import { formatDate, generateVisibleDays } from "./utils";
 
-import calendarMonthCss from "./CalendarMonth.css";
-import { useCalendarContext } from "./CalendarContext";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { useCalendarContext } from "./CalendarContext";
+import calendarMonthCss from "./CalendarMonth.css";
 
 export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
   date: DateValue;
@@ -77,5 +77,5 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
         </div>
       </div>
     );
-  }
+  },
 );

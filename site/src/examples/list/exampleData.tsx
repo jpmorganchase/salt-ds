@@ -8,7 +8,7 @@ export const getListItems = ({
   usStateExampleData.map((item, index) => {
     return (
       <ListItemNext
-        key={index}
+        key={item}
         disabled={disabledItems.includes(index)}
         id={`controlled-list-item-${index}`}
         value={item}

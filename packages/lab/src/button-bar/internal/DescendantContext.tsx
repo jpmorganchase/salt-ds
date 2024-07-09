@@ -1,14 +1,14 @@
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 // Copied from https://gist.github.com/ryanflorence/10e9387f633f9d2e6f444a9bddaabf6e
 import {
+  type Dispatch,
+  type MutableRefObject,
+  type ReactNode,
+  type SetStateAction,
   createContext,
-  Dispatch,
-  MutableRefObject,
-  ReactNode,
-  SetStateAction,
   useRef,
   useState,
 } from "react";
-import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 // //////////////////////////////////////////////////////////////////////////////
 // SUPER HACKS AHEAD: The React team will hate this enough to hopefully give us

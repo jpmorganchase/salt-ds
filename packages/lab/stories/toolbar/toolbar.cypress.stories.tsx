@@ -14,9 +14,14 @@ import {
   UserGroupIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { Toolbar, ToolbarButton, ToolbarProps, Tooltray } from "@salt-ds/lab";
-import { StoryFn } from "@storybook/react";
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "../components";
+import {
+  Toolbar,
+  ToolbarButton,
+  type ToolbarProps,
+  Tooltray,
+} from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
+import { AdjustableFlexbox, type AdjustableFlexboxProps } from "../components";
 import "./toolbar.stories.css";
 
 export default {

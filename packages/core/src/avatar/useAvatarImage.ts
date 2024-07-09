@@ -1,4 +1,4 @@
-import { ImgHTMLAttributes, useEffect, useState } from "react";
+import { type ImgHTMLAttributes, useEffect, useState } from "react";
 import { useIsomorphicLayoutEffect } from "../utils";
 
 export function useAvatarImage({ src }: ImgHTMLAttributes<HTMLImageElement>) {

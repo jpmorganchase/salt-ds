@@ -1,5 +1,9 @@
 import { makePrefixer } from "@salt-ds/core";
-import { Dropdown, SelectHandler, SelectionChangeHandler } from "@salt-ds/lab";
+import {
+  Dropdown,
+  type SelectHandler,
+  type SelectionChangeHandler,
+} from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useEffect, useRef } from "react";
@@ -7,7 +11,7 @@ import { useEffect, useRef } from "react";
 import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
 import { useEditorContext } from "./EditorContext";
-import { GridColumnModel, GridRowModel } from "./Grid";
+import type { GridColumnModel, GridRowModel } from "./Grid";
 
 import dropdownCellEditorCss from "./DropdownCellEditor.css";
 

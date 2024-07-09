@@ -1,5 +1,5 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
 
 function getCssVariablesFromDir(dirPath) {
   console.log("Extracting CSS variable from", dirPath);
@@ -23,12 +23,13 @@ function getCssVariablesFromDir(dirPath) {
     ) {
       // Process CSS files
       const cssContent = fs.readFileSync(filePath, "utf8");
-      let match;
+      let match = cssVariableRegex.exec(cssContent);
 
-      while ((match = cssVariableRegex.exec(cssContent)) !== null) {
+      while (match !== null) {
         const variableName = match[1];
         const variableValue = match[2].trim();
         cssVariables[variableName] = variableValue;
+        match = cssVariableRegex.exec(cssContent);
       }
     }
   });
@@ -43,7 +44,7 @@ function extractVariables(folder, outputFile) {
   const jsonData = JSON.stringify(allCharacteristicsVariables, null, 2);
   const cssFolderPath = path.resolve(
     __dirname,
-    "../site/src/components/css-display"
+    "../site/src/components/css-display",
   );
 
   const outputPath = path.join(cssFolderPath, outputFile);
@@ -57,6 +58,6 @@ function extractVariables(folder, outputFile) {
 
 extractVariables(
   "../packages/theme/css/characteristics",
-  "cssCharacteristics.json"
+  "cssCharacteristics.json",
 );
 extractVariables("../packages/theme/css/foundations", "cssFoundations.json");

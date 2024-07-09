@@ -1,9 +1,9 @@
-import { SliderChangeHandler, SliderValue } from "../types";
+import type { SliderChangeHandler, SliderValue } from "../types";
 import {
+  type UpdateValueItem,
   clampValue,
   getHandleIndex,
   roundValue,
-  UpdateValueItem,
 } from "./utils";
 
 export function useSliderKeyDown(
@@ -14,7 +14,7 @@ export function useSliderKeyDown(
   step: number,
   updateValueItem: UpdateValueItem,
   setValue: SliderChangeHandler,
-  onChange?: SliderChangeHandler
+  onChange?: SliderChangeHandler,
 ) {
   return (event: React.KeyboardEvent) => {
     const handleElement = event.target as HTMLDivElement;

@@ -37,7 +37,7 @@ const ITEMS: ItemWithLabel[] = [
             defaultSelected={ITEMS[1]}
             source={ITEMS}
           />
-        )
+        ),
       );
     });
 
@@ -48,7 +48,7 @@ const ITEMS: ItemWithLabel[] = [
       cy.get("@selectHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        isDeclarative ? "list item 2" : ITEMS[1]
+        isDeclarative ? "list item 2" : ITEMS[1],
       );
     });
     it("clicking another item should change selected item", () => {
@@ -58,12 +58,12 @@ const ITEMS: ItemWithLabel[] = [
       cy.get("@selectionChangeHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        isDeclarative ? "list item 3" : ITEMS[2]
+        isDeclarative ? "list item 3" : ITEMS[2],
       );
       cy.get("@selectHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        isDeclarative ? "list item 3" : ITEMS[2]
+        isDeclarative ? "list item 3" : ITEMS[2],
       );
     });
   });
@@ -98,7 +98,7 @@ const ITEMS: ItemWithLabel[] = [
             defaultSelected={ITEMS[1]}
             source={ITEMS}
           />
-        )
+        ),
       );
     });
 
@@ -152,7 +152,7 @@ const ITEMS: ItemWithLabel[] = [
             selectionStrategy="deselectable"
             source={ITEMS}
           />
-        )
+        ),
       );
     });
 
@@ -164,13 +164,13 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          null
+          null,
         );
 
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 2" : ITEMS[1]
+          isDeclarative ? "list item 2" : ITEMS[1],
         );
       });
     });
@@ -206,7 +206,7 @@ const ITEMS: ItemWithLabel[] = [
             selectionStrategy="multiple"
             source={ITEMS}
           />
-        )
+        ),
       );
     });
 
@@ -217,7 +217,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[0]
+          isDeclarative ? "list item 1" : ITEMS[0],
         );
 
         cy.findByText("list item 3").realHover().realClick();
@@ -228,13 +228,13 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? ["list item 1", "list item 3"] : [ITEMS[0], ITEMS[2]]
+          isDeclarative ? ["list item 1", "list item 3"] : [ITEMS[0], ITEMS[2]],
         );
 
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[2]
+          isDeclarative ? "list item 1" : ITEMS[2],
         );
       });
     });
@@ -246,7 +246,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[0]
+          isDeclarative ? "list item 1" : ITEMS[0],
         );
 
         cy.findByText("list item 3").realHover().realClick();
@@ -258,7 +258,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[0]
+          isDeclarative ? "list item 1" : ITEMS[0],
         );
 
         cy.findByText("list item 4").realHover().realClick();
@@ -270,7 +270,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 3" : ITEMS[2]
+          isDeclarative ? "list item 3" : ITEMS[2],
         );
       });
     });
@@ -284,7 +284,7 @@ const ITEMS: ItemWithLabel[] = [
         const onSelectionChange = cy.stub().as("selectHandler");
         cy.mount(
           isDeclarative ? (
-            <List<String, "multiple">
+            <List<string, "multiple">
               defaultSelected={["list item 2", "list item 4"]}
               onSelectionChange={onSelectionChange}
               selectionStrategy="multiple"
@@ -301,7 +301,7 @@ const ITEMS: ItemWithLabel[] = [
               selectionStrategy="multiple"
               source={ITEMS}
             />
-          )
+          ),
         );
 
         cy.findByText("list item 1").realHover().realClick();
@@ -342,7 +342,7 @@ const ITEMS: ItemWithLabel[] = [
             selectionStrategy="extended"
             source={ITEMS}
           />
-        )
+        ),
       );
     });
 
@@ -352,7 +352,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[0]
+          isDeclarative ? "list item 1" : ITEMS[0],
         );
 
         cy.findByText("list item 3").realHover().realClick();
@@ -362,12 +362,12 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? ["list item 3"] : [ITEMS[2]]
+          isDeclarative ? ["list item 3"] : [ITEMS[2]],
         );
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 3" : ITEMS[2]
+          isDeclarative ? "list item 3" : ITEMS[2],
         );
       });
 
@@ -386,16 +386,16 @@ const ITEMS: ItemWithLabel[] = [
                 Cypress.sinon.match.any,
                 isDeclarative
                   ? ["list item 1", "list item 3"]
-                  : [ITEMS[0], ITEMS[2]]
+                  : [ITEMS[0], ITEMS[2]],
               );
 
               cy.get("@selectHandler").should(
                 "have.been.calledWith",
                 Cypress.sinon.match.any,
-                isDeclarative ? "list item 3" : ITEMS[2]
+                isDeclarative ? "list item 3" : ITEMS[2],
               );
             }
-          : undefined
+          : undefined,
       );
 
       it(
@@ -416,16 +416,16 @@ const ITEMS: ItemWithLabel[] = [
                 Cypress.sinon.match.any,
                 isDeclarative
                   ? ["list item 1", "list item 2", "list item 3", "list item 4"]
-                  : [ITEMS[0], ITEMS[1], ITEMS[2], ITEMS[3]]
+                  : [ITEMS[0], ITEMS[1], ITEMS[2], ITEMS[3]],
               );
 
               cy.get("@selectHandler").should(
                 "have.been.calledWith",
                 Cypress.sinon.match.any,
-                isDeclarative ? "list item 4" : ITEMS[3]
+                isDeclarative ? "list item 4" : ITEMS[3],
               );
             }
-          : undefined
+          : undefined,
       );
 
       it("should not select duplicates if a range overlaps", () => {
@@ -434,7 +434,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 2" : ITEMS[1]
+          isDeclarative ? "list item 2" : ITEMS[1],
         );
 
         cy.findByText("list item 1").realHover().click({ shiftKey: true });
@@ -445,14 +445,14 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? ["list item 1", "list item 2"] : [ITEMS[0], ITEMS[1]]
+          isDeclarative ? ["list item 1", "list item 2"] : [ITEMS[0], ITEMS[1]],
         );
 
         // is this right, shouldn't it be 1 ?
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 2" : ITEMS[1]
+          isDeclarative ? "list item 2" : ITEMS[1],
         );
 
         // selecting second range that overlaps with the first
@@ -465,7 +465,7 @@ const ITEMS: ItemWithLabel[] = [
           Cypress.sinon.match.any,
           isDeclarative
             ? ["list item 1", "list item 2", "list item 3", "list item 4"]
-            : [ITEMS[0], ITEMS[1], ITEMS[2], ITEMS[3]]
+            : [ITEMS[0], ITEMS[1], ITEMS[2], ITEMS[3]],
         );
       });
 
@@ -479,13 +479,13 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? ["list item 1", "list item 2"] : [ITEMS[0], ITEMS[1]]
+          isDeclarative ? ["list item 1", "list item 2"] : [ITEMS[0], ITEMS[1]],
         );
 
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 2" : ITEMS[1]
+          isDeclarative ? "list item 2" : ITEMS[1],
         );
         // selecting second range
         // cy.findByText("list item 3").realHover().click({ ctrlKey: true });
@@ -500,7 +500,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectionChangeHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? ["list item 3", "list item 4"] : [ITEMS[2], ITEMS[3]]
+          isDeclarative ? ["list item 3", "list item 4"] : [ITEMS[2], ITEMS[3]],
         );
       });
 
@@ -519,13 +519,13 @@ const ITEMS: ItemWithLabel[] = [
                 Cypress.sinon.match.any,
                 isDeclarative
                   ? ["list item 1", "list item 2"]
-                  : [ITEMS[0], ITEMS[1]]
+                  : [ITEMS[0], ITEMS[1]],
               );
 
               cy.get("@selectHandler").should(
                 "have.been.calledWith",
                 Cypress.sinon.match.any,
-                isDeclarative ? "list item 2" : ITEMS[1]
+                isDeclarative ? "list item 2" : ITEMS[1],
               );
               // selecting second range
               cy.findByText("list item 3").click({ ctrlKey: true });
@@ -544,10 +544,10 @@ const ITEMS: ItemWithLabel[] = [
                 Cypress.sinon.match.any,
                 isDeclarative
                   ? ["list item 1", "list item 2", "list item 3", "list item 4"]
-                  : [ITEMS[0], ITEMS[1], ITEMS[2], ITEMS[3]]
+                  : [ITEMS[0], ITEMS[1], ITEMS[2], ITEMS[3]],
               );
             }
-          : undefined
+          : undefined,
       );
     });
 
@@ -566,7 +566,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[0]
+          isDeclarative ? "list item 1" : ITEMS[0],
         );
 
         cy.findAllByRole("option").eq(0).should("have.ariaSelected");
@@ -588,7 +588,7 @@ const ITEMS: ItemWithLabel[] = [
         cy.get("@selectHandler").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          isDeclarative ? "list item 1" : ITEMS[0]
+          isDeclarative ? "list item 1" : ITEMS[0],
         );
 
         cy.findAllByRole("option").eq(0).should("not.have.ariaSelected");

@@ -1,7 +1,7 @@
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 import { CircularProgress, LinearProgress } from "@salt-ds/core";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import "./progress.qa.stories.css";
 

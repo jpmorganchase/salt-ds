@@ -1,4 +1,4 @@
-import { FocusEvent, KeyboardEvent, useState } from "react";
+import { type FocusEvent, type KeyboardEvent, useState } from "react";
 
 export interface UsePopperStatusProps {
   initialOpen?: boolean;

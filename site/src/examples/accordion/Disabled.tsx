@@ -1,7 +1,6 @@
-import { ReactElement } from "react";
 import {
-  AccordionGroup,
   Accordion,
+  AccordionGroup,
   AccordionHeader,
   AccordionPanel,
   FlowLayout,
@@ -9,6 +8,7 @@ import {
   FormFieldLabel,
   Input,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Disabled = (): ReactElement => (
   <div style={{ width: "80%", height: "100%" }}>

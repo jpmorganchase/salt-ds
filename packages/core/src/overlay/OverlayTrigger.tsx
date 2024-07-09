@@ -1,5 +1,5 @@
-import { cloneElement, isValidElement, ReactNode } from "react";
-import { mergeProps, useForkRef, getRefFromChildren } from "../utils";
+import { type ReactNode, cloneElement, isValidElement } from "react";
+import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 
 export interface OverlayTriggerProps {

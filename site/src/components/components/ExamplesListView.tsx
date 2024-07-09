@@ -1,24 +1,18 @@
+import { Dropdown, ListBox, Option } from "@salt-ds/core";
 import {
-  FC,
-  ReactElement,
-  useState,
   Children,
+  type FC,
+  type ReactElement,
+  type SyntheticEvent,
   useEffect,
   useMemo,
-  SyntheticEvent,
+  useState,
 } from "react";
-import {
-  ListBox,
-  Option,
-  Dropdown,
-  FormField,
-  FormFieldLabel,
-} from "@salt-ds/core";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { formatComponentExampleName } from "./formatComponentExampleName";
 
-import styles from "./ExamplesListView.module.css";
 import { useParams } from "next/navigation";
+import styles from "./ExamplesListView.module.css";
 
 type ExamplesListViewProps = { examples: ReactElement[] };
 
@@ -32,9 +26,9 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
   const examplesList: string[] = useMemo(
     () =>
       Children.map(examples, ({ props }) =>
-        formatComponentExampleName(props.exampleName, props.displayName)
+        formatComponentExampleName(props.exampleName, props.displayName),
       ),
-    [examples]
+    [examples],
   );
 
   const [selectedItem, setSelectedItem] = useState<string[]>([]);
@@ -43,9 +37,9 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     // window.location.hash could be #hash?query=string and we only want the #hash part.
     const hash = window.location.hash.substring(1).split("?")[0];
     const exampleInHash = examplesList.find(
-      (example) => exampleNameToHash(example) === hash
+      (example) => exampleNameToHash(example) === hash,
     );
-    setSelectedItem((old) => {
+    setSelectedItem(() => {
       if (exampleInHash) {
         return [exampleInHash];
       }
@@ -72,7 +66,7 @@ const ExamplesListView: FC<ExamplesListViewProps> = ({ examples }) => {
     examplesArray.find(
       ({ props }) =>
         formatComponentExampleName(props.exampleName, props.displayName) ===
-        selectedItem[0]
+        selectedItem[0],
     ) || examplesArray[0];
 
   const {

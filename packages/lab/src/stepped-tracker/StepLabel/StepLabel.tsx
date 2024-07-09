@@ -1,8 +1,8 @@
-import { forwardRef, ReactNode } from "react";
-import { clsx } from "clsx";
-import { makePrefixer, Label, TextProps } from "@salt-ds/core";
+import { Label, type TextProps, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ReactNode, forwardRef } from "react";
 
 import stepLabelCss from "./StepLabel.css";
 
@@ -29,5 +29,5 @@ export const StepLabel = forwardRef<HTMLLabelElement, StepLabelProps>(
         <strong>{children}</strong>
       </Label>
     );
-  }
+  },
 );

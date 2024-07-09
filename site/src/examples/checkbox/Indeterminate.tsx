@@ -1,5 +1,5 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import { Checkbox } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 export const Indeterminate = (): ReactElement => {
   const [checkboxState, setCheckboxState] = useState({

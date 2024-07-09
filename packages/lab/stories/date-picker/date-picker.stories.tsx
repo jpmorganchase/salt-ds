@@ -1,21 +1,21 @@
 import {
-  DatePicker,
-  DatePickerProps,
-  RangeSelectionValueType,
-  SingleSelectionValueType,
-} from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+  DateFormatter,
+  type DateValue,
+  getLocalTimeZone,
+} from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import { ChangeEvent, useState } from "react";
 import {
-  DateFormatter,
-  DateValue,
-  getLocalTimeZone,
-} from "@internationalized/date";
+  DatePicker,
+  type DatePickerProps,
+  type RangeSelectionValueType,
+  type SingleSelectionValueType,
+} from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Lab/Date Picker",
@@ -23,7 +23,7 @@ export default {
 } as Meta<typeof DatePicker>;
 
 const isInvalidDate = (value: string) =>
-  value && isNaN(new Date(value).getDay());
+  value && Number.isNaN(new Date(value).getDay());
 
 const getDateValidationStatus = (value: string | undefined) =>
   value && isInvalidDate(value) ? "error" : undefined;
@@ -80,7 +80,7 @@ export const WithValidation: StoryFn<
 > = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2021)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined
+    undefined,
   );
   const [inputValue, setInputValue] = useState<string | undefined>(undefined);
   const [selectedDate, setSelectedDate] = useState<
@@ -115,7 +115,7 @@ export const RangeWithValidation: StoryFn<
 > = (args) => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined
+    undefined,
   );
   const [selectedDate, setSelectedDate] = useState<
     RangeSelectionValueType | undefined
@@ -133,7 +133,7 @@ export const RangeWithValidation: StoryFn<
         onChange={(
           event: ChangeEvent<HTMLInputElement>,
           startDateInputValue?: string,
-          endDateInputValue?: string
+          endDateInputValue?: string,
         ) => {
           setStartString(startDateInputValue);
           setEndString(endDateInputValue);
@@ -158,7 +158,7 @@ export const SingleControlled: StoryFn<
   DatePickerProps<SingleSelectionValueType | RangeSelectionValueType>
 > = (args) => {
   const [selectedDate, setSelectedDate] = useState<DateValue | undefined>(
-    undefined
+    undefined,
   );
   return (
     <DatePicker

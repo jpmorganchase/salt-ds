@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Button, FlowLayout, Text, Toast, ToastContent } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
+import { useState } from "react";
 
 export const InfoToast = () => {
   const [open, setOpen] = useState<boolean>(true);

@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Text, TextProps } from "./Text";
+import { Text, type TextProps } from "./Text";
 
 export const Label = forwardRef<
   HTMLLabelElement,

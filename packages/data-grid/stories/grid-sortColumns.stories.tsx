@@ -1,19 +1,19 @@
+import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
-import { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react";
 import {
-  Investor,
-  investorKeyGetter,
-  db,
-  createDummyInvestors,
-} from "./dummyData";
-import { useEffect, useState } from "react";
-import {
-  useQuery,
   QueryClient,
   QueryClientProvider,
+  useQuery,
 } from "@tanstack/react-query";
-import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { rest } from "msw";
+import { useEffect, useState } from "react";
+import {
+  type Investor,
+  createDummyInvestors,
+  db,
+  investorKeyGetter,
+} from "./dummyData";
 import "./grid.stories.css";
 
 export default {

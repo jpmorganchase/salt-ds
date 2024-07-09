@@ -1,12 +1,16 @@
 import { useControlled, useForkRef, useIsFocusVisible } from "@salt-ds/core";
-import React, {
-  FocusEventHandler,
+import type React from "react";
+import {
+  type FocusEventHandler,
+  type KeyboardEventHandler,
+  type MouseEventHandler,
   forwardRef,
-  KeyboardEventHandler,
-  MouseEventHandler,
   useState,
 } from "react";
-import { StarIconContainer, StarIconContainerProps } from "./StarIconContainer";
+import {
+  StarIconContainer,
+  type StarIconContainerProps,
+} from "./StarIconContainer";
 
 export interface FavoriteToggleProps
   extends Omit<StarIconContainerProps, "onChange"> {
@@ -85,7 +89,7 @@ export const FavoriteToggle = forwardRef<HTMLSpanElement, FavoriteToggleProps>(
     };
 
     const handleMouseEnter: React.MouseEventHandler<HTMLSpanElement> = (
-      event
+      event,
     ) => {
       if (onMouseEnterProp) {
         onMouseEnterProp(event);
@@ -94,7 +98,7 @@ export const FavoriteToggle = forwardRef<HTMLSpanElement, FavoriteToggleProps>(
     };
 
     const handleMouseLeave: React.MouseEventHandler<HTMLSpanElement> = (
-      event
+      event,
     ) => {
       if (onMouseLeaveProp) {
         onMouseLeaveProp(event);
@@ -130,5 +134,5 @@ export const FavoriteToggle = forwardRef<HTMLSpanElement, FavoriteToggleProps>(
         {...restProps}
       />
     );
-  }
+  },
 );

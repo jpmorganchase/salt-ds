@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as linkCardStories from "@stories/link-card/link-card.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(linkCardStories);
@@ -12,7 +12,7 @@ describe("Given a Link Card", () => {
     cy.mount(<Default />);
     cy.findByText("Sustainable investing products").should("be.visible");
     cy.findByText(
-      "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values."
+      "We have a commitment to provide a wide range of investment solutions to enable you to align your financial goals to your values.",
     ).should("be.visible");
   });
 

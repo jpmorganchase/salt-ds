@@ -1,4 +1,4 @@
-import { useViewport, ViewportContext, ViewportProvider } from "@salt-ds/core";
+import { ViewportContext, ViewportProvider, useViewport } from "@salt-ds/core";
 import { mount } from "cypress/react18";
 import { useEffect } from "react";
 
@@ -24,7 +24,7 @@ describe("Given a ViewportProvider", () => {
     mount(
       <ViewportProvider>
         <TestComponent />
-      </ViewportProvider>
+      </ViewportProvider>,
     );
 
     cy.findByText("550");
@@ -44,7 +44,7 @@ describe("Given a ViewportProvider", () => {
       mount(
         <ViewportProvider>
           <ViewportProvider />
-        </ViewportProvider>
+        </ViewportProvider>,
       );
       cy.get("@resizeObserver").should("have.been.calledOnce");
     });
@@ -55,7 +55,7 @@ describe("Given a ViewportProvider", () => {
       mount(
         <ViewportContext.Provider value={100}>
           <ViewportProvider />
-        </ViewportContext.Provider>
+        </ViewportContext.Provider>,
       );
       cy.get("@resizeObserver").should("not.have.been.called");
     });
@@ -66,7 +66,7 @@ describe("Given a ViewportProvider", () => {
       mount(
         <ViewportContext.Provider value={0}>
           <ViewportProvider />
-        </ViewportContext.Provider>
+        </ViewportContext.Provider>,
       );
       cy.get("@resizeObserver").should("not.have.been.called");
     });
@@ -77,7 +77,7 @@ describe("Given a ViewportProvider", () => {
       mount(
         <ViewportContext.Provider value={null}>
           <ViewportProvider />
-        </ViewportContext.Provider>
+        </ViewportContext.Provider>,
       );
       cy.get("@resizeObserver").should("have.been.calledOnce");
     });
@@ -91,7 +91,7 @@ describe("Given a ViewportProvider", () => {
       mount(
         <ViewportProvider>
           <TestComponent onViewPortWidthChange={widthChangeSpy} />
-        </ViewportProvider>
+        </ViewportProvider>,
       );
 
       cy.get("@widthChange").should("have.been.calledWith", 1000);

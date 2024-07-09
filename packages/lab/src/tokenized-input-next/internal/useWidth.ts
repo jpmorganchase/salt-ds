@@ -1,7 +1,7 @@
+import { type Density, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useState } from "react";
-import { Density, useIsomorphicLayoutEffect } from "@salt-ds/core";
 
-const safeParseFloat = (target?: string) => parseFloat(target ?? "0");
+const safeParseFloat = (target?: string) => Number.parseFloat(target ?? "0");
 
 export const getPadding = (node: HTMLElement | null) => {
   if (node == null) {
@@ -22,7 +22,7 @@ export const getWidth = (node: HTMLElement | null) => {
   const margin =
     safeParseFloat(style.marginLeft) + safeParseFloat(style.marginRight);
 
-  let dimension;
+  let dimension: DOMRect;
 
   if (style.display === "none") {
     const nodeDisplay = node.style.display;
@@ -41,13 +41,14 @@ export const getWidth = (node: HTMLElement | null) => {
  * This records the width of a component when it's rendered
  */
 export const useWidth = (
-  density: Density
+  density: Density,
+  // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
 ): [(newNode: any) => void, number] => {
   const [node, setNode] = useState<HTMLElement | null>(null);
   const [width, setWidth] = useState<number>(0);
 
   useIsomorphicLayoutEffect(() => {
-    if (node !== null) {
+    if (node !== null && density) {
       setWidth(getWidth(node));
     }
   }, [node, density]);

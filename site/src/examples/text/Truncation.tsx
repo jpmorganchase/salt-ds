@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Text, Tooltip } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Truncation = (): ReactElement => (
   <div style={{ width: 150 }}>

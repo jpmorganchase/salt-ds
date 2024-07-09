@@ -3,7 +3,7 @@ import {
   FileDropZoneIcon,
   FileDropZoneTrigger,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { AllRenderer } from "docs/components";
 
 export default {

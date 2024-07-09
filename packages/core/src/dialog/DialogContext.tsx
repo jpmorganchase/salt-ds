@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ValidationStatus } from "../status-indicator";
+import type { ValidationStatus } from "../status-indicator";
 
 export const DialogContext = createContext<{
   status?: ValidationStatus;

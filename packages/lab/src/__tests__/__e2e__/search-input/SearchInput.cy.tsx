@@ -30,7 +30,7 @@ describe("GIVEN a Search", () => {
       it("THEN should call onSubmit with the default value", () => {
         const submitSpy = cy.stub().as("submitSpy");
         cy.mount(
-          <SearchInput defaultValue="default value" onSubmit={submitSpy} />
+          <SearchInput defaultValue="default value" onSubmit={submitSpy} />,
         );
         cy.findByRole("textbox").focus();
         cy.realPress("{enter}");
@@ -49,13 +49,13 @@ describe("GIVEN a Search", () => {
       it("THEN should call onChange with an empty value", () => {
         const changeSpy = cy.stub().as("changeSpy");
         cy.mount(
-          <SearchInput defaultValue="default value" onChange={changeSpy} />
+          <SearchInput defaultValue="default value" onChange={changeSpy} />,
         );
         cy.findByRole("button", { name: "clear input" }).click();
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          ""
+          "",
         );
       });
 
@@ -76,7 +76,7 @@ describe("GIVEN a Search", () => {
       it("THEN should call onClear", () => {
         const clearSpy = cy.stub().as("clearSpy");
         cy.mount(
-          <SearchInput defaultValue="default value" onClear={clearSpy} />
+          <SearchInput defaultValue="default value" onClear={clearSpy} />,
         );
         cy.findByRole("button", { name: "clear input" }).click();
 
@@ -87,7 +87,7 @@ describe("GIVEN a Search", () => {
         it("THEN should not call onSubmit", () => {
           const submitSpy = cy.stub().as("submitSpy");
           cy.mount(
-            <SearchInput defaultValue="default value" onSubmit={submitSpy} />
+            <SearchInput defaultValue="default value" onSubmit={submitSpy} />,
           );
           cy.findByRole("button").click();
           cy.findByRole("textbox").should("have.focus");
@@ -115,7 +115,7 @@ describe("GIVEN a Search", () => {
         it("THEN should call onChange with the new value", () => {
           const changeSpy = cy.stub().as("changeSpy");
           cy.mount(
-            <SearchInput defaultValue="default value" onChange={changeSpy} />
+            <SearchInput defaultValue="default value" onChange={changeSpy} />,
           );
           cy.findByRole("button", { name: "clear input" }).click();
           cy.findByRole("textbox").clear();
@@ -124,7 +124,7 @@ describe("GIVEN a Search", () => {
           cy.get("@changeSpy").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            "new value"
+            "new value",
           );
         });
 
@@ -132,7 +132,7 @@ describe("GIVEN a Search", () => {
           it("THEN should call onSubmit", () => {
             const clearSpy = cy.stub().as("clearSpy");
             cy.mount(
-              <SearchInput defaultValue="default value" onClear={clearSpy} />
+              <SearchInput defaultValue="default value" onClear={clearSpy} />,
             );
             cy.findByRole("button", { name: "clear input" }).click();
             cy.realType("new value");
@@ -227,7 +227,7 @@ describe("GIVEN a Search", () => {
           cy.get("@changeSpy").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            "value b"
+            "value b",
           );
         });
 
@@ -264,7 +264,7 @@ describe("GIVEN a Search", () => {
               ({ rerender }) => {
                 rerender(<SearchInput value="value b" onChange={changeSpy} />);
                 cy.get("@changeSpy").should("have.callCount", 0);
-              }
+              },
             );
           });
         });

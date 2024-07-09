@@ -79,12 +79,5 @@
   height: calc(var(--colorChooser-swatch-size-unit) - 2px) !important;
   margin-bottom: 1px;
   margin-left: 1px;
-  background: linear-gradient(
-    to top left,
-    rgba(166, 21, 11, 0) 0%,
-    rgba(166, 21, 11, 0) calc(50% - 0.8px),
-    rgba(166, 21, 11, 1) 50%,
-    rgba(166, 21, 11, 0) calc(50% + 0.8px),
-    rgba(166, 21, 11, 0) 100%
-  ) !important;
+  background: linear-gradient(to top left, rgba(166, 21, 11, 0) 0%, rgba(166, 21, 11, 0) calc(50% - 0.8px), rgba(166, 21, 11, 1) 50%, rgba(166, 21, 11, 0) calc(50% + 0.8px), rgba(166, 21, 11, 0) 100%) !important;
 }
