@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core/src/utils";
+import { makePrefixer } from "@salt-ds/core";
 
 import systemStatusContentCss from "./SystemStatusContent.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
