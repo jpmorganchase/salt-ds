@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
+import { Spinner } from "@salt-ds/core";
 import { useOf } from "@storybook/addon-docs";
 import { ResetWrapper } from "@storybook/components";
-import { Spinner } from "@salt-ds/core";
+import { useEffect, useState } from "react";
 import { CharacteristicUsageRow } from "./CharacteristicUsageRow";
 import { EmptyBlock } from "./EmptyBlock";
-import { getCharacteristics } from "./utils";
 import { TableWrapper } from "./TableWrapper";
+import { getCharacteristics } from "./utils";
 
 import "./CharacteristicUsage.css";
 
 export function CharacteristicUsage(
-  props: Record<string, string>
+  props: Record<string, string>,
 ): JSX.Element {
   const { of } = props;
 

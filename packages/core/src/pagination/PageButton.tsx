@@ -1,11 +1,11 @@
-import { MouseEventHandler, forwardRef } from "react";
 import { clsx } from "clsx";
+import { type MouseEventHandler, forwardRef } from "react";
 import { Button } from "../button";
 import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import pageButtonCss from "./PageButton.css";
 
@@ -47,5 +47,5 @@ export const PageButton = forwardRef<HTMLButtonElement, PageButtonProps>(
         {page}
       </Button>
     );
-  }
+  },
 );

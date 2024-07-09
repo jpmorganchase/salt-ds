@@ -1,14 +1,14 @@
-import { defineConfig } from "cypress";
-import react from "@vitejs/plugin-react";
-import tsconfigPaths from "vite-tsconfig-paths";
-import IstanbulPlugin from "vite-plugin-istanbul";
-import { isCI } from "ci-info";
-import path from "path";
-import { UserConfig } from "vite";
-import { version as reactVersion } from "react";
+import path from "node:path";
 // @ts-ignore
 import installCoverageTask from "@cypress/code-coverage/task";
+import react from "@vitejs/plugin-react";
+import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
+import { defineConfig } from "cypress";
+import { version as reactVersion } from "react";
+import type { UserConfig } from "vite";
+import IstanbulPlugin from "vite-plugin-istanbul";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 async function getViteConfig(config: UserConfig) {
   const { mergeConfig } = await import("vite");
@@ -52,7 +52,7 @@ async function getViteConfig(config: UserConfig) {
           "@salt-ds/core": path.resolve(__dirname, "./dist/salt-ds-core"),
           "@salt-ds/data-grid": path.resolve(
             __dirname,
-            "./dist/salt-ds-data-grid"
+            "./dist/salt-ds-data-grid",
           ),
           "@salt-ds/lab": path.resolve(__dirname, "./dist/salt-ds-lab"),
           "@salt-ds/icons": path.resolve(__dirname, "./dist/salt-ds-icons"),

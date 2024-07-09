@@ -1,4 +1,4 @@
-import { Children, ReactNode } from "react";
+import { Children, type ReactNode } from "react";
 import splitArray from "../../../utils/splitArray";
 import styles from "./DesignCards.module.css";
 

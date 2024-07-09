@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import { Card } from "@salt-ds/core";
-import { DeckLayout, DeckItem, Tab, Tabstrip } from "@salt-ds/lab";
+import { DeckItem, DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useEffect, useState } from "react";
 import "../layout/layout.stories.css";
 
 export default {
@@ -77,8 +77,8 @@ const WithTabStrip: StoryFn<typeof DeckLayout> = (args) => {
   return (
     <div>
       <Tabstrip onActiveChange={setActiveTabIndex}>
-        {tabs.map((label, i) => (
-          <Tab label={label} key={i} />
+        {tabs.map((label) => (
+          <Tab label={label} key={label} />
         ))}
       </Tabstrip>
       <DeckLayout

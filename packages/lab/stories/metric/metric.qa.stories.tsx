@@ -1,7 +1,7 @@
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 import { Metric, MetricContent, MetricHeader } from "@salt-ds/lab";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Metric/QA",

@@ -1,6 +1,11 @@
-import { ChangeEvent, useCallback, useState, CSSProperties } from "react";
 import { AriaAnnouncerProvider, useAriaAnnouncer } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type CSSProperties,
+  type ChangeEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export default {
   title: "Core/Aria Announcer Provider",
@@ -36,10 +41,10 @@ const Content = () => {
   const getMilliseconds = useCallback(
     (type: interval) => {
       const value = type === "delay" ? delay : debounce;
-      const maybeNumber = parseInt(value, 10);
-      return isNaN(maybeNumber) ? undefined : maybeNumber;
+      const maybeNumber = Number.parseInt(value, 10);
+      return Number.isNaN(maybeNumber) ? undefined : maybeNumber;
     },
-    [debounce, delay]
+    [debounce, delay],
   );
 
   const { announce } = useAriaAnnouncer({
@@ -66,11 +71,11 @@ const Content = () => {
   const getButtonLabel = () => {
     if (delay) {
       return `Increment count with ${delay}ms delay`;
-    } else if (debounce) {
-      return `Increment count with ${debounce}ms debounce`;
-    } else {
-      return "Increment count, nothing fancy";
     }
+    if (debounce) {
+      return `Increment count with ${debounce}ms debounce`;
+    }
+    return "Increment count, nothing fancy";
   };
 
   return (

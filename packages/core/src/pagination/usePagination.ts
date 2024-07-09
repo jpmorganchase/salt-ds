@@ -4,7 +4,7 @@ export function usePagination(
   page: number,
   count: number,
   boundaryCount: number,
-  siblingCount: number
+  siblingCount: number,
 ) {
   const totalButtonsVisible = 2 * (boundaryCount + siblingCount) + 3;
   const isEnoughSpace = totalButtonsVisible >= count;

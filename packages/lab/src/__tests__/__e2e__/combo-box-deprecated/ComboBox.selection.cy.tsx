@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox-deprecated.stories";
+import { composeStories } from "@storybook/react";
 
 const { Default, MultiSelect } = composeStories(comboBoxStories);
 
@@ -22,7 +22,7 @@ describe("A combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      "Alaska"
+      "Alaska",
     );
   });
 
@@ -122,7 +122,7 @@ describe("A combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      null
+      null,
     );
   });
 });
@@ -138,13 +138,13 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alaska"]
+      ["Alaska"],
     );
     cy.findByRole("option", { name: "Alabama" }).realClick();
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
+      ["Alabama", "Alaska"],
     );
     // pill group updated
     cy.findAllByTestId("pill").should("have.length", 2);
@@ -188,7 +188,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama"]
+      ["Alabama"],
     );
     cy.findByRole("listbox")
       .findByRole("option", { name: "Alaska" })
@@ -196,7 +196,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
+      ["Alabama", "Alaska"],
     );
     cy.findByRole("listbox")
       .findByRole("option", { name: "Alabama" })
@@ -204,7 +204,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alaska"]
+      ["Alaska"],
     );
     // pill group updated
     cy.findAllByTestId("pill").should("have.length", 1);
@@ -231,7 +231,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama"]
+      ["Alabama"],
     );
     cy.findByRole("listbox")
       .findByRole("option", { name: "Alaska" })
@@ -239,7 +239,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
+      ["Alabama", "Alaska"],
     );
 
     cy.findAllByTestId("pill").should("have.length", 2);
@@ -249,7 +249,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama"]
+      ["Alabama"],
     );
 
     // pill group updated
@@ -273,7 +273,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama"]
+      ["Alabama"],
     );
     cy.findByRole("listbox")
       .findByRole("option", { name: "Alaska" })
@@ -281,7 +281,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      ["Alabama", "Alaska"]
+      ["Alabama", "Alaska"],
     );
 
     cy.findAllByTestId("pill").should("have.length", 2);
@@ -292,7 +292,7 @@ describe("A multi-select combo box", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      []
+      [],
     );
 
     // list style updated

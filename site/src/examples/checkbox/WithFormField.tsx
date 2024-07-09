@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import {
   Checkbox,
   CheckboxGroup,
-  FormField,
-  FormFieldLabel,
-  FormFieldHelperText,
   FlexLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const WithFormField = (): ReactElement => {
   return (

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useMemo } from "react";
+import { type ReactNode, createContext, useContext, useMemo } from "react";
 
 export interface InsertionPointContextType {
   insertionPoint: ChildNode | null;

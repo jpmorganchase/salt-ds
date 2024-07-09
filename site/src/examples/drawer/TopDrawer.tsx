@@ -1,18 +1,18 @@
-import { ReactElement, useState } from "react";
 import {
   Button,
+  Drawer,
+  DrawerCloseButton,
   FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   H2,
-  Text,
   Input,
   StackLayout,
+  Text,
   useId,
-  Drawer,
-  DrawerCloseButton,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 const FormFieldExample = () => (
   <FormField>

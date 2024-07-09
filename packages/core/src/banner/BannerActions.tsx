@@ -1,10 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
 import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 import { makePrefixer } from "../utils";
 
-import bannerActionsCss from "./BannerActions.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import bannerActionsCss from "./BannerActions.css";
 
 const withBaseName = makePrefixer("saltBannerActions");
 
@@ -29,5 +33,5 @@ export const BannerActions = forwardRef<HTMLDivElement, BannerActionsProps>(
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref} />
     );
-  }
+  },
 );

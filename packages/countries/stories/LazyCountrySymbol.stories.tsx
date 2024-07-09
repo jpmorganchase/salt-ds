@@ -1,12 +1,12 @@
-import { Suspense } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
-  countryMetaMap,
   LazyCountrySymbol as LazyCountrySymbolComponent,
+  countryMetaMap,
 } from "@salt-ds/countries";
+import type { Meta, StoryFn } from "@storybook/react";
+import { Suspense } from "react";
 
 const countryCodes = Object.keys(
-  countryMetaMap
+  countryMetaMap,
 ) as (keyof typeof countryMetaMap)[];
 
 export default {
@@ -24,7 +24,7 @@ export default {
 } as Meta<typeof LazyCountrySymbolComponent>;
 
 export const LazyCountrySymbol: StoryFn<typeof LazyCountrySymbolComponent> = (
-  args
+  args,
 ) => {
   return (
     <Suspense fallback={"Loading..."}>

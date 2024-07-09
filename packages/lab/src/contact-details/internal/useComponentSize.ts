@@ -1,5 +1,5 @@
-import { MutableRefObject, useCallback, useRef, useState } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { type MutableRefObject, useCallback, useRef, useState } from "react";
 
 export interface ComponentSize {
   height?: number;
@@ -7,7 +7,7 @@ export interface ComponentSize {
 }
 
 export function useComponentSize<T extends HTMLElement>(
-  initialWidth: number
+  initialWidth: number,
 ): [MutableRefObject<T | null>, ComponentSize] {
   const [size, setSize] = useState<ComponentSize>({ width: initialWidth });
   const ref = useRef<T>(null);
@@ -17,14 +17,13 @@ export function useComponentSize<T extends HTMLElement>(
     height,
   }: DOMRect) {
     setSize({ width, height });
-  },
-  []);
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     if (!ref.current) {
       if (process.env.NODE_ENV !== "production") {
         throw new Error(
-          "ref returned by useComponentSize was not assigned to a component"
+          "ref returned by useComponentSize was not assigned to a component",
         );
       }
       return;
@@ -33,7 +32,7 @@ export function useComponentSize<T extends HTMLElement>(
     const observer = new ResizeObserver(
       (observerEntries: ResizeObserverEntry[]) => {
         handleResize(observerEntries[0].contentRect);
-      }
+      },
     );
     observer.observe(ref.current);
     return () => {

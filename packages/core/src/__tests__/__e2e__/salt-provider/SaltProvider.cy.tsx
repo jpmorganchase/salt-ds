@@ -1,14 +1,14 @@
 import {
-  ownerWindow,
   SaltProvider,
+  UNSTABLE_SaltProviderNext,
+  ownerWindow,
   useAriaAnnouncer,
   useDensity,
   useTheme,
-  UNSTABLE_SaltProviderNext,
 } from "@salt-ds/core";
-import { mount } from "cypress/react18";
 import { WindowProvider } from "@salt-ds/window";
-import { ReactNode, useCallback, useState } from "react";
+import { mount } from "cypress/react18";
+import { type ReactNode, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 
 const TestComponent = ({
@@ -54,7 +54,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -68,7 +68,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -82,7 +82,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get(".salt-theme-next").should("have.length", 0);
@@ -95,7 +95,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider mode="dark">
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -108,7 +108,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider density="high">
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -121,7 +121,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider density="high" mode="dark" theme="custom-theme">
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -139,7 +139,7 @@ describe("Given a SaltProvider", () => {
           theme="custom-theme-1 custom-theme-2"
         >
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("html")
@@ -164,7 +164,7 @@ describe("Given a SaltProvider", () => {
           <SaltProvider>
             <TestComponent />
           </SaltProvider>
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("[aria-live]").should("have.length", 1);
@@ -177,7 +177,7 @@ describe("Given a SaltProvider", () => {
           <SaltProvider density="medium">
             <TestComponent id="test-2" />
           </SaltProvider>
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("#test-1")
@@ -199,7 +199,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider density="high" mode="dark" applyClassesTo={"child"}>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -222,7 +222,7 @@ describe("Given a SaltProvider", () => {
           applyClassesTo={"root"}
         >
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -245,7 +245,7 @@ describe("Given a SaltProvider", () => {
           applyClassesTo="scope"
         >
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider")
@@ -264,18 +264,18 @@ describe("Given a SaltProvider", () => {
         <SaltProvider applyClassesTo={"root"}>
           <TestComponent />
         </SaltProvider>
-      </SaltProvider>
+      </SaltProvider>,
     );
 
     cy.get("@consoleSpy").should(
       "have.been.calledWith",
-      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
     );
   });
 
   function FakeWindow({ children }: { children?: ReactNode }) {
     const [mountNode, setMountNode] = useState<HTMLElement | undefined>(
-      undefined
+      undefined,
     );
 
     const handleFrameRef = useCallback((node: HTMLIFrameElement) => {
@@ -283,7 +283,7 @@ describe("Given a SaltProvider", () => {
     }, []);
 
     return (
-      <iframe ref={handleFrameRef}>
+      <iframe ref={handleFrameRef} title="Fake Window">
         <WindowProvider window={ownerWindow(mountNode)}>
           {mountNode && createPortal(children, mountNode)}
         </WindowProvider>
@@ -301,7 +301,7 @@ describe("Given a SaltProvider", () => {
             <TestComponent />
           </SaltProvider>
         </FakeWindow>
-      </SaltProvider>
+      </SaltProvider>,
     );
 
     cy.get("@consoleSpy").should("not.have.been.called");
@@ -314,7 +314,7 @@ describe("Given a SaltProviderNext", () => {
       mount(
         <UNSTABLE_SaltProviderNext>
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -334,7 +334,7 @@ describe("Given a SaltProviderNext", () => {
       mount(
         <UNSTABLE_SaltProviderNext>
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -361,7 +361,7 @@ describe("Given a SaltProviderNext", () => {
           theme="custom-theme-1 custom-theme-2"
         >
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>,
       );
 
       cy.get("html")
@@ -401,7 +401,7 @@ describe("Given a SaltProviderNext", () => {
           <UNSTABLE_SaltProviderNext density="medium">
             <TestComponent id="test-2" />
           </UNSTABLE_SaltProviderNext>
-        </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>,
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);
@@ -447,7 +447,7 @@ describe("Given a SaltProviderNext", () => {
           >
             <TestComponent id="test-2" />
           </UNSTABLE_SaltProviderNext>
-        </UNSTABLE_SaltProviderNext>
+        </UNSTABLE_SaltProviderNext>,
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);

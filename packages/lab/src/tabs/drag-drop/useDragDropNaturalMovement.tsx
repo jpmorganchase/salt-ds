@@ -1,16 +1,16 @@
-import { MouseEventHandler, useCallback, useRef, useState } from "react";
+import { type MouseEventHandler, useCallback, useRef, useState } from "react";
 
-import { DragDropHook, Direction } from "./dragDropTypes";
+import type { Direction, DragDropHook } from "./dragDropTypes";
 import { useDragSpacers } from "./useDragSpacers";
 
 import {
+  type MeasuredDropTarget,
   dimensions,
-  isDraggedElement,
-  MeasuredDropTarget,
-  measureDropTargets,
-  moveDragItem,
   getDraggedItem,
   getNextDropTarget,
+  isDraggedElement,
+  measureDropTargets,
+  moveDragItem,
 } from "./drag-utils";
 
 import { Draggable } from "./Draggable";
@@ -55,7 +55,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
         const pos = startPos.current - mouseOffset.current + moveDistance;
         const renderPos = Math.max(
           dragLimits.current.start,
-          Math.min(dragLimits.current.end, pos)
+          Math.min(dragLimits.current.end, pos),
         );
 
         if (draggableRef.current && containerRef.current) {
@@ -71,7 +71,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           const nextDropTarget = getNextDropTarget(
             measuredDropTargets.current,
             leadingEdge,
-            direction
+            direction,
           );
 
           if (
@@ -81,7 +81,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           ) {
             if (nextDropTarget.isOverflowIndicator) {
               // Does this belong in here or can we abstract it out
-              setShowOverflow((overflowMenuShowingRef.current = true));
+              overflowMenuShowingRef.current = true;
+              setShowOverflow(true);
             } else {
               const newDropTargets = moveDragItem(dropTargets, nextDropTarget);
               const draggedItem = getDraggedItem(newDropTargets);
@@ -93,7 +94,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
                   nextDisplacedItem,
                   draggedItem.size,
                   true,
-                  direction
+                  direction,
                 );
               } else {
                 const displacedItem =
@@ -101,7 +102,8 @@ export const useDragDropNaturalMovement: DragDropHook = ({
                 displaceLastItem(displacedItem, draggedItem.size, true);
               }
               measuredDropTargets.current = newDropTargets;
-              setShowOverflow((overflowMenuShowingRef.current = false));
+              overflowMenuShowingRef.current = false;
+              setShowOverflow(false);
             }
 
             dropTarget.current = nextDropTarget;
@@ -110,7 +112,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
         }
       }
     },
-    [containerRef, displaceItem, displaceLastItem, orientation]
+    [containerRef, displaceItem, displaceLastItem, orientation],
   );
 
   const dragMouseUpHandler = useCallback(() => {
@@ -152,7 +154,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           containerRef.current as HTMLElement,
           orientation,
           dragElement,
-          query
+          query,
         );
 
         const draggedItem = dropTargets.find(isDraggedElement);
@@ -179,7 +181,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
               ref={draggableRef}
               rect={draggableRect}
               element={dragElement.cloneNode(true) as HTMLElement}
-            />
+            />,
           );
 
           if (draggedItem !== lastItem) {
@@ -205,8 +207,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
       dragMouseUpHandler,
       itemQuery,
       orientation,
-      setIsDragging,
-    ]
+    ],
   );
 
   const preDragMouseMoveHandler = useCallback(
@@ -222,14 +223,14 @@ export const useDragDropNaturalMovement: DragDropHook = ({
         document.removeEventListener(
           "mousemove",
           preDragMouseMoveHandler,
-          false
+          false,
         );
         document.removeEventListener("mouseup", preDragMouseUpHandler, false);
 
         enterDraggingState(evt);
       }
     },
-    [containerRef, enterDraggingState, orientation]
+    [containerRef, enterDraggingState, orientation],
   );
 
   const preDragMouseUpHandler = useCallback(() => {
@@ -258,7 +259,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
           document.removeEventListener(
             "mousemove",
             preDragMouseMoveHandler,
-            false
+            false,
           );
           document.removeEventListener("mouseup", preDragMouseUpHandler, false);
 
@@ -272,7 +273,7 @@ export const useDragDropNaturalMovement: DragDropHook = ({
       orientation,
       preDragMouseMoveHandler,
       preDragMouseUpHandler,
-    ]
+    ],
   );
 
   const draggedItemIndex = isDragging

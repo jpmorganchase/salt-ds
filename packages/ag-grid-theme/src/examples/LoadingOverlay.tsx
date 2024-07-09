@@ -1,5 +1,5 @@
 import { Card, Spinner, StackLayout, Text } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 

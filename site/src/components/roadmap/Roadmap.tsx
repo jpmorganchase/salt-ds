@@ -1,13 +1,13 @@
 import {
   Banner,
   BannerContent,
-  GridLayout,
-  H3,
   FormField,
   FormFieldLabel,
+  GridLayout,
+  H3,
   Input,
   InteractableCard,
-  InteractableCardProps,
+  type InteractableCardProps,
   Spinner,
   Text,
 } from "@salt-ds/core";
@@ -16,7 +16,7 @@ import {
   ProgressInprogressIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { Heading4 } from "../mdx/h4";
 
 import styles from "./style.module.css";
@@ -53,11 +53,14 @@ function RoadmapCard(props: InteractableCardProps) {
 export const Roadmap = ({ endpoint }: RoadmapProps) => {
   const [roadmapData, setRoadmapData] = useState<RoadmapData[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [status, setStatus] = useState<"pending" | "success" | "error">(
+    "pending",
+  );
 
   const filteredRoadmapData = roadmapData.filter(
     (r) =>
       (r.quarter !== null || r.startSprint !== null || r.endSprint !== null) &&
-      r.title.match(new RegExp(searchQuery, "i"))
+      r.title.match(new RegExp(searchQuery, "i")),
   );
 
   useEffect(() => {
@@ -65,6 +68,7 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
 
     const fetchData = async () => {
       try {
+        setStatus("pending");
         const response = await fetch(`${endpoint}`, {
           signal: abortController.signal,
         });
@@ -73,10 +77,9 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
         const extractedData: RoadmapData[] = items?.map(mapRoadmapData);
 
         setRoadmapData(extractedData || []);
+        setStatus("success");
       } catch (error) {
-        <Banner status="info">
-          <BannerContent>No data available</BannerContent>
-        </Banner>;
+        setStatus("error");
       }
     };
 
@@ -85,9 +88,9 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
     return () => {
       abortController.abort();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [endpoint]);
 
+  // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
   const mapRoadmapData = (responseItem: any): RoadmapData => {
     const data: RoadmapData = {
       id: responseItem.id,
@@ -142,23 +145,27 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
         <Input
           value={searchQuery}
           variant="secondary"
-          onChange={(event) =>
-            setSearchQuery((event.target as HTMLInputElement).value)
-          }
+          inputProps={{
+            onChange: (event) => setSearchQuery(event.target.value),
+          }}
           className={styles.searchInput}
           startAdornment={<FilterIcon />}
         />
       </FormField>
 
-      {roadmapData !== null && roadmapData.length > 0 ? (
+      {roadmapData.length > 0 ? (
         <CardView data={filteredRoadmapData} />
-      ) : (
+      ) : status !== "error" ? (
         <Spinner
           className={styles.loading}
           aria-label="loading"
           role="status"
           size="large"
         />
+      ) : (
+        <Banner status="info">
+          <BannerContent>No data available</BannerContent>
+        </Banner>
       )}
     </div>
   );
@@ -226,7 +233,11 @@ const CardView = ({ data }: CardViewProps) => {
           In backlog
         </H3>
         {plannedData
-          .sort((a, b) => a.quarter!.title.localeCompare(b.quarter!.title))
+          .sort((a, b) => {
+            const aQuarter = a.quarter?.title ?? "";
+            const bQuarter = b.quarter?.title ?? "";
+            return aQuarter.localeCompare(bQuarter);
+          })
           .map((item) => (
             <ColumnData key={item.id} item={item} />
           ))}

@@ -1,6 +1,6 @@
 import { Checkbox, FlexItem, StackLayout, useDensity } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import { ChangeEvent, useState } from "react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
+import { type ChangeEvent, useState } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 

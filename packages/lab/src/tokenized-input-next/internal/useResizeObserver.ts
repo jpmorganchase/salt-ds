@@ -1,7 +1,7 @@
 // TODO: Use resize observer from Tabstrip / Toolbar
 
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { useRef, useEffect, Ref } from "react";
+import { type Ref, useEffect, useRef } from "react";
 
 /**
  * This monitors the size of a component and calls `onSizeChange` callback
@@ -10,8 +10,8 @@ import { useRef, useEffect, Ref } from "react";
 export function useResizeObserver<Element extends HTMLElement>(
   onSizeChange: (
     entries: ResizeObserverEntry[],
-    observer?: ResizeObserver
-  ) => void
+    observer?: ResizeObserver,
+  ) => void,
 ): Ref<Element> {
   const ref = useRef<Element>(null);
 

@@ -1,15 +1,15 @@
-import { ReactElement, useState } from "react";
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogCloseButton,
+  DialogContent,
+  DialogHeader,
   H3,
   StackLayout,
   useId,
-  Dialog,
-  DialogHeader,
-  DialogActions,
-  DialogContent,
-  DialogCloseButton,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);

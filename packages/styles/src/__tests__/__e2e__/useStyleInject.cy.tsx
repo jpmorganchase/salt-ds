@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { Button } from "@salt-ds/core";
 import { InsertionPointProvider } from "@salt-ds/styles";
+import { useState } from "react";
 
 import TestComponent from "./TestComponent";
 
@@ -53,14 +53,14 @@ describe("Given two components with the same injection ID but different css", ()
           injectionId="test-component"
           injectionCss={testComponentCss2}
         />
-      </div>
+      </div>,
     );
 
     cy.get('[data-salt-style="test-component"]').then((injectedStyles) => {
       cy.wrap(injectedStyles.length).should("equal", 2);
       cy.wrap(injectedStyles[0].innerHTML).should(
         "not.equal",
-        injectedStyles[1].innerHTML
+        injectedStyles[1].innerHTML,
       );
       cy.wrap(injectedStyles[0].innerHTML).should("be.oneOf", [
         testComponentCss1,
@@ -86,14 +86,14 @@ describe("Given two components with no insertion ID but different css", () => {
           className="TestComponent2"
           injectionCss={testComponentCss2}
         />
-      </div>
+      </div>,
     );
 
     cy.get('[data-salt-style=""]').then((injectedStyles) => {
       cy.wrap(injectedStyles.length).should("equal", 2);
       cy.wrap(injectedStyles[0].innerHTML).should(
         "not.equal",
-        injectedStyles[1].innerHTML
+        injectedStyles[1].innerHTML,
       );
       cy.wrap(injectedStyles[0].innerHTML).should("be.oneOf", [
         testComponentCss1,
@@ -112,7 +112,7 @@ describe("Given a removed component which has injected css", () => {
     cy.mount(
       <div>
         <RemovableTest />
-      </div>
+      </div>,
     );
 
     const SELECTOR = '[data-salt-style="test-component"]';
@@ -146,7 +146,7 @@ describe("Given an insertion point", () => {
         insertionPoint={document.querySelector('[data-marker="example"]')}
       >
         <Button>Test</Button>
-      </InsertionPointProvider>
+      </InsertionPointProvider>,
     );
 
     cy.get('[data-salt-style="salt-button"]').then((injectedStyle) => {
@@ -154,14 +154,14 @@ describe("Given an insertion point", () => {
         // Is the style before the marker
         cy.wrap(
           injectedStyle[0].compareDocumentPosition(marker[0]) &
-            Node.DOCUMENT_POSITION_PRECEDING
+            Node.DOCUMENT_POSITION_PRECEDING,
         ).should("equal", 0);
       });
       cy.get("style").then((styles) => {
         // Is the style after the first child within the head
         cy.wrap(
           injectedStyle[0].compareDocumentPosition(styles[0]) &
-            Node.DOCUMENT_POSITION_FOLLOWING
+            Node.DOCUMENT_POSITION_FOLLOWING,
         ).should("equal", 0);
       });
     });

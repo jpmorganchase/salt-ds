@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import {
   H3,
-  StackLayout,
-  Text,
   InteractableCard,
   InteractableCardGroup,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const ToggleGroup = (): ReactElement => (
   <StackLayout>

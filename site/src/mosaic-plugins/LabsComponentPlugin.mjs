@@ -14,7 +14,7 @@ const LabsComponentPlugin = {
   async $afterSource(
     pages,
     { ignorePages, pageExtensions },
-    { labPackageName, statusLabel, icon }
+    { labPackageName, statusLabel, icon },
   ) {
     const isNonHiddenPage = createPageTest(ignorePages, pageExtensions);
 

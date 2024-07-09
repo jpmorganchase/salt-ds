@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { GridColumnModel } from "../Grid";
+import type { GridColumnModel } from "../Grid";
 
 export interface TableColGroupProps<T> {
   columns: GridColumnModel<T>[];

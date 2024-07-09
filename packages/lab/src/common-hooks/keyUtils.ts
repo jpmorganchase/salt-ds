@@ -1,9 +1,9 @@
-import React from "react";
+import type React from "react";
 
 function union<T>(set1: Set<T>, ...sets: Set<T>[]) {
   const result = new Set(set1);
-  for (let set of sets) {
-    for (let element of set) {
+  for (const set of sets) {
+    for (const element of set) {
       result.add(element);
     }
   }
@@ -53,7 +53,7 @@ const specialKeys = union(
   navigationKeys,
   arrowLeftRightKeys,
   functionKeys,
-  focusKeys
+  focusKeys,
 );
 export const isCharacterKey = (evt: React.KeyboardEvent): boolean => {
   if (specialKeys.has(evt.key)) {

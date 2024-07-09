@@ -1,7 +1,7 @@
-import { ChangeEvent } from "react";
-import { Color } from "./Color";
+import type { ChangeEvent } from "react";
+import type { Color } from "./Color";
 import { ColorPicker } from "./ColorPicker";
-import { DictTabsProps } from "./DictTabs";
+import type { DictTabsProps } from "./DictTabs";
 import { Swatches } from "./Swatches";
 
 interface TabsMappingProps {
@@ -14,7 +14,7 @@ interface TabsMappingProps {
   handleColorChange: (
     color: Color | undefined,
     finalSelection: boolean,
-    e?: ChangeEvent
+    e?: ChangeEvent,
   ) => void;
   displayColorName: string | undefined;
   placeholder: string | undefined;

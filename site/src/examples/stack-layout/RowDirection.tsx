@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { StackLayout, FlexItem } from "@salt-ds/core";
+import { FlexItem, StackLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const RowDirection = (): ReactElement => (

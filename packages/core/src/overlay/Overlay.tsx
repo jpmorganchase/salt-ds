@@ -1,17 +1,17 @@
-import { ComponentPropsWithoutRef, useMemo, useRef } from "react";
-import { OverlayContext } from "./OverlayContext";
-import { useControlled, useFloatingUI } from "../utils";
 import {
+  arrow,
   flip,
+  limitShift,
   offset,
   shift,
-  limitShift,
-  arrow,
   useClick,
   useDismiss,
   useInteractions,
   useRole,
 } from "@floating-ui/react";
+import { type ComponentPropsWithoutRef, useMemo, useRef } from "react";
+import { useControlled, useFloatingUI } from "../utils";
+import { OverlayContext } from "./OverlayContext";
 
 export interface OverlayProps extends ComponentPropsWithoutRef<"div"> {
   /**

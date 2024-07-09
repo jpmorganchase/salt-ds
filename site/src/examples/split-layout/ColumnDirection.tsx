@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { SplitLayout, FlexItem, StackLayout } from "@salt-ds/core";
-import styles from "./index.module.css";
+import { FlexItem, SplitLayout, StackLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import columnDirectionStyles from "./ColumnDirection.module.css";
+import styles from "./index.module.css";
 
 const startItem = (
   <StackLayout>

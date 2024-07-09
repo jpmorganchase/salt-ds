@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent, KeyboardEvent } from "react";
+import { type KeyboardEvent, type SyntheticEvent, useState } from "react";
 
 // Alt+Arrow Up/Down toggles list open/close
 export const isToggleList = (event: KeyboardEvent) =>
@@ -26,7 +26,7 @@ export const usePopperStatus = (props: {
     } else if (
       !isOpen &&
       ["Alt", "Tab", "Escape", "Control", "Shift", "Meta"].indexOf(
-        event.key
+        event.key,
       ) === -1
     ) {
       setOpen(true);

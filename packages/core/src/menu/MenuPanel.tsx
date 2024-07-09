@@ -1,10 +1,14 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
-import { clsx } from "clsx";
 import { FloatingList } from "@floating-ui/react";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
+import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 import { useMenuContext } from "./MenuContext";
 import { MenuPanelBase } from "./MenuPanelBase";
 import { MenuPanelContext } from "./MenuPanelContext";
-import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 
 export interface MenuPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -65,5 +69,5 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
         </FloatingList>
       </MenuPanelContext.Provider>
     );
-  }
+  },
 );

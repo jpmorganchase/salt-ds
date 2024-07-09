@@ -8,7 +8,7 @@ import {
 import { BeakerIcon, CheckIcon } from "@storybook/icons";
 import { useGlobals } from "@storybook/manager-api";
 import { clsx } from "clsx";
-import React, { AnchorHTMLAttributes } from "react";
+import React, { type AnchorHTMLAttributes } from "react";
 
 import "./ThemeNextToolbar.css";
 
@@ -60,10 +60,9 @@ const GroupWrapper = ({
   children,
 }: AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return (
-    <div
-      className={clsx(className, "theme-next-toolbar-group-wrapper")}
-      children={children}
-    />
+    <div className={clsx(className, "theme-next-toolbar-group-wrapper")}>
+      {children}
+    </div>
   );
 };
 
@@ -81,9 +80,7 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
         },
         ...globalOptions[globalKey].items.map((value) => {
           const disabled =
-            globalKey === "themeNext"
-              ? false
-              : globals["themeNext"] !== "enable";
+            globalKey === "themeNext" ? false : globals.themeNext !== "enable";
           const active = globals[globalKey] === value;
 
           return {
@@ -100,7 +97,7 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
           };
         }),
       ];
-    }
+    },
   );
 
   return (

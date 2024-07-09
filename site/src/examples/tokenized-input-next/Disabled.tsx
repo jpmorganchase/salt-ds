@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { TokenizedInputNext } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const Disabled = (): ReactElement => (
   <TokenizedInputNext

@@ -1,18 +1,18 @@
-import React from "react";
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import { Body } from "@jpmorganchase/mosaic-site-components";
 import {
+  type MiddlewareResult,
   createMiddlewareRunner,
-  MiddlewareResult,
   middlewarePresets,
 } from "@jpmorganchase/mosaic-site-middleware";
+import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
+import type { ComponentPropsWithoutRef } from "react";
 
 import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
 
 /**
  * Extend props passed to MyApp by adding your own middleware ('withMyExampleMiddleware') functions.
  *
- const middlewareRunner = createMiddlewareRunner<ExampleMiddlewareProps, ExampleMiddlewareOptions>({}, 
+ const middlewareRunner = createMiddlewareRunner<ExampleMiddlewareProps, ExampleMiddlewareOptions>({},
    [
      ...middlewarePresets,
      [withMyExampleMiddleware, { someProp: 20000 }]
@@ -21,22 +21,22 @@ import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
  */
 const middlewareRunner = createMiddlewareRunner<MyMiddlewareProps>(
   {},
-  middlewarePresets
+  middlewarePresets,
 );
 
 export async function getServerSideProps(
-  context: GetServerSidePropsContext
+  context: GetServerSidePropsContext,
 ): Promise<Partial<GetServerSidePropsResult<MiddlewareResult<MyAppProps>>>> {
   const props = await middlewareRunner(context, {});
   return props;
 }
 
 /** MyApp will be passed MyAppProps which is created by combining the result of all props created by Middleware */
-const MyApp = (
-  props: JSX.IntrinsicAttributes & {
-    [x: string]: any;
-    components?: {} | undefined;
-    type: any;
-  }
-) => <Body {...props} />;
+const MyApp = ({
+  component,
+  type,
+  ...props
+}: ComponentPropsWithoutRef<typeof Body>) => (
+  <Body component={component} type={type} {...props} />
+);
 export default MyApp;

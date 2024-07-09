@@ -1,10 +1,10 @@
-import { ReactElement } from "react";
 import {
   FormField,
-  FormFieldLabel,
   FormFieldHelperText,
+  FormFieldLabel,
   Input,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Readonly = (): ReactElement => (
   <FormField style={{ width: "256px" }} readOnly>

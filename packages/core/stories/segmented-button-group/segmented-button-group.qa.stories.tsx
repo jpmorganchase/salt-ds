@@ -1,11 +1,11 @@
 import {
-  StackLayout,
   Button,
   SegmentedButtonGroup,
-  SegmentedButtonGroupProps,
+  type SegmentedButtonGroupProps,
+  StackLayout,
 } from "@salt-ds/core";
-import { MessageIcon, ChatGroupIcon, CallIcon } from "@salt-ds/icons";
-import { StoryFn, Meta } from "@storybook/react";
+import { CallIcon, ChatGroupIcon, MessageIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
 export default {

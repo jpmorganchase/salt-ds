@@ -5,16 +5,16 @@ import {
 } from "@salt-ds/core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { isDesktop, Window as SaltWindow, WindowProps } from "../window";
+import { Window as SaltWindow, type WindowProps, isDesktop } from "../window";
 
-import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import electronWindowCss from "./ElectronWindow.css";
+import { WindowParentContext, useWindowParentContext } from "./desktop-utils";
 
 const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   { className, children, id = "dialog", open = true, style = {}, ...rest },
-  forwardedRef
+  forwardedRef,
 ): JSX.Element | null {
   const { top, left, position, ...styleRest } = style;
 
@@ -26,32 +26,28 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   });
 
   const [mountNode, setMountNode] = useState<Element | null>(null);
-  const [windowRef, setWindowRef] = useState<Window | null>(null);
   const windowRoot = useRef<HTMLDivElement>(null);
 
   const forkedRef = useForkRef(forwardedRef, windowRoot);
 
   if (!mountNode) {
     const win = window.open("", id);
-    (win as Window).document.write(
-      // eslint-disable-next-line no-restricted-globals
-      `<html lang="en"><head><title>${id}</title><base href="${location.origin}"><style>body {margin: 0;}</style></head><body></body></html>`
+    win?.document.write(
+      `<html lang="en"><head><title>${id}</title><base href="${location.origin}"><style>body {margin: 0;}</style></head><body></body></html>`,
     );
     document.head.querySelectorAll("style").forEach((htmlElement) => {
       (win as Window).document.head.appendChild(htmlElement.cloneNode(true));
     });
     const bodyElement = (win as Window).document.body;
     setMountNode(bodyElement);
-    setWindowRef(win);
   }
 
   const parentWindow = useWindowParentContext();
 
   const closeWindow = useCallback(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
       ipcRenderer.send("window-close", { id: id });
     }
   }, [id]);
@@ -61,13 +57,10 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   useEffect(() => {
     setTimeout(() => {
       if (windowRoot.current) {
-        // @ts-ignore
         const { scrollHeight: height, scrollWidth: width } = windowRoot.current;
-        // @ts-ignore
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
         const { ipcRenderer } = global as any;
         if (ipcRenderer) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
           ipcRenderer.send("window-size", {
             id: id,
             height: Math.ceil(height + 1),
@@ -81,11 +74,10 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   // The timeout is required to allow the window time to be moved into position and scaled
   // before being shown to the user,
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
     const { ipcRenderer } = global as any;
     if (ipcRenderer) {
       setTimeout(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ipcRenderer.send("window-ready", { id: id });
       }, 100);
     }
@@ -93,16 +85,15 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
     return () => {
       closeWindow();
     };
-  }, [closeWindow, windowRef, id]);
+  }, [closeWindow, id]);
 
   // The timeout is required to give the Dialog component time to report the correct height
   // otherwise the window will be smaller than expected
   useIsomorphicLayoutEffect(() => {
     setTimeout(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      // biome-ignore lint/suspicious/noExplicitAny: any is simpler here.
       const { ipcRenderer } = global as any;
       if (ipcRenderer) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
         ipcRenderer.send("window-position", {
           id: id,
           parentWindowID: parentWindow.id,
@@ -111,7 +102,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
         });
       }
     }, 90);
-  }, [style]);
+  }, [style, id, parentWindow.id]);
 
   return mountNode
     ? ReactDOM.createPortal(
@@ -130,7 +121,7 @@ const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
             </div>
           </WindowParentContext.Provider>
         </SaltProvider>,
-        mountNode
+        mountNode,
       )
     : null;
 });

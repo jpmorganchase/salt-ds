@@ -1,4 +1,4 @@
-import { Breadcrumbs, Breadcrumb } from "@salt-ds/lab";
+import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
 
 describe("GIVEN a Breadcrumbs component", () => {
   describe("WHEN Breadcrumbs are passed as children", () => {
@@ -6,7 +6,7 @@ describe("GIVEN a Breadcrumbs component", () => {
       cy.mount(
         <Breadcrumbs>
           <Breadcrumb>Test</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -20,7 +20,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test 1</Breadcrumb>
           <Breadcrumb>Test 2</Breadcrumb>
           <Breadcrumb>Test 3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
       cy.realPress("Tab");
       cy.findByRole("tooltip").should("not.exist");
@@ -38,7 +38,7 @@ describe("GIVEN a Breadcrumbs component", () => {
         <Breadcrumbs hideCurrentLevel>
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -54,7 +54,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
           <Breadcrumb>Test4</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -72,7 +72,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -90,7 +90,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
           <Breadcrumb>Test4</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -109,7 +109,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
           <Breadcrumb>Test4</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -128,7 +128,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
           <Breadcrumb>Test4</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -147,7 +147,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.findByText("Test").should("exist");
@@ -166,7 +166,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb ContainerProps={containerProps}>Test</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test2</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.get(".item")
@@ -184,7 +184,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           </Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.get("#Test1").should("have.css", "max-width", "20px");
@@ -198,7 +198,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb href="#">Root Level Entity</Breadcrumb>
           <Breadcrumb href="#">Level 2 Entity</Breadcrumb>
           <Breadcrumb href="#">Level 3 Entity</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
       cy.wait(1000);
 
@@ -220,7 +220,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb ContainerProps={containerProps}>Test</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test2</Breadcrumb>
           <Breadcrumb ContainerProps={containerProps}>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
       cy.get(".item")
         .should("have.length", 3)
@@ -237,7 +237,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           </Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.get("#Test1").should("have.css", "min-width", "20px");
@@ -251,7 +251,7 @@ describe("GIVEN a Breadcrumbs component", () => {
           <Breadcrumb>Test1</Breadcrumb>
           <Breadcrumb>Test2</Breadcrumb>
           <Breadcrumb>Test3</Breadcrumb>
-        </Breadcrumbs>
+        </Breadcrumbs>,
       );
 
       cy.get("a").then((links) => {

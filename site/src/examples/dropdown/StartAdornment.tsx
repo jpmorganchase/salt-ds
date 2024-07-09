@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
 import { Dropdown, Option } from "@salt-ds/core";
-import { largestCities } from "./exampleData";
 import { LocationIcon } from "@salt-ds/icons";
+import type { ReactElement } from "react";
+import { largestCities } from "./exampleData";
 
 export const StartAdornment = (): ReactElement => {
   return (

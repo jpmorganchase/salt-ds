@@ -1,12 +1,12 @@
-import { Tooltip, TooltipProps } from "@salt-ds/core";
+import { Tooltip, type TooltipProps } from "@salt-ds/core";
+import { InfoSolidIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
-import { Meta, StoryFn } from "@storybook/react";
-import { InfoSolidIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Tooltip/Tooltip QA",
@@ -54,7 +54,7 @@ AllExamplesGrid.parameters = {
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection
     height={670}

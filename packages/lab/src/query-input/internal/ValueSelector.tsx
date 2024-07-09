@@ -4,13 +4,13 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { Dispatch, Ref, SetStateAction, useMemo } from "react";
-import { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
+import { type Dispatch, type Ref, type SetStateAction, useMemo } from "react";
+import { Portal } from "../../portal";
+import { useWindow } from "../../window";
+import type { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 import { CategoryList } from "./CategoryList";
 import { SearchList } from "./SearchList";
 import { ValueList } from "./ValueList";
-import { Portal } from "../../portal";
-import { useWindow } from "../../window";
 
 const withBaseName = makePrefixer("saltQueryInputValueSelector");
 

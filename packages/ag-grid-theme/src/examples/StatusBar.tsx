@@ -1,5 +1,5 @@
-import { StackLayout, Text, Divider } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { Divider, StackLayout, Text } from "@salt-ds/core";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -13,7 +13,7 @@ const CustomClickableStatusBar = () => {
         style={{ height: "var(--salt-text-fontSize)", alignSelf: "center" }}
       />
       {/* In status bar, line height being size base keeps text in the middle */}
-      <Text variant="secondary" style={{ lineHeight: "var(--salt-size-base)" }}>
+      <Text color="secondary" style={{ lineHeight: "var(--salt-size-base)" }}>
         Custom Component
       </Text>
     </StackLayout>
@@ -59,9 +59,7 @@ const StatusBar = (props: AgGridReactProps) => {
           rowData={dataGridExampleData}
           onFirstDataRendered={(params) => {
             params.api.forEachNode((node, index) => {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               if (node.data && index < 3) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                 node.setSelected(true);
               }
             });

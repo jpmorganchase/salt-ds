@@ -1,4 +1,4 @@
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";
@@ -17,9 +17,8 @@ export const aggregates = {
   max,
 };
 
-const fields = function <T>(fieldName: keyof T, rows: T[]) {
-  return rows.map((row) => row[fieldName]);
-};
+const fields = <T,>(fieldName: keyof T, rows: T[]) =>
+  rows.map((row) => row[fieldName]);
 
 const headerRow = [
   {
@@ -56,7 +55,7 @@ export const PinnedRows = function PinnedRowsExample({
 
   const getColumnData = () => {
     return fields(aggregateColumn, defaultData).filter(
-      (field) => typeof field === "number"
+      (field) => typeof field === "number",
     ) as number[];
   };
 

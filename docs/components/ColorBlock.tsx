@@ -1,9 +1,9 @@
-import { clsx } from "clsx";
 import {
-  characteristic,
+  type characteristic,
   getCharacteristicValue,
   makePrefixer,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import { ReplacementToken } from "./ReplacementToken";
 
 import "./ColorBlock.css";
@@ -27,7 +27,7 @@ export const ColorBlock = ({
   const color = getCharacteristicValue(
     "salt-theme",
     characteristicName,
-    colorVar.split(`${characteristicName}-`)[1]
+    colorVar.split(`${characteristicName}-`)[1],
   );
   const withBorder = color?.replaceAll(" ", "").includes("255,255,255");
   const transparent = color?.includes("transparent");
@@ -42,7 +42,7 @@ export const ColorBlock = ({
             [withBaseName("withBorder")]: withBorder,
             [withBaseName("transparent")]: transparent,
           },
-          className
+          className,
         )}
       />
       {!hideToken && <code className="DocGrid-code">{colorVar}</code>}

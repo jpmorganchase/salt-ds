@@ -1,6 +1,6 @@
 import { useControlled } from "@salt-ds/core";
-import { useCallback, KeyboardEvent } from "react";
-import { OverflowItem } from "../responsive";
+import { type KeyboardEvent, useCallback } from "react";
+import type { OverflowItem } from "../responsive";
 
 const editKeys = new Set(["Enter", " "]);
 const isEditKey = (key: string) => editKeys.has(key);
@@ -9,7 +9,7 @@ export type ExitEditModeHandler = (
   originalValue: string,
   editedValue: string,
   allowDeactivation: boolean,
-  tabIndex: number
+  tabIndex: number,
 ) => void;
 
 export interface Editable {
@@ -44,13 +44,13 @@ export const useEditableItem = ({
   const onEnterEditMode = useCallback(() => {
     setEditing(true);
     onEnterEditModeProp?.();
-  }, [onEnterEditModeProp, setEditing]);
+  }, [onEnterEditModeProp]);
 
   const onExitEditMode = (
     originalValue: string,
     editedValue: string,
     allowDeactivation: boolean,
-    tabIndex: number
+    tabIndex: number,
   ) => {
     setEditing(false);
     console.log("exit edit mode");
@@ -58,7 +58,7 @@ export const useEditableItem = ({
       originalValue,
       editedValue,
       allowDeactivation,
-      tabIndex
+      tabIndex,
     );
   };
 
@@ -71,7 +71,7 @@ export const useEditableItem = ({
         onEnterEditMode();
       }
     },
-    [onEnterEditMode, highlightedIdx, indexPositions]
+    [onEnterEditMode, highlightedIdx, indexPositions],
   );
 
   return {

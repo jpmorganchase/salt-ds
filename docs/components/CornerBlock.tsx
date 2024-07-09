@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
 import { clsx } from "clsx";
+import type { ReactNode } from "react";
 
 import "./CornerBlock.css";
 

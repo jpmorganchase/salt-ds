@@ -1,7 +1,11 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 import { makePrefixer, useId } from "../utils";
 import optionGroupCss from "./OptionGroup.css";
 
@@ -44,5 +48,5 @@ export const OptionGroup = forwardRef<HTMLDivElement, OptionGroupProps>(
         {children}
       </div>
     );
-  }
+  },
 );

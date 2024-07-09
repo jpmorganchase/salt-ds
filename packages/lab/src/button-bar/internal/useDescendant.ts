@@ -1,6 +1,6 @@
+import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 // Copied from https://gist.github.com/ryanflorence/10e9387f633f9d2e6f444a9bddaabf6e
 import { useContext, useRef } from "react";
-import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 
 import { DescendantContext } from "./DescendantContext";
 

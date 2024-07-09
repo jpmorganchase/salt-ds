@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Input } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Spellcheck = (): ReactElement => (
   <Input

@@ -2,12 +2,11 @@ export interface Cancelable {
   clear(): void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => any>(
   func: T,
   // Corresponds to 10 frames at 60 Hz.
   wait = 166,
-  leading = false
+  leading = false,
 ): T & Cancelable {
   let timeout: number;
   const debounced: T & Cancelable = function debounced(

@@ -1,8 +1,8 @@
+import { Image, Link } from "@jpmorganchase/mosaic-site-components";
 import React from "react";
-import { Link, Image } from "@jpmorganchase/mosaic-site-components";
-import Features from "src/_index/features/Features";
-import { Card, CardProps } from "src/components/card/Card";
 import HomepageAccordion from "src/_index/accordion/Accordion";
+import Features from "src/_index/features/Features";
+import { Card, type CardProps } from "src/components/card/Card";
 import styles from "./index.module.css";
 
 const tagline = `Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries. It offers you well-documented, accessible components as well as comprehensive design templates, style libraries and assets.
@@ -17,8 +17,8 @@ const HomepageHeader = () => {
       <header className={styles.heroBanner}>
         <div className={styles.content}>
           <h1 className={styles.heroTitle}>Welcome to Salt</h1>
-          {splitTagline.map((tagline, index) => (
-            <p key={index}>{tagline}</p>
+          {splitTagline.map((tagline) => (
+            <p key={tagline}>{tagline}</p>
           ))}
           <Link href="./getting-started" className={styles.heroLink}>
             Start using Salt
@@ -172,12 +172,12 @@ const Homepage = (): JSX.Element => {
       <HomepageHeader />
       <Features heading="What to expect" listItems={features} />
       <div className={styles.cardContainer}>
-        {cards.map((card, index) => {
+        {cards.map((card) => {
           const { icon, title, description, url, footerText, keylineColor } =
             card;
           return (
             <Card
-              key={index}
+              key={title}
               icon={icon}
               title={title}
               description={description}

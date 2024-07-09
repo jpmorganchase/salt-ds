@@ -1,50 +1,50 @@
 import {
   Button,
-  makePrefixer,
   Tooltip,
+  makePrefixer,
   useIdMemo,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import React, {
-  ForwardedRef,
+  type ForwardedRef,
   forwardRef,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
+  type KeyboardEvent,
+  type MouseEvent,
+  type RefObject,
   useCallback,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
-import { SelectionChangeHandler } from "../common-hooks";
+import type { SelectionChangeHandler } from "../common-hooks";
 
 import { Dropdown } from "../dropdown";
 import {
-  InjectedSourceItem,
-  OverflowItem,
+  type InjectedSourceItem,
+  type OverflowItem,
   useOverflowLayout,
 } from "../responsive";
 import { useOverflowCollectionItems } from "../responsive/useOverflowCollectionItems";
 import { Tab } from "./Tab";
 import { TabActivationIndicator } from "./TabActivationIndicator";
-import {
+import type {
   FocusAPI,
-  responsiveDataAttributes,
   TabDescriptor,
   TabElement,
   TabProps,
   TabsSource,
   TabstripProps,
+  responsiveDataAttributes,
 } from "./TabsTypes";
 import { useTabstrip } from "./useTabstrip";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
-import themeTabstripCss from "./ThemeTabstrip.css";
 import tabstripCss from "./Tabstrip.css";
+import themeTabstripCss from "./ThemeTabstrip.css";
 
 const withBaseName = makePrefixer("saltTabstrip");
 
@@ -52,11 +52,10 @@ const ADD_TAB_LABEL = "Create Tab";
 
 // Simple strings for tab labels are accepted as input, convert to TabDescriptors internally
 const tabDescriptors = (
-  tabs: TabsSource | undefined
+  tabs: TabsSource | undefined,
 ): TabDescriptor[] | undefined =>
-  tabs &&
-  tabs.map((tab: string | TabDescriptor) =>
-    typeof tab === "string" ? { label: tab } : tab
+  tabs?.map((tab: string | TabDescriptor) =>
+    typeof tab === "string" ? { label: tab } : tab,
   );
 
 export const Tabstrip = forwardRef(function Tabstrip(
@@ -90,7 +89,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
     title,
     ...htmlAttributes
   }: TabstripProps,
-  forwardedRef: ForwardedRef<FocusAPI>
+  forwardedRef: ForwardedRef<FocusAPI>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -108,7 +107,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   // can't use forwardedRef here, can we ?
   // const setForkRef = useForkRef(root, forwardedRef);
   const activeRef = useRef<number | null>(
-    activeTabIndexProp || defaultActiveTabIndex || 0
+    activeTabIndexProp || defaultActiveTabIndex || 0,
   );
 
   const overflowItemsRef = useRef<OverflowItem[]>([]);
@@ -150,9 +149,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const getChildren = (): TabElement[] | undefined => {
     if (React.Children.count(children) === 0) {
       return undefined;
-    } else {
-      return React.Children.toArray(children) as TabElement[];
     }
+    return React.Children.toArray(children) as TabElement[];
   };
 
   const [innerContainerRef, switchOverflowPriorities] = useOverflowLayout({
@@ -174,14 +172,14 @@ export const Tabstrip = forwardRef(function Tabstrip(
         });
       }, 50);
     },
-    [collectionHook, onMoveTab]
+    [collectionHook, onMoveTab],
   );
 
   const handleTabSelectionChange = useCallback(
     (tabIndex: number) => {
       const selectedItem = collectionHook.data[tabIndex];
       const prevSelectedItem = collectionHook.data.find(
-        (item) => item.priority === 1 && !item.isOverflowIndicator
+        (item) => item.priority === 1 && !item.isOverflowIndicator,
       );
       if (selectedItem && prevSelectedItem && overflowMenuProp) {
         switchOverflowPriorities(selectedItem, prevSelectedItem);
@@ -195,7 +193,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
       overflowMenuProp,
       setShowOverflowMenu,
       switchOverflowPriorities,
-    ]
+    ],
   );
 
   const {
@@ -235,15 +233,15 @@ export const Tabstrip = forwardRef(function Tabstrip(
           const { current: tabstrip } = root;
           if (tabstrip) {
             const selectedTab = tabstrip.querySelector(
-              '.saltTab[aria-selected="true"]'
+              '.saltTab[aria-selected="true"]',
             ) as HTMLElement;
             if (selectedTab) {
               selectedTab.focus();
             }
           }
         },
-      } as FocusAPI),
-    []
+      }) as FocusAPI,
+    [],
   );
 
   const handleAddTabClick = useCallback(() => {
@@ -262,21 +260,21 @@ export const Tabstrip = forwardRef(function Tabstrip(
           activateTab(tab.index);
         }
       },
-      [activateTab]
+      [activateTab],
     );
 
   const handleKeydownOverflowMenu = useCallback(
     (e: KeyboardEvent<HTMLElement>) => {
       tabstripHook.navigationProps?.onKeyDown?.(e);
     },
-    [tabstripHook.navigationProps]
+    [tabstripHook.navigationProps],
   );
 
   const handleOverflowMenuOpen = useCallback(
     (open: boolean) => {
       setShowOverflowMenu(open);
     },
-    [setShowOverflowMenu]
+    [setShowOverflowMenu],
   );
 
   const handleMouseDown = useCallback(
@@ -284,7 +282,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
       onMouseDown?.(evt);
       tabstripHookMouseDown?.(evt);
     },
-    [onMouseDown, tabstripHookMouseDown]
+    [onMouseDown, tabstripHookMouseDown],
   );
 
   // shouldn't we use ref for this ?
@@ -307,6 +305,10 @@ export const Tabstrip = forwardRef(function Tabstrip(
     }
   }, [children]);
 
+  /*
+   * biome-ignore lint/correctness/useExhaustiveDependencies: We only want the effect to run when value changes, not every time focusedTabIndex changes.
+   * It doesn't matter if focusedTabIndex is stale in between calls - it will be correct when value changes.
+   */
   useIsomorphicLayoutEffect(() => {
     if (
       activeTabIndex !== null &&
@@ -315,11 +317,6 @@ export const Tabstrip = forwardRef(function Tabstrip(
     ) {
       tabstripHook.focusTab(activeTabIndex);
     }
-
-    // We only want the effect to run when value changes, not every time focusedTabIndex changes.
-    // It doesn't matter if focusedTabIndex is stale in between calls - it will be correct when
-    // value changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTabIndex]);
 
   const renderContent = () => {
@@ -334,15 +331,15 @@ export const Tabstrip = forwardRef(function Tabstrip(
         const focusVisible = tabstripHook.focusVisible === index;
         const overflowed =
           overflowedItems.findIndex(
-            (item: OverflowItem) => item.index === index
+            (item: OverflowItem) => item.index === index,
           ) !== -1;
 
         const tabIsBeingEdited = tabstripHook.editing && selected;
         const tabIndex = tabIsBeingEdited
           ? undefined
           : selected && !tabstripHook.focusIsWithinComponent
-          ? 0
-          : -1;
+            ? 0
+            : -1;
 
         const baseProps: Partial<TabProps> &
           responsiveDataAttributes & {
@@ -375,17 +372,15 @@ export const Tabstrip = forwardRef(function Tabstrip(
         if (React.isValidElement(element)) {
           if (element.type === Tab) {
             return React.cloneElement(element, { ...baseProps, ...tabProps });
-          } else {
-            return React.cloneElement(element, baseProps);
           }
-        } else {
-          //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
-          return React.createElement(Tab, {
-            ...baseProps,
-            ...tabProps,
-            label: tab.label,
-          });
+          return React.cloneElement(element, baseProps);
         }
+        //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
+        return React.createElement(Tab, {
+          ...baseProps,
+          ...tabProps,
+          label: tab.label,
+        });
       });
 
     const overflowCount = overflowedItems.length;
@@ -395,7 +390,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
       showOverflowMenu;
     const showTooltip = tabstripHook.revealOverflowedItems && draggingActiveTab;
     const overflowIndicator = collectionHook.data.find(
-      (i) => i.isOverflowIndicator
+      (i) => i.isOverflowIndicator,
     );
     const [injectedItem] = collectionHook.data.filter((i) => i.isInjectedItem);
 
@@ -443,7 +438,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
             }
             width="auto"
           />
-        </Tooltip>
+        </Tooltip>,
       );
     }
 
@@ -461,7 +456,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
           tabIndex={-1}
         >
           <AddIcon />
-        </Button>
+        </Button>,
       );
     }
 
@@ -469,7 +464,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   };
 
   const selectedTabOverflowed = overflowedItems.some(
-    (item: OverflowItem) => item.index === activeTabIndex
+    (item: OverflowItem) => item.index === activeTabIndex,
   );
   const className = clsx(
     withBaseName(),
@@ -479,7 +474,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
       [withBaseName("centered")]: centered,
       [withBaseName("draggingTab")]: tabstripHook.isDragging,
       [withBaseName("tertiary")]: variant === "tertiary",
-    }
+    },
   );
 
   const selectedTabId =

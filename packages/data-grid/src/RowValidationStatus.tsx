@@ -1,6 +1,10 @@
 import { StatusIndicator } from "@salt-ds/core";
 import { createContext, useContext } from "react";
-import { CellValidationState, GridColumn, GridColumnProps } from "./GridColumn";
+import {
+  type CellValidationState,
+  GridColumn,
+  type GridColumnProps,
+} from "./GridColumn";
 
 export const RowValidationStatusContext = createContext<{
   status?: CellValidationState;
@@ -12,7 +16,7 @@ export type RowValidationStatusColumnProps<T> = Omit<
 >;
 
 export function RowValidationStatusColumn<T>(
-  props: RowValidationStatusColumnProps<T>
+  props: RowValidationStatusColumnProps<T>,
 ) {
   return (
     <GridColumn

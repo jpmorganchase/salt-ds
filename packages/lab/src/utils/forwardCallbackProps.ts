@@ -12,7 +12,7 @@ type Props = Record<string, any>;
 
 export const forwardCallbackProps = <P1 extends Props, P2 extends Props>(
   ownProps: P1,
-  overrideProps: P2
+  overrideProps: P2,
 ): P1 & P2 => {
   const props = Object.keys(ownProps).reduce<Props>(
     (map, name) => {
@@ -26,7 +26,7 @@ export const forwardCallbackProps = <P1 extends Props, P2 extends Props>(
       }
       return map;
     },
-    { ...overrideProps }
+    { ...overrideProps },
   );
 
   return props as P1 & P2;

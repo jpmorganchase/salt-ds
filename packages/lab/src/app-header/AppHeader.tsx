@@ -1,11 +1,11 @@
-import { clsx } from "clsx";
-import { Toolbar } from "../toolbar";
 import { makePrefixer } from "@salt-ds/core";
 import { MenuIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import { Toolbar } from "../toolbar";
 
-import { forwardRef, HTMLAttributes } from "react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { type HTMLAttributes, forwardRef } from "react";
 
 import appHeaderCss from "./AppHeader.css";
 
@@ -49,5 +49,5 @@ export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
     //     </div>
     //   </div>
     // );
-  }
+  },
 );

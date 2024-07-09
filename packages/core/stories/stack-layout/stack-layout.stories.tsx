@@ -1,5 +1,9 @@
-import { FLEX_ALIGNMENT_BASE, FlexLayout, StackLayout } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import {
+  FLEX_ALIGNMENT_BASE,
+  type FlexLayout,
+  StackLayout,
+} from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 
 export default {

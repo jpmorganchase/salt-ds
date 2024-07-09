@@ -1,17 +1,17 @@
-import { clsx } from "clsx";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  ComponentPropsWithoutRef,
-  forwardRef,
-} from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ChangeEvent,
+  type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
+  forwardRef,
+} from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { AdornmentValidationStatus } from "../status-adornment";
+import type { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer, useControlled } from "../utils";
-import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 import checkboxGroupCss from "./CheckboxGroup.css";
+import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
 export interface CheckboxGroupProps
   extends Omit<ComponentPropsWithoutRef<"fieldset">, "onChange"> {
@@ -76,7 +76,7 @@ export const CheckboxGroup = forwardRef<
     validationStatus: validationStatusProp,
     ...other
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -130,7 +130,7 @@ export const CheckboxGroup = forwardRef<
         {
           [withBaseName("noWrap")]: !wrap,
         },
-        className
+        className,
       )}
       ref={ref}
       {...other}

@@ -9,10 +9,7 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "salt-ag-theme.css",
-  "files": [
-    "/fonts",
-    "/salt-ag-theme.css"
-  ],
+  "files": ["/fonts", "/salt-ag-theme.css"],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
     "build-watch": "yarn node ./scripts/build.mjs --watch"

@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import { FlowLayout, FlexItem } from "@salt-ds/core";
+import { FlexItem, FlowLayout } from "@salt-ds/core";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import type { ReactElement } from "react";
 import flexItemSizeStyles from "./FlexItemSize.module.css";
+import styles from "./index.module.css";
 
 export const FlexItemSize = (): ReactElement => (
   <FlowLayout

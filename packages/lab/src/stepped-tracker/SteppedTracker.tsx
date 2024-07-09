@@ -1,16 +1,16 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  ReactElement,
-  ReactNode,
   Children,
+  type ComponentPropsWithoutRef,
+  type ReactElement,
+  type ReactNode,
+  forwardRef,
   isValidElement,
   useEffect,
 } from "react";
-import { clsx } from "clsx";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { makePrefixer } from "@salt-ds/core";
 
 import {
   SteppedTrackerProvider,
@@ -48,7 +48,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
 
       if (hasInvalidChild) {
         console.error(
-          "Invalid child: children of SteppedTracker must be a TrackerStep component"
+          "Invalid child: children of SteppedTracker must be a TrackerStep component",
         );
       }
     }
@@ -64,7 +64,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
       orientation = "horizontal",
       ...restProps
     },
-    ref
+    ref,
   ): ReactElement<SteppedTrackerProps> {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -89,5 +89,5 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
         </ul>
       </SteppedTrackerProvider>
     );
-  }
+  },
 );

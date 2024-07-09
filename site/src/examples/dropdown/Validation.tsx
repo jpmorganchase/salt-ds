@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Dropdown, Option, StackLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import { shortColorData } from "./exampleData";
 
 export const Validation = (): ReactElement => (

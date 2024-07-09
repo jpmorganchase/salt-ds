@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import type { CSSProperties } from "react";
 import { ReplacementToken } from "./ReplacementToken";
 
 import "./FontBlock.css";

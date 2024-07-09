@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import {
   FormField,
-  FormFieldLabelPlacement,
-  StackLayout,
-  FormFieldLabel,
   FormFieldHelperText,
+  FormFieldLabel,
+  type FormFieldLabelPlacement,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const GroupedWithLabelLeft = (): ReactElement => {
   const groupedProps: { labelPlacement: FormFieldLabelPlacement } = {

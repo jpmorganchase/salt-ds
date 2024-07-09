@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { InputLegacy as Input } from "../../../input-legacy";
 
 describe("GIVEN an Input", () => {
@@ -22,7 +22,7 @@ describe("GIVEN an Input", () => {
           changeSpy(event);
         };
         cy.mount(
-          <Input defaultValue="The default value" onChange={onChange} />
+          <Input defaultValue="The default value" onChange={onChange} />,
         );
         cy.findByRole("textbox").click().clear().type("new value");
         cy.get("@changeSpy").should("have.been.calledWithMatch", {
@@ -72,11 +72,11 @@ describe("GIVEN an Input", () => {
             data-testid="parent"
             defaultValue="The default value"
             textAlign="left"
-          />
+          />,
         );
         cy.findByTestId("parent").should(
           "have.class",
-          "saltInputLegacy-leftTextAlign"
+          "saltInputLegacy-leftTextAlign",
         );
       });
     });
@@ -88,11 +88,11 @@ describe("GIVEN an Input", () => {
             data-testid="parent"
             defaultValue="The default value"
             textAlign="right"
-          />
+          />,
         );
         cy.findByTestId("parent").should(
           "have.class",
-          "saltInputLegacy-rightTextAlign"
+          "saltInputLegacy-rightTextAlign",
         );
       });
     });
@@ -136,7 +136,10 @@ describe("GIVEN an Input", () => {
   describe('WHEN cursorPositionOnFocus is "start"', () => {
     it("THEN should move the cursor to the start on click", () => {
       cy.mount(
-        <Input cursorPositionOnFocus="start" defaultValue="The default value" />
+        <Input
+          cursorPositionOnFocus="start"
+          defaultValue="The default value"
+        />,
       );
 
       cy.findByRole("textbox").click();
@@ -148,7 +151,10 @@ describe("GIVEN an Input", () => {
 
     it("THEN should move the cursor to the start on focus", () => {
       cy.mount(
-        <Input cursorPositionOnFocus="start" defaultValue="The default value" />
+        <Input
+          cursorPositionOnFocus="start"
+          defaultValue="The default value"
+        />,
       );
 
       cy.findByRole("textbox").focus();
@@ -162,7 +168,7 @@ describe("GIVEN an Input", () => {
   describe('WHEN cursorPositionOnFocus is "end"', () => {
     it("THEN should move the cursor to the end on click", () => {
       cy.mount(
-        <Input cursorPositionOnFocus="end" defaultValue="The default value" />
+        <Input cursorPositionOnFocus="end" defaultValue="The default value" />,
       );
 
       cy.findByRole("textbox").click();
@@ -174,7 +180,7 @@ describe("GIVEN an Input", () => {
 
     it("THEN should move the cursor to the end on focus", () => {
       cy.mount(
-        <Input cursorPositionOnFocus="end" defaultValue="The default value" />
+        <Input cursorPositionOnFocus="end" defaultValue="The default value" />,
       );
 
       cy.findByRole("textbox").focus();
@@ -188,7 +194,7 @@ describe("GIVEN an Input", () => {
   describe("WHEN cursorPositionOnFocus is a number", () => {
     it("THEN should move the cursor that index on click", () => {
       cy.mount(
-        <Input cursorPositionOnFocus={2} defaultValue="The default value" />
+        <Input cursorPositionOnFocus={2} defaultValue="The default value" />,
       );
 
       cy.findByRole("textbox").click();
@@ -200,7 +206,7 @@ describe("GIVEN an Input", () => {
 
     it("THEN should move the cursor to that index on focus", () => {
       cy.mount(
-        <Input cursorPositionOnFocus={2} defaultValue="The default value" />
+        <Input cursorPositionOnFocus={2} defaultValue="The default value" />,
       );
 
       cy.findByRole("textbox").focus();
@@ -236,7 +242,7 @@ describe("GIVEN an Input", () => {
   describe("WHEN highlightOnFocus is an array of two numbers", () => {
     it("THEN should highlight all indexes on click", () => {
       cy.mount(
-        <Input highlightOnFocus={[4, 11]} defaultValue="The default value" />
+        <Input highlightOnFocus={[4, 11]} defaultValue="The default value" />,
       );
 
       cy.findByRole("textbox").click();
@@ -248,7 +254,7 @@ describe("GIVEN an Input", () => {
 
     it("THEN should highlight all text on focus", () => {
       cy.mount(
-        <Input highlightOnFocus={[4, 11]} defaultValue="The default value" />
+        <Input highlightOnFocus={[4, 11]} defaultValue="The default value" />,
       );
 
       cy.findByRole("textbox").focus();

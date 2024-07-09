@@ -1,6 +1,5 @@
 import { VALIDATION_NAMED_STATUS } from "../../../status-indicator";
 import {
-  Text,
   Display1,
   Display2,
   Display3,
@@ -10,8 +9,9 @@ import {
   H3,
   H4,
   Label,
-  TextNotation,
+  Text,
   TextAction,
+  TextNotation,
 } from "../../../text";
 
 const textExample = `Far far away, behind the word mountains, far from the countries Vokalia
@@ -124,7 +124,7 @@ COLORS.forEach((color) => {
 });
 it(`GIVEN a Text component with color="inherit", it should NOT have color class `, () => {
   cy.mount(<Text color="inherit">{textExample}</Text>);
-  cy.get(".saltText").should("not.have.class", `saltText-inherit`);
+  cy.get(".saltText").should("not.have.class", "saltText-inherit");
 });
 
 // styleAs
@@ -335,7 +335,7 @@ describe("GIVEN Text component within font family CSS var override", () => {
     cy.mount(
       <div style={{ "--salt-text-fontFamily": "Lato" } as React.CSSProperties}>
         <Text>{textExample}</Text>
-      </div>
+      </div>,
     );
     cy.get(".saltText")
       .should("have.class", "saltText")

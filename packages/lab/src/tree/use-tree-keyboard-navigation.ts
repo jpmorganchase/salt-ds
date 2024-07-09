@@ -1,23 +1,25 @@
-import { KeyboardEvent, useCallback } from "react";
+import { type KeyboardEvent, useCallback } from "react";
+import type { CollectionHookResult, CollectionItem } from "../common-hooks";
 import { ArrowLeft } from "../common-hooks/keyUtils";
-import { CollectionItem, CollectionHookResult } from "../common-hooks";
 
 export const getNodeParentPath = ({ id }: CollectionItem<any>) => {
-  let pos = id!.lastIndexOf("-");
+  let pos = id.lastIndexOf("-");
   if (pos !== -1) {
     // using the built-in hierarchical id scheme
     // rootId-n-n.n
-    const path = id!.slice(pos + 1);
+    const path = id.slice(pos + 1);
     const steps = path.split(".");
     if (steps.length === 1) {
       return null;
-    } else {
-      steps.pop();
-      return `${id!.slice(0, pos)}-${steps.join(".")}`;
     }
-  } else if ((pos = id!.lastIndexOf("/")) !== -1) {
+    steps.pop();
+    return `${id.slice(0, pos)}-${steps.join(".")}`;
+  }
+
+  pos = id.lastIndexOf("/");
+  if (pos !== -1) {
     // using a path scheme step/step/step
-    return id!.slice(0, pos);
+    return id.slice(0, pos);
   }
 };
 
@@ -46,12 +48,12 @@ export const useKeyboardNavigation = <Item>({
         const parentId = getNodeParentPath(node);
         if (parentId) {
           highlightItemAtIndex(
-            collectionHook.data.findIndex((item) => item.id === parentId)
+            collectionHook.data.findIndex((item) => item.id === parentId),
           );
         }
       }
     },
-    [highlightedIdx, highlightItemAtIndex]
+    [highlightedIdx, highlightItemAtIndex],
   );
 
   const listHandlers = {

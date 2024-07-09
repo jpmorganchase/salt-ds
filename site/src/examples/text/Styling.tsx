@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Text } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Styling = (): ReactElement => (
   <Text as="p" styleAs="h1">

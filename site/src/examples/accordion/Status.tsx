@@ -1,15 +1,15 @@
-import { ReactElement } from "react";
 import {
-  AccordionGroup,
-  AccordionProps,
   Accordion,
+  AccordionGroup,
   AccordionHeader,
   AccordionPanel,
+  type AccordionProps,
   FlowLayout,
   FormField,
   FormFieldLabel as FormLabel,
   Input,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 const statuses: AccordionProps["status"][] = [
   undefined,

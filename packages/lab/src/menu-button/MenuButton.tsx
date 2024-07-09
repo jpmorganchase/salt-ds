@@ -1,9 +1,9 @@
-import { forwardRef, ReactNode, useCallback, useState } from "react";
-import { ButtonProps } from "@salt-ds/core";
-import { CascadingMenu, CascadingMenuProps } from "../cascading-menu";
-import { MenuButtonTrigger } from "./MenuButtonTrigger";
-import { useWindow } from "@salt-ds/window";
+import type { ButtonProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { type ReactNode, forwardRef, useCallback, useState } from "react";
+import { CascadingMenu, type CascadingMenuProps } from "../cascading-menu";
+import { MenuButtonTrigger } from "./MenuButtonTrigger";
 
 import menuButtonCss from "./MenuButton.css";
 
@@ -17,7 +17,7 @@ export interface MenuButtonProps extends ButtonProps {
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
   function MenuButton(
     { variant = "secondary", CascadingMenuProps = {}, children, ...restProps },
-    ref
+    ref,
   ) {
     const {
       initialSource = { menuItems: [] },
@@ -37,12 +37,12 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
 
     const handleOpen = useCallback(() => {
       setMenuOpen(true);
-      onOpen && onOpen();
+      onOpen?.();
     }, [onOpen]);
 
     const handleClose = useCallback(() => {
       setMenuOpen(false);
-      onClose && onClose();
+      onClose?.();
     }, [onClose]);
 
     return (
@@ -64,5 +64,5 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
         </MenuButtonTrigger>
       </CascadingMenu>
     );
-  }
+  },
 );

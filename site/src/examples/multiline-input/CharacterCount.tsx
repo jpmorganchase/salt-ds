@@ -1,5 +1,5 @@
-import { ChangeEvent, ReactElement, useState } from "react";
 import { Label, MultilineInput } from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 export const CharacterCount = (): ReactElement => {
   const [value, setValue] = useState<string>("Value");

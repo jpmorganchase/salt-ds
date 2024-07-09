@@ -1,7 +1,7 @@
 import { ColumnGroup, Grid, GridColumn, GridProps } from "../src";
 import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Data Grid",
@@ -9,7 +9,7 @@ export default {
   argTypes: {},
 };
 
-const ColumnGroupsTemplate: StoryFn<{}> = () => {
+const ColumnGroupsTemplate: StoryFn = () => {
   return (
     <Grid
       rowData={rowData}

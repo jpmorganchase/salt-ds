@@ -1,19 +1,19 @@
-import { clsx } from "clsx";
-import {
-  ChangeEvent,
-  ComponentPropsWithoutRef,
-  FocusEvent,
-  forwardRef,
-  InputHTMLAttributes,
-  ReactNode,
-  Ref,
-  useState,
-} from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type InputHTMLAttributes,
+  type ReactNode,
+  type Ref,
+  forwardRef,
+  useState,
+} from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled } from "../utils";
 import { StatusAdornment } from "../status-adornment";
+import { makePrefixer, useControlled } from "../utils";
 
 import inputCss from "./Input.css";
 
@@ -92,7 +92,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
     bordered = false,
     ...other
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -181,7 +181,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
           [withBaseName(validationStatus || "")]: validationStatus,
           [withBaseName("bordered")]: bordered,
         },
-        classNameProp
+        classNameProp,
       )}
       ref={ref}
       style={inputStyle}

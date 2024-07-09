@@ -1,13 +1,13 @@
-import { Suspense, useState } from "react";
-import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
 import {
   FlowLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
   StackLayout,
   Text,
-  FormField,
-  Input,
-  FormFieldLabel,
 } from "@salt-ds/core";
+import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
+import { Suspense, useState } from "react";
 
 export const AllCountrySymbols = () => {
   const [inputText, setInputText] = useState("");

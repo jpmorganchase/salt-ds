@@ -1,10 +1,16 @@
-import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { QueryInputCategory } from "../queryInputTypes";
-import { SelectHandler } from "../../common-hooks";
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
+import type { SelectHandler } from "../../common-hooks";
 import { List } from "../../list";
-import { CategoryListItem } from "./CategoryListItem";
+import type { QueryInputCategory } from "../queryInputTypes";
 import { CategoryListContext } from "./CategoryListContext";
+import { CategoryListItem } from "./CategoryListItem";
 
 const withBaseName = makePrefixer("saltCategoryList");
 
@@ -45,13 +51,13 @@ export function CategoryList(props: CategoryListProps) {
         });
       }
     }, 0);
-  }, [categories, setMeasuredCategories, setContextValue]);
+  }, [categories]);
 
   const onSelect: SelectHandler<QueryInputCategory> = useCallback(
     (_, item) => {
       onCategorySelect(item);
     },
-    [onCategorySelect]
+    [onCategorySelect],
   );
 
   const isMeasuring = measuredCategories !== categories;
@@ -59,9 +65,9 @@ export function CategoryList(props: CategoryListProps) {
   if (isMeasuring) {
     return (
       <div ref={measureRef} className={withBaseName("categoryWidthMeasure")}>
-        {categories.map((c, i) => {
+        {categories.map((c) => {
           return (
-            <div key={i} className={withBaseName("category")}>
+            <div key={c.name} className={withBaseName("category")}>
               {c.name}
             </div>
           );

@@ -1,12 +1,12 @@
 import {
-  StackLayout,
   Button,
-  Tooltip,
   SegmentedButtonGroup,
-  SegmentedButtonGroupProps,
+  type SegmentedButtonGroupProps,
+  StackLayout,
+  Tooltip,
 } from "@salt-ds/core";
-import { MessageIcon, ChatGroupIcon, CallIcon } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
+import { CallIcon, ChatGroupIcon, MessageIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Segmented Button Group",

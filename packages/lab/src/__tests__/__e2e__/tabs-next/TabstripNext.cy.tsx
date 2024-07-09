@@ -1,6 +1,6 @@
-import { composeStories } from "@storybook/react";
-import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
 import { StackLayout } from "@salt-ds/core";
+import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
+import { composeStories } from "@storybook/react";
 
 const { DefaultLeftAligned: DefaultTabstrip, ControlledTabstrip } =
   composeStories(tabstripStories);
@@ -32,7 +32,7 @@ describe("Given a Tabstrip", () => {
             onChange={cy.spy().as("onChange")}
             value="Transactions"
             width={500}
-          />
+          />,
         );
         cy.findAllByRole("tab")
           .eq(1)
@@ -93,7 +93,7 @@ describe("Tab selection, Given a Tabstrip", () => {
         cy.findAllByRole("tab", { name: "Home" }).should(
           "have.attr",
           "aria-selected",
-          "true"
+          "true",
         );
         cy.findByRole("combobox").realClick();
         cy.findByRole("listbox").should("be.visible");
@@ -102,7 +102,7 @@ describe("Tab selection, Given a Tabstrip", () => {
         cy.findAllByRole("tab", { name: "Loans" }).should(
           "have.attr",
           "aria-selected",
-          "true"
+          "true",
         );
       });
     });
@@ -119,7 +119,7 @@ describe("Navigation, Given a Tabstrip", () => {
               <button data-testid="tabstop-1" />
               <DefaultTabstrip width={500} />
               <button data-testid="tabstop-2" />
-            </StackLayout>
+            </StackLayout>,
           );
           cy.findByTestId("tabstop-1").focus();
           cy.realPress("Tab");
@@ -132,7 +132,7 @@ describe("Navigation, Given a Tabstrip", () => {
                 <button data-testid="tabstop-1" />
                 <DefaultTabstrip width={500} />
                 <button data-testid="tabstop-2" />
-              </StackLayout>
+              </StackLayout>,
             );
             cy.findByTestId("tabstop-1").focus();
             cy.realPress("Tab");
@@ -150,7 +150,7 @@ describe("Navigation, Given a Tabstrip", () => {
               <button data-testid="tabstop-1" />
               <DefaultTabstrip width={500} />
               <button data-testid="tabstop-2" />
-            </StackLayout>
+            </StackLayout>,
           );
           cy.findByTestId("tabstop-1").focus();
           cy.findAllByRole("tab").eq(0).realClick();
@@ -184,7 +184,7 @@ describe("Navigation, Given a Tabstrip", () => {
                 <button data-testid="tabstop-1" />
                 <DefaultTabstrip width={500} />
                 <button data-testid="tabstop-2" />
-              </StackLayout>
+              </StackLayout>,
             );
             cy.findAllByRole("tab").eq(0).realClick();
             cy.realPress("ArrowRight");
@@ -201,7 +201,7 @@ describe("Navigation, Given a Tabstrip", () => {
                 <button data-testid="tabstop-1" />
                 <DefaultTabstrip width={500} />
                 <button data-testid="tabstop-2" />
-              </StackLayout>
+              </StackLayout>,
             );
             cy.findAllByRole("tab").eq(0).should("be.visible");
             cy.findAllByRole("tab").eq(0).realClick();
@@ -266,7 +266,7 @@ describe("Navigation, Given a Tabstrip", () => {
           .eq(1)
           .then(($el) => {
             expect($container.attr("aria-activedescendant")).to.equal(
-              $el.attr("id")
+              $el.attr("id"),
             );
           });
       });

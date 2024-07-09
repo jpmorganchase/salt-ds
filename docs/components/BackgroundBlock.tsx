@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef } from "react";
 import { clsx } from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
 
 import "./BackgroundBlock.css";
 

@@ -32,7 +32,7 @@ type ResponsivePropsTuple = [AnyProps, AnyProps];
  * @returns
  */
 export const liftResponsivePropsToFormField = (
-  props: AnyProps
+  props: AnyProps,
 ): ResponsivePropsTuple => {
   const propNames = Object.keys(props);
   if (propNames.some(isResponsiveAttribute)) {
@@ -50,9 +50,8 @@ export const liftResponsivePropsToFormField = (
         }
         return tuple;
       },
-      [{}, {}]
+      [{}, {}],
     );
-  } else {
-    return [{}, props];
   }
+  return [{}, props];
 };

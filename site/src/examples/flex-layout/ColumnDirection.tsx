@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { FlexLayout, FlexItem } from "@salt-ds/core";
+import { FlexItem, FlexLayout } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const ColumnDirection = (): ReactElement => (

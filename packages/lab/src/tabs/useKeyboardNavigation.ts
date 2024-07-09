@@ -1,23 +1,23 @@
 import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
-  FocusEvent,
-  FocusEventHandler,
-  KeyboardEvent,
-  MouseEvent,
-  MouseEventHandler,
+  type FocusEvent,
+  type FocusEventHandler,
+  type KeyboardEvent,
+  type MouseEvent,
+  type MouseEventHandler,
   useCallback,
   useRef,
   useState,
 } from "react";
-import { OverflowItem } from "../responsive";
 import {
   ArrowDown,
-  ArrowUp,
   ArrowLeft,
   ArrowRight,
-  Home,
+  ArrowUp,
   End,
+  Home,
 } from "../common-hooks";
+import type { OverflowItem } from "../responsive";
 
 type orientationType = "horizontal" | "vertical";
 type directionType = "bwd" | "fwd" | "start" | "end";
@@ -39,29 +39,29 @@ const navigation = {
 
 const isNavigationKey = (
   key: string,
-  orientation: orientationType = "horizontal"
+  orientation: orientationType = "horizontal",
 ) => navigation[orientation][key] !== undefined;
 
 function nextItemIdx(count: number, direction: directionType, idx: number) {
   if (direction === "start") {
     return 0;
-  } else if (direction === "end") {
+  }
+  if (direction === "end") {
     return count - 1;
-  } else if (direction === "bwd") {
+  }
+  if (direction === "bwd") {
     if (idx > 0) {
       return idx - 1;
-    } else {
-      return idx;
     }
-  } else {
-    if (idx === null) {
-      return 0;
-    } else if (idx === count - 1) {
-      return idx;
-    } else {
-      return idx + 1;
-    }
+    return idx;
   }
+  if (idx === null) {
+    return 0;
+  }
+  if (idx === count - 1) {
+    return idx;
+  }
+  return idx + 1;
 }
 
 const isFocusable = (item: OverflowItem) => !item.overflowed;
@@ -94,7 +94,7 @@ interface TabstripNavigationHookResult {
   focusTab: (
     tabIndex: number,
     immediateFocus?: boolean,
-    withKeyboard?: boolean
+    withKeyboard?: boolean,
   ) => void;
   focusVisible: number;
   focusIsWithinComponent: boolean;
@@ -122,12 +122,10 @@ export const useKeyboardNavigation = ({
     name: "UseKeyboardNavigation",
   });
 
-  const setHighlightedIdx = useCallback(
-    (value: number) => {
-      _setHighlightedIdx((focusedRef.current = value));
-    },
-    [_setHighlightedIdx]
-  );
+  const setHighlightedIdx = useCallback((value: number) => {
+    focusedRef.current = value;
+    _setHighlightedIdx(value);
+  }, []);
 
   const keyboardNavigation = useRef(false);
 
@@ -152,7 +150,7 @@ export const useKeyboardNavigation = ({
 
         if (item) {
           const focussableElement = getFocusableElement(
-            document.getElementById(item.id)
+            document.getElementById(item.id),
           );
           focussableElement?.focus();
         }
@@ -163,7 +161,7 @@ export const useKeyboardNavigation = ({
         setTimeout(setFocus, 70);
       }
     },
-    [indexPositions, setHighlightedIdx]
+    [indexPositions, setHighlightedIdx],
   );
 
   const onFocus = (e: FocusEvent<HTMLElement>) => {
@@ -190,7 +188,7 @@ export const useKeyboardNavigation = ({
   const nextFocusableItemIdx = useCallback(
     (
       direction: directionType = "fwd",
-      idx = direction === "fwd" ? -1 : indexPositions.length
+      idx = direction === "fwd" ? -1 : indexPositions.length,
     ) => {
       let nextIdx = nextItemIdx(indexPositions.length, direction, idx);
       const nextDirection =
@@ -203,17 +201,16 @@ export const useKeyboardNavigation = ({
         const newIdx = nextItemIdx(
           indexPositions.length,
           nextDirection,
-          nextIdx
+          nextIdx,
         );
         if (newIdx === nextIdx) {
           break;
-        } else {
-          nextIdx = newIdx;
         }
+        nextIdx = newIdx;
       }
       return nextIdx;
     },
-    [indexPositions]
+    [indexPositions],
   );
 
   // forceFocusVisible supports an edge case - first or last Tab are clicked
@@ -240,7 +237,7 @@ export const useKeyboardNavigation = ({
       nextFocusableItemIdx,
       focusTab,
       orientation,
-    ]
+    ],
   );
 
   const handleKeyDown = useCallback(
@@ -255,7 +252,7 @@ export const useKeyboardNavigation = ({
         }
       }
     },
-    [indexPositions, navigateChildItems, orientation]
+    [indexPositions, navigateChildItems, orientation],
   );
 
   // TODO, in common hooks, we use mouse movement to track current highlighted
@@ -264,19 +261,16 @@ export const useKeyboardNavigation = ({
     setHighlightedIdx(tabIndex);
   };
 
-  const handleFocus = useCallback(
-    (evt: FocusEvent) => {
-      if (!hasFocus) {
-        setHasFocus(true);
-        if (!mouseClickPending.current) {
-          keyboardNavigation.current = true;
-        } else {
-          mouseClickPending.current = false;
-        }
+  const handleFocus = () => {
+    if (!hasFocus) {
+      setHasFocus(true);
+      if (!mouseClickPending.current) {
+        keyboardNavigation.current = true;
+      } else {
+        mouseClickPending.current = false;
       }
-    },
-    [hasFocus]
-  );
+    }
+  };
 
   const handleContainerMouseDown = useCallback(
     (evt: MouseEvent) => {
@@ -285,7 +279,7 @@ export const useKeyboardNavigation = ({
       }
       keyboardNavigation.current = false;
     },
-    [hasFocus]
+    [hasFocus],
   );
 
   const containerProps = {

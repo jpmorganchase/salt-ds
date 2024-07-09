@@ -1,8 +1,8 @@
-import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import { useFormFieldProps } from "../form-field-context";
-import { Label, TextProps } from "../text";
+import { Label, type TextProps } from "../text";
 import { capitalize, makePrefixer } from "../utils";
 
 import formFieldLabelCss from "./FormFieldLabel.css";

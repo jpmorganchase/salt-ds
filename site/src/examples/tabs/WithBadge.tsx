@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { TabstripNext, TabNext } from "@salt-ds/lab";
 import { Badge } from "@salt-ds/core";
+import { TabNext, TabstripNext } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const WithBadge = (): ReactElement => {
   const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];

@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as tokenizedInputNextStories from "@stories/tokenized-input-next/tokenized-input-next.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(tokenizedInputNextStories);
@@ -132,7 +132,7 @@ describe("GIVEN a Tokenized Input", () => {
           onClear={onClearSpy}
           onExpand={onExpandSpy}
           onCollapse={onCollapseSpy}
-        />
+        />,
       );
       // expand
       cy.findByTestId("expand-button").should("exist");
@@ -168,7 +168,7 @@ describe("GIVEN a Tokenized Input", () => {
             defaultSelected={["Delhi"]}
             value="Tokio"
             onChange={changeSpy}
-          />
+          />,
         );
         cy.findByRole("textbox").focus();
         cy.findByRole("textbox").click().clear().type("Mexico City,");

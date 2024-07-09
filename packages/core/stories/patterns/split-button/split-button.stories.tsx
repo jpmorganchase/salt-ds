@@ -8,15 +8,15 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import {
-  PrintIcon,
-  MessageIcon,
-  CallIcon,
-  ShareIcon,
-  ChevronDownIcon,
-  ChatIcon,
   ArrowLeftIcon,
+  CallIcon,
+  ChatIcon,
+  ChevronDownIcon,
+  MessageIcon,
+  PrintIcon,
+  ShareIcon,
 } from "@salt-ds/icons";
-import { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 export default {
   title: "Patterns/Split Button",

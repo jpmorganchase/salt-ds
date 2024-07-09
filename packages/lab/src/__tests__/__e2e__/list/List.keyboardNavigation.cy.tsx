@@ -33,7 +33,7 @@ const ITEMS_PER_PAGE = 2;
             </List>
           ) : (
             <List<ItemWithLabel> id="list" source={ITEMS} {...listProps} />
-          )
+          ),
         );
       });
 
@@ -41,7 +41,7 @@ const ITEMS_PER_PAGE = 2;
         describe("with ListItems", () => {
           it("should highlight the first item with a focus ring", () => {
             cy.findByRole("listbox").focus();
-            cy.get(`#list-item-0`)
+            cy.get("#list-item-0")
               .should("be.highlighted")
               .should("have.focusVisible");
           });
@@ -53,7 +53,7 @@ const ITEMS_PER_PAGE = 2;
                 <List />
               ) : (
                 <List<ItemWithLabel, "deselectable"> source={[]} />
-              )
+              ),
             );
             cy.findByRole("listbox").focus();
             cy.findByRole("listbox").should("have.focusVisible");
@@ -106,12 +106,12 @@ const ITEMS_PER_PAGE = 2;
           cy.get("@selectionChangeHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
           cy.get("@selectHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
         });
       });
@@ -145,12 +145,12 @@ const ITEMS_PER_PAGE = 2;
           cy.get("@selectionChangeHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
           cy.get("@selectHandler").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            isDeclarative ? "list item 1" : ITEMS[0]
+            isDeclarative ? "list item 1" : ITEMS[0],
           );
         });
       });
@@ -183,7 +183,7 @@ const ITEMS_PER_PAGE = 2;
                 defaultSelected={ITEMS[2]}
                 source={ITEMS}
               />
-            )
+            ),
           );
 
           cy.findByRole("listbox").focus();
@@ -214,7 +214,7 @@ const ITEMS_PER_PAGE = 2;
                   source={ITEMS}
                 />
               </>
-            )
+            ),
           );
 
           cy.findByRole("listbox").focus();
@@ -255,7 +255,7 @@ const ITEMS_PER_PAGE = 2;
               restoreLastFocus
               source={ITEMS}
             />
-          )
+          ),
         );
       });
       describe("when focused", () => {
@@ -314,7 +314,7 @@ const ITEMS_PER_PAGE = 2;
                   restoreLastFocus
                   source={ITEMS}
                 />
-              )
+              ),
             );
             cy.findByRole("listbox").focus();
             cy.get("#list-item-2")
@@ -339,7 +339,7 @@ const ITEMS_PER_PAGE = 2;
                   restoreLastFocus
                   source={ITEMS}
                 />
-              )
+              ),
             );
             cy.findByRole("listbox").focus();
             cy.realPress("ArrowUp");
@@ -373,7 +373,7 @@ const ITEMS_PER_PAGE = 2;
             id="list"
             source={ITEMS}
           />
-        )
+        ),
       );
     });
     describe("when the 'End' key is pressed", () => {
@@ -500,84 +500,84 @@ const ITEMS_PER_PAGE = 2;
       cy.mount(
         isDeclarative ? (
           <List {...listProps} displayedItemCount={ITEMS_PER_PAGE}>
-            {FancyItems.map((x, i) => (
-              <ListItem key={`item-${i}`}>{x}</ListItem>
+            {FancyItems.map((x) => (
+              <ListItem key={x}>{x}</ListItem>
             ))}
           </List>
         ) : (
           <List {...listProps} source={FancyItems} />
-        )
+        ),
       );
       cy.findByRole("listbox").focus();
     });
     it("supports focusing items by typing letters in rapid succession", () => {
-      cy.get(`#list-item-0`)
+      cy.get("#list-item-0")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       // Prioritize next available option starting with B from the cyclic effect
       cy.realType("B");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       cy.realType("A");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
 
       cy.realType("R");
-      cy.get(`#list-item-0`)
+      cy.get("#list-item-0")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     // TODO:
     it.skip("supports the space character in a search", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realPress("Space");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("B");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("A");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("R");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
 
     it("supports item selection using the Spacebar after search times out", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realPress("Space");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       // Verify no selection was been made
@@ -592,17 +592,17 @@ const ITEMS_PER_PAGE = 2;
       cy.get("@selectionChangeHandler").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        "Foo Bar"
+        "Foo Bar",
       );
     });
     it("resets the search text after a timeout", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.wait(1500);
       cy.realType("B");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
@@ -611,55 +611,55 @@ const ITEMS_PER_PAGE = 2;
       cy.realType("B");
       cy.realType("A");
       cy.realType("Z");
-      cy.get(`#list-item-3`)
+      cy.get("#list-item-3")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.wait(1500);
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     it("cycles through options when typing the first character repeatedly", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("F");
-      cy.get(`#list-item-2`)
+      cy.get("#list-item-2")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     it("does not cycle through options when typing repeated characters after the first char", () => {
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
     it("supports clicking item first then by typing letters in rapid succession", () => {
       cy.get("#list-item-0").click();
       cy.realType("F");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
       cy.realType("O");
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("be.highlighted")
         .should("have.focusVisible");
     });
@@ -671,8 +671,8 @@ const ITEMS_PER_PAGE = 2;
             displayedItemCount={ITEMS_PER_PAGE}
             id="list"
           >
-            {FancyItems.map((x, i) => (
-              <ListItem key={`item-${i}`}>{x}</ListItem>
+            {FancyItems.map((x) => (
+              <ListItem key={x}>{x}</ListItem>
             ))}
           </List>
         ) : (
@@ -682,12 +682,12 @@ const ITEMS_PER_PAGE = 2;
             id="list"
             source={FancyItems}
           />
-        )
+        ),
       );
       cy.findByRole("listbox").focus();
       cy.realType("F");
 
-      cy.get(`#list-item-1`)
+      cy.get("#list-item-1")
         .should("not.be.highlighted")
         .should("not.have.focusVisible");
     });
@@ -709,7 +709,7 @@ const ITEMS_PER_PAGE = 2;
           </List>
         ) : (
           <List<ItemWithLabel> id="list" source={ITEMS} tabToSelect />
-        )
+        ),
       );
     });
 

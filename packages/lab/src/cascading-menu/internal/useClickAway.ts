@@ -7,7 +7,7 @@ function eventComingFromNodes(nodes: HTMLElement[], event: MouseEvent) {
   return nodes.some(
     (node) =>
       node != null &&
-      (node === event.target || node.contains(event.target as HTMLElement))
+      (node === event.target || node.contains(event.target as HTMLElement)),
   );
 }
 
@@ -16,7 +16,7 @@ type clickAwayHook = (
   containingDocument: Document,
   onClickAway: (event: FocusEvent) => void,
   onClick: (event: MouseEvent) => void,
-  mouseEvent?: keyof DocumentEventMap
+  mouseEvent?: keyof DocumentEventMap,
 ) => void;
 
 export const useClickAway: clickAwayHook = (
@@ -24,7 +24,7 @@ export const useClickAway: clickAwayHook = (
   containingDocument,
   onClickAway,
   onClick = () => undefined,
-  mouseEvent = "mouseup"
+  mouseEvent = "mouseup",
 ) => {
   //TODO can we get rid of this if it's just for IE11 ?
   const mountedRef = useMountedRef();
@@ -51,15 +51,12 @@ export const useClickAway: clickAwayHook = (
 
     const ownerDocumentNode = resolvedNodes.find((node) =>
       // node could be null, e.g. left click on surrounding area of context menu examples
-      node ? node.ownerDocument : false
+      node ? node.ownerDocument : false,
     );
-    const doc =
-      containingDocument ||
-      (ownerDocumentNode && ownerDocumentNode.ownerDocument);
+    const doc = containingDocument || ownerDocumentNode?.ownerDocument;
 
     if (
-      doc.documentElement &&
-      doc.documentElement.contains(event.target as HTMLElement) &&
+      doc.documentElement?.contains(event.target as HTMLElement) &&
       !isEventComingFromNodes
     ) {
       onClickAway(event);
@@ -70,7 +67,7 @@ export const useClickAway: clickAwayHook = (
     if (containingDocument) {
       containingDocument.addEventListener(
         mouseEvent,
-        handleClickAway as EventListener
+        handleClickAway as EventListener,
       );
       containingDocument.defaultView?.addEventListener("blur", onClickAway);
     }
@@ -78,11 +75,11 @@ export const useClickAway: clickAwayHook = (
       if (containingDocument) {
         containingDocument.removeEventListener(
           mouseEvent,
-          handleClickAway as EventListener
+          handleClickAway as EventListener,
         );
         containingDocument.defaultView?.removeEventListener(
           "blur",
-          onClickAway
+          onClickAway,
         );
       }
     };
