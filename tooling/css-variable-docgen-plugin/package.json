@@ -8,7 +8,7 @@
   ],
   "dependencies": {
     "css-tree": "^2.0.4",
-    "glob": "^8.0.0",
+    "glob": "^11.0.0",
     "glob-promise": "^6.0.0"
   },
   "devDependencies": {
