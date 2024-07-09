@@ -21,46 +21,22 @@
     "rules": {
       "recommended": true,
       "style": {
-        "useNodejsImportProtocol": {
-          "level": "error",
-          "fix": "safe"
-        },
-        "useTemplate": {
-          "level": "error",
-          "fix": "safe"
-        },
-        "noUnusedTemplateLiteral": {
-          "level": "error",
-          "fix": "safe"
-        },
-        "noUselessElse": {
-          "level": "error",
-          "fix": "safe"
-        },
-        "useExponentiationOperator": {
-          "level": "error",
-          "fix": "safe"
-        },
-        "useSelfClosingElements": {
-          "level": "error",
-          "fix": "safe"
-        },
-        "noParameterAssign": "warn",
+        // Changed to warn because we have a lot of non-null assertions.
         "noNonNullAssertion": "warn"
       },
-      "nursery": {
-        "noUselessStringConcat": { "level": "error", "fix": "safe" }
-      },
       "complexity": {
-        "useOptionalChain": { "level": "error", "fix": "safe" },
-        "useLiteralKeys": { "level": "error", "fix": "safe" },
+        // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
         "noForEach": "warn"
       },
       "a11y": {
+        // Disabled because autofocus is necessary in some cases.
         "noAutofocus": "off",
+        // Disabled because we write a lot of custom components.
         "noNoninteractiveElementToInteractiveRole": "off",
         "noNoninteractiveTabindex": "off",
+        // Disabled until biome doesn't flag hidden SVGs.
         "noSvgWithoutTitle": "off",
+        // Changed to warn because biome has some false positives.
         "useAriaPropsForRole": "warn"
       },
       "correctness": {
@@ -79,18 +55,12 @@
               }
             ]
           }
-        },
-        "noSwitchDeclarations": {
-          "level": "error",
-          "fix": "safe"
         }
       },
       "suspicious": {
+        // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
         "noArrayIndexKey": "warn",
-        "noGlobalIsNan": {
-          "level": "error",
-          "fix": "safe"
-        },
+        // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
         "noExplicitAny": "warn"
       }
     }
@@ -109,6 +79,7 @@
   },
   "overrides": [
     {
+      // Disable some rules for tests and stories, because they are not production code.
       "include": ["__tests__/**", "stories/**"],
       "linter": {
         "rules": {
@@ -125,6 +96,7 @@
       }
     },
     {
+      // Disable some rules for legacy code, because it is not worth fixing.
       "include": [
         "lab/src/responsive/**",
         "packages/data-grid/**",
@@ -142,6 +114,7 @@
       }
     },
     {
+      // Disable noExplicitAny for utils, because any is useful in some cases.
       "include": ["utils/**"],
       "linter": {
         "rules": {
@@ -152,6 +125,7 @@
       }
     },
     {
+      // Disable noArrayIndexKey for layout examples because array indexes are useful in this case.
       "include": [
         "packages/*/stories/*-layout/**",
         "site/src/examples/*-layout/**"
@@ -165,6 +139,7 @@
       }
     },
     {
+      // Disable noShadowRestrictedNames for examples and stories because it is useful to shadow restricted names for example names.
       "include": ["site/src/examples/**", "packages/*/stories/**"],
       "linter": {
         "rules": {
