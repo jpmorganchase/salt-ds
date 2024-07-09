@@ -1,7 +1,7 @@
 import {
   type Mode,
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
+  SaltProviderNext,
   makePrefixer,
   useTheme,
 } from "@salt-ds/core";
@@ -60,9 +60,7 @@ const DensityBlock = ({
   mode: Mode;
 }) => {
   const { themeNext } = useTheme();
-  const ChosenSaltProvider = themeNext
-    ? UNSTABLE_SaltProviderNext
-    : SaltProvider;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <BackgroundBlock background={mode === "light" ? "white" : undefined}>
@@ -99,9 +97,7 @@ export const QAContainer = ({
   } as CSSProperties;
 
   const { themeNext } = useTheme();
-  const ChosenSaltProvider = themeNext
-    ? UNSTABLE_SaltProviderNext
-    : SaltProvider;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <div

@@ -21,11 +21,7 @@ import {
   useContext,
   useMemo,
 } from "react";
-import {
-  SaltProvider,
-  UNSTABLE_SaltProviderNext,
-  useTheme,
-} from "../../salt-provider";
+import { SaltProvider, SaltProviderNext, useTheme } from "../../salt-provider";
 
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -73,9 +69,7 @@ const DefaultFloatingComponent = forwardRef<
 
   const { themeNext } = useTheme();
 
-  const ChosenSaltProvider = themeNext
-    ? UNSTABLE_SaltProviderNext
-    : SaltProvider;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   if (focusManagerProps && open) {
     return (
