@@ -30,7 +30,7 @@ describe("GIVEN a System status", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  xit("THEN should announce the contents of the System status", () => {
+  it("THEN should announce the contents of the System status", () => {
     const message = "example announcement";
     cy.mount(
       <SystemStatus>
