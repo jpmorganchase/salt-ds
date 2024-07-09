@@ -4,11 +4,11 @@ import {
   ownerWindow,
   useAriaAnnouncer,
   useDensity,
-  useTheme
+  useTheme,
 } from "@salt-ds/core";
 import { WindowProvider } from "@salt-ds/window";
 import { mount } from "cypress/react18";
-import { useCallback, useState, type ReactNode } from "react";
+import { type ReactNode, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 
 const TestComponent = ({
@@ -324,7 +324,7 @@ describe("Given a SaltProviderNext", () => {
       mount(
         <SaltProviderNext>
           <TestComponent />
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -344,7 +344,7 @@ describe("Given a SaltProviderNext", () => {
       mount(
         <SaltProviderNext>
           <TestComponent />
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -375,7 +375,7 @@ describe("Given a SaltProviderNext", () => {
           theme="custom-theme-1 custom-theme-2"
         >
           <TestComponent />
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html")
@@ -415,7 +415,7 @@ describe("Given a SaltProviderNext", () => {
           <SaltProviderNext density="medium">
             <TestComponent id="test-2" />
           </SaltProviderNext>
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);
@@ -469,7 +469,7 @@ describe("Given a SaltProviderNext", () => {
           >
             <TestComponent id="test-2" />
           </SaltProviderNext>
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);

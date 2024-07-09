@@ -4,7 +4,7 @@ import {
   SaltProvider,
   SaltProviderNext,
   getCharacteristicValue,
-  useTheme
+  useTheme,
 } from "@salt-ds/core";
 import type { Decorator } from "@storybook/react";
 import { useEffect } from "react";

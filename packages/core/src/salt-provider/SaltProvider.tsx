@@ -2,7 +2,7 @@ import {
   StyleInjectionProvider,
   useComponentCssInjection,
 } from "@salt-ds/styles";
-import { useWindow, type WindowContextType } from "@salt-ds/window";
+import { type WindowContextType, useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import React, {
   createContext,
@@ -15,11 +15,11 @@ import React, {
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
   BreakpointProvider,
+  type Breakpoints,
   DEFAULT_BREAKPOINTS,
   useMatchedBreakpoints,
-  type Breakpoints,
 } from "../breakpoints";
-import {
+import type {
   Accent,
   ActionFont,
   Corner,

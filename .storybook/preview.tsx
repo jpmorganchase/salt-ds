@@ -24,7 +24,7 @@ import { withScaffold } from "docs/decorators/withScaffold";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
 import { withTheme } from "docs/decorators/withTheme";
 import { initialize, mswLoader } from "msw-storybook-addon";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 
 import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
 

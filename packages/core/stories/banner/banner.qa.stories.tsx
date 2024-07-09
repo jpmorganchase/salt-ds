@@ -2,9 +2,9 @@ import {
   Banner,
   BannerActions,
   BannerContent,
+  type BannerProps,
   Button,
   Link,
-  type BannerProps
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";

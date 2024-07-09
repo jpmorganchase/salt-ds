@@ -1,16 +1,16 @@
 import {
+  type Mode,
   SaltProvider,
   SaltProviderNext,
   makePrefixer,
   useTheme,
-  type Mode,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  Children,
-  Fragment,
   type CSSProperties,
+  Children,
   type DetailedHTMLProps,
+  Fragment,
   type HTMLAttributes,
 } from "react";
 import { DraggableImg } from "./DraggableSnapshot";

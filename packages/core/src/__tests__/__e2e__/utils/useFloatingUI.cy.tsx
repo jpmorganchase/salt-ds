@@ -2,7 +2,7 @@ import {
   SaltProvider,
   SaltProviderNext,
   useFloatingComponent,
-  useFloatingUI
+  useFloatingUI,
 } from "@salt-ds/core";
 import { mount } from "cypress/react18";
 
@@ -49,7 +49,7 @@ describe("Use useFloatingComponent", () => {
       mount(
         <SaltProviderNext>
           <TestComponent focusManager={false} />
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html.salt-theme.salt-theme-next").should("have.length", 1);
@@ -74,7 +74,7 @@ describe("Use useFloatingComponent", () => {
       mount(
         <SaltProviderNext>
           <TestComponent focusManager={true} />
-        </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html.salt-theme.salt-theme-next").should("have.length", 1);

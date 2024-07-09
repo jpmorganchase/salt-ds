@@ -1,8 +1,4 @@
-import {
-  SaltProvider,
-  SaltProviderNext,
-  useTheme
-} from "@salt-ds/core";
+import { SaltProvider, SaltProviderNext, useTheme } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
