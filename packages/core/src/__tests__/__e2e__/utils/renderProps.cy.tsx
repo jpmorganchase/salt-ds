@@ -1,6 +1,6 @@
-import { ComponentPropsWithoutRef } from "react";
-import { mount } from "cypress/react18";
 import { renderProps } from "@salt-ds/core";
+import { mount } from "cypress/react18";
+import type { ComponentPropsWithoutRef } from "react";
 
 describe("renderProps function", () => {
   const Button = (props: ComponentPropsWithoutRef<"button">) => (
@@ -17,7 +17,7 @@ describe("renderProps function", () => {
     cy.findByRole("button", { name: "Button Children" }).should("exist");
     cy.findByRole("button", { name: "Button Children" }).should(
       "have.class",
-      "test-class"
+      "test-class",
     );
   });
 
@@ -34,7 +34,7 @@ describe("renderProps function", () => {
     cy.findByRole("button", { name: "Button Children" }).should("exist");
     cy.findByRole("button", { name: "Button Children" }).should(
       "have.class",
-      "test-class"
+      "test-class",
     );
   });
 
@@ -48,7 +48,7 @@ describe("renderProps function", () => {
     cy.findByRole("button", { name: "Button Children" }).should("exist");
     cy.findByRole("button", { name: "Button Children" }).should(
       "have.class",
-      "test-class"
+      "test-class",
     );
   });
 });

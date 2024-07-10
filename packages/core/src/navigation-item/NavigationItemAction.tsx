@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import { renderProps } from "../utils";
 
 interface NavigationItemActionProps extends ComponentPropsWithoutRef<any> {}

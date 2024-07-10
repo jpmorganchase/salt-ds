@@ -1,4 +1,9 @@
-import { cloneElement, ElementType, isValidElement, ReactElement } from "react";
+import {
+  type ElementType,
+  type ReactElement,
+  cloneElement,
+  isValidElement,
+} from "react";
 import { mergeProps } from "./mergeProps";
 
 export interface RenderPropsType {
@@ -7,7 +12,7 @@ export interface RenderPropsType {
 
 export function renderProps<Type extends ElementType>(
   Type: Type,
-  props: RenderPropsType & React.ComponentProps<Type>
+  props: RenderPropsType & React.ComponentProps<Type>,
 ): ReactElement {
   const { render, ...rest } = props;
   // Case 1: If render is a valid React element, clone it with merged props

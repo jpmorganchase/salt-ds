@@ -1,19 +1,19 @@
+import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
+  type ComponentPropsWithoutRef,
+  type MouseEvent,
+  type MouseEventHandler,
   forwardRef,
-  MouseEvent,
-  MouseEventHandler,
 } from "react";
 import { makePrefixer } from "../utils";
-import { clsx } from "clsx";
 import { ExpansionIcon } from "./ExpansionIcon";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
+import type { RenderPropsType } from "../utils";
 import navigationItemCss from "./NavigationItem.css";
 import { NavigationItemAction } from "./NavigationItemAction";
-import { RenderPropsType } from "../utils";
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -108,7 +108,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
               [withBaseName("blurActive")]: blurActive,
               [withBaseName("rootItem")]: level === 0,
             },
-            withBaseName(orientation)
+            withBaseName(orientation),
           )}
           render={render ?? (isParent ? <button /> : undefined)}
           aria-expanded={isParent ? expanded : undefined}
@@ -123,5 +123,5 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         </NavigationItemAction>
       </div>
     );
-  }
+  },
 );

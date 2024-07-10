@@ -1,5 +1,5 @@
-import React, { ReactElement, useState } from "react";
 import { NavigationItem, StackLayout, Text } from "@salt-ds/core";
+import React, { type ReactElement, useState } from "react";
 
 const CustomLinkImplementation = (props: any) => (
   <a {...props} aria-label={"overridden-label"}>

@@ -118,7 +118,7 @@ describe("GIVEN a NavItem", () => {
           render={mockRender}
         >
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByText("Parent Button").should("exist");
       cy.get("@render").should("have.been.calledWithMatch", {
@@ -143,7 +143,7 @@ describe("GIVEN a NavItem", () => {
           render={mockRender}
         >
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByText("Navigation Link").should("exist");
       cy.get("@render").should("have.been.calledWithMatch", {
@@ -160,13 +160,13 @@ describe("GIVEN a NavItem", () => {
       cy.mount(
         <NavigationItem parent={true} render={<button>Button Children</button>}>
           Navigation Item
-        </NavigationItem>
+        </NavigationItem>,
       );
       cy.findByRole("button", { name: "expand" }).should("exist");
       cy.findByRole("button", { name: "expand" }).should(
         "have.attr",
         "aria-expanded",
-        "false"
+        "false",
       );
       cy.findByText("Button Children").should("exist");
     });

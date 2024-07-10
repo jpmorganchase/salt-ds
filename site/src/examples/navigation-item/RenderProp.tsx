@@ -1,5 +1,5 @@
-import { ReactElement, useState } from "react";
 import { NavigationItem, StackLayout } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const RenderProp = (): ReactElement => {
   const [expanded, setExpanded] = useState<boolean>(false);
