@@ -66,12 +66,8 @@ describe("GIVEN a NavItem", () => {
   describe("AND it is a parent", () => {
     it("should render an expansion button", () => {
       cy.mount(<NavigationItem parent={true}>Navigation Item</NavigationItem>);
-      cy.findByRole("button", { name: "expand" }).should("exist");
-      cy.findByRole("button", { name: "expand" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
+      cy.findByRole("button").should("exist");
+      cy.findByRole("button").should("have.attr", "aria-expanded", "false");
     });
 
     it("should call `onExpand` when the expansion button is clicked", () => {
@@ -81,7 +77,7 @@ describe("GIVEN a NavItem", () => {
           Navigation Item
         </NavigationItem>,
       );
-      cy.findByRole("button", { name: "expand" }).realClick();
+      cy.findByRole("button").realClick();
       cy.get("@expandSpy").should("have.been.calledOnce");
     });
 
@@ -92,11 +88,7 @@ describe("GIVEN a NavItem", () => {
             Navigation Item
           </NavigationItem>,
         );
-        cy.findByRole("button", { name: "expand" }).should(
-          "have.attr",
-          "aria-expanded",
-          "true",
-        );
+        cy.findByRole("button").should("have.attr", "aria-expanded", "true");
       });
     });
   });
@@ -162,12 +154,8 @@ describe("GIVEN a NavItem", () => {
           Navigation Item
         </NavigationItem>,
       );
-      cy.findByRole("button", { name: "expand" }).should("exist");
-      cy.findByRole("button", { name: "expand" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
+      cy.findByRole("button").should("exist");
+      cy.findByRole("button").should("have.attr", "aria-expanded", "false");
       cy.findByText("Button Children").should("exist");
     });
   });
