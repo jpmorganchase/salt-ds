@@ -1,5 +1,6 @@
 /* Style applied to the root element */
 .saltDateInput {
+  --input-border: none;
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderStyle: var(--salt-editable-borderStyle);
   --input-outlineColor: var(--salt-focused-outlineColor);
@@ -7,6 +8,7 @@
 
   align-items: center;
   background: var(--saltDateInput-background, var(--input-background));
+  border: var(--input-border);
   color: var(--saltDateInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
   gap: var(--salt-spacing-50);
@@ -178,6 +180,25 @@
   border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
 }
 
+/* Style applied if `bordered={true}` */
+.saltDateInput.saltDateInput-bordered {
+  --input-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--input-borderColor);
+  --input-borderWidth: 0;
+}
+
+/* Style applied if focused or active when `bordered={true}` */
+.saltDateInput-bordered.saltDateInput-focused,
+.saltDateInput-bordered:active {
+  --input-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltDateInput-bordered.saltDateInput-readOnly,
+.saltDateInput-bordered.saltDateInput-disabled:hover {
+  --input-borderWidth: 0;
+}
+
+
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;
@@ -187,7 +208,7 @@
   align-items: end;
 }
 
-.saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
+.saltDateInput-endAdornmentContainer .saltButton~.saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
@@ -195,7 +216,7 @@
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
-.saltDateInput-endAdornmentContainer > .saltButton {
+.saltDateInput-endAdornmentContainer>.saltButton {
   --saltButton-padding: var(--salt-spacing-50);
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }

@@ -66,16 +66,16 @@ function getCalendarDate(inputDate: string) {
 const defaultDateFormatter = (date: DateValue | undefined): string => {
   return date
     ? new DateFormatter("EN-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }).format(date.toDate(getLocalTimeZone()))
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(date.toDate(getLocalTimeZone()))
     : "";
 };
 
 export interface DateInputProps<SelectionVariantType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
-    Pick<ComponentPropsWithoutRef<"input">, "disabled" | "placeholder"> {
+  Pick<ComponentPropsWithoutRef<"input">, "disabled" | "placeholder"> {
   ariaLabel?: string;
   /**
    * The marker to use in an empty read only DateInput.
@@ -103,6 +103,10 @@ export interface DateInputProps<SelectionVariantType>
    */
   variant?: "primary" | "secondary";
   /**
+   * Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
+  /**
    * Function to format the input value.
    */
   dateFormatter?: (input: DateValue | undefined) => string;
@@ -129,15 +133,15 @@ export interface DateInputProps<SelectionVariantType>
    * Callback fired when the input value change.
    */
   onChange?: SelectionVariantType extends SingleSelectionValueType
-    ? (
-        event: ChangeEvent<HTMLInputElement>,
-        selectedDateInputValue?: string,
-      ) => void
-    : (
-        event: ChangeEvent<HTMLInputElement>,
-        startDateInputValue?: string,
-        endDateInputValue?: string,
-      ) => void;
+  ? (
+    event: ChangeEvent<HTMLInputElement>,
+    selectedDateInputValue?: string,
+  ) => void
+  : (
+    event: ChangeEvent<HTMLInputElement>,
+    startDateInputValue?: string,
+    endDateInputValue?: string,
+  ) => void;
 }
 
 export const DateInput = forwardRef<
@@ -155,6 +159,7 @@ export const DateInput = forwardRef<
     readOnly: readOnlyProp,
     validationStatus: validationStatusProp,
     variant = "primary",
+    bordered = false,
     dateFormatter = defaultDateFormatter,
     placeholder = "dd mmm yyyy",
     startInputRef,
@@ -327,6 +332,7 @@ export const DateInput = forwardRef<
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName(validationStatus ?? "")]: validationStatus,
+          [withBaseName("bordered")]: bordered,
         },
         className,
       )}

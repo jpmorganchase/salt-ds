@@ -24,3 +24,9 @@ export const Range = DateInputTemplate.bind({});
 Range.args = {
   selectionVariant: "range",
 };
+
+export const Bordered: StoryFn<typeof DateInput> = (args) => {
+  return (
+    <DateInput bordered {...args} />
+  );
+};
