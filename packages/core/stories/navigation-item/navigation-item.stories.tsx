@@ -642,9 +642,8 @@ export const WithRenderProp = () => {
   const render = (props: any) => {
     if (props.href) {
       return <a {...props} />;
-    } else {
-      return <button {...props} />;
     }
+    return <button {...props} />;
   };
 
   return (

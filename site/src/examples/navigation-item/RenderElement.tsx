@@ -27,7 +27,7 @@ export const RenderElement = (): ReactElement => {
             onExpand={() => setExpanded(!expanded)}
             orientation="vertical"
             parent={true}
-            render={<button />}
+            render={<button type="button" />}
           >
             Render Prop Parent
           </NavigationItem>

@@ -110,7 +110,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             },
             withBaseName(orientation),
           )}
-          render={render ?? (isParent ? <button /> : undefined)}
+          render={render ?? (isParent ? <button type="button" /> : undefined)}
           aria-expanded={isParent ? expanded : undefined}
           onClick={handleClick}
           aria-current={!isParent && active ? "page" : undefined}
