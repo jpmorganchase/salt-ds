@@ -26,7 +26,5 @@ Range.args = {
 };
 
 export const Bordered: StoryFn<typeof DateInput> = (args) => {
-  return (
-    <DateInput bordered {...args} />
-  );
+  return <DateInput bordered {...args} />;
 };

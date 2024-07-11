@@ -41,10 +41,10 @@ CustomFormat.args = {
   dateFormatter: (date: DateValue | undefined): string => {
     return date
       ? new DateFormatter("fr-CA", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date.toDate(getLocalTimeZone()))
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date.toDate(getLocalTimeZone()))
       : "";
   },
   placeholder: "YYYY-MM-DD",
