@@ -100,7 +100,9 @@ export function MenuBase(props: MenuBaseProps) {
       (isNested || getVirtualElement ? "right-start" : "bottom-start"),
     middleware: [
       // Align the nested menu by shifting it by var(--salt-size-border)
-      offset(isNested ? { crossAxis: -1, mainAxis: 2 } : !getVirtualElement ? 1 : 0),
+      offset(
+        isNested ? { crossAxis: -1, mainAxis: 2 } : !getVirtualElement ? 1 : 0,
+      ),
       flip({}),
       shift({ limiter: limitShift() }),
       size({
