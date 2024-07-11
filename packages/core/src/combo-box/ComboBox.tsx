@@ -1,5 +1,6 @@
 import {
   flip,
+  offset,
   size,
   useClick,
   useDismiss,
@@ -177,6 +178,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       placement: "bottom-start",
       strategy: "fixed",
       middleware: [
+        offset(1),
         size({
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
