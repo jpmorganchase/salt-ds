@@ -59,7 +59,7 @@ export const AccentPlacement: StoryFn<typeof LinkCard> = (args) => {
 };
 
 export const Variant: StoryFn<typeof LinkCard> = (args) => {
-  const variants = ["primary", "secondary"] as const;
+  const variants = ["primary", "secondary", "tertiary"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {

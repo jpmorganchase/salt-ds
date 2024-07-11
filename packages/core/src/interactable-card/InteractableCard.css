@@ -24,6 +24,13 @@
   --card-accent-color: var(--salt-container-secondary-borderColor);
 }
 
+/* Styles applied to InteractableCard when variant="tertiary" */
+.saltInteractableCard-tertiary {
+  background: var(--saltInteractableCard-background, var(--salt-container-tertiary-background));
+  border-color: var(--salt-container-tertiary-borderColor);
+  --card-accent-color: var(--salt-container-tertiary-borderColor);
+}
+
 /* Styles applied to create accent */
 .saltInteractableCard-accent::after {
   content: "";

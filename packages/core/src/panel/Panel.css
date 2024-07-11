@@ -8,6 +8,11 @@
   --panel-background: var(--salt-container-secondary-background);
 }
 
+/* Styles applied to the root element when variant="tertiary" */
+.saltPanel-tertiary.saltPanel {
+  --panel-background: var(--salt-container-tertiary-background);
+}
+
 /* Styles applied to the root element */
 .saltPanel {
   background: var(--saltPanel-background, var(--panel-background));

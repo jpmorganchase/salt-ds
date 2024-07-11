@@ -21,6 +21,12 @@
   --card-accent-color: var(--salt-container-secondary-borderColor);
 }
 
+.saltCard-tertiary {
+  background: var(--saltCard-background, var(--salt-container-tertiary-background));
+  border-color: var(--salt-container-tertiary-borderColor);
+  --card-accent-color: var(--salt-container-tertiary-borderColor);
+}
+
 /* Styles applied to create accent */
 .saltCard-accent::after {
   content: "";

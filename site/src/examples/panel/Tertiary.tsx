@@ -1,7 +1,7 @@
 import { FlexLayout, Panel } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
-export const Secondary = (): ReactElement => (
+export const Tertiary = (): ReactElement => (
   <FlexLayout
     style={{
       width: "90%",
@@ -14,9 +14,9 @@ export const Secondary = (): ReactElement => (
         alignItems: "center",
         justifyContent: "center",
       }}
-      variant="secondary"
+      variant="tertiary"
     >
-      Example of a secondary Panel
+      Example of a Tertiary Panel
     </Panel>
   </FlexLayout>
 );

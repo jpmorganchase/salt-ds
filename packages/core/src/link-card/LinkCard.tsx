@@ -17,7 +17,7 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
   /**
    * Styling variant; defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
