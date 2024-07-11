@@ -15,15 +15,16 @@
   border-top-width: var(--trackerConnector-thickness);
   border-top-style: var(--trackerConnector-style-border);
   border-top-color: var(--trackerConnector-color);
-  width: calc(100% - (var(--saltIcon-size)) - (var(--trackerConnector-margin) * 2));
-  left: calc(50% + (var(--saltIcon-size) / 2) + var(--trackerConnector-margin));
-  top: calc(var(--saltIcon-size) / 2 - (var(--trackerConnector-thickness) / 2));
+  width: calc(100% - var(--salt-size-base));
+  left: calc(50% + (var(--salt-size-base) / 2));
+  top: calc(var(--salt-size-base) / 2 - (var(--trackerConnector-thickness) / 2));
+  transform: translateY(-50%);
   height: 0;
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerConnector {
   top: var(--salt-size-base);
-  left: calc((var(--saltIcon-size) / 2) - (var(--trackerConnector-thickness) / 2));
+  left: calc((var(--salt-size-base) / 2) - (var(--trackerConnector-thickness) / 2));
   bottom: 0;
   border-left-width: var(--trackerConnector-thickness);
   border-left-style: var(--trackerConnector-style-border);

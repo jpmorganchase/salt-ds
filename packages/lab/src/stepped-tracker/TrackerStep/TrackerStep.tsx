@@ -113,6 +113,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
     const depthClass = withBaseName(`depth-${depth}`);
+    const iconSize = depth > 0 ? 1 : 1.5;
 
     const innerStyle = {
       ...style,
@@ -135,7 +136,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
         {...restProps}
       >
         <div className={withBaseName("indicator")}>
-          <Icon />
+          <Icon size={iconSize} />
         </div>
         {hasConnector && <TrackerConnector state={connectorState} />}
         <div className={withBaseName("body")}>{children}</div>

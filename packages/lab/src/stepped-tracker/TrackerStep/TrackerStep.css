@@ -7,8 +7,6 @@
   --trackerStep-icon-color: var(--saltTrackerStep-icon-color, var(--salt-status-static-foreground));
 
   --saltIcon-color: var(--trackerStep-icon-color);
-  /* We redefine Icon Size so we can use it in calc functions in the trackerConnector */
-  --saltIcon-size: var(--saltTrackerStep-icon-size, max(var(--salt-size-icon), 12px));
 }
 
 .saltTrackerStep {
@@ -40,8 +38,10 @@
   padding-bottom: var(--salt-spacing-300);
 }
 
-.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-indicator {
-  width: var(--salt-size-icon);
+.saltTrackerStep-indicator {
+  flex-shrink: 0;
+  flex-grow: 0;
+  width: var(--salt-size-base);
   height: var(--salt-size-base);
   display: flex;
   justify-content: center;
@@ -95,8 +95,8 @@
   --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
 
-.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-1 .saltIcon,
+/* .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-1 .saltIcon,
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-2 .saltIcon {
   width: var(--salt-size-adornment);
   min-width: var(--salt-size-adornment);
-}
+} */
