@@ -33,7 +33,7 @@ body:
       description: |
         Which version(s) did you observe the bug in? 
 
-        Please provide the exact version(s) instead of using range `^`. If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
+        Please provide the exact version(s) instead of a [range](https://github.com/npm/node-semver#advanced-range-syntax) (`^`, `~`, `>`, `*`, `X`). If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
   - type: textarea
     attributes:
       label: Description
