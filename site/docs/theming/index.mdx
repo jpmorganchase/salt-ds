@@ -36,6 +36,11 @@ As of Q3 2024, Salt offers two themes: the current 'legacy' theme, that reflects
 
 In Salt's architecture, theme styles (known as 'design tokens') are kept separate from components. Regardless of the chosen theme (the look-and-feel), the underlying components remain the same. This separation makes it easy to switch between themes, without breaking or altering the underlying application build.
 
+<Image
+  src="/img/theming/salt-technology-stack.png"
+  alt="Salt technology stack"
+/>
+
 ## Salt Next theme
 
 Salt Next is a new theme for Salt which is built on new design foundations endorsed by the J.P. Morgan Corporate Brand team. It is a non-breaking update to the Salt library which officially brings 'styling options' and 'theming' capability to Salt components.
@@ -242,7 +247,19 @@ To access the libraries:
 
 1. Go to the Assets panel in your Figma file.
 2. Tap on the Libraries icon (open book icon).
-3. Search for 'Next'.
+
+<Image
+  src="/img/theming/figma-next-library-libraries-icon.png"
+  alt="Figma next library libraries icon"
+/>
+
+3. Search for 'Salt Next'.
+
+<Image
+  src="/img/theming/figma-next-library-add-to-file.png"
+  alt="Figma next library add to file"
+/>
+
 4. Add the three available libraries (referenced above) to your file.
 
 #### Using the Style Library
@@ -250,6 +267,11 @@ To access the libraries:
 The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'style options' to your components.
 
 The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `-salt-spacing-300`).
+
+<Image
+  src="/img/theming/figma-next-library-next-dev-mode.png"
+  alt="Figma next library next dev mode"
+/>
 
 #### Using the Colors Library
 
@@ -268,7 +290,13 @@ The new variable-driven Component & Pattern library functions similarly to the c
 #### Using component 'style options' in Figma
 
 1.  Add components: Drag from the Assets panel.
-2.  Access ’style options: In the right sidebar, click on the Variables icon in the Layer panel to see all available options.
+2.  Access 'style options': In the right sidebar, click on the Variables icon in the Layer panel to see all available options.
+
+<Image
+  src="/img/theming/figma-next-library-variable-mode-switch.png"
+  alt="Figma next library variable mode switch"
+/>
+
 3.  For the current Page, Frame or Component set:
 
         1. **Accent / Mode**: Set teal or blue (default) accent color (e.g., indicators in Tabs, CTA buttons) in light or dark mode.
