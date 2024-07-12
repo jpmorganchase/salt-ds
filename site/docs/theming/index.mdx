@@ -135,7 +135,7 @@ If styling options alone don't achieve your desired visual design, you can creat
 - Aligning with an alternate design system to support migration to Salt.
 - Achieving greater parity with a brand other than J.P. Morgan, such as Chase.
 
-Any theme changes outside of 'style options' mean you assume certain responsibilities from Salt. For example, if you change a token for a background color, you must ensure it meets accessibility standards for contrast ratios.
+Any theme changes outside of 'styling options' mean you assume certain responsibilities from Salt. For example, if you change a token for a background color, you must ensure it meets accessibility standards for contrast ratios.
 
 Most design tokens are used across multiple components, so understand the impact and test changes thoroughly across the product. In Figma, create and publish custom components independently of the provided Salt libraries. In code, create a centralized CSS stylesheet with the changes to be imported alongside the Salt theme.
 
@@ -149,9 +149,9 @@ In code, each component would need to be wrapped and published as a new componen
 
 White labelling requires significant changes and investment, and therefore is not supported by the Salt team.
 
-## Component-level style options
+## Component-level styling options
 
-In addition to the Salt Next theme, Salt is beginning to provide further component-level style options for full borders (where the border is considered decorative) and drop shadows. The options are on a component-by-component basis and not a system-wide style option. You can choose whether to have these options on each part of the application.
+In addition to the Salt Next theme, Salt is beginning to provide further component-level styling options for full borders (where the border is considered decorative) and drop shadows. The options are on a component-by-component basis and not a system-wide styling option. You can choose whether to have these options on each part of the application.
 
 Optional border support is already being rolled out across Salt's form control components (i.e., Input, Multiline, Combo Box). This feature can be combined with 'Corner' and 'Accent' styling option to provide the capability of Form Fields with full borders and rounded corners (a long request feature), aligned to brand.
 
@@ -240,7 +240,7 @@ The Salt Next theme is now stable and available in both Figma and code to use in
 
 #### New variable-driven libraries
 
-To provide 'style options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
+To provide 'styling options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
 
 Using Figma variables enables us to reduce the number of Figma libraries we need to provide. Salt Next has the following libraries:
 
@@ -273,7 +273,7 @@ To access the libraries:
 
 #### Using the Style Library
 
-The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'style options' to your components.
+The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'styling options' to your components.
 
 The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `-salt-spacing-300`).
 
@@ -294,12 +294,12 @@ The new variable-driven Component & Pattern library functions similarly to the c
 
 - No need to switch between light and dark mode libraries.
 - No need to set 'density' at the component level.
-- Access to new 'style options' like round corners, accent color, and Amplitude as a heading and/or action font.
+- Access to new 'styling options' like round corners, accent color, and Amplitude as a heading and/or action font.
 
-#### Using component 'style options' in Figma
+#### Using component 'styling options' in Figma
 
 1.  Add components: Drag from the Assets panel.
-2.  Access 'style options': In the right sidebar, click on the Variables icon in the Layer panel to see all available options.
+2.  Access 'styling options': In the right sidebar, click on the Variables icon in the Layer panel to see all available options.
 
 <Image
   src="/img/theming/figma-next-library-variable-mode-switch.png"
@@ -316,7 +316,7 @@ The new variable-driven Component & Pattern library functions similarly to the c
 
 #### Setting a Theme Recipe in Figma
 
-Style options can be set at different levels within Figma – at a Page, Frame or Component level. While you can set them for individual components, we recommend setting the required options for a product/ LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a Frame or Component level where you’re mixing styling options.
+styling options can be set at different levels within Figma – at a Page, Frame or Component level. While you can set them for individual components, we recommend setting the required options for a product/ LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a Frame or Component level where you’re mixing styling options.
 
 ### Code
 
