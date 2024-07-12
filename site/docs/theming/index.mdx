@@ -46,58 +46,64 @@ Salt design system does not recommend customizing the look-and-feel with the leg
 
 There are two ways to customize the look-and-feel of components:
 
-1. System-wide 'styling options': Choose from a selection of predefined design choices.
-2. Theming: Change the value of supported design tokens.
+1. **System-wide 'styling options'**: Choose from a selection of predefined design choices.
+2. **Theming**: Change the value of supported design tokens.
 
-#### Styling options
+**Styling options**
 
-Styling options make it easy to adjust the design of Salt components across the system for a user group or use case::
+Styling options make it easy to adjust the design of Salt components across the system for a user group or use case:
 
-##### Density
+**Density**
 
 Relates to the amount of content that can fit on a screen based on the size and spacing of components. The four densities are high, medium, low, and touch.
 
-[Image: Buttons at different densities]
+<Image
+  src="/img/theming/styling-options-button-densities-example.png"
+  alt="Styling options button densities example"
+/>
 
-##### Mode
+**Accent / Mode**
 
-Switches between a light and dark color palette.
+Determines the dominant color – blue (aligned to the legacy design language) or teal (aligned to the JP Morgan MasterBrand Styleguide) for light or dark mode.
 
-[Image: LD Buttons in light or dark]
+<Image
+  src="/img/theming/styling-options-button-accent-mode-example.png"
+  alt="Styling options button accent mode example"
+/>
 
-##### Accent
-
-Determines the dominant color: blue (aligned to the legacy design language) or teal (aligned to the JPM MasterBrand Styleguide).
-
-[Image: LD Buttons in blue or teal]
-
-##### Corner radius
+**Corner radius**
 
 Sets predefined corners in certain components to sharp or round.
 
-[Image: LD Buttons in round or sharp]
+<Image
+  src="/img/theming/styling-options-button-corner-example.png"
+  alt="Styling options button corner example"
+/>
 
-##### Font
+**Font**
 
 Displays heading and/or action fonts as Amplitude or Open Sans.
 
-[Image: LD Buttons in Amplitude or Open Sans]
+<Image
+  src="/img/theming/styling-options-button-font-example.png"
+  alt="Styling options button font example"
+/>
 
-##### Theme Recipe
+#### Theme Recipe
 
 Styling options can be combined as a 'theme recipe' to create design languages which are optimized for a specific context, for example:
 
 **Example #1**: An external application is infrequently for limited data input An LOB define their design language to be low density, light mode, round corners, amplitude font, teal accent.
 
-[Image: Representative composition ]
+[[Image: Representative composition]]
 
 **Example #2**: An established internal application is frequently to handling vast amounts of data. An LOB define their design language to be high density, dark mode, sharpcorners, open sans font, blue accent.
 
-[Image: Representative composition]
+[[Image: Representative composition]]
 
 **Example #3**: An internal application is frequently to handle operational tasks. An LOB define their design language to be medium density, light mode, round corners, open sans font, teal accent.
 
-[Image: Representative composition]
+[[Image: Representative composition]]
 
 There are several benefits to using styling options:
 
@@ -135,7 +141,10 @@ In addition to the Salt Next theme, Salt is beginning to provide further compone
 
 Optional border support is already being rolled out across Salt's form control components (i.e., Input, Multiline, Combo Box). This feature can be combined with 'Corner' and 'Accent' styling option to provide the capability of Form Fields with full borders and rounded corners (a long request feature), aligned to brand.
 
-[Image: LD Form Field with just underline, sharp, blue vs border, round, teal]
+<Image
+  src="/img/theming/input-border-styling-options.png"
+  alt="Input border styling options"
+/>
 
 ## JPM Brand endorsed
 
@@ -193,6 +202,8 @@ Salt Next introduces the Amplitude typeface, taken directly from the CIB Brand G
 
 Salt Next includes the ability to apply predefined corner radiuses to specified components. This rounded corner feature, from the CIB Brand Guidelines, allows designers to create a softer, more consumer-friendly look and feel in their products. Each density includes four different radiuses, which help achieve a sense of visual nesting when used together.
 
+<Image src="/img/theming/new-corner-ramps.png" alt="New corner ramps" />
+
 ## When to use the Salt Next theme?
 
 Before using the Salt Next theme in design or development you should align with your Product team and check which theme to use, and when an appropriate time to switch themes is.
@@ -209,13 +220,13 @@ Salt does not provide all styling options for the 'legacy' theme (apart from den
 
 ## How to use the Salt Next theme
 
-The Salt Next theme is now stable and available in both Figma and code. In Figma, options are changed through variable mode switches at a Page, Frame or Component level. In code, they are provided as props to `SaltProviderNext`.
+The Salt Next theme is now stable and available in both Figma and code to use in your production delivery.
 
 ### Figma
 
 #### New variable-driven libraries
 
-To provide ‘style options’ and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma variables to define all the visual attributes of components.
+To provide 'style options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
 
 Using Figma variables enables us to reduce the number of Figma libraries we need to provide. Salt Next has the following libraries:
 
@@ -223,7 +234,7 @@ Using Figma variables enables us to reduce the number of Figma libraries we need
 2. Salt (Next) Style Library
 3. Salt (Next) Color Library
 
-The ‘Salt Icons’ library has been updated with variable support to work with Salt Next components.
+The 'Salt Icons' library has been updated with variable support to work with Salt Next components.
 
 Some recent component and pattern releases in the Core code package may be missing, but we are working to add them soon.
 
@@ -236,51 +247,39 @@ To access the libraries:
 
 #### Using the Style Library
 
-The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more, The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `-salt-spacing-300`).
+The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'style options' to your components.
+
+The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `-salt-spacing-300`).
 
 #### Using the Colors Library
 
-The Colors library provides access to all foundational color ramps (e.g., `--blue-100` to `--blue-900`). These colors are linked to the semantic styles in the Salt Next Styles library.
+The Colors Library provides access to all foundational color ramps (e.g., `--blue-100` to `--blue-900`). These colors are linked to the semantic styles in the Salt Next Styles library.
 
-Note: You don't need to add Foundation Colors to your project unless you want to use them directly. For the best experience, apply styles from the Salt Next Style library to your project only.
+You don't need to add these colors to your project unless you want to use them directly. For consistency across components and to benefit from 'styling options', Salt recommends applying variables from the Salt Next Style library to your project only.
 
 #### Using the Component & Pattern Library
 
-The new component library is built using the new style variables. It functions similarly to the current Salt component library but with key differences:
+The new variable-driven Component & Pattern library functions similarly to the current Salt component library but with key differences:
 
 - No need to switch between light and dark mode libraries.
 - No need to set 'density' at the component level.
-- Access new features like rounded corners, teal as an accent color, and Amplitude as a heading and/or action font.
+- Access to new 'style options' like round corners, accent color, and Amplitude as a heading and/or action font.
 
-#### How to Change the Style of a Component
+#### Using component 'style options' in Figma
 
-1. Drag a Component: From the Assets panel in the right sidebar, drag a component onto a page.
-2. Access Variable Options: In the left sidebar, click on the Variables icon in the Layer panel to see all available variable options.
-3. Change the Component:
-4. Accent / Mode: Change the accent color (e.g., indicators in Tabs, CTA buttons) and/or the mode (light/dark).
-5. Corner: Switch between sharp edges (default) and rounded corners (note: not all components have rounded corners).
-6. Density: Change the size and spacing of elements, as well as corner radius and typographic values (font size and line height). The default is HD.
-7. Heading Font: Change the font family of Display and H1-4 styles from Open Sans to Amplitude.
-8. Action Font: Change the font family of action styles from Open Sans to Amplitude.
+1.  Add components: Drag from the Assets panel.
+2.  Access ’style options: In the right sidebar, click on the Variables icon in the Layer panel to see all available options.
+3.  For the current Page, Frame or Component set:
 
-By following these steps, you can fully utilize the new style variables and features in the Salt Next libraries.
-
-#### Theme Recipes and Ingredients
-
-In Salt, a theme is made up of a series of choices, known as a 'theme recipe.' The available choices are:
-
-- Density: High, Medium, Low, Touch
-- Mode: Light or Dark
-- Accent Color: Blue or Teal
-- Corner: Sharp or Round
-- Heading Font: Open Sans or Amplitude
-- Action Font: Open Sans or Amplitude
-
-In code, these choices can be combined into a 'preset' theme for consistent use across a LOB's products.
+        1. **Accent / Mode**: Set teal or blue (default) accent color (e.g., indicators in Tabs, CTA buttons) in light or dark mode.
+        1. **Corner**: Switch between sharp (default) and round corners.
+        1. **Density**: Change the size, spacing, corner radius and type size of elements for high (default) medium, low or touch density.
+        1. **Heading Font**: Set Display and H1-4 type styles as Open Sans or Amplitude.
+        1. **Action Font**: Set the type style in Button components as Open Sans or Amplitude.
 
 #### Setting a Theme Recipe in Figma
 
-Variable options can be set at different levels within Figma. While you can configure them at an individual component level, a theme should ideally be defined at a product or LOB level. This ensures consistency and avoids setting variables component by component.
+Style options can be set at different levels within Figma – at a Page, Frame or Component level. While you can set them for individual components, we recommend setting the required options for a product/ LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a Frame or Component level where you’re mixing styling options.
 
 ### Code
 
