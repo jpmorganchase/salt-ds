@@ -49,7 +49,20 @@ export const OpenExamples: StoryFn<QAContainerProps> = () => (
 );
 
 OpenExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const ClosedExamples: StoryFn<QAContainerProps> = () => (

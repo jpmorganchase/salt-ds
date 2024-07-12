@@ -1,7 +1,7 @@
 .saltOptionList {
   background: var(--salt-container-primary-background);
   border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
-  border-radius: var(--salt-palette-corner-weak, 0);
+  border-radius: var(--salt-palette-corner, 0);
   overflow: hidden;
   overflow-y: auto;
   position: relative;
