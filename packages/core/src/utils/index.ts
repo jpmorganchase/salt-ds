@@ -8,6 +8,7 @@ export * from "./marginMiddleware";
 export * from "./ownerDocument";
 export * from "./ownerWindow";
 export * from "./polymorphicTypes";
+export * from "./renderProps";
 export * from "./setRef";
 export * from "./useControlled";
 export * from "./useFloatingUI";
