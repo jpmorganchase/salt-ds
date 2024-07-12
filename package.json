@@ -107,7 +107,7 @@
     "vite-plugin-istanbul": "^6.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^1.0.0",
-    "webpack": "5.92.0",
+    "webpack": "5.93.0",
     "yup": "^1.0.2"
   },
   "resolutions": {
@@ -116,7 +116,7 @@
     "modular-scripts/rollup": "2.79.1",
     "next": "^14.0.0",
     "webpack-dev-server": "4.9.3",
-    "webpack": "5.92.0",
+    "webpack": "5.93.0",
     "recursive-readdir": "2.2.3"
   },
   "browserslist": {
