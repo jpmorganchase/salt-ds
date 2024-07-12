@@ -92,6 +92,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       size = "medium",
       disableScrim,
       idProp,
+      initialFocus,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -149,6 +150,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             height={elements.floating?.offsetHeight}
             focusManagerProps={{
               context: context,
+              initialFocus,
             }}
             className={clsx(
               withBaseName(),
