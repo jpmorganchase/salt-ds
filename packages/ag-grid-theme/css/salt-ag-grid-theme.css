@@ -61,8 +61,11 @@ div[class*="ag-theme-salt"] {
 }
 
 div[class*="ag-theme-salt-compact"] {
-  --ag-row-height: var(--salt-size-base);
-  --ag-header-height: var(--salt-size-base);
+  /* Ensures icon / country symbol renders correct height  */
+  --salt-size-base: 16px;
+
+  /* --ag-row-height: var(--salt-size-base); */
+  /* --ag-header-height: var(--salt-size-base); */
 }
 
 div[class*="ag-theme-salt"] .ag-root-wrapper {
@@ -153,6 +156,11 @@ div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
 
 div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
   color: var(--salt-actionable-secondary-foreground-active);
+}
+
+div[class*="ag-theme-salt"] .ag-cell-label-container {
+  /* row height is base size + 50 spacing on top/bottom */
+  padding: var(--salt-spacing-50) 0;
 }
 
 /* MENU */
