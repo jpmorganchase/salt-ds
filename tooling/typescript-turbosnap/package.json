@@ -1,9 +1,6 @@
 {
   "name": "vite-plugin-typescript-turbosnap",
   "private": true,
-  "modular": {
-    "type": "package"
-  },
   "main": "./src/index.ts",
   "version": "1.0.0",
   "dependencies": {

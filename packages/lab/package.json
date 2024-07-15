@@ -14,6 +14,10 @@
     "@floating-ui/react": "^0.26.5",
     "@fluentui/react-overflow": "^9.0.19",
     "@internationalized/date": "^3.5.5",
+    "@salt-ds/core": "workspace:^",
+    "@salt-ds/icons": "workspace:^",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "@types/react-window": "^1.8.2",
     "aria-hidden": "^1.1.1",
     "attr-accept": "^2.0.0",
@@ -42,6 +46,7 @@
     "provenance": true
   },
   "scripts": {
+    "build": "yarn node ../../scripts/build.mjs",
     "bundle:css": "yarn node ./scripts/build.mjs"
   },
   "files": [
