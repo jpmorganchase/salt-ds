@@ -8,10 +8,7 @@
     "directory": "packages/countries"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "main": "./src/index.ts",
-  "modular": {
-    "type": "package"
-  },
+  "main": "src/index.ts",
   "sideEffects": false,
   "files": [
     "saltCountries.css",
@@ -19,11 +16,15 @@
     "css"
   ],
   "scripts": {
-    "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
+    "build": "yarn clean && yarn build:countries && yarn node ../../scripts/build.mjs",
+    "build:countries": "node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components",
     "copy:css": "yarn node ./scripts/copyCss.mjs"
   },
   "dependencies": {
+    "@salt-ds/core": "workspace:*",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {

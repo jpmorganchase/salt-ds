@@ -15,11 +15,14 @@
     "saltIcons.css"
   ],
   "scripts": {
-    "build": "yarn clean && yarn node ./scripts/generateIcons.mjs '*.svg'",
+    "build": "yarn clean && yarn build:icons && yarn node ../../scripts/build.mjs",
+    "build:icons": "yarn node ./scripts/generateIcons.mjs '*.svg'",
     "copy:css": "yarn node ./scripts/copyCss.mjs",
     "clean": "rimraf ./src/components"
   },
   "dependencies": {
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {

@@ -12,6 +12,9 @@
   "sideEffects": false,
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
+    "@salt-ds/icons": "workspace:*",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
@@ -29,7 +32,8 @@
     "provenance": true
   },
   "scripts": {
-    "bundle:css": "yarn node ./scripts/build.mjs"
+    "build": "yarn node ../../scripts/build.mjs",
+    "bundle:css": "yarn node ./scripts/bundleCSS.mjs"
   },
   "files": [
     "css"

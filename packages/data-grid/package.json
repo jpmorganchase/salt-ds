@@ -11,6 +11,11 @@
   "main": "src/index.ts",
   "sideEffects": false,
   "dependencies": {
+    "@salt-ds/core": "workspace:*",
+    "@salt-ds/icons": "workspace:*",
+    "@salt-ds/lab": "workspace:",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
@@ -26,5 +31,8 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-data-grid",
     "provenance": true
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs"
   }
 }
