@@ -289,7 +289,7 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
 
 export const ContextMenu: StoryFn = () => {
   const [virtualElement, setVirtualElement] = useState<VirtualElement | null>(
-    null
+    null,
   );
   const [open, setOpen] = useState(false);
   return (

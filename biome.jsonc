@@ -7,7 +7,13 @@
     "defaultBranch": "main"
   },
   "files": {
-    "ignore": [".next", "mockServiceWorker.js", "*-props.json", ".tmp"]
+    "ignore": [
+      ".next",
+      "mockServiceWorker.js",
+      "*-props.json",
+      ".tmp",
+      "package.json"
+    ]
   },
   "organizeImports": {
     "enabled": true

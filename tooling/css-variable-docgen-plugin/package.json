@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "main": "src/index.ts",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "dependencies": {
     "css-tree": "^2.0.4",
     "glob": "^8.0.0",
