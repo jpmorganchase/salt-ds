@@ -6,7 +6,7 @@ sidebar:
   priority: 1
 ---
 
-## What is a theme?
+## What is a Salt theme
 
 Salt theme is a collection of defined visual styles that shape the overall look-and-feel of a digital product. This encompasses elements like color, typography, spacing, and corner radius, ensuring a consistent and cohesive appearance throughout the product.
 
@@ -32,7 +32,7 @@ To keep tokens manageable, Salt doesn't create tokens for every style attribute 
 
 ## Supported themes
 
-As of Q3 2024, Salt offers two themes: the current 'legacy' theme, that reflects the UI Toolkit (UITK) design language, and the new JPM brand-endorsed 'next' theme.
+As of Q3 2024, Salt offers two themes: the current 'legacy' theme, that reflects the UI Toolkit (UITK) design language, and the new J.P. Morgan (JPM) brand-endorsed 'next' theme.
 
 In Salt's architecture, theme styles (known as 'design tokens') are kept separate from components. Regardless of the chosen theme (the look-and-feel), the underlying components remain the same. This separation makes it easy to switch between themes, without breaking or altering the underlying application build.
 
@@ -45,7 +45,7 @@ In Salt's architecture, theme styles (known as 'design tokens') are kept separat
 
 Salt Next is a new theme for Salt which is built on new design foundations endorsed by the J.P. Morgan Corporate Brand team. It is a non-breaking update to the Salt library which officially brings 'styling options' and 'theming' capability to Salt components.
 
-Salt design system does not recommend customizing the look-and-feel with the legacy Salt theme.
+Salt design system does not recommend customizing the look-and-feel with the 'legacy' Salt theme.
 
 ## Customizing with Salt Next
 
@@ -137,7 +137,7 @@ If styling options alone don't achieve your desired visual design, you can creat
 
 Any theme changes outside of 'styling options' mean you assume certain responsibilities from Salt. For example, if you change a token for a background color, you must ensure it meets accessibility standards for contrast ratios.
 
-Most design tokens are used across multiple components, so understand the impact and test changes thoroughly across the product. In Figma, create and publish custom components independently of the provided Salt libraries. In code, create a centralized CSS stylesheet with the changes to be imported alongside the Salt theme.
+Most design tokens are used across multiple components, so you need to understand the impact and test changes thoroughly across the product. In Figma, create and publish custom components independently of the provided Salt libraries. In code, create a centralized CSS stylesheet with the changes to be imported alongside the Salt theme.
 
 By modifying the theme, you own the cost of the change and are responsible for maintaining it.
 
@@ -189,7 +189,7 @@ The 500 series swatches have been carefully selected to ensure that primary text
   alt="Color contrast ensured 500 colorseries"
 />
 
-Primary, secondary, and tertiary backgrounds have been created as standalone swatches and are no longer tied to the color ramps. This includes snow, marble, and limestone for light mode; and jet, granite, and leather for dark mode.
+Primary, secondary, and tertiary backgrounds have been created as standalone swatches and are no longer tied to the color ramps. This includes snow, marble and limestone for light mode; and jet, granite and leather for dark mode.
 
 <Image
   src="/img/theming/standalone-background-colors.png"
@@ -214,23 +214,23 @@ Salt Next introduces the Amplitude typeface, taken directly from the CIB Brand G
 
 ### Corner ramps
 
-Salt Next includes the ability to apply predefined corner radiuses to specified components. This rounded corner feature, from the CIB Brand Guidelines, allows designers to create a softer, more consumer-friendly look and feel in their products. Each density includes four different radiuses, which help achieve a sense of visual nesting when used together.
+Salt Next includes the ability to apply predefined corner radiuses to specified components. This rounded corner feature, from the CIB Brand Guidelines, allows designers to create a softer, more consumer-friendly look-and-feel in their products. Each density includes four different radiuses, which help achieve a sense of visual nesting when used together.
 
 <Image src="/img/theming/new-corner-ramps.png" alt="New corner ramps" />
 
-## When to use the Salt Next theme?
+## When to use the Salt Next theme
 
 Before using the Salt Next theme in design or development you should align with your Product team and check which theme to use, and when an appropriate time to switch themes is.
 
-Due to the benefits of improved accessibility and brand alignment, and the ability to easily tailor look-and-feel to use cases, Salt recommends that delivery teams plan to switch to the Salt Next theme
+Due to the benefits of improved accessibility and brand alignment, and the ability to easily tailor look-and-feel to use cases, Salt recommends that delivery teams plan to switch to the Salt Next theme.
 
-## What about the current 'legacy' theme?
+## What about the current 'legacy' theme
 
 We understand the importance of 'legacy' theme for products while migrating from UI Toolkit. Whilst the Design System team is still providing support for the UI Toolkit, we will continue to ensure that a 'legacy' theme is available for Salt components.
 
 Salt does not provide all styling options for the 'legacy' theme (apart from density and mode) and does not recommend customizing the look-and-feel. Please be aware you are responsible for maintaining any customizations you make to this theme.
 
-**If you are a designer**, be aware that if your product team is continuing to use the 'legacy' theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include legacy support in the new Salt Next variable-driven Figma library.
+**If you are a designer**, be aware that if your product team is continuing to use the 'legacy' theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include legacy support in the new Salt Next [variable-driven Figma library](#new-variable-driven-libraries).
 
 ## How to use the Salt Next theme
 
@@ -238,9 +238,9 @@ The Salt Next theme is now stable and available in both Figma and code to use in
 
 ### Figma
 
-#### New variable-driven libraries
-
 To provide 'styling options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
+
+#### New variable-driven libraries
 
 Using Figma variables enables us to reduce the number of Figma libraries we need to provide. Salt Next has the following libraries:
 
@@ -249,8 +249,6 @@ Using Figma variables enables us to reduce the number of Figma libraries we need
 3. Salt (Next) Color Library
 
 The 'Salt Icons' library has been updated with variable support to work with Salt Next components.
-
-Some recent component and pattern releases in the Core code package may be missing, but we are working to add them soon.
 
 To access the libraries:
 
@@ -275,7 +273,7 @@ To access the libraries:
 
 The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'styling options' to your components.
 
-The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `-salt-spacing-300`).
+The variables are set up to match our tokens in code. When inspecting a design in Figma's [Dev Mode](https://help.figma.com/hc/en-us/sections/15023066873239-Dev-Mode), you can see references that match our tokens, such as size and spacing values (e.g., `--spacing-100` in Figma maps to `--salt-spacing-100` in code).
 
 <Image
   src="/img/theming/figma-next-library-next-dev-mode.png"
@@ -286,56 +284,66 @@ The variables are set up to match our tokens in code. When inspecting a design i
 
 The Colors Library provides access to all foundational color ramps (e.g., `--blue-100` to `--blue-900`). These colors are linked to the semantic styles in the Salt Next Styles library.
 
-You don't need to add these colors to your project unless you want to use them directly. For consistency across components and to benefit from 'styling options', Salt recommends applying variables from the Salt Next Style library to your project only.
+You don't need to add these colors to your project unless you want to use them directly. For consistency across components and to benefit from 'styling options', Salt recommends only applying variables from the [Salt Next Style library](#using-the-style-library) to your project.
 
 #### Using the Component & Pattern Library
 
 The new variable-driven Component & Pattern library functions similarly to the current Salt component library but with key differences:
 
 - No need to switch between light and dark mode libraries.
-- No need to set 'density' at the component level.
+- No need to set density at the component level.
 - Access to new 'styling options' like round corners, accent color, and Amplitude as a heading and/or action font.
 
 #### Using component 'styling options' in Figma
 
 1.  Add components: Drag from the Assets panel.
-2.  Access 'styling options': In the right sidebar, click on the Variables icon in the Layer panel to see all available options.
+2.  Access 'styling options': In the right sidebar, click 'Change variable mode' (double hexagon) icon in the Layer panel to see all available options.
 
     <Image
       src="/img/theming/figma-next-library-variable-mode-switch.png"
       alt="Figma next library variable mode switch"
     />
 
-3.  For the current Page, Frame or Component set:
+3.  For Pages, Groups, Sections, Frames or Components:
 
         1. **Accent / Mode**: Set teal or blue (default) accent color (e.g., indicators in Tabs, CTA buttons) in light or dark mode.
         1. **Corner**: Switch between sharp (default) and round corners.
-        1. **Density**: Change the size, spacing, corner radius and type size of elements for high (default) medium, low or touch density.
-        1. **Heading Font**: Set Display and H1-4 type styles as Open Sans or Amplitude.
-        1. **Action Font**: Set the type style in Button components as Open Sans or Amplitude.
+        1. **Density**: Change the size, spacing, corner radius and type size of elements for high (default), medium, low or touch density.
+        1. **Heading Font**: Set display and H1-H4 type styles as Open Sans or Amplitude.
+        1. **Action Font**: Set action components (mostly Buttons) type styles as Open Sans or Amplitude.
 
 #### Setting a Theme Recipe in Figma
 
-styling options can be set at different levels within Figma – at a Page, Frame or Component level. While you can set them for individual components, we recommend setting the required options for a product/ LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a Frame or Component level where you’re mixing styling options.
+While you can set styling options for individual components, we recommend setting the required options for a product / LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a nested Frame or Component level where you need to mix styling options.
 
 ### Code
 
-The new Salt Provider, `SaltProviderNext`, offers new styling options like rounded corners and balanced color palettes. It extends the existing Salt Provider, keeping current options (light/dark mode, density levels) with new props for new options.
+The new Salt Provider, `SaltProviderNext`, offers new styling options like rounded corners and balanced color palettes. It extends the existing Salt Provider, keeping current options (light / dark modes, density levels) with new props for new options.
 To use it, replace the existing `SaltProvider` with `SaltProviderNext` and import the new theme CSS.
 
-```javascript
-// Alongside with existing `import "@salt-ds/theme/index.css";`
-import "@salt-ds/theme/css/theme-next.css";
+```diff
+// Swap out existing SaltProvider(s)
+- import { SaltProvider } from "@salt-ds/core";
++ import { SaltProviderNext } from "@salt-ds/core";
 ```
 
-The new provider adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., `data-corner`). All values in `theme-next.css` are scoped to `.salt-theme-next` to override existing values.
+```diff
+// Alongside existing `import "@salt-ds/theme/index.css";`
+  import "@salt-ds/theme/index.css";
++ import "@salt-ds/theme/css/theme-next.css";
+```
 
-#### Setting a Theme Recipe in Code
+The new provider adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., `data-corner`). All values in `theme-next.css` are scoped to `.salt-theme-next` to override any existing values.
 
-Youcan use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
+#### Setting a Theme Recipe in code
 
-```jsx
+You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
+
+```javascript
 import { sharedStylePresets } from '@lob-library/styles';
 
-<SaltProviderNext {... sharedStylePresets}>
+<SaltProviderNext
+  {... sharedStylePresets}
+  // Any product specific overrides
+>
 ```
