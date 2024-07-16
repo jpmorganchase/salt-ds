@@ -10,7 +10,7 @@ describe("GIVEN a Dialog", () => {
     it("THEN it should display a dialog by default", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltDialogHeader").should("be.visible");
@@ -21,7 +21,7 @@ describe("GIVEN a Dialog", () => {
     it("THEN it should display the header", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltDialogHeader-header").should("be.visible");
@@ -29,7 +29,8 @@ describe("GIVEN a Dialog", () => {
 
     it("THEN it should add the accent class to the title component", () => {
       cy.mount(<Default />);
-      cy.findByRole("button").click();
+
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltDialogHeader-withAccent").should("exist");
     });
@@ -37,7 +38,7 @@ describe("GIVEN a Dialog", () => {
     it("THEN it should display animations by default", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.findByRole("dialog").should("have.class", "saltDialog-enterAnimation");
     });
@@ -51,7 +52,7 @@ describe("GIVEN a Dialog", () => {
       () => {
         cy.mount(<Default />);
 
-        cy.findByRole("button").click();
+        cy.findByRole("button", { name: "Open dialog" }).realClick();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
       },
@@ -62,7 +63,7 @@ describe("GIVEN a Dialog", () => {
     it("THEN it should display the preheader", () => {
       cy.mount(<Preheader />);
 
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.get(".saltDialogHeader-preheader").should("be.visible");
     });
@@ -71,7 +72,7 @@ describe("GIVEN a Dialog", () => {
   describe("WHEN disableScrim is provided", () => {
     it("THEN it should not display the scrim", () => {
       cy.mount(<Default disableScrim />);
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltScrim").should("not.exist");
     });
@@ -80,7 +81,7 @@ describe("GIVEN a Dialog", () => {
   describe("WHEN disableDismiss is provided", () => {
     it("THEN it should not close when clicking outside the dialog", () => {
       cy.mount(<Default disableDismiss />);
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltScrim").click("left", { force: true });
       cy.findByRole("dialog").should("exist");
@@ -97,7 +98,7 @@ describe("GIVEN a Dialog", () => {
       () => {
         cy.mount(<Default size={"large"} />);
 
-        cy.findByRole("button").click();
+        cy.findByRole("button", { name: "Open dialog" }).realClick();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-large-xl");
       },
@@ -112,7 +113,7 @@ describe("GIVEN a Dialog", () => {
       () => {
         cy.mount(<Default size={"small"} />);
 
-        cy.findByRole("button").click();
+        cy.findByRole("button", { name: "Open dialog" }).realClick();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-small-xs");
       },
@@ -125,7 +126,7 @@ describe("GIVEN a Dialog", () => {
 
       cy.mount(<Default />);
 
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.findByRole("dialog").should("be.visible");
 
@@ -143,7 +144,7 @@ describe("GIVEN a Dialog", () => {
     it("THEN it should close when the ESC key is pressed", () => {
       cy.mount(<Default />);
 
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.findByRole("dialog").should("be.visible");
 
@@ -154,7 +155,7 @@ describe("GIVEN a Dialog", () => {
 
     it("THEN it should close when clicking outside the dialog", () => {
       cy.mount(<Default />);
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.get(".saltScrim").click("left", { force: true });
       cy.findByRole("dialog").should("not.exist");
@@ -162,21 +163,25 @@ describe("GIVEN a Dialog", () => {
 
     it("THEN it should trap focus inside the Dialog", () => {
       cy.mount(<Default />);
-      cy.findByRole("button").click();
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      cy.findAllByRole("button").eq(0).should("be.focused");
+      cy.findAllByRole("button", { name: "Cancel" }).should("be.focused");
       cy.realPress("Tab");
-      cy.findAllByRole("button").eq(1).should("be.focused");
+      cy.findAllByRole("button", { name: "Previous" }).should("be.focused");
       cy.realPress("Tab");
-      cy.findAllByRole("button").eq(2).should("be.focused");
+      cy.findAllByRole("button", { name: "Next" }).should("be.focused");
       cy.realPress("Tab");
-      cy.findAllByRole("button")
-        .eq(3)
-        .should("be.focused")
-        .should("have.attr", "aria-label", "Close dialog");
+      cy.findAllByRole("button", { name: "Close dialog" }).should("be.focused");
       cy.realPress("Tab");
       //back to the first button
-      cy.findAllByRole("button").eq(0).should("be.focused");
+      cy.findAllByRole("button", { name: "Cancel" }).should("be.focused");
+    });
+
+    it("THEN should support initialFocus being set", () => {
+      cy.mount(<Default initialFocus={2} />);
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.findByRole("button", { name: "Next" }).should("be.focused");
     });
   });
 });

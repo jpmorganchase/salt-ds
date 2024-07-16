@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "main": "src/index.tsx",
-  "files": ["README.md"],
+  "files": [
+    "README.md"
+  ],
   "dependencies": {
     "@storybook/addon-docs": "^8.0.10",
     "@storybook/blocks": "^8.0.10",

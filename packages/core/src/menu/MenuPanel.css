@@ -8,6 +8,7 @@
   z-index: var(--salt-zIndex-flyover);
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
+  border-radius: var(--salt-palette-corner, 0);
 }
 
 .saltMenuPanel-container {

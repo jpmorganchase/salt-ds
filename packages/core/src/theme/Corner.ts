@@ -1,3 +1,7 @@
-export const UNSTABLE_CornerValues = ["sharp", "rounded"] as const;
+export const CornerValues = ["sharp", "rounded"] as const;
+/** @deprecated use `CornerValues` */
+export const UNSTABLE_CornerValues = CornerValues;
 
-export type UNSTABLE_Corner = (typeof UNSTABLE_CornerValues)[number];
+export type Corner = (typeof CornerValues)[number];
+/** @deprecated Use `Corner` */
+export type UNSTABLE_Corner = Corner;

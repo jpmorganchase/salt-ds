@@ -1,5 +1,6 @@
 import {
   flip,
+  offset,
   size,
   useClick,
   useDismiss,
@@ -217,6 +218,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       middleware: [
+        offset(1),
         size({
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {

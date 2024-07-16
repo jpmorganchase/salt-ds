@@ -146,7 +146,7 @@ AllVariantsGrid.parameters = {
     disableSnapshot: false,
     modes: {
       theme: {
-        themeNext: "disabled",
+        themeNext: "disable",
       },
       themeNext: {
         themeNext: "enable",

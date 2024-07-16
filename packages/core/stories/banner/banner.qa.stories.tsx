@@ -5,8 +5,6 @@ import {
   type BannerProps,
   Button,
   Link,
-  SaltProvider,
-  StackLayout,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -52,7 +50,20 @@ export const ExamplesGrid: StoryFn = (props) => (
 );
 
 ExamplesGrid.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (

@@ -1,3 +1,7 @@
-export const UNSTABLE_HeadingFontValues = ["Open Sans", "Amplitude"] as const;
+export const HeadingFontValues = ["Open Sans", "Amplitude"] as const;
+/** @deprecated use `HeadingFontValues` */
+export const UNSTABLE_HeadingFontValues = HeadingFontValues;
 
-export type UNSTABLE_HeadingFont = (typeof UNSTABLE_HeadingFontValues)[number];
+export type HeadingFont = (typeof HeadingFontValues)[number];
+/** @deprecated Use `HeadingFont` */
+export type UNSTABLE_HeadingFont = HeadingFont;

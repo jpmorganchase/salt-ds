@@ -1,11 +1,16 @@
+import {
+  StyleInjectionProvider,
+  useComponentCssInjection,
+} from "@salt-ds/styles";
+import { type WindowContextType, useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import React, {
   createContext,
+  useContext,
+  useMemo,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
-  useContext,
-  useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
@@ -14,40 +19,47 @@ import {
   DEFAULT_BREAKPOINTS,
   useMatchedBreakpoints,
 } from "../breakpoints";
-import type { Density, Mode, ThemeName, UNSTABLE_ActionFont } from "../theme";
+import type {
+  Accent,
+  ActionFont,
+  Corner,
+  Density,
+  HeadingFont,
+  Mode,
+  ThemeName,
+} from "../theme";
 import { useIsomorphicLayoutEffect } from "../utils";
 import { ViewportProvider } from "../viewport";
-
-import {
-  StyleInjectionProvider,
-  useComponentCssInjection,
-} from "@salt-ds/styles";
-import { type WindowContextType, useWindow } from "@salt-ds/window";
-import type { UNSTABLE_Accent } from "../theme/Accent";
-import type { UNSTABLE_Corner } from "../theme/Corner";
-import type { UNSTABLE_HeadingFont } from "../theme/HeadingFont";
 import saltProviderCss from "./SaltProvider.css";
 
 export const DEFAULT_DENSITY = "medium";
 
 const DEFAULT_THEME_NAME = "salt-theme";
-const UNSTABLE_ADDITIONAL_THEME_NAME = "salt-theme-next";
+const DEFAULT_THEME_NAME_NEXT = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
-const DEFAULT_CORNER: UNSTABLE_Corner = "sharp";
-const DEFAULT_HEADING_FONT: UNSTABLE_HeadingFont = "Open Sans";
-const DEFAULT_ACCENT: UNSTABLE_Accent = "blue";
-const DEFAULT_ACTION_FONT: UNSTABLE_ActionFont = "Open Sans";
+const DEFAULT_CORNER: Corner = "sharp";
+const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
+const DEFAULT_ACCENT: Accent = "blue";
+const DEFAULT_ACTION_FONT: ActionFont = "Open Sans";
 export interface ThemeContextProps {
   theme: ThemeName;
   mode: Mode;
   window?: WindowContextType;
   /** Only available when using SaltProviderNext. */
   themeNext: boolean;
-  UNSTABLE_corner: UNSTABLE_Corner;
-  UNSTABLE_headingFont: UNSTABLE_HeadingFont;
-  UNSTABLE_accent: UNSTABLE_Accent;
-  UNSTABLE_actionFont: UNSTABLE_ActionFont;
+  corner: Corner;
+  /** @deprecated use `corner`*/
+  UNSTABLE_corner: Corner;
+  headingFont: HeadingFont;
+  /** @deprecated use `headingFont` */
+  UNSTABLE_headingFont: HeadingFont;
+  accent: Accent;
+  /** @deprecated use `accent` */
+  UNSTABLE_accent: Accent;
+  actionFont: ActionFont;
+  /** @deprecated use `actionFont` */
+  UNSTABLE_actionFont: ActionFont;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -56,9 +68,13 @@ export const ThemeContext = createContext<ThemeContextProps>({
   theme: "",
   mode: DEFAULT_MODE,
   themeNext: false,
+  corner: DEFAULT_CORNER,
   UNSTABLE_corner: DEFAULT_CORNER,
+  headingFont: DEFAULT_HEADING_FONT,
   UNSTABLE_headingFont: DEFAULT_HEADING_FONT,
+  accent: DEFAULT_ACCENT,
   UNSTABLE_accent: DEFAULT_ACCENT,
+  actionFont: DEFAULT_ACTION_FONT,
   UNSTABLE_actionFont: DEFAULT_ACTION_FONT,
 });
 
@@ -74,8 +90,8 @@ const getThemeNames = (
 ): ThemeName => {
   if (themeNext) {
     return themeName === DEFAULT_THEME_NAME
-      ? clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME)
-      : clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName);
+      ? clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT)
+      : clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT, themeName);
   }
   return themeName === DEFAULT_THEME_NAME
     ? themeName
@@ -104,7 +120,7 @@ const createThemedChildren = ({
   mode: Mode;
   applyClassesTo?: TargetElement;
 } & ThemeNextProps &
-  UNSTABLE_SaltProviderNextAdditionalProps) => {
+  SaltProviderNextAdditionalProps) => {
   const themeNamesString = getThemeNames(themeName, themeNext);
   const themeNextProps = {
     "data-corner": corner,
@@ -226,7 +242,7 @@ function InternalSaltProvider({
   accent: accentProp,
   actionFont: actionFontProp,
 }: Omit<
-  SaltProviderProps & ThemeNextProps & UNSTABLE_SaltProviderNextProps,
+  SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
 >) {
   const inheritedDensity = useContext(DensityContext);
@@ -234,10 +250,10 @@ function InternalSaltProvider({
     theme: inheritedTheme,
     mode: inheritedMode,
     window: inheritedWindow,
-    UNSTABLE_corner: inheritedCorner,
-    UNSTABLE_headingFont: inheritedHeadingFont,
-    UNSTABLE_accent: inheritedAccent,
-    UNSTABLE_actionFont: inheritedActionFont,
+    corner: inheritedCorner,
+    headingFont: inheritedHeadingFont,
+    accent: inheritedAccent,
+    actionFont: inheritedActionFont,
   } = useContext(ThemeContext);
 
   const isRootProvider = inheritedTheme === undefined || inheritedTheme === "";
@@ -269,6 +285,11 @@ function InternalSaltProvider({
       mode,
       window: targetWindow,
       themeNext: Boolean(themeNext),
+      corner: corner,
+      headingFont: headingFont,
+      accent: accent,
+      actionFont: actionFont,
+      // Backward compatilibty
       UNSTABLE_corner: corner,
       UNSTABLE_headingFont: headingFont,
       UNSTABLE_accent: accent,
@@ -385,20 +406,22 @@ export function SaltProvider({
   );
 }
 
-interface UNSTABLE_SaltProviderNextAdditionalProps {
-  corner?: UNSTABLE_Corner;
-  headingFont?: UNSTABLE_HeadingFont;
-  accent?: UNSTABLE_Accent;
-  actionFont?: UNSTABLE_ActionFont;
+interface SaltProviderNextAdditionalProps {
+  corner?: Corner;
+  headingFont?: HeadingFont;
+  accent?: Accent;
+  actionFont?: ActionFont;
 }
 
-export type UNSTABLE_SaltProviderNextProps = SaltProviderProps &
-  UNSTABLE_SaltProviderNextAdditionalProps;
+export type SaltProviderNextProps = SaltProviderProps &
+  SaltProviderNextAdditionalProps;
+/** @deprecated use `SaltProviderNextProps` */
+export type UNSTABLE_SaltProviderNextProps = SaltProviderNextProps;
 
-export function UNSTABLE_SaltProviderNext({
+export function SaltProviderNext({
   enableStyleInjection,
   ...restProps
-}: UNSTABLE_SaltProviderNextProps) {
+}: SaltProviderNextProps) {
   return (
     <StyleInjectionProvider value={enableStyleInjection}>
       {/* Leveraging InternalSaltProvider being not exported, so we can pass more props than previously supported */}
@@ -406,6 +429,8 @@ export function UNSTABLE_SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
+/** @deprecated use `SaltProviderNext` */
+export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {
   const { window, ...contextWithoutWindow } = useContext(ThemeContext);

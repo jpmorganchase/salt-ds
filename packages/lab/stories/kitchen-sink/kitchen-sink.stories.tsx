@@ -159,7 +159,7 @@ export const Example1 = () => {
           <Text color="warning">Warning body copy</Text>
           <Text color="success">Success body copy</Text>
           <Text color="info">Info body copy</Text>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -174,7 +174,7 @@ export const Example1 = () => {
           <Text color="warning">Warning body copy</Text>
           <Text color="success">Success body copy</Text>
           <Text color="info">Info body copy</Text>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -191,7 +191,7 @@ export const Example1 = () => {
             <Text color="success">Success body copy</Text>
             <Text color="info">Info body copy</Text>
           </Card>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -208,7 +208,7 @@ export const Example1 = () => {
             <Text color="success">Success body copy</Text>
             <Text color="info">Info body copy</Text>
           </Card>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -229,10 +229,26 @@ export const Example1 = () => {
         <Badge value="new" />
         <NotificationIcon />
         <NotificationSolidIcon />
-        <Link>Link</Link>
-        <Link variant="secondary">Link</Link>
-        <Link target="_blank">Link</Link>
-        <Link target="_blank" variant="secondary">
+        <Link href="#">Link</Link>
+        <Link href="#" color="secondary">
+          Link
+        </Link>
+        <Link href="#" color="info">
+          Link
+        </Link>
+        <Link href="#" color="success">
+          Link
+        </Link>
+        <Link href="#" color="warning">
+          Link
+        </Link>
+        <Link href="#" color="error">
+          Link
+        </Link>
+        <Link href="#" target="_blank">
+          Link
+        </Link>
+        <Link href="#" target="_blank" color="secondary">
           Link
         </Link>
         <StatusIndicator status="error" />

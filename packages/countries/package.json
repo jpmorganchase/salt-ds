@@ -13,7 +13,11 @@
     "type": "package"
   },
   "sideEffects": false,
-  "files": ["saltCountries.css", "saltSharpCountries.css", "css"],
+  "files": [
+    "saltCountries.css",
+    "saltSharpCountries.css",
+    "css"
+  ],
   "scripts": {
     "build": "yarn clean && node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components",

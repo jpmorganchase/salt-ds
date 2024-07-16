@@ -1,17 +1,19 @@
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type MouseEvent,
   type MouseEventHandler,
   forwardRef,
 } from "react";
 import { makePrefixer } from "../utils";
-import { ConditionalWrapper } from "./ConditionalWrapper";
 import { ExpansionIcon } from "./ExpansionIcon";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
+import type { RenderPropsType } from "../utils";
 import navigationItemCss from "./NavigationItem.css";
+import { NavigationItemAction } from "./NavigationItemAction";
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -39,6 +41,10 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   parent?: boolean;
   /**
+   * Render prop to enable customisation of navigation item element.
+   */
+  render?: RenderPropsType["render"];
+  /**
    * Action to be triggered when the navigation item is expanded.
    */
   onExpand?: MouseEventHandler<HTMLButtonElement>;
@@ -55,14 +61,15 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
     const {
       active,
       blurActive,
+      render,
       children,
       className,
       expanded = false,
+      href,
       orientation = "horizontal",
       parent,
       level = 0,
       onExpand,
-      href,
       style: styleProp,
       ...rest
     } = props;
@@ -79,6 +86,13 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       "--saltNavigationItem-level": `${level}`,
     };
 
+    const isParent = parent || href === undefined;
+
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onExpand?.(event);
+    };
+
     return (
       <div
         ref={ref}
@@ -86,7 +100,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         style={style}
         {...rest}
       >
-        <ConditionalWrapper
+        <NavigationItemAction
           className={clsx(
             withBaseName("wrapper"),
             {
@@ -96,17 +110,17 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             },
             withBaseName(orientation),
           )}
-          parent={parent}
-          expanded={expanded}
-          onExpand={onExpand}
-          active={active}
+          render={render ?? (isParent ? <button type="button" /> : undefined)}
+          aria-expanded={isParent ? expanded : undefined}
+          onClick={handleClick}
+          aria-current={!isParent && active ? "page" : undefined}
           href={href}
         >
           <span className={withBaseName("label")}>{children}</span>
-          {parent && (
+          {isParent ? (
             <ExpansionIcon expanded={expanded} orientation={orientation} />
-          )}
-        </ConditionalWrapper>
+          ) : null}
+        </NavigationItemAction>
       </div>
     );
   },

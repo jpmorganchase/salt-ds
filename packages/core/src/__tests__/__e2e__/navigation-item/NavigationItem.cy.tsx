@@ -66,12 +66,8 @@ describe("GIVEN a NavItem", () => {
   describe("AND it is a parent", () => {
     it("should render an expansion button", () => {
       cy.mount(<NavigationItem parent={true}>Navigation Item</NavigationItem>);
-      cy.findByRole("button", { name: "expand" }).should("exist");
-      cy.findByRole("button", { name: "expand" }).should(
-        "have.attr",
-        "aria-expanded",
-        "false",
-      );
+      cy.findByRole("button").should("exist");
+      cy.findByRole("button").should("have.attr", "aria-expanded", "false");
     });
 
     it("should call `onExpand` when the expansion button is clicked", () => {
@@ -81,7 +77,7 @@ describe("GIVEN a NavItem", () => {
           Navigation Item
         </NavigationItem>,
       );
-      cy.findByRole("button", { name: "expand" }).realClick();
+      cy.findByRole("button").realClick();
       cy.get("@expandSpy").should("have.been.calledOnce");
     });
 
@@ -92,12 +88,76 @@ describe("GIVEN a NavItem", () => {
             Navigation Item
           </NavigationItem>,
         );
-        cy.findByRole("button", { name: "expand" }).should(
-          "have.attr",
-          "aria-expanded",
-          "true",
-        );
+        cy.findByRole("button").should("have.attr", "aria-expanded", "true");
       });
+    });
+  });
+
+  describe("AND `render` is passed a render function", () => {
+    it("should call `render` to create parent item", () => {
+      const mockRender = cy
+        .stub()
+        .as("render")
+        .returns(<button>Parent Button</button>);
+      cy.mount(
+        <NavigationItem
+          active={true}
+          expanded={true}
+          href="https://www.saltdesignsystem.com"
+          level={2}
+          parent={true}
+          orientation="vertical"
+          render={mockRender}
+        >
+          Navigation Item
+        </NavigationItem>,
+      );
+      cy.findByText("Parent Button").should("exist");
+      cy.get("@render").should("have.been.calledWithMatch", {
+        "aria-expanded": true,
+        className: Cypress.sinon.match.string,
+        children: Cypress.sinon.match.any,
+      });
+    });
+    it("should call `render` to create child item", () => {
+      const mockRender = cy
+        .stub()
+        .as("render")
+        // biome-ignore lint/a11y/useValidAnchor: <explanation>
+        .returns(<a>Navigation Link</a>);
+      cy.mount(
+        <NavigationItem
+          active={true}
+          expanded={true}
+          href="https://www.saltdesignsystem.com"
+          level={2}
+          parent={false}
+          orientation="vertical"
+          render={mockRender}
+        >
+          Navigation Item
+        </NavigationItem>,
+      );
+      cy.findByText("Navigation Link").should("exist");
+      cy.get("@render").should("have.been.calledWithMatch", {
+        "aria-current": "page",
+        className: Cypress.sinon.match.string,
+        children: Cypress.sinon.match.any,
+        href: "https://www.saltdesignsystem.com",
+      });
+    });
+  });
+
+  describe("AND `render` is given a JSX element", () => {
+    it("should merge the props and render the JSX element ", () => {
+      cy.mount(
+        <NavigationItem parent={true} render={<button>Button Children</button>}>
+          Navigation Item
+        </NavigationItem>,
+      );
+      cy.findByRole("button").should("exist");
+      cy.findByRole("button").should("have.attr", "aria-expanded", "false");
+      cy.findByText("Button Children").should("exist");
     });
   });
 });

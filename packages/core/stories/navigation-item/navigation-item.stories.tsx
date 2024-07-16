@@ -3,10 +3,12 @@ import {
   FlexLayout,
   NavigationItem,
   type NavigationItemProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import "./navigation-item.stories.css";
 
@@ -582,6 +584,104 @@ export const VerticalNestedGroupNoIcon = () => {
           </li>
         ))}
       </ul>
+    </nav>
+  );
+};
+
+const CustomLinkImplementation = (props: any) => (
+  <a {...props} aria-label={"overridden-label"}>
+    <Text>Your Own Link Implementation</Text>
+  </a>
+);
+
+export const WithRenderElement = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
+        <li>
+          <NavigationItem
+            expanded={expanded}
+            level={0}
+            onExpand={() => setExpanded(!expanded)}
+            orientation="vertical"
+            parent={true}
+            render={<button />}
+          >
+            Render Prop Parent
+          </NavigationItem>
+        </li>
+        {expanded ? (
+          <li>
+            <NavigationItem
+              href="#"
+              level={1}
+              orientation="vertical"
+              render={<CustomLinkImplementation />}
+            >
+              Render Prop Child
+            </NavigationItem>
+          </li>
+        ) : null}
+      </StackLayout>
+    </nav>
+  );
+};
+
+export const WithRenderProp = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const render = (props: any) => {
+    if (props.href) {
+      return <a {...props} />;
+    }
+    return <button {...props} />;
+  };
+
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
+        <li>
+          <NavigationItem
+            expanded={expanded}
+            level={0}
+            onExpand={() => setExpanded(!expanded)}
+            orientation="vertical"
+            parent={true}
+            render={render}
+          >
+            Render Prop Parent
+          </NavigationItem>
+        </li>
+        {expanded ? (
+          <li>
+            <NavigationItem
+              href="#"
+              level={1}
+              orientation="vertical"
+              render={render}
+            >
+              Render Prop Child
+            </NavigationItem>
+          </li>
+        ) : null}
+      </StackLayout>
     </nav>
   );
 };
