@@ -1,14 +1,14 @@
-import { FC } from "react";
+import type { FC } from "react";
 import {
   SystemStatus,
-  SystemStatusProps,
+  type SystemStatusProps,
   SystemStatusContent,
 } from "@salt-ds/lab";
 import {
   StackLayout,
   Text
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
 export default {
