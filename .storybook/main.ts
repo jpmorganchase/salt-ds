@@ -27,7 +27,7 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-a11y"),
     getAbsolutePath("@storybook/addon-mdx-gfm"),
     getAbsolutePath("@storybook/addon-interactions"),
-    "@storybook/addon-storysource",
+    getAbsolutePath("@storybook/addon-storysource"),
   ],
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");
