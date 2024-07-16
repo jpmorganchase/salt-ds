@@ -50,6 +50,8 @@
   },
   "dependencies": {
     "@biomejs/biome": "1.8.3",
+    "@biomejs/js-api": "^0.6.2",
+    "@biomejs/wasm-nodejs": "^1.8.3",
     "@changesets/cli": "^2.25.2",
     "@cypress/code-coverage": "^3.12.35",
     "@faker-js/faker": "^8.0.0",
