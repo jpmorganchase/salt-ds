@@ -4,6 +4,10 @@ import {
   SystemStatusProps,
   SystemStatusContent,
 } from "@salt-ds/lab";
+import {
+  StackLayout,
+  Text
+} from "@salt-ds/core";
 import { Meta, StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
@@ -15,7 +19,14 @@ export default {
 const BasicSystemStatusExample: FC<SystemStatusProps> = ({ status }) => {
   return (
     <SystemStatus status={status}>
-      <SystemStatusContent>Example custom renderer</SystemStatusContent>
+      <SystemStatusContent>
+        <StackLayout gap={0.5}>
+          <Text color="inherit">
+            <strong>Title</strong>
+          </Text>
+          <Text color="inherit">Example custom renderer</Text>
+        </StackLayout>
+      </SystemStatusContent>
     </SystemStatus>
   );
 };

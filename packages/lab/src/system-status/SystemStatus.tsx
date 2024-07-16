@@ -9,10 +9,7 @@ import systemStatusCss from "./SystemStatus.css";
 
 export interface SystemStatusProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Emphasize the styling by applying a background color: defaults to false
-   */
-  /**
-   *  A string to determine the current state of the SystemStatus
+   *  A string to determine the current state of the SystemStatus. Defaults to `info`.
    */
   status?: ValidationStatus;
 }
