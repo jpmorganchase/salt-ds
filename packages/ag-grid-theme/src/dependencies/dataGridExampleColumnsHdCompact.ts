@@ -48,12 +48,12 @@ const dataGridExampleColumnsHdCompact: ColDef[] = [
   {
     headerName: "Rating",
     field: "rating",
+    // Not using `editable-cell` as it doesn't work with Dropdown focus style
     editable: true,
     cellEditor: DropdownEditor,
     cellEditorParams: {
       source: [10, 20, 30, 40, 50, 60],
     },
-    cellClass: ["editable-cell"],
   },
   {
     headerName: "Flag",
