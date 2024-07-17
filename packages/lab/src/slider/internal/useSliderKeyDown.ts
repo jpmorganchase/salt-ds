@@ -1,3 +1,4 @@
+import type { KeyboardEvent } from "react";
 import type { SliderChangeHandler, SliderValue } from "../types";
 import {
   type UpdateValueItem,
@@ -16,7 +17,7 @@ export function useSliderKeyDown(
   setValue: SliderChangeHandler,
   onChange?: SliderChangeHandler,
 ) {
-  return (event: React.KeyboardEvent) => {
+  return (event: KeyboardEvent) => {
     const handleElement = event.target as HTMLDivElement;
     const handleIndex = getHandleIndex(handleElement);
     let valueItem: number = Array.isArray(value) ? value[handleIndex] : value;

@@ -1,6 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { type ChangeEvent, useEffect, useState } from "react";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  useEffect,
+  useState,
+} from "react";
 import { InputLegacy as Input } from "../input-legacy";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -58,9 +64,7 @@ export const AlphaInput = ({
     setAlphaInputValue(alpha);
   };
 
-  const handleKeyDownAlpha = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-  ): void => {
+  const handleKeyDownAlpha = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       const alpha =
         alphaInputValue.trim().replace("%", "") !== ""
@@ -72,7 +76,7 @@ export const AlphaInput = ({
     }
   };
 
-  const handleOnBlurAlpha = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurAlpha = (e: FocusEvent<HTMLInputElement>): void => {
     // Guard against parseFloat('') becoming NaN
     const alpha =
       alphaInputValue.trim() !== "" ? Number.parseFloat(alphaInputValue) : 0;

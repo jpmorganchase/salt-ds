@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import {
   type HTMLAttributes,
   type ReactNode,
+  type UIEvent,
   forwardRef,
   useState,
 } from "react";
@@ -25,7 +26,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const { children, className, ...rest } = props;
     const [scrollTop, setScrollTop] = useState(0);
 
-    const handleScroll = (event: React.UIEvent<HTMLElement>) => {
+    const handleScroll = (event: UIEvent<HTMLElement>) => {
       setScrollTop(event.currentTarget.scrollTop);
     };
 

@@ -1,8 +1,9 @@
 import { offset, platform } from "@floating-ui/dom";
 import type { Platform } from "@floating-ui/react";
 import type { Meta, StoryFn } from "@storybook/react";
-import type React from "react";
 import {
+  type CSSProperties,
+  type ChangeEvent,
   type ComponentPropsWithoutRef,
   type Ref,
   forwardRef,
@@ -48,7 +49,7 @@ type RootComponentProps = FloatingComponentProps &
 
 type NewWindowTestProps = Pick<TooltipProps, "placement" | "content">;
 
-const offscreenStyles: React.CSSProperties = {
+const offscreenStyles: CSSProperties = {
   top: -9999,
   left: -9999,
   position: "fixed",
@@ -158,7 +159,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
 
   const [value, setValue] = useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
 

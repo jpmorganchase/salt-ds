@@ -10,8 +10,7 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import type { ChangeEvent } from "react";
-import React from "react";
+import { type ChangeEvent, useState } from "react";
 
 const checkboxesData = [
   {
@@ -30,11 +29,11 @@ interface WithActionsContentProps {
 }
 
 const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
-  const [controlledValues, setControlledValues] = React.useState([
+  const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
   ]);
 
-  const [checkboxState, setCheckboxState] = React.useState({
+  const [checkboxState, setCheckboxState] = useState({
     checked: false,
     indeterminate: true,
   });
@@ -105,7 +104,7 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
 };
 
 export const WithActions = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);

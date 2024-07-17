@@ -4,13 +4,15 @@ import {
 } from "@salt-ds/styles";
 import { type WindowContextType, useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import React, {
-  createContext,
-  useContext,
-  useMemo,
+import {
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
+  cloneElement,
+  createContext,
+  isValidElement,
+  useContext,
+  useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
@@ -132,8 +134,8 @@ const createThemedChildren = ({
     return children;
   }
   if (applyClassesTo === "child") {
-    if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
-      return React.cloneElement(children, {
+    if (isValidElement<HTMLAttributes<HTMLElement>>(children)) {
+      return cloneElement(children, {
         className: clsx(
           children.props?.className,
           themeNamesString,

@@ -1,4 +1,4 @@
-import React, { type HTMLAttributes, type ReactElement } from "react";
+import { type HTMLAttributes, type ReactElement, cloneElement } from "react";
 
 import type { ToolbarAlignmentProps } from "../ToolbarProps";
 import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
@@ -85,14 +85,14 @@ export const renderToolbarItems = (
       };
 
       if (item.element.type === Tooltray) {
-        return React.cloneElement(item.element, toolbarItemProps);
+        return cloneElement(item.element, toolbarItemProps);
       }
       switch (item.element.type) {
         case ToolbarField: {
           const props = item.element.props as ToolbarFieldProps;
-          return React.cloneElement(item.element, {
+          return cloneElement(item.element, {
             ...toolbarItemProps,
-            children: React.cloneElement(props.children as ReactElement, {
+            children: cloneElement(props.children as ReactElement, {
               // Inject an id that nested Control can use to query status via context
               id: `toolbar-control-${item.id}`,
             }),
@@ -104,7 +104,7 @@ export const renderToolbarItems = (
 
           return (
             <ToolbarField {...responsiveProps} {...toolbarItemProps}>
-              {React.cloneElement(item.element, {
+              {cloneElement(item.element, {
                 ...componentProps,
                 // Inject an id that nested Control can use to query status via context
                 id: `toolbar-control-${item.id}`,

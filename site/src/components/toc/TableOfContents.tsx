@@ -1,11 +1,11 @@
 import { TableOfContents as MosaicTOC } from "@jpmorganchase/mosaic-site-components";
-import React, { type ComponentPropsWithoutRef, useEffect } from "react";
+import { type ComponentPropsWithoutRef, useEffect, useState } from "react";
 
 // This component is needed to fix the TOC not picking up lazily loaded mdx from next-remote-mdx.
 export function TableOfContents(
   props: ComponentPropsWithoutRef<typeof MosaicTOC>,
 ) {
-  const [showTOC, setShowTOC] = React.useState(false);
+  const [showTOC, setShowTOC] = useState(false);
 
   useEffect(() => {
     const handle = window.requestIdleCallback(() => {
