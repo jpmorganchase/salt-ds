@@ -5,9 +5,14 @@ import {
   useRoute,
   useStore,
 } from "@jpmorganchase/mosaic-store";
-import { TabPanel, Tabs } from "@salt-ds/lab";
+import { TabNext, TabstripNext } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
-import React, { type FC, useEffect, useState } from "react";
+import React, {
+  type FC,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import { code, p, ul } from "../../components";
 import { TableOfContents } from "../../components/toc";
@@ -87,15 +92,16 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const isMobileView = useIsMobileView();
 
-  const updateRouteWhenTabChanges = (index: number) => {
-    const currentTab = tabs.find(({ id }) => index === id);
+  const updateRouteWhenTabChanges = (
+    event: SyntheticEvent,
+    { value }: { value: string },
+  ) => {
+    const currentTab = tabs.find(({ name }) => value === name);
 
     currentTab
       ? push(`${newRoute}${currentTab.name}`)
       : push(`${newRoute}${tabs[0].name}`);
   };
-
-  const currentTabIndex = currentTab?.id ?? 0;
 
   const {
     meta: { title },
@@ -138,16 +144,32 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
         <ReactMarkdown components={components}>
           {description ?? ""}
         </ReactMarkdown>
-        <Tabs
-          activeTabIndex={currentTabIndex}
-          onActiveChange={updateRouteWhenTabChanges}
-        >
-          {tabs.map(({ id, label }) => (
-            <TabPanel key={id} label={label} className={styles.tabPanel}>
-              {children}
-            </TabPanel>
-          ))}
-        </Tabs>
+        <div className={styles.container}>
+          <TabstripNext
+            value={currentTab?.name}
+            onChange={updateRouteWhenTabChanges}
+            variant="inline"
+            className={styles.tabstrip}
+          >
+            {tabs.map(({ id, label, name }) => (
+              <TabNext
+                key={id}
+                value={name}
+                id={`${title}-${name}`}
+                aria-controls={`${name}-panel`}
+              >
+                {label}
+              </TabNext>
+            ))}
+          </TabstripNext>
+          <div
+            role="tabpanel"
+            id={`${currentTab?.name}-panel`}
+            aria-labelledby={`${title}-${currentTab?.name}`}
+          >
+            {children}
+          </div>
+        </div>
       </DetailBase>
     </AllExamplesViewContext.Provider>
   );
