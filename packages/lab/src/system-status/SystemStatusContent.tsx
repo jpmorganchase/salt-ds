@@ -1,10 +1,14 @@
-import { type ComponentPropsWithoutRef, forwardRef, type ReactNode } from "react";
-import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 
-import systemStatusContentCss from "./SystemStatusContent.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import systemStatusContentCss from "./SystemStatusContent.css";
 
 const withBaseName = makePrefixer("saltSystemStatusContent");
 

@@ -1,6 +1,6 @@
-import { composeStories } from "@storybook/react";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import * as systemStatusStories from "@stories/system-status/system-status.stories";
+import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(systemStatusStories);
@@ -35,7 +35,7 @@ describe("GIVEN a System status", () => {
     cy.mount(
       <SystemStatus>
         <SystemStatusContent>{message}</SystemStatusContent>
-      </SystemStatus>
+      </SystemStatus>,
     );
 
     cy.get("[aria-live]").contains(message);

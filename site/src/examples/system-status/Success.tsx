@@ -1,6 +1,6 @@
-import type { ReactElement } from "react";
 import { Text } from "@salt-ds/core";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const Success = (): ReactElement => (
   <div style={{ width: "80%" }}>

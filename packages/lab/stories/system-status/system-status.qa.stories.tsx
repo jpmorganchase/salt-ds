@@ -1,15 +1,12 @@
-import type { FC } from "react";
+import { StackLayout, Text } from "@salt-ds/core";
 import {
   SystemStatus,
-  type SystemStatusProps,
   SystemStatusContent,
+  type SystemStatusProps,
 } from "@salt-ds/lab";
-import {
-  StackLayout,
-  Text
-} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
+import type { FC } from "react";
 
 export default {
   title: "Lab/System Status/System Status QA",

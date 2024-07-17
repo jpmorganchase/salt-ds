@@ -1,13 +1,13 @@
-import type { Meta, StoryFn } from "@storybook/react";
 import {
+  Banner,
+  BannerActions,
+  BannerContent,
+  Button,
   StackLayout,
   Text,
-  Banner,
-  BannerContent,
-  BannerActions,
-  Button,
 } from "@salt-ds/core";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
 
 import { CloseIcon } from "@salt-ds/icons";
 

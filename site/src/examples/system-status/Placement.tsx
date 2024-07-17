@@ -1,10 +1,10 @@
 import {
+  Banner,
+  BannerActions,
+  BannerContent,
+  Button,
   StackLayout,
   Text,
-  Banner,
-  BannerContent,
-  BannerActions,
-  Button,
 } from "@salt-ds/core";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 

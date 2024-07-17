@@ -1,9 +1,13 @@
-import { forwardRef, type HTMLAttributes } from "react";
-import { makePrefixer, StatusIndicator, type ValidationStatus } from "@salt-ds/core";
+import {
+  StatusIndicator,
+  type ValidationStatus,
+  makePrefixer,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
+import { type HTMLAttributes, forwardRef } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import systemStatusCss from "./SystemStatus.css";
 
@@ -19,7 +23,7 @@ const withBaseName = makePrefixer("saltSystemStatus");
 export const SystemStatus = forwardRef<HTMLDivElement, SystemStatusProps>(
   function SystemStatus(
     { children, className, status = "info", ...rest },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -39,5 +43,5 @@ export const SystemStatus = forwardRef<HTMLDivElement, SystemStatusProps>(
         {children}
       </div>
     );
-  }
+  },
 );
