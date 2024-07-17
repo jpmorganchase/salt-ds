@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, type ReactNode } from "react";
 import { clsx } from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 

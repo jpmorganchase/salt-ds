@@ -1,6 +1,6 @@
 import { StackLayout, Text } from "@salt-ds/core";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 export const WithTitle = (): ReactElement => (
   <div style={{ width: "80%" }}>

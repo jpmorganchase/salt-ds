@@ -10,7 +10,7 @@ import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 
 import { CloseIcon } from "@salt-ds/icons";
 
-import { ReactElement } from "react";
+import type { ReactElement } from "react";
 
 export const Placement = (): ReactElement => {
   return (
