@@ -1,4 +1,5 @@
 name: Storybook Preview Publish
+run-name: Storybook publish for ${{ github.event.workflow_run.head_branch }}
 
 on:
   workflow_run:

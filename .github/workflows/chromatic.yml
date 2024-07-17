@@ -37,6 +37,12 @@ jobs:
 
             const base = fs.readFileSync("./METADATA/base", "utf8").trim();
             core.setOutput("base", base);
+
+            const runChromatic = fs.readFileSync("./METADATA/run-chromatic", "utf8").trim();
+            core.setOutput("runChromatic", runChromatic);
+
+            const noTurbosnap = fs.readFileSync("./METADATA/no-turbosnap", "utf8").trim();
+            core.setOutput("noTurbosnap", noTurbosnap);
       - name: Fetch base branch from upstream
         if: github.event.workflow_run.event == 'pull_request'
         run: |
@@ -60,7 +66,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
-        if: ${{ steps.chromatic_branch.outputs.draft != 'true' }}
+        if: ${{ steps.chromatic_branch.outputs.draft != 'true' && steps.chromatic_branch.outputs.runChromatic == 'true' }}
         uses: chromaui/action@v11.3.5
         # Chromatic GitHub Action options
         with:
@@ -68,12 +74,12 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
-          onlyChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' }}
-          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'packages/(theme)/**' || '' }}
+          onlyChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' }}
+          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
           skip: "changeset-release/*"
-          autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' }}
+          autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' }}
           ignoreLastBuildOnBranch: "**"
-          traceChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'expanded' || '' }}
+          traceChanged: ${{ (steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
           storybookBuildDir: "./storybook-static"
           branchName: ${{ steps.chromatic_branch.outputs.branchName }}
           debug: true
