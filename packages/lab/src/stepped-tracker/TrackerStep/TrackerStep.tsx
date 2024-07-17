@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, type ValidationStatus } from "@salt-ds/core";
 import {
   StepActiveIcon,
   StepDefaultIcon,
@@ -22,7 +22,7 @@ import trackerStepCss from "./TrackerStep.css";
 const withBaseName = makePrefixer("saltTrackerStep");
 
 type StageOptions = "pending" | "completed";
-type StatusOptions = "warning" | "error";
+type StatusOptions = Extract<ValidationStatus, "warning" | "error">;
 
 interface ParseStateProps {
   stage: StageOptions;
