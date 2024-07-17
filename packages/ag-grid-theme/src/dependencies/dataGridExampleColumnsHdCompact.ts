@@ -1,6 +1,6 @@
 import type { ColDef } from "ag-grid-community";
-import { FlagRenderer } from "./cell-renderers/FlagRenderer";
 import { DropdownEditor } from "./cell-editors/DropdownEditor";
+import { FlagRenderer } from "./cell-renderers/FlagRenderer";
 
 const dataGridExampleColumnsHdCompact: ColDef[] = [
   {
@@ -50,7 +50,7 @@ const dataGridExampleColumnsHdCompact: ColDef[] = [
     field: "rating",
     // Not using `editable-cell` as it doesn't work with Dropdown focus style
     editable: true,
-    cellEditor: DropdownEditor,
+    cellEditor: "DropdownEditor",
     cellEditorParams: {
       source: [10, 20, 30, 40, 50, 60],
     },

@@ -1,5 +1,5 @@
-import type { CustomCellRendererProps } from "ag-grid-react";
 import { countryMetaMap } from "@salt-ds/countries";
+import type { CustomCellRendererProps } from "ag-grid-react";
 
 export const FlagRenderer = (props: CustomCellRendererProps) => {
   const isoCode = props.value as keyof typeof countryMetaMap;

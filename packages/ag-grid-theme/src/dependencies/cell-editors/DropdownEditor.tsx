@@ -1,3 +1,5 @@
+import { Dropdown, type DropdownProps, Option } from "@salt-ds/core";
+import type { ICellEditorParams } from "ag-grid-community";
 import React, {
   forwardRef,
   useImperativeHandle,
@@ -7,8 +9,6 @@ import React, {
   type SyntheticEvent,
   type KeyboardEvent,
 } from "react";
-import type { ICellEditorParams } from "ag-grid-community";
-import { Dropdown, type DropdownProps, Option } from "@salt-ds/core";
 
 export type GridCellValue = string | boolean | number;
 
@@ -52,8 +52,6 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
 
   useImperativeHandle(ref, () => ({ getValue: (): typeof value => value }));
 
-  console.log("--- DropdownEditor", { value });
-
   return (
     <Dropdown
       onSelectionChange={onSelect}
@@ -61,7 +59,15 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
       selected={[value || ""]}
       ref={button}
       onKeyDown={onEscapeKeyPressed}
+      className="DropdownEditor"
       {...dropdownProps}
+      style={{
+        // Outline will be shown on the cell
+        outline: "none",
+        // Leave room for cell focus ring
+        marginInline: "2px",
+        width: "calc(100% - 4px)",
+      }}
     >
       <div
         ref={(elem): void => {

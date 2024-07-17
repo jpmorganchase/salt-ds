@@ -254,6 +254,10 @@ div[class*="ag-theme-salt"] .ag-cell-inline-editing:focus-within {
   background: var(--salt-container-primary-background);
 }
 
+div[class*="ag-theme-salt"] .ag-cell-inline-editing {
+  padding: 0;
+}
+
 div[class*="ag-theme-salt"] .editable-cell,
 div[class*="ag-theme-salt"] .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
@@ -302,10 +306,6 @@ div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:before {
   position: absolute;
   top: 0px;
   z-index: 2;
-}
-
-div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing {
-  padding: 0;
 }
 
 div[class*="ag-theme-salt"] .editable-numeric-cell input,
