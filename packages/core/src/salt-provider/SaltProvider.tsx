@@ -407,9 +407,29 @@ export function SaltProvider({
 }
 
 interface SaltProviderNextAdditionalProps {
+  /**
+   * Either "sharp" or "rounded".
+   * Determines selected components corner radius.
+   * @default "sharp"
+   */
   corner?: Corner;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of display and heading text.
+   * @default "Open Sans"
+   */
   headingFont?: HeadingFont;
+  /**
+   * Either "blue" or "teal".
+   * Determines accent color used across components, e.g. Accent Button, List, Calendar.
+   * @default "blue"
+   */
   accent?: Accent;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of action components, mostly Buttons.
+   * @default "Open Sans"
+   */
   actionFont?: ActionFont;
 }
 
