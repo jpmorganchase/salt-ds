@@ -4,7 +4,7 @@ import * as systemStatusStories from "@stories/system-status/system-status.stori
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(systemStatusStories);
-const { Info, Success, Error, Warning } = composedStories;
+const { Info, Success, Error: SystemStatusError, Warning } = composedStories;
 
 describe("GIVEN a System status", () => {
   checkAccessibility(composedStories);
@@ -25,7 +25,7 @@ describe("GIVEN a System status", () => {
     cy.findByTestId("WarningSolidIcon").should("exist");
   });
   it("THEN should render error status", () => {
-    cy.mount(<Error />);
+    cy.mount(<SystemStatusError />);
 
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
