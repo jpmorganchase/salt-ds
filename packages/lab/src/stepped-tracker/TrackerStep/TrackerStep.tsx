@@ -1,10 +1,10 @@
-import { makePrefixer, type ValidationStatus } from "@salt-ds/core";
+import { type ValidationStatus, makePrefixer } from "@salt-ds/core";
 import {
+  ErrorSolidIcon,
   StepActiveIcon,
   StepDefaultIcon,
   StepSuccessIcon,
   WarningSolidIcon,
-  ErrorSolidIcon,
 } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
