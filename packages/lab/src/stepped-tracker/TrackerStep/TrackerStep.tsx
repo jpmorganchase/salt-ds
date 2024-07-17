@@ -24,7 +24,7 @@ const withBaseName = makePrefixer("saltTrackerStep");
 type StageOptions = "pending" | "completed";
 type StatusOptions = Extract<ValidationStatus, "warning" | "error">;
 
-interface ParseStateProps {
+interface ParseIconNameProps {
   stage: StageOptions;
   status?: StatusOptions;
   active: boolean;
@@ -63,7 +63,7 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   }, [isWithinSteppedTracker]);
 };
 
-const parseState = ({ stage, status, active }: ParseStateProps) => {
+const parseIconName = ({ stage, status, active }: ParseIconNameProps) => {
   if (stage === "completed") return "completed";
   if (active) return "active";
   if (status) return status;
@@ -95,9 +95,9 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
     const isActive = activeStep === stepNumber;
-    const state = parseState({ stage, status, active: isActive });
+    const iconName = parseIconName({ stage, status, active: isActive });
 
-    const Icon = iconMap[state];
+    const Icon = iconMap[iconName];
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
 
@@ -108,10 +108,9 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     return (
       <li
-        className={clsx(withBaseName(), withBaseName(state), className)}
+        className={clsx(withBaseName(), withBaseName(iconName), className)}
         style={innerStyle}
         aria-current={isActive ? "step" : undefined}
-        data-state={state}
         ref={ref}
         {...restProps}
       >
