@@ -1,11 +1,11 @@
-import { ReactElement } from "react";
-import { Slider } from "@salt-ds/lab";
 import {
-  StackLayout,
+  FlexLayout,
   FormField,
   FormFieldLabel,
-  FlexLayout,
+  StackLayout,
 } from "@salt-ds/core";
+import { Slider } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const SingleFormField = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>

@@ -1,5 +1,5 @@
-import { useContext, createContext } from "react";
-import { SliderChangeHandler, SliderValue } from "../types";
+import { createContext, useContext } from "react";
+import type { SliderChangeHandler, SliderValue } from "../types";
 export interface SliderContextValue {
   min: number;
   max: number;

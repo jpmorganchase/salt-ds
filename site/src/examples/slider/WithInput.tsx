@@ -1,12 +1,16 @@
-import { ReactElement, useState, ChangeEvent } from "react";
-import { Slider, SliderValue, SliderChangeHandler } from "@salt-ds/lab";
 import {
-  StackLayout,
+  FlexLayout,
   FormField,
   FormFieldLabel,
-  FlexLayout,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
+import {
+  Slider,
+  type SliderChangeHandler,
+  type SliderValue,
+} from "@salt-ds/lab";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 export const SingleWithInput = () => {
   const [value, setValue] = useState<SliderValue>([20]);
@@ -51,7 +55,7 @@ export const SingleWithInput = () => {
 
 function validate(minValue: number, maxValue: number) {
   if (minValue > maxValue) return false;
-  else return true;
+  return true;
 }
 
 const RangeWithInput = () => {
@@ -59,7 +63,7 @@ const RangeWithInput = () => {
   const [minValue, setMinValue] = useState(`${value[0]}`);
   const [maxValue, setMaxValue] = useState(`${value[1]}`);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
-    undefined
+    undefined,
   );
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -73,12 +77,17 @@ const RangeWithInput = () => {
   };
 
   const handleInputBlur = () => {
-    const minNumVal = parseFloat(minValue);
-    const maxNumVal = parseFloat(maxValue);
+    const minNumVal = Number.parseFloat(minValue);
+    const maxNumVal = Number.parseFloat(maxValue);
     const validated = validate(minNumVal, maxNumVal);
-    validated
-      ? (setValue([minNumVal, maxNumVal]), setValidationStatus(undefined))
-      : setValidationStatus("error");
+
+    if (validated) {
+      setValue([minNumVal, maxNumVal]);
+      setValidationStatus(undefined);
+      return;
+    }
+
+    setValidationStatus("error");
   };
 
   const handleSliderChange: SliderChangeHandler = (value: number[]) => {

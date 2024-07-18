@@ -1,9 +1,9 @@
 import { makePrefixer } from "@salt-ds/core";
-import { useRef, ComponentPropsWithoutRef, useState } from "react";
+import { type ComponentPropsWithoutRef, useRef, useState } from "react";
 
+import { useSliderContext } from "./SliderContext";
 import { SliderSelection } from "./SliderSelection";
 import { SliderThumb } from "./SliderThumb";
-import { useSliderContext } from "./SliderContext";
 import { usePointerDown } from "./usePointerDown";
 
 export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
@@ -26,7 +26,7 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
     onChange,
     null,
     activeThumb,
-    setActiveThumb
+    setActiveThumb,
   );
 
   return (
