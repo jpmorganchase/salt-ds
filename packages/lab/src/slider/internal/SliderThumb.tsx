@@ -1,10 +1,10 @@
-import { makePrefixer, Label } from "@salt-ds/core";
+import { Label, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { getPercentage } from "./utils";
-import { ComponentPropsWithoutRef, RefObject } from "react";
-import { usePointerDown } from "./usePointerDown";
-import { useKeyDownThumb } from "./useKeyDownThumb";
+import type { ComponentPropsWithoutRef, RefObject } from "react";
 import { useSliderContext } from "./SliderContext";
+import { useKeyDownThumb } from "./useKeyDownThumb";
+import { usePointerDown } from "./usePointerDown";
+import { getPercentage } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderThumb");
 
@@ -31,7 +31,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     onChange,
     index,
     activeThumb,
-    setActiveThumb
+    setActiveThumb,
   );
 
   const thumbPosition = getPercentage(min, max, value[index]);

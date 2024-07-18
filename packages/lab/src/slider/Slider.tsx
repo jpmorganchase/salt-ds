@@ -1,12 +1,12 @@
 import { Label, makePrefixer, useControlled } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes } from "react";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { SliderTrack, SliderMarks, SliderContext } from "./internal";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type HTMLAttributes, forwardRef } from "react";
+import { SliderContext, SliderMarks, SliderTrack } from "./internal";
 
 import sliderCss from "./Slider.css";
-import { SliderChangeHandler, SliderValue } from "./types";
+import type { SliderChangeHandler, SliderValue } from "./types";
 
 const withBaseName = makePrefixer("saltSlider");
 
@@ -55,7 +55,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = [0],
     onChange,
     className,
-    ["aria-label"]: ariaLabel,
+    "aria-label": ariaLabel,
     marks = "inline",
     ...rest
   },
@@ -96,7 +96,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         className={clsx(
           withBaseName(),
           { [withBaseName("bottomLabel")]: marks !== "inline" },
-          className
+          className,
         )}
         {...rest}
       >

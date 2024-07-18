@@ -1,5 +1,28 @@
-import { SliderChangeHandler, SliderValue } from "../types";
+import type { SliderChangeHandler, SliderValue } from "../types";
 import { clampValue, roundToStep, roundToTwoDp, setValue } from "./utils";
+
+const getValueFromKeyName = (
+  keyName: string,
+  value: number,
+  min: number,
+  max: number,
+  step: number,
+) => {
+  switch (keyName) {
+    case "Home":
+      return min;
+    case "End":
+      return max;
+    case "ArrowUp":
+    case "ArrowRight":
+      return value + step;
+    case "ArrowDown":
+    case "ArrowLeft":
+      return value - step;
+    default:
+      return value;
+  }
+};
 
 export function useKeyDownThumb(
   min: number,
@@ -7,38 +30,27 @@ export function useKeyDownThumb(
   step: number,
   value: SliderValue,
   onChange: SliderChangeHandler,
-  index: number
+  index: number,
 ) {
   return (event: React.KeyboardEvent) => {
-    let newValue: number = value[index];
-    switch (event.key) {
-      case "Home":
-        newValue = min;
-        break;
-      case "End":
-        newValue = max;
-        break;
-      case "ArrowUp":
-      case "ArrowRight":
-        newValue += step;
-        break;
-      case "ArrowDown":
-      case "ArrowLeft":
-        newValue -= step;
-        break;
-      default:
-        return;
-    }
+    const rawValue = getValueFromKeyName(
+      event.key,
+      value[index],
+      min,
+      max,
+      step,
+    );
 
-    newValue = roundToStep(newValue, step);
-    newValue = roundToTwoDp(newValue);
-    newValue = clampValue(newValue, min, max);
-    value.length > 1
-      ? (newValue =
-          index === 0
-            ? Math.min(newValue, value[1] - step)
-            : Math.max(newValue, value[0] + step))
-      : null;
+    const roundedToStep = roundToStep(rawValue, step);
+    const rounded = roundToTwoDp(roundedToStep);
+    const clamped = clampValue(Number(rounded), min, max);
+
+    const newValue =
+      value.length > 1
+        ? index === 0
+          ? Math.min(clamped, value[1] - step)
+          : Math.max(clamped, value[0] + step)
+        : clamped;
 
     setValue(value, newValue, index, onChange);
   };

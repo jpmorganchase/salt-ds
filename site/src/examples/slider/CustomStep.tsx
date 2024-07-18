@@ -1,6 +1,6 @@
-import { ReactElement } from "react";
-import { Slider } from "@salt-ds/lab";
 import { StackLayout } from "@salt-ds/core";
+import { Slider } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const CustomStep = (): ReactElement => (
   <StackLayout gap={3}>

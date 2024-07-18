@@ -1,12 +1,12 @@
-import { RefObject } from "react";
-import { SliderChangeHandler, SliderValue } from "../types";
+import type { RefObject } from "react";
+import type { SliderChangeHandler, SliderValue } from "../types";
 
 export function getValue(
   trackRef: RefObject<Element>,
   min: number,
   max: number,
   step: number,
-  clientX: number
+  clientX: number,
 ) {
   const { width, x } = trackRef.current!.getBoundingClientRect();
   const localX = clientX - x;
@@ -21,7 +21,7 @@ export function setValue(
   value: SliderValue,
   newValue: number,
   index: number,
-  onChange: SliderChangeHandler
+  onChange: SliderChangeHandler,
 ) {
   const newValueArray = [...value];
   newValueArray.splice(index, 1, newValue);
@@ -51,7 +51,7 @@ export function getPercentage(min: number, max: number, value: number) {
 export function getPercentageDifference(
   min: number,
   max: number,
-  value: number[]
+  value: number[],
 ) {
   const valueDiff = value[1] - value[0];
   const percentage = ((valueDiff - min) / (max - min)) * 100;

@@ -1,5 +1,5 @@
-import { RefObject, useState } from "react";
-import { SliderValue, SliderChangeHandler } from "../types";
+import { type RefObject, useState } from "react";
+import type { SliderChangeHandler, SliderValue } from "../types";
 import { getNearestIndex, getValue, setValue } from "./utils";
 
 export function usePointerDown(
@@ -11,7 +11,7 @@ export function usePointerDown(
   onChange: SliderChangeHandler,
   index: number | null,
   activeThumb: number | undefined,
-  setActiveThumb: (index: number | undefined) => void
+  setActiveThumb: (index: number | undefined) => void,
 ) {
   const [pointerDown, setPointerDown] = useState(false);
 
@@ -29,7 +29,7 @@ export function usePointerDown(
   const _onPointerUp = (
     event: PointerEvent,
     handlePointerMove: (e: PointerEvent) => void,
-    handlePointerUp: (e: PointerEvent) => void
+    handlePointerUp: (e: PointerEvent) => void,
   ) => {
     event.preventDefault();
     document.removeEventListener("pointermove", handlePointerMove);
@@ -42,20 +42,20 @@ export function usePointerDown(
     if (index === null) return;
 
     const { clientX } = event;
-    let newValue: number | undefined = getValue(
+    const rawValue: number | undefined = getValue(
       trackRef,
       min,
       max,
       step,
-      clientX
+      clientX,
     );
 
-    value.length > 1
-      ? (newValue =
-          index === 0
-            ? Math.min(newValue, value[1] - step)
-            : Math.max(newValue, value[0] + step))
-      : null;
+    const newValue =
+      value.length > 1
+        ? index === 0
+          ? Math.min(rawValue, value[1] - step)
+          : Math.max(rawValue, value[0] + step)
+        : rawValue;
     setValue(value, newValue, index, onChange);
   };
 
@@ -70,7 +70,7 @@ export function usePointerDown(
           value,
           newValue,
           value.length > 1 ? nearestIndex : 0,
-          onChange
+          onChange,
         );
         onDownThumb(nearestIndex);
       },

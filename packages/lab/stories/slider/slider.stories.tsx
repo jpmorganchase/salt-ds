@@ -1,13 +1,13 @@
 import {
-  Input,
-  FormField,
-  FormFieldLabel,
-  FormFieldHelperText,
   FlexLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
 } from "@salt-ds/core";
-import { Slider, SliderProps, SliderValue } from "@salt-ds/lab";
-import { useState, ChangeEvent } from "react";
-import { StoryFn } from "@storybook/react";
+import { Slider, type SliderProps, type SliderValue } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Lab/Slider",
@@ -111,7 +111,7 @@ RangeWithMarks.args = {
 
 function validate(minValue: number, maxValue: number) {
   if (minValue > maxValue) return false;
-  else return true;
+  return true;
 }
 
 export const RangeWithInput = () => {
@@ -119,7 +119,7 @@ export const RangeWithInput = () => {
   const [minValue, setMinValue] = useState<number>(value[0]);
   const [maxValue, setMaxValue] = useState(value[1]);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
-    undefined
+    undefined,
   );
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -134,9 +134,14 @@ export const RangeWithInput = () => {
 
   const handleInputBlur = () => {
     const validated = validate(+minValue, +maxValue);
-    validated
-      ? (setValue([minValue, maxValue]), setValidationStatus(undefined))
-      : setValidationStatus("error");
+
+    if (validated) {
+      setValue([minValue, maxValue]);
+      setValidationStatus(undefined);
+      return;
+    }
+
+    setValidationStatus("error");
   };
 
   const handleSliderChange = (value: SliderValue) => {

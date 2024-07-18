@@ -1,8 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
-import { ComponentPropsWithoutRef } from "react";
-import { getPercentage } from "./utils";
-import { useSliderContext } from "./SliderContext";
 import { clsx } from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
+import { useSliderContext } from "./SliderContext";
+import { getPercentage } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderSelection");
 

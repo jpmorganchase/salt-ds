@@ -10,7 +10,7 @@ describe("Given a Slider", () => {
           max={125}
           step={5}
           defaultValue={[100]}
-        />
+        />,
       );
       cy.findByRole("slider")
         .should("have.attr", "aria-valuemin", "5")
@@ -39,7 +39,7 @@ describe("Given a Slider", () => {
           step={5}
           defaultValue={[100]}
           onChange={changeSpy}
-        />
+        />,
       );
       cy.findByRole("slider").focus().realPress("ArrowRight");
       cy.findByRole("slider").should("have.attr", "aria-valuenow", "105");
@@ -77,7 +77,7 @@ describe("Given a Slider", () => {
           max={100}
           step={10}
           defaultValue={[20, 40]}
-        />
+        />,
       );
       cy.findAllByRole("slider").should("have.length", 2);
       cy.findAllByRole("slider")
@@ -98,7 +98,7 @@ describe("Given a Slider", () => {
           step={1}
           defaultValue={[2, 8]}
           onChange={changeSpy}
-        />
+        />,
       );
       cy.get(".saltSliderTrack").trigger("pointerdown", {
         clientX: 0,
@@ -122,7 +122,7 @@ describe("Given a Slider", () => {
           max={10}
           step={1}
           defaultValue={[5, 8]}
-        />
+        />,
       );
       cy.findAllByRole("slider")
         .eq(0)
@@ -142,7 +142,7 @@ describe("Given a Slider", () => {
           max={10}
           step={1}
           defaultValue={[2, 5]}
-        />
+        />,
       );
       cy.findAllByRole("slider")
         .eq(0)
