@@ -254,6 +254,7 @@ div[class*="ag-theme-salt"] .ag-cell-inline-editing:focus-within {
   background: var(--salt-container-primary-background);
 }
 
+/* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
 div[class*="ag-theme-salt"] .ag-cell-inline-editing {
   padding: 0;
 }
