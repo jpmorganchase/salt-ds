@@ -1,10 +1,13 @@
 import { makePrefixer } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import React, {
+import {
+  Children,
   type HTMLAttributes,
-  isValidElement,
   type ReactNode,
+  cloneElement,
+  forwardRef,
+  isValidElement,
   useMemo,
 } from "react";
 import type { BreadcrumbProps } from "./Breadcrumb";
@@ -60,7 +63,7 @@ export interface BreadcrumbsProps extends HTMLAttributes<HTMLElement> {
   children?: ReactNode;
 }
 
-export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
+export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
   function Breadcrumbs(props, ref) {
     const {
       children,
@@ -102,7 +105,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
       <BreadcrumbsSeparator {...SeparatorProps} />
     );
 
-    const childrenArray = React.Children.toArray(children);
+    const childrenArray = Children.toArray(children);
     const shouldRenderAllItems =
       wrap || maxItems == null || childrenArray.length <= maxItems;
 
@@ -111,7 +114,7 @@ export const Breadcrumbs = React.forwardRef<HTMLElement, BreadcrumbsProps>(
       .map((child, index) => {
         const isLastChild = index === childrenArray.length - 1;
 
-        return React.cloneElement(child, {
+        return cloneElement(child, {
           isCurrentLevel: isLastChild,
         } as BreadcrumbProps);
       });

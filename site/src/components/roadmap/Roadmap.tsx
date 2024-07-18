@@ -16,7 +16,7 @@ import {
   ProgressInprogressIcon,
   ProgressTodoIcon,
 } from "@salt-ds/icons";
-import { type ReactNode, useEffect, useState } from "react";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 import { Heading4 } from "../mdx/h4";
 
 import styles from "./style.module.css";
@@ -171,7 +171,7 @@ export const Roadmap = ({ endpoint }: RoadmapProps) => {
   );
 };
 
-const ColumnData: React.FC<{ item: RoadmapData; future?: boolean }> = ({
+const ColumnData: FC<{ item: RoadmapData; future?: boolean }> = ({
   item,
   future = true,
 }) => {

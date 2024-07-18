@@ -1,5 +1,11 @@
 import { makePrefixer } from "@salt-ds/core";
-import { useEffect, useState } from "react";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  useEffect,
+  useState,
+} from "react";
 import { InputLegacy as Input } from "../input-legacy";
 import type { RGBAValue } from "./Color";
 
@@ -11,7 +17,7 @@ const withBaseName = makePrefixer("saltColorChooser");
 interface RGBInputProps {
   rgbaValue: RGBAValue;
   value: "r" | "g" | "b";
-  onSubmit: (rgb: RGBAValue, e?: React.ChangeEvent) => void;
+  onSubmit: (rgb: RGBAValue, e?: ChangeEvent) => void;
 }
 
 export const RGBInput = ({
@@ -35,7 +41,7 @@ export const RGBInput = ({
   }, [rgbaValue, value]);
 
   const handleRGBInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: ChangeEvent<HTMLInputElement>,
     value: string,
   ): void => {
     let rgb: string | number;
@@ -49,7 +55,7 @@ export const RGBInput = ({
     setRgbaInputValue(rgb);
   };
 
-  const handleKeyDownRGB = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDownRGB = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       const newRgb = { ...rgbaValue, [value]: e.currentTarget.value };
       const validatedRgb = {
@@ -63,7 +69,7 @@ export const RGBInput = ({
     }
   };
 
-  const handleOnBlurRGB = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurRGB = (e: FocusEvent<HTMLInputElement>): void => {
     const newRgb = { ...rgbaValue, [value]: e.target.value };
     const validatedRgb = {
       r: Math.max(0, Math.min(newRgb.r, 255)),

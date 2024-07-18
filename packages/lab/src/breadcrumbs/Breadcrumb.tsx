@@ -3,6 +3,7 @@ import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   Children,
+  type ComponentType,
   type HTMLAttributes,
   type ReactNode,
   forwardRef,
@@ -28,7 +29,7 @@ export interface BreadcrumbProps {
   minWidth?: number;
   onItemClick?: (item: any, event: any) => void; // TODO
   overflowLabel?: string;
-  Icon?: React.ComponentType<IconProps>;
+  Icon?: ComponentType<IconProps>;
 }
 
 export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(

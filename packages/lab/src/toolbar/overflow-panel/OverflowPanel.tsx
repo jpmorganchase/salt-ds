@@ -6,11 +6,12 @@ import {
 } from "@salt-ds/core";
 import { OverflowMenuIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import React, {
+import {
   type ForwardedRef,
-  forwardRef,
   type MouseEvent,
   type ReactElement,
+  cloneElement,
+  forwardRef,
   useCallback,
   useRef,
 } from "react";
@@ -138,10 +139,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
           } as ToolbarFieldProps;
 
           if (type === ToolbarField) {
-            return React.cloneElement(
-              item.value as ReactElement,
-              formFieldProps,
-            );
+            return cloneElement(item.value as ReactElement, formFieldProps);
           }
           return (
             <ToolbarField {...formFieldProps} key={item.id}>

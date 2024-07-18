@@ -14,7 +14,7 @@ import {
   useId,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import "./overlay.stories.css";
 
@@ -156,11 +156,11 @@ const WithActionsContent = ({
   onClose: () => void;
   id: string | undefined;
 }) => {
-  const [controlledValues, setControlledValues] = React.useState([
+  const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
   ]);
 
-  const [checkboxState, setCheckboxState] = React.useState({
+  const [checkboxState, setCheckboxState] = useState({
     checked: false,
     indeterminate: true,
   });
@@ -231,7 +231,7 @@ const WithActionsContent = ({
 };
 
 export const WithActions = ({ onOpenChange }: OverlayProps) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   const onChange = (newOpen: boolean) => {

@@ -1,4 +1,4 @@
-import type { SyntheticEvent } from "react";
+import type { KeyboardEvent, MouseEvent, SyntheticEvent } from "react";
 import type { CollectionItem } from "./collectionTypes";
 
 export const SINGLE = "default";
@@ -62,13 +62,10 @@ export interface SelectionProps<
 }
 
 export interface ListHandlers {
-  onClick?: (event: React.MouseEvent) => void;
-  onKeyDown?: (event: React.KeyboardEvent) => void;
-  onKeyboardNavigation?: (
-    event: React.KeyboardEvent,
-    currentIndex: number,
-  ) => void;
-  onMouseMove?: (event: React.MouseEvent) => void;
+  onClick?: (event: MouseEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
+  onKeyboardNavigation?: (event: KeyboardEvent, currentIndex: number) => void;
+  onMouseMove?: (event: MouseEvent) => void;
 }
 export interface SelectionHookProps<
   Item,

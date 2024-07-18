@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { VALIDATION_NAMED_STATUS } from "../../../status-indicator";
 import {
   Display1,
@@ -333,7 +334,7 @@ describe("GIVEN Text component with styleAs=display3", () => {
 describe("GIVEN Text component within font family CSS var override", () => {
   it("should have non-default font family applied", () => {
     cy.mount(
-      <div style={{ "--salt-text-fontFamily": "Lato" } as React.CSSProperties}>
+      <div style={{ "--salt-text-fontFamily": "Lato" } as CSSProperties}>
         <Text>{textExample}</Text>
       </div>,
     );

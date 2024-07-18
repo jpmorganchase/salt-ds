@@ -1,4 +1,5 @@
 import {
+  type ComponentProps,
   type ElementType,
   type ReactElement,
   cloneElement,
@@ -12,16 +13,16 @@ export interface RenderPropsType {
 
 export function renderProps<Type extends ElementType>(
   Type: Type,
-  props: RenderPropsType & React.ComponentProps<Type>,
+  props: RenderPropsType & ComponentProps<Type>,
 ): ReactElement {
   const { render, ...rest } = props;
   // Case 1: If render is a valid React element, clone it with merged props
   if (isValidElement(render)) {
-    const renderProps = render.props as React.ComponentProps<Type>;
+    const renderProps = render.props as ComponentProps<Type>;
     return cloneElement(render, mergeProps(rest, renderProps));
   }
 
-  const restProps = rest as React.ComponentProps<Type>;
+  const restProps = rest as ComponentProps<Type>;
 
   // Case 2: If render is a function, call it with the rest of the props
   if (typeof render === "function") {

@@ -56,7 +56,7 @@ const DensityValues = ["high", "medium", "low", "touch"] as const;
 const DensityBlock = ({
   mode,
   children,
-}: DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
+}: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
   mode: Mode;
 }) => {
   const { themeNext } = useTheme();

@@ -1,9 +1,9 @@
 import { useControlled } from "@salt-ds/core";
-import type React from "react";
 import {
   Children,
   type FocusEventHandler,
   type MouseEventHandler,
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
   type RefObject,
   isValidElement,
@@ -460,7 +460,7 @@ export function useColumnResize<T>(
   }, []);
 
   return useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
+    (event: ReactMouseEvent<HTMLDivElement>) => {
       const targetElement = event.target as HTMLElement;
       const [columnIndexAttribute, thElement] = getAttribute(
         targetElement,
@@ -849,7 +849,7 @@ export function useRowSelection<T>(
   }, [setSelRowIdxs]);
 
   const onMouseDown = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
+    (event: ReactMouseEvent<HTMLDivElement>) => {
       if (rowSelectionMode === "none") {
         return;
       }
@@ -1188,7 +1188,7 @@ export function useRangeSelection(cellSelectionMode?: GridCellSelectionMode) {
   }, []);
 
   const onCellMouseDown = useCallback(
-    (event: React.MouseEvent) => {
+    (event: ReactMouseEvent) => {
       if (cellSelectionMode !== "range") {
         return;
       }
