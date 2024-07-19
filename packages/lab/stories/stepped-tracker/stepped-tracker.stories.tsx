@@ -93,10 +93,7 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
 
 export const Status: StoryFn<typeof SteppedTracker> = () => {
   return (
-    <StackLayout
-      direction="column"
-      align="stretch"
-      gap={10}
+    <div
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={1}>
@@ -116,7 +113,7 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
           <StepLabel>Default</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-    </StackLayout>
+    </div>
   );
 };
 
