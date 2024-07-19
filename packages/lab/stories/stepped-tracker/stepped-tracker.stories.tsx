@@ -224,8 +224,8 @@ export const AutoProgress: StoryFn<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }, key) => (
-          <TrackerStep stage={state} key={key}>
+        {steps.map(({ label, state }) => (
+          <TrackerStep stage={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
@@ -304,8 +304,8 @@ export const NonSequentialProgress: StoryFn<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }, key) => (
-          <TrackerStep stage={state} key={key}>
+        {steps.map(({ label, state }) => (
+          <TrackerStep stage={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
