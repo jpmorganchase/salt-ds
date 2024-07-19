@@ -165,6 +165,17 @@ div[class*="ag-theme-salt"] .ag-cell-label-container {
   padding: var(--salt-spacing-50) 0;
 }
 
+div[class*="ag-theme-salt"] .ag-list-item:hover,
+div[class*="ag-theme-salt"] .ag-virtual-list-item:hover {
+  background-color: var(--salt-selectable-background-hover);
+  cursor: pointer;
+}
+
+div[class*="ag-theme-salt"] .ag-label-align-right .ag-label {
+  margin-inline-start: var(--salt-spacing-100);
+  margin-inline-end: 0;
+}
+
 /* MENU */
 
 div[class*="ag-theme-salt"] .ag-menu {
