@@ -1,13 +1,14 @@
 import { Dropdown, type DropdownProps, Option } from "@salt-ds/core";
 import type { ICellEditorParams } from "ag-grid-community";
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useState,
-  useEffect,
-  useCallback,
-  type SyntheticEvent,
+import {
   type KeyboardEvent,
+  type SyntheticEvent,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
 } from "react";
 
 export type GridCellValue = string | boolean | number;
@@ -21,7 +22,7 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
   const { value: initialValue, source = [], dropdownProps } = props;
   const [value, setValue] = useState(initialValue);
 
-  const button = React.useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   const onSelect = useCallback(
     (_event: SyntheticEvent, selectedValue: Array<GridCellValue>) => {
@@ -31,7 +32,7 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
       // timeout is necessary because otherwise the grid stops editing
       // before the useImperativeHandle getValue returns the new value state
       setTimeout(() => {
-        props.api!.stopEditing();
+        props.api?.stopEditing();
       }, 100);
     },
     [props.api],
@@ -40,14 +41,14 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
   const onEscapeKeyPressed = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        props.api!.stopEditing();
+        props.api?.stopEditing();
       }
     },
     [props.api],
   );
 
   useEffect(() => {
-    button.current!.focus();
+    buttonRef.current?.focus();
   }, []);
 
   useImperativeHandle(ref, () => ({ getValue: (): typeof value => value }));
@@ -57,7 +58,7 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
       onSelectionChange={onSelect}
       defaultOpen={props.cellStartedEdit}
       selected={[value || ""]}
-      ref={button}
+      ref={buttonRef}
       onKeyDown={onEscapeKeyPressed}
       className="DropdownEditor"
       {...dropdownProps}
@@ -75,7 +76,7 @@ export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
           // current element -> list container -> list box that matters
           (
             (elem.parentElement as HTMLElement).parentElement as HTMLElement
-          ).className += " ag-custom-component-popup";
+          ).className += " ag-custom-component-popup"; // https://www.ag-grid.com/react-data-grid/component-filter/#custom-filters-containing-a-popup-element
         }}
       >
         {source.map((item) => (
