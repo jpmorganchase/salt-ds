@@ -65,6 +65,15 @@ module.exports = {
       config.resolve.fallback = { fs: false };
     }
 
+    for (const rule of config.module.rules) {
+      if (rule.oneOf) {
+        rule.oneOf.unshift({
+          resourceQuery: /raw/,
+          type: "asset/source",
+        });
+      }
+    }
+
     return config;
   },
   env: {},
