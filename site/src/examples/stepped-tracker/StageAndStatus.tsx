@@ -2,7 +2,7 @@ import { StackLayout } from "@salt-ds/core";
 import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Status = (): ReactElement => {
+export const StageAndStatus = (): ReactElement => {
   return (
     <StackLayout
       direction="column"
