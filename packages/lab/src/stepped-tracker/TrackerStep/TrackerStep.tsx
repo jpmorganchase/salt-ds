@@ -24,12 +24,6 @@ const withBaseName = makePrefixer("saltTrackerStep");
 type StageOptions = "pending" | "completed";
 type StatusOptions = Extract<ValidationStatus, "warning" | "error">;
 
-interface ParseIconNameProps {
-  stage: StageOptions;
-  status?: StatusOptions;
-  active: boolean;
-}
-
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
    * The stage of the step: "pending" or "completed" (note, "active" is derived from "activeStep" in parent SteppedTracker component)
@@ -63,7 +57,15 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   }, [isWithinSteppedTracker]);
 };
 
-const parseIconName = ({ stage, status, active }: ParseIconNameProps) => {
+const parseIconName = ({
+  stage,
+  status,
+  active,
+}: {
+  stage: StageOptions;
+  status?: StatusOptions;
+  active: boolean;
+}) => {
   if (stage === "completed") return "completed";
   if (active) return "active";
   if (status) return status;
