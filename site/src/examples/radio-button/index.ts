@@ -9,3 +9,4 @@ export * from "./Wrap";
 export * from "./LongText";
 export * from "./WithFormField";
 export * from "./WithDescription";
+export * from "./Controlled";
