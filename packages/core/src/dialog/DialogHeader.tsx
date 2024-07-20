@@ -30,6 +30,10 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
    * Displays the preheader just above the header
    **/
   preheader?: ReactNode;
+  /**
+   * Displays the subtitle just below the header
+   **/
+  subtitle?: ReactNode;
 }
 
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
@@ -38,6 +42,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       className,
       header,
       preheader,
+      subtitle,
       disableAccent,
       status: statusProp,
       ...rest
@@ -62,7 +67,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
             [withBaseName("withAccent")]: !disableAccent && !status,
             [withBaseName(status ?? "")]: !!status,
           },
-          className,
+          className
         )}
         ref={ref}
         {...rest}
@@ -70,13 +75,18 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
         {status && <StatusIndicator status={status} />}
         <H2 className={withBaseName("header")}>
           {preheader && (
-            <Text variant="secondary" className={withBaseName("preheader")}>
+            <Text color="secondary" className={withBaseName("preheader")}>
               {preheader}
             </Text>
           )}
           <div>{header}</div>
+          {subtitle && (
+            <Text color="secondary" className={withBaseName("subtitle")}>
+              {subtitle}
+            </Text>
+          )}
         </H2>
       </div>
     );
-  },
+  }
 );
