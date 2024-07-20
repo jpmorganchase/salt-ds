@@ -11,3 +11,4 @@ export * from "./Primary";
 export * from "./TextAlignment";
 export * from "./Validation";
 export * from "./Bordered";
+export * from "./Controlled";
