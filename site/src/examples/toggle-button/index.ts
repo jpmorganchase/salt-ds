@@ -4,3 +4,4 @@ export * from "./ToggleButtonGroupVertical";
 export * from "./Disabled";
 export * from "./IconOnly";
 export * from "./TextOnly";
+export * from "./Controlled";
