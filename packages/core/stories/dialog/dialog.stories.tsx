@@ -40,12 +40,16 @@ const UnmountLogger = () => {
 
 const DialogTemplate: StoryFn<
   Omit<DialogProps, "content"> &
-    Pick<ComponentProps<typeof DialogHeader>, "header" | "preheader"> & {
+    Pick<
+      ComponentProps<typeof DialogHeader>,
+      "header" | "preheader" | "subtitle"
+    > & {
       content: DialogContentProps["children"];
     }
 > = ({
   header,
   preheader,
+  subtitle,
   content,
   id,
   size,
@@ -78,7 +82,11 @@ const DialogTemplate: StoryFn<
         id={id}
         size={size}
       >
-        <DialogHeader header={header} preheader={preheader} />
+        <DialogHeader
+          header={header}
+          preheader={preheader}
+          subtitle={subtitle}
+        />
         <DialogContent>
           {content}
           <UnmountLogger />
@@ -164,6 +172,13 @@ export const Preheader = DialogTemplate.bind({});
 Preheader.args = {
   header: "Congratulations! You have created a Dialog.",
   preheader: "I am a preheader",
+};
+
+export const Subtitle = DialogTemplate.bind({});
+
+Subtitle.args = {
+  header: "Congratulations! You have created a Dialog.",
+  subtitle: "I am a subtitle",
 };
 
 const AlertDialogTemplate: StoryFn<
