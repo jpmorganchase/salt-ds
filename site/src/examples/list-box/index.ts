@@ -5,3 +5,4 @@ export * from "./DisabledOption";
 export * from "./Bordered";
 export * from "./Scrolling";
 export * from "./ComplexOptions";
+export * from "./Controlled";
