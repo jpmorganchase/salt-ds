@@ -6,14 +6,17 @@ import { shortColorData } from "./exampleData";
 export const Controlled = (): ReactElement => {
   const [selected, setSelected] = useState<string[]>([]);
 
-  const handleChange = (event: SyntheticEvent, newSelected: string[]) => {
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[]
+  ) => {
     setSelected(newSelected);
   };
 
   return (
     <ListBox
       selected={selected}
-      onSelectionChange={handleChange}
+      onSelectionChange={handleSelectionChange}
       style={{ width: "10em" }}
     >
       {shortColorData.slice(0, 5).map((color) => (
