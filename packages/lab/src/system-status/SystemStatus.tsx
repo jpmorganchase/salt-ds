@@ -36,8 +36,8 @@ export const SystemStatus = forwardRef<HTMLDivElement, SystemStatusProps>(
       <div
         className={clsx(withBaseName(), withBaseName(status), className)}
         ref={ref}
+        role="status"
         {...rest}
-        aria-live="polite"
       >
         <StatusIndicator status={status} className={withBaseName("icon")} />
         {children}

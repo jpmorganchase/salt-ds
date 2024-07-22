@@ -5,7 +5,7 @@
 Added `SystemStatus`, `SystemStatusContent`, `SystemStatusActions` component to lab.
 
 ```tsx
-<SystemStatus {...props}>
+<SystemStatus>
   <SystemStatusContent>
     <Text color="inherit">New feature updates are available</Text>
   </SystemStatusContent>

@@ -7,7 +7,7 @@
   border-width: var(--saltSystemStatus-borderWidth, var(--salt-size-border));
   border-style: var(--saltSystemStatus-borderStyle, var(--salt-container-borderStyle));
   box-sizing: border-box;
-  display: inline-flex;
+  display: flex;
   gap: var(--salt-spacing-75);
   padding: var(--saltSystemStatus-padding, var(--salt-spacing-50) var(--salt-spacing-100));
   width: 100%;

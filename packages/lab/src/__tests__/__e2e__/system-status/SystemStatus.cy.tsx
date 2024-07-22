@@ -4,33 +4,34 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(systemStatusStories);
-const { Info, Success, Error: SystemStatusError, Warning } = composedStories;
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+const { Info, Success, Error, Warning } = composedStories;
 
 describe("GIVEN a System status", () => {
   checkAccessibility(composedStories);
 
-  it("THEN should render info status", () => {
+  it('should render an info status when `status="info"`', () => {
     cy.mount(<Info />);
 
     cy.findByTestId("InfoSolidIcon").should("exist");
   });
-  it("THEN should render success status", () => {
+  it('should render a success status when `status="success"`', () => {
     cy.mount(<Success />);
 
     cy.findByTestId("SuccessTickIcon").should("exist");
   });
-  it("THEN should render warning status", () => {
+  it('should render a warning status when `status="warning"`', () => {
     cy.mount(<Warning />);
 
     cy.findByTestId("WarningSolidIcon").should("exist");
   });
-  it("THEN should render error status", () => {
-    cy.mount(<SystemStatusError />);
+  it('should render an error status when `status="error"`', () => {
+    cy.mount(<Error />);
 
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("THEN should announce the contents of the System status", () => {
+  it('should have a default role of "status"', () => {
     const message = "example announcement";
     cy.mount(
       <SystemStatus>
@@ -38,6 +39,6 @@ describe("GIVEN a System status", () => {
       </SystemStatus>,
     );
 
-    cy.get("[aria-live]").contains(message);
+    cy.findByRole("status").should("have.text", message);
   });
 });
