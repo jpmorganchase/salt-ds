@@ -54,7 +54,7 @@ export type ListControlProps<Item> = {
 };
 
 export function defaultValueToString<Item>(item: Item): string {
-  return typeof item === "string" ? item : "";
+  return String(item);
 }
 
 export function useListControl<Item>(props: ListControlProps<Item>) {

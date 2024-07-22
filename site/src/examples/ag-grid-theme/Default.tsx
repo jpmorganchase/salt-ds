@@ -35,15 +35,15 @@ export const Default = (): ReactElement => {
   const rowHeight = useMemo(() => {
     switch (density) {
       case "high":
-        return 24;
+        return 25;
       case "medium":
-        return 36;
+        return 37;
       case "low":
-        return 48;
+        return 49;
       case "touch":
-        return 60;
+        return 61;
       default:
-        return 20;
+        return 25;
     }
   }, [density]);
 
