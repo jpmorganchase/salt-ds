@@ -1,5 +1,19 @@
 # @salt-ds/core
 
+## 1.33.0
+
+### Minor Changes
+
+- 533b590: - Updated `Listbox`, `Menu`, `ComboBox` and `Dropdown` to use `--salt-palette-corner` when their corners are rounded.
+  - Updated `Menu`, `Dropdown` and `ComboBox` to have a 1px visual offset on floating panels.
+- 34e8c9c: Added `render` prop to `NavigationItem`. The `render` prop enables the substitution of the default anchor tag with an alternate link, such as React Router, facilitating integration with routing libraries.
+
+### Patch Changes
+
+- bfe0f84: Cleaned up TypeScript types in multiple components.
+- 0927a2d: Fixed the `initialFocus` prop not working on Dialog.
+- b6070e7: Added JSDoc description to `SaltProviderNext` props.
+
 ## 1.32.0
 
 ### Minor Changes
