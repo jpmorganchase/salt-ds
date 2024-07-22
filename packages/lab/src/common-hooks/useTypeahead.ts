@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { type KeyboardEvent, useCallback, useRef } from "react";
 import type { CollectionItem } from "./collectionTypes";
 import { Space, isCharacterKey } from "./keyUtils";
 
@@ -12,7 +12,7 @@ interface TypeaheadHookProps<Item> {
 }
 
 interface TypeaheadHookResult {
-  onKeyDown?: (e: React.KeyboardEvent) => void;
+  onKeyDown?: (e: KeyboardEvent) => void;
 }
 
 export const useTypeahead = <Item>({
@@ -52,7 +52,7 @@ export const useTypeahead = <Item>({
   );
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       const searchInProgress = startIdx.current !== -1;
       if (isCharacterKey(e) || (searchInProgress && e.key === Space)) {
         if (typeToNavigate) {

@@ -7,12 +7,16 @@ import {
 } from "@salt-ds/core";
 import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import React, {
+import {
+  Children,
   type ForwardedRef,
-  forwardRef,
   type KeyboardEvent,
   type MouseEvent,
   type RefObject,
+  cloneElement,
+  createElement,
+  forwardRef,
+  isValidElement,
   useCallback,
   useImperativeHandle,
   useRef,
@@ -144,13 +148,13 @@ export const Tabstrip = forwardRef(function Tabstrip(
     },
   });
 
-  const childCount = useRef(React.Children.count(children));
+  const childCount = useRef(Children.count(children));
 
   const getChildren = (): TabElement[] | undefined => {
-    if (React.Children.count(children) === 0) {
+    if (Children.count(children) === 0) {
       return undefined;
     }
-    return React.Children.toArray(children) as TabElement[];
+    return Children.toArray(children) as TabElement[];
   };
 
   const [innerContainerRef, switchOverflowPriorities] = useOverflowLayout({
@@ -298,8 +302,8 @@ export const Tabstrip = forwardRef(function Tabstrip(
   }, [overflowMenuProp, activeTabIndex]);
 
   useIsomorphicLayoutEffect(() => {
-    if (React.Children.count(children) !== childCount.current) {
-      childCount.current = React.Children.count(children);
+    if (Children.count(children) !== childCount.current) {
+      childCount.current = Children.count(children);
       // TODO
       // resetOverflow();
     }
@@ -369,14 +373,14 @@ export const Tabstrip = forwardRef(function Tabstrip(
           selected,
         } as Partial<TabProps>;
 
-        if (React.isValidElement(element)) {
+        if (isValidElement(element)) {
           if (element.type === Tab) {
-            return React.cloneElement(element, { ...baseProps, ...tabProps });
+            return cloneElement(element, { ...baseProps, ...tabProps });
           }
-          return React.cloneElement(element, baseProps);
+          return cloneElement(element, baseProps);
         }
-        //@ts-ignore tab can only be a TabDescriptor here, but TypeScript seems to think it can be a number
-        return React.createElement(Tab, {
+
+        return createElement(Tab, {
           ...baseProps,
           ...tabProps,
           label: tab.label,

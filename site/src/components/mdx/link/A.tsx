@@ -1,4 +1,4 @@
-import type React from "react";
+import type { FC, PropsWithChildren } from "react";
 
 import {
   Link as LinkComponent,
@@ -10,7 +10,7 @@ export interface MarkdownLinkProps extends LinkProps {
   href?: string;
 }
 
-export const Link: React.FC<React.PropsWithChildren<MarkdownLinkProps>> = ({
+export const Link: FC<PropsWithChildren<MarkdownLinkProps>> = ({
   href,
   ...rest
 }) => (

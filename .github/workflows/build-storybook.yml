@@ -4,7 +4,7 @@ on:
     branches:
       - main
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [opened, synchronize, reopened, labeled]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -39,10 +39,16 @@ jobs:
           echo $BRANCH_NAME > ./METADATA/branch-name
           echo $DRAFT > ./METADATA/draft
           echo $BASE > ./METADATA/base
+          echo $RUN_CHROMATIC > ./METADATA/run-chromatic
+          echo $NO_TURBOSNAP > ./METADATA/no-turbosnap
+          echo $ISSUE_NUMBER > ./METADATA/issue-number
         env:
           DRAFT: ${{ github.event.pull_request.draft }}
           BRANCH_NAME: ${{ github.event.pull_request.head.label || github.ref_name }}
           BASE: ${{ github.event.pull_request.base.ref || github.ref_name }}
+          RUN_CHROMATIC: ${{ contains(github.event.pull_request.labels.*.name, 'chromatic') }}
+          NO_TURBOSNAP: ${{ contains(github.event.pull_request.labels.*.name, 'no turbosnap') }}
+          ISSUE_NUMBER: ${{ github.event.pull_request.number }}
       - uses: actions/upload-artifact@v4
         with:
           name: metadata

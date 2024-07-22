@@ -59,7 +59,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
       )[exampleName];
       const sourceCode = (
         (await import(
-          `!!raw-loader!../../examples/${componentName}/${exampleName}.tsx`
+          `../../examples/${componentName}/${exampleName}.tsx?raw`
         )) as Record<string, string>
       ).default;
 

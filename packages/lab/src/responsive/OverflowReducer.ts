@@ -4,11 +4,12 @@
  * the source prop or as child elements. We also support 'injected' items. These allow for additional UI
  * controls to be inserted into the container, eg an 'Add Item' button.
  */
-import React, {
-  isValidElement,
+import {
+  Children,
   type ReactElement,
   type ReactNode,
   type Reducer,
+  isValidElement,
 } from "react";
 
 import type {
@@ -89,7 +90,7 @@ const mapReactElementChildren = (
   fn: (el: ReactElement, index: number) => OverflowItem,
 ): OverflowItem[] => {
   const childElements: OverflowItem[] = [];
-  React.Children.forEach(children, (child, i) => {
+  Children.forEach(children, (child, i) => {
     if (isValidElement(child)) {
       childElements.push(fn(child, i));
     }
@@ -185,7 +186,7 @@ const childItem = (
 };
 
 const createChildItems = (
-  children: React.ReactNode,
+  children: ReactNode,
   idRoot: string,
   options?: OverflowCollectionOptions,
 ): OverflowItem<"child">[] | undefined => {

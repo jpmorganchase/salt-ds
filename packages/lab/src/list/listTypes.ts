@@ -1,4 +1,3 @@
-import type React from "react";
 import type {
   FocusEventHandler,
   ForwardedRef,
@@ -7,6 +6,7 @@ import type {
   KeyboardEventHandler,
   MouseEventHandler,
   PropsWithChildren,
+  ReactNode,
   Ref,
   RefObject,
 } from "react";
@@ -35,7 +35,7 @@ export type ListItemType<T = unknown> = ComponentType<
 
 export interface ListItemProps<T = unknown>
   extends HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode;
+  children?: ReactNode;
   disabled?: boolean;
   item?: T;
   itemHeight?: number | string;
@@ -221,10 +221,7 @@ export interface ListHookProps<Item, Selection extends SelectionStrategy>
   label?: string;
   listHandlers?: ListHandlers;
   onHighlight?: (index: number) => void;
-  onKeyboardNavigation?: (
-    event: React.KeyboardEvent,
-    currentIndex: number,
-  ) => void;
+  onKeyboardNavigation?: (event: KeyboardEvent, currentIndex: number) => void;
   onKeyDown?: (evt: KeyboardEvent) => void;
   onSelect?: SelectHandler<Item>;
   onSelectionChange?: SelectionChangeHandler<Item, Selection>;

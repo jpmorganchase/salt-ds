@@ -217,7 +217,7 @@ export const useKeyboardNavigation = ({
   // then Left or Right Arrow keys are pressed, There will be no navigation
   // but focusVisible must be applied
   const navigateChildItems = useCallback(
-    (e: React.KeyboardEvent, forceFocusVisible = false) => {
+    (e: KeyboardEvent, forceFocusVisible = false) => {
       const direction = navigation[orientation][e.key];
       const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
       if (nextIdx !== highlightedIdx) {

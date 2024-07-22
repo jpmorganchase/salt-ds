@@ -19,9 +19,7 @@ import { LineBlock } from "docs/components/LineBlock";
 import { OutlineBlock } from "docs/components/OutlineBlock";
 import { ShadowBlockCell } from "docs/components/ShadowBlock";
 import { TextBlock } from "docs/components/TextBlock";
-import type React from "react";
-import { useEffect, useState } from "react";
-import { Heading4 } from "../mdx/h4";
+import { type FC, useEffect, useState } from "react";
 import { Table } from "../mdx/table";
 import styles from "./AccordianView.module.css";
 import chars from "./descriptions";
@@ -59,7 +57,7 @@ const transform: string[] = new Array("textTransform");
 const fontFamily: string[] = new Array("fontFamily");
 const lineHeight: string[] = new Array("lineHeight");
 
-const BlockView: React.FC<{ name: string }> = ({ name }) => {
+const BlockView: FC<{ name: string }> = ({ name }) => {
   switch (true) {
     case color.some((c) => name.includes(c)):
       return <ColorBlock hideToken colorVar={name} />;
@@ -103,7 +101,7 @@ const handleCopyToClipboard = (text: string) => {
   textField.remove();
 };
 
-export const AccordionView: React.FC<{ value: string }> = ({ value }) => {
+export const AccordionView: FC<{ value: string }> = ({ value }) => {
   const [cssVariablesData, setCssVariablesData] =
     useState<CssVariableData | null>(null);
 

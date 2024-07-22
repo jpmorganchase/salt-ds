@@ -4,13 +4,15 @@ import {
 } from "@salt-ds/styles";
 import { type WindowContextType, useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import React, {
-  createContext,
-  useContext,
-  useMemo,
+import {
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
+  cloneElement,
+  createContext,
+  isValidElement,
+  useContext,
+  useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
@@ -132,8 +134,8 @@ const createThemedChildren = ({
     return children;
   }
   if (applyClassesTo === "child") {
-    if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
-      return React.cloneElement(children, {
+    if (isValidElement<HTMLAttributes<HTMLElement>>(children)) {
+      return cloneElement(children, {
         className: clsx(
           children.props?.className,
           themeNamesString,
@@ -407,9 +409,29 @@ export function SaltProvider({
 }
 
 interface SaltProviderNextAdditionalProps {
+  /**
+   * Either "sharp" or "rounded".
+   * Determines selected components corner radius.
+   * @default "sharp"
+   */
   corner?: Corner;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of display and heading text.
+   * @default "Open Sans"
+   */
   headingFont?: HeadingFont;
+  /**
+   * Either "blue" or "teal".
+   * Determines accent color used across components, e.g. Accent Button, List, Calendar.
+   * @default "blue"
+   */
   accent?: Accent;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of action components, mostly Buttons.
+   * @default "Open Sans"
+   */
   actionFont?: ActionFont;
 }
 

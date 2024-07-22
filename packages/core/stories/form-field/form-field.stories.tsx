@@ -914,7 +914,7 @@ export const MultiColumnLayoutEmptySlot: StoryFn<typeof FormField> = (
 ) => {
   return (
     <StackLayout
-      style={{ "--saltFormField-label-width": "100px" } as React.CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>
