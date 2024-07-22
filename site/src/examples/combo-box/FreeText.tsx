@@ -12,8 +12,6 @@ export const FreeText = (): ReactElement => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    // React 16 backwards compatibility
-    event.persist();
     const value = event.target.value;
     setValue(value);
   };
@@ -22,8 +20,6 @@ export const FreeText = (): ReactElement => {
     event: SyntheticEvent,
     newSelected: string[],
   ) => {
-    // React 16 backwards compatibility
-    event.persist();
     setSelectedValues(newSelected);
     setValue("");
   };
