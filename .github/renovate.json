@@ -5,7 +5,11 @@
   "packageRules": [
     {
       "groupName": "Mosaic",
-      "packagePatterns": ["^@jpmorganchase/mosaic"]
+      "matchPackagePrefixes": ["@jpmorganchase/mosaic"]
+    },
+    {
+      "groupName": "AG Grid",
+      "matchPackagePrefixes": ["@ag-grid"]
     }
   ]
 }
