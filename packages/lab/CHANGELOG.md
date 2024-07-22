@@ -1,5 +1,23 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.50
+
+### Minor Changes
+
+- 0008528: Added `SystemStatus`, `SystemStatusContent`, `SystemStatusActions` component to lab.
+
+  ```tsx
+  <SystemStatus>
+    <SystemStatusContent>
+      <Text color="inherit">New feature updates are available</Text>
+    </SystemStatusContent>
+  </SystemStatus>
+  ```
+
+### Patch Changes
+
+- bfe0f84: Cleaned up TypeScript types in multiple components.
+
 ## 1.0.0-alpha.49
 
 ### Minor Changes
