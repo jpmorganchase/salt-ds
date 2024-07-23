@@ -22,10 +22,10 @@ describe("Given a Slider", () => {
       const changeSpy = cy.stub().as("changeSpy");
       cy.mount(<Slider style={{ width: "400px" }} onChange={changeSpy} />);
       cy.get(".saltSliderTrack").trigger("pointerdown", {
+        button: 0,
         clientX: 50,
         clientY: 50,
       });
-      cy.get(".saltSliderTrack").trigger("pointerup");
       cy.get("@changeSpy").should("have.callCount", 1);
     });
 
@@ -62,9 +62,19 @@ describe("Given a Slider", () => {
       cy.mount(<Slider style={{ width: "400px" }} />);
       cy.get(".saltSliderThumb-container").trigger("pointerover");
       cy.get(".saltSliderThumb-tooltip").should("be.visible");
+      cy.get(".saltSliderThumb-tooltip").should(
+        "have.attr",
+        "aria-expanded",
+        "true",
+      );
 
       cy.get(".saltSliderThumb-container").trigger("pointerout");
       cy.get(".saltSliderThumb-tooltip").should("not.be.visible");
+      cy.get(".saltSliderThumb-tooltip").should(
+        "have.attr",
+        "aria-expanded",
+        "false",
+      );
     });
   });
 
@@ -101,10 +111,10 @@ describe("Given a Slider", () => {
         />,
       );
       cy.get(".saltSliderTrack").trigger("pointerdown", {
+        button: 0,
         clientX: 0,
         clientY: 0,
       });
-      cy.get(".saltSliderTrack").trigger("pointerup");
       cy.get("@changeSpy").should("have.callCount", 1);
       cy.findAllByRole("slider")
         .eq(0)
@@ -134,7 +144,7 @@ describe("Given a Slider", () => {
         .eq(0)
         .should("have.attr", "aria-valuenow", "7");
     });
-    it("THEN slider thumbs should not cross and maintain a gap of 1 step when using keyboard nav", () => {
+    it("THEN slider thumbs should not cross and maintain a gap of 1 step when using cursor nav", () => {
       cy.mount(
         <Slider
           style={{ width: "400px" }}
@@ -146,12 +156,11 @@ describe("Given a Slider", () => {
       );
       cy.findAllByRole("slider")
         .eq(0)
-        .trigger("pointerdown")
+        .trigger("pointerdown", { button: 0 })
         .trigger("pointermove", {
           clientX: 1000,
           clientY: 1000,
-        })
-        .trigger("pointerup");
+        });
       cy.findAllByRole("slider")
         .eq(0)
         .should("have.attr", "aria-valuenow", "4");

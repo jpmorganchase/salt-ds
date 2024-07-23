@@ -1,52 +1,58 @@
 import { Label, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import type { ComponentPropsWithoutRef, RefObject } from "react";
+import { type ComponentPropsWithoutRef, useState } from "react";
 import { useSliderContext } from "./SliderContext";
 import { useKeyDownThumb } from "./useKeyDownThumb";
-import { usePointerDown } from "./usePointerDown";
 import { getPercentage } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderThumb");
 
 export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
-  trackRef: RefObject<HTMLDivElement>;
   index: number;
   activeThumb: number | undefined;
   setActiveThumb: (index: number | undefined) => void;
 }
 
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
-  const { trackRef, index, activeThumb, setActiveThumb, ...rest } = props;
+  const { index, activeThumb, setActiveThumb } = props;
+
+  const [focussed, setFocussed] = useState(false);
 
   const { min, max, step, value, onChange, ariaLabel } = useSliderContext();
 
   const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
-  const { thumbProps } = usePointerDown(
-    trackRef,
-    min,
-    max,
-    step,
-    value,
-    onChange,
-    index,
-    activeThumb,
-    setActiveThumb,
-  );
-
   const thumbPosition = getPercentage(min, max, value[index]);
+
+  const handlePointerOver = () => {
+    if (activeThumb === undefined && index !== null) setActiveThumb(index);
+  };
+
+  const handleFocus = () => {
+    setFocussed(true);
+    if (index !== null) setActiveThumb(index);
+  };
+
+  const handleBlur = () => {
+    setFocussed(false);
+    setActiveThumb(undefined);
+  };
+
+  const showTooltip = focussed || activeThumb === index;
 
   return (
     <div
       style={{ left: `${thumbPosition}%` }}
       className={withBaseName("container")}
-      {...thumbProps}
+      onPointerOver={handlePointerOver}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
     >
       <div
         className={clsx(withBaseName("tooltip"), {
-          [withBaseName("showTooltip")]: activeThumb === index,
+          [withBaseName("showTooltip")]: showTooltip,
         })}
-        aria-expanded={activeThumb === index}
+        aria-expanded={showTooltip}
       >
         <Label>{value[index]}</Label>
       </div>
@@ -62,7 +68,6 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         aria-label={ariaLabel}
         aria-orientation="horizontal"
         tabIndex={0}
-        {...rest}
       />
     </div>
   );

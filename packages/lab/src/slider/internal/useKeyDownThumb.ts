@@ -24,14 +24,14 @@ const getValueFromKeyName = (
   }
 };
 
-export function useKeyDownThumb(
+export const useKeyDownThumb = (
   min: number,
   max: number,
   step: number,
   value: SliderValue,
   onChange: SliderChangeHandler,
   index: number,
-) {
+) => {
   return (event: React.KeyboardEvent) => {
     const rawValue = getValueFromKeyName(
       event.key,
@@ -54,4 +54,4 @@ export function useKeyDownThumb(
 
     setValue(value, newValue, index, onChange);
   };
-}
+};
