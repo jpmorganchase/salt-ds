@@ -23,10 +23,10 @@ export function SliderMarks({
         return (
           <Label
             className={withBaseName("mark")}
-            key={mark.index}
+            key={mark.value}
             style={{ left: mark.position }}
           >
-            {mark.index}
+            {mark.label}
           </Label>
         );
       })}

@@ -32,14 +32,14 @@ NonZeroInput.args = {
   "aria-label": "NonZeroInput",
 };
 
-export const CustomStep = Template.bind({});
-CustomStep.args = {
-  min: -1,
-  max: 1,
-  step: 0.2,
-  marks: "all",
-  "aria-label": "CustomStep",
-};
+export const CustomStep = () => (
+  <FlexLayout gap={5} direction="column" style={{ width: "300px" }}>
+    <Slider min={-1} max={1} marks="all" />
+    <Slider min={-1} max={1} step={0.5} marks="all" />
+    <Slider min={-1} max={1} step={0.2} marks="all" />
+    <Slider min={-1} max={1} step={0.25} marks="all" />
+  </FlexLayout>
+);
 
 export const BottomLabel = Template.bind({});
 BottomLabel.args = {
