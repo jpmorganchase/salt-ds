@@ -53,7 +53,7 @@
     "@biomejs/biome": "1.8.3",
     "@biomejs/js-api": "^0.6.2",
     "@biomejs/wasm-nodejs": "^1.8.3",
-    "@changesets/cli": "^2.25.2",
+    "@changesets/cli": "^2.27.7",
     "@cypress/code-coverage": "^3.12.35",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
@@ -103,7 +103,7 @@
     "modular-scripts": "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch",
     "msw": "^1.2.1",
     "msw-storybook-addon": "^1.8.0",
-    "prettier": "^2.6.2",
+    "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-docgen-typescript": "2.2.2",
     "react-dom": "^18.3.1",
@@ -120,7 +120,7 @@
     "yup": "^1.0.2"
   },
   "resolutions": {
-    "@changesets/assemble-release-plan@npm:^6.0.2": "patch:@changesets/assemble-release-plan@npm%3A6.0.2#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.2-d74b7b2762.patch",
+    "@changesets/assemble-release-plan@npm:^6.0.3": "patch:@changesets/assemble-release-plan@npm%3A6.0.3#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.3-29726de363.patch",
     "@salt-ds/lab": "workspace:*",
     "modular-scripts/rollup": "2.79.1",
     "next": "^14.0.0",
