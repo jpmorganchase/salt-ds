@@ -2,4 +2,4 @@
 "@salt-ds/core": minor
 ---
 
-Support status color for FormFieldHelperText
+Update FormFieldHelperText to have status colors applied when `validationStatus` is applied to FormField.
