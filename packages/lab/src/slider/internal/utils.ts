@@ -13,7 +13,7 @@ export const getValue = (
   const normaliseBetweenValues = (localX / width) * (max - min) + min;
   const roundedToStep = roundToStep(normaliseBetweenValues, step);
   const rounded = Number(roundedToStep.toFixed(1));
-  const value = clampValue(rounded, min, max);
+  const value = clampValue(rounded, [min, max]);
   return value;
 };
 
@@ -31,7 +31,7 @@ export const setValue = (
 export const roundToStep = (value: number, step: number) =>
   Math.round(value / step) * step;
 
-export const clampValue = (value: number, min: number, max: number) => {
+export const clampValue = (value: number, [min, max]: number[]) => {
   if (value > max) {
     return max;
   }
@@ -89,11 +89,9 @@ export const getMarkStyles = (min: number, max: number, step: number) => {
 export const getNearestIndex = (value: number[], newValue: number) => {
   if (value.length === 1) return 0;
 
-  const nearestIndex = value.reduce((acc, value) => {
-    const difference = Math.abs(newValue - value);
-    const prevDifference = Math.abs(newValue - acc);
-    const index = difference < prevDifference ? 1 : 0;
-    return index;
-  }, 0);
+  const distances = value.map((value) => Math.abs(newValue - value));
+  const minDistance = Math.min(...distances);
+  const nearestIndex = distances.indexOf(minDistance);
+
   return nearestIndex;
 };
