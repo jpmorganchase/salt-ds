@@ -41,6 +41,7 @@ describe("GIVEN a FormField", () => {
       );
 
       cy.findByText("Helper text").should("exist");
+      cy.findByText("Helper text").should("have.class", "saltText-secondary");
     });
   });
 
@@ -85,6 +86,7 @@ describe("GIVEN a FormField", () => {
         "have.class",
         "saltStatusIndicator-error",
       );
+      cy.findByText("Helper text").should("have.class", "saltText-error");
     });
 
     describe("AND is disabled", () => {
@@ -127,6 +129,7 @@ describe("GIVEN a FormField", () => {
           "have.class",
           "saltStatusIndicator-success",
         );
+        cy.findByText("Helper text").should("have.class", "saltText-success");
       });
     });
 
@@ -142,6 +145,7 @@ describe("GIVEN a FormField", () => {
           "have.class",
           "saltStatusIndicator-warning",
         );
+        cy.findByText("Helper text").should("have.class", "saltText-warning");
       });
     });
   });
