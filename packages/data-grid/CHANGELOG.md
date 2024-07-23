@@ -1,5 +1,11 @@
 # @salt-ds/data-grid
 
+## 1.0.6
+
+### Patch Changes
+
+- bfe0f84: Cleaned up TypeScript types in multiple components.
+
 ## 1.0.5
 
 ### Patch Changes

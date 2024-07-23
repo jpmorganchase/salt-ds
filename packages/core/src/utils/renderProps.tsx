@@ -12,7 +12,7 @@ export interface RenderPropsType {
 }
 
 export function renderProps<Type extends ElementType>(
-  Type: Type,
+  Type: Type | null,
   props: RenderPropsType & ComponentProps<Type>,
 ): ReactElement {
   const { render, ...rest } = props;
@@ -33,6 +33,10 @@ export function renderProps<Type extends ElementType>(
     throw new Error("Render function did not return a valid React element");
   }
 
-  // Case 3: If render is not provided, render the Type component with the rest of the props
-  return <Type {...restProps} />;
+  if (Type) {
+    // Case 3: If render is not provided, render the Type component with the rest of the props
+    return <Type {...restProps} />;
+  }
+
+  throw new Error("Type or render should be provided");
 }

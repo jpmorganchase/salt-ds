@@ -3,6 +3,8 @@ import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "../salt-ag-theme.css";
 
+import "@salt-ds/countries/saltSharpCountries.css";
+
 export default {
   title: "Ag Grid/Ag Grid Theme",
   component: AgGridReact,
