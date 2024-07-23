@@ -67,7 +67,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
             [withBaseName("withAccent")]: !disableAccent && !status,
             [withBaseName(status ?? "")]: !!status,
           },
-          className
+          className,
         )}
         ref={ref}
         {...rest}
@@ -88,5 +88,5 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
         </H2>
       </div>
     );
-  }
+  },
 );

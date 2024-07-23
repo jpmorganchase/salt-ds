@@ -55,7 +55,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button", { name: "Open dialog" }).realClick();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-medium-xl");
-      }
+      },
     );
   });
 
@@ -111,7 +111,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button", { name: "Open dialog" }).realClick();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-large-xl");
-      }
+      },
     );
 
     it(
@@ -126,7 +126,7 @@ describe("GIVEN a Dialog", () => {
         cy.findByRole("button", { name: "Open dialog" }).realClick();
 
         cy.findByRole("dialog").should("have.class", "saltDialog-small-xs");
-      }
+      },
     );
   });
 
