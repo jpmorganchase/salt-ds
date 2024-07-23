@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
-import { type SyntheticEvent, type ReactElement, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const Controlled = (): ReactElement => {
   const [value, setValue] = useState<string>("");

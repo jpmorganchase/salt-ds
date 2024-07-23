@@ -1,5 +1,5 @@
 import { Dropdown, Option } from "@salt-ds/core";
-import { type SyntheticEvent, type ReactElement, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useState } from "react";
 import { shortColorData } from "./exampleData";
 
 export const Controlled = (): ReactElement => {
@@ -7,7 +7,7 @@ export const Controlled = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     setSelected(newSelected);
   };

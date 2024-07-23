@@ -1,5 +1,5 @@
 import { ListBox, Option } from "@salt-ds/core";
-import { type SyntheticEvent, type ReactElement, useState } from "react";
+import { type ReactElement, type SyntheticEvent, useState } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/list-box/exampleData.ts
 import { shortColorData } from "./exampleData";
 
@@ -8,7 +8,7 @@ export const Controlled = (): ReactElement => {
 
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: string[]
+    newSelected: string[],
   ) => {
     setSelected(newSelected);
   };
