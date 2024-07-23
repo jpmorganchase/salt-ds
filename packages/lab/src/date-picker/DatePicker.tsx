@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { flip, useDismiss, useInteractions } from "@floating-ui/react";
+import { flip, offset, useDismiss, useInteractions } from "@floating-ui/react";
 import {
   type DateValue,
   getLocalTimeZone,
@@ -182,7 +182,7 @@ export const DatePicker = forwardRef<
       open: open,
       onOpenChange: onOpenChange,
       placement: "bottom-start",
-      middleware: [flip({ fallbackStrategy: "initialPlacement" })],
+      middleware: [offset(1), flip({ fallbackStrategy: "initialPlacement" })],
     });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
