@@ -1,6 +1,7 @@
 import { SaltProvider, SaltProviderNext, useTheme } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
+import { DropdownEditor } from "../dependencies/cell-editors/DropdownEditor";
+import dataGridExampleColumnsHdCompact from "../dependencies/dataGridExampleColumnsHdCompact";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -29,7 +30,7 @@ const HDCompact = (props: AgGridReactProps) => {
     <Provider density="high">
       <div {...containerProps}>
         <AgGridReact
-          columnDefs={dataGridExampleColumns}
+          columnDefs={dataGridExampleColumnsHdCompact}
           rowData={dataGridExampleData}
           statusBar={statusBar}
           rowSelection="multiple"
@@ -42,6 +43,9 @@ const HDCompact = (props: AgGridReactProps) => {
                 node.setSelected(true);
               }
             });
+          }}
+          components={{
+            DropdownEditor,
           }}
         />
       </div>

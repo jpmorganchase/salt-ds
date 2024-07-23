@@ -9,6 +9,7 @@
 
 .saltPageButton:hover,
 .saltPageButton:focus-visible {
+  --saltButton-text-color-hover: var(--salt-content-primary-foreground);
   --saltButton-background-hover: var(--salt-selectable-background-hover);
 }
 

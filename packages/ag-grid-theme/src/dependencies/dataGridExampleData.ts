@@ -6,6 +6,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8446790,
     date: "29/07/2004",
+    country: "US",
   },
   {
     name: "Alaska",
@@ -14,6 +15,7 @@ const dataGridExampleData = [
     rating: 20,
     population: 5492139,
     date: "20/05/2009",
+    country: "US",
   },
   {
     name: "Arizona",
@@ -22,6 +24,7 @@ const dataGridExampleData = [
     rating: 30,
     population: 806007,
     date: "23/02/2020",
+    country: "US",
   },
   {
     name: "Arkansas",
@@ -30,6 +33,7 @@ const dataGridExampleData = [
     rating: 40,
     population: 59453,
     date: "19/02/1999",
+    country: "US",
   },
   {
     name: "California",
@@ -38,6 +42,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8319396,
     date: "29/04/1967",
+    country: "US",
   },
   {
     name: "Colorado",
@@ -46,6 +51,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8822592,
     date: "19/02/1944",
+    country: "US",
   },
   {
     name: "Connecticut",
@@ -54,6 +60,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2465263,
     date: "30/03/2015",
+    country: "US",
   },
   {
     name: "Delaware",
@@ -62,6 +69,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 3075357,
     date: "04/03/1949",
+    country: "US",
   },
   {
     name: "Florida",
@@ -70,6 +78,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 7597316,
     date: "03/10/2005",
+    country: "US",
   },
   {
     name: "Georgia",
@@ -78,6 +87,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 7271180,
     date: "16/02/1998",
+    country: "US",
   },
   {
     name: "Hawaii",
@@ -86,6 +96,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8534120,
     date: "17/02/2005",
+    country: "US",
   },
   {
     name: "Idaho",
@@ -94,6 +105,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 5806269,
     date: "19/02/2007",
+    country: "US",
   },
   {
     name: "Illinois",
@@ -102,6 +114,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 525951,
     date: "08/11/2022",
+    country: "US",
   },
   {
     name: "Indiana",
@@ -110,6 +123,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 5220228,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Iowa",
@@ -118,6 +132,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 333600,
     date: "31/05/2020",
+    country: "US",
   },
   {
     name: "Kansas",
@@ -126,6 +141,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 170082,
     date: "28/02/1999",
+    country: "US",
   },
   {
     name: "Kentucky",
@@ -134,6 +150,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 1359657,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Louisiana",
@@ -142,6 +159,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 9267793,
     date: "17/02/1970",
+    country: "US",
   },
   {
     name: "Maine",
@@ -150,6 +168,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 7366792,
     date: "13/02/2000",
+    country: "US",
   },
   {
     name: "Maryland",
@@ -158,6 +177,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2474500,
     date: "18/11/1902",
+    country: "US",
   },
   {
     name: "Massachusetts",
@@ -166,6 +186,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 7858200,
     date: "19/02/1902",
+    country: "US",
   },
   {
     name: "Michigan",
@@ -174,6 +195,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 4036589,
     date: "19/02/2002",
+    country: "US",
   },
   {
     name: "Minnesota",
@@ -182,6 +204,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 490080,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Mississippi",
@@ -190,6 +213,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2021576,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Missouri",
@@ -198,6 +222,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 3511147,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Montana",
@@ -206,6 +231,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2856628,
     date: "19/05/0520",
+    country: "US",
   },
   {
     name: "Nebraska",
@@ -214,6 +240,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 9584904,
     date: "05/02/0520",
+    country: "US",
   },
   {
     name: "Nevada",
@@ -222,6 +249,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 489695,
     date: "05/02/2002",
+    country: "US",
   },
   {
     name: "New Hampshire",
@@ -230,6 +258,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8819049,
     date: "19/02/2002",
+    country: "US",
   },
   {
     name: "New Jersey",
@@ -238,6 +267,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2500770,
     date: "19/02/2002",
+    country: "US",
   },
   {
     name: "New Mexico",
@@ -246,6 +276,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 536205,
     date: "19/02/2002",
+    country: "US",
   },
   {
     name: "New York",
@@ -254,6 +285,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 5248173,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "North Carolina",
@@ -262,6 +294,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 1452619,
     date: "10/02/1020",
+    country: "US",
   },
   {
     name: "North Dakota",
@@ -270,6 +303,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8890392,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Ohio",
@@ -278,6 +312,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 5968829,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Oklahoma",
@@ -286,6 +321,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 9044655,
     date: "21/02/1950",
+    country: "US",
   },
   {
     name: "Oregon",
@@ -294,6 +330,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 8054969,
     date: "12/10/1920",
+    country: "US",
   },
   {
     name: "Pennsylvania",
@@ -302,6 +339,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 1359410,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Rhode Island",
@@ -310,6 +348,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 4473590,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "South Carolina",
@@ -318,6 +357,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 6527907,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "South Dakota",
@@ -326,6 +366,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 3152416,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Tennessee",
@@ -334,6 +375,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 9717114,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Texas",
@@ -342,6 +384,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 6552290,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Utah",
@@ -350,6 +393,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2815416,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Vermont",
@@ -358,6 +402,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 2845360,
     date: "19/02/1920",
+    country: "US",
   },
   {
     name: "Virginia",
@@ -366,6 +411,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 4919143,
     date: "20/02/1920",
+    country: "US",
   },
   {
     name: "Washington",
@@ -374,6 +420,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 4614717,
     date: "22/02/2009",
+    country: "US",
   },
   {
     name: "West Virginia",
@@ -382,6 +429,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 6413104,
     date: "19/11/2002",
+    country: "US",
   },
   {
     name: "Wisconsin",
@@ -390,6 +438,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 3934168,
     date: "01/08/2005",
+    country: "US",
   },
   {
     name: "Wyoming",
@@ -398,6 +447,7 @@ const dataGridExampleData = [
     rating: 10,
     population: 901078,
     date: "01/01/2000",
+    country: "US",
   },
 ];
 

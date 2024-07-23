@@ -61,8 +61,13 @@ div[class*="ag-theme-salt"] {
 }
 
 div[class*="ag-theme-salt-compact"] {
-  --ag-row-height: var(--salt-size-base);
-  --ag-header-height: var(--salt-size-base);
+  /* 
+    Ensures icon / country symbol renders correct height.
+    This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
+   */
+  --salt-size-base: 16px;
+  /* This is a deprecated token, until Salt Checkbox uses a new token, temparily pin it to HD size. */
+  --salt-size-selectable: 12px;
 }
 
 div[class*="ag-theme-salt"] .ag-root-wrapper {
@@ -155,11 +160,31 @@ div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
   color: var(--salt-actionable-secondary-foreground-active);
 }
 
+div[class*="ag-theme-salt"] .ag-cell-label-container {
+  /* row height is base size + 50 spacing on top/bottom */
+  padding: var(--salt-spacing-50) 0;
+}
+
+div[class*="ag-theme-salt"] .ag-list-item:hover,
+div[class*="ag-theme-salt"] .ag-virtual-list-item:hover {
+  background-color: var(--salt-selectable-background-hover);
+  cursor: pointer;
+}
+
+div[class*="ag-theme-salt"] .ag-label-align-right .ag-label {
+  margin-inline-start: var(--salt-spacing-100);
+  margin-inline-end: 0;
+}
+
 /* MENU */
 
 div[class*="ag-theme-salt"] .ag-menu {
-  padding: var(--salt-spacing-100);
+  padding: 0;
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
+}
+
+div[class*="ag-theme-salt"] .ag-tabs {
+  padding: var(--salt-spacing-100);
 }
 
 div[class*="ag-theme-salt"] .ag-popup-child:not(.ag-tooltip-custom) {
@@ -187,8 +212,9 @@ div[class*="ag-theme-salt"] .ag-menu-option {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-div[class*="ag-theme-salt"] .ag-menu-option-icon {
-  padding: 0 var(--salt-spacing-100);
+div[class*="ag-theme-salt"] .ag-menu-option-icon,
+div[class*="ag-theme-salt"] .ag-compact-menu-option-icon {
+  padding-inline-start: var(--salt-spacing-100);
 }
 
 div[class*="ag-theme-salt"] .ag-tab {
@@ -234,6 +260,16 @@ div[class*="ag-theme-salt"] .ag-cell {
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
+}
+
+/* This is not restricted to `.editable-cell`, so any custom editor would get the same background treatment */
+div[class*="ag-theme-salt"] .ag-cell-inline-editing:focus-within {
+  background: var(--salt-container-primary-background);
+}
+
+/* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
+div[class*="ag-theme-salt"] .ag-cell-inline-editing {
+  padding: 0;
 }
 
 div[class*="ag-theme-salt"] .editable-cell,
@@ -284,14 +320,6 @@ div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:before {
   position: absolute;
   top: 0px;
   z-index: 2;
-}
-
-div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing {
-  padding: 0;
-}
-
-div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:focus-within {
-  background: var(--salt-container-primary-background);
 }
 
 div[class*="ag-theme-salt"] .editable-numeric-cell input,

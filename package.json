@@ -38,6 +38,7 @@
     "prettier:ci": "prettier --check .",
     "lint": "biome check",
     "lint:fix": "biome check --fix",
+    "lint:check:error": "biome check --diagnostic-level=error",
     "lint:style": "yarn lint:style:core && yarn lint:style:icon && yarn lint:style:lab && yarn lint:style:ag-theme",
     "lint:style:core": "yarn stylelint -f verbose \"packages/core/src/**/*.css\"",
     "lint:style:icon": "yarn stylelint -f verbose \"packages/icons/src/**/*.css\"",
