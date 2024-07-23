@@ -50,10 +50,17 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
     >
       <div
         className={clsx(withBaseName("tooltip"), {
-          [withBaseName("showTooltip")]: showTooltip,
+          [withBaseName("tooltip-visible")]: showTooltip,
         })}
         aria-expanded={showTooltip}
       >
+        <svg
+          className={withBaseName("tooltip-arrow")}
+          aria-hidden="true"
+          viewBox="0 1 14 14"
+        >
+          <path d="M0,0 H14 L7,7 Q7,7 7,7 Z" />
+        </svg>
         <Label>{value[index]}</Label>
       </div>
       <div

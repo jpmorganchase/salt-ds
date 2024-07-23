@@ -78,7 +78,21 @@
   display: none;
 }
 
-.saltSliderThumb-showTooltip {
+.saltSliderThumb-tooltip-arrow {
+  position: absolute;
+  pointer-events: none;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  stroke: none;
+  fill: var(--salt-container-primary-background);
+  stroke: var(--salt-status-info-borderColor);
+  stroke-width: var(--salt-size-border);
+  width: var(--salt-size-icon);
+  height: var(--salt-size-icon);
+}
+
+.saltSliderThumb-tooltip-visible {
   display: block;
 }
 
