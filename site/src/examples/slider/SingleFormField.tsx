@@ -10,7 +10,7 @@ import type { ReactElement } from "react";
 export const SingleFormField = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>
     <FormField>
-      <FlexLayout gap={1}>
+      <FlexLayout gap={1} align="center">
         <FormFieldLabel style={{ width: "max-content" }}>
           Field Label
         </FormFieldLabel>
