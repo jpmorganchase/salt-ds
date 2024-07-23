@@ -17,3 +17,4 @@ export * from "./Truncation";
 export * from "./SelectOnTab";
 export * from "./ClearSelection";
 export * from "./Bordered";
+export * from "./FreeText";
