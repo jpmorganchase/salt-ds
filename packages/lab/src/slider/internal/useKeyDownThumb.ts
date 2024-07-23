@@ -43,7 +43,7 @@ export const useKeyDownThumb = (
 
     const roundedToStep = roundToStep(rawValue, step);
     const rounded = Number(roundedToStep.toFixed(1));
-    const clamped = clampValue(rounded, min, max);
+    const clamped = clampValue(rounded, [min, max]);
 
     const newValue =
       value.length > 1
