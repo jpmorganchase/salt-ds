@@ -1,5 +1,5 @@
 import type { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundToStep, roundToTwoDp, setValue } from "./utils";
+import { clampValue, roundToStep, setValue } from "./utils";
 
 const getValueFromKeyName = (
   keyName: string,
@@ -42,8 +42,8 @@ export const useKeyDownThumb = (
     );
 
     const roundedToStep = roundToStep(rawValue, step);
-    const rounded = roundToTwoDp(roundedToStep);
-    const clamped = clampValue(Number(rounded), min, max);
+    const rounded = Number(roundedToStep.toFixed(1));
+    const clamped = clampValue(rounded, min, max);
 
     const newValue =
       value.length > 1
