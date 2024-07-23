@@ -12,7 +12,7 @@ import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
-  title: "Core/Card/Link Card",
+  title: "Core/Link Card",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 

@@ -21,7 +21,7 @@ import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
 import "./interactable-card.stories.css";
 
 export default {
-  title: "Core/Card/Interactable Card",
+  title: "Core/Interactable Card",
   component: InteractableCard,
 } as Meta<typeof InteractableCard>;
 

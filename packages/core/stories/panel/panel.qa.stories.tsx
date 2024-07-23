@@ -13,9 +13,15 @@ export default {
 } as Meta<typeof Panel>;
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer cols={1} itemWidthAuto height={600} width={1000} {...props}>
+  <QAContainer cols={3} itemPadding={4} height={600} width={1000} {...props}>
     <Panel>
       <p>This is a panel around some text</p>
+    </Panel>
+    <Panel variant="secondary">
+      <p>This is a secondary panel around some text</p>
+    </Panel>
+    <Panel variant="tertiary">
+      <p>This is a tertiary panel around some text</p>
     </Panel>
   </QAContainer>
 );
@@ -41,14 +47,20 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
   props,
 ) => (
   <QAContainerNoStyleInjection
-    cols={1}
-    itemWidthAuto
+    cols={3}
+    itemPadding={4}
     height={600}
     width={1000}
     {...props}
   >
     <Panel>
       <p>This is a panel around some text</p>
+    </Panel>
+    <Panel variant="secondary">
+      <p>This is a secondary panel around some text</p>
+    </Panel>
+    <Panel variant="tertiary">
+      <p>This is a tertiary panel around some text</p>
     </Panel>
   </QAContainerNoStyleInjection>
 );

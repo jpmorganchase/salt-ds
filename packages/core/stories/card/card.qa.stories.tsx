@@ -18,29 +18,33 @@ export const AllExamplesUsingText: StoryFn<
   return (
     <QAContainer itemPadding={10} itemWidthAuto {...props}>
       <Card>
-        <H1>Card with density</H1>
+        <H1>Primary card</H1>
         <Text>Content</Text>
       </Card>
       <Card variant="secondary">
-        <H1>Secondary card with density</H1>
+        <H1>Secondary card</H1>
         <Text>Content</Text>
       </Card>
-      <Card accent="top" hoverable>
-        <H1>Card with accent and density</H1>
+      <Card variant="tertiary">
+        <H1>Tertiary card</H1>
         <Text>Content</Text>
       </Card>
-      <Card variant="secondary" accent="bottom" hoverable>
-        <H1>Secondary card with accent and density</H1>
+      <Card accent="top">
+        <H1>Accent top</H1>
         <Text>Content</Text>
       </Card>
-      <InteractableCard>
-        <H1>Interactable card with density</H1>
+      <Card accent="right">
+        <H1>Accent right</H1>
         <Text>Content</Text>
-      </InteractableCard>
-      <InteractableCard variant="secondary">
-        <H1>Secondary interactable with density</H1>
+      </Card>
+      <Card accent="bottom">
+        <H1>Accent bottom</H1>
         <Text>Content</Text>
-      </InteractableCard>
+      </Card>
+      <Card accent="left">
+        <H1>Accent left</H1>
+        <Text>Content</Text>
+      </Card>
     </QAContainer>
   );
 };
@@ -66,21 +70,33 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
 ) => (
   <QAContainerNoStyleInjection itemPadding={10} itemWidthAuto {...props}>
     <Card>
-      <H1>Card with density</H1>
+      <H1>Primary card</H1>
       <Text>Content</Text>
     </Card>
     <Card variant="secondary">
-      <H1>Secondary card with density</H1>
+      <H1>Secondary card</H1>
       <Text>Content</Text>
     </Card>
-    <InteractableCard>
-      <H1>Interactable card with density</H1>
+    <Card variant="tertiary">
+      <H1>Tertiary card</H1>
       <Text>Content</Text>
-    </InteractableCard>
-    <InteractableCard variant="secondary">
-      <H1>Secondary interactable with density</H1>
+    </Card>
+    <Card accent="top">
+      <H1>Accent top</H1>
       <Text>Content</Text>
-    </InteractableCard>
+    </Card>
+    <Card accent="right">
+      <H1>Accent right</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card accent="bottom">
+      <H1>Accent bottom</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card accent="left">
+      <H1>Accent left</H1>
+      <Text>Content</Text>
+    </Card>
   </QAContainerNoStyleInjection>
 );
 
