@@ -52,16 +52,18 @@
   flex-direction: column;
 }
 
+.saltTrackerStep.saltTrackerStep-status-warning {
+  --trackerStep-icon-color: var(--trackerStep-icon-color-warning);
+}
+
+.saltTrackerStep.saltTrackerStep-status-error {
+  --trackerStep-icon-color: var(--trackerStep-icon-color-error);
+}
+
 .saltTrackerStep.saltTrackerStep-active {
   --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
 
-.saltTrackerStep.saltTrackerStep-completed {
+.saltTrackerStep.saltTrackerStep-stage-completed {
   --trackerStep-icon-color: var(--trackerStep-icon-color-completed);
-}
-.saltTrackerStep.saltTrackerStep-warning {
-  --trackerStep-icon-color: var(--trackerStep-icon-color-warning);
-}
-.saltTrackerStep.saltTrackerStep-error {
-  --trackerStep-icon-color: var(--trackerStep-icon-color-error);
 }

@@ -110,7 +110,13 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     return (
       <li
-        className={clsx(withBaseName(), withBaseName(iconName), className)}
+        className={clsx(
+          className,
+          withBaseName(),
+          withBaseName(`stage-${stage}`),
+          withBaseName(`status-${status}`),
+          { [withBaseName("active")]: isActive },
+        )}
         style={innerStyle}
         aria-current={isActive ? "step" : undefined}
         ref={ref}
