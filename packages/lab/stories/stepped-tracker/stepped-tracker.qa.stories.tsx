@@ -49,23 +49,23 @@ export const Basic: StoryFn<QAContainerProps> = (props) => {
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
-        <SteppedTracker orientation="horizontal" activeStep={3}>
-          <TrackerStep stage="completed">
-            <StepLabel>Step One</StepLabel>
+        <SteppedTracker activeStep={1}>
+          <TrackerStep stage="completed" status="warning">
+            <StepLabel>Completed with warning</StepLabel>
+          </TrackerStep>
+          <TrackerStep status="warning">
+            <StepLabel>Active with warning</StepLabel>
+          </TrackerStep>
+          <TrackerStep stage="completed" status="error">
+            <StepLabel>Completed with error</StepLabel>
           </TrackerStep>
           <TrackerStep stage="completed">
-            <StepLabel>Step Two</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Three</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Four</StepLabel>
+            <StepLabel>Completed</StepLabel>
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker activeStep={0}>
           <TrackerStep stage="completed">
-            <StepLabel>Completed</StepLabel>
+            <StepLabel>Completed and active</StepLabel>
           </TrackerStep>
           <TrackerStep status="warning">
             <StepLabel>Warning</StepLabel>
