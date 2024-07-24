@@ -819,7 +819,7 @@ import "@salt-ds/lab/css/salt-lab.css";
     event: SyntheticEvent,
     data: {
       value: string;
-    }
+    },
   ) => {
     console.log("input value changed", data);
   };
