@@ -139,6 +139,7 @@ export const DatePicker = forwardRef<
     onSelectionChange,
     onChange,
     visibleMonths = 2,
+    bordered,
     ...rest
   },
   ref,
@@ -249,6 +250,7 @@ export const DatePicker = forwardRef<
     <DatePickerContext.Provider value={datePickerContextValue}>
       <DateInput
         validationStatus={validationStatus}
+        bordered={bordered}
         className={clsx(withBaseName(), className)}
         ref={inputRef}
         {...getReferenceProps()}
@@ -275,7 +277,7 @@ export const DatePicker = forwardRef<
         ref={floatingRef}
         {...getFloatingProps()}
         onSelect={handleSelect}
-        CalendarProps={CalendarProps}
+        CalendarProps={{ ...CalendarProps, borderedDropdown: bordered }}
         helperText={helperText}
         visibleMonths={visibleMonths}
       />

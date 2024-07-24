@@ -24,6 +24,7 @@ export type CalendarProps = useCalendarProps & {
   className?: string;
   renderDayContents?: CalendarCarouselProps["renderDayContents"];
   hideYearDropdown?: CalendarNavigationProps["hideYearDropdown"];
+  borderedDropdown?: CalendarNavigationProps["borderedDropdown"];
   TooltipProps?: CalendarCarouselProps["TooltipProps"];
   hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
 };
@@ -37,6 +38,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       renderDayContents,
       hideYearDropdown,
       TooltipProps,
+      borderedDropdown,
       ...rest
     } = props;
 
@@ -79,7 +81,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           aria-label={calendarLabel}
           ref={ref}
         >
-          <CalendarNavigation hideYearDropdown={hideYearDropdown} />
+          <CalendarNavigation
+            borderedDropdown={borderedDropdown}
+            hideYearDropdown={hideYearDropdown}
+          />
           <CalendarWeekHeader />
           <CalendarCarousel
             onFocus={handleFocus}
