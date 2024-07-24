@@ -56,11 +56,11 @@
 }
 
 .saltTabstrip-addButton,
-.saltDropdown.saltTabstrip-overflowMenu {
+.saltDropdownBase.saltTabstrip-overflowMenu {
   margin-left: var(--salt-size-unit);
 }
 
-.saltTabstrip-overflowMenu.saltDropdown {
+.saltTabstrip-overflowMenu.saltDropdownBase {
   --saltIcon-margin: 2px 0 0 0px;
 }
 

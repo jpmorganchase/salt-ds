@@ -1,15 +1,15 @@
-.saltDropdown {
+.saltDropdownBase {
   --saltIcon-margin: 2px 0 0 8px;
   display: inline-block;
   line-height: 0;
   position: relative;
 }
 
-.saltDropdown-fullWidth {
+.saltDropdownBase-fullWidth {
   width: 100%;
 }
 
-.saltDropdown-popup {
+.saltDropdownBase-popup {
   background: var(--salt-container-primary-background);
   z-index: calc(var(--salt-zIndex-flyover) - 1);
 }
