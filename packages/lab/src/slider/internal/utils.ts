@@ -12,7 +12,8 @@ export const getValue = (
   const localX = clientX - x;
   const normaliseBetweenValues = (localX / width) * (max - min) + min;
   const roundedToStep = roundToStep(normaliseBetweenValues, step);
-  const rounded = Number(roundedToStep.toFixed(1));
+  const decimals = countDecimalPlaces(step);
+  const rounded = Number(roundedToStep.toFixed(decimals));
   const value = clampValue(rounded, [min, max]);
   return value;
 };
