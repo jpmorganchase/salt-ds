@@ -59,8 +59,6 @@ HeaderTooltip.play = async ({ canvasElement }) => {
   // Do findAll here so this will also work in `side-by-side` mode
   const headerCells = await canvas.findAllByText("Capital");
 
-  console.log(headerCells);
-
   for (const cell of headerCells) {
     const gridRoot: HTMLElement = cell.closest(".ag-root-wrapper")!;
 
