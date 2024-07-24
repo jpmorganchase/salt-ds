@@ -20,6 +20,10 @@ export const All: StoryFn<typeof Panel> = (props) => {
       <AllRenderer>
         <Panel variant="secondary" {...props} />
       </AllRenderer>
+      <h1>Tertiary</h1>
+      <AllRenderer>
+        <Panel variant="tertiary" {...props} />
+      </AllRenderer>
     </>
   );
 };
@@ -40,6 +44,12 @@ export const Secondary = Template.bind({});
 Secondary.args = {
   children: "This is a Panel",
   variant: "secondary",
+};
+
+export const Tertiary = Template.bind({});
+Tertiary.args = {
+  children: "This is a Panel",
+  variant: "tertiary",
 };
 
 export const FixedHeightAndWidth: StoryFn<typeof Panel> = () => (

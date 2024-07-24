@@ -22,7 +22,7 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Styling variant; defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 const withBaseName = makePrefixer("saltPanel");

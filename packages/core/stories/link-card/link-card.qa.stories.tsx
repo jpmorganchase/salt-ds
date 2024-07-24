@@ -13,50 +13,79 @@ export default {
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
-export const AllExamplesUsingText: StoryFn<QAContainerProps> = (props) => {
+export const AllExamples: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer itemPadding={10} itemWidthAuto {...props}>
+    <QAContainer itemPadding={4} cols={4} itemWidthAuto {...props}>
       <LinkCard>
-        <H1>Card with density</H1>
+        <H1>Primary card</H1>
         <Text>Content</Text>
       </LinkCard>
       <LinkCard variant="secondary">
-        <H1>Secondary card with density</H1>
+        <H1>Secondary card</H1>
+        <Text>Content</Text>
+      </LinkCard>
+      <LinkCard variant="tertiary">
+        <H1>Tertiary card</H1>
         <Text>Content</Text>
       </LinkCard>
       <LinkCard accent="top">
-        <H1>Card with accent and density</H1>
+        <H1>Accent top</H1>
         <Text>Content</Text>
       </LinkCard>
-      <LinkCard variant="secondary" accent="bottom">
-        <H1>Secondary card with accent and density</H1>
+      <LinkCard accent="right">
+        <H1>Accent right</H1>
+        <Text>Content</Text>
+      </LinkCard>
+      <LinkCard accent="bottom">
+        <H1>Accent bottom</H1>
+        <Text>Content</Text>
+      </LinkCard>
+      <LinkCard accent="left">
+        <H1>Accent left</H1>
         <Text>Content</Text>
       </LinkCard>
     </QAContainer>
   );
 };
-AllExamplesUsingText.parameters = {
+AllExamples.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
   props,
 ) => (
-  <QAContainerNoStyleInjection itemPadding={10} itemWidthAuto {...props}>
+  <QAContainerNoStyleInjection
+    itemPadding={4}
+    cols={4}
+    itemWidthAuto
+    {...props}
+  >
     <LinkCard>
-      <H1>Card with density</H1>
+      <H1>Primary card</H1>
       <Text>Content</Text>
     </LinkCard>
     <LinkCard variant="secondary">
-      <H1>Secondary card with density</H1>
+      <H1>Secondary card</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard variant="tertiary">
+      <H1>Tertiary card</H1>
       <Text>Content</Text>
     </LinkCard>
     <LinkCard accent="top">
-      <H1>Card with accent and density</H1>
+      <H1>Accent top</H1>
       <Text>Content</Text>
     </LinkCard>
-    <LinkCard variant="secondary" accent="bottom">
-      <H1>Secondary card with accent and density</H1>
+    <LinkCard accent="right">
+      <H1>Accent right</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard accent="bottom">
+      <H1>Accent bottom</H1>
+      <Text>Content</Text>
+    </LinkCard>
+    <LinkCard accent="left">
+      <H1>Accent left</H1>
       <Text>Content</Text>
     </LinkCard>
   </QAContainerNoStyleInjection>
