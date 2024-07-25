@@ -60,6 +60,9 @@ export const WithInput = () => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
+    // TODO replace Input with StepperInput when available
+    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
+
     setValue([+inputValue]);
   };
 
