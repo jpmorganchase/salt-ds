@@ -342,6 +342,40 @@ To use it, replace the existing `SaltProvider` with `SaltProviderNext` and impor
 
 The new provider adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., `data-corner`). All values in `theme-next.css` are scoped to `.salt-theme-next` to override any existing values.
 
+#### Apply styling options
+
+You can apply styling options as corresponding props to `SaltProviderNext`
+
+```javascript
+<SaltProviderNext
+    accent="teal"             // or "blue"
+    corner="rounded"          // or "sharp"
+    headingFont="Amplitude"   // or "Open Sans"
+    actionFont="Amplitude"    // or "Open Sans"
+>
+```
+
+#### Amplitude font
+
+When Amplitude is used, default heading font weight is set to medium (instead of semi bold for Open Sans), via --salt-palette-text-heading-fontWeight and --salt-palette-text-display-fontWeight variables.
+
+You'll need to install Amplitude font to your application to make sure every user will see the font correctly, e.g.,
+
+```css
+@font-face {
+  font-family: "Amplitude";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url("PATH/TO/FONT.woff2") format("woff2");
+}
+```
+
+#### Display text sizes
+
+Display text styles are updated to distinguish them from heading text (h1/h2/h3/h4).
+They are now larger than h1 across densities.
+
 #### Setting a Theme Recipe in code
 
 You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
@@ -350,7 +384,7 @@ You can use an npm package to ensure consistency. For example, a team can encaps
 import { sharedStylePresets } from '@lob-library/styles';
 
 <SaltProviderNext
-  {... sharedStylePresets}
-  // Any product specific overrides
+    {... sharedStylePresets}
+    // Any product specific overrides
 >
 ```
