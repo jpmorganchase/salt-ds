@@ -21,8 +21,8 @@
     "clean": "rimraf ./src/components"
   },
   "dependencies": {
-    "@salt-ds/styles": "workspace:*",
-    "@salt-ds/window": "workspace:*",
+    "@salt-ds/styles": "workspace:^",
+    "@salt-ds/window": "workspace:^",
     "clsx": "^2.0.0"
   },
   "peerDependencies": {

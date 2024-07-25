@@ -37,7 +37,7 @@
     "@biomejs/biome": "1.9.1",
     "@biomejs/js-api": "^0.6.2",
     "@biomejs/wasm-nodejs": "^1.9.1",
-    "@changesets/cli": "^2.27.7",
+    "@changesets/cli": "patch:@changesets/cli@npm%3A2.27.7#~/.yarn/patches/@changesets-cli-npm-2.27.7-1c109a185d.patch",
     "@cypress/code-coverage": "^3.12.44",
     "@faker-js/faker": "^8.0.0",
     "@fontsource/open-sans": "^4.5.13",
