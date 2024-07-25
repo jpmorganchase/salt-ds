@@ -5,41 +5,42 @@ import {
   getMarkdownComponents,
   withMarkdownSpacing,
 } from "@jpmorganchase/mosaic-components";
-import { LayoutProvider } from "@jpmorganchase/mosaic-layouts";
-import { layouts as mosaicLayouts } from "@jpmorganchase/mosaic-layouts";
+import {
+  LayoutProvider,
+  layouts as mosaicLayouts,
+} from "@jpmorganchase/mosaic-layouts";
 import {
   BaseUrlProvider,
   Image,
   Link,
-  Metadata,
 } from "@jpmorganchase/mosaic-site-components";
 import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
+import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
+import clsx from "clsx";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
-import Head from "next/head";
+import { Open_Sans, PT_Mono } from "next/font/google";
 import { type ReactNode, useMemo } from "react";
-import "@salt-ds/theme/index.css";
-import "@jpmorganchase/mosaic-theme/index.css";
-import "@jpmorganchase/mosaic-theme/baseline.css";
+import * as saltComponents from "../components";
+import * as saltLayouts from "../layouts";
+import type { MyAppProps } from "../types/mosaic";
+import Homepage from "./index";
+
+import "@jpmorganchase/mosaic-components/index.css";
+import "@jpmorganchase/mosaic-content-editor-plugin/index.css";
+import "@jpmorganchase/mosaic-labs-components/index.css";
 import "@jpmorganchase/mosaic-layouts/index.css";
 import "@jpmorganchase/mosaic-site-components/index.css";
 import "@jpmorganchase/mosaic-sitemap-component/index.css";
-import "@jpmorganchase/mosaic-components/index.css";
-import "@jpmorganchase/mosaic-labs-components/index.css";
-import "@jpmorganchase/mosaic-content-editor-plugin/index.css";
+import "@jpmorganchase/mosaic-theme/baseline.css";
+import "@jpmorganchase/mosaic-theme/index.css";
+import "@salt-ds/theme/css/theme-next.css";
+import "@salt-ds/theme/index.css";
 import "prismjs/themes/prism.css";
 
-import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
-import { Open_Sans, PT_Mono } from "next/font/google";
-
 import "../css/index.css";
-import * as saltComponents from "../components";
-import * as saltLayouts from "../layouts";
-import Homepage from "./index";
-
-import type { MyAppProps } from "../types/mosaic";
 
 const components = {
   ...getMarkdownComponents(),
@@ -69,26 +70,13 @@ const ptMono = PT_Mono({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
+  variable: "--salt-typography-fontFamily-ptMono",
 });
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
+  variable: "--salt-typography-fontFamily-openSans",
 });
-
-// Declare the --site-font-family* props so that they are available
-// anywhere on the page. This makes them visible in portals too and
-// ensures that text renders in the correct fonts there too.
-const HeadWithFontStyles = ({ children }: { children: ReactNode }) => (
-  <Head>
-    {children}
-    <style>{`
-    :root {
-      --site-font-family: ${openSans.style.fontFamily};
-      --site-font-family-code: ${ptMono.style.fontFamily};
-    }
-  `}</style>
-  </Head>
-);
 
 export default function MyApp({
   Component,
@@ -113,8 +101,13 @@ export default function MyApp({
   return (
     <SessionProvider>
       <StoreProvider value={createStore()}>
-        <Metadata Component={HeadWithFontStyles} />
-        <ThemeProvider className={themeClassName}>
+        <ThemeProvider
+          themeClassName={clsx(
+            themeClassName,
+            ptMono.variable,
+            openSans.variable,
+          )}
+        >
           <DensityProvider>
             <BaseUrlProvider>
               <ImageProvider value={Image}>
