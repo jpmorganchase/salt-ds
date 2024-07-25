@@ -5689,7 +5689,7 @@ __metadata:
     cypress-axe: "npm:^1.5.0"
     cypress-real-events: "npm:^1.12.0"
     deepmerge: "npm:^4.2.2"
-    dom-accessibility-api: "npm:^0.6.3"
+    dom-accessibility-api: "npm:^0.7.0"
     mockdate: "npm:^3.0.5"
     modular-scripts: "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch"
     msw: "npm:^1.2.1"
@@ -12741,6 +12741,13 @@ __metadata:
   version: 0.6.3
   resolution: "dom-accessibility-api@npm:0.6.3"
   checksum: 10/83d3371f8226487fbad36e160d44f1d9017fb26d46faba6a06fcad15f34633fc827b8c3e99d49f71d5f3253d866e2131826866fd0a3c86626f8eccfc361881ff
+  languageName: node
+  linkType: hard
+
+"dom-accessibility-api@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "dom-accessibility-api@npm:0.7.0"
+  checksum: 10/ac69d27099bc0650633545c461347a355c2794b330f69b6b67fd98df91be9a48547d85176758747841e10ee041905143b39b6094e72c704c265b0f4f9bb7ab28
   languageName: node
   linkType: hard
 

@@ -98,7 +98,7 @@
     "cypress-axe": "^1.5.0",
     "cypress-real-events": "^1.12.0",
     "deepmerge": "^4.2.2",
-    "dom-accessibility-api": "^0.6.3",
+    "dom-accessibility-api": "^0.7.0",
     "mockdate": "^3.0.5",
     "modular-scripts": "patch:modular-scripts@npm:3.6.0#.yarn/patches/modular-scripts-npm-3.6.0-d967962075.patch",
     "msw": "^1.2.1",
