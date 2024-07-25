@@ -199,7 +199,7 @@ interface SaltProviderBaseProps {
   mode?: Mode;
   /**
    * Shape of `{ xs: number; sm: number; md: number; lg: number; xl: number; }`.
-   * Determins breakpoints used in responsive calulation for layout components.
+   * Determines breakpoints used in responsive calculation for layout components.
    */
   breakpoints?: Breakpoints;
   /**
@@ -291,7 +291,7 @@ function InternalSaltProvider({
       headingFont: headingFont,
       accent: accent,
       actionFont: actionFont,
-      // Backward compatilibty
+      // Backward compatibility
       UNSTABLE_corner: corner,
       UNSTABLE_headingFont: headingFont,
       UNSTABLE_accent: accent,
