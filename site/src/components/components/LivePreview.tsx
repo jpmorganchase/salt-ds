@@ -1,4 +1,4 @@
-import { Switch } from "@salt-ds/core";
+import { SaltProviderNext, Switch } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
 import clsx from "clsx";
 import {
@@ -76,6 +76,9 @@ export const LivePreview: FC<LivePreviewProps> = ({
     mode,
     showCode: contextShowCode,
     onShowCodeToggle: contextOnShowCodeToggle,
+    accent,
+    corner,
+    themeNext,
   } = useLivePreviewControls();
 
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
@@ -92,6 +95,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
   // somewhere), then fallback to using own state
   const showCode = contextOnShowCodeToggle ? contextShowCode : ownShowCode;
 
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+
   return (
     <>
       {children}
@@ -102,23 +107,23 @@ export const LivePreview: FC<LivePreviewProps> = ({
           })}
         >
           {list && list}
-          <SaltProvider mode={mode}>
+          <ChosenSaltProvider mode={mode} accent={accent} corner={corner}>
             <div className={styles.exampleWithSwitch}>
               <div className={styles.example}>
-                <SaltProvider density={density}>
+                <ChosenSaltProvider density={density}>
                   {ComponentExample.Example && <ComponentExample.Example />}
-                </SaltProvider>
+                </ChosenSaltProvider>
               </div>
-              <SaltProvider density="medium">
+              <ChosenSaltProvider density="medium">
                 <Switch
                   checked={showCode}
                   onChange={handleShowCodeToggle}
                   className={styles.switch}
                   label="Show code"
                 />
-              </SaltProvider>
+              </ChosenSaltProvider>
             </div>
-          </SaltProvider>
+          </ChosenSaltProvider>
         </div>
 
         {showCode && (
