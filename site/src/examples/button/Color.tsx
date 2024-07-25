@@ -1,26 +1,25 @@
 import { Button, GridLayout } from "@salt-ds/core";
-import { SearchIcon, SendIcon, SettingsSolidIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
-export const IconOnly = (): ReactElement => (
+export const Color = (): ReactElement => (
   <GridLayout columns={3}>
     <Button appearance="solid" color="neutral">
-      <SendIcon />
+      Solid
     </Button>
     <Button appearance="outline" color="neutral">
-      <SearchIcon />
+      Outline
     </Button>
     <Button appearance="transparent" color="neutral">
-      <SettingsSolidIcon />
+      Transparent
     </Button>
     <Button appearance="solid" color="accent">
-      <SendIcon />
+      Solid
     </Button>
     <Button appearance="outline" color="accent">
-      <SearchIcon />
+      Outline
     </Button>
     <Button appearance="transparent" color="accent">
-      <SettingsSolidIcon />
+      Transparent
     </Button>
   </GridLayout>
 );

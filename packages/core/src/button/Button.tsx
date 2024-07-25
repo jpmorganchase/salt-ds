@@ -32,6 +32,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
+   * @deprecated Use `appearance` and `color` instead.
    */
   variant?: ButtonVariant;
   /**
@@ -42,6 +43,17 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * The color of the button. Options are 'accent' and 'neutral'.
    */
   color?: ButtonColor;
+}
+
+function variantToAppearanceAndColor(variant: ButtonVariant) {
+  switch (variant) {
+    case "primary":
+      return { appearance: "solid", color: "neutral" };
+    case "secondary":
+      return { appearance: "transparent", color: "neutral" };
+    case "cta":
+      return { appearance: "solid", color: "accent" };
+  }
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -55,8 +67,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onKeyDown,
       onBlur,
       onClick,
-      appearance,
-      color,
+      appearance: appearanceProp,
+      color: colorProp,
       type = "button",
       variant = "primary",
       ...restProps
@@ -79,15 +91,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       window: targetWindow,
     });
 
-    const variantStyles = {
-      primary: { defaultAppearance: "solid", defaultColor: "neutral" },
-      secondary: { defaultAppearance: "transparent", defaultColor: "neutral" },
-      cta: { defaultAppearance: "solid", defaultColor: "accent" },
-    };
-
-    const { defaultAppearance, defaultColor } = variantStyles[variant];
-    const resolvedAppearance = appearance ?? defaultAppearance;
-    const resolvedColor = color ?? defaultColor;
+    const mapped = variantToAppearanceAndColor(variant);
+    const appearance = appearanceProp ?? mapped.appearance;
+    const color = colorProp ?? mapped.color;
 
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
@@ -101,8 +107,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("active")]: active,
-            [withBaseName(`${resolvedAppearance}-${resolvedColor}`)]:
-              resolvedAppearance,
+            [withBaseName(appearance)]: appearance,
+            [withBaseName(color)]: color,
           },
           className,
         )}

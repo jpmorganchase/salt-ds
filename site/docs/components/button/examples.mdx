@@ -9,34 +9,21 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="button" exampleName="CTA" >
+<LivePreview componentName="button" exampleName="Appearance">
 
-## CTA
+## Appearance
 
-Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
-
-### Best practices
-
-Use CTA buttons sparingly. They represent the default or expected action on the page.
+Button supports multiple visual styles; `"solid"`, `"outline"` and `"transparent"`. `"solid"` is the default appearance.
 
 </LivePreview>
+  
+<LivePreview componentName="button" exampleName="Color">
 
-<LivePreview componentName="button" exampleName="Primary" >
+## Color
 
-## Primary
-
-This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
-
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Secondary" >
-
-## Secondary
-
-Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
+Button has a default color of `"neutral"`, it can be used for routine, nonurgent actions. You can use the `"accent"` color for high-priority actions or call-to-actions.
 
 </LivePreview>
-
 <LivePreview componentName="button" exampleName="IconAndText">
 
 ## Icon and text
@@ -69,7 +56,17 @@ Display an icon-only button with no text when you have limited on-screen space, 
 
 Use the disabled state for a button that the user can’t press.
 
-A button with the prop `disabled={true}` will suppress all functionality. If you need to allow the user to place focus on a disabled button, you also need to pass `focusableWhenDisabled={true}`.
+A button with the prop `disabled={true}` will suppress all functionality.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="FocusableWhenDisabled" >
+
+## Focusable when disabled
+
+If you need to allow the user to place focus on a disabled button, you also need to pass `focusableWhenDisabled={true}`.
+
+This is useful when you want to show a tooltip or a popover when the user hovers over the button.
 
 </LivePreview>
 
@@ -78,6 +75,40 @@ A button with the prop `disabled={true}` will suppress all functionality. If you
 ## Full width
 
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
+
+</LivePreview>
+  
+<LivePreview componentName="button" exampleName="CTA" displayName="CTA - Deprecated" >
+
+## CTA
+
+_Note:_ The `variant` prop is deprecated. Use `appearance="solid"` and `color="accent"` instead.
+
+Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
+
+### Best practices
+
+Use CTA buttons sparingly. They represent the default or expected action on the page.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="Primary" displayName="Primary - Deprecated" >
+
+## Primary
+
+_Note:_ The `variant` prop is deprecated. Use `appearance="solid"` and `color="neutral"` instead.
+
+This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="Secondary" displayName="Secondary - Deprecated" >
+
+## Secondary
+
+_Note:_ The `variant` prop is deprecated. Use `appearance="transparent"` and `color="neutral"` instead.
+
+Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
 
 </LivePreview>
 </LivePreviewControls>
