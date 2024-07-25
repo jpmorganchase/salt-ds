@@ -127,11 +127,15 @@ export const RangeWithInput = () => {
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
+    // TODO replace Input with StepperInput when available
+    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
     setMinValue(+inputValue);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
+    // TODO replace Input with StepperInput when available
+    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
     setMaxValue(+inputValue);
   };
 
