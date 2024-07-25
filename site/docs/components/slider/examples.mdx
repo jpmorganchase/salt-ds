@@ -38,6 +38,10 @@ The default minimum range is set to 1 step, therefore thumbs cannot pass or over
 
 By default, the slider step increment is set to 1. This can be customised by configuring the ‘step’ prop. We recommend using an increment most suitable to your use case by using a step relative to the granularity of the scale. This prevents slider selections from becoming tedious and difficult to manage.
 
+Custom step values can be set to any number, including decimal values up to two decimal places. If a decimal step value is provided, the marks (if shown) will also be displayed as decimal values.
+
+If a custom step value is provided that is not a multiple of the range, the slider will round the maximum selectable value to the largest multiple of the step that is less than the maximum value. **Note:** This will render the final portion of the slider track unusable (the portion between the rounded maximum value and the actual maximum value). Step calculations are made from `0`, so the same rounding logic applies to negative values, but in the opposite direction.
+
 </LivePreview>
 
 <LivePreview componentName="slider" exampleName="SingleFormField">
