@@ -13,15 +13,17 @@ export interface FormFieldProps
   extends HTMLAttributes<HTMLDivElement>,
     A11yValueProps {
   /**
-   * Disabled prop
+   * If `true`, the control will be disabled
    */
   disabled?: boolean;
   /**
-   * Location of the label, values: 'top' (default) or 'left'
+   * Location of the label relative to the control
+   *
+   * Either 'top', 'left', or 'right'`
    */
   labelPlacement?: FormFieldLabelPlacement;
   /**
-   * Readonly prop
+   * If `true`, the control will be read-only
    */
   readOnly?: boolean;
   /**
