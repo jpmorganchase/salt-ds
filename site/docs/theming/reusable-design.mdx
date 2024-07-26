@@ -3,11 +3,11 @@ title: Reusable design
 layout: DetailTechnical
 ---
 
-Salt offers many [components](/salt/components) and [patterns](/salt/patterns) you can use and build on top of. There will still be times where you want to build a custom component to suit specific product need. We will walk through what to consider and what is available for you to reuse.
+Salt offers many [components](/salt/components) and [patterns](/salt/patterns) you can use and build on top of. There will still be times where you want to build a custom component to suit specific product need. We will talk about what to consider and what is available for you to reuse.
 
 ## Design to be reusable
 
-A good component should be reusable across multiple places. When building on top of Salt, it would be ideal if your component can be used across all [styling options](/salt/theming/index#styling-options) just like Salt components. To achieve that, you will need to use the right [design tokens](/salt/theming/index#design-tokens).
+A good component should be reusable across multiple places. When building on top of Salt, it would be ideal if your component can be used across all [styling options](/salt/theming/index#styling-options) just like all Salt components. To achieve that, you will need to use the right [design tokens](/salt/theming/index#design-tokens).
 
 ### Color tokens
 
@@ -30,5 +30,12 @@ For example, `--salt-spacing-100` scales from 4px in high density to 16px in low
 
 Good practices shown above are being used across Salt components and patterns. You may find it helpful to study how tokens are used by Salt.
 
-- [Button](/salt/components/button) uses actionable characteritics, size token for height and spacing token for inline padding.
-- []
+- [Button](/salt/components/button) uses actionable characteritic, size token for height and spacing token for inline padding.
+- [List box](/salt/components/list-box) uses seletable characteritic, size and spacing tokens for height.
+- [Banner](/salt/components/banner) uses various status characteritic tokens to inform its status.
+
+On top of using design tokens, you can utilize as many as Salt components to help build your own pattern.
+
+- Layout components (e.g. [stack layout](/salt/components/stack-layout), [split layout](/salt/components/split-layout), [grid layout](/salt/components/grid-layout)) will adjust its spacing according to the density it sits it.
+- [Text](/salt/components/text) components encapusate [typography](/salt/foundations/typography) design choices to be readily available.
+- [Icon](/salt/components/icon) and [status indicator](/salt/components/status-indicator) can be used for common recognizable UIs.
