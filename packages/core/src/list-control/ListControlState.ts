@@ -322,19 +322,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
         return;
       }
 
-      const { scrollTop } = listRef.current;
-      const { offsetTop, offsetHeight } = activeElement;
-
-      const isVisible =
-        offsetTop >= scrollTop &&
-        offsetTop + offsetHeight <= scrollTop + listRef.current.offsetHeight;
-
-      if (!isVisible) {
-        activeElement.scrollIntoView({
-          block: "end",
-          inline: "nearest",
-        });
-      }
+      activeElement.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+      });
     }
   }, [activeState]);
 
