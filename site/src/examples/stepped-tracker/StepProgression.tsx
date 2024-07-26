@@ -5,7 +5,7 @@ import { type ReactElement, useState } from "react";
 
 type Step = {
   label: string;
-  state: "default" | "completed";
+  stage: "pending" | "completed";
 };
 
 type Steps = Step[];
@@ -13,19 +13,19 @@ type Steps = Step[];
 const sampleSteps: Steps = [
   {
     label: "Step One",
-    state: "default",
+    stage: "pending",
   },
   {
     label: "Step Two",
-    state: "default",
+    stage: "pending",
   },
   {
     label: "Step Three",
-    state: "default",
+    stage: "pending",
   },
   {
     label: "Step Four",
-    state: "default",
+    stage: "pending",
   },
 ];
 
@@ -44,7 +44,7 @@ export const StepProgression = (): ReactElement => {
         i === activeStep
           ? {
               ...step,
-              state: "completed",
+              stage: "completed",
             }
           : step,
       ),
@@ -63,8 +63,8 @@ export const StepProgression = (): ReactElement => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }) => (
-          <TrackerStep state={state} key={label}>
+        {steps.map(({ label, stage }, key) => (
+          <TrackerStep stage={stage} key={key}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

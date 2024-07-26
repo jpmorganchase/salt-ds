@@ -13,7 +13,7 @@ export default {
 
 interface Step {
   label: string;
-  state: "default" | "completed";
+  state: "pending" | "completed";
 }
 
 type Steps = Step[];
@@ -21,19 +21,19 @@ type Steps = Step[];
 const sampleSteps: Steps = [
   {
     label: "Step One",
-    state: "default",
+    state: "pending",
   },
   {
     label: "Step Two",
-    state: "default",
+    state: "pending",
   },
   {
     label: "Step Three",
-    state: "default",
+    state: "pending",
   },
   {
     label: "Step Four",
-    state: "default",
+    state: "pending",
   },
 ];
 
@@ -60,30 +60,30 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={2}>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker activeStep={3}>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
@@ -91,19 +91,45 @@ export const Basic: StoryFn<typeof SteppedTracker> = () => {
   );
 };
 
+export const Status: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <div
+      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+    >
+      <SteppedTracker activeStep={1}>
+        <TrackerStep stage="completed">
+          <StepLabel>Completed</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Active</StepLabel>
+        </TrackerStep>
+        <TrackerStep status="warning">
+          <StepLabel>Warning</StepLabel>
+        </TrackerStep>
+        <TrackerStep status="error">
+          <StepLabel>Error</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Default</StepLabel>
+        </TrackerStep>
+      </SteppedTracker>
+    </div>
+  );
+};
+
 export const SingleVertical: StoryFn<typeof SteppedTracker> = () => {
   return (
-    <SteppedTracker orientation="vertical" activeStep={2}>
-      <TrackerStep state="completed">
+    <SteppedTracker orientation="vertical" activeStep={1}>
+      <TrackerStep stage="completed">
         <StepLabel>Step One</StepLabel>
       </TrackerStep>
-      <TrackerStep state="completed">
+      <TrackerStep stage="completed">
         <StepLabel>Step Two</StepLabel>
       </TrackerStep>
-      <TrackerStep state="default">
+      <TrackerStep>
         <StepLabel>Step Three</StepLabel>
       </TrackerStep>
-      <TrackerStep state="default">
+      <TrackerStep>
         <StepLabel>Step Four</StepLabel>
       </TrackerStep>
     </SteppedTracker>
@@ -133,30 +159,30 @@ export const BasicVertical: StoryFn<typeof SteppedTracker> = () => {
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker orientation="vertical" activeStep={2}>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
       <SteppedTracker orientation="vertical" activeStep={3}>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Two</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Three</StepLabel>
         </TrackerStep>
-        <TrackerStep state="completed">
+        <TrackerStep stage="completed">
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
@@ -199,7 +225,7 @@ export const AutoProgress: StoryFn<typeof SteppedTracker> = () => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }) => (
-          <TrackerStep state={state} key={label}>
+          <TrackerStep stage={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
@@ -224,20 +250,20 @@ export const WrappingLabel: StoryFn<typeof SteppedTracker> = () => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={0}>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>
             Step Two: I am a label that wraps on smaller screen sizes
           </StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>
             Step Three: I am a label that wraps on smaller screen sizes
           </StepLabel>
         </TrackerStep>
-        <TrackerStep state="default">
+        <TrackerStep>
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
@@ -264,7 +290,7 @@ export const NonSequentialProgress: StoryFn<typeof SteppedTracker> = () => {
         i === activeStep
           ? {
               ...step,
-              state: step.state === "default" ? "completed" : "default",
+              state: step.state === "pending" ? "completed" : "pending",
             }
           : step,
       ),
@@ -279,7 +305,7 @@ export const NonSequentialProgress: StoryFn<typeof SteppedTracker> = () => {
     >
       <SteppedTracker activeStep={activeStep}>
         {steps.map(({ label, state }) => (
-          <TrackerStep state={state} key={label}>
+          <TrackerStep stage={state} key={label}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}
