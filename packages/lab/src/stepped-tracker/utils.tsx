@@ -1,6 +1,9 @@
 import { Children, isValidElement, Fragment, type ReactNode } from "react";
+import { makePrefixer } from "@salt-ds/core";
 
 import { TrackerStepProvider } from "./SteppedTrackerContext";
+
+const withBaseName = makePrefixer("saltSteppedTracker");
 
 type DepthMap = {
   i: number;
@@ -75,7 +78,12 @@ export const renderNestedSteps = (
           <TrackerStepProvider stepNumber={depthItem.i}>
             {child}
           </TrackerStepProvider>
-          <div className={} >{renderNestedSteps(childrenArray, depthItem.children)}</div>
+          <ul
+            className={withBaseName("nested-group")}
+            data-parent-step={depthItem.i}
+          >
+            {renderNestedSteps(childrenArray, depthItem.children)}
+          </ul>
         </Fragment>
       );
     }

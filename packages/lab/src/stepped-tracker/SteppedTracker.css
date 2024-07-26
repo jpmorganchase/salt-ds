@@ -1,4 +1,5 @@
-.saltSteppedTracker {
+.saltSteppedTracker,
+.saltSteppedTracker-nested-group {
   margin: 0;
   padding: 0;
   text-indent: 0;
@@ -8,10 +9,15 @@
   position: relative;
 }
 
-.saltSteppedTracker.saltSteppedTracker-horizontal {
+.saltSteppedTracker.saltSteppedTracker-horizontal,
+.saltSteppedTracker.saltSteppedTracker-horizontal .saltSteppedTracker-nested-group {
   flex-direction: row;
 }
 
-.saltSteppedTracker.saltSteppedTracker-vertical {
+.saltSteppedTracker.saltSteppedTracker-vertical,
+.saltSteppedTracker.saltSteppedTracker-vertical .saltSteppedTracker-nested-group {
   flex-direction: column;
+}
+
+.saltSteppedTracker-nested-group {
 }
