@@ -1,46 +1,46 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { flip, useDismiss, useInteractions } from "@floating-ui/react";
+import {
+  type DateValue,
+  endOfMonth,
+  getLocalTimeZone,
+  startOfMonth,
+  today,
+} from "@internationalized/date";
 import {
   useControlled,
   useFloatingUI,
   useForkRef,
   useFormFieldProps,
 } from "@salt-ds/core";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  isRangeSelectionValueType,
-  RangeSelectionValueType,
-  SingleSelectionValueType,
+  type DateRangeSelection,
+  type SingleDateSelection,
+  isDateRangeSelection,
 } from "../calendar";
-import { flip, useDismiss, useInteractions } from "@floating-ui/react";
-import {
-  DateValue,
-  getLocalTimeZone,
-  endOfMonth,
-  startOfMonth,
-  today,
-} from "@internationalized/date";
 
 interface useDatePickerBaseProps<SelectionVariantType> {
   selectionVariant: "single" | "range";
-  disabled: boolean;
-  readOnly: boolean;
-  focusedInput: "start" | "end" | null;
+  disabled?: boolean;
+  readOnly?: boolean;
+  focusedInput?: "start" | "end" | null;
   defaultFocusedInput?: useDatePickerBaseProps<SelectionVariantType>["focusedInput"];
-  open: boolean;
+  open?: boolean;
   defaultOpen?: useDatePickerBaseProps<SelectionVariantType>["open"];
-  selectedDate: SelectionVariantType | null;
+  selectedDate?: SelectionVariantType | null;
   defaultSelectedDate?: useDatePickerBaseProps<SelectionVariantType>["selectedDate"];
-  onSelectedDateChange: (newDate: SelectionVariantType | null) => void;
+  onSelectedDateChange?: (newDate: SelectionVariantType | null) => void;
   minDate?: DateValue;
   maxDate?: DateValue;
 }
 
 export interface useDatePickerSingleProps
-  extends useDatePickerBaseProps<SingleSelectionValueType> {
+  extends useDatePickerBaseProps<SingleDateSelection> {
   selectionVariant: "single";
 }
 
 export interface useDatePickerRangeProps
-  extends useDatePickerBaseProps<RangeSelectionValueType> {
+  extends useDatePickerBaseProps<DateRangeSelection> {
   selectionVariant: "range";
 }
 
@@ -50,7 +50,7 @@ export type useDatePickerProps =
 
 export function useDatePicker(
   props: useDatePickerProps,
-  ref: React.ForwardedRef<HTMLDivElement>
+  ref: React.ForwardedRef<HTMLDivElement>,
 ) {
   const {
     readOnly = false,
@@ -71,7 +71,7 @@ export function useDatePicker(
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
   const prevSelectedDate = useRef<
-    SingleSelectionValueType | RangeSelectionValueType | null
+    SingleDateSelection | DateRangeSelection | null
   >(null);
 
   const [focusedInput, setFocusedInput] = useControlled({
@@ -99,14 +99,14 @@ export function useDatePicker(
 
   useEffect(() => {
     if (selectionVariant === "range") {
-      const rangeValue = selectedDate as RangeSelectionValueType;
+      const rangeValue = selectedDate as DateRangeSelection;
       if (!rangeValue?.startDate) {
         setFocusedInput("start");
       } else {
         setFocusedInput("end");
       }
     } else {
-      const singleSelectionValue = selectedDate as SingleSelectionValueType;
+      const singleSelectionValue = selectedDate as SingleDateSelection;
       if (singleSelectionValue) {
         setFocusedInput("start");
       }
@@ -140,38 +140,38 @@ export function useDatePicker(
         ...getFloatingPropsCallback(userProps),
       };
     },
-    [getFloatingPropsCallback, floatingUIResult]
+    [getFloatingPropsCallback, floatingUIResult],
   );
 
   const apply = (
-    newDate: SingleSelectionValueType | RangeSelectionValueType | null
+    newDate: SingleDateSelection | DateRangeSelection | null,
   ): void => {
     if (newDate === null) {
-      onSelectedDateChange(newDate);
+      onSelectedDateChange?.(newDate);
     } else {
       if (selectionVariant === "range") {
-        const newRangeDate = newDate as RangeSelectionValueType;
+        const newRangeDate = newDate as DateRangeSelection;
         if (newRangeDate?.startDate && newRangeDate?.endDate) {
           setOpen(false);
         }
-        onSelectedDateChange(newRangeDate);
+        onSelectedDateChange?.(newRangeDate);
       } else {
-        const newSingleDate = newDate as SingleSelectionValueType;
+        const newSingleDate = newDate as SingleDateSelection;
         if (newSingleDate) {
           setOpen(false);
         }
-        onSelectedDateChange(newSingleDate);
+        onSelectedDateChange?.(newSingleDate);
       }
     }
   };
 
   const setSelectedDateWrapper = (
-    newDate: SingleSelectionValueType | RangeSelectionValueType | null
+    newDate: SingleDateSelection | DateRangeSelection | null,
   ) => {
     let inRangeNewDate;
     let startDateInRange = true;
     let endDateInRange = true;
-    if (isRangeSelectionValueType(newDate)) {
+    if (isDateRangeSelection(newDate)) {
       if (maxDate && newDate?.startDate) {
         startDateInRange = newDate.startDate.compare(minDate) >= 0;
       }

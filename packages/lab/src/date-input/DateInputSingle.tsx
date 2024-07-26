@@ -1,38 +1,38 @@
-import { clsx } from "clsx";
+import type { CalendarDate, DateValue } from "@internationalized/date";
 import {
-  ChangeEventHandler,
-  ComponentPropsWithoutRef,
-  FocusEventHandler,
-  forwardRef,
-  InputHTMLAttributes,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  ReactNode,
-  RefObject,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { CalendarDate, DateValue } from "@internationalized/date";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import {
-  makePrefixer,
   StatusAdornment,
+  makePrefixer,
   useControlled,
   useForkRef,
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import { SingleSelectionValueType } from "../calendar";
-import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  type InputHTMLAttributes,
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+  type ReactNode,
+  type RefObject,
+  type SyntheticEvent,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import type { SingleDateSelection } from "../calendar";
 import dateInputCss from "./DateInput.css";
+import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
 export interface DateInputSingleProps<
-  SelectionVariantType = SingleSelectionValueType
+  SelectionVariantType = SingleDateSelection,
 > extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
@@ -94,7 +94,7 @@ export interface DateInputSingleProps<
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SelectionVariantType | null
+    date: SelectionVariantType | null,
   ) => void;
   /**
    * If `true`, the component should receive focus.
@@ -137,7 +137,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     const innerInputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef<HTMLInputElement>(
       innerInputRef,
-      inputRefProp
+      inputRefProp,
     );
 
     const inputId = useId();
@@ -265,7 +265,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus ?? "")]: validationStatus,
           },
-          className
+          className,
         )}
         ref={handleWrapperRef}
         onClick={handleClick}
@@ -277,7 +277,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           aria-labelledby={clsx(
             formFieldLabelledBy,
             dateInputLabelledBy,
-            inputId
+            inputId,
           )}
           aria-label={clsx("Start date", ariaLabel)}
           id={inputId}
@@ -305,5 +305,5 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         <div className={withBaseName("activationIndicator")} />
       </div>
     );
-  }
+  },
 );

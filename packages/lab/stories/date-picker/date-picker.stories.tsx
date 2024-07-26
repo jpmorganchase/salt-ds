@@ -1,36 +1,36 @@
 import {
-  DatePicker,
-  DatePickerSingleInput,
-  DatePickerSinglePanel,
-  DatePickerSingleProps,
-  DatePickerRangeProps,
-  DatePickerRangeInput,
-  DatePickerRangePanel,
-  DatePickerRangeFooter,
-  DatePickerOverlay,
-  type RangeSelectionValueType,
-  DateInputRangeValue,
-  SingleSelectionValueType,
-  createCalendarDate,
-} from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
-import {
-  Divider,
-  FlexLayout,
-  FlexItem,
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-  FormFieldHelperText,
-} from "@salt-ds/core";
-import {
-  getLocalTimeZone,
   CalendarDate,
   DateFormatter,
-  DateValue,
+  type DateValue,
+  getLocalTimeZone,
   today,
 } from "@internationalized/date";
-import { ChangeEvent, useState } from "react";
+import {
+  Divider,
+  FlexItem,
+  FlexLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import {
+  type DateInputRangeValue,
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerRangeFooter,
+  DatePickerRangeInput,
+  DatePickerRangePanel,
+  type DatePickerRangeProps,
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
+  type DatePickerSingleProps,
+  type DateRangeSelection,
+  type SingleDateSelection,
+  createCalendarDate,
+} from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -44,9 +44,9 @@ function isValidDate(dateString: string) {
   if (!match) {
     return false;
   }
-  const day = parseInt(match[1], 10);
+  const day = Number.parseInt(match[1], 10);
   const monthStr = match[2].toLowerCase(); // Convert month to lowercase
-  const year = parseInt(match[3], 10);
+  const year = Number.parseInt(match[3], 10);
   const months = [
     "jan",
     "feb",
@@ -81,9 +81,9 @@ function isValidOffsetString(offsetString: string) {
 }
 
 function formatDate(
-  dateValue: SingleSelectionValueType | null,
-  locale: string = "en-US",
-  options?: Intl.DateTimeFormatOptions
+  dateValue: SingleDateSelection | null,
+  locale = "en-US",
+  options?: Intl.DateTimeFormatOptions,
 ): string {
   const dateFormatter = new DateFormatter(locale, options);
   return dateValue
@@ -92,9 +92,9 @@ function formatDate(
 }
 
 function formatDateRange(
-  dateRange: RangeSelectionValueType | null,
-  locale: string = "en-US",
-  options?: Intl.DateTimeFormatOptions
+  dateRange: DateRangeSelection | null,
+  locale = "en-US",
+  options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
   const dateFormatter = new DateFormatter(locale, options);
@@ -150,16 +150,15 @@ Range.args = {
 };
 
 export const SingleControlled: StoryFn<DatePickerSingleProps> = (args) => {
-  const [selectedDate, setSelectedDate] =
-    useState<SingleSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
   return (
     <DatePicker
       {...args}
       selectionVariant={"single"}
       selectedDate={selectedDate}
-      onSelectedDateChange={(
-        newSelectedDate: SingleSelectionValueType | null
-      ) => {
+      onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
         console.log(`Selected date: ${formatDate(newSelectedDate)}`);
         setSelectedDate(newSelectedDate);
       }}
@@ -173,16 +172,15 @@ export const SingleControlled: StoryFn<DatePickerSingleProps> = (args) => {
 };
 
 export const RangeControlled: StoryFn<DatePickerRangeProps> = (args) => {
-  const [selectedDate, setSelectedDate] =
-    useState<RangeSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   return (
     <DatePicker
       {...args}
       selectionVariant="range"
       selectedDate={selectedDate}
-      onSelectedDateChange={(
-        newSelectedDate: RangeSelectionValueType | null
-      ) => {
+      onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
         console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
         setSelectedDate(newSelectedDate);
       }}
@@ -196,8 +194,9 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = (args) => {
 };
 
 export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = (args) => {
-  const [selectedDate, setSelectedDate] =
-    useState<SingleSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
   const helperText = "Valid between 15/01/2030 and 15/01/2031";
   return (
     <FormField>
@@ -206,9 +205,7 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = (args) => {
         {...args}
         selectionVariant={"single"}
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: SingleSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
           console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
         }}
@@ -229,8 +226,9 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = (args) => {
 };
 
 export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = (args) => {
-  const [selectedDate, setSelectedDate] =
-    useState<RangeSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   const helperText = "Valid between 15/01/2030 and 15/01/2031";
   return (
     <FormField>
@@ -239,11 +237,9 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = (args) => {
         {...args}
         selectionVariant="range"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: RangeSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
           console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
         }}
@@ -265,18 +261,17 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = (args) => {
 };
 
 export const SingleWithCustomFormat: StoryFn<DatePickerSingleProps> = (
-  args
+  args,
 ) => {
-  const [selectedDate, setSelectedDate] =
-    useState<SingleSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
   return (
     <DatePicker
       {...args}
       selectionVariant={"single"}
       selectedDate={selectedDate}
-      onSelectedDateChange={(
-        newSelectedDate: SingleSelectionValueType | null
-      ) => {
+      onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
         console.log(`Selected date: ${formatDate(newSelectedDate)}`);
         setSelectedDate(newSelectedDate);
       }}
@@ -301,16 +296,15 @@ export const SingleWithCustomFormat: StoryFn<DatePickerSingleProps> = (
 };
 
 export const RangeWithCustomFormat: StoryFn<DatePickerRangeProps> = (args) => {
-  const [selectedDate, setSelectedDate] =
-    useState<RangeSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   return (
     <DatePicker
       {...args}
       selectionVariant={"range"}
       selectedDate={selectedDate}
-      onSelectedDateChange={(
-        newSelectedDate: RangeSelectionValueType | null
-      ) => {
+      onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
         console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
         setSelectedDate(newSelectedDate);
       }}
@@ -335,14 +329,15 @@ export const RangeWithCustomFormat: StoryFn<DatePickerRangeProps> = (args) => {
 };
 
 export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = (
-  args
+  args,
 ) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    "error"
+    "error",
   );
-  const [selectedDate, setSelectedDate] =
-    useState<SingleSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -351,9 +346,7 @@ export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = (
         {...args}
         selectionVariant="single"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: SingleSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
           console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
           setValidationStatus(undefined);
@@ -381,7 +374,7 @@ export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = (
 export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    "error"
+    "error",
   );
 
   return (
@@ -390,11 +383,9 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
       <DatePicker
         {...args}
         selectionVariant="range"
-        onSelectedDateChange={(
-          newSelectedDate: RangeSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
           console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           //setSelectedDate(newSelectedDate);
           setValidationStatus(undefined);
@@ -404,7 +395,7 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
         <DatePickerRangeInput
           onChange={(
             _e: ChangeEvent<HTMLInputElement>,
-            selectedDate?: DateInputRangeValue
+            selectedDate?: DateInputRangeValue,
           ) => {
             const startDateValue = selectedDate?.startDate;
             const endDateValue = selectedDate?.endDate;
@@ -433,10 +424,11 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
 export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined
+    undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<SingleSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -445,9 +437,7 @@ export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
         {...args}
         selectionVariant="single"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: SingleSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
           console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
           setValidationStatus(undefined);
@@ -474,10 +464,11 @@ export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
 export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined
+    undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<RangeSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -486,11 +477,9 @@ export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
         {...args}
         selectionVariant="range"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: RangeSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
           console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
           setValidationStatus(undefined);
@@ -499,7 +488,7 @@ export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
         <DatePickerRangeInput
           onChange={(
             _e: ChangeEvent<HTMLInputElement>,
-            selectedDate?: DateInputRangeValue
+            selectedDate?: DateInputRangeValue,
           ) => {
             const startDateValue = selectedDate?.startDate;
             const endDateValue = selectedDate?.endDate;
@@ -521,15 +510,16 @@ export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
 };
 
 export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
-  args
+  args,
 ) => {
   const helperText =
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined
+    undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<SingleSelectionValueType | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -538,9 +528,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
         {...args}
         selectionVariant="single"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: SingleSelectionValueType | null
-        ) => {
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
           console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
           setValidationStatus(undefined);
@@ -551,7 +539,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
             let parsedDate = inputDate;
             const offsetMatch = parsedDate?.match(/^([+-]?\d+)$/);
             if (offsetMatch) {
-              const offsetDays = parseInt(offsetMatch[1], 10);
+              const offsetDays = Number.parseInt(offsetMatch[1], 10);
               let offsetDate = selectedDate
                 ? selectedDate
                 : today(getLocalTimeZone());
@@ -584,17 +572,20 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
   );
 };
 
-export const CustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
+export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const minDate = today(getLocalTimeZone());
   return (
     <FormField>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         {...args}
+        minDate={minDate}
+        maxDate={minDate.add({ years: 50 })}
         selectionVariant="range"
         onSelectedDateChange={(newSelectedDate) => {
           console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
         }}
       >
@@ -608,19 +599,20 @@ export const CustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
   );
 };
 
-export const ConfirmDateBeforeSelection: StoryFn<DatePickerRangeProps> = (
-  args
-) => {
+export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const minDate = today(getLocalTimeZone());
   return (
     <FormField>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         {...args}
         selectionVariant="range"
+        minDate={minDate}
+        maxDate={minDate.add({ years: 50 })}
         onSelectedDateChange={(newSelectedDate) => {
           console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
         }}
       >

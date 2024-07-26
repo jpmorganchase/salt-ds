@@ -77,13 +77,13 @@ function useCalendarNavigation() {
       if (isOutsideAllowedMonths(newMonth)) {
         // If month is navigable we should move to the closest navigable month
         const navigableMonths = monthsForLocale(visibleMonth).filter(
-          (n) => !isOutsideAllowedMonths(n)
+          (n) => !isOutsideAllowedMonths(n),
         );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
           Math.abs(monthDiff(currentMonth, newMonth)) <
           Math.abs(monthDiff(closestMonth, newMonth))
             ? currentMonth
-            : closestMonth
+            : closestMonth,
         );
       }
       setVisibleMonth(event, newMonth);
@@ -95,10 +95,10 @@ function useCalendarNavigation() {
   const years: DateValue[] = generateYearsInRange(minDate, maxDate);
 
   const selectedMonth: DateValue | undefined = months.find((month: DateValue) =>
-    isSameMonth(month, visibleMonth)
+    isSameMonth(month, visibleMonth),
   );
   const selectedYear: DateValue | undefined = years.find((year: DateValue) =>
-    isSameYear(year, visibleMonth)
+    isSameYear(year, visibleMonth),
   );
 
   const canNavigatePrevious = !(minDate && isDayVisible(minDate));
@@ -146,7 +146,7 @@ const OptionWithTooltip = ({
 
 function generateYearsInRange(
   minDate?: DateValue,
-  maxDate?: DateValue
+  maxDate?: DateValue,
 ): DateValue[] {
   const currentYear = new Date().getFullYear();
   const minYear = minDate ? minDate.year : currentYear - 100;
@@ -193,7 +193,7 @@ export const CalendarNavigation = forwardRef<
   } = useCalendarNavigation();
 
   const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> = (
-    event
+    event,
   ) => {
     moveToPreviousMonth(event);
   };
@@ -225,7 +225,7 @@ export const CalendarNavigation = forwardRef<
       className={clsx(
         withBaseName(),
         { [withBaseName("hideYearDropdown")]: hideYearDropdown },
-        className
+        className,
       )}
       ref={ref}
       {...rest}

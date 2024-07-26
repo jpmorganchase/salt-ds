@@ -1,30 +1,34 @@
 import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  SyntheticEvent,
-  useState,
-} from "react";
-import {
-  DateValue,
+  type DateValue,
   getLocalTimeZone,
   startOfMonth,
   today,
 } from "@internationalized/date";
-import clsx from "clsx";
 import {
   FlexItem,
   FlexLayout,
   FormFieldContext,
-  FormFieldContextValue,
+  type FormFieldContextValue,
   FormFieldHelperText,
-  makePrefixer,
   StackLayout,
+  makePrefixer,
   useControlled,
 } from "@salt-ds/core";
-import { CalendarSingleProps } from "@salt-ds/lab";
-import { useWindow } from "@salt-ds/window";
+import type { CalendarSingleProps } from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { Calendar, CalendarProps, SingleSelectionValueType } from "../calendar";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type SyntheticEvent,
+  forwardRef,
+  useState,
+} from "react";
+import {
+  Calendar,
+  type CalendarProps,
+  type SingleDateSelection,
+} from "../calendar";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
@@ -32,14 +36,14 @@ export interface DatePickerSinglePanelProps<SelectionVariantType>
   extends ComponentPropsWithoutRef<"div"> {
   onSelect?: (
     event: SyntheticEvent,
-    selectedDate?: SelectionVariantType | null
+    selectedDate?: SelectionVariantType | null,
   ) => void;
   helperText?: string;
   visibleMonth?: DateValue;
   defaultVisibleMonth?: DateValue;
   onVisibleMonthChange?: (
     event: SyntheticEvent,
-    visibleMonth: DateValue
+    visibleMonth: DateValue,
   ) => void;
   CalendarProps?: Partial<
     Omit<
@@ -57,7 +61,7 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export const DatePickerSinglePanel = forwardRef<
   HTMLDivElement,
-  DatePickerSinglePanelProps<SingleSelectionValueType>
+  DatePickerSinglePanelProps<SingleDateSelection>
 >(function DatePickerSinglePanel(props, ref) {
   const {
     CalendarProps,
@@ -83,7 +87,7 @@ export const DatePickerSinglePanel = forwardRef<
       maxDate = minDate.add({ months: 1 }),
     },
     helpers: { setSelectedDate },
-  } = useDatePickerContext<SingleSelectionValueType>();
+  } = useDatePickerContext<SingleDateSelection>();
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 
@@ -96,7 +100,7 @@ export const DatePickerSinglePanel = forwardRef<
 
   const handleSelectedDateChange = (
     event: SyntheticEvent,
-    newDate: SingleSelectionValueType | null
+    newDate: SingleDateSelection | null,
   ) => {
     setSelectedDate(newDate);
     onSelect?.(event, newDate);
@@ -104,7 +108,7 @@ export const DatePickerSinglePanel = forwardRef<
 
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
     event,
-    newHoveredDate
+    newHoveredDate,
   ) => {
     setHoveredDate(newHoveredDate);
     if (newHoveredDate && CalendarProps?.onHoveredDateChange) {
@@ -114,7 +118,7 @@ export const DatePickerSinglePanel = forwardRef<
 
   const handleVisibleMonthChange: CalendarProps["onVisibleMonthChange"] = (
     event,
-    newVisibleMonth
+    newVisibleMonth,
   ) => {
     setVisibleMonth(newVisibleMonth);
     if (onVisibleMonthChange) {

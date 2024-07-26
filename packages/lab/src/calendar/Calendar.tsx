@@ -12,11 +12,11 @@ import {
 } from "./internal/CalendarNavigation";
 import { CalendarWeekHeader } from "./internal/CalendarWeekHeader";
 import {
+  type UseCalendarMultiSelectProps,
+  type UseCalendarOffsetProps,
+  type UseCalendarRangeProps,
+  type UseCalendarSingleProps,
   useCalendar,
-  UseCalendarSingleProps,
-  UseCalendarRangeProps,
-  UseCalendarMultiSelectProps,
-  UseCalendarOffsetProps,
 } from "./useCalendar";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -127,5 +127,5 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
         </div>
       </CalendarContext.Provider>
     );
-  }
+  },
 );

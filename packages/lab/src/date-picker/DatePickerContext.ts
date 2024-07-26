@@ -1,11 +1,14 @@
+import type { DateValue } from "@internationalized/date";
+import { type UseFloatingUIReturn, createContext } from "@salt-ds/core";
 import { useContext } from "react";
-import { createContext, UseFloatingUIReturn } from "@salt-ds/core";
-import { RangeSelectionValueType, SingleSelectionValueType } from "../calendar";
-import { useDatePicker } from "./useDatePicker";
-import {DateValue} from "@internationalized/date";
+import type {
+  DateRangeSelection,
+  SingleDateSelection,
+} from "../calendar";
+import type { useDatePicker } from "./useDatePicker";
 
 export interface DatePickerState<
-  SelectionVariantType = SingleSelectionValueType | RangeSelectionValueType
+  SelectionVariantType = SingleDateSelection | DateRangeSelection,
 > {
   state: Omit<
     ReturnType<typeof useDatePicker>["state"],
@@ -13,8 +16,8 @@ export interface DatePickerState<
   > & {
     floatingUIResult?: UseFloatingUIReturn;
     selectedDate?: SelectionVariantType | null;
-    minDate?: DateValue,
-    maxDate?: DateValue,
+    minDate?: DateValue;
+    maxDate?: DateValue;
   };
   helpers: Omit<
     ReturnType<typeof useDatePicker>["helpers"],
@@ -40,7 +43,7 @@ function createDatePickerContext<SelectionVariantType>() {
         autoApplyDisabled: false,
         containerRef: null,
         minDate: undefined,
-        maxDate: undefined
+        maxDate: undefined,
       },
       helpers: {
         setFocusedInput: () => undefined,
@@ -51,16 +54,16 @@ function createDatePickerContext<SelectionVariantType>() {
         cancel: () => undefined,
         setAutoApplyDisabled: () => undefined,
       },
-    }
+    },
   );
 }
 
 export const DatePickerContext = createDatePickerContext<
-  SingleSelectionValueType | RangeSelectionValueType
+  SingleDateSelection | DateRangeSelection
 >();
 
 export function useDatePickerContext<SelectionVariantType>() {
   return useContext(
-    DatePickerContext
+    DatePickerContext,
   ) as unknown as DatePickerState<SelectionVariantType>;
 }

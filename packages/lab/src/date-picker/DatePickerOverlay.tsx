@@ -1,5 +1,3 @@
-import { type ComponentPropsWithoutRef, forwardRef, ReactNode } from "react";
-import { clsx } from "clsx";
 import {
   makePrefixer,
   useFloatingComponent,
@@ -8,6 +6,12 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
@@ -40,7 +44,7 @@ export const DatePickerOverlay = forwardRef<
 
   const floatingRef = useForkRef<HTMLDivElement>(
     ref,
-    floatingUIResult?.floating
+    floatingUIResult?.floating,
   );
 
   return (

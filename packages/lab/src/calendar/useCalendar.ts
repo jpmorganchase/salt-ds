@@ -1,5 +1,5 @@
 import {
-  DateValue,
+  type DateValue,
   endOfMonth,
   endOfYear,
   getLocalTimeZone,
@@ -10,22 +10,22 @@ import {
   today,
 } from "@internationalized/date";
 import { useControlled } from "@salt-ds/core";
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
+  type UseCalendarSelectionMultiSelectProps,
+  type UseCalendarSelectionOffsetProps,
+  type UseCalendarSelectionProps,
+  type UseCalendarSelectionRangeProps,
+  type UseCalendarSelectionSingleProps,
+  isDateRangeSelection,
   useCalendarSelection,
-  UseCalendarSelectionProps,
-  UseCalendarSelectionSingleProps,
-  UseCalendarSelectionRangeProps,
-  UseCalendarSelectionMultiSelectProps,
-  UseCalendarSelectionOffsetProps,
-  isRangeSelectionValueType,
 } from "./useCalendarSelection";
 
 interface UseCalendarBaseProps {
   defaultVisibleMonth?: DateValue;
   onVisibleMonthChange?: (
     event: SyntheticEvent,
-    visibleMonth: DateValue
+    visibleMonth: DateValue,
   ) => void;
   isDayUnselectable?: (date: DateValue) => string | false | void;
   isDayHighlighted?: (date: DateValue) => string | false | void;
@@ -90,7 +90,7 @@ export function useCalendar(props: UseCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
-    select
+    select,
     // startDateOffset,
     // endDateOffset,
   } = props;
@@ -108,7 +108,7 @@ export function useCalendar(props: UseCalendarProps) {
         (maxDate && date.compare(maxDate) > 0)
       );
     },
-    [maxDate, minDate]
+    [maxDate, minDate],
   );
 
   const isOutsideAllowedMonths = (date: DateValue) => {
@@ -133,7 +133,7 @@ export function useCalendar(props: UseCalendarProps) {
           isDayDisabled(date) ||
           isOutsideAllowedDates(date))
       ),
-    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates]
+    [isDayUnselectable, isDayDisabled, isOutsideAllowedDates],
   );
 
   const selectionManager = useCalendarSelection({
@@ -152,13 +152,13 @@ export function useCalendar(props: UseCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
-    select
+    select,
   } as UseCalendarSelectionProps);
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
   const isInVisibleMonth = (
-    date: DateValue | undefined | null
+    date: DateValue | undefined | null,
   ): date is DateValue => date != null && isSameMonth(date, visibleMonth);
 
   const getInitialFocusedDate = (): DateValue => {
@@ -166,7 +166,7 @@ export function useCalendar(props: UseCalendarProps) {
     // Case range or offset
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isRangeSelectionValueType(selectedDate)
+      isDateRangeSelection(selectedDate)
     ) {
       if (isInVisibleMonth(selectedDate?.startDate)) {
         return selectedDate.startDate;
@@ -196,7 +196,7 @@ export function useCalendar(props: UseCalendarProps) {
     // Case single select
     if (
       selectionVariant === "single" &&
-      !isRangeSelectionValueType(selectedDate) &&
+      !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
       isInVisibleMonth(selectedDate)
     ) {
@@ -210,7 +210,7 @@ export function useCalendar(props: UseCalendarProps) {
   };
 
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
-    getInitialFocusedDate
+    getInitialFocusedDate,
   );
 
   const isDayVisible = useCallback(
@@ -223,7 +223,7 @@ export function useCalendar(props: UseCalendarProps) {
 
       return !(date.compare(endInsideDays) > 0);
     },
-    [visibleMonth]
+    [visibleMonth],
   );
 
   const setVisibleMonth = useCallback(
@@ -231,7 +231,7 @@ export function useCalendar(props: UseCalendarProps) {
       setVisibleMonthState(newVisibleMonth);
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [onVisibleMonthChange, setVisibleMonthState]
+    [onVisibleMonthChange, setVisibleMonthState],
   );
 
   const setFocusedDate = useCallback(
@@ -254,7 +254,7 @@ export function useCalendar(props: UseCalendarProps) {
       isDayVisible,
       isOutsideAllowedDates,
       setVisibleMonth,
-    ]
+    ],
   );
 
   useEffect(() => {

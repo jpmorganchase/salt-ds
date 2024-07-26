@@ -1,15 +1,15 @@
-import {
-  FocusEventHandler,
-  forwardRef,
-  KeyboardEvent,
-  SyntheticEvent
-} from "react";
-import { clsx } from "clsx";
 import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
-import { DateInputSingle, DateInputSingleProps } from "../date-input";
 import { CalendarIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
+import {
+  type FocusEventHandler,
+  type KeyboardEvent,
+  type SyntheticEvent,
+  forwardRef,
+} from "react";
+import type { SingleDateSelection } from "../calendar";
+import { DateInputSingle, type DateInputSingleProps } from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
-import { SingleSelectionValueType } from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
@@ -31,7 +31,7 @@ export const DatePickerSingleInput = forwardRef<
       readOnly,
     },
     helpers: { setSelectedDate, getReferenceProps, setOpen, setFocusedInput },
-  } = useDatePickerContext<SingleSelectionValueType>();
+  } = useDatePickerContext<SingleDateSelection>();
 
   const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
 
@@ -47,7 +47,7 @@ export const DatePickerSingleInput = forwardRef<
 
   const handleDateChange = (
     _event: SyntheticEvent,
-    newDate: SingleSelectionValueType | null
+    newDate: SingleDateSelection | null,
   ) => {
     setSelectedDate(newDate);
   };

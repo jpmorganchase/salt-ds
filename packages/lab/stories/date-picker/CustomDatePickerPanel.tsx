@@ -1,20 +1,22 @@
-import React, { forwardRef } from "react";
-import { today, getLocalTimeZone } from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   FlexItem,
   FlexLayout,
   FormFieldHelperText,
-  makePrefixer,
   StackLayout,
+  makePrefixer,
+  ListBox,
+  Option,
 } from "@salt-ds/core";
 import {
   DatePickerRangePanel,
-  useDatePickerContext,
+  type DatePickerRangePanelProps,
   List,
-  ListProps,
-  RangeSelectionValueType,
-  DatePickerRangePanelProps,
+  type ListProps,
+  type DateRangeSelection,
+  useDatePickerContext,
 } from "@salt-ds/lab";
+import React, { forwardRef } from "react";
 
 type CustomItem = {
   label: string;
@@ -23,14 +25,21 @@ type CustomItem = {
 const customItemToString: ListProps<CustomItem>["itemToString"] = ({ label }) =>
   label;
 
+const tenorOptions = [
+  { tenor: "5", label: "5 years" },
+  { tenor: "10", label: "10 years" },
+  { tenor: "15", label: "15 years" },
+  { tenor: "20", label: "20 years" },
+];
+
 export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
-  DatePickerRangePanelProps<RangeSelectionValueType>
+  DatePickerRangePanelProps<DateRangeSelection>
 >(function CustomDatePickerPanel(props, ref) {
   const {
     state: { selectedDate },
     helpers: { setSelectedDate },
-  } = useDatePickerContext<RangeSelectionValueType>();
+  } = useDatePickerContext<DateRangeSelection>();
   const { helperText, ...rest } = props;
   return (
     <StackLayout separators gap={0} ref={ref}>
@@ -40,15 +49,14 @@ export const CustomDatePickerPanel = forwardRef<
         </FlexItem>
       )}
       <FlexLayout>
-        <List<CustomItem>
-          aria-label="Tenor shortcuts"
-          itemToString={customItemToString}
-          maxHeight="unset"
+        <ListBox
+          bordered
+          style={{ width: "10em" }}
           onSelectionChange={(e, item) => {
             if (!item) {
               return;
             }
-            const { tenor } = item;
+            const tenor = parseInt(item[0], 10);
             const newSelectedDate = selectedDate?.startDate
               ? {
                   startDate: selectedDate.startDate,
@@ -64,13 +72,14 @@ export const CustomDatePickerPanel = forwardRef<
                 };
             setSelectedDate(newSelectedDate);
           }}
-          source={[
-            { tenor: 5, label: "5 years" },
-            { tenor: 10, label: "10 years" },
-            { tenor: 15, label: "15 years" },
-            { tenor: 20, label: "20 years" },
-          ]}
-        />
+        >
+          {tenorOptions.map(({ tenor, label }) => (
+            <Option value={tenor} key={tenor}>
+              {label}
+            </Option>
+          ))}
+        </ListBox>
+        );
         <DatePickerRangePanel {...rest} />
       </FlexLayout>
     </StackLayout>
