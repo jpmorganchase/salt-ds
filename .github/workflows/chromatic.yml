@@ -93,6 +93,7 @@ jobs:
         env:
           LOG_LEVEL: "debug"
       - name: Remove Chromatic label
+        if: ${{ steps.chromatic_branch.outputs.branchName != 'main' }}
         uses: actions/github-script@v7
         with:
           script: |
