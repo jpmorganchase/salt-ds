@@ -1,6 +1,10 @@
-import { forwardRef, ReactNode } from "react";
+import { type ReactNode, forwardRef } from "react";
 import { DatePickerContext } from "./DatePickerContext";
-import { useDatePicker, useDatePickerSingleProps, useDatePickerRangeProps } from "./useDatePicker";
+import {
+  useDatePicker,
+  type useDatePickerRangeProps,
+  type useDatePickerSingleProps,
+} from "./useDatePicker";
 
 export interface DatePickerBaseProps {
   className?: string;
@@ -8,18 +12,18 @@ export interface DatePickerBaseProps {
 }
 
 export interface DatePickerSingleProps
-  extends DatePickerBaseProps, useDatePickerSingleProps {
+  extends DatePickerBaseProps,
+    useDatePickerSingleProps {
   selectionVariant: "single";
 }
 
 export interface DatePickerRangeProps
-  extends DatePickerBaseProps, useDatePickerRangeProps {
+  extends DatePickerBaseProps,
+    useDatePickerRangeProps {
   selectionVariant: "range";
 }
 
-export type DatePickerProps =
-  | DatePickerSingleProps
-  | DatePickerRangeProps;
+export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   function DatePicker(props, ref) {
@@ -37,5 +41,5 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         </div>
       </DatePickerContext.Provider>
     );
-  }
+  },
 );

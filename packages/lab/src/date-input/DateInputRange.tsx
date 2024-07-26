@@ -1,35 +1,35 @@
-import { clsx } from "clsx";
+import type { CalendarDate, DateValue } from "@internationalized/date";
 import {
-  ChangeEvent,
-  ChangeEventHandler,
-  ComponentPropsWithoutRef,
-  FocusEventHandler,
-  forwardRef,
-  InputHTMLAttributes,
-  KeyboardEventHandler,
-  MouseEventHandler,
-  ReactNode,
-  Ref,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import {CalendarDate, DateValue} from "@internationalized/date";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import {
-  InputProps,
-  makePrefixer,
+  type InputProps,
   StatusAdornment,
+  makePrefixer,
   useControlled,
   useForkRef,
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import { RangeSelectionValueType } from "../calendar";
-import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ChangeEvent,
+  type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  type InputHTMLAttributes,
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+  type ReactNode,
+  type Ref,
+  type SyntheticEvent,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import type { DateRangeSelection } from "../calendar";
 import dateInputCss from "./DateInput.css";
+import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -39,7 +39,7 @@ export type DateInputRangeValue = {
 };
 
 export interface DateInputRangeProps<
-  SelectionVariantType = RangeSelectionValueType
+  SelectionVariantType = DateRangeSelection,
 > extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
   ariaLabel?: string;
@@ -106,14 +106,14 @@ export interface DateInputRangeProps<
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SelectionVariantType | null
+    date: SelectionVariantType | null,
   ) => void;
   /**
    * Callback fired when the input value change.
    */
   onChange?: (
     event: ChangeEvent<HTMLInputElement>,
-    date: DateInputRangeValue
+    date: DateInputRangeValue,
   ) => void;
   /**
    * Name of input that should receive focus
@@ -184,14 +184,18 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       state: "dateValue",
     });
 
-    const setDateValueFromDate = (newDate:DateInputRangeProps["date"]) => {
-      const formattedStartDate = newDate?.startDate ? formatDate(newDate.startDate) : "";
-      const formattedEndDate = newDate?.endDate ? formatDate(newDate.endDate) : "";
+    const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
+      const formattedStartDate = newDate?.startDate
+        ? formatDate(newDate.startDate)
+        : "";
+      const formattedEndDate = newDate?.endDate
+        ? formatDate(newDate.endDate)
+        : "";
       setDateValue({
         startDate: formattedStartDate,
         endDate: formattedEndDate,
       });
-    }
+    };
 
     // Update date string value when selected date changes
     useEffect(() => {
@@ -278,7 +282,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     };
 
     const handleStartInputChange: ChangeEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       const newDateValue = { ...dateValue, startDate: event.target.value };
       setDateValue(newDateValue);
@@ -287,7 +291,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     };
 
     const handleEndInputChange: ChangeEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       const newDateValue = { ...dateValue, endDate: event.target.value };
       setDateValue(newDateValue);
@@ -296,21 +300,21 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     };
 
     const handleStartInputFocus: FocusEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       setFocused(true);
       startInputPropsOnFocus?.(event);
     };
 
     const handleEndInputFocus: FocusEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       setFocused(true);
       endInputPropsOnFocus?.(event);
     };
 
     const handleStartInputBlur: FocusEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       setFocused(false);
       apply(event);
@@ -324,7 +328,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     };
 
     const handleStartInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       if (event.key === "Enter") {
         apply(event);
@@ -333,7 +337,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     };
 
     const handleEndInputKeyDown: KeyboardEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       if (event.key === "Enter") {
         apply(event);
@@ -359,7 +363,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus ?? "")]: validationStatus,
           },
-          className
+          className,
         )}
         ref={handleWrapperRef}
         onClick={handleWrapperClick}
@@ -369,12 +373,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           autoComplete="off"
           aria-describedby={clsx(
             formFieldDescribedBy,
-            startInputPropsDescribedBy
+            startInputPropsDescribedBy,
           )}
           aria-labelledby={clsx(
             formFieldLabelledBy,
             startInputPropsLabelledBy,
-            startInputID
+            startInputID,
           )}
           aria-label={clsx("Start date", ariaLabel)}
           id={startInputID}
@@ -388,7 +392,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : dateValue.startDate ?? ''
+              : dateValue.startDate ?? ""
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -402,12 +406,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           autoComplete="off"
           aria-describedby={clsx(
             formFieldDescribedBy,
-            endInputPropsDescribedBy
+            endInputPropsDescribedBy,
           )}
           aria-labelledby={clsx(
             formFieldLabelledBy,
             endInputPropsLabelledBy,
-            endInputID
+            endInputID,
           )}
           aria-label={clsx("End date", ariaLabel)}
           id={endInputID}
@@ -421,7 +425,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : dateValue.endDate ?? ''
+              : dateValue.endDate ?? ""
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}
@@ -439,5 +443,5 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         <div className={withBaseName("activationIndicator")} />
       </div>
     );
-  }
+  },
 );

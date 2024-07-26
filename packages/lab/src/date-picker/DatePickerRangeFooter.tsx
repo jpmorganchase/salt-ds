@@ -1,15 +1,18 @@
+import { Button, Label, makePrefixer } from "@salt-ds/core";
+import {
+  type DateRangeSelection,
+  useDatePickerContext,
+} from "@salt-ds/lab";
+import { clsx } from "clsx";
 import React, {
   type ComponentPropsWithoutRef,
   forwardRef,
   useEffect,
-  SyntheticEvent,
+  type SyntheticEvent,
 } from "react";
-import { clsx } from "clsx";
-import { Button, makePrefixer, Label } from "@salt-ds/core";
-import { useDatePickerContext, RangeSelectionValueType } from "@salt-ds/lab";
 import "./DatePickerRangeFooter.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import datePickerRangeFooter from "./DatePickerRangeFooter.css";
 
 const withBaseName = makePrefixer("datePickerRangeFooter");
@@ -19,7 +22,7 @@ export interface DatePickerRangeFooterProps
   placeholder?: string | undefined;
   onApply?: (
     _event: SyntheticEvent,
-    date: RangeSelectionValueType | null | undefined
+    date: DateRangeSelection | null | undefined,
   ) => void;
   onCancel?: (_event: SyntheticEvent) => void;
 }
@@ -39,7 +42,7 @@ export const DatePickerRangeFooter = forwardRef<
   const {
     state: { selectedDate },
     helpers: { apply, cancel, setAutoApplyDisabled },
-  } = useDatePickerContext<RangeSelectionValueType>();
+  } = useDatePickerContext<DateRangeSelection>();
 
   useEffect(() => {
     setAutoApplyDisabled(true);

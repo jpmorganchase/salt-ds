@@ -1,13 +1,13 @@
 import {
   CalendarDate,
   DateFormatter,
-  DateValue,
+  type DateValue,
   getLocalTimeZone,
   parseAbsoluteToLocal,
 } from "@internationalized/date";
 
 export function createCalendarDate(
-  inputDate: string | undefined
+  inputDate: string | undefined,
 ): CalendarDate | undefined {
   if (!inputDate) {
     return undefined;
@@ -37,4 +37,3 @@ export const formatDate = (date: DateValue | null | undefined): string => {
       }).format(date.toDate(getLocalTimeZone()))
     : "";
 };
-

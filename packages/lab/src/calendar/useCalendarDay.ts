@@ -41,7 +41,7 @@ export function useCalendarDay(
     state: { focusedDate, hideOutOfRangeDates, calendarFocused },
     helpers: {
       isDayUnselectable,
-      isDaySelectable ,
+      isDaySelectable,
       isDayHighlighted,
       isDayDisabled,
       isOutsideAllowedMonths,
@@ -85,7 +85,9 @@ export function useCalendarDay(
   const highlightedReason = isDayHighlighted(date);
 
   const disabled =
-    isDayDisabled(date) || (outOfRange && isOutsideAllowedMonths(date)) || (isDaySelectable && !isDaySelectable(date));
+    isDayDisabled(date) ||
+    (outOfRange && isOutsideAllowedMonths(date)) ||
+    (isDaySelectable && !isDaySelectable(date));
   const unselectable = Boolean(unselectableReason);
   const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates && outOfRange;

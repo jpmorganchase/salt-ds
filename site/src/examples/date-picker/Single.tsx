@@ -1,12 +1,34 @@
-import { ReactElement } from "react";
-import { DatePicker, DatePickerSinglePanel } from "@salt-ds/lab";
-import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
+import type { ReactElement } from "react";
+import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
+  type SingleDateSelection,
+} from "@salt-ds/lab";
+
+function formatDate(
+  dateValue: SingleDateSelection | null,
+  locale = "en-US",
+  options?: Intl.DateTimeFormatOptions,
+): string {
+  const dateFormatter = new DateFormatter(locale, options);
+  return dateValue
+    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
+    : "N/A";
+}
 
 export const Single = (): ReactElement => (
-  <FormField style={{ width: "250px" }}>
-    <FormLabel>Pick a date</FormLabel>
-    <DatePicker selectionVariant="single">
-      <DatePickerSinglePanel helperText="Select a date, format DD MMM YYYY (e.g. 09 Jun 2021)" />
-    </DatePicker>
-  </FormField>
+  <DatePicker
+    selectionVariant="single"
+    onSelectedDateChange={(newSelectedDate) =>
+      console.log(`Selected date: ${formatDate(newSelectedDate)}`)
+    }
+  >
+    <DatePickerSingleInput />
+    <DatePickerOverlay>
+      <DatePickerSinglePanel />
+    </DatePickerOverlay>
+  </DatePicker>
 );
