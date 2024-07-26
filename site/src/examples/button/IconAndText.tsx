@@ -1,26 +1,30 @@
 import { Button, GridLayout } from "@salt-ds/core";
-import { RefreshIcon, SearchIcon, SendIcon } from "@salt-ds/icons";
+import {
+  DoubleChevronRightIcon,
+  DownloadIcon,
+  SearchIcon,
+} from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const IconAndText = (): ReactElement => (
   <GridLayout columns={3}>
-    <Button appearance="solid" color="neutral">
-      <SearchIcon /> Search
-    </Button>
-    <Button appearance="outline" color="neutral">
-      Send <SendIcon />
-    </Button>
-    <Button appearance="transparent" color="neutral">
-      Refresh <RefreshIcon />
-    </Button>
     <Button appearance="solid" color="accent">
       <SearchIcon /> Search
     </Button>
     <Button appearance="outline" color="accent">
-      Send <SendIcon />
+      <DownloadIcon /> Download
     </Button>
     <Button appearance="transparent" color="accent">
-      Refresh <RefreshIcon />
+      Expand <DoubleChevronRightIcon />
+    </Button>
+    <Button appearance="solid" color="neutral">
+      <SearchIcon /> Search
+    </Button>
+    <Button appearance="outline" color="neutral">
+      <DownloadIcon /> Download
+    </Button>
+    <Button appearance="transparent" color="neutral">
+      Expand <DoubleChevronRightIcon />
     </Button>
   </GridLayout>
 );
