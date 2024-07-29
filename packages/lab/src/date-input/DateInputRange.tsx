@@ -39,7 +39,7 @@ export type DateInputRangeValue = {
 };
 
 export interface DateInputRangeProps<
-  SelectionVariantType = DateRangeSelection,
+  T = DateRangeSelection,
 > extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
   ariaLabel?: string;
@@ -96,17 +96,17 @@ export interface DateInputRangeProps<
   /**
    * The  date value. Use when the component is controlled.
    */
-  date?: SelectionVariantType | null;
+  date?: T | null;
   /**
    * The initial selected date value. Use when the component is un-controlled.
    */
-  defaultDate?: SelectionVariantType | null;
+  defaultDate?: T | null;
   /**
    * Callback fired when the selected date change.
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SelectionVariantType | null,
+    date: T | null,
   ) => void;
   /**
    * Callback fired when the input value change.
@@ -270,12 +270,14 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         newEndDate && date?.endDate
           ? newEndDate.compare(date.endDate) !== 0
           : newEndDate !== date?.endDate;
-      if (hasStartDateChanged || hasEndDateChanged) {
-        const newDate = {
-          ...(!!newStartDate && { startDate: newStartDate }),
-          ...(!!newEndDate && { endDate: newEndDate }),
-        };
+      const newDate = {
+        ...(!!newStartDate && { startDate: newStartDate }),
+        ...(!!newEndDate && { endDate: newEndDate }),
+      };
+      if (newDate?.startDate || newDate?.endDate) {
         setDateValueFromDate(newDate);
+      }
+      if (hasStartDateChanged || hasEndDateChanged) {
         setDate(newDate);
         onDateChange?.(event, newDate);
       }

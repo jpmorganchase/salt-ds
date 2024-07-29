@@ -1,10 +1,16 @@
 import { type ReactNode, forwardRef } from "react";
-import { DatePickerContext } from "./DatePickerContext";
+import {
+  DatePickerState,
+  SingleDateSelectionContext,
+  DateRangeSelectionContext,
+} from "./DatePickerContext";
+import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {
   useDatePicker,
-  type useDatePickerRangeProps,
-  type useDatePickerSingleProps,
+  type UseDatePickerRangeProps,
+  type UseDatePickerSingleProps,
 } from "./useDatePicker";
+import { DatePickerOverlayProvider } from "./DatePickerOverlayProvider";
 
 export interface DatePickerBaseProps {
   className?: string;
@@ -13,33 +19,63 @@ export interface DatePickerBaseProps {
 
 export interface DatePickerSingleProps
   extends DatePickerBaseProps,
-    useDatePickerSingleProps {
+    UseDatePickerSingleProps {
   selectionVariant: "single";
 }
 
 export interface DatePickerRangeProps
   extends DatePickerBaseProps,
-    useDatePickerRangeProps {
+    UseDatePickerRangeProps {
   selectionVariant: "range";
 }
 
 export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
+export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
+  function DatePickerMain(props, ref) {
+    const { className, children, ...rest } = props;
+    if (props.selectionVariant === "range") {
+      const stateAndHelpers = useDatePicker(
+        rest,
+        ref,
+      ) as DatePickerState<DateRangeSelection>;
+      return (
+          <DateRangeSelectionContext.Provider value={stateAndHelpers}>
+            <div
+              className={className}
+              ref={stateAndHelpers?.state?.containerRef}
+            >
+              {children}
+            </div>
+        </DateRangeSelectionContext.Provider>
+      );
+    } else {
+      const stateAndHelpers = useDatePicker(
+        rest,
+        ref,
+      ) as DatePickerState<SingleDateSelection>;
+      return (
+          <SingleDateSelectionContext.Provider value={stateAndHelpers}>
+            <div
+              className={className}
+              ref={stateAndHelpers?.state?.containerRef}
+            >
+              {children}
+            </div>
+          </SingleDateSelectionContext.Provider>
+      );
+    }
+  },
+);
+
 export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
   function DatePicker(props, ref) {
-    const { className, children, ...rest } = props;
-    const { state, helpers } = useDatePicker(rest, ref);
+    const { open, defaultOpen, ...rest } = props;
+
     return (
-      <DatePickerContext.Provider
-        value={{
-          state,
-          helpers,
-        }}
-      >
-        <div className={className} ref={state.containerRef}>
-          {children}
-        </div>
-      </DatePickerContext.Provider>
+      <DatePickerOverlayProvider open={open} defaultOpen={defaultOpen}>
+        <DatePickerMain {...rest} ref={ref} />
+      </DatePickerOverlayProvider>
     );
-  },
+  }
 );

@@ -1,15 +1,16 @@
-import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
-import { CalendarIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
 import {
   type FocusEventHandler,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
 } from "react";
+import { clsx } from "clsx";
+import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
+import { CalendarIcon } from "@salt-ds/icons";
 import type { SingleDateSelection } from "../calendar";
 import { DateInputSingle, type DateInputSingleProps } from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
+import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
@@ -19,25 +20,22 @@ export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
   DatePickerSingleInputProps
 >(function DatePickerSingleInput(props, ref) {
-  const { className, onFocus, onBlur, ...rest } = props;
+  const { className, onFocus, onBlur, value, ...rest } = props;
 
   const {
-    state: {
-      selectedDate,
-      open,
-      focusedInput,
-      floatingUIResult,
-      disabled,
-      readOnly,
-    },
-    helpers: { setSelectedDate, getReferenceProps, setOpen, setFocusedInput },
-  } = useDatePickerContext<SingleDateSelection>();
+    state: { selectedDate, focusedValue, disabled, readOnly, cancelled },
+    helpers: { apply, setSelectedDate, setFocusedValue },
+  } = useDatePickerContext({ selectionVariant: "single" });
+  const {
+    state: { open, floatingUIResult },
+    helpers: { getReferenceProps, setOpen },
+  } = useDatePickerOverlay();
 
   const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      setOpen(false);
+      apply(selectedDate);
     }
   };
 
@@ -53,22 +51,23 @@ export const DatePickerSingleInput = forwardRef<
   };
 
   const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
-    setFocusedInput("start");
+    setFocusedValue("start");
     onFocus?.(event);
   };
   const handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-    setFocusedInput(null);
+    setFocusedValue(null);
     onBlur?.(event);
   };
 
   return (
     <DateInputSingle
+      value={value}
       className={clsx(withBaseName(), className)}
       ref={inputRef}
       date={selectedDate || null}
       readOnly={readOnly}
       onDateChange={handleDateChange}
-      focusedInput={focusedInput === "start"}
+      focusedInput={focusedValue === "start"}
       endAdornment={
         <Button
           variant="secondary"

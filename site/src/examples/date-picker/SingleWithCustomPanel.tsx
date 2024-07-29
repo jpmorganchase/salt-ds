@@ -1,15 +1,16 @@
 import React, { ReactElement } from "react";
 import {
   DateFormatter,
+  type DateValue,
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
 import {
   DatePicker,
   DatePickerOverlay,
-  DatePickerRangeInput,
-  DatePickerRangePanel,
-  type DateRangeSelection,
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
+  type SingleDateSelection,
 } from "@salt-ds/lab";
 import {
   FormField,
@@ -18,40 +19,35 @@ import {
 } from "@salt-ds/core";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
 
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
+function formatDate(
+  dateValue: SingleDateSelection | null,
   locale = "en-US",
   options?: Intl.DateTimeFormatOptions,
 ): string {
-  const { startDate, endDate } = dateRange || {};
   const dateFormatter = new DateFormatter(locale, options);
-  const formattedStartDate = startDate
-    ? dateFormatter.format(startDate.toDate(getLocalTimeZone()))
+  return dateValue
+    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
     : "N/A";
-  const formattedEndDate = endDate
-    ? dateFormatter.format(endDate.toDate(getLocalTimeZone()))
-    : "N/A";
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
-export const RangeWithCustomPanel = (): ReactElement => {
+export const SingleWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
   return (
     <FormField>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel>Select a date</FormLabel>
       <DatePicker
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
-        selectionVariant="range"
+        selectionVariant="single"
         onSelectedDateChange={(newSelectedDate) => {
-          console.log(`Selected date: ${formatDateRange(newSelectedDate)}`);
+          console.log(`Selected date: ${formatDate(newSelectedDate)}`);
         }}
       >
-        <DatePickerRangeInput />
+        <DatePickerSingleInput />
         <DatePickerOverlay>
           <CustomDatePickerPanel
-            selectionVariant="range"
+            selectionVariant="single"
             helperText={helperText}
           />
         </DatePickerOverlay>

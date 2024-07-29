@@ -1,4 +1,4 @@
-import type { ReactElement } from "react";
+import React, { ReactElement } from "react";
 import {
   CalendarDate,
   DateFormatter,
@@ -8,9 +8,9 @@ import {
 import {
   DatePicker,
   DatePickerOverlay,
-  DatePickerRangeFooter,
+  DatePickerFooter,
   DatePickerRangeInput,
-  type DateRangeSelection,
+  type DateRangeSelection, DatePickerRangePanel,
 } from "@salt-ds/lab";
 import {
   Divider,
@@ -20,7 +20,6 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
-import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -45,9 +44,9 @@ export const RangeWithConfirmation = (): ReactElement => {
     <FormField>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
+        selectionVariant="range"
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
-        selectionVariant="range"
         onSelectedDateChange={(newSelectedDate) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
@@ -58,11 +57,11 @@ export const RangeWithConfirmation = (): ReactElement => {
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <CustomDatePickerPanel helperText={helperText} />
+              <DatePickerRangePanel helperText={helperText} />
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerRangeFooter />
+              <DatePickerFooter selectionVariant="range" />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>

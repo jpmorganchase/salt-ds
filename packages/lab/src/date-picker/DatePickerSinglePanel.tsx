@@ -1,4 +1,11 @@
 import {
+  type ComponentPropsWithoutRef,
+  type SyntheticEvent,
+  forwardRef,
+  useState,
+} from "react";
+import clsx from "clsx";
+import {
   type DateValue,
   getLocalTimeZone,
   startOfMonth,
@@ -14,29 +21,21 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
-import type { CalendarSingleProps } from "@salt-ds/lab";
+import {CalendarSingleProps, useDatePickerContext} from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
-import {
-  type ComponentPropsWithoutRef,
-  type SyntheticEvent,
-  forwardRef,
-  useState,
-} from "react";
 import {
   Calendar,
   type CalendarProps,
   type SingleDateSelection,
 } from "../calendar";
-import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
-export interface DatePickerSinglePanelProps<SelectionVariantType>
+export interface DatePickerSinglePanelProps<T>
   extends ComponentPropsWithoutRef<"div"> {
   onSelect?: (
     event: SyntheticEvent,
-    selectedDate?: SelectionVariantType | null,
+    selectedDate?: T | null,
   ) => void;
   helperText?: string;
   visibleMonth?: DateValue;
@@ -87,7 +86,7 @@ export const DatePickerSinglePanel = forwardRef<
       maxDate = minDate.add({ months: 1 }),
     },
     helpers: { setSelectedDate },
-  } = useDatePickerContext<SingleDateSelection>();
+  } = useDatePickerContext({ selectionVariant: "single" });
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 

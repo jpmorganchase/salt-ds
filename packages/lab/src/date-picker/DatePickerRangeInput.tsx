@@ -1,20 +1,21 @@
-import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
-import { CalendarIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
 import {
   type FocusEventHandler,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
 } from "react";
+import { clsx } from "clsx";
+import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
+import { CalendarIcon } from "@salt-ds/icons";
 import type { DateRangeSelection } from "../calendar";
 import { DateInputRange, type DateInputRangeProps } from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
+import {useDatePickerOverlay} from "./DatePickerOverlayProvider";
 
-const withBaseName = makePrefixer("saltDatePickerSingleInput");
+const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
 export interface DatePickerRangeInputProps
-  extends Omit<DateInputRangeProps, "focusedInput"> {}
+  extends Omit<DateInputRangeProps, "focusedValue"> {}
 
 export const DatePickerRangeInput = forwardRef<
   HTMLDivElement,
@@ -34,14 +35,16 @@ export const DatePickerRangeInput = forwardRef<
   const {
     state: {
       selectedDate,
-      focusedInput,
-      open,
-      floatingUIResult,
+      focusedValue,
       disabled,
       readOnly,
     },
-    helpers: { getReferenceProps, setOpen, setSelectedDate, setFocusedInput },
-  } = useDatePickerContext<DateRangeSelection>();
+    helpers: { setSelectedDate, setFocusedValue },
+  } = useDatePickerContext({ selectionVariant: "range"});
+  const {
+    state: { open, floatingUIResult },
+    helpers: { getReferenceProps, setOpen },
+  } = useDatePickerOverlay();
 
   const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
 
@@ -68,11 +71,11 @@ export const DatePickerRangeInput = forwardRef<
     onFocus: FocusEventHandler<HTMLInputElement>;
   } = {
     onBlur: (event) => {
-      setFocusedInput(null);
+      setFocusedValue(null);
       startInputPropsProp?.onBlur?.(event);
     },
     onFocus: (event) => {
-      setFocusedInput("start");
+      setFocusedValue("start");
       startInputPropsProp?.onFocus?.(event);
     },
     ...startInputPropsProp,
@@ -82,11 +85,11 @@ export const DatePickerRangeInput = forwardRef<
     onFocus: FocusEventHandler<HTMLInputElement>;
   } = {
     onBlur: (event) => {
-      setFocusedInput(null);
+      setFocusedValue(null);
       endInputPropsProp?.onBlur?.(event);
     },
     onFocus: (event) => {
-      setFocusedInput("end");
+      setFocusedValue("end");
       endInputPropsProp?.onFocus?.(event);
     },
     ...endInputPropsProp,
@@ -97,7 +100,7 @@ export const DatePickerRangeInput = forwardRef<
       className={clsx(withBaseName(), className)}
       ref={inputRef}
       date={selectedDate}
-      focusedInput={focusedInput}
+      focusedInput={focusedValue}
       startInputProps={startInputProps}
       endInputProps={endInputProps}
       readOnly={readOnly}

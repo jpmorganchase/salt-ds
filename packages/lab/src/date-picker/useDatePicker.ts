@@ -1,4 +1,4 @@
-import { flip, useDismiss, useInteractions } from "@floating-ui/react";
+import { useEffect, useRef, useState } from "react";
 import {
   type DateValue,
   endOfMonth,
@@ -8,50 +8,52 @@ import {
 } from "@internationalized/date";
 import {
   useControlled,
-  useFloatingUI,
   useForkRef,
   useFormFieldProps,
 } from "@salt-ds/core";
-import { useCallback, useEffect, useRef, useState } from "react";
 import {
   type DateRangeSelection,
   type SingleDateSelection,
   isDateRangeSelection,
 } from "../calendar";
+import { DatePickerState } from "./DatePickerContext";
+import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
-interface useDatePickerBaseProps<SelectionVariantType> {
-  selectionVariant: "single" | "range";
+interface UseDatePickerBaseProps<T> {
   disabled?: boolean;
   readOnly?: boolean;
-  focusedInput?: "start" | "end" | null;
-  defaultFocusedInput?: useDatePickerBaseProps<SelectionVariantType>["focusedInput"];
+  focusedValue?: "start" | "end" | null;
+  defaultFocusedValue?: UseDatePickerBaseProps<T>["focusedValue"];
   open?: boolean;
-  defaultOpen?: useDatePickerBaseProps<SelectionVariantType>["open"];
-  selectedDate?: SelectionVariantType | null;
-  defaultSelectedDate?: useDatePickerBaseProps<SelectionVariantType>["selectedDate"];
-  onSelectedDateChange?: (newDate: SelectionVariantType | null) => void;
+  defaultOpen?: UseDatePickerBaseProps<T>["open"];
+  selectedDate?: T | null;
+  defaultSelectedDate?: UseDatePickerBaseProps<T>["selectedDate"];
+  onSelectedDateChange?: (newDate: T | null) => void;
   minDate?: DateValue;
   maxDate?: DateValue;
 }
 
-export interface useDatePickerSingleProps
-  extends useDatePickerBaseProps<SingleDateSelection> {
+export interface UseDatePickerSingleProps
+  extends UseDatePickerBaseProps<SingleDateSelection> {
   selectionVariant: "single";
 }
 
-export interface useDatePickerRangeProps
-  extends useDatePickerBaseProps<DateRangeSelection> {
+export interface UseDatePickerRangeProps
+  extends UseDatePickerBaseProps<DateRangeSelection> {
   selectionVariant: "range";
 }
 
-export type useDatePickerProps =
-  | useDatePickerSingleProps
-  | useDatePickerRangeProps;
+export type UseDatePickerProps<SelectionVariant> =
+  SelectionVariant extends "single"
+    ? UseDatePickerSingleProps
+    : SelectionVariant extends "range"
+      ? UseDatePickerRangeProps
+      : never;
 
-export function useDatePicker(
-  props: useDatePickerProps,
+export function useDatePicker<SelectionVariant extends "single" | "range">(
+  props: UseDatePickerProps<SelectionVariant>,
   ref: React.ForwardedRef<HTMLDivElement>,
-) {
+): DatePickerState<SingleDateSelection> | DatePickerState<DateRangeSelection> {
   const {
     readOnly = false,
     disabled,
@@ -59,14 +61,19 @@ export function useDatePicker(
     defaultSelectedDate = null,
     selectedDate: selectedDateProp,
     onSelectedDateChange,
-    defaultFocusedInput = null,
-    focusedInput: focusedInputProp,
+    defaultFocusedValue = null,
+    focusedValue: focusedValueProp,
     defaultOpen = false,
     open: openProp,
-    minDate = startOfMonth(today(getLocalTimeZone())),
-    maxDate = endOfMonth(minDate.add({ months: 1 })),
+    minDate: minDateProp,
+    maxDate: maxDateProp,
     ...rest
   } = props;
+
+  const minDate: DateValue =
+    minDateProp ?? startOfMonth(today(getLocalTimeZone()));
+  const maxDate: DateValue =
+    maxDateProp ?? endOfMonth(minDate.add({ months: 1 }));
 
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
@@ -74,18 +81,16 @@ export function useDatePicker(
     SingleDateSelection | DateRangeSelection | null
   >(null);
 
-  const [focusedInput, setFocusedInput] = useControlled({
-    controlled: focusedInputProp,
-    default: defaultFocusedInput,
-    name: "DatePicker",
-    state: "focusedInput",
-  });
+  const {
+    state: { open },
+    helpers: { setOpen },
+  } = useDatePickerOverlay();
 
-  const [open, setOpen] = useControlled({
-    controlled: openProp,
-    default: Boolean(defaultOpen),
+  const [focusedValue, setFocusedValue] = useControlled({
+    controlled: focusedValueProp,
+    default: defaultFocusedValue,
     name: "DatePicker",
-    state: "openPanel",
+    state: "focusedValue",
   });
 
   const [selectedDate, setSelectedDate] = useControlled({
@@ -96,20 +101,24 @@ export function useDatePicker(
   });
 
   const [autoApplyDisabled, setAutoApplyDisabled] = useState<boolean>(false);
+  const [cancelled, setCancelled] = useState<boolean>(false);
 
   useEffect(() => {
     if (selectionVariant === "range") {
-      const rangeValue = selectedDate as DateRangeSelection;
-      if (!rangeValue?.startDate) {
-        setFocusedInput("start");
+      const rangeSelection = selectedDate as DateRangeSelection;
+      if (!rangeSelection?.startDate) {
+        setFocusedValue("start");
       } else {
-        setFocusedInput("end");
+        setFocusedValue("end");
       }
     } else {
-      const singleSelectionValue = selectedDate as SingleDateSelection;
-      if (singleSelectionValue) {
-        setFocusedInput("start");
+      const singleSelection = selectedDate as SingleDateSelection;
+      if (singleSelection) {
+        setFocusedValue("start");
       }
+    }
+    if (open) {
+      prevSelectedDate.current = selectedDate;
     }
   }, [open]);
 
@@ -118,34 +127,10 @@ export function useDatePicker(
   const isReadOnly = readOnly || formFieldReadOnly || false;
   const isDisabled = disabled || formFieldDisabled || false;
 
-  const floatingUIResult = useFloatingUI({
-    open,
-    onOpenChange(nextOpen) {
-      setOpen(nextOpen);
-    },
-    placement: "bottom-start",
-    middleware: [flip({ fallbackStrategy: "initialPlacement" })],
-  });
-  const { getFloatingProps: getFloatingPropsCallback, getReferenceProps } =
-    useInteractions([useDismiss(floatingUIResult.context)]);
-  const getFloatingProps = useCallback(
-    (userProps: React.HTMLProps<HTMLElement> | undefined) => {
-      const { x, y, strategy, elements } = floatingUIResult;
-      return {
-        top: y ?? 0,
-        left: x ?? 0,
-        position: strategy,
-        width: elements.floating?.offsetWidth,
-        height: elements.floating?.offsetHeight,
-        ...getFloatingPropsCallback(userProps),
-      };
-    },
-    [getFloatingPropsCallback, floatingUIResult],
-  );
-
   const apply = (
     newDate: SingleDateSelection | DateRangeSelection | null,
   ): void => {
+    setCancelled(false);
     if (newDate === null) {
       onSelectedDateChange?.(newDate);
     } else {
@@ -204,27 +189,22 @@ export function useDatePicker(
     }
   };
 
-  const setOpenWrapper = (open: boolean): void => {
-    prevSelectedDate.current = selectedDate;
-    setOpen(open);
-  };
-
   const cancel = () => {
-    setSelectedDate(prevSelectedDate.current);
+    setSelectedDateWrapper(prevSelectedDate.current);
     prevSelectedDate.current = null;
+    setCancelled(true);
     setOpen(false);
   };
 
-  return {
+  const returnValue = {
     state: {
       selectionVariant,
       selectedDate,
-      open,
-      focusedInput,
+      cancelled,
+      focusedValue,
       autoApplyDisabled,
       disabled: isDisabled,
       readOnly: isReadOnly,
-      floatingUIResult,
       containerRef,
       minDate,
       maxDate,
@@ -233,12 +213,15 @@ export function useDatePicker(
     helpers: {
       apply,
       cancel,
-      setOpen: setOpenWrapper,
-      getFloatingProps,
-      getReferenceProps,
-      setFocusedInput,
+      setFocusedValue,
       setSelectedDate: setSelectedDateWrapper,
       setAutoApplyDisabled,
     },
   };
+  if (props.selectionVariant === "single") {
+    return returnValue as DatePickerState<SingleDateSelection>;
+  } else if (props.selectionVariant === "range") {
+    return returnValue as DatePickerState<DateRangeSelection>;
+  }
+  throw new Error("Invalid variant");
 }

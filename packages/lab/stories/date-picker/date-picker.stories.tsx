@@ -18,7 +18,7 @@ import {
   type DateInputRangeValue,
   DatePicker,
   DatePickerOverlay,
-  DatePickerRangeFooter,
+  DatePickerFooter,
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DatePickerRangeProps,
@@ -30,7 +30,7 @@ import {
   createCalendarDate,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { type ChangeEvent, useState } from "react";
+import React, { type ChangeEvent, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -509,6 +509,129 @@ export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
   );
 };
 
+export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = (args) => {
+  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const minDate = today(getLocalTimeZone());
+  return (
+    <FormField>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        {...args}
+        minDate={minDate}
+        maxDate={minDate.add({ years: 50 })}
+        selectionVariant="single"
+        onSelectedDateChange={(newSelectedDate) => {
+          console.log(`Selected date: ${formatDate(newSelectedDate)}`);
+        }}
+      >
+        <DatePickerSingleInput />
+        <DatePickerOverlay>
+          <CustomDatePickerPanel
+            selectionVariant="single"
+            helperText={helperText}
+          />
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
+export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
+  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const minDate = today(getLocalTimeZone());
+  return (
+    <FormField>
+      <FormLabel>Select a date range</FormLabel>
+      <DatePicker
+        {...args}
+        minDate={minDate}
+        maxDate={minDate.add({ years: 50 })}
+        selectionVariant="range"
+        onSelectedDateChange={(newSelectedDate) => {
+          console.log(`Selected date: ${formatDateRange(newSelectedDate)}`);
+        }}
+      >
+        <DatePickerRangeInput />
+        <DatePickerOverlay>
+          <CustomDatePickerPanel
+            selectionVariant="range"
+            helperText={helperText}
+          />
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
+export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
+  args,
+) => {
+  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  return (
+    <FormField>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        {...args}
+        selectionVariant="single"
+        onSelectedDateChange={(newSelectedDate) => {
+          console.log(`Selected date range: ${formatDate(newSelectedDate)}`);
+        }}
+      >
+        <DatePickerSingleInput />
+        <DatePickerOverlay>
+          <FlexLayout gap={0} direction="column">
+            <FlexItem>
+              <DatePickerSinglePanel />
+              <Divider variant="tertiary" />
+            </FlexItem>
+            <FlexItem>
+              <DatePickerFooter selectionVariant="single" />
+            </FlexItem>
+          </FlexLayout>
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
+export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
+  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const minDate = today(getLocalTimeZone());
+  return (
+    <FormField>
+      <FormLabel>Select a date range</FormLabel>
+      <DatePicker
+        {...args}
+        selectionVariant="range"
+        minDate={minDate}
+        maxDate={minDate.add({ years: 50 })}
+        onSelectedDateChange={(newSelectedDate) => {
+          console.log(
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
+          );
+        }}
+      >
+        <DatePickerRangeInput />
+        <DatePickerOverlay>
+          <FlexLayout gap={0} direction="column">
+            <FlexItem>
+              <DatePickerRangePanel helperText={helperText} />
+              <Divider variant="tertiary" />
+            </FlexItem>
+            <FlexItem>
+              <DatePickerFooter selectionVariant="range" />
+            </FlexItem>
+          </FlexLayout>
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
 export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
   args,
 ) => {
@@ -565,68 +688,6 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
         />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
-        </DatePickerOverlay>
-      </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
-    </FormField>
-  );
-};
-
-export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const minDate = today(getLocalTimeZone());
-  return (
-    <FormField>
-      <FormLabel>Select a date range</FormLabel>
-      <DatePicker
-        {...args}
-        minDate={minDate}
-        maxDate={minDate.add({ years: 50 })}
-        selectionVariant="range"
-        onSelectedDateChange={(newSelectedDate) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`,
-          );
-        }}
-      >
-        <DatePickerRangeInput />
-        <DatePickerOverlay>
-          <CustomDatePickerPanel helperText={helperText} />
-        </DatePickerOverlay>
-      </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
-    </FormField>
-  );
-};
-
-export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const minDate = today(getLocalTimeZone());
-  return (
-    <FormField>
-      <FormLabel>Select a date range</FormLabel>
-      <DatePicker
-        {...args}
-        selectionVariant="range"
-        minDate={minDate}
-        maxDate={minDate.add({ years: 50 })}
-        onSelectedDateChange={(newSelectedDate) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`,
-          );
-        }}
-      >
-        <DatePickerRangeInput />
-        <DatePickerOverlay>
-          <FlexLayout gap={0} direction="column">
-            <FlexItem>
-              <CustomDatePickerPanel helperText={helperText} />
-              <Divider variant="tertiary" />
-            </FlexItem>
-            <FlexItem>
-              <DatePickerRangeFooter />
-            </FlexItem>
-          </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
       <FormHelperText>{helperText}</FormHelperText>
