@@ -8,17 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="link" exampleName="Default">
-
 ## Default
 
 By default, a link will only navigate the user within the same tab, replacing the page where the user followed the link.
 
-</LivePreview>
-
-  <LivePreview componentName="link" exampleName="OpenInANewTab">
+<LivePreview componentName="link" exampleName="Default" />
 
 ## Open in a new tab
 
@@ -34,9 +28,7 @@ There are a few cases where it’s recommended, like when the link is in the mid
 
 When linking to third party content, we recommended setting `rel=”noopener”` or `rel=”noreferrer”`. Although this is default behaviour in newer browsers, explicitly specifying this helps protect users of legacy browsers. For more information, read “[Links to cross-origin destinations are unsafe](https://web.dev/external-anchors-use-rel-noopener/)”.
 
-  </LivePreview>
-
-  <LivePreview componentName="link" exampleName="Color">
+<LivePreview componentName="link" exampleName="OpenInANewTab" />
 
 ## Color
 
@@ -44,17 +36,13 @@ To help create a visual hierarchy using a link, use the `color` prop.
 
 The default color is `primary`.
 
-  </LivePreview>
-
-    <LivePreview componentName="link" exampleName="Visited">
+<LivePreview componentName="link" exampleName="Color" />
 
 ## Visited
 
 Links change color after a user clicks on them. This tells the user which links they have already visited.
 
-  </LivePreview>
-
-  <LivePreview componentName="link" exampleName="Variant" displayName="Variant - Deprecated">
+<LivePreview componentName="link" exampleName="Visited" />
 
 ## Variant
 
@@ -64,6 +52,4 @@ To help create a visual hierarchy using a link, use the `variant` prop.
 
 The default variant is `primary`.
 
-  </LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="link" exampleName="Variant" />

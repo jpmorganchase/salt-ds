@@ -8,35 +8,25 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="split-layout" exampleName="Default" >
-
 ## Default
 
 Split layouts display items horizontally at either end of the container by default.
 
 Its items align centrally in the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The items drive the height and width of the overall layout.
 
-</LivePreview>
-
-<LivePreview componentName="split-layout" exampleName="ColumnDirection" >
+<LivePreview componentName="split-layout" exampleName="Default" />
 
 ## Column direction
 
 The split layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `column` to display items in a vertical direction along a single line.
 
-</LivePreview>
-
-<LivePreview componentName="split-layout" exampleName="ButtonBar" >
+<LivePreview componentName="split-layout" exampleName="ColumnDirection" />
 
 ## Button bar
 
 This example shows two groups of buttons inside a split layout, such as within an app header. Here, the split layout is in its default configuration.
 
-</LivePreview>
-
-<LivePreview componentName="split-layout" exampleName="ResponsiveLayout" >
+<LivePreview componentName="split-layout" exampleName="ButtonBar" />
 
 ## Responsive layout
 
@@ -50,9 +40,7 @@ A responsive prop is a prop that takes either multiple values (one value per bre
 direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
 ```
 
-</LivePreview>
-
-<LivePreview componentName="split-layout" exampleName="LayoutAlignment" >
+<LivePreview componentName="split-layout" exampleName="ResponsiveLayout" />
 
 ## Layout alignment
 
@@ -60,17 +48,13 @@ Control the position of the split layout and its items using the `align` prop.
 
 If there is additional space available around the layout (i.e., above or below the row, or beside the column) use the `align` prop to position items within that space.
 
-</LivePreview>
-
-<LivePreview componentName="split-layout" exampleName="FlexItemPosition" >
+<LivePreview componentName="split-layout" exampleName="LayoutAlignment" />
 
 ## Flex item position
 
 Use the flex item component's `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
-</LivePreview>
-
-<LivePreview componentName="split-layout" exampleName="FlexItemSize" >
+<LivePreview componentName="split-layout" exampleName="FlexItemPosition" />
 
 ## Flex item size
 
@@ -82,6 +66,4 @@ The flex item component's `grow` prop enables specific items in the layout to gr
 
 In contrast to the `grow` prop, the `shrink` prop shrinks specific items as small as possible within the layout. By default, `shrink` is set to 1. If an item is set to 2, that item would attempt to take half as much space.
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="split-layout" exampleName="FlexItemSize" />

@@ -1,24 +1,21 @@
-import { Switch } from "@salt-ds/core";
 import {
   type Density,
   type Mode,
   SaltProvider,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
 } from "@salt-ds/core";
 import { DarkIcon, LightIcon } from "@salt-ds/icons";
 import clsx from "clsx";
 import {
-  type ChangeEvent,
   type FC,
   type ReactElement,
   type SyntheticEvent,
   createContext,
   useState,
 } from "react";
-import { useAllExamplesView } from "../../utils/useAllExamplesView";
 import useIsMobileView from "../../utils/useIsMobileView";
-import ExamplesListView from "./ExamplesListView";
 
 import styles from "./LivePreviewControls.module.css";
 
@@ -37,8 +34,6 @@ const defaultMode = modes[0];
 export type LivePreviewContextType = {
   density?: Density;
   mode?: Mode;
-  showCode?: boolean;
-  onShowCodeToggle?: (showCode: boolean) => void;
 };
 
 export const LivePreviewContext = createContext<LivePreviewContextType>({});
@@ -50,10 +45,6 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 
   const [mode, setMode] = useState<Mode>(defaultMode);
 
-  const [showCode, setShowCode] = useState<boolean>(false);
-
-  const { allExamplesView, setAllExamplesView } = useAllExamplesView();
-
   const isMobileView = useIsMobileView();
 
   const handleDensityChange = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -64,31 +55,10 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(event.currentTarget.value as Mode);
   };
 
-  const handleAllExamplesChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAllExamplesView(event.target.checked);
-  };
-
-  // Only set this handler function when we are displaying the combined list
-  // view, so that showing/hiding code persists when switching between
-  // examples. For the "All examples" view, we leave it undefined, which causes
-  // each LivePreview to show/hide its code individually.
-  const handleShowCodeToggle = !allExamplesView
-    ? (showCode: boolean) => {
-        setShowCode(showCode);
-      }
-    : undefined;
-
   return (
     <>
       <SaltProvider density="medium">
         <div className={styles.controls}>
-          {!isMobileView && (
-            <Switch
-              label="All examples"
-              checked={allExamplesView}
-              onChange={handleAllExamplesChange}
-            />
-          )}
           <div className={styles.toggleButtonGroups}>
             <div
               className={clsx(styles.density, {
@@ -127,12 +97,16 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
                 onChange={handleModeChange}
                 value={mode}
               >
-                <ToggleButton aria-label="light mode" value="light">
-                  <LightIcon /> {!isMobileView && " Light"}
-                </ToggleButton>
-                <ToggleButton aria-label="dark mode" value="dark">
-                  <DarkIcon /> {!isMobileView && " Dark"}
-                </ToggleButton>
+                <Tooltip content="Light" placement="top">
+                  <ToggleButton aria-label="light mode" value="light">
+                    <LightIcon />
+                  </ToggleButton>
+                </Tooltip>
+                <Tooltip content="Dark" placement="top">
+                  <ToggleButton aria-label="dark mode" value="dark">
+                    <DarkIcon />
+                  </ToggleButton>
+                </Tooltip>
               </ToggleButtonGroup>
             </div>
           </div>
@@ -142,11 +116,9 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         value={{
           density,
           mode,
-          showCode,
-          onShowCodeToggle: handleShowCodeToggle,
         }}
       >
-        {allExamplesView ? children : <ExamplesListView examples={children} />}
+        {children}
       </LivePreviewContext.Provider>
     </>
   );

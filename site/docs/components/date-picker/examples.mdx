@@ -8,53 +8,49 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="date-picker" exampleName="SingleSelect">
-
 ## Single select
 
 The default date picker allows the user to pick a single date, which is committed when it has been typed into the field or selected from the calendar.
 
-</LivePreview>
-<LivePreview componentName="date-picker" exampleName="WithFormField">
+<LivePreview componentName="date-picker" exampleName="SingleSelect" />
+
 ## Form field compatibility
 
 You can wrap date picker in a form field when it’s displayed within a form. This provides functionality built into `FormField` for increased accessibility.
 
 For more information, refer to the [form pattern](/salt/patterns/forms).
 
-</LivePreview>
-<LivePreview componentName="date-picker" exampleName="WithValidation">
+<LivePreview componentName="date-picker" exampleName="WithFormField" />
+
 ## Validation
 
 Date picker can show validation states (warning, success, error) with the prop `validationStatus`.
 
-</LivePreview>
-<LivePreview componentName="date-picker" exampleName="Range">
+<LivePreview componentName="date-picker" exampleName="WithValidation" />
+
 ## Date range
 
 The Date Range Picker enables selection of start and end dates, using the input fields or two calendars displayed.
 
-</LivePreview>
-<LivePreview componentName="date-picker" exampleName="CustomFormatter">
+<LivePreview componentName="date-picker" exampleName="Range" />
+
 ## With custom formatter
 
 You can customize the date picker's placeholder and formatter by changing the `placeholder` and `dateFormatter` props.
 Make sure `dateFormatter` is stable to avoid it triggering unintended state resets.
 We recommend using our default date picker format (DD MMM YYYY) as it provides greater clarity and avoids ambiguity when identifying the month.
 
-</LivePreview>
-<LivePreview componentName="date-picker" exampleName="WithDisabledDates">
+<LivePreview componentName="date-picker" exampleName="CustomFormatter" />
+
 ## With disabled dates
 
 You can customize the calendar by passing calendar props into `CalendarProps`.
 For more information, refer to the [calendar](/salt/components/calendar).
 
-</LivePreview>
-<LivePreview componentName="date-picker" exampleName="VisibleMonths">
+<LivePreview componentName="date-picker" exampleName="WithDisabledDates" />
+
 ## Visible months
 
 Use the `visibleMonths` prop to customize the number of visible months in the panel for a range date picker. This is useful on smaller viewports.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="date-picker" exampleName="VisibleMonths" />

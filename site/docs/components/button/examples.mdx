@@ -8,9 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="button" exampleName="CTA" >
-
 ## CTA
 
 Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
@@ -19,25 +16,19 @@ Use the CTA button for high-priority actions. For example, a CTA button may prom
 
 Use CTA buttons sparingly. They represent the default or expected action on the page.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Primary" >
+<LivePreview componentName="button" exampleName="CTA" />
 
 ## Primary
 
 This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Secondary" >
+<LivePreview componentName="button" exampleName="Primary" />
 
 ## Secondary
 
 Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="IconAndText">
+<LivePreview componentName="button" exampleName="Secondary" />
 
 ## Icon and text
 
@@ -48,9 +39,7 @@ Add an icon before the text to reinforce the button text. Add an icon after the 
 - Place an icon to the left of the text to further describe the action, such as “upload”, “submit”, “play” or “done”. Additional description can make it easier for users to locate actions.
 - Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel or opening a document. When the user activates the button, there's typically an immediate visual change.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="IconOnly">
+<LivePreview componentName="button" exampleName="IconAndText" />
 
 ## Icon only
 
@@ -61,9 +50,7 @@ Display an icon-only button with no text when you have limited on-screen space, 
 - An icon-only button should be self-explanatory, ideally using well-known symbols. If the button's purpose isn’t clear from the icon alone, add a text description.
 - Use [`Tooltip`](../tooltip) on an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Disabled" >
+<LivePreview componentName="button" exampleName="IconOnly" />
 
 ## Disabled
 
@@ -71,13 +58,10 @@ Use the disabled state for a button that the user can’t press.
 
 A button with the prop `disabled={true}` will suppress all functionality. If you need to allow the user to place focus on a disabled button, you also need to pass `focusableWhenDisabled={true}`.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="FullWidth" >
+<LivePreview componentName="button" exampleName="Disabled" />
 
 ## Full width
 
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="button" exampleName="FullWidth" />
