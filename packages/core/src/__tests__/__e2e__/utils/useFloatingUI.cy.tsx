@@ -5,27 +5,41 @@ import {
   useFloatingUI,
 } from "@salt-ds/core";
 import { mount } from "cypress/react18";
+import { useEffect } from "react";
 
 const TestComponent = ({
   id = "test-1",
   contentId = "test-1-content",
   focusManager,
   open = true,
+  lockScroll = false,
 }: {
   id?: string;
   contentId?: string;
   focusManager?: boolean;
   open?: boolean;
+  lockScroll?: boolean;
 }) => {
   const { Component: FloatingComponent } = useFloatingComponent();
   const { context } = useFloatingUI({
     open,
   });
+
+  useEffect(() => {
+    const originalHeight = document.body.style.height;
+    document.body.style.height = "300vh";
+
+    return () => {
+      document.body.style.height = originalHeight;
+    };
+  }, []);
+
   return (
     <div id={id}>
       <FloatingComponent
         open={Boolean(open)}
         focusManagerProps={focusManager ? { context } : undefined}
+        lockScroll={lockScroll}
       >
         <div id={contentId} />
       </FloatingComponent>
@@ -82,6 +96,30 @@ describe("Use useFloatingComponent", () => {
         "have.length",
         1,
       );
+    });
+  });
+  describe("without lockScroll", () => {
+    it("the document body should not have hidden overflow", () => {
+      mount(
+        <SaltProvider>
+          <TestComponent lockScroll={false} />
+        </SaltProvider>,
+      );
+
+      cy.document().its("documentElement.style.overflow").should("equal", "");
+    });
+  });
+  describe("with lockScroll", () => {
+    it("the document body should have hidden overflow", () => {
+      mount(
+        <SaltProvider>
+          <TestComponent lockScroll />
+        </SaltProvider>,
+      );
+
+      cy.document()
+        .its("documentElement.style.overflow")
+        .should("equal", "hidden");
     });
   });
 });
