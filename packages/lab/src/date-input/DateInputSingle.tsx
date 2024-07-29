@@ -31,9 +31,8 @@ import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
-export interface DateInputSingleProps<
-  SelectionVariantType = SingleDateSelection,
-> extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
+export interface DateInputSingleProps<T = SingleDateSelection>
+  extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
@@ -67,7 +66,7 @@ export interface DateInputSingleProps<
   /**
    * Function to format the input value.
    */
-  formatDate?: (input: DateValue | null | undefined) => string;
+  formatDate?: (input: DateValue | null | undefined) => string | undefined;
   /**
    * Reference for the input;
    */
@@ -84,18 +83,15 @@ export interface DateInputSingleProps<
   /**
    * The  date value. Use when the component is controlled.
    */
-  date?: SelectionVariantType | null;
+  date?: T | null;
   /**
    * The initial selected date value. Use when the component is un-controlled.
    */
-  defaultDate?: SelectionVariantType | null;
+  defaultDate?: T | null;
   /**
    * Callback fired when the selected date change.
    */
-  onDateChange?: (
-    event: SyntheticEvent,
-    date: SelectionVariantType | null,
-  ) => void;
+  onDateChange?: (event: SyntheticEvent, date: T | null) => void;
   /**
    * If `true`, the component should receive focus.
    */
@@ -165,7 +161,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     // Update date string value when selected date changes
     useEffect(() => {
       const formattedDate = formatDate(date);
-      if (formattedDate?.length) {
+      if (formattedDate) {
         setDateValue(formattedDate);
       }
     }, [date, formatDate]);
@@ -213,7 +209,9 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       const newDate = parse(dateValue) || null;
       if (newDate) {
         const formattedDate = formatDate(newDate);
-        setDateValue(formattedDate);
+        if (formattedDate) {
+          setDateValue(formattedDate);
+        }
       }
       const hasDateChanged =
         newDate && date ? newDate.compare(date) !== 0 : newDate !== date;

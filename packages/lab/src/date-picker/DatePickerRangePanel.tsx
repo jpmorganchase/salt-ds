@@ -1,4 +1,11 @@
 import {
+  type ComponentPropsWithoutRef,
+  type SyntheticEvent,
+  forwardRef,
+  useState,
+} from "react";
+import clsx from "clsx";
+import {
   type DateValue,
   endOfMonth,
   getLocalTimeZone,
@@ -17,13 +24,6 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
-import {
-  type ComponentPropsWithoutRef,
-  type SyntheticEvent,
-  forwardRef,
-  useState,
-} from "react";
 import {
   Calendar,
   type CalendarOffsetProps,
@@ -32,15 +32,14 @@ import {
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
 } from "../calendar";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  useDatePickerContext,
+} from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
-export interface DatePickerRangePanelProps<SelectionVariantType>
+export interface DatePickerRangePanelProps<T>
   extends ComponentPropsWithoutRef<"div"> {
-  onSelect?: (
-    event: SyntheticEvent,
-    selectedDate?: SelectionVariantType | null,
-  ) => void;
+  onSelect?: (event: SyntheticEvent, selectedDate?: T | null) => void;
   helperText?: string;
   startVisibleMonth?: DateValue;
   defaultStartVisibleMonth?: DateValue;
@@ -108,7 +107,7 @@ export const DatePickerRangePanel = forwardRef<
       maxDate = minDate.add({ months: 1 }),
     },
     helpers: { setSelectedDate },
-  } = useDatePickerContext<DateRangeSelection>();
+  } = useDatePickerContext({ selectionVariant: "range" });
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 

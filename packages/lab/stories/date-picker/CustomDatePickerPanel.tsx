@@ -15,6 +15,9 @@ import {
   type ListProps,
   type DateRangeSelection,
   useDatePickerContext,
+  type DatePickerState,
+  SingleDateSelection,
+  DatePickerSinglePanel,
 } from "@salt-ds/lab";
 import React, { forwardRef } from "react";
 
@@ -32,15 +35,31 @@ const tenorOptions = [
   { tenor: "20", label: "20 years" },
 ];
 
+interface CustomDatePickerPanelProps {
+  helperText?: string;
+  selectionVariant: "single" | "range";
+}
+
 export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
-  DatePickerRangePanelProps<DateRangeSelection>
->(function CustomDatePickerPanel(props, ref) {
+  CustomDatePickerPanelProps
+>(function CustomDatePickerPanel({ selectionVariant, helperText }, ref) {
+  let stateAndHelpers: any;
+  if (selectionVariant === "range") {
+    stateAndHelpers = useDatePickerContext({
+      selectionVariant: "range",
+    }) as DatePickerState<DateRangeSelection>;
+  } else {
+    stateAndHelpers = useDatePickerContext({
+      selectionVariant: "single",
+    }) as DatePickerState<SingleDateSelection>;
+  }
+
   const {
     state: { selectedDate },
     helpers: { setSelectedDate },
-  } = useDatePickerContext<DateRangeSelection>();
-  const { helperText, ...rest } = props;
+  } = stateAndHelpers;
+
   return (
     <StackLayout separators gap={0} ref={ref}>
       {helperText && (
@@ -57,19 +76,30 @@ export const CustomDatePickerPanel = forwardRef<
               return;
             }
             const tenor = parseInt(item[0], 10);
-            const newSelectedDate = selectedDate?.startDate
-              ? {
-                  startDate: selectedDate.startDate,
-                  endDate: selectedDate.startDate.add({
+            let newSelectedDate;
+            if (selectionVariant === "range") {
+              newSelectedDate = selectedDate?.startDate
+                ? {
+                    startDate: selectedDate.startDate,
+                    endDate: selectedDate.startDate.add({
+                      years: tenor,
+                    }),
+                  }
+                : {
+                    startDate: today(getLocalTimeZone()),
+                    endDate: today(getLocalTimeZone()).add({
+                      years: tenor,
+                    }),
+                  };
+            } else {
+              newSelectedDate = selectedDate
+                ? selectedDate.add({
                     years: tenor,
-                  }),
-                }
-              : {
-                  startDate: today(getLocalTimeZone()),
-                  endDate: today(getLocalTimeZone()).add({
+                  })
+                : today(getLocalTimeZone()).add({
                     years: tenor,
-                  }),
-                };
+                  });
+            }
             setSelectedDate(newSelectedDate);
           }}
         >
@@ -79,8 +109,11 @@ export const CustomDatePickerPanel = forwardRef<
             </Option>
           ))}
         </ListBox>
-        );
-        <DatePickerRangePanel {...rest} />
+        {selectionVariant === "range" ? (
+          <DatePickerRangePanel />
+        ) : (
+          <DatePickerSinglePanel />
+        )}
       </FlexLayout>
     </StackLayout>
   );

@@ -1,4 +1,4 @@
-.datePickerRangeFooter {
+.saltDatePickerFooter {
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
@@ -10,22 +10,14 @@
   padding-right: var(--salt-spacing-300);
 }
 
-.datePickerRangeFooter-rangeLabel {
-  margin-right: var(--salt-spacing-100);
-}
-
-.datePickerRangeFooter-range {
+.saltDatePickerFooter-body {
   flex-grow: 1;
 }
 
-.datePickerRangeFooter-noOfDaysSelected {
-  display: block;
-}
-
-.datePickerRangeFooter-action {
+.saltDatePickerFooter-action {
   /* No margin needed here */
 }
 
-.datePickerRangeFooter-action + .datePickerRangeFooter-action {
+.saltDatePickerFooter-action + .saltDatePickerFooter-action {
   margin-left: var(--salt-spacing-100);
 }
