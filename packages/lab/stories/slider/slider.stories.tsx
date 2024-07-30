@@ -112,15 +112,20 @@ RangeWithMarks.args = {
   marks: "all",
 };
 
-function validate(minValue: number, maxValue: number) {
-  if (minValue > maxValue) return false;
+function validate(value: SliderValue, bounds: [number, number]) {
+  if (typeof value[1] === "undefined") return false;
+  if (value[0] < bounds[0]) return false;
+  if (value[1] > bounds[1]) return false;
+  if (value[0] > value[1]) return false;
   return true;
 }
 
 export const RangeWithInput = () => {
-  const [value, setValue] = useState<number[]>([0, 50]);
-  const [minValue, setMinValue] = useState<number>(value[0]);
-  const [maxValue, setMaxValue] = useState(value[1]);
+  const bounds: [number, number] = [0, 50];
+
+  const [value, setValue] = useState<SliderValue>([0, 50]);
+  const [minValue, setMinValue] = useState<number>(bounds[0]);
+  const [maxValue, setMaxValue] = useState<number>(bounds[1]);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
@@ -140,7 +145,7 @@ export const RangeWithInput = () => {
   };
 
   const handleInputBlur = () => {
-    const validated = validate(+minValue, +maxValue);
+    const validated = validate([+minValue, +maxValue], bounds);
 
     if (validated) {
       setValue([minValue, maxValue]);
@@ -152,10 +157,10 @@ export const RangeWithInput = () => {
   };
 
   const handleSliderChange = (value: SliderValue) => {
-    const rangeValue = value as number[];
-    setValue(rangeValue);
-    setMinValue(rangeValue[0]);
-    setMaxValue(rangeValue[1]);
+    if (typeof value[1] === "undefined") return false;
+    setValue(value);
+    setMinValue(value[0]);
+    setMaxValue(value[1]);
   };
 
   return (
@@ -174,8 +179,8 @@ export const RangeWithInput = () => {
         />
         <Slider
           style={{ width: "300px" }}
-          min={0}
-          max={50}
+          min={bounds[0]}
+          max={bounds[1]}
           value={value}
           onChange={handleSliderChange}
           aria-label="withInput"
