@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import type { SliderChangeHandler, SliderValue } from "../types";
+import type { SliderChangeHandler, SliderValue, ThumbIndex } from "../types";
 
 export const getValue = (
   trackRef: RefObject<Element>,
@@ -21,12 +21,16 @@ export const getValue = (
 export const setValue = (
   value: SliderValue,
   newValue: number,
-  index: number,
+  index: ThumbIndex,
   onChange: SliderChangeHandler,
 ) => {
-  const newValueArray = [...value];
-  newValueArray.splice(index, 1, newValue);
-  onChange(newValueArray);
+  if (value.length === 2) {
+    const newValueArray = [...value];
+    newValueArray.splice(index, 1, newValue);
+    onChange(newValueArray as SliderValue);
+    return;
+  }
+  onChange([newValue]);
 };
 
 export const roundToStep = (value: number, step: number) =>
@@ -87,12 +91,28 @@ export const getMarkStyles = (min: number, max: number, step: number) => {
   }));
 };
 
-export const getNearestIndex = (value: number[], newValue: number) => {
+export const getNearestIndex = (value: SliderValue, newValue: number) => {
   if (value.length === 1) return 0;
+
+  if (value[0] === value[1]) {
+    if (newValue < value[0]) return 0;
+    return 1;
+  }
 
   const distances = value.map((value) => Math.abs(newValue - value));
   const minDistance = Math.min(...distances);
   const nearestIndex = distances.indexOf(minDistance);
 
-  return nearestIndex;
+  return nearestIndex as ThumbIndex;
 };
+
+export const preventOverlappingValues = (
+  value: SliderValue,
+  newValue: number,
+  index: ThumbIndex,
+) =>
+  value.length === 2
+    ? index === 0
+      ? Math.min(newValue, value[1])
+      : Math.max(newValue, value[0])
+    : newValue;

@@ -1,5 +1,10 @@
-import type { SliderChangeHandler, SliderValue } from "../types";
-import { clampValue, roundToStep, setValue } from "./utils";
+import type { SliderChangeHandler, SliderValue, ThumbIndex } from "../types";
+import {
+  clampValue,
+  preventOverlappingValues,
+  roundToStep,
+  setValue,
+} from "./utils";
 
 const getValueFromKeyName = (
   keyName: string,
@@ -30,12 +35,13 @@ export const useKeyDownThumb = (
   step: number,
   value: SliderValue,
   onChange: SliderChangeHandler,
-  index: number,
+  index: ThumbIndex,
 ) => {
   return (event: React.KeyboardEvent) => {
+    const targetValue = value[index];
     const rawValue = getValueFromKeyName(
       event.key,
-      value[index],
+      targetValue as number,
       min,
       max,
       step,
@@ -44,13 +50,7 @@ export const useKeyDownThumb = (
     const roundedToStep = roundToStep(rawValue, step);
     const rounded = Number(roundedToStep.toFixed(1));
     const clamped = clampValue(rounded, [min, max]);
-
-    const newValue =
-      value.length > 1
-        ? index === 0
-          ? Math.min(clamped, value[1] - step)
-          : Math.max(clamped, value[0] + step)
-        : clamped;
+    const newValue = preventOverlappingValues(value, clamped, index);
 
     setValue(value, newValue, index, onChange);
   };

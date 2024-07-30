@@ -39,7 +39,7 @@ export interface SliderProps
   /**
    * Value of the slider, to be used when in a controlled state
    */
-  value?: SliderValue;
+  value?: number[];
   /**
    * Change handler to be used when in a controlled state
    */
@@ -69,7 +69,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const [value, setValue] = useControlled<SliderValue>({
-    controlled: valueProp,
+    controlled: valueProp as SliderValue,
     default: defaultValue,
     name: "Slider",
     state: "Value",

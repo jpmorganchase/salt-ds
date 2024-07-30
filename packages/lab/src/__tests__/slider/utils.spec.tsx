@@ -6,6 +6,7 @@ import {
   getPercentage,
   getPercentageDifference,
   getPercentageOffset,
+  preventOverlappingValues,
   roundToStep,
 } from "../../slider/internal/utils";
 
@@ -61,6 +62,32 @@ describe("Slider utils", () => {
       expect(getNearestIndex([100, 120], 101)).toEqual(0);
       expect(getNearestIndex([100, 120], 199)).toEqual(1);
       expect(getNearestIndex([100, 120], 119)).toEqual(1);
+    });
+    it("When values are equal", () => {
+      expect(getNearestIndex([5, 5], 2)).toEqual(0);
+      expect(getNearestIndex([5, 5], 8)).toEqual(1);
+      expect(getNearestIndex([100, 100], 99)).toEqual(0);
+      expect(getNearestIndex([100, 100], 101)).toEqual(1);
+    });
+  });
+
+  describe("preventOverlappingValues", () => {
+    it("should prevent overlapping values", () => {
+      expect(preventOverlappingValues([2, 5], 4, 0)).toEqual(4);
+      expect(preventOverlappingValues([2, 5], 5, 0)).toEqual(5);
+      expect(preventOverlappingValues([2, 5], 6, 0)).toEqual(5);
+
+      expect(preventOverlappingValues([2, 5], 1, 1)).toEqual(2);
+      expect(preventOverlappingValues([2, 5], 2, 1)).toEqual(2);
+      expect(preventOverlappingValues([2, 5], 3, 1)).toEqual(3);
+
+      expect(preventOverlappingValues([100, 120], 119, 0)).toEqual(119);
+      expect(preventOverlappingValues([100, 120], 120, 0)).toEqual(120);
+      expect(preventOverlappingValues([100, 120], 121, 0)).toEqual(120);
+
+      expect(preventOverlappingValues([100, 120], 99, 1)).toEqual(100);
+      expect(preventOverlappingValues([100, 120], 100, 1)).toEqual(100);
+      expect(preventOverlappingValues([100, 120], 101, 1)).toEqual(101);
     });
   });
 });
