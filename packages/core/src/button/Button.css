@@ -175,44 +175,28 @@
   --button-borderColor-disabled: var(--salt-actionable-subtle-borderColor-disabled);
 }
 
-.saltButton-cta.saltButton-loading {
-  --button-text-color: var(--salt-content-primary-foreground);
-  --button-background: var(--salt-container-primary-background);
-  --button-borderColor: var(--salt-actionable-cta-borderColor);
-}
-
-.saltButton-cta.saltButton-loading:hover,
-.saltButton-cta.saltButton-loading:active {
-  color: var(--salt-content-primary-foreground);
-  background: var(--salt-container-primary-background);
-  border-color: var(--salt-actionable-cta-borderColor);
+.saltButton-accent.saltButton-loading {
+  --button-text-color: var(--salt-actionable-accent-foreground);
+  --button-text-color-hover: var(--salt-actionable-accent-foreground);
+  --button-text-color-active: var(--salt-actionable-accent-foreground);
+  --button-background: var(--salt-actionable-accent-background);
+  --button-background-hover: var(--salt-actionable-accent-background);
+  --button-background-active: var(--salt-actionable-accent-background);
+  --button-borderColor: var(--salt-actionable-accent-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-accent-borderColor);
+  --button-borderColor-active: var(--salt-actionable-accent-borderColor);
   cursor: default;
 }
 
-.saltButton-primary.saltButton-loading {
-  --button-text-color: var(--salt-content-primary-foreground);
-  --button-background: var(--salt-container-primary-background);
-  --button-borderColor: var(--salt-actionable-primary-borderColor);
-}
-
-.saltButton-primary.saltButton-loading:hover,
-.saltButton-primary.saltButton-loading:active {
-  color: var(--salt-content-primary-foreground);
-  background: var(--salt-container-primary-background);
-  border-color: var(--salt-actionable-primary-borderColor);
-  cursor: default;
-}
-
-.saltButton-secondary.saltButton-loading {
-  --button-text-color: var(--salt-content-primary-foreground);
-  --button-background: var(--salt-container-primary-background);
-  --button-borderColor: var(--salt-actionable-secondary-borderColor);
-}
-
-.saltButton-secondary.saltButton-loading:hover,
-.saltButton-secondary.saltButton-loading:active {
-  color: var(--salt-content-primary-foreground);
-  background: var(--salt-container-primary-background);
-  border-color: var(--salt-actionable-secondary-borderColor);
+.saltButton-neutral.saltButton-loading {
+  --button-text-color: var(--salt-actionable-foreground);
+  --button-text-color-hover: var(--salt-actionable-foreground);
+  --button-text-color-active: var(--salt-actionable-foreground);
+  --button-background: var(--salt-actionable-background);
+  --button-background-hover: var(--salt-actionable-background);
+  --button-background-active: var(--salt-actionable-background);
+  --button-borderColor: var(--salt-actionable-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-borderColor);
+  --button-borderColor-active: var(--salt-actionable-borderColor);
   cursor: default;
 }

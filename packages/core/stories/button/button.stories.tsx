@@ -1,20 +1,11 @@
 import {
   Button,
   type ButtonProps,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogHeader,
-  FlowLayout,
-  FormField,
-  FormFieldLabel,
-  Input,
+  GridLayout,
   Spinner,
   StackLayout,
-  useId,
 } from "@salt-ds/core";
 import {
-  DoubleChevronRightIcon,
   DownloadIcon,
   RefreshIcon,
   SearchIcon,
@@ -250,15 +241,25 @@ function useLoadOnClick() {
   return [loading, handleClick] as const;
 }
 
-export const LoadingButtonsReplaceIcon: StoryFn<typeof Button> = () => {
-  const [primaryLoading, setPrimaryLoading] = useLoadOnClick();
-  const [secondaryLoading, setSecondaryLoading] = useLoadOnClick();
-  const [ctaLoading, setCtaLoading] = useLoadOnClick();
+export const LoadingButtonsReplaceIcon: StoryFn = () => {
+  const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
+  const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
+  const [accentTransparentLoading, setAccentTransparentLoading] =
+    useLoadOnClick();
+  const [neutralSolidLoading, setNeutralSolidLoading] = useLoadOnClick();
+  const [neutralOutlineLoading, setNeutralOutlineLoading] = useLoadOnClick();
+  const [neutralTransparentLoading, setNeutralTransparentLoading] =
+    useLoadOnClick();
 
   return (
-    <FlowLayout>
-      <Button variant="cta" loading={ctaLoading} onClick={setCtaLoading}>
-        {ctaLoading ? (
+    <GridLayout columns={3}>
+      <Button
+        color="accent"
+        appearance="solid"
+        loading={accentSolidLoading}
+        onClick={setAccentSolidLoading}
+      >
+        {accentSolidLoading ? (
           <Spinner size="small" aria-label="Sending" />
         ) : (
           <SendIcon aria-hidden />
@@ -266,11 +267,12 @@ export const LoadingButtonsReplaceIcon: StoryFn<typeof Button> = () => {
         Send Email
       </Button>
       <Button
-        variant="primary"
-        loading={primaryLoading}
-        onClick={setPrimaryLoading}
+        color="accent"
+        appearance="outline"
+        loading={accentOutlineLoading}
+        onClick={setAccentOutlineLoading}
       >
-        {primaryLoading ? (
+        {accentOutlineLoading ? (
           <Spinner aria-label="Syncing" size="small" />
         ) : (
           <SyncIcon aria-hidden />
@@ -278,35 +280,81 @@ export const LoadingButtonsReplaceIcon: StoryFn<typeof Button> = () => {
         Sync Files
       </Button>
       <Button
-        variant="secondary"
-        loading={secondaryLoading}
-        onClick={setSecondaryLoading}
+        color="accent"
+        appearance="transparent"
+        loading={accentTransparentLoading}
+        onClick={setAccentTransparentLoading}
       >
-        {secondaryLoading ? (
+        {accentTransparentLoading ? (
           <Spinner size="small" aria-label="Refreshing" />
         ) : (
           <RefreshIcon aria-hidden />
         )}
         Refresh Page
       </Button>
-    </FlowLayout>
+      <Button
+        color="neutral"
+        appearance="solid"
+        loading={neutralSolidLoading}
+        onClick={setNeutralSolidLoading}
+      >
+        {neutralSolidLoading ? (
+          <Spinner size="small" aria-label="Sending" />
+        ) : (
+          <SendIcon aria-hidden />
+        )}
+        Send Email
+      </Button>
+      <Button
+        color="neutral"
+        appearance="outline"
+        loading={neutralOutlineLoading}
+        onClick={setNeutralOutlineLoading}
+      >
+        {neutralOutlineLoading ? (
+          <Spinner aria-label="Syncing" size="small" />
+        ) : (
+          <SyncIcon aria-hidden />
+        )}
+        Sync Files
+      </Button>
+      <Button
+        color="neutral"
+        appearance="transparent"
+        loading={neutralTransparentLoading}
+        onClick={setNeutralTransparentLoading}
+      >
+        {neutralTransparentLoading ? (
+          <Spinner size="small" aria-label="Refreshing" />
+        ) : (
+          <RefreshIcon aria-hidden />
+        )}
+        Refresh Page
+      </Button>
+    </GridLayout>
   );
 };
 
-export const LoadingButtons: StoryFn<typeof Button> = () => {
-  const [primaryLoading, setPrimaryLoading] = useLoadOnClick();
-  const [secondaryLoading, setSecondaryLoading] = useLoadOnClick();
-  const [ctaLoading, setCtaLoading] = useLoadOnClick();
+export const LoadingButtons: StoryFn = () => {
+  const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
+  const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
+  const [accentTransparentLoading, setAccentTransparentLoading] =
+    useLoadOnClick();
+  const [neutralSolidLoading, setNeutralSolidLoading] = useLoadOnClick();
+  const [neutralOutlineLoading, setNeutralOutlineLoading] = useLoadOnClick();
+  const [neutralTransparentLoading, setNeutralTransparentLoading] =
+    useLoadOnClick();
 
   return (
-    <FlowLayout>
+    <GridLayout columns={3}>
       <Button
-        variant="cta"
-        loading={ctaLoading}
-        onClick={setCtaLoading}
+        color="accent"
+        appearance="solid"
+        loading={accentSolidLoading}
+        onClick={setAccentSolidLoading}
         style={{ width: 66 }}
       >
-        {ctaLoading ? (
+        {accentSolidLoading ? (
           <Spinner size="small" aria-label="Sending" />
         ) : (
           <>
@@ -316,12 +364,13 @@ export const LoadingButtons: StoryFn<typeof Button> = () => {
         )}
       </Button>
       <Button
-        variant="primary"
-        loading={primaryLoading}
-        onClick={setPrimaryLoading}
+        color="accent"
+        appearance="outline"
+        loading={accentOutlineLoading}
+        onClick={setAccentOutlineLoading}
         style={{ width: 66 }}
       >
-        {primaryLoading ? (
+        {accentOutlineLoading ? (
           <Spinner size="small" aria-label="Syncing" />
         ) : (
           <>
@@ -331,12 +380,13 @@ export const LoadingButtons: StoryFn<typeof Button> = () => {
         )}
       </Button>
       <Button
-        variant="secondary"
-        loading={secondaryLoading}
-        onClick={setSecondaryLoading}
+        color="accent"
+        appearance="transparent"
+        loading={accentTransparentLoading}
+        onClick={setAccentTransparentLoading}
         style={{ width: 87 }}
       >
-        {secondaryLoading ? (
+        {accentTransparentLoading ? (
           <Spinner size="small" aria-label="Refreshing" />
         ) : (
           <>
@@ -345,19 +395,77 @@ export const LoadingButtons: StoryFn<typeof Button> = () => {
           </>
         )}
       </Button>
-    </FlowLayout>
+      <Button
+        color="neutral"
+        appearance="solid"
+        loading={neutralSolidLoading}
+        onClick={setNeutralSolidLoading}
+        style={{ width: 66 }}
+      >
+        {neutralSolidLoading ? (
+          <Spinner size="small" aria-label="Sending" />
+        ) : (
+          <>
+            <SendIcon aria-hidden />
+            Send
+          </>
+        )}
+      </Button>
+      <Button
+        color="neutral"
+        appearance="outline"
+        loading={neutralOutlineLoading}
+        onClick={setNeutralOutlineLoading}
+        style={{ width: 66 }}
+      >
+        {neutralOutlineLoading ? (
+          <Spinner size="small" aria-label="Syncing" />
+        ) : (
+          <>
+            <SyncIcon aria-hidden />
+            Sync
+          </>
+        )}
+      </Button>
+      <Button
+        color="neutral"
+        appearance="transparent"
+        loading={neutralTransparentLoading}
+        onClick={setNeutralTransparentLoading}
+        style={{ width: 87 }}
+      >
+        {neutralTransparentLoading ? (
+          <Spinner size="small" aria-label="Refreshing" />
+        ) : (
+          <>
+            <RefreshIcon aria-hidden />
+            Refresh
+          </>
+        )}
+      </Button>
+    </GridLayout>
   );
 };
 
-export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
-  const [primaryLoading, setPrimaryLoading] = useLoadOnClick();
-  const [secondaryLoading, setSecondaryLoading] = useLoadOnClick();
-  const [ctaLoading, setCtaLoading] = useLoadOnClick();
+export const LoadingButtonsWithLabel: StoryFn = () => {
+  const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
+  const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
+  const [accentTransparentLoading, setAccentTransparentLoading] =
+    useLoadOnClick();
+  const [neutralSolidLoading, setNeutralSolidLoading] = useLoadOnClick();
+  const [neutralOutlineLoading, setNeutralOutlineLoading] = useLoadOnClick();
+  const [neutralTransparentLoading, setNeutralTransparentLoading] =
+    useLoadOnClick();
 
   return (
-    <FlowLayout>
-      <Button variant="cta" loading={ctaLoading} onClick={setCtaLoading}>
-        {ctaLoading ? (
+    <GridLayout columns={3}>
+      <Button
+        color="accent"
+        appearance="solid"
+        loading={accentSolidLoading}
+        onClick={setAccentSolidLoading}
+      >
+        {accentSolidLoading ? (
           <>
             <Spinner size="small" aria-label="Sending" />
             Sending
@@ -370,11 +478,12 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
         )}
       </Button>
       <Button
-        variant="primary"
-        loading={primaryLoading}
-        onClick={setPrimaryLoading}
+        color="accent"
+        appearance="outline"
+        loading={accentOutlineLoading}
+        onClick={setAccentOutlineLoading}
       >
-        {primaryLoading ? (
+        {accentOutlineLoading ? (
           <>
             <Spinner size="small" aria-label="Syncing" />
             Syncing
@@ -387,11 +496,12 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
         )}
       </Button>
       <Button
-        variant="secondary"
-        loading={secondaryLoading}
-        onClick={setSecondaryLoading}
+        color="accent"
+        appearance="transparent"
+        loading={accentTransparentLoading}
+        onClick={setAccentTransparentLoading}
       >
-        {secondaryLoading ? (
+        {accentTransparentLoading ? (
           <>
             <Spinner size="small" aria-label="Refreshing" />
             Refreshing
@@ -403,76 +513,60 @@ export const LoadingButtonsWithLabel: StoryFn<typeof Button> = () => {
           </>
         )}
       </Button>
-    </FlowLayout>
-  );
-};
-
-export const LoadingButtonRenameExample = () => {
-  const [loading, setLoading] = useState(false);
-
-  const handlePrimaryClick = () => {
-    if (!loading) {
-      setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        handleClose();
-      }, 3000);
-    }
-  };
-  const [open, setOpen] = useState(false);
-  const id = useId();
-
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (value: boolean) => {
-    setOpen(value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Button onClick={handleRequestOpen}>Open dialog</Button>
-      <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogHeader header="Find and rename layers" />
-        <DialogContent>
-          <StackLayout>
-            <FormField>
-              <FormFieldLabel>Find</FormFieldLabel>
-              <Input defaultValue="UITK" />
-            </FormField>
-            <FormField>
-              <FormFieldLabel>Rename</FormFieldLabel>
-              <Input defaultValue="Salt" />
-            </FormField>
-          </StackLayout>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button
-            variant="cta"
-            loading={loading}
-            onClick={handlePrimaryClick}
-            style={{ width: 135 }}
-          >
-            {loading ? (
-              <>
-                <Spinner size="small" aria-label="Renaming" />
-                Renaming
-              </>
-            ) : (
-              <>
-                Rename Layers
-                <DoubleChevronRightIcon />
-              </>
-            )}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+      <Button
+        color="neutral"
+        appearance="solid"
+        loading={neutralSolidLoading}
+        onClick={setNeutralSolidLoading}
+      >
+        {neutralSolidLoading ? (
+          <>
+            <Spinner size="small" aria-label="Sending" />
+            Sending
+          </>
+        ) : (
+          <>
+            <SendIcon aria-hidden />
+            Send
+          </>
+        )}
+      </Button>
+      <Button
+        color="neutral"
+        appearance="outline"
+        loading={neutralOutlineLoading}
+        onClick={setNeutralOutlineLoading}
+      >
+        {neutralOutlineLoading ? (
+          <>
+            <Spinner size="small" aria-label="Syncing" />
+            Syncing
+          </>
+        ) : (
+          <>
+            <SyncIcon aria-hidden />
+            Sync
+          </>
+        )}
+      </Button>
+      <Button
+        color="neutral"
+        appearance="transparent"
+        loading={neutralTransparentLoading}
+        onClick={setNeutralTransparentLoading}
+      >
+        {neutralTransparentLoading ? (
+          <>
+            <Spinner size="small" aria-label="Refreshing" />
+            Refreshing
+          </>
+        ) : (
+          <>
+            <RefreshIcon aria-hidden />
+            Refresh
+          </>
+        )}
+      </Button>
+    </GridLayout>
   );
 };
