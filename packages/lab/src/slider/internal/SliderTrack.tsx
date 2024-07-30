@@ -6,10 +6,16 @@ import {
   useState,
 } from "react";
 
+import type { ActiveThumbIndex, ThumbIndex } from "../types";
 import { useSliderContext } from "./SliderContext";
 import { SliderSelection } from "./SliderSelection";
 import { SliderThumb } from "./SliderThumb";
-import { getNearestIndex, getValue, setValue } from "./utils";
+import {
+  getNearestIndex,
+  getValue,
+  preventOverlappingValues,
+  setValue,
+} from "./utils";
 
 export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
 
@@ -20,7 +26,7 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
 
   const trackRef = useRef<HTMLDivElement>(null);
 
-  const [activeThumb, setActiveThumb] = useState<number | undefined>(undefined);
+  const [activeThumb, setActiveThumb] = useState<ActiveThumbIndex>(undefined);
 
   const [pointerDown, setPointerDown] = useState(false);
 
@@ -43,15 +49,9 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
     if (!pointerDown || typeof activeThumb === "undefined") return;
     const { clientX } = event;
     const rawValue: number = getValue(trackRef, min, max, step, clientX);
+    const newValue = preventOverlappingValues(value, rawValue, activeThumb);
 
-    const nonOverlappingValue =
-      value.length > 1
-        ? activeThumb === 0
-          ? Math.min(rawValue, value[1] - step)
-          : Math.max(rawValue, value[0] + step)
-        : rawValue;
-
-    setValue(value, nonOverlappingValue, activeThumb, onChange);
+    setValue(value, newValue, activeThumb, onChange);
   };
 
   const handlePointerOut = () => {
@@ -82,7 +82,7 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
         return (
           <SliderThumb
             key={i}
-            index={i}
+            index={i as ThumbIndex}
             activeThumb={activeThumb}
             setActiveThumb={setActiveThumb}
           />

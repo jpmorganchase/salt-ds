@@ -1,6 +1,7 @@
 import { Label, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, useState } from "react";
+import type { ActiveThumbIndex, ThumbIndex } from "../types";
 import { useSliderContext } from "./SliderContext";
 import { useKeyDownThumb } from "./useKeyDownThumb";
 import { getPercentage } from "./utils";
@@ -8,9 +9,9 @@ import { getPercentage } from "./utils";
 const withBaseName = makePrefixer("saltSliderThumb");
 
 export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
-  index: number;
-  activeThumb: number | undefined;
-  setActiveThumb: (index: number | undefined) => void;
+  index: ThumbIndex;
+  activeThumb: ActiveThumbIndex;
+  setActiveThumb: (index: ActiveThumbIndex) => void;
 }
 
 export function SliderThumb(props: SliderThumbProps): JSX.Element {
@@ -22,7 +23,9 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
 
   const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
 
-  const thumbPosition = getPercentage(min, max, value[index]);
+  const thumbValue = value[index];
+
+  const thumbPosition = getPercentage(min, max, thumbValue as number);
 
   const handlePointerOver = () => {
     if (activeThumb === undefined && index !== null) setActiveThumb(index);
@@ -69,9 +72,7 @@ export function SliderThumb(props: SliderThumbProps): JSX.Element {
         role="slider"
         aria-valuemin={min}
         aria-valuemax={max}
-        aria-valuenow={
-          Array.isArray(value) ? (index === 0 ? value[0] : value[1]) : value
-        }
+        aria-valuenow={index === 1 ? value[1] : value[0]}
         aria-label={ariaLabel}
         aria-orientation="horizontal"
         tabIndex={0}
