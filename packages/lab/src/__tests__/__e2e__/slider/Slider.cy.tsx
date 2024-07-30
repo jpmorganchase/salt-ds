@@ -124,7 +124,7 @@ describe("Given a Slider", () => {
         .should("have.attr", "aria-valuenow", "8");
     });
 
-    it("THEN slider thumbs should not cross and maintain a gap of 1 step when using keyboard nav", () => {
+    it("THEN slider thumbs should not cross when using keyboard nav", () => {
       cy.mount(
         <Slider
           style={{ width: "400px" }}
@@ -142,9 +142,9 @@ describe("Given a Slider", () => {
         .realPress("ArrowRight");
       cy.findAllByRole("slider")
         .eq(0)
-        .should("have.attr", "aria-valuenow", "7");
+        .should("have.attr", "aria-valuenow", "8");
     });
-    it("THEN slider thumbs should not cross and maintain a gap of 1 step when using cursor nav", () => {
+    it("THEN slider thumbs should not cross when using cursor nav", () => {
       cy.mount(
         <Slider
           style={{ width: "400px" }}
@@ -163,7 +163,7 @@ describe("Given a Slider", () => {
         });
       cy.findAllByRole("slider")
         .eq(0)
-        .should("have.attr", "aria-valuenow", "4");
+        .should("have.attr", "aria-valuenow", "5");
     });
   });
 });
