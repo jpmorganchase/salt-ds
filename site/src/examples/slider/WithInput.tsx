@@ -20,7 +20,7 @@ export const SingleWithInput = () => {
     setValue([+inputValue]);
   };
 
-  const handleChange: SliderChangeHandler = (value: number[]) => {
+  const handleChange: SliderChangeHandler = (value: SliderValue) => {
     setValue(value);
   };
 
@@ -53,13 +53,17 @@ export const SingleWithInput = () => {
   );
 };
 
-function validate(minValue: number, maxValue: number) {
-  if (minValue > maxValue) return false;
+function validate(value: SliderValue, bounds: [number, number]) {
+  if (typeof value[1] === "undefined") return false;
+  if (value[0] < bounds[0]) return false;
+  if (value[1] > bounds[1]) return false;
+  if (value[0] > value[1]) return false;
   return true;
 }
 
 const RangeWithInput = () => {
-  const [value, setValue] = useState([20, 60]);
+  const bounds: [number, number] = [0, 100];
+  const [value, setValue] = useState<SliderValue>([20, 60]);
   const [minValue, setMinValue] = useState(`${value[0]}`);
   const [maxValue, setMaxValue] = useState(`${value[1]}`);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
@@ -83,7 +87,7 @@ const RangeWithInput = () => {
   const handleInputBlur = () => {
     const minNumVal = Number.parseFloat(minValue);
     const maxNumVal = Number.parseFloat(maxValue);
-    const validated = validate(minNumVal, maxNumVal);
+    const validated = validate([minNumVal, maxNumVal], bounds);
 
     if (validated) {
       setValue([minNumVal, maxNumVal]);
@@ -94,7 +98,7 @@ const RangeWithInput = () => {
     setValidationStatus("error");
   };
 
-  const handleSliderChange: SliderChangeHandler = (value: number[]) => {
+  const handleSliderChange: SliderChangeHandler = (value: SliderValue) => {
     setValue(value);
     setMinValue(`${value[0]}`);
     setMaxValue(`${value[1]}`);
@@ -115,8 +119,8 @@ const RangeWithInput = () => {
         />
         <Slider
           style={{ flexGrow: 1 }}
-          min={0}
-          max={100}
+          min={bounds[0]}
+          max={bounds[1]}
           value={value}
           onChange={handleSliderChange}
           aria-label="withInput"

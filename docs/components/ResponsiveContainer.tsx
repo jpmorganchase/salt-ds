@@ -1,7 +1,7 @@
 import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
-import { Slider, StepperInput } from "@salt-ds/lab";
+import { Slider, type SliderValue, StepperInput } from "@salt-ds/lab";
 
 export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
   const [containerWidth, setWidth] = useState([90]);
@@ -38,8 +38,8 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           id="width"
           max={maxUnits}
           min={10}
-          onChange={(value: number[]) => setWidth(value)}
-          value={containerWidth}
+          onChange={(value: SliderValue) => setWidth(value)}
+          value={containerWidth as SliderValue}
         />
         <StepperInput
           value={containerHeight[0]}
@@ -52,8 +52,8 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           id="height"
           max={maxUnits}
           min={10}
-          onChange={(value: number[]) => setHeight(value)}
-          value={containerHeight}
+          onChange={(value: SliderValue) => setHeight(value)}
+          value={containerHeight as SliderValue}
         />
       </div>
 
