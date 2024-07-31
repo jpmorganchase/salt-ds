@@ -1,5 +1,11 @@
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
-import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { useControlled } from "@salt-ds/core";
+import {
+  type KeyboardEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 interface Item {
   id: string;
@@ -37,9 +43,13 @@ function sortBasedOnDOMPosition(items: Item[]): Item[] {
   return items;
 }
 
-function useCollection({ root }: { root: HTMLElement }) {
+function useCollection() {
   const [items, setItems] = useState<Item[]>([]);
   const itemMap = useRef<Map<string, Item>>(new Map());
+
+  useEffect(() => {
+    console.log(items, itemMap.current);
+  }, [items]);
 
   const registerItem = (item: Item) => {
     setItems((old) => {
@@ -96,21 +106,21 @@ function useCollection({ root }: { root: HTMLElement }) {
 }
 
 export function useTabstrip({
-  container,
   selected: selectedProp,
   defaultSelected,
+}: {
+  selected?: string;
+  defaultSelected?: string;
 }) {
   const { registerItem, item, getNext, getPrevious, getFirst, getLast } =
-    useCollection({
-      root: container,
-    });
+    useCollection();
   const [selected, setSelectedState] = useControlled({
     controlled: selectedProp,
     default: defaultSelected,
     name: "TabstripNext",
     state: "selected",
   });
-  const [active, setActive] = useState<string | null>(selected);
+  const [active, setActive] = useState<string | undefined>(selected);
   const movedRef = useRef(false);
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -134,7 +144,7 @@ export function useTabstrip({
     }
   };
 
-  const setSelected = useCallback((action) => {
+  const setSelected = useCallback((action: string) => {
     setSelectedState(action);
     setActive(action);
   }, []);
@@ -147,6 +157,16 @@ export function useTabstrip({
       itemElement.scrollIntoView({ block: "nearest", inline: "nearest" });
     }
   }, [active]);
+
+  useEffect(() => {
+    const itemElement = item(selected)?.element;
+    if (itemElement) {
+      requestAnimationFrame(() => {
+        itemElement.focus({ preventScroll: true });
+        itemElement.scrollIntoView({ block: "nearest", inline: "nearest" });
+      });
+    }
+  }, [selected]);
 
   return {
     registerItem,

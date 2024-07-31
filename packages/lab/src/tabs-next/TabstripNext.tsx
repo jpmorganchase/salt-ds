@@ -1,21 +1,22 @@
-import { capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
-import clsx from "clsx";
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  ReactNode,
-  SyntheticEvent,
-  KeyboardEvent,
-  useMemo,
-  useRef,
-} from "react";
+import { Button, capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
+import { AddIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import tabstripCss from "./TabstripNext.css";
+import clsx from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type SyntheticEvent,
+  forwardRef,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
 import { TabsContext } from "./TabNextContext";
-import { useTabstrip } from "./useTabstrip";
 import { TabOverflowList } from "./TabOverflowList";
+import tabstripCss from "./TabstripNext.css";
 import { useOverflow } from "./useOverflow";
+import { useTabstrip } from "./useTabstrip";
 
 const withBaseName = makePrefixer("saltTabstripNext");
 
@@ -25,7 +26,7 @@ export interface TabstripNextProps
   activeColor?: "primary" | "secondary";
   /* Tabs alignment. Defaults to "left" */
   align?: "left" | "center" | "right";
-  /* Value for the uncontrolled version. */
+  /* Value for the controlled version. */
   value?: string;
   /* Callback for the controlled version. */
   onChange?: (event: SyntheticEvent, value: string) => void;
@@ -33,6 +34,7 @@ export interface TabstripNextProps
   defaultValue?: string;
   /* The Tabs variant */
   variant?: "main" | "inline";
+  onAdd?: () => void;
 }
 
 export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
@@ -44,6 +46,7 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
       className,
       value,
       defaultValue,
+      onAdd,
       onChange,
       onKeyDown,
       style,
@@ -59,24 +62,26 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
-    const {
-      registerItem,
-      setActive,
-      setSelected,
-      selected,
-      active,
-      handleKeyDown,
-    } = useTabstrip({
-      container: tabstripRef.current,
+    const { registerItem, setSelected, selected, handleKeyDown } = useTabstrip({
       defaultSelected: defaultValue,
       selected: value,
     });
 
     const [visible, hidden] = useOverflow({
-      container: tabstripRef.current,
+      container: tabstripRef,
       children,
       selected,
     });
+
+    const [focusInside, setFocusInside] = useState(false);
+
+    const handleFocus = () => {
+      setFocusInside(true);
+    };
+
+    const handleBlur = () => {
+      setFocusInside(false);
+    };
 
     const contextValue = useMemo(
       () => ({
@@ -84,9 +89,9 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
         variant,
         setSelected,
         selected,
-        active,
+        focusInside,
       }),
-      [variant, setSelected, selected, active, registerItem]
+      [variant, setSelected, selected, registerItem, focusInside],
     );
 
     const tabstripStyle = {
@@ -103,17 +108,24 @@ export const TabstripNext = forwardRef<HTMLDivElement, TabstripNextProps>(
             withBaseName(variant),
             withBaseName("horizontal"),
             withBaseName(`activeColor${capitalize(activeColor)}`),
-            className
+            className,
           )}
           style={tabstripStyle}
           ref={handleRef}
           onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...rest}
         >
           {visible}
+          {onAdd && (
+            <Button aria-label="Add Tab" variant="secondary" onClick={onAdd}>
+              <AddIcon aria-hidden />
+            </Button>
+          )}
           <TabOverflowList>{hidden}</TabOverflowList>
         </div>
       </TabsContext.Provider>
     );
-  }
+  },
 );

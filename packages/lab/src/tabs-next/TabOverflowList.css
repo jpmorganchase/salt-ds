@@ -1,4 +1,3 @@
-
 .saltTabOverflow {
   position: relative;
 }
@@ -27,7 +26,6 @@
   pointer-events: none;
 }
 
-
 .saltTabOverflow-list [role="tab"] {
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);
@@ -50,12 +48,10 @@
   display: none;
 }
 
-
 .saltTabOverflow-list [role="tab"][aria-disabled="true"] {
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
-
 
 .saltTabOverflow-list [role="tab"]:focus-visible {
   outline: var(--salt-focused-outline);

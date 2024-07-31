@@ -1,25 +1,42 @@
-import { Children, useMemo, useState } from "react";
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
+import {
+  Children,
+  type ReactNode,
+  type RefObject,
+  useMemo,
+  useState,
+} from "react";
 
-export function useOverflow({ container, selected, children }) {
-  const [visible, setVisible] = useState([]);
-  const [hidden, setHidden] = useState([]);
-  const [count, setCount] = useState(Infinity);
+export function useOverflow({
+  container,
+  selected,
+  children,
+}: {
+  container: RefObject<HTMLElement>;
+  selected?: string;
+  children: ReactNode;
+}) {
+  const [visible, setVisible] = useState<any[]>([]);
+  const [hidden, setHidden] = useState<any[]>([]);
+  const [count, setCount] = useState(Number.POSITIVE_INFINITY);
   const targetWindow = useWindow();
 
   const childArray = useMemo(() => Children.toArray(children), [children]);
 
   useIsomorphicLayoutEffect(() => {
-    if (!container) return;
+    if (!container.current) return;
 
     const observer = new ResizeObserver(() => {
-      const availableWidth = container.offsetWidth;
-      const gap = parseInt(
-        targetWindow?.getComputedStyle(container)?.gap || "0"
+      if (!container.current) return;
+
+      const availableWidth = container.current.clientWidth;
+      const gap = Number.parseInt(
+        targetWindow?.getComputedStyle(container.current)?.gap || "0",
       );
 
-      const elements = container.querySelectorAll("[role=tab]");
+      const elements =
+        container.current.querySelectorAll<HTMLElement>("[role=tab]");
 
       let i = 0;
       let currentWidth = 0;
@@ -36,28 +53,32 @@ export function useOverflow({ container, selected, children }) {
       setCount(Math.max(1, i));
     });
 
-    observer.observe(container);
+    observer.observe(container.current);
 
     return () => {
       observer.disconnect();
     };
-  }, [container]);
+  }, []);
 
   useIsomorphicLayoutEffect(() => {
     const nextVisible = childArray.slice(0, count || 1);
-    let nextHidden = childArray.slice(count || 1);
-    // if (selected && nextHidden.includes(selectedId)) {
-    //   const lastVisibleId = nextVisible.pop();
-    //   if (lastVisibleId) {
-    //     nextHidden = nextHidden.filter((id) => id !== selectedId);
-    //     nextHidden.unshift(lastVisibleId);
-    //   }
-    //   nextVisible.push(selectedId);
-    //   move(selectedId);
-    // }
+    const nextHidden = childArray.slice(count || 1);
+
+    const hiddenSelectedIndex = nextHidden.findIndex(
+      (child) => child?.props?.value === selected,
+    );
+
+    if (selected && hiddenSelectedIndex !== -1) {
+      const lastVisibleId = nextVisible.pop();
+      if (lastVisibleId) {
+        const removed = nextHidden.splice(hiddenSelectedIndex, 1);
+        nextHidden.unshift(lastVisibleId);
+        nextVisible.push(removed[0]);
+      }
+    }
     setVisible(nextVisible);
     setHidden(nextHidden);
-  }, [childArray, count]);
+  }, [childArray, count, selected]);
 
   return [visible, hidden] as const;
 }
