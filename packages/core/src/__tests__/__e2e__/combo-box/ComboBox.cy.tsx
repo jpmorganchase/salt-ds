@@ -596,9 +596,10 @@ describe("Given a ComboBox", () => {
     cy.findByRole("listbox").should("exist");
   });
 
-  it("should not show a list with no options", () => {
+  it("should not show a list or trigger button with no options", () => {
     cy.mount(<ComboBox open />);
     cy.findByRole("listbox").should("not.exist");
+    cy.findByRole("button").should("not.exist");
   });
 
   it("should clear selected items when the input is cleared and the combo box is single-select", () => {
@@ -680,9 +681,9 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").realClick();
     cy.realType("UNKNOWN");
     cy.realPress("Home");
-    cy.findAllByRole("button").should("have.length", "4");
+    cy.findAllByTestId("pill").should("have.length", "3");
     cy.realPress("Backspace");
-    cy.findAllByRole("button").should("have.length", "3");
+    cy.findAllByTestId("pill").should("have.length", "2");
   });
 
   it("should render the custom floating component", () => {
