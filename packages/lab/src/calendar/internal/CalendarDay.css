@@ -100,9 +100,6 @@
   position: absolute;
 }
 
-.saltCalendarDay-disabled {
-  color: var(--salt-content-secondary-foreground-disabled);
-}
 .saltCalendarDay-unselectable:after {
   content: "";
   height: var(--salt-size-border);
@@ -116,6 +113,11 @@
 .saltCalendarDay-outOfRange .saltCalendarDay-today:hover {
   border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-accent-borderColor);
   margin-bottom: calc(var(--salt-size-indicator) * -1);
+}
+
+.saltCalendarDay-disabled,
+.saltCalendarDay-disabled:hover {
+  color: var(--salt-content-secondary-foreground-disabled);
 }
 
 .saltCalendarDay-hidden {
