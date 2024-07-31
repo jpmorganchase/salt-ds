@@ -46,9 +46,13 @@ export const SteppedTrackerProvider = ({
 
 export const useSteppedTrackerContext = () => useContext(SteppedTrackerContext);
 
-type TrackerStepNumberContextType = number;
+type TrackerStepNumberContextType = {
+  stepNumber: number;
+};
 
-const TrackerStepContext = createContext<TrackerStepNumberContextType>(0);
+const TrackerStepContext = createContext<TrackerStepNumberContextType>({
+  stepNumber: 0,
+});
 
 export const useTrackerStepContext = () => useContext(TrackerStepContext);
 
@@ -62,7 +66,7 @@ export const TrackerStepProvider = ({
   stepNumber,
 }: TrackerStepProviderProps) => {
   return (
-    <TrackerStepContext.Provider value={stepNumber}>
+    <TrackerStepContext.Provider value={{ stepNumber }}>
       {children}
     </TrackerStepContext.Provider>
   );

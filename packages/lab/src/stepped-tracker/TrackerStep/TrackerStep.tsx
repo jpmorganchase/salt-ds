@@ -102,7 +102,7 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     const { activeStep, totalSteps, isWithinSteppedTracker } =
       useSteppedTrackerContext();
-    const stepNumber = useTrackerStepContext();
+    const { stepNumber } = useTrackerStepContext();
 
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
