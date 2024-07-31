@@ -91,12 +91,6 @@
   gap: var(--salt-spacing-300);
 }
 
-.saltTrackerStep.saltTrackerStep-inprogress {
+.saltTrackerStep.saltTrackerStep-stage-inprogress {
   --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
-
-/* .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-1 .saltIcon,
-.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-2 .saltIcon {
-  width: var(--salt-size-adornment);
-  min-width: var(--salt-size-adornment);
-} */

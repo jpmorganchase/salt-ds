@@ -152,33 +152,33 @@ export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
       activeStep={8}
       style={{ width: 400 }}
     >
-      <TrackerStep state="completed">
+      <TrackerStep stage="completed">
         <StepLabel>Step 1</StepLabel>
         <Text color="secondary">
           A label that is very long describing the sub-steps and why they are
           there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
         </Text>
       </TrackerStep>
-      <TrackerStep depth={1} state="completed">
+      <TrackerStep depth={1} stage="completed">
         <StepLabel>Step 1.1</StepLabel>
       </TrackerStep>
-      <TrackerStep depth={2} state="completed">
+      <TrackerStep depth={2} stage="completed">
         <StepLabel>Step 1.1.1</StepLabel>
         <Text color="secondary">This one has an extra label</Text>
       </TrackerStep>
-      <TrackerStep depth={2} state="completed">
+      <TrackerStep depth={2} stage="completed">
         <StepLabel>Step 1.1.2</StepLabel>
       </TrackerStep>
-      <TrackerStep state="completed">
+      <TrackerStep stage="completed">
         <StepLabel>Step 2</StepLabel>
       </TrackerStep>
-      <TrackerStep state="inprogress">
+      <TrackerStep stage="inprogress">
         <StepLabel>Step 3</StepLabel>
       </TrackerStep>
-      <TrackerStep depth={1} state="inprogress">
+      <TrackerStep depth={1} stage="inprogress">
         <StepLabel>Step 3.1</StepLabel>
       </TrackerStep>
-      <TrackerStep depth={2} state="completed">
+      <TrackerStep depth={2} stage="completed">
         <StepLabel>Step 3.1.1</StepLabel>
       </TrackerStep>
       <TrackerStep depth={2}>
@@ -194,7 +194,7 @@ export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
       <TrackerStep depth={1}>
         <StepLabel>Step 3.3</StepLabel>
       </TrackerStep>
-      <TrackerStep state="default">
+      <TrackerStep>
         <StepLabel>Step 4</StepLabel>
       </TrackerStep>
     </SteppedTracker>
