@@ -1,0 +1,36 @@
+.saltTrackerStepWrapper {
+  display: flex;
+  align-items: start;
+  width: var(--saltTrackerStep-width, 100%);
+  gap: var(--salt-spacing-50);
+}
+
+.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStepWrapper-nested-group {
+  flex-direction: column;
+}
+
+.saltTrackerStepWrapper-nested-group {
+  width: 100%;
+  display: grid;
+  transition: grid-template-rows var(--salt-duration-perceptible) ease-in-out, opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
+}
+
+.saltTrackerStepWrapper-nested-group-inner {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+  overflow: hidden;
+}
+
+.saltTrackerStepWrapper-nested-group[aria-hidden="true"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.saltTrackerStepWrapper-nested-group {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
