@@ -10,7 +10,7 @@ import {
 } from "react";
 import { StatusIndicator } from "../status-indicator";
 
-import { makePrefixer } from "../utils";
+import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 
 import { useAccordion } from "./AccordionContext";
 import accordionHeaderCss from "./AccordionHeader.css";
@@ -37,9 +37,18 @@ export const AccordionHeader = forwardRef<
   HTMLButtonElement,
   AccordionHeaderProps
 >(function AccordionHeader(props, ref) {
-  const { children, className, onClick, ...rest } = props;
-  const { value, expanded, toggle, indicatorSide, disabled, id, status } =
-    useAccordion();
+  const { children, className, onClick, id, ...rest } = props;
+  const {
+    value,
+    expanded,
+    toggle,
+    indicatorSide,
+    disabled,
+    headerId,
+    panelId,
+    setHeaderId,
+    status,
+  } = useAccordion();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -53,6 +62,12 @@ export const AccordionHeader = forwardRef<
     onClick?.(event);
   };
 
+  useIsomorphicLayoutEffect(() => {
+    if (id) {
+      setHeaderId(id);
+    }
+  }, [id]);
+
   return (
     <button
       ref={ref}
@@ -64,8 +79,8 @@ export const AccordionHeader = forwardRef<
       disabled={disabled}
       onClick={handleClick}
       aria-expanded={expanded}
-      id={`${id}-header`}
-      aria-controls={`${id}-panel`}
+      id={headerId}
+      aria-controls={panelId}
       value={value}
       type="button"
       {...rest}
