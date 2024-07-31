@@ -6,7 +6,6 @@ import {
   StepDefaultIcon,
   StepSuccessIcon,
   WarningSolidIcon,
-  SuccessIcon,
 } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -23,7 +22,7 @@ import trackerStepCss from "./TrackerStep.css";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
-type StageOptions = "pending" | "completed";
+type StageOptions = "pending" | "completed" | "inprogress";
 type StatusOptions = Extract<ValidationStatus, "warning" | "error">;
 type Depth = 0 | 1 | 2;
 
@@ -50,7 +49,6 @@ const iconMap = {
   completed: StepSuccessIcon,
   warning: WarningSolidIcon,
   error: ErrorSolidIcon,
-  "completed-sub": SuccessIcon,
   inprogress: ProgressInprogressIcon,
 };
 
