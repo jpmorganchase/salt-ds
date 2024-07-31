@@ -1,4 +1,4 @@
-.saltTrackerStep {
+.saltTrackerStep .saltTrackerStep-indicator {
   --trackerStep-icon-color-active: var(--saltTrackerStep-icon-color-active, var(--salt-status-info-foreground-decorative));
   --trackerStep-icon-color-completed: var(--saltTrackerStep-icon-color-completed, var(--salt-status-success-foreground-decorative));
   --trackerStep-icon-color-warning: var(--saltTrackerStep-icon-color-warning, var(--salt-status-warning-foreground-decorative));
@@ -67,30 +67,31 @@
   display: block;
 }
 
-.saltTrackerStep.saltTrackerStep-status-warning {
+.saltTrackerStep-status-warning .saltTrackerStep-indicator {
   --trackerStep-icon-color: var(--trackerStep-icon-color-warning);
 }
 
-.saltTrackerStep.saltTrackerStep-status-error {
+.saltTrackerStep-status-error .saltTrackerStep-indicator {
   --trackerStep-icon-color: var(--trackerStep-icon-color-error);
 }
 
-.saltTrackerStep.saltTrackerStep-active {
+.saltTrackerStep-active .saltTrackerStep-indicator {
   --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
 
-.saltTrackerStep.saltTrackerStep-stage-completed {
+.saltTrackerStep-stage-completed .saltTrackerStep-indicator {
   --trackerStep-icon-color: var(--trackerStep-icon-color-completed);
+}
+
+.saltTrackerStep-stage-inprogress .saltTrackerStep-indicator {
+  --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
 
 /* Nested styles (vertical only) */
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-1 {
   gap: var(--salt-spacing-200);
 }
+
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-2 {
   gap: var(--salt-spacing-300);
-}
-
-.saltTrackerStep.saltTrackerStep-stage-inprogress {
-  --trackerStep-icon-color: var(--trackerStep-icon-color-active);
 }
