@@ -1,16 +1,15 @@
 import {
   type ChangeEvent,
   type FocusEvent,
-  type HTMLAttributes,
   type SyntheticEvent,
   forwardRef,
   useRef,
 } from "react";
-import { Button } from "../button";
+import { Button, type ButtonProps } from "../button";
 import { useForkRef } from "../utils";
 
 export interface FileDropZoneTriggerProps
-  extends Omit<HTMLAttributes<HTMLButtonElement>, "onChange"> {
+  extends Omit<ButtonProps, "onChange"> {
   /**
    * `accept` attribute for HTML <input>.
    *

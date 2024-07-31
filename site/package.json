@@ -17,7 +17,7 @@
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",
     "serve:snapshot:s3": "yarn cross-env MOSAIC_MODE='snapshot-s3' concurrently --kill-others 'yarn dev'",
     "serve:mosaic": "yarn mosaic serve -c ./mosaic.config.js -p 8080",
-    "serve": "yarn gen:props && yarn gen:css && concurrently --kill-others 'yarn dev' 'yarn serve:mosaic'",
+    "serve": "concurrently --kill-others 'yarn dev' 'yarn serve:mosaic'",
     "gen:props": "yarn node './propsGen.js'",
     "gen:css": "yarn node './cssGen.js'"
   },
