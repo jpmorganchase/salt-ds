@@ -1,4 +1,3 @@
-export * from "./AllIcons";
 export * from "./BasicIcon";
 export * from "./CssBackgroundImage";
 export * from "./CustomColors";

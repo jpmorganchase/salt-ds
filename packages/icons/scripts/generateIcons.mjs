@@ -312,7 +312,7 @@ const templatePath = path.join(__dirname, "./templateIcon.mustache");
 const allPath = path.join(basePath, "../stories/icon.all.ts");
 const siteAllPath = path.join(
   basePath,
-  "../../../site/src/examples/icon/allIconsList.ts",
+  "../../../site/src/components/icon-preview/allIconsList.ts",
 );
 
 await fs.promises.mkdir(componentsPath, { recursive: true });
