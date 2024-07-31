@@ -9,7 +9,7 @@ import { TabPanel, Tabs } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
 import React, { type FC, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { code, p, ul } from "../../components";
+import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
 import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 import useIsMobileView from "../../utils/useIsMobileView";
@@ -20,7 +20,7 @@ import MobileDrawer from "./MobileDrawer";
 import SecondarySidebar from "./SecondarySidebar";
 import TitleWithDrawer from "./TitleWithDrawer";
 
-const components = { code, ul, p };
+const components = { code, ul, p, a };
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
