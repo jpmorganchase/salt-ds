@@ -171,9 +171,12 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
   };
 
+  const hasValidChildren =
+    Children.toArray(children).filter(Boolean).length > 0;
+
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && Children.count(children) > 0,
+      open: openState && !readOnly && hasValidChildren,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       strategy: "fixed",
@@ -408,7 +411,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         endAdornment={
           <>
             {endAdornment}
-            {!readOnly ? (
+            {!readOnly && hasValidChildren ? (
               <Button
                 aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
                 aria-label="Show options"
@@ -464,11 +467,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }
       />
       <OptionList
-        open={
-          (openState || focusedState) &&
-          !readOnly &&
-          Children.count(children) > 0
-        }
+        open={(openState || focusedState) && !readOnly && hasValidChildren}
         collapsed={!openState}
         ref={handleListRef}
         id={listId}
