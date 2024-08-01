@@ -1,10 +1,7 @@
-import {
-  SaltProvider,
-  UNSTABLE_SaltProviderNext,
-  useTheme,
-} from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
-import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
+import { SaltProvider, SaltProviderNext, useTheme } from "@salt-ds/core";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
+import { DropdownEditor } from "../dependencies/cell-editors/DropdownEditor";
+import dataGridExampleColumnsHdCompact from "../dependencies/dataGridExampleColumnsHdCompact";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
@@ -27,13 +24,13 @@ const HDCompact = (props: AgGridReactProps) => {
     density: "high",
   });
 
-  const Provider = themeNext ? UNSTABLE_SaltProviderNext : SaltProvider;
+  const Provider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <Provider density="high">
       <div {...containerProps}>
         <AgGridReact
-          columnDefs={dataGridExampleColumns}
+          columnDefs={dataGridExampleColumnsHdCompact}
           rowData={dataGridExampleData}
           statusBar={statusBar}
           rowSelection="multiple"
@@ -42,12 +39,13 @@ const HDCompact = (props: AgGridReactProps) => {
           enableRangeSelection={true}
           onFirstDataRendered={(params) => {
             params.api.forEachNode((node, index) => {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
               if (node.data && index < 3) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
                 node.setSelected(true);
               }
             });
+          }}
+          components={{
+            DropdownEditor,
           }}
         />
       </div>

@@ -1,5 +1,3 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { ListItemNext, ListNext, ListNextProps } from "../../src";
 import {
   Button,
   FlexLayout,
@@ -7,9 +5,16 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { ChangeEvent, KeyboardEvent, SyntheticEvent, useState } from "react";
-import { usStateExampleData } from "../assets/exampleData";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
+  type SyntheticEvent,
+  useState,
+} from "react";
+import { ListItemNext, ListNext, type ListNextProps } from "../../src";
+import { usStateExampleData } from "../assets/exampleData";
 
 export default {
   title: "Lab/List Next",
@@ -20,7 +25,7 @@ const getListItems = ({ disabledItems = [] }: { disabledItems?: number[] }) =>
   usStateExampleData.map((item, index) => {
     return (
       <ListItemNext
-        key={index}
+        key={item}
         disabled={disabledItems.includes(index)}
         id={`controlled-list-item-${index}`}
         value={item}
@@ -57,10 +62,10 @@ Default.args = {};
 
 export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
-    0
+    0,
   );
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    undefined
+    undefined,
   );
   const [controls, setControls] = useState<string>("buttons");
 
@@ -91,7 +96,7 @@ export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
     const firstMatchingItem =
       inputValue.length - 1 >= 0
         ? usStateExampleData.findIndex((item) =>
-            item.toLowerCase().includes(inputValue)
+            item.toLowerCase().includes(inputValue),
           )
         : undefined;
     setHighlightedIndex(firstMatchingItem);
@@ -164,7 +169,7 @@ export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
           value={selectedItem}
           onChange={handleInputChange}
           onKeyDown={handleInputKeyDown}
-        ></Input>
+        />
       )}
       <ListNext
         {...rest}
@@ -185,7 +190,7 @@ export const Controlled: StoryFn<ListNextProps> = ({ onChange, ...rest }) => {
         {usStateExampleData.map((item, index) => {
           return (
             <ListItemNext
-              key={index}
+              key={item}
               onClick={() => handleClick(index)}
               onMouseMove={() => setHighlightedIndex(index)}
               value={item}

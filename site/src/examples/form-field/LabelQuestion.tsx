@@ -1,12 +1,12 @@
-import { ReactElement } from "react";
 import {
-  FormField,
   FlowLayout,
-  FormFieldLabel,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   Input,
   MultilineInput,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const LabelQuestion = (): ReactElement => (
   <FlowLayout style={{ width: "366px" }}>

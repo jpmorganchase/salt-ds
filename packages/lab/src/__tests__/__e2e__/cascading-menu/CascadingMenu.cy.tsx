@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as cascadingMenuStories from "@stories/cascading-menu/cascading-menu.stories";
+import { composeStories } from "@storybook/react";
 import { version } from "react";
 
 const { Default } = composeStories(cascadingMenuStories);
@@ -10,7 +10,7 @@ describe("GIVEN a CascadingMenu component", () => {
       cy.mount(<Default />);
       cy.findByTestId("cascading-menu-trigger").should(
         "have.class",
-        "saltButton"
+        "saltButton",
       );
       cy.findByRole("menu").should("not.exist");
     });
@@ -64,7 +64,7 @@ describe("GIVEN a CascadingMenu component", () => {
             cy.realPress("{enter}");
             cy.findAllByRole("menu").should("have.length", 3);
           }
-        : undefined
+        : undefined,
     );
 
     specify(
@@ -80,7 +80,7 @@ describe("GIVEN a CascadingMenu component", () => {
             cy.realPress("{rightarrow}");
             cy.findAllByRole("menu").should("have.length", 3);
           }
-        : undefined
+        : undefined,
     );
 
     specify(
@@ -102,7 +102,7 @@ describe("GIVEN a CascadingMenu component", () => {
             cy.realPress("Escape");
             cy.findAllByRole("menu").should("have.length", 0);
           }
-        : undefined
+        : undefined,
     );
 
     specify("Click-away closes all menus", () => {

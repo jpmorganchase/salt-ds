@@ -55,14 +55,23 @@ module.exports = {
     config.plugins.push(
       new webpack.NormalModuleReplacementPlugin(
         /^buble$/,
-        require.resolve("@philpl/buble")
-      )
+        require.resolve("@philpl/buble"),
+      ),
     );
     // Required by MDX-JS
     if (config.resolve.fallback) {
       config.resolve.fallback.fs = false;
     } else {
       config.resolve.fallback = { fs: false };
+    }
+
+    for (const rule of config.module.rules) {
+      if (rule.oneOf) {
+        rule.oneOf.unshift({
+          resourceQuery: /raw/,
+          type: "asset/source",
+        });
+      }
     }
 
     return config;

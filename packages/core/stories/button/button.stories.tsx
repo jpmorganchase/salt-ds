@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   Button,
-  ButtonProps,
+  type ButtonProps,
   StackLayout,
   Text,
   BannerContent,
@@ -26,7 +26,7 @@ import {
   ChevronRightIcon,
   DoubleChevronRightIcon,
 } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Button",
@@ -140,6 +140,54 @@ export const Secondary: StoryFn<typeof Button> = () => {
       label2="Find address"
       label3="Save as draft"
     />
+  );
+};
+
+export const AccentSolid: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="accent" appearance="solid">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const AccentOutline: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="accent" appearance="outline">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const AccentTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="accent" appearance="transparent">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const NeutralSolid: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="neutral" appearance="solid">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const NeutralOutline: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="neutral" appearance="outline">
+      Send <SendIcon aria-hidden />
+    </Button>
+  );
+};
+
+export const NeutralTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <Button color="neutral" appearance="transparent">
+      Send <SendIcon aria-hidden />
+    </Button>
   );
 };
 

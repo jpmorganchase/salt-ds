@@ -1,44 +1,49 @@
 import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  ReactNode,
-  KeyboardEvent,
-  useEffect,
-  FocusEvent,
-  useRef,
-  ForwardedRef,
-  Ref,
-} from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import {
-  ListControlProps,
-  useListControl,
-  defaultValueToString,
-} from "../list-control/ListControlState";
-import {
-  makePrefixer,
-  useFloatingUI,
-  UseFloatingUIProps,
-  useForkRef,
-  useId,
-} from "../utils";
-import { StatusAdornment } from "../status-adornment";
-import { ValidationStatus } from "../status-indicator";
-import { useFormFieldProps } from "../form-field-context";
-import {
   flip,
+  offset,
   size,
   useClick,
   useDismiss,
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import dropdownCss from "./Dropdown.css";
-import { ListControlContext } from "../list-control/ListControlContext";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  Children,
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type ForwardedRef,
+  type KeyboardEvent,
+  type ReactNode,
+  type Ref,
+  forwardRef,
+  useEffect,
+  useRef,
+} from "react";
+import { useFormFieldProps } from "../form-field-context";
+import {
+  ListControlContext,
+  type OptionValue,
+} from "../list-control/ListControlContext";
+import {
+  type ListControlProps,
+  defaultValueToString,
+  useListControl,
+} from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
+import { StatusAdornment } from "../status-adornment";
+import type { ValidationStatus } from "../status-indicator";
+import {
+  type UseFloatingUIProps,
+  makePrefixer,
+  useFloatingUI,
+  useForkRef,
+  useId,
+} from "../utils";
+import dropdownCss from "./Dropdown.css";
 
 export type DropdownProps<Item = string> = {
   /**
@@ -100,7 +105,7 @@ const withBaseName = makePrefixer("saltDropdown");
 
 export const Dropdown = forwardRef(function Dropdown<Item>(
   props: DropdownProps<Item>,
-  ref: ForwardedRef<HTMLButtonElement>
+  ref: ForwardedRef<HTMLButtonElement>,
 ) {
   const {
     "aria-labelledby": ariaLabelledBy,
@@ -200,7 +205,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
     _event,
-    reason
+    reason,
   ) => {
     const focusNotBlur = reason === "focus" && newOpen;
     if (readOnly || focusNotBlur) return;
@@ -209,10 +214,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && children != undefined,
+      open: openState && !readOnly && Children.count(children) > 0,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       middleware: [
+        offset(1),
         size({
           apply({ rects, elements, availableHeight }) {
             Object.assign(elements.floating.style, {
@@ -264,6 +270,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown?.(event);
+
     if (readOnly) {
       return;
     }
@@ -288,7 +296,8 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
     const activeOption = activeState ?? getFirstOption().data;
 
-    let newActive;
+    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
+      null;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -333,13 +342,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         break;
     }
 
-    if (newActive && newActive.data.id != activeState?.id) {
+    if (newActive && newActive.data.id !== activeState?.id) {
       event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
     }
-
-    onKeyDown?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLButtonElement>) => {
@@ -360,6 +367,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     buttonRef.current?.focus();
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
@@ -379,7 +387,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     // If we have selected an item, we should make that the active item
     if (selectedState.length > 0) {
       newActive = getOptionsMatching(
-        (option) => option.value === selectedState[0]
+        (option) => option.value === selectedState[0],
       ).pop();
     }
 
@@ -398,7 +406,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     }
 
     setActive(newActive?.data);
-    /* eslint-disable-next-line react-hooks/exhaustive-deps -- We only want this to run when the list's openState or the displayed options change */
   }, [openState, children]);
 
   const listId = useId();
@@ -416,7 +423,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
             [withBaseName(validationStatus ?? "")]: validationStatus,
             [withBaseName("bordered")]: bordered,
           },
-          className
+          className,
         )}
         ref={handleButtonRef}
         role="combobox"
@@ -452,7 +459,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
-        open={(openState || focusedState) && !readOnly && children != undefined}
+        open={
+          (openState || focusedState) &&
+          !readOnly &&
+          Children.count(children) > 0
+        }
         {...getFloatingProps({
           onMouseOver: handleListMouseOver,
           onFocus: handleFocusButton,
@@ -472,5 +483,5 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     </ListControlContext.Provider>
   );
 }) as <Item = string>(
-  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> }
+  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
 ) => JSX.Element;

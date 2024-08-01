@@ -1,7 +1,7 @@
-import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
 import { StackLayout } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Lab/Stepped Tracker/Stepped Tracker QA",
@@ -36,31 +36,45 @@ export const Basic: StoryFn<QAContainerProps> = (props) => {
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="horizontal" activeStep={2}>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep state="default">
+          <TrackerStep stage="pending">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep state="default">
+          <TrackerStep stage="pending">
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
-        <SteppedTracker orientation="horizontal" activeStep={3}>
-          <TrackerStep state="completed">
-            <StepLabel>Step One</StepLabel>
+        <SteppedTracker activeStep={1}>
+          <TrackerStep stage="completed" status="warning">
+            <StepLabel>Completed with warning</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
-            <StepLabel>Step Two</StepLabel>
+          <TrackerStep status="warning">
+            <StepLabel>Active with warning</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
-            <StepLabel>Step Three</StepLabel>
+          <TrackerStep stage="completed" status="error">
+            <StepLabel>Completed with error</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
-            <StepLabel>Step Four</StepLabel>
+          <TrackerStep stage="completed">
+            <StepLabel>Completed</StepLabel>
+          </TrackerStep>
+        </SteppedTracker>
+        <SteppedTracker activeStep={0}>
+          <TrackerStep stage="completed">
+            <StepLabel>Completed and active</StepLabel>
+          </TrackerStep>
+          <TrackerStep status="warning">
+            <StepLabel>Warning</StepLabel>
+          </TrackerStep>
+          <TrackerStep status="error">
+            <StepLabel>Error</StepLabel>
+          </TrackerStep>
+          <TrackerStep>
+            <StepLabel>Default</StepLabel>
           </TrackerStep>
         </SteppedTracker>
       </StackLayout>
@@ -99,31 +113,45 @@ export const Vertical: StoryFn<QAContainerProps> = (props) => {
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="vertical" activeStep={2}>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep state="default">
+          <TrackerStep stage="pending">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep state="default">
+          <TrackerStep stage="pending">
             <StepLabel>Step Four</StepLabel>
           </TrackerStep>
         </SteppedTracker>
         <SteppedTracker orientation="vertical" activeStep={3}>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step One</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Two</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Three</StepLabel>
           </TrackerStep>
-          <TrackerStep state="completed">
+          <TrackerStep stage="completed">
             <StepLabel>Step Four</StepLabel>
+          </TrackerStep>
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical" activeStep={0}>
+          <TrackerStep stage="completed">
+            <StepLabel>Completed</StepLabel>
+          </TrackerStep>
+          <TrackerStep status="warning">
+            <StepLabel>Warning</StepLabel>
+          </TrackerStep>
+          <TrackerStep status="error">
+            <StepLabel>Error</StepLabel>
+          </TrackerStep>
+          <TrackerStep>
+            <StepLabel>Default</StepLabel>
           </TrackerStep>
         </SteppedTracker>
       </StackLayout>

@@ -1,4 +1,4 @@
-import { Breakpoints } from "../breakpoints";
+import type { Breakpoints } from "../breakpoints";
 import { useBreakpoints } from "../salt-provider";
 import { useViewport } from "../viewport";
 
@@ -10,21 +10,24 @@ export type ResponsiveProp<T> = T | BreakpointProp<T>;
 
 export const getCurrentBreakpoint = (
   breakpoints: Breakpoints,
-  width: number
+  width: number,
 ) => {
   const breakpointList = Object.entries(breakpoints).sort(
-    ([, a], [, b]) => a - b
+    ([, a], [, b]) => a - b,
   );
   const [currentBreakpoint] = (
     breakpointList as [keyof Breakpoints, number][]
-  ).reduce((acc, val) => {
-    const [, accWidth] = acc;
-    const [breakpoint, breakpointWidth] = val;
-    if (breakpointWidth < width && breakpointWidth > accWidth) {
-      return [breakpoint, breakpointWidth];
-    }
-    return [...acc];
-  }, breakpointList[0] as [keyof Breakpoints, number]);
+  ).reduce(
+    (acc, val) => {
+      const [, accWidth] = acc;
+      const [breakpoint, breakpointWidth] = val;
+      if (breakpointWidth < width && breakpointWidth > accWidth) {
+        return [breakpoint, breakpointWidth];
+      }
+      return acc;
+    },
+    breakpointList[0] as [keyof Breakpoints, number],
+  );
 
   return currentBreakpoint;
 };
@@ -46,8 +49,7 @@ export const useOrderedBreakpoints = () => {
 };
 
 const isObject = <T>(
-  value: T
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: T,
 ): value is Record<string | number | symbol, any> => {
   const type = typeof value;
   return value !== null && (type === "object" || type === "function");
@@ -55,7 +57,7 @@ const isObject = <T>(
 
 const hasBreakpointValues = <T>(
   value: ResponsiveProp<T>,
-  breakpoints: Breakpoints
+  breakpoints: Breakpoints,
 ): value is BreakpointProp<T> => {
   return (
     isObject(value) && Object.keys(value).every((key) => key in breakpoints)
@@ -66,7 +68,7 @@ const getResponsiveValue = <T>(
   breakpointValues: BreakpointProp<T>,
   breakpoints: Breakpoints,
   viewport: keyof Breakpoints,
-  defaultValue: T
+  defaultValue: T,
 ) => {
   return Object.entries(breakpointValues).reduce<[number, T]>(
     (acc, val) => {
@@ -85,13 +87,13 @@ const getResponsiveValue = <T>(
 
       return acc;
     },
-    [0, defaultValue]
+    [0, defaultValue],
   )[1];
 };
 
 export const useResponsiveProp = <T>(
   value: ResponsiveProp<T>,
-  defaultValue: T
+  defaultValue: T,
 ) => {
   const breakpoints = useBreakpoints();
   const viewport = useViewport();
@@ -104,21 +106,21 @@ export const useResponsiveProp = <T>(
       value,
       breakpoints,
       currentViewport,
-      defaultValue
+      defaultValue,
     );
   }
   return value;
 };
 
 function isBreakpointProp<T>(
-  value: ResponsiveProp<T>
+  value: ResponsiveProp<T>,
 ): value is BreakpointProp<T> {
   return typeof value === "object" && !Array.isArray(value);
 }
 
 export function resolveResponsiveValue<Value>(
   value: ResponsiveProp<Value>,
-  matchedBreakpoints: (keyof Breakpoints)[]
+  matchedBreakpoints: (keyof Breakpoints)[],
 ) {
   if (value && isBreakpointProp(value)) {
     for (const breakpoint of matchedBreakpoints) {

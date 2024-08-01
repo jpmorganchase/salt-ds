@@ -1,5 +1,5 @@
-import { Meta, StoryFn } from "@storybook/react";
 import { Text } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Core/Text",
@@ -57,8 +57,7 @@ const BaseComponent: StoryFn<typeof Text> = (args) => {
 
   return (
     <div>
-      {/* We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home! :) */}
-      {/* @ts-ignore */}
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: We're using dangerouslySetInnerHTML here so we can edit the text within the storybook. Don't do this at home! :) */}
       <Text dangerouslySetInnerHTML={{ __html: children }} {...rest} />
     </div>
   );

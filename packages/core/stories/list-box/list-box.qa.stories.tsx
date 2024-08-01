@@ -1,7 +1,7 @@
-import type { Meta, StoryFn } from "@storybook/react";
 import { ListBox, Option } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 import { shortColorData } from "../assets/exampleData";
-import { QAContainer, QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/List box/List box QA",
@@ -32,5 +32,18 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
 );
 
 AllExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };

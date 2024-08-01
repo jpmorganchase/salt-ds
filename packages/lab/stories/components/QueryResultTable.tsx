@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
 import "./QueryResultTable.css";
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
@@ -36,9 +36,9 @@ export const QueryResultTable = (props: QueryResultTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => {
+          {rows.map((row) => {
             return (
-              <tr key={i}>
+              <tr key={row.name}>
                 <td className={withBaseName("name")}>{row.name}</td>
                 <td className={withBaseName("role")}>{row.role}</td>
                 <td className={withBaseName("location")}>{row.location}</td>

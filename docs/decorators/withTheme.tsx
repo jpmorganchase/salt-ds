@@ -1,12 +1,12 @@
-import { Decorator } from "@storybook/react";
 import {
-  getCharacteristicValue,
   ModeValues,
   Panel,
   SaltProvider,
+  SaltProviderNext,
+  getCharacteristicValue,
   useTheme,
-  UNSTABLE_SaltProviderNext,
 } from "@salt-ds/core";
+import type { Decorator } from "@storybook/react";
 import { useEffect } from "react";
 
 // Modified from storybook background addon
@@ -31,22 +31,23 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
   const selectorId =
     viewMode === "docs"
       ? `addon-backgrounds-docs-${id}`
-      : `addon-backgrounds-color`;
+      : "addon-backgrounds-color";
 
-  const selector = viewMode === "docs" ? `.docs-story` : ".sb-show-main";
+  const selector = viewMode === "docs" ? ".docs-story" : ".sb-show-main";
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mode is needed.
   useEffect(() => {
     const color = getCharacteristicValue(
       theme,
       "text",
       "primary-foreground",
-      document.querySelector(".salt-theme") as HTMLElement
+      document.querySelector(".salt-theme") as HTMLElement,
     );
     const background = getCharacteristicValue(
       theme,
       "container",
       "primary-background",
-      document.querySelector(".salt-theme") as HTMLElement
+      document.querySelector(".salt-theme") as HTMLElement,
     );
 
     addBackgroundStyle(
@@ -57,7 +58,7 @@ function SetBackground({ viewMode, id }: { viewMode: string; id: string }) {
           color: ${color || "unset"};
           transition: background-color 0.3s;
         }
-      `
+      `,
     );
   }, [selectorId, selector, mode, theme]);
 
@@ -76,8 +77,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
     actionFont,
   } = context.globals;
 
-  const Provider =
-    themeNext === "enable" ? UNSTABLE_SaltProviderNext : SaltProvider;
+  const Provider = themeNext === "enable" ? SaltProviderNext : SaltProvider;
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";

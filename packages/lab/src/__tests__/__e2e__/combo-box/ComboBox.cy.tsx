@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox.stories";
+import { composeStories } from "@storybook/react";
 
 const {
   Default,
@@ -116,14 +116,14 @@ describe("A combo box", () => {
       cy.findByRole("combobox").clear();
       cy.findAllByRole("option").should(
         "have.length",
-        Default.args!.source!.length
+        Default.args!.source!.length,
       );
 
       // change callback invoked
       cy.get("@changeSpy").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        "ska"
+        "ska",
       );
     });
 

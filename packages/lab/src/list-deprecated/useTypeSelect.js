@@ -26,10 +26,7 @@ export function useTypeSelect(options) {
       while (index < itemCount) {
         const item = getItemAtIndex(index);
         const textValue = itemToString ? itemToString(item) : item;
-        if (
-          textValue &&
-          textValue.match(new RegExp(`^${escapeRegExp(searchTerm)}`, "i"))
-        ) {
+        if (textValue?.match(new RegExp(`^${escapeRegExp(searchTerm)}`, "i"))) {
           return index;
         }
 
@@ -38,7 +35,7 @@ export function useTypeSelect(options) {
 
       return null;
     },
-    [itemCount, itemToString, getItemAtIndex]
+    [itemCount, itemToString, getItemAtIndex],
   );
 
   const state = useRef({
@@ -46,7 +43,6 @@ export function useTypeSelect(options) {
     timeout: null,
   }).current;
 
-  // eslint-disable-next-line complexity
   const onKeyDownCapture = (event) => {
     const character = getStringForKey(event.key);
     if (!character || event.ctrlKey || event.metaKey) {
@@ -76,7 +72,7 @@ export function useTypeSelect(options) {
     // always jumping around.
     let index = getItemIndexForSearch(
       state.search,
-      state.search.length > 1 ? highlightedIndex : highlightedIndex + 1
+      state.search.length > 1 ? highlightedIndex : highlightedIndex + 1,
     );
 
     // If no key found, search from the top.

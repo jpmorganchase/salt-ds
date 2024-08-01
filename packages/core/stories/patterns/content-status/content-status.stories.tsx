@@ -1,12 +1,12 @@
 import {
-  CircularProgress,
-  StackLayout,
-  Text,
-  Spinner,
-  StatusIndicator,
   Button,
+  CircularProgress,
+  Spinner,
+  StackLayout,
+  StatusIndicator,
+  Text,
 } from "@salt-ds/core";
-import { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 
 export default {
   title: "Patterns/Content Status",

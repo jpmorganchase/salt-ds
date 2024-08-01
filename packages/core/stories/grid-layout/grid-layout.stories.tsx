@@ -5,8 +5,8 @@ import {
   GridLayout,
   SaltProvider,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
 import { ThumbsUpIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 
 export default {
@@ -82,10 +82,10 @@ const footerLinks: Record<string, string[]> = {
 };
 
 const footerColumns = Object.keys(footerLinks).map((header, index) => (
-  <div key={index} className="footer-column">
+  <div key={header} className="footer-column">
     <p>{header}</p>
-    {footerLinks[header].map((link: string, i: number) => (
-      <p key={i}>{link}</p>
+    {footerLinks[header].map((link: string) => (
+      <p key={link}>{link}</p>
     ))}
   </div>
 ));

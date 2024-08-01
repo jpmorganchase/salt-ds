@@ -2,19 +2,19 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  Divider,
+  Overlay,
+  OverlayPanel,
+  OverlayPanelCloseButton,
+  OverlayPanelContent,
+  type OverlayProps,
+  OverlayTrigger,
   StackLayout,
   Tooltip,
   useId,
-  Overlay,
-  OverlayPanel,
-  OverlayProps,
-  OverlayTrigger,
-  OverlayPanelCloseButton,
-  OverlayPanelContent,
-  Divider,
 } from "@salt-ds/core";
-import React, { ChangeEvent, useState } from "react";
-import { StoryFn, Meta } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 import "./overlay.stories.css";
 
@@ -156,11 +156,11 @@ const WithActionsContent = ({
   onClose: () => void;
   id: string | undefined;
 }) => {
-  const [controlledValues, setControlledValues] = React.useState([
+  const [controlledValues, setControlledValues] = useState([
     checkboxesData[0].value,
   ]);
 
-  const [checkboxState, setCheckboxState] = React.useState({
+  const [checkboxState, setCheckboxState] = useState({
     checked: false,
     indeterminate: true,
   });
@@ -184,8 +184,8 @@ const WithActionsContent = ({
     } else {
       setControlledValues((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
   };
@@ -231,7 +231,7 @@ const WithActionsContent = ({
 };
 
 export const WithActions = ({ onOpenChange }: OverlayProps) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   const onChange = (newOpen: boolean) => {

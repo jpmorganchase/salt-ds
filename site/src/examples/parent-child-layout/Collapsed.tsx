@@ -1,11 +1,11 @@
-import { ReactElement, useState } from "react";
 import {
+  Label,
+  ParentChildLayout,
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
-  Label,
-  ParentChildLayout,
 } from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 import styles from "./Default.module.css";
 

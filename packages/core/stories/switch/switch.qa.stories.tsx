@@ -5,12 +5,12 @@ import {
   Input,
   Switch,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
 
 export default {
@@ -38,7 +38,21 @@ export const AllExamplesGrid: StoryFn<
 };
 
 AllExamplesGrid.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
@@ -66,7 +80,21 @@ export const FormFieldAlignments: StoryFn<QAContainerProps> = (props) => (
   </QAContainer>
 );
 FormFieldAlignments.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const NoStyleInjectionGrid: StoryFn<

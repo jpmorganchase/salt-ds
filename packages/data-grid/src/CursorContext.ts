@@ -12,12 +12,12 @@ export interface CursorContext {
 }
 
 export const CursorContext = createContext<CursorContext | undefined>(
-  undefined
+  undefined,
 );
 export const useCursorContext = () => {
   const c = useContext(CursorContext);
   if (!c) {
-    throw new Error(`useCursorContext invoked outside of a Grid`);
+    throw new Error("useCursorContext invoked outside of a Grid");
   }
   return c;
 };

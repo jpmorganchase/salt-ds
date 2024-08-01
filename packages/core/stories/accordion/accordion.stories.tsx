@@ -1,23 +1,23 @@
-import { useState, SyntheticEvent, ChangeEvent } from "react";
 import {
-  AccordionGroup,
-  AccordionPanel,
   Accordion,
+  AccordionGroup,
+  type AccordionGroupProps,
   AccordionHeader,
-  AccordionProps,
+  AccordionPanel,
+  type AccordionProps,
+  Checkbox,
+  CheckboxGroup,
   FlowLayout,
   FormField,
+  FormFieldLabel,
   FormFieldLabel as FormLabel,
   Input,
-  AccordionGroupProps,
+  SplitLayout,
   StackLayout,
   Text,
-  SplitLayout,
-  FormFieldLabel,
-  CheckboxGroup,
-  Checkbox,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "./accordion.stories.css";
 
 export default {

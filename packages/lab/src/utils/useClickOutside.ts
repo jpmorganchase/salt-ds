@@ -1,4 +1,4 @@
-import { useRef, useEffect, Ref } from "react";
+import { type Ref, useEffect, useRef } from "react";
 
 const defaultTriggerEvents: MouseEvents[] = ["mousedown"];
 
@@ -11,7 +11,7 @@ type MouseEvents = keyof {
 export function useClickOutside<Element extends HTMLElement>(
   handler: () => void,
   triggerEvents?: MouseEvents[],
-  containers?: HTMLElement[]
+  containers?: HTMLElement[],
 ): Ref<Element> {
   const ref = useRef<Element>(null);
 

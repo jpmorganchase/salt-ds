@@ -6,6 +6,10 @@ on:
     types:
       - completed
 
+permissions:
+  issues: write
+  pull-requests: write
+
 jobs:
   chromatic-deployment:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
@@ -37,6 +41,15 @@ jobs:
 
             const base = fs.readFileSync("./METADATA/base", "utf8").trim();
             core.setOutput("base", base);
+
+            const runChromatic = fs.readFileSync("./METADATA/run-chromatic", "utf8").trim();
+            core.setOutput("runChromatic", runChromatic);
+
+            const noTurbosnap = fs.readFileSync("./METADATA/no-turbosnap", "utf8").trim();
+            core.setOutput("noTurbosnap", noTurbosnap);
+
+            const issueNumber = fs.readFileSync("./METADATA/issue-number", "utf8").trim();
+            core.setOutput("issueNumber", issueNumber);
       - name: Fetch base branch from upstream
         if: github.event.workflow_run.event == 'pull_request'
         run: |
@@ -60,22 +73,37 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
-        if: ${{ steps.chromatic_branch.outputs.draft != 'true' }}
-        uses: chromaui/action@v11.3.5
+        if: ${{ steps.chromatic_branch.outputs.branchName == 'main' || (steps.chromatic_branch.outputs.draft != 'true' && steps.chromatic_branch.outputs.runChromatic == 'true') }}
+        uses: chromaui/action@v11.6.0
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
-          onlyChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' }}
-          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'packages/(theme)/**' || '' }}
+          onlyChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' }}
+          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
           skip: "changeset-release/*"
-          autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' }}
+          autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' }}
           ignoreLastBuildOnBranch: "**"
-          traceChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && 'expanded' || '' }}
+          traceChanged: ${{ (steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
           storybookBuildDir: "./storybook-static"
           branchName: ${{ steps.chromatic_branch.outputs.branchName }}
           debug: true
         env:
           LOG_LEVEL: "debug"
+      - name: Remove Chromatic label
+        if: ${{ steps.chromatic_branch.outputs.branchName != 'main' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.issues.removeLabel({
+                issue_number: ${{ steps.chromatic_branch.outputs.issueNumber }},
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: ["chromatic"]
+              });
+            } catch (error) {
+              console.log(error);
+            }

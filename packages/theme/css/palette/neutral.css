@@ -18,6 +18,10 @@
   --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
   --salt-palette-neutral-selection: var(--salt-color-black-fade-background-selection);
+  --salt-palette-neutral-tertiary-background: var(--salt-color-gray-30);
+  --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-30-fade-background);
+  --salt-palette-neutral-tertiary-border: var(--salt-color-gray-50);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-50-fade-background);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -40,4 +44,8 @@
   --salt-palette-neutral-secondary-separator: var(--salt-color-white-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-separator: var(--salt-color-white-fade-separatorOpacity-tertiary);
   --salt-palette-neutral-selection: var(--salt-color-white-fade-background-selection);
+  --salt-palette-neutral-tertiary-background: var(--salt-color-gray-500);
+  --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-500-fade-background);
+  --salt-palette-neutral-tertiary-border: var(--salt-color-gray-300);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-300-fade-background);
 }

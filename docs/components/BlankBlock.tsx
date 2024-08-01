@@ -1,5 +1,5 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react";
 import { clsx } from "clsx";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 import "./BlankBlock.css";
 

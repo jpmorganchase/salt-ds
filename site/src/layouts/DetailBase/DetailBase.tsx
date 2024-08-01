@@ -6,16 +6,16 @@ import {
   DocPaginator,
   PageNavigation,
 } from "@jpmorganchase/mosaic-site-components";
-import { SiteState, useMeta, useStore } from "@jpmorganchase/mosaic-store";
-import { SaltProvider, FlexLayout, H1 } from "@salt-ds/core";
+import { type SiteState, useMeta, useStore } from "@jpmorganchase/mosaic-store";
+import { FlexLayout, H1, SaltProvider } from "@salt-ds/core";
 import clsx from "clsx";
-import { FC, ReactElement } from "react";
+import type { FC, ReactElement } from "react";
 import { AppHeader } from "../../components/app-header";
 import { Footer } from "../../components/footer";
 import { StatusPill } from "../../components/status-pill";
 import { LayoutColumns } from "../LayoutColumns/LayoutColumns";
 import layoutStyles from "../index.module.css";
-import { LayoutProps } from "../types/index";
+import type { LayoutProps } from "../types/index";
 import styles from "./DetailBase.module.css";
 
 interface Data {
@@ -100,7 +100,7 @@ export const DetailBase: FC<LayoutProps> = ({
               <div
                 className={clsx(
                   layoutStyles.docsPageContent,
-                  styles.docsPageContent
+                  styles.docsPageContent,
                 )}
               >
                 {children}

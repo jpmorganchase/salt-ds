@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox-deprecated.stories";
+import { composeStories } from "@storybook/react";
 import { version } from "react";
 
 const {
@@ -20,7 +20,7 @@ describe("A combo box", () => {
         cy.realPress("Tab");
         cy.findAllByRole("option").should(
           "not.have.class",
-          "saltListItemDeprecated-highlighted"
+          "saltListItemDeprecated-highlighted",
         );
       });
     });
@@ -108,7 +108,7 @@ describe("A combo box", () => {
           cy.get("@changeSpy").should(
             "have.been.calledWith",
             Cypress.sinon.match.any,
-            "Alabama"
+            "Alabama",
           );
         });
       });
@@ -125,7 +125,7 @@ describe("A combo box", () => {
         // input value updated
         cy.findByRole("combobox").should(
           "have.value",
-          Default.args!.source?.[0]
+          Default.args!.source?.[0],
         );
 
         // list is closed
@@ -135,7 +135,7 @@ describe("A combo box", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          Default.args!.source?.[0]
+          Default.args!.source?.[0],
         );
       });
     });
@@ -232,7 +232,7 @@ describe("A combo box", () => {
                 .should("have.class", "saltListItemDeprecated-highlighted")
                 .and("have.class", "saltListItemDeprecated-focusVisible");
             }
-          : undefined
+          : undefined,
       );
     });
   });
@@ -283,7 +283,7 @@ describe("A combo box that allows free text", () => {
       cy.get("@changeSpy").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
-        "Baby blue"
+        "Baby blue",
       );
     });
 
@@ -445,7 +445,7 @@ describe("A multi-select combo box", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          ["Alabama"]
+          ["Alabama"],
         );
 
         cy.realPress("ArrowDown");
@@ -460,7 +460,7 @@ describe("A multi-select combo box", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          ["Alabama", "Arizona"]
+          ["Alabama", "Arizona"],
         );
 
         // list style updated
@@ -581,7 +581,7 @@ describe("A multi-select combo box", () => {
 
         cy.findAllByTestId("pill").should(
           "not.have.class",
-          "saltInputPill-pillActive"
+          "saltInputPill-pillActive",
         );
 
         // start navigating through pill group so the focus should be removed from list
@@ -614,7 +614,7 @@ describe("A multi-select combo box", () => {
 
         cy.findAllByTestId("pill").should(
           "not.have.class",
-          "saltInputPill-pillActive"
+          "saltInputPill-pillActive",
         );
 
         cy.findByRole("listbox")
@@ -682,7 +682,7 @@ describe("A multi-select combo box", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          ["Arkansas", "Connecticut", "Hawaii", "Kansas"]
+          ["Arkansas", "Connecticut", "Hawaii", "Kansas"],
         );
 
         cy.realPress("ArrowDown");
@@ -698,7 +698,7 @@ describe("A multi-select combo box", () => {
         cy.get("@changeSpy").should(
           "have.been.calledWith",
           Cypress.sinon.match.any,
-          ["Connecticut", "Hawaii", "Kansas"]
+          ["Connecticut", "Hawaii", "Kansas"],
         );
       });
     });

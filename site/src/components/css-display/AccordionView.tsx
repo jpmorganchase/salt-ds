@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionHeader,
@@ -10,20 +9,20 @@ import {
   Spinner,
   Tooltip,
 } from "@salt-ds/core";
+import { CopyIcon } from "@salt-ds/icons";
 import { ColorBlock } from "docs/components/ColorBlock";
+import { CursorBlock } from "docs/components/CursorBlock";
 import { FontSizeBlock } from "docs/components/FontSizeBlock";
 import { FontWeightBlock } from "docs/components/FontWeightBlock";
-import { CursorBlock } from "docs/components/CursorBlock";
 import { LetterSpacingBlock } from "docs/components/LetterSpacingBlock";
 import { LineBlock } from "docs/components/LineBlock";
-import { TextBlock } from "docs/components/TextBlock";
 import { OutlineBlock } from "docs/components/OutlineBlock";
 import { ShadowBlockCell } from "docs/components/ShadowBlock";
+import { TextBlock } from "docs/components/TextBlock";
+import { type FC, useEffect, useState } from "react";
 import { Table } from "../mdx/table";
-import { Heading4 } from "../mdx/h4";
 import styles from "./AccordianView.module.css";
 import chars from "./descriptions";
-import { CopyIcon } from "@salt-ds/icons";
 
 type CssVariableData = {
   [key: string]: string;
@@ -36,7 +35,7 @@ const color: string[] = new Array(
   "palette",
   "borderColor",
   "outlineColor",
-  "indicator"
+  "indicator",
 );
 
 const fontSize: string[] = new Array("fontSize", "minHeight");
@@ -47,7 +46,7 @@ const border: string[] = new Array(
   "borderStyle",
   "borderWidth",
   "outlineWidth",
-  "outlineStyle"
+  "outlineStyle",
 );
 const text: string[] = new Array("fontStyle");
 const outline: string[] = new Array("outline");
@@ -58,7 +57,7 @@ const transform: string[] = new Array("textTransform");
 const fontFamily: string[] = new Array("fontFamily");
 const lineHeight: string[] = new Array("lineHeight");
 
-const BlockView: React.FC<{ name: string }> = ({ name }) => {
+const BlockView: FC<{ name: string }> = ({ name }) => {
   switch (true) {
     case color.some((c) => name.includes(c)):
       return <ColorBlock hideToken colorVar={name} />;
@@ -102,7 +101,7 @@ const handleCopyToClipboard = (text: string) => {
   textField.remove();
 };
 
-export const AccordionView: React.FC<{ value: string }> = ({ value }) => {
+export const AccordionView: FC<{ value: string }> = ({ value }) => {
   const [cssVariablesData, setCssVariablesData] =
     useState<CssVariableData | null>(null);
 
@@ -139,7 +138,7 @@ export const AccordionView: React.FC<{ value: string }> = ({ value }) => {
 
     Object.entries(data).forEach(([name, value]) => {
       const match = regex.exec(name);
-      if (match && match[1]) {
+      if (match?.[1]) {
         const groupName = match[1];
         if (!groupedData[groupName]) {
           groupedData[groupName] = {};

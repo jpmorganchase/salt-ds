@@ -1,18 +1,19 @@
 import {
-  cloneElement,
-  forwardRef,
-  isValidElement,
-  ReactNode,
-  useRef,
-  useState,
-} from "react";
-import { createPortal } from "react-dom";
-import {
   SaltProvider,
+  getRefFromChildren,
   ownerDocument,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
+import {
+  type ReactNode,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 
 export interface PortalProps {
   /**
@@ -55,15 +56,11 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
     disablePortal = false,
     id = DEFAULT_ID,
   },
-  ref
+  ref,
 ) {
   const [mounted, setMounted] = useState(false);
   const portalRef = useRef<HTMLElement | null>(null);
-  const handleRef = useForkRef(
-    // @ts-ignore
-    isValidElement(children) ? children.ref : null,
-    ref
-  );
+  const handleRef = useForkRef(getRefFromChildren(children), ref);
 
   const container = getContainer(containerProp) ?? document.body;
 
@@ -98,7 +95,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   if (mounted && portalRef.current && children) {
     return createPortal(
       <SaltProvider>{children}</SaltProvider>,
-      portalRef.current
+      portalRef.current,
     );
   }
 

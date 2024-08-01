@@ -1,0 +1,6 @@
+/* Styles applied to SystemStatusContent */
+.saltSystemStatusContent {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+  color: var(--salt-content-bold-foreground);
+}

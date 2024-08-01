@@ -1,21 +1,21 @@
+import { useClick, useDismiss, useInteractions } from "@floating-ui/react";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
+  type ComponentPropsWithoutRef,
+  type PropsWithChildren,
   forwardRef,
   useEffect,
   useState,
-  PropsWithChildren,
 } from "react";
-import { clsx } from "clsx";
-import { useClick, useDismiss, useInteractions } from "@floating-ui/react";
+import { Scrim } from "../scrim";
 import {
   makePrefixer,
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
 } from "../utils";
-import { Scrim } from "../scrim";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import drawerCss from "./Drawer.css";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
@@ -58,84 +58,83 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltDrawer");
 
-export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(function Drawer(
-  props,
-  ref
-) {
-  const {
-    children,
-    className,
-    position = "left",
-    open = false,
-    onOpenChange,
-    variant = "primary",
-    disableDismiss,
-    disableScrim,
-    ...rest
-  } = props;
+export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
+  function Drawer(props, ref) {
+    const {
+      children,
+      className,
+      position = "left",
+      open = false,
+      onOpenChange,
+      variant = "primary",
+      disableDismiss,
+      disableScrim,
+      ...rest
+    } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-drawer",
-    css: drawerCss,
-    window: targetWindow,
-  });
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-drawer",
+      css: drawerCss,
+      window: targetWindow,
+    });
 
-  const [showComponent, setShowComponent] = useState(false);
-  const { Component: FloatingComponent } = useFloatingComponent();
+    const [showComponent, setShowComponent] = useState(false);
+    const { Component: FloatingComponent } = useFloatingComponent();
 
-  const { context, floating, elements } = useFloatingUI({
-    open: showComponent,
-    onOpenChange,
-  });
+    const { context, floating, elements } = useFloatingUI({
+      open: showComponent,
+      onOpenChange,
+    });
 
-  const { getFloatingProps } = useInteractions([
-    useClick(context),
-    useDismiss(context, { enabled: !disableDismiss }),
-  ]);
+    const { getFloatingProps } = useInteractions([
+      useClick(context),
+      useDismiss(context, { enabled: !disableDismiss }),
+    ]);
 
-  const handleRef = useForkRef<HTMLDivElement>(floating, ref);
+    const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
-  useEffect(() => {
-    if (open && !showComponent) {
-      setShowComponent(true);
-    }
+    useEffect(() => {
+      if (open && !showComponent) {
+        setShowComponent(true);
+      }
 
-    if (!open && showComponent) {
-      const animate = setTimeout(() => {
-        setShowComponent(false);
-      }, 300); // var(--salt-duration-perceptible)
-      return () => clearTimeout(animate);
-    }
-  }, [open, showComponent, setShowComponent]);
+      if (!open && showComponent) {
+        const animate = setTimeout(() => {
+          setShowComponent(false);
+        }, 300); // var(--salt-duration-perceptible)
+        return () => clearTimeout(animate);
+      }
+    }, [open, showComponent]);
 
-  return (
-    <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
-      <FloatingComponent
-        open={showComponent}
-        ref={handleRef}
-        role={"dialog"}
-        width={elements.floating?.offsetWidth}
-        height={elements.floating?.offsetHeight}
-        aria-modal="true"
-        focusManagerProps={{
-          context: context,
-        }}
-        className={clsx(
-          withBaseName(),
-          withBaseName(position),
-          {
-            [withBaseName("enterAnimation")]: open,
-            [withBaseName("exitAnimation")]: !open,
-            [withBaseName(variant)]: variant,
-          },
-          className
-        )}
-        {...getFloatingProps()}
-        {...rest}
-      >
-        {children}
-      </FloatingComponent>
-    </ConditionalScrimWrapper>
-  );
-});
+    return (
+      <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
+        <FloatingComponent
+          open={showComponent}
+          ref={handleRef}
+          role={"dialog"}
+          width={elements.floating?.offsetWidth}
+          height={elements.floating?.offsetHeight}
+          aria-modal="true"
+          focusManagerProps={{
+            context: context,
+          }}
+          className={clsx(
+            withBaseName(),
+            withBaseName(position),
+            {
+              [withBaseName("enterAnimation")]: open,
+              [withBaseName("exitAnimation")]: !open,
+              [withBaseName(variant)]: variant,
+            },
+            className,
+          )}
+          {...getFloatingProps()}
+          {...rest}
+        >
+          {children}
+        </FloatingComponent>
+      </ConditionalScrimWrapper>
+    );
+  },
+);

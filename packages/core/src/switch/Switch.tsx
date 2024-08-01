@@ -1,23 +1,23 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  ChangeEventHandler,
-  ComponentPropsWithoutRef,
-  FocusEventHandler,
+  type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  type ReactNode,
   forwardRef,
-  ReactNode,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled } from "../utils";
 import { useDensity } from "../salt-provider";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer, useControlled } from "../utils";
 
-import switchCss from "./Switch.css";
 import {
-  IconProps,
+  type IconProps,
   SuccessSmallSolidIcon,
   SuccessSolidIcon,
 } from "@salt-ds/icons";
+import switchCss from "./Switch.css";
 
 export interface SwitchProps
   extends Omit<
@@ -78,107 +78,106 @@ function CheckedIcon(props: IconProps) {
   );
 }
 
-export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(function Switch(
-  props,
-  ref
-) {
-  const {
-    checked: checkedProp,
-    className,
-    defaultChecked,
-    disabled: disabledProp,
-    inputProps = {},
-    label,
-    name,
-    onBlur,
-    onChange,
-    onFocus,
-    value,
-    ...rest
-  } = props;
+export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
+  function Switch(props, ref) {
+    const {
+      checked: checkedProp,
+      className,
+      defaultChecked,
+      disabled: disabledProp,
+      inputProps = {},
+      label,
+      name,
+      onBlur,
+      onChange,
+      onFocus,
+      value,
+      ...rest
+    } = props;
 
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-switch",
-    css: switchCss,
-    window: targetWindow,
-  });
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-switch",
+      css: switchCss,
+      window: targetWindow,
+    });
 
-  const {
-    "aria-describedby": inputDescribedBy,
-    "aria-labelledby": inputLabelledBy,
-    className: inputClassName,
-    onChange: inputOnChange,
-    ...restInputProps
-  } = inputProps;
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      className: inputClassName,
+      onChange: inputOnChange,
+      ...restInputProps
+    } = inputProps;
 
-  const [checked, setChecked] = useControlled({
-    controlled: checkedProp,
-    default: Boolean(defaultChecked),
-    name: "Switch",
-    state: "checked",
-  });
+    const [checked, setChecked] = useControlled({
+      controlled: checkedProp,
+      default: Boolean(defaultChecked),
+      name: "Switch",
+      state: "checked",
+    });
 
-  const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
-    useFormFieldProps();
+    const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
+      useFormFieldProps();
 
-  const disabled = formFieldDisabled || disabledProp;
+    const disabled = formFieldDisabled || disabledProp;
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-    // Workaround for https://github.com/facebook/react/issues/9023
-    if (event.nativeEvent.defaultPrevented) {
-      return;
-    }
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      // Workaround for https://github.com/facebook/react/issues/9023
+      if (event.nativeEvent.defaultPrevented) {
+        return;
+      }
 
-    const value = event.target.checked;
-    setChecked(value);
-    onChange?.(event);
-    inputOnChange?.(event);
-  };
+      const value = event.target.checked;
+      setChecked(value);
+      onChange?.(event);
+      inputOnChange?.(event);
+    };
 
-  return (
-    <label
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("checked")]: checked,
-        },
-        className
-      )}
-      ref={ref}
-      {...rest}
-    >
-      <input
-        aria-describedby={clsx(
-          formFieldA11yProps?.["aria-describedby"],
-          inputDescribedBy
+    return (
+      <label
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("checked")]: checked,
+          },
+          className,
         )}
-        aria-labelledby={clsx(
-          formFieldA11yProps?.["aria-labelledby"],
-          inputLabelledBy
-        )}
-        name={name}
-        value={value}
-        checked={checked}
-        className={clsx(withBaseName("input"), inputClassName)}
-        defaultChecked={defaultChecked}
-        disabled={disabled}
-        onBlur={onBlur}
-        onChange={handleChange}
-        onFocus={onFocus}
-        type="checkbox"
-        role="switch"
-        {...restInputProps}
-      />
-      <span className={withBaseName("track")}>
-        <span className={withBaseName("thumb")}>
-          {checked && (
-            <CheckedIcon aria-hidden className={withBaseName("icon")} />
+        ref={ref}
+        {...rest}
+      >
+        <input
+          aria-describedby={clsx(
+            formFieldA11yProps?.["aria-describedby"],
+            inputDescribedBy,
           )}
+          aria-labelledby={clsx(
+            formFieldA11yProps?.["aria-labelledby"],
+            inputLabelledBy,
+          )}
+          name={name}
+          value={value}
+          checked={checked}
+          className={clsx(withBaseName("input"), inputClassName)}
+          defaultChecked={defaultChecked}
+          disabled={disabled}
+          onBlur={onBlur}
+          onChange={handleChange}
+          onFocus={onFocus}
+          type="checkbox"
+          role="switch"
+          {...restInputProps}
+        />
+        <span className={withBaseName("track")}>
+          <span className={withBaseName("thumb")}>
+            {checked && (
+              <CheckedIcon aria-hidden className={withBaseName("icon")} />
+            )}
+          </span>
         </span>
-      </span>
-      {label && <span className={withBaseName("label")}>{label}</span>}
-    </label>
-  );
-});
+        {label && <span className={withBaseName("label")}>{label}</span>}
+      </label>
+    );
+  },
+);

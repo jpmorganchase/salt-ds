@@ -5,14 +5,14 @@ import {
   useForkRef,
   useIdMemo as useId,
 } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
-import { forwardCallbackProps } from "../utils";
-import { DropdownBaseProps } from "./dropdownTypes";
-import { useDropdownBase } from "./useDropdownBase";
 import { Portal } from "../portal";
+import { forwardCallbackProps } from "../utils";
 import { isDesktop, useWindow as usePortalWindow } from "../window";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import type { DropdownBaseProps } from "./dropdownTypes";
+import { useDropdownBase } from "./useDropdownBase";
 
 import { useWindow } from "@salt-ds/window";
 
@@ -27,7 +27,7 @@ export type MaybeChildProps = {
   width: number | string;
 };
 
-const withBaseName = makePrefixer("saltDropdown");
+const withBaseName = makePrefixer("saltDropdownBase");
 
 export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
   function Dropdown(
@@ -50,7 +50,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
       width,
       ...htmlAttributes
     },
-    forwardedRef
+    forwardedRef,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -65,7 +65,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
       [withBaseName("disabled")]: disabled,
     });
     const [trigger, popupComponent] = Children.toArray(
-      children
+      children,
     ) as JSX.Element[];
     const id = useId(idProp);
     const Window = usePortalWindow();
@@ -85,10 +85,10 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         popupWidth,
         rootRef,
         width,
-      }
+      },
     );
     const [maxPopupHeight, setMaxPopupHeight] = useState<number | undefined>(
-      undefined
+      undefined,
     );
 
     const middleware = isDesktop
@@ -112,7 +112,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
 
     const handlePopperListAdapterRef = useForkRef<HTMLDivElement>(
       reference,
-      forwardedRef
+      forwardedRef,
     );
     const handleRootRef = useForkRef(rootRef, handlePopperListAdapterRef);
     const handleFloatingRef = useForkRef<HTMLDivElement>(floating, popperRef);
@@ -137,7 +137,7 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
           ...restTriggerProps,
           id,
           role,
-        })
+        }),
       );
     };
 
@@ -186,5 +186,5 @@ export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
         )}
       </div>
     );
-  }
+  },
 );

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Checkbox, Text, StackLayout, CheckboxGroup } from "@salt-ds/core";
+import { Checkbox, CheckboxGroup, StackLayout, Text } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const WithDescription = (): ReactElement => {
   return (
@@ -9,7 +9,9 @@ export const WithDescription = (): ReactElement => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Alternatives</Text>
-            <Text color="secondary">Other investments</Text>
+            <Text color="secondary" styleAs="label">
+              Other investments
+            </Text>
           </StackLayout>
         }
       />
@@ -18,7 +20,9 @@ export const WithDescription = (): ReactElement => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Equities</Text>
-            <Text color="secondary">Company shares</Text>
+            <Text color="secondary" styleAs="label">
+              Company shares
+            </Text>
           </StackLayout>
         }
       />
@@ -27,7 +31,9 @@ export const WithDescription = (): ReactElement => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Fixed income</Text>
-            <Text color="secondary">Interest-paying</Text>
+            <Text color="secondary" styleAs="label">
+              Interest-paying
+            </Text>
           </StackLayout>
         }
       />
@@ -36,7 +42,9 @@ export const WithDescription = (): ReactElement => {
         label={
           <StackLayout gap={0.5} align="start">
             <Text>Bonds</Text>
-            <Text color="secondary">Debt securities</Text>
+            <Text color="secondary" styleAs="label">
+              Debt securities
+            </Text>
           </StackLayout>
         }
       />

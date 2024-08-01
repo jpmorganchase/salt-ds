@@ -1,8 +1,8 @@
-import { forwardRef, ComponentPropsWithoutRef } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "../utils";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 
 import segmentedButtonGroupCss from "./SegmentedButtonGroup.css";
 

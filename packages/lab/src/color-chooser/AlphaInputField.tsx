@@ -1,10 +1,16 @@
-import { clsx } from "clsx";
-import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  useEffect,
+  useState,
+} from "react";
 import { InputLegacy as Input } from "../input-legacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import rgbaInputCss from "./RGBAInput.css";
 
@@ -13,7 +19,7 @@ const withBaseName = makePrefixer("saltColorChooser");
 interface AlphaInputProps {
   alphaValue: number;
   showAsOpacity?: boolean;
-  onSubmit: (alpha: number, e?: React.ChangeEvent) => void;
+  onSubmit: (alpha: number, e?: ChangeEvent) => void;
 }
 
 export const AlphaInput = ({
@@ -29,18 +35,18 @@ export const AlphaInput = ({
   });
 
   const [alphaInputValue, setAlphaInputValue] = useState<string>(
-    !isNaN(alphaValue) ? alphaValue.toString() : ""
+    !Number.isNaN(alphaValue) ? alphaValue.toString() : "",
   );
 
   useEffect(() => {
-    setAlphaInputValue(!isNaN(alphaValue) ? alphaValue.toString() : "");
+    setAlphaInputValue(!Number.isNaN(alphaValue) ? alphaValue.toString() : "");
   }, [alphaValue]);
 
   const handleAlphaInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-    value: string
+    event: ChangeEvent<HTMLInputElement>,
+    newValue: string,
   ): void => {
-    value = value.replace("%", "");
+    const value = newValue.replace("%", "");
     let alpha: string = value;
 
     if (value.trim() === "" || Number.isNaN(value)) {
@@ -48,7 +54,7 @@ export const AlphaInput = ({
     }
 
     if (showAsOpacity && Number.parseFloat(value)) {
-      alpha = (parseFloat(value) / 100).toString();
+      alpha = (Number.parseFloat(value) / 100).toString();
     }
 
     if (value.charAt(1) === "." || value.charAt(0) === ".") {
@@ -58,13 +64,11 @@ export const AlphaInput = ({
     setAlphaInputValue(alpha);
   };
 
-  const handleKeyDownAlpha = (
-    e: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
+  const handleKeyDownAlpha = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       const alpha =
         alphaInputValue.trim().replace("%", "") !== ""
-          ? parseFloat(alphaInputValue)
+          ? Number.parseFloat(alphaInputValue)
           : 0;
       const validatedAlpha = Math.max(0, Math.min(alpha, 1));
       setAlphaInputValue(validatedAlpha.toString());
@@ -72,10 +76,10 @@ export const AlphaInput = ({
     }
   };
 
-  const handleOnBlurAlpha = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurAlpha = (e: FocusEvent<HTMLInputElement>): void => {
     // Guard against parseFloat('') becoming NaN
     const alpha =
-      alphaInputValue.trim() !== "" ? parseFloat(alphaInputValue) : 0;
+      alphaInputValue.trim() !== "" ? Number.parseFloat(alphaInputValue) : 0;
 
     const validatedAlpha = Math.max(0, Math.min(alpha, 1));
     setAlphaInputValue(validatedAlpha.toString());
@@ -95,7 +99,7 @@ export const AlphaInput = ({
       value={
         showAsOpacity
           ? alphaInputValue
-            ? (parseFloat(alphaInputValue) * 100).toString() + "%"
+            ? `${(Number.parseFloat(alphaInputValue) * 100).toString()}%`
             : "%"
           : alphaInputValue
       }

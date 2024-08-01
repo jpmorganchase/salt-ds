@@ -1,7 +1,11 @@
-import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
-import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactElement,
+  forwardRef,
+} from "react";
 import { makePrefixer } from "../utils";
 import { Spinner } from "../spinner";
 
@@ -11,7 +15,11 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
+export const AppearanceValues = ["solid", "outline", "transparent"] as const;
+export const ButtonColorValues = ["accent", "neutral"] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
+export type Appearance = (typeof AppearanceValues)[number];
+export type ButtonColor = (typeof ButtonColorValues)[number];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
@@ -25,6 +33,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
+   * @deprecated Use `appearance` and `color` instead.
    */
   variant?: ButtonVariant;
   /**
@@ -40,6 +49,25 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * If `true`, a loading text with spinner will be shown while button is in loading state.
    */
   showLoadingText?: boolean;
+  /**
+   * The type of the button. Options are 'solid', 'outline', and 'transparent'.
+   */
+  appearance?: Appearance;
+  /**
+   * The color of the button. Options are 'accent' and 'neutral'.
+   */
+  color?: ButtonColor;
+}
+
+function variantToAppearanceAndColor(variant: ButtonVariant) {
+  switch (variant) {
+    case "primary":
+      return { appearance: "solid", color: "neutral" };
+    case "secondary":
+      return { appearance: "transparent", color: "neutral" };
+    case "cta":
+      return { appearance: "solid", color: "accent" };
+  }
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -53,6 +81,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onKeyDown,
       onBlur,
       onClick,
+      appearance: appearanceProp,
+      color: colorProp,
       type = "button",
       variant = "primary",
       loading,
@@ -60,7 +90,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       showLoadingText,
       ...restProps
     },
-    ref?
+    ref?,
   ): ReactElement<ButtonProps> {
     const { active, buttonProps } = useButton({
       disabled,
@@ -78,6 +108,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       window: targetWindow,
     });
 
+    const mapped = variantToAppearanceAndColor(variant);
+    const appearance = appearanceProp ?? mapped.appearance;
+    const color = colorProp ?? mapped.color;
+
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;
@@ -91,8 +125,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             [withBaseName("disabled")]: disabled,
             [withBaseName(`loading-${variant}`)]: loading,
             [withBaseName("active")]: active,
+            [withBaseName(appearance)]: appearance,
+            [withBaseName(color)]: color,
           },
-          className
+          className,
         )}
         {...restProps}
         ref={ref}
@@ -124,5 +160,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </button>
     );
-  }
+  },
 );

@@ -1,8 +1,8 @@
+import { type KeyboardEvent, useCallback } from "react";
+import { GridColumn, type GridColumnProps } from "./GridColumn";
 import { RowSelectionRadioCellValue } from "./RowSelectionRadioCellValue";
-import { GridColumn, GridColumnProps } from "./GridColumn";
 import { RowSelectionRadioHeaderCell } from "./RowSelectionRadioHeaderCell";
 import { useSelectionContext } from "./SelectionContext";
-import { KeyboardEvent, useCallback } from "react";
 
 export type RowSelectionRadioColumnProps<T> = Omit<
   GridColumnProps<T>,
@@ -10,7 +10,7 @@ export type RowSelectionRadioColumnProps<T> = Omit<
 >;
 
 export function RowSelectionRadioColumn<T>(
-  props: RowSelectionRadioColumnProps<T>
+  props: RowSelectionRadioColumnProps<T>,
 ) {
   const { selectRows } = useSelectionContext();
 
@@ -22,7 +22,7 @@ export function RowSelectionRadioColumn<T>(
         event.stopPropagation();
       }
     },
-    [selectRows]
+    [selectRows],
   );
 
   return (

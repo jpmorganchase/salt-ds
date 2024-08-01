@@ -1,5 +1,5 @@
 import { BorderItem, BorderLayout } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 
 export default {

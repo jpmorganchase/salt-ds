@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Button, Tooltip } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const HideArrow = (): ReactElement => (
   <Tooltip content="I am a tooltip" hideArrow>

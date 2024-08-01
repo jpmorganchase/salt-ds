@@ -1,12 +1,22 @@
-import { makePrefixer, Tooltip, TooltipProps, useForkRef } from "@salt-ds/core";
+import type { DateValue } from "@internationalized/date";
+import {
+  Tooltip,
+  type TooltipProps,
+  makePrefixer,
+  useForkRef,
+} from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { ComponentPropsWithRef, forwardRef, ReactElement, useRef } from "react";
-import { DateValue } from "@internationalized/date";
-import { DayStatus, useCalendarDay } from "../useCalendarDay";
+import {
+  type ComponentPropsWithRef,
+  type ReactElement,
+  forwardRef,
+  useRef,
+} from "react";
+import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
 import { formatDate } from "./utils";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
@@ -41,7 +51,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
           date: day,
           month,
         },
-        dayRef
+        dayRef,
       );
     const { outOfRange, today, unselectable, highlighted, hidden, disabled } =
       status;
@@ -80,7 +90,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
               [withBaseName("highlighted")]: !!highlighted,
             },
             dayProps.className,
-            className
+            className,
           )}
         >
           <span
@@ -95,5 +105,5 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         </button>
       </Tooltip>
     );
-  }
+  },
 );

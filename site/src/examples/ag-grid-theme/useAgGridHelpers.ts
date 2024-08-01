@@ -1,8 +1,8 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
+import type { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
-import { AgGridReactProps } from "ag-grid-react";
-import { HTMLAttributes, useMemo, useRef, useState } from "react";
+import type { AgGridReactProps } from "ag-grid-react";
+import { type HTMLAttributes, useMemo, useRef, useState } from "react";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -23,25 +23,26 @@ export function useAgGridHelpers(compact = false): {
   const density = useDensity();
   const { mode } = useTheme();
 
-  const [rowHeight, listItemHeight] = useMemo(() => {
+  // Row height is 1px more than header row, to count for border between rows
+  const [rowHeight, headerRowHeight] = useMemo(() => {
     switch (density) {
       case compact && "high":
-        return [20, 20];
+        return [21, 20];
       case "high":
-        return [24, 24];
+        return [25, 24];
       case "medium":
-        return [36, 36];
+        return [37, 36];
       case "low":
-        return [48, 48];
+        return [49, 48];
       case "touch":
-        return [60, 60];
+        return [61, 60];
       default:
-        return [20, 24];
+        return [25, 24];
     }
   }, [density, compact]);
 
   const className = `ag-theme-salt${
-    compact && density === "high" ? `-compact` : ``
+    compact && density === "high" ? "-compact" : ""
   }-${mode}`;
 
   const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
@@ -58,14 +59,14 @@ export function useAgGridHelpers(compact = false): {
     agGridProps: {
       onGridReady,
       rowHeight,
-      headerHeight: rowHeight,
+      headerHeight: headerRowHeight,
       suppressMenuHide: true,
       defaultColDef: {
         filter: true,
         resizable: true,
         sortable: true,
         filterParams: {
-          cellHeight: listItemHeight,
+          cellHeight: rowHeight,
         },
       },
     },

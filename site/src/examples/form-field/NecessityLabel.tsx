@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { FormField, FlowLayout, FormFieldLabel, Input } from "@salt-ds/core";
+import { FlowLayout, FormField, FormFieldLabel, Input } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const NecessityLabel = (): ReactElement => (
   <FlowLayout style={{ width: "366px" }}>

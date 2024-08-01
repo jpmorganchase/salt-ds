@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { InteractableCard } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const DisabledInteractableCard = (): ReactElement => {
   return (
@@ -7,6 +7,6 @@ export const DisabledInteractableCard = (): ReactElement => {
       accent="top"
       style={{ width: "260px", height: "144px" }}
       disabled
-    ></InteractableCard>
+    />
   );
 };

@@ -1,14 +1,18 @@
-import { ComponentPropsWithoutRef, forwardRef, MouseEventHandler } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type MouseEventHandler,
+  forwardRef,
+} from "react";
 import { Button } from "../button";
 import { Text } from "../text";
 import { makePrefixer } from "../utils";
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { PageButton } from "./PageButton";
 import { usePaginationContext } from "./usePaginationContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import compactPaginatorCss from "./CompactPaginator.css";
 

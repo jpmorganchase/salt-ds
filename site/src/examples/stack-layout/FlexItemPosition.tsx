@@ -1,17 +1,17 @@
-import { ReactElement, ChangeEventHandler, useState } from "react";
 import {
-  StackLayout,
-  FLEX_ITEM_ALIGNMENTS as flexItemAlignments,
-  flexItemAlignment,
   FlexItem,
   FormField,
   FormFieldLabel,
-  RadioButtonGroup,
   RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  type flexItemAlignment,
+  FLEX_ITEM_ALIGNMENTS as flexItemAlignments,
 } from "@salt-ds/core";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import flexItemPositionStyles from "./FlexItemPosition.module.css";
+import styles from "./index.module.css";
 
 export const FlexItemPosition = (): ReactElement => {
   const [align, setAlign] = useState<flexItemAlignment>("start");
@@ -53,7 +53,7 @@ export const FlexItemPosition = (): ReactElement => {
             <RadioButton
               key={alignment}
               label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                1
+                1,
               )}`}
               value={alignment}
             />

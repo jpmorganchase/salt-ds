@@ -1,20 +1,23 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
+  type ComponentPropsWithoutRef,
+  type KeyboardEvent,
+  type SyntheticEvent,
   forwardRef,
-  KeyboardEvent,
-  SyntheticEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
 import { makePrefixer, useControlled, useForkRef } from "../utils";
-import { ToggleButtonGroupContext, Value } from "./ToggleButtonGroupContext";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
+import {
+  ToggleButtonGroupContext,
+  type Value,
+} from "./ToggleButtonGroupContext";
 
 export interface ToggleButtonGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
@@ -85,25 +88,25 @@ export const ToggleButtonGroup = forwardRef<
         onChange?.(event);
       }
     },
-    [onChange, value, setValue]
+    [onChange, value],
   );
 
   const isSelected = useCallback(
     (id: Value) => {
       return value === id;
     },
-    [value]
+    [value],
   );
 
-  const focus = (id: Value) => {
+  const focus = useCallback((id: Value) => {
     setFocused(id);
-  };
+  }, []);
 
   const isFocused = useCallback(
     (id: Value) => {
       return focused === id || !focused;
     },
-    [focused]
+    [focused],
   );
 
   const contextValue = useMemo(
@@ -115,15 +118,15 @@ export const ToggleButtonGroup = forwardRef<
       disabled,
       orientation,
     }),
-    [select, isSelected, isFocused, disabled, orientation]
+    [select, isSelected, isFocused, disabled, orientation, focus],
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const elements: HTMLElement[] = Array.from(
-      groupRef.current?.querySelectorAll("button:not([disabled])") ?? []
+      groupRef.current?.querySelectorAll("button:not([disabled])") ?? [],
     );
     const currentIndex = elements.findIndex(
-      (element) => element === document.activeElement
+      (element) => element === document.activeElement,
     );
     switch (event.key) {
       case "ArrowDown":

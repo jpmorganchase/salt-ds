@@ -1,24 +1,24 @@
-import React, { FC, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Sidebar } from "@jpmorganchase/mosaic-site-components";
 import {
+  type SiteState,
+  useMeta,
   useRoute,
   useStore,
-  SiteState,
-  useMeta,
 } from "@jpmorganchase/mosaic-store";
 import { TabPanel, Tabs } from "@salt-ds/lab";
+import { useRouter } from "next/navigation";
+import React, { type FC, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { LayoutProps } from "../types/index";
-import { DetailBase } from "../DetailBase";
-import SecondarySidebar from "./SecondarySidebar";
-import TitleWithDrawer from "./TitleWithDrawer";
-import MobileDrawer from "./MobileDrawer";
-import useIsMobileView from "../../utils/useIsMobileView";
-import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
-import styles from "./DetailComponent.module.css";
 import { code, p, ul } from "../../components";
 import { TableOfContents } from "../../components/toc";
+import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
+import useIsMobileView from "../../utils/useIsMobileView";
+import { DetailBase } from "../DetailBase";
+import type { LayoutProps } from "../types/index";
+import styles from "./DetailComponent.module.css";
+import MobileDrawer from "./MobileDrawer";
+import SecondarySidebar from "./SecondarySidebar";
+import TitleWithDrawer from "./TitleWithDrawer";
 
 const components = { code, ul, p };
 

@@ -1,5 +1,5 @@
-import { useEffect, useReducer } from "react";
 import { Tree } from "@salt-ds/lab";
+import { useEffect, useReducer } from "react";
 
 function createNodes(count: number, factory: (index: number) => any) {
   const nodes = [];
@@ -52,7 +52,7 @@ function createSampleTreeData(autoExpanded = true, wideLeafNodeParentId = "") {
                             description: "description",
                           },
                         ]
-                      : []
+                      : [],
                   ),
                 },
               ],
@@ -213,13 +213,13 @@ describe("GIVEN a Tree", () => {
   describe('AND when `selectionStrategy` is set to "default"', () => {
     it("THEN should select 1 node", () => {
       cy.mount(
-        <Tree source={createSampleTreeData()} selectionStrategy="default" />
+        <Tree source={createSampleTreeData()} selectionStrategy="default" />,
       );
       cy.findByText("1").realClick();
       cy.findByText("2").realClick();
       cy.get('.saltTreeNode-item[aria-selected="true"]').should(
         "have.length",
-        1
+        1,
       );
     });
   });
@@ -238,7 +238,7 @@ describe("GIVEN a Tree", () => {
           onToggle={onToggle}
           onSelectionChange={onSelectionChange}
           selectionStrategy="default"
-        />
+        />,
       );
     });
 
@@ -350,7 +350,7 @@ describe("GIVEN a Tree", () => {
             },
           ]}
           selectionStrategy="default"
-        />
+        />,
       );
     });
 
@@ -392,7 +392,7 @@ describe("GIVEN a Tree", () => {
         cy.get(".saltTreeNode-item").eq(2).realClick();
         cy.get('.saltTreeNode-item[aria-selected="true"]').should(
           "have.length",
-          1
+          1,
         );
         cy.get(".saltTreeNode-item")
           .eq(2)

@@ -24,6 +24,13 @@
   --linkCard-accent-color: var(--salt-container-secondary-borderColor);
 }
 
+/* Styles applied to LinkCard when variant="tertiary" */
+.saltLinkCard-tertiary {
+  background: var(--saltLinkCard-background, var(--salt-container-tertiary-background));
+  border-color: var(--salt-container-tertiary-borderColor);
+  --linkCard-accent-color: var(--salt-container-tertiary-borderColor);
+}
+
 /* Styles applied to create accent */
 .saltLinkCard-accent::after {
   content: "";

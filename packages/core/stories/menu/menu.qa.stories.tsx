@@ -1,5 +1,3 @@
-import { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
 import {
   Button,
   Menu,
@@ -9,6 +7,8 @@ import {
   MenuTrigger,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
   title: "Core/Menu/Menu QA",
@@ -45,7 +45,20 @@ export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
 };
 
 SingleLevelExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
@@ -87,7 +100,20 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
 };
 
 MultilevelExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
@@ -122,5 +148,18 @@ export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
 };
 
 GroupedExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };

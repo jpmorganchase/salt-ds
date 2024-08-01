@@ -1,17 +1,23 @@
-import { useEffect, useState } from "react";
 import { makePrefixer } from "@salt-ds/core";
-import { RGBAValue } from "./Color";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  useEffect,
+  useState,
+} from "react";
 import { InputLegacy as Input } from "../input-legacy";
+import type { RGBAValue } from "./Color";
 
-import rgbaInputCss from "./RGBAInput.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import rgbaInputCss from "./RGBAInput.css";
 
 const withBaseName = makePrefixer("saltColorChooser");
 interface RGBInputProps {
   rgbaValue: RGBAValue;
   value: "r" | "g" | "b";
-  onSubmit: (rgb: RGBAValue, e?: React.ChangeEvent) => void;
+  onSubmit: (rgb: RGBAValue, e?: ChangeEvent) => void;
 }
 
 export const RGBInput = ({
@@ -27,7 +33,7 @@ export const RGBInput = ({
   });
 
   const [rgbaInputValue, setRgbaInputValue] = useState<number | string>(
-    rgbaValue ? rgbaValue[value] : ""
+    rgbaValue ? rgbaValue[value] : "",
   );
 
   useEffect(() => {
@@ -35,12 +41,12 @@ export const RGBInput = ({
   }, [rgbaValue, value]);
 
   const handleRGBInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    value: string
+    e: ChangeEvent<HTMLInputElement>,
+    value: string,
   ): void => {
     let rgb: string | number;
 
-    rgb = parseInt(value);
+    rgb = Number.parseInt(value);
 
     if (value.trim() === "" || Number.isNaN(rgb)) {
       rgb = "";
@@ -49,7 +55,7 @@ export const RGBInput = ({
     setRgbaInputValue(rgb);
   };
 
-  const handleKeyDownRGB = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyDownRGB = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === "Enter") {
       const newRgb = { ...rgbaValue, [value]: e.currentTarget.value };
       const validatedRgb = {
@@ -63,7 +69,7 @@ export const RGBInput = ({
     }
   };
 
-  const handleOnBlurRGB = (e: React.FocusEvent<HTMLInputElement>): void => {
+  const handleOnBlurRGB = (e: FocusEvent<HTMLInputElement>): void => {
     const newRgb = { ...rgbaValue, [value]: e.target.value };
     const validatedRgb = {
       r: Math.max(0, Math.min(newRgb.r, 255)),

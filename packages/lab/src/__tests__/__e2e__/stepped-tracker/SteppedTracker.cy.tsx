@@ -1,10 +1,10 @@
-import {
-  SteppedTracker,
-  TrackerStep,
-  StepLabel,
-} from "../../../stepped-tracker";
 import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
 import { composeStories } from "@storybook/react";
+import {
+  StepLabel,
+  SteppedTracker,
+  TrackerStep,
+} from "../../../stepped-tracker";
 
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
@@ -94,7 +94,7 @@ describe("GIVEN a SteppedTracker", () => {
         {labels.map((label, key) => (
           <TrackerStep
             key={key}
-            state={key === completedStep ? "completed" : undefined}
+            stage={key === completedStep ? "completed" : undefined}
           >
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
@@ -114,7 +114,7 @@ describe("GIVEN a SteppedTracker", () => {
       .should("not.exist");
   });
 
-  it("should show completed icon if a state is completed and active", () => {
+  it("should show completed icon if stage prop is completed and step is active", () => {
     const labels = ["Step 1", "Step 2", "Step 3"];
 
     const stepNum = 1;
@@ -124,7 +124,7 @@ describe("GIVEN a SteppedTracker", () => {
         {labels.map((label, key) => (
           <TrackerStep
             key={key}
-            state={key === stepNum ? "completed" : undefined}
+            stage={key === stepNum ? "completed" : undefined}
           >
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
@@ -142,5 +142,93 @@ describe("GIVEN a SteppedTracker", () => {
       .not(`:nth-child(${stepNum + 1})`)
       .findByTestId("StepActiveIcon")
       .should("not.exist");
+  });
+
+  it("should show warning icon if status prop is warning", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const TestComponent = (
+      <SteppedTracker activeStep={0} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep key={key} status={key === 1 ? "warning" : undefined}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${2})`)
+      .findByTestId("WarningSolidIcon")
+      .should("exist");
+  });
+
+  it("should show completed icon if status prop is warning but stage prop is completed", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const TestComponent = (
+      <SteppedTracker activeStep={0} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep
+            key={key}
+            stage={key <= 1 ? "completed" : undefined}
+            status={key === 1 ? "warning" : undefined}
+          >
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${2})`)
+      .findByTestId("StepSuccessIcon")
+      .should("exist");
+  });
+
+  it("should show active icon if status prop is warning but step is active", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const TestComponent = (
+      <SteppedTracker activeStep={1} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep key={key} status={key === 1 ? "warning" : undefined}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${2})`)
+      .findByTestId("StepActiveIcon")
+      .should("exist");
+  });
+
+  it("should show error icon if status prop is error", () => {
+    const labels = ["Step 1", "Step 2", "Step 3"];
+
+    const TestComponent = (
+      <SteppedTracker activeStep={0} style={{ width: 300 }}>
+        {labels.map((label, key) => (
+          <TrackerStep key={key} status={key === 1 ? "error" : undefined}>
+            <StepLabel>{label}</StepLabel>
+          </TrackerStep>
+        ))}
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${2})`)
+      .findByTestId("ErrorSolidIcon")
+      .should("exist");
   });
 });

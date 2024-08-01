@@ -1,20 +1,20 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { ComponentType, forwardRef, Ref, useRef } from "react";
+import { type ComponentType, type Ref, forwardRef, useRef } from "react";
 
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
+import { useWidth } from "../list-deprecated/internal/useWidth";
 import {
   DefaultComboBox,
-  DefaultComboBoxProps,
+  type DefaultComboBoxProps,
 } from "./internal/DefaultComboBox";
 import {
   MultiSelectComboBox,
-  MultiSelectComboBoxProps,
+  type MultiSelectComboBoxProps,
 } from "./internal/MultiSelectComboBox";
-import { useWidth } from "../list-deprecated/internal/useWidth";
-import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import comboBoxCss from "./ComboBox.css";
 
@@ -99,7 +99,7 @@ export const ComboBoxDeprecated = forwardRef<
 
   const id = useId(idProp);
   const [rootRef, rootWidth] = useWidth<HTMLDivElement>(
-    width == null && listWidth == null
+    width == null && listWidth == null,
   );
 
   const ComboBoxComponent = (
@@ -112,9 +112,9 @@ export const ComboBoxDeprecated = forwardRef<
         withBaseName(),
         {
           [withBaseName("disabled")]: disabled,
-          [withBaseName(`field`)]: inFormField,
+          [withBaseName("field")]: inFormField,
         },
-        className
+        className,
       )}
       id={id}
       ref={useForkRef(ref, rootRef)}

@@ -1,23 +1,23 @@
+import {
+  Pill,
+  type PillProps,
+  Tooltip,
+  makePrefixer,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type MutableRefObject,
+  type SyntheticEvent,
   memo,
-  MutableRefObject,
-  SyntheticEvent,
   useRef,
   useState,
 } from "react";
-import {
-  makePrefixer,
-  Tooltip,
-  useIsomorphicLayoutEffect,
-  Pill,
-  PillProps,
-} from "@salt-ds/core";
-import { getWidth } from "./useWidth";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import inputPillCss from "./InputPill.css";
-import { CloseIcon } from "@salt-ds/icons";
+import { getWidth } from "./useWidth";
 
 const withBaseName = makePrefixer("saltInputPill");
 
@@ -85,7 +85,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     () => () => {
       pillsRef.current[index] = undefined;
     },
-    [pillsRef, index]
+    [pillsRef, index],
   );
 
   const handleClose = (event: SyntheticEvent) => {
@@ -101,7 +101,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
             [withBaseName("expanded")]: isRemovable,
             [withBaseName("hidden")]: hidden,
           },
-          className
+          className,
         )}
         tabIndex={-1}
         onClick={isRemovable ? handleClose : undefined}

@@ -35,7 +35,7 @@ describe("A list", () => {
   });
   it('should render with a customised "displayedItemCount"', () => {
     cy.mount(
-      <List borderless displayedItemCount={2} itemHeight={10} source={ITEMS} />
+      <List borderless displayedItemCount={2} itemHeight={10} source={ITEMS} />,
     );
     // 20 = itemHeight * displayedItemCount + gaps (1 gap * 0)
     cy.findByRole("listbox").should("have.css", "max-height", "20px");
@@ -48,7 +48,7 @@ describe("A list", () => {
         itemGapSize={1}
         itemHeight={10}
         source={ITEMS}
-      />
+      />,
     );
     // 21 = itemHeight * displayedItemCount + gaps (1 gap * 1)
     cy.findByRole("listbox").should("have.css", "max-height", "21px");
@@ -57,7 +57,7 @@ describe("A list", () => {
     cy.mount(
       <div style={{ width: 600 }}>
         <List source={ITEMS} />
-      </div>
+      </div>,
     );
     cy.findByRole("listbox")
       .should("have.attr", "style")
@@ -104,7 +104,7 @@ describe("A list", () => {
     const getItemHeight = (index?: number) =>
       index !== undefined ? height[index] : 0;
     cy.mount(
-      <List getItemHeight={getItemHeight} itemHeight={50} source={ITEMS} />
+      <List getItemHeight={getItemHeight} itemHeight={50} source={ITEMS} />,
     );
     cy.findAllByRole("option").eq(0).should("have.css", "height", "20px");
     cy.findAllByRole("option").eq(1).should("have.css", "height", "30px");

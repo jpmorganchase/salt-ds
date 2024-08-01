@@ -1,0 +1,159 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "main"
+  },
+  "files": {
+    "ignore": [
+      ".next",
+      "mockServiceWorker.js",
+      "*-props.json",
+      ".tmp",
+      "package.json"
+    ]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        // Changed to warn because we have a lot of non-null assertions.
+        "noNonNullAssertion": "warn"
+      },
+      "complexity": {
+        // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
+        "noForEach": "warn"
+      },
+      "a11y": {
+        // Disabled because autofocus is necessary in some cases.
+        "noAutofocus": "off",
+        // Disabled because we write a lot of custom components.
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "noNoninteractiveTabindex": "off",
+        // Disabled until biome doesn't flag hidden SVGs.
+        "noSvgWithoutTitle": "off",
+        // Changed to warn because biome has some false positives.
+        "useAriaPropsForRole": "warn"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": {
+          "level": "warn",
+          "options": {
+            "hooks": [
+              {
+                "name": "useIsomorphicLayoutEffect",
+                "closureIndex": 0,
+                "dependenciesIndex": 1
+              },
+              {
+                "name": "useControlled",
+                "stableResult": [1]
+              }
+            ]
+          }
+        }
+      },
+      "suspicious": {
+        // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
+        "noArrayIndexKey": "warn",
+        // Changed to warn because it is useful to keep this in mind, but it doesn't need to be a strict requirement.
+        "noExplicitAny": "warn"
+      }
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "lineWidth": 200
+    },
+    "linter": {
+      "enabled": true
+    },
+    "parser": {
+      "cssModules": true
+    }
+  },
+  "overrides": [
+    {
+      // Disable some rules for tests and stories, because they are not production code.
+      "include": ["__tests__/**", "stories/**"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useButtonType": "off"
+          },
+          "complexity": {
+            "noForEach": "off"
+          },
+          "suspicious": {
+            "noImplicitAnyLet": "off"
+          }
+        }
+      }
+    },
+    {
+      // Disable some rules for legacy code, because it is not worth fixing.
+      "include": [
+        "lab/src/responsive/**",
+        "packages/data-grid/**",
+        "lab/src/common-hooks/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noParameterAssign": "off"
+          },
+          "suspicious": {
+            "noAssignInExpressions": "off"
+          }
+        }
+      }
+    },
+    {
+      // Disable noExplicitAny for utils, because any is useful in some cases.
+      "include": ["utils/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      // Disable noArrayIndexKey for layout examples because array indexes are useful in this case.
+      "include": [
+        "packages/*/stories/*-layout/**",
+        "site/src/examples/*-layout/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
+    },
+    {
+      // Disable noShadowRestrictedNames for examples and stories because it is useful to shadow restricted names for example names.
+      "include": ["site/src/examples/**", "packages/*/stories/**"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noShadowRestrictedNames": "off"
+          }
+        }
+      }
+    }
+  ]
+}

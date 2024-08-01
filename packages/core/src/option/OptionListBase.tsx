@@ -1,8 +1,8 @@
-import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "../utils";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { makePrefixer } from "../utils";
 import optionListCss from "./OptionList.css";
 
 const withBaseName = makePrefixer("saltOptionList");
@@ -29,5 +29,5 @@ export const OptionListBase = forwardRef<HTMLDivElement, OptionListBaseProps>(
         {children}
       </div>
     );
-  }
+  },
 );

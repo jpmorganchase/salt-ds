@@ -1,4 +1,4 @@
-import { useOf, Of } from "@storybook/addon-docs";
+import { type Of, useOf } from "@storybook/addon-docs";
 import { ResetWrapper } from "@storybook/components";
 import { ClassNameRow } from "./ClassNameRow";
 import { EmptyBlock } from "./EmptyBlock";
@@ -6,7 +6,6 @@ import { TableWrapper } from "./TableWrapper";
 import { getClassNames } from "./utils";
 
 export function CSSClassTable(props: { of: Of }): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const { of } = props;
 
   const resolved = useOf(of);

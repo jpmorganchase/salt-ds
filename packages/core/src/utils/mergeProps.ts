@@ -14,7 +14,7 @@ interface Props {
  */
 export function mergeProps(
   propsA: Props,
-  propsB: Props
+  propsB: Props,
 ): Record<string, unknown> {
   const props = { ...propsA };
 

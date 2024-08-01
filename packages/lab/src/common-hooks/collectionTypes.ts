@@ -1,5 +1,8 @@
-import { ReactNode } from "react";
-import { SelectionStrategy, SingleSelectionStrategy } from "./selectionTypes";
+import type { ReactNode } from "react";
+import type {
+  SelectionStrategy,
+  SingleSelectionStrategy,
+} from "./selectionTypes";
 
 export interface CollectionIndexer {
   value: number;
@@ -60,15 +63,15 @@ export type CollectionHookResult<T> = {
   itemById: (id: string) => T | never;
   itemToCollectionItem: <
     Selection extends SelectionStrategy,
-    U extends T | T[] | null | undefined
+    U extends T | T[] | null | undefined,
   >(
-    item: U
+    item: U,
   ) => Selection extends SingleSelectionStrategy
     ? CollectionItem<T> | null
     : CollectionItem<T>[];
 
   stringToCollectionItem: <Selection extends SelectionStrategy>(
-    item: string | null | undefined
+    item: string | null | undefined,
   ) => Selection extends SingleSelectionStrategy
     ? CollectionItem<T> | null
     : CollectionItem<T>[];

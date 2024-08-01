@@ -1,8 +1,8 @@
-import React from "react";
+import type { FC, PropsWithChildren } from "react";
 
 import {
   Link as LinkComponent,
-  LinkProps,
+  type LinkProps,
 } from "@jpmorganchase/mosaic-components";
 import styles from "./A.module.css";
 
@@ -10,7 +10,7 @@ export interface MarkdownLinkProps extends LinkProps {
   href?: string;
 }
 
-export const Link: React.FC<React.PropsWithChildren<MarkdownLinkProps>> = ({
+export const Link: FC<PropsWithChildren<MarkdownLinkProps>> = ({
   href,
   ...rest
 }) => (

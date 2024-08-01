@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
 import { clsx } from "clsx";
+import { forwardRef } from "react";
 import {
-  FloatingComponentProps,
+  type FloatingComponentProps,
   makePrefixer,
   useFloatingComponent,
 } from "../utils";
@@ -26,7 +26,7 @@ export const OptionList = forwardRef<HTMLDivElement, OptionListProps>(
           {
             [withBaseName("collapsed")]: collapsed,
           },
-          className
+          className,
         )}
         role="listbox"
         open={open}
@@ -36,5 +36,5 @@ export const OptionList = forwardRef<HTMLDivElement, OptionListProps>(
         <OptionListBase>{children}</OptionListBase>
       </FloatingComponent>
     );
-  }
+  },
 );

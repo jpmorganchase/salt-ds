@@ -1,10 +1,10 @@
-import { ReactElement, useState } from "react";
 import { Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
+import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 type Step = {
   label: string;
-  state: "default" | "completed";
+  stage: "pending" | "completed";
 };
 
 type Steps = Step[];
@@ -12,19 +12,19 @@ type Steps = Step[];
 const sampleSteps: Steps = [
   {
     label: "Step One",
-    state: "default",
+    stage: "pending",
   },
   {
     label: "Step Two",
-    state: "default",
+    stage: "pending",
   },
   {
     label: "Step Three",
-    state: "default",
+    stage: "pending",
   },
   {
     label: "Step Four",
-    state: "default",
+    stage: "pending",
   },
 ];
 
@@ -47,10 +47,10 @@ export const NonSequentialProgress = (): ReactElement => {
         i === activeStep
           ? {
               ...step,
-              state: step.state === "default" ? "completed" : "default",
+              stage: step.stage === "pending" ? "completed" : "pending",
             }
-          : step
-      )
+          : step,
+      ),
     );
   };
 
@@ -61,8 +61,8 @@ export const NonSequentialProgress = (): ReactElement => {
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
       <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }, key) => (
-          <TrackerStep state={state} key={key}>
+        {steps.map(({ label, stage }, key) => (
+          <TrackerStep stage={stage} key={key}>
             <StepLabel>{label}</StepLabel>
           </TrackerStep>
         ))}

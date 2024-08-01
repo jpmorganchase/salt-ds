@@ -1,17 +1,17 @@
-import { ReactElement } from "react";
 import {
-  FormField,
   Checkbox,
-  GridLayout,
-  StackLayout,
-  FormFieldLabel,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
+  GridLayout,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
+import type { CSSProperties, ReactElement } from "react";
 
 export const GroupedWithEmptySlot = (): ReactElement => (
   <StackLayout
-    style={{ "--saltFormField-label-width": "100px" } as React.CSSProperties}
+    style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
     role={"group"}
   >
     <FormField>

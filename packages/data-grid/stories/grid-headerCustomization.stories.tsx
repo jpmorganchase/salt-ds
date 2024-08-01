@@ -1,6 +1,14 @@
 import {
+  FlexItem,
+  FlexLayout,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
+import { ArrowDownIcon, ArrowUpIcon, HomeIcon, MenuIcon } from "@salt-ds/icons";
+import { MenuButton } from "@salt-ds/lab";
+import {
+  type SyntheticEvent,
   createContext,
-  SyntheticEvent,
   useCallback,
   useContext,
   useMemo,
@@ -8,24 +16,16 @@ import {
 } from "react";
 import {
   ColumnGroup,
-  ColumnGroupCellValueProps,
+  type ColumnGroupCellValueProps,
   Grid,
-  GridCellValueProps,
+  type GridCellValueProps,
   GridColumn,
-  GridHeaderValueProps,
+  type GridHeaderValueProps,
   NumericColumn,
 } from "../src";
-import { MenuButton } from "@salt-ds/lab";
-import {
-  FlexItem,
-  FlexLayout,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
-import { ArrowDownIcon, ArrowUpIcon, MenuIcon, HomeIcon } from "@salt-ds/icons";
 import { randomInt, randomNumber } from "./utils";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Data Grid",
@@ -175,7 +175,7 @@ const SummaryCellValue = (props: GridCellValueProps<ExampleRow>) => {
  * An example of how to use the `headerValueComponent` property of columns and
  * column groups.
  * */
-const HeaderCustomizationTemplate: StoryFn<{}> = () => {
+const HeaderCustomizationTemplate: StoryFn = () => {
   const rowData: ExampleRow[] = useMemo(() => {
     const names = [
       "Espresso",
@@ -242,7 +242,7 @@ const HeaderCustomizationTemplate: StoryFn<{}> = () => {
       setSortBy,
       sortOrder,
       setSortOrder,
-    ]
+    ],
   );
 
   const rowKeyGetter = useCallback((row: ExampleRow) => row.name, []);

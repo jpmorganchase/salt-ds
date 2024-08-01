@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { LayoutProps } from "../types/index";
+import React, { type FC } from "react";
+import type { LayoutProps } from "../types/index";
 import styles from "./LayoutFullWidth.module.css";
 
 export const LayoutFullWidth: FC<LayoutProps> = ({

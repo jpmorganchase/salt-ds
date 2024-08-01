@@ -1,20 +1,20 @@
-import {
-  ComponentPropsWithoutRef,
-  FocusEvent,
-  forwardRef,
-  KeyboardEvent,
-  MouseEvent,
-} from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { ChevronRightIcon } from "@salt-ds/icons";
 import { useFloatingTree, useListItem } from "@floating-ui/react";
+import { ChevronRightIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  forwardRef,
+} from "react";
 import { makePrefixer, useForkRef } from "../utils";
 
 import menuItemCss from "./MenuItem.css";
-import { useIsMenuTrigger } from "./MenuTriggerContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
+import { useIsMenuTrigger } from "./MenuTriggerContext";
 
 export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -56,7 +56,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           {
             [withBaseName("blurActive")]: blurActive,
           },
-          className
+          className,
         )}
         role="menuitem"
         aria-disabled={disabled || undefined}
@@ -66,16 +66,15 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
             const element = event.currentTarget;
             onKeyDown?.(event);
             if (
-              (event.key == " " || event.key == "Enter") &&
+              (event.key === " " || event.key === "Enter") &&
               !triggersSubmenu &&
               !disabled
             ) {
               event.preventDefault();
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars -- view is unused.
               const { view, ...eventInit } = event;
               queueMicrotask(() => {
                 element.dispatchEvent(
-                  new window.MouseEvent("click", eventInit)
+                  new window.MouseEvent("click", eventInit),
                 );
               });
               tree?.events.emit("click");
@@ -104,5 +103,5 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
         )}
       </div>
     );
-  }
+  },
 );

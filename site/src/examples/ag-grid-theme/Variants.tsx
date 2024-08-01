@@ -1,7 +1,7 @@
 import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
-import { SyntheticEvent, useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";

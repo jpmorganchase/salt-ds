@@ -1,53 +1,67 @@
+import {
+  StyleInjectionProvider,
+  useComponentCssInjection,
+} from "@salt-ds/styles";
+import { type WindowContextType, useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import React, {
+import {
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  cloneElement,
   createContext,
-  HTMLAttributes,
-  ReactElement,
-  ReactNode,
+  isValidElement,
   useContext,
   useMemo,
 } from "react";
 import { AriaAnnouncerProvider } from "../aria-announcer";
 import {
-  Breakpoints,
-  DEFAULT_BREAKPOINTS,
   BreakpointProvider,
+  type Breakpoints,
+  DEFAULT_BREAKPOINTS,
   useMatchedBreakpoints,
 } from "../breakpoints";
-import { Density, Mode, ThemeName, UNSTABLE_ActionFont } from "../theme";
-import { ViewportProvider } from "../viewport";
+import type {
+  Accent,
+  ActionFont,
+  Corner,
+  Density,
+  HeadingFont,
+  Mode,
+  ThemeName,
+} from "../theme";
 import { useIsomorphicLayoutEffect } from "../utils";
-
+import { ViewportProvider } from "../viewport";
 import saltProviderCss from "./SaltProvider.css";
-import { useWindow, WindowContextType } from "@salt-ds/window";
-import {
-  useComponentCssInjection,
-  StyleInjectionProvider,
-} from "@salt-ds/styles";
-import { UNSTABLE_Corner } from "../theme/Corner";
-import { UNSTABLE_HeadingFont } from "../theme/HeadingFont";
-import { UNSTABLE_Accent } from "../theme/Accent";
 
 export const DEFAULT_DENSITY = "medium";
 
 const DEFAULT_THEME_NAME = "salt-theme";
-const UNSTABLE_ADDITIONAL_THEME_NAME = "salt-theme-next";
+const DEFAULT_THEME_NAME_NEXT = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
-const DEFAULT_CORNER: UNSTABLE_Corner = "sharp";
-const DEFAULT_HEADING_FONT: UNSTABLE_HeadingFont = "Open Sans";
-const DEFAULT_ACCENT: UNSTABLE_Accent = "blue";
-const DEFAULT_ACTION_FONT: UNSTABLE_ActionFont = "Open Sans";
+const DEFAULT_CORNER: Corner = "sharp";
+const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
+const DEFAULT_ACCENT: Accent = "blue";
+const DEFAULT_ACTION_FONT: ActionFont = "Open Sans";
 export interface ThemeContextProps {
   theme: ThemeName;
   mode: Mode;
   window?: WindowContextType;
   /** Only available when using SaltProviderNext. */
   themeNext: boolean;
-  UNSTABLE_corner: UNSTABLE_Corner;
-  UNSTABLE_headingFont: UNSTABLE_HeadingFont;
-  UNSTABLE_accent: UNSTABLE_Accent;
-  UNSTABLE_actionFont: UNSTABLE_ActionFont;
+  corner: Corner;
+  /** @deprecated use `corner`*/
+  UNSTABLE_corner: Corner;
+  headingFont: HeadingFont;
+  /** @deprecated use `headingFont` */
+  UNSTABLE_headingFont: HeadingFont;
+  accent: Accent;
+  /** @deprecated use `accent` */
+  UNSTABLE_accent: Accent;
+  actionFont: ActionFont;
+  /** @deprecated use `actionFont` */
+  UNSTABLE_actionFont: ActionFont;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -56,9 +70,13 @@ export const ThemeContext = createContext<ThemeContextProps>({
   theme: "",
   mode: DEFAULT_MODE,
   themeNext: false,
+  corner: DEFAULT_CORNER,
   UNSTABLE_corner: DEFAULT_CORNER,
+  headingFont: DEFAULT_HEADING_FONT,
   UNSTABLE_headingFont: DEFAULT_HEADING_FONT,
+  accent: DEFAULT_ACCENT,
   UNSTABLE_accent: DEFAULT_ACCENT,
+  actionFont: DEFAULT_ACTION_FONT,
   UNSTABLE_actionFont: DEFAULT_ACTION_FONT,
 });
 
@@ -70,17 +88,16 @@ export const BreakpointContext =
  */
 const getThemeNames = (
   themeName: ThemeName,
-  themeNext?: boolean
+  themeNext?: boolean,
 ): ThemeName => {
   if (themeNext) {
     return themeName === DEFAULT_THEME_NAME
-      ? clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME)
-      : clsx(DEFAULT_THEME_NAME, UNSTABLE_ADDITIONAL_THEME_NAME, themeName);
-  } else {
-    return themeName === DEFAULT_THEME_NAME
-      ? themeName
-      : clsx(DEFAULT_THEME_NAME, themeName);
+      ? clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT)
+      : clsx(DEFAULT_THEME_NAME, DEFAULT_THEME_NAME_NEXT, themeName);
   }
+  return themeName === DEFAULT_THEME_NAME
+    ? themeName
+    : clsx(DEFAULT_THEME_NAME, themeName);
 };
 
 interface ThemeNextProps {
@@ -105,7 +122,7 @@ const createThemedChildren = ({
   mode: Mode;
   applyClassesTo?: TargetElement;
 } & ThemeNextProps &
-  UNSTABLE_SaltProviderNextAdditionalProps) => {
+  SaltProviderNextAdditionalProps) => {
   const themeNamesString = getThemeNames(themeName, themeNext);
   const themeNextProps = {
     "data-corner": corner,
@@ -115,42 +132,40 @@ const createThemedChildren = ({
   };
   if (applyClassesTo === "root") {
     return children;
-  } else if (applyClassesTo === "child") {
-    if (React.isValidElement<HTMLAttributes<HTMLElement>>(children)) {
-      return React.cloneElement(children, {
+  }
+  if (applyClassesTo === "child") {
+    if (isValidElement<HTMLAttributes<HTMLElement>>(children)) {
+      return cloneElement(children, {
         className: clsx(
           children.props?.className,
           themeNamesString,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         ),
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         "data-mode": mode,
         ...(themeNext ? themeNextProps : {}),
       });
-    } else {
-      console.warn(
-        `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
-        Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
-        div element will wrap your child elements`
-      );
-      return children;
     }
-  } else {
-    return (
-      <div
-        className={clsx(
-          "salt-provider",
-          themeNamesString,
-          `salt-density-${density}`
-        )}
-        data-mode={mode}
-        {...(themeNext ? themeNextProps : {})}
-      >
-        {children}
-      </div>
+    console.warn(
+      `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
+        Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
+        div element will wrap your child elements`,
     );
+    return children;
   }
+  return (
+    <div
+      className={clsx(
+        "salt-provider",
+        themeNamesString,
+        `salt-density-${density}`,
+      )}
+      data-mode={mode}
+      {...(themeNext ? themeNextProps : {})}
+    >
+      {children}
+    </div>
+  );
 };
 
 type TargetElement = "root" | "scope" | "child";
@@ -229,7 +244,7 @@ function InternalSaltProvider({
   accent: accentProp,
   actionFont: actionFontProp,
 }: Omit<
-  SaltProviderProps & ThemeNextProps & UNSTABLE_SaltProviderNextProps,
+  SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
 >) {
   const inheritedDensity = useContext(DensityContext);
@@ -237,10 +252,10 @@ function InternalSaltProvider({
     theme: inheritedTheme,
     mode: inheritedMode,
     window: inheritedWindow,
-    UNSTABLE_corner: inheritedCorner,
-    UNSTABLE_headingFont: inheritedHeadingFont,
-    UNSTABLE_accent: inheritedAccent,
-    UNSTABLE_actionFont: inheritedActionFont,
+    corner: inheritedCorner,
+    headingFont: inheritedHeadingFont,
+    accent: inheritedAccent,
+    actionFont: inheritedActionFont,
   } = useContext(ThemeContext);
 
   const isRootProvider = inheritedTheme === undefined || inheritedTheme === "";
@@ -272,6 +287,11 @@ function InternalSaltProvider({
       mode,
       window: targetWindow,
       themeNext: Boolean(themeNext),
+      corner: corner,
+      headingFont: headingFont,
+      accent: accent,
+      actionFont: actionFont,
+      // Backward compatilibty
       UNSTABLE_corner: corner,
       UNSTABLE_headingFont: headingFont,
       UNSTABLE_accent: accent,
@@ -286,7 +306,7 @@ function InternalSaltProvider({
       headingFont,
       accent,
       actionFont,
-    ]
+    ],
   );
 
   const themedChildren = createThemedChildren({
@@ -307,11 +327,11 @@ function InternalSaltProvider({
     const themeNames = themeNamesString.split(" ");
 
     if (applyClassesTo === "root" && targetWindow) {
-      if (inheritedWindow != targetWindow) {
+      if (inheritedWindow !== targetWindow) {
         // add the styles we want to apply
         targetWindow.document.documentElement.classList.add(
           ...themeNames,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         );
         targetWindow.document.documentElement.dataset.mode = mode;
         if (themeNext) {
@@ -323,7 +343,7 @@ function InternalSaltProvider({
         }
       } else {
         console.warn(
-          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+          "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
         );
       }
     }
@@ -332,7 +352,7 @@ function InternalSaltProvider({
         // When unmounting/remounting, remove the applied styles from the root
         targetWindow.document.documentElement.classList.remove(
           ...themeNames,
-          `salt-density-${density}`
+          `salt-density-${density}`,
         );
         targetWindow.document.documentElement.dataset.mode = undefined;
         if (themeNext) {
@@ -373,9 +393,8 @@ function InternalSaltProvider({
 
   if (isRootProvider) {
     return <AriaAnnouncerProvider>{saltProvider}</AriaAnnouncerProvider>;
-  } else {
-    return saltProvider;
   }
+  return saltProvider;
 }
 
 export function SaltProvider({
@@ -389,20 +408,42 @@ export function SaltProvider({
   );
 }
 
-interface UNSTABLE_SaltProviderNextAdditionalProps {
-  corner?: UNSTABLE_Corner;
-  headingFont?: UNSTABLE_HeadingFont;
-  accent?: UNSTABLE_Accent;
-  actionFont?: UNSTABLE_ActionFont;
+interface SaltProviderNextAdditionalProps {
+  /**
+   * Either "sharp" or "rounded".
+   * Determines selected components corner radius.
+   * @default "sharp"
+   */
+  corner?: Corner;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of display and heading text.
+   * @default "Open Sans"
+   */
+  headingFont?: HeadingFont;
+  /**
+   * Either "blue" or "teal".
+   * Determines accent color used across components, e.g. Accent Button, List, Calendar.
+   * @default "blue"
+   */
+  accent?: Accent;
+  /**
+   * Either "Open Sans" or "Amplitude".
+   * Determines font family of action components, mostly Buttons.
+   * @default "Open Sans"
+   */
+  actionFont?: ActionFont;
 }
 
-export type UNSTABLE_SaltProviderNextProps = SaltProviderProps &
-  UNSTABLE_SaltProviderNextAdditionalProps;
+export type SaltProviderNextProps = SaltProviderProps &
+  SaltProviderNextAdditionalProps;
+/** @deprecated use `SaltProviderNextProps` */
+export type UNSTABLE_SaltProviderNextProps = SaltProviderNextProps;
 
-export function UNSTABLE_SaltProviderNext({
+export function SaltProviderNext({
   enableStyleInjection,
   ...restProps
-}: UNSTABLE_SaltProviderNextProps) {
+}: SaltProviderNextProps) {
   return (
     <StyleInjectionProvider value={enableStyleInjection}>
       {/* Leveraging InternalSaltProvider being not exported, so we can pass more props than previously supported */}
@@ -410,9 +451,10 @@ export function UNSTABLE_SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
+/** @deprecated use `SaltProviderNext` */
+export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { window, ...contextWithoutWindow } = useContext(ThemeContext);
 
   return contextWithoutWindow;

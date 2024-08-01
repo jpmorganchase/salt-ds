@@ -1,16 +1,16 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
 import {
-  GridLayout,
-  GridItem,
-  GRID_ALIGNMENT_BASE as gridItemAlignment,
   FormField,
   FormFieldLabel,
-  RadioButtonGroup,
+  GridItem,
+  GridLayout,
   RadioButton,
+  RadioButtonGroup,
+  GRID_ALIGNMENT_BASE as gridItemAlignment,
 } from "@salt-ds/core";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import positioningItemsStyles from "./PositioningItems.module.css";
+import styles from "./index.module.css";
 
 type GridItemAlignmentType = (typeof gridItemAlignment)[number];
 
@@ -21,14 +21,14 @@ export const PositioningItems = (): ReactElement => {
     useState<GridItemAlignmentType>("stretch");
 
   const handleVerticalChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     setVerticalAlignment(value as GridItemAlignmentType);
   };
 
   const handleHorizontalChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     setHorizontalAlignment(value as GridItemAlignmentType);
@@ -71,7 +71,7 @@ export const PositioningItems = (): ReactElement => {
               <RadioButton
                 key={alignment}
                 label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1
+                  1,
                 )}`}
                 value={alignment}
               />
@@ -92,7 +92,7 @@ export const PositioningItems = (): ReactElement => {
               <RadioButton
                 key={alignment}
                 label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1
+                  1,
                 )}`}
                 value={alignment}
               />

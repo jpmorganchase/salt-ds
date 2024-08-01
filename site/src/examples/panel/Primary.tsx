@@ -1,6 +1,21 @@
-import { ReactElement } from "react";
-import { Panel } from "@salt-ds/core";
+import { FlexLayout, Panel } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Primary = (): ReactElement => (
-  <Panel>Example of a primary Panel</Panel>
+  <FlexLayout
+    style={{
+      width: "90%",
+      height: "90%",
+    }}
+  >
+    <Panel
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      Example of a primary Panel
+    </Panel>
+  </FlexLayout>
 );

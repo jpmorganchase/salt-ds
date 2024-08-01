@@ -1,14 +1,14 @@
-import { useForkRef, UseTooltipProps } from "@salt-ds/core";
-import { ComponentType, ForwardedRef, forwardRef } from "react";
+import { type UseTooltipProps, useForkRef } from "@salt-ds/core";
+import { type ComponentType, type ForwardedRef, forwardRef } from "react";
 import {
   TokenizedInputBase,
-  TokenizedInputBaseProps,
+  type TokenizedInputBaseProps,
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
 
 export type StringToItem<Item> = (
   selectedItems: Array<Item>,
-  value: string
+  value: string,
 ) => Item | null | undefined;
 
 export type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
@@ -37,7 +37,7 @@ export interface TokenizedInputProps<Item>
 
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   props: TokenizedInputProps<Item>,
-  ref: ForwardedRef<HTMLDivElement>
+  ref: ForwardedRef<HTMLDivElement>,
 ) {
   const { inputRef: inputRefProp, ...restProps } = props;
 

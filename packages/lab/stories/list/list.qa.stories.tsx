@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, QAContainerProps } from "docs/components";
+import { QAContainer, type QAContainerProps } from "docs/components";
 
 import { List } from "@salt-ds/lab";
 

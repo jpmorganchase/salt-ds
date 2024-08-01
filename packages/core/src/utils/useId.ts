@@ -2,7 +2,6 @@ import * as React from "react";
 
 // Workaround for https://github.com/webpack/webpack/issues/14814#issuecomment-1536757985
 // Without `toString()`, downstream library using webpack to re-bundle will error
-// eslint-disable-next-line
 const maybeReactUseId: undefined | (() => string) = (React as any)[
   "useId".toString()
 ];
@@ -24,15 +23,14 @@ export function useId(idOverride?: string): string | undefined {
     const reactId = maybeReactUseId();
     return idOverride ?? reactId;
   }
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- `React.useId` is invariant at runtime.
+  // `React.useId` is invariant at runtime.
   return useIdLegacy(idOverride);
 }
 
 // Note: Some usages require that an id is returned on first call, not only post-first-render
 // (as with the useEffect solution). This can go away once we totally move to React 18
 export function useIdMemo(idOverride?: string): string {
-  const id = React.useMemo(() => {
+  return React.useMemo(() => {
     return idOverride ?? `salt-${++globalId}`;
   }, [idOverride]);
-  return id;
 }

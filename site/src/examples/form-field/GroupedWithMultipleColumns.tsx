@@ -1,12 +1,12 @@
-import { CSSProperties, ReactElement } from "react";
 import {
-  FormField,
   Checkbox,
-  StackLayout,
-  FormFieldLabel,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
+import type { CSSProperties, ReactElement } from "react";
 
 export const GroupedWithMultipleColumns = (): ReactElement => {
   return (

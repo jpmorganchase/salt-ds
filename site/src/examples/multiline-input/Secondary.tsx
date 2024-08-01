@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { MultilineInput } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 export const Secondary = (): ReactElement => (
   <MultilineInput

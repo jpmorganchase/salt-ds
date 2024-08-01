@@ -1,13 +1,13 @@
+import { LinearProgress } from "@salt-ds/core";
 import { useCallback, useMemo } from "react";
 import {
   Grid,
-  GridCellValueProps,
+  type GridCellValueProps,
   GridColumn,
   RowSelectionCheckboxColumn,
 } from "../src";
-import { LinearProgress } from "@salt-ds/core";
 import "./grid.stories.css";
-import { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Data Grid",
@@ -55,7 +55,7 @@ const PercentageCellValue = (props: GridCellValueProps<CurrencyPairRow>) => {
   );
 };
 
-const CellCustomizationTemplate: StoryFn<{}> = () => {
+const CellCustomizationTemplate: StoryFn = () => {
   const rowData: CurrencyPairRow[] = useMemo(() => {
     const currencies = ["AUD", "USD", "SGD", "GBP", "HKD", "NZD", "EUR"];
     const result: CurrencyPairRow[] = [];
@@ -77,7 +77,7 @@ const CellCustomizationTemplate: StoryFn<{}> = () => {
 
   const rowKeyGetter = useCallback(
     (row: CurrencyPairRow) => row.currencyPair,
-    []
+    [],
   );
 
   return (

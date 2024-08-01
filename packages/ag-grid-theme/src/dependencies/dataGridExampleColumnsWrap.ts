@@ -1,4 +1,4 @@
-import { ColDef } from "ag-grid-community";
+import type { ColDef } from "ag-grid-community";
 
 const dataGridExampleColumnsWrap: ColDef[] = [
   {

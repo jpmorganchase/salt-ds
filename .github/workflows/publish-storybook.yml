@@ -1,4 +1,5 @@
 name: Storybook Preview Publish
+run-name: Storybook publish for ${{ github.event.workflow_run.head_branch }}
 
 on:
   workflow_run:
@@ -64,7 +65,7 @@ jobs:
 
       - name: Update deploy status (success)
         uses: actions/github-script@v7
-        if: success() && github.event.workflow_run.event == 'pull_request'
+        if: success()
         with:
           script: |
             await github.rest.repos.createCommitStatus({
@@ -79,7 +80,7 @@ jobs:
 
       - name: Update deploy status (failure)
         uses: actions/github-script@v7
-        if: failure() && github.event.workflow_run.event == 'pull_request'
+        if: failure()
         with:
           script: |
             await github.rest.repos.createCommitStatus({

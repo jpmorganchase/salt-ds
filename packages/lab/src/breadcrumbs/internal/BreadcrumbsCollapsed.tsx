@@ -1,17 +1,17 @@
+import { OverflowMenuIcon } from "@salt-ds/icons";
 import {
   Children,
+  type Component,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
   isValidElement,
-  ReactNode,
   useCallback,
-  MouseEvent,
-  KeyboardEvent,
-  Component,
 } from "react";
-import { OverflowMenuIcon } from "@salt-ds/icons";
-import { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";
+import type { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";
+import { MenuButton, type MenuButtonProps } from "../../menu-button";
+import type { BreadcrumbProps } from "../Breadcrumb";
 import { useFocusMenuRemount } from "./useFocusMenuRemount";
-import { MenuButton, MenuButtonProps } from "../../menu-button";
-import { BreadcrumbProps } from "../Breadcrumb";
 
 export interface BreadcrumbsCollapsedProps
   extends Omit<MenuButtonProps, "CascadingMenuProps"> {
@@ -50,7 +50,7 @@ export const BreadcrumbsCollapsed = ({
     (sourceItem: MenuDescriptor, event: MouseEvent | KeyboardEvent): void => {
       shouldFocusOnMount.current = true;
     },
-    [shouldFocusOnMount]
+    [shouldFocusOnMount],
   );
 
   const menuItems: MenuDescriptor[] = [];

@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
 import { Card, SaltProvider, StackLayout, useTheme } from "@salt-ds/core";
+import type { ReactElement } from "react";
 
 const ThemeCard = (): ReactElement => {
   const { theme } = useTheme();

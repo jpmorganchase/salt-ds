@@ -1,5 +1,5 @@
-import { SyntheticEvent } from "react";
-import { CollectionItem } from "./collectionTypes";
+import type { KeyboardEvent, MouseEvent, SyntheticEvent } from "react";
+import type { CollectionItem } from "./collectionTypes";
 
 export const SINGLE = "default";
 export const MULTIPLE = "multiple";
@@ -18,24 +18,24 @@ export type SelectionStrategy =
 
 export type selectedType<
   Item,
-  Selection extends SelectionStrategy
+  Selection extends SelectionStrategy,
 > = Selection extends MultiSelectionStrategy ? Item[] : Item | null;
 
 export type SelectHandler<Item = string> = (
   event: SyntheticEvent,
-  selectedItem: Item
+  selectedItem: Item,
 ) => void;
 
 export type SelectionChangeHandler<
   Item = string,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > = (
   event: SyntheticEvent,
-  selected: Selection extends SingleSelectionStrategy ? Item | null : Item[]
+  selected: Selection extends SingleSelectionStrategy ? Item | null : Item[],
 ) => void;
 
 export const hasSelection = <Item = unknown>(
-  selected: Item | Item[] | null
+  selected: Item | Item[] | null,
 ): boolean => {
   return Array.isArray(selected)
     ? selected.length > 0
@@ -43,14 +43,14 @@ export const hasSelection = <Item = unknown>(
 };
 
 export const getFirstSelectedItem = <Item = unknown>(
-  selected: Item | Item[] | null
+  selected: Item | Item[] | null,
 ): Item | null => {
   return Array.isArray(selected) ? selected[0] : selected;
 };
 
 export interface SelectionProps<
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > {
   defaultSelected?: Selection extends SingleSelectionStrategy
     ? Item | null
@@ -62,17 +62,14 @@ export interface SelectionProps<
 }
 
 export interface ListHandlers {
-  onClick?: (event: React.MouseEvent) => void;
-  onKeyDown?: (event: React.KeyboardEvent) => void;
-  onKeyboardNavigation?: (
-    event: React.KeyboardEvent,
-    currentIndex: number
-  ) => void;
-  onMouseMove?: (event: React.MouseEvent) => void;
+  onClick?: (event: MouseEvent) => void;
+  onKeyDown?: (event: KeyboardEvent) => void;
+  onKeyboardNavigation?: (event: KeyboardEvent, currentIndex: number) => void;
+  onMouseMove?: (event: MouseEvent) => void;
 }
 export interface SelectionHookProps<
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > extends SelectionProps<CollectionItem<Item>, Selection> {
   disableSelection?: boolean;
   highlightedIdx: number;
@@ -84,7 +81,7 @@ export interface SelectionHookProps<
 
 export interface SelectionHookResult<
   Item,
-  Selection extends SelectionStrategy = "default"
+  Selection extends SelectionStrategy = "default",
 > {
   listHandlers: ListHandlers;
   selected: Selection extends SingleSelectionStrategy
@@ -93,6 +90,6 @@ export interface SelectionHookResult<
   setSelected: (
     selected: Selection extends SingleSelectionStrategy
       ? CollectionItem<Item> | null
-      : CollectionItem<Item>[]
+      : CollectionItem<Item>[],
   ) => void;
 }

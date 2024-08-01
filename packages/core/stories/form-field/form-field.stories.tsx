@@ -1,31 +1,31 @@
 import {
-  ChangeEvent,
-  ChangeEventHandler,
-  CSSProperties,
-  useState,
-} from "react";
-import {
+  Button,
   Checkbox,
   CheckboxGroup,
-  RadioButton,
-  RadioButtonGroup,
   FlowLayout,
+  FormField,
+  type FormFieldLabelPlacement,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
-  FormField,
-  Input,
-  InputProps,
-  Tooltip,
-  Text,
-  StackLayout,
   GridLayout,
-  FormFieldLabelPlacement,
-  Button,
+  Input,
+  type InputProps,
   MultilineInput,
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
   Switch,
+  Text,
+  Tooltip,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
-import { NoteIcon, InfoIcon } from "@salt-ds/icons";
+import { InfoIcon, NoteIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type CSSProperties,
+  type ChangeEvent,
+  type ChangeEventHandler,
+  useState,
+} from "react";
 
 export default {
   title: "Core/Form Field",
@@ -150,7 +150,7 @@ export const LabelLeftWithControls: StoryFn<typeof FormField> = (props) => {
   };
 
   const handleCheckboxChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     if (checkboxGroupValue.indexOf(value) === -1) {
@@ -161,8 +161,8 @@ export const LabelLeftWithControls: StoryFn<typeof FormField> = (props) => {
     } else {
       setCheckboxGroupValue((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
     props.onChange?.(event);
@@ -266,15 +266,15 @@ export const MultipleChildren: StoryFn<typeof FormField> = (props) => {
     let update = values;
     const value = e.target.value;
 
-    if (parseFloat(value)) {
+    if (Number.parseFloat(value)) {
       if (index === 0) {
         update = {
           firstValue: value,
-          secondValue: (parseFloat(value) * 1.5).toString(),
+          secondValue: (Number.parseFloat(value) * 1.5).toString(),
         };
       } else {
         update = {
-          firstValue: ((parseFloat(value) * 2) / 3).toString(),
+          firstValue: ((Number.parseFloat(value) * 2) / 3).toString(),
           secondValue: value,
         };
       }
@@ -451,7 +451,7 @@ export const WithControls: StoryFn<typeof FormField> = (props) => {
   };
 
   const handleCheckboxChange: ChangeEventHandler<HTMLInputElement> = (
-    event
+    event,
   ) => {
     const { value } = event.target;
     if (checkboxGroupValue.indexOf(value) === -1) {
@@ -462,8 +462,8 @@ export const WithControls: StoryFn<typeof FormField> = (props) => {
     } else {
       setCheckboxGroupValue((prevControlledValues) =>
         prevControlledValues.filter(
-          (controlledValue) => controlledValue !== value
-        )
+          (controlledValue) => controlledValue !== value,
+        ),
       );
     }
     props.onChange?.(event);
@@ -570,7 +570,7 @@ export const WithMultilineInput: StoryFn<typeof FormField> = (props) => {
 };
 
 export const WithMultilineInputAsQuestion: StoryFn<typeof FormField> = (
-  props
+  props,
 ) => {
   return (
     <FlowLayout style={{ width: "366px" }}>
@@ -910,11 +910,11 @@ export const MultiColumnLayout: StoryFn<typeof FormField> = (props) => {
 };
 
 export const MultiColumnLayoutEmptySlot: StoryFn<typeof FormField> = (
-  props
+  props,
 ) => {
   return (
     <StackLayout
-      style={{ "--saltFormField-label-width": "100px" } as React.CSSProperties}
+      style={{ "--saltFormField-label-width": "100px" } as CSSProperties}
     >
       <FormField {...props}>
         <FormLabel>Form Field label left</FormLabel>

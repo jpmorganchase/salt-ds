@@ -1,17 +1,17 @@
-import { Meta, StoryFn } from "@storybook/react";
 import {
   Checkbox,
   CheckboxGroup,
-  CheckboxGroupProps,
+  type CheckboxGroupProps,
   FormField,
-  FormFieldLabel,
   FormFieldHelperText,
+  FormFieldLabel,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
 
 export default {
@@ -77,11 +77,24 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
 };
 
 AllExamplesGrid.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection cols={1} itemPadding={8} {...props}>
     <CheckboxGroupExample direction="vertical" />

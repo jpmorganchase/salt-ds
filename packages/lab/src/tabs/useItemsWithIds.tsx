@@ -1,20 +1,20 @@
 import {
   Children,
+  type ReactElement,
+  type ReactNode,
   cloneElement,
   isValidElement,
-  ReactElement,
-  ReactNode,
   useCallback,
   useMemo,
 } from "react";
 import { TabPanel } from "./TabPanel";
-import { TabDescriptor } from "./TabsTypes";
+import type { TabDescriptor } from "./TabsTypes";
 
 type TabMap = { [key: string]: TabDescriptor };
 
 export const useItemsWithIds = (
   children: ReactNode,
-  id = "root"
+  id = "root",
 ): [TabDescriptor[], (id: string) => TabDescriptor] => {
   const normalizeItems = useCallback(
     (items: ReactNode): [TabDescriptor[], TabMap] => {
@@ -38,7 +38,7 @@ export const useItemsWithIds = (
             child.type === TabPanel ? (
               cloneElement(child, props)
             ) : (
-              <TabPanel {...props} label={label}>
+              <TabPanel {...props} label={label} key={tabId}>
                 {child}
               </TabPanel>
             );
@@ -53,17 +53,14 @@ export const useItemsWithIds = (
         });
       return [tabDescriptors, sourceMap];
     },
-    [id]
+    [id],
   );
 
   const [sourceWithIds, sourceMap] = useMemo(() => {
     return normalizeItems(children);
   }, [normalizeItems, children]);
 
-  const itemById = useCallback(
-    (id: string) => sourceMap[id],
-    [sourceWithIds, sourceMap]
-  );
+  const itemById = useCallback((id: string) => sourceMap[id], [sourceMap]);
 
   return [sourceWithIds, itemById];
 };

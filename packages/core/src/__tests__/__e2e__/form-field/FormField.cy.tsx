@@ -1,12 +1,12 @@
 import {
-  FormField,
-  FormFieldLabel,
-  FormFieldHelperText,
-  Input,
-  Tooltip,
-  Checkbox,
-  RadioButton,
   Button,
+  Checkbox,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
+  RadioButton,
+  Tooltip,
 } from "@salt-ds/core";
 
 const MockChildren = () => {
@@ -25,7 +25,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField>
           <MockChildren />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByText("Label").should("exist");
@@ -37,10 +37,11 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField>
           <MockChildren />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByText("Helper text").should("exist");
+      cy.findByText("Helper text").should("have.class", "saltText-secondary");
     });
   });
 
@@ -49,14 +50,14 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField id={"test-id"}>
           <MockChildren />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByText("Label").should("have.attr", "id", "label-test-id");
       cy.findByText("Helper text").should(
         "have.attr",
         "id",
-        "helperText-test-id"
+        "helperText-test-id",
       );
     });
   });
@@ -66,7 +67,7 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField disabled>
           <MockChildren />
-        </FormField>
+        </FormField>,
       );
       cy.findByText("Label").should("have.class", "saltText-disabled");
       cy.findByText("Helper text").should("have.class", "saltText-disabled");
@@ -78,13 +79,14 @@ describe("GIVEN a FormField", () => {
       cy.mount(
         <FormField validationStatus="error">
           <MockChildren />
-        </FormField>
+        </FormField>,
       );
 
       cy.get(".saltStatusIndicator").should(
         "have.class",
-        "saltStatusIndicator-error"
+        "saltStatusIndicator-error",
       );
+      cy.findByText("Helper text").should("have.class", "saltText-error");
     });
 
     describe("AND is disabled", () => {
@@ -92,7 +94,7 @@ describe("GIVEN a FormField", () => {
         cy.mount(
           <FormField disabled validationStatus="error">
             <MockChildren />
-          </FormField>
+          </FormField>,
         );
 
         cy.get(".saltFormFieldHelperText")
@@ -106,7 +108,7 @@ describe("GIVEN a FormField", () => {
         cy.mount(
           <FormField readOnly validationStatus="error">
             <MockChildren />
-          </FormField>
+          </FormField>,
         );
 
         cy.get(".saltFormFieldHelperText")
@@ -120,13 +122,14 @@ describe("GIVEN a FormField", () => {
         cy.mount(
           <FormField validationStatus="success">
             <MockChildren />
-          </FormField>
+          </FormField>,
         );
 
         cy.get(".saltStatusIndicator").should(
           "have.class",
-          "saltStatusIndicator-success"
+          "saltStatusIndicator-success",
         );
+        cy.findByText("Helper text").should("have.class", "saltText-success");
       });
     });
 
@@ -135,13 +138,14 @@ describe("GIVEN a FormField", () => {
         cy.mount(
           <FormField validationStatus="warning">
             <MockChildren />
-          </FormField>
+          </FormField>,
         );
 
         cy.get(".saltStatusIndicator").should(
           "have.class",
-          "saltStatusIndicator-warning"
+          "saltStatusIndicator-warning",
         );
+        cy.findByText("Helper text").should("have.class", "saltText-warning");
       });
     });
   });
@@ -153,7 +157,7 @@ describe("GIVEN a FormField", () => {
           <FormFieldLabel>Label</FormFieldLabel>
           <Input defaultValue="Value" data-testid="test-id-1" />
           <FormFieldHelperText>Helper text</FormFieldHelperText>
-        </FormField>
+        </FormField>,
       );
 
       cy.findByLabelText("Label").focus();
@@ -167,7 +171,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input defaultValue="Value" />
             <FormFieldHelperText>Helper text</FormFieldHelperText>
-          </FormField>
+          </FormField>,
         );
 
         cy.findByText("(Required)").should("exist");
@@ -180,7 +184,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input defaultValue="Value" />
             <FormFieldHelperText>Helper text</FormFieldHelperText>
-          </FormField>
+          </FormField>,
         );
 
         cy.findByText("(Optional)").should("exist");
@@ -192,7 +196,7 @@ describe("GIVEN a FormField", () => {
             <FormFieldLabel>Label</FormFieldLabel>
             <Input defaultValue="Value" />
             <FormFieldHelperText>Helper text</FormFieldHelperText>
-          </FormField>
+          </FormField>,
         );
 
         cy.findByLabelText("Label *").should("have.attr", "required");
@@ -207,7 +211,7 @@ describe("GIVEN a FormField", () => {
             <Tooltip content="Helper text">
               <Input defaultValue="Value" data-testid="test-id-2" />
             </Tooltip>
-          </FormField>
+          </FormField>,
         );
 
         cy.findByLabelText("Label").realHover();
@@ -221,14 +225,14 @@ describe("GIVEN a FormField", () => {
             <Tooltip content="Helper text">
               <Input defaultValue="Value" data-testid="test-id-2" />
             </Tooltip>
-          </FormField>
+          </FormField>,
         );
 
         cy.findByLabelText("Label").realHover();
         cy.findByText("Helper text").should(
           "have.attr",
           "id",
-          "helperText-test-id"
+          "helperText-test-id",
         );
       });
 
@@ -240,7 +244,7 @@ describe("GIVEN a FormField", () => {
               <Tooltip content="Helper text">
                 <Input defaultValue="Value" data-testid="test-id-2" />
               </Tooltip>
-            </FormField>
+            </FormField>,
           );
           cy.findByLabelText("Label").realHover();
 
@@ -256,7 +260,7 @@ describe("GIVEN a FormField", () => {
               <Tooltip content="Helper text">
                 <Input defaultValue="Value" data-testid="test-id-2" />
               </Tooltip>
-            </FormField>
+            </FormField>,
           );
           cy.findByLabelText("Label").realHover();
 
@@ -275,7 +279,7 @@ describe("GIVEN a FormField", () => {
               startAdornment={<Button>Test</Button>}
               data-testid="test-id-3"
             />
-          </FormField>
+          </FormField>,
         );
         cy.findByRole("button").should("be.visible");
       });
@@ -289,7 +293,7 @@ describe("GIVEN a FormField", () => {
               startAdornment={<Button disabled>Test</Button>}
               data-testid="test-id-3"
             />
-          </FormField>
+          </FormField>,
         );
         cy.findByRole("button").should("be.visible");
         cy.findByRole("button").should("have.class", "saltButton-disabled");
@@ -304,7 +308,7 @@ describe("GIVEN a FormField", () => {
               startAdornment={<Button disabled>Test</Button>}
               data-testid="test-id-3"
             />
-          </FormField>
+          </FormField>,
         );
         cy.findByRole("button").should("be.visible");
         cy.findByRole("button").should("have.class", "saltButton-disabled");
@@ -318,7 +322,7 @@ describe("GIVEN a FormField", () => {
         <FormField>
           <FormFieldLabel>Label</FormFieldLabel>
           <RadioButton label="Value" />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByLabelText("Label").focus();
@@ -330,7 +334,7 @@ describe("GIVEN a FormField", () => {
         <FormField disabled>
           <FormFieldLabel>Label</FormFieldLabel>
           <RadioButton label="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByLabelText("Label").should("have.attr", "disabled");
     });
@@ -340,7 +344,7 @@ describe("GIVEN a FormField", () => {
         <FormField readOnly>
           <FormFieldLabel>Label</FormFieldLabel>
           <RadioButton label="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByText("Label").should("have.class", "saltRadioButton-readonly");
     });
@@ -352,7 +356,7 @@ describe("GIVEN a FormField", () => {
         <FormField>
           <FormFieldLabel>Label</FormFieldLabel>
           <Checkbox label="Value" />
-        </FormField>
+        </FormField>,
       );
 
       cy.findByLabelText("Label").focus();
@@ -364,7 +368,7 @@ describe("GIVEN a FormField", () => {
         <FormField disabled>
           <FormFieldLabel>Label</FormFieldLabel>
           <Checkbox label="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByLabelText("Label").should("have.attr", "disabled");
     });
@@ -374,7 +378,7 @@ describe("GIVEN a FormField", () => {
         <FormField readOnly>
           <FormFieldLabel>Label</FormFieldLabel>
           <Checkbox label="Value" />
-        </FormField>
+        </FormField>,
       );
       cy.findByText("Label").should("have.class", "saltCheckbox-readonly");
     });

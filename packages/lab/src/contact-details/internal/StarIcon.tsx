@@ -28,5 +28,5 @@ export const StarIcon = forwardRef<SVGSVGElement, StarIconProps>(
         </g>
       </svg>
     );
-  }
+  },
 );

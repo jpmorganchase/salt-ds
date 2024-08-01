@@ -1,14 +1,13 @@
 import { useCallback } from "react";
-import {
-  OverflowItem,
+import type {
   OverflowHookProps,
   OverflowHookResult,
+  OverflowItem,
 } from "./overflowTypes";
 
 import {
   getOverflowIndicator,
   measureContainerOverflow,
-  popNextItemByPriority,
 } from "./overflowUtils";
 
 const getPriority = (item: OverflowItem) => item.priority;
@@ -39,7 +38,7 @@ const canReleaseReclaimedSpace = (size: number, items: OverflowItem[]) => {
   const overflowedItem = findNextOverflowedItem(items);
   if (claimant && overflowedItem) {
     const renderedSize = items.reduce(addAllVisible, 0);
-    const { size: indicatorSize } = getOverflowIndicator(items)!;
+    const { size: indicatorSize } = getOverflowIndicator(items) ?? { size: 0 };
     const { size: overflowedSize } = overflowedItem;
     // TODO we can discount the indicator size ONLY IF overflowed item is only overflowed item
     const reclaimableSpace = getReclaimableSpace(claimant);
@@ -65,32 +64,13 @@ export const useReclaimSpace = ({
   overflowContainerRef: ref,
   orientation,
 }: OverflowHookProps): OverflowHookResult => {
-  const getAllOverflowedItems = useCallback(
-    (visibleContentSize: number, containerSize: number) => {
-      let newlyOverflowedItems = [];
-      const { current: managedItems } = managedItemsRef;
-      const visibleItems = managedItems.slice();
-      while (visibleContentSize > containerSize) {
-        const overflowedItem = popNextItemByPriority(visibleItems);
-        if (overflowedItem === null) {
-          break;
-        }
-        // eslint-disable-next-line no-param-reassign
-        visibleContentSize -= overflowedItem.size;
-        newlyOverflowedItems.push(overflowedItem);
-      }
-      return newlyOverflowedItems;
-    },
-    []
-  );
-
   const releaseReclaimedSpace = useCallback(() => {
     const { current: managedItems } = managedItemsRef;
 
     const claimant = managedItems.find(hasReclaimedSpace);
     if (claimant) {
-      // Might not always need to collapse, if there is enough available space for it to still be collapsing
-      // collapse the claimant and turn off recvlaimed
+      // Might not always need to collapse, if there is enough available space for it to still be collapsing then
+      // collapse the claimant and turn off reclaimed
       collectionHook.dispatch({
         type: "replace-item",
         overflowItem: {
@@ -103,12 +83,13 @@ export const useReclaimSpace = ({
         },
       });
     }
-  }, []);
+  }, [managedItemsRef, collectionHook.dispatch]);
+
   const handleResize = useCallback(
     (size: number, containerHasGrown?: boolean) => {
       const { isOverflowing: willOverflow } = measureContainerOverflow(
         ref,
-        orientation
+        orientation,
       );
       const { current: managedItems } = managedItemsRef;
 
@@ -135,7 +116,13 @@ export const useReclaimSpace = ({
         }
       }
     },
-    []
+    [
+      ref,
+      managedItemsRef,
+      releaseReclaimedSpace,
+      collectionHook.dispatch,
+      orientation,
+    ],
   );
 
   return {

@@ -1,14 +1,14 @@
 import {
-  ownerWindow,
   SaltProvider,
+  SaltProviderNext,
+  ownerWindow,
   useAriaAnnouncer,
   useDensity,
   useTheme,
-  UNSTABLE_SaltProviderNext,
 } from "@salt-ds/core";
-import { mount } from "cypress/react18";
 import { WindowProvider } from "@salt-ds/window";
-import { ReactNode, useCallback, useState } from "react";
+import { mount } from "cypress/react18";
+import { type ReactNode, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 
 const TestComponent = ({
@@ -22,9 +22,14 @@ const TestComponent = ({
   const {
     theme,
     mode,
+    themeNext,
+    corner,
+    accent,
+    actionFont,
+    headingFont,
+    // Test backwards compatibilty using `UNSTABLE_` variables
     UNSTABLE_corner,
     UNSTABLE_accent,
-    themeNext,
     UNSTABLE_actionFont,
     UNSTABLE_headingFont,
   } = useTheme();
@@ -39,11 +44,16 @@ const TestComponent = ({
       data-theme={theme}
       data-mode={mode}
       data-announcer={announcerPresent}
-      data-corner={UNSTABLE_corner}
-      data-accent={UNSTABLE_accent}
-      data-heading-font={UNSTABLE_headingFont}
-      data-action-font={UNSTABLE_actionFont}
+      data-corner={corner}
+      data-accent={accent}
+      data-heading-font={headingFont}
+      data-action-font={actionFont}
       data-themeNext={themeNext}
+      // Test backwards compatibilty using `UNSTABLE_` variables
+      data-unstable-corner={UNSTABLE_corner}
+      data-unstable-accent={UNSTABLE_accent}
+      data-unstable-heading-font={UNSTABLE_headingFont}
+      data-unstable-action-font={UNSTABLE_actionFont}
     />
   );
 };
@@ -54,7 +64,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -68,7 +78,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -82,7 +92,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get(".salt-theme-next").should("have.length", 0);
@@ -95,7 +105,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider mode="dark">
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -108,7 +118,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider density="high">
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -121,7 +131,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider density="high" mode="dark" theme="custom-theme">
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
@@ -139,7 +149,7 @@ describe("Given a SaltProvider", () => {
           theme="custom-theme-1 custom-theme-2"
         >
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("html")
@@ -164,7 +174,7 @@ describe("Given a SaltProvider", () => {
           <SaltProvider>
             <TestComponent />
           </SaltProvider>
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("[aria-live]").should("have.length", 1);
@@ -177,7 +187,7 @@ describe("Given a SaltProvider", () => {
           <SaltProvider density="medium">
             <TestComponent id="test-2" />
           </SaltProvider>
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("#test-1")
@@ -199,7 +209,7 @@ describe("Given a SaltProvider", () => {
       mount(
         <SaltProvider density="high" mode="dark" applyClassesTo={"child"}>
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -222,7 +232,7 @@ describe("Given a SaltProvider", () => {
           applyClassesTo={"root"}
         >
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -245,7 +255,7 @@ describe("Given a SaltProvider", () => {
           applyClassesTo="scope"
         >
           <TestComponent />
-        </SaltProvider>
+        </SaltProvider>,
       );
 
       cy.get("div.salt-provider")
@@ -264,18 +274,18 @@ describe("Given a SaltProvider", () => {
         <SaltProvider applyClassesTo={"root"}>
           <TestComponent />
         </SaltProvider>
-      </SaltProvider>
+      </SaltProvider>,
     );
 
     cy.get("@consoleSpy").should(
       "have.been.calledWith",
-      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider."
+      "SaltProvider can only apply CSS classes to the root if it is the root level SaltProvider.",
     );
   });
 
   function FakeWindow({ children }: { children?: ReactNode }) {
     const [mountNode, setMountNode] = useState<HTMLElement | undefined>(
-      undefined
+      undefined,
     );
 
     const handleFrameRef = useCallback((node: HTMLIFrameElement) => {
@@ -283,7 +293,7 @@ describe("Given a SaltProvider", () => {
     }, []);
 
     return (
-      <iframe ref={handleFrameRef}>
+      <iframe ref={handleFrameRef} title="Fake Window">
         <WindowProvider window={ownerWindow(mountNode)}>
           {mountNode && createPortal(children, mountNode)}
         </WindowProvider>
@@ -301,7 +311,7 @@ describe("Given a SaltProvider", () => {
             <TestComponent />
           </SaltProvider>
         </FakeWindow>
-      </SaltProvider>
+      </SaltProvider>,
     );
 
     cy.get("@consoleSpy").should("not.have.been.called");
@@ -312,9 +322,9 @@ describe("Given a SaltProviderNext", () => {
   describe("with no props set", () => {
     it("should apply default theme attributes to the html element", () => {
       mount(
-        <UNSTABLE_SaltProviderNext>
+        <SaltProviderNext>
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("div.salt-provider").should("have.length", 0);
@@ -332,20 +342,24 @@ describe("Given a SaltProviderNext", () => {
     });
     it("should read correct default values from provider and add an AriaAnnouncer", () => {
       mount(
-        <UNSTABLE_SaltProviderNext>
+        <SaltProviderNext>
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>
+        </SaltProviderNext>,
       );
       cy.get("#test-1")
         .should("exist")
         .and("have.attr", "data-density", "medium")
         .and("have.attr", "data-mode", "light")
         .and("have.attr", "data-announcer", "true")
+        .and("have.attr", "data-themeNext", "true")
         .and("have.attr", "data-corner", "sharp")
         .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-heading-font", "Open Sans")
         .and("have.attr", "data-action-font", "Open Sans")
-        .and("have.attr", "data-themeNext", "true");
+        .and("have.attr", "data-unstable-corner", "sharp")
+        .and("have.attr", "data-unstable-accent", "blue")
+        .and("have.attr", "data-unstable-heading-font", "Open Sans")
+        .and("have.attr", "data-unstable-action-font", "Open Sans");
       cy.get("[aria-live]").should("exist");
     });
   });
@@ -353,7 +367,7 @@ describe("Given a SaltProviderNext", () => {
   describe("with props set", () => {
     it("should allow pass in multiple theme names", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
+        <SaltProviderNext
           density="high"
           mode="dark"
           corner="rounded"
@@ -361,7 +375,7 @@ describe("Given a SaltProviderNext", () => {
           theme="custom-theme-1 custom-theme-2"
         >
           <TestComponent />
-        </UNSTABLE_SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html")
@@ -389,7 +403,7 @@ describe("Given a SaltProviderNext", () => {
   describe("when nested", () => {
     it("should inherit values not passed as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
+        <SaltProviderNext
           density="high"
           mode="dark"
           corner="rounded"
@@ -398,10 +412,10 @@ describe("Given a SaltProviderNext", () => {
           actionFont="Amplitude"
         >
           <TestComponent />
-          <UNSTABLE_SaltProviderNext density="medium">
+          <SaltProviderNext density="medium">
             <TestComponent id="test-2" />
-          </UNSTABLE_SaltProviderNext>
-        </UNSTABLE_SaltProviderNext>
+          </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);
@@ -415,6 +429,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-unstable-corner", "rounded")
+        .and("have.attr", "data-unstable-accent", "teal")
+        .and("have.attr", "data-unstable-heading-font", "Amplitude")
+        .and("have.attr", "data-unstable-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -425,11 +443,15 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-unstable-corner", "rounded")
+        .and("have.attr", "data-unstable-accent", "teal")
+        .and("have.attr", "data-unstable-heading-font", "Amplitude")
+        .and("have.attr", "data-unstable-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
     });
     it("should take different values set as props", () => {
       mount(
-        <UNSTABLE_SaltProviderNext
+        <SaltProviderNext
           density="high"
           mode="dark"
           corner="rounded"
@@ -438,7 +460,7 @@ describe("Given a SaltProviderNext", () => {
           actionFont="Amplitude"
         >
           <TestComponent />
-          <UNSTABLE_SaltProviderNext
+          <SaltProviderNext
             density="medium"
             corner="sharp"
             accent="blue"
@@ -446,8 +468,8 @@ describe("Given a SaltProviderNext", () => {
             actionFont="Open Sans"
           >
             <TestComponent id="test-2" />
-          </UNSTABLE_SaltProviderNext>
-        </UNSTABLE_SaltProviderNext>
+          </SaltProviderNext>
+        </SaltProviderNext>,
       );
 
       cy.get("html.salt-theme-next").should("have.length", 1);
@@ -461,6 +483,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-unstable-corner", "rounded")
+        .and("have.attr", "data-unstable-accent", "teal")
+        .and("have.attr", "data-unstable-heading-font", "Amplitude")
+        .and("have.attr", "data-unstable-action-font", "Amplitude")
         .and("have.attr", "data-announcer", "true");
 
       cy.get("#test-2")
@@ -471,6 +497,10 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-heading-font", "Open Sans")
         .and("have.attr", "data-action-font", "Open Sans")
+        .and("have.attr", "data-unstable-corner", "sharp")
+        .and("have.attr", "data-unstable-accent", "blue")
+        .and("have.attr", "data-unstable-heading-font", "Open Sans")
+        .and("have.attr", "data-unstable-action-font", "Open Sans")
         .and("have.attr", "data-announcer", "true");
     });
   });

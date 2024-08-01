@@ -1,5 +1,39 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.50
+
+### Minor Changes
+
+- 0008528: Added `SystemStatus`, `SystemStatusContent`, `SystemStatusActions` component to lab.
+
+  ```tsx
+  <SystemStatus>
+    <SystemStatusContent>
+      <Text color="inherit">New feature updates are available</Text>
+    </SystemStatusContent>
+  </SystemStatus>
+  ```
+
+### Patch Changes
+
+- bfe0f84: Cleaned up TypeScript types in multiple components.
+
+## 1.0.0-alpha.49
+
+### Minor Changes
+
+- 62d917d: Updated styling of date picker and calendar
+
+  - Corner radius support for date picker panel in theme next
+  - Corner radius support for calendar selected days in theme next
+  - Use accent color for today indicator and highlight color in calendar
+
+  Closes #3530.
+
+### Patch Changes
+
+- da92421: Fix warning logged when access a child ref on React 19.
+
 ## 1.0.0-alpha.48
 
 ### Minor Changes
@@ -785,7 +819,7 @@ import "@salt-ds/lab/css/salt-lab.css";
     event: SyntheticEvent,
     data: {
       value: string;
-    }
+    },
   ) => {
     console.log("input value changed", data);
   };

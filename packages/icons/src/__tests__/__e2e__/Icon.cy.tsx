@@ -1,6 +1,6 @@
 import { composeStories } from "@storybook/react";
-import * as iconStory from "../../../stories/icon.stories";
 import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
+import * as iconStory from "../../../stories/icon.stories";
 
 const composedStories = composeStories(iconStory);
 

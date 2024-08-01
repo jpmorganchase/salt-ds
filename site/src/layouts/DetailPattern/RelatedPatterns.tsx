@@ -1,6 +1,6 @@
-import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
-import styles from "./RelatedPatterns.module.css";
+import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import { LinkList } from "../../components/link-list/LinkList";
+import styles from "./RelatedPatterns.module.css";
 
 type Data = {
   relatedPatterns: string[];

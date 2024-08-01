@@ -14,8 +14,12 @@
   --saltCard-accent-color: rgb(133, 72, 20);
 }
 
+.variantContainer {
+  width: 100%;
+  justify-content: center;
+}
+
 .variantCard {
-  width: 260px;
   height: 144px;
   display: flex;
   justify-content: center;

@@ -6,7 +6,7 @@ export type screenBounds = {
 export function getMaxHeight(
   heightProp: number | undefined,
   menuMargin: number | undefined = 0,
-  getScreenBounds: () => screenBounds = defaultGetScreenBounds
+  getScreenBounds: () => screenBounds = defaultGetScreenBounds,
 ) {
   const { clientHeight } = getScreenBounds();
 
@@ -21,7 +21,7 @@ export function getMaxHeight(
 export function getHeight(
   heightProp: number | undefined,
   calculatedMenuHeight: number,
-  maxHeight: number
+  maxHeight: number,
 ): number {
   if (heightProp) {
     return Math.min(heightProp, calculatedMenuHeight, maxHeight);

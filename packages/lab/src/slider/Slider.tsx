@@ -1,25 +1,25 @@
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  CSSProperties,
+  type CSSProperties,
+  type HTMLAttributes,
   forwardRef,
-  HTMLAttributes,
   useMemo,
   useRef,
 } from "react";
 import { SliderHandle } from "./internal/SliderHandle";
 import { SliderMarkLabels } from "./internal/SliderMarkLabels";
 import { SliderRail } from "./internal/SliderRail";
-import { SliderMark, SliderRailMarks } from "./internal/SliderRailMarks";
+import { type SliderMark, SliderRailMarks } from "./internal/SliderRailMarks";
 import { SliderSelection } from "./internal/SliderSelection";
 import { createHandleStyles, createTrackStyle } from "./internal/styles";
 import { useSliderKeyDown } from "./internal/useSliderKeyDown";
 import { useSliderMouseDown } from "./internal/useSliderMouseDown";
 import { useValueUpdater } from "./internal/utils";
-import { SliderChangeHandler, SliderValue } from "./types";
+import type { SliderChangeHandler, SliderValue } from "./types";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import sliderCss from "./Slider.css";
 
@@ -66,7 +66,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     hideMarkLabels,
     ...restProps
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -88,14 +88,14 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 
   const trackStyle = useMemo(
     () => createTrackStyle(min, max, value),
-    [min, max, value]
+    [min, max, value],
   );
 
   const valueLength = Array.isArray(value) ? value.length : 1;
 
   const handleStyles: CSSProperties[] = useMemo(
     () => createHandleStyles(valueLength),
-    [valueLength]
+    [valueLength],
   );
 
   const onMouseDown = useSliderMouseDown(
@@ -106,7 +106,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     step,
     updateValueItem,
     setValue,
-    onChange
+    onChange,
   );
 
   const onKeyDown = useSliderKeyDown(
@@ -117,7 +117,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     step,
     updateValueItem,
     setValue,
-    onChange
+    onChange,
   );
 
   return (
@@ -127,7 +127,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         {
           [withBaseName("disabled")]: disabled,
         },
-        className
+        className,
       )}
       ref={ref}
       onKeyDown={disabled ? undefined : onKeyDown}

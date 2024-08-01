@@ -1,7 +1,7 @@
-import { SiteState, useStore } from "@jpmorganchase/mosaic-store";
+import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
 
-import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 import { LinkList } from "../../components/link-list/LinkList";
+import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 
 import styles from "./Resources.module.css";
 

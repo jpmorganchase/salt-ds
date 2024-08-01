@@ -1,23 +1,23 @@
 import {
   Dropdown,
-  DropdownProps,
-  Option,
-  OptionGroup,
+  type DropdownProps,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  Option,
+  OptionGroup,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 
-import { Meta, StoryFn } from "@storybook/react";
-import { SyntheticEvent, useState } from "react";
 import {
+  EditIcon,
+  GuideClosedIcon,
   LocationIcon,
   UserAdminIcon,
-  GuideClosedIcon,
-  EditIcon,
 } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type SyntheticEvent, useState } from "react";
 
 export default {
   title: "Core/Dropdown",
@@ -212,7 +212,7 @@ export const ComplexOption: StoryFn<DropdownProps> = (args) => {
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
-    newSelected
+    newSelected,
   ) => {
     setSelected(newSelected);
     args.onSelectionChange?.(event, newSelected);
@@ -260,7 +260,7 @@ export const CustomValue: StoryFn<DropdownProps> = (args) => {
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
-    newSelected
+    newSelected,
   ) => {
     setSelected(newSelected);
     args.onSelectionChange?.(event, newSelected);
@@ -316,7 +316,7 @@ export const ObjectValue: StoryFn<DropdownProps<Person>> = () => {
   const [selected, setSelected] = useState<Person[]>([]);
   const handleSelectionChange = (
     event: SyntheticEvent,
-    newSelected: Person[]
+    newSelected: Person[],
   ) => {
     setSelected(newSelected);
   };
@@ -340,12 +340,12 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
 
   const handleSelectionChange: DropdownProps["onSelectionChange"] = (
     event,
-    newSelected
+    newSelected,
   ) => {
     let newOptionsSelected = [...newSelected];
     const allWasPreviousSelected = selected.includes(allSelectedOptionValue);
     const allIsCurrentlySelected = newOptionsSelected.includes(
-      allSelectedOptionValue
+      allSelectedOptionValue,
     );
 
     // If all was unselected
@@ -357,7 +357,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       newOptionsSelected.length - 1 !== usStates.length
     ) {
       newOptionsSelected = newOptionsSelected.filter(
-        (el) => el !== allSelectedOptionValue
+        (el) => el !== allSelectedOptionValue,
       );
       // If all was selected or all options are now selected
     } else if (
@@ -380,8 +380,8 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
         selected.length < 2
           ? selected[0]
           : selected.includes("all")
-          ? "All Selected"
-          : `${selected.length} items selected`
+            ? "All Selected"
+            : `${selected.length} items selected`
       }
       onSelectionChange={handleSelectionChange}
       multiselect

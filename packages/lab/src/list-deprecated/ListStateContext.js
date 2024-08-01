@@ -7,7 +7,7 @@ export const useListStateContext = () => {
 
   if (!context) {
     throw new Error(
-      "useListStateContext must be used inside of a ListStateContext Provider."
+      "useListStateContext must be used inside of a ListStateContext Provider.",
     );
   }
 

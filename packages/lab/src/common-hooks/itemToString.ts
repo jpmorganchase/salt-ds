@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ItemToStringFunction = (item: any) => string;
 
 const isPlainObject = (obj: unknown) =>
@@ -7,7 +6,8 @@ const isPlainObject = (obj: unknown) =>
 export function itemToString(item: unknown): string {
   if (typeof item === "string") {
     return item;
-  } else if (!isPlainObject(item)) {
+  }
+  if (!isPlainObject(item)) {
     return String(item);
   }
 
@@ -19,7 +19,7 @@ export function itemToString(item: unknown): string {
     [
       "itemToString: you've likely forgotten to set the label prop on the item object.",
       "You can also provide your own `itemToString` implementation.",
-    ].join("\n")
+    ].join("\n"),
   );
 
   return "";

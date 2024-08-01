@@ -1,6 +1,6 @@
 import { useControlled, useIdMemo } from "@salt-ds/core";
-import { ReactNode, useCallback } from "react";
-import { TabDescriptor } from "./TabsTypes";
+import { type ReactNode, useCallback } from "react";
+import type { TabDescriptor } from "./TabsTypes";
 import { useItemsWithIds } from "./useItemsWithIds";
 
 export interface TabsHookProps {
@@ -41,7 +41,7 @@ export const useTabs = ({
       setActiveTabIndex(tabIndex);
       onActiveChange?.(tabIndex);
     },
-    [onActiveChange, setActiveTabIndex]
+    [onActiveChange],
   );
 
   return {

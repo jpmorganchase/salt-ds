@@ -5,8 +5,8 @@ import { clsx } from "clsx";
 
 import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
-import { GridColumnModel } from "./Grid";
-import { GridCellProps } from "./GridColumn";
+import type { GridColumnModel } from "./Grid";
+import type { GridCellProps } from "./GridColumn";
 import { Cursor, useFocusableContent } from "./internal";
 import {
   CellErrorIcon,

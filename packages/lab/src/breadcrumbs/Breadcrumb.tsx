@@ -1,11 +1,17 @@
-import { Link, makePrefixer, Text, TooltipProps } from "@salt-ds/core";
-import { IconProps } from "@salt-ds/icons";
+import { Link, Text, type TooltipProps, makePrefixer } from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
-import { Children, forwardRef, HTMLAttributes, ReactNode } from "react";
+import {
+  Children,
+  type ComponentType,
+  type HTMLAttributes,
+  type ReactNode,
+  forwardRef,
+} from "react";
 import { useBreadcrumbsContext } from "./internal/BreadcrumbsContext";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import breadcrumbCss from "./Breadcrumb.css";
 
@@ -23,7 +29,7 @@ export interface BreadcrumbProps {
   minWidth?: number;
   onItemClick?: (item: any, event: any) => void; // TODO
   overflowLabel?: string;
-  Icon?: React.ComponentType<IconProps>;
+  Icon?: ComponentType<IconProps>;
 }
 
 export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
@@ -42,7 +48,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -63,7 +69,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
           className={clsx(
             withBaseName(),
             className,
-            withBaseName("currentLevel")
+            withBaseName("currentLevel"),
           )}
           styleAs="label"
         >
@@ -77,7 +83,7 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
             {
               [withBaseName("justifyContentCenter")]: hasOnlyIcon,
             },
-            withBaseName("regular")
+            withBaseName("regular"),
           )}
         >
           {Icon && <Icon className={withBaseName("icon")} />}
@@ -111,5 +117,5 @@ export const Breadcrumb = forwardRef<HTMLLIElement, BreadcrumbProps>(
         {content}
       </li>
     );
-  }
+  },
 );

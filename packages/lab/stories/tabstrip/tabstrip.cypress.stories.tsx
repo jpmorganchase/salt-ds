@@ -1,7 +1,7 @@
+import { Tabstrip, type TabstripProps } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
 import { useState } from "react";
-import { StoryFn } from "@storybook/react";
-import { Tabstrip, TabstripProps } from "@salt-ds/lab";
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "../components";
+import { AdjustableFlexbox, type AdjustableFlexboxProps } from "../components";
 
 export default {
   title: "Lab/Tabs/Cypress Test Fixtures",
@@ -51,7 +51,7 @@ export const SimpleTabstripAddRemoveTab: TabstripStory = ({
   const [editing, setEditing] = useState(false);
 
   const handleAddTab = () => {
-    console.log(`handleAddTab`);
+    console.log("handleAddTab");
     const count = tabs.length;
     setTabs((state) => state.concat([`Tab ${state.length + 1}`]));
     setActiveTabIndex(count);

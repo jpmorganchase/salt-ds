@@ -1,16 +1,16 @@
-import React from "react";
-import clsx from "clsx";
-import { Breadcrumbs } from "@jpmorganchase/mosaic-site-components";
-import { Footer, AppHeader } from "../../components";
-import { SaltProvider } from "@salt-ds/core";
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
+import { Breadcrumbs } from "@jpmorganchase/mosaic-site-components";
 import { useMeta } from "@jpmorganchase/mosaic-store";
+import { SaltProvider } from "@salt-ds/core";
+import clsx from "clsx";
+import type { FC } from "react";
+import { AppHeader, Footer } from "../../components";
 import { LayoutFullWidth } from "../LayoutFullWidth";
-import type { LayoutProps } from "../types/index";
 import layoutStyles from "../index.module.css";
+import type { LayoutProps } from "../types/index";
 import styles from "./DetailContentOnly.module.css";
 
-export const DetailContentOnly: React.FC<LayoutProps> = ({
+export const DetailContentOnly: FC<LayoutProps> = ({
   FooterProps,
   children,
 }) => {

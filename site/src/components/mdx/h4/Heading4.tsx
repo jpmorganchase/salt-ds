@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, FC, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, FC, ReactNode } from "react";
 import styles from "./Heading4.module.css";
 
 interface Heading4Props extends ComponentPropsWithoutRef<"h4"> {

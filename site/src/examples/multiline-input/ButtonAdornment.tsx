@@ -1,5 +1,4 @@
-import { ReactElement } from "react";
-import { Text, FlowLayout, Button, MultilineInput } from "@salt-ds/core";
+import { Button, FlowLayout, MultilineInput, Text } from "@salt-ds/core";
 import {
   BankCheckSolidIcon,
   BookmarkSolidIcon,
@@ -8,6 +7,7 @@ import {
   SendIcon,
   UserBadgeIcon,
 } from "@salt-ds/icons";
+import type { ReactElement } from "react";
 
 export const ButtonAdornment = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>

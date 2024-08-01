@@ -1,5 +1,45 @@
 # @salt-ds/core
 
+## 1.33.0
+
+### Minor Changes
+
+- 533b590: - Updated `Listbox`, `Menu`, `ComboBox` and `Dropdown` to use `--salt-palette-corner` when their corners are rounded.
+  - Updated `Menu`, `Dropdown` and `ComboBox` to have a 1px visual offset on floating panels.
+- 34e8c9c: Added `render` prop to `NavigationItem`. The `render` prop enables the substitution of the default anchor tag with an alternate link, such as React Router, facilitating integration with routing libraries.
+
+### Patch Changes
+
+- bfe0f84: Cleaned up TypeScript types in multiple components.
+- 0927a2d: Fixed the `initialFocus` prop not working on Dialog.
+- b6070e7: Added JSDoc description to `SaltProviderNext` props.
+
+## 1.32.0
+
+### Minor Changes
+
+- da92421: Added `getRefFromChildren`. This allows reading ref from a child component.
+- 8b43adf: Updated `LinearProgress` to display a moving line to represent an unspecified wait time, when `value` is `undefined`.
+
+  `<LinearProgress />`
+
+  _Note_: `value` and `bufferValue` are no longer default to `0`. Previously above code would render a 0% progress bar, which was not a good reflection of intent. You can still achieve it by passing in `value={0}`.
+
+- ce319ee: Added support for multiple themes to be passed to `SaltProvider`, e.g.,
+
+  ```
+  <SaltProvider theme="theme-1 theme-2">
+  ```
+
+- 9abf267: Marked `SaltProviderNext` being stable.
+
+  If you're using existing type or variable with `UNSTABLE_` prefix, they are now deprecated but will still work.
+
+### Patch Changes
+
+- da92421: Fix warning logged when access a child ref on React 19.
+- 7fa6e22: Fixed `Tooltip` not having correct height.
+
 ## 1.31.0
 
 ### Minor Changes

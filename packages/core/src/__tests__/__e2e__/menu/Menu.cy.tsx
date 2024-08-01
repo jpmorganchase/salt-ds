@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as menuStories from "@stories/menu/menu.stories";
+import { composeStories } from "@storybook/react";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const { ContextMenu, SingleLevel, MultiLevel, GroupedItems, IconWithGroups } =
@@ -102,13 +102,13 @@ describe("Given a Menu", () => {
     cy.findByRole("menuitem", { name: "Edit styling" }).should(
       "have.attr",
       "aria-expanded",
-      "false"
+      "false",
     );
     cy.findByRole("menuitem", { name: "Edit styling" }).realHover();
     cy.findByRole("menuitem", { name: "Edit styling" }).should(
       "have.attr",
       "aria-expanded",
-      "true"
+      "true",
     );
     cy.findByRole("menuitem", { name: "Column" }).should("exist");
     cy.findByRole("menuitem", { name: "Cell" }).should("exist");
@@ -116,7 +116,7 @@ describe("Given a Menu", () => {
     cy.findByRole("menuitem", { name: "Column" }).realHover();
     cy.findByRole("menuitem", { name: "Edit styling" }).should(
       "have.class",
-      "saltMenuItem-blurActive"
+      "saltMenuItem-blurActive",
     );
     cy.findByRole("menuitem", { name: "Column" }).realClick();
     cy.on("window:alert", (str) => {
@@ -170,7 +170,7 @@ describe("Given a Menu", () => {
     cy.findByRole("button", { name: "Open Menu" }).realClick();
     cy.findByRole("menuitem", { name: "Paste" }).should(
       "have.attr",
-      "aria-disabled"
+      "aria-disabled",
     );
     cy.findByRole("menuitem", { name: "Paste" }).realClick();
     cy.findByRole("menu").should("exist");
@@ -221,7 +221,7 @@ describe("Given a Menu", () => {
     cy.mount(
       <CustomFloatingComponentProvider>
         <SingleLevel open />
-      </CustomFloatingComponentProvider>
+      </CustomFloatingComponentProvider>,
     );
 
     cy.findByTestId(FLOATING_TEST_ID).should("exist");

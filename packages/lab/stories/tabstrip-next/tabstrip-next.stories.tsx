@@ -1,7 +1,4 @@
-import { useState, ComponentType } from "react";
-import { StoryFn } from "@storybook/react";
-import { Button, StackLayout, Badge } from "@salt-ds/core";
-import { TabstripNextProps, TabstripNext, TabNext } from "@salt-ds/lab";
+import { Badge, Button, StackLayout } from "@salt-ds/core";
 import {
   BankCheckIcon,
   CreditCardIcon,
@@ -9,6 +6,9 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
+import { TabNext, TabstripNext, type TabstripNextProps } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
+import { type ComponentType, useState } from "react";
 import "./tabstrip-next.stories.css";
 
 export default {
@@ -81,7 +81,7 @@ export const MainTabBleedingIntoPrimaryBackground: TabstripStory = ({
           );
         })}
       </TabstripNext>
-      <div className="inner-container primary-container"></div>
+      <div className="inner-container primary-container" />
     </div>
   );
 };
@@ -113,7 +113,7 @@ export const MainTabBleedingIntoSecondaryBackground: TabstripStory = ({
           );
         })}
       </TabstripNext>
-      <div className="inner-container secondary-container"></div>
+      <div className="inner-container secondary-container" />
     </div>
   );
 };

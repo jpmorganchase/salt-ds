@@ -1,5 +1,5 @@
-import { GetContextMenuItemsParams } from "ag-grid-community";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import type { GetContextMenuItemsParams } from "ag-grid-community";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
 import { useAgGridHelpers } from "./useAgGridHelpers";

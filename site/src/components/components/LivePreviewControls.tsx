@@ -1,24 +1,24 @@
-import {
-  FC,
-  ReactElement,
-  useState,
-  createContext,
-  ChangeEvent,
-  SyntheticEvent,
-} from "react";
-import clsx from "clsx";
 import { Switch } from "@salt-ds/core";
-import { LightIcon, DarkIcon } from "@salt-ds/icons";
 import {
+  type Density,
+  type Mode,
   SaltProvider,
-  ToggleButtonGroup,
   ToggleButton,
-  Density,
-  Mode,
+  ToggleButtonGroup,
 } from "@salt-ds/core";
-import ExamplesListView from "./ExamplesListView";
-import useIsMobileView from "../../utils/useIsMobileView";
+import { DarkIcon, LightIcon } from "@salt-ds/icons";
+import clsx from "clsx";
+import {
+  type ChangeEvent,
+  type FC,
+  type ReactElement,
+  type SyntheticEvent,
+  createContext,
+  useState,
+} from "react";
 import { useAllExamplesView } from "../../utils/useAllExamplesView";
+import useIsMobileView from "../../utils/useIsMobileView";
+import ExamplesListView from "./ExamplesListView";
 
 import styles from "./LivePreviewControls.module.css";
 

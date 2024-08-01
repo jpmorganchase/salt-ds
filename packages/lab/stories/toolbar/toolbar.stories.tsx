@@ -1,4 +1,3 @@
-import type { Meta, StoryFn } from "@storybook/react";
 import { Avatar, Button, Pill, ToggleButton } from "@salt-ds/core";
 import {
   AddIcon,
@@ -18,8 +17,8 @@ import {
   SettingsIcon,
   SettingsSolidIcon,
   ShareIcon,
-  SwapIcon,
   SuccessTickIcon,
+  SwapIcon,
   TearOutIcon,
   UserGroupIcon,
   UserIcon,
@@ -27,17 +26,18 @@ import {
 } from "@salt-ds/icons";
 import {
   Dropdown,
+  Input,
+  StaticInputAdornment,
   Toolbar,
   ToolbarButton,
   ToolbarField,
-  ToolbarProps,
+  type ToolbarProps,
   Tooltray,
-  Input,
-  StaticInputAdornment,
 } from "@salt-ds/lab";
-import { CSSProperties, MouseEvent, useState } from "react";
+import type { Meta, StoryFn } from "@storybook/react";
+import { type CSSProperties, type MouseEvent, useState } from "react";
 
-import { AdjustableFlexbox, AdjustableFlexboxProps } from "../components";
+import { AdjustableFlexbox, type AdjustableFlexboxProps } from "../components";
 
 import "./toolbar.stories.css";
 

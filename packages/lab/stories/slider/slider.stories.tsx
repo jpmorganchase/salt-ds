@@ -1,6 +1,6 @@
 import { Button, Card, Checkbox } from "@salt-ds/core";
-import { Slider, SliderProps } from "@salt-ds/lab";
-import { StoryFn } from "@storybook/react";
+import { Slider, type SliderProps } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Slider",

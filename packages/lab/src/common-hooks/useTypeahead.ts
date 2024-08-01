@@ -1,6 +1,6 @@
-import { useCallback, useRef } from "react";
-import { isCharacterKey, Space } from "./keyUtils";
-import { CollectionItem } from "./collectionTypes";
+import { type KeyboardEvent, useCallback, useRef } from "react";
+import type { CollectionItem } from "./collectionTypes";
+import { Space, isCharacterKey } from "./keyUtils";
 
 interface TypeaheadHookProps<Item> {
   disableTypeToSelect?: boolean;
@@ -12,7 +12,7 @@ interface TypeaheadHookProps<Item> {
 }
 
 interface TypeaheadHookResult {
-  onKeyDown?: (e: React.KeyboardEvent) => void;
+  onKeyDown?: (e: KeyboardEvent) => void;
 }
 
 export const useTypeahead = <Item>({
@@ -32,11 +32,11 @@ export const useTypeahead = <Item>({
       if (intermediateSearch || !applyIncrementalSearch) {
         const regex = new RegExp(`^${searchChars.current}`, "i");
         let idx = items.findIndex(
-          ({ label }, i) => i > startIdx.current && regex.test(label!)
+          ({ label }, i) => i > startIdx.current && regex.test(label!),
         );
         if (idx === -1) {
           idx = items.findIndex(
-            ({ label }, i) => i <= startIdx.current && regex.test(label!)
+            ({ label }, i) => i <= startIdx.current && regex.test(label!),
           );
         }
         if (idx !== -1) {
@@ -48,11 +48,11 @@ export const useTypeahead = <Item>({
         startIdx.current = -1;
       }
     },
-    [applyIncrementalSearch, highlightItemAtIndex, items]
+    [applyIncrementalSearch, highlightItemAtIndex, items],
   );
 
   const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
+    (e: KeyboardEvent) => {
       const searchInProgress = startIdx.current !== -1;
       if (isCharacterKey(e) || (searchInProgress && e.key === Space)) {
         if (typeToNavigate) {
@@ -79,7 +79,7 @@ export const useTypeahead = <Item>({
         }
       }
     },
-    [typeToNavigate, applyIncrementalSearch, highlightedIdx, applySearch]
+    [typeToNavigate, applyIncrementalSearch, highlightedIdx, applySearch],
   );
 
   return {

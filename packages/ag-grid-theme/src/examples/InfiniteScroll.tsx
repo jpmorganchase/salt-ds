@@ -1,12 +1,12 @@
 import { Spinner } from "@salt-ds/core";
-import { AgGridReact, AgGridReactProps } from "ag-grid-react";
+import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useEffect } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const generateData = function generateData<T extends { name: string }>(
-  lst: T[]
+  lst: T[],
 ) {
   return lst.reduce((result, row) => {
     const data = [];
@@ -15,7 +15,7 @@ const generateData = function generateData<T extends { name: string }>(
       const o = { ...row, name: `${row.name} ${i}` };
       data.push(o);
     }
-    return [...result, ...data];
+    return result.concat(data);
   }, [] as T[]);
 };
 
@@ -26,20 +26,20 @@ const InfiniteScroll = (props: AgGridReactProps) => {
 
   useEffect(() => {
     if (isGridReady) {
-      api!.sizeColumnsToFit();
+      api?.sizeColumnsToFit();
 
-      api!.setGridOption("datasource", {
+      api?.setGridOption("datasource", {
         getRows: ({ startRow, endRow, successCallback }) => {
           setTimeout(() => {
             successCallback(
               dataSourceRows.slice(startRow, endRow),
-              dataSourceRows.length
+              dataSourceRows.length,
             );
           }, 500);
         },
       });
     }
-  }, [isGridReady]);
+  }, [isGridReady, api]);
 
   return (
     <div {...containerProps}>
@@ -56,15 +56,11 @@ const InfiniteScroll = (props: AgGridReactProps) => {
 };
 
 const infiniteScrollComponents = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loadingRenderer(params: any) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  loadingRenderer(params: { value: unknown }) {
     if (params.value !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
       return params.value;
-    } else {
-      return <Spinner size="default" />;
     }
+    return <Spinner size="default" />;
   },
 };
 

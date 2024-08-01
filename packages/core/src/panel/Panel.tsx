@@ -1,10 +1,10 @@
 import { clsx } from "clsx";
-import { forwardRef, HTMLAttributes } from "react";
+import { type HTMLAttributes, forwardRef } from "react";
 import { makePrefixer } from "../utils";
 
-import panelCss from "./Panel.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import panelCss from "./Panel.css";
 
 /**
  * Panel component that acts as wrapper around a node
@@ -22,14 +22,14 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Styling variant; defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 const withBaseName = makePrefixer("saltPanel");
 
 export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
   { className, children, variant = "primary", ...restProps },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

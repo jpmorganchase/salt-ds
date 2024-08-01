@@ -1,18 +1,18 @@
-import { ReactElement, useState } from "react";
 import {
   Button,
-  StackLayout,
-  NavigationItem,
-  H2,
-  SplitLayout,
-  useId,
   Dialog,
-  DialogHeader,
   DialogActions,
   DialogContent,
+  DialogHeader,
+  H2,
+  NavigationItem,
   ParentChildLayout,
+  SplitLayout,
+  StackLayout,
+  useId,
 } from "@salt-ds/core";
-import { SteppedTracker, TrackerStep, StepLabel } from "@salt-ds/lab";
+import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 const SmallDialog = (): ReactElement => {
   const [open, setOpen] = useState(false);

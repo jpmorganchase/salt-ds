@@ -20,7 +20,7 @@ describe("GIVEN a Panel", () => {
         cy.mount(
           <Panel>
             <div data-testid="test" />
-          </Panel>
+          </Panel>,
         );
         cy.findByTestId("test").should("exist");
       });

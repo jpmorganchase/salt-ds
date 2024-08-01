@@ -1,7 +1,7 @@
 import {
   DEFAULT_ICON_SIZE,
   ErrorSolidIcon,
-  IconProps,
+  type IconProps,
   InfoSolidIcon,
   SuccessTickIcon,
   WarningSolidIcon,
@@ -9,11 +9,11 @@ import {
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { makePrefixer } from "../utils";
-import { ValidationStatus } from "./ValidationStatus";
+import type { ValidationStatus } from "./ValidationStatus";
 
-import statusIndicatorCss from "./StatusIndicator.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import statusIndicatorCss from "./StatusIndicator.css";
 
 const icons = {
   error: ErrorSolidIcon,
@@ -41,7 +41,7 @@ const withBaseName = makePrefixer("saltStatusIndicator");
 export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
   function StatusIndicator(
     { className, status, size = DEFAULT_ICON_SIZE, ...restProps },
-    ref
+    ref,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -62,5 +62,5 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
         ref={ref}
       />
     );
-  }
+  },
 );

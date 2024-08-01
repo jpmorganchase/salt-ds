@@ -8,7 +8,7 @@ export interface MenuTriggerContextValue {
 
 export const MenuTriggerContext = createContext<MenuTriggerContextValue>(
   "MenuTriggerContext",
-  { triggersSubmenu: false, blurActive: false }
+  { triggersSubmenu: false, blurActive: false },
 );
 
 export function useIsMenuTrigger() {

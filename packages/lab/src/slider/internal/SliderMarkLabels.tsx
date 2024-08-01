@@ -1,14 +1,14 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useMemo } from "react";
+import type { SliderMark } from "./SliderRailMarks";
 import {
-  createSliderMarkLabelsStyle,
   createSliderMarkLabelStyles,
+  createSliderMarkLabelsStyle,
 } from "./styles";
 import { isLabeledMark } from "./utils";
-import { SliderMark } from "./SliderRailMarks";
-import { useMemo } from "react";
 
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import sliderCss from "../Slider.css";
 
 const withBaseName = makePrefixer("saltSliderMarkLabels");
@@ -31,17 +31,21 @@ export function SliderMarkLabels(props: SliderMarkLabelsProps) {
 
   const style = useMemo(
     () => createSliderMarkLabelsStyle(min, max, marks),
-    [min, max, marks]
+    [min, max, marks],
   );
   const labelStyles = useMemo(
     () => createSliderMarkLabelStyles(marks),
-    [marks]
+    [marks],
   );
   return (
     <div className={withBaseName()} style={style}>
       {marks.map((mark, i) => {
         return (
-          <div key={i} className={withBaseName("label")} style={labelStyles[i]}>
+          <div
+            key={isLabeledMark(mark) ? mark.value : mark}
+            className={withBaseName("label")}
+            style={labelStyles[i]}
+          >
             {isLabeledMark(mark) ? mark.label : `${mark}`}
           </div>
         );

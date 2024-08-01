@@ -1,30 +1,30 @@
-import type { Parameters, GlobalTypes, ArgTypes } from "@storybook/types";
-import "@salt-ds/theme/index.css";
-import "@salt-ds/theme/css/theme-next.css";
-import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/300-italic.css";
-import "@fontsource/open-sans/400.css";
+import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400-italic.css";
-import "@fontsource/open-sans/500.css";
+import "@fontsource/open-sans/400.css";
 import "@fontsource/open-sans/500-italic.css";
-import "@fontsource/open-sans/600.css";
+import "@fontsource/open-sans/500.css";
 import "@fontsource/open-sans/600-italic.css";
-import "@fontsource/open-sans/700.css";
+import "@fontsource/open-sans/600.css";
 import "@fontsource/open-sans/700-italic.css";
-import "@fontsource/open-sans/800.css";
+import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800-italic.css";
+import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
+import "@salt-ds/theme/css/theme-next.css";
+import "@salt-ds/theme/index.css";
+import type { ArgTypes, GlobalTypes, Parameters } from "@storybook/types";
 import "./styles.css";
 
-import { ComponentProps } from "react";
-import { withTheme } from "docs/decorators/withTheme";
-import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
-import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
-import { withScaffold } from "docs/decorators/withScaffold";
-import { withDateMock } from "docs/decorators/withDateMock";
-import { SaltProvider, UNSTABLE_SaltProviderNext } from "@salt-ds/core";
+import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
+import { withDateMock } from "docs/decorators/withDateMock";
+import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
+import { withScaffold } from "docs/decorators/withScaffold";
+import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
+import { withTheme } from "docs/decorators/withTheme";
 import { initialize, mswLoader } from "msw-storybook-addon";
+import type { ComponentProps } from "react";
 
 import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
 
@@ -151,7 +151,7 @@ export const parameters: Parameters = {
       const ChosenProvider =
         /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
         context.store.globals.globals?.themeNext === "enable"
-          ? UNSTABLE_SaltProviderNext
+          ? SaltProviderNext
           : SaltProvider;
       return (
         <DocsContainer context={context} {...rest}>

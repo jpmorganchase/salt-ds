@@ -1,18 +1,18 @@
-import { ReactElement, useState, ChangeEventHandler } from "react";
 import {
-  FlowLayout,
-  FlexContentAlignment,
+  type FlexContentAlignment,
   FlexItem,
-  FLEX_ALIGNMENT_BASE as flexAlignment,
-  FLEX_CONTENT_ALIGNMENT_BASE as flexContentAlignment,
+  FlowLayout,
   FormField,
   FormFieldLabel,
-  RadioButtonGroup,
   RadioButton,
+  RadioButtonGroup,
+  FLEX_ALIGNMENT_BASE as flexAlignment,
+  FLEX_CONTENT_ALIGNMENT_BASE as flexContentAlignment,
 } from "@salt-ds/core";
 import clsx from "clsx";
-import styles from "./index.module.css";
+import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import layoutPositionStyles from "./LayoutPosition.module.css";
+import styles from "./index.module.css";
 
 type FlexAlignment = (typeof flexAlignment)[number];
 type FlexAlign = FlexAlignment | "stretch" | "baseline";
@@ -60,7 +60,7 @@ export const LayoutPosition = (): ReactElement => {
               <RadioButton
                 key={alignment}
                 label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1
+                  1,
                 )}`}
                 value={alignment}
               />
@@ -81,7 +81,7 @@ export const LayoutPosition = (): ReactElement => {
               <RadioButton
                 key={alignment}
                 label={`${alignment.charAt(0).toUpperCase()}${alignment.slice(
-                  1
+                  1,
                 )}`}
                 value={alignment}
               />

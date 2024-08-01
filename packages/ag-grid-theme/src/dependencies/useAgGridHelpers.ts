@@ -1,9 +1,15 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
+import type { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
-import { AgGridReactProps } from "ag-grid-react";
+import type { AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
-import { HTMLAttributes, useCallback, useMemo, useRef, useState } from "react";
+import {
+  type HTMLAttributes,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -39,26 +45,26 @@ export function useAgGridHelpers({
   const mode = modeProp ?? contextMode;
   const density = densityProp ?? contextDensity;
 
-  const [rowHeight, listItemHeight] = useMemo(() => {
+  const [rowHeight, headerRowHeight] = useMemo(() => {
     switch (density) {
       case compact && "high":
-        return [20, 20];
+        return [21, 20];
       case "high":
-        return [24, 24]; // 20 + 4
+        return [25, 24]; // 20 + 4 + [1 (border)]
       case "medium":
-        return [36, 36]; // 28 + 8
+        return [37, 36]; // 28 + 8 + [1 (border)]
       case "low":
-        return [48, 48]; // 36 + 12
+        return [49, 48]; // 36 + 12 + [1 (border)]
       case "touch":
-        return [60, 60]; // 44 + 16
+        return [61, 60]; // 44 + 16 + [1 (border)]
       default:
-        return [24, 24];
+        return [25, 24];
     }
   }, [density, compact]);
 
   const className = clsx(
     containerClassName,
-    `ag-theme-salt${compact && density === "high" ? `-compact` : ``}-${mode}`
+    `ag-theme-salt${compact && density === "high" ? "-compact" : ""}-${mode}`,
   );
 
   const onGridReady = useCallback(({ api, columnApi }: GridReadyEvent) => {
@@ -75,14 +81,14 @@ export function useAgGridHelpers({
     agGridProps: {
       onGridReady,
       rowHeight,
-      headerHeight: rowHeight,
+      headerHeight: headerRowHeight,
       suppressMenuHide: true,
       defaultColDef: {
         filter: true,
         resizable: true,
         sortable: true,
         filterParams: {
-          cellHeight: listItemHeight,
+          cellHeight: rowHeight,
         },
       },
     },

@@ -1,10 +1,10 @@
-import { forwardRef } from "react";
-import clsx from "clsx";
-import { Button, ButtonProps } from "../button";
-import { makePrefixer } from "../utils";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { CloseIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import { forwardRef } from "react";
+import { Button, type ButtonProps } from "../button";
+import { makePrefixer } from "../utils";
 
 import dialogCloseButtonCss from "./DialogCloseButton.css";
 
@@ -30,5 +30,5 @@ export const DialogCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
         <CloseIcon aria-hidden />
       </Button>
     );
-  }
+  },
 );

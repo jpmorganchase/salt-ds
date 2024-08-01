@@ -1,16 +1,16 @@
 import {
-  H3,
-  Text,
-  StackLayout,
-  InteractableCard,
-  InteractableCardGroup,
-  InteractableCardValue,
   Avatar,
   CheckboxIcon,
+  H3,
+  InteractableCard,
+  InteractableCardGroup,
+  type InteractableCardValue,
   RadioButtonIcon,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
-import { CreditCardIcon, BankIcon } from "@salt-ds/icons";
-import { Meta, StoryFn } from "@storybook/react";
+import { BankIcon, CreditCardIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 import persona1 from "../../assets/avatar.png";

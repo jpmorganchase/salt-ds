@@ -1,18 +1,22 @@
 import { useControlled, useForkRef, useIsFocusVisible } from "@salt-ds/core";
-import React, {
-  FocusEventHandler,
+import {
+  type FocusEventHandler,
+  type KeyboardEventHandler,
+  type MouseEvent,
+  type MouseEventHandler,
   forwardRef,
-  KeyboardEventHandler,
-  MouseEventHandler,
   useState,
 } from "react";
-import { StarIconContainer, StarIconContainerProps } from "./StarIconContainer";
+import {
+  StarIconContainer,
+  type StarIconContainerProps,
+} from "./StarIconContainer";
 
 export interface FavoriteToggleProps
   extends Omit<StarIconContainerProps, "onChange"> {
   onBlur?: FocusEventHandler;
   onChange?: (isSelected: boolean) => void;
-  onClick?: (event: React.MouseEvent<HTMLSpanElement>) => void;
+  onClick?: (event: MouseEvent<HTMLSpanElement>) => void;
   onFocus?: FocusEventHandler;
   onKeyDown?: KeyboardEventHandler<HTMLSpanElement>;
   onMouseEnter?: MouseEventHandler<HTMLSpanElement>;
@@ -76,7 +80,7 @@ export const FavoriteToggle = forwardRef<HTMLSpanElement, FavoriteToggleProps>(
       setIsFocusVisible(false);
     };
 
-    const handleClick: React.MouseEventHandler<HTMLSpanElement> = (event) => {
+    const handleClick: MouseEventHandler<HTMLSpanElement> = (event) => {
       if (onClickProp) {
         onClickProp(event);
       }
@@ -84,18 +88,14 @@ export const FavoriteToggle = forwardRef<HTMLSpanElement, FavoriteToggleProps>(
       toggleSelected();
     };
 
-    const handleMouseEnter: React.MouseEventHandler<HTMLSpanElement> = (
-      event
-    ) => {
+    const handleMouseEnter: MouseEventHandler<HTMLSpanElement> = (event) => {
       if (onMouseEnterProp) {
         onMouseEnterProp(event);
       }
       setIsHighlighted(true);
     };
 
-    const handleMouseLeave: React.MouseEventHandler<HTMLSpanElement> = (
-      event
-    ) => {
+    const handleMouseLeave: MouseEventHandler<HTMLSpanElement> = (event) => {
       if (onMouseLeaveProp) {
         onMouseLeaveProp(event);
       }
@@ -130,5 +130,5 @@ export const FavoriteToggle = forwardRef<HTMLSpanElement, FavoriteToggleProps>(
         {...restProps}
       />
     );
-  }
+  },
 );

@@ -1,22 +1,22 @@
-import { makePrefixer, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import { ToggleButton, ToggleButtonGroup, makePrefixer } from "@salt-ds/core";
 import { FilterIcon } from "@salt-ds/icons";
 import {
-  ChangeEventHandler,
-  FocusEventHandler,
+  type ChangeEventHandler,
+  type FocusEventHandler,
+  type KeyboardEventHandler,
+  type Ref,
+  type SyntheticEvent,
   forwardRef,
-  KeyboardEventHandler,
-  Ref,
-  SyntheticEvent,
   useMemo,
 } from "react";
 
 import {
-  ChangeHandler,
-  StringToItem,
+  type ChangeHandler,
+  type StringToItem,
   TokenizedInput,
 } from "../../tokenized-input";
-import { QueryInputItem } from "../queryInputTypes";
-import { BooleanOperator } from "../useQueryInput";
+import type { QueryInputItem } from "../queryInputTypes";
+import type { BooleanOperator } from "../useQueryInput";
 
 const withBaseName = makePrefixer("saltQueryInputBody");
 
@@ -69,7 +69,7 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
 
     const stringToItem: StringToItem<QueryInputItem> = (
       selectedItems,
-      value
+      value,
     ) => {
       return {
         category: null,
@@ -90,8 +90,10 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
           disabled={disabled}
           className={withBaseName("input")}
           selectedItems={selectedItems}
-          itemToString={itemToString as any}
-          stringToItem={stringToItem as any}
+          // @ts-ignore
+          itemToString={itemToString}
+          // @ts-ignore
+          stringToItem={stringToItem}
           onInputFocus={onInputFocus}
           onInputBlur={onInputBlur}
           value={inputValue}
@@ -99,7 +101,8 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
           onInputChange={onInputChange}
           expanded={isFocused}
           onClear={onInputClear}
-          onChange={onSelectedItemsChange as any}
+          // @ts-ignore
+          onChange={onSelectedItemsChange}
           onKeyDown={onKeyDown}
         />
         <div className={withBaseName("separator")} />
@@ -114,5 +117,5 @@ export const QueryInputBody = forwardRef<HTMLDivElement, QueryInputBodyProps>(
         </ToggleButtonGroup>
       </div>
     );
-  }
+  },
 );

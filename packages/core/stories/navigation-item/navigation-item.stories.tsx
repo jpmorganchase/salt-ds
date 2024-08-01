@@ -2,11 +2,13 @@ import {
   Badge,
   FlexLayout,
   NavigationItem,
-  NavigationItemProps,
+  type NavigationItemProps,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
 import { NotificationIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import React, { useState } from "react";
 
 import "./navigation-item.stories.css";
 
@@ -348,8 +350,8 @@ export const VerticalNestedGroup = () => {
                     active === `${name} - ${item.name}` ||
                     item.subNav.some(
                       (nestedItem) =>
-                        active === `${name} - ${item.name} - ${nestedItem}`
-                    )
+                        active === `${name} - ${item.name} - ${nestedItem}`,
+                    ),
                 )
               }
               href="#"
@@ -384,7 +386,7 @@ export const VerticalNestedGroup = () => {
                           active === itemValue ||
                           (!expanded.includes(item.name) &&
                             item.subNav?.some(
-                              (item) => active === `${name} - ${item}`
+                              (item) => active === `${name} - ${item}`,
                             ))
                         }
                         blurActive={
@@ -392,7 +394,7 @@ export const VerticalNestedGroup = () => {
                           item.subNav?.some(
                             (nestedItem) =>
                               active ===
-                              `${name} - ${item.name} - ${nestedItem}`
+                              `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
                         href="#"
@@ -406,8 +408,8 @@ export const VerticalNestedGroup = () => {
                           if (expanded.includes(item.name)) {
                             setExpanded(
                               expanded.filter(
-                                (element) => element !== item.name
-                              )
+                                (element) => element !== item.name,
+                              ),
                             );
                           } else {
                             setExpanded([...expanded, item.name]);
@@ -479,8 +481,8 @@ export const VerticalNestedGroupNoIcon = () => {
                     active === `${name} - ${item.name}` ||
                     item.subNav.some(
                       (nestedItem) =>
-                        active === `${name} - ${item.name} - ${nestedItem}`
-                    )
+                        active === `${name} - ${item.name} - ${nestedItem}`,
+                    ),
                 )
               }
               href="#"
@@ -514,7 +516,7 @@ export const VerticalNestedGroupNoIcon = () => {
                           active === itemValue ||
                           (!expanded.includes(item.name) &&
                             item.subNav?.some(
-                              (item) => active === `${name} - ${item}`
+                              (item) => active === `${name} - ${item}`,
                             ))
                         }
                         blurActive={
@@ -522,7 +524,7 @@ export const VerticalNestedGroupNoIcon = () => {
                           item.subNav?.some(
                             (nestedItem) =>
                               active ===
-                              `${name} - ${item.name} - ${nestedItem}`
+                              `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
                         href="#"
@@ -536,8 +538,8 @@ export const VerticalNestedGroupNoIcon = () => {
                           if (expanded.includes(item.name)) {
                             setExpanded(
                               expanded.filter(
-                                (element) => element !== item.name
-                              )
+                                (element) => element !== item.name,
+                              ),
                             );
                           } else {
                             setExpanded([...expanded, item.name]);
@@ -582,6 +584,104 @@ export const VerticalNestedGroupNoIcon = () => {
           </li>
         ))}
       </ul>
+    </nav>
+  );
+};
+
+const CustomLinkImplementation = (props: any) => (
+  <a {...props} aria-label={"overridden-label"}>
+    <Text>Your Own Link Implementation</Text>
+  </a>
+);
+
+export const WithRenderElement = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
+        <li>
+          <NavigationItem
+            expanded={expanded}
+            level={0}
+            onExpand={() => setExpanded(!expanded)}
+            orientation="vertical"
+            parent={true}
+            render={<button />}
+          >
+            Render Prop Parent
+          </NavigationItem>
+        </li>
+        {expanded ? (
+          <li>
+            <NavigationItem
+              href="#"
+              level={1}
+              orientation="vertical"
+              render={<CustomLinkImplementation />}
+            >
+              Render Prop Child
+            </NavigationItem>
+          </li>
+        ) : null}
+      </StackLayout>
+    </nav>
+  );
+};
+
+export const WithRenderProp = () => {
+  const [expanded, setExpanded] = useState<boolean>(false);
+
+  const render = (props: any) => {
+    if (props.href) {
+      return <a {...props} />;
+    }
+    return <button {...props} />;
+  };
+
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{
+          width: 250,
+          listStyle: "none",
+          paddingLeft: 0,
+        }}
+      >
+        <li>
+          <NavigationItem
+            expanded={expanded}
+            level={0}
+            onExpand={() => setExpanded(!expanded)}
+            orientation="vertical"
+            parent={true}
+            render={render}
+          >
+            Render Prop Parent
+          </NavigationItem>
+        </li>
+        {expanded ? (
+          <li>
+            <NavigationItem
+              href="#"
+              level={1}
+              orientation="vertical"
+              render={render}
+            >
+              Render Prop Child
+            </NavigationItem>
+          </li>
+        ) : null}
+      </StackLayout>
     </nav>
   );
 };

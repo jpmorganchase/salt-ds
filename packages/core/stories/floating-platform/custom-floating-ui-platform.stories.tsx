@@ -1,35 +1,37 @@
-import { Meta, StoryFn } from "@storybook/react";
-import React, {
+import { offset, platform } from "@floating-ui/dom";
+import type { Platform } from "@floating-ui/react";
+import type { Meta, StoryFn } from "@storybook/react";
+import {
+  type CSSProperties,
+  type ChangeEvent,
+  type ComponentPropsWithoutRef,
+  type Ref,
   forwardRef,
   useMemo,
-  ComponentPropsWithoutRef,
   useState,
-  Ref,
 } from "react";
 import { createPortal } from "react-dom";
-import { platform, offset } from "@floating-ui/dom";
-import { Platform } from "@floating-ui/react";
 
 import {
   Button,
-  FloatingPlatformProvider,
-  Tooltip,
-  TooltipProps,
-  StackLayout,
-  Text,
-  H3,
-  FloatingComponentProvider,
-  FloatingComponentProps,
   ComboBox,
   Dropdown,
+  type FloatingComponentProps,
+  FloatingComponentProvider,
+  FloatingPlatformProvider,
+  H3,
   Option,
+  StackLayout,
+  Text,
+  Tooltip,
+  type TooltipProps,
 } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
 import floatingCss from "./floating-platform.css";
 
-import { NewWindow, FloatingComponentWindow } from "./NewWindow";
+import { FloatingComponentWindow, NewWindow } from "./NewWindow";
 
 export default {
   title: "Core/Floating Platform",
@@ -47,7 +49,7 @@ type RootComponentProps = FloatingComponentProps &
 
 type NewWindowTestProps = Pick<TooltipProps, "placement" | "content">;
 
-const offscreenStyles: React.CSSProperties = {
+const offscreenStyles: CSSProperties = {
   top: -9999,
   left: -9999,
   position: "fixed",
@@ -110,25 +112,15 @@ const NewWindowTest = (props: NewWindowTestProps) => {
       getDimensions: platform.getDimensions,
       getClippingRect: () => window.document.body.getBoundingClientRect(),
     }),
-    [iframe]
+    [iframe],
   );
 
   const FloatingUIComponent = useMemo(
     () =>
       forwardRef<HTMLDivElement, RootComponentProps>(
         function FloatingUIComponent(
-          {
-            style,
-            open,
-            top,
-            left,
-            width,
-            height,
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            position,
-            ...rest
-          },
-          ref
+          { style, open, top, left, width, height, position, ...rest },
+          ref,
         ) {
           const FloatingRoot = (
             /* In thise case to avoid Flash of Unstyled Text (FOUT) in the tooltip, due to being in an iframe, we are always rendering the tooltip.
@@ -160,14 +152,14 @@ const NewWindowTest = (props: NewWindowTestProps) => {
 
           // In this case tooltip is portalled back to the root document this may not be the case if tooltips were opened as new windows
           return rootBody ? createPortal(FloatingRoot, rootBody) : null;
-        }
+        },
       ),
-    [rootBody]
+    [rootBody],
   );
 
   const [value, setValue] = useState("");
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
   };
 
@@ -192,7 +184,7 @@ const NewWindowTest = (props: NewWindowTestProps) => {
               <ComboBox disabled={false} onChange={handleChange}>
                 {source
                   .filter((item) =>
-                    item.toLowerCase().includes(value.trim().toLowerCase())
+                    item.toLowerCase().includes(value.trim().toLowerCase()),
                   )
                   .map((item) => (
                     <Option key={item} value={item}>

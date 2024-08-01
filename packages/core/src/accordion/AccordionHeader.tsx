@@ -1,14 +1,14 @@
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  MouseEvent,
-  ReactNode,
-} from "react";
-import { clsx } from "clsx";
-import { StatusIndicator } from "../status-indicator";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type MouseEvent,
+  type ReactNode,
+  forwardRef,
+} from "react";
+import { StatusIndicator } from "../status-indicator";
 
 import { makePrefixer } from "../utils";
 
@@ -59,7 +59,7 @@ export const AccordionHeader = forwardRef<
       className={clsx(
         withBaseName(),
         { [withBaseName(status ?? "")]: status },
-        className
+        className,
       )}
       disabled={disabled}
       onClick={handleClick}

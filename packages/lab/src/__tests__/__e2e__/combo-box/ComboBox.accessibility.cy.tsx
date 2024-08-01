@@ -1,5 +1,5 @@
-import { composeStories } from "@storybook/react";
 import * as comboBoxStories from "@stories/combobox/combobox.stories";
+import { composeStories } from "@storybook/react";
 
 const {
   Default,
@@ -16,7 +16,9 @@ describe("A combo box", () => {
     const testId = "my-input";
 
     cy.mount(
-      <Default InputProps={{ inputProps: { "data-testid": testId } as any }} />
+      <Default
+        InputProps={{ inputProps: { "data-testid": testId } as never }}
+      />,
     );
 
     cy.findByTestId(testId).should("have.attr", "role", "combobox");
@@ -38,7 +40,7 @@ describe("A combo box", () => {
 
       cy.findByRole("combobox").should(
         "not.have.attr",
-        "aria-activedescendant"
+        "aria-activedescendant",
       );
       cy.realPress("Tab");
 
@@ -47,7 +49,7 @@ describe("A combo box", () => {
       cy.findByRole("combobox").should(
         "have.attr",
         "aria-activedescendant",
-        `${mockId}-item-3`
+        `${mockId}-item-3`,
       );
     });
 
@@ -64,7 +66,7 @@ describe("A combo box", () => {
 
       cy.findByRole("combobox").should(
         "not.have.attr",
-        "aria-activedescendant"
+        "aria-activedescendant",
       );
     });
 
@@ -90,7 +92,7 @@ describe("A combo box", () => {
 
         cy.findByRole("combobox").should(
           "not.have.attr",
-          "aria-activedescendant"
+          "aria-activedescendant",
         );
 
         // // second time highlight
@@ -99,7 +101,7 @@ describe("A combo box", () => {
         cy.findByRole("combobox").should(
           "have.attr",
           "aria-activedescendant",
-          `${mockId}-item-${key === "ArrowDown" ? "1" : "0"}`
+          `${mockId}-item-${key === "ArrowDown" ? "1" : "0"}`,
         );
       });
     });

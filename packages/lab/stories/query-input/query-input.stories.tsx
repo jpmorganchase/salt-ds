@@ -1,7 +1,11 @@
-import { BooleanOperator, QueryInput, QueryInputItem } from "@salt-ds/lab";
-import { Meta, StoryFn } from "@storybook/react";
+import {
+  type BooleanOperator,
+  QueryInput,
+  type QueryInputItem,
+} from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useMemo, useState } from "react";
-import { QueryResultRow, QueryResultTable } from "../components";
+import { type QueryResultRow, QueryResultTable } from "../components";
 
 import "./query-input.stories.css";
 
@@ -71,7 +75,7 @@ const matchQueryItem = (row: QueryResultRow, item: QueryInputItem) => {
 
 const makeFilterFunction = (
   items: QueryInputItem[],
-  booleanOperator: BooleanOperator
+  booleanOperator: BooleanOperator,
 ) => {
   if (items.length === 0) {
     return () => true;
@@ -79,10 +83,9 @@ const makeFilterFunction = (
   if (booleanOperator === "or") {
     return (row: QueryResultRow) =>
       items.some((item) => matchQueryItem(row, item));
-  } else {
-    return (row: QueryResultRow) =>
-      items.every((item) => matchQueryItem(row, item));
   }
+  return (row: QueryResultRow) =>
+    items.every((item) => matchQueryItem(row, item));
 };
 
 const DevelopmentStory: StoryFn<StoryProps> = (props) => {

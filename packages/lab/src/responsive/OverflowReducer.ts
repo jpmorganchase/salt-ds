@@ -4,14 +4,20 @@
  * the source prop or as child elements. We also support 'injected' items. These allow for additional UI
  * controls to be inserted into the container, eg an 'Add Item' button.
  */
-import React, { isValidElement, ReactElement, ReactNode, Reducer } from "react";
-
 import {
+  Children,
+  type ReactElement,
+  type ReactNode,
+  type Reducer,
+  isValidElement,
+} from "react";
+
+import type {
   InjectedChildItem,
   InjectedSourceItem,
+  OverflowCollectionOptions,
   OverflowItem,
   OverflowItems,
-  OverflowCollectionOptions,
   OverflowSource,
 } from "./overflowTypes";
 
@@ -81,10 +87,10 @@ const DEFAULT_PRIORITY = 3;
 
 const mapReactElementChildren = (
   children: ReactNode,
-  fn: (el: ReactElement, index: number) => OverflowItem
+  fn: (el: ReactElement, index: number) => OverflowItem,
 ): OverflowItem[] => {
   const childElements: OverflowItem[] = [];
-  React.Children.forEach(children, (child, i) => {
+  Children.forEach(children, (child, i) => {
     if (isValidElement(child)) {
       childElements.push(fn(child, i));
     }
@@ -96,7 +102,7 @@ const sourceItem = (
   item: OverflowSource,
   id: string,
   index: number,
-  options?: OverflowCollectionOptions
+  options?: OverflowCollectionOptions,
 ): OverflowItem<"source"> => {
   const priority =
     options?.getPriority?.(item, index) ?? item.priority ?? DEFAULT_PRIORITY;
@@ -121,7 +127,7 @@ const sourceItem = (
 const createSourceItems = (
   source: any,
   idRoot: string,
-  options?: OverflowCollectionOptions
+  options?: OverflowCollectionOptions,
 ): OverflowItem<"source">[] | undefined => {
   if (Array.isArray(source)) {
     return source.map((item, index) => {
@@ -146,7 +152,7 @@ const childItem = (
   child: ReactElement,
   id: string,
   index: number,
-  options?: OverflowCollectionOptions
+  options?: OverflowCollectionOptions,
 ): OverflowItem<"child"> => {
   const {
     closeable,
@@ -172,7 +178,7 @@ const childItem = (
     element: child,
     label,
     position: dataPosition,
-    priority: priority ?? parseInt(dataPriority),
+    priority: priority ?? Number.parseInt(dataPriority),
     size: 0,
     source: null,
     type: "child",
@@ -180,9 +186,9 @@ const childItem = (
 };
 
 const createChildItems = (
-  children: React.ReactNode,
+  children: ReactNode,
   idRoot: string,
-  options?: OverflowCollectionOptions
+  options?: OverflowCollectionOptions,
 ): OverflowItem<"child">[] | undefined => {
   if (children) {
     return mapReactElementChildren(children, (child, index) => {
@@ -195,7 +201,7 @@ const createChildItems = (
 const createInjectedContent = (
   items: Array<InjectedSourceItem | InjectedChildItem>,
   idRoot: string,
-  startIndex: number
+  startIndex: number,
 ): OverflowItem<"source" | "child">[] => {
   return items.map((item, i) => {
     const index = startIndex + i;
@@ -205,12 +211,11 @@ const createInjectedContent = (
       const injectedItem = sourceItem(source, id, index);
       injectedItem.isInjectedItem = true;
       return injectedItem;
-    } else {
-      const { element } = item as InjectedChildItem;
-      const injectedItem = childItem(element, id, index);
-      injectedItem.isInjectedItem = true;
-      return injectedItem;
     }
+    const { element } = item as InjectedChildItem;
+    const injectedItem = childItem(element, id, index);
+    injectedItem.isInjectedItem = true;
+    return injectedItem;
   });
 };
 
@@ -227,7 +232,7 @@ export type OverflowReducerInitialisationProps = {
 };
 
 export const reducerInitialiser: (
-  props: OverflowReducerInitialisationProps
+  props: OverflowReducerInitialisationProps,
 ) => OverflowItems = ({
   children,
   source,
@@ -242,14 +247,14 @@ export const reducerInitialiser: (
   const injectedContent = createInjectedContent(
     injectedItems,
     idRoot,
-    providedContent.length
+    providedContent.length,
   );
   return providedContent.concat(injectedContent);
 };
 
 const collapsingItem = (
   items: OverflowItem[],
-  { overflowItem }: SingleItemAction
+  { overflowItem }: SingleItemAction,
 ) =>
   items.map((item) =>
     item === overflowItem
@@ -257,12 +262,12 @@ const collapsingItem = (
           ...item,
           collapsing: true,
         }
-      : item
+      : item,
   );
 
 const uncollapseDynamicItem = (
   items: OverflowItem[],
-  { overflowItem }: SingleItemAction
+  { overflowItem }: SingleItemAction,
 ) =>
   items.map((item) =>
     item === overflowItem
@@ -273,12 +278,12 @@ const uncollapseDynamicItem = (
           size: item.fullSize as number,
           fullSize: null,
         }
-      : item
+      : item,
   );
 
 const collapseInstantItem = (
   items: OverflowItem[],
-  { overflowItem }: SingleItemAction
+  { overflowItem }: SingleItemAction,
 ) =>
   items.map((item) =>
     item === overflowItem
@@ -286,20 +291,20 @@ const collapseInstantItem = (
           ...item,
           collapsed: true,
         }
-      : item
+      : item,
   );
 
 const replaceItem = (
   items: OverflowItem[],
-  { overflowItem }: SingleItemAction
+  { overflowItem }: SingleItemAction,
 ) =>
   items.map((item) =>
-    item.index === overflowItem?.index ? overflowItem : item
+    item.index === overflowItem?.index ? overflowItem : item,
   );
 
 const updateItems = (
   items: OverflowItem[],
-  { overflowItems = [] }: MultiItemAction
+  { overflowItems = [] }: MultiItemAction,
 ) => {
   return items.map((item) => {
     const targetItem = overflowItems.find((i) => i.id === item.id);
@@ -309,10 +314,10 @@ const updateItems = (
 
 const restoreCollapsingItem = (items: OverflowItem[]) => {
   const collapsingItem = items.find(
-    ({ collapsible, collapsing }) => collapsible === "dynamic" && collapsing
+    ({ collapsible, collapsing }) => collapsible === "dynamic" && collapsing,
   );
   const collapsedItem = items.find(
-    ({ collapsible, collapsed }) => collapsible === "dynamic" && collapsed
+    ({ collapsible, collapsed }) => collapsible === "dynamic" && collapsed,
   );
   return items.map((item) => {
     if (item === collapsingItem) {
@@ -320,24 +325,24 @@ const restoreCollapsingItem = (items: OverflowItem[]) => {
         ...item,
         collapsing: false,
       };
-    } else if (item === collapsedItem) {
+    }
+    if (item === collapsedItem) {
       return {
         ...item,
         collapsed: false,
         collapsing: true,
       };
-    } else {
-      return item;
     }
+    return item;
   });
 };
 
 const collapseDynamicItem = (
   items: OverflowItem[],
-  { overflowItem, collapsedSize = 0, minSize = 0 }: DynamicCollapseAction
+  { overflowItem, collapsedSize = 0, minSize = 0 }: DynamicCollapseAction,
 ) => {
   const remainingUncollpasedItems = items.filter(
-    (i) => i.collapsible === "dynamic" && !i.collapsed && i !== overflowItem
+    (i) => i.collapsible === "dynamic" && !i.collapsed && i !== overflowItem,
   );
   const lastUncollapsedItem = remainingUncollpasedItems.pop();
 
@@ -351,20 +356,20 @@ const collapseDynamicItem = (
         minSize,
         size: collapsedSize,
       };
-    } else if (item === lastUncollapsedItem) {
+    }
+    if (item === lastUncollapsedItem) {
       return {
         ...item,
         collapsing: true,
       };
-    } else {
-      return item;
     }
+    return item;
   });
 };
 
 const addSourceItem = (
   items: OverflowItem<any>[],
-  { idRoot, source }: SourceAction
+  { idRoot, source }: SourceAction,
 ): OverflowItem[] => {
   const index = items.length;
   return items.concat(sourceItem(source, `${idRoot}-${index}`, index));
@@ -372,14 +377,14 @@ const addSourceItem = (
 
 const removeItem = (
   items: OverflowItem<any>[],
-  { indexPosition }: RemoveItemAction
+  { indexPosition }: RemoveItemAction,
 ): OverflowItem[] => {
   return items.slice(0, indexPosition).concat(items.slice(indexPosition + 1));
 };
 
 const addOverflowIndicator = (
   items: OverflowItem<any>[],
-  { overflowItem }: SingleItemAction
+  { overflowItem }: SingleItemAction,
 ) => {
   // Guard against accidental duplicate overflowIndicator
   if (!items.find((i) => i.isOverflowIndicator)) {
@@ -389,12 +394,10 @@ const addOverflowIndicator = (
         .slice(0, -1)
         .concat({ ...overflowItem, index: addTab.index })
         .concat({ ...addTab, index: overflowItem.index });
-    } else {
-      return items.concat(overflowItem);
     }
-  } else {
-    return items;
+    return items.concat(overflowItem);
   }
+  return items;
 };
 
 export const overflowReducer: OverflowReducer = (state, action) => {
@@ -416,7 +419,7 @@ export const overflowReducer: OverflowReducer = (state, action) => {
           type: "update-items",
           overflowItems: action.overflowItems,
         }),
-        { type: "add-overflow-indicator", overflowItem: action.overflowItem }
+        { type: "add-overflow-indicator", overflowItem: action.overflowItem },
       );
 
     case "update-items-remove-overflow-indicator":

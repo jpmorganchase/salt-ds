@@ -1,15 +1,15 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  ComponentPropsWithoutRef,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
   forwardRef,
-  ReactNode,
   useEffect,
 } from "react";
-import { Breakpoints } from "../breakpoints";
+import type { Breakpoints } from "../breakpoints";
 import { makePrefixer } from "../utils";
 import { useIsViewportLargerThanBreakpoint } from "./useIsViewportLargerThanBreakpoint";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
 import parentChildLayoutCss from "./ParentChildLayout.css";
 export interface ParentChildLayoutProps
@@ -57,7 +57,7 @@ export const ParentChildLayout = forwardRef<
     style,
     ...rest
   },
-  ref
+  ref,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

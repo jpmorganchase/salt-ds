@@ -1,27 +1,26 @@
 //TODO remove when popout code has been migrated
-/* eslint-disable @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access */
 import { ownerWindow, useControlled, useDensity, useId } from "@salt-ds/core";
 import copy from "clipboard-copy";
 import {
-  ChangeEvent,
-  FocusEvent,
-  InputHTMLAttributes,
-  KeyboardEvent,
-  KeyboardEventHandler,
-  Ref,
-  SetStateAction,
-  SyntheticEvent,
+  type ChangeEvent,
+  type FocusEvent,
+  type InputHTMLAttributes,
+  type KeyboardEvent,
+  type KeyboardEventHandler,
+  type Ref,
+  type SetStateAction,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
+import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { escapeRegExp, useEventCallback } from "../utils";
+import type { TokenizedInputProps } from "./TokenizedInput";
+import type { TokenizedInputBaseProps } from "./TokenizedInputBase";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
-import { TokenizedInputProps } from "./TokenizedInput";
-import { TokenizedInputBaseProps } from "./TokenizedInputBase";
-import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;
@@ -83,7 +82,7 @@ type useTokenizedInputResult<Item> = {
 };
 
 export function useTokenizedInput<Item>(
-  props: TokenizedInputProps<Item>
+  props: TokenizedInputProps<Item>,
 ): useTokenizedInputResult<Item> {
   validateProps(props);
 
@@ -167,7 +166,7 @@ export function useTokenizedInput<Item>(
 
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(
-    undefined
+    undefined,
   );
   const [focused, setFocusedState] = useState(false);
 
@@ -180,7 +179,7 @@ export function useTokenizedInput<Item>(
   const primaryDelimiter = delimiters[0];
   const delimiterRegex = new RegExp(
     delimiters.map(escapeRegExp).join("|"),
-    "gi"
+    "gi",
   );
 
   const onChange = useEventCallback((selectedItems: Item[] | undefined) => {
@@ -210,7 +209,7 @@ export function useTokenizedInput<Item>(
     () => () => {
       cancelBlur();
     },
-    [cancelBlur]
+    [cancelBlur],
   );
 
   useEffect(() => {
@@ -250,7 +249,7 @@ export function useTokenizedInput<Item>(
         onChange(typeof action === "function" ? action(selectedItems) : action);
       }
     },
-    [isSelectionControlled, setSelectedItems, onChange, selectedItems]
+    [isSelectionControlled, onChange, selectedItems],
   );
 
   const updateExpanded = (newExpanded: boolean) => {
@@ -259,9 +258,9 @@ export function useTokenizedInput<Item>(
     }
 
     if (newExpanded) {
-      onExpand && onExpand();
+      onExpand?.();
     } else {
-      onCollapse && onCollapse();
+      onCollapse?.();
     }
 
     if (popoutMode && popoutActions) {
@@ -287,11 +286,11 @@ export function useTokenizedInput<Item>(
           (prevSelectedItems.length === 0
             ? prevSelectedItems
             : prevSelectedItems.filter(
-                (_, index) => itemIndices.indexOf(index) === -1
-              ))
+                (_, index) => itemIndices.indexOf(index) === -1,
+              )),
       );
     },
-    [updateSelectedItems]
+    [updateSelectedItems],
   );
 
   const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -305,8 +304,8 @@ export function useTokenizedInput<Item>(
       setActiveIndices(
         Array.from(
           { length: selectedItems ? selectedItems.length : 0 },
-          (_, index) => index
-        )
+          (_, index) => index,
+        ),
       );
       return;
     }
@@ -343,7 +342,7 @@ export function useTokenizedInput<Item>(
   };
 
   const handleBlur = (
-    event: FocusEvent<HTMLInputElement | HTMLButtonElement>
+    event: FocusEvent<HTMLInputElement | HTMLButtonElement>,
   ) => {
     if (preventBlurOnCopy.current) {
       return focusInput();
@@ -399,7 +398,7 @@ export function useTokenizedInput<Item>(
 
   const handleAddItems = (
     newValue: string | undefined,
-    appendOnly?: boolean
+    appendOnly?: boolean,
   ) => {
     if (!newValue || newValue.length === 0) {
       return;
@@ -412,7 +411,7 @@ export function useTokenizedInput<Item>(
       .reduce<Item[]>((values, part) => {
         const newItem = stringToItem(
           hasActiveItems ? values : selectedItems.concat(values),
-          part
+          part,
         );
         return isValidItem<Item>(newItem) ? values.concat(newItem) : values;
       }, []);
@@ -421,7 +420,7 @@ export function useTokenizedInput<Item>(
       updateSelectedItems((prevSelectedItems = []) =>
         hasActiveItems && !appendOnly
           ? newItems
-          : prevSelectedItems.concat(newItems)
+          : prevSelectedItems.concat(newItems),
       );
     }
   };
@@ -433,7 +432,7 @@ export function useTokenizedInput<Item>(
         removeItems([itemIndex]);
       }
     },
-    [focusInput, removeItems]
+    [focusInput, removeItems],
   );
 
   const handleClear = (event: ChangeEvent<HTMLInputElement>) => {
@@ -464,7 +463,7 @@ export function useTokenizedInput<Item>(
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? selectedItems.length - 1
-          : Math.max(0, prevHighlightedIndex - 1)
+          : Math.max(0, prevHighlightedIndex - 1),
       );
     },
     ArrowRight: (event) => {
@@ -476,7 +475,7 @@ export function useTokenizedInput<Item>(
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? prevHighlightedIndex
-          : Math.min(selectedItems.length - 1, prevHighlightedIndex + 1)
+          : Math.min(selectedItems.length - 1, prevHighlightedIndex + 1),
       );
     },
     Backspace: (event) => {
@@ -485,7 +484,7 @@ export function useTokenizedInput<Item>(
       setHighlightedIndex((prevHighlightedIndex) =>
         prevHighlightedIndex == null
           ? prevHighlightedIndex
-          : Math.max(0, prevHighlightedIndex - 1)
+          : Math.max(0, prevHighlightedIndex - 1),
       );
     },
     Home: (event) => {
@@ -545,14 +544,14 @@ export function useTokenizedInput<Item>(
   const handleCtrlModifierKeyDown: InputHTMLAttributes<HTMLInputElement>["onKeyDown"] =
     (event) => {
       const win = ownerWindow(event.target as HTMLElement);
-      const supportClipboard = win.navigator && win.navigator.clipboard;
+      const supportClipboard = win.navigator?.clipboard;
 
       switch (event.key.toUpperCase()) {
         case "A":
           // Select all
           setHighlightedIndex(undefined);
           setActiveIndices(
-            Array.from({ length: selectedItems.length }, (_, index) => index)
+            Array.from({ length: selectedItems.length }, (_, index) => index),
           );
           break;
         case "C":
@@ -562,7 +561,7 @@ export function useTokenizedInput<Item>(
               .map((index) => itemToString(selectedItems[index]))
               .concat(value != null ? String(value).trim() : "")
               .filter(Boolean)
-              .join(primaryDelimiter)
+              .join(primaryDelimiter),
           )
             .then((result) => {
               preventBlurOnCopy.current = !supportClipboard;
@@ -609,7 +608,7 @@ export function useTokenizedInput<Item>(
   };
 
   const handleKeyDown: InputHTMLAttributes<HTMLInputElement>["onKeyDown"] = (
-    event
+    event,
   ) => {
     if (onKeyDown) {
       onKeyDown(event);
@@ -624,7 +623,7 @@ export function useTokenizedInput<Item>(
     ) {
       handleCtrlModifierKeyDown(event);
     } else {
-      let handler;
+      let handler: KeyboardEventHandler<HTMLInputElement> | undefined;
 
       if (highlightedIndex == null) {
         handler = inputKeyDownHandlers[event.key];
@@ -696,7 +695,7 @@ export function useTokenizedInput<Item>(
 }
 
 const validateProps = function validateProps<Item>(
-  props: TokenizedInputProps<Item>
+  props: TokenizedInputProps<Item>,
 ) {
   if (process.env.NODE_ENV !== "production") {
     const { delimiter } = props;
@@ -706,9 +705,11 @@ const validateProps = function validateProps<Item>(
       : isChar(delimiter);
 
     useEffect(() => {
-      console.warn(
-        "TokenizedInput delimiter should be a single character or an array of single characters"
-      );
+      if (invalidDelimiter) {
+        console.warn(
+          "TokenizedInput delimiter should be a single character or an array of single characters",
+        );
+      }
     }, [invalidDelimiter]);
   }
 };

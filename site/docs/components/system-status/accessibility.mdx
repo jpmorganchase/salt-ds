@@ -1,0 +1,16 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+By default, the `SystemStatus` component has the role `"status"`. This means a screen reader will announce the message at the next available opportunity.
+
+## Best practices
+
+- If the status is critical and requires immediate attention, apply `role="alert"` to ensure the message is announced immediately.
+- If the status is not critical, consider applying `role="region"`.

@@ -1,15 +1,15 @@
-import { RefObject } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import type { RefObject } from "react";
 
-import { GridColumnModel, GridRowModel } from "../Grid";
-import { CellValidationState } from "../GridColumn";
+import type { GridColumnModel, GridRowModel } from "../Grid";
+import type { CellValidationState } from "../GridColumn";
 
-import { useActiveOnWheel } from "./gridHooks";
 import { TableBody } from "./TableBody";
 import { TableColGroup } from "./TableColGroup";
+import { useActiveOnWheel } from "./gridHooks";
 
 import leftPartCss from "./LeftPart.css";
 
@@ -25,7 +25,7 @@ export interface LeftPartProps<T> {
   setHoverOverRowKey: (key: string | undefined) => void;
   zebra?: boolean;
   getRowValidationStatus?: (
-    row: GridRowModel<T>
+    row: GridRowModel<T>,
   ) => CellValidationState | undefined;
 }
 

@@ -1,30 +1,36 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { MenuContext } from "./MenuContext";
 import {
+  FloatingNode,
+  type ReferenceType,
   flip,
-  offset,
-  shift,
   limitShift,
-  useInteractions,
-  useRole,
+  offset,
+  safePolygon,
+  shift,
+  size,
   useClick,
   useDismiss,
-  useHover,
-  safePolygon,
-  FloatingNode,
-  useFloatingParentNodeId,
   useFloatingNodeId,
-  useListNavigation,
+  useFloatingParentNodeId,
   useFloatingTree,
-  size,
-  ReferenceType,
+  useHover,
+  useInteractions,
+  useListNavigation,
+  useRole,
 } from "@floating-ui/react";
 import {
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import {
+  type UseFloatingUIProps,
   useControlled,
   useFloatingUI,
-  UseFloatingUIProps,
   useIsomorphicLayoutEffect,
 } from "../utils";
+import { MenuContext } from "./MenuContext";
 
 export interface MenuBaseProps {
   children?: ReactNode;
@@ -76,7 +82,7 @@ export function MenuBase(props: MenuBaseProps) {
       setOpenState(newOpen);
       onOpenChange?.(newOpen);
     },
-    [setOpenState, onOpenChange]
+    [onOpenChange],
   );
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -94,7 +100,9 @@ export function MenuBase(props: MenuBaseProps) {
       (isNested || getVirtualElement ? "right-start" : "bottom-start"),
     middleware: [
       // Align the nested menu by shifting it by var(--salt-size-border)
-      offset(isNested ? { crossAxis: -1 } : {}),
+      offset(
+        isNested ? { crossAxis: -1, mainAxis: 2 } : !getVirtualElement ? 1 : 0,
+      ),
       flip({}),
       shift({ limiter: limitShift() }),
       size({
@@ -111,7 +119,7 @@ export function MenuBase(props: MenuBaseProps) {
     if (getVirtualElement) {
       refs.setPositionReference(getVirtualElement());
     }
-  }, [getVirtualElement]);
+  }, [getVirtualElement, refs]);
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
@@ -132,7 +140,7 @@ export function MenuBase(props: MenuBaseProps) {
         nested: isNested,
         onNavigate: setActiveIndex,
       }),
-    ]
+    ],
   );
 
   const getPanelPosition = () => ({

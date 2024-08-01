@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+import type { SVGProps } from "react";
 import styles from "./Accordion.module.css";
 
 export default (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => (

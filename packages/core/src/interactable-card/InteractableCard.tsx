@@ -1,20 +1,20 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
+  type ComponentPropsWithoutRef,
+  type MouseEvent,
+  type SyntheticEvent,
   forwardRef,
-  MouseEvent,
-  ComponentPropsWithoutRef,
-  SyntheticEvent,
   useRef,
 } from "react";
-import { clsx } from "clsx";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
-import { useInteractableCard } from "./useInteractableCard";
 import interactableCardCss from "./InteractableCard.css";
 import {
-  InteractableCardValue,
+  type InteractableCardValue,
   useInteractableCardGroup,
 } from "./InteractableCardGroupContext";
+import { useInteractableCard } from "./useInteractableCard";
 
 const withBaseName = makePrefixer("saltInteractableCard");
 
@@ -39,7 +39,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Styling variant; defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Value of card (for selectable use case).
    */
@@ -93,11 +93,9 @@ export const InteractableCard = forwardRef<
       : "radio"
     : "button";
 
-  const isMultiselect =
-    interactableCardGroup && interactableCardGroup.multiSelect;
+  const isMultiselect = interactableCardGroup?.multiSelect;
 
-  const isFirstChild =
-    interactableCardGroup && interactableCardGroup.isFirstChild(value);
+  const isFirstChild = interactableCardGroup?.isFirstChild(value);
 
   const ariaChecked =
     role === "radio" || role === "checkbox" ? selected : undefined;
@@ -113,7 +111,7 @@ export const InteractableCard = forwardRef<
     onClick?.(event);
   };
 
-  let tabIndex;
+  let tabIndex: number;
 
   if (interactableCardGroup) {
     if (disabled) {
@@ -159,7 +157,7 @@ export const InteractableCard = forwardRef<
           [withBaseName("disabled")]: disabled,
           [withBaseName("selected")]: selected,
         },
-        className
+        className,
       )}
       {...rest}
       onClick={handleClick}

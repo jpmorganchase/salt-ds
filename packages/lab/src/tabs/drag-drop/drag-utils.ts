@@ -1,5 +1,5 @@
-import { orientationType } from "../../responsive";
-import { Direction, FWD } from "./dragDropTypes";
+import type { orientationType } from "../../responsive";
+import { type Direction, FWD } from "./dragDropTypes";
 
 const LEFT_RIGHT = ["left", "right"];
 const TOP_BOTTOM = ["top", "bottom"];
@@ -41,7 +41,7 @@ type ElementDimension = keyof Pick<
 export const measureElementSizeAndPosition = (
   element: HTMLElement,
   dimension: Dimension = "width",
-  includeAutoMargin = false
+  includeAutoMargin = false,
 ) => {
   const pos = dimension === "width" ? "left" : "top";
   const { [dimension]: size, [pos]: position } =
@@ -52,17 +52,17 @@ export const measureElementSizeAndPosition = (
   const marginStart =
     padStart && !includeAutoMargin
       ? 0
-      : parseInt(style.getPropertyValue(`margin-${start}`), 10);
+      : Number.parseInt(style.getPropertyValue(`margin-${start}`), 10);
   const marginEnd =
     padEnd && !includeAutoMargin
       ? 0
-      : parseInt(style.getPropertyValue(`margin-${end}`), 10);
+      : Number.parseInt(style.getPropertyValue(`margin-${end}`), 10);
 
   let minWidth = size;
-  const flexShrink = parseInt(style.getPropertyValue("flex-shrink"), 10);
+  const flexShrink = Number.parseInt(style.getPropertyValue("flex-shrink"), 10);
   if (flexShrink > 0) {
-    const flexBasis = parseInt(style.getPropertyValue("flex-basis"), 10);
-    if (!isNaN(flexBasis) && flexBasis > 0) {
+    const flexBasis = Number.parseInt(style.getPropertyValue("flex-basis"), 10);
+    if (!Number.isNaN(flexBasis) && flexBasis > 0) {
       minWidth = flexBasis;
     }
   }
@@ -97,19 +97,18 @@ export const dimensions = (orientation: orientationType) =>
   DIMENSIONS[orientation];
 
 export const getDraggedItem = (
-  measuredItems: MeasuredDropTarget[]
+  measuredItems: MeasuredDropTarget[],
 ): MeasuredDropTarget => {
   const result = measuredItems.find((item) => item.isDraggedElement);
   if (result) {
     return result;
-  } else {
-    throw Error("measuredItems do not contain a draggedElement");
   }
+  throw Error("measuredItems do not contain a draggedElement");
 };
 
 export const moveDragItem = (
   measuredItems: MeasuredDropTarget[],
-  dropTarget: MeasuredDropTarget
+  dropTarget: MeasuredDropTarget,
 ): MeasuredDropTarget[] => {
   const items: MeasuredDropTarget[] = measuredItems.slice();
   const draggedItem = getDraggedItem(items);
@@ -142,34 +141,34 @@ export const measureDropTargets = (
   container: HTMLElement,
   orientation: orientationType,
   draggedItem: HTMLElement,
-  itemQuery?: string
+  itemQuery?: string,
 ) => {
   const dragThresholds: MeasuredDropTarget[] = [];
 
   // TODO need to make sure we're including only the children we should
   const children = Array.from(
-    itemQuery ? container.querySelectorAll(itemQuery) : container.children
+    itemQuery ? container.querySelectorAll(itemQuery) : container.children,
   );
   let previousThreshold = null;
   for (let index = 0; index < children.length; index++) {
     const element = children[index] as HTMLElement;
     const dimension = orientation === "horizontal" ? "width" : "height";
-    let [start, size] = measureElementSizeAndPosition(element, dimension);
+    const [start, size] = measureElementSizeAndPosition(element, dimension);
 
-    dragThresholds.push(
-      (previousThreshold = {
-        currentIndex: index,
-        dataIndex: parseInt(element.dataset.index ?? "-1"),
-        index,
-        isDraggedElement: element === draggedItem,
-        isOverflowIndicator: element.dataset.overflowIndicator === "true",
-        element: element as HTMLElement,
-        start,
-        end: start + size,
-        size,
-        mid: start + size / 2,
-      })
-    );
+    previousThreshold = {
+      currentIndex: index,
+      dataIndex: Number.parseInt(element.dataset.index ?? "-1"),
+      index,
+      isDraggedElement: element === draggedItem,
+      isOverflowIndicator: element.dataset.overflowIndicator === "true",
+      element: element as HTMLElement,
+      start,
+      end: start + size,
+      size,
+      mid: start + size / 2,
+    };
+
+    dragThresholds.push(previousThreshold);
   }
   return dragThresholds;
 };
@@ -177,7 +176,7 @@ export const measureDropTargets = (
 export const getNextDropTarget = (
   dropTargets: MeasuredDropTarget[],
   pos: number,
-  direction: Direction
+  direction: Direction,
 ) => {
   const len = dropTargets.length;
   if (direction === FWD) {
@@ -186,9 +185,11 @@ export const getNextDropTarget = (
       const { start, mid, end } = dropTarget;
       if (pos > end) {
         continue;
-      } else if (pos > mid) {
+      }
+      if (pos > mid) {
         return dropTarget.isDraggedElement ? null : dropTarget;
-      } else if (pos > start) {
+      }
+      if (pos > start) {
         dropTarget = dropTargets[index - 1];
         return dropTarget.isDraggedElement ? null : dropTarget;
       }
@@ -199,9 +200,11 @@ export const getNextDropTarget = (
       const { start, mid, end } = dropTarget;
       if (pos < start) {
         continue;
-      } else if (pos < mid) {
+      }
+      if (pos < mid) {
         return dropTarget.isDraggedElement ? null : dropTarget;
-      } else if (pos < end) {
+      }
+      if (pos < end) {
         dropTarget = dropTargets[Math.min(len - 1, index + 1)];
         return dropTarget.isDraggedElement ? null : dropTarget;
       }

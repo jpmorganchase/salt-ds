@@ -1,18 +1,18 @@
-import { ElementType, forwardRef, ReactElement } from "react";
 import { clsx } from "clsx";
+import { type ElementType, type ReactElement, forwardRef } from "react";
 
 import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+  type ResponsiveProp,
   makePrefixer,
-  ResponsiveProp,
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
   resolveResponsiveValue,
 } from "../utils";
 
-import flexLayoutCss from "./FlexLayout.css";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { useBreakpoint } from "../breakpoints";
+import flexLayoutCss from "./FlexLayout.css";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
@@ -64,7 +64,7 @@ export type FlexLayoutProps<T extends ElementType> =
   >;
 
 type FlexLayoutComponent = <T extends ElementType = "div">(
-  props: FlexLayoutProps<T>
+  props: FlexLayoutProps<T>,
 ) => ReactElement | null;
 
 function parseAlignment(style: string | undefined) {
@@ -94,7 +94,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
       wrap = false,
       ...rest
     }: FlexLayoutProps<T>,
-    ref?: PolymorphicRef<T>
+    ref?: PolymorphicRef<T>,
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -128,12 +128,12 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
             [withBaseName(
               `separator-${flexDirection ?? "row"}-${
                 separatorAlignment ?? "center"
-              }`
+              }`,
             )]: separatorAlignment && !wrap,
             [withBaseName(`separator-${flexDirection ?? "row"}`)]:
               separatorAlignment && !wrap,
           },
-          className
+          className,
         )}
         ref={ref}
         style={flexLayoutStyles}
@@ -142,5 +142,5 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
         {children}
       </Component>
     );
-  }
+  },
 );

@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
 import {
   H3,
-  Text,
-  StackLayout,
-  RadioButton,
-  RadioButtonGroup,
   Label,
   LinkCard,
-  LinkCardProps,
+  type LinkCardProps,
+  RadioButton,
+  RadioButtonGroup,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
 
 export default {
-  title: "Core/Card/Link Card",
+  title: "Core/Link Card",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
@@ -59,7 +59,7 @@ export const AccentPlacement: StoryFn<typeof LinkCard> = (args) => {
 };
 
 export const Variant: StoryFn<typeof LinkCard> = (args) => {
-  const variants = ["primary", "secondary"] as const;
+  const variants = ["primary", "secondary", "tertiary"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {

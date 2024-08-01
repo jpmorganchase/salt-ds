@@ -5,15 +5,15 @@ import {
   GridLayout,
   StackLayout,
 } from "@salt-ds/core";
-import { Meta, StoryFn } from "@storybook/react";
+import { MessageIcon, NotificationSolidIcon } from "@salt-ds/icons";
+import { TabNext, TabstripNext } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
-  QAContainerNoStyleInjectionProps,
-  QAContainerProps,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
 } from "docs/components";
-import { MessageIcon, NotificationSolidIcon } from "@salt-ds/icons";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
 
 export default {
   title: "Core/Badge/Badge QA",
@@ -53,11 +53,24 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
 );
 
 AllExamples.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
-  props
+  props,
 ) => (
   <QAContainerNoStyleInjection height={500} width={1500} {...props}>
     <GridLayout columns={12} gap={4}>

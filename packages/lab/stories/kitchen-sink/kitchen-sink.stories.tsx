@@ -2,27 +2,27 @@ import {
   Badge,
   Button,
   Card,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
   Display1,
   FlexItem,
+  FlexLayout,
   H1,
   H2,
+  H3,
   Link,
+  ListBox,
+  Option,
+  RadioButton,
+  RadioButtonGroup,
   StackLayout,
   StatusIndicator,
   Text,
   Tooltip,
   VALIDATION_NAMED_STATUS,
-  ValidationStatus,
-  RadioButton,
-  RadioButtonGroup,
-  H3,
-  FlexLayout,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogHeader,
-  ListBox,
-  Option,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { AD, GB, UN, US } from "@salt-ds/countries";
 import {
@@ -31,6 +31,10 @@ import {
   SaltShakerIcon,
   SaltShakerSolidIcon,
 } from "@salt-ds/icons";
+import { useState } from "react";
+import AgGridThemeDefault from "../../../ag-grid-theme/src/examples/Default";
+import AgGridThemeHDCompact from "../../../ag-grid-theme/src/examples/HDCompact";
+import AgGridThemeZebra from "../../../ag-grid-theme/src/examples/VariantZebra";
 import {
   DefaultGroup as AccordionDefault,
   Status as AccordionStatus,
@@ -41,42 +45,38 @@ import {
   StatusesSecondary as BannerStatusesSecondary,
 } from "../../../core/stories/banner/banner.stories";
 import { WithIcon as ButtonExamples } from "../../../core/stories/button/button.stories";
-import {
-  Horizontal as ToggleButtonGroupHorizontal,
-  HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
-  HorizontalTextOnly as ToggleButtonGroupHorizontalText,
-} from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
 import { Default as CardDefault } from "../../../core/stories/card/card.stories";
-import { Default as InteractableCardStory } from "../../../core/stories/interactable-card/interactable-card.stories";
 import {
-  HorizontalGroup as CheckboxHorizontalGroup,
   Error as CheckboxError,
+  HorizontalGroup as CheckboxHorizontalGroup,
   Readonly as CheckboxReadonly,
 } from "../../../core/stories/checkbox/checkbox.stories";
+import {
+  HelperText as FormFieldHelperText,
+  Readonly as FormFieldReadonly,
+  WithValidation as FormFieldValidation,
+  WithMultilineInputAsQuestion,
+} from "../../../core/stories/form-field/form-field.stories";
+import { Default as InteractableCardStory } from "../../../core/stories/interactable-card/interactable-card.stories";
+import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
+import {
+  Closable as PillClosable,
+  Default as PillDefault,
+  Disabled as PillDisabled,
+  Icon as PillIcon,
+} from "../../../core/stories/pill/pill.stories";
+import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories";
 import { Default as SwitchDefault } from "../../../core/stories/switch/switch.stories";
-import { useState } from "react";
 import {
   Default as ToastDefault,
   Error as ToastError,
   Warning as ToastWarning,
 } from "../../../core/stories/toast/toast.stories";
 import {
-  WithValidation as FormFieldValidation,
-  WithMultilineInputAsQuestion,
-  HelperText as FormFieldHelperText,
-  Readonly as FormFieldReadonly,
-} from "../../../core/stories/form-field/form-field.stories";
-import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories";
-import {
-  Default as PillDefault,
-  Disabled as PillDisabled,
-  Closable as PillClosable,
-  Icon as PillIcon,
-} from "../../../core/stories/pill/pill.stories";
-import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
-import AgGridThemeDefault from "../../../ag-grid-theme/src/examples/Default";
-import AgGridThemeZebra from "../../../ag-grid-theme/src/examples/VariantZebra";
-import AgGridThemeHDCompact from "../../../ag-grid-theme/src/examples/HDCompact";
+  Horizontal as ToggleButtonGroupHorizontal,
+  HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
+  HorizontalTextOnly as ToggleButtonGroupHorizontalText,
+} from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
@@ -159,7 +159,7 @@ export const Example1 = () => {
           <Text color="warning">Warning body copy</Text>
           <Text color="success">Success body copy</Text>
           <Text color="info">Info body copy</Text>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -174,7 +174,7 @@ export const Example1 = () => {
           <Text color="warning">Warning body copy</Text>
           <Text color="success">Success body copy</Text>
           <Text color="info">Info body copy</Text>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -191,7 +191,7 @@ export const Example1 = () => {
             <Text color="success">Success body copy</Text>
             <Text color="info">Info body copy</Text>
           </Card>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -208,7 +208,7 @@ export const Example1 = () => {
             <Text color="success">Success body copy</Text>
             <Text color="info">Info body copy</Text>
           </Card>
-          <Link>Default link text</Link>
+          <Link href="#">Default link text</Link>
           <Text>
             <code>Code example 123</code>
           </Text>
@@ -229,10 +229,26 @@ export const Example1 = () => {
         <Badge value="new" />
         <NotificationIcon />
         <NotificationSolidIcon />
-        <Link>Link</Link>
-        <Link variant="secondary">Link</Link>
-        <Link target="_blank">Link</Link>
-        <Link target="_blank" variant="secondary">
+        <Link href="#">Link</Link>
+        <Link href="#" color="secondary">
+          Link
+        </Link>
+        <Link href="#" color="info">
+          Link
+        </Link>
+        <Link href="#" color="success">
+          Link
+        </Link>
+        <Link href="#" color="warning">
+          Link
+        </Link>
+        <Link href="#" color="error">
+          Link
+        </Link>
+        <Link href="#" target="_blank">
+          Link
+        </Link>
+        <Link href="#" target="_blank" color="secondary">
           Link
         </Link>
         <StatusIndicator status="error" />
