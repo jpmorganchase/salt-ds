@@ -31,5 +31,47 @@ export const Color = (): ReactElement => (
         </Button>
       </FlowLayout>
     </StackLayout>
+    <StackLayout>
+      <H3>Negative</H3>
+      <FlowLayout>
+        <Button appearance="solid" color="negative">
+          Solid
+        </Button>
+        <Button appearance="outline" color="negative">
+          Outline
+        </Button>
+        <Button appearance="transparent" color="negative">
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+    <StackLayout>
+      <H3>Positive</H3>
+      <FlowLayout>
+        <Button appearance="solid" color="positive">
+          Solid
+        </Button>
+        <Button appearance="outline" color="positive">
+          Outline
+        </Button>
+        <Button appearance="transparent" color="positive">
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+    <StackLayout>
+      <H3>Warning</H3>
+      <FlowLayout>
+        <Button appearance="solid" color="warning">
+          Solid
+        </Button>
+        <Button appearance="outline" color="warning">
+          Outline
+        </Button>
+        <Button appearance="transparent" color="warning">
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
   </StackLayout>
 );

@@ -170,6 +170,123 @@ export const NeutralTransparent: StoryFn<typeof Button> = () => {
   );
 };
 
+export const NegativeSolid: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="negative" appearance="solid">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="negative" appearance="solid">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const NegativeOutline: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="negative" appearance="outline">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="negative" appearance="outline">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const NegativeTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="negative" appearance="transparent">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="negative" appearance="transparent">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const PositiveSolid: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="positive" appearance="solid">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="positive" appearance="solid">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const PositiveOutline: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="positive" appearance="outline">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="positive" appearance="outline">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const PositiveTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="positive" appearance="transparent">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="positive" appearance="transparent">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const WarningSolid: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="warning" appearance="solid">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="warning" appearance="solid">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const WarningOutline: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="warning" appearance="outline">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="warning" appearance="outline">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
+export const WarningTransparent: StoryFn<typeof Button> = () => {
+  return (
+    <>
+      <Button color="warning" appearance="transparent">
+        Send <SendIcon aria-hidden />
+      </Button>
+      <Button disabled color="warning" appearance="transparent">
+        Send <SendIcon aria-hidden />
+      </Button>
+    </>
+  );
+};
+
 export const FeatureButton = SingleButtonTemplate.bind({});
 FeatureButton.args = {
   children: "Activate",

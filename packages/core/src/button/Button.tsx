@@ -15,7 +15,13 @@ const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 export const AppearanceValues = ["solid", "outline", "transparent"] as const;
-export const ButtonColorValues = ["accent", "neutral"] as const;
+export const ButtonColorValues = [
+  "accent",
+  "neutral",
+  "negative",
+  "positive",
+  "warning",
+] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
 export type Appearance = (typeof AppearanceValues)[number];
 export type ButtonColor = (typeof ButtonColorValues)[number];
