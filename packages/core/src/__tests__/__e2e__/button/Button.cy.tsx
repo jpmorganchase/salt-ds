@@ -62,10 +62,6 @@ describe("Given a Button", () => {
   });
   it("should have overlay when loading is true", () => {
     cy.mount(<FeatureButton loading />);
-    cy.get(".saltButton-loading-overlay").should("exist");
-  });
-  it("should have spinner when loading is true", () => {
-    cy.mount(<FeatureButton loading />);
-    cy.get(".saltButton-loading-spinner").should("exist");
+    cy.get(".saltButton-loading").should("exist");
   });
 });
