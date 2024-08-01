@@ -12,12 +12,13 @@
 }
 
 .saltSteppedTracker.saltSteppedTracker-horizontal .saltTrackerConnector {
+  --trackerConnector-indicator-width: calc(var(--trackerStep-icon-size) + (2 * var(--salt-spacing-100)));
   border-top-width: var(--trackerConnector-thickness);
   border-top-style: var(--trackerConnector-style-border);
   border-top-color: var(--trackerConnector-color);
-  width: calc(100% - var(--salt-size-base));
-  left: calc(50% + (var(--salt-size-base) / 2));
-  top: calc(var(--salt-size-base) / 2 - (var(--trackerConnector-thickness) / 2));
+  width: calc(100% - var(--trackerConnector-indicator-width));
+  left: calc(50% + (var(--trackerConnector-indicator-width) / 2));
+  top: calc(var(--trackerStep-icon-size) / 2);
   transform: translateY(-50%);
   height: 0;
 }
