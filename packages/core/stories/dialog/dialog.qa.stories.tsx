@@ -39,7 +39,7 @@ function FakeLongDialog({ children, status, id }: DialogProps) {
 }
 
 export default {
-  title: "Lab/Dialog/QA",
+  title: "Core/Dialog/QA",
   component: Dialog,
 } as Meta<typeof Dialog>;
 
