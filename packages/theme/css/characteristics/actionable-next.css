@@ -10,7 +10,6 @@
   --salt-actionable-cta-background-disabled: var(--salt-palette-accent-disabled);
   --salt-actionable-cta-borderColor: var(--salt-palette-accent);
   --salt-actionable-cta-borderColor-hover: transparent;
-
   --salt-actionable-cta-borderColor-active: var(--salt-palette-accent);
   --salt-actionable-cta-borderColor-disabled: transparent;
 
@@ -25,7 +24,6 @@
   --salt-actionable-primary-background-disabled: var(--salt-palette-neutral-disabled);
   --salt-actionable-primary-borderColor: var(--salt-palette-neutral);
   --salt-actionable-primary-borderColor-hover: transparent;
-
   --salt-actionable-primary-borderColor-active: var(--salt-palette-neutral);
   --salt-actionable-primary-borderColor-disabled: transparent;
 
