@@ -88,32 +88,37 @@ Use full width buttons on mobile devices or smaller viewports, the button will t
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="LoadingButtons" >
+<LivePreview componentName="button" exampleName="Loading" >
 
-## Loading Buttons
+## Loading
 
-The buttons will show a loading spinner when setting the prop `loading` to `true`. You should pass a message using the `loadingText` prop for screenreader to announce while loading state is true. It defaults to "Loading".
+Buttons can show that a short action is being performed by passing `loading={true}`. This allows a [Spinner](/salt/components/spinner) to be displayed inside the button.
 
-A Loading Button provides immediate feedback to the user after they trigger an action. It's typically used in situations where a user's action requires some processing time (more than a few seconds) before the result can be displayed. Use cases include:
+### Best practices
 
-- Form Submission: When a user submits a [form](/salt/patterns/forms), the Loading Button indicates that the form data is being processed. This helps prevent the user from clicking the submit button multiple times, which could potentially cause duplicate submissions or errors.
-- Data Fetching: If a button triggers a data fetch from a server, a Loading Button indicates that the data is being retrieved. This is especially useful in applications where data retrieval might take a significant amount of time.
-- Processing Actions: If a button triggers a complex action that requires processing, such as generating a report or performing a calculation, a Loading Button indicates that the action is in progress.
-
-The [Content Status](salt/patterns/content-status) pattern can be displayed with a Loading Button to provide additional feedback to the user.
-
-Alternative solutions for other use cases:
-
-- Instant Actions: If an action is instantaneous or very quick. A Loading Button is not necessary.
-- Complex processing: Use a [Progress Bar](/salt/components/progress) when a task is going to take a significant amount of time (more than a few seconds) and when it's possible to estimate the progress of the task. This could be when uploading or downloading large files, installing software, or completing a multi-step process.
+- Use loading buttons for actions that take a short amount of time to complete, such as submitting a form, fetching data from a server or a quick processing action (generating a report or performing a calculation).
+- The [Content Status](salt/patterns/content-status) pattern can be used with a loading button to provide additional feedback to the user.
+- Don't use loading buttons if an action is instantaneous or very quick. For further guidance, view the [Salt duration foundation](/salt/foundations/duration).
+- Don't use loading buttons if the action is complex and will take a significant amount of time (more than a few seconds) e.g. uploading or downloading large files, installing software, or completing a multi-step process. Use a [Progress Bar](/salt/components/progress) or a [Toast](/salt/components/toast) instead.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="LoadingButtonsWithLabel" >
+<LivePreview componentName="button" exampleName="LoadingWithLabel" displayName="Loading buttons with labels" >
 
-## Loading Buttons with Label
+## Loading buttons with labels
 
-The buttons will show a loading spinner when setting the prop `loading` to `true`. You should pass a message using the `loadingText` prop and `showLoadingText` as `true` for screenreader to announce while loading state is true. It defaults to "Loading".
+A loading button can also have a label to provide more context about the action being performed.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="LoadingReplaceIcon" displayName="Loading buttons - Replace icon" >
+
+## Loading buttons - Replace icon
+
+An icon can be swapped out with a spinner when a button is in a loading state.
+
+</LivePreview>
+
   
 <LivePreview componentName="button" exampleName="CTA" displayName="CTA - Deprecated" >
 

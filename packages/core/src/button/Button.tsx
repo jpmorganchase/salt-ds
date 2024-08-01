@@ -7,7 +7,6 @@ import {
   forwardRef,
 } from "react";
 import { makePrefixer } from "../utils";
-import { Spinner } from "../spinner";
 
 import buttonCss from "./Button.css";
 import { useButton } from "./useButton";
@@ -37,19 +36,6 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   variant?: ButtonVariant;
   /**
-   * To show a loading spinner.
-   */
-  loading?: boolean;
-  /**
-   * For the screen reader to announce while button is in loading state
-   * 'Loading' is the default value.
-   */
-  loadingText?: string;
-  /**
-   * If `true`, a loading text with spinner will be shown while button is in loading state.
-   */
-  showLoadingText?: boolean;
-  /**
    * The type of the button. Options are 'solid', 'outline', and 'transparent'.
    */
   appearance?: Appearance;
@@ -57,6 +43,10 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * The color of the button. Options are 'accent' and 'neutral'.
    */
   color?: ButtonColor;
+  /**
+   * To show a loading spinner.
+   */
+  loading?: boolean;
 }
 
 function variantToAppearanceAndColor(variant: ButtonVariant) {
@@ -86,11 +76,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = "button",
       variant = "primary",
       loading,
-      loadingText = "Loading",
-      showLoadingText,
       ...restProps
     },
-    ref?,
+    ref,
   ): ReactElement<ButtonProps> {
     const { active, buttonProps } = useButton({
       disabled,
@@ -123,7 +111,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(variant),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName(`loading-${variant}`)]: loading,
+            [withBaseName("loading")]: loading,
             [withBaseName("active")]: active,
             [withBaseName(appearance)]: appearance,
             [withBaseName(color)]: color,
@@ -134,30 +122,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
       >
-        {loading ? (
-          <>
-            <span className={clsx(withBaseName("loading-overlay"), className)}>
-              <Spinner
-                size="small"
-                className={clsx(withBaseName("loading-spinner"), className)}
-                aria-label={!showLoadingText ? loadingText : ""}
-              />
-              {showLoadingText && (
-                <span className={clsx(withBaseName("loading-text"), className)}>
-                  {loadingText}
-                </span>
-              )}
-            </span>
-            <span
-              aria-hidden="true"
-              className={clsx(withBaseName("hidden-element"))}
-            >
-              {children}
-            </span>
-          </>
-        ) : (
-          children
-        )}
+        {children}
       </button>
     );
   },

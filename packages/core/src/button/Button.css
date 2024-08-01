@@ -7,7 +7,7 @@
   border-width: var(--saltButton-borderWidth, var(--salt-size-border, 0));
   border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
   color: var(--saltButton-text-color, var(--button-text-color));
-  cursor: var(--saltButton-cursor, pointer);
+  cursor: var(--saltButton-cursor, var(--salt-actionable-cursor-hover));
   display: inline-flex;
   gap: var(--salt-spacing-50);
   justify-content: var(--saltButton-justifyContent, center);
@@ -77,7 +77,7 @@
 .saltButton:disabled,
 .saltButton-disabled,
 /* Overrides to apply the disabled style when the button is focusable while also disabled */
-.saltButton-disabled:active,
+  .saltButton-disabled:active,
 .saltButton-disabled:focus-visible,
 .saltButton-disabled:hover {
   background: var(--saltButton-background-disabled, var(--button-background-disabled));
@@ -222,4 +222,29 @@
   --button-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
   --button-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
   --button-borderColor-disabled: var(--salt-actionable-subtle-borderColor-disabled);
+}
+.saltButton-accent.saltButton-loading {
+  --button-text-color: var(--salt-actionable-accent-foreground);
+  --button-text-color-hover: var(--salt-actionable-accent-foreground);
+  --button-text-color-active: var(--salt-actionable-accent-foreground);
+  --button-background: var(--salt-actionable-accent-background);
+  --button-background-hover: var(--salt-actionable-accent-background);
+  --button-background-active: var(--salt-actionable-accent-background);
+  --button-borderColor: var(--salt-actionable-accent-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-accent-borderColor);
+  --button-borderColor-active: var(--salt-actionable-accent-borderColor);
+  cursor: default;
+}
+
+.saltButton-neutral.saltButton-loading {
+  --button-text-color: var(--salt-actionable-foreground);
+  --button-text-color-hover: var(--salt-actionable-foreground);
+  --button-text-color-active: var(--salt-actionable-foreground);
+  --button-background: var(--salt-actionable-background);
+  --button-background-hover: var(--salt-actionable-background);
+  --button-background-active: var(--salt-actionable-background);
+  --button-borderColor: var(--salt-actionable-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-borderColor);
+  --button-borderColor-active: var(--salt-actionable-borderColor);
+  cursor: default;
 }
