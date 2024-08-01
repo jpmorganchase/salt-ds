@@ -7,7 +7,10 @@ export interface AccordionContextValue {
   toggle: (event: SyntheticEvent<HTMLButtonElement>) => void;
   disabled: boolean;
   indicatorSide: "left" | "right";
-  id: string;
+  headerId: string;
+  setHeaderId: (id: string) => void;
+  panelId: string;
+  setPanelId: (id: string) => void;
   status?: "error" | "warning" | "success";
 }
 
@@ -19,7 +22,10 @@ export const AccordionContext = createContext<AccordionContextValue>(
     toggle: () => undefined,
     disabled: false,
     indicatorSide: "left",
-    id: "",
+    headerId: "",
+    setHeaderId: () => undefined,
+    panelId: "",
+    setPanelId: () => undefined,
   },
 );
 

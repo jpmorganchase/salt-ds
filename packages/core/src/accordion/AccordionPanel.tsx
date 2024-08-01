@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react";
 
-import { makePrefixer } from "../utils";
+import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 import { useAccordion } from "./AccordionContext";
 import accordionPanelCss from "./AccordionPanel.css";
 
@@ -22,7 +22,7 @@ const withBaseName = makePrefixer("saltAccordionPanel");
 
 export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
   function AccordionPanel(props, ref) {
-    const { children, className, ...rest } = props;
+    const { children, className, id, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -31,15 +31,22 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
       window: targetWindow,
     });
 
-    const { id, expanded, indicatorSide } = useAccordion();
+    const { headerId, panelId, setPanelId, expanded, indicatorSide } =
+      useAccordion();
+
+    useIsomorphicLayoutEffect(() => {
+      if (id) {
+        setPanelId(id);
+      }
+    }, [id]);
 
     return (
       <div
         ref={ref}
         className={clsx(withBaseName(), className)}
         role="region"
-        id={`${id}-panel`}
-        aria-labelledby={`${id}-header`}
+        id={panelId}
+        aria-labelledby={headerId}
         aria-hidden={!expanded ? "true" : undefined}
         hidden={!expanded}
         {...rest}
