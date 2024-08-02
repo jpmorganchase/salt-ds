@@ -234,11 +234,11 @@
   margin-left: var(--salt-spacing-50);
 }
 
-.saltPillInput-startAdornmentContainer .saltButton~.saltButton {
+.saltPillInput-startAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
-.saltPillInput-endAdornmentContainer .saltButton~.saltButton {
+.saltPillInput-endAdornmentContainer .saltButton ~ .saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
@@ -250,8 +250,8 @@
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
-.saltPillInput-startAdornmentContainer>.saltButton,
-.saltPillInput-endAdornmentContainer>.saltButton {
+.saltPillInput-startAdornmentContainer > .saltButton,
+.saltPillInput-endAdornmentContainer > .saltButton {
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
@@ -270,11 +270,11 @@
   box-sizing: border-box;
 }
 
-.saltPillInput-bordered>.saltPillInput-endAdornmentContainer {
+.saltPillInput-bordered > .saltPillInput-endAdornmentContainer {
   padding-top: calc(var(--salt-spacing-50) - var(--salt-size-border));
 }
 
-.saltPillInput-bordered>.saltPillInput-inputWrapper {
+.saltPillInput-bordered > .saltPillInput-inputWrapper {
   padding: calc(var(--salt-spacing-50) - var(--salt-size-border)) 0;
 }
 
