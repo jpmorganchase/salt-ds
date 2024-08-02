@@ -234,11 +234,11 @@
   margin-left: var(--salt-spacing-50);
 }
 
-.saltPillInput-startAdornmentContainer .saltButton ~ .saltButton {
+.saltPillInput-startAdornmentContainer .saltButton~.saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
-.saltPillInput-endAdornmentContainer .saltButton ~ .saltButton {
+.saltPillInput-endAdornmentContainer .saltButton~.saltButton {
   margin-left: calc(-1 * var(--salt-spacing-50));
 }
 
@@ -250,8 +250,8 @@
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
-.saltPillInput-startAdornmentContainer > .saltButton,
-.saltPillInput-endAdornmentContainer > .saltButton {
+.saltPillInput-startAdornmentContainer>.saltButton,
+.saltPillInput-endAdornmentContainer>.saltButton {
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
@@ -270,11 +270,11 @@
   box-sizing: border-box;
 }
 
-.saltPillInput-bordered > .saltPillInput-endAdornmentContainer {
+.saltPillInput-bordered>.saltPillInput-endAdornmentContainer {
   padding-top: calc(var(--salt-spacing-50) - var(--salt-size-border));
 }
 
-.saltPillInput-bordered > .saltPillInput-inputWrapper {
+.saltPillInput-bordered>.saltPillInput-inputWrapper {
   padding: calc(var(--salt-spacing-50) - var(--salt-size-border)) 0;
 }
 
@@ -283,18 +283,26 @@
 }
 
 .saltPillInput .saltPill:focus-visible {
-  background: var(--salt-selectable-background-hover);
+  background: var(--salt-content-foreground-highlight);
+  color: var(--salt-content-primary-foreground);
   outline: none;
 }
 
 .saltPillInput .saltPill:hover {
-  background: var(--salt-selectable-background-hover);
+  background: var(--salt-actionable-bold-background-hover);
+  color: var(--salt-actionable-bold-foreground-hover);
 }
 
 .saltPillInput .saltPill:active {
-  background: var(--salt-actionable-primary-background-active);
+  background: var(--salt-actionable-bold-background-active);
+  color: var(--salt-content-bold-foreground);
   --saltPill-color: var(--salt-actionable-primary-foreground-active);
   --saltIcon-color: var(--salt-actionable-primary-foreground-active);
+}
+
+.saltPillInput .saltPill:disabled {
+  background: var(--salt-actionable-bold-background-disabled);
+  color: var(--salt-content-bold-foreground-disabled);
 }
 
 div[role="listitem"] {
