@@ -302,7 +302,7 @@
 
 .saltPillInput .saltPill:disabled {
   background: var(--salt-actionable-bold-background-disabled);
-  color: var(--salt-content-bold-foreground-disabled);
+  color: var(--salt-actionable-bold-foreground);
 }
 
 div[role="listitem"] {
