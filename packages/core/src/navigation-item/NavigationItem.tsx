@@ -86,10 +86,9 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
       "--saltNavigationItem-level": `${level}`,
     };
 
-    const isParent = parent || href === undefined;
+    const isLink = href !== undefined;
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
       onExpand?.(event);
     };
 
@@ -110,14 +109,14 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
             },
             withBaseName(orientation),
           )}
-          render={render ?? (isParent ? <button type="button" /> : undefined)}
-          aria-expanded={isParent ? expanded : undefined}
+          render={render ?? (isLink ? undefined : <button type="button" />)}
+          aria-expanded={isLink ? undefined : expanded}
           onClick={handleClick}
-          aria-current={!isParent && active ? "page" : undefined}
+          aria-current={isLink && active ? "page" : undefined}
           href={href}
         >
           <span className={withBaseName("label")}>{children}</span>
-          {isParent ? (
+          {parent ? (
             <ExpansionIcon expanded={expanded} orientation={orientation} />
           ) : null}
         </NavigationItemAction>
