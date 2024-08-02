@@ -116,3 +116,16 @@ export const preventOverlappingValues = (
       ? Math.min(newValue, value[1])
       : Math.max(newValue, value[0])
     : newValue;
+
+export const parseValueProp = (
+  value: number[] | undefined,
+  min: number,
+  max: number,
+) => {
+  if (typeof value === "undefined" || value.length < 1) return;
+  const a = clampValue(value[0], [min, max]);
+  if (value.length === 1) return [a] as SliderValue;
+  const b = clampValue(value[1], [min, max]);
+  if (a > b) return [a, a] as SliderValue;
+  return [a, b] as SliderValue;
+};
