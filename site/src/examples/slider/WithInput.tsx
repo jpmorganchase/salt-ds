@@ -10,19 +10,51 @@ import {
   type SliderChangeHandler,
   type SliderValue,
 } from "@salt-ds/lab";
-import { type ChangeEvent, type ReactElement, useState } from "react";
+import {
+  type ChangeEvent,
+  type ReactElement,
+  useEffect,
+  useState,
+} from "react";
+
+const validateSingle = (value: string, bounds: [number, number]) => {
+  if (Number.isNaN(Number(value))) return false;
+  if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
+  return true;
+};
+
+const validateRange = (values: [string, string], bounds: [number, number]) => {
+  if (values.length !== 2) return false;
+  const [min, max] = values;
+  const minValid = validateSingle(min, bounds);
+  const maxValid = validateSingle(max, bounds);
+  if (!minValid || !maxValid) return false;
+  if (Number(min) > Number(max)) return false;
+  return true;
+};
 
 export const SingleWithInput = () => {
   const [value, setValue] = useState<SliderValue>([20]);
+  const [inputValue, setInputValue] = useState<string>(value[0].toString());
+  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
+    undefined,
+  );
+  const bounds: [number, number] = [-50, 50];
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setValue([+inputValue]);
+    setInputValue(inputValue);
   };
 
   const handleChange: SliderChangeHandler = (value: SliderValue) => {
     setValue(value);
   };
+
+  useEffect(() => {
+    const valid = validateSingle(inputValue, bounds);
+    setValidationStatus(valid ? undefined : "error");
+    setValue([+inputValue]);
+  }, [inputValue]);
 
   return (
     <FormField style={{ width: "400px" }}>
@@ -35,14 +67,15 @@ export const SingleWithInput = () => {
         }}
       >
         <Input
-          placeholder={`${value[0]}`}
-          value={`${value[0]}`}
+          placeholder={inputValue}
+          value={inputValue}
           style={{ width: "1px", margin: "5px" }}
           onChange={handleInputChange}
+          validationStatus={validationStatus}
         />
         <Slider
-          min={-50}
-          max={50}
+          min={bounds[0]}
+          max={bounds[1]}
           value={value}
           onChange={handleChange}
           aria-label="withInput"
@@ -53,56 +86,40 @@ export const SingleWithInput = () => {
   );
 };
 
-function validate(value: SliderValue, bounds: [number, number]) {
-  if (typeof value[1] === "undefined") return false;
-  if (value[0] < bounds[0]) return false;
-  if (value[1] > bounds[1]) return false;
-  if (value[0] > value[1]) return false;
-  return true;
-}
-
 const RangeWithInput = () => {
   const bounds: [number, number] = [0, 100];
+
   const [value, setValue] = useState<SliderValue>([20, 60]);
-  const [minValue, setMinValue] = useState(`${value[0]}`);
-  const [maxValue, setMaxValue] = useState(`${value[1]}`);
+  const [minValue, setMinValue] = useState<string>(bounds[0].toString());
+  const [maxValue, setMaxValue] = useState<string>(bounds[1].toString());
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    // TODO replace Input with StepperInput when available
-    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
     setMinValue(inputValue);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    // TODO replace Input with StepperInput when available
-    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
     setMaxValue(inputValue);
   };
 
-  const handleInputBlur = () => {
-    const minNumVal = Number.parseFloat(minValue);
-    const maxNumVal = Number.parseFloat(maxValue);
-    const validated = validate([minNumVal, maxNumVal], bounds);
-
-    if (validated) {
-      setValue([minNumVal, maxNumVal]);
-      setValidationStatus(undefined);
-      return;
-    }
-
-    setValidationStatus("error");
-  };
-
-  const handleSliderChange: SliderChangeHandler = (value: SliderValue) => {
+  const handleSliderChange = (value: SliderValue) => {
+    if (typeof value[1] === "undefined") return false;
     setValue(value);
-    setMinValue(`${value[0]}`);
-    setMaxValue(`${value[1]}`);
+    setMinValue(value[0].toString());
+    setMaxValue(value[1].toString());
   };
+
+  useEffect(() => {
+    const valid = validateRange([minValue, maxValue], bounds);
+    setValidationStatus(valid ? undefined : "error");
+    if (valid) {
+      setValue([Number(minValue), Number(maxValue)]);
+    }
+  }, [minValue, maxValue]);
 
   return (
     <FormField style={{ width: "400px" }}>
@@ -112,9 +129,7 @@ const RangeWithInput = () => {
           placeholder={`${minValue}`}
           value={minValue}
           style={{ width: "10px", margin: "5px" }}
-          onBlur={handleInputBlur}
           onChange={handleMinInputChange}
-          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
           validationStatus={validationStatus}
         />
         <Slider
@@ -129,9 +144,7 @@ const RangeWithInput = () => {
           placeholder={`${maxValue}`}
           value={maxValue}
           style={{ width: "10px" }}
-          onBlur={handleInputBlur}
           onChange={handleMaxInputChange}
-          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
           validationStatus={validationStatus}
         />
       </FlexLayout>
