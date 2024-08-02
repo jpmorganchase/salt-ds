@@ -41,11 +41,11 @@ Default.args = {
   "aria-label": "default",
 };
 
-export const NonZeroInput = Template.bind({});
-NonZeroInput.args = {
+export const WithNegativeBounds = Template.bind({});
+WithNegativeBounds.args = {
   min: -5,
   max: 5,
-  "aria-label": "NonZeroInput",
+  "aria-label": "WithNegativeBounds",
 };
 
 export const CustomStep = () => (
