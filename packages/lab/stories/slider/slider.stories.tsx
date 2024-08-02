@@ -7,7 +7,23 @@ import {
 } from "@salt-ds/core";
 import { Slider, type SliderProps, type SliderValue } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
+
+const validateSingle = (value: string, bounds: [number, number]) => {
+  if (Number.isNaN(Number(value))) return false;
+  if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
+  return true;
+};
+
+const validateRange = (values: [string, string], bounds: [number, number]) => {
+  if (values.length !== 2) return false;
+  const [min, max] = values;
+  const minValid = validateSingle(min, bounds);
+  const maxValid = validateSingle(max, bounds);
+  if (!minValid || !maxValid) return false;
+  if (Number(min) > Number(max)) return false;
+  return true;
+};
 
 export default {
   title: "Lab/Slider",
@@ -57,32 +73,43 @@ WithMarks.args = {
 
 export const WithInput = () => {
   const [value, setValue] = useState<SliderValue>([5]);
+  const [inputValue, setInputValue] = useState<string>(value[0].toString());
+  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
+    undefined,
+  );
+  const bounds: [number, number] = [-50, 50];
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    // TODO replace Input with StepperInput when available
-    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
-
+    setInputValue(inputValue);
+    if (Number.isNaN(Number(inputValue))) return;
     setValue([+inputValue]);
   };
 
   const handleChange = (value: SliderValue) => {
-    setValue(value);
+    setInputValue(value[0].toString());
+    setValue([+inputValue]);
   };
+
+  useEffect(() => {
+    const valid = validateSingle(inputValue, bounds);
+    setValidationStatus(valid ? undefined : "error");
+  }, [inputValue]);
 
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={1}>
         <Input
-          value={`${value}`}
+          value={inputValue}
           style={{ width: "10px" }}
           onChange={handleInputChange}
+          validationStatus={validationStatus}
         />
         <Slider
           style={{ width: "300px" }}
-          min={-50}
-          max={50}
+          min={bounds[0]}
+          max={bounds[1]}
           value={value}
           onChange={handleChange}
           aria-label="withInput"
@@ -112,56 +139,40 @@ RangeWithMarks.args = {
   marks: "all",
 };
 
-function validate(value: SliderValue, bounds: [number, number]) {
-  if (typeof value[1] === "undefined") return false;
-  if (value[0] < bounds[0]) return false;
-  if (value[1] > bounds[1]) return false;
-  if (value[0] > value[1]) return false;
-  return true;
-}
-
 export const RangeWithInput = () => {
   const bounds: [number, number] = [0, 50];
 
   const [value, setValue] = useState<SliderValue>([0, 50]);
-  const [minValue, setMinValue] = useState<number>(bounds[0]);
-  const [maxValue, setMaxValue] = useState<number>(bounds[1]);
+  const [minValue, setMinValue] = useState<string>(bounds[0].toString());
+  const [maxValue, setMaxValue] = useState<string>(bounds[1].toString());
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
 
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    // TODO replace Input with StepperInput when available
-    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
-    setMinValue(+inputValue);
+    setMinValue(inputValue);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    // TODO replace Input with StepperInput when available
-    if (Number.isNaN(Number(inputValue)) && inputValue !== "-") return;
-    setMaxValue(+inputValue);
-  };
-
-  const handleInputBlur = () => {
-    const validated = validate([+minValue, +maxValue], bounds);
-
-    if (validated) {
-      setValue([minValue, maxValue]);
-      setValidationStatus(undefined);
-      return;
-    }
-
-    setValidationStatus("error");
+    setMaxValue(inputValue);
   };
 
   const handleSliderChange = (value: SliderValue) => {
     if (typeof value[1] === "undefined") return false;
     setValue(value);
-    setMinValue(value[0]);
-    setMaxValue(value[1]);
+    setMinValue(value[0].toString());
+    setMaxValue(value[1].toString());
   };
+
+  useEffect(() => {
+    const valid = validateRange([minValue, maxValue], bounds);
+    setValidationStatus(valid ? undefined : "error");
+    if (valid) {
+      setValue([Number(minValue), Number(maxValue)]);
+    }
+  }, [minValue, maxValue]);
 
   return (
     <FormField>
@@ -169,12 +180,10 @@ export const RangeWithInput = () => {
       <FormFieldHelperText>Helper text</FormFieldHelperText>
       <FlexLayout gap={1} align="center">
         <Input
-          placeholder={`${minValue}`}
+          placeholder={minValue}
           value={minValue}
           style={{ width: "10px" }}
-          onBlur={handleInputBlur}
           onChange={handleMinInputChange}
-          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
           validationStatus={validationStatus}
         />
         <Slider
@@ -186,12 +195,10 @@ export const RangeWithInput = () => {
           aria-label="withInput"
         />
         <Input
-          placeholder={`${maxValue}`}
+          placeholder={maxValue}
           value={maxValue}
           style={{ width: "10px" }}
-          onBlur={handleInputBlur}
           onChange={handleMaxInputChange}
-          onKeyDown={(event) => event.key === "Enter" && handleInputBlur()}
           validationStatus={validationStatus}
         />
       </FlexLayout>

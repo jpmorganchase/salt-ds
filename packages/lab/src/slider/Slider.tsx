@@ -6,6 +6,7 @@ import { type HTMLAttributes, forwardRef } from "react";
 import { SliderContext, SliderMarks, SliderTrack } from "./internal";
 
 import sliderCss from "./Slider.css";
+import { parseValueProp } from "./internal/utils";
 import type { SliderChangeHandler, SliderValue } from "./types";
 
 const withBaseName = makePrefixer("saltSlider");
@@ -69,7 +70,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const [value, setValue] = useControlled<SliderValue>({
-    controlled: valueProp,
+    controlled: parseValueProp(valueProp, min, max),
     default: defaultValue,
     name: "Slider",
     state: "Value",
