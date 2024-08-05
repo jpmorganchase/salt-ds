@@ -285,6 +285,7 @@
 .saltPillInput .saltPill:focus-visible {
   background: var(--salt-content-foreground-highlight);
   color: var(--salt-content-primary-foreground);
+  border-color: var(--salt-content-foreground-highlight);
   outline: none;
 }
 
