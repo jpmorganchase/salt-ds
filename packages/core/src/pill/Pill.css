@@ -5,7 +5,9 @@
   align-items: center;
   background: var(--saltPill-background, var(--salt-actionable-primary-background));
   border-radius: var(--saltPill-borderRadius, var(--salt-palette-corner-weaker, 0));
-  border: 0;
+  border-style: solid;
+  border-width: var(--salt-size-border, 0);
+  border-color: var(--salt-actionable-subtle-borderColor);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   min-height: var(--salt-text-minHeight);
   outline: 0;
@@ -50,4 +52,31 @@
   color: var(--salt-actionable-primary-foreground-disabled);
   background: var(--salt-actionable-primary-background-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltPill:hover {
+  background: var(--salt-actionable-bold-background-hover);
+  color: var(--salt-actionable-bold-foreground-hover);
+  border-style: solid;
+  border-width: var(--salt-size-border, 0);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border-color: var(--salt-actionable-subtle-borderColor);
+}
+
+.saltPill:active {
+  background: var(--salt-actionable-bold-background-active);
+  color: var(--salt-content-bold-foreground);
+  border-style: solid;
+  border-width: var(--salt-size-border, 0);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border-color: var(--salt-actionable-borderColor);
+}
+
+.saltPill:disabled {
+  background: var(--salt-actionable-bold-background-disabled);
+  color: var(--salt-actionable-bold-foreground);
+  border-style: solid;
+  border-width: var(--salt-size-border, 0);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border-color: var(--salt-actionable-subtle-borderColor);
 }

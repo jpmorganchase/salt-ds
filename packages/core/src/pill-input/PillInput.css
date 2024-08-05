@@ -282,46 +282,10 @@
   display: contents;
 }
 
-.saltPillInput .saltPill {
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border-color: var(--salt-actionable-subtle-borderColor);
-}
-
 .saltPillInput .saltPill:focus-visible {
   background: var(--salt-content-foreground-highlight);
   color: var(--salt-content-primary-foreground);
   outline: none;
-}
-
-.saltPillInput .saltPill:hover {
-  background: var(--salt-actionable-bold-background-hover);
-  color: var(--salt-actionable-bold-foreground-hover);
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border-color: var(--salt-actionable-subtle-borderColor);
-}
-
-.saltPillInput .saltPill:active {
-  background: var(--salt-actionable-bold-background-active);
-  color: var(--salt-content-bold-foreground);
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border-color: var(--salt-actionable-borderColor);
-  --saltPill-color: var(--salt-actionable-primary-foreground-active);
-  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
-}
-
-.saltPillInput .saltPill:disabled {
-  background: var(--salt-actionable-bold-background-disabled);
-  color: var(--salt-actionable-bold-foreground);
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border-color: var(--salt-actionable-subtle-borderColor);
 }
 
 div[role="listitem"] {
