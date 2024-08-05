@@ -44,7 +44,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   color?: ButtonColor;
   /**
-   * To show a loading spinner.
+   * If `true`, the button will be in a loading state. This allows a spinner to be nested inside the button.
    */
   loading?: boolean;
 }
