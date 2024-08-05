@@ -3,21 +3,21 @@ import {
   FlexItem,
   FlexLayout,
   FormFieldHelperText,
-  StackLayout,
-  makePrefixer,
   ListBox,
   Option,
+  StackLayout,
+  makePrefixer,
 } from "@salt-ds/core";
 import {
   DatePickerRangePanel,
   type DatePickerRangePanelProps,
+  DatePickerSinglePanel,
+  type DatePickerState,
+  type DateRangeSelection,
   List,
   type ListProps,
-  type DateRangeSelection,
+  type SingleDateSelection,
   useDatePickerContext,
-  type DatePickerState,
-  SingleDateSelection,
-  DatePickerSinglePanel,
 } from "@salt-ds/lab";
 import React, { forwardRef } from "react";
 
@@ -67,7 +67,7 @@ export const CustomDatePickerPanel = forwardRef<
           <FormFieldHelperText>{helperText}</FormFieldHelperText>
         </FlexItem>
       )}
-      <FlexLayout>
+      <FlexLayout gap={0}>
         <ListBox
           bordered
           style={{ width: "10em" }}
@@ -75,7 +75,7 @@ export const CustomDatePickerPanel = forwardRef<
             if (!item) {
               return;
             }
-            const tenor = parseInt(item[0], 10);
+            const tenor = Number.parseInt(item[0], 10);
             let newSelectedDate;
             if (selectionVariant === "range") {
               newSelectedDate = selectedDate?.startDate

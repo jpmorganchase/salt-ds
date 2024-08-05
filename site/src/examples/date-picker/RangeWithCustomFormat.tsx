@@ -1,4 +1,3 @@
-import { ReactElement, useState } from "react";
 import {
   DateFormatter,
   type DateValue,
@@ -11,6 +10,7 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -29,15 +29,14 @@ function formatDateRange(
 }
 
 export const RangeWithCustomFormat = (): ReactElement => {
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   return (
     <DatePicker
       selectionVariant={"range"}
       selectedDate={selectedDate}
-      onSelectedDateChange={(
-        newSelectedDate: DateRangeSelection | null,
-      ) => {
+      onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
         console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
         setSelectedDate(newSelectedDate);
       }}

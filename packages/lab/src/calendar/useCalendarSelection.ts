@@ -24,14 +24,19 @@ export type AllSelectionValueType =
   | DateRangeSelection
   | null;
 
+export const CALENDAR_MIN_YEAR = 1900;
+export const CALENDAR_MAX_YEAR = 2100;
+
 export function isSingleSelectionValueType(value: any): value is DateValue {
   return value instanceof CalendarDate;
 }
 
-export function isDateRangeSelection(
-  value: any,
-): value is DateRangeSelection {
-  return value && typeof value === "object" && "startDate" in value;
+export function isDateRangeSelection(value: any): value is DateRangeSelection {
+  return (
+    value &&
+    typeof value === "object" &&
+    ("startDate" in value || "endDate" in value)
+  );
 }
 
 export function isMultipleDateSelection(
@@ -50,7 +55,7 @@ interface UseCalendarSelectionBaseProps<SelectionVariantType> {
     event: SyntheticEvent,
     selectedDate: SelectionVariantType | null,
   ) => void;
-  isDaySelectable?: (date?: DateValue) => boolean;
+  isDaySelectable?: (date: DateValue) => boolean;
   onHoveredDateChange?: (
     event: SyntheticEvent,
     hoveredDate: DateValue | null,

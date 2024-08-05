@@ -1,16 +1,22 @@
+import { Button, makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import { CalendarIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import {
   type FocusEventHandler,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
+  useEffect,
+  useRef,
 } from "react";
-import { clsx } from "clsx";
-import { Button, makePrefixer, useForkRef } from "@salt-ds/core";
-import { CalendarIcon } from "@salt-ds/icons";
 import type { DateRangeSelection } from "../calendar";
-import { DateInputRange, type DateInputRangeProps } from "../date-input";
+import {
+  DateInputRange,
+  type DateInputRangeProps,
+  type DateInputRangeValue,
+} from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
-import {useDatePickerOverlay} from "./DatePickerOverlayProvider";
+import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
@@ -27,33 +33,32 @@ export const DatePickerRangeInput = forwardRef<
     startInputProps: startInputPropsProp,
     onKeyDown,
     defaultValue,
-    value,
+    value: valueProp,
     onChange,
+    onDateValueChange,
     ...rest
   } = props;
 
   const {
-    state: {
-      selectedDate,
-      focusedValue,
-      disabled,
-      readOnly,
-    },
+    state: { selectedDate, focusedValue, disabled, readOnly, cancelled },
     helpers: { setSelectedDate, setFocusedValue },
-  } = useDatePickerContext({ selectionVariant: "range"});
+  } = useDatePickerContext({ selectionVariant: "range" });
   const {
     state: { open, floatingUIResult },
     helpers: { getReferenceProps, setOpen },
   } = useDatePickerOverlay();
 
   const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
+  const prevState = useRef<
+    { date: typeof selectedDate; value: typeof valueProp } | undefined
+  >();
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      setOpen(false);
-    }
-    onKeyDown?.(event);
-  };
+  const [value, setValue] = useControlled({
+    controlled: valueProp,
+    default: defaultValue,
+    name: "DatePickerRangeInput",
+    state: "dateValue",
+  });
 
   const handleCalendarButton = () => {
     setOpen(!open);
@@ -65,6 +70,27 @@ export const DatePickerRangeInput = forwardRef<
   ) => {
     setSelectedDate(newDate);
   };
+
+  const handleDateValueChange = (
+    newDateValue: DateInputRangeValue,
+    isFormatted: boolean,
+  ) => {
+    setValue(newDateValue);
+    onDateValueChange?.(newDateValue, isFormatted);
+  };
+
+  useEffect(() => {
+    if (open) {
+      prevState.current = { date: selectedDate, value: value };
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (cancelled) {
+      setValue(prevState?.current?.value);
+      setSelectedDate(prevState?.current?.date || null);
+    }
+  }, [cancelled]);
 
   const startInputProps: {
     onBlur: FocusEventHandler<HTMLInputElement>;
@@ -97,14 +123,16 @@ export const DatePickerRangeInput = forwardRef<
 
   return (
     <DateInputRange
+      value={value || { startDate: "", endDate: "" }}
       className={clsx(withBaseName(), className)}
       ref={inputRef}
       date={selectedDate}
       focusedInput={focusedValue}
-      startInputProps={startInputProps}
-      endInputProps={endInputProps}
+      startInputProps={getReferenceProps(startInputProps)}
+      endInputProps={getReferenceProps(endInputProps)}
       readOnly={readOnly}
       onDateChange={handleDateChange}
+      onDateValueChange={handleDateValueChange}
       onChange={onChange}
       endAdornment={
         <Button
@@ -116,12 +144,7 @@ export const DatePickerRangeInput = forwardRef<
           <CalendarIcon aria-hidden />
         </Button>
       }
-      defaultValue={defaultValue}
-      value={value}
-      {...getReferenceProps({
-        onKeyDown: handleKeyDown,
-        ...rest,
-      })}
+      {...rest}
     />
   );
 });

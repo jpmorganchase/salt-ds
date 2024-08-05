@@ -1,9 +1,13 @@
-import { ReactElement, useState } from "react";
 import {
   CalendarDate,
   DateFormatter,
   getLocalTimeZone,
 } from "@internationalized/date";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -11,11 +15,7 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
 } from "@salt-ds/lab";
-import {
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -34,18 +34,17 @@ function formatDateRange(
 }
 
 export const RangeWithMinMaxDate = (): ReactElement => {
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
   const helperText = "Valid between 15/01/2030 and 15/01/2031";
   return (
-    <FormField>
+    <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: DateRangeSelection | null,
-        ) => {
+        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );

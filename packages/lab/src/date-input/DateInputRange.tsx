@@ -38,9 +38,8 @@ export type DateInputRangeValue = {
   endDate?: string | undefined;
 };
 
-export interface DateInputRangeProps<
-  T = DateRangeSelection,
-> extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
+export interface DateInputRangeProps<T = DateRangeSelection>
+  extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
   ariaLabel?: string;
   /**
@@ -104,16 +103,20 @@ export interface DateInputRangeProps<
   /**
    * Callback fired when the selected date change.
    */
-  onDateChange?: (
-    event: SyntheticEvent,
-    date: T | null,
-  ) => void;
   /**
    * Callback fired when the input value change.
    */
   onChange?: (
     event: ChangeEvent<HTMLInputElement>,
     date: DateInputRangeValue,
+  ) => void;
+  onDateChange?: (event: SyntheticEvent, date: T | null) => void;
+  /**
+   * Called when input values changes, either due to user-interaction or programmatic formatting of valid dates
+   */
+  onDateValueChange?: (
+    newValue: DateInputRangeValue,
+    isFormatted: boolean,
   ) => void;
   /**
    * Name of input that should receive focus
@@ -138,6 +141,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       defaultValue = { startDate: "", endDate: "" },
       onChange,
       onClick,
+      onDateValueChange,
       emptyReadOnlyMarker = "—",
       endAdornment,
       focusedInput = null,
@@ -174,27 +178,33 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const [date, setDate] = useControlled({
       controlled: dateProp,
       default: defaultDate,
-      name: "DateInput",
+      name: "DateInputRange",
       state: "date",
     });
     const [dateValue, setDateValue] = useControlled({
       controlled: valueProp,
       default: defaultValue,
-      name: "DateInput",
+      name: "DateInputRange",
       state: "dateValue",
     });
 
     const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
-      const formattedStartDate = newDate?.startDate
-        ? formatDate(newDate.startDate)
-        : "";
-      const formattedEndDate = newDate?.endDate
-        ? formatDate(newDate.endDate)
-        : "";
-      setDateValue({
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
-      });
+      let newDateValue = { ...dateValue };
+      const formattedStartDate = formatDate(newDate?.startDate);
+      if (formattedStartDate) {
+        newDateValue = { ...newDateValue, startDate: formattedStartDate };
+      }
+      const formattedEndDate = formatDate(newDate?.endDate);
+      if (formattedEndDate) {
+        newDateValue = { ...newDateValue, endDate: formattedEndDate };
+      }
+      if (
+        newDateValue?.startDate !== dateValue?.startDate ||
+        newDateValue?.endDate !== dateValue?.endDate
+      ) {
+        onDateValueChange?.(newDateValue, true);
+      }
+      setDateValue(newDateValue);
     };
 
     // Update date string value when selected date changes
@@ -203,10 +213,14 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     }, [date?.startDate, date?.endDate, formatDate]);
 
     useEffect(() => {
-      if (focusedInput === "start") {
-        startInputRef?.current?.focus();
-      } else if (focusedInput === "end") {
-        endInputRef?.current?.focus();
+      if (focusedInput === "start" && startInputRef.current) {
+        const input = startInputRef.current;
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      } else if (focusedInput === "end" && endInputRef.current) {
+        const input = endInputRef.current;
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
       }
     }, [focusedInput]);
 
@@ -260,23 +274,66 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const apply = (event: SyntheticEvent) => {
       const newStartDate = parse(dateValue.startDate);
-      // date ranges reset, when the end date is no longer defined
       const newEndDate = parse(dateValue.endDate);
-      const hasStartDateChanged =
-        newStartDate && date?.startDate
-          ? newStartDate.compare(date.startDate) !== 0
-          : newStartDate !== date?.startDate;
-      const hasEndDateChanged =
-        newEndDate && date?.endDate
-          ? newEndDate.compare(date.endDate) !== 0
-          : newEndDate !== date?.endDate;
-      const newDate = {
-        ...(!!newStartDate && { startDate: newStartDate }),
-        ...(!!newEndDate && { endDate: newEndDate }),
+
+      const hasDateChanged = (
+        newDate: DateValue | null | undefined,
+        oldDate: DateValue | null | undefined,
+      ): boolean => {
+        if (newDate && oldDate) {
+          return newDate.compare(oldDate) !== 0;
+        }
+        return newDate !== oldDate;
       };
+
+      const createNewDateRange = (
+        startDate: DateValue | null | undefined,
+        endDate: DateValue | null | undefined,
+      ): DateRangeSelection | null => {
+        return {
+          ...(!!startDate && { startDate }),
+          ...(!!endDate && { endDate }),
+        };
+      };
+
+      const isEndDateBeforeStartDate = (
+        dateRange: DateRangeSelection | null,
+      ): boolean => {
+        return !!(
+          dateRange?.startDate &&
+          dateRange?.endDate &&
+          dateRange.endDate.compare(dateRange.startDate) < 0
+        );
+      };
+
+      const isStartDateAfterEndDate = (
+        dateRange: DateRangeSelection | null,
+      ): boolean => {
+        return !!(
+          dateRange?.startDate &&
+          dateRange?.endDate &&
+          dateRange.startDate.compare(dateRange.endDate) > 0
+        );
+      };
+
+      const hasStartDateChanged = hasDateChanged(newStartDate, date?.startDate);
+      const hasEndDateChanged = hasDateChanged(newEndDate, date?.endDate);
+
+      let newDate: DateRangeSelection | null = createNewDateRange(
+        newStartDate,
+        newEndDate,
+      );
+
+      if (isEndDateBeforeStartDate(newDate)) {
+        newDate = { ...newDate, endDate: undefined };
+      } else if (isStartDateAfterEndDate(newDate)) {
+        newDate = { ...newDate, startDate: undefined };
+      }
+
       if (newDate?.startDate || newDate?.endDate) {
         setDateValueFromDate(newDate);
       }
+
       if (hasStartDateChanged || hasEndDateChanged) {
         setDate(newDate);
         onDateChange?.(event, newDate);
@@ -290,6 +347,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       setDateValue(newDateValue);
       startInputPropsOnChange?.(event);
       onChange?.(event, newDateValue);
+      onDateValueChange?.(newDateValue, false);
     };
 
     const handleEndInputChange: ChangeEventHandler<HTMLInputElement> = (
@@ -299,6 +357,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       setDateValue(newDateValue);
       endInputPropsOnChange?.(event);
       onChange?.(event, newDateValue);
+      onDateValueChange?.(newDateValue, false);
     };
 
     const handleStartInputFocus: FocusEventHandler<HTMLInputElement> = (
@@ -349,7 +408,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const handleWrapperClick: MouseEventHandler<HTMLDivElement> = (event) => {
       if (event.target === wrapperRef.current) {
-        startInputRef?.current?.focus();
+        const input = startInputRef.current;
+        input?.focus();
+        input?.setSelectionRange(input.value.length, input.value.length);
       }
       onClick?.(event);
     };

@@ -1,5 +1,10 @@
-import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import {
+  DateFormatter,
+  getLocalTimeZone,
+  today,
+} from "@internationalized/date";
+import {
+  Button,
   Divider,
   FlexItem,
   FlexLayout,
@@ -9,11 +14,12 @@ import {
 } from "@salt-ds/core";
 import {
   DatePicker,
-  DatePickerActions,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  type DatePickerState,
   type SingleDateSelection,
+  useDatePickerContext,
 } from "@salt-ds/lab";
 import React, { type ReactElement } from "react";
 
@@ -28,7 +34,24 @@ function formatDate(
     : "N/A";
 }
 
-export const SingleWithConfirmation = (): ReactElement => {
+const TodayButton = () => {
+  const {
+    helpers: { setSelectedDate },
+  } = useDatePickerContext({
+    selectionVariant: "single",
+  }) as DatePickerState<SingleDateSelection>;
+
+  return (
+    <Button
+      style={{ width: "100%" }}
+      onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+    >
+      Today
+    </Button>
+  );
+};
+
+export const SingleWithToday = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   return (
     <FormField style={{ width: "256px" }}>
@@ -47,7 +70,7 @@ export const SingleWithConfirmation = (): ReactElement => {
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerActions selectionVariant="single" />
+              <TodayButton />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>

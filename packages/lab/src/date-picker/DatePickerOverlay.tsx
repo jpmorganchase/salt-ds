@@ -1,10 +1,4 @@
 import {
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-  forwardRef,
-} from "react";
-import { clsx } from "clsx";
-import {
   makePrefixer,
   useFloatingComponent,
   useForkRef,
@@ -12,8 +6,14 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+} from "react";
 import datePickerOverlayCss from "./DatePickerOverlay.css";
+import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerOverlay");
 

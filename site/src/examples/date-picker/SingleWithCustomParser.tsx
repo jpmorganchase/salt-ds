@@ -1,25 +1,25 @@
-import { type ChangeEvent, ReactElement, useState } from "react";
 import {
-  CalendarDate,
+  type CalendarDate,
   DateFormatter,
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
 import {
-  createCalendarDate,
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type DatePickerSingleProps,
   type SingleDateSelection,
+  createCalendarDate,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 function formatDate(
   dateValue: SingleDateSelection | null,
@@ -80,18 +80,17 @@ export const SingleWithCustomParser = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<SingleDateSelection | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
 
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: SingleDateSelection | null,
-        ) => {
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
           console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
           setValidationStatus(undefined);
@@ -112,7 +111,6 @@ export const SingleWithCustomParser = (): ReactElement => {
                 month: "short",
                 year: "numeric",
               }).format(offsetDate.toDate(getLocalTimeZone()));
-              console.log("------", parsedDate);
             }
             return createCalendarDate(parsedDate);
           }}

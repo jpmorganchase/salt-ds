@@ -1,11 +1,4 @@
 import {
-  type ComponentPropsWithoutRef,
-  type SyntheticEvent,
-  forwardRef,
-  useState,
-} from "react";
-import clsx from "clsx";
-import {
   type DateValue,
   getLocalTimeZone,
   startOfMonth,
@@ -21,9 +14,16 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
-import {CalendarSingleProps, useDatePickerContext} from "@salt-ds/lab";
+import { type CalendarSingleProps, useDatePickerContext } from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type SyntheticEvent,
+  forwardRef,
+  useState,
+} from "react";
 import {
   Calendar,
   type CalendarProps,
@@ -33,10 +33,7 @@ import datePickerPanelCss from "./DatePickerPanel.css";
 
 export interface DatePickerSinglePanelProps<T>
   extends ComponentPropsWithoutRef<"div"> {
-  onSelect?: (
-    event: SyntheticEvent,
-    selectedDate?: T | null,
-  ) => void;
+  onSelect?: (event: SyntheticEvent, selectedDate?: T | null) => void;
   helperText?: string;
   visibleMonth?: DateValue;
   defaultVisibleMonth?: DateValue;
@@ -92,7 +89,9 @@ export const DatePickerSinglePanel = forwardRef<
 
   const [visibleMonth, setVisibleMonth] = useControlled({
     controlled: visibleMonthProp,
-    default: defaultVisibleMonth || startOfMonth(selectedDate || minDate),
+    default:
+      defaultVisibleMonth ||
+      startOfMonth(selectedDate || today(getLocalTimeZone())),
     name: "DatePickerSinglePanel",
     state: "visibleMonth",
   });
@@ -151,7 +150,7 @@ export const DatePickerSinglePanel = forwardRef<
           <FormFieldHelperText>{helperText}</FormFieldHelperText>
         </FlexItem>
       )}
-      <FlexLayout>
+      <FlexLayout gap={0}>
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant="single" {...baseCalendarProps} />,

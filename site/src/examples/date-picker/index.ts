@@ -7,6 +7,7 @@ export * from "./SingleWithCustomPanel";
 export * from "./SingleWithInitialError";
 export * from "./SingleWithMinMaxDate";
 export * from "./SingleWithValidation";
+export * from "./SingleWithToday";
 export * from "./Range";
 export * from "./RangeControlled";
 export * from "./RangeWithConfirmation";
@@ -15,5 +16,3 @@ export * from "./RangeWithCustomPanel";
 export * from "./RangeWithInitialError";
 export * from "./RangeWithMinMaxDate";
 export * from "./RangeWithValidation";
-
-

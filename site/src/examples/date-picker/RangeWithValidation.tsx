@@ -1,5 +1,9 @@
-import {type ChangeEvent, ReactElement, useState} from "react";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
+import {
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
 import {
   type DateInputRangeValue,
   DatePicker,
@@ -8,11 +12,7 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
 } from "@salt-ds/lab";
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel
-} from "@salt-ds/core";
+import { type ChangeEvent, type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -72,18 +72,17 @@ export const RangeWithValidation = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] =
-    useState<DateRangeSelection | null>(null);
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
 
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: DateRangeSelection | null,
-        ) => {
+        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );

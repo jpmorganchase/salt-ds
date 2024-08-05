@@ -1,4 +1,4 @@
-.saltDatePickerFooter {
+.saltDatePickerActions {
   box-sizing: border-box;
   display: flex;
   align-items: flex-start;
@@ -10,14 +10,14 @@
   padding-right: var(--salt-spacing-300);
 }
 
-.saltDatePickerFooter-body {
+.saltDatePickerActions-body {
   flex-grow: 1;
 }
 
-.saltDatePickerFooter-action {
+.saltDatePickerActions-action {
   /* No margin needed here */
 }
 
-.saltDatePickerFooter-action + .saltDatePickerFooter-action {
+.saltDatePickerActions-action + .saltDatePickerActions-action {
   margin-left: var(--salt-spacing-100);
 }
