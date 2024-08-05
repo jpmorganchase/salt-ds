@@ -18,8 +18,8 @@ export const AppearanceValues = ["solid", "outline", "transparent"] as const;
 export const ButtonColorValues = [
   "accent",
   "neutral",
-  "negative",
   "positive",
+  "negative",
   "warning",
 ] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
