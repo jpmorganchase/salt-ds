@@ -4,18 +4,18 @@ import { shortColorData } from "./exampleData";
 
 export const Readonly = (): ReactElement => {
   return (
-    <StackLayout>
-      <ComboBox
-        defaultValue="Yellow"
-        defaultSelected={["Yellow"]}
-        readOnly
-        style={{ width: "266px" }}
-      >
+    <StackLayout style={{ width: "266px" }}>
+      <ComboBox defaultValue="Yellow" defaultSelected={["Yellow"]} readOnly>
         {shortColorData.map((color) => (
           <Option value={color} key={color} />
         ))}
       </ComboBox>
-      <ComboBox readOnly style={{ width: "266px" }}>
+      <ComboBox readOnly multiselect defaultSelected={["Yellow", "Green"]}>
+        {shortColorData.map((color) => (
+          <Option value={color} key={color} />
+        ))}
+      </ComboBox>
+      <ComboBox readOnly>
         {shortColorData.map((color) => (
           <Option value={color} key={color} />
         ))}

@@ -18,4 +18,3 @@ export * from "./SelectOnTab";
 export * from "./ClearSelection";
 export * from "./Bordered";
 export * from "./FreeText";
-export * from "./ReadonlyMultiselect";
