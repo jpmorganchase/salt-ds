@@ -17,7 +17,7 @@ import {
   type SyntheticEvent,
   forwardRef,
 } from "react";
-
+import { CALENDAR_MAX_YEAR, CALENDAR_MIN_YEAR } from "../useCalendarSelection";
 import { useCalendarContext } from "./CalendarContext";
 
 import {
@@ -90,9 +90,22 @@ function useCalendarNavigation() {
     }
   };
 
-  const months: DateValue[] = monthsForLocale(visibleMonth);
+  function generateYearsBetweenRange(
+    minYear: number,
+    maxYear: number,
+  ): DateValue[] {
+    const years: DateValue[] = [];
+    for (let year = minYear; year <= maxYear; year++) {
+      years.push(new CalendarDate(year, 1, 1));
+    }
+    return years;
+  }
 
-  const years: DateValue[] = generateYearsInRange(minDate, maxDate);
+  const months: DateValue[] = monthsForLocale(visibleMonth);
+  const years: DateValue[] = generateYearsBetweenRange(
+    Math.min(minDate ? minDate.year : CALENDAR_MIN_YEAR, visibleMonth.year),
+    Math.max(maxDate ? maxDate.year : CALENDAR_MAX_YEAR, visibleMonth.year),
+  );
 
   const selectedMonth: DateValue | undefined = months.find((month: DateValue) =>
     isSameMonth(month, visibleMonth),
@@ -143,20 +156,6 @@ const OptionWithTooltip = ({
     </Tooltip>
   );
 };
-
-function generateYearsInRange(
-  minDate?: DateValue,
-  maxDate?: DateValue,
-): DateValue[] {
-  const currentYear = new Date().getFullYear();
-  const minYear = minDate ? minDate.year : currentYear - 100;
-  const maxYear = maxDate ? maxDate.year : currentYear + 100;
-  const years: DateValue[] = [];
-  for (let year = minYear; year <= maxYear; year++) {
-    years.push(new CalendarDate(year, 1, 1));
-  }
-  return years;
-}
 
 export const CalendarNavigation = forwardRef<
   HTMLDivElement,

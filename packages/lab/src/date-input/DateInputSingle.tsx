@@ -100,6 +100,10 @@ export interface DateInputSingleProps<T = SingleDateSelection>
    * @param inputDate - parse date string to valid `CalendarDate` or undefined, if invalid
    */
   parse?: (inputDate: string | undefined) => CalendarDate | undefined;
+  /**
+   * Called when input value changes, either due to user-interaction or programmatic formatting of valid dates
+   */
+  onDateValueChange?: (newValue: string, isFormatted: boolean) => void;
 }
 
 export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
@@ -126,6 +130,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
+      onDateValueChange,
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -148,13 +153,13 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     const [date, setDate] = useControlled({
       controlled: dateProp,
       default: defaultDate,
-      name: "DateInput",
+      name: "DateInputSingle",
       state: "date",
     });
     const [dateValue, setDateValue] = useControlled({
       controlled: valueProp,
       default: defaultValue,
-      name: "DateInput",
+      name: "DateInputSingle",
       state: "dateValue",
     });
 
@@ -163,6 +168,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       const formattedDate = formatDate(date);
       if (formattedDate) {
         setDateValue(formattedDate);
+        onDateValueChange?.(formattedDate, true);
       }
     }, [date, formatDate]);
 
@@ -211,6 +217,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         const formattedDate = formatDate(newDate);
         if (formattedDate) {
           setDateValue(formattedDate);
+          onDateValueChange?.(formattedDate, true);
         }
       }
       const hasDateChanged =
@@ -226,6 +233,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       setDateValue(newDateValue);
       inputPropsOnChange?.(event);
       onChange?.(event);
+      onDateValueChange?.(newDateValue, false);
     };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {

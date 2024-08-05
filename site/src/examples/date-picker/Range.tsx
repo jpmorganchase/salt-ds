@@ -1,4 +1,3 @@
-import type { ReactElement } from "react";
 import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
 import {
   DatePicker,
@@ -7,6 +6,7 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
 } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

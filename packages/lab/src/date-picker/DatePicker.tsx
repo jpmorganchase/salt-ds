@@ -1,16 +1,16 @@
 import { type ReactNode, forwardRef } from "react";
-import {
-  DatePickerState,
-  SingleDateSelectionContext,
-  DateRangeSelectionContext,
-} from "./DatePickerContext";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {
-  useDatePicker,
+  type DatePickerState,
+  DateRangeSelectionContext,
+  SingleDateSelectionContext,
+} from "./DatePickerContext";
+import { DatePickerOverlayProvider } from "./DatePickerOverlayProvider";
+import {
   type UseDatePickerRangeProps,
   type UseDatePickerSingleProps,
+  useDatePicker,
 } from "./useDatePicker";
-import { DatePickerOverlayProvider } from "./DatePickerOverlayProvider";
 
 export interface DatePickerBaseProps {
   className?: string;
@@ -40,13 +40,10 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
         ref,
       ) as DatePickerState<DateRangeSelection>;
       return (
-          <DateRangeSelectionContext.Provider value={stateAndHelpers}>
-            <div
-              className={className}
-              ref={stateAndHelpers?.state?.containerRef}
-            >
-              {children}
-            </div>
+        <DateRangeSelectionContext.Provider value={stateAndHelpers}>
+          <div className={className} ref={stateAndHelpers?.state?.containerRef}>
+            {children}
+          </div>
         </DateRangeSelectionContext.Provider>
       );
     } else {
@@ -55,14 +52,11 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
         ref,
       ) as DatePickerState<SingleDateSelection>;
       return (
-          <SingleDateSelectionContext.Provider value={stateAndHelpers}>
-            <div
-              className={className}
-              ref={stateAndHelpers?.state?.containerRef}
-            >
-              {children}
-            </div>
-          </SingleDateSelectionContext.Provider>
+        <SingleDateSelectionContext.Provider value={stateAndHelpers}>
+          <div className={className} ref={stateAndHelpers?.state?.containerRef}>
+            {children}
+          </div>
+        </SingleDateSelectionContext.Provider>
       );
     }
   },
@@ -77,5 +71,5 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <DatePickerMain {...rest} ref={ref} />
       </DatePickerOverlayProvider>
     );
-  }
+  },
 );

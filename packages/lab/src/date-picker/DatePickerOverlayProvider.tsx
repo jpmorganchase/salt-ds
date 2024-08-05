@@ -1,6 +1,6 @@
-import { useContext, ReactNode, useCallback } from "react";
 import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
+import { type ReactNode, useCallback, useContext } from "react";
 
 interface DatePickerOverlayState {
   open: boolean;
@@ -39,6 +39,7 @@ export const DatePickerOverlayProvider: React.FC<
 
   const floatingUIResult = useFloatingUI({
     open,
+    onOpenChange: setOpen,
     placement: "bottom-start",
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });

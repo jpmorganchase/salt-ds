@@ -6,6 +6,7 @@ import {
   today,
 } from "@internationalized/date";
 import {
+  Button,
   Divider,
   FlexItem,
   FlexLayout,
@@ -17,17 +18,19 @@ import {
 import {
   type DateInputRangeValue,
   DatePicker,
+  DatePickerActions,
   DatePickerOverlay,
-  DatePickerFooter,
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DatePickerRangeProps,
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type DatePickerSingleProps,
+  type DatePickerState,
   type DateRangeSelection,
   type SingleDateSelection,
   createCalendarDate,
+  useDatePickerContext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import React, { type ChangeEvent, useState } from "react";
@@ -565,6 +568,51 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
   );
 };
 
+export const SingleWithToday: StoryFn<DatePickerSingleProps> = (args) => {
+  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const TodayButton = () => {
+    const {
+      helpers: { setSelectedDate },
+    } = useDatePickerContext({
+      selectionVariant: "single",
+    }) as DatePickerState<SingleDateSelection>;
+
+    return (
+      <Button
+        style={{ width: "100%" }}
+        onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+      >
+        Today
+      </Button>
+    );
+  };
+  return (
+    <FormField>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        {...args}
+        selectionVariant="single"
+        onSelectedDateChange={(newSelectedDate) => {
+          console.log(`Selected date range: ${formatDate(newSelectedDate)}`);
+        }}
+      >
+        <DatePickerSingleInput />
+        <DatePickerOverlay>
+          <FlexLayout gap={0} direction="column">
+            <FlexItem>
+              <DatePickerSinglePanel />
+            </FlexItem>
+            <FlexItem>
+              <TodayButton />
+            </FlexItem>
+          </FlexLayout>
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
 export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
   args,
 ) => {
@@ -587,7 +635,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerFooter selectionVariant="single" />
+              <DatePickerActions selectionVariant="single" />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
@@ -622,7 +670,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerFooter selectionVariant="range" />
+              <DatePickerActions selectionVariant="range" />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
@@ -672,7 +720,6 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
                 month: "short",
                 year: "numeric",
               }).format(offsetDate.toDate(getLocalTimeZone()));
-              console.log("------", parsedDate);
             }
             return createCalendarDate(parsedDate);
           }}

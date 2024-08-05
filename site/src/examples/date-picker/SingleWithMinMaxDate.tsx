@@ -1,9 +1,13 @@
-import { ReactElement, useState } from "react";
 import {
   CalendarDate,
   DateFormatter,
   getLocalTimeZone,
 } from "@internationalized/date";
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -11,11 +15,7 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
 } from "@salt-ds/lab";
-import {
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 function formatDate(
   dateValue: SingleDateSelection | null,
@@ -29,18 +29,17 @@ function formatDate(
 }
 
 export const SingleWithMinMaxDate = (): ReactElement => {
-  const [selectedDate, setSelectedDate] =
-    useState<SingleDateSelection | null>(null);
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+    null,
+  );
   const helperText = "Valid between 15/01/2030 and 15/01/2031";
   return (
-    <FormField>
+    <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
         selectedDate={selectedDate}
-        onSelectedDateChange={(
-          newSelectedDate: SingleDateSelection | null,
-        ) => {
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
           console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
         }}

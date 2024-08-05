@@ -8,7 +8,7 @@ import {
 
 export function createCalendarDate(
   inputDate: string | undefined,
-): CalendarDate | undefined {
+): DateValue | undefined {
   if (!inputDate) {
     return undefined;
   }

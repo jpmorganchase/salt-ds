@@ -1,17 +1,9 @@
-import React, { ReactElement } from "react";
 import {
   CalendarDate,
   DateFormatter,
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
-import {
-  DatePicker,
-  DatePickerOverlay,
-  DatePickerFooter,
-  DatePickerRangeInput,
-  type DateRangeSelection, DatePickerRangePanel,
-} from "@salt-ds/lab";
 import {
   Divider,
   FlexItem,
@@ -20,6 +12,15 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import {
+  DatePicker,
+  DatePickerActions,
+  DatePickerOverlay,
+  DatePickerRangeInput,
+  DatePickerRangePanel,
+  type DateRangeSelection,
+} from "@salt-ds/lab";
+import React, { type ReactElement } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -41,7 +42,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
   return (
-    <FormField>
+    <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
@@ -61,7 +62,7 @@ export const RangeWithConfirmation = (): ReactElement => {
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerFooter selectionVariant="range" />
+              <DatePickerActions selectionVariant="range" />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>

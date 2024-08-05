@@ -1,14 +1,8 @@
 import {
-  type ComponentPropsWithoutRef,
-  type SyntheticEvent,
-  forwardRef,
-  useState,
-} from "react";
-import clsx from "clsx";
-import {
   type DateValue,
   endOfMonth,
   getLocalTimeZone,
+  isSameMonth,
   startOfMonth,
   today,
 } from "@internationalized/date";
@@ -24,6 +18,13 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import {
+  type ComponentPropsWithoutRef,
+  type SyntheticEvent,
+  forwardRef,
+  useState,
+} from "react";
 import {
   Calendar,
   type CalendarOffsetProps,
@@ -32,9 +33,7 @@ import {
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
 } from "../calendar";
-import {
-  useDatePickerContext,
-} from "./DatePickerContext";
+import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
 export interface DatePickerRangePanelProps<T>
@@ -71,6 +70,26 @@ export interface DatePickerRangePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+}
+
+function getFallbackVisibleMonths(selectedDate?: DateRangeSelection | null) {
+  const createConsecutiveRange = (date: DateValue) => [
+    startOfMonth(date),
+    startOfMonth(date).add({ months: 1 }),
+  ];
+
+  if (selectedDate?.startDate) {
+    const { startDate, endDate } = selectedDate;
+    if (endDate) {
+      return isSameMonth(startDate, endDate)
+        ? createConsecutiveRange(startDate)
+        : [startOfMonth(startDate), startOfMonth(endDate)];
+    }
+    return createConsecutiveRange(startDate);
+  }
+
+  const todayDate = today(getLocalTimeZone());
+  return [todayDate, todayDate.add({ months: 1 })];
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -111,22 +130,23 @@ export const DatePickerRangePanel = forwardRef<
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 
+  const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
+    getFallbackVisibleMonths(selectedDate),
+  );
+
   const [startVisibleMonth, setStartVisibleMonth] = useControlled({
     controlled: startVisibleMonthProp,
-    default:
-      defaultStartVisibleMonthProp ||
-      startOfMonth(selectedDate?.startDate || minDate),
+    default: defaultStartVisibleMonthProp || fallbackStartVisibleMonth,
     name: "DatePickerRangePanel",
     state: "startVisibleMonth",
   });
-  const isStartVisibleMonthControlled = !!startVisibleMonthProp;
+
   const [endVisibleMonth, setEndVisibleMonth] = useControlled({
     controlled: endVisibleMonthProp,
-    default: defaultEndVisibleMonthProp || startOfMonth(maxDate),
+    default: defaultEndVisibleMonthProp || fallbackEndVisibleMonth,
     name: "DatePickerRangePanel",
     state: "endVisibleMonth",
   });
-  const isEndVisibleMonthControlled = !!endVisibleMonthProp;
 
   const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
     (event, newDate) => {
@@ -158,10 +178,7 @@ export const DatePickerRangePanel = forwardRef<
     newVisibleMonth,
   ) => {
     setStartVisibleMonth(newVisibleMonth);
-    if (
-      !isStartVisibleMonthControlled &&
-      newVisibleMonth.compare(endVisibleMonth) >= 0
-    ) {
+    if (newVisibleMonth.compare(endVisibleMonth) >= 0) {
       setEndVisibleMonth(newVisibleMonth.add({ months: 1 }));
     }
     onStartVisibleMonthChange?.(event, newVisibleMonth);
@@ -172,10 +189,7 @@ export const DatePickerRangePanel = forwardRef<
     newVisibleMonth,
   ) => {
     setEndVisibleMonth(newVisibleMonth);
-    if (
-      !isEndVisibleMonthControlled &&
-      newVisibleMonth.compare(startVisibleMonth) <= 0
-    ) {
+    if (newVisibleMonth.compare(startVisibleMonth) <= 0) {
       setStartVisibleMonth(
         startOfMonth(newVisibleMonth.subtract({ months: 1 })),
       );

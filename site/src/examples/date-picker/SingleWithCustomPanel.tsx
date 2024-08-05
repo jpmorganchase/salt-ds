@@ -1,4 +1,3 @@
-import React, { ReactElement } from "react";
 import {
   DateFormatter,
   type DateValue,
@@ -6,18 +5,19 @@ import {
   today,
 } from "@internationalized/date";
 import {
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
 } from "@salt-ds/lab";
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
+import React, { type ReactElement } from "react";
 
 function formatDate(
   dateValue: SingleDateSelection | null,
@@ -34,7 +34,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
   return (
-    <FormField>
+    <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         minDate={minDate}

@@ -1,6 +1,6 @@
-import {  useContext } from "react";
 import type { DateValue } from "@internationalized/date";
 import { createContext } from "@salt-ds/core";
+import { useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 
 interface DatePickerBaseState {

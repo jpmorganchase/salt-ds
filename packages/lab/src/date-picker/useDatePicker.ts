@@ -1,22 +1,21 @@
-import { useEffect, useRef, useState } from "react";
 import {
+  CalendarDate,
   type DateValue,
   endOfMonth,
   getLocalTimeZone,
   startOfMonth,
   today,
 } from "@internationalized/date";
+import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
+import { useEffect, useRef, useState } from "react";
 import {
-  useControlled,
-  useForkRef,
-  useFormFieldProps,
-} from "@salt-ds/core";
-import {
+  CALENDAR_MAX_YEAR,
+  CALENDAR_MIN_YEAR,
   type DateRangeSelection,
   type SingleDateSelection,
   isDateRangeSelection,
 } from "../calendar";
-import { DatePickerState } from "./DatePickerContext";
+import type { DatePickerState } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 interface UseDatePickerBaseProps<T> {
@@ -71,15 +70,12 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   } = props;
 
   const minDate: DateValue =
-    minDateProp ?? startOfMonth(today(getLocalTimeZone()));
+    minDateProp ?? startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1));
   const maxDate: DateValue =
-    maxDateProp ?? endOfMonth(minDate.add({ months: 1 }));
+    maxDateProp ?? endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1));
 
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
-  const prevSelectedDate = useRef<
-    SingleDateSelection | DateRangeSelection | null
-  >(null);
 
   const {
     state: { open },
@@ -118,7 +114,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       }
     }
     if (open) {
-      prevSelectedDate.current = selectedDate;
+      setCancelled(false);
     }
   }, [open]);
 
@@ -190,8 +186,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   };
 
   const cancel = () => {
-    setSelectedDateWrapper(prevSelectedDate.current);
-    prevSelectedDate.current = null;
     setCancelled(true);
     setOpen(false);
   };
