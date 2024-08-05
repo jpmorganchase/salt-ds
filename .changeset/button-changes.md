@@ -14,3 +14,9 @@ Added `color` and `appearance` props for Button. These props replace the `varian
 ```
 
 _Note:_ Button's `variant` prop is now deprecated and will be removed in the next major version.
+
+| Deprecated                    | Replacement                                    |
+| ----------------------------- | ---------------------------------------------- |
+| `variant="cta"`               | `color="accent" appearance="solid"`            |
+| `variant="primary"` (default) | `color="neutral" appearance="solid"` (default) |
+| `variant="secondary"`         | `color="neutral" appearance="transparent"`     |
