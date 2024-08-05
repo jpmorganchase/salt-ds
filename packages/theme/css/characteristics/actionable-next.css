@@ -178,7 +178,7 @@
   --salt-actionable-positive-bold-borderColor-disabled: var(--salt-palette-alpha-none);
   --salt-actionable-positive-bold-background: var(--salt-palette-positive);
   --salt-actionable-positive-bold-background-hover: var(--salt-palette-positive-action-hover);
-  --salt-actionable-positive-bold-background-active: var(--salt-palette-positive);
+  --salt-actionable-positive-bold-background-active: var(--salt-palette-positive-action-active);
   --salt-actionable-positive-bold-background-disabled: var(--salt-palette-positive-disabled);
 
   /* saltButton-positive-outline */
