@@ -55,28 +55,17 @@
 }
 
 .saltPill:hover {
-  background: var(--salt-actionable-bold-background-hover);
-  color: var(--salt-actionable-bold-foreground-hover);
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border-color: var(--salt-actionable-subtle-borderColor);
+  --saltPill-background: var(--salt-actionable-bold-background-hover);
+  --saltPill-color: var(--salt-actionable-bold-foreground-hover);
 }
 
 .saltPill:active {
-  background: var(--salt-actionable-bold-background-active);
-  color: var(--salt-content-bold-foreground);
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
+  --saltPill-background: var(--salt-actionable-bold-background-active);
+  --saltPill-color: var(--salt-content-bold-foreground);
   border-color: var(--salt-actionable-borderColor);
 }
 
 .saltPill:disabled {
-  background: var(--salt-actionable-bold-background-disabled);
-  color: var(--salt-actionable-bold-foreground);
-  border-style: solid;
-  border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border-color: var(--salt-actionable-subtle-borderColor);
+  --saltPill-background: var(--salt-actionable-bold-background-disabled);
+  --saltPill-color: var(--salt-actionable-bold-foreground);
 }
