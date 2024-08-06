@@ -1,4 +1,10 @@
-import { Button, type ButtonProps, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  ButtonAppearanceValues,
+  type ButtonProps,
+  FlexItem,
+  StackLayout,
+} from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
@@ -20,25 +26,39 @@ const SingleButtonTemplate: StoryFn<typeof Button> = (props) => {
   return <Button {...props} />;
 };
 
-const ButtonGrid = ({
+export const Default = SingleButtonTemplate.bind({});
+Default.args = {
+  children: "Activate",
+};
+
+export const Disabled = SingleButtonTemplate.bind({});
+Disabled.args = {
+  disabled: true,
+  children: "Submit",
+};
+
+const ButtonVariantGrid = ({
   className = "",
   label1,
   label2,
   label3,
   variant,
+  onClick,
+  ...restProps
 }: {
   className?: string;
   label1: string;
   label2: string;
   label3: string;
-  variant: ButtonProps["variant"];
-}) => {
-  const handleClick = () => {
+  color?: ButtonProps["color"];
+} & ButtonProps) => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     console.log("clicked");
+    onClick?.(event);
   };
 
   return (
-    <>
+    <StackLayout>
       <div
         className={className}
         style={{
@@ -48,137 +68,122 @@ const ButtonGrid = ({
           gridGap: 10,
         }}
       >
-        <Button variant={variant} onClick={handleClick}>
+        <Button variant={variant} onClick={handleClick} {...restProps}>
           {label1}
         </Button>
-        <Button variant={variant} onClick={handleClick} aria-label="search">
+        <Button
+          variant={variant}
+          onClick={handleClick}
+          aria-label="search"
+          {...restProps}
+        >
           <SearchIcon aria-hidden />
         </Button>
-        <Button variant={variant} onClick={handleClick}>
+        <Button variant={variant} onClick={handleClick} {...restProps}>
           <SearchIcon aria-hidden />
           {label2}
         </Button>
       </div>
-      <br />
       <div>
-        <Button variant={variant} onClick={handleClick} disabled>
+        <Button variant={variant} onClick={handleClick} disabled {...restProps}>
           {label3}
         </Button>
       </div>
-    </>
+    </StackLayout>
   );
 };
 
-export const All: StoryFn<typeof Button> = () => {
-  const handleClick = () => {
+const ButtonColorGrid = ({
+  className = "",
+  label1,
+  label2,
+  label3,
+  color,
+  onClick,
+  ...restProps
+}: {
+  className?: string;
+  label1: string;
+  label2: string;
+  label3: string;
+  color?: ButtonProps["color"];
+} & ButtonProps) => {
+  const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     console.log("clicked");
+    onClick?.(event);
   };
 
   return (
-    <div style={{ display: "flex", gap: "8px" }}>
-      <Button variant={"cta"} onClick={handleClick}>
-        Submit
-      </Button>
-      <Button variant={"primary"} onClick={handleClick}>
-        Search
-      </Button>
-      <Button variant={"secondary"} onClick={handleClick}>
-        Cancel
-      </Button>
-    </div>
+    <StackLayout>
+      {ButtonAppearanceValues.map((appearance) => (
+        <StackLayout key={appearance}>
+          <StackLayout direction="row">
+            <Button
+              appearance={appearance}
+              color={color}
+              onClick={handleClick}
+              {...restProps}
+            >
+              {label1}
+            </Button>
+            <Button
+              appearance={appearance}
+              color={color}
+              onClick={handleClick}
+              aria-label="search"
+              {...restProps}
+            >
+              <SearchIcon aria-hidden />
+            </Button>
+            <Button
+              appearance={appearance}
+              color={color}
+              onClick={handleClick}
+              {...restProps}
+            >
+              <SearchIcon aria-hidden />
+              {label2}
+            </Button>
+          </StackLayout>
+          <FlexItem>
+            <Button
+              appearance={appearance}
+              color={color}
+              onClick={handleClick}
+              disabled
+              {...restProps}
+            >
+              {label3}
+            </Button>
+          </FlexItem>
+        </StackLayout>
+      ))}
+    </StackLayout>
   );
 };
 
-export const CTA: StoryFn<typeof Button> = () => {
+export const Accent: StoryFn<typeof Button> = (props) => {
   return (
-    <ButtonGrid
-      variant="cta"
+    <ButtonColorGrid
+      color="accent"
       label1="Submit"
       label2="Search"
       label3="Continue"
+      {...props}
     />
   );
 };
 
-export const Primary: StoryFn<typeof Button> = () => {
+export const Neutral: StoryFn<typeof Button> = (props) => {
   return (
-    <ButtonGrid
-      variant="primary"
+    <ButtonColorGrid
+      color="neutral"
       label1="Submit"
       label2="Search"
       label3="Continue"
+      {...props}
     />
   );
-};
-
-export const Secondary: StoryFn<typeof Button> = () => {
-  return (
-    <ButtonGrid
-      variant="secondary"
-      label1="Cancel"
-      label2="Find address"
-      label3="Save as draft"
-    />
-  );
-};
-
-export const AccentSolid: StoryFn<typeof Button> = () => {
-  return (
-    <Button color="accent" appearance="solid">
-      Send <SendIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const AccentBordered: StoryFn<typeof Button> = () => {
-  return (
-    <Button color="accent" appearance="bordered">
-      Send <SendIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const AccentTransparent: StoryFn<typeof Button> = () => {
-  return (
-    <Button color="accent" appearance="transparent">
-      Send <SendIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const NeutralSolid: StoryFn<typeof Button> = () => {
-  return (
-    <Button color="neutral" appearance="solid">
-      Send <SendIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const NeutralBordered: StoryFn<typeof Button> = () => {
-  return (
-    <Button color="neutral" appearance="bordered">
-      Send <SendIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const NeutralTransparent: StoryFn<typeof Button> = () => {
-  return (
-    <Button color="neutral" appearance="transparent">
-      Send <SendIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const FeatureButton = SingleButtonTemplate.bind({});
-FeatureButton.args = {
-  children: "Activate",
-};
-
-export const Disabled = SingleButtonTemplate.bind({});
-Disabled.args = {
-  disabled: true,
-  children: "Submit",
 };
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
@@ -210,9 +215,43 @@ export const WithIcon: StoryFn<typeof Button> = () => {
 export const FullWidth: StoryFn<typeof Button> = () => {
   return (
     <StackLayout style={{ width: "98vw" }}>
-      <Button variant="primary">Primary full width Button</Button>
-      <Button variant="secondary">Secondary full width Button</Button>
-      <Button variant="cta">Cta full width Button</Button>
+      <Button color="neutral" appearance="solid">
+        Neutral solid full width Button
+      </Button>
+      <Button color="neutral" appearance="transparent">
+        Neutral transparent full width Button
+      </Button>
+      <Button color="accent" appearance="solid">
+        Accent solid full width Button
+      </Button>
+    </StackLayout>
+  );
+};
+
+export const Deprecated: StoryFn<typeof Button> = (props) => {
+  return (
+    <StackLayout>
+      <ButtonVariantGrid
+        variant="cta"
+        label1="Submit"
+        label2="Search"
+        label3="Continue"
+        {...props}
+      />
+      <ButtonVariantGrid
+        variant="primary"
+        label1="Submit"
+        label2="Search"
+        label3="Continue"
+        {...props}
+      />
+      <ButtonVariantGrid
+        variant="secondary"
+        label1="Submit"
+        label2="Search"
+        label3="Continue"
+        {...props}
+      />
     </StackLayout>
   );
 };
