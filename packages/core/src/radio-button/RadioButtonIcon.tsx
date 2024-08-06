@@ -72,10 +72,7 @@ export const RadioButtonIcon = ({
           fill="currentColor"
           viewBox="0 0 12 12"
         >
-          <path
-            fill="#161616"
-            d="M9.5 6a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-          />
+          <path d="M9.5 6a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z" />
         </svg>
       )}
     </div>
