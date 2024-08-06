@@ -2,7 +2,6 @@ import {
   Button,
   type ButtonProps,
   FlowLayout,
-  GridLayout,
   Spinner,
   StackLayout,
 } from "@salt-ds/core";
@@ -242,7 +241,7 @@ function useLoadOnClick() {
   return [loading, handleClick] as const;
 }
 
-export const LoadingButtonsReplaceIcon: StoryFn = () => {
+export const LoadingReplaceIcon: StoryFn = () => {
   const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
   const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
   const [accentTransparentLoading, setAccentTransparentLoading] =
@@ -340,7 +339,7 @@ export const LoadingButtonsReplaceIcon: StoryFn = () => {
   );
 };
 
-export const LoadingButtons: StoryFn = () => {
+export const Loading: StoryFn = () => {
   const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
   const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
   const [accentTransparentLoading, setAccentTransparentLoading] =
@@ -358,14 +357,14 @@ export const LoadingButtons: StoryFn = () => {
           appearance="solid"
           loading={accentSolidLoading}
           onClick={setAccentSolidLoading}
-          style={{ width: 66 }}
+          style={{ width: 109 }}
         >
           {accentSolidLoading ? (
             <Spinner size="small" aria-label="Sending" />
           ) : (
             <>
               <SendIcon aria-hidden />
-              Send
+              Send Email
             </>
           )}
         </Button>
@@ -374,14 +373,14 @@ export const LoadingButtons: StoryFn = () => {
           appearance="outline"
           loading={accentOutlineLoading}
           onClick={setAccentOutlineLoading}
-          style={{ width: 66 }}
+          style={{ width: 102 }}
         >
           {accentOutlineLoading ? (
             <Spinner size="small" aria-label="Syncing" />
           ) : (
             <>
               <SyncIcon aria-hidden />
-              Sync
+              Sync Files
             </>
           )}
         </Button>
@@ -390,14 +389,14 @@ export const LoadingButtons: StoryFn = () => {
           appearance="transparent"
           loading={accentTransparentLoading}
           onClick={setAccentTransparentLoading}
-          style={{ width: 87 }}
+          style={{ width: 124 }}
         >
           {accentTransparentLoading ? (
             <Spinner size="small" aria-label="Refreshing" />
           ) : (
             <>
               <RefreshIcon aria-hidden />
-              Refresh
+              Refresh Page
             </>
           )}
         </Button>
@@ -408,14 +407,14 @@ export const LoadingButtons: StoryFn = () => {
           appearance="solid"
           loading={neutralSolidLoading}
           onClick={setNeutralSolidLoading}
-          style={{ width: 66 }}
+          style={{ width: 109 }}
         >
           {neutralSolidLoading ? (
             <Spinner size="small" aria-label="Sending" />
           ) : (
             <>
               <SendIcon aria-hidden />
-              Send
+              Send Email
             </>
           )}
         </Button>
@@ -424,14 +423,14 @@ export const LoadingButtons: StoryFn = () => {
           appearance="outline"
           loading={neutralOutlineLoading}
           onClick={setNeutralOutlineLoading}
-          style={{ width: 66 }}
+          style={{ width: 102 }}
         >
           {neutralOutlineLoading ? (
             <Spinner size="small" aria-label="Syncing" />
           ) : (
             <>
               <SyncIcon aria-hidden />
-              Sync
+              Sync Files
             </>
           )}
         </Button>
@@ -440,14 +439,14 @@ export const LoadingButtons: StoryFn = () => {
           appearance="transparent"
           loading={neutralTransparentLoading}
           onClick={setNeutralTransparentLoading}
-          style={{ width: 87 }}
+          style={{ width: 124 }}
         >
           {neutralTransparentLoading ? (
             <Spinner size="small" aria-label="Refreshing" />
           ) : (
             <>
               <RefreshIcon aria-hidden />
-              Refresh
+              Refresh Page
             </>
           )}
         </Button>
@@ -456,7 +455,7 @@ export const LoadingButtons: StoryFn = () => {
   );
 };
 
-export const LoadingButtonsWithLabel: StoryFn = () => {
+export const LoadingWithLabel: StoryFn = () => {
   const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
   const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
   const [accentTransparentLoading, setAccentTransparentLoading] =

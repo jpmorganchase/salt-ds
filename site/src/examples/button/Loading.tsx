@@ -35,14 +35,14 @@ export const Loading = (): ReactElement => {
           appearance="solid"
           loading={accentSolidLoading}
           onClick={setAccentSolidLoading}
-          style={{ width: 66 }}
+          style={{ width: 109 }}
         >
           {accentSolidLoading ? (
             <Spinner size="small" aria-label="Sending" />
           ) : (
             <>
               <SendIcon aria-hidden />
-              Send
+              Send Email
             </>
           )}
         </Button>
@@ -51,14 +51,14 @@ export const Loading = (): ReactElement => {
           appearance="outline"
           loading={accentOutlineLoading}
           onClick={setAccentOutlineLoading}
-          style={{ width: 66 }}
+          style={{ width: 102 }}
         >
           {accentOutlineLoading ? (
             <Spinner size="small" aria-label="Syncing" />
           ) : (
             <>
               <SyncIcon aria-hidden />
-              Sync
+              Sync Files
             </>
           )}
         </Button>
@@ -67,14 +67,14 @@ export const Loading = (): ReactElement => {
           appearance="transparent"
           loading={accentTransparentLoading}
           onClick={setAccentTransparentLoading}
-          style={{ width: 87 }}
+          style={{ width: 124 }}
         >
           {accentTransparentLoading ? (
             <Spinner size="small" aria-label="Refreshing" />
           ) : (
             <>
               <RefreshIcon aria-hidden />
-              Refresh
+              Refresh Page
             </>
           )}
         </Button>
@@ -85,14 +85,14 @@ export const Loading = (): ReactElement => {
           appearance="solid"
           loading={neutralSolidLoading}
           onClick={setNeutralSolidLoading}
-          style={{ width: 66 }}
+          style={{ width: 109 }}
         >
           {neutralSolidLoading ? (
             <Spinner size="small" aria-label="Sending" />
           ) : (
             <>
               <SendIcon aria-hidden />
-              Send
+              Send Email
             </>
           )}
         </Button>
@@ -101,14 +101,14 @@ export const Loading = (): ReactElement => {
           appearance="outline"
           loading={neutralOutlineLoading}
           onClick={setNeutralOutlineLoading}
-          style={{ width: 66 }}
+          style={{ width: 102 }}
         >
           {neutralOutlineLoading ? (
             <Spinner size="small" aria-label="Syncing" />
           ) : (
             <>
               <SyncIcon aria-hidden />
-              Sync
+              Sync Files
             </>
           )}
         </Button>
@@ -117,14 +117,14 @@ export const Loading = (): ReactElement => {
           appearance="transparent"
           loading={neutralTransparentLoading}
           onClick={setNeutralTransparentLoading}
-          style={{ width: 87 }}
+          style={{ width: 124 }}
         >
           {neutralTransparentLoading ? (
             <Spinner size="small" aria-label="Refreshing" />
           ) : (
             <>
               <RefreshIcon aria-hidden />
-              Refresh
+              Refresh Page
             </>
           )}
         </Button>
