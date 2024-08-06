@@ -1,9 +1,8 @@
 import {
   CalendarDate,
-  DateFormatter,
   type DateValue,
-  getLocalTimeZone,
   parseAbsoluteToLocal,
+  parseDate,
 } from "@internationalized/date";
 
 export function createCalendarDate(
@@ -26,14 +25,3 @@ export function createCalendarDate(
     ? new CalendarDate(isoDate.year, isoDate.month, isoDate.day)
     : undefined;
 }
-
-export const formatDate = (date: DateValue | null | undefined): string => {
-  //TODO confirm whether EN-GB is the right default ?
-  return date
-    ? new DateFormatter("EN-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      }).format(date.toDate(getLocalTimeZone()))
-    : "";
-};

@@ -1,4 +1,4 @@
-import { Calendar } from "@salt-ds/lab";
+import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const isDayHighlighted = (day: { day: number }) => {
@@ -6,5 +6,7 @@ const isDayHighlighted = (day: { day: number }) => {
 };
 
 export const HighlightedDates = (): ReactElement => (
-  <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted} />
+  <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted}>
+    <CalendarNavigation />
+  </Calendar>
 );

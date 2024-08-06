@@ -16,14 +16,14 @@ import {
 } from "react";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
-import { formatDate } from "./utils";
+import { formatDate as defaultFormatDate } from "./utils";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
 export interface CalendarDayProps
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
   day: DateValue;
-  formatDate?: DateFormatter;
+  formatDate?: typeof defaultFormatDate;
   renderDayContents?: (date: DateValue, status: DayStatus) => ReactElement;
   status?: DayStatus;
   month: DateValue;
@@ -34,8 +34,15 @@ const withBaseName = makePrefixer("saltCalendarDay");
 
 export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
   function CalendarDay(props, ref) {
-    const { className, day, renderDayContents, month, TooltipProps, ...rest } =
-      props;
+    const {
+      className,
+      day,
+      renderDayContents,
+      month,
+      TooltipProps,
+      formatDate: formatDateProp = defaultFormatDate,
+      ...rest
+    } = props;
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-calendar-day",
@@ -45,7 +52,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
     const dayRef = useRef<HTMLButtonElement>(null);
     const buttonRef = useForkRef(ref, dayRef);
-    const { status, dayProps, unselectableReason, highlightedReason } =
+    const { status, dayProps, unselectableReason, highlightedReason, locale } =
       useCalendarDay(
         {
           date: day,
@@ -70,7 +77,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         {...TooltipProps}
       >
         <button
-          aria-label={formatDate(day, {
+          aria-label={formatDateProp(day, locale, {
             day: "2-digit",
             month: "long",
             year: "numeric",
@@ -100,7 +107,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
           >
             {renderDayContents
               ? renderDayContents(day, status)
-              : formatDate(day, { day: "numeric" })}
+              : formatDateProp(day, locale, { day: "numeric" })}
           </span>
         </button>
       </Tooltip>

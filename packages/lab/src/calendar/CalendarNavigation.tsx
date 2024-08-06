@@ -17,8 +17,8 @@ import {
   type SyntheticEvent,
   forwardRef,
 } from "react";
-import { CALENDAR_MAX_YEAR, CALENDAR_MIN_YEAR } from "../useCalendarSelection";
-import { useCalendarContext } from "./CalendarContext";
+import { useCalendarContext } from "./internal/CalendarContext";
+import { CALENDAR_MAX_YEAR, CALENDAR_MIN_YEAR } from "./useCalendarSelection";
 
 import {
   CalendarDate,
@@ -29,7 +29,8 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import calendarNavigationCss from "./CalendarNavigation.css";
-import { formatDate, monthDiff, monthsForLocale } from "./utils";
+import { formatDate } from "./formatDate";
+import { monthDiff, monthsForLocale } from "./internal/utils";
 
 type dateDropdownProps = DropdownProps<DateValue>;
 
@@ -42,6 +43,7 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   onNavigateNext?: ButtonProps["onClick"];
   onNavigatePrevious?: ButtonProps["onClick"];
   hideYearDropdown?: boolean;
+  step?: number;
 }
 
 interface OptionWithTooltipProps extends OptionProps {
@@ -53,7 +55,7 @@ const withBaseName = makePrefixer("saltCalendarNavigation");
 
 function useCalendarNavigation() {
   const {
-    state: { visibleMonth, minDate, maxDate },
+    state: { visibleMonth, minDate, maxDate, locale, timeZone },
     helpers: {
       setVisibleMonth,
       isDayVisible,
@@ -62,12 +64,12 @@ function useCalendarNavigation() {
     },
   } = useCalendarContext();
 
-  const moveToNextMonth = (event: SyntheticEvent) => {
-    setVisibleMonth(event, visibleMonth.add({ months: 1 }));
+  const moveToNextMonth = (event: SyntheticEvent, step = 1) => {
+    setVisibleMonth(event, visibleMonth.add({ months: step }));
   };
 
-  const moveToPreviousMonth = (event: SyntheticEvent) => {
-    setVisibleMonth(event, visibleMonth.subtract({ months: 1 }));
+  const moveToPreviousMonth = (event: SyntheticEvent, step = 1) => {
+    setVisibleMonth(event, visibleMonth.subtract({ months: step }));
   };
 
   const moveToMonth = (event: SyntheticEvent, month: DateValue) => {
@@ -76,7 +78,7 @@ function useCalendarNavigation() {
     if (!isOutsideAllowedYears(newMonth)) {
       if (isOutsideAllowedMonths(newMonth)) {
         // If month is navigable we should move to the closest navigable month
-        const navigableMonths = monthsForLocale(visibleMonth).filter(
+        const navigableMonths = monthsForLocale(visibleMonth, locale).filter(
           (n) => !isOutsideAllowedMonths(n),
         );
         newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
@@ -101,7 +103,7 @@ function useCalendarNavigation() {
     return years;
   }
 
-  const months: DateValue[] = monthsForLocale(visibleMonth);
+  const months: DateValue[] = monthsForLocale(visibleMonth, locale);
   const years: DateValue[] = generateYearsBetweenRange(
     Math.min(minDate ? minDate.year : CALENDAR_MIN_YEAR, visibleMonth.year),
     Math.max(maxDate ? maxDate.year : CALENDAR_MAX_YEAR, visibleMonth.year),
@@ -129,6 +131,8 @@ function useCalendarNavigation() {
     selectedMonth,
     selectedYear,
     isOutsideAllowedMonths,
+    locale,
+    timeZone,
   };
 }
 
@@ -162,11 +166,12 @@ export const CalendarNavigation = forwardRef<
   CalendarNavigationProps
 >(function CalendarNavigation(props, ref) {
   const {
+    borderedDropdown,
     className,
     MonthDropdownProps,
     YearDropdownProps,
     hideYearDropdown,
-    borderedDropdown,
+    step = 1,
     ...rest
   } = props;
 
@@ -185,20 +190,20 @@ export const CalendarNavigation = forwardRef<
     years,
     canNavigateNext,
     canNavigatePrevious,
-    visibleMonth,
     selectedMonth,
     selectedYear,
     isOutsideAllowedMonths,
+    locale,
   } = useCalendarNavigation();
 
   const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> = (
     event,
   ) => {
-    moveToPreviousMonth(event);
+    moveToPreviousMonth(event, step);
   };
 
   const handleNavigateNext: MouseEventHandler<HTMLButtonElement> = (event) => {
-    moveToNextMonth(event);
+    moveToNextMonth(event, step);
   };
 
   const handleMonthSelect = (event: SyntheticEvent, month: DateValue[]) => {
@@ -212,11 +217,13 @@ export const CalendarNavigation = forwardRef<
   const formatMonth = (date?: DateValue) => {
     return !date
       ? ""
-      : formatDate(date, { month: hideYearDropdown ? "long" : "short" });
+      : formatDate(date, locale, {
+          month: hideYearDropdown ? "long" : "short",
+        });
   };
 
   const formatYear = (date?: DateValue) => {
-    return !date ? "" : formatDate(date, { year: "numeric" });
+    return !date ? "" : formatDate(date, locale, { year: "numeric" });
   };
 
   return (
@@ -245,7 +252,7 @@ export const CalendarNavigation = forwardRef<
           <ChevronLeftIcon aria-label="Previous Month" />
         </Button>
       </Tooltip>
-      <div className={withBaseName("dropdowns")}>
+      <div className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}>
         <Dropdown
           bordered={borderedDropdown}
           aria-label="Month Dropdown"

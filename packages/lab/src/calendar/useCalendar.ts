@@ -11,6 +11,7 @@ import {
 } from "@internationalized/date";
 import { useControlled } from "@salt-ds/core";
 import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
+import { getCurrentLocale } from "./formatDate";
 import {
   type UseCalendarSelectionMultiSelectProps,
   type UseCalendarSelectionOffsetProps,
@@ -32,9 +33,10 @@ interface UseCalendarBaseProps {
   isDayDisabled?: (date: DateValue) => boolean;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
-  hideYearDropdown?: boolean;
   minDate?: DateValue;
   maxDate?: DateValue;
+  timeZone?: string;
+  locale?: string;
 }
 
 export interface UseCalendarSingleProps
@@ -73,20 +75,17 @@ export function useCalendar(props: UseCalendarProps) {
     selectedDate,
     defaultSelectedDate,
     visibleMonth: visibleMonthProp,
-    hideYearDropdown,
     hideOutOfRangeDates,
-    defaultVisibleMonth = today(getLocalTimeZone()),
+    timeZone = getLocalTimeZone(),
+    locale = getCurrentLocale(),
+    defaultVisibleMonth = today(timeZone),
     onSelectedDateChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
     isDayHighlighted = defaultIsDayHighlighted,
     isDayDisabled = defaultIsDayDisabled,
-    minDate = hideYearDropdown
-      ? startOfYear(today(getLocalTimeZone()))
-      : undefined,
-    maxDate = hideYearDropdown
-      ? endOfYear(today(getLocalTimeZone()))
-      : undefined,
+    minDate,
+    maxDate,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
@@ -203,8 +202,8 @@ export function useCalendar(props: UseCalendarProps) {
       return selectedDate;
     }
     // default
-    if (isInVisibleMonth(today(getLocalTimeZone()))) {
-      return today(getLocalTimeZone());
+    if (isInVisibleMonth(today(timeZone))) {
+      return today(timeZone);
     }
     return startOfMonth(visibleMonth);
   };
@@ -272,6 +271,8 @@ export function useCalendar(props: UseCalendarProps) {
       selectionVariant,
       hideOutOfRangeDates,
       calendarFocused,
+      timeZone,
+      locale,
       ...selectionManager.state,
     },
     helpers: {

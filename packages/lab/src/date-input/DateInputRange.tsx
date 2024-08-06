@@ -1,4 +1,4 @@
-import type { CalendarDate, DateValue } from "@internationalized/date";
+import { type DateValue, getLocalTimeZone } from "@internationalized/date";
 import {
   type InputProps,
   StatusAdornment,
@@ -27,9 +27,13 @@ import {
   useRef,
   useState,
 } from "react";
-import type { DateRangeSelection } from "../calendar";
+import {
+  type DateRangeSelection,
+  formatDate as defaultFormatDate,
+  getCurrentLocale,
+} from "../calendar";
 import dateInputCss from "./DateInput.css";
-import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
+import { createCalendarDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -74,7 +78,7 @@ export interface DateInputRangeProps<T = DateRangeSelection>
   /**
    * Function to format the input value.
    */
-  formatDate?: (input: DateValue | null | undefined) => string;
+  formatDate?: typeof defaultFormatDate;
   /**
    * Optional ref for the start input component
    */
@@ -123,9 +127,11 @@ export interface DateInputRangeProps<T = DateRangeSelection>
    */
   focusedInput?: "start" | "end" | null;
   /**
-   * @param inputDate - parse date string to valid `CalendarDate` or undefined, if invalid
+   * @param inputDate - parse date string to valid `DateValue` or undefined, if invalid
    */
-  parse?: (inputDate: string | undefined) => CalendarDate | undefined;
+  parse?: (inputDate: string | undefined) => DateValue | undefined;
+  locale?: string;
+  timeZone?: string;
 }
 
 export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
@@ -155,6 +161,8 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
+      locale = getCurrentLocale(),
+      timeZone = getLocalTimeZone(),
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -190,11 +198,15 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
       let newDateValue = { ...dateValue };
-      const formattedStartDate = formatDate(newDate?.startDate);
+      const formattedStartDate = formatDate(newDate?.startDate, locale, {
+        timeZone,
+      });
       if (formattedStartDate) {
         newDateValue = { ...newDateValue, startDate: formattedStartDate };
       }
-      const formattedEndDate = formatDate(newDate?.endDate);
+      const formattedEndDate = formatDate(newDate?.endDate, locale, {
+        timeZone,
+      });
       if (formattedEndDate) {
         newDateValue = { ...newDateValue, endDate: formattedEndDate };
       }

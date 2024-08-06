@@ -40,7 +40,15 @@ export const DatePickerRangeInput = forwardRef<
   } = props;
 
   const {
-    state: { selectedDate, focusedValue, disabled, readOnly, cancelled },
+    state: {
+      selectedDate,
+      focusedValue,
+      disabled,
+      readOnly,
+      cancelled,
+      locale,
+      timeZone,
+    },
     helpers: { setSelectedDate, setFocusedValue },
   } = useDatePickerContext({ selectionVariant: "range" });
   const {
@@ -124,6 +132,8 @@ export const DatePickerRangeInput = forwardRef<
   return (
     <DateInputRange
       value={value || { startDate: "", endDate: "" }}
+      locale={locale}
+      timeZone={timeZone}
       className={clsx(withBaseName(), className)}
       ref={inputRef}
       date={selectedDate}

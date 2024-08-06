@@ -9,15 +9,19 @@ import {
   startOfYear,
   today,
 } from "@internationalized/date";
+import { Button, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
+  CalendarNavigation,
   type CalendarProps,
-  type UseRangeSelectionCalendarProps,
+  type UseCalendarSelectionRangeProps,
+  type UseCalendarSelectionSingleProps,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 import "./calendar.stories.css";
+import clsx from "clsx";
 
 export default {
   title: "Lab/Calendar",
@@ -31,10 +35,32 @@ const currentLocale = navigator.languages[0];
 const localTimeZone = getLocalTimeZone();
 
 const Template: StoryFn<typeof Calendar> = (args) => {
-  return <Calendar {...args} />;
+  return (
+    <Calendar {...args}>
+      <CalendarNavigation />
+    </Calendar>
+  );
 };
 
-export const Default = Template.bind({});
+export const Single = Template.bind({
+  selectionVariant: "single",
+});
+
+export const Range = Template.bind({});
+Range.args = {
+  selectionVariant: "range",
+};
+
+export const MultiSelection = Template.bind({});
+MultiSelection.args = {
+  selectionVariant: "multiselect",
+};
+
+export const OffsetSelection = Template.bind({});
+OffsetSelection.args = {
+  selectionVariant: "offset",
+  endDateOffset: (date) => date.add({ days: 4 }),
+};
 
 export const UnselectableDates = Template.bind({});
 UnselectableDates.args = {
@@ -44,6 +70,11 @@ UnselectableDates.args = {
       return "weekend";
     }
   },
+};
+
+export const DisabledDates = Template.bind({});
+DisabledDates.args = {
+  isDayDisabled: (day) => getDayOfWeek(day, currentLocale) >= 5,
 };
 
 export const HighlightedDates = Template.bind({});
@@ -56,9 +87,37 @@ HighlightedDates.args = {
   },
 };
 
-export const DisabledDates = Template.bind({});
-DisabledDates.args = {
-  isDayDisabled: (day) => getDayOfWeek(day, currentLocale) >= 5,
+export const HideOutOfRangeDates = Template.bind({});
+HideOutOfRangeDates.args = {
+  hideOutOfRangeDates: true,
+};
+
+export const HideYearDropdown: StoryFn<typeof Calendar> = () => (
+  <Calendar selectionVariant="single">
+    <CalendarNavigation hideYearDropdown />
+  </Calendar>
+);
+
+export const CustomHeader: StoryFn<typeof Calendar> = () => {
+  const [selectedDate, setSelectedDate] = useState<
+    UseCalendarSelectionSingleProps["selectedDate"]
+  >(today(getLocalTimeZone()).subtract({ years: 1 }));
+  return (
+    <Calendar
+      selectionVariant="single"
+      selectedDate={selectedDate}
+      onSelectedDateChange={(_event, newSelectedDate) =>
+        setSelectedDate(newSelectedDate)
+      }
+    >
+      <StackLayout gap={0}>
+        <CalendarNavigation />
+        <Button onClick={() => setSelectedDate(today(getLocalTimeZone()))}>
+          Today
+        </Button>
+      </StackLayout>
+    </Calendar>
+  );
 };
 
 function renderDayContents(day: DateValue) {
@@ -77,9 +136,8 @@ FadeMonthAnimation.args = {
   className: "FadeMonthAnimation",
 };
 
-export const NavigationBlocked = Template.bind({});
-
-NavigationBlocked.args = {
+export const MinMaxDates = Template.bind({});
+MinMaxDates.args = {
   minDate: startOfMonth(today(localTimeZone)),
   maxDate: endOfMonth(today(localTimeZone)),
 };
@@ -91,27 +149,6 @@ ExpandedYears.args = {
   maxDate: startOfYear(today(getLocalTimeZone()).add({ years: 5 })),
 };
 
-export const RangeSelection = Template.bind({});
-RangeSelection.args = {
-  selectionVariant: "range",
-};
-
-export const OffsetSelection = Template.bind({});
-OffsetSelection.args = {
-  selectionVariant: "offset",
-  endDateOffset: (date) => date.add({ days: 4 }),
-};
-
-export const MultiSelection = Template.bind({});
-MultiSelection.args = {
-  selectionVariant: "multiselect",
-};
-
-export const HideOutOfRangeDays = Template.bind({});
-HideOutOfRangeDays.args = {
-  hideOutOfRangeDates: true,
-};
-
 export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
@@ -121,8 +158,8 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
     setHoveredDate(newHoveredDate);
   };
   const [selectedDate, setSelectedDate] =
-    useState<UseRangeSelectionCalendarProps["selectedDate"]>(null);
-  const handleSelectedDateChange: UseRangeSelectionCalendarProps["onSelectedDateChange"] =
+    useState<UseCalendarSelectionRangeProps["selectedDate"]>(null);
+  const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
@@ -135,7 +172,9 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
         hoveredDate={hoveredDate}
         onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
-      />
+      >
+        <CalendarNavigation />
+      </Calendar>
       <Calendar
         selectionVariant="range"
         onHoveredDateChange={handleHoveredDateChange}
@@ -143,7 +182,15 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
         onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
         defaultVisibleMonth={today(localTimeZone).add({ months: 1 })}
-      />
+      >
+        <CalendarNavigation />
+      </Calendar>
     </div>
   );
 };
+
+export const WithLocaleES: StoryFn<typeof Calendar> = () => (
+  <Calendar selectionVariant="single" locale="es-ES">
+    <CalendarNavigation hideYearDropdown />
+  </Calendar>
+);

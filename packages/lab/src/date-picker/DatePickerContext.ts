@@ -14,6 +14,8 @@ interface DatePickerBaseState {
     minDate?: DateValue;
     maxDate?: DateValue;
     containerRef: React.Ref<HTMLDivElement>;
+    locale?: string;
+    timeZone?: string;
   };
   helpers: {
     cancel: () => void;
