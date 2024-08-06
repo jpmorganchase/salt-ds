@@ -137,7 +137,11 @@ describe("Stepper Input", () => {
     cy.mount(<StepperInput defaultValue={16} onChange={changeSpy} />);
 
     cy.findByLabelText("decrement value").realClick();
-    cy.get("@changeSpy").should("have.been.calledWith", "15");
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "15"
+    );
   });
 
   it("calls the `onChange` callback when the value is incremented", () => {
@@ -153,7 +157,11 @@ describe("Stepper Input", () => {
     );
 
     cy.findByLabelText("increment value").realClick();
-    cy.get("@changeSpy").should("have.been.calledWith", "-109.44");
+    cy.get("@changeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      "-109.44"
+    );
   });
 
   it("allows maximum safe integer", () => {
@@ -212,6 +220,28 @@ describe("Stepper Input", () => {
       "have.value",
       Number.MIN_SAFE_INTEGER.toString(),
     );
+  });
+
+  it("does not decrement below the minimum value", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<StepperInput defaultValue={-1} min={-1} onChange={changeSpy} />);
+
+    cy.findByRole("spinbutton").should("have.value", -1);
+
+    cy.findByLabelText("decrement value").realClick();
+    cy.get("@changeSpy").should("not.have.been.called");
+    cy.findByRole("spinbutton").should("have.value", -1);
+  });
+
+  it("does not increment above the maximum value", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(<StepperInput defaultValue={1} max={1} onChange={changeSpy} />);
+
+    cy.findByRole("spinbutton").should("have.value", 1);
+
+    cy.findByLabelText("increment value").realClick();
+    cy.get("@changeSpy").should("not.have.been.called");
+    cy.findByRole("spinbutton").should("have.value", 1);
   });
 
   it("rounds up to correct number of decimal places", () => {
