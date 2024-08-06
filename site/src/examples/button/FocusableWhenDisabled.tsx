@@ -8,12 +8,12 @@ export const FocusableWhenDisabled = (): ReactElement => (
         Solid
       </Button>
       <Button
-        appearance="outline"
+        appearance="bordered"
         color="accent"
         disabled
         focusableWhenDisabled
       >
-        Outline
+        Bordered
       </Button>
       <Button
         appearance="transparent"
@@ -29,12 +29,12 @@ export const FocusableWhenDisabled = (): ReactElement => (
         Solid
       </Button>
       <Button
-        appearance="outline"
+        appearance="bordered"
         color="neutral"
         disabled
         focusableWhenDisabled
       >
-        Outline
+        Bordered
       </Button>
       <Button
         appearance="transparent"

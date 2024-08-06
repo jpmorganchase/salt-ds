@@ -14,10 +14,14 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
-export const AppearanceValues = ["solid", "outline", "transparent"] as const;
+export const ButtonAppearanceValues = [
+  "solid",
+  "bordered",
+  "transparent",
+] as const;
 export const ButtonColorValues = ["accent", "neutral"] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
-export type Appearance = (typeof AppearanceValues)[number];
+export type ButtonAppearance = (typeof ButtonAppearanceValues)[number];
 export type ButtonColor = (typeof ButtonColorValues)[number];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
@@ -36,9 +40,9 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   variant?: ButtonVariant;
   /**
-   * The type of the button. Options are 'solid', 'outline', and 'transparent'.
+   * The type of the button. Options are 'solid', 'bordered', and 'transparent'.
    */
-  appearance?: Appearance;
+  appearance?: ButtonAppearance;
   /**
    * The color of the button. Options are 'accent' and 'neutral'.
    */

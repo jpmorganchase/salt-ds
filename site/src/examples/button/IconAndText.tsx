@@ -12,7 +12,7 @@ export const IconAndText = (): ReactElement => (
       <Button appearance="solid" color="accent">
         <SearchIcon /> Search
       </Button>
-      <Button appearance="outline" color="accent">
+      <Button appearance="bordered" color="accent">
         <DownloadIcon /> Download
       </Button>
       <Button appearance="transparent" color="accent">
@@ -23,7 +23,7 @@ export const IconAndText = (): ReactElement => (
       <Button appearance="solid" color="neutral">
         <SearchIcon /> Search
       </Button>
-      <Button appearance="outline" color="neutral">
+      <Button appearance="bordered" color="neutral">
         <DownloadIcon /> Download
       </Button>
       <Button appearance="transparent" color="neutral">

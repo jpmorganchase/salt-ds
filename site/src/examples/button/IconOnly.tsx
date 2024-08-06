@@ -11,7 +11,7 @@ export const IconOnly = (): ReactElement => (
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Search document">
-        <Button appearance="outline" color="accent">
+        <Button appearance="bordered" color="accent">
           <SearchIcon />
         </Button>
       </Tooltip>
@@ -28,7 +28,7 @@ export const IconOnly = (): ReactElement => (
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Search document">
-        <Button appearance="outline" color="neutral">
+        <Button appearance="bordered" color="neutral">
           <SearchIcon />
         </Button>
       </Tooltip>

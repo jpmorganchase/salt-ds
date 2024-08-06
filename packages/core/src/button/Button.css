@@ -100,7 +100,7 @@
   --button-borderColor-disabled: var(--salt-actionable-accent-bold-borderColor-disabled);
 }
 
-.saltButton-accent.saltButton-outline {
+.saltButton-accent.saltButton-bordered {
   --button-text-color: var(--salt-actionable-accent-foreground);
   --button-text-color-hover: var(--salt-actionable-accent-foreground-hover);
   --button-text-color-active: var(--salt-actionable-accent-foreground-active);
@@ -145,7 +145,7 @@
   --button-borderColor-disabled: var(--salt-actionable-bold-borderColor-disabled);
 }
 
-.saltButton-neutral.saltButton-outline {
+.saltButton-neutral.saltButton-bordered {
   --button-text-color: var(--salt-actionable-foreground);
   --button-text-color-hover: var(--salt-actionable-foreground-hover);
   --button-text-color-active: var(--salt-actionable-foreground-active);

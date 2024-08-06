@@ -9,8 +9,8 @@ export const Color = (): ReactElement => (
         <Button appearance="solid" color="accent">
           Solid
         </Button>
-        <Button appearance="outline" color="accent">
-          Outline
+        <Button appearance="bordered" color="accent">
+          Bordered
         </Button>
         <Button appearance="transparent" color="accent">
           Transparent
@@ -23,8 +23,8 @@ export const Color = (): ReactElement => (
         <Button appearance="solid" color="neutral">
           Solid
         </Button>
-        <Button appearance="outline" color="neutral">
-          Outline
+        <Button appearance="bordered" color="neutral">
+          Bordered
         </Button>
         <Button appearance="transparent" color="neutral">
           Transparent

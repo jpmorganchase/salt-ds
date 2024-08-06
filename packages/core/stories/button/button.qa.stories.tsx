@@ -49,13 +49,13 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Button color="accent" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       <SearchIcon /> Button
     </Button>
     <Button color="accent" appearance="transparent">
@@ -76,13 +76,13 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Button color="neutral" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       <SearchIcon /> Button
     </Button>
     <Button color="neutral" appearance="transparent">
@@ -148,13 +148,13 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Button color="accent" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       <SearchIcon /> Button
     </Button>
     <Button color="accent" appearance="transparent">
@@ -175,13 +175,13 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Button color="neutral" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       <SearchIcon /> Button
     </Button>
     <Button color="neutral" appearance="transparent">

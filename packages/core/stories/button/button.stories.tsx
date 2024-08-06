@@ -130,9 +130,9 @@ export const AccentSolid: StoryFn<typeof Button> = () => {
   );
 };
 
-export const AccentOutline: StoryFn<typeof Button> = () => {
+export const AccentBordered: StoryFn<typeof Button> = () => {
   return (
-    <Button color="accent" appearance="outline">
+    <Button color="accent" appearance="bordered">
       Send <SendIcon aria-hidden />
     </Button>
   );
@@ -154,9 +154,9 @@ export const NeutralSolid: StoryFn<typeof Button> = () => {
   );
 };
 
-export const NeutralOutline: StoryFn<typeof Button> = () => {
+export const NeutralBordered: StoryFn<typeof Button> = () => {
   return (
-    <Button color="neutral" appearance="outline">
+    <Button color="neutral" appearance="bordered">
       Send <SendIcon aria-hidden />
     </Button>
   );

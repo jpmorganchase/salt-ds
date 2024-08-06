@@ -7,8 +7,8 @@ export const FullWidth = (): ReactElement => (
       <Button color="accent" appearance="solid">
         Solid
       </Button>
-      <Button color="accent" appearance="outline">
-        Outline
+      <Button color="accent" appearance="bordered">
+        Bordered
       </Button>
       <Button color="accent" appearance="transparent">
         Transparent
@@ -18,8 +18,8 @@ export const FullWidth = (): ReactElement => (
       <Button color="neutral" appearance="solid">
         Solid
       </Button>
-      <Button color="neutral" appearance="outline">
-        Outline
+      <Button color="neutral" appearance="bordered">
+        Bordered
       </Button>
       <Button color="neutral" appearance="transparent">
         Transparent
