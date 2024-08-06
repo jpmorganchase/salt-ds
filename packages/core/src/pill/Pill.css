@@ -12,8 +12,7 @@
   min-height: var(--salt-text-minHeight);
   position: relative;
   gap: var(--salt-spacing-50);
-  padding-left: var(--salt-spacing-50);
-  padding-right: var(--salt-spacing-50);
+  padding: 0 calc(var(--salt-spacing-50) - var(--salt-size-border, 0));
   color: var(--saltPill-color, var(--pill-color));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
