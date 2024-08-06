@@ -1,26 +1,26 @@
 import {
-  DateInput,
-  type DateInputProps,
-  type RangeSelectionValueType,
-  type SingleSelectionValueType,
+  DateInputRange,
+  type DateInputRangeProps,
+  DateInputSingle,
+  type DateInputSingleProps,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
   title: "Lab/Date Input",
-  component: DateInput,
-} as Meta<typeof DateInput>;
+  component: DateInputSingle,
+} as Meta<typeof DateInputSingle>;
 
-const DateInputTemplate: StoryFn<
-  DateInputProps<SingleSelectionValueType | RangeSelectionValueType>
-> = (args) => {
-  return <DateInput {...args} />;
+const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
+  return <DateInputSingle {...args} />;
 };
 
-export const Default = DateInputTemplate.bind({});
-Default.args = {};
-
-export const Range = DateInputTemplate.bind({});
-Range.args = {
-  selectionVariant: "range",
+const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
+  return <DateInputRange {...args} />;
 };
+
+export const Single = DateInputSingleTemplate.bind({});
+Single.args = {};
+
+export const Range = DateInputRangeTemplate.bind({});
+Range.args = {};

@@ -12,23 +12,23 @@ import {
 import { useControlled } from "@salt-ds/core";
 import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import {
-  type UseMultiSelectionCalendarProps,
-  type UseOffsetSelectionCalendarProps,
-  type UseRangeSelectionCalendarProps,
-  type UseSingleSelectionCalendarProps,
-  isRangeOrOffsetSelectionWithStartDate,
-  useSelectionCalendar,
-  type useSelectionCalendarProps,
-} from "./useSelection";
+  type UseCalendarSelectionMultiSelectProps,
+  type UseCalendarSelectionOffsetProps,
+  type UseCalendarSelectionProps,
+  type UseCalendarSelectionRangeProps,
+  type UseCalendarSelectionSingleProps,
+  isDateRangeSelection,
+  useCalendarSelection,
+} from "./useCalendarSelection";
 
-interface BaseUseCalendarProps {
+interface UseCalendarBaseProps {
   defaultVisibleMonth?: DateValue;
   onVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
-  isDayUnselectable?: (date: DateValue) => string | false | undefined;
-  isDayHighlighted?: (date: DateValue) => string | false | undefined;
+  isDayUnselectable?: (date: DateValue) => string | false | void;
+  isDayHighlighted?: (date: DateValue) => string | false | void;
   isDayDisabled?: (date: DateValue) => boolean;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
@@ -37,19 +37,38 @@ interface BaseUseCalendarProps {
   maxDate?: DateValue;
 }
 
-export type useCalendarProps = (
-  | Omit<UseSingleSelectionCalendarProps, "isDaySelectable">
-  | Omit<UseMultiSelectionCalendarProps, "isDaySelectable">
-  | Omit<UseRangeSelectionCalendarProps, "isDaySelectable">
-  | Omit<UseOffsetSelectionCalendarProps, "isDaySelectable">
-) &
-  BaseUseCalendarProps;
+export interface UseCalendarSingleProps
+  extends UseCalendarSelectionSingleProps,
+    UseCalendarBaseProps {
+  selectionVariant: "single";
+}
+export interface UseCalendarRangeProps
+  extends UseCalendarSelectionRangeProps,
+    UseCalendarBaseProps {
+  selectionVariant: "range";
+}
+export interface UseCalendarMultiSelectProps
+  extends UseCalendarSelectionMultiSelectProps,
+    UseCalendarBaseProps {
+  selectionVariant: "multiselect";
+}
+export interface UseCalendarOffsetProps
+  extends UseCalendarSelectionOffsetProps,
+    UseCalendarBaseProps {
+  selectionVariant: "offset";
+}
+
+export type UseCalendarProps =
+  | UseCalendarSingleProps
+  | UseCalendarRangeProps
+  | UseCalendarMultiSelectProps
+  | UseCalendarOffsetProps;
 
 const defaultIsDayUnselectable = (): string | false => false;
 const defaultIsDayHighlighted = (): string | false => false;
 const defaultIsDayDisabled = (): false => false;
 
-export function useCalendar(props: useCalendarProps) {
+export function useCalendar(props: UseCalendarProps) {
   const {
     selectedDate,
     defaultSelectedDate,
@@ -71,6 +90,7 @@ export function useCalendar(props: useCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
+    select,
     // startDateOffset,
     // endDateOffset,
   } = props;
@@ -84,8 +104,8 @@ export function useCalendar(props: useCalendarProps) {
   const isOutsideAllowedDates = useCallback(
     (date: DateValue) => {
       return (
-        (minDate != null && date.compare(minDate) < 0) ||
-        (maxDate != null && date.compare(maxDate) > 0)
+        (minDate && date.compare(minDate) < 0) ||
+        (maxDate && date.compare(maxDate) > 0)
       );
     },
     [maxDate, minDate],
@@ -93,15 +113,15 @@ export function useCalendar(props: useCalendarProps) {
 
   const isOutsideAllowedMonths = (date: DateValue) => {
     return (
-      (minDate != null && endOfMonth(date).compare(minDate) < 0) ||
-      (maxDate != null && startOfMonth(date).compare(maxDate) > 0)
+      (minDate && endOfMonth(date).compare(minDate) < 0) ||
+      (maxDate && startOfMonth(date).compare(maxDate) > 0)
     );
   };
 
   const isOutsideAllowedYears = (date: DateValue) => {
     return (
-      (minDate != null && endOfYear(date).compare(minDate) < 0) ||
-      (maxDate != null && startOfYear(date).compare(maxDate) > 0)
+      (minDate && endOfYear(date).compare(minDate) < 0) ||
+      (maxDate && startOfYear(date).compare(maxDate) > 0)
     );
   };
 
@@ -116,7 +136,7 @@ export function useCalendar(props: useCalendarProps) {
     [isDayUnselectable, isDayDisabled, isOutsideAllowedDates],
   );
 
-  const selectionManager = useSelectionCalendar({
+  const selectionManager = useCalendarSelection({
     defaultSelectedDate: defaultSelectedDate,
     selectedDate,
     onSelectedDateChange,
@@ -132,7 +152,8 @@ export function useCalendar(props: useCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
-  } as useSelectionCalendarProps);
+    select,
+  } as UseCalendarSelectionProps);
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
@@ -145,7 +166,7 @@ export function useCalendar(props: useCalendarProps) {
     // Case range or offset
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isRangeOrOffsetSelectionWithStartDate(selectedDate)
+      isDateRangeSelection(selectedDate)
     ) {
       if (isInVisibleMonth(selectedDate?.startDate)) {
         return selectedDate.startDate;
@@ -174,8 +195,8 @@ export function useCalendar(props: useCalendarProps) {
     }
     // Case single select
     if (
-      selectionVariant === "default" &&
-      !isRangeOrOffsetSelectionWithStartDate(selectedDate) &&
+      selectionVariant === "single" &&
+      !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
       isInVisibleMonth(selectedDate)
     ) {

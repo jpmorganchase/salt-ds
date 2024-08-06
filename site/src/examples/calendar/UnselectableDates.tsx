@@ -6,5 +6,5 @@ const isDayUnselectable = (day: { day: number }) => {
 };
 
 export const UnselectableDates = (): ReactElement => (
-  <Calendar selectionVariant="default" isDayUnselectable={isDayUnselectable} />
+  <Calendar selectionVariant="single" isDayUnselectable={isDayUnselectable} />
 );
