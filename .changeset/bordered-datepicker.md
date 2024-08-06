@@ -17,5 +17,4 @@ Added borderedDropdown prop for `CalendarNavigation` component to display border
  <DateInput bordered />
 ```
 
-*Note: this Labs API will be refactored and re-aligned to the updated DatePicker approach via* [PR 3716](https://github.com/jpmorganchase/salt-ds/pull/3716)
-
+_Note: this Labs API will be refactored and re-aligned to the updated DatePicker approach via_ [PR 3716](https://github.com/jpmorganchase/salt-ds/pull/3716)
