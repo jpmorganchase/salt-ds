@@ -103,6 +103,10 @@ export interface DateInputProps<SelectionVariantType>
    */
   variant?: "primary" | "secondary";
   /**
+   * Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
+  /**
    * Function to format the input value.
    */
   dateFormatter?: (input: DateValue | undefined) => string;
@@ -155,6 +159,7 @@ export const DateInput = forwardRef<
     readOnly: readOnlyProp,
     validationStatus: validationStatusProp,
     variant = "primary",
+    bordered = false,
     dateFormatter = defaultDateFormatter,
     placeholder = "dd mmm yyyy",
     startInputRef,
@@ -327,6 +332,7 @@ export const DateInput = forwardRef<
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName(validationStatus ?? "")]: validationStatus,
+          [withBaseName("bordered")]: bordered,
         },
         className,
       )}

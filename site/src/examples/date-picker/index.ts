@@ -5,3 +5,4 @@ export * from "./WithValidation";
 export * from "./Range";
 export * from "./WithDisabledDates";
 export * from "./VisibleMonths";
+export * from "./Bordered";

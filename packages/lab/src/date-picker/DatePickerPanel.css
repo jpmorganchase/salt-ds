@@ -10,6 +10,7 @@
   display: flex;
   border-radius: var(--salt-palette-corner, 0);
 }
+
 .saltDatePickerPanel-container {
   width: min-content;
   gap: 1px;

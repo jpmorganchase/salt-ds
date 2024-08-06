@@ -24,3 +24,8 @@ export const Range = DateInputTemplate.bind({});
 Range.args = {
   selectionVariant: "range",
 };
+
+export const Bordered = DateInputTemplate.bind({});
+Bordered.args = {
+  bordered: true,
+};

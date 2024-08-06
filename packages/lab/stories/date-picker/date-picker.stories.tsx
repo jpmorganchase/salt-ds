@@ -202,3 +202,8 @@ export const ControlledOpenOnEnter: StoryFn<
     />
   );
 };
+
+export const Bordered = DatePickerTemplate.bind({});
+Bordered.args = {
+  bordered: true,
+};
