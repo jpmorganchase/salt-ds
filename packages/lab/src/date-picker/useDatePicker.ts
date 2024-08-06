@@ -4,7 +4,6 @@ import {
   endOfMonth,
   getLocalTimeZone,
   startOfMonth,
-  today,
 } from "@internationalized/date";
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
 import { useEffect, useRef, useState } from "react";
@@ -13,6 +12,7 @@ import {
   CALENDAR_MIN_YEAR,
   type DateRangeSelection,
   type SingleDateSelection,
+  getCurrentLocale,
   isDateRangeSelection,
 } from "../calendar";
 import type { DatePickerState } from "./DatePickerContext";
@@ -30,6 +30,8 @@ interface UseDatePickerBaseProps<T> {
   onSelectedDateChange?: (newDate: T | null) => void;
   minDate?: DateValue;
   maxDate?: DateValue;
+  timeZone?: string;
+  locale?: string;
 }
 
 export interface UseDatePickerSingleProps
@@ -66,6 +68,8 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     open: openProp,
     minDate: minDateProp,
     maxDate: maxDateProp,
+    timeZone = getLocalTimeZone(),
+    locale = getCurrentLocale(),
     ...rest
   } = props;
 
@@ -202,6 +206,8 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       containerRef,
       minDate,
       maxDate,
+      locale,
+      timeZone,
       ...rest,
     },
     helpers: {

@@ -22,10 +22,9 @@ const withBaseName = makePrefixer("saltDatePickerActions");
 
 export interface DatePickerActionsBaseProps
   extends ComponentPropsWithoutRef<"div"> {
-  disableApply: boolean;
   onCancel?: (_event: SyntheticEvent) => void;
-  applyButtonProps?: ButtonProps;
-  cancelButtonProps?: ButtonProps;
+  ApplyButtonProps?: ButtonProps;
+  CancelButtonProps?: ButtonProps;
 }
 
 export type DatePickerActionsProps<
@@ -51,10 +50,10 @@ export const DatePickerActions = forwardRef<
   DatePickerActionsProps<"single" | "range">
 >(function DatePickerActions(props, ref) {
   const {
-    applyButtonProps,
+    ApplyButtonProps,
     children,
     className,
-    cancelButtonProps,
+    CancelButtonProps,
     onApply,
     onCancel,
     selectionVariant,
@@ -88,7 +87,7 @@ export const DatePickerActions = forwardRef<
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
     cancel();
-    cancelButtonProps?.onClick?.(event);
+    CancelButtonProps?.onClick?.(event);
     onCancel?.(event);
   };
 
@@ -100,7 +99,7 @@ export const DatePickerActions = forwardRef<
       apply(selectedDate || null);
       onApply?.(event, selectedDate);
     }
-    applyButtonProps?.onClick?.(event);
+    ApplyButtonProps?.onClick?.(event);
   };
 
   return (
@@ -108,17 +107,17 @@ export const DatePickerActions = forwardRef<
       <div className={withBaseName("body")}>{children}</div>
       <Button
         variant={"secondary"}
-        {...cancelButtonProps}
+        {...CancelButtonProps}
         onClick={handleCancel}
-        className={clsx(withBaseName("action"), cancelButtonProps?.className)}
+        className={clsx(withBaseName("action"), CancelButtonProps?.className)}
       >
         Cancel
       </Button>
       <Button
         variant={"cta"}
-        {...applyButtonProps}
+        {...ApplyButtonProps}
         onClick={handleApply}
-        className={clsx(withBaseName("action"), applyButtonProps?.className)}
+        className={clsx(withBaseName("action"), ApplyButtonProps?.className)}
       >
         Apply
       </Button>

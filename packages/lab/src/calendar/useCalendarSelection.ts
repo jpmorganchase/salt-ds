@@ -1,6 +1,8 @@
 import {
   CalendarDate,
+  CalendarDateTime,
   type DateValue,
+  ZonedDateTime,
   isSameDay,
 } from "@internationalized/date";
 import { makePrefixer, useControlled } from "@salt-ds/core";
@@ -28,7 +30,11 @@ export const CALENDAR_MIN_YEAR = 1900;
 export const CALENDAR_MAX_YEAR = 2100;
 
 export function isSingleSelectionValueType(value: any): value is DateValue {
-  return value instanceof CalendarDate;
+  return (
+    value instanceof CalendarDate ||
+    value instanceof CalendarDateTime ||
+    value instanceof ZonedDateTime
+  );
 }
 
 export function isDateRangeSelection(value: any): value is DateRangeSelection {
@@ -43,7 +49,8 @@ export function isMultipleDateSelection(
   value: any,
 ): value is MultipleDateSelection {
   return (
-    Array.isArray(value) && value.every((item) => item instanceof CalendarDate)
+    Array.isArray(value) &&
+    value.every((item) => isSingleSelectionValueType(item))
   );
 }
 
@@ -241,7 +248,8 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
     switch (selectionVariant) {
       case "single":
         return (
-          selectedDate instanceof CalendarDate && isSameDay(selectedDate, date)
+          isSingleSelectionValueType(selectedDate) &&
+          isSameDay(selectedDate, date)
         );
       case "multiselect":
         return (

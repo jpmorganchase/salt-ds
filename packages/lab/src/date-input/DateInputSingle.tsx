@@ -1,4 +1,4 @@
-import type { CalendarDate, DateValue } from "@internationalized/date";
+import { type DateValue, getLocalTimeZone } from "@internationalized/date";
 import {
   StatusAdornment,
   makePrefixer,
@@ -25,9 +25,13 @@ import {
   useRef,
   useState,
 } from "react";
-import type { SingleDateSelection } from "../calendar";
+import {
+  type SingleDateSelection,
+  formatDate as defaultFormatDate,
+  getCurrentLocale,
+} from "../calendar";
 import dateInputCss from "./DateInput.css";
-import { createCalendarDate, formatDate as defaultFormatDate } from "./utils";
+import { createCalendarDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -66,7 +70,7 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Function to format the input value.
    */
-  formatDate?: (input: DateValue | null | undefined) => string | undefined;
+  formatDate?: typeof defaultFormatDate;
   /**
    * Reference for the input;
    */
@@ -97,13 +101,15 @@ export interface DateInputSingleProps<T = SingleDateSelection>
    */
   focusedInput?: boolean;
   /**
-   * @param inputDate - parse date string to valid `CalendarDate` or undefined, if invalid
+   * @param inputDate - parse date string to valid `DateValue` or undefined, if invalid
    */
-  parse?: (inputDate: string | undefined) => CalendarDate | undefined;
+  parse?: (inputDate: string | undefined) => DateValue | undefined;
   /**
    * Called when input value changes, either due to user-interaction or programmatic formatting of valid dates
    */
   onDateValueChange?: (newValue: string, isFormatted: boolean) => void;
+  locale?: string;
+  timeZone?: string;
 }
 
 export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
@@ -131,6 +137,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       validationStatus: validationStatusProp,
       variant = "primary",
       onDateValueChange,
+      locale = getCurrentLocale(),
+      timeZone = getLocalTimeZone(),
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -165,7 +173,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
 
     // Update date string value when selected date changes
     useEffect(() => {
-      const formattedDate = formatDate(date);
+      const formattedDate = formatDate(date, locale, { timeZone });
       if (formattedDate) {
         setDateValue(formattedDate);
         onDateValueChange?.(formattedDate, true);
@@ -214,7 +222,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     const apply = (event: SyntheticEvent) => {
       const newDate = parse(dateValue) || null;
       if (newDate) {
-        const formattedDate = formatDate(newDate);
+        const formattedDate = formatDate(newDate, locale, { timeZone });
         if (formattedDate) {
           setDateValue(formattedDate);
           onDateValueChange?.(formattedDate, true);

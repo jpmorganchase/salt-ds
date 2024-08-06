@@ -32,7 +32,15 @@ export const DatePickerSingleInput = forwardRef<
   } = props;
 
   const {
-    state: { selectedDate, focusedValue, disabled, readOnly, cancelled },
+    state: {
+      selectedDate,
+      focusedValue,
+      disabled,
+      readOnly,
+      cancelled,
+      locale,
+      timeZone,
+    },
     helpers: { setSelectedDate, setFocusedValue },
   } = useDatePickerContext({ selectionVariant: "single" });
   const {
@@ -96,6 +104,8 @@ export const DatePickerSingleInput = forwardRef<
   return (
     <DateInputSingle
       value={value || ""}
+      locale={locale}
+      timeZone={timeZone}
       className={clsx(withBaseName(), className)}
       ref={inputRef}
       date={selectedDate || null}

@@ -42,10 +42,11 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
       window: targetWindow,
     });
 
-    const days = generateVisibleDays(date);
     const {
+      state: { locale },
       helpers: { setHoveredDate },
     } = useCalendarContext();
+    const days = generateVisibleDays(date, locale);
 
     const handleMouseLeave = (event: SyntheticEvent) => {
       setHoveredDate(event, null);
@@ -66,7 +67,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
           {days.map((day) => {
             return (
               <CalendarDay
-                key={formatDate(day.date)}
+                key={formatDate(day.date, locale)}
                 day={day.date}
                 renderDayContents={renderDayContents}
                 month={date}

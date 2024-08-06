@@ -1,15 +1,16 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, useCallback } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  forwardRef,
+  useCallback,
+} from "react";
 import {
   CalendarCarousel,
   type CalendarCarouselProps,
 } from "./internal/CalendarCarousel";
 import { CalendarContext } from "./internal/CalendarContext";
-import {
-  CalendarNavigation,
-  type CalendarNavigationProps,
-} from "./internal/CalendarNavigation";
 import { CalendarWeekHeader } from "./internal/CalendarWeekHeader";
 import {
   type UseCalendarMultiSelectProps,
@@ -22,17 +23,17 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
+import { DateFormatter } from "@internationalized/date";
 import calendarCss from "./Calendar.css";
-import { getCurrentLocale } from "./internal/utils";
 
-export type CalendarBaseProps = {
+export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
+  children?: ReactNode;
   className?: string;
   renderDayContents?: CalendarCarouselProps["renderDayContents"];
-  hideYearDropdown?: CalendarNavigationProps["hideYearDropdown"];
   TooltipProps?: CalendarCarouselProps["TooltipProps"];
   hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
-};
+}
+
 export interface CalendarSingleProps
   extends CalendarBaseProps,
     UseCalendarSingleProps {
@@ -64,13 +65,8 @@ const withBaseName = makePrefixer("saltCalendar");
 
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   function Calendar(props, ref) {
-    const {
-      className,
-      renderDayContents,
-      hideYearDropdown,
-      TooltipProps,
-      ...rest
-    } = props;
+    const { children, className, renderDayContents, TooltipProps, ...rest } =
+      props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -80,7 +76,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
     });
 
     const { state, helpers } = useCalendar({
-      hideYearDropdown,
       ...rest,
     });
 
@@ -94,10 +89,10 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       setCalendarFocused(false);
     }, [setCalendarFocused]);
 
-    const calendarLabel = new DateFormatter(getCurrentLocale(), {
+    const calendarLabel = new DateFormatter(state.locale, {
       month: "long",
       year: "numeric",
-    }).format(state.visibleMonth.toDate(getLocalTimeZone()));
+    }).format(state.visibleMonth.toDate(state.timeZone));
     return (
       <CalendarContext.Provider
         value={{
@@ -111,8 +106,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           aria-label={calendarLabel}
           ref={ref}
         >
-          <CalendarNavigation hideYearDropdown={hideYearDropdown} />
-          <CalendarWeekHeader />
+          {children ?? null}
+          <CalendarWeekHeader locale={state.locale} />
           <CalendarCarousel
             onFocus={handleFocus}
             onBlur={handleBlur}

@@ -14,7 +14,12 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
-import { type CalendarSingleProps, useDatePickerContext } from "@salt-ds/lab";
+import {
+  CalendarNavigation,
+  type CalendarSingleProps,
+  getCurrentLocale,
+  useDatePickerContext,
+} from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -81,6 +86,8 @@ export const DatePickerSinglePanel = forwardRef<
       selectedDate,
       minDate = startOfMonth(today(getLocalTimeZone())),
       maxDate = minDate.add({ months: 1 }),
+      locale = getCurrentLocale(),
+      timeZone = getLocalTimeZone(),
     },
     helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "single" });
@@ -135,6 +142,8 @@ export const DatePickerSinglePanel = forwardRef<
     selectedDate,
     minDate,
     maxDate,
+    locale,
+    timeZone,
     ...CalendarProps,
   };
 
@@ -153,7 +162,10 @@ export const DatePickerSinglePanel = forwardRef<
       <FlexLayout gap={0}>
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
-          <Calendar selectionVariant="single" {...baseCalendarProps} />,
+          <Calendar selectionVariant="single" {...baseCalendarProps}>
+            <CalendarNavigation />
+          </Calendar>
+          ,
         </FormFieldContext.Provider>
       </FlexLayout>
     </StackLayout>

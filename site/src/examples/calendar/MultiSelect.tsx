@@ -1,5 +1,5 @@
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { Calendar } from "@salt-ds/lab";
+import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 const localTimeZone = getLocalTimeZone();
 export const MultiSelection = (): ReactElement => (
@@ -10,5 +10,7 @@ export const MultiSelection = (): ReactElement => (
       today(localTimeZone).subtract({ days: 1 }),
       today(localTimeZone).subtract({ days: 8 }),
     ]}
-  />
+  >
+    <CalendarNavigation />
+  </Calendar>
 );

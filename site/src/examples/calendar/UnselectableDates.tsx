@@ -1,4 +1,4 @@
-import { Calendar } from "@salt-ds/lab";
+import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const isDayUnselectable = (day: { day: number }) => {
@@ -6,5 +6,7 @@ const isDayUnselectable = (day: { day: number }) => {
 };
 
 export const UnselectableDates = (): ReactElement => (
-  <Calendar selectionVariant="single" isDayUnselectable={isDayUnselectable} />
+  <Calendar selectionVariant="single" isDayUnselectable={isDayUnselectable}>
+    <CalendarNavigation />
+  </Calendar>
 );
