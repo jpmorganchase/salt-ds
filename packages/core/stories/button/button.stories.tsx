@@ -50,7 +50,6 @@ const ButtonVariantGrid = ({
   label1: string;
   label2: string;
   label3: string;
-  color?: ButtonProps["color"];
 } & ButtonProps) => {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     console.log("clicked");
@@ -93,12 +92,12 @@ const ButtonVariantGrid = ({
   );
 };
 
-const ButtonColorGrid = ({
+const ButtonChromeGrid = ({
   className = "",
   label1,
   label2,
   label3,
-  color,
+  chrome,
   onClick,
   ...restProps
 }: {
@@ -106,7 +105,6 @@ const ButtonColorGrid = ({
   label1: string;
   label2: string;
   label3: string;
-  color?: ButtonProps["color"];
 } & ButtonProps) => {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     console.log("clicked");
@@ -120,7 +118,7 @@ const ButtonColorGrid = ({
           <StackLayout direction="row">
             <Button
               appearance={appearance}
-              color={color}
+              chrome={chrome}
               onClick={handleClick}
               {...restProps}
             >
@@ -128,7 +126,7 @@ const ButtonColorGrid = ({
             </Button>
             <Button
               appearance={appearance}
-              color={color}
+              chrome={chrome}
               onClick={handleClick}
               aria-label="search"
               {...restProps}
@@ -137,7 +135,7 @@ const ButtonColorGrid = ({
             </Button>
             <Button
               appearance={appearance}
-              color={color}
+              chrome={chrome}
               onClick={handleClick}
               {...restProps}
             >
@@ -148,7 +146,7 @@ const ButtonColorGrid = ({
           <FlexItem>
             <Button
               appearance={appearance}
-              color={color}
+              chrome={chrome}
               onClick={handleClick}
               disabled
               {...restProps}
@@ -164,8 +162,8 @@ const ButtonColorGrid = ({
 
 export const Accent: StoryFn<typeof Button> = (props) => {
   return (
-    <ButtonColorGrid
-      color="accent"
+    <ButtonChromeGrid
+      chrome="accent"
       label1="Submit"
       label2="Search"
       label3="Continue"
@@ -176,8 +174,8 @@ export const Accent: StoryFn<typeof Button> = (props) => {
 
 export const Neutral: StoryFn<typeof Button> = (props) => {
   return (
-    <ButtonColorGrid
-      color="neutral"
+    <ButtonChromeGrid
+      chrome="neutral"
       label1="Submit"
       label2="Search"
       label3="Continue"
@@ -215,14 +213,14 @@ export const WithIcon: StoryFn<typeof Button> = () => {
 export const FullWidth: StoryFn<typeof Button> = () => {
   return (
     <StackLayout style={{ width: "98vw" }}>
-      <Button color="neutral" appearance="solid">
-        Neutral solid full width Button
+      <Button chrome="neutral" appearance="filled">
+        Neutral filled full width Button
       </Button>
-      <Button color="neutral" appearance="transparent">
-        Neutral transparent full width Button
+      <Button chrome="neutral" appearance="minimal">
+        Neutral minimal full width Button
       </Button>
-      <Button color="accent" appearance="solid">
-        Accent solid full width Button
+      <Button chrome="accent" appearance="filled">
+        Accent filled full width Button
       </Button>
     </StackLayout>
   );

@@ -40,58 +40,58 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Button variant="cta">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button chrome="accent" appearance="filled">
       Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button chrome="accent" appearance="filled">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button chrome="accent" appearance="filled">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="bordered">
+    <Button chrome="accent" appearance="outlined">
       Button
     </Button>
-    <Button color="accent" appearance="bordered">
+    <Button chrome="accent" appearance="outlined">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="bordered">
+    <Button chrome="accent" appearance="outlined">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button chrome="accent" appearance="minimal">
       Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button chrome="accent" appearance="minimal">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button chrome="accent" appearance="minimal">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button chrome="neutral" appearance="filled">
       Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button chrome="neutral" appearance="filled">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button chrome="neutral" appearance="filled">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="bordered">
+    <Button chrome="neutral" appearance="outlined">
       Button
     </Button>
-    <Button color="neutral" appearance="bordered">
+    <Button chrome="neutral" appearance="outlined">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="bordered">
+    <Button chrome="neutral" appearance="outlined">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button chrome="neutral" appearance="minimal">
       Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button chrome="neutral" appearance="minimal">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button chrome="neutral" appearance="minimal">
       <SearchIcon /> Button
     </Button>
   </QAContainer>
@@ -139,58 +139,58 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Button variant="cta">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button chrome="accent" appearance="filled">
       Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button chrome="accent" appearance="filled">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button chrome="accent" appearance="filled">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="bordered">
+    <Button chrome="accent" appearance="outlined">
       Button
     </Button>
-    <Button color="accent" appearance="bordered">
+    <Button chrome="accent" appearance="outlined">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="bordered">
+    <Button chrome="accent" appearance="outlined">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button chrome="accent" appearance="minimal">
       Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button chrome="accent" appearance="minimal">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button chrome="accent" appearance="minimal">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button chrome="neutral" appearance="filled">
       Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button chrome="neutral" appearance="filled">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button chrome="neutral" appearance="filled">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="bordered">
+    <Button chrome="neutral" appearance="outlined">
       Button
     </Button>
-    <Button color="neutral" appearance="bordered">
+    <Button chrome="neutral" appearance="outlined">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="bordered">
+    <Button chrome="neutral" appearance="outlined">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button chrome="neutral" appearance="minimal">
       Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button chrome="neutral" appearance="minimal">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button chrome="neutral" appearance="minimal">
       <SearchIcon /> Button
     </Button>
   </QAContainerNoStyleInjection>

@@ -3,14 +3,14 @@ import type { ReactElement } from "react";
 
 export const Appearance = (): ReactElement => (
   <>
-    <Button appearance="solid" color="accent">
-      Solid
+    <Button appearance="filled" chrome="accent">
+      Filled
     </Button>
-    <Button appearance="bordered" color="accent">
-      Bordered
+    <Button appearance="outlined" chrome="accent">
+      Outlined
     </Button>
-    <Button appearance="transparent" color="accent">
-      Transparent
+    <Button appearance="minimal" chrome="accent">
+      Minimal
     </Button>
   </>
 );

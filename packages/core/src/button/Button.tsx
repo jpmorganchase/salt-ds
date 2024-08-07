@@ -15,14 +15,14 @@ const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
 export const ButtonAppearanceValues = [
-  "solid",
-  "bordered",
-  "transparent",
+  "filled",
+  "outlined",
+  "minimal",
 ] as const;
-export const ButtonColorValues = ["accent", "neutral"] as const;
+export const ButtonChromeValues = ["accent", "neutral"] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
 export type ButtonAppearance = (typeof ButtonAppearanceValues)[number];
-export type ButtonColor = (typeof ButtonColorValues)[number];
+export type ButtonChrome = (typeof ButtonChromeValues)[number];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
@@ -36,27 +36,29 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
-   * @deprecated Use `appearance` and `color` instead.
+   * @deprecated Use `appearance` and `chrome` instead.
    */
   variant?: ButtonVariant;
   /**
-   * The type of the button. Options are 'solid', 'bordered', and 'transparent'.
+   * The type of the button. Options are 'filled', 'outlined', and 'minimal'.
    */
   appearance?: ButtonAppearance;
   /**
-   * The color of the button. Options are 'accent' and 'neutral'.
+   * Attention option of the button. Options are 'accent' and 'neutral'.
    */
-  color?: ButtonColor;
+  chrome?: ButtonChrome;
 }
 
-function variantToAppearanceAndColor(variant: ButtonVariant) {
+function mapVariantToNewProp(
+  variant: ButtonVariant,
+): Pick<ButtonProps, "appearance" | "chrome"> {
   switch (variant) {
     case "primary":
-      return { appearance: "solid", color: "neutral" };
+      return { appearance: "filled", chrome: "neutral" };
     case "secondary":
-      return { appearance: "transparent", color: "neutral" };
+      return { appearance: "outlined", chrome: "neutral" };
     case "cta":
-      return { appearance: "solid", color: "accent" };
+      return { appearance: "minimal", chrome: "accent" };
   }
 }
 
@@ -72,7 +74,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onBlur,
       onClick,
       appearance: appearanceProp,
-      color: colorProp,
+      chrome: chromeProp,
       type = "button",
       variant = "primary",
       ...restProps
@@ -95,9 +97,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       window: targetWindow,
     });
 
-    const mapped = variantToAppearanceAndColor(variant);
+    const mapped = mapVariantToNewProp(variant);
     const appearance = appearanceProp ?? mapped.appearance;
-    const color = colorProp ?? mapped.color;
+    const chrome = chromeProp ?? mapped.chrome;
 
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
@@ -111,8 +113,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             [withBaseName("disabled")]: disabled,
             [withBaseName("active")]: active,
-            [withBaseName(appearance)]: appearance,
-            [withBaseName(color)]: color,
+            [withBaseName(appearance || "")]: appearance,
+            [withBaseName(chrome || "")]: chrome,
           },
           className,
         )}

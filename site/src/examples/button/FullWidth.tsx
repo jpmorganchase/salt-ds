@@ -4,25 +4,25 @@ import type { ReactElement } from "react";
 export const FullWidth = (): ReactElement => (
   <StackLayout gap={6} style={{ width: "400px" }}>
     <StackLayout>
-      <Button color="accent" appearance="solid">
-        Solid
+      <Button chrome="accent" appearance="filled">
+        Filled
       </Button>
-      <Button color="accent" appearance="bordered">
-        Bordered
+      <Button chrome="accent" appearance="outlined">
+        Outlined
       </Button>
-      <Button color="accent" appearance="transparent">
-        Transparent
+      <Button chrome="accent" appearance="minimal">
+        Minimal
       </Button>
     </StackLayout>
     <StackLayout>
-      <Button color="neutral" appearance="solid">
-        Solid
+      <Button chrome="neutral" appearance="filled">
+        Filled
       </Button>
-      <Button color="neutral" appearance="bordered">
-        Bordered
+      <Button chrome="neutral" appearance="outlined">
+        Outlined
       </Button>
-      <Button color="neutral" appearance="transparent">
-        Transparent
+      <Button chrome="neutral" appearance="minimal">
+        Minimal
       </Button>
     </StackLayout>
   </StackLayout>

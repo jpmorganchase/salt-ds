@@ -4,45 +4,55 @@ import type { ReactElement } from "react";
 export const FocusableWhenDisabled = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
-      <Button appearance="solid" color="accent" disabled focusableWhenDisabled>
-        Solid
-      </Button>
       <Button
-        appearance="bordered"
-        color="accent"
+        appearance="filled"
+        chrome="accent"
         disabled
         focusableWhenDisabled
       >
-        Bordered
+        Filled
       </Button>
       <Button
-        appearance="transparent"
-        color="accent"
+        appearance="outlined"
+        chrome="accent"
         disabled
         focusableWhenDisabled
       >
-        Transparent
+        Outlined
+      </Button>
+      <Button
+        appearance="minimal"
+        chrome="accent"
+        disabled
+        focusableWhenDisabled
+      >
+        Minimal
       </Button>
     </FlowLayout>
     <FlowLayout>
-      <Button appearance="solid" color="neutral" disabled focusableWhenDisabled>
-        Solid
-      </Button>
       <Button
-        appearance="bordered"
-        color="neutral"
+        appearance="filled"
+        chrome="neutral"
         disabled
         focusableWhenDisabled
       >
-        Bordered
+        Filled
       </Button>
       <Button
-        appearance="transparent"
-        color="neutral"
+        appearance="outlined"
+        chrome="neutral"
         disabled
         focusableWhenDisabled
       >
-        Transparent
+        Outlined
+      </Button>
+      <Button
+        appearance="minimal"
+        chrome="neutral"
+        disabled
+        focusableWhenDisabled
+      >
+        Minimal
       </Button>
     </FlowLayout>
   </StackLayout>

@@ -6,34 +6,34 @@ export const IconOnly = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
       <Tooltip placement="top" content="Send comment">
-        <Button appearance="solid" color="accent">
+        <Button appearance="filled" chrome="accent">
           <SendIcon />
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Search document">
-        <Button appearance="bordered" color="accent">
+        <Button appearance="outlined" chrome="accent">
           <SearchIcon />
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Open settings">
-        <Button appearance="transparent" color="accent">
+        <Button appearance="minimal" chrome="accent">
           <SettingsIcon />
         </Button>
       </Tooltip>
     </FlowLayout>
     <FlowLayout>
       <Tooltip placement="top" content="Send comment">
-        <Button appearance="solid" color="neutral">
+        <Button appearance="filled" chrome="neutral">
           <SendIcon />
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Search document">
-        <Button appearance="bordered" color="neutral">
+        <Button appearance="outlined" chrome="neutral">
           <SearchIcon />
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Open settings">
-        <Button appearance="transparent" color="neutral">
+        <Button appearance="minimal" chrome="neutral">
           <SettingsIcon />
         </Button>
       </Tooltip>

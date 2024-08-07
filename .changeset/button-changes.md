@@ -2,21 +2,21 @@
 "@salt-ds/core": minor
 ---
 
-Added `color` and `appearance` props for Button. These props replace the `variant` prop.
+Added `chrome` and `appearance` props for Button. These props replace the `variant` prop.
 
 ```tsx
-    <Button color="accent" appearance="solid" />
-    <Button color="accent" appearance="bordered" />
-    <Button color="accent" appearance="transparent" />
-    <Button color="neutral" appearance="solid" />
-    <Button color="neutral" appearance="bordered" />
-    <Button color="neutral" appearance="transparent" />
+    <Button chrome="accent" appearance="filled" />
+    <Button chrome="accent" appearance="outlined" />
+    <Button chrome="accent" appearance="minimal" />
+    <Button chrome="neutral" appearance="filled" />
+    <Button chrome="neutral" appearance="outlined" />
+    <Button chrome="neutral" appearance="minimal" />
 ```
 
 _Note:_ Button's `variant` prop is now deprecated and will be removed in the next major version.
 
-| Deprecated                    | Replacement                                    |
-| ----------------------------- | ---------------------------------------------- |
-| `variant="cta"`               | `color="accent" appearance="solid"`            |
-| `variant="primary"` (default) | `color="neutral" appearance="solid"` (default) |
-| `variant="secondary"`         | `color="neutral" appearance="transparent"`     |
+| Deprecated                    | Replacement                                      |
+| ----------------------------- | ------------------------------------------------ |
+| `variant="cta"`               | `chrome="accent" appearance="filled"`            |
+| `variant="primary"` (default) | `chrome="neutral" appearance="filled"` (default) |
+| `variant="secondary"`         | `chrome="neutral" appearance="minimal"`          |

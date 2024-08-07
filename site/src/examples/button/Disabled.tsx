@@ -4,25 +4,25 @@ import type { ReactElement } from "react";
 export const Disabled = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
-      <Button appearance="solid" color="accent" disabled>
-        Solid
+      <Button appearance="filled" chrome="accent" disabled>
+        Filled
       </Button>
-      <Button appearance="bordered" color="accent" disabled>
-        Bordered
+      <Button appearance="outlined" chrome="accent" disabled>
+        Outlined
       </Button>
-      <Button appearance="transparent" color="accent" disabled>
-        Transparent
+      <Button appearance="minimal" chrome="accent" disabled>
+        Minimal
       </Button>
     </FlowLayout>
     <FlowLayout>
-      <Button appearance="solid" color="neutral" disabled>
-        Solid
+      <Button appearance="filled" chrome="neutral" disabled>
+        Filled
       </Button>
-      <Button appearance="bordered" color="neutral" disabled>
-        Bordered
+      <Button appearance="outlined" chrome="neutral" disabled>
+        Outlined
       </Button>
-      <Button appearance="transparent" color="neutral" disabled>
-        Transparent
+      <Button appearance="minimal" chrome="neutral" disabled>
+        Minimal
       </Button>
     </FlowLayout>
   </StackLayout>

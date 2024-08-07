@@ -1,5 +1,5 @@
 export * from "./Appearance";
-export * from "./Color";
+export * from "./Chrome";
 export * from "./CTA";
 export * from "./Disabled";
 export * from "./IconAndText";

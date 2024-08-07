@@ -9,24 +9,24 @@ import type { ReactElement } from "react";
 export const IconAndText = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
-      <Button appearance="solid" color="accent">
+      <Button appearance="filled" chrome="accent">
         <SearchIcon /> Search
       </Button>
-      <Button appearance="bordered" color="accent">
+      <Button appearance="outlined" chrome="accent">
         <DownloadIcon /> Download
       </Button>
-      <Button appearance="transparent" color="accent">
+      <Button appearance="minimal" chrome="accent">
         Expand <DoubleChevronRightIcon />
       </Button>
     </FlowLayout>
     <FlowLayout>
-      <Button appearance="solid" color="neutral">
+      <Button appearance="filled" chrome="neutral">
         <SearchIcon /> Search
       </Button>
-      <Button appearance="bordered" color="neutral">
+      <Button appearance="outlined" chrome="neutral">
         <DownloadIcon /> Download
       </Button>
-      <Button appearance="transparent" color="neutral">
+      <Button appearance="minimal" chrome="neutral">
         Expand <DoubleChevronRightIcon />
       </Button>
     </FlowLayout>
