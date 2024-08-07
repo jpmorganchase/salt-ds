@@ -1,11 +1,20 @@
-import { Button, type ButtonProps, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  type ButtonProps,
+  FlowLayout,
+  Spinner,
+  StackLayout,
+} from "@salt-ds/core";
 import {
   DownloadIcon,
+  RefreshIcon,
   SearchIcon,
   SendIcon,
   SettingsSolidIcon,
+  SyncIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
 
 export default {
   title: "Core/Button",
@@ -213,6 +222,369 @@ export const FullWidth: StoryFn<typeof Button> = () => {
       <Button variant="primary">Primary full width Button</Button>
       <Button variant="secondary">Secondary full width Button</Button>
       <Button variant="cta">Cta full width Button</Button>
+    </StackLayout>
+  );
+};
+
+function useLoadOnClick() {
+  const [loading, setLoading] = useState(false);
+
+  const handleClick = () => {
+    if (!loading) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    }
+  };
+
+  return [loading, handleClick] as const;
+}
+
+export const LoadingReplaceIcon: StoryFn = () => {
+  const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
+  const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
+  const [accentTransparentLoading, setAccentTransparentLoading] =
+    useLoadOnClick();
+  const [neutralSolidLoading, setNeutralSolidLoading] = useLoadOnClick();
+  const [neutralOutlineLoading, setNeutralOutlineLoading] = useLoadOnClick();
+  const [neutralTransparentLoading, setNeutralTransparentLoading] =
+    useLoadOnClick();
+
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button
+          color="accent"
+          appearance="solid"
+          loading={accentSolidLoading}
+          onClick={setAccentSolidLoading}
+        >
+          {accentSolidLoading ? (
+            <Spinner size="small" aria-label="Sending" />
+          ) : (
+            <SendIcon aria-hidden />
+          )}
+          Send Email
+        </Button>
+        <Button
+          color="accent"
+          appearance="outline"
+          loading={accentOutlineLoading}
+          onClick={setAccentOutlineLoading}
+        >
+          {accentOutlineLoading ? (
+            <Spinner aria-label="Syncing" size="small" />
+          ) : (
+            <SyncIcon aria-hidden />
+          )}
+          Sync Files
+        </Button>
+        <Button
+          color="accent"
+          appearance="transparent"
+          loading={accentTransparentLoading}
+          onClick={setAccentTransparentLoading}
+        >
+          {accentTransparentLoading ? (
+            <Spinner size="small" aria-label="Refreshing" />
+          ) : (
+            <RefreshIcon aria-hidden />
+          )}
+          Refresh Page
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          color="neutral"
+          appearance="solid"
+          loading={neutralSolidLoading}
+          onClick={setNeutralSolidLoading}
+        >
+          {neutralSolidLoading ? (
+            <Spinner size="small" aria-label="Sending" />
+          ) : (
+            <SendIcon aria-hidden />
+          )}
+          Send Email
+        </Button>
+        <Button
+          color="neutral"
+          appearance="outline"
+          loading={neutralOutlineLoading}
+          onClick={setNeutralOutlineLoading}
+        >
+          {neutralOutlineLoading ? (
+            <Spinner aria-label="Syncing" size="small" />
+          ) : (
+            <SyncIcon aria-hidden />
+          )}
+          Sync Files
+        </Button>
+        <Button
+          color="neutral"
+          appearance="transparent"
+          loading={neutralTransparentLoading}
+          onClick={setNeutralTransparentLoading}
+        >
+          {neutralTransparentLoading ? (
+            <Spinner size="small" aria-label="Refreshing" />
+          ) : (
+            <RefreshIcon aria-hidden />
+          )}
+          Refresh Page
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+  );
+};
+
+export const Loading: StoryFn = () => {
+  const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
+  const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
+  const [accentTransparentLoading, setAccentTransparentLoading] =
+    useLoadOnClick();
+  const [neutralSolidLoading, setNeutralSolidLoading] = useLoadOnClick();
+  const [neutralOutlineLoading, setNeutralOutlineLoading] = useLoadOnClick();
+  const [neutralTransparentLoading, setNeutralTransparentLoading] =
+    useLoadOnClick();
+
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button
+          color="accent"
+          appearance="solid"
+          loading={accentSolidLoading}
+          onClick={setAccentSolidLoading}
+          style={{ width: 109 }}
+        >
+          {accentSolidLoading ? (
+            <Spinner size="small" aria-label="Sending" />
+          ) : (
+            <>
+              <SendIcon aria-hidden />
+              Send Email
+            </>
+          )}
+        </Button>
+        <Button
+          color="accent"
+          appearance="outline"
+          loading={accentOutlineLoading}
+          onClick={setAccentOutlineLoading}
+          style={{ width: 102 }}
+        >
+          {accentOutlineLoading ? (
+            <Spinner size="small" aria-label="Syncing" />
+          ) : (
+            <>
+              <SyncIcon aria-hidden />
+              Sync Files
+            </>
+          )}
+        </Button>
+        <Button
+          color="accent"
+          appearance="transparent"
+          loading={accentTransparentLoading}
+          onClick={setAccentTransparentLoading}
+          style={{ width: 124 }}
+        >
+          {accentTransparentLoading ? (
+            <Spinner size="small" aria-label="Refreshing" />
+          ) : (
+            <>
+              <RefreshIcon aria-hidden />
+              Refresh Page
+            </>
+          )}
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          color="neutral"
+          appearance="solid"
+          loading={neutralSolidLoading}
+          onClick={setNeutralSolidLoading}
+          style={{ width: 109 }}
+        >
+          {neutralSolidLoading ? (
+            <Spinner size="small" aria-label="Sending" />
+          ) : (
+            <>
+              <SendIcon aria-hidden />
+              Send Email
+            </>
+          )}
+        </Button>
+        <Button
+          color="neutral"
+          appearance="outline"
+          loading={neutralOutlineLoading}
+          onClick={setNeutralOutlineLoading}
+          style={{ width: 102 }}
+        >
+          {neutralOutlineLoading ? (
+            <Spinner size="small" aria-label="Syncing" />
+          ) : (
+            <>
+              <SyncIcon aria-hidden />
+              Sync Files
+            </>
+          )}
+        </Button>
+        <Button
+          color="neutral"
+          appearance="transparent"
+          loading={neutralTransparentLoading}
+          onClick={setNeutralTransparentLoading}
+          style={{ width: 124 }}
+        >
+          {neutralTransparentLoading ? (
+            <Spinner size="small" aria-label="Refreshing" />
+          ) : (
+            <>
+              <RefreshIcon aria-hidden />
+              Refresh Page
+            </>
+          )}
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+  );
+};
+
+export const LoadingWithLabel: StoryFn = () => {
+  const [accentSolidLoading, setAccentSolidLoading] = useLoadOnClick();
+  const [accentOutlineLoading, setAccentOutlineLoading] = useLoadOnClick();
+  const [accentTransparentLoading, setAccentTransparentLoading] =
+    useLoadOnClick();
+  const [neutralSolidLoading, setNeutralSolidLoading] = useLoadOnClick();
+  const [neutralOutlineLoading, setNeutralOutlineLoading] = useLoadOnClick();
+  const [neutralTransparentLoading, setNeutralTransparentLoading] =
+    useLoadOnClick();
+
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button
+          color="accent"
+          appearance="solid"
+          loading={accentSolidLoading}
+          onClick={setAccentSolidLoading}
+          style={{ width: 109 }}
+        >
+          {accentSolidLoading ? (
+            <>
+              <Spinner size="small" aria-label="Sending" />
+              Sending
+            </>
+          ) : (
+            <>
+              <SendIcon aria-hidden />
+              Send email
+            </>
+          )}
+        </Button>
+        <Button
+          color="accent"
+          appearance="outline"
+          loading={accentOutlineLoading}
+          onClick={setAccentOutlineLoading}
+          style={{ width: 102 }}
+        >
+          {accentOutlineLoading ? (
+            <>
+              <Spinner size="small" aria-label="Syncing" />
+              Syncing
+            </>
+          ) : (
+            <>
+              <SyncIcon aria-hidden />
+              Sync files
+            </>
+          )}
+        </Button>
+        <Button
+          color="accent"
+          appearance="transparent"
+          loading={accentTransparentLoading}
+          onClick={setAccentTransparentLoading}
+          style={{ width: 124 }}
+        >
+          {accentTransparentLoading ? (
+            <>
+              <Spinner size="small" aria-label="Refreshing" />
+              Refreshing
+            </>
+          ) : (
+            <>
+              <RefreshIcon aria-hidden />
+              Refresh page
+            </>
+          )}
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          color="neutral"
+          appearance="solid"
+          loading={neutralSolidLoading}
+          onClick={setNeutralSolidLoading}
+          style={{ width: 109 }}
+        >
+          {neutralSolidLoading ? (
+            <>
+              <Spinner size="small" aria-label="Sending" />
+              Sending
+            </>
+          ) : (
+            <>
+              <SendIcon aria-hidden />
+              Send email
+            </>
+          )}
+        </Button>
+        <Button
+          color="neutral"
+          appearance="outline"
+          loading={neutralOutlineLoading}
+          onClick={setNeutralOutlineLoading}
+          style={{ width: 102 }}
+        >
+          {neutralOutlineLoading ? (
+            <>
+              <Spinner size="small" aria-label="Syncing" />
+              Syncing
+            </>
+          ) : (
+            <>
+              <SyncIcon aria-hidden />
+              Sync files
+            </>
+          )}
+        </Button>
+        <Button
+          color="neutral"
+          appearance="transparent"
+          loading={neutralTransparentLoading}
+          onClick={setNeutralTransparentLoading}
+          style={{ width: 124 }}
+        >
+          {neutralTransparentLoading ? (
+            <>
+              <Spinner size="small" aria-label="Refreshing" />
+              Refreshing
+            </>
+          ) : (
+            <>
+              <RefreshIcon aria-hidden />
+              Refresh page
+            </>
+          )}
+        </Button>
+      </FlowLayout>
     </StackLayout>
   );
 };

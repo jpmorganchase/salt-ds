@@ -87,6 +87,37 @@ This is useful when you want to show a tooltip or a popover when the user hovers
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
 
 </LivePreview>
+
+<LivePreview componentName="button" exampleName="Loading" displayName="Loading - With spinner" >
+
+## Loading - With spinner
+
+Buttons can show that a short action is being performed by passing `loading={true}`. This allows a [Spinner](/salt/components/spinner) to be displayed inside the button.
+
+### Best practices
+
+- Use loading buttons for actions that take a short amount of time to complete, such as submitting a form, fetching data from a server or a quick processing action (generating a report or performing a calculation).
+- The [Content Status](salt/patterns/content-status) pattern can be used with a loading button to provide additional feedback to the user.
+- Don't use loading buttons if an action is instantaneous or very quick. For further guidance, view the [Salt duration foundation](/salt/foundations/duration).
+- Don't use loading buttons if the action is complex and will take a significant amount of time (more than a few seconds) e.g. uploading or downloading large files, installing software, or completing a multi-step process. Use a [Progress Bar](/salt/components/progress) or a [Toast](/salt/components/toast) instead.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="LoadingWithLabel" displayName="Loading - Spinner and label" >
+
+## Loading - Spinner and label
+
+A loading button can also have a label to provide more context about the action being performed.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="LoadingReplaceIcon" displayName="Loading - Spinner replaces icon" >
+
+## Loading - Spinner replaces icon
+
+An icon can be swapped out with a spinner when a button is in a loading state.
+
+</LivePreview>
   
 <LivePreview componentName="button" exampleName="CTA" displayName="CTA - Deprecated" >
 

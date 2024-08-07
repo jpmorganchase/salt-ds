@@ -43,6 +43,10 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * The color of the button. Options are 'accent' and 'neutral'.
    */
   color?: ButtonColor;
+  /**
+   * If `true`, the button will be in a loading state. This allows a spinner to be nested inside the button.
+   */
+  loading?: boolean;
 }
 
 function variantToAppearanceAndColor(variant: ButtonVariant) {
@@ -71,9 +75,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       color: colorProp,
       type = "button",
       variant = "primary",
+      loading,
       ...restProps
     },
-    ref?,
+    ref,
   ): ReactElement<ButtonProps> {
     const { active, buttonProps } = useButton({
       disabled,
@@ -106,6 +111,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(variant),
           {
             [withBaseName("disabled")]: disabled,
+            [withBaseName("loading")]: loading,
             [withBaseName("active")]: active,
             [withBaseName(appearance)]: appearance,
             [withBaseName(color)]: color,
