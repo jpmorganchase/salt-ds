@@ -60,4 +60,8 @@ describe("Given a Button", () => {
     cy.mount(<FeatureButton />);
     cy.findByRole("button").should("have.attr", "type", "button");
   });
+  it("should have overlay when loading is true", () => {
+    cy.mount(<FeatureButton loading />);
+    cy.get(".saltButton-loading").should("exist");
+  });
 });
