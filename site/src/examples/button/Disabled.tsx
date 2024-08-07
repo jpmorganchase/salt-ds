@@ -25,5 +25,38 @@ export const Disabled = (): ReactElement => (
         Transparent
       </Button>
     </FlowLayout>
+    <FlowLayout>
+      <Button appearance="solid" color="positive" disabled>
+        Solid
+      </Button>
+      <Button appearance="outline" color="positive" disabled>
+        Outline
+      </Button>
+      <Button appearance="transparent" color="positive" disabled>
+        Transparent
+      </Button>
+    </FlowLayout>
+    <FlowLayout>
+      <Button appearance="solid" color="negative" disabled>
+        Solid
+      </Button>
+      <Button appearance="outline" color="negative" disabled>
+        Outline
+      </Button>
+      <Button appearance="transparent" color="negative" disabled>
+        Transparent
+      </Button>
+    </FlowLayout>
+    <FlowLayout>
+      <Button appearance="solid" color="warning" disabled>
+        Solid
+      </Button>
+      <Button appearance="outline" color="warning" disabled>
+        Outline
+      </Button>
+      <Button appearance="transparent" color="warning" disabled>
+        Transparent
+      </Button>
+    </FlowLayout>
   </StackLayout>
 );

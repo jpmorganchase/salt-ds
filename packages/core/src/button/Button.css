@@ -174,3 +174,138 @@
   --button-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
   --button-borderColor-disabled: var(--salt-actionable-subtle-borderColor-disabled);
 }
+
+.saltButton-negative.saltButton-solid {
+  --button-text-color: var(--salt-actionable-negative-bold-foreground);
+  --button-text-color-hover: var(--salt-actionable-negative-bold-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-negative-bold-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-negative-bold-foreground-disabled);
+  --button-background: var(--salt-actionable-negative-bold-background);
+  --button-background-hover: var(--salt-actionable-negative-bold-background-hover);
+  --button-background-active: var(--salt-actionable-negative-bold-background-active);
+  --button-background-disabled: var(--salt-actionable-negative-bold-background-disabled);
+  --button-borderColor: var(--salt-actionable-negative-bold-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-negative-bold-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-negative-bold-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-negative-bold-borderColor-disabled);
+}
+
+.saltButton-negative.saltButton-outline {
+  --button-text-color: var(--salt-actionable-negative-foreground);
+  --button-text-color-hover: var(--salt-actionable-negative-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-negative-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-negative-foreground-disabled);
+  --button-background: var(--salt-actionable-negative-background);
+  --button-background-hover: var(--salt-actionable-negative-background-hover);
+  --button-background-active: var(--salt-actionable-negative-background-active);
+  --button-background-disabled: var(--salt-actionable-negative-background-disabled);
+  --button-borderColor: var(--salt-actionable-negative-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-negative-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-negative-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-negative-borderColor-disabled);
+}
+
+.saltButton-negative.saltButton-transparent {
+  --button-text-color: var(--salt-actionable-negative-subtle-foreground);
+  --button-text-color-hover: var(--salt-actionable-negative-subtle-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-negative-subtle-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-negative-subtle-foreground-disabled);
+  --button-background: var(--salt-actionable-negative-subtle-background);
+  --button-background-hover: var(--salt-actionable-negative-subtle-background-hover);
+  --button-background-active: var(--salt-actionable-negative-subtle-background-active);
+  --button-background-disabled: var(--salt-actionable-negative-subtle-background-disabled);
+  --button-borderColor: var(--salt-actionable-negative-subtle-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-negative-subtle-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-negative-subtle-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-negative-subtle-borderColor-disabled);
+}
+
+.saltButton-positive.saltButton-solid {
+  --button-text-color: var(--salt-actionable-positive-bold-foreground);
+  --button-text-color-hover: var(--salt-actionable-positive-bold-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-positive-bold-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-positive-bold-foreground-disabled);
+  --button-background: var(--salt-actionable-positive-bold-background);
+  --button-background-hover: var(--salt-actionable-positive-bold-background-hover);
+  --button-background-active: var(--salt-actionable-positive-bold-background-active);
+  --button-background-disabled: var(--salt-actionable-positive-bold-background-disabled);
+  --button-borderColor: var(--salt-actionable-positive-bold-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-positive-bold-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-positive-bold-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-positive-bold-borderColor-disabled);
+}
+
+.saltButton-positive.saltButton-outline {
+  --button-text-color: var(--salt-actionable-positive-foreground);
+  --button-text-color-hover: var(--salt-actionable-positive-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-positive-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-positive-foreground-disabled);
+  --button-background: var(--salt-actionable-positive-background);
+  --button-background-hover: var(--salt-actionable-positive-background-hover);
+  --button-background-active: var(--salt-actionable-positive-background-active);
+  --button-background-disabled: var(--salt-actionable-positive-background-disabled);
+  --button-borderColor: var(--salt-actionable-positive-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-positive-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-positive-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-positive-borderColor-disabled);
+}
+
+.saltButton-positive.saltButton-transparent {
+  --button-text-color: var(--salt-actionable-positive-subtle-foreground);
+  --button-text-color-hover: var(--salt-actionable-positive-subtle-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-positive-subtle-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-positive-subtle-foreground-disabled);
+  --button-background: var(--salt-actionable-positive-subtle-background);
+  --button-background-hover: var(--salt-actionable-positive-subtle-background-hover);
+  --button-background-active: var(--salt-actionable-positive-subtle-background-active);
+  --button-background-disabled: var(--salt-actionable-positive-subtle-background-disabled);
+  --button-borderColor: var(--salt-actionable-positive-subtle-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-positive-subtle-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-positive-subtle-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-positive-subtle-borderColor-disabled);
+}
+
+.saltButton-warning.saltButton-solid {
+  --button-text-color: var(--salt-actionable-warning-bold-foreground);
+  --button-text-color-hover: var(--salt-actionable-warning-bold-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-warning-bold-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-warning-bold-foreground-disabled);
+  --button-background: var(--salt-actionable-warning-bold-background);
+  --button-background-hover: var(--salt-actionable-warning-bold-background-hover);
+  --button-background-active: var(--salt-actionable-warning-bold-background-active);
+  --button-background-disabled: var(--salt-actionable-warning-bold-background-disabled);
+  --button-borderColor: var(--salt-actionable-warning-bold-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-warning-bold-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-warning-bold-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-warning-bold-borderColor-disabled);
+}
+
+.saltButton-warning.saltButton-outline {
+  --button-text-color: var(--salt-actionable-warning-foreground);
+  --button-text-color-hover: var(--salt-actionable-warning-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-warning-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-warning-foreground-disabled);
+  --button-background: var(--salt-actionable-warning-background);
+  --button-background-hover: var(--salt-actionable-warning-background-hover);
+  --button-background-active: var(--salt-actionable-warning-background-active);
+  --button-background-disabled: var(--salt-actionable-warning-background-disabled);
+  --button-borderColor: var(--salt-actionable-warning-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-warning-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-warning-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-warning-borderColor-disabled);
+}
+
+.saltButton-warning.saltButton-transparent {
+  --button-text-color: var(--salt-actionable-warning-subtle-foreground);
+  --button-text-color-hover: var(--salt-actionable-warning-subtle-foreground-hover);
+  --button-text-color-active: var(--salt-actionable-warning-subtle-foreground-active);
+  --button-text-color-disabled: var(--salt-actionable-warning-subtle-foreground-disabled);
+  --button-background: var(--salt-actionable-warning-subtle-background);
+  --button-background-hover: var(--salt-actionable-warning-subtle-background-hover);
+  --button-background-active: var(--salt-actionable-warning-subtle-background-active);
+  --button-background-disabled: var(--salt-actionable-warning-subtle-background-disabled);
+  --button-borderColor: var(--salt-actionable-warning-subtle-borderColor);
+  --button-borderColor-hover: var(--salt-actionable-warning-subtle-borderColor-hover);
+  --button-borderColor-active: var(--salt-actionable-warning-subtle-borderColor-active);
+  --button-borderColor-disabled: var(--salt-actionable-warning-subtle-borderColor-disabled);
+}

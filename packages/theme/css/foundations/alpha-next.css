@@ -1,4 +1,4 @@
-/* 
+/*
 TODO: discuss whether this should be an actual file, or should inline these values.
 con: If we offer these values, then it could misleading that we're offering all these values
  */
@@ -45,4 +45,7 @@ con: If we offer these values, then it could misleading that we're offering all 
   --salt-color-background-granite-40a: rgba(var(--salt-color-background-granite-rgb), 0.4);
   --salt-color-background-jet-40a: rgba(var(--salt-color-background-jet-rgb), 0.4);
   --salt-color-background-leather-40a: rgba(var(--salt-color-background-leather-rgb), 0.4);
+  --salt-color-red-500-40a: rgba(var(--salt-color-red-500-rgb), 0.4);
+  --salt-color-green-500-40a: rgba(var(--salt-color-green-500-rgb), 0.4);
+  --salt-color-orange-500-40a: rgba(var(--salt-color-orange-500-rgb), 0.4);
 }
