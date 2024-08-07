@@ -33,6 +33,7 @@ import {
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
   getCurrentLocale,
+  CalendarNavigation,
 } from "../calendar";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
@@ -253,8 +254,14 @@ export const DatePickerRangePanel = forwardRef<
       <FlexLayout gap={0}>
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
-          <Calendar selectionVariant={"range"} {...startDateCalendarProps} />,
-          <Calendar selectionVariant={"range"} {...endDateCalendarProps} />,
+          <Calendar selectionVariant={"range"} {...startDateCalendarProps}>
+            <CalendarNavigation />
+          </Calendar>
+          ,
+          <Calendar selectionVariant={"range"} {...endDateCalendarProps}>
+            <CalendarNavigation />
+          </Calendar>
+          ,
         </FormFieldContext.Provider>
       </FlexLayout>
     </StackLayout>
