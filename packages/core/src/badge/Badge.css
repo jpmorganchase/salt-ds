@@ -4,14 +4,15 @@
   position: relative;
   flex-shrink: 0;
   vertical-align: middle;
+  --badge-size: var(--salt-text-notation-lineHeight);
 }
 
 .saltBadge-badge {
   /* Should this vary according to touch size */
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
-  height: var(--salt-text-notation-lineHeight);
-  min-width: var(--salt-text-notation-lineHeight);
+  height: var(--badge-size);
+  min-width: var(--badge-size);
   border-radius: var(--salt-palette-corner-strongest, 9999px);
 
   white-space: nowrap;
@@ -37,5 +38,16 @@
 .saltBadge-topRight {
   position: absolute;
   right: var(--salt-spacing-100);
-  transform: translateX(100%);
+  transform: translateX(100%) translateY(calc(-1 * (var(--badge-size) / 2)));
+}
+
+.saltBadge-dotBadge {
+  height: var(--salt-size-adornment);
+  min-width: var(--salt-size-adornment);
+  padding: 0;
+  --badge-size: var(--salt-size-adornment);
+}
+
+.saltBadge-dotBadge.saltBadge-topRight {
+  right: calc((var(--salt-size-adornment) / 2));
 }
