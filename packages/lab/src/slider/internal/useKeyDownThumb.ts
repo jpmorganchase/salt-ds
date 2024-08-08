@@ -6,6 +6,15 @@ import {
   setValue,
 } from "./utils";
 
+const supportedKeys = [
+  "Home",
+  "End",
+  "ArrowUp",
+  "ArrowRight",
+  "ArrowDown",
+  "ArrowLeft",
+];
+
 const getValueFromKeyName = (
   keyName: string,
   value: number,
@@ -38,6 +47,8 @@ export const useKeyDownThumb = (
   index: ThumbIndex,
 ) => {
   return (event: React.KeyboardEvent) => {
+    if (!supportedKeys.includes(event.key)) return;
+    event.preventDefault();
     const targetValue = value[index];
     const rawValue = getValueFromKeyName(
       event.key,
