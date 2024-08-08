@@ -39,3 +39,9 @@
   right: var(--salt-spacing-100);
   transform: translateX(100%);
 }
+
+.saltBadge-topRightCenter {
+  position: absolute;
+  right: calc((var(--salt-text-notation-lineHeight) / 2));
+  top: calc(-1 * (var(--salt-text-notation-lineHeight) / 2));
+}

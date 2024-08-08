@@ -10,7 +10,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
    * The number to display on the badge
    */
-  value: number | string;
+  value?: number | string;
   /**
    * If a child is provided the Badge will render top right. By defualt renders inline.
    */
@@ -42,6 +42,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
       <span
         className={clsx(withBaseName("badge"), {
           [withBaseName("topRight")]: children,
+          [withBaseName("topRightCenter")]: children && !value,
         })}
       >
         {valueText}

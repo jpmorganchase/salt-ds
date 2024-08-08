@@ -1,5 +1,12 @@
-import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
+import {
+  Badge,
+  Button,
+  FlexLayout,
+  NavigationItem,
+  StackLayout,
+} from "@salt-ds/core";
 import { List, ListItem } from "@salt-ds/lab";
+import { useState } from "react";
 
 import {
   MessageIcon,
@@ -99,5 +106,68 @@ export const MultipleButtons: StoryFn<typeof Badge> = () => {
         </Button>
       </FlexLayout>
     </StackLayout>
+  );
+};
+
+export const DotBadge: StoryFn<typeof Badge> = () => {
+  return (
+    <div style={{ display: "flex", gap: "16px" }}>
+      <FlexLayout>
+        <Button appearance="transparent" color="neutral">
+          <Badge>
+            <SettingsSolidIcon />
+          </Badge>
+        </Button>
+      </FlexLayout>
+      <FlexLayout>
+        <Badge>
+          <Button>
+            <NotificationIcon />
+          </Button>
+        </Badge>
+      </FlexLayout>
+    </div>
+  );
+};
+
+export const InlineDotBadge: StoryFn<typeof Badge> = () => {
+  const items = ["Label 1", "Label 2"];
+  const [active, setActive] = useState(items[0]);
+
+  return (
+    <nav>
+      <StackLayout
+        as="ul"
+        gap="var(--salt-size-border)"
+        style={{ listStyle: "none" }}
+      >
+        <li>
+          <NavigationItem
+            active={active === "Label 1"}
+            href="#"
+            orientation="vertical"
+            onClick={() => {
+              setActive("Label 1");
+            }}
+          >
+            Label 1
+          </NavigationItem>
+        </li>
+        <li>
+          <NavigationItem
+            active={active === "Label 2"}
+            href="#"
+            orientation="vertical"
+            onClick={() => {
+              setActive("Label 2");
+            }}
+          >
+            <StackLayout direction="row" gap={1}>
+              Level 2<Badge />
+            </StackLayout>
+          </NavigationItem>
+        </li>
+      </StackLayout>
+    </nav>
   );
 };
