@@ -59,17 +59,11 @@ export const SingleWithInput = () => {
   return (
     <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Slider with Input</FormFieldLabel>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
+      <FlexLayout gap={1} align="center">
         <Input
           placeholder={inputValue}
           value={inputValue}
-          style={{ width: "1px", margin: "5px" }}
+          style={{ width: "10px" }}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />
@@ -81,7 +75,7 @@ export const SingleWithInput = () => {
           aria-label="withInput"
           style={{ flexGrow: 1 }}
         />
-      </div>
+      </FlexLayout>
     </FormField>
   );
 };
@@ -124,11 +118,12 @@ const RangeWithInput = () => {
   return (
     <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Slider with Input</FormFieldLabel>
-      <FlexLayout gap={2} align="center">
+      <FlexLayout gap={1} align="center">
         <Input
+          id="slider-min-value"
           placeholder={`${minValue}`}
           value={minValue}
-          style={{ width: "10px", margin: "5px" }}
+          style={{ width: "10px" }}
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
@@ -141,6 +136,7 @@ const RangeWithInput = () => {
           aria-label="withInput"
         />
         <Input
+          id="slider-max-value"
           placeholder={`${maxValue}`}
           value={maxValue}
           style={{ width: "10px" }}
