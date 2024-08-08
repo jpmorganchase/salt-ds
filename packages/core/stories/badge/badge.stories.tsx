@@ -1,5 +1,5 @@
 import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { List, ListItem } from "@salt-ds/lab";
+import { List, ListItem, TabNext, TabstripNext } from "@salt-ds/lab";
 
 import {
   MessageIcon,
@@ -99,5 +99,44 @@ export const MultipleButtons: StoryFn<typeof Badge> = () => {
         </Button>
       </FlexLayout>
     </StackLayout>
+  );
+};
+
+export const DotBadge = () => {
+  return (
+    <StackLayout>
+      <FlexLayout>
+        <Button appearance="transparent" color="neutral">
+          <Badge>
+            <SettingsSolidIcon />
+          </Badge>
+        </Button>
+      </FlexLayout>
+      <FlexLayout>
+        <Badge>
+          <Button>
+            <NotificationIcon />
+          </Button>
+        </Badge>
+      </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const InlineDotBadge = () => {
+  return (
+    <TabstripNext
+      variant="inline"
+      defaultValue="Home"
+      style={{ width: "400px", margin: "auto" }}
+    >
+      <TabNext value="Home">Home</TabNext>
+      <TabNext value="Transactions">Transactions</TabNext>
+      <TabNext value="Loans">
+        Loans
+        <Badge />
+      </TabNext>
+      <TabNext value="Checks">Checks</TabNext>
+    </TabstripNext>
   );
 };
