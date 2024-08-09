@@ -1,0 +1,41 @@
+.root {
+  min-height: 400px;
+}
+
+.toolbar {
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-200));
+}
+
+/* Overrides flex-grow: 1. */
+.toolbar.toolbar {
+  flex-grow: 0;
+}
+
+.iconName {
+  text-wrap: balance;
+  text-align: center;
+}
+
+.search {
+  max-width: 40ch;
+  flex: 1;
+}
+
+.iconCard {
+  padding-top: var(--salt-spacing-300);
+  padding-inline: var(--salt-spacing-25);
+  height: calc(var(--salt-size-base) * 4);
+  aspect-ratio: 1.1;
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(var(--salt-size-icon) * 2);
+}
+
+.notFound {
+  flex: 1;
+  justify-content: center;
+}
