@@ -2,21 +2,13 @@
 .saltTabstripNext {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: var(--tabstripNext-justifyContent);
+  justify-content: var(--tabstripNext-justifyContent, flex-start);
   align-items: center;
   position: relative;
   background: transparent;
   width: 100%;
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
-}
-.saltTabstripNext-container {
-  display: block;
-  width: 100%;
-  height: fit-content;
-  position: relative;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  gap: var(--salt-spacing-100);
 }
 
 .saltTabstripNext-main {
@@ -33,7 +25,10 @@
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
-.saltTabstripNext .saltTabNext-wrapper:not(:last-child) {
-  padding-right: var(--salt-spacing-100);
-  box-sizing: border-box;
+.saltTabstripNext-activeColorPrimary {
+  --saltTabstripNext-activeColor: var(--salt-container-primary-background);
+}
+
+.saltTabstripNext-activeColorSecondary {
+  --saltTabstripNext-activeColor: var(--salt-container-secondary-background);
 }

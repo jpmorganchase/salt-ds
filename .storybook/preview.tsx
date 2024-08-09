@@ -117,7 +117,6 @@ export const argTypes: ArgTypes = {
 };
 
 export const parameters: Parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
   layout: "centered",
   // Show props description in Controls panel
   controls: { expanded: true, sort: "requiredFirst" },

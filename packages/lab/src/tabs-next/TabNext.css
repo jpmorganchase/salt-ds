@@ -1,10 +1,10 @@
 /* Class applied to root Tab element */
 .saltTabNext {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   appearance: none;
   -webkit-appearance: none;
-  display: inline-flex;
   background: var(--salt-navigable-primary-background);
   gap: var(--salt-spacing-100);
   border: none;
@@ -29,12 +29,12 @@
   font-size: var(--salt-text-fontSize);
 }
 
-.saltTabNext-primary {
-  --tabNext-background-active: var(--salt-container-primary-background);
-}
-
-.saltTabNext-secondary {
-  --tabNext-background-active: var(--salt-container-secondary-background);
+.saltTabNext-label {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 
 .saltTabNext::after {
@@ -58,8 +58,8 @@
   background: var(--salt-navigable-indicator-hover);
 }
 
-.saltTabNext:disabled:hover::after,
-.saltTabNext:disabled:focus-visible::after {
+.saltTabNext[aria-disabled="true"]:hover::after,
+.saltTabNext[aria-disabled="true"]:focus-visible::after {
   background: none;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .saltTabNext-main[aria-selected="true"] {
-  background: var(--tabNext-background-active);
+  background: var(--saltTabstripNext-activeColor);
   border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
   border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
@@ -77,7 +77,7 @@
   background: var(--salt-navigable-indicator-active);
 }
 
-.saltTabNext:disabled {
+.saltTabNext[aria-disabled="true"] {
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }
