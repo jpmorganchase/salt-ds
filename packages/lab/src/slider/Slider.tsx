@@ -1,50 +1,50 @@
-import { makePrefixer, useControlled } from "@salt-ds/core";
-import { clsx } from "clsx";
-import {
-  type CSSProperties,
-  type HTMLAttributes,
-  forwardRef,
-  useMemo,
-  useRef,
-} from "react";
-import { SliderHandle } from "./internal/SliderHandle";
-import { SliderMarkLabels } from "./internal/SliderMarkLabels";
-import { SliderRail } from "./internal/SliderRail";
-import { type SliderMark, SliderRailMarks } from "./internal/SliderRailMarks";
-import { SliderSelection } from "./internal/SliderSelection";
-import { createHandleStyles, createTrackStyle } from "./internal/styles";
-import { useSliderKeyDown } from "./internal/useSliderKeyDown";
-import { useSliderMouseDown } from "./internal/useSliderMouseDown";
-import { useValueUpdater } from "./internal/utils";
-import type { SliderChangeHandler, SliderValue } from "./types";
-
+import { Label, makePrefixer, useControlled } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type HTMLAttributes, forwardRef } from "react";
+import { SliderContext, SliderMarks, SliderTrack } from "./internal";
 
 import sliderCss from "./Slider.css";
+import { parseValueProp } from "./internal/utils";
+import type { SliderChangeHandler, SliderValue } from "./types";
 
 const withBaseName = makePrefixer("saltSlider");
 
 const defaultMin = 0;
-const defaultMax = 100;
+const defaultMax = 10;
 const defaultStep = 1;
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
-  label?: string;
+  /**
+   * Minimum slider value
+   */
   min?: number;
+  /**
+   * Maximum slider value
+   */
   max?: number;
+  /**
+   * Minimum interval the slider thumb can move
+   */
   step?: number;
-  pageStep?: number;
-  value?: SliderValue;
+  /**
+   * Initial value of the slider
+   */
   defaultValue?: SliderValue;
-  pushable?: boolean;
-  pushDistance?: number;
-  disabled?: boolean;
+  /**
+   * The markings the slider is displayed with
+   */
+  marks?: "inline" | "bottom" | "all";
+  /**
+   * Value of the slider, to be used when in a controlled state
+   */
+  value?: SliderValue;
+  /**
+   * Change handler to be used when in a controlled state
+   */
   onChange?: SliderChangeHandler;
-  marks?: SliderMark[];
-  hideMarks?: boolean;
-  hideMarkLabels?: boolean;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
@@ -52,19 +52,13 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     min = defaultMin,
     max = defaultMax,
     step = defaultStep,
-    pageStep = step,
     value: valueProp,
-    defaultValue = defaultMin,
+    defaultValue = [0],
     onChange,
-    label,
     className,
-    pushable,
-    pushDistance = 0,
-    disabled,
-    marks,
-    hideMarks,
-    hideMarkLabels,
-    ...restProps
+    "aria-label": ariaLabel,
+    marks = "inline",
+    ...rest
   },
   ref,
 ) {
@@ -75,99 +69,59 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     window: targetWindow,
   });
 
-  const trackRef = useRef<HTMLDivElement>(null);
-
   const [value, setValue] = useControlled<SliderValue>({
-    controlled: valueProp,
+    controlled: parseValueProp(valueProp, min, max),
     default: defaultValue,
     name: "Slider",
     state: "Value",
   });
 
-  const updateValueItem = useValueUpdater(pushable, pushDistance, min, max);
-
-  const trackStyle = useMemo(
-    () => createTrackStyle(min, max, value),
-    [min, max, value],
-  );
-
-  const valueLength = Array.isArray(value) ? value.length : 1;
-
-  const handleStyles: CSSProperties[] = useMemo(
-    () => createHandleStyles(valueLength),
-    [valueLength],
-  );
-
-  const onMouseDown = useSliderMouseDown(
-    trackRef,
-    value,
-    min,
-    max,
-    step,
-    updateValueItem,
-    setValue,
-    onChange,
-  );
-
-  const onKeyDown = useSliderKeyDown(
-    value,
-    min,
-    max,
-    pageStep,
-    step,
-    updateValueItem,
-    setValue,
-    onChange,
-  );
+  const handleSliderChange = (value: SliderValue) => {
+    setValue(value);
+    onChange?.(value);
+  };
 
   return (
-    <div
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("disabled")]: disabled,
-        },
-        className,
-      )}
-      ref={ref}
-      onKeyDown={disabled ? undefined : onKeyDown}
-      aria-label={`${label} slider from ${min} to ${max}`}
-      role="group"
+    <SliderContext.Provider
+      value={{
+        value,
+        min,
+        max,
+        step,
+        onChange: handleSliderChange,
+        ariaLabel,
+      }}
     >
-      {label !== undefined ? (
-        <div className={withBaseName("label")}>{label}</div>
-      ) : null}
       <div
-        className={withBaseName("clickable")}
-        onMouseDown={disabled ? undefined : onMouseDown}
+        ref={ref}
+        className={clsx(
+          withBaseName(),
+          { [withBaseName("bottomLabel")]: marks !== "inline" },
+          className,
+        )}
+        {...rest}
       >
-        <div
-          className={withBaseName("track")}
-          style={trackStyle}
-          ref={trackRef}
-        >
-          <SliderRail />
-          {marks && !hideMarks ? (
-            <SliderRailMarks min={min} max={max} marks={marks} />
-          ) : null}
-          {marks && !hideMarkLabels ? (
-            <SliderMarkLabels min={min} max={max} marks={marks} />
-          ) : null}
-          <SliderSelection valueLength={valueLength} />
-          {(Array.isArray(value) ? value : [value]).map((v, i) => (
-            <SliderHandle
-              key={i}
-              min={min}
-              max={max}
-              value={v}
-              index={i}
-              disabled={!!disabled}
-              valueLength={valueLength}
-              style={handleStyles[i]}
-            />
-          ))}
-        </div>
+        {marks !== "all" && (
+          <Label
+            className={clsx(withBaseName("label"), {
+              [withBaseName("labelMinBottom")]: marks !== "inline",
+            })}
+          >
+            {min}
+          </Label>
+        )}
+        <SliderTrack />
+        {marks !== "all" && (
+          <Label
+            className={clsx(withBaseName("label"), {
+              [withBaseName("labelMaxBottom")]: marks !== "inline",
+            })}
+          >
+            {max}
+          </Label>
+        )}
+        {marks === "all" && <SliderMarks max={max} min={min} step={step} />}
       </div>
-    </div>
+    </SliderContext.Provider>
   );
 });

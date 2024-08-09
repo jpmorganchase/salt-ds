@@ -1,0 +1,89 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+<LivePreview componentName="slider" exampleName="Single">
+
+## Single Slider
+
+Selection of a single value from a horizontally oriented slider track. Values can be displayed either inline or below the track.
+
+A tooltip is displayed when the thumb is dragged to ensure that incremental values remain visible when the number increments are not displayed along the track (i.e., with vertical label position).
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="Range">
+
+## Range Slider
+
+Selection of a range of values from a horizontally oriented slider track. This determines a minimum and maximum range. Values can be displayed either inline or below the track.
+
+### Best practices
+
+The default minimum range is set to 1 step, therefore thumbs cannot pass or overlap.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="CustomStep">
+
+## Custom Step
+
+By default, the slider step increment is set to 1. This can be customised by configuring the ‘step’ prop. We recommend using an increment most suitable to your use case by using a step relative to the granularity of the scale. This prevents slider selections from becoming tedious and difficult to manage.
+
+Custom step values can be set to any number, including decimal values up to two decimal places. If a decimal step value is provided, the marks (if shown) will also be displayed as decimal values.
+
+If a custom step value is provided that is not a multiple of the range, the slider will round the maximum selectable value to the largest multiple of the step that is less than the maximum value. **Note:** This will render the final portion of the slider track unusable (the portion between the rounded maximum value and the actual maximum value). Step calculations are made from `0`, so the same rounding logic applies to negative values, but in the opposite direction.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="SingleFormField">
+
+## Single Form Field
+
+Wrap single slider in a form field to display a left-aligned or top label.
+
+For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+
+### Best practices
+
+We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="RangeFormField">
+
+## Range Form Field
+
+Wrap range slider in a form field to display a left-aligned or top label.
+
+For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+
+### Best practices
+
+We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
+
+</LivePreview>
+
+<LivePreview componentName="slider" exampleName="WithInput">
+
+## With Input
+
+You can display inputs with either a single or range slider. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
+The thumb and input are in sync. An update to either causes the other to update. E.g., if you use cursor click or drag along the slider track, the input must display the change in value live.
+
+### Best practices
+
+For single slider, display one input to the left of the track.
+Only use the inline variant of slider alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+
+</LivePreview>
+
+</LivePreviewControls>

@@ -1,158 +1,131 @@
-import { useMemo } from "react";
-import type { SliderValue } from "../types";
-import type { LabeledMark, SliderMark } from "./SliderRailMarks";
+import type { RefObject } from "react";
+import type { SliderChangeHandler, SliderValue, ThumbIndex } from "../types";
 
-const updateValueItemNotPushable = (
-  oldValue: number[],
-  index: number,
-  valueItem: number,
+export const getValue = (
+  trackRef: RefObject<Element>,
   min: number,
   max: number,
+  step: number,
+  clientX: number,
 ) => {
-  const newValue = [...oldValue];
-  if (valueItem < oldValue[index]) {
-    const constraint = index === 0 ? min : newValue[index - 1];
-    newValue[index] = Math.max(constraint, valueItem);
-  } else {
-    const constraint =
-      index === newValue.length - 1 ? max : newValue[index + 1];
-    newValue[index] = Math.min(constraint, valueItem);
-  }
-  return newValue;
+  const { width, x } = trackRef.current!.getBoundingClientRect();
+  const localX = clientX - x;
+  const normaliseBetweenValues = (localX / width) * (max - min) + min;
+  const roundedToStep = roundToStep(normaliseBetweenValues, step);
+  const decimals = countDecimalPlaces(step);
+  const rounded = Number(roundedToStep.toFixed(decimals));
+  const value = clampValue(rounded, [min, max]);
+  return value;
 };
 
-const updateValueItemPushable = (
-  oldValue: number[],
-  index: number,
-  valueItem: number,
-  min: number,
-  max: number,
-  pushDistance: number,
+export const setValue = (
+  value: SliderValue,
+  newValue: number,
+  index: ThumbIndex,
+  onChange: SliderChangeHandler,
 ) => {
-  const newValue = [...oldValue];
-  newValue[index] = valueItem;
-  if (valueItem < oldValue[index]) {
-    for (let i = index - 1; i >= 0; --i) {
-      if (newValue[i + 1] - newValue[i] < pushDistance) {
-        newValue[i] = newValue[i + 1] - pushDistance;
-      } else {
-        break;
-      }
-    }
-    const distToMin = newValue[0] - min;
-    if (distToMin < 0) {
-      for (let i = index; i >= 0; --i) {
-        newValue[i] -= distToMin;
-      }
-    }
-  } else {
-    for (let i = index + 1; i < newValue.length; ++i) {
-      if (newValue[i] - newValue[i - 1] < pushDistance) {
-        newValue[i] = newValue[i - 1] + pushDistance;
-      } else {
-        break;
-      }
-    }
-    const distToMax = max - newValue[newValue.length - 1];
-    if (distToMax < 0) {
-      for (let i = index; i < newValue.length; ++i) {
-        newValue[i] += distToMax;
-      }
-    }
-  }
-  return newValue;
-};
-
-export type UpdateValueItem = (
-  oldValue: SliderValue,
-  index: number,
-  valueItem: number,
-) => SliderValue;
-
-export function useValueUpdater(
-  pushable: boolean | undefined,
-  pushDistance: number,
-  min: number,
-  max: number,
-): UpdateValueItem {
-  return useMemo(() => {
-    const updater = pushable
-      ? (oldValue: number[], index: number, valueItem: number) =>
-          updateValueItemPushable(
-            oldValue,
-            index,
-            valueItem,
-            min,
-            max,
-            pushDistance,
-          )
-      : (oldValue: number[], index: number, valueItem: number) =>
-          updateValueItemNotPushable(oldValue, index, valueItem, min, max);
-    return (oldValue: SliderValue, index: number, valueItem: number) => {
-      if (!Array.isArray(oldValue)) {
-        return valueItem;
-      }
-      if (oldValue[index] === valueItem) {
-        return oldValue;
-      }
-      const newValue = updater(oldValue, index, valueItem);
-      if (-1 === newValue.findIndex((v, i) => oldValue[i] !== v)) {
-        return oldValue;
-      }
-      return newValue;
-    };
-  }, [pushable, pushDistance, min, max]);
-}
-
-export const roundValue = (v: number, step: number) =>
-  Math.round(v / step) * step;
-
-export const clampValue = (v: number, min: number, max: number) => {
-  if (v < min) {
-    return min;
-  }
-  if (v > max) {
-    return max;
-  }
-  return v;
-};
-
-export function getSliderAriaLabel(count: number, index: number) {
-  if (count < 2) {
+  if (value.length === 2) {
+    const newValueArray = [...value];
+    newValueArray.splice(index, 1, newValue);
+    onChange(newValueArray as SliderValue);
     return;
   }
-  if (count === 2) {
-    return index === 0 ? "Min" : "Max";
-  }
-  if (index >= 0 && index < 10) {
-    return [
-      "First",
-      "Second",
-      "Third",
-      "Fourth",
-      "Fifth",
-      "Sixth",
-      "Seventh",
-      "Eighth",
-      "Ninth",
-      "Tenth",
-    ][index];
-  }
-  return;
-}
+  onChange([newValue]);
+};
 
-export function getHandleIndex(element: HTMLElement): number {
-  const handleIndexAttribute = element.getAttribute("data-handle-index");
-  if (handleIndexAttribute) {
-    return Number.parseInt(handleIndexAttribute, 10);
+export const roundToStep = (value: number, step: number) =>
+  Math.round(value / step) * step;
+
+export const clampValue = (value: number, [min, max]: number[]) => {
+  if (value > max) {
+    return max;
   }
-  return getHandleIndex(element.parentElement as HTMLElement);
-}
+  if (value < min) {
+    return min;
+  }
+  return value;
+};
 
-export function isLabeledMark(mark: SliderMark): mark is LabeledMark {
-  return typeof mark !== "number";
-}
+export const getPercentage = (min: number, max: number, value: number) => {
+  const percentage = ((value - min) / (max - min)) * 100;
+  return Math.min(Math.max(percentage, 0), 100);
+};
 
-export function isMarkAtMax(max: number, mark: SliderMark) {
-  return max === (isLabeledMark(mark) ? mark.value : mark);
-}
+export const getPercentageDifference = (
+  min: number,
+  max: number,
+  value: number[],
+) => {
+  const valueDiff = value[1] - value[0];
+  const percentage = ((valueDiff - min) / (max - min)) * 100;
+  return `${Math.min(Math.max(percentage, 0), 100)}%`;
+};
+
+export const getPercentageOffset = (
+  min: number,
+  max: number,
+  value: number[],
+) => {
+  const offsetLeft = ((value[0] - min) / (max - min)) * 100;
+  return `${Math.min(Math.max(offsetLeft, 0), 100)}%`;
+};
+
+export const countDecimalPlaces = (num: number) => {
+  const parts = num.toString().split(".");
+  return parts.length > 1 ? parts[1].length : 0;
+};
+
+export const getMarkStyles = (min: number, max: number, step: number) => {
+  const marks = [];
+  for (let i = min; i <= max; i = Number((i + step).toPrecision(4))) {
+    const value = Number(i.toPrecision(4));
+    const position = `${getPercentage(min, max, value)}%`;
+    marks.push({ value, position });
+  }
+  const decimals = Math.max(
+    ...marks.map((mark) => countDecimalPlaces(mark.value)),
+  );
+  return marks.map((mark) => ({
+    ...mark,
+    label: mark.value.toFixed(decimals),
+  }));
+};
+
+export const getNearestIndex = (value: SliderValue, newValue: number) => {
+  if (value.length === 1) return 0;
+
+  if (value[0] === value[1]) {
+    if (newValue < value[0]) return 0;
+    return 1;
+  }
+
+  const distances = value.map((value) => Math.abs(newValue - value));
+  const minDistance = Math.min(...distances);
+  const nearestIndex = distances.indexOf(minDistance);
+
+  return nearestIndex as ThumbIndex;
+};
+
+export const preventOverlappingValues = (
+  value: SliderValue,
+  newValue: number,
+  index: ThumbIndex,
+) =>
+  value.length === 2
+    ? index === 0
+      ? Math.min(newValue, value[1])
+      : Math.max(newValue, value[0])
+    : newValue;
+
+export const parseValueProp = (
+  value: number[] | undefined,
+  min: number,
+  max: number,
+) => {
+  if (typeof value === "undefined" || value.length < 1) return;
+  const a = clampValue(value[0], [min, max]);
+  if (value.length === 1) return [a] as SliderValue;
+  const b = clampValue(value[1], [min, max]);
+  if (a > b) return [a, a] as SliderValue;
+  return [a, b] as SliderValue;
+};
