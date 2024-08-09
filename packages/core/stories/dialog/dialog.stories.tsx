@@ -7,7 +7,10 @@ import {
   type DialogContentProps,
   DialogHeader,
   type DialogProps,
+  H2,
+  H4,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
@@ -372,6 +375,61 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
           </Button>
         </DialogActions>
         <DialogCloseButton onClick={handleClose} />
+      </Dialog>
+    </>
+  );
+};
+
+export const WithDescription: StoryFn<typeof Dialog> = (args) => {
+  const [open, setOpen] = useState(false);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={handleRequestOpen}>Open dialog</Button>
+      <Dialog
+        {...args}
+        open={open}
+        onOpenChange={onOpenChange}
+        // focus the ok instead of the cancel button
+        initialFocus={1}
+      >
+        <DialogHeader
+          preheader={
+            <H4 style={{ margin: 0 }}>
+              <small>Preheader</small>
+            </H4>
+          }
+          header={
+            <StackLayout gap={0.5}>
+              <H2 style={{ margin: 0 }}>Title</H2>
+              <Text color="secondary">Description</Text>
+            </StackLayout>
+          }
+        />
+        <DialogContent>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book.
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="cta" onClick={handleClose}>
+            Ok
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );
