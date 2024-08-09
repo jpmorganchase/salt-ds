@@ -14,8 +14,9 @@ import {
 
 import {
   SteppedTrackerProvider,
-  TrackerStepProvider,
+  // TrackerStepProvider,
 } from "./SteppedTrackerContext";
+import { getDepthMap, renderNestedSteps } from "./utils";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
@@ -76,6 +77,12 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
 
     const totalSteps = Children.count(children);
 
+    const depthMap = getDepthMap(children);
+
+    const childrenArray = Children.toArray(children);
+
+    const nestedSteps = renderNestedSteps(childrenArray, depthMap);
+
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
         <ul
@@ -83,9 +90,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
           ref={ref}
           {...restProps}
         >
-          {Children.map(children, (child, i) => (
-            <TrackerStepProvider stepNumber={i}>{child}</TrackerStepProvider>
-          ))}
+          {nestedSteps}
         </ul>
       </SteppedTrackerProvider>
     );
