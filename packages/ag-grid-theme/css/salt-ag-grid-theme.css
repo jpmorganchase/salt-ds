@@ -150,10 +150,13 @@ div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number
 }
 
 div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving):hover,
 div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
   /* When menu is visible, change bg and fg */
   background: var(--salt-actionable-secondary-background-active);
   color: var(--salt-actionable-secondary-foreground-active);
+  /* Color for menu / filter icons */
+  --ag-icon-font-color: var(--salt-actionable-secondary-foreground-active);
 }
 
 div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
