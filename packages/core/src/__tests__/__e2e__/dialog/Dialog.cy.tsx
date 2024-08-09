@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(dialogStories);
 
-const { Default, Preheader } = composedStories;
+const { Default, Preheader, Subtitle } = composedStories;
 
 describe("GIVEN a Dialog", () => {
   describe("WHEN only header is provided", () => {
@@ -66,6 +66,16 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("button", { name: "Open dialog" }).realClick();
 
       cy.get(".saltDialogHeader-preheader").should("be.visible");
+    });
+  });
+
+  describe("WHEN subtitle is provided", () => {
+    it("THEN it should display the subtitle", () => {
+      cy.mount(<Subtitle />);
+
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+
+      cy.get(".saltDialogHeader-subtitle").should("be.visible");
     });
   });
 

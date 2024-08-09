@@ -156,7 +156,7 @@ export const Preheader: StoryFn<QAContainerProps> = () => {
       <FakeDialog>
         <DialogHeader
           header="Subscribe"
-          preheader="Recieve emails about the latest updates"
+          preheader="Receive emails about the latest updates"
           style={{ width: "500px" }}
         />
         <DialogCloseButton />
@@ -177,6 +177,36 @@ export const Preheader: StoryFn<QAContainerProps> = () => {
 };
 
 Preheader.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const Subtitle: StoryFn<QAContainerProps> = () => {
+  return (
+    <QAContainer width={1300} itemPadding={3}>
+      <FakeDialog>
+        <DialogHeader
+          header="Subscribe"
+          subtitle="Receive emails about the latest updates"
+          style={{ width: "500px" }}
+        />
+        <DialogCloseButton />
+
+        <DialogContent>
+          <FormField necessity="asterisk">
+            <FormFieldLabel> Email </FormFieldLabel>
+            <Input defaultValue="Email Address" />
+          </FormField>
+        </DialogContent>
+        <DialogActions>
+          <Button>Cancel</Button>
+          <Button variant="cta">Subscribe</Button>
+        </DialogActions>
+      </FakeDialog>
+    </QAContainer>
+  );
+};
+
+Subtitle.parameters = {
   chromatic: { disableSnapshot: false },
 };
 

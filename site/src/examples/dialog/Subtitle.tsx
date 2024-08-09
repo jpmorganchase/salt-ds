@@ -12,7 +12,7 @@ import {
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
-export const Preheader = (): ReactElement => {
+export const Subtitle = (): ReactElement => {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -30,11 +30,11 @@ export const Preheader = (): ReactElement => {
 
   return (
     <>
-      <Button onClick={handleRequestOpen}>Open dialog with preheader</Button>
+      <Button onClick={handleRequestOpen}>Open dialog with subtitle</Button>
       <Dialog open={open} onOpenChange={onOpenChange} size="small" id={id}>
         <DialogHeader
           header="Subscribe"
-          preheader="Receive emails about the latest updates"
+          subtitle="Receive emails about the latest updates"
         />
         <DialogCloseButton onClick={handleClose} />
 
