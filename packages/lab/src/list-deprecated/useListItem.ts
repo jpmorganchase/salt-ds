@@ -181,7 +181,6 @@ export const useVirtualizedListItem = (props: VirtualizedListItemProps) => {
 const validateProps = <Item>(props: IndexedListItemProps<Item>) => {
   const { index, item } = props;
 
-  /* eslint-disable react-hooks/rules-of-hooks */
   useEffect(() => {
     if (item === undefined) {
       console.warn("useListItem needs `item`.");
@@ -190,5 +189,4 @@ const validateProps = <Item>(props: IndexedListItemProps<Item>) => {
       console.warn("useListItem needs to know item's index.");
     }
   }, [index, item]);
-  /* eslint-enable react-hooks/rules-of-hooks */
 };

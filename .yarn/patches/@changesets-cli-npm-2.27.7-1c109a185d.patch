@@ -1,0 +1,74 @@
+diff --git a/dist/changesets-cli.cjs.js b/dist/changesets-cli.cjs.js
+index 9fdc475d0aed8135bb8f0f0b57cf98204dad27c8..7324fe54cd0493e13ba7f46163942060db5c85b0 100644
+--- a/dist/changesets-cli.cjs.js
++++ b/dist/changesets-cli.cjs.js
+@@ -740,6 +740,7 @@ let getOtpCode = async twoFactorState => {
+ async function internalPublish(pkgName, opts, twoFactorState) {
+   let publishTool = await getPublishTool(opts.cwd);
+   let publishFlags = opts.access ? ["--access", opts.access] : [];
++  
+   publishFlags.push("--tag", opts.tag);
+ 
+   if ((await twoFactorState.isRequired) && !ciInfo.isCI) {
+@@ -760,14 +761,24 @@ async function internalPublish(pkgName, opts, twoFactorState) {
+     code,
+     stdout,
+     stderr
+-  } = publishTool.name === "pnpm" ? await spawn__default["default"]("pnpm", ["publish", "--json", ...publishFlags], {
+-    env: Object.assign({}, process.env, envOverride),
+-    cwd: opts.cwd
+-  }) : await spawn__default["default"](publishTool.name, ["publish", opts.publishDir, "--json", ...publishFlags], {
++  } = await spawn__default["default"]("yarn", ["npm", "publish", ...publishFlags], {
++	cwd: opts.cwd,
+     env: Object.assign({}, process.env, envOverride)
+   });
+ 
+   if (code !== 0) {
++    const output = stdout
++	  .toString()
++	  .trim()
++	  .split("\n")
++	  // this filters out "unnamed" logs: https://yarnpkg.com/advanced/error-codes/#yn0000---unnamed
++	  // this includes a list of packed files and the "summary output" like: "Failed with errors in 0s 75ms"
++	  // those are not that interesting so we reduce the noise by dropping them
++	  .filter(line => !/YN0000:/.test(line))
++	  .join("\n");
++    logger.error(`an error occurred while publishing ${pkgName}:`, `\n${output}`);
++    return { published: false };
++	
+     // NPM's --json output is included alongside the `prepublish` and `postpublish` output in terminal
+     // We want to handle this as best we can but it has some struggles:
+     // - output of those lifecycle scripts can contain JSON
+diff --git a/dist/changesets-cli.esm.js b/dist/changesets-cli.esm.js
+index 67ec717f672f330d742beb4cdddf9fa330f7dd5c..b537b313ec2915012a2e96af560ebb46a98abd64 100644
+--- a/dist/changesets-cli.esm.js
++++ b/dist/changesets-cli.esm.js
+@@ -720,14 +720,24 @@ async function internalPublish(pkgName, opts, twoFactorState) {
+     code,
+     stdout,
+     stderr
+-  } = publishTool.name === "pnpm" ? await spawn$1("pnpm", ["publish", "--json", ...publishFlags], {
+-    env: Object.assign({}, process.env, envOverride),
+-    cwd: opts.cwd
+-  }) : await spawn$1(publishTool.name, ["publish", opts.publishDir, "--json", ...publishFlags], {
++  } = await spawn$1("yarn", ["npm", "publish", ...publishFlags], {
++	cwd: opts.cwd,
+     env: Object.assign({}, process.env, envOverride)
+   });
+ 
+   if (code !== 0) {
++	const output = stdout
++	  .toString()
++	  .trim()
++	  .split("\n")
++	  // this filters out "unnamed" logs: https://yarnpkg.com/advanced/error-codes/#yn0000---unnamed
++	  // this includes a list of packed files and the "summary output" like: "Failed with errors in 0s 75ms"
++	  // those are not that interesting so we reduce the noise by dropping them
++	  .filter(line => !/YN0000:/.test(line))
++	  .join("\n");
++	error(`an error occurred while publishing ${pkgName}:`, `\n${output}`);
++	return { published: false };
++	
+     // NPM's --json output is included alongside the `prepublish` and `postpublish` output in terminal
+     // We want to handle this as best we can but it has some struggles:
+     // - output of those lifecycle scripts can contain JSON
