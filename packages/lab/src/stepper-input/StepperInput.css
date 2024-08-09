@@ -6,6 +6,18 @@
   gap: var(--salt-spacing-50);
 }
 
+.saltStepperInput-textAlignLeft {
+  text-align: left;
+}
+
+.saltStepperInput-textAlignCenter {
+  text-align: center;
+}
+
+.saltStepperInput-textAlignRight {
+  text-align: right;
+}
+
 /* Styles applied to stepper buttons container */
 .saltStepperInput-buttonContainer {
   display: flex;
@@ -14,7 +26,8 @@
 }
 
 /* Styles applied to stepper buttons */
-.saltStepperInput-stepperButton {
+.saltStepperInput-stepperButtonIncrement,
+.saltStepperInput-stepperButtonDecrement {
   --saltButton-height: calc((var(--salt-size-base) - var(--salt-spacing-50)) * 0.5);
   --saltButton-width: var(--salt-size-base);
 }

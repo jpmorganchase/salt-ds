@@ -1,135 +1,77 @@
-import { type InputProps, useControlled, useId } from "@salt-ds/core";
-import type {
-  ChangeEvent,
-  FocusEvent,
-  KeyboardEvent,
-  MouseEvent,
-  MutableRefObject,
-  SyntheticEvent,
+import {
+  type InputProps,
+  useControlled,
+  useForkRef,
+  useId,
+} from "@salt-ds/core";
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type SyntheticEvent,
+  useRef,
 } from "react";
 import type { StepperInputProps } from "./StepperInput";
 import { useSpinner } from "./internal/useSpinner";
+import {
+  isAtMax,
+  isAtMin,
+  isOutOfRange,
+  toFixedDecimalPlaces,
+  toFloat,
+} from "./internal/utils";
 
-// The input should only accept numbers, decimal points, and plus/minus symbols
-const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
-
-const callAll =
-  (...fns: any[]) =>
-  (...args: any[]) =>
-    fns.forEach((fn) => fn?.(...args));
-
-const toFixedDecimalPlaces = (inputNumber: number, decimalPlaces: number) =>
-  inputNumber.toFixed(decimalPlaces);
-
-const isAllowedNonNumeric = (inputCharacter: number | string) => {
-  if (typeof inputCharacter === "number") return;
-  return (
-    ("-+".includes(inputCharacter) && inputCharacter.length === 1) ||
-    inputCharacter === ""
-  );
-};
-
-const toFloat = (inputValue: number | string) => {
-  // Plus, minus, and empty characters are treated as 0
-  if (isAllowedNonNumeric(inputValue)) return 0;
-  return Number.parseFloat(inputValue.toString());
-};
-
-const sanitizedInput = (numberString: string) =>
-  (numberString.match(ACCEPT_INPUT) || []).join("");
-
-export const useStepperInput = (
-  props: StepperInputProps,
-  inputRef: MutableRefObject<HTMLInputElement | null>,
-) => {
-  const {
-    block = 10,
-    decimalPlaces = 0,
-    defaultValue = 0,
-    id: idProp,
-    max = Number.MAX_SAFE_INTEGER,
-    min = Number.MIN_SAFE_INTEGER,
-    onChange,
-    step = 1,
-    value,
-    ...rest
-  } = props;
-
-  const [currentValue, setCurrentValue, isControlled] = useControlled({
-    controlled: value,
-    default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
-    name: "stepper-input",
-  });
-
-  const inputId = useId(idProp);
-
-  const isOutOfRange = () => {
-    if (currentValue === undefined) return true;
-    return toFloat(currentValue) > max || toFloat(currentValue) < min;
-  };
-
-  const isAtMax = () => {
-    if (currentValue === undefined) return true;
-    return toFloat(currentValue) >= max || (max === 0 && currentValue === "");
-  };
-
-  const isAtMin = () => {
-    if (currentValue === undefined) return true;
-    return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
-  };
-
+export const useStepperInput = ({
+  stepBlock = 10,
+  decimalPlaces = 0,
+  defaultValue = 0,
+  id: idProp,
+  max = Number.MAX_SAFE_INTEGER,
+  min = Number.MIN_SAFE_INTEGER,
+  onChange,
+  step = 1,
+  value,
+  readOnly,
+  disabled,
+  textAlign,
+}: Pick<
+  StepperInputProps,
+  | "stepBlock"
+  | "decimalPlaces"
+  | "defaultValue"
+  | "id"
+  | "max"
+  | "min"
+  | "onChange"
+  | "step"
+  | "value"
+  | "readOnly"
+  | "disabled"
+  | "textAlign"
+>) => {
   const decrement = (event?: SyntheticEvent) => {
-    if (currentValue === undefined || isAtMin()) return;
-    let nextValue = currentValue === "" ? -step : toFloat(currentValue) - step;
-
-    // Set value to `max` if it's currently out of range
-    if (max !== undefined && isOutOfRange()) nextValue = max;
-    setNextValue(nextValue, event);
+    if (value === undefined || isAtMin(value, min)) return;
+    const nextValue = value === "" ? -step : toFloat(value) - step;
+    setNextValue(event, nextValue);
   };
 
   const decrementBlock = (event?: SyntheticEvent) => {
-    if (currentValue === undefined || isAtMin()) return;
-    let nextValue = currentValue === "" ? block : toFloat(currentValue) - block;
-
-    // Set value to `max` if it's currently out of range
-    if (max !== undefined && isOutOfRange()) nextValue = max;
-    setNextValue(nextValue, event);
+    if (value === undefined || isAtMin(value, min)) return;
+    const nextValue = value === "" ? stepBlock : toFloat(value) - stepBlock;
+    setNextValue(event, nextValue);
   };
 
   const increment = (event?: SyntheticEvent) => {
-    if (currentValue === undefined || isAtMax()) return;
-    let nextValue = currentValue === "" ? step : toFloat(currentValue) + step;
-
-    // Set value to `min` if it's currently out of range
-    if (min !== undefined && isOutOfRange()) nextValue = min;
-    setNextValue(nextValue, event);
+    if (value === undefined || isAtMax(value, max)) return;
+    const nextValue = value === "" ? step : toFloat(value) + step;
+    setNextValue(event, nextValue);
   };
 
   const incrementBlock = (event?: SyntheticEvent) => {
-    if (currentValue === undefined || isAtMax()) return;
-    let nextValue = currentValue === "" ? block : toFloat(currentValue) + block;
-
-    // Set value to `min` if it's currently out of range
-    if (min !== undefined && isOutOfRange()) nextValue = min;
-    setNextValue(nextValue, event);
-  };
-
-  const setNextValue = (modifiedValue: number, event?: SyntheticEvent) => {
-    if (props.readOnly) return;
-    let nextValue = modifiedValue;
-    if (nextValue < min) nextValue = min;
-    if (nextValue > max) nextValue = max;
-
-    const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-    if (Number.isNaN(toFloat(roundedValue))) return;
-
-    if (!isControlled) {
-      setCurrentValue(roundedValue);
-    }
-
-    if (onChange) {
-      onChange(event, roundedValue);
-    }
+    if (value === undefined || isAtMax(value, max)) return;
+    const nextValue = value === "" ? stepBlock : toFloat(value) + stepBlock;
+    setNextValue(event, nextValue);
   };
 
   const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
@@ -138,7 +80,9 @@ export const useStepperInput = (
   const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
     useSpinner((event?: SyntheticEvent) => increment(event), isAtMax());
 
-  const handleInputBlur = (event: FocusEvent) => {
+  const handleInputBlur = (event: FocusEvent<HTMLDivElement>) => {
+    InputProps?.onBlur?.(event);
+
     if (currentValue === undefined) return;
 
     const roundedValue = toFixedDecimalPlaces(
@@ -160,6 +104,8 @@ export const useStepperInput = (
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    InputProps?.onChange?.(event);
+
     const changedValue = event.target.value;
 
     if (!isControlled) {
@@ -171,7 +117,8 @@ export const useStepperInput = (
     }
   };
 
-  const handleInputKeyDown = (event: KeyboardEvent) => {
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    InputProps?.onKeyDown?.(event);
     if (event.shiftKey && ["ArrowUp", "ArrowDown"].includes(event.key)) {
       event.preventDefault();
       event.key === "ArrowUp" ? incrementBlock() : decrementBlock();
@@ -191,48 +138,49 @@ export const useStepperInput = (
       : decrementSpinner(event);
   };
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const handleButtonMouseUp = () => inputRef.current?.focus();
+
+  const forkedInputRef = useForkRef(inputRef, InputPropsProp.inputRef);
 
   const getButtonProps = (direction: string) => ({
     "aria-hidden": true,
-    disabled:
-      props.disabled || (direction === "increment" ? isAtMax() : isAtMin()),
+    disabled: disabled || (direction === "increment" ? isAtMax() : isAtMin()),
     tabIndex: -1,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
       handleButtonMouseDown(event, direction),
     onMouseUp: handleButtonMouseUp,
   });
 
-  const getInputProps = (
-    inputProps: InputProps = {},
-  ): InputProps | undefined => {
-    if (currentValue === undefined) return undefined;
-    return {
-      ...rest,
-      inputProps: {
-        role: "spinbutton",
-        "aria-invalid": isOutOfRange(),
-        "aria-valuemax": toFloat(toFixedDecimalPlaces(max, decimalPlaces)),
-        "aria-valuemin": toFloat(toFixedDecimalPlaces(min, decimalPlaces)),
-        "aria-valuenow": toFloat(
-          toFixedDecimalPlaces(toFloat(currentValue), decimalPlaces),
-        ),
-        id: inputId,
-        ...inputProps.inputProps,
-      },
-      onBlur: callAll(inputProps.onBlur, handleInputBlur),
-      onChange: callAll(inputProps.onChange, handleInputChange),
-      onFocus: inputProps.onFocus,
-      onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
-      textAlign: inputProps.textAlign,
-      value: String(currentValue),
-    };
-  };
+  const InputProps: InputProps | undefined =
+    currentValue === undefined
+      ? undefined
+      : {
+          ...InputPropsProp,
+          inputProps: {
+            role: "spinbutton",
+            "aria-invalid": isOutOfRange(),
+            "aria-valuemax": toFloat(toFixedDecimalPlaces(max, decimalPlaces)),
+            "aria-valuemin": toFloat(toFixedDecimalPlaces(min, decimalPlaces)),
+            "aria-valuenow": toFloat(
+              toFixedDecimalPlaces(toFloat(currentValue), decimalPlaces),
+            ),
+            id: inputId,
+            ...InputPropsProp.inputProps,
+          },
+          onBlur: handleInputBlur,
+          onChange: handleInputChange,
+          onKeyDown: handleInputKeyDown,
+          textAlign: textAlign ?? InputPropsProp.textAlign,
+          value: String(currentValue),
+          inputRef: forkedInputRef,
+        };
 
   return {
     decrementButtonDown: arrowDownButtonDown,
     getButtonProps,
-    getInputProps,
+    InputProps,
     incrementButtonDown: arrowUpButtonDown,
   };
 };
