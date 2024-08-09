@@ -21,8 +21,8 @@ export default {
 } as Meta<typeof Badge>;
 
 export const AllExamples: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer height={500} width={1500} {...props}>
-    <GridLayout columns={12} gap={4}>
+  <QAContainer height={500} width={1700} {...props}>
+    <GridLayout columns={20} gap={4}>
       <Badge value={9}>
         <Button>
           <NotificationSolidIcon />
@@ -38,7 +38,12 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
           <MessageIcon />
         </Button>
       </Badge>
-      <GridItem colSpan={9}>
+      <Badge>
+        <Button>
+          <NotificationSolidIcon />
+        </Button>
+      </Badge>
+      <GridItem colSpan={7}>
         <TabstripNext defaultValue="Checks">
           <TabNext value="Checks">
             <StackLayout direction="row" gap={1}>
