@@ -1,11 +1,11 @@
 import {
-  getRefFromChildren,
   ownerWindow,
   useControlled,
   useDensity,
   useForkRef,
   usePrevious,
 } from "@salt-ds/core";
+import { getRefFromChildren } from "@salt-ds/utils";
 import {
   type KeyboardEvent,
   type MouseEvent,
