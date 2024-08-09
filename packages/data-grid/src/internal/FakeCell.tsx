@@ -1,10 +1,5 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import { CellFrame } from "../CellFrame";
 import type { GridCellProps } from "../GridColumn";
-
-import fakeCellCss from "./FakeCell.css";
 
 export type FakeCellProps<T> = Pick<GridCellProps<T>, "row">;
 
@@ -14,13 +9,6 @@ export type FakeCellProps<T> = Pick<GridCellProps<T>, "row">;
 // this column. Fake cells can't have keyboard focus or render any values.
 export function FakeCell<T>(props: FakeCellProps<T>) {
   const { row } = props;
-
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-fake-cell",
-    css: fakeCellCss,
-    window: targetWindow,
-  });
 
   return (
     <CellFrame
