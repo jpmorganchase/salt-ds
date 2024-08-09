@@ -283,10 +283,18 @@
 }
 
 .saltPillInput .saltPill:focus-visible {
-  background: var(--salt-content-foreground-highlight);
-  color: var(--salt-content-primary-foreground);
-  border-color: transparent;
+  background: var(--salt-selectable-background-hover);
   outline: none;
+}
+
+.saltPillInput .saltPill:hover {
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltPillInput .saltPill:active {
+  background: var(--salt-actionable-primary-background-active);
+  --saltPill-color: var(--salt-actionable-primary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
 }
 
 div[role="listitem"] {
