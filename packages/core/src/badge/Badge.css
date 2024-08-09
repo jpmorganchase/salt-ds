@@ -40,8 +40,13 @@
   transform: translateX(100%);
 }
 
-.saltBadge-topRightCenter {
+.saltBadge-dotBadge {
+  height: var(--salt-size-adornment);
+  min-width: var(--salt-size-adornment);
+}
+
+.saltBadge-dotBadge.saltBadge-topRightCenter {
   position: absolute;
-  right: calc((var(--salt-text-notation-lineHeight) / 2));
-  top: calc(-1 * (var(--salt-text-notation-lineHeight) / 2));
+  right: calc((var(--salt-size-adornment) / 2));
+  top: calc(-1 * (var(--salt-size-adornment) / 2));
 }
