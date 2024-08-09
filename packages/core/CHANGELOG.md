@@ -1,5 +1,32 @@
 # @salt-ds/core
 
+## 1.34.0
+
+### Minor Changes
+
+- 64be665: Update FormFieldHelperText to have status colors applied when `validationStatus` is applied to FormField.
+- fc66238: Added `tertiary` variant to the `variant` prop for Card, LinkCard, InteractableCard and Panel.
+
+  ```tsx
+  <Card variant="tertiary">Example of a Tertiary Card</Card>
+  <LinkCard variant="tertiary">Example of a Link Card</LinkCard>
+  <InteractableCard variant="tertiary">Example of a Interactable Card</InteractableCard>
+  <Panel variant="tertiary">Example of a Tertiary Panel</Panel>
+  ```
+
+### Patch Changes
+
+- 4823df6: - Fixed the default NavigationItem being considered a parent.
+  - Fixed NavigationItem not calling `onClick`.
+- 1a0ca7f: Fixed read-only checked radio buttons having the incorrect icon color.
+- 9837998: Fixed Pagination button having an incorrect color on hover when theme next is enabled.
+- 3913dbb: Fixed list scroll when there is only one item in `ComboBox` and `Dropdown`.
+- 5b735d9: Fixed ComboBox having a button when it has nothing to show.
+- 31c3702: Fixed ListBox not scrolling to the active item in some circumstances
+- 85997dc: Updated AccordionPanel to have less padding.
+- e9c1287: Update gap to `--salt-spacing-75` for top aligned labels in `FormField`.
+- 0eb21ae: Fixed `Accordion` becoming inaccessible when an id is passed to `AccordionPanel` or `AccordionHeader`.
+
 ## 1.33.0
 
 ### Minor Changes
