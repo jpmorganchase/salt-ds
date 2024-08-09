@@ -8,5 +8,8 @@
   ],
   "peerDependencies": {
     "vite": ">2.0.0-0"
+  },
+  "dependencies": {
+    "magic-string": "^0.30.11"
   }
 }

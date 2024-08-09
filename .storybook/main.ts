@@ -1,13 +1,9 @@
 import { dirname, join } from "node:path";
-import type { StorybookConfig } from "@storybook/react-vite";
-import { cssVariableDocgen } from "css-variable-docgen-plugin";
-import type { UserConfig } from "vite";
-import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
-import { cssInline } from "../tooling/css-inline-plugin";
+import type { StorybookConfig } from "storybook-react-rsbuild";
 
 const config: StorybookConfig = {
   framework: {
-    name: getAbsolutePath("@storybook/react-vite"),
+    name: getAbsolutePath("storybook-react-rsbuild"),
     options: {},
   },
   stories: ["../packages/*/stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"],
@@ -29,25 +25,6 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-interactions"),
     getAbsolutePath("@storybook/addon-storysource"),
   ],
-  async viteFinal(config, { configType }) {
-    const { mergeConfig } = await import("vite");
-
-    const customConfig: UserConfig = {
-      plugins: [cssInline(), cssVariableDocgen()],
-    };
-
-    if (configType === "PRODUCTION" && config.root) {
-      config.plugins = config.plugins?.filter(
-        (p) =>
-          !p ||
-          !("name" in p) ||
-          p?.name !== "storybook:rollup-plugin-webpack-stats",
-      );
-      customConfig.plugins?.push(typescriptTurbosnap({ rootDir: config.root }));
-    }
-
-    return mergeConfig(customConfig, config);
-  },
 };
 
 module.exports = config;
