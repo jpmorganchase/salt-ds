@@ -28,6 +28,7 @@ import {
   type SyntheticEvent,
   forwardRef,
   useState,
+  useCallback,
 } from "react";
 import {
   Calendar,
@@ -103,33 +104,33 @@ export const DatePickerSinglePanel = forwardRef<
     state: "visibleMonth",
   });
 
-  const handleSelectedDateChange = (
-    event: SyntheticEvent,
-    newDate: SingleDateSelection | null,
-  ) => {
-    setSelectedDate(newDate);
-    onSelect?.(event, newDate);
-  };
+  const handleSelectedDateChange = useCallback(
+    (event: SyntheticEvent, newDate: SingleDateSelection | null) => {
+      setSelectedDate(newDate);
+      onSelect?.(event, newDate);
+    },
+    [setSelectedDate, onSelect],
+  );
 
-  const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
-    event,
-    newHoveredDate,
-  ) => {
-    setHoveredDate(newHoveredDate);
-    if (newHoveredDate && CalendarProps?.onHoveredDateChange) {
-      CalendarProps.onHoveredDateChange(event, newHoveredDate);
-    }
-  };
+  const handleHoveredDateChange = useCallback(
+    (event: SyntheticEvent, newHoveredDate: SingleDateSelection | null) => {
+      setHoveredDate(newHoveredDate);
+      if (newHoveredDate && CalendarProps?.onHoveredDateChange) {
+        CalendarProps.onHoveredDateChange(event, newHoveredDate);
+      }
+    },
+    [setHoveredDate, CalendarProps?.onHoveredDateChange],
+  );
 
-  const handleVisibleMonthChange: CalendarProps["onVisibleMonthChange"] = (
-    event,
-    newVisibleMonth,
-  ) => {
-    setVisibleMonth(newVisibleMonth);
-    if (onVisibleMonthChange) {
-      onVisibleMonthChange(event, newVisibleMonth);
-    }
-  };
+  const handleVisibleMonthChange = useCallback(
+    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+      setVisibleMonth(newVisibleMonth);
+      if (onVisibleMonthChange) {
+        onVisibleMonthChange(event, newVisibleMonth);
+      }
+    },
+    [setVisibleMonth, onVisibleMonthChange],
+  );
 
   const baseCalendarProps: Partial<CalendarSingleProps> = {
     selectionVariant: "single",
@@ -165,7 +166,6 @@ export const DatePickerSinglePanel = forwardRef<
           <Calendar selectionVariant="single" {...baseCalendarProps}>
             <CalendarNavigation />
           </Calendar>
-          ,
         </FormFieldContext.Provider>
       </FlexLayout>
     </StackLayout>

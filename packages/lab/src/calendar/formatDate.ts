@@ -7,6 +7,12 @@ import {
 export function getCurrentLocale() {
   return navigator.languages[0];
 }
+
+const defaultFormatOptions: Intl.DateTimeFormatOptions = {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+};
 export function formatDate(
   date: DateValue | null | undefined,
   locale?: string,
@@ -17,6 +23,7 @@ export function formatDate(
   }
   const timeLocale = locale || getCurrentLocale();
   const timeZone = options?.timeZone || getLocalTimeZone();
-  const formatter = new DateFormatter(timeLocale, options);
-  return formatter.format(date.toDate(timeZone));
+  return date
+    ? new DateFormatter(timeLocale, {...defaultFormatOptions, ...options}).format(date.toDate(timeZone))
+    : "";
 }

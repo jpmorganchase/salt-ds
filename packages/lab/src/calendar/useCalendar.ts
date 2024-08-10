@@ -10,7 +10,7 @@ import {
   today,
 } from "@internationalized/date";
 import { useControlled } from "@salt-ds/core";
-import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
+import { type SyntheticEvent, useCallback, useEffect, useState, useMemo } from "react";
 import { getCurrentLocale } from "./formatDate";
 import {
   type UseCalendarSelectionMultiSelectProps,
@@ -110,19 +110,25 @@ export function useCalendar(props: UseCalendarProps) {
     [maxDate, minDate],
   );
 
-  const isOutsideAllowedMonths = (date: DateValue) => {
-    return (
-      (minDate && endOfMonth(date).compare(minDate) < 0) ||
-      (maxDate && startOfMonth(date).compare(maxDate) > 0)
-    );
-  };
+  const isOutsideAllowedMonths = useCallback(
+    (date: DateValue) => {
+      return (
+        (minDate && endOfMonth(date).compare(minDate) < 0) ||
+        (maxDate && startOfMonth(date).compare(maxDate) > 0)
+      );
+    },
+    [minDate, maxDate],
+  );
 
-  const isOutsideAllowedYears = (date: DateValue) => {
-    return (
-      (minDate && endOfYear(date).compare(minDate) < 0) ||
-      (maxDate && startOfYear(date).compare(maxDate) > 0)
-    );
-  };
+  const isOutsideAllowedYears = useCallback(
+    (date: DateValue) => {
+      return (
+        (minDate && endOfYear(date).compare(minDate) < 0) ||
+        (maxDate && startOfYear(date).compare(maxDate) > 0)
+      );
+    },
+    [minDate, maxDate],
+  );
 
   const isDaySelectable = useCallback(
     (date?: DateValue) =>
@@ -141,12 +147,10 @@ export function useCalendar(props: UseCalendarProps) {
     onSelectedDateChange,
     startDateOffset:
       props.selectionVariant === "offset"
-        ? props.startDateOffset
-        : (date) => date,
+        ? props.startDateOffset : undefined,
     endDateOffset:
       props.selectionVariant === "offset"
-        ? props.endDateOffset
-        : (date) => date,
+        ? props.endDateOffset : undefined,
     isDaySelectable,
     selectionVariant,
     onHoveredDateChange,
@@ -156,9 +160,11 @@ export function useCalendar(props: UseCalendarProps) {
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
-  const isInVisibleMonth = (
-    date: DateValue | undefined | null,
-  ): date is DateValue => date != null && isSameMonth(date, visibleMonth);
+  const isInVisibleMonth = useCallback(
+    (date: DateValue | undefined | null): date is DateValue =>
+      date != null && isSameMonth(date, visibleMonth),
+    [visibleMonth],
+  );
 
   const getInitialFocusedDate = (): DateValue => {
     const selectedDate = selectionManager.state.selectedDate;
@@ -262,8 +268,35 @@ export function useCalendar(props: UseCalendarProps) {
     }
   }, [isDayVisible, focusedDate, visibleMonth]);
 
-  return {
-    state: {
+  return useMemo(
+    () => ({
+      state: {
+        visibleMonth,
+        focusedDate,
+        minDate,
+        maxDate,
+        selectionVariant,
+        hideOutOfRangeDates,
+        calendarFocused,
+        timeZone,
+        locale,
+        ...selectionManager.state,
+      },
+      helpers: {
+        setVisibleMonth,
+        setFocusedDate,
+        setCalendarFocused,
+        isDayUnselectable,
+        isDayHighlighted,
+        isDayDisabled,
+        isDayVisible,
+        isOutsideAllowedDates,
+        isOutsideAllowedMonths,
+        isOutsideAllowedYears,
+        ...selectionManager.helpers,
+      },
+    }),
+    [
       visibleMonth,
       focusedDate,
       minDate,
@@ -273,9 +306,6 @@ export function useCalendar(props: UseCalendarProps) {
       calendarFocused,
       timeZone,
       locale,
-      ...selectionManager.state,
-    },
-    helpers: {
       setVisibleMonth,
       setFocusedDate,
       setCalendarFocused,
@@ -286,7 +316,7 @@ export function useCalendar(props: UseCalendarProps) {
       isOutsideAllowedDates,
       isOutsideAllowedMonths,
       isOutsideAllowedYears,
-      ...selectionManager.helpers,
-    },
-  };
+      selectionManager
+    ],
+  );
 }

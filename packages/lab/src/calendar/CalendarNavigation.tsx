@@ -6,6 +6,7 @@ import {
   Option,
   type OptionProps,
   Tooltip,
+  type TooltipProps,
   makePrefixer,
   useListControlContext,
 } from "@salt-ds/core";
@@ -16,6 +17,8 @@ import {
   type MouseEventHandler,
   type SyntheticEvent,
   forwardRef,
+  useCallback,
+  useMemo,
 } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { CALENDAR_MAX_YEAR, CALENDAR_MIN_YEAR } from "./useCalendarSelection";
@@ -48,10 +51,21 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
 
 interface OptionWithTooltipProps extends OptionProps {
   value: DateValue;
-  tooltipContent: string;
+  tooltipContent?: string;
 }
 
 const withBaseName = makePrefixer("saltCalendarNavigation");
+
+const ConditionalTooltip: React.FC<TooltipProps> = ({
+  children,
+  disabled = true,
+  ...rest
+}) => {
+  if (disabled) {
+    return <>{children}</>;
+  }
+  return <Tooltip {...rest}>{children}</Tooltip>;
+};
 
 function useCalendarNavigation() {
   const {
@@ -64,34 +78,47 @@ function useCalendarNavigation() {
     },
   } = useCalendarContext();
 
-  const moveToNextMonth = (event: SyntheticEvent, step = 1) => {
-    setVisibleMonth(event, visibleMonth.add({ months: step }));
-  };
+  const moveToNextMonth = useCallback(
+    (event: SyntheticEvent, step = 1) => {
+      setVisibleMonth(event, visibleMonth.add({ months: step }));
+    },
+    [setVisibleMonth, visibleMonth],
+  );
 
-  const moveToPreviousMonth = (event: SyntheticEvent, step = 1) => {
-    setVisibleMonth(event, visibleMonth.subtract({ months: step }));
-  };
+  const moveToPreviousMonth = useCallback(
+    (event: SyntheticEvent, step = 1) => {
+      setVisibleMonth(event, visibleMonth.subtract({ months: step }));
+    },
+    [setVisibleMonth, visibleMonth],
+  );
 
-  const moveToMonth = (event: SyntheticEvent, month: DateValue) => {
-    let newMonth = month;
+  const moveToMonth = useCallback(
+    (event: SyntheticEvent, month: DateValue) => {
+      let newMonth = month;
 
-    if (!isOutsideAllowedYears(newMonth)) {
-      if (isOutsideAllowedMonths(newMonth)) {
-        // If month is navigable we should move to the closest navigable month
-        const navigableMonths = monthsForLocale(visibleMonth, locale).filter(
-          (n) => !isOutsideAllowedMonths(n),
-        );
-        newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
-          Math.abs(monthDiff(currentMonth, newMonth)) <
-          Math.abs(monthDiff(closestMonth, newMonth))
-            ? currentMonth
-            : closestMonth,
-        );
+      if (!isOutsideAllowedYears(newMonth)) {
+        if (isOutsideAllowedMonths(newMonth)) {
+          // If month is navigable we should move to the closest navigable month
+          const navigableMonths = monthsForLocale(visibleMonth, locale).filter(
+            (n) => !isOutsideAllowedMonths(n),
+          );
+          newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
+            Math.abs(monthDiff(currentMonth, newMonth)) <
+            Math.abs(monthDiff(closestMonth, newMonth))
+              ? currentMonth
+              : closestMonth,
+          );
+        }
+        setVisibleMonth(event, newMonth);
       }
-      setVisibleMonth(event, newMonth);
-    }
-  };
+    },
+    [isOutsideAllowedYears, isOutsideAllowedMonths, visibleMonth, locale],
+  );
 
+  const months: DateValue[] = useMemo(
+    () => monthsForLocale(visibleMonth, locale),
+    [visibleMonth, locale],
+  );
   function generateYearsBetweenRange(
     minYear: number,
     maxYear: number,
@@ -102,11 +129,13 @@ function useCalendarNavigation() {
     }
     return years;
   }
-
-  const months: DateValue[] = monthsForLocale(visibleMonth, locale);
-  const years: DateValue[] = generateYearsBetweenRange(
-    Math.min(minDate ? minDate.year : CALENDAR_MIN_YEAR, visibleMonth.year),
-    Math.max(maxDate ? maxDate.year : CALENDAR_MAX_YEAR, visibleMonth.year),
+  const years: DateValue[] = useMemo(
+    () =>
+      generateYearsBetweenRange(
+        Math.min(minDate ? minDate.year : CALENDAR_MIN_YEAR, visibleMonth.year),
+        Math.max(maxDate ? maxDate.year : CALENDAR_MAX_YEAR, visibleMonth.year),
+      ),
+    [minDate, maxDate, visibleMonth.year],
   );
 
   const selectedMonth: DateValue | undefined = months.find((month: DateValue) =>
@@ -119,34 +148,48 @@ function useCalendarNavigation() {
   const canNavigatePrevious = !(minDate && isDayVisible(minDate));
   const canNavigateNext = !(maxDate && isDayVisible(maxDate));
 
-  return {
-    moveToNextMonth,
-    moveToPreviousMonth,
-    moveToMonth,
-    visibleMonth,
-    months,
-    years,
-    canNavigateNext,
-    canNavigatePrevious,
-    selectedMonth,
-    selectedYear,
-    isOutsideAllowedMonths,
-    locale,
-    timeZone,
-  };
+  return useMemo(
+    () => ({
+      moveToNextMonth,
+      moveToPreviousMonth,
+      moveToMonth,
+      visibleMonth,
+      months,
+      years,
+      canNavigateNext,
+      canNavigatePrevious,
+      selectedMonth,
+      selectedYear,
+      isOutsideAllowedMonths,
+      locale,
+      timeZone,
+    }),
+    [
+      moveToNextMonth,
+      moveToMonth,
+      visibleMonth,
+      years,
+      canNavigateNext,
+      canNavigatePrevious,
+      selectedMonth,
+      selectedYear,
+      isOutsideAllowedMonths,
+      locale,
+      timeZone,
+    ],
+  );
 }
 
 const OptionWithTooltip = ({
   value,
   children,
-  disabled,
+  disabled = false,
   tooltipContent,
 }: OptionWithTooltipProps) => {
   const { activeState, openState } = useListControlContext();
   const open = activeState?.value === value;
-
   return (
-    <Tooltip
+    <ConditionalTooltip
       placement="right"
       open={open && openState}
       disabled={!disabled}
@@ -157,7 +200,7 @@ const OptionWithTooltip = ({
       <Option value={value} disabled={disabled}>
         {children}
       </Option>
-    </Tooltip>
+    </ConditionalTooltip>
   );
 };
 
@@ -196,34 +239,47 @@ export const CalendarNavigation = forwardRef<
     locale,
   } = useCalendarNavigation();
 
-  const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> = (
-    event,
-  ) => {
-    moveToPreviousMonth(event, step);
-  };
+  const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> =
+    useCallback(
+      (event) => {
+        moveToPreviousMonth(event, step);
+      },
+      [moveToPreviousMonth, step],
+    );
 
-  const handleNavigateNext: MouseEventHandler<HTMLButtonElement> = (event) => {
-    moveToNextMonth(event, step);
-  };
+  const handleNavigateNext: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (event) => {
+      moveToNextMonth(event, step);
+    },
+    [moveToNextMonth, step],
+  );
 
-  const handleMonthSelect = (event: SyntheticEvent, month: DateValue[]) => {
-    moveToMonth(event, month[0]);
-  };
+  const handleMonthSelect = useCallback(
+    (event: SyntheticEvent, month: DateValue[]) => {
+      moveToMonth(event, month[0]);
+    },
+    [moveToMonth],
+  );
 
-  const handleYearSelect = (event: SyntheticEvent, year: DateValue[]) => {
-    moveToMonth(event, year[0]);
-  };
+  const handleYearSelect = useCallback(
+    (event: SyntheticEvent, year: DateValue[]) => {
+      moveToMonth(event, year[0]);
+    },
+    [moveToMonth],
+  );
 
   const formatMonth = (date?: DateValue) => {
     return !date
       ? ""
       : formatDate(date, locale, {
           month: hideYearDropdown ? "long" : "short",
+          day: undefined,
+          year: undefined,
         });
   };
 
   const formatYear = (date?: DateValue) => {
-    return !date ? "" : formatDate(date, locale, { year: "numeric" });
+    return !date ? "" : `${date.year}`;
   };
 
   return (
@@ -236,7 +292,7 @@ export const CalendarNavigation = forwardRef<
       ref={ref}
       {...rest}
     >
-      <Tooltip
+      <ConditionalTooltip
         placement="top"
         disabled={canNavigatePrevious}
         content="Past dates are out of range"
@@ -251,7 +307,7 @@ export const CalendarNavigation = forwardRef<
         >
           <ChevronLeftIcon aria-label="Previous Month" />
         </Button>
-      </Tooltip>
+      </ConditionalTooltip>
       <div className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}>
         <Dropdown
           bordered={borderedDropdown}
@@ -282,18 +338,14 @@ export const CalendarNavigation = forwardRef<
             {...YearDropdownProps}
           >
             {years.map((year) => (
-              <OptionWithTooltip
-                key={formatYear(year)}
-                value={year}
-                tooltipContent="This year is out of range"
-              >
+              <OptionWithTooltip key={formatYear(year)} value={year}>
                 {formatYear(year)}
               </OptionWithTooltip>
             ))}
           </Dropdown>
         )}
       </div>
-      <Tooltip
+      <ConditionalTooltip
         placement="top"
         disabled={canNavigateNext}
         content="Future dates are out of range"
@@ -308,7 +360,7 @@ export const CalendarNavigation = forwardRef<
         >
           <ChevronRightIcon aria-label="Next Month" />
         </Button>
-      </Tooltip>
+      </ConditionalTooltip>
     </div>
   );
 });

@@ -308,26 +308,6 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         };
       };
 
-      const isEndDateBeforeStartDate = (
-        dateRange: DateRangeSelection | null,
-      ): boolean => {
-        return !!(
-          dateRange?.startDate &&
-          dateRange?.endDate &&
-          dateRange.endDate.compare(dateRange.startDate) < 0
-        );
-      };
-
-      const isStartDateAfterEndDate = (
-        dateRange: DateRangeSelection | null,
-      ): boolean => {
-        return !!(
-          dateRange?.startDate &&
-          dateRange?.endDate &&
-          dateRange.startDate.compare(dateRange.endDate) > 0
-        );
-      };
-
       const hasStartDateChanged = hasDateChanged(newStartDate, date?.startDate);
       const hasEndDateChanged = hasDateChanged(newEndDate, date?.endDate);
 
@@ -335,12 +315,6 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         newStartDate,
         newEndDate,
       );
-
-      if (isEndDateBeforeStartDate(newDate)) {
-        newDate = { ...newDate, endDate: undefined };
-      } else if (isStartDateAfterEndDate(newDate)) {
-        newDate = { ...newDate, startDate: undefined };
-      }
 
       if (newDate?.startDate || newDate?.endDate) {
         setDateValueFromDate(newDate);

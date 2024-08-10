@@ -1,6 +1,6 @@
 import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
-import { type ReactNode, useCallback, useContext } from "react";
+import { type ReactNode, useCallback, useContext, useMemo } from "react";
 
 interface DatePickerOverlayState {
   open: boolean;
@@ -43,8 +43,14 @@ export const DatePickerOverlayProvider: React.FC<
     placement: "bottom-start",
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
-  const { getFloatingProps: getFloatingPropsCallback, getReferenceProps } =
-    useInteractions([useDismiss(floatingUIResult.context)]);
+
+  const {
+    getFloatingProps: _getFloatingPropsCallback,
+    getReferenceProps: _getReferenceProps,
+  } = useInteractions([useDismiss(floatingUIResult.context)]);
+  const getFloatingPropsCallback = useMemo(() => _getFloatingPropsCallback, []);
+  const getReferenceProps = useMemo(() => _getReferenceProps, []);
+
   const getFloatingProps = useCallback(
     (userProps: React.HTMLProps<HTMLElement> | undefined) => {
       const { x, y, strategy, elements } = floatingUIResult;
@@ -60,19 +66,26 @@ export const DatePickerOverlayProvider: React.FC<
     [getFloatingPropsCallback, floatingUIResult],
   );
 
-  const state: DatePickerOverlayState = {
-    open,
-    floatingUIResult,
-  };
+  const state: DatePickerOverlayState = useMemo(
+    () => ({
+      open,
+      floatingUIResult,
+    }),
+    [open, floatingUIResult],
+  );
 
-  const helpers: DatePickerOverlayHelpers = {
-    getFloatingProps,
-    getReferenceProps,
-    setOpen,
-  };
+  const helpers: DatePickerOverlayHelpers = useMemo(
+    () => ({
+      getFloatingProps,
+      getReferenceProps,
+      setOpen,
+    }),
+    [getFloatingProps, getReferenceProps, setOpen],
+  );
+  const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 
   return (
-    <DatePickerOverlayContext.Provider value={{ state, helpers }}>
+    <DatePickerOverlayContext.Provider value={contextValue}>
       {children}
     </DatePickerOverlayContext.Provider>
   );

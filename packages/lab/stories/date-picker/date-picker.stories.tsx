@@ -1,5 +1,6 @@
 import {
   CalendarDate,
+  DateFormatter,
   type DateValue,
   getLocalTimeZone,
   today,
@@ -34,7 +35,7 @@ import {
   getCurrentLocale,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { type ChangeEvent, useState } from "react";
+import React, {SyntheticEvent, useCallback, useState} from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -44,52 +45,46 @@ export default {
 
 function validateShortDate(
   dateString: string,
-  locale = getCurrentLocale(),
-): boolean {
-  try {
-    const dateFormatter = new Intl.DateTimeFormat(locale, {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
+  locale: string = getCurrentLocale(),
+) {
+  // Regular expression to match the expected date format (e.g., "01 May 1970")
+  const datePattern = /^(\d{2}) (\w{3}) (\d{4})$/;
+  const match = dateString.match(datePattern);
 
-    const parts = dateFormatter.formatToParts(new Date(dateString));
-    const dayPart = parts.find((part) => part.type === "day");
-    const monthPart = parts.find((part) => part.type === "month");
-    const yearPart = parts.find((part) => part.type === "year");
-    console.log(parts);
-    if (!dayPart || !monthPart || !yearPart) {
-      return false;
-    }
-
-    const day = Number.parseInt(dayPart.value, 10);
-    const monthStr = monthPart.value.toLowerCase(); // Convert month to lowercase
-    const year = Number.parseInt(yearPart.value, 10);
-
-    function getMonthNames() {
-      const formatter = new Intl.DateTimeFormat(locale, { month: "short" });
-      const months = [];
-      for (let month = 0; month < 12; month++) {
-        const date = new Date(2021, month, 1);
-        months.push(formatter.format(date));
-      }
-      return months;
-    }
-    const months = getMonthNames();
-    const monthIndex = months.indexOf(monthStr);
-    if (monthIndex === -1 || monthIndex === undefined) {
-      return false;
-    }
-
-    const date = new Date(year, monthIndex, day);
-    return (
-      date.getFullYear() === year &&
-      date.getMonth() === monthIndex &&
-      date.getDate() === day
-    );
-  } catch (error) {
+  // Check if the date string matches the expected format
+  if (!match) {
     return false;
   }
+
+  const [, dayStr, monthStr, yearStr] = match;
+  const day = Number.parseInt(dayStr, 10);
+  const monthInput = monthStr.toLowerCase();
+  const year = Number.parseInt(yearStr, 10);
+
+  // Function to get month names in the specified locale
+  function getMonthNames() {
+    const formatter = new Intl.DateTimeFormat(locale, { month: "short" });
+    const months = [];
+    for (let month = 0; month < 12; month++) {
+      const date = new Date(2021, month, 1);
+      months.push(formatter.format(date).toLowerCase());
+    }
+    return months;
+  }
+
+  const months = getMonthNames();
+  const monthIndex = months.indexOf(monthInput);
+
+  if (monthIndex === -1) {
+    return false;
+  }
+
+  const date = new Date(year, monthIndex, day);
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() === monthIndex &&
+    date.getDate() === day
+  );
 }
 
 function validateNumericDate(dateString: string, format: string): boolean {
@@ -126,15 +121,22 @@ function validateNumericDate(dateString: string, format: string): boolean {
 }
 
 const isValidShortDate = (
-  value: string | undefined,
+  dateValue: string | undefined,
   locale = getCurrentLocale(),
-) => !value?.length || validateShortDate(value, locale);
-const isValidNumericDate = (value: string | undefined, format = "DD/MM/YYYY") =>
-  !value?.length || validateNumericDate(value, format);
+) => !dateValue?.length || validateShortDate(dateValue, locale);
+const isValidNumericDate = (dateValue: string | undefined, format = "DD/MM/YYYY") =>
+  !dateValue?.length || validateNumericDate(dateValue, format);
 
 function isValidOffsetString(offsetString: string) {
   const offsetPattern = /^\[+-]\d+$/;
   return offsetPattern.test(offsetString);
+}
+
+function isValidDateRange(date: DateRangeSelection | null) {
+  if (date?.startDate && date?.endDate && date.startDate.compare(date.endDate) > 0) {
+    return false;
+  }
+  return true;
 }
 
 function formatDateRange(
@@ -325,9 +327,8 @@ export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = (
         }}
       >
         <DatePickerSingleInput
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const newInputValue = event.target.value;
-            const validationStatus = isValidShortDate(newInputValue)
+          onDateValueChange={(newDateValue: string) => {
+            const validationStatus = isValidShortDate(newDateValue)
               ? undefined
               : "error";
             setValidationStatus(validationStatus);
@@ -359,20 +360,16 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
-          //setSelectedDate(newSelectedDate);
-          setValidationStatus(undefined);
+          const validationStatus = isValidDateRange(newSelectedDate) ? undefined : "error";
+          setValidationStatus(validationStatus);
         }}
         defaultSelectedDate={{ startDate: new CalendarDate(2024, 6, 9) }}
       >
         <DatePickerRangeInput
-          onChange={(
-            _e: ChangeEvent<HTMLInputElement>,
-            selectedDate?: DateInputRangeValue,
-          ) => {
-            const startDateValue = selectedDate?.startDate;
-            const endDateValue = selectedDate?.endDate;
+          onDateValueChange={(newDateValue?: DateInputRangeValue) => {
             const validationStatus =
-              isValidShortDate(startDateValue) && isValidShortDate(endDateValue)
+              isValidShortDate(newDateValue?.startDate) &&
+              isValidShortDate(newDateValue?.endDate)
                 ? undefined
                 : "error";
             setValidationStatus(validationStatus);
@@ -415,11 +412,12 @@ export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
         }}
       >
         <DatePickerSingleInput
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const newInputValue = event.target.value;
-            const validationStatus = isValidShortDate(newInputValue)
-              ? undefined
-              : "error";
+          onDateValueChange={(newDateValue: string) => {
+            const validationStatus =
+              isValidShortDate(newDateValue) ||
+              isValidOffsetString(newDateValue)
+                ? undefined
+                : "error";
             setValidationStatus(validationStatus);
           }}
         />
@@ -453,18 +451,15 @@ export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
-          setValidationStatus(undefined);
+          const validationStatus = isValidDateRange(newSelectedDate) ? undefined : "error";
+          setValidationStatus(validationStatus);
         }}
       >
         <DatePickerRangeInput
-          onChange={(
-            _e: ChangeEvent<HTMLInputElement>,
-            selectedDate?: DateInputRangeValue,
-          ) => {
-            const startDateValue = selectedDate?.startDate;
-            const endDateValue = selectedDate?.endDate;
+          onDateValueChange={(newDateValue?: DateInputRangeValue) => {
             const validationStatus =
-              isValidShortDate(startDateValue) && isValidShortDate(endDateValue)
+              isValidShortDate(newDateValue?.startDate) &&
+              isValidShortDate(newDateValue?.endDate)
                 ? undefined
                 : "error";
             setValidationStatus(validationStatus);
@@ -690,11 +685,10 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
             }
             return createCalendarDate(parsedDate);
           }}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const newInputValue = event.target.value;
+          onDateValueChange={(newDateValue: string) => {
             const validationStatus =
-              isValidShortDate(newInputValue) ||
-              isValidOffsetString(newInputValue)
+              isValidShortDate(newDateValue) ||
+              isValidOffsetString(newDateValue)
                 ? undefined
                 : "error";
             setValidationStatus(validationStatus);
@@ -718,9 +712,9 @@ export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
     undefined,
   );
 
-  function parseDateStringEnUS(
+  const parseDateStringEnUS = useCallback((
     dateString: string | undefined,
-  ): DateValue | undefined {
+  ): DateValue | undefined => {
     if (!dateString) {
       return undefined;
     }
@@ -734,7 +728,25 @@ export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
       Number.parseInt(month, 10),
       Number.parseInt(day, 10),
     );
-  }
+  }, []);
+
+  const formatDateStringEnUS = useCallback((
+    date: DateValue | null | undefined,
+    locale?: string,
+    options?: Intl.DateTimeFormatOptions,
+  ) => {
+    const preferredLocale = locale || getCurrentLocale();
+    const preferredTimeZone = options?.timeZone || getLocalTimeZone();
+    return date
+      ? new DateFormatter(preferredLocale, {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          ...options,
+          timeZone: preferredTimeZone,
+        }).format(date.toDate(preferredTimeZone))
+      : "";
+  }, []);
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -744,22 +756,25 @@ export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
         selectionVariant={"single"}
         selectedDate={selectedDate}
         locale={"en-US"}
+        timeZone={"America/New_York"}
         onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
-          console.log(`Selected date: ${formatDate(newSelectedDate, "en-US")}`);
+          console.log(
+            `Selected date: ${formatDateStringEnUS(newSelectedDate, "en-US", { timeZone: "America/New_York" })}`,
+          );
           setSelectedDate(newSelectedDate);
         }}
       >
         <DatePickerSingleInput
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const newInputValue = event.target.value;
+          onDateValueChange={(newDateValue: string) => {
             const validationStatus = isValidNumericDate(
-              newInputValue,
+              newDateValue,
               "MM/DD/YYYY",
             )
               ? undefined
               : "error";
             setValidationStatus(validationStatus);
           }}
+          formatDate={formatDateStringEnUS}
           parse={parseDateStringEnUS}
           placeholder={"MM/DD/YYYY"}
         />
@@ -781,9 +796,9 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
     undefined,
   );
 
-  function parseDateStringEsES(
+  const parseDateStringEsES = useCallback((
     dateString: string | undefined,
-  ): DateValue | undefined {
+  ): DateValue | undefined => {
     if (!dateString) {
       return undefined;
     }
@@ -797,7 +812,25 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
       Number.parseInt(month, 10),
       Number.parseInt(day, 10),
     );
-  }
+  }, []);
+
+  const formatDateStringEsES = useCallback((
+    date: DateValue | null | undefined,
+    locale?: string,
+    options?: Intl.DateTimeFormatOptions,
+  ) => {
+    const preferredLocale = locale || getCurrentLocale();
+    const preferredTimeZone = options?.timeZone || getLocalTimeZone();
+    return date
+      ? new DateFormatter(preferredLocale, {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          ...options,
+          timeZone: preferredTimeZone,
+        }).format(date.toDate(preferredTimeZone))
+      : "";
+  }, []);
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -807,22 +840,26 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
         selectionVariant={"range"}
         selectedDate={selectedDate}
         locale={"es-ES"}
+        timeZone={"Europe/Madrid"}
         onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
-          console.log(`Selected date: ${formatDateRange(newSelectedDate, "es-ES")}`);
+          console.log(
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
+          );
           setSelectedDate(newSelectedDate);
+          const validationStatus = isValidDateRange(newSelectedDate) ? undefined : "error";
+          setValidationStatus(validationStatus);
         }}
       >
         <DatePickerRangeInput
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const newInputValue = event.target.value;
-            const validationStatus = isValidNumericDate(
-              newInputValue,
-              "DD/MM/YYYY",
-            )
-              ? undefined
-              : "error";
+          onDateValueChange={(newDateValue?: DateInputRangeValue) => {
+            const validationStatus =
+              isValidNumericDate(newDateValue?.startDate, "DD/MM/YYYY") &&
+              isValidNumericDate(newDateValue?.endDate, "DD/MM/YYYY")
+                ? undefined
+                : "error";
             setValidationStatus(validationStatus);
           }}
+          formatDate={formatDateStringEsES}
           parse={parseDateStringEsES}
           placeholder={"DD/MM/YYYY"}
         />

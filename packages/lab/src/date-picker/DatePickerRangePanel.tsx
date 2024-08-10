@@ -24,6 +24,7 @@ import {
   type SyntheticEvent,
   forwardRef,
   useState,
+  useCallback,
 } from "react";
 import {
   Calendar,
@@ -152,54 +153,57 @@ export const DatePickerRangePanel = forwardRef<
     state: "endVisibleMonth",
   });
 
-  const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
-    (event, newDate) => {
+  const handleSelectedDateChange = useCallback(
+    (event: SyntheticEvent, newDate: DateRangeSelection | null) => {
       setSelectedDate(newDate);
       onSelect?.(event, newDate);
-    };
+    },
+    [onSelect, setSelectedDate],
+  );
 
-  const handleHoveredStartDateChange: CalendarProps["onHoveredDateChange"] = (
-    event,
-    newHoveredDate,
-  ) => {
-    setHoveredDate(newHoveredDate);
-    if (newHoveredDate && StartCalendarProps?.onHoveredDateChange) {
-      StartCalendarProps.onHoveredDateChange?.(event, newHoveredDate);
-    }
-  };
-  const handleHoveredEndDateChange: CalendarProps["onHoveredDateChange"] = (
-    event,
-    newHoveredDate,
-  ) => {
-    setHoveredDate(newHoveredDate);
-    if (newHoveredDate && EndCalendarProps?.onHoveredDateChange) {
-      EndCalendarProps.onHoveredDateChange(event, newHoveredDate);
-    }
-  };
+  const handleHoveredStartDateChange: CalendarProps["onHoveredDateChange"] =
+    useCallback(
+      (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
+        setHoveredDate(newHoveredDate);
+        if (newHoveredDate && StartCalendarProps?.onHoveredDateChange) {
+          StartCalendarProps.onHoveredDateChange?.(event, newHoveredDate);
+        }
+      },
+      [setHoveredDate, StartCalendarProps?.onHoveredDateChange],
+    );
+  const handleHoveredEndDateChange = useCallback(
+    (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
+      setHoveredDate(newHoveredDate);
+      if (newHoveredDate && EndCalendarProps?.onHoveredDateChange) {
+        EndCalendarProps.onHoveredDateChange(event, newHoveredDate);
+      }
+    },
+    [setHoveredDate, EndCalendarProps?.onHoveredDateChange],
+  );
 
-  const handleStartVisibleMonthChange: CalendarProps["onVisibleMonthChange"] = (
-    event,
-    newVisibleMonth,
-  ) => {
-    setStartVisibleMonth(newVisibleMonth);
-    if (newVisibleMonth.compare(endVisibleMonth) >= 0) {
-      setEndVisibleMonth(newVisibleMonth.add({ months: 1 }));
-    }
-    onStartVisibleMonthChange?.(event, newVisibleMonth);
-  };
+  const handleStartVisibleMonthChange = useCallback(
+    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+      setStartVisibleMonth(newVisibleMonth);
+      if (newVisibleMonth.compare(endVisibleMonth) >= 0) {
+        setEndVisibleMonth(newVisibleMonth.add({ months: 1 }));
+      }
+      onStartVisibleMonthChange?.(event, newVisibleMonth);
+    },
+    [onStartVisibleMonthChange, setStartVisibleMonth, setEndVisibleMonth],
+  );
 
-  const handleEndVisibleMonthChange: CalendarProps["onVisibleMonthChange"] = (
-    event,
-    newVisibleMonth,
-  ) => {
-    setEndVisibleMonth(newVisibleMonth);
-    if (newVisibleMonth.compare(startVisibleMonth) <= 0) {
-      setStartVisibleMonth(
-        startOfMonth(newVisibleMonth.subtract({ months: 1 })),
-      );
-    }
-    onEndVisibleMonthChange?.(event, newVisibleMonth);
-  };
+  const handleEndVisibleMonthChange = useCallback(
+    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+      setEndVisibleMonth(newVisibleMonth);
+      if (newVisibleMonth.compare(startVisibleMonth) <= 0) {
+        setStartVisibleMonth(
+          startOfMonth(newVisibleMonth.subtract({ months: 1 })),
+        );
+      }
+      onEndVisibleMonthChange?.(event, newVisibleMonth);
+    },
+    [onEndVisibleMonthChange, setStartVisibleMonth, setEndVisibleMonth],
+  );
 
   function getHoveredDate(
     date?: DateValue | null,
@@ -257,11 +261,9 @@ export const DatePickerRangePanel = forwardRef<
           <Calendar selectionVariant={"range"} {...startDateCalendarProps}>
             <CalendarNavigation />
           </Calendar>
-          ,
           <Calendar selectionVariant={"range"} {...endDateCalendarProps}>
             <CalendarNavigation />
           </Calendar>
-          ,
         </FormFieldContext.Provider>
       </FlexLayout>
     </StackLayout>
