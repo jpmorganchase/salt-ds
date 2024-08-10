@@ -311,7 +311,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       const hasStartDateChanged = hasDateChanged(newStartDate, date?.startDate);
       const hasEndDateChanged = hasDateChanged(newEndDate, date?.endDate);
 
-      let newDate: DateRangeSelection | null = createNewDateRange(
+      const newDate: DateRangeSelection | null = createNewDateRange(
         newStartDate,
         newEndDate,
       );

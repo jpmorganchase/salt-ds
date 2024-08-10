@@ -12,7 +12,7 @@ import type {
   MouseEventHandler,
   SyntheticEvent,
 } from "react";
-import { useMemo, useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
 
 export type SingleDateSelection = DateValue;
@@ -469,35 +469,35 @@ export function useCalendarSelectionDay({ date }: { date: DateValue }) {
   const hoveredOffset = isHoveredOffset(date);
 
   return {
-      handleClick,
-      handleKeyDown,
-      handleMouseOver,
-      handleMouseLeave,
-      status: {
-        selected,
-        selectedSpan,
-        hoveredSpan,
-        selectedStart,
-        selectedEnd,
-        hovered,
-        hoveredOffset,
-      },
-      dayProps: {
-        className: clsx({
-          [withBaseName("selected")]: selected,
-          [withBaseName("selectedSpan")]: selectedSpan,
-          [withBaseName("hoveredSpan")]: hoveredSpan,
-          [withBaseName("selectedStart")]: selectedStart,
-          [withBaseName("selectedEnd")]: selectedEnd,
-          [withBaseName("hovered")]: hovered,
-          [withBaseName("hoveredOffset")]: hoveredOffset,
-        }),
-        "aria-pressed":
-          selected || selectedEnd || selectedStart || selectedSpan
-            ? "true"
-            : undefined,
-        "aria-disabled":
-          isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
-      },
+    handleClick,
+    handleKeyDown,
+    handleMouseOver,
+    handleMouseLeave,
+    status: {
+      selected,
+      selectedSpan,
+      hoveredSpan,
+      selectedStart,
+      selectedEnd,
+      hovered,
+      hoveredOffset,
+    },
+    dayProps: {
+      className: clsx({
+        [withBaseName("selected")]: selected,
+        [withBaseName("selectedSpan")]: selectedSpan,
+        [withBaseName("hoveredSpan")]: hoveredSpan,
+        [withBaseName("selectedStart")]: selectedStart,
+        [withBaseName("selectedEnd")]: selectedEnd,
+        [withBaseName("hovered")]: hovered,
+        [withBaseName("hoveredOffset")]: hoveredOffset,
+      }),
+      "aria-pressed":
+        selected || selectedEnd || selectedStart || selectedSpan
+          ? "true"
+          : undefined,
+      "aria-disabled":
+        isDaySelectable && !isDaySelectable(date) ? "true" : undefined,
+    },
   };
 }

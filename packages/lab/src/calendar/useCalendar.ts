@@ -10,7 +10,13 @@ import {
   today,
 } from "@internationalized/date";
 import { useControlled } from "@salt-ds/core";
-import { type SyntheticEvent, useCallback, useEffect, useState, useMemo } from "react";
+import {
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { getCurrentLocale } from "./formatDate";
 import {
   type UseCalendarSelectionMultiSelectProps,
@@ -146,11 +152,9 @@ export function useCalendar(props: UseCalendarProps) {
     selectedDate,
     onSelectedDateChange,
     startDateOffset:
-      props.selectionVariant === "offset"
-        ? props.startDateOffset : undefined,
+      props.selectionVariant === "offset" ? props.startDateOffset : undefined,
     endDateOffset:
-      props.selectionVariant === "offset"
-        ? props.endDateOffset : undefined,
+      props.selectionVariant === "offset" ? props.endDateOffset : undefined,
     isDaySelectable,
     selectionVariant,
     onHoveredDateChange,
@@ -316,7 +320,7 @@ export function useCalendar(props: UseCalendarProps) {
       isOutsideAllowedDates,
       isOutsideAllowedMonths,
       isOutsideAllowedYears,
-      selectionManager
+      selectionManager,
     ],
   );
 }

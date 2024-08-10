@@ -24,6 +24,9 @@ export function formatDate(
   const timeLocale = locale || getCurrentLocale();
   const timeZone = options?.timeZone || getLocalTimeZone();
   return date
-    ? new DateFormatter(timeLocale, {...defaultFormatOptions, ...options}).format(date.toDate(timeZone))
+    ? new DateFormatter(timeLocale, {
+        ...defaultFormatOptions,
+        ...options,
+      }).format(date.toDate(timeZone))
     : "";
 }

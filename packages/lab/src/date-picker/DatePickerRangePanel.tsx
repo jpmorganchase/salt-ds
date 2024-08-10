@@ -23,18 +23,18 @@ import {
   type ComponentPropsWithoutRef,
   type SyntheticEvent,
   forwardRef,
-  useState,
   useCallback,
+  useState,
 } from "react";
 import {
   Calendar,
+  CalendarNavigation,
   type CalendarOffsetProps,
   type CalendarProps,
   type CalendarRangeProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
   getCurrentLocale,
-  CalendarNavigation,
 } from "../calendar";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";

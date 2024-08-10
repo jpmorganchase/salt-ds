@@ -31,11 +31,11 @@ import {
   type SingleDateSelection,
   createCalendarDate,
   formatDate,
-  useDatePickerContext,
   getCurrentLocale,
+  useDatePickerContext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, {SyntheticEvent, useCallback, useState} from "react";
+import React, { SyntheticEvent, useCallback, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -96,18 +96,18 @@ function validateNumericDate(dateString: string, format: string): boolean {
       return false;
     }
     const parts = dateString.split("/");
-    month = parseInt(parts[0], 10);
-    day = parseInt(parts[1], 10);
-    year = parseInt(parts[2], 10);
+    month = Number.parseInt(parts[0], 10);
+    day = Number.parseInt(parts[1], 10);
+    year = Number.parseInt(parts[2], 10);
   } else if (format === "DD/MM/YYYY") {
     regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
     if (!regex.test(dateString)) {
       return false;
     }
     const parts = dateString.split("/");
-    day = parseInt(parts[0], 10);
-    month = parseInt(parts[1], 10);
-    year = parseInt(parts[2], 10);
+    day = Number.parseInt(parts[0], 10);
+    month = Number.parseInt(parts[1], 10);
+    year = Number.parseInt(parts[2], 10);
   } else {
     // Unsupported format
     return false;
@@ -124,8 +124,10 @@ const isValidShortDate = (
   dateValue: string | undefined,
   locale = getCurrentLocale(),
 ) => !dateValue?.length || validateShortDate(dateValue, locale);
-const isValidNumericDate = (dateValue: string | undefined, format = "DD/MM/YYYY") =>
-  !dateValue?.length || validateNumericDate(dateValue, format);
+const isValidNumericDate = (
+  dateValue: string | undefined,
+  format = "DD/MM/YYYY",
+) => !dateValue?.length || validateNumericDate(dateValue, format);
 
 function isValidOffsetString(offsetString: string) {
   const offsetPattern = /^\[+-]\d+$/;
@@ -133,7 +135,11 @@ function isValidOffsetString(offsetString: string) {
 }
 
 function isValidDateRange(date: DateRangeSelection | null) {
-  if (date?.startDate && date?.endDate && date.startDate.compare(date.endDate) > 0) {
+  if (
+    date?.startDate &&
+    date?.endDate &&
+    date.startDate.compare(date.endDate) > 0
+  ) {
     return false;
   }
   return true;
@@ -360,7 +366,9 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
-          const validationStatus = isValidDateRange(newSelectedDate) ? undefined : "error";
+          const validationStatus = isValidDateRange(newSelectedDate)
+            ? undefined
+            : "error";
           setValidationStatus(validationStatus);
         }}
         defaultSelectedDate={{ startDate: new CalendarDate(2024, 6, 9) }}
@@ -451,7 +459,9 @@ export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
-          const validationStatus = isValidDateRange(newSelectedDate) ? undefined : "error";
+          const validationStatus = isValidDateRange(newSelectedDate)
+            ? undefined
+            : "error";
           setValidationStatus(validationStatus);
         }}
       >
@@ -712,41 +722,45 @@ export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
     undefined,
   );
 
-  const parseDateStringEnUS = useCallback((
-    dateString: string | undefined,
-  ): DateValue | undefined => {
-    if (!dateString) {
-      return undefined;
-    }
-    const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (!dateParts) {
-      return undefined;
-    }
-    const [, month, day, year] = dateParts;
-    return new CalendarDate(
-      Number.parseInt(year, 10),
-      Number.parseInt(month, 10),
-      Number.parseInt(day, 10),
-    );
-  }, []);
+  const parseDateStringEnUS = useCallback(
+    (dateString: string | undefined): DateValue | undefined => {
+      if (!dateString) {
+        return undefined;
+      }
+      const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (!dateParts) {
+        return undefined;
+      }
+      const [, month, day, year] = dateParts;
+      return new CalendarDate(
+        Number.parseInt(year, 10),
+        Number.parseInt(month, 10),
+        Number.parseInt(day, 10),
+      );
+    },
+    [],
+  );
 
-  const formatDateStringEnUS = useCallback((
-    date: DateValue | null | undefined,
-    locale?: string,
-    options?: Intl.DateTimeFormatOptions,
-  ) => {
-    const preferredLocale = locale || getCurrentLocale();
-    const preferredTimeZone = options?.timeZone || getLocalTimeZone();
-    return date
-      ? new DateFormatter(preferredLocale, {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          ...options,
-          timeZone: preferredTimeZone,
-        }).format(date.toDate(preferredTimeZone))
-      : "";
-  }, []);
+  const formatDateStringEnUS = useCallback(
+    (
+      date: DateValue | null | undefined,
+      locale?: string,
+      options?: Intl.DateTimeFormatOptions,
+    ) => {
+      const preferredLocale = locale || getCurrentLocale();
+      const preferredTimeZone = options?.timeZone || getLocalTimeZone();
+      return date
+        ? new DateFormatter(preferredLocale, {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            ...options,
+            timeZone: preferredTimeZone,
+          }).format(date.toDate(preferredTimeZone))
+        : "";
+    },
+    [],
+  );
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -796,41 +810,45 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
     undefined,
   );
 
-  const parseDateStringEsES = useCallback((
-    dateString: string | undefined,
-  ): DateValue | undefined => {
-    if (!dateString) {
-      return undefined;
-    }
-    const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (!dateParts) {
-      return undefined;
-    }
-    const [, day, month, year] = dateParts;
-    return new CalendarDate(
-      Number.parseInt(year, 10),
-      Number.parseInt(month, 10),
-      Number.parseInt(day, 10),
-    );
-  }, []);
+  const parseDateStringEsES = useCallback(
+    (dateString: string | undefined): DateValue | undefined => {
+      if (!dateString) {
+        return undefined;
+      }
+      const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+      if (!dateParts) {
+        return undefined;
+      }
+      const [, day, month, year] = dateParts;
+      return new CalendarDate(
+        Number.parseInt(year, 10),
+        Number.parseInt(month, 10),
+        Number.parseInt(day, 10),
+      );
+    },
+    [],
+  );
 
-  const formatDateStringEsES = useCallback((
-    date: DateValue | null | undefined,
-    locale?: string,
-    options?: Intl.DateTimeFormatOptions,
-  ) => {
-    const preferredLocale = locale || getCurrentLocale();
-    const preferredTimeZone = options?.timeZone || getLocalTimeZone();
-    return date
-      ? new DateFormatter(preferredLocale, {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          ...options,
-          timeZone: preferredTimeZone,
-        }).format(date.toDate(preferredTimeZone))
-      : "";
-  }, []);
+  const formatDateStringEsES = useCallback(
+    (
+      date: DateValue | null | undefined,
+      locale?: string,
+      options?: Intl.DateTimeFormatOptions,
+    ) => {
+      const preferredLocale = locale || getCurrentLocale();
+      const preferredTimeZone = options?.timeZone || getLocalTimeZone();
+      return date
+        ? new DateFormatter(preferredLocale, {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            ...options,
+            timeZone: preferredTimeZone,
+          }).format(date.toDate(preferredTimeZone))
+        : "";
+    },
+    [],
+  );
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -846,7 +864,9 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
-          const validationStatus = isValidDateRange(newSelectedDate) ? undefined : "error";
+          const validationStatus = isValidDateRange(newSelectedDate)
+            ? undefined
+            : "error";
           setValidationStatus(validationStatus);
         }}
       >
