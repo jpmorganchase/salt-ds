@@ -6,27 +6,16 @@ import {
   ListBox,
   Option,
   StackLayout,
-  makePrefixer,
 } from "@salt-ds/core";
 import {
   DatePickerRangePanel,
-  type DatePickerRangePanelProps,
   DatePickerSinglePanel,
   type DatePickerState,
   type DateRangeSelection,
-  List,
-  type ListProps,
   type SingleDateSelection,
   useDatePickerContext,
 } from "@salt-ds/lab";
-import React, { forwardRef } from "react";
-
-type CustomItem = {
-  label: string;
-  tenor: number;
-};
-const customItemToString: ListProps<CustomItem>["itemToString"] = ({ label }) =>
-  label;
+import React, {forwardRef} from "react";
 
 const tenorOptions = [
   { tenor: "5", label: "5 years" },
@@ -71,7 +60,7 @@ export const CustomDatePickerPanel = forwardRef<
         <ListBox
           bordered
           style={{ width: "10em" }}
-          onSelectionChange={(e, item) => {
+          onSelectionChange={(_event, item) => {
             if (!item) {
               return;
             }
@@ -104,7 +93,7 @@ export const CustomDatePickerPanel = forwardRef<
           }}
         >
           {tenorOptions.map(({ tenor, label }) => (
-            <Option value={tenor} key={tenor}>
+            <Option value={tenor} key={tenor}  tabIndex={0}>
               {label}
             </Option>
           ))}

@@ -1,6 +1,5 @@
+import React, { type ReactElement } from "react";
 import {
-  DateFormatter,
-  type DateValue,
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
@@ -13,22 +12,10 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   type SingleDateSelection,
+  formatDate
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import React, { type ReactElement } from "react";
-
-function formatDate(
-  dateValue: SingleDateSelection | null,
-  locale = "en-US",
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const dateFormatter = new DateFormatter(locale, options);
-  return dateValue
-    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
-    : "N/A";
-}
 
 export const SingleWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";

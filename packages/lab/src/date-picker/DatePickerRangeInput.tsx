@@ -3,7 +3,6 @@ import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type FocusEventHandler,
-  type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
   useEffect,
@@ -151,7 +150,7 @@ export const DatePickerRangeInput = forwardRef<
           disabled={disabled}
           aria-label="Open Calendar"
         >
-          <CalendarIcon aria-hidden />
+          <CalendarIcon />
         </Button>
       }
       {...rest}

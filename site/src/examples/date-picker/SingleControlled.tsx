@@ -1,24 +1,12 @@
-import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
+import { type ReactElement, useState } from "react";
 import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  type DateRangeSelection,
   type SingleDateSelection,
+  formatDate,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
-
-function formatDate(
-  dateValue: SingleDateSelection | null,
-  locale = "en-US",
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const dateFormatter = new DateFormatter(locale, options);
-  return dateValue
-    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
-    : "N/A";
-}
 
 export const SingleControlled = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(

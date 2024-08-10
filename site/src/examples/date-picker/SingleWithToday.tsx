@@ -1,11 +1,7 @@
-import {
-  DateFormatter,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+import React, { type ReactElement } from "react";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
-  Divider,
   FlexItem,
   FlexLayout,
   FormField,
@@ -20,19 +16,8 @@ import {
   type DatePickerState,
   type SingleDateSelection,
   useDatePickerContext,
+  formatDate,
 } from "@salt-ds/lab";
-import React, { type ReactElement } from "react";
-
-function formatDate(
-  dateValue: SingleDateSelection | null,
-  locale = "en-US",
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const dateFormatter = new DateFormatter(locale, options);
-  return dateValue
-    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
-    : "N/A";
-}
 
 const TodayButton = () => {
   const {
@@ -67,7 +52,6 @@ export const SingleWithToday = (): ReactElement => {
           <FlexLayout gap={0} direction="column">
             <FlexItem>
               <DatePickerSinglePanel />
-              <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
               <TodayButton />

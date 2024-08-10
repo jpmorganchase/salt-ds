@@ -1,4 +1,4 @@
-import { DateFormatter, getLocalTimeZone } from "@internationalized/date";
+import { type ReactElement, useState } from "react";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -9,48 +9,47 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  getCurrentLocale,
   type SingleDateSelection,
+  formatDate,
 } from "@salt-ds/lab";
-import { type ChangeEvent, type ReactElement, useState } from "react";
 
-function formatDate(
-  dateValue: SingleDateSelection | null,
-  locale = "en-US",
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const dateFormatter = new DateFormatter(locale, options);
-  return dateValue
-    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
-    : "N/A";
-}
-
-function isValidDate(dateString: string) {
-  const datePattern = /^(\d{2})\s([A-Za-z]{3})\s(\d{4})$/i;
+function validateShortDate(
+  dateString: string,
+  locale: string = getCurrentLocale(),
+) {
+  // Regular expression to match the expected date format (e.g., "01 May 1970")
+  const datePattern = /^(\d{2}) (\w{3}) (\d{4})$/;
   const match = dateString.match(datePattern);
+
+  // Check if the date string matches the expected format
   if (!match) {
     return false;
   }
-  const day = Number.parseInt(match[1], 10);
-  const monthStr = match[2].toLowerCase(); // Convert month to lowercase
-  const year = Number.parseInt(match[3], 10);
-  const months = [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "may",
-    "jun",
-    "jul",
-    "aug",
-    "sep",
-    "oct",
-    "nov",
-    "dec",
-  ];
-  const monthIndex = months.indexOf(monthStr);
+
+  const [, dayStr, monthStr, yearStr] = match;
+  const day = Number.parseInt(dayStr, 10);
+  const monthInput = monthStr.toLowerCase();
+  const year = Number.parseInt(yearStr, 10);
+
+  // Function to get month names in the specified locale
+  function getMonthNames() {
+    const formatter = new Intl.DateTimeFormat(locale, { month: "short" });
+    const months = [];
+    for (let month = 0; month < 12; month++) {
+      const date = new Date(2021, month, 1);
+      months.push(formatter.format(date).toLowerCase());
+    }
+    return months;
+  }
+
+  const months = getMonthNames();
+  const monthIndex = months.indexOf(monthInput);
+
   if (monthIndex === -1) {
     return false;
   }
+
   const date = new Date(year, monthIndex, day);
   return (
     date.getFullYear() === year &&
@@ -59,12 +58,10 @@ function isValidDate(dateString: string) {
   );
 }
 
-const isValidDateString = (value: string | undefined) =>
-  !value?.length || isValidDate(value);
-function isValidOffsetString(offsetString: string) {
-  const offsetPattern = /^\[+-]\d+$/;
-  return offsetPattern.test(offsetString);
-}
+const isValidShortDate = (
+  dateValue: string | undefined,
+  locale = getCurrentLocale(),
+) => !dateValue?.length || validateShortDate(dateValue, locale);
 
 export const SingleWithInitialError = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
@@ -88,9 +85,8 @@ export const SingleWithInitialError = (): ReactElement => {
         }}
       >
         <DatePickerSingleInput
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const newInputValue = event.target.value;
-            const validationStatus = isValidDateString(newInputValue)
+          onDateValueChange={(newDateValue: string) => {
+            const validationStatus = isValidShortDate(newDateValue)
               ? undefined
               : "error";
             setValidationStatus(validationStatus);

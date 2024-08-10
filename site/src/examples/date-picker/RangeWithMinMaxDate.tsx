@@ -1,8 +1,5 @@
-import {
-  CalendarDate,
-  DateFormatter,
-  getLocalTimeZone,
-} from "@internationalized/date";
+import { type ReactElement, useState } from "react";
+import { CalendarDate } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText,
@@ -14,22 +11,17 @@ import {
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DateRangeSelection,
+  formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = "en-US",
-  options?: Intl.DateTimeFormatOptions,
+  locale = getCurrentLocale(),
 ): string {
   const { startDate, endDate } = dateRange || {};
-  const dateFormatter = new DateFormatter(locale, options);
-  const formattedStartDate = startDate
-    ? dateFormatter.format(startDate.toDate(getLocalTimeZone()))
-    : "N/A";
-  const formattedEndDate = endDate
-    ? dateFormatter.format(endDate.toDate(getLocalTimeZone()))
-    : "N/A";
+  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
+  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 

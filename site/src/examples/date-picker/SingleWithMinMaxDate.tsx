@@ -1,8 +1,5 @@
-import {
-  CalendarDate,
-  DateFormatter,
-  getLocalTimeZone,
-} from "@internationalized/date";
+import { type ReactElement, useState } from "react";
+import { CalendarDate } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText,
@@ -14,19 +11,8 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
+  formatDate,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
-
-function formatDate(
-  dateValue: SingleDateSelection | null,
-  locale = "en-US",
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const dateFormatter = new DateFormatter(locale, options);
-  return dateValue
-    ? dateFormatter.format(dateValue.toDate(getLocalTimeZone()))
-    : "N/A";
-}
 
 export const SingleWithMinMaxDate = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(

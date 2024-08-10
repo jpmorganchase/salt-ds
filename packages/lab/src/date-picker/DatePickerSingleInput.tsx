@@ -120,7 +120,7 @@ export const DatePickerSingleInput = forwardRef<
           disabled={disabled}
           aria-label="Open Calendar"
         >
-          <CalendarIcon aria-hidden />
+          <CalendarIcon />
         </Button>
       }
       {...getReferenceProps({

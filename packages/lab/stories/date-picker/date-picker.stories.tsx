@@ -35,7 +35,7 @@ import {
   useDatePickerContext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { SyntheticEvent, useCallback, useState } from "react";
+import React, { useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -421,11 +421,9 @@ export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
       >
         <DatePickerSingleInput
           onDateValueChange={(newDateValue: string) => {
-            const validationStatus =
-              isValidShortDate(newDateValue) ||
-              isValidOffsetString(newDateValue)
-                ? undefined
-                : "error";
+            const validationStatus = isValidShortDate(newDateValue)
+              ? undefined
+              : "error";
             setValidationStatus(validationStatus);
           }}
         />
@@ -540,24 +538,25 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
   );
 };
 
+const TodayButton = () => {
+  const {
+    helpers: { setSelectedDate },
+  } = useDatePickerContext({
+    selectionVariant: "single",
+  }) as DatePickerState<SingleDateSelection>;
+
+  return (
+    <Button
+      style={{ width: "100%" }}
+      onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+    >
+      Today
+    </Button>
+  );
+};
+
 export const SingleWithToday: StoryFn<DatePickerSingleProps> = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const TodayButton = () => {
-    const {
-      helpers: { setSelectedDate },
-    } = useDatePickerContext({
-      selectionVariant: "single",
-    }) as DatePickerState<SingleDateSelection>;
-
-    return (
-      <Button
-        style={{ width: "100%" }}
-        onClick={() => setSelectedDate(today(getLocalTimeZone()))}
-      >
-        Today
-      </Button>
-    );
-  };
   return (
     <FormField>
       <FormLabel>Select a date</FormLabel>
@@ -713,6 +712,42 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
   );
 };
 
+const parseDateStringEnUS = (
+  dateString: string | undefined,
+): DateValue | undefined => {
+  if (!dateString) {
+    return undefined;
+  }
+  const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!dateParts) {
+    return undefined;
+  }
+  const [, month, day, year] = dateParts;
+  return new CalendarDate(
+    Number.parseInt(year, 10),
+    Number.parseInt(month, 10),
+    Number.parseInt(day, 10),
+  );
+};
+
+const formatDateStringEnUS = (
+  date: DateValue | null | undefined,
+  locale?: string,
+  options?: Intl.DateTimeFormatOptions,
+) => {
+  const preferredLocale = locale || getCurrentLocale();
+  const preferredTimeZone = options?.timeZone || getLocalTimeZone();
+  return date
+    ? new DateFormatter(preferredLocale, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        ...options,
+        timeZone: preferredTimeZone,
+      }).format(date.toDate(preferredTimeZone))
+    : "";
+};
+
 export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
@@ -720,46 +755,6 @@ export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
   const helperText = "Date format MM/DD/YYYY";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
-  );
-
-  const parseDateStringEnUS = useCallback(
-    (dateString: string | undefined): DateValue | undefined => {
-      if (!dateString) {
-        return undefined;
-      }
-      const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-      if (!dateParts) {
-        return undefined;
-      }
-      const [, month, day, year] = dateParts;
-      return new CalendarDate(
-        Number.parseInt(year, 10),
-        Number.parseInt(month, 10),
-        Number.parseInt(day, 10),
-      );
-    },
-    [],
-  );
-
-  const formatDateStringEnUS = useCallback(
-    (
-      date: DateValue | null | undefined,
-      locale?: string,
-      options?: Intl.DateTimeFormatOptions,
-    ) => {
-      const preferredLocale = locale || getCurrentLocale();
-      const preferredTimeZone = options?.timeZone || getLocalTimeZone();
-      return date
-        ? new DateFormatter(preferredLocale, {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            ...options,
-            timeZone: preferredTimeZone,
-          }).format(date.toDate(preferredTimeZone))
-        : "";
-    },
-    [],
   );
 
   return (
@@ -801,6 +796,42 @@ export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
   );
 };
 
+const parseDateStringEsES = (
+  dateString: string | undefined,
+): DateValue | undefined => {
+  if (!dateString) {
+    return undefined;
+  }
+  const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!dateParts) {
+    return undefined;
+  }
+  const [, day, month, year] = dateParts;
+  return new CalendarDate(
+    Number.parseInt(year, 10),
+    Number.parseInt(month, 10),
+    Number.parseInt(day, 10),
+  );
+};
+
+const formatDateStringEsES = (
+  date: DateValue | null | undefined,
+  locale?: string,
+  options?: Intl.DateTimeFormatOptions,
+) => {
+  const preferredLocale = locale || getCurrentLocale();
+  const preferredTimeZone = options?.timeZone || getLocalTimeZone();
+  return date
+    ? new DateFormatter(preferredLocale, {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        ...options,
+        timeZone: preferredTimeZone,
+      }).format(date.toDate(preferredTimeZone))
+    : "";
+};
+
 export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
@@ -808,46 +839,6 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Date format DD/MM/YYYY";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
-  );
-
-  const parseDateStringEsES = useCallback(
-    (dateString: string | undefined): DateValue | undefined => {
-      if (!dateString) {
-        return undefined;
-      }
-      const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-      if (!dateParts) {
-        return undefined;
-      }
-      const [, day, month, year] = dateParts;
-      return new CalendarDate(
-        Number.parseInt(year, 10),
-        Number.parseInt(month, 10),
-        Number.parseInt(day, 10),
-      );
-    },
-    [],
-  );
-
-  const formatDateStringEsES = useCallback(
-    (
-      date: DateValue | null | undefined,
-      locale?: string,
-      options?: Intl.DateTimeFormatOptions,
-    ) => {
-      const preferredLocale = locale || getCurrentLocale();
-      const preferredTimeZone = options?.timeZone || getLocalTimeZone();
-      return date
-        ? new DateFormatter(preferredLocale, {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            ...options,
-            timeZone: preferredTimeZone,
-          }).format(date.toDate(preferredTimeZone))
-        : "";
-    },
-    [],
   );
 
   return (
