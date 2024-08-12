@@ -78,6 +78,9 @@
   width: 100%;
   display: block;
 }
+.saltSteppedTracker-horizontal .saltTrackerStep-body {
+  text-align: center;
+}
 
 .saltTrackerStep-status-warning .saltTrackerStep-indicator {
   --trackerStep-icon-color: var(--trackerStep-icon-color-warning);

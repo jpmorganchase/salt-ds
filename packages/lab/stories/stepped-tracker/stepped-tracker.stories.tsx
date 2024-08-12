@@ -99,18 +99,23 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
       <SteppedTracker activeStep={1}>
         <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
+          <Text color="secondary">Descriptive text</Text>
         </TrackerStep>
         <TrackerStep>
           <StepLabel>Active</StepLabel>
+          <Text color="secondary">Descriptive text</Text>
         </TrackerStep>
         <TrackerStep status="warning">
           <StepLabel>Warning</StepLabel>
+          <Text color="warning">Descriptive text</Text>
         </TrackerStep>
         <TrackerStep status="error">
           <StepLabel>Error</StepLabel>
+          <Text color="error">Descriptive text</Text>
         </TrackerStep>
         <TrackerStep>
           <StepLabel>Default</StepLabel>
+          <Text color="secondary">Descriptive text</Text>
         </TrackerStep>
       </SteppedTracker>
     </div>
