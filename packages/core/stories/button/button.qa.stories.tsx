@@ -40,60 +40,6 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Button variant="cta">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="solid">
-      Button
-    </Button>
-    <Button color="accent" appearance="solid">
-      <SearchIcon />
-    </Button>
-    <Button color="accent" appearance="solid">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="accent" appearance="outline">
-      Button
-    </Button>
-    <Button color="accent" appearance="outline">
-      <SearchIcon />
-    </Button>
-    <Button color="accent" appearance="outline">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="accent" appearance="transparent">
-      Button
-    </Button>
-    <Button color="accent" appearance="transparent">
-      <SearchIcon />
-    </Button>
-    <Button color="accent" appearance="transparent">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="neutral" appearance="solid">
-      Button
-    </Button>
-    <Button color="neutral" appearance="solid">
-      <SearchIcon />
-    </Button>
-    <Button color="neutral" appearance="solid">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="neutral" appearance="outline">
-      Button
-    </Button>
-    <Button color="neutral" appearance="outline">
-      <SearchIcon />
-    </Button>
-    <Button color="neutral" appearance="outline">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="neutral" appearance="transparent">
-      Button
-    </Button>
-    <Button color="neutral" appearance="transparent">
-      <SearchIcon />
-    </Button>
-    <Button color="neutral" appearance="transparent">
-      <SearchIcon /> Button
-    </Button>
   </QAContainer>
 );
 
@@ -137,60 +83,6 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <SearchIcon />
     </Button>
     <Button variant="cta">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="accent" appearance="solid">
-      Button
-    </Button>
-    <Button color="accent" appearance="solid">
-      <SearchIcon />
-    </Button>
-    <Button color="accent" appearance="solid">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="accent" appearance="outline">
-      Button
-    </Button>
-    <Button color="accent" appearance="outline">
-      <SearchIcon />
-    </Button>
-    <Button color="accent" appearance="outline">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="accent" appearance="transparent">
-      Button
-    </Button>
-    <Button color="accent" appearance="transparent">
-      <SearchIcon />
-    </Button>
-    <Button color="accent" appearance="transparent">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="neutral" appearance="solid">
-      Button
-    </Button>
-    <Button color="neutral" appearance="solid">
-      <SearchIcon />
-    </Button>
-    <Button color="neutral" appearance="solid">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="neutral" appearance="outline">
-      Button
-    </Button>
-    <Button color="neutral" appearance="outline">
-      <SearchIcon />
-    </Button>
-    <Button color="neutral" appearance="outline">
-      <SearchIcon /> Button
-    </Button>
-    <Button color="neutral" appearance="transparent">
-      Button
-    </Button>
-    <Button color="neutral" appearance="transparent">
-      <SearchIcon />
-    </Button>
-    <Button color="neutral" appearance="transparent">
       <SearchIcon /> Button
     </Button>
   </QAContainerNoStyleInjection>
