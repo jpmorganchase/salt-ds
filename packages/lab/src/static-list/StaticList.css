@@ -1,0 +1,8 @@
+.saltStaticList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  height: auto;
+}
