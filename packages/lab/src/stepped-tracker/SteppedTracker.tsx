@@ -16,7 +16,7 @@ import {
   SteppedTrackerProvider,
   // TrackerStepProvider,
 } from "./SteppedTrackerContext";
-import { getDepthMap, renderNestedSteps } from "./utils";
+import { checkNesting, getDepthMap, renderNestedSteps } from "./utils";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
@@ -79,6 +79,8 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
 
     const depthMap = getDepthMap(children);
 
+    const isNested = checkNesting(depthMap);
+
     const childrenArray = Children.toArray(children);
 
     const nestedSteps = renderNestedSteps(childrenArray, depthMap);
@@ -86,7 +88,12 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
         <ul
-          className={clsx(withBaseName(), className, withBaseName(orientation))}
+          className={clsx(
+            withBaseName(),
+            withBaseName(orientation),
+            { [withBaseName("nested")]: isNested },
+            className,
+          )}
           ref={ref}
           {...restProps}
         >

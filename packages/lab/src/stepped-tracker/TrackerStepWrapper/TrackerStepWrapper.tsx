@@ -35,7 +35,7 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
 
   return (
     <>
-      <TrackerStepProvider stepNumber={stepNumber}>
+      <TrackerStepProvider stepNumber={stepNumber} parent={true}>
         <div className={withBaseName()}>
           {child}
           <Button

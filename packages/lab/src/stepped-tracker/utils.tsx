@@ -83,8 +83,15 @@ export const renderNestedSteps = (
     }
 
     return (
-      <TrackerStepProvider key={`step-${depthItem.i}`} stepNumber={depthItem.i}>
+      <TrackerStepProvider
+        key={`step-${depthItem.i}`}
+        stepNumber={depthItem.i}
+        parent={false}
+      >
         {child}
       </TrackerStepProvider>
     );
   });
+
+export const checkNesting = (depthMap: DepthMap[]) =>
+  depthMap.reduce((acc, item) => acc || item.children.length > 0, false);
