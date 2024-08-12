@@ -111,7 +111,7 @@ export const MultipleButtons: StoryFn<typeof Badge> = () => {
 
 export const DotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <div style={{ display: "flex", gap: "16px" }}>
+    <StackLayout>
       <FlexLayout>
         <Button appearance="transparent" color="neutral">
           <Badge>
@@ -126,7 +126,7 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
           </Button>
         </Badge>
       </FlexLayout>
-    </div>
+    </StackLayout>
   );
 };
 

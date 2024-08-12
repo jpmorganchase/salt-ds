@@ -46,7 +46,7 @@
   padding: 0;
 }
 
-.saltBadge-dotBadge.saltBadge-topRightCenter {
+.saltBadge-dotBadge.saltBadge-topRight {
   position: absolute;
   transform: translateX(100%) translateY(calc(-1 * (var(--salt-size-adornment) / 2)));
   right: calc((var(--salt-size-adornment) / 2));

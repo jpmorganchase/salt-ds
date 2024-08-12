@@ -41,9 +41,8 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
       {children}
       <span
         className={clsx(withBaseName("badge"), {
-          [withBaseName("topRight")]: children && value,
+          [withBaseName("topRight")]: children,
           [withBaseName("dotBadge")]: !value,
-          [withBaseName("topRightCenter")]: children && !value,
         })}
       >
         {valueText}

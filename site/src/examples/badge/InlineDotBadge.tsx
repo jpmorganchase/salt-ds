@@ -13,10 +13,8 @@ export const InlineDotBadge = (): ReactElement => {
       <TabNext value="Home">Home</TabNext>
       <TabNext value="Transactions">Transactions</TabNext>
       <TabNext value="Loans">
-        <StackLayout direction="row" gap={1}>
-          Loans
-          <Badge />
-        </StackLayout>
+        Loans
+        <Badge />
       </TabNext>
       <TabNext value="Checks">Checks</TabNext>
     </TabstripNext>
