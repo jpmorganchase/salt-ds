@@ -1,0 +1,11 @@
+.saltStaticListItem {
+  --static-list-item-text-color: var(--salt-content-primary-foreground);
+  --static-list-item-background: var(--salt-selectable-background);
+  --static-list-borderStyle: var(--salt-container-borderStyle);
+  --static-list-borderWidth: var(--salt-size-border);
+  list-style: none;
+
+  padding: var(--salt-spacing-100);
+  border-top: var(--static-list-borderWidth) var(--static-list-borderStyle) var(--salt-separable-tertiary-borderColor);
+  display: flex;
+}

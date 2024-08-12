@@ -56,6 +56,7 @@ export * from "./responsive";
 export * from "./search-input";
 export * from "./skip-link";
 export * from "./slider";
+export * from "./static-list";
 export * from "./stepped-tracker";
 export * from "./stepper-input";
 export * from "./system-status";
