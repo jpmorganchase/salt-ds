@@ -3,11 +3,12 @@ import type { Decorator, Meta, StoryFn } from "@storybook/react";
 import {
   Button,
   FlexLayout,
+  Spinner,
   StackLayout,
   StatusIndicator,
   Text,
 } from "@salt-ds/core";
-import { DeleteIcon } from "@salt-ds/icons";
+import { CloseIcon, DeleteIcon } from "@salt-ds/icons";
 
 import { StaticList, StaticListItem, type StaticListProps } from "@salt-ds/lab";
 
@@ -29,78 +30,71 @@ export default {
   decorators: [withFullViewWidth],
 } as Meta<typeof StaticList>;
 
+const files = [
+  {
+    name: "J.P.MorganChase.png",
+    status: "completed",
+    description: ["500KB", " •", "July 2024"],
+  },
+  {
+    name: "J.P.MorganChase.png",
+    status: "pending",
+    description: ["0KB of 500KB", " •", "30 July 2024"],
+  },
+  {
+    name: "J.P.MorganChase.png",
+    status: "error",
+    description: ["File size exceeds 500KB"],
+  },
+];
+
+type FileItemStatus = "completed" | "pending" | "error";
+
+function getStatusDecoration(status: FileItemStatus) {
+  switch (status) {
+    case "error":
+      return <StatusIndicator status="error" />;
+    case "pending":
+      return <Spinner size="small" />;
+    case "completed":
+      return <StatusIndicator status="success" />;
+  }
+}
+
 export const Default: StoryFn<StaticListProps> = (props) => {
   return (
     <StaticList>
-      <StaticListItem style={{ width: "320px" }}>
-        <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
-          <StatusIndicator status={"success"} />
-          <StackLayout gap={0.5} align="start">
-            <Text>J.P.MorganChase.png</Text>
-            <FlexLayout direction={"row"} gap={1}>
-              <Text styleAs="label" color="secondary">
-                500KB
-              </Text>
-              <Text styleAs="label" color="secondary">
-                •
-              </Text>
-              <Text styleAs="label" color="secondary">
-                July 2024
-              </Text>
-            </FlexLayout>
+      {files.map(({ status, name, description }) => (
+        <StaticListItem style={{ width: "320px" }}>
+          <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
+            {getStatusDecoration(status as FileItemStatus)}
+            <StackLayout gap={0.5} align="start">
+              <Text>{name}</Text>
+              <FlexLayout direction={"row"} gap={1}>
+                {description.map((text) => (
+                  <Text
+                    styleAs="label"
+                    color={status === "error" ? status : "secondary"}
+                  >
+                    {text}
+                  </Text>
+                ))}
+              </FlexLayout>
+            </StackLayout>
+            <Button
+              variant="secondary"
+              aria-label={status === "pending" ? "Cancel" : "Delete"}
+              style={{ marginLeft: "auto" }}
+            >
+              {status === "pending" ? (
+                <CloseIcon aria-hidden />
+              ) : (
+                <DeleteIcon aria-hidden />
+              )}
+            </Button>
           </StackLayout>
-          <Button
-            className="saltFileItemAction"
-            variant="secondary"
-            aria-label="Delete"
-            style={{ marginLeft: "auto" }}
-          >
-            {<DeleteIcon aria-hidden />}
-          </Button>
-        </StackLayout>
-      </StaticListItem>
-      <StaticListItem style={{ width: "320px" }}>
-        <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
-          <StatusIndicator status={"error"} />
-          <StackLayout gap={0.5} align="start">
-            <Text>J.P.MorganChase.png</Text>
-            <FlexLayout direction={"row"} gap={1}>
-              <Text color="error" styleAs="label">
-                File size exceeds 500KB
-              </Text>
-            </FlexLayout>
-          </StackLayout>
-          <Button
-            className="saltFileItemAction"
-            variant="secondary"
-            aria-label="Delete"
-            style={{ marginLeft: "auto" }}
-          >
-            {<DeleteIcon aria-hidden />}
-          </Button>
-        </StackLayout>
-      </StaticListItem>
-      <StaticListItem style={{ width: "320px" }}>
-        <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
-          <StatusIndicator status={"error"} />
-          <StackLayout gap={0.5} align="start">
-            <Text>J.P.MorganChase.png</Text>
-            <FlexLayout direction={"row"} gap={1}>
-              <Text color="error" styleAs="label">
-                File size exceeds 500KB
-              </Text>
-            </FlexLayout>
-          </StackLayout>
-          <Button
-            className="saltFileItemAction"
-            variant="secondary"
-            aria-label="Delete"
-            style={{ marginLeft: "auto" }}
-          >
-            {<DeleteIcon aria-hidden />}
-          </Button>
-        </StackLayout>
-      </StaticListItem>
+        </StaticListItem>
+      ))}
     </StaticList>
   );
 };
