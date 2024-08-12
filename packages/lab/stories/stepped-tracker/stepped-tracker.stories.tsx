@@ -154,6 +154,50 @@ export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
     >
       <TrackerStep stage="completed">
         <StepLabel>Step 1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep stage="completed">
+        <StepLabel>Step 2</StepLabel>
+      </TrackerStep>
+      <TrackerStep stage="inprogress">
+        <StepLabel>Step 3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 3.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 3.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="inprogress">
+        <StepLabel>Step 3.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 3.4</StepLabel>
+      </TrackerStep>
+      <TrackerStep>
+        <StepLabel>Step 4</StepLabel>
+      </TrackerStep>
+    </SteppedTracker>
+  );
+};
+
+export const NestedVerticalComplex: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <SteppedTracker
+      orientation="vertical"
+      activeStep={8}
+      style={{ width: 400 }}
+    >
+      <TrackerStep stage="completed">
+        <StepLabel>Step 1</StepLabel>
         <Text color="secondary">
           A label that is very long describing the sub-steps and why they are
           there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
@@ -168,34 +212,51 @@ export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
       </TrackerStep>
       <TrackerStep depth={2} stage="completed">
         <StepLabel>Step 1.1.2</StepLabel>
+        <Text color="secondary">
+          A label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur. A
+          label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
+        </Text>
       </TrackerStep>
       <TrackerStep stage="completed">
         <StepLabel>Step 2</StepLabel>
       </TrackerStep>
+      <TrackerStep stage="completed">
+        <StepLabel>
+          Step 3: a title that is very long and breaks over multiple lines.
+          Lorem ipsum dolor sit amet.
+        </StepLabel>
+      </TrackerStep>
       <TrackerStep stage="inprogress">
-        <StepLabel>Step 3</StepLabel>
+        <StepLabel>
+          Step 4: a title that is very long and breaks over multiple lines.
+          Lorem ipsum dolor sit amet, consectetur. Step 3: a title that is very
+          long and breaks over multiple lines. Lorem ipsum dolor sit amet,
+          consectetur.
+        </StepLabel>
       </TrackerStep>
       <TrackerStep depth={1} stage="inprogress">
-        <StepLabel>Step 3.1</StepLabel>
+        <StepLabel>Step 4.1</StepLabel>
       </TrackerStep>
       <TrackerStep depth={2} stage="completed">
-        <StepLabel>Step 3.1.1</StepLabel>
+        <StepLabel>Step 4.1.1</StepLabel>
       </TrackerStep>
       <TrackerStep depth={2}>
-        <StepLabel>Step 3.1.2</StepLabel>
+        <StepLabel>Step 4.1.2</StepLabel>
       </TrackerStep>
       <TrackerStep depth={2}>
-        <StepLabel>Step 3.1.3</StepLabel>
+        <StepLabel>Step 4.1.3</StepLabel>
       </TrackerStep>
       <TrackerStep depth={1}>
-        <StepLabel>Step 3.2</StepLabel>
+        <StepLabel>Step 4.2</StepLabel>
         <Text color="secondary">This one has an extra label</Text>
       </TrackerStep>
       <TrackerStep depth={1}>
-        <StepLabel>Step 3.3</StepLabel>
+        <StepLabel>Step 4.3</StepLabel>
       </TrackerStep>
       <TrackerStep>
-        <StepLabel>Step 4</StepLabel>
+        <StepLabel>Step 5</StepLabel>
       </TrackerStep>
     </SteppedTracker>
   );
