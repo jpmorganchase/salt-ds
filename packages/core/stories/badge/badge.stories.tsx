@@ -162,9 +162,7 @@ export const InlineDotBadge: StoryFn<typeof Badge> = () => {
               setActive("Label 2");
             }}
           >
-            <StackLayout direction="row" gap={1}>
-              Level 2<Badge />
-            </StackLayout>
+            Level 2<Badge />
           </NavigationItem>
         </li>
       </StackLayout>
