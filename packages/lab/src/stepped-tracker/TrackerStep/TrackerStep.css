@@ -107,3 +107,13 @@
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-2 {
   gap: var(--salt-spacing-300);
 }
+
+.saltSteppedTracker-nested.saltSteppedTracker-vertical .saltTrackerStep:not(.saltTrackerStep-parent) > .saltTrackerStep-body {
+  --trackerStep-toggle-width: calc(
+    2 *
+    var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--salt-size-border, 0)))) +
+    var(--saltButton-iconSize, var(--salt-size-icon))
+  );
+  padding-right: var(--salt-spacing-300);
+  margin-right: var(--trackerStep-toggle-width);
+}
