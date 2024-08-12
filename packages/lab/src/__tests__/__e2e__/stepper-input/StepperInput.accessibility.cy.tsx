@@ -1,10 +1,16 @@
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import { StepperInput } from "@salt-ds/lab";
+import * as stepperInputStories from "@stories/stepper-input/stepper-input.stories";
+import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+
+const composedStories = composeStories(stepperInputStories);
+const { Default } = composedStories;
 
 describe("Stepper Input - Accessibility", () => {
+  checkAccessibility(composedStories);
+
   it("sets the correct default ARIA attributes on input", () => {
     cy.mount(
-      <StepperInput
+      <Default
         decimalPlaces={2}
         defaultValue={-20.1}
         max={250.23}
@@ -19,28 +25,22 @@ describe("Stepper Input - Accessibility", () => {
   });
 
   it("has the correct labelling when wrapped in a `FormField`", () => {
-    cy.mount(
-      <FormField>
-        <FormFieldLabel>Stepper Input</FormFieldLabel>
-        <StepperInput defaultValue={-10} min={0} />
-        <FormFieldHelperText>Please enter a value</FormFieldHelperText>
-      </FormField>,
-    );
+    cy.mount(<Default defaultValue={-10} min={0} />);
 
     cy.findByRole("spinbutton").should("have.accessibleName", "Stepper Input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
-      "Please enter a value",
+      "Please enter a number",
     );
   });
 
   it("sets `aria-invalid=false` on input when the value is out of range", () => {
-    cy.mount(<StepperInput defaultValue={-10} min={0} />);
+    cy.mount(<Default defaultValue={-10} min={0} />);
     cy.findByRole("spinbutton").should("have.attr", "aria-invalid", "true");
   });
 
   it("sets the correct default ARIA attributes on the increment/decrement buttons", () => {
-    cy.mount(<StepperInput />);
+    cy.mount(<Default />);
     cy.findByLabelText("increment value")
       .should("have.attr", "tabindex", "-1")
       .and("have.attr", "aria-hidden", "true");

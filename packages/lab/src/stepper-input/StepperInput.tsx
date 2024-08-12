@@ -2,10 +2,12 @@ import {
   Button,
   Input,
   type InputProps,
+  StatusAdornment,
   type ValidationStatus,
   capitalize,
   makePrefixer,
   useControlled,
+  useForkRef,
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
@@ -14,32 +16,34 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ChangeEvent,
   type ComponentPropsWithoutRef,
-  type FocusEventHandler,
+  type FocusEvent,
   type InputHTMLAttributes,
+  type KeyboardEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
   forwardRef,
   useRef,
+  useState,
 } from "react";
 import {
   ACCEPT_INPUT,
   isAllowedNonNumeric,
+  isOutOfRange,
   sanitizedInput,
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
 
 import stepperInputCss from "./StepperInput.css";
+import { useStepperInput } from "./useStepperInput";
 
 const withBaseName = makePrefixer("saltStepperInput");
 
 export interface StepperInputProps
-  extends Omit<
-    ComponentPropsWithoutRef<"div">,
-    "onChange" | "emptyReadOnlyMarker"
-  > {
+  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
    * A boolean. When `true`, the input will receive a full border.
    */
@@ -91,6 +95,7 @@ export interface StepperInputProps
   min?: number;
   /**
    * Callback when stepper input value is changed.
+   * @param event - the event triggers value change, could be undefined during increment / decrement button long press
    */
   onChange?: (
     event: SyntheticEvent | undefined,
@@ -150,14 +155,14 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       emptyReadOnlyMarker = "—",
       endAdornment,
       hideButtons,
-      id: idProp,
-      inputProps = {},
-      inputRef,
+      inputProps: inputPropsProp = {},
+      inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
-      onChange,
+      onChange: onChangeProp,
       placeholder,
-      readOnly,
+      readOnly: readOnlyProp,
+      startAdornment,
       step = 1,
       stepBlock = 10,
       textAlign = "left",
@@ -186,69 +191,222 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
 
+    const isDisabled = disabled || formFieldDisabled;
+    const isReadOnly = readOnlyProp || formFieldReadOnly;
+    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
+
     const {
       "aria-describedby": inputDescribedBy,
       "aria-labelledby": inputLabelledBy,
-      onBlur,
+      className: inputClassName,
+      onBlur: inputOnBlur,
       onChange: inputOnChange,
-      onFocus,
-      required: inputPropsRequired,
+      onFocus: inputOnFocus,
+      required: inputRequired,
+      onKeyDown: inputOnKeyDown,
       ...restInputProps
-    } = inputProps;
+    } = inputPropsProp;
 
-    const inputId = useId(idProp);
+    const isRequired = formFieldRequired
+      ? ["required", "asterisk"].includes(formFieldRequired)
+      : inputRequired;
 
-    const [value, setValue, isControlled] = useControlled({
+    const [value, setValue] = useControlled({
       controlled: valueProp,
       default:
         typeof defaultValueProp === "number"
           ? toFixedDecimalPlaces(defaultValueProp, decimalPlaces)
-          : undefined,
+          : defaultValueProp,
       name: "StepperInput",
       state: "value",
     });
 
-    const setNextValue = (
-      event: SyntheticEvent | undefined,
-      modifiedValue: number,
-    ) => {
-      if (readOnly) return;
-      let nextValue = modifiedValue;
-      if (nextValue < min) nextValue = min;
-      if (nextValue > max) nextValue = max;
+    // Won't be needed when `:has` css can be used
+    const [focused, setFocused] = useState(false);
 
-      const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-      if (Number.isNaN(toFloat(roundedValue))) return;
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const forkedInputRef = useForkRef(inputRef, inputRefProp);
 
-      setValue(roundedValue);
+    const {
+      decrementButtonProps,
+      decrementValue,
+      incrementButtonProps,
+      incrementValue,
+    } = useStepperInput({
+      inputRef,
+      setValue,
+      decimalPlaces,
+      disabled,
+      max,
+      min,
+      onChange: onChangeProp,
+      readOnly: isReadOnly,
+      step,
+      stepBlock,
+      value,
+    });
 
-      onChange?.(event, roundedValue);
+    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      setFocused(true);
+
+      inputOnFocus?.(event);
+    };
+
+    const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+      setFocused(false);
+
+      if (value === undefined) return;
+
+      const floatValue = toFloat(value);
+      if (Number.isNaN(floatValue)) {
+        // Keep original value if NaN
+        setValue(value);
+        onChangeProp?.(event, value);
+      } else {
+        const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
+
+        if (value !== "" && !isAllowedNonNumeric(value)) {
+          setValue(roundedValue);
+        }
+
+        onChangeProp?.(event, roundedValue);
+      }
+
+      inputOnBlur?.(event);
+    };
+
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const changedValue = event.target.value;
+
+      setValue(sanitizedInput(changedValue));
+
+      onChangeProp?.(event, sanitizedInput(changedValue));
+      inputOnChange?.(event);
+    };
+
+    const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      switch (event.key) {
+        case "ArrowUp": {
+          event.preventDefault();
+          const block = event.shiftKey;
+          incrementValue(event, block);
+          break;
+        }
+        case "ArrowDown": {
+          event.preventDefault();
+          const block = event.shiftKey;
+          decrementValue(event, block);
+          break;
+        }
+        case "Home": {
+          event.preventDefault();
+          setValue(min);
+          onChangeProp?.(event, min);
+          break;
+        }
+        case "End": {
+          event.preventDefault();
+          setValue(max);
+          onChangeProp?.(event, max);
+          break;
+        }
+        case "PageUp": {
+          event.preventDefault();
+          incrementValue(event, true);
+          break;
+        }
+        case "PageDown": {
+          event.preventDefault();
+          decrementValue(event, true);
+          break;
+        }
+      }
+
+      inputOnKeyDown?.(event);
     };
 
     return (
       <div
-        className={clsx(
-          withBaseName(),
-          withBaseName(variant),
-          withBaseName(`textAlign${capitalize(textAlign)}`),
-          classNameProp,
-        )}
+        className={clsx(withBaseName(), classNameProp)}
         {...restProps}
         ref={ref}
       >
-        {!hideButtons && !readOnly && (
+        <div
+          className={clsx(
+            withBaseName("inputContainer"),
+            withBaseName(variant),
+            {
+              [withBaseName("focused")]: !isDisabled && focused,
+              [withBaseName("disabled")]: isDisabled,
+              [withBaseName("readOnly")]: isReadOnly,
+              [withBaseName(validationStatus || "")]: validationStatus,
+              [withBaseName("bordered")]: bordered,
+            },
+          )}
+        >
+          {startAdornment && (
+            <div className={withBaseName("startAdornmentContainer")}>
+              {startAdornment}
+            </div>
+          )}
+          <input
+            aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
+            aria-invalid={isOutOfRange(value, min, max)}
+            aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+            aria-valuemax={toFloat(toFixedDecimalPlaces(max, decimalPlaces))}
+            aria-valuemin={toFloat(toFixedDecimalPlaces(min, decimalPlaces))}
+            aria-valuenow={
+              value && !Number.isNaN(toFloat(value))
+                ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
+                : undefined
+            }
+            className={clsx(
+              withBaseName("input"),
+              withBaseName(`inputTextAlign${capitalize(textAlign)}`),
+              inputClassName,
+            )}
+            disabled={isDisabled}
+            onBlur={handleInputBlur}
+            onChange={handleInputChange}
+            onFocus={!isDisabled ? handleInputFocus : undefined}
+            onKeyDown={handleInputKeyDown}
+            placeholder={placeholder}
+            readOnly={isReadOnly}
+            ref={forkedInputRef}
+            required={isRequired}
+            role="spinbutton"
+            tabIndex={isDisabled ? -1 : 0}
+            value={value}
+            {...restInputProps}
+          />
+          {!isDisabled && validationStatus && (
+            <StatusAdornment status={validationStatus} />
+          )}
+          {endAdornment && (
+            <div className={withBaseName("endAdornmentContainer")}>
+              {endAdornment}
+            </div>
+          )}
+          <div className={withBaseName("activationIndicator")} />
+        </div>
+
+        {!hideButtons && !isReadOnly && (
           <div className={withBaseName("buttonContainer")}>
             <Button
-              aria-label="increment value"
-              className={withBaseName("stepperButtonIncrement")}
-              {...getButtonProps("increment")}
+              className={clsx(
+                withBaseName("stepperButton"),
+                withBaseName("stepperButtonIncrement"),
+              )}
+              {...incrementButtonProps}
             >
               <TriangleUpIcon aria-hidden />
             </Button>
             <Button
-              aria-label="decrement value"
-              className={withBaseName("stepperButtonDecrement")}
-              {...getButtonProps("decrement")}
+              className={clsx(
+                withBaseName("stepperButton"),
+                withBaseName("stepperButtonDecrement"),
+              )}
+              {...decrementButtonProps}
             >
               <TriangleDownIcon aria-hidden />
             </Button>

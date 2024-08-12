@@ -4,7 +4,7 @@ import { useInterval } from "./useInterval";
 const INITIAL_DELAY = 500;
 const INTERVAL_DELAY = 100;
 
-function useSpinner(
+export function useActivateWhileMouseDown(
   activationFn: (event?: SyntheticEvent) => void,
   isAtLimit: boolean,
 ) {
@@ -47,5 +47,3 @@ function useSpinner(
 
   return { activate, buttonDown };
 }
-
-export { useSpinner };

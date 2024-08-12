@@ -17,30 +17,97 @@ export default {
 export const Default: StoryFn = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
 };
+Default.args = {
+  defaultValue: 0,
+};
 
 export const Secondary: StoryFn = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput {...args} variant="secondary" />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
 };
+Secondary.args = {
+  defaultValue: 0,
+};
+
+export const Bordered: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+    </FormField>
+  );
+};
+Bordered.args = {
+  bordered: true,
+};
+
+export const ReadOnly: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+    </FormField>
+  );
+};
+ReadOnly.args = {
+  readOnly: true,
+  defaultValue: 5,
+};
+
+export const Disabled: StoryFn = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+    </FormField>
+  );
+};
+Disabled.args = {
+  disabled: true,
+  defaultValue: 5,
+};
+
+export const Validation: StoryFn<typeof StepperInput> = (args) => {
+  return (
+    <StackLayout>
+      <FormField validationStatus="error">
+        <FormFieldLabel>Error Stepper Input</FormFieldLabel>
+        <StepperInput defaultValue={"Error value"} {...args} />
+      </FormField>
+      <FormField validationStatus="warning">
+        <FormFieldLabel>Warning Stepper Input</FormFieldLabel>
+        <StepperInput defaultValue={"Warning value"} {...args} />
+      </FormField>
+      <FormField validationStatus="success">
+        <FormFieldLabel>Success Stepper Input</FormFieldLabel>
+        <StepperInput defaultValue={"Success value"} {...args} />
+      </FormField>
+    </StackLayout>
+  );
+};
+
 export const DecimalPlaces: StoryFn = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput decimalPlaces={2} step={0.01} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
+};
+DecimalPlaces.args = {
+  defaultValue: 0,
 };
 
 export const Controlled: StoryFn = (args) => {
@@ -131,6 +198,9 @@ export const Alignment: StoryFn = (args) => (
     </FormField>
   </StackLayout>
 );
+Alignment.args = {
+  defaultValue: 0,
+};
 
 export const RefreshAdornment: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(10);
@@ -159,7 +229,7 @@ export const RefreshAdornment: StoryFn = (args) => {
   );
 };
 
-export const HideButtons: StoryFn = (args) => {
+export const CustomButtons: StoryFn = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
@@ -203,15 +273,6 @@ export const HideButtons: StoryFn = (args) => {
         }
       />
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
-    </FormField>
-  );
-};
-
-export const ReadOnly: StoryFn = (args) => {
-  return (
-    <FormField>
-      <FormFieldLabel>Stepper Input</FormFieldLabel>
-      <StepperInput {...args} readOnly />
     </FormField>
   );
 };

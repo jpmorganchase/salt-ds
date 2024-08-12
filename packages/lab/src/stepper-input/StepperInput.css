@@ -1,33 +1,290 @@
 /* Styles applied to stepper container */
 .saltStepperInput {
+  --stepperInput-border: none;
+  --stepperInput-borderColor: var(--salt-editable-borderColor);
+  --stepperInput-borderStyle: var(--salt-editable-borderStyle);
+  --stepperInput-outlineColor: var(--salt-focused-outlineColor);
+  --stepperInput-borderWidth: var(--salt-size-border);
+
   align-items: center;
-  display: flex;
-  flex-direction: row;
+  color: var(--salt-content-primary-foreground);
+  display: inline-flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  height: var(--salt-size-base);
+  line-height: var(--salt-text-lineHeight);
+  min-height: var(--salt-size-base);
+  min-width: 4em;
+  width: 100%;
+  box-sizing: border-box;
+
   gap: var(--salt-spacing-50);
 }
 
-.saltStepperInput-textAlignLeft {
+.saltStepperInput:hover {
+  --stepperInput-borderStyle: var(--salt-editable-borderStyle-hover);
+  --stepperInput-borderColor: var(--salt-editable-borderColor-hover);
+
+  background: var(--stepperInput-background-hover);
+  cursor: var(--salt-editable-cursor-hover);
+}
+
+.saltStepperInput:active {
+  --stepperInput-borderColor: var(--salt-editable-borderColor-active);
+  --stepperInput-borderStyle: var(--salt-editable-borderStyle-active);
+  --stepperInput-borderWidth: var(--salt-editable-borderWidth-active);
+
+  background: var(--stepperInput-background-active);
+  cursor: var(--salt-editable-cursor-active);
+}
+
+/* Class applied if `variant="primary"` */
+.saltStepperInput-primary {
+  --stepperInput-background: var(--salt-editable-primary-background);
+  --stepperInput-background-active: var(--salt-editable-primary-background-active);
+  --stepperInput-background-hover: var(--salt-editable-primary-background-hover);
+  --stepperInput-background-disabled: var(--salt-editable-primary-background-disabled);
+  --stepperInput-background-readonly: var(--salt-editable-primary-background-readonly);
+}
+
+/* Class applied if `variant="secondary"` */
+.saltStepperInput-secondary {
+  --stepperInput-background: var(--salt-editable-secondary-background);
+  --stepperInput-background-active: var(--salt-editable-secondary-background-active);
+  --stepperInput-background-hover: var(--salt-editable-secondary-background-active);
+  --stepperInput-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --stepperInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+}
+
+/* Style applied to input if `validationState="error"` */
+.saltStepperInput-error,
+.saltStepperInput-error:hover {
+  --stepperInput-background: var(--salt-status-error-background);
+  --stepperInput-background-active: var(--salt-status-error-background);
+  --stepperInput-background-hover: var(--salt-status-error-background);
+  --stepperInput-borderColor: var(--salt-status-error-borderColor);
+  --stepperInput-outlineColor: var(--salt-status-error-borderColor);
+  --stepperInput-background-readonly: var(--salt-status-error-background);
+}
+
+/* Style applied to input if `validationState="warning"` */
+.saltStepperInput-warning,
+.saltStepperInput-warning:hover {
+  --stepperInput-background: var(--salt-status-warning-background);
+  --stepperInput-background-active: var(--salt-status-warning-background);
+  --stepperInput-background-hover: var(--salt-status-warning-background);
+  --stepperInput-borderColor: var(--salt-status-warning-borderColor);
+  --stepperInput-outlineColor: var(--salt-status-warning-borderColor);
+  --stepperInput-background-readonly: var(--salt-status-warning-background);
+}
+
+/* Style applied to input if `validationState="success"` */
+.saltStepperInput-success,
+.saltStepperInput-success:hover {
+  --stepperInput-background: var(--salt-status-success-background);
+  --stepperInput-background-active: var(--salt-status-success-background);
+  --stepperInput-background-hover: var(--salt-status-success-background);
+  --stepperInput-borderColor: var(--salt-status-success-borderColor);
+  --stepperInput-outlineColor: var(--salt-status-success-borderColor);
+  --stepperInput-background-readonly: var(--salt-status-success-background);
+}
+
+.saltStepperInput-inputContainer {
+  display: flex;
+  background: var(--stepperInput-background);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border: var(--stepperInput-border);
+  box-sizing: border-box;
+  height: var(--salt-size-base);
+  min-height: var(--salt-size-base);
+  overflow: hidden;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  position: relative;
+}
+
+/* Style applied to inner input component */
+.saltStepperInput-input {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  height: 100%;
+  letter-spacing: var(--saltStepperInput-letterSpacing, 0);
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  text-align: var(--stepperInput-textAlign);
+  width: 100%;
+}
+
+.saltStepperInput-input:focus {
+  outline: none;
+}
+
+/* Style applied to selected input */
+.saltStepperInput-input::selection {
+  background: var(--salt-content-foreground-highlight);
+}
+
+/* Style applied to placeholder text */
+.saltStepperInput-input::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Styling when focused */
+.saltStepperInput-focused {
+  --stepperInput-borderColor: var(--stepperInput-outlineColor);
+  --stepperInput-borderWidth: var(--salt-editable-borderWidth-active);
+
+  outline: var(--saltStepperInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--stepperInput-outlineColor));
+}
+
+/* Style applied if `readOnly={true}` */
+.saltStepperInput-readOnly {
+  --stepperInput-borderColor: var(--salt-editable-borderColor-readonly);
+  --stepperInput-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --stepperInput-borderWidth: var(--salt-size-border);
+
+  background: var(--stepperInput-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Styling when focused if `disabled={true}` */
+.saltStepperInput-focused.saltStepperInput-disabled {
+  --stepperInput-borderWidth: var(--salt-size-border);
+  outline: none;
+}
+
+/* Styling when focused if `readOnly={true}` */
+.saltStepperInput-focused.saltStepperInput-readOnly {
+  --stepperInput-borderWidth: var(--salt-size-border);
+}
+
+/* Style applied to selected input if `disabled={true}` */
+.saltStepperInput-disabled .saltStepperInput-input::selection {
+  background: none;
+}
+
+/* Style applied to input if `disabled={true}` */
+.saltStepperInput-disabled,
+.saltStepperInput-disabled:hover,
+.saltStepperInput-disabled:active {
+  --stepperInput-borderColor: var(--salt-editable-borderColor-disabled);
+  --stepperInput-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --stepperInput-borderWidth: var(--salt-size-border);
+
+  background: var(--stepperInput-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--saltStepperInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+}
+
+.saltStepperInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--stepperInput-borderWidth) var(--stepperInput-borderStyle) var(--stepperInput-borderColor);
+}
+
+/* Style applied if `bordered={true}` */
+.saltStepperInput-bordered {
+  --stepperInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--stepperInput-borderColor);
+  --stepperInput-borderWidth: 0;
+}
+
+/* Style applied if focused or active when `bordered={true}` */
+.saltStepperInput-bordered.saltStepperInput-focused,
+.saltStepperInput-bordered:active {
+  --stepperInput-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltStepperInput-bordered.saltStepperInput-readOnly,
+.saltStepperInput-bordered.saltStepperInput-disabled:hover {
+  --stepperInput-borderWidth: 0;
+}
+
+/* Style applied to start adornments */
+.saltStepperInput-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-right: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+
+/* Style applied to end adornments */
+.saltStepperInput-endAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-left: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+
+.saltStepperInput-readOnly .saltStepperInput-startAdornmentContainer {
+  margin-left: var(--salt-spacing-50);
+}
+
+.saltStepperInput-startAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
+.saltStepperInput-endAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
+.saltStepperInput-startAdornmentContainer .saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-50) * -1);
+}
+
+.saltStepperInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+
+.saltStepperInput-startAdornmentContainer > .saltButton,
+.saltStepperInput-endAdornmentContainer > .saltButton {
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
+}
+
+.saltStepperInput-inputTextAlignLeft {
   text-align: left;
 }
 
-.saltStepperInput-textAlignCenter {
+.saltStepperInput-inputTextAlignCenter {
   text-align: center;
 }
 
-.saltStepperInput-textAlignRight {
+.saltStepperInput-inputTextAlignRight {
   text-align: right;
 }
 
+/* --- Buttons --- */
+
 /* Styles applied to stepper buttons container */
 .saltStepperInput-buttonContainer {
+  --stepperInput-buttonGap: var(--salt-size-border-strong);
   display: flex;
   flex-direction: column;
-  gap: var(--salt-spacing-50);
+  gap: var(--stepperInput-buttonGap);
 }
 
 /* Styles applied to stepper buttons */
-.saltStepperInput-stepperButtonIncrement,
-.saltStepperInput-stepperButtonDecrement {
-  --saltButton-height: calc((var(--salt-size-base) - var(--salt-spacing-50)) * 0.5);
+.saltStepperInput-stepperButton {
+  --saltButton-height: calc((var(--salt-size-base) - var(--stepperInput-buttonGap)) * 0.5);
   --saltButton-width: var(--salt-size-base);
+}
+
+.saltStepperInput-stepperButtonIncrement {
+  --saltButton-borderRadius: var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0 0;
+}
+.saltStepperInput-stepperButtonDecrement {
+  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0);
 }

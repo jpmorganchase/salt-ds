@@ -3,7 +3,7 @@ import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Stepper Input/QA",
+  title: "Lab/Stepper Input/Stepper Input QA",
   component: StepperInput,
 } as Meta<typeof StepperInput>;
 
