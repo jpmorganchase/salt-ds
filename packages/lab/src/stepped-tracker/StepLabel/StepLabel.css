@@ -1,20 +1,22 @@
-.saltStepLabel {
+label.saltText.saltStepLabel {
   width: 100%;
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
 }
 
 .saltSteppedTracker.saltSteppedTracker-horizontal .saltStepLabel {
   text-align: center;
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltStepLabel {
-  --stepLabel-top-offset: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
+  --stepLabel-top-offset: calc((var(--salt-size-base) - var(--salt-text-lineHeight)) / 2);
   text-align: left;
   display: block;
   padding-top: var(--stepLabel-top-offset);
   padding-bottom: var(--stepLabel-top-offset);
-  font-weight: var(--salt-text-label-fontWeight);
+  font-weight: var(--salt-text-fontWeight);
 }
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-0 .saltStepLabel {
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
