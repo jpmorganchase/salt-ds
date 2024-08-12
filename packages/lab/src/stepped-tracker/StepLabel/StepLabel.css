@@ -4,10 +4,17 @@
 
 .saltSteppedTracker.saltSteppedTracker-horizontal .saltStepLabel {
   text-align: center;
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltStepLabel {
+  --stepLabel-top-offset: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
   text-align: left;
-  height: var(--salt-size-base);
-  line-height: var(--salt-size-base);
+  display: block;
+  padding-top: var(--stepLabel-top-offset);
+  padding-bottom: var(--stepLabel-top-offset);
+  font-weight: var(--salt-text-label-fontWeight);
+}
+.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStep-depth-0 .saltStepLabel {
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
