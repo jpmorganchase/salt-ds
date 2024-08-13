@@ -101,6 +101,7 @@
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
   position: relative;
+  flex-grow: 1;
 }
 
 /* Style applied to inner input component */
