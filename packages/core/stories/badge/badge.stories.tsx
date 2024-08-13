@@ -1,12 +1,5 @@
-import {
-  Badge,
-  Button,
-  FlexLayout,
-  NavigationItem,
-  StackLayout,
-} from "@salt-ds/core";
-import { List, ListItem } from "@salt-ds/lab";
-import { useState } from "react";
+import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
+import { List, ListItem, TabNext, TabstripNext } from "@salt-ds/lab";
 
 import {
   MessageIcon,
@@ -131,41 +124,19 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
 };
 
 export const InlineDotBadge: StoryFn<typeof Badge> = () => {
-  const items = ["Label 1", "Label 2"];
-  const [active, setActive] = useState(items[0]);
-
   return (
-    <nav>
-      <StackLayout
-        as="ul"
-        gap="var(--salt-size-border)"
-        style={{ listStyle: "none" }}
-      >
-        <li>
-          <NavigationItem
-            active={active === "Label 1"}
-            href="#"
-            orientation="vertical"
-            onClick={() => {
-              setActive("Label 1");
-            }}
-          >
-            Label 1
-          </NavigationItem>
-        </li>
-        <li>
-          <NavigationItem
-            active={active === "Label 2"}
-            href="#"
-            orientation="vertical"
-            onClick={() => {
-              setActive("Label 2");
-            }}
-          >
-            Level 2<Badge />
-          </NavigationItem>
-        </li>
-      </StackLayout>
-    </nav>
+    <TabstripNext
+      variant="inline"
+      defaultValue="Home"
+      style={{ width: "400px", margin: "auto" }}
+    >
+      <TabNext value="Home">Home</TabNext>
+      <TabNext value="Transactions">Transactions</TabNext>
+      <TabNext value="Loans">
+        Loans
+        <Badge />
+      </TabNext>
+      <TabNext value="Checks">Checks</TabNext>
+    </TabstripNext>
   );
 };

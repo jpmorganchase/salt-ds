@@ -1,5 +1,4 @@
-import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { NotificationIcon, SettingsSolidIcon } from "@salt-ds/icons";
+import { Badge } from "@salt-ds/core";
 import { TabNext, TabstripNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
