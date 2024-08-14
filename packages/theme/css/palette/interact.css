@@ -11,7 +11,6 @@
   --salt-palette-interact-border-disabled: var(--salt-color-gray-200-fade-border);
   --salt-palette-interact-border-hover: var(--salt-color-blue-500);
   --salt-palette-interact-border-readonly: var(--salt-color-gray-200-fade-border-readonly);
-  --salt-palette-interact-border-none: transparent;
   --salt-palette-interact-foreground: var(--salt-color-gray-200);
   --salt-palette-interact-foreground-active: var(--salt-color-blue-600);
   --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-600-fade-foreground);
@@ -58,7 +57,6 @@
   --salt-palette-interact-border-disabled: var(--salt-color-gray-90-fade-border);
   --salt-palette-interact-border-hover: var(--salt-color-blue-500);
   --salt-palette-interact-border-readonly: var(--salt-color-gray-90-fade-border-readonly);
-  --salt-palette-interact-border-none: transparent;
   --salt-palette-interact-foreground: var(--salt-color-gray-90);
   --salt-palette-interact-foreground-active: var(--salt-color-blue-100);
   --salt-palette-interact-foreground-activeDisabled: var(--salt-color-blue-100-fade-foreground);

@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 
-import { flip, useDismiss, useInteractions } from "@floating-ui/react";
+import { flip, offset, useDismiss, useInteractions } from "@floating-ui/react";
 import {
   type DateValue,
   getLocalTimeZone,
@@ -139,6 +139,7 @@ export const DatePicker = forwardRef<
     onSelectionChange,
     onChange,
     visibleMonths = 2,
+    bordered,
     ...rest
   },
   ref,
@@ -182,7 +183,7 @@ export const DatePicker = forwardRef<
       open: open,
       onOpenChange: onOpenChange,
       placement: "bottom-start",
-      middleware: [flip({ fallbackStrategy: "initialPlacement" })],
+      middleware: [offset(1), flip({ fallbackStrategy: "initialPlacement" })],
     });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
@@ -249,6 +250,7 @@ export const DatePicker = forwardRef<
     <DatePickerContext.Provider value={datePickerContextValue}>
       <DateInput
         validationStatus={validationStatus}
+        bordered={bordered}
         className={clsx(withBaseName(), className)}
         ref={inputRef}
         {...getReferenceProps()}
@@ -275,7 +277,7 @@ export const DatePicker = forwardRef<
         ref={floatingRef}
         {...getFloatingProps()}
         onSelect={handleSelect}
-        CalendarProps={CalendarProps}
+        CalendarProps={{ ...CalendarProps, borderedDropdown: bordered }}
         helperText={helperText}
         visibleMonths={visibleMonths}
       />

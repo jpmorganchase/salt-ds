@@ -37,6 +37,7 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   YearDropdownProps?: dateDropdownProps;
   onMonthSelect?: dateDropdownProps["onChange"];
   onYearSelect?: dateDropdownProps["onChange"];
+  borderedDropdown?: dateDropdownProps["bordered"];
   onNavigateNext?: ButtonProps["onClick"];
   onNavigatePrevious?: ButtonProps["onClick"];
   hideYearDropdown?: boolean;
@@ -153,6 +154,7 @@ export const CalendarNavigation = forwardRef<
     MonthDropdownProps,
     YearDropdownProps,
     hideYearDropdown,
+    borderedDropdown,
     ...rest
   } = props;
 
@@ -233,6 +235,7 @@ export const CalendarNavigation = forwardRef<
       </Tooltip>
       <div className={withBaseName("dropdowns")}>
         <Dropdown
+          bordered={borderedDropdown}
           aria-label="Month Dropdown"
           selected={selectedMonth ? [selectedMonth] : []}
           value={formatMonth(selectedMonth)}
@@ -256,6 +259,7 @@ export const CalendarNavigation = forwardRef<
             selected={selectedYear ? [selectedYear] : []}
             value={formatYear(selectedYear)}
             onSelectionChange={handleYearSelect}
+            bordered={borderedDropdown}
             {...YearDropdownProps}
           >
             {years.map((year) => (
