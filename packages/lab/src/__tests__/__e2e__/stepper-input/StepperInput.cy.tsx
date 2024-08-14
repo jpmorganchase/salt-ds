@@ -34,6 +34,7 @@ describe("Stepper Input", () => {
   it("increments from an empty value on button click", () => {
     cy.mount(<Default />);
 
+    cy.findByRole("spinbutton").clear();
     cy.findByRole("spinbutton").should("have.value", "");
 
     cy.findByLabelText("increment value").realClick();
