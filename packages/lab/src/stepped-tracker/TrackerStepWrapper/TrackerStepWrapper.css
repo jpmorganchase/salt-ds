@@ -18,6 +18,10 @@
   text-indent: 0;
   list-style-type: none;
   overflow: hidden;
+  padding-right: var(--salt-focused-outlineWidth);
+  margin-right: calc(0px - var(--salt-focused-outlineWidth));
+  padding-top: var(--salt-focused-outlineWidth);
+  margin-top: calc(0px - var(--salt-focused-outlineWidth));
 }
 
 .saltTrackerStepWrapper-nested-group[aria-hidden="true"] {
