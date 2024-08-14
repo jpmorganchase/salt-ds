@@ -7,15 +7,13 @@ export const InlineDotBadge = (): ReactElement => {
     <TabstripNext
       variant="inline"
       defaultValue="Home"
-      style={{ maxWidth: "400px", margin: "auto" }}
+      style={{ minWidth: 350 }}
     >
       <TabNext value="Home">Home</TabNext>
-      <TabNext value="Transactions">Transactions</TabNext>
-      <TabNext value="Loans">
-        Loans
-        <Badge />
+      <TabNext value="Transactions" aria-label="Transactions - New">
+        Transactions <Badge />
       </TabNext>
-      <TabNext value="Checks">Checks</TabNext>
+      <TabNext value="Loans">Loans</TabNext>
     </TabstripNext>
   );
 };

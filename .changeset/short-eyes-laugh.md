@@ -2,8 +2,12 @@
 "@salt-ds/core": minor
 ---
 
-Added dot badge is a circle dot provides users of changes in state that user needs to be aware of
+Added dot badge. A dot badge notifies users of changes in state e.g. new messages, notifications, or updates.
 
 ```tsx
-    <Badge><Button><NotificationIcon /></Button></Badge>
+<Badge>
+  <Button aria-label="Notifications">
+    <NotificationIcon aria-hidden />
+  </Button>
+</Badge>
 ```
