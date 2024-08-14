@@ -34,9 +34,9 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
   };
 
   return (
-    <>
+    <li className={withBaseName()}>
       <TrackerStepProvider stepNumber={stepNumber} parent={true}>
-        <div className={withBaseName()}>
+        <div className={withBaseName("parent")}>
           {child}
           <Button
             className={withBaseName("collapse-toggle")}
@@ -68,6 +68,6 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
       >
         <ul className={withBaseName("nested-group-inner")}>{children}</ul>
       </div>
-    </>
+    </li>
   );
 };

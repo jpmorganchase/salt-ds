@@ -1,18 +1,15 @@
-.saltTrackerStepWrapper {
+.saltTrackerStepWrapper-parent {
   display: flex;
   align-items: start;
   width: var(--saltTrackerStep-width, 100%);
   gap: var(--salt-spacing-50);
 }
 
-.saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerStepWrapper-nested-group {
-  flex-direction: column;
-}
-
 .saltTrackerStepWrapper-nested-group {
-  width: 100%;
   display: grid;
   transition: grid-template-rows var(--salt-duration-perceptible) ease-in-out, opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
+  margin: 0;
+  padding: 0;
 }
 
 .saltTrackerStepWrapper-nested-group-inner {
