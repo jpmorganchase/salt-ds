@@ -18,8 +18,8 @@ export default {
 
 export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
   <QAContainer cols={4} height={950} imgSrc={imgSrc} itemPadding={5}>
-    <StaticList>
-      <StaticListItem style={{ width: "320px" }}>
+    <StaticList style={{ width: "320px" }}>
+      <StaticListItem>
         <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
           <StatusIndicator status={"success"} />
           <StackLayout gap={0.5} align="start">
@@ -46,7 +46,7 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
           </Button>
         </StackLayout>
       </StaticListItem>
-      <StaticListItem style={{ width: "320px" }}>
+      <StaticListItem>
         <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
           <StatusIndicator status={"error"} />
           <StackLayout gap={0.5} align="start">
@@ -67,7 +67,7 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
           </Button>
         </StackLayout>
       </StaticListItem>
-      <StaticListItem style={{ width: "320px" }}>
+      <StaticListItem>
         <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
           <StatusIndicator status={"error"} />
           <StackLayout gap={0.5} align="start">
