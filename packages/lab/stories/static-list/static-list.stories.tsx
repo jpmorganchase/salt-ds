@@ -28,21 +28,25 @@ const files = [
     name: "J.P.MorganChase.png",
     status: "completed",
     description: ["500KB", " •", "July 2024"],
+    id: 1,
   },
   {
     name: "J.P.MorganChase.png",
     status: "pending",
     description: ["0KB of 500KB", " •", "30 July 2024"],
+    id: 2,
   },
   {
     name: "J.P.MorganChase.png",
     status: "error",
     description: ["File size exceeds 500KB"],
+    id: 3,
   },
   {
     name: "J.P.MorganChase.png",
     status: "completed",
     description: ["500KB", " •", "July 2024"],
+    id: 4,
   },
 ];
 
@@ -62,17 +66,18 @@ function getStatusDecoration(status: FileItemStatus) {
 export const Default: StoryFn<StaticListProps> = (props) => {
   return (
     <StaticList style={{ width: "320px" }}>
-      {files.map(({ status, name, description }) => (
-        <StaticListItem>
+      {files.map(({ status, name, description, id }) => (
+        <StaticListItem key={id}>
           <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
             {getStatusDecoration(status as FileItemStatus)}
             <StackLayout gap={0.5} align="start">
               <Text>{name}</Text>
               <FlexLayout direction={"row"} gap={1}>
-                {description.map((text) => (
+                {description.map((text, index) => (
                   <Text
                     styleAs="label"
                     color={status === "error" ? status : "secondary"}
+                    key={index}
                   >
                     {text}
                   </Text>
@@ -100,17 +105,18 @@ export const Default: StoryFn<StaticListProps> = (props) => {
 export const WithNoDivider: StoryFn<StaticListProps> = (props) => {
   return (
     <StaticList style={{ width: "320px" }}>
-      {files.map(({ status, name, description }) => (
-        <StaticListItem divider={false}>
+      {files.map(({ status, name, description, id }) => (
+        <StaticListItem divider={false} key={id}>
           <StackLayout direction="row" gap={1} style={{ width: "100%" }}>
             {getStatusDecoration(status as FileItemStatus)}
             <StackLayout gap={0.5} align="start">
               <Text>{name}</Text>
               <FlexLayout direction={"row"} gap={1}>
-                {description.map((text) => (
+                {description.map((text, index) => (
                   <Text
                     styleAs="label"
                     color={status === "error" ? status : "secondary"}
+                    key={index}
                   >
                     {text}
                   </Text>
