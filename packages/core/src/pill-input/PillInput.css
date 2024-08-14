@@ -289,18 +289,6 @@
   outline: none;
 }
 
-.saltPillInput .saltPill:hover {
-  background: var(--salt-content-foreground-highlight);
-  color: var(--salt-content-primary-foreground);
-  --saltIcon-color: var(--salt-content-primary-foreground);
-}
-
-.saltPillInput .saltPill:active {
-  background: var(--salt-actionable-primary-background-active);
-  color: var(--salt-actionable-primary-foreground-active);
-  --saltIcon-color: var(--salt-actionable-primary-foreground-active);
-}
-
 .saltPillInput-pillList div[role="listitem"] {
   display: inline;
 }
