@@ -20,7 +20,7 @@ import MobileDrawer from "./MobileDrawer";
 import SecondarySidebar from "./SecondarySidebar";
 import TitleWithDrawer from "./TitleWithDrawer";
 
-const components = { code, ul, p, a };
+const components = { code, ul, p, a } as any;
 
 const tabs = [
   { id: 0, name: "examples", label: "Examples" },
