@@ -12,7 +12,7 @@ import { DeleteIcon } from "@salt-ds/icons";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 
 export default {
-  title: "Lab/Static List/QA",
+  title: "Lab/Static List/Static List QA",
   component: StaticList,
 } as Meta<typeof StaticList>;
 
