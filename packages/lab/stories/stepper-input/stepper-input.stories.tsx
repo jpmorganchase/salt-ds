@@ -6,7 +6,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
-import { StepperInput } from "@salt-ds/lab";
+import { StepperInput, type StepperInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 export default {
@@ -14,7 +14,7 @@ export default {
   component: StepperInput,
 } as Meta<typeof StepperInput>;
 
-export const Default: StoryFn = (args) => {
+export const Default: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
@@ -27,7 +27,7 @@ Default.args = {
   defaultValue: 0,
 };
 
-export const Secondary: StoryFn = (args) => {
+export const Secondary: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
@@ -40,7 +40,7 @@ Secondary.args = {
   defaultValue: 0,
 };
 
-export const Bordered: StoryFn = (args) => {
+export const Bordered: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
@@ -52,7 +52,7 @@ Bordered.args = {
   bordered: true,
 };
 
-export const ReadOnly: StoryFn = (args) => {
+export const ReadOnly: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
@@ -65,7 +65,7 @@ ReadOnly.args = {
   defaultValue: 5,
 };
 
-export const Disabled: StoryFn = (args) => {
+export const Disabled: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
@@ -97,7 +97,7 @@ export const Validation: StoryFn<typeof StepperInput> = (args) => {
   );
 };
 
-export const DecimalPlaces: StoryFn = (args) => {
+export const DecimalPlaces: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Stepper Input</FormFieldLabel>
@@ -110,7 +110,7 @@ DecimalPlaces.args = {
   defaultValue: 0,
 };
 
-export const Controlled: StoryFn = (args) => {
+export const Controlled: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(1.11);
 
   return (
@@ -140,7 +140,7 @@ export const Controlled: StoryFn = (args) => {
   );
 };
 
-export const MinAndMaxValue: StoryFn = (args) => {
+export const MinAndMaxValue: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const max = 5;
   const min = 0;
@@ -179,7 +179,22 @@ export const MinAndMaxValue: StoryFn = (args) => {
   );
 };
 
-export const Alignment: StoryFn = (args) => (
+export const CustomStep: StoryFn<StepperInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+      <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
+    </FormField>
+  );
+};
+CustomStep.args = {
+  defaultValue: 1,
+  step: 5,
+  stepBlock: 50,
+};
+
+export const TextAlignment: StoryFn<StepperInputProps> = (args) => (
   <StackLayout>
     <FormField>
       <FormFieldLabel>Left aligned</FormFieldLabel>
@@ -198,11 +213,11 @@ export const Alignment: StoryFn = (args) => (
     </FormField>
   </StackLayout>
 );
-Alignment.args = {
+TextAlignment.args = {
   defaultValue: 0,
 };
 
-export const RefreshAdornment: StoryFn = (args) => {
+export const RefreshAdornment: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
@@ -229,7 +244,7 @@ export const RefreshAdornment: StoryFn = (args) => {
   );
 };
 
-export const CustomButtons: StoryFn = (args) => {
+export const CustomButtons: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
