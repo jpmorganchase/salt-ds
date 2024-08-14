@@ -102,11 +102,11 @@ export const MultipleButtons: StoryFn<typeof Badge> = () => {
   );
 };
 
-export const DotBadge = () => {
+export const DotBadge: StoryFn<typeof Badge> = () => {
   return (
     <StackLayout>
       <FlexLayout>
-        <Button appearance="transparent" color="neutral">
+        <Button variant="secondary">
           <Badge>
             <SettingsSolidIcon />
           </Badge>
@@ -123,7 +123,7 @@ export const DotBadge = () => {
   );
 };
 
-export const InlineDotBadge = () => {
+export const InlineDotBadge: StoryFn<typeof Badge> = () => {
   return (
     <TabstripNext
       variant="inline"

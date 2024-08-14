@@ -5,7 +5,7 @@ import type { ReactElement } from "react";
 export const DotBadge = (): ReactElement => (
   <StackLayout>
     <FlexLayout>
-      <Button appearance="transparent" color="neutral">
+      <Button variant="secondary">
         <Badge>
           <SettingsSolidIcon />
         </Badge>
