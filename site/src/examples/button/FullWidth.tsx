@@ -2,28 +2,9 @@ import { Button, StackLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const FullWidth = (): ReactElement => (
-  <StackLayout gap={6} style={{ width: "400px" }}>
-    <StackLayout>
-      <Button color="accent" appearance="solid">
-        Solid
-      </Button>
-      <Button color="accent" appearance="outline">
-        Outline
-      </Button>
-      <Button color="accent" appearance="transparent">
-        Transparent
-      </Button>
-    </StackLayout>
-    <StackLayout>
-      <Button color="neutral" appearance="solid">
-        Solid
-      </Button>
-      <Button color="neutral" appearance="outline">
-        Outline
-      </Button>
-      <Button color="neutral" appearance="transparent">
-        Transparent
-      </Button>
-    </StackLayout>
+  <StackLayout style={{ width: "400px" }}>
+    <Button variant="primary">Primary full width Button</Button>
+    <Button variant="secondary">Secondary full width Button</Button>
+    <Button variant="cta">Cta full width Button</Button>
   </StackLayout>
 );

@@ -9,31 +9,34 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="button" exampleName="Color">
+<LivePreview componentName="button" exampleName="CTA" >
 
-## Color
+## CTA
 
-Button has two colors: `accent` and `neutral`. Accent buttons will reflect the primary color of the design language.
-
-### Best practices
-
-- Use accent buttons for the main calls-to-action in your application workflows (button bars, card actions, promotional banners, etc.).
-- Use neutral buttons for secondary tasks or workflows, such as configuring settings in preferences, or actions embedded in form fields and forms. Neutral buttons can also be used to give greater prominence to alternative actions alongside accent buttons.
-
-</LivePreview>
-  
-<LivePreview componentName="button" exampleName="Appearance">
-
-## Appearance
-
-Button comes in three variants based on appearance—`solid`, `outline` and `transparent`—which give button more or less visual prominence on the page.
+Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
 
 ### Best practices
 
-First choose the button `color` that best fits your use case and then pick the `appearance` that offers the right level of visual prominence.
+Use CTA buttons sparingly. They represent the default or expected action on the page.
 
 </LivePreview>
-  
+
+<LivePreview componentName="button" exampleName="Primary" >
+
+## Primary
+
+This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="Secondary" >
+
+## Secondary
+
+Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
+
+</LivePreview>
+
 <LivePreview componentName="button" exampleName="IconAndText">
 
 ## Icon and text
@@ -42,8 +45,8 @@ Add an icon before the text to reinforce the button text. Add an icon after the 
 
 ### Best practices
 
-- Place an icon to the left of the text to further describe the action, such as “search” or “download”. Additional description can make it easier for users to locate actions.
-- Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay or expanding a panel. When the user activates the button, there's typically an immediate visual change.
+- Place an icon to the left of the text to further describe the action, such as “upload”, “submit”, “play” or “done”. Additional description can make it easier for users to locate actions.
+- Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel or opening a document. When the user activates the button, there's typically an immediate visual change.
 
 </LivePreview>
 
@@ -56,7 +59,7 @@ Display an icon-only button with no text when you have limited on-screen space, 
 ### Best practices
 
 - An icon-only button should be self-explanatory, ideally using well-known symbols. If the button's purpose isn’t clear from the icon alone, add a text description.
-- Use [`Tooltip`](../tooltip) on an icon-only button to describe the action, such as “Send comment”, “Search documents”, or “Open settings”.
+- Use [`Tooltip`](../tooltip) on an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
 
 </LivePreview>
 
@@ -66,17 +69,7 @@ Display an icon-only button with no text when you have limited on-screen space, 
 
 Use the disabled state for a button that the user can’t press.
 
-To set the button as disabled pass the prop `disabled={true}`.
-
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="FocusableWhenDisabled" >
-
-## Focusable when disabled
-
-If a disabled element can be enabled (either by the user or by the system), it should be focusable. To allows this you can pass `focusableWhenDisabled={true}`.
-
-This is useful when you want to show a tooltip or a popover when the user hovers over the button.
+A button with the prop `disabled={true}` will suppress all functionality. If you need to allow the user to place focus on a disabled button, you also need to pass `focusableWhenDisabled={true}`.
 
 </LivePreview>
 
@@ -85,40 +78,6 @@ This is useful when you want to show a tooltip or a popover when the user hovers
 ## Full width
 
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
-
-</LivePreview>
-  
-<LivePreview componentName="button" exampleName="CTA" displayName="CTA - Deprecated" >
-
-## CTA - Deprecated
-
-_Note:_ The `variant` prop is deprecated. Use `appearance="solid"` and `color="accent"` instead.
-
-Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
-
-### Best practices
-
-Use CTA buttons sparingly. They represent the default or expected action on the page.
-
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Primary" displayName="Primary - Deprecated" >
-
-## Primary - Deprecated
-
-_Note:_ The `variant` prop is deprecated. Use `appearance="solid"` and `color="neutral"` instead.
-
-This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
-
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Secondary" displayName="Secondary - Deprecated" >
-
-## Secondary - Deprecated
-
-_Note:_ The `variant` prop is deprecated. Use `appearance="transparent"` and `color="neutral"` instead.
-
-Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
 
 </LivePreview>
 </LivePreviewControls>
