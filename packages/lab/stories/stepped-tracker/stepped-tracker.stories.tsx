@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, FlexLayout, StackLayout, Label, Tooltip } from "@salt-ds/core";
+import { Button, FlexLayout, Label, StackLayout, Tooltip } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -127,7 +127,7 @@ export const SingleVertical: StoryFn<typeof SteppedTracker> = () => {
     <SteppedTracker
       orientation="vertical"
       activeStep={2}
-      style={{ width: 400 }}
+      style={{ width: "100%", maxWidth: 400 }}
     >
       <TrackerStep stage="completed">
         <StepLabel>Step One</StepLabel>
@@ -155,7 +155,7 @@ export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
     <SteppedTracker
       orientation="vertical"
       activeStep={8}
-      style={{ width: 400 }}
+      style={{ width: "100%", minWidth: 300, maxWidth: 400 }}
     >
       <TrackerStep stage="completed">
         <StepLabel>Step 1</StepLabel>
@@ -199,7 +199,7 @@ export const NestedVerticalComplex: StoryFn<typeof SteppedTracker> = () => {
     <SteppedTracker
       orientation="vertical"
       activeStep={8}
-      style={{ width: 400 }}
+      style={{ width: "100%", maxWidth: 400 }}
     >
       <TrackerStep stage="completed">
         <StepLabel>Step 1</StepLabel>
