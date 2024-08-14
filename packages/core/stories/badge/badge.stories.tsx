@@ -1,6 +1,4 @@
-import { Badge, Button, FlexLayout, StackLayout } from "@salt-ds/core";
-import { List, ListItem, TabNext, TabstripNext } from "@salt-ds/lab";
-
+import { Badge, Button, FlexLayout } from "@salt-ds/core";
 import {
   MessageIcon,
   NotificationIcon,
@@ -8,7 +6,7 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
-
+import { TabNext, TabstripNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -16,110 +14,106 @@ export default {
   component: Badge,
 } as Meta<typeof Badge>;
 
-export const Icon: StoryFn<typeof Badge> = () => {
+export const Icon: StoryFn<typeof Badge> = (args) => {
   return (
-    <div>
-      <Badge value={9}>
-        <Button>
-          <SettingsSolidIcon />
+    <Badge {...args}>
+      <Button aria-label={`${args.value} Notifications`}>
+        <NotificationIcon aria-hidden />
+      </Button>
+    </Badge>
+  );
+};
+
+Icon.args = {
+  value: 9,
+};
+
+export const MaxNumber: StoryFn<typeof Badge> = (args) => {
+  return (
+    <Badge {...args}>
+      <Button aria-label={`${args.value} Notifications`}>
+        <NotificationIcon aria-hidden />
+      </Button>
+    </Badge>
+  );
+};
+
+MaxNumber.args = {
+  value: 200,
+  max: 99,
+};
+
+export const DefaultTruncation: StoryFn<typeof Badge> = (args) => {
+  return (
+    <Badge {...args}>
+      <Button aria-label={`${args.value} Messages`}>
+        <MessageIcon aria-hidden />
+      </Button>
+    </Badge>
+  );
+};
+
+DefaultTruncation.args = {
+  value: 1000,
+};
+
+export const String: StoryFn = () => {
+  return (
+    <Badge value={"NEW"}>
+      <Button aria-label="New messages">
+        <MessageIcon aria-hidden />
+      </Button>
+    </Badge>
+  );
+};
+
+export const InlineBadge: StoryFn = () => {
+  return (
+    <TabstripNext
+      defaultValue="Home"
+      style={{
+        minWidth: 350,
+      }}
+    >
+      <TabNext value="Home">Home</TabNext>
+      <TabNext value="Transactions" aria-label="Transations - 30 updates">
+        Transactions
+        <Badge value={30} />
+      </TabNext>
+      <TabNext value="Loans">Loans</TabNext>
+    </TabstripNext>
+  );
+};
+
+export const MultipleButtons: StoryFn = () => {
+  return (
+    <FlexLayout>
+      <Badge value={20}>
+        <Button aria-label="Upvote - 20 Upvotes">
+          <ThumbsUpIcon aria-hidden />
         </Button>
       </Badge>
-    </div>
-  );
-};
-
-export const MaxNumber: StoryFn<typeof Badge> = () => {
-  return (
-    <div>
-      <Badge max={99} value={150}>
-        <Button>
-          <NotificationIcon />
-        </Button>
-      </Badge>
-    </div>
-  );
-};
-
-export const DefaultTruncation: StoryFn<typeof Badge> = () => {
-  return (
-    <div>
-      <Badge value={1000}>
-        <Button>
-          <MessageIcon />
-        </Button>
-      </Badge>
-    </div>
-  );
-};
-
-export const String: StoryFn<typeof Badge> = () => {
-  return (
-    <div>
-      <Badge value={"NEW"}>
-        <Button>
-          <MessageIcon />
-        </Button>
-      </Badge>
-    </div>
-  );
-};
-
-export const ListStory: StoryFn<typeof Badge> = () => {
-  return (
-    <List aria-label="Declarative List example">
-      <ListItem>Level 1</ListItem>
-      <ListItem>Level 2</ListItem>
-      <ListItem>Level 3</ListItem>
-      <ListItem>
-        Level 4<Badge value={"NEW"} />{" "}
-      </ListItem>
-    </List>
-  );
-};
-
-export const MultipleButtons: StoryFn<typeof Badge> = () => {
-  return (
-    <StackLayout>
-      <FlexLayout>
-        <Badge value={20}>
-          <Button>
-            <ThumbsUpIcon />
-          </Button>
-        </Badge>
-        <Button>
-          <ThumbsDownIcon />
-        </Button>
-      </FlexLayout>
-      <FlexLayout>
-        <Button>
-          <ThumbsUpIcon />
-        </Button>
-        <Button>
-          <ThumbsDownIcon />
-        </Button>
-      </FlexLayout>
-    </StackLayout>
+      <Button aria-label="Downvote - 0 Downvotes">
+        <ThumbsDownIcon aria-hidden />
+      </Button>
+    </FlexLayout>
   );
 };
 
 export const DotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <StackLayout>
-      <FlexLayout>
-        <Button variant="secondary">
-          <Badge>
-            <SettingsSolidIcon />
-          </Badge>
-        </Button>
-      </FlexLayout>
-      <FlexLayout>
+    <FlexLayout>
+      <Button variant="secondary" aria-label="Settings - New available">
         <Badge>
-          <Button>
-            <NotificationIcon />
-          </Button>
+          <SettingsSolidIcon aria-hidden />
         </Badge>
-      </FlexLayout>
-    </StackLayout>
+      </Button>
+      <Badge>
+        <Button aria-label="Notifications - Unread">
+          <NotificationIcon aria-hidden />
+        </Button>
+      </Badge>
+    </FlexLayout>
   );
 };
 
@@ -128,15 +122,13 @@ export const InlineDotBadge: StoryFn<typeof Badge> = () => {
     <TabstripNext
       variant="inline"
       defaultValue="Home"
-      style={{ width: "400px", margin: "auto" }}
+      style={{ minWidth: 350 }}
     >
       <TabNext value="Home">Home</TabNext>
-      <TabNext value="Transactions">Transactions</TabNext>
-      <TabNext value="Loans">
-        Loans
-        <Badge />
+      <TabNext value="Transactions" aria-label="Transactions - New">
+        Transactions <Badge />
       </TabNext>
-      <TabNext value="Checks">Checks</TabNext>
+      <TabNext value="Loans">Loans</TabNext>
     </TabstripNext>
   );
 };
