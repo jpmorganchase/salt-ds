@@ -1,11 +1,24 @@
 .saltStaticListItem {
   --static-list-item-text-color: var(--salt-content-primary-foreground);
-  --static-list-item-background: var(--salt-selectable-background);
-  --static-list-borderStyle: var(--salt-container-borderStyle);
-  --static-list-borderWidth: var(--salt-size-border);
-  list-style: none;
 
-  padding: var(--salt-spacing-100);
-  border-top: var(--static-list-borderWidth) var(--static-list-borderStyle) var(--salt-separable-tertiary-borderColor);
+  list-style: none;
+  all: unset;
+  color: var(--static-list-item-text-color);
   display: flex;
+  height: var(--saltStaticList-item-height, auto);
+  box-sizing: border-box;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  text-align: left;
+  position: relative;
+}
+
+.saltStaticListItem-divided::before {
+  display: block;
+  content: "";
+  height: var(--salt-size-border);
+  background: var(--salt-separable-tertiary-borderColor);
+  width: 100%;
+  position: absolute;
+  top: calc(var(--salt-size-border) * -1);
+  left: 0;
 }
