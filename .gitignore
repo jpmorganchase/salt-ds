@@ -17,6 +17,7 @@ node_modules
 
 # testing
 /cypress/screenshots
+/cypress/downloads
 /coverage
 .nyc_output
 
