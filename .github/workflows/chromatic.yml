@@ -74,7 +74,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
         if: ${{ steps.chromatic_branch.outputs.branchName == 'main' || (steps.chromatic_branch.outputs.draft != 'true' && steps.chromatic_branch.outputs.runChromatic == 'true') }}
-        uses: chromaui/action@v11.6.0
+        uses: chromaui/action@v11.7.1
         # Chromatic GitHub Action options
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
