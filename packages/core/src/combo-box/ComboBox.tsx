@@ -77,6 +77,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     onOpenChange,
     onChange,
     open,
+    inputRef: inputRefProp,
     inputProps: inputPropsProp,
     variant = "primary",
     onKeyDown,
@@ -106,6 +107,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const disabled = Boolean(disabledProp) || formFieldDisabled;
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
   const inputRef = useRef<HTMLInputElement>(null);
+  const handleInputRef = useForkRef(inputRef, inputRefProp);
 
   const listControl = useComboBox<Item>({
     open,
@@ -447,7 +449,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }}
         aria-activedescendant={activeState?.id}
         variant={variant}
-        inputRef={inputRef}
+        inputRef={handleInputRef}
         value={valueState}
         ref={handleRef}
         bordered={bordered}
