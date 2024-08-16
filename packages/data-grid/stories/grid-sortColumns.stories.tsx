@@ -6,7 +6,7 @@ import {
   QueryClientProvider,
   useQuery,
 } from "@tanstack/react-query";
-import { rest } from "msw";
+import { http } from "msw";
 import { useEffect, useState } from "react";
 import {
   type Investor,
@@ -22,8 +22,9 @@ export default {
   parameters: {
     msw: {
       handlers: [
-        rest.get("/api/investors", (req, res, ctx) => {
-          const sortBy = req.url.searchParams.get("sort_by");
+        http.get("/api/investors", ({ request }) => {
+          const url = new URL(request.url);
+          const sortBy = url.searchParams.get("sort_by");
 
           const orderBy =
             sortBy
@@ -44,7 +45,9 @@ export default {
             take: 50,
           });
 
-          return res(ctx.json(response));
+          return new Response(JSON.stringify(response), {
+            headers: { "Content-Type": "application/json" },
+          });
         }),
       ],
     },
