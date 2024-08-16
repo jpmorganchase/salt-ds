@@ -13,7 +13,7 @@ import { Button, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
   CalendarNavigation,
-  type CalendarProps,
+  type CalendarProps, CalendarRangeProps, CalendarSingleProps,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
 } from "@salt-ds/lab";
@@ -51,8 +51,8 @@ Range.args = {
   selectionVariant: "range",
 };
 
-export const MultiSelection = Template.bind({});
-MultiSelection.args = {
+export const Multiselect = Template.bind({});
+Multiselect.args = {
   selectionVariant: "multiselect",
 };
 
@@ -92,20 +92,24 @@ HideOutOfRangeDates.args = {
   hideOutOfRangeDates: true,
 };
 
-export const HideYearDropdown: StoryFn<typeof Calendar> = () => (
-  <Calendar selectionVariant="single">
-    <CalendarNavigation hideYearDropdown />
-  </Calendar>
-);
+export const HideYearDropdown: StoryFn<typeof Calendar> = (args) => {
+  return (
+    <Calendar {...args}>
+      <CalendarNavigation hideYearDropdown />
+    </Calendar>
+  );
+};
 
-export const CustomHeader: StoryFn<typeof Calendar> = () => {
+export const CustomHeader: StoryFn<CalendarSingleProps & React.RefAttributes<HTMLDivElement>> = (args) => {
   const [selectedDate, setSelectedDate] = useState<
     UseCalendarSelectionSingleProps["selectedDate"]
   >(today(getLocalTimeZone()).subtract({ years: 1 }));
   return (
     <Calendar
+      {...args}
       selectionVariant="single"
       selectedDate={selectedDate}
+      visibleMonth={selectedDate ? startOfMonth(selectedDate) : startOfMonth(today(getLocalTimeZone()))}
       onSelectedDateChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate)
       }
@@ -125,10 +129,10 @@ function renderDayContents(day: DateValue) {
   return <>{formatter.format(day.toDate(localTimeZone))}</>;
 }
 
-export const CustomDayRender = Template.bind({});
-CustomDayRender.args = {
-  className: "CustomDayRender",
-  renderDayContents,
+export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
+  return (
+    <Calendar {...args} className="CustomDayRender" renderDayContents={renderDayContents}/>
+  );
 };
 
 export const FadeMonthAnimation = Template.bind({});
@@ -149,7 +153,7 @@ ExpandedYears.args = {
   maxDate: startOfYear(today(getLocalTimeZone()).add({ years: 5 })),
 };
 
-export const TwinCalendars: StoryFn<typeof Calendar> = () => {
+export const TwinCalendars: StoryFn<CalendarRangeProps & React.RefAttributes<HTMLDivElement>> = (args) => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
     _event,
@@ -158,7 +162,7 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
     setHoveredDate(newHoveredDate);
   };
   const [selectedDate, setSelectedDate] =
-    useState<UseCalendarSelectionRangeProps["selectedDate"]>(null);
+    useState<UseCalendarSelectionRangeProps["selectedDate"]>(args.defaultSelectedDate || null);
   const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
@@ -167,21 +171,26 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <Calendar
+        {...args}
         selectionVariant="range"
         onHoveredDateChange={handleHoveredDateChange}
         hoveredDate={hoveredDate}
         onSelectedDateChange={handleSelectedDateChange}
+        defaultVisibleMonth={selectedDate?.startDate ? startOfMonth(selectedDate.startDate) : startOfMonth(today(getLocalTimeZone()))}
         selectedDate={selectedDate}
+        hideOutOfRangeDates
       >
         <CalendarNavigation />
       </Calendar>
       <Calendar
+        {...args}
         selectionVariant="range"
         onHoveredDateChange={handleHoveredDateChange}
         hoveredDate={hoveredDate}
         onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
-        defaultVisibleMonth={today(localTimeZone).add({ months: 1 })}
+        defaultVisibleMonth={selectedDate?.endDate ? startOfMonth(selectedDate.endDate) : startOfMonth(today(getLocalTimeZone()).add({ months: 1}))}
+        hideOutOfRangeDates
       >
         <CalendarNavigation />
       </Calendar>
@@ -189,8 +198,8 @@ export const TwinCalendars: StoryFn<typeof Calendar> = () => {
   );
 };
 
-export const WithLocaleES: StoryFn<typeof Calendar> = () => (
-  <Calendar selectionVariant="single" locale="es-ES">
-    <CalendarNavigation hideYearDropdown />
+export const WithLocaleES: StoryFn<typeof Calendar> = (args) => (
+  <Calendar {...args} locale="es-ES">
+    <CalendarNavigation />
   </Calendar>
 );

@@ -14,7 +14,7 @@ import {
 
 export interface DatePickerBaseProps {
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export interface DatePickerSingleProps

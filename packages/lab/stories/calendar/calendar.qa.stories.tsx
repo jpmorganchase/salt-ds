@@ -1,5 +1,5 @@
 import { parseDate } from "@internationalized/date";
-import { Calendar } from "@salt-ds/lab";
+import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -18,28 +18,38 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     transposeDensity
     vertical
   >
-    <Calendar
-      selectionVariant="single"
-      selectedDate={parseDate("2024-04-02")}
-    />
+    <Calendar selectionVariant="single" selectedDate={parseDate("2024-04-02")}>
+      <CalendarNavigation />
+    </Calendar>
     <Calendar
       selectionVariant="range"
       selectedDate={{
         startDate: parseDate("2024-04-02"),
         endDate: parseDate("2024-04-04"),
       }}
-    />
+    >
+      <CalendarNavigation />
+    </Calendar>
     <Calendar
       selectionVariant="offset"
       selectedDate={{
         startDate: parseDate("2024-04-02"),
         endDate: parseDate("2024-04-04"),
       }}
-    />
+    >
+      <CalendarNavigation />
+    </Calendar>
+    <Calendar
+      selectionVariant="multiselect"
+      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+    >
+      <CalendarNavigation />
+    </Calendar>
     <Calendar
       selectionVariant="multiselect"
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
     />
+    <CalendarNavigation hideYearDropdown />
   </QAContainer>
 );
 

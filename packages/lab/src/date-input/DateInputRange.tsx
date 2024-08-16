@@ -302,10 +302,19 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         startDate: DateValue | null | undefined,
         endDate: DateValue | null | undefined,
       ): DateRangeSelection | null => {
-        return {
-          ...(!!startDate && { startDate }),
-          ...(!!endDate && { endDate }),
-        };
+        if (!startDate && !endDate) {
+          return null;
+        }
+
+        const dateRange: DateRangeSelection = {};
+        if (startDate) {
+          dateRange.startDate = startDate;
+        }
+        if (endDate) {
+          dateRange.endDate = endDate;
+        }
+
+        return dateRange;
       };
 
       const hasStartDateChanged = hasDateChanged(newStartDate, date?.startDate);
@@ -441,7 +450,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : dateValue.startDate ?? ""
+              : (dateValue.startDate ?? "")
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -474,7 +483,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : dateValue.endDate ?? ""
+              : (dateValue.endDate ?? "")
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

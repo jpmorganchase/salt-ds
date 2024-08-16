@@ -293,7 +293,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
             dateInputLabelledBy,
             inputId,
           )}
-          aria-label={clsx("Start date", ariaLabel)}
+          aria-label={clsx("Selected date", ariaLabel)}
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}
