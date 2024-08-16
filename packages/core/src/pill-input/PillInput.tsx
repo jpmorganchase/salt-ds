@@ -5,6 +5,7 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   type ForwardedRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
@@ -140,6 +141,7 @@ export const PillInput = forwardRef(function PillInput(
   const isReadOnly = readOnlyProp || formFieldReadOnly;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
+  const [focused, setFocused] = useState(false);
   const [focusedPillIndex, setFocusedPillIndex] = useState(-1);
 
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
@@ -148,6 +150,8 @@ export const PillInput = forwardRef(function PillInput(
   const {
     "aria-describedby": inputDescribedBy,
     "aria-labelledby": inputLabelledBy,
+    onBlur,
+    onFocus,
     onChange,
     required: inputPropsRequired,
     onKeyDown: inputOnKeyDown,
@@ -238,6 +242,16 @@ export const PillInput = forwardRef(function PillInput(
     inputRef.current?.focus();
   };
 
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    onBlur?.(event);
+    setFocused(false);
+  };
+
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    onFocus?.(event);
+    setFocused(true);
+  };
+
   const inputStyle = {
     "--input-textAlign": textAlign,
     ...style,
@@ -249,6 +263,7 @@ export const PillInput = forwardRef(function PillInput(
         withBaseName(),
         withBaseName(variant),
         {
+          [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName("truncate")]: truncate,
@@ -321,7 +336,9 @@ export const PillInput = forwardRef(function PillInput(
           ref={handleInputRef}
           role={role}
           tabIndex={isDisabled ? -1 : 0}
+          onBlur={handleBlur}
           onChange={handleChange}
+          onFocus={!isDisabled ? handleFocus : undefined}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           value={value}
