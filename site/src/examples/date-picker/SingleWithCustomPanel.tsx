@@ -1,8 +1,4 @@
-import React, { type ReactElement } from "react";
-import {
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -13,9 +9,10 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   type SingleDateSelection,
-  formatDate
+  formatDate,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
+import React, { type ReactElement } from "react";
 
 export const SingleWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";

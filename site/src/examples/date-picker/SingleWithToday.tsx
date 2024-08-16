@@ -1,4 +1,3 @@
-import React, { type ReactElement } from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Button,
@@ -15,9 +14,10 @@ import {
   DatePickerSinglePanel,
   type DatePickerState,
   type SingleDateSelection,
-  useDatePickerContext,
   formatDate,
+  useDatePickerContext,
 } from "@salt-ds/lab";
+import React, { type ReactElement } from "react";
 
 const TodayButton = () => {
   const {

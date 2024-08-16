@@ -1,4 +1,3 @@
-import { type ReactElement, useState } from "react";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -7,6 +6,7 @@ import {
   type SingleDateSelection,
   formatDate,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 export const SingleControlled = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(

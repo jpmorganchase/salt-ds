@@ -1,4 +1,3 @@
-import React, { type ReactElement } from "react";
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   FormField,
@@ -14,6 +13,7 @@ import {
   getCurrentLocale,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
+import React, { type ReactElement } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

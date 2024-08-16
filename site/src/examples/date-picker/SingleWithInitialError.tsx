@@ -1,4 +1,3 @@
-import { type ReactElement, useState } from "react";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -9,10 +8,11 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  getCurrentLocale,
   type SingleDateSelection,
   formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 function validateShortDate(
   dateString: string,

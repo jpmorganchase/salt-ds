@@ -1,8 +1,4 @@
-import React, { type ReactElement } from "react";
-import {
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Divider,
   FlexItem,
@@ -17,8 +13,11 @@ import {
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
-  type DateRangeSelection, formatDate, getCurrentLocale,
+  type DateRangeSelection,
+  formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
+import React, { type ReactElement } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

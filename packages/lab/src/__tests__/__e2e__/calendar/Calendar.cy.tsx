@@ -1,19 +1,17 @@
 import {
   type DateValue,
   endOfMonth,
-    endOfWeek,
-    getLocalTimeZone,
-    parseDate,
-    startOfMonth,
-    startOfWeek,
-    today,
+  endOfWeek,
+  getLocalTimeZone,
+  parseDate,
+  startOfMonth,
+  startOfWeek,
+  today,
 } from "@internationalized/date";
+import { formatDate, getCurrentLocale } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
-import { formatDate, getCurrentLocale } from "@salt-ds/lab";
-import {
-  checkAccessibility
-} from "../../../../../../cypress/tests/checkAccessibility";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const {
   Single,
@@ -22,11 +20,10 @@ const {
   HideYearDropdown,
   MinMaxDates,
   TwinCalendars,
-  WithLocaleES
+  WithLocaleES,
 } = composeStories(calendarStories);
 
 describe("GIVEN a Calendar", () => {
-
   checkAccessibility(calendarStories);
 
   const testDate = parseDate("2022-02-03");
@@ -384,9 +381,9 @@ describe("GIVEN a Calendar", () => {
     });
 
     it("SHOULD render different locales", () => {
-      cy.mount(<WithLocaleES locale={"es-ES"}/>);
+      cy.mount(<WithLocaleES locale={"es-ES"} />);
       // Verify that the month dropdown is rendered in the specified locale
-      cy.findByRole("combobox", {name: "Month Dropdown"}).should(
+      cy.findByRole("combobox", { name: "Month Dropdown" }).should(
         "have.text",
         formatDate(today(getLocalTimeZone()), "es-ES", {
           day: undefined,
@@ -402,12 +399,12 @@ describe("GIVEN a Calendar", () => {
       cy.mount(
         <MinMaxDates
           defaultVisibleMonth={testDate}
-          minDate={startOfMonth(testDate).add({days: 1})}
-          maxDate={endOfMonth(testDate).subtract({days: 1})}
+          minDate={startOfMonth(testDate).add({ days: 1 })}
+          maxDate={endOfMonth(testDate).subtract({ days: 1 })}
         />,
       );
       // Verify the initial month in the dropdown
-      cy.findByRole("combobox", {name: "Month Dropdown"}).should(
+      cy.findByRole("combobox", { name: "Month Dropdown" }).should(
         "have.text",
         formatDate(testDate, currentLocale, {
           day: undefined,
@@ -421,7 +418,7 @@ describe("GIVEN a Calendar", () => {
       }).realClick();
       // Verify out of range options are disabled
       cy.findByRole("option", {
-        name: formatDate(testDate.set({month: 1}), currentLocale, {
+        name: formatDate(testDate.set({ month: 1 }), currentLocale, {
           day: undefined,
           month: "short",
           year: undefined,
@@ -429,20 +426,16 @@ describe("GIVEN a Calendar", () => {
       }).should("have.attr", "aria-disabled", "true");
       for (let monthIndex = 3; monthIndex < 12; monthIndex++) {
         cy.findByRole("option", {
-          name: formatDate(
-            testDate.set({month: monthIndex}),
-            currentLocale,
-            {
-              day: undefined,
-              month: "short",
-              year: undefined,
-            },
-          ),
+          name: formatDate(testDate.set({ month: monthIndex }), currentLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
         }).should("have.attr", "aria-disabled", "true");
       }
       // Verify in range options are enabled
       cy.findByRole("option", {
-        name: formatDate(testDate.set({month: 2}), currentLocale, {
+        name: formatDate(testDate.set({ month: 2 }), currentLocale, {
           day: undefined,
           month: "short",
           year: undefined,

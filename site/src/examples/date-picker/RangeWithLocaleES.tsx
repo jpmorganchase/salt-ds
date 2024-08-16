@@ -1,4 +1,3 @@
-import React, { type ReactElement, useState } from "react";
 import {
   CalendarDate,
   DateFormatter,
@@ -20,6 +19,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
+import React, { type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

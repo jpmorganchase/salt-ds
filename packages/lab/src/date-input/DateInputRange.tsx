@@ -450,7 +450,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : (dateValue.startDate ?? "")
+              : dateValue.startDate ?? ""
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -483,7 +483,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : (dateValue.endDate ?? "")
+              : dateValue.endDate ?? ""
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

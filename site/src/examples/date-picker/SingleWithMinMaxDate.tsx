@@ -1,4 +1,3 @@
-import { type ReactElement, useState } from "react";
 import { CalendarDate } from "@internationalized/date";
 import {
   FormField,
@@ -13,6 +12,7 @@ import {
   type SingleDateSelection,
   formatDate,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 export const SingleWithMinMaxDate = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(

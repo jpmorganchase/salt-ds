@@ -1,11 +1,13 @@
-import type { ReactElement } from "react";
 import {
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
-  type DateRangeSelection, formatDate, getCurrentLocale,
+  type DateRangeSelection,
+  formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

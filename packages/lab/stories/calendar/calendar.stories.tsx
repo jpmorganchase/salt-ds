@@ -13,7 +13,9 @@ import { Button, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
   CalendarNavigation,
-  type CalendarProps, CalendarRangeProps, CalendarSingleProps,
+  type CalendarProps,
+  type CalendarRangeProps,
+  type CalendarSingleProps,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
 } from "@salt-ds/lab";
@@ -100,7 +102,9 @@ export const HideYearDropdown: StoryFn<typeof Calendar> = (args) => {
   );
 };
 
-export const CustomHeader: StoryFn<CalendarSingleProps & React.RefAttributes<HTMLDivElement>> = (args) => {
+export const CustomHeader: StoryFn<
+  CalendarSingleProps & React.RefAttributes<HTMLDivElement>
+> = (args) => {
   const [selectedDate, setSelectedDate] = useState<
     UseCalendarSelectionSingleProps["selectedDate"]
   >(today(getLocalTimeZone()).subtract({ years: 1 }));
@@ -109,7 +113,11 @@ export const CustomHeader: StoryFn<CalendarSingleProps & React.RefAttributes<HTM
       {...args}
       selectionVariant="single"
       selectedDate={selectedDate}
-      visibleMonth={selectedDate ? startOfMonth(selectedDate) : startOfMonth(today(getLocalTimeZone()))}
+      visibleMonth={
+        selectedDate
+          ? startOfMonth(selectedDate)
+          : startOfMonth(today(getLocalTimeZone()))
+      }
       onSelectedDateChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate)
       }
@@ -131,7 +139,11 @@ function renderDayContents(day: DateValue) {
 
 export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
   return (
-    <Calendar {...args} className="CustomDayRender" renderDayContents={renderDayContents}/>
+    <Calendar
+      {...args}
+      className="CustomDayRender"
+      renderDayContents={renderDayContents}
+    />
   );
 };
 
@@ -153,7 +165,9 @@ ExpandedYears.args = {
   maxDate: startOfYear(today(getLocalTimeZone()).add({ years: 5 })),
 };
 
-export const TwinCalendars: StoryFn<CalendarRangeProps & React.RefAttributes<HTMLDivElement>> = (args) => {
+export const TwinCalendars: StoryFn<
+  CalendarRangeProps & React.RefAttributes<HTMLDivElement>
+> = (args) => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
     _event,
@@ -161,8 +175,9 @@ export const TwinCalendars: StoryFn<CalendarRangeProps & React.RefAttributes<HTM
   ) => {
     setHoveredDate(newHoveredDate);
   };
-  const [selectedDate, setSelectedDate] =
-    useState<UseCalendarSelectionRangeProps["selectedDate"]>(args.defaultSelectedDate || null);
+  const [selectedDate, setSelectedDate] = useState<
+    UseCalendarSelectionRangeProps["selectedDate"]
+  >(args.defaultSelectedDate || null);
   const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
@@ -176,7 +191,11 @@ export const TwinCalendars: StoryFn<CalendarRangeProps & React.RefAttributes<HTM
         onHoveredDateChange={handleHoveredDateChange}
         hoveredDate={hoveredDate}
         onSelectedDateChange={handleSelectedDateChange}
-        defaultVisibleMonth={selectedDate?.startDate ? startOfMonth(selectedDate.startDate) : startOfMonth(today(getLocalTimeZone()))}
+        defaultVisibleMonth={
+          selectedDate?.startDate
+            ? startOfMonth(selectedDate.startDate)
+            : startOfMonth(today(getLocalTimeZone()))
+        }
         selectedDate={selectedDate}
         hideOutOfRangeDates
       >
@@ -189,7 +208,11 @@ export const TwinCalendars: StoryFn<CalendarRangeProps & React.RefAttributes<HTM
         hoveredDate={hoveredDate}
         onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
-        defaultVisibleMonth={selectedDate?.endDate ? startOfMonth(selectedDate.endDate) : startOfMonth(today(getLocalTimeZone()).add({ months: 1}))}
+        defaultVisibleMonth={
+          selectedDate?.endDate
+            ? startOfMonth(selectedDate.endDate)
+            : startOfMonth(today(getLocalTimeZone()).add({ months: 1 }))
+        }
         hideOutOfRangeDates
       >
         <CalendarNavigation />

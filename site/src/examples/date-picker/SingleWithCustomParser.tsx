@@ -1,7 +1,6 @@
-import { type ReactElement, useState } from "react";
 import {
   CalendarDate,
-  DateValue,
+  type DateValue,
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
@@ -20,6 +19,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 function validateShortDate(
   dateString: string,

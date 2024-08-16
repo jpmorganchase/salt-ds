@@ -15,7 +15,7 @@ import {
   type SingleDateSelection,
   useDatePickerContext,
 } from "@salt-ds/lab";
-import React, {forwardRef} from "react";
+import React, { forwardRef } from "react";
 
 const tenorOptions = [
   { tenor: "5", label: "5 years" },
@@ -93,7 +93,7 @@ export const CustomDatePickerPanel = forwardRef<
           }}
         >
           {tenorOptions.map(({ tenor, label }) => (
-            <Option value={tenor} key={tenor}  tabIndex={0}>
+            <Option value={tenor} key={tenor} tabIndex={0}>
               {label}
             </Option>
           ))}

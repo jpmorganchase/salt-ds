@@ -1,4 +1,3 @@
-import { type ReactElement, useState } from "react";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -14,6 +13,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

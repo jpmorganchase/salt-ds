@@ -1,5 +1,3 @@
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
-import { composeStories } from "@storybook/react";
 import {
   CalendarDate,
   type DateValue,
@@ -7,7 +5,7 @@ import {
   parseDate,
   today,
 } from "@internationalized/date";
-import { formatDate, getCurrentLocale } from "../../../calendar";
+import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
   SingleControlled,
   SingleWithConfirmation,
@@ -17,6 +15,8 @@ import {
   SingleWithToday,
   SingleWithValidation,
 } from "@stories/date-picker/date-picker.stories";
+import { composeStories } from "@storybook/react";
+import { formatDate, getCurrentLocale } from "../../../calendar";
 
 const composedStories = composeStories(datePickerStories);
 const { Single } = composedStories;

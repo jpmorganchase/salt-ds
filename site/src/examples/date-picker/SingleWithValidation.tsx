@@ -1,4 +1,3 @@
-import { type ReactElement, useState } from "react";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -10,8 +9,10 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
-  formatDate, getCurrentLocale,
+  formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
+import { type ReactElement, useState } from "react";
 
 function validateShortDate(
   dateString: string,
@@ -85,10 +86,9 @@ export const SingleWithValidation = (): ReactElement => {
       >
         <DatePickerSingleInput
           onDateValueChange={(newDateValue: string) => {
-            const validationStatus =
-              isValidShortDate(newDateValue)
-                ? undefined
-                : "error";
+            const validationStatus = isValidShortDate(newDateValue)
+              ? undefined
+              : "error";
             setValidationStatus(validationStatus);
           }}
         />

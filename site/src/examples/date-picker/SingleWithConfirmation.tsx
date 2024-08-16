@@ -1,4 +1,3 @@
-import React, { type ReactElement } from "react";
 import {
   Divider,
   FlexItem,
@@ -15,6 +14,7 @@ import {
   DatePickerSinglePanel,
   formatDate,
 } from "@salt-ds/lab";
+import React, { type ReactElement } from "react";
 
 export const SingleWithConfirmation = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";

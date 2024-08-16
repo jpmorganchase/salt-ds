@@ -533,7 +533,9 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = (args) => {
         maxDate={minDate.add({ years: 50 })}
         selectionVariant="range"
         onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
-          console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+          console.log(
+            `Selected date range: ${formatDateRange(newSelectedDate)}`,
+          );
           args?.onSelectedDateChange?.(newSelectedDate);
         }}
       >

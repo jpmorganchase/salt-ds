@@ -5,9 +5,9 @@ import {
   startOfMonth,
   today,
 } from "@internationalized/date";
+import { formatDate } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
-import { formatDate } from "@salt-ds/lab";
 
 const { Multiselect } = composeStories(calendarStories);
 

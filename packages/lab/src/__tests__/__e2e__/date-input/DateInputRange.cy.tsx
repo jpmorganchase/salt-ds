@@ -1,8 +1,8 @@
-import { SyntheticEvent, useState } from "react";
-import { CalendarDate, DateValue } from "@internationalized/date";
-import { composeStories } from "@storybook/react";
+import { CalendarDate, type DateValue } from "@internationalized/date";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
-import { DateRangeSelection } from "../../../calendar";
+import { composeStories } from "@storybook/react";
+import { type SyntheticEvent, useState } from "react";
+import type { DateRangeSelection } from "../../../calendar";
 
 const composedStories = composeStories(dateInputStories);
 const { Range } = composedStories;

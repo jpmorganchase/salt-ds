@@ -1,4 +1,3 @@
-import React, { type ReactElement, useState } from "react";
 import {
   CalendarDate,
   DateFormatter,
@@ -6,18 +5,19 @@ import {
   getLocalTimeZone,
 } from "@internationalized/date";
 import {
-  DatePicker,
-  DatePickerOverlay,
-  DatePickerSingleInput,
-  DatePickerSinglePanel,
-  getCurrentLocale,
-  type SingleDateSelection,
-} from "@salt-ds/lab";
-import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
+  type SingleDateSelection,
+  getCurrentLocale,
+} from "@salt-ds/lab";
+import React, { type ReactElement, useState } from "react";
 
 function validateNumericDate(dateString: string, format: string): boolean {
   let regex, day, month, year;

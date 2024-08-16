@@ -1,4 +1,3 @@
-import type { ReactElement } from "react";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -6,6 +5,7 @@ import {
   DatePickerSinglePanel,
   formatDate,
 } from "@salt-ds/lab";
+import type { ReactElement } from "react";
 
 export const Single = (): ReactElement => (
   <DatePicker
