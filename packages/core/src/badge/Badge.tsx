@@ -36,13 +36,15 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   const valueText =
     typeof value === "number" && value > max ? `${max}+` : value;
 
+  const dotBadge = typeof value === "undefined";
+
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {children}
       <span
         className={clsx(withBaseName("badge"), {
           [withBaseName("topRight")]: children,
-          [withBaseName("dotBadge")]: !value,
+          [withBaseName("dotBadge")]: dotBadge,
         })}
       >
         {valueText}

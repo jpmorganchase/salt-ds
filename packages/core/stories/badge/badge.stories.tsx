@@ -122,6 +122,7 @@ export const InlineDotBadge: StoryFn<typeof Badge> = () => {
     <TabstripNext
       variant="inline"
       defaultValue="Home"
+      align="center"
       style={{ minWidth: 350 }}
     >
       <TabNext value="Home">Home</TabNext>
