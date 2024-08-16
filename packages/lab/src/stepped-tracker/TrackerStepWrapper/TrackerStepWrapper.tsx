@@ -34,7 +34,12 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
   };
 
   return (
-    <li className={withBaseName()}>
+    <li
+      className={clsx(withBaseName(), {
+        [withBaseName("expanded")]: expanded,
+        [withBaseName("collapsed")]: !expanded,
+      })}
+    >
       <TrackerStepProvider stepNumber={stepNumber} parent={true}>
         <div className={withBaseName("parent")}>
           {child}

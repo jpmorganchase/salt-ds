@@ -21,6 +21,7 @@
   top: calc(var(--trackerStep-icon-size) / 2);
   transform: translateY(-50%);
   height: 0;
+  opacity: 1;
 }
 
 .saltSteppedTracker.saltSteppedTracker-vertical .saltTrackerConnector {
@@ -34,4 +35,9 @@
 
 .saltTrackerConnector.saltTrackerConnector-active {
   --trackerConnector-style-border: var(--trackerConnector-style-active);
+}
+
+.saltSteppedTracker-nested .saltTrackerStepWrapper:last-child.saltTrackerStepWrapper-collapsed .saltTrackerStep .saltTrackerConnector {
+  opacity: 0;
+  transition: opacity var(--salt-duration-perceptible) ease-in-out;
 }

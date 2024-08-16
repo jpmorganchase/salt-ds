@@ -187,8 +187,17 @@ export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
       <TrackerStep depth={1}>
         <StepLabel>Step 3.4</StepLabel>
       </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 3.4</StepLabel>
+      </TrackerStep>
       <TrackerStep>
         <StepLabel>Step 4</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 4.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2}>
+        <StepLabel>Step 4.1.1</StepLabel>
       </TrackerStep>
     </SteppedTracker>
   );
