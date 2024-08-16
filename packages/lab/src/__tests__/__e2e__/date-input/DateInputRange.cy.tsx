@@ -3,6 +3,7 @@ import { CalendarDate, DateValue } from "@internationalized/date";
 import { composeStories } from "@storybook/react";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { DateRangeSelection } from "../../../calendar";
+
 const composedStories = composeStories(dateInputStories);
 const { Range } = composedStories;
 
@@ -46,6 +47,7 @@ describe("GIVEN a DateInputRange", () => {
         }}
       />,
     );
+    // Verify that the start and end date inputs have the specified values
     cy.findByLabelText("Start date").should("have.value", "start date value");
     cy.findByLabelText("End date").should("have.value", "end date value");
   });
@@ -63,11 +65,14 @@ describe("GIVEN a DateInputRange", () => {
     cy.mount(
       <Range defaultValue={{ startDate: "text value" }} parse={customParser} />,
     );
+    // Simulate user entering "new start date value" into the start date input
     cy.findByLabelText("Start date")
       .click()
       .clear()
       .type("new start date value");
+    // Simulate pressing the Tab key to trigger blur event
     cy.realPress("Tab");
+    // Verify that the start date input is updated with the parsed value
     cy.findByLabelText("Start date").should(
       "have.value",
       updatedFormattedDateValue.startDate,
@@ -76,8 +81,11 @@ describe("GIVEN a DateInputRange", () => {
       "have.been.calledWithMatch",
       "new start date value",
     );
+    // Simulate user entering "new end date value" into the end date input
     cy.findByLabelText("End date").click().clear().type("new end date value");
+    // Simulate pressing the Tab key to trigger blur event
     cy.realPress("Tab");
+    // Verify that the end date input is updated with the parsed value
     cy.findByLabelText("End date").should(
       "have.value",
       updatedFormattedDateValue.startDate,
@@ -103,21 +111,27 @@ describe("GIVEN a DateInputRange", () => {
         formatDate={customFormatter}
       />,
     );
+    // Simulate user entering initial start date value into the start date input
     cy.findByLabelText("Start date")
       .click()
       .clear()
       .type(initialDateValue.startDate);
+    // Simulate pressing the Tab key to trigger blur event
     cy.realPress("Tab");
+    // Verify that the start date input is updated with the formatted value
     cy.findByLabelText("Start date").should("have.value", "formatted date");
     cy.get("@formatSpy").should(
       "have.been.calledWithMatch",
       initialDate.startDate,
     );
+    // Simulate user entering initial end date value into the end date input
     cy.findByLabelText("End date")
       .click()
       .clear()
       .type(initialDateValue.endDate);
+    // Simulate pressing the Tab key to trigger blur event
     cy.realPress("Tab");
+    // Verify that the end date input is updated with the formatted value
     cy.findByLabelText("End date").should("have.value", "formatted date");
     cy.get("@formatSpy").should(
       "have.been.calledWithMatch",
@@ -136,6 +150,7 @@ describe("GIVEN a DateInputRange", () => {
         timeZone={"America/New_York"}
       />,
     );
+    // Verify that the start and end date inputs are updated with the date values in the specified locale
     cy.findByLabelText("Start date").should("have.value", "01 ago 2030");
     cy.findByLabelText("End date").should("have.value", "01 dic 2030");
   });
@@ -158,6 +173,7 @@ describe("GIVEN a DateInputRange", () => {
           onDateChange={dateChangeSpy}
         />,
       );
+      // Simulate user entering updated start date value into the start date input
       cy.findByLabelText("Start date")
         .click()
         .clear()
@@ -171,6 +187,7 @@ describe("GIVEN a DateInputRange", () => {
         false,
       );
       cy.get("@dateChangeSpy").should("not.have.been.called");
+      // Simulate pressing the Tab key to trigger blur event
       cy.realPress("Tab");
       cy.get("@dateValueChangeSpy").should(
         "have.been.calledWithMatch",
@@ -185,15 +202,18 @@ describe("GIVEN a DateInputRange", () => {
         Cypress.sinon.match({ type: "blur" }),
         { startDate: updatedDate.startDate, endDate: initialDate.endDate },
       );
+      // Verify that the start date input is updated with the formatted value
       cy.findByLabelText("Start date").should(
         "have.value",
         updatedFormattedDateValue.startDate,
       );
+      // Verify that the end date input retains its initial value
       cy.findByLabelText("End date").should(
         "have.value",
         initialDateValue.endDate,
       );
 
+      // Simulate user entering updated end date value into the end date input
       cy.findByLabelText("End date")
         .click()
         .clear()
@@ -202,6 +222,7 @@ describe("GIVEN a DateInputRange", () => {
         target: { value: updatedDateValue.endDate },
       });
       cy.get("@dateChangeSpy").should("have.been.calledOnce");
+      // Simulate pressing the Tab key to trigger blur event
       cy.realPress("Tab");
       cy.get("@dateValueChangeSpy").should(
         "have.been.calledWithMatch",
@@ -216,6 +237,7 @@ describe("GIVEN a DateInputRange", () => {
         Cypress.sinon.match({ type: "blur" }),
         updatedDate,
       );
+      // Verify that the start and end date inputs are updated with the formatted values
       cy.findByLabelText("Start date").should(
         "have.value",
         updatedFormattedDateValue.startDate,
@@ -262,6 +284,7 @@ describe("GIVEN a DateInputRange", () => {
       }
 
       cy.mount(<ControlledDateInput />);
+      // Simulate user entering updated start date value into the start date input
       cy.findByLabelText("Start date")
         .click()
         .clear()
@@ -275,6 +298,7 @@ describe("GIVEN a DateInputRange", () => {
         false,
       );
       cy.get("@dateChangeSpy").should("not.have.been.called");
+      // Simulate pressing the Tab key to trigger blur event
       cy.realPress("Tab");
       cy.get("@dateValueChangeSpy").should(
         "have.been.calledWithMatch",
@@ -290,14 +314,17 @@ describe("GIVEN a DateInputRange", () => {
         { startDate: updatedDate.startDate, endDate: initialDate.endDate },
       );
 
+      // Verify that the start date input is updated with the formatted value
       cy.findByLabelText("Start date").should(
         "have.value",
         updatedFormattedDateValue.startDate,
       );
+      // Verify that the end date input retains its initial value
       cy.findByLabelText("End date").should(
         "have.value",
         initialDateValue.endDate,
       );
+      // Simulate user entering updated end date value into the end date input
       cy.findByLabelText("End date")
         .click()
         .clear()
@@ -306,6 +333,7 @@ describe("GIVEN a DateInputRange", () => {
         target: { value: updatedDateValue.endDate },
       });
       cy.get("@dateChangeSpy").should("have.been.calledOnce");
+      // Simulate pressing the Tab key to trigger blur event
       cy.realPress("Tab");
       cy.get("@dateValueChangeSpy").should(
         "have.been.calledWithMatch",
@@ -320,6 +348,7 @@ describe("GIVEN a DateInputRange", () => {
         Cypress.sinon.match({ type: "blur" }),
         updatedDate,
       );
+      // Verify that the start and end date inputs are updated with the formatted values
       cy.findByLabelText("Start date").should(
         "have.value",
         updatedFormattedDateValue.startDate,

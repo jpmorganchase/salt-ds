@@ -39,13 +39,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
 
   it("SHOULD only be able to select a date between min/max", () => {
     cy.mount(<SingleWithMinMaxDate selectionVariant={"single"} />);
+    // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
+    // Verify that dates outside the min/max range are disabled
     cy.findByRole("button", {
       name: formatDay(parseDate("2030-01-14")),
     }).should("have.attr", "aria-disabled", "true");
     cy.findByRole("button", {
       name: formatDay(parseDate("2030-01-15")),
     }).should("not.have.attr", "aria-disabled", "true");
+    // Simulate selecting a year from the dropdown
     cy.findByRole("combobox", {
       name: "Year Dropdown",
     }).realClick();
@@ -54,15 +57,18 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     })
       .realHover()
       .realClick();
+    // Verify that dates outside the min/max range are disabled
     cy.findByRole("button", {
       name: formatDay(parseDate("2031-01-15")),
     }).should("not.have.attr", "aria-disabled", "true");
     cy.findByRole("button", {
       name: formatDay(parseDate("2031-01-16")),
     }).should("have.attr", "aria-disabled", "true");
+    // Simulate selecting a date within the min/max range
     cy.findByRole("button", {
       name: formatDay(parseDate("2031-01-15")),
     }).realClick();
+    // Verify that the calendar is closed and the selected date is displayed
     cy.findByRole("application").should("not.exist");
     cy.findByRole("textbox").should(
       "have.value",
@@ -78,6 +84,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         onSelectedDateChange={selectedDateChangeSpy}
       />,
     );
+    // Simulate entering a valid date
     cy.findByRole("textbox").click().clear().type(initialDateValue);
     cy.realPress("Tab");
     cy.findByRole("textbox").should("have.value", initialDateValue);
@@ -85,6 +92,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       "have.been.calledWith",
       initialDate,
     );
+    // Simulate entering an invalid date
     cy.findByRole("textbox").click().clear().type("bad date");
     cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
     cy.realPress("Tab");
@@ -100,13 +108,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         onSelectedDateChange={selectedDateChangeSpy}
       />,
     );
+    // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
     cy.findByRole("application").should("exist");
+    // Simulate selecting a tenor option
     cy.findByRole("option", {
       name: "15 years",
     })
       .realHover()
       .realClick();
+    // Verify that the calendar is closed and the selected date is displayed
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
     const newDate = today(getLocalTimeZone()).add({ years: 15 });
@@ -125,9 +136,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         onSelectedDateChange={selectedDateChangeSpy}
       />,
     );
+    // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
     cy.findByRole("application").should("exist");
+    // Simulate clicking the "Today" button
     cy.findByRole("button", { name: "Today" }).realClick();
+    // Verify that the calendar is closed and today's date is displayed
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
     const newDate = today(getLocalTimeZone());
@@ -148,23 +162,29 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           onSelectedDateChange={selectedDateChangeSpy}
         />,
       );
+      // Verify that the initial selected date is displayed
       cy.document()
         .find("input")
         .first()
         .should("have.value", formatDate(initialDate));
+      // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
       const unconfirmedDate = initialDate.add({ days: 1 });
+      // Simulate selecting an unconfirmed date
       cy.findByRole("button", { name: formatDay(unconfirmedDate) }).realClick();
       cy.findByRole("application").should("exist");
       cy.document()
         .find("input")
         .should("have.value", formatDate(unconfirmedDate));
+      // Simulate clicking the "Cancel" button
       cy.findByRole("button", { name: "Cancel" }).realClick();
+      // Verify that the calendar is closed and the initial selected date is restored
       cy.findByRole("application").should("not.exist");
       cy.get("@selectedDateChangeSpy").should("not.have.been.called");
       cy.document().find("input").should("have.value", formatDate(initialDate));
     });
+
     it("SHOULD apply confirmed selections", () => {
       const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
       cy.mount(
@@ -174,19 +194,24 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           onSelectedDateChange={selectedDateChangeSpy}
         />,
       );
+      // Verify that the initial selected date is displayed
       cy.document()
         .find("input")
         .first()
         .should("have.value", formatDate(initialDate));
+      // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
       const unconfirmedDate = initialDate.add({ days: 1 });
+      // Simulate selecting a new date
       cy.findByRole("button", { name: formatDay(unconfirmedDate) }).realClick();
       cy.findByRole("application").should("exist");
       cy.document()
         .find("input")
         .should("have.value", formatDate(unconfirmedDate));
+      // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
+      // Verify that the calendar is closed and the new date is applied
       cy.findByRole("application").should("not.exist");
       cy.get("@selectedDateChangeSpy").should(
         "have.been.calledWith",
@@ -206,6 +231,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         onSelectedDateChange={selectedDateChangeSpy}
       />,
     );
+    // Simulate entering a valid date
     cy.findByRole("textbox").click().clear().type(initialDateValue);
     cy.realPress("Tab");
     cy.findByRole("textbox").should("have.value", initialDateValue);
@@ -213,6 +239,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       "have.been.calledWith",
       initialDate,
     );
+    // Simulate entering a custom parsed date
     cy.findByRole("textbox").click().clear().type("+7");
     cy.realPress("Tab");
     cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
@@ -224,24 +251,31 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   describe("uncontrolled component", () => {
     it("SHOULD render the default date", () => {
       cy.mount(<Single defaultSelectedDate={initialDate} />);
+      // Verify that the default selected date is displayed
       cy.findByRole("textbox").should("have.value", initialDateValue);
+      // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
+      // Verify that the default selected date is highlighted in the calendar
       cy.findByRole("button", { name: formatDay(initialDate) }).should(
         "have.attr",
         "aria-pressed",
         "true",
       );
     });
+
     it("SHOULD be able to select a date", () => {
       cy.mount(<Single defaultSelectedDate={initialDate} />);
+      // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Simulate selecting a new date
       cy.findByRole("button", {
         name: formatDay(updatedDate),
       }).should("exist");
       cy.findByRole("button", {
         name: formatDay(updatedDate),
       }).realClick();
+      // Verify that the calendar is closed and the new date is displayed
       cy.findByRole("application").should("not.exist");
       cy.findByRole("textbox").should("have.focus");
       cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);
@@ -256,15 +290,19 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectedDate={initialDate}
         />,
       );
+      // Verify that the selected date is displayed
       cy.findByRole("textbox").should("have.value", initialDateValue);
+      // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
+      // Verify that the selected date is highlighted in the calendar
       cy.findByRole("button", { name: formatDay(initialDate) }).should(
         "have.attr",
         "aria-pressed",
         "true",
       );
     });
+
     it("SHOULD be able to select a date", () => {
       cy.mount(
         <SingleControlled
@@ -272,13 +310,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectedDate={initialDate}
         />,
       );
+      // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Simulate selecting a new date
       cy.findByRole("button", {
         name: formatDay(updatedDate),
       }).should("exist");
       cy.findByRole("button", {
         name: formatDay(updatedDate),
       }).realClick();
+      // Verify that the calendar is closed and the new date is displayed
       cy.findByRole("application").should("not.exist");
       cy.findByRole("textbox").should("have.focus");
       cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);

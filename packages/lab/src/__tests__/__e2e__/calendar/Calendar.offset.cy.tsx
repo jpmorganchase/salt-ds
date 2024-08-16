@@ -1,6 +1,5 @@
 import {
   type DateValue,
-  getLocalTimeZone,
   parseDate,
 } from "@internationalized/date";
 import * as calendarStories from "@stories/calendar/calendar.stories";
@@ -41,19 +40,22 @@ describe("GIVEN a Calendar with offset selection", () => {
       // @ts-ignore
       OffsetSelection.args?.endDateOffset(baseDate),
     );
+    // Simulate hovering over the base date button
     cy.findByRole("button", {
       name: formatDay(baseDate),
     }).realHover();
+    // Verify that all dates in the range are highlighted
     for (const dateInRange of datesInRange) {
       cy.findByRole("button", {
         name: formatDay(dateInRange),
       }).should("have.class", "saltCalendarDay-hoveredOffset");
     }
 
+    // Simulate clicking the base date button to select the range
     cy.findByRole("button", {
       name: formatDay(baseDate),
     }).realClick();
-
+    // Verify that all dates in the range are selected
     for (const dateInRange of datesInRange) {
       cy.findByRole("button", {
         name: formatDay(dateInRange),
@@ -67,23 +69,28 @@ describe("GIVEN a Calendar with offset selection", () => {
       OffsetSelection.args?.endDateOffset(newBaseDate),
     );
 
+    // Simulate clicking a new base date button to select a new range
     cy.findByRole("button", {
       name: formatDay(baseDate.add({ weeks: 1 })),
     }).realClick();
+    // Verify that all dates in the new range are selected
     for (const dateInRange of datesInNewRange) {
       cy.findByRole("button", {
         name: formatDay(dateInRange),
       }).should("have.attr", "aria-pressed", "true");
     }
-
+    // Verify that the previous range is unselected
     for (const dateInRange of datesInRange) {
       cy.findByRole("button", {
         name: formatDay(dateInRange),
       }).should("not.have.attr", "aria-pressed");
     }
 
+    // Simulate pressing the ArrowUp key to move the focus
     cy.realPress("ArrowUp");
+    // Simulate pressing the Enter key to select the range
     cy.realPress("Enter");
+    // Verify that the original range is selected again
     for (const dateInRange of datesInRange) {
       cy.findByRole("button", {
         name: formatDay(dateInRange),
