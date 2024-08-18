@@ -68,6 +68,13 @@
 
 .saltCheckboxIcon-readOnly,
 .saltCheckbox:hover .saltCheckboxIcon-readOnly {
+  background: unset;
   border-color: var(--salt-selectable-borderColor-readonly);
   color: var(--salt-content-primary-foreground);
+}
+
+.saltCheckboxIcon > svg {
+  position: absolute;
+  /* Ensure a gap doesn't appear when device scaling is used */
+  transform: scale(1.01);
 }
