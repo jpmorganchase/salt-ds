@@ -300,7 +300,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
     event.persist();
-    onBlur?.(event);
+    if (!listRef.current || !listRef.current.contains(event.relatedTarget)) {
+      onBlur?.(event);
+    }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
