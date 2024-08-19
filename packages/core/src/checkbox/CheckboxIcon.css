@@ -68,7 +68,6 @@
 
 .saltCheckboxIcon-readOnly,
 .saltCheckbox:hover .saltCheckboxIcon-readOnly {
-  background: unset;
   border-color: var(--salt-selectable-borderColor-readonly);
   color: var(--salt-content-primary-foreground);
 }
