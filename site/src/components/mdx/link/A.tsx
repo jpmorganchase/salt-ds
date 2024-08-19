@@ -13,12 +13,14 @@ export interface MarkdownLinkProps extends LinkProps {
 export const Link: FC<PropsWithChildren<MarkdownLinkProps>> = ({
   href,
   ...rest
-}) => (
-  <LinkComponent
-    className={styles.a}
-    link={href}
-    variant="document"
-    endIcon="none"
-    {...rest}
-  />
-);
+}) => {
+  return (
+    <LinkComponent
+      className={styles.a}
+      link={href}
+      variant="document"
+      endIcon="none"
+      {...rest}
+    />
+  );
+};

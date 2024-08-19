@@ -20,3 +20,4 @@ export * from "./mdx";
 export * from "./support-and-contributions";
 export * from "./css-display";
 export * from "./patterns";
+export * from "./icon-preview";

@@ -7,19 +7,19 @@ Size refers to the restricted dimensions provided within the design system, such
 
 ## Size tokens
 
-| Token                    | Dimension        | High Density (HD) | Medium (MD) | Low (LD) | Touch (TD) |
-| ------------------------ | ---------------- | ----------------- | ----------- | -------- | ---------- |
-| `--salt-size-base`       | Height           | 20                | 28          | 36       | 44         |
-| `--salt-size-selectable` | Height and width | 12                | 14          | 16       | 18         |
-| `--salt-size-icon`       | Height and width | 12                | 12          | 14       | 16         |
-| `--salt-size-adornment`  | Height and width | 6                 | 8           | 10       | 12         |
-| `--salt-size-bar`        | Height or width  | 2                 | 4           | 6        | 8          |
-| `--salt-size-indicator`  | Height or width  | 1                 | 2           | 3        | 4          |
-| `--salt-size-border`     | Height or width  | 1                 | 1           | 1        | 1          |
+| Token                    | Dimension        | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
+| ------------------------ | ---------------- | ----------------- | ------------------- | ---------------- | ------------------ |
+| `--salt-size-base`       | Height           | 20px              | 28px                | 36px             | 44px               |
+| `--salt-size-selectable` | Height and width | 12px              | 14px                | 16px             | 18px               |
+| `--salt-size-icon`       | Height and width | 12px              | 12px                | 14px             | 16px               |
+| `--salt-size-adornment`  | Height and width | 6px               | 8px                 | 10px             | 12px               |
+| `--salt-size-bar`        | Height or width  | 2px               | 4px                 | 6px              | 8px                |
+| `--salt-size-indicator`  | Height or width  | 1px               | 2px                 | 3px              | 4px                |
+| `--salt-size-border`     | Height or width  | 1px               | 1px                 | 1px              | 1px                |
 
 ## Base
 
-`salt-size-base` is the fixed default height for base components in each [density](density) within the design system. It ensures the consistent alignment of components in horizontal layouts, as well as the vertical alignments of the text values within them. This means the text within each component sits on the same baseline.
+`salt-size-base` is the fixed default height for base components in each [density](./density) within the design system. It ensures the consistent alignment of components in horizontal layouts, as well as the vertical alignments of the text values within them. This means the text within each component sits on the same baseline.
 
 <ImageSwitcher
   images={[
@@ -31,7 +31,7 @@ Size refers to the restricted dimensions provided within the design system, such
 
 ### Nesting size-base
 
-Using size-base, in conjunction with a [spacing token](spacing) above and below, creates a consistent height for components that can nest a `--salt-size-base` component within them. This provides further standardized heights across the design system.
+Using size-base, in conjunction with a [spacing token](./spacing) above and below, creates a consistent height for components that can nest a `--salt-size-base` component within them. This provides further standardized heights across the design system.
 
 The following example shows how components can use `--salt-size-base` and `--salt-spacing-50` (top and bottom) to define the height of a component or stackable element, such as a Data Grid row. The height allows a size-base component to be contained within it, but it is not dependent on the component to force the height.
 
@@ -45,7 +45,7 @@ The following example shows how components can use `--salt-size-base` and `--sal
 
 ## Selectable
 
-`--salt-size-selectable` is used to set the dimensions of selectable components, including [Radio Button](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-radio-button--docs), [Checkbox](https://storybook.saltdesignsystem.com/?path=/docs/documentation-core-checkbox--docs), and Switch.
+`--salt-size-selectable` is used to set the dimensions of selectable components, including [Radio Button](../components/radio-button), [Checkbox](../components/checkbox), and Switch.
 
 <ImageSwitcher
   images={[
@@ -59,11 +59,11 @@ The following example shows how components can use `--salt-size-base` and `--sal
 
 `--salt-size-icon` controls the size of all icons throughout the design system. Icons are designed to be displayed no smaller than 12px x 12px; therefore this is set as a minimum measurement within the token's values. The result of this restriction can be seen in the Size tokens table. Following the ramp, HD should be 10px. However, the minimum size fixes it at 12px.
 
-The size of an icon can be changed within a density using the [Scale](scale) Foundation. For HD, the scale is based on the expected value rather than the minimum. This means an HD icon starts at 12px. When scaled up (x2 its default size) it will be 20px rather than 24px, at x3 its default it will be 30px, etc.
+The size of an icon can be changed within a density using the [Scale](./scale) Foundation. For HD, the scale is based on the expected value rather than the minimum. This means an HD icon starts at 12px. When scaled up (x2 its default size) it will be 20px rather than 24px, at x3 its default it will be 30px, etc.
 
 The Scale Foundation provides an example of `--salt-size-icon` scaling, including specific values for each density.
 
-You can find out more about icons and how to use them in the [Iconography](iconography) Foundation.
+You can find out more about icons and how to use them in the [Iconography](./iconography) Foundation.
 
 <ImageSwitcher
   images={[
