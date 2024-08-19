@@ -10,10 +10,8 @@ import {
   RangeControlled,
   RangeWithConfirmation,
   RangeWithCustomPanel,
+  RangeWithFormField,
   RangeWithMinMaxDate,
-  RangeWithValidation,
-  SingleControlled,
-  SingleWithConfirmation,
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import { formatDate, getCurrentLocale } from "../../../calendar";
@@ -90,7 +88,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   it("SHOULD support validation", () => {
     const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
     cy.mount(
-      <RangeWithValidation
+      <RangeWithFormField
         selectionVariant={"range"}
         onSelectedDateChange={selectedDateChangeSpy}
       />,

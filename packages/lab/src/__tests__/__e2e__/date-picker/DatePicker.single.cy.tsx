@@ -11,9 +11,9 @@ import {
   SingleWithConfirmation,
   SingleWithCustomPanel,
   SingleWithCustomParser,
+  SingleWithFormField,
   SingleWithMinMaxDate,
   SingleWithToday,
-  SingleWithValidation,
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import { formatDate, getCurrentLocale } from "../../../calendar";
@@ -79,7 +79,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   it("SHOULD support validation", () => {
     const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
     cy.mount(
-      <SingleWithValidation
+      <SingleWithFormField
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
       />,

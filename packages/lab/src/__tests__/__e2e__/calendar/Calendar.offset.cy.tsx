@@ -3,7 +3,7 @@ import { formatDate } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
 
-const { OffsetSelection } = composeStories(calendarStories);
+const { Offset } = composeStories(calendarStories);
 
 const testDate = parseDate("2022-02-03");
 const currentLocale = navigator.languages[0];
@@ -29,7 +29,7 @@ function getAllDatesInRange(startDate: DateValue, endDate: DateValue) {
 
 describe("GIVEN a Calendar with offset selection", () => {
   it("SHOULD allow a defined range to be selected", () => {
-    cy.mount(<OffsetSelection defaultVisibleMonth={testDate} />);
+    cy.mount(<Offset defaultVisibleMonth={testDate} />);
     const baseDate = testDate.add({ days: 3 });
     const datesInRange = getAllDatesInRange(
       // @ts-ignore

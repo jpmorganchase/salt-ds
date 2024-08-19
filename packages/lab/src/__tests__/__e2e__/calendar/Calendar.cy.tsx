@@ -18,9 +18,9 @@ const {
   CustomDayRender,
   CustomHeader,
   HideYearDropdown,
-  MinMaxDates,
+  MinMaxDate,
   TwinCalendars,
-  WithLocaleES,
+  WithLocale,
 } = composeStories(calendarStories);
 
 describe("GIVEN a Calendar", () => {
@@ -381,7 +381,7 @@ describe("GIVEN a Calendar", () => {
     });
 
     it("SHOULD render different locales", () => {
-      cy.mount(<WithLocaleES locale={"es-ES"} />);
+      cy.mount(<WithLocale locale={"es-ES"} />);
       // Verify that the month dropdown is rendered in the specified locale
       cy.findByRole("combobox", { name: "Month Dropdown" }).should(
         "have.text",
@@ -397,7 +397,7 @@ describe("GIVEN a Calendar", () => {
   describe("Min/Max", () => {
     it("SHOULD be selectable between min/max dates", () => {
       cy.mount(
-        <MinMaxDates
+        <MinMaxDate
           defaultVisibleMonth={testDate}
           minDate={startOfMonth(testDate).add({ days: 1 })}
           maxDate={endOfMonth(testDate).subtract({ days: 1 })}
