@@ -348,7 +348,9 @@ export const PillInput = forwardRef(function PillInput(
         />
       </div>
       {!isDisabled && validationStatus && (
-        <StatusAdornment status={validationStatus} />
+        <div className={withBaseName("statusAdornmentContainer")}>
+          <StatusAdornment status={validationStatus} />
+        </div>
       )}
       {endAdornment && (
         <div className={withBaseName("endAdornmentContainer")}>
