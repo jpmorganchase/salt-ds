@@ -1,0 +1,43 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- To present a set of list items which are static. It can be used in conjunction with File drop zone to create a file uploader pattern to show the list of files added, it can also be used to create a pattern for cart details.
+
+### When not to use
+
+- If you need to create a interactive list, use the [`ListBox`](../list-box) component.
+
+## Content
+
+- Always use sentence case for static list item labels.
+- Keep static list item labels short and concise.
+- Keep static list secondary item labels short and concise.
+
+## Import
+
+To import `StaticList` and related components from the lab Salt package, use:
+
+```
+import { StaticList, StaticListItem } from "@salt-ds/lab";
+```
+
+## Props
+
+### `StaticList`
+
+<PropsTable packageName="lab" componentName="StaticList" />
+
+### `StaticListItem`
+
+<PropsTable packageName="lab" componentName="StaticListItem" />
