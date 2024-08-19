@@ -1,5 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
-import { ChevronLeftIcon } from "@salt-ds/icons";
+import { makePrefixer, useIcon } from "@salt-ds/core";
 import type { Dispatch, ReactElement, SetStateAction } from "react";
 import type { SelectHandler } from "../../common-hooks";
 import { List, ListItem } from "../../list";
@@ -27,6 +26,7 @@ export function ValueList(props: ValueListProps) {
     highlightedValueIndex,
     setHighlightedValueIndex,
   } = props;
+  const { PreviousIcon } = useIcon();
 
   const handleSelect: SelectHandler = (_, value: string) => {
     onValueToggle(category!, value);
@@ -57,7 +57,7 @@ export function ValueList(props: ValueListProps) {
           onClick={onBack}
           selectable={false}
         >
-          <ChevronLeftIcon />
+          <PreviousIcon />
           <div className={withBaseName("category")}>
             {category ? category.name : ""}
           </div>

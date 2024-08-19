@@ -1,5 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { makePrefixer, useIcon } from "@salt-ds/core";
 import { type CSSProperties, useMemo, useRef } from "react";
 import { ListItem, type ListItemProps, type ListItemType } from "../../list";
 import type { QueryInputCategory } from "../queryInputTypes";
@@ -16,7 +15,7 @@ export const CategoryListItem: ListItemType<QueryInputCategory> =
   function CategoryListItem({ item: category, ...props }) {
     const textRef = useRef<HTMLDivElement>(null);
     const context = useCategoryListContext();
-
+    const { ExpandGroupIcon } = useIcon();
     const textStyle: CSSProperties = useMemo(
       () => ({
         minWidth: context.width,
@@ -36,7 +35,7 @@ export const CategoryListItem: ListItemType<QueryInputCategory> =
           </span>
           <span>)</span>
         </div>
-        <ChevronRightIcon className={withBaseName("chevron")} />
+        <ExpandGroupIcon className={withBaseName("chevron")} />
       </ListItem>
     );
   };

@@ -1,12 +1,11 @@
-import { UserSolidIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
-import { useAvatarImage } from "./useAvatarImage";
-
+import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer } from "../utils";
 import avatarCss from "./Avatar.css";
+import { useAvatarImage } from "./useAvatarImage";
 
 export type NameToInitials = (name?: string) => string;
 
@@ -54,12 +53,18 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
     src,
     size = DEFAULT_AVATAR_SIZE,
     style: styleProp,
-    fallbackIcon = <UserSolidIcon aria-label="User Avatar" />,
+    fallbackIcon: fallbackIconProp,
     ...rest
   },
   ref,
 ) {
   const targetWindow = useWindow();
+  const { UserIcon } = useIcon();
+
+  const fallbackIcon = fallbackIconProp || (
+    <UserIcon aria-label="User Avatar" />
+  );
+
   useComponentCssInjection({
     testId: "salt-avatar",
     css: avatarCss,

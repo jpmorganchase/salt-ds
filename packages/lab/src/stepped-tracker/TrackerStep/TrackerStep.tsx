@@ -1,11 +1,4 @@
-import { type ValidationStatus, makePrefixer } from "@salt-ds/core";
-import {
-  ErrorSolidIcon,
-  StepActiveIcon,
-  StepDefaultIcon,
-  StepSuccessIcon,
-  WarningSolidIcon,
-} from "@salt-ds/icons";
+import { type ValidationStatus, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -36,14 +29,6 @@ export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
    */
   status?: StatusOptions;
 }
-
-const iconMap = {
-  pending: StepDefaultIcon,
-  active: StepActiveIcon,
-  completed: StepSuccessIcon,
-  warning: WarningSolidIcon,
-  error: ErrorSolidIcon,
-};
 
 const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   useEffect(() => {
@@ -89,7 +74,8 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       css: trackerStepCss,
       window: targetWindow,
     });
-
+    const { ErrorIcon, WarningIcon, CompletedIcon, ActiveIcon, PendingIcon } =
+      useIcon();
     const { activeStep, totalSteps, isWithinSteppedTracker } =
       useSteppedTrackerContext();
     const stepNumber = useTrackerStepContext();
@@ -98,6 +84,13 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     const isActive = activeStep === stepNumber;
     const iconName = parseIconName({ stage, status, active: isActive });
+    const iconMap = {
+      pending: PendingIcon,
+      active: ActiveIcon,
+      completed: CompletedIcon,
+      warning: WarningIcon,
+      error: ErrorIcon,
+    };
 
     const Icon = iconMap[iconName];
     const connectorState = activeStep > stepNumber ? "active" : "default";

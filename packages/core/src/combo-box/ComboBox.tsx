@@ -7,7 +7,6 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -34,6 +33,7 @@ import {
 import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
 import { PillInput, type PillInputProps } from "../pill-input";
+import { useIcon } from "../semantic-icon-provider";
 import {
   type UseFloatingUIProps,
   makePrefixer,
@@ -97,7 +97,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     css: comboBoxCss,
     window: targetWindow,
   });
-
+  const { CollapseIcon, ExpandIcon } = useIcon();
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
     disabled: formFieldDisabled,
@@ -429,9 +429,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
                 tabIndex={-1}
               >
                 {openState ? (
-                  <ChevronUpIcon aria-hidden />
+                  <CollapseIcon aria-hidden />
                 ) : (
-                  <ChevronDownIcon aria-hidden />
+                  <ExpandIcon aria-hidden />
                 )}
               </Button>
             ) : undefined}

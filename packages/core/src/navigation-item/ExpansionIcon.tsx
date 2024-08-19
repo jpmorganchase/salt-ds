@@ -1,15 +1,4 @@
-import { ChevronDownIcon, ChevronRightIcon } from "@salt-ds/icons";
-
-const iconExpansionMap = {
-  vertical: {
-    expanded: ChevronDownIcon,
-    collapsed: ChevronRightIcon,
-  },
-  horizontal: {
-    expanded: ChevronDownIcon,
-    collapsed: ChevronDownIcon,
-  },
-};
+import { useIcon } from "../semantic-icon-provider";
 
 interface ExpansionIconProps {
   /**
@@ -26,6 +15,18 @@ export const ExpansionIcon = ({
   expanded = false,
   orientation = "horizontal",
 }: ExpansionIconProps) => {
+  const { ExpandGroupIcon, ExpandIcon, CollapseGroupIcon } = useIcon();
+  const iconExpansionMap = {
+    vertical: {
+      expanded: CollapseGroupIcon,
+      collapsed: ExpandGroupIcon,
+    },
+    horizontal: {
+      expanded: CollapseGroupIcon,
+      collapsed: CollapseGroupIcon,
+    },
+  };
+
   const Icon =
     iconExpansionMap[orientation][expanded ? "expanded" : "collapsed"];
   return <Icon aria-hidden="true" />;

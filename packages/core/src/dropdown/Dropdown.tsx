@@ -7,7 +7,6 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -34,6 +33,7 @@ import {
   useListControl,
 } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
+import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { ValidationStatus } from "../status-indicator";
 import {
@@ -98,7 +98,8 @@ export type DropdownProps<Item = string> = {
   ListControlProps<Item>;
 
 function ExpandIcon({ open }: { open: boolean }) {
-  return open ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />;
+  const { CollapseIcon, ExpandIcon } = useIcon();
+  return open ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />;
 }
 
 const withBaseName = makePrefixer("saltDropdown");

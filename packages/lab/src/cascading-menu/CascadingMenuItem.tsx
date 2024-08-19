@@ -1,5 +1,4 @@
-import { Tooltip, makePrefixer } from "@salt-ds/core";
-import { ChevronRightIcon } from "@salt-ds/icons";
+import { Tooltip, makePrefixer, useIcon } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type KeyboardEvent,
@@ -80,7 +79,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       css: cascadingMenuItemCss,
       window: targetWindow,
     });
-
+    const { ExpandGroupIcon } = useIcon();
     const menuTextRef = useRef<HTMLDivElement>(null);
     const [hasTooltip, setHasTooltip] = useState(false);
     const menuText = itemToString(sourceItem);
@@ -169,7 +168,7 @@ export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
                 [withBaseName("menuItemAdornmentHidden")]: !hasSubMenu,
               })}
             >
-              <ChevronRightIcon
+              <ExpandGroupIcon
                 className={clsx(withBaseName("menuItemEndAdornment"), {
                   [withBaseName("menuItemDisabled")]: isDisabled,
                 })}

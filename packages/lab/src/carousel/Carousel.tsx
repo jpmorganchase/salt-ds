@@ -4,9 +4,11 @@ import {
   RadioButton,
   RadioButtonGroup,
   makePrefixer,
+  useIcon,
   useId,
 } from "@salt-ds/core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEventHandler,
@@ -17,9 +19,6 @@ import {
   useEffect,
 } from "react";
 import { DeckLayout } from "../deck-layout";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { useSlideSelection } from "../utils";
 import type { CarouselSlideProps } from "./CarouselSlide";
 
@@ -81,7 +80,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       css: carouselCss,
       window: targetWindow,
     });
-
+    const { NextIcon, PreviousIcon } = useIcon();
     const id = useId(idProp);
     const slidesCount = Children.count(children);
 
@@ -135,7 +134,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           className={withBaseName("prev-button")}
           onClick={() => moveSlide("left")}
         >
-          <ChevronLeftIcon size={2} />
+          <PreviousIcon size={2} />
         </Button>
         <DeckLayout
           activeIndex={selectedSlide}
@@ -149,7 +148,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           className={withBaseName("next-button")}
           onClick={() => moveSlide("right")}
         >
-          <ChevronRightIcon size={2} />
+          <NextIcon size={2} />
         </Button>
         <div className={withBaseName("dots")}>
           <RadioButtonGroup

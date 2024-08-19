@@ -1,5 +1,4 @@
-import { Button } from "@salt-ds/core";
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import { Button, useIcon } from "@salt-ds/core";
 import React, { type FC, type Dispatch, type SetStateAction } from "react";
 
 import layoutStyles from "../index.module.css";
@@ -16,6 +15,7 @@ const TitleWithDrawer: FC<TitleWithDrawerProps> = ({
   openDrawer,
   setOpenDrawer,
 }) => {
+  const { OverflowIcon, CloseIcon } = useIcon();
   const showDrawer = () => {
     setOpenDrawer(true);
   };
@@ -41,7 +41,7 @@ const TitleWithDrawer: FC<TitleWithDrawerProps> = ({
           variant="secondary"
           onClick={showDrawer}
         >
-          <OverflowMenuIcon aria-hidden />
+          <OverflowIcon aria-hidden />
         </Button>
       )}
     </div>

@@ -3,9 +3,9 @@ import {
   type PillProps,
   Tooltip,
   makePrefixer,
+  useIcon,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -67,6 +67,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
     window: targetWindow,
   });
 
+  const { CloseIcon } = useIcon();
   const ref = useRef<HTMLButtonElement | null>(null);
   const [isEllipsisActive, setEllipsisActive] = useState(false);
   const isRemovable = Boolean(onClose);

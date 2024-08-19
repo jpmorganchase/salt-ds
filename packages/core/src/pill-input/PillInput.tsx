@@ -1,4 +1,3 @@
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -19,6 +18,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { Pill } from "../pill";
+import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
@@ -115,6 +115,7 @@ export const PillInput = forwardRef(function PillInput(
   ref: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
+  const { OverflowIcon, CloseIcon } = useIcon();
   useComponentCssInjection({
     testId: "salt-pill-input",
     css: pillInputCss,
@@ -322,7 +323,7 @@ export const PillInput = forwardRef(function PillInput(
                 data-overflowindicator
                 className={withBaseName("overflowIndicator")}
               >
-                <OverflowMenuIcon aria-hidden />
+                <OverflowIcon aria-hidden />
               </div>
             </div>
           )}
