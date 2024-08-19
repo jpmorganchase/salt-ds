@@ -29,10 +29,6 @@
   box-sizing: border-box;
 }
 
-.saltCheckboxIcon > svg {
-  /* ensures svg is centered in all browsers */
-  transform: translate(0px, 0px);
-}
 /* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-offset: var(--salt-focused-outlineOffset);
