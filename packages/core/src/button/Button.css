@@ -126,6 +126,7 @@
 .saltButton-disabled,
 .saltButton-disabled:active,
 .saltButton-disabled:focus-visible,
+.saltButton-disabled:focus-visible:active,
 .saltButton-disabled:hover {
   background: var(--saltButton-background-disabled, var(--button-background-disabled));
   color: var(--saltButton-text-color-disabled, var(--button-text-color-disabled));
