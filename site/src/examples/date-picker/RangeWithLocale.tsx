@@ -116,7 +116,7 @@ const formatDateStringEsES = (
     : "";
 };
 
-export const RangeWithLocaleES = (): ReactElement => {
+export const RangeWithLocale = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
   );
@@ -126,7 +126,7 @@ export const RangeWithLocaleES = (): ReactElement => {
   );
 
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "250px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}

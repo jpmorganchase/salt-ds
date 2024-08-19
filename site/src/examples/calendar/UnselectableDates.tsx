@@ -1,8 +1,12 @@
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import { type DateValue, getDayOfWeek } from "@internationalized/date";
+import { Calendar, CalendarNavigation, getCurrentLocale } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-const isDayUnselectable = (day: { day: number }) => {
-  if (day.day === 1) return "Cut off day";
+const isDayUnselectable = (date: DateValue) => {
+  // Saturday & Sunday
+  if (getDayOfWeek(date, getCurrentLocale()) >= 5) {
+    return "weekend";
+  }
 };
 
 export const UnselectableDates = (): ReactElement => (

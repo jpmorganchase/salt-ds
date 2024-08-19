@@ -2,11 +2,8 @@ import { getLocalTimeZone, today } from "@internationalized/date";
 import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Single = (): ReactElement => (
-  <Calendar
-    selectionVariant="single"
-    defaultSelectedDate={today(getLocalTimeZone())}
-  >
+export const WithLocale = (): ReactElement => (
+  <Calendar selectionVariant="single" locale="es-ES">
     <CalendarNavigation />
   </Calendar>
 );

@@ -16,6 +16,7 @@ import {
 } from "@salt-ds/core";
 import {
   CalendarNavigation,
+  type CalendarNavigationProps,
   type CalendarSingleProps,
   getCurrentLocale,
   useDatePickerContext,
@@ -57,6 +58,7 @@ export interface DatePickerSinglePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+  NavigationProps?: CalendarNavigationProps;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -67,6 +69,7 @@ export const DatePickerSinglePanel = forwardRef<
 >(function DatePickerSinglePanel(props, ref) {
   const {
     CalendarProps,
+    NavigationProps,
     className,
     defaultVisibleMonth,
     visibleMonth: visibleMonthProp,
@@ -164,7 +167,7 @@ export const DatePickerSinglePanel = forwardRef<
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant="single" {...baseCalendarProps}>
-            <CalendarNavigation />
+            <CalendarNavigation {...NavigationProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

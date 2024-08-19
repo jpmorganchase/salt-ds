@@ -5,6 +5,7 @@ import {
   type DateInputSingleProps,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import type { ReactElement } from "react";
 
 export default {
   title: "Lab/Date Input",
@@ -25,7 +26,18 @@ Single.args = {};
 export const Range = DateInputRangeTemplate.bind({});
 Range.args = {};
 
-export const Bordered = DateInputSingleTemplate.bind({});
-Bordered.args = {
+export const SingleBordered = DateInputSingleTemplate.bind({});
+SingleBordered.args = {
   bordered: true,
+};
+
+export const RangeBordered = DateInputSingleTemplate.bind({});
+RangeBordered.args = {
+  bordered: true,
+};
+
+export const EmptyReadOnlyMarker = DateInputSingleTemplate.bind({});
+EmptyReadOnlyMarker.args = {
+  emptyReadOnlyMarker: "-",
+  readOnly: true,
 };

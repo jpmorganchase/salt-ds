@@ -29,6 +29,7 @@ import {
 import {
   Calendar,
   CalendarNavigation,
+  type CalendarNavigationProps,
   type CalendarOffsetProps,
   type CalendarProps,
   type CalendarRangeProps,
@@ -55,6 +56,7 @@ export interface DatePickerRangePanelProps<T>
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
+  StartNavigationProps?: CalendarNavigationProps;
   StartCalendarProps?: Partial<
     Omit<
       CalendarRangeProps | CalendarOffsetProps,
@@ -73,6 +75,7 @@ export interface DatePickerRangePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+  EndNavigationProps?: CalendarNavigationProps;
 }
 
 function getFallbackVisibleMonths(selectedDate?: DateRangeSelection | null) {
@@ -111,8 +114,10 @@ export const DatePickerRangePanel = forwardRef<
     onEndVisibleMonthChange,
     helperText,
     onSelect,
-    StartCalendarProps,
-    EndCalendarProps,
+    StartCalendarProps: StartCalendarPropsProp,
+    StartNavigationProps,
+    EndCalendarProps: EndCalendarPropsProp,
+    EndNavigationProps,
   } = props;
 
   const targetWindow = useWindow();
@@ -165,20 +170,20 @@ export const DatePickerRangePanel = forwardRef<
     useCallback(
       (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
         setHoveredDate(newHoveredDate);
-        if (newHoveredDate && StartCalendarProps?.onHoveredDateChange) {
-          StartCalendarProps.onHoveredDateChange?.(event, newHoveredDate);
+        if (newHoveredDate && StartCalendarPropsProp?.onHoveredDateChange) {
+          StartCalendarPropsProp.onHoveredDateChange?.(event, newHoveredDate);
         }
       },
-      [setHoveredDate, StartCalendarProps?.onHoveredDateChange],
+      [setHoveredDate, StartCalendarPropsProp?.onHoveredDateChange],
     );
   const handleHoveredEndDateChange = useCallback(
     (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
       setHoveredDate(newHoveredDate);
-      if (newHoveredDate && EndCalendarProps?.onHoveredDateChange) {
-        EndCalendarProps.onHoveredDateChange(event, newHoveredDate);
+      if (newHoveredDate && EndCalendarPropsProp?.onHoveredDateChange) {
+        EndCalendarPropsProp.onHoveredDateChange(event, newHoveredDate);
       }
     },
-    [setHoveredDate, EndCalendarProps?.onHoveredDateChange],
+    [setHoveredDate, EndCalendarPropsProp?.onHoveredDateChange],
   );
 
   const handleStartVisibleMonthChange = useCallback(
@@ -214,7 +219,7 @@ export const DatePickerRangePanel = forwardRef<
       : hoveredDate;
   }
 
-  const startDateCalendarProps = {
+  const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
     hoveredDate: getHoveredDate(selectedDate?.startDate, hoveredDate),
     selectedDate: selectedDate as DateRangeSelection,
@@ -226,9 +231,9 @@ export const DatePickerRangePanel = forwardRef<
     maxDate,
     locale,
     timeZone,
-    ...StartCalendarProps,
+    ...StartCalendarPropsProp,
   } as Partial<UseCalendarSelectionRangeProps>;
-  const endDateCalendarProps = {
+  const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
     selectedDate: selectedDate as DateRangeSelection,
@@ -240,7 +245,7 @@ export const DatePickerRangePanel = forwardRef<
     maxDate,
     locale,
     timeZone,
-    ...EndCalendarProps,
+    ...EndCalendarPropsProp,
   } as Partial<UseCalendarSelectionRangeProps>;
 
   return (
@@ -258,11 +263,11 @@ export const DatePickerRangePanel = forwardRef<
       <FlexLayout gap={0}>
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
-          <Calendar selectionVariant={"range"} {...startDateCalendarProps}>
-            <CalendarNavigation />
+          <Calendar selectionVariant={"range"} {...StartCalendarProps}>
+            <CalendarNavigation {...StartNavigationProps} />
           </Calendar>
-          <Calendar selectionVariant={"range"} {...endDateCalendarProps}>
-            <CalendarNavigation />
+          <Calendar selectionVariant={"range"} {...EndCalendarProps}>
+            <CalendarNavigation {...EndNavigationProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

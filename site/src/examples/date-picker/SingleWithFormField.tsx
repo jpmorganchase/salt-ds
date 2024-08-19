@@ -4,26 +4,15 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputRangeValue,
   DatePicker,
   DatePickerOverlay,
-  DatePickerRangeInput,
-  DatePickerRangePanel,
-  type DateRangeSelection,
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
+  type SingleDateSelection,
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
 
 function validateShortDate(
   dateString: string,
@@ -74,55 +63,37 @@ const isValidShortDate = (
   locale = getCurrentLocale(),
 ) => !dateValue?.length || validateShortDate(dateValue, locale);
 
-function isValidDateRange(date: DateRangeSelection | null) {
-  if (
-    date?.startDate &&
-    date?.endDate &&
-    date.startDate.compare(date.endDate) > 0
-  ) {
-    return false;
-  }
-  return true;
-}
-
-export const RangeWithValidation = (): ReactElement => {
-  const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+export const SingleWithFormField = (): ReactElement => {
+  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
 
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+      <FormLabel>Select a date</FormLabel>
       <DatePicker
-        selectionVariant="range"
+        selectionVariant="single"
         selectedDate={selectedDate}
-        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`,
-          );
+        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
+          console.log(`Selected date: ${formatDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
-          const validationStatus = isValidDateRange(newSelectedDate)
-            ? undefined
-            : "error";
-          setValidationStatus(validationStatus);
+          setValidationStatus(undefined);
         }}
       >
-        <DatePickerRangeInput
-          onDateValueChange={(newDateValue?: DateInputRangeValue) => {
-            const validationStatus =
-              isValidShortDate(newDateValue?.startDate) &&
-              isValidShortDate(newDateValue?.endDate)
-                ? undefined
-                : "error";
+        <DatePickerSingleInput
+          onDateValueChange={(newDateValue: string) => {
+            const validationStatus = isValidShortDate(newDateValue)
+              ? undefined
+              : "error";
             setValidationStatus(validationStatus);
           }}
         />
         <DatePickerOverlay>
-          <DatePickerRangePanel helperText={helperText} />
+          <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       <FormHelperText>{helperText}</FormHelperText>

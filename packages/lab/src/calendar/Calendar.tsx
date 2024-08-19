@@ -27,7 +27,6 @@ import { DateFormatter } from "@internationalized/date";
 import calendarCss from "./Calendar.css";
 
 export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
-  borderedDropdown?: CalendarNavigationProps["borderedDropdown"];
   children?: ReactNode;
   className?: string;
   renderDayContents?: CalendarCarouselProps["renderDayContents"];

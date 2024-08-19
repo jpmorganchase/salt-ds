@@ -10,23 +10,35 @@ data:
 
 ## Using the component
 
+<LivePreviewControls>
+<LivePreview componentName="calendar" exampleName="Single">
+## Compose a standard DatePicker
+To use the `Calendar` component, compose it with children that define the calendar header, such as `CalendarNavigation`. 
+
+The `CalendarNavigation` component provides year/month dropdowns and forward/back controls for the visible month.
+</LivePreview>
+</LivePreviewControls>
+
+<LivePreviewControls>
+<LivePreview componentName="calendar" displayName="Custom header" exampleName="CustomHeader">
+## Customising the DatePicker
+Alternatively, you can compose it with your own navigation component or add additional controls.
+</LivePreview>
+</LivePreviewControls>
+
 ### When to use
 
-- To allow users to input a date or range of dates.
+Use the `Calendar` component when you need a versatile date selection tool that supports single, range, multiselect, or offset dates. This flexibility makes it ideal for financial applications, event scheduling, project timelines, and other scenarios where different date selection modes are necessary.
 
 ### When not to use
 
-- For calendar-related tasks other than selecting a date, such as picking a time or time-zone; or displaying event information.
-- If the date or range is pre-determined and can’t be specified by the user. Consider showing date options in a dropdown instead.
+- For tasks other than selecting a date, such as picking a time or displaying event information.
+- If the date or range is pre-determined and cannot be specified by the user. In such cases, consider showing date options in a dropdown instead.
 
 ## Import
 
-To import `Calendar` from the lab Salt package, use:
+To import `Calendar` from the Salt lab package, use:
 
 ```js
 import { Calendar } from "@salt-ds/lab";
 ```
-
-## Props
-
-<PropsTable packageName="lab" componentName="Calendar" />

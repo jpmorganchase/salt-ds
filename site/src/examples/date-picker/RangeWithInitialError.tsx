@@ -102,7 +102,7 @@ export const RangeWithInitialError = (): ReactElement => {
   );
 
   return (
-    <FormField style={{ width: "280px" }} validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"

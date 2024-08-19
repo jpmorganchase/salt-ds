@@ -93,7 +93,7 @@ const formatDateStringEnUS = (
     : "";
 };
 
-export const SingleWithLocaleUS = (): ReactElement => {
+export const SingleWithLocale = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
@@ -103,7 +103,7 @@ export const SingleWithLocaleUS = (): ReactElement => {
   );
 
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "250px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}

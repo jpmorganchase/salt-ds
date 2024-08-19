@@ -405,7 +405,7 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = (args) => {
   );
 };
 
-export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
+export const SingleWithFormField: StoryFn<DatePickerSingleProps> = (args) => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -445,7 +445,7 @@ export const SingleWithValidation: StoryFn<DatePickerSingleProps> = (args) => {
   );
 };
 
-export const RangeWithValidation: StoryFn<DatePickerRangeProps> = (args) => {
+export const RangeWithFormField: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -766,7 +766,7 @@ const formatDateStringEnUS = (
     : "";
 };
 
-export const SingleWithLocaleUS: StoryFn<DatePickerSingleProps> = (args) => {
+export const SingleWithLocale: StoryFn<DatePickerSingleProps> = (args) => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
@@ -851,7 +851,7 @@ const formatDateStringEsES = (
     : "";
 };
 
-export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
+export const RangeWithLocale: StoryFn<DatePickerRangeProps> = (args) => {
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
   );
@@ -903,8 +903,52 @@ export const RangeWithLocaleES: StoryFn<DatePickerRangeProps> = (args) => {
   );
 };
 
-export const Bordered = DatePickerSingleTemplate.bind({});
-Bordered.args = {
-  bordered: true,
+export const SingleBordered: StoryFn<DatePickerSingleProps> = (args) => {
+  return (
+    <DatePicker
+      {...args}
+      selectionVariant="single"
+      onSelectedDateChange={(newSelectedDate) => {
+        console.log(`Selected date: ${formatDate(newSelectedDate)}`);
+        args?.onSelectedDateChange?.(newSelectedDate);
+      }}
+    >
+      <DatePickerSingleInput bordered />
+      <DatePickerOverlay>
+        <DatePickerSinglePanel
+          NavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+        />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
 };
 
+export const RangeBordered: StoryFn<DatePickerRangeProps> = (args) => {
+  return (
+    <DatePicker
+      {...args}
+      selectionVariant="range"
+      onSelectedDateChange={(newSelectedDate) => {
+        console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+        args?.onSelectedDateChange?.(newSelectedDate);
+      }}
+    >
+      <DatePickerRangeInput bordered />
+      <DatePickerOverlay>
+        <DatePickerRangePanel
+          StartNavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+          EndNavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+        />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};

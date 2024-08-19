@@ -47,6 +47,10 @@ export interface DateInputRangeProps<T = DateRangeSelection>
     Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
   ariaLabel?: string;
   /**
+   * Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
+  /**
    * The marker to use in an empty read only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
    */
@@ -137,6 +141,7 @@ export interface DateInputRangeProps<T = DateRangeSelection>
 export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
   function DateInput(props, ref) {
     const {
+      bordered = false,
       className,
       disabled,
       "aria-label": ariaLabel,
@@ -420,6 +425,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus ?? "")]: validationStatus,
+            [withBaseName("bordered")]: bordered,
           },
           className,
         )}

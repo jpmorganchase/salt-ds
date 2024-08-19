@@ -4,7 +4,7 @@ import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Calendar/Calendar QA",
+  title: "Lab/Calendar/QA",
   component: Calendar,
 };
 
@@ -48,8 +48,18 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     <Calendar
       selectionVariant="multiselect"
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
-    />
-    <CalendarNavigation hideYearDropdown />
+    >
+      <CalendarNavigation hideYearDropdown />
+    </Calendar>
+    <Calendar
+      selectionVariant="multiselect"
+      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+    >
+      <CalendarNavigation
+        MonthDropdownProps={{ bordered: true }}
+        YearDropdownProps={{ bordered: true }}
+      />
+    </Calendar>
   </QAContainer>
 );
 

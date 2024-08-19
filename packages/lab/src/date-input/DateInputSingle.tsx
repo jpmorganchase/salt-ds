@@ -43,6 +43,10 @@ export interface DateInputSingleProps<T = SingleDateSelection>
     > {
   ariaLabel?: string;
   /**
+   * Styling variant with full border. Defaults to false
+   */
+  bordered?: boolean;
+  /**
    * The marker to use in an empty read only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
    */
@@ -115,6 +119,7 @@ export interface DateInputSingleProps<T = SingleDateSelection>
 export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
   function DateInput(props, ref) {
     const {
+      bordered = false,
       className,
       disabled,
       "aria-label": ariaLabel,
@@ -278,6 +283,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName(validationStatus ?? "")]: validationStatus,
+            [withBaseName("bordered")]: bordered,
           },
           className,
         )}

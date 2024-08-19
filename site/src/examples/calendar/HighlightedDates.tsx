@@ -1,8 +1,16 @@
+import {
+  type DateValue,
+  isEqualDay,
+  startOfMonth,
+} from "@internationalized/date";
 import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-const isDayHighlighted = (day: { day: number }) => {
-  if (day.day === 1) return "Cut off day";
+const isDayHighlighted = (date: DateValue) => {
+  // Start of month
+  if (isEqualDay(startOfMonth(date), date)) {
+    return "Start of month reminder";
+  }
 };
 
 export const HighlightedDates = (): ReactElement => (
