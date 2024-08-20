@@ -13,3 +13,7 @@
 .saltAccordion-success {
   border-top-color: var(--salt-status-success-borderColor);
 }
+
+.saltAccordion-disabled {
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
