@@ -10,6 +10,7 @@
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
   text-align: left;
   position: relative;
+  width: var(--saltStaticList-item-width, 100%);
 }
 
 .saltStaticListItem-divided::before {
