@@ -723,4 +723,11 @@ describe("Given a ComboBox", () => {
     );
     cy.findByRole("combobox").should("have.value", "Alaska");
   });
+  it("should not call onBlur when an option in the list is clicked", () => {
+    const blurSpy = cy.stub().as("blurSpy");
+    cy.mount(<Default onBlur={blurSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByRole("option").eq(0).realClick();
+    cy.get("@blurSpy").should("not.have.been.called");
+  });
 });
