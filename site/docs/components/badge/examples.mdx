@@ -12,7 +12,7 @@ data:
 <LivePreview componentName="badge" exampleName="Default">
 ## Default
 
-`Badge` is anchored to the top-right corner when attached to a child component such as an button. As the number of alphanumeric characters increases, the badge width expands, but stays in the same place.
+The `Badge` is anchored to the top-right corner when attached to a child component such as a button. As the number of alphanumeric characters increases, the badge width expands but stays in the same place.
 
 ### Best practices
 
@@ -25,7 +25,8 @@ Use a badge to summarize the overall state of the content the badge is anchored 
 
 To place a badge inline instead of in the top-right corner of an element, don't pass `children` to the badge.
 
-Using a badge inline with text clarifies which part of the content the badge relates to and allows specific details to be highlighted within the content to draw the user’s attention. For example, you may use a badge inside a tab.
+- Using a badge inline with text clarifies which part of the content the badge relates to.
+- Highlight specific details within the content to draw the user’s attention, such as using a badge inside a tab.
 
 </LivePreview>
 <LivePreview componentName="badge" exampleName="BadgeWithMaximumDigits">
@@ -34,7 +35,7 @@ Using a badge inline with text clarifies which part of the content the badge rel
 
 Specify the maximum displayed number with the `max` prop. If `value` exceeds `max`, it will clamp the value and append a (`+`) suffix.
 
-When you don't pass a max value to the component, the value will have a limitation of three digits by default, displaying 999+ for any values over 999.
+- Without a `max` value, the component limits the value to three digits by default, displaying `999+` for any values over 999.
 
 </LivePreview>
 <LivePreview componentName="badge" exampleName="BadgeWithString">
@@ -53,7 +54,9 @@ A dot badge is a circular dot that notifies users of changes in state.
 
 ### Best practices
 
-Be consistent where the badge is positioned in a group of elements. If there is 3:1 contrast between the badge and an element it is attached to, the badge can be anchored to the element's contents. If the contrast is less than 3:1, the badge should be anchored to the element.
+- Be consistent with the badge's position in a group of elements.
+- If there is a 3:1 contrast between the badge and the element it is attached to, the badge can be anchored to the element's contents.
+- If the contrast is less than 3:1, the badge should be anchored to the element.
 
 </LivePreview>
 
@@ -61,7 +64,7 @@ Be consistent where the badge is positioned in a group of elements. If there is 
 
 ## Inline dot badge
 
-Similarly to badge, you can place a dot badge inline. To do this, don't pass `children` to the badge.
+Similarly to a regular badge, you can place a dot badge inline. To do this, do not pass `children` to the badge.
 
 </LivePreview>
 </LivePreviewControls>
