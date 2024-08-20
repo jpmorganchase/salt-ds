@@ -356,7 +356,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
     setFocusedState(false);
-    onBlur?.(event);
+    if (!listRef.current || !listRef.current.contains(event.relatedTarget)) {
+      onBlur?.(event);
+    }
   };
 
   const handleListMouseOver = () => {

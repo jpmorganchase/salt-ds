@@ -465,4 +465,12 @@ describe("Given a Dropdown", () => {
 
     cy.findByTestId(FLOATING_TEST_ID).should("exist");
   });
+
+  it("should not call onBlur when an option in the list is clicked", () => {
+    const blurSpy = cy.stub().as("blurSpy");
+    cy.mount(<Default onBlur={blurSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByRole("option").eq(0).realClick();
+    cy.get("@blurSpy").should("not.have.been.called");
+  });
 });
