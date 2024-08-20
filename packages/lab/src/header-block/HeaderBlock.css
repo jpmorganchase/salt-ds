@@ -1,0 +1,52 @@
+.saltHeaderBlock {
+  padding: var(--salt-spacing-300);
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+}
+
+.saltHeaderBlock-body {
+  flex-grow: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-50);
+}
+
+.saltHeaderBlock .saltStatusIndicator.saltIcon {
+  --icon-size: var(--salt-text-h2-lineHeight);
+}
+
+.saltHeaderBlock-withAccent {
+  position: relative;
+}
+
+.saltHeaderBlock-withAccent::before {
+  content: "";
+  position: absolute;
+  top: var(--salt-spacing-300);
+  left: 0;
+  bottom: var(--salt-spacing-300);
+  width: var(--salt-size-bar);
+  background: var(--salt-accent-background);
+}
+
+.saltHeaderBlock-error::before {
+  background: var(--salt-status-error-borderColor);
+}
+
+.saltHeaderBlock-info::before {
+  background: var(--salt-status-info-borderColor);
+}
+
+.saltHeaderBlock-success::before {
+  background: var(--salt-status-success-borderColor);
+}
+
+.saltHeaderBlock-warning::before {
+  background: var(--salt-status-warning-borderColor);
+}

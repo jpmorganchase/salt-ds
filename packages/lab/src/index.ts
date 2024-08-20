@@ -39,6 +39,7 @@ export {
 export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
+export * from "./header-block";
 export {
   InputLegacy as Input,
   type InputLegacyProps as InputProps,

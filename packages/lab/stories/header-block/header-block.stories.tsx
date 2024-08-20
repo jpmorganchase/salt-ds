@@ -1,10 +1,9 @@
 import {
   Button,
+  Card,
   Dialog,
   DialogActions,
-  DialogCloseButton,
   DialogContent,
-  DialogHeader,
   Overlay,
   OverlayPanel,
   OverlayPanelCloseButton,
@@ -14,9 +13,9 @@ import {
   StackLayout,
   Tooltip,
   Drawer,
-  DrawerCloseButton,
   type DrawerProps,
 } from "@salt-ds/core";
+import { HeaderBlock } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
@@ -24,6 +23,50 @@ export default {
   title: "Lab/Header Block",
   component: Dialog,
 } as Meta<typeof Dialog>;
+
+export const Default: StoryFn<typeof Dialog> = () => {
+  return (
+    <StackLayout>
+      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <HeaderBlock header="Header Block" onClose={() => {}} accent={true} />
+      </Card>
+      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <HeaderBlock
+          accent={true}
+          header="A Header Block with a preheader and a description."
+          preheader="This is a preheader."
+          description="This is a description."
+          onClose={() => {}}
+        />
+      </Card>
+      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <HeaderBlock
+          header="No accent"
+          preheader="This is a preheader."
+          onClose={() => {}}
+        />
+      </Card>
+      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <HeaderBlock
+          accent={true}
+          status="error"
+          header="Status: error"
+          onClose={() => {}}
+        />
+      </Card>
+      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <HeaderBlock
+          accent={true}
+          status="success"
+          header="Status: success"
+          preheader="This is a preheader."
+          description="This is a description."
+          onClose={() => {}}
+        />
+      </Card>
+    </StackLayout>
+  );
+};
 
 export const InDialog: StoryFn<typeof Dialog> = () => {
   const [open, setOpen] = useState(true);
@@ -46,7 +89,11 @@ export const InDialog: StoryFn<typeof Dialog> = () => {
         Open dialog
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} id="header-block-dialog">
-        <DialogHeader header="Congratulations! You have created a Dialog." />
+        <HeaderBlock
+          accent={true}
+          header="Congratulations! You have created a Dialog."
+          onClose={() => onOpenChange(false)}
+        />
         <DialogContent>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -62,7 +109,6 @@ export const InDialog: StoryFn<typeof Dialog> = () => {
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
@@ -84,11 +130,8 @@ export const InOverlay = ({ onOpenChange }: OverlayProps) => {
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby="header-block-overlay">
-        <OverlayPanelCloseButton onClick={handleClose} />
+        <HeaderBlock header="Title" onClose={handleClose} />
         <OverlayPanelContent>
-          <h3 id="header-block-overlay" className="content-heading">
-            Title
-          </h3>
           <div>
             Content of Overlay
             <br />
@@ -123,7 +166,7 @@ export const InOverlayWithLongContent = () => {
           overflow: "auto",
         }}
       >
-        <OverlayPanelCloseButton onClick={handleClose} />
+        <HeaderBlock onClose={handleClose} />
         <OverlayPanelContent>
           <StackLayout>
             <div>
@@ -160,7 +203,7 @@ export const InDrawer: StoryFn<DrawerProps> = (args) => {
         id="primary"
         style={{ width: 200 }}
       >
-        <DrawerCloseButton onClick={() => setOpenPrimary(false)} />
+        <HeaderBlock onClose={() => setOpenPrimary(false)} />
       </Drawer>
     </>
   );
