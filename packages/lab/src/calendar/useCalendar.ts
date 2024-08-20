@@ -36,7 +36,7 @@ interface UseCalendarBaseProps {
   ) => void;
   isDayUnselectable?: (date: DateValue) => string | false | void;
   isDayHighlighted?: (date: DateValue) => string | false | void;
-  isDayDisabled?: (date: DateValue) => boolean;
+  isDayDisabled?: (date: DateValue) => string | false | void;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
   minDate?: DateValue;

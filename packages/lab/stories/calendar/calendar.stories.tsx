@@ -31,6 +31,7 @@ export default {
   component: Calendar,
   args: {
     selectionVariant: "single",
+    children: <CalendarNavigation />,
   },
 } as Meta<typeof Calendar>;
 
@@ -113,30 +114,27 @@ Offset.args = {
 
 export const UnselectableDates = Template.bind({});
 UnselectableDates.args = {
-  isDayUnselectable: (date) => {
-    // Saturday & Sunday
-    if (getDayOfWeek(date, getCurrentLocale()) >= 5) {
-      return "weekend";
-    }
-  },
+  // Saturday & Sunday
+  isDayUnselectable: (date) =>
+    getDayOfWeek(date, getCurrentLocale()) >= 5
+      ? "Weekends are un-selectable"
+      : false,
 };
 
 export const DisabledDates = Template.bind({});
 DisabledDates.args = {
-  isDayDisabled: (date) => {
-    // Saturday & Sunday
-    return getDayOfWeek(date, getCurrentLocale()) >= 5;
-  },
+  // Saturday & Sunday
+  isDayDisabled: (date) =>
+    getDayOfWeek(date, getCurrentLocale()) >= 5
+      ? "Weekends are disabled"
+      : false,
 };
 
 export const HighlightedDates = Template.bind({});
 HighlightedDates.args = {
-  isDayHighlighted: (day) => {
-    // Start of month
-    if (isEqualDay(startOfMonth(day), day)) {
-      return "Start of month reminder";
-    }
-  },
+  // Start of month
+  isDayHighlighted: (day) =>
+    isEqualDay(startOfMonth(day), day) ? "Start of month reminder" : false,
 };
 
 export const HideOutOfRangeDates = Template.bind({});

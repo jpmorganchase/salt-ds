@@ -106,10 +106,10 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   useEffect(() => {
     if (selectionVariant === "range") {
       const rangeSelection = selectedDate as DateRangeSelection;
-      if (!rangeSelection?.startDate) {
-        setFocusedValue("start");
-      } else {
+      if (rangeSelection?.endDate) {
         setFocusedValue("end");
+      } else {
+        setFocusedValue("start");
       }
     } else {
       const singleSelection = selectedDate as SingleDateSelection;

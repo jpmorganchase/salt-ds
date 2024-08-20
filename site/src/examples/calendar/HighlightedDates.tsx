@@ -3,15 +3,12 @@ import {
   isEqualDay,
   startOfMonth,
 } from "@internationalized/date";
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import { Calendar, CalendarNavigation, getCurrentLocale } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-const isDayHighlighted = (date: DateValue) => {
-  // Start of month
-  if (isEqualDay(startOfMonth(date), date)) {
-    return "Start of month reminder";
-  }
-};
+// Start of month
+const isDayHighlighted = (date: DateValue) =>
+  isEqualDay(startOfMonth(date), date) ? "Start of month reminder" : false;
 
 export const HighlightedDates = (): ReactElement => (
   <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted}>

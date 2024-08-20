@@ -35,7 +35,7 @@ describe("GIVEN a Calendar with offset selection", () => {
       // @ts-ignore
       baseDate,
       // @ts-ignore
-      OffsetSelection.args?.endDateOffset(baseDate),
+      Offset.args?.endDateOffset(baseDate),
     );
     // Simulate hovering over the base date button
     cy.findByRole("button", {
@@ -63,7 +63,7 @@ describe("GIVEN a Calendar with offset selection", () => {
     const datesInNewRange = getAllDatesInRange(
       newBaseDate,
       // @ts-ignore
-      OffsetSelection.args?.endDateOffset(newBaseDate),
+      Offset.args?.endDateOffset(newBaseDate),
     );
 
     // Simulate clicking a new base date button to select a new range

@@ -86,7 +86,7 @@ export function useCalendarDay(
   const tabIndex = isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
   const today = isToday(date, timeZone);
 
-  const unselectableReason = isDayUnselectable(date);
+  const unselectableReason = isDayUnselectable(date) || isDayDisabled(date);
   const highlightedReason = isDayHighlighted(date);
 
   const disabled =

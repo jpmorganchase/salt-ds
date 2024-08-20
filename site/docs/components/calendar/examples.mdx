@@ -45,9 +45,9 @@ Disabled dates are not selectable. To implement this, use the `isDayUnselectable
 Highlighted dates are marked by a triangle in the top right corner, indicating an event associated with that day. When a user hovers over a highlighted date, the calendar displays a tooltip with additional information. To implement this, use the `isDayHighlighted` prop to pass a function that determines whether a day is highlighted and provides the tooltip description.
 </LivePreview>
 
-<LivePreview componentName="calendar" displayName="Custom Day Render" exampleName="CustomDayRender">
-## Custom date rendering
-To customize the rendering of a date element, use the `renderDayContents` prop with the `Calendar` component. This prop accepts a function that is passed a `DateValue` and returns the custom element for that date. This can be useful for scenarios where you need to display additional information or apply custom styling to specific dates.
+<LivePreview componentName="calendar" displayName="Custom day render" exampleName="CustomDayRender">
+## Custom day rendering
+To customize the rendering of a day element, use the `renderDayContents` prop with the `Calendar` component. This prop accepts a function that is passed a `DateValue` and returns the custom element for that day. This can be useful for scenarios where you need to display additional information or apply custom styling to specific dates.
 </LivePreview>
 
 <LivePreview componentName="calendar" displayName="Hide out-of-range dates" exampleName="HideOutOfRangeDates">

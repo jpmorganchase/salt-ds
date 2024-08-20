@@ -98,7 +98,12 @@ describe("GIVEN a Calendar with range selection", () => {
 
   it("SHOULD move to today's date if there is not selected date", () => {
     const todayTestDate = today(localTimeZone);
-    cy.mount(<Range defaultVisibleMonth={todayTestDate} />);
+    cy.mount(
+      <Range
+        defaultVisibleMonth={todayTestDate}
+        defaultSelectedDate={undefined}
+      />,
+    );
     // Simulate focusing on the "Next Month" button
     cy.findByRole("button", {
       name: "Next Month",
