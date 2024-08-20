@@ -34,9 +34,9 @@ interface UseCalendarBaseProps {
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
-  isDayUnselectable?: (date: DateValue) => string | false | void;
-  isDayHighlighted?: (date: DateValue) => string | false | void;
-  isDayDisabled?: (date: DateValue) => string | false | void;
+  isDayUnselectable?: (date: DateValue) => string | false | undefined;
+  isDayHighlighted?: (date: DateValue) => string | false | undefined;
+  isDayDisabled?: (date: DateValue) => string | false | undefined;
   visibleMonth?: DateValue;
   hideOutOfRangeDates?: boolean;
   minDate?: DateValue;
@@ -170,9 +170,8 @@ export function useCalendar(props: UseCalendarProps) {
     [visibleMonth],
   );
 
-  const getInitialFocusedDate = (): DateValue => {
+  const getInitialFocusedDate = useCallback(() => {
     const selectedDate = selectionManager.state.selectedDate;
-    // Case range or offset
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isDateRangeSelection(selectedDate)
@@ -191,9 +190,10 @@ export function useCalendar(props: UseCalendarProps) {
       ) {
         return startOfMonth(visibleMonth);
       }
-    }
-    // Case multiselect
-    if (selectionVariant === "multiselect" && Array.isArray(selectedDate)) {
+    } else if (
+      selectionVariant === "multiselect" &&
+      Array.isArray(selectedDate)
+    ) {
       // return first selected day in visible month
       const selectionInMonth = selectedDate
         .filter((day) => isInVisibleMonth(day))
@@ -201,9 +201,7 @@ export function useCalendar(props: UseCalendarProps) {
       if (selectionInMonth.length > 0) {
         return selectionInMonth[0];
       }
-    }
-    // Case single select
-    if (
+    } else if (
       selectionVariant === "single" &&
       !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
@@ -216,7 +214,13 @@ export function useCalendar(props: UseCalendarProps) {
       return today(timeZone);
     }
     return startOfMonth(visibleMonth);
-  };
+  }, [
+    isInVisibleMonth,
+    selectionVariant,
+    selectionManager.state.selectedDate,
+    timeZone,
+    visibleMonth,
+  ]);
 
   const [focusedDate, setFocusedDateState] = useState<DateValue>(
     getInitialFocusedDate,
@@ -240,7 +244,7 @@ export function useCalendar(props: UseCalendarProps) {
       setVisibleMonthState(newVisibleMonth);
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [onVisibleMonthChange, setVisibleMonthState],
+    [onVisibleMonthChange],
   );
 
   const setFocusedDate = useCallback(
@@ -267,10 +271,10 @@ export function useCalendar(props: UseCalendarProps) {
   );
 
   useEffect(() => {
-    if (!isDayVisible(focusedDate)) {
+    if (visibleMonth && !isDayVisible(focusedDate)) {
       setFocusedDateState(getInitialFocusedDate());
     }
-  }, [isDayVisible, focusedDate, visibleMonth]);
+  }, [isDayVisible, focusedDate, getInitialFocusedDate, visibleMonth]);
 
   return useMemo(
     () => ({
@@ -312,7 +316,6 @@ export function useCalendar(props: UseCalendarProps) {
       locale,
       setVisibleMonth,
       setFocusedDate,
-      setCalendarFocused,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,

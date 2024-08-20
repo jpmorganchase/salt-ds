@@ -67,14 +67,12 @@ export function useDatePickerContext({
       );
     }
     return context;
-  } else if (selectionVariant === "single") {
-    const context = useContext(SingleDateSelectionContext);
-    if (!context) {
-      throw new Error(
-        'useDatePickerSelection should be called with props { selectionVariant : "single" } inside SingleDateSelectionContext.Provider',
-      );
-    }
-    return context;
   }
-  throw new Error("Invalid selectionVariant");
+  const context = useContext(SingleDateSelectionContext);
+  if (!context) {
+    throw new Error(
+      'useDatePickerSelection should be called with props { selectionVariant : "single" } inside SingleDateSelectionContext.Provider',
+    );
+  }
+  return context;
 }

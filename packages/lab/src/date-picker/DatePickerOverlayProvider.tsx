@@ -48,8 +48,14 @@ export const DatePickerOverlayProvider: React.FC<
     getFloatingProps: _getFloatingPropsCallback,
     getReferenceProps: _getReferenceProps,
   } = useInteractions([useDismiss(floatingUIResult.context)]);
-  const getFloatingPropsCallback = useMemo(() => _getFloatingPropsCallback, []);
-  const getReferenceProps = useMemo(() => _getReferenceProps, []);
+  const getFloatingPropsCallback = useMemo(
+    () => _getFloatingPropsCallback,
+    [_getFloatingPropsCallback],
+  );
+  const getReferenceProps = useMemo(
+    () => _getReferenceProps,
+    [_getReferenceProps],
+  );
 
   const getFloatingProps = useCallback(
     (userProps: React.HTMLProps<HTMLElement> | undefined) => {
@@ -80,7 +86,7 @@ export const DatePickerOverlayProvider: React.FC<
       getReferenceProps,
       setOpen,
     }),
-    [getFloatingProps, getReferenceProps, setOpen],
+    [getFloatingProps, getReferenceProps],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 

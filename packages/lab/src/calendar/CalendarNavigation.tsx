@@ -66,6 +66,17 @@ const ConditionalTooltip: React.FC<TooltipProps> = ({
   return <Tooltip {...rest}>{children}</Tooltip>;
 };
 
+function generateYearsBetweenRange(
+  minYear: number,
+  maxYear: number,
+): DateValue[] {
+  const years: DateValue[] = [];
+  for (let year = minYear; year <= maxYear; year++) {
+    years.push(new CalendarDate(year, 1, 1));
+  }
+  return years;
+}
+
 function useCalendarNavigation() {
   const {
     state: { visibleMonth, minDate, maxDate, locale, timeZone },
@@ -111,23 +122,20 @@ function useCalendarNavigation() {
         setVisibleMonth(event, newMonth);
       }
     },
-    [isOutsideAllowedYears, isOutsideAllowedMonths, visibleMonth, locale],
+    [
+      isOutsideAllowedYears,
+      isOutsideAllowedMonths,
+      setVisibleMonth,
+      visibleMonth,
+      locale,
+    ],
   );
 
   const months: DateValue[] = useMemo(
     () => monthsForLocale(visibleMonth, locale),
     [visibleMonth, locale],
   );
-  function generateYearsBetweenRange(
-    minYear: number,
-    maxYear: number,
-  ): DateValue[] {
-    const years: DateValue[] = [];
-    for (let year = minYear; year <= maxYear; year++) {
-      years.push(new CalendarDate(year, 1, 1));
-    }
-    return years;
-  }
+
   const years: DateValue[] = useMemo(
     () =>
       generateYearsBetweenRange(
@@ -164,6 +172,8 @@ function useCalendarNavigation() {
       timeZone,
     }),
     [
+      months,
+      moveToPreviousMonth,
       moveToNextMonth,
       moveToMonth,
       visibleMonth,

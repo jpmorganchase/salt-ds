@@ -12,10 +12,10 @@ export function createCalendarDate(
     return undefined;
   }
   const date = new Date(inputDate);
-  if (isNaN(date.getTime())) {
+  if (Number.isNaN(date.getTime())) {
     return undefined;
   }
-  let isoDate;
+  let isoDate: DateValue;
   try {
     isoDate = parseAbsoluteToLocal(date?.toISOString());
   } catch (err) {

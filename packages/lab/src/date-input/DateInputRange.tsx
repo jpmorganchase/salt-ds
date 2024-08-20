@@ -23,6 +23,7 @@ import {
   type Ref,
   type SyntheticEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -201,33 +202,36 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       state: "dateValue",
     });
 
-    const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
-      let newDateValue = { ...dateValue };
-      const formattedStartDate = formatDate(newDate?.startDate, locale, {
-        timeZone,
-      });
-      if (formattedStartDate) {
-        newDateValue = { ...newDateValue, startDate: formattedStartDate };
-      }
-      const formattedEndDate = formatDate(newDate?.endDate, locale, {
-        timeZone,
-      });
-      if (formattedEndDate) {
-        newDateValue = { ...newDateValue, endDate: formattedEndDate };
-      }
-      if (
-        newDateValue?.startDate !== dateValue?.startDate ||
-        newDateValue?.endDate !== dateValue?.endDate
-      ) {
-        onDateValueChange?.(newDateValue, true);
-      }
-      setDateValue(newDateValue);
-    };
+    const setDateValueFromDate = useCallback(
+      (newDate: DateInputRangeProps["date"]) => {
+        let newDateValue = { ...dateValue };
+        const formattedStartDate = formatDate(newDate?.startDate, locale, {
+          timeZone,
+        });
+        if (formattedStartDate) {
+          newDateValue = { ...newDateValue, startDate: formattedStartDate };
+        }
+        const formattedEndDate = formatDate(newDate?.endDate, locale, {
+          timeZone,
+        });
+        if (formattedEndDate) {
+          newDateValue = { ...newDateValue, endDate: formattedEndDate };
+        }
+        if (
+          newDateValue?.startDate !== dateValue?.startDate ||
+          newDateValue?.endDate !== dateValue?.endDate
+        ) {
+          onDateValueChange?.(newDateValue, true);
+        }
+        setDateValue(newDateValue);
+      },
+      [dateValue, formatDate, locale, onDateValueChange, timeZone],
+    );
 
     // Update date string value when selected date changes
     useEffect(() => {
       setDateValueFromDate(date);
-    }, [date?.startDate, date?.endDate, formatDate]);
+    }, [date, date?.startDate, date?.endDate, setDateValueFromDate]);
 
     useEffect(() => {
       if (focusedInput === "start" && startInputRef.current) {

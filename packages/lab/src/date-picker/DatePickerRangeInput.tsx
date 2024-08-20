@@ -88,16 +88,16 @@ export const DatePickerRangeInput = forwardRef<
 
   useEffect(() => {
     if (open) {
-      prevState.current = { date: selectedDate, value: value };
+      prevState.current = { date: selectedDate, value };
     }
-  }, [open]);
+  }, [open, selectedDate, value]);
 
   useEffect(() => {
     if (cancelled) {
       setValue(prevState?.current?.value);
       setSelectedDate(prevState?.current?.date || null);
     }
-  }, [cancelled]);
+  }, [cancelled, setSelectedDate]);
 
   const startInputProps: {
     onBlur: FocusEventHandler<HTMLInputElement>;

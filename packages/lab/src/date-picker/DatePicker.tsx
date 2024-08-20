@@ -46,19 +46,18 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
           </div>
         </DateRangeSelectionContext.Provider>
       );
-    } else {
-      const stateAndHelpers = useDatePicker(
-        rest,
-        ref,
-      ) as DatePickerState<SingleDateSelection>;
-      return (
-        <SingleDateSelectionContext.Provider value={stateAndHelpers}>
-          <div className={className} ref={stateAndHelpers?.state?.containerRef}>
-            {children}
-          </div>
-        </SingleDateSelectionContext.Provider>
-      );
     }
+    const stateAndHelpers = useDatePicker(
+      rest,
+      ref,
+    ) as DatePickerState<SingleDateSelection>;
+    return (
+      <SingleDateSelectionContext.Provider value={stateAndHelpers}>
+        <div className={className} ref={stateAndHelpers?.state?.containerRef}>
+          {children}
+        </div>
+      </SingleDateSelectionContext.Provider>
+    );
   },
 );
 

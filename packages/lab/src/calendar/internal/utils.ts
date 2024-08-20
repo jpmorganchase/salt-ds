@@ -30,14 +30,14 @@ export function getCalendar(locale: string) {
 
 type WeekdayFormat = Intl.DateTimeFormatOptions["weekday"];
 
-export function daysForLocale(weekday: WeekdayFormat = "long", locale: string) {
+export function daysForLocale(weekday: WeekdayFormat, locale: string) {
   return [...Array(7).keys()].map((day) =>
     formatDate(
       startOfWeek(today(getLocalTimeZone()), locale).add({
         days: day,
       }),
       locale,
-      { weekday },
+      { weekday: weekday || "long" },
     ),
   );
 }

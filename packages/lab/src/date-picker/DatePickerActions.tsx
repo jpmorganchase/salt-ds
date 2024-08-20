@@ -65,6 +65,7 @@ export const DatePickerActions = forwardRef<
     window: targetWindow,
   });
 
+  // biome-ignore lint/suspicious/noExplicitAny: state and helpers coerced based on selectionVariant
   let stateAndHelpers: any;
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({
@@ -83,7 +84,7 @@ export const DatePickerActions = forwardRef<
 
   useEffect(() => {
     setAutoApplyDisabled(true);
-  }, []);
+  }, [setAutoApplyDisabled]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
     cancel();

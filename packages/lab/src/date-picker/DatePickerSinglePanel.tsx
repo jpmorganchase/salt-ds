@@ -122,7 +122,7 @@ export const DatePickerSinglePanel = forwardRef<
         CalendarProps.onHoveredDateChange(event, newHoveredDate);
       }
     },
-    [setHoveredDate, CalendarProps?.onHoveredDateChange],
+    [CalendarProps?.onHoveredDateChange],
   );
 
   const handleVisibleMonthChange = useCallback(
@@ -132,7 +132,7 @@ export const DatePickerSinglePanel = forwardRef<
         onVisibleMonthChange(event, newVisibleMonth);
       }
     },
-    [setVisibleMonth, onVisibleMonthChange],
+    [onVisibleMonthChange],
   );
 
   const baseCalendarProps: Partial<CalendarSingleProps> = {

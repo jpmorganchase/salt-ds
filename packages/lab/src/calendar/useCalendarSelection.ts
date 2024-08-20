@@ -30,6 +30,7 @@ export type AllSelectionValueType =
 export const CALENDAR_MIN_YEAR = 1900;
 export const CALENDAR_MAX_YEAR = 2100;
 
+// biome-ignore lint/suspicious/noExplicitAny: type guard
 export function isSingleSelectionValueType(value: any): value is DateValue {
   return (
     value instanceof CalendarDate ||
@@ -38,6 +39,7 @@ export function isSingleSelectionValueType(value: any): value is DateValue {
   );
 }
 
+// biome-ignore lint/suspicious/noExplicitAny: type guard
 export function isDateRangeSelection(value: any): value is DateRangeSelection {
   return (
     value &&
@@ -47,6 +49,7 @@ export function isDateRangeSelection(value: any): value is DateRangeSelection {
 }
 
 export function isMultipleDateSelection(
+  // biome-ignore lint/suspicious/noExplicitAny: type guard
   value: any,
 ): value is MultipleDateSelection {
   return (
@@ -105,10 +108,7 @@ export type UseCalendarSelectionProps =
   | UseCalendarSelectionRangeProps
   | UseCalendarSelectionOffsetProps;
 
-function addOrRemoveFromArray(
-  array: AllSelectionValueType = [],
-  item: DateValue,
-) {
+function addOrRemoveFromArray(array: AllSelectionValueType, item: DateValue) {
   if (Array.isArray(array)) {
     if (array.find((element) => isSameDay(element, item))) {
       return array.filter((element) => !isSameDay(element, item));
@@ -183,27 +183,36 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
     state: "selectedDate",
   });
 
-  const getStartDateOffset = (date: DateValue) => {
-    if (selectionVariant === "offset" && props.startDateOffset) {
-      return props.startDateOffset(date);
-    } else {
-      return defaultOffset(date);
-    }
-  };
+  const startDateOffset =
+    selectionVariant === "offset" ? props.startDateOffset : undefined;
+  const endDateOffset =
+    selectionVariant === "offset" ? props.endDateOffset : undefined;
 
-  const getEndDateOffset = (date: DateValue) => {
-    if (selectionVariant === "offset" && props.endDateOffset) {
-      return props.endDateOffset(date);
-    } else {
+  const getStartDateOffset = useCallback(
+    (date: DateValue) => {
+      if (selectionVariant === "offset" && startDateOffset) {
+        return startDateOffset(date);
+      }
       return defaultOffset(date);
-    }
-  };
+    },
+    [selectionVariant, startDateOffset],
+  );
+
+  const getEndDateOffset = useCallback(
+    (date: DateValue) => {
+      if (selectionVariant === "offset" && endDateOffset) {
+        return endDateOffset(date);
+      }
+      return defaultOffset(date);
+    },
+    [selectionVariant, endDateOffset],
+  );
 
   const setSelectedDate = useCallback(
     (event: SyntheticEvent<HTMLButtonElement>, newSelectedDate: DateValue) => {
       if (!isDaySelectable || isDaySelectable(newSelectedDate)) {
         switch (selectionVariant) {
-          case "single":
+          case "single": {
             const singleSelect = selectProp || defaultSingleSelectionHandler;
             const newSingleDate = singleSelect(
               selectedDate as DateValue,
@@ -212,7 +221,8 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
             setSelectedDateState(newSingleDate);
             onSelectedDateChange?.(event, newSingleDate);
             break;
-          case "multiselect":
+          }
+          case "multiselect": {
             const multiSelect = selectProp || defaultMultiSelectHandler;
             const newMultiSelectDate = multiSelect(
               selectedDate as DateValue[],
@@ -221,7 +231,8 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
             setSelectedDateState(newMultiSelectDate);
             onSelectedDateChange?.(event, newMultiSelectDate);
             break;
-          case "range":
+          }
+          case "range": {
             const rangeSelect = selectProp || defaultRangeSelectionHandler;
             const newRangeDate = rangeSelect(
               selectedDate as DateRangeSelection,
@@ -230,7 +241,8 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
             setSelectedDateState(newRangeDate);
             onSelectedDateChange?.(event, newRangeDate);
             break;
-          case "offset":
+          }
+          case "offset": {
             const offsetSelect = selectProp || defaultOffsetSelectionHandler;
             const newOffsetDate = offsetSelect(
               selectedDate as DateRangeSelection,
@@ -239,10 +251,17 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
             setSelectedDateState(newOffsetDate);
             onSelectedDateChange?.(event, newOffsetDate);
             break;
+          }
         }
       }
     },
-    [isDaySelectable, selectProp, selectedDate, onSelectedDateChange],
+    [
+      isDaySelectable,
+      selectProp,
+      selectedDate,
+      selectionVariant,
+      onSelectedDateChange,
+    ],
   );
 
   const isSelected = useCallback(
@@ -372,7 +391,13 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
 
       return false;
     },
-    [hoveredDate, selectionVariant],
+    [
+      getStartDateOffset,
+      getEndDateOffset,
+      hoveredDate,
+      isDaySelectable,
+      selectionVariant,
+    ],
   );
 
   return useMemo(

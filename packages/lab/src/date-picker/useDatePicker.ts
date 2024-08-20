@@ -120,7 +120,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     if (open) {
       setCancelled(false);
     }
-  }, [open]);
+  }, [open, selectedDate, selectionVariant]);
 
   const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
     useFormFieldProps();
@@ -153,7 +153,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   const setSelectedDateWrapper = (
     newDate: SingleDateSelection | DateRangeSelection | null,
   ) => {
-    let inRangeNewDate;
+    let inRangeNewDate: typeof newDate;
     let startDateInRange = true;
     let endDateInRange = true;
     if (isDateRangeSelection(newDate)) {
@@ -218,10 +218,8 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       setAutoApplyDisabled,
     },
   };
-  if (props.selectionVariant === "single") {
-    return returnValue as DatePickerState<SingleDateSelection>;
-  } else if (props.selectionVariant === "range") {
+  if (props.selectionVariant === "range") {
     return returnValue as DatePickerState<DateRangeSelection>;
   }
-  throw new Error("Invalid variant");
+  return returnValue as DatePickerState<SingleDateSelection>;
 }

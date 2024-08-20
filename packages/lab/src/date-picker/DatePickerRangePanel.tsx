@@ -174,7 +174,7 @@ export const DatePickerRangePanel = forwardRef<
           StartCalendarPropsProp.onHoveredDateChange?.(event, newHoveredDate);
         }
       },
-      [setHoveredDate, StartCalendarPropsProp?.onHoveredDateChange],
+      [StartCalendarPropsProp?.onHoveredDateChange],
     );
   const handleHoveredEndDateChange = useCallback(
     (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
@@ -183,7 +183,7 @@ export const DatePickerRangePanel = forwardRef<
         EndCalendarPropsProp.onHoveredDateChange(event, newHoveredDate);
       }
     },
-    [setHoveredDate, EndCalendarPropsProp?.onHoveredDateChange],
+    [EndCalendarPropsProp?.onHoveredDateChange],
   );
 
   const handleStartVisibleMonthChange = useCallback(
@@ -194,7 +194,7 @@ export const DatePickerRangePanel = forwardRef<
       }
       onStartVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [onStartVisibleMonthChange, setStartVisibleMonth, setEndVisibleMonth],
+    [endVisibleMonth, onStartVisibleMonthChange],
   );
 
   const handleEndVisibleMonthChange = useCallback(
@@ -207,7 +207,7 @@ export const DatePickerRangePanel = forwardRef<
       }
       onEndVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [onEndVisibleMonthChange, setStartVisibleMonth, setEndVisibleMonth],
+    [startVisibleMonth, onEndVisibleMonthChange],
   );
 
   function getHoveredDate(
