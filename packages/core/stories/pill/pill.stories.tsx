@@ -49,7 +49,7 @@ export const Closable: StoryFn<typeof Pill> = () => {
           disabled={index < 3}
           onClick={() => removeColor(color)}
         >
-          {color} <CloseIcon />
+          {color} <CloseIcon style={{ marginLeft: "auto" }} />
         </Pill>
       ))}
     </FlowLayout>
