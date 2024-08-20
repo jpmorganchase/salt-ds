@@ -10,14 +10,14 @@ const withBaseName = makePrefixer("saltStaticListItem");
 
 export interface StaticListItemProps extends ComponentPropsWithoutRef<"li"> {
   /**
-   *  To pass a divider to separate the List items. Defaults to true.
+   *  To pass a divider to separate the List items. Defaults to false.
    */
   divider?: boolean;
 }
 
 export const StaticListItem = forwardRef<HTMLLIElement, StaticListItemProps>(
   function TrackerStep(props, ref) {
-    const { className, children, divider = true, ...restProps } = props;
+    const { className, children, divider = false, ...restProps } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({

@@ -14,72 +14,61 @@ export default {
   component: StaticList,
 } as Meta<typeof StaticList>;
 
+const ListItemWithIcons = () => (
+  <StaticListItem>
+    <FlexLayout gap={1} style={{ width: "100%" }}>
+      <NotificationIcon />
+      <StackLayout gap={0.5}>
+        <Text color="inherit">Item label</Text>
+        <Text variant="secondary">Secondary label</Text>
+      </StackLayout>
+    </FlexLayout>
+  </StaticListItem>
+);
+
 const ListItem = () => (
   <StaticListItem>
-    <FlexLayout gap={1} style={{ width: "100%" }}>
-      <NotificationIcon />
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text variant="secondary">Secondary label</Text>
-      </StackLayout>
-      <StackLayout direction={"row"} gap={0.5} style={{ marginLeft: "auto" }}>
-        <Button variant="secondary" aria-label={"icon"}>
-          {" "}
-          <NoteIcon aria-hidden />
-        </Button>
-        <Button variant="secondary" aria-label={"icon"}>
-          {" "}
-          <NoteIcon aria-hidden />
-        </Button>
-      </StackLayout>
-    </FlexLayout>
+    <StackLayout gap={0.5} style={{ width: "100%" }}>
+      <Text color="inherit">Item label</Text>
+      <Text variant="secondary">Secondary label</Text>
+    </StackLayout>
   </StaticListItem>
 );
 
-const ListItemWithoutIcons = () => (
+const ListItemWithDivider = () => (
+  <StaticListItem divider>
+    <StackLayout gap={0.5} style={{ width: "100%" }}>
+      <Text color="inherit">Item label</Text>
+      <Text variant="secondary">Secondary label</Text>
+    </StackLayout>
+  </StaticListItem>
+);
+
+const ListItemWithButtons = () => (
   <StaticListItem>
-    <FlexLayout gap={1} style={{ width: "100%" }}>
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text variant="secondary">Secondary label</Text>
-      </StackLayout>
-      <StackLayout direction={"row"} gap={0.5} style={{ marginLeft: "auto" }}>
-        <Button variant="secondary" aria-label={"icon"}>
-          {" "}
-          <NoteIcon aria-hidden />
-        </Button>
-        <Button variant="secondary" aria-label={"icon"}>
-          {" "}
-          <NoteIcon aria-hidden />
-        </Button>
-      </StackLayout>
-    </FlexLayout>
+    <StackLayout gap={0.5} style={{ width: "100%" }}>
+      <Text color="inherit">Item label</Text>
+      <Text variant="secondary">Secondary label</Text>
+    </StackLayout>
+    <StackLayout direction={"row"} gap={0.5} style={{ marginLeft: "auto" }}>
+      <Button variant="secondary" aria-label={"icon"}>
+        <NoteIcon aria-hidden />
+      </Button>
+      <Button variant="secondary" aria-label={"icon"}>
+        <NoteIcon aria-hidden />
+      </Button>
+    </StackLayout>
   </StaticListItem>
 );
+export const DefaultSingle: StoryFn<StaticListProps> = () => {
+  return (
+    <StaticList style={{ width: "320px" }}>
+      <ListItem />
+    </StaticList>
+  );
+};
 
-const NoDividerListItem = () => (
-  <StaticListItem divider={false}>
-    <FlexLayout gap={1} style={{ width: "100%" }}>
-      <NotificationIcon />
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text variant="secondary">Secondary label</Text>
-      </StackLayout>
-      <StackLayout direction={"row"} gap={0.5} style={{ marginLeft: "auto" }}>
-        <Button variant="secondary" aria-label={"icon"}>
-          {" "}
-          <NoteIcon aria-hidden />
-        </Button>
-        <Button variant="secondary" aria-label={"icon"}>
-          {" "}
-          <NoteIcon aria-hidden />
-        </Button>
-      </StackLayout>
-    </FlexLayout>
-  </StaticListItem>
-);
-
-export const WithDescriptiveIcons: StoryFn<StaticListProps> = (props) => {
+export const DefaultMultiple: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
       <ListItem />
@@ -89,22 +78,32 @@ export const WithDescriptiveIcons: StoryFn<StaticListProps> = (props) => {
   );
 };
 
-export const WithoutDescriptiveIcons: StoryFn<StaticListProps> = (props) => {
+export const WithIcons: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
-      <ListItemWithoutIcons />
-      <ListItemWithoutIcons />
-      <ListItemWithoutIcons />
+      <ListItemWithIcons />
+      <ListItemWithIcons />
+      <ListItemWithIcons />
     </StaticList>
   );
 };
 
-export const WithoutDivider: StoryFn<StaticListProps> = (props) => {
+export const WithButtons: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
-      <NoDividerListItem />
-      <NoDividerListItem />
-      <NoDividerListItem />
+      <ListItemWithButtons />
+      <ListItemWithButtons />
+      <ListItemWithButtons />
+    </StaticList>
+  );
+};
+
+export const WithDividers: StoryFn<StaticListProps> = () => {
+  return (
+    <StaticList style={{ width: "320px" }}>
+      <ListItem />
+      <ListItemWithDivider />
+      <ListItemWithDivider />
     </StaticList>
   );
 };
