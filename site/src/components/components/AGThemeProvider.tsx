@@ -7,6 +7,7 @@ interface AGThemeProviderProps {
   children: ReactNode;
 }
 
+/** This is needed for ag grid theme CSS to be imported */
 export const AGThemeProvider: FC<AGThemeProviderProps> = ({ children }) => {
   return <>{children}</>;
 };
