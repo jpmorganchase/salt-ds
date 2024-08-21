@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 const ListItem = () => (
   <StaticListItem>
-    <StackLayout gap={0.5} style={{ width: "100%" }}>
+    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
       <Text color="inherit">Item label</Text>
       <Text variant="secondary">Secondary label</Text>
     </StackLayout>
@@ -13,7 +13,7 @@ const ListItem = () => (
 
 const ListItemWithDivider = () => (
   <StaticListItem divider>
-    <StackLayout gap={0.5} style={{ width: "100%" }}>
+    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
       <Text color="inherit">Item label</Text>
       <Text variant="secondary">Secondary label</Text>
     </StackLayout>

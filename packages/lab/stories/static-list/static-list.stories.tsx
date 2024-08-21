@@ -16,19 +16,23 @@ export default {
 
 const ListItemWithIcons = () => (
   <StaticListItem>
-    <FlexLayout gap={1} style={{ width: "100%" }}>
-      <NotificationIcon />
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text variant="secondary">Secondary label</Text>
-      </StackLayout>
-    </FlexLayout>
+    <NotificationIcon />
+    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
+      <Text color="inherit">Item label</Text>
+      <Text variant="secondary">Secondary label</Text>
+    </StackLayout>
+    <Button variant="secondary" aria-label={"icon"}>
+      <NoteIcon aria-hidden />
+    </Button>
+    <Button variant="secondary" aria-label={"icon"}>
+      <NoteIcon aria-hidden />
+    </Button>
   </StaticListItem>
 );
 
 const ListItem = () => (
   <StaticListItem>
-    <StackLayout gap={0.5} style={{ width: "100%" }}>
+    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
       <Text color="inherit">Item label</Text>
       <Text variant="secondary">Secondary label</Text>
     </StackLayout>
@@ -37,7 +41,7 @@ const ListItem = () => (
 
 const ListItemWithDivider = () => (
   <StaticListItem divider>
-    <StackLayout gap={0.5} style={{ width: "100%" }}>
+    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
       <Text color="inherit">Item label</Text>
       <Text variant="secondary">Secondary label</Text>
     </StackLayout>
@@ -46,18 +50,16 @@ const ListItemWithDivider = () => (
 
 const ListItemWithButtons = () => (
   <StaticListItem>
-    <StackLayout gap={0.5} style={{ width: "100%" }}>
+    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
       <Text color="inherit">Item label</Text>
       <Text variant="secondary">Secondary label</Text>
     </StackLayout>
-    <StackLayout direction={"row"} gap={0.5} style={{ marginLeft: "auto" }}>
-      <Button variant="secondary" aria-label={"icon"}>
-        <NoteIcon aria-hidden />
-      </Button>
-      <Button variant="secondary" aria-label={"icon"}>
-        <NoteIcon aria-hidden />
-      </Button>
-    </StackLayout>
+    <Button variant="secondary" aria-label={"icon"}>
+      <NoteIcon aria-hidden />
+    </Button>
+    <Button variant="secondary" aria-label={"icon"}>
+      <NoteIcon aria-hidden />
+    </Button>
   </StaticListItem>
 );
 export const DefaultSingle: StoryFn<StaticListProps> = () => {
