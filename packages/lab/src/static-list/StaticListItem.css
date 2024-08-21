@@ -5,6 +5,8 @@
   all: unset;
   color: var(--static-list-item-text-color);
   display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: baseline;
   height: var(--saltStaticList-item-height, auto);
   box-sizing: border-box;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
