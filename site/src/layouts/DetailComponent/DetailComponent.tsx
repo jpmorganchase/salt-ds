@@ -11,7 +11,6 @@ import React, { type FC, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
-import { AllExamplesViewContext } from "../../utils/useAllExamplesView";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { DetailBase } from "../DetailBase";
 import type { LayoutProps } from "../types/index";
@@ -59,8 +58,6 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
 
-  const [allExamplesView, setAllExamplesView] = useState(false);
-
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
   const useData = useStore((state: CustomSiteState) => {
@@ -83,7 +80,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     if (!currentTab) {
       replace(`${newRoute}${tabs[0].name}`);
     }
-  }, [currentTab, newRoute, replace, route]);
+  }, [currentTab, newRoute, replace]);
 
   const isMobileView = useIsMobileView();
 
@@ -102,53 +99,47 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   } = useMeta();
 
   return (
-    <AllExamplesViewContext.Provider
-      value={{ allExamplesView, setAllExamplesView }}
-    >
-      <DetailBase
-        sidebar={
-          !isMobileView ? (
-            <Sidebar sticky>
-              {
-                <SecondarySidebar
-                  additionalData={useData}
-                  tableOfContents={<TableOfContents />}
-                />
-              }
-            </Sidebar>
-          ) : undefined
-        }
-        pageTitle={
-          isMobileView ? (
-            <TitleWithDrawer
-              title={title}
-              openDrawer={openDrawer}
-              setOpenDrawer={setOpenDrawer}
-            />
-          ) : undefined
-        }
-        isMobileView={isMobileView}
-      >
-        {isMobileView && (
-          <MobileDrawer
-            open={openDrawer}
-            drawerContent={<SecondarySidebar additionalData={useData} />}
+    <DetailBase
+      sidebar={
+        !isMobileView ? (
+          <Sidebar sticky>
+            {
+              <SecondarySidebar
+                additionalData={useData}
+                tableOfContents={<TableOfContents />}
+              />
+            }
+          </Sidebar>
+        ) : undefined
+      }
+      pageTitle={
+        isMobileView ? (
+          <TitleWithDrawer
+            title={title}
+            openDrawer={openDrawer}
+            setOpenDrawer={setOpenDrawer}
           />
-        )}
-        <ReactMarkdown components={components}>
-          {description ?? ""}
-        </ReactMarkdown>
-        <Tabs
-          activeTabIndex={currentTabIndex}
-          onActiveChange={updateRouteWhenTabChanges}
-        >
-          {tabs.map(({ id, label }) => (
-            <TabPanel key={id} label={label} className={styles.tabPanel}>
-              {children}
-            </TabPanel>
-          ))}
-        </Tabs>
-      </DetailBase>
-    </AllExamplesViewContext.Provider>
+        ) : undefined
+      }
+      isMobileView={isMobileView}
+    >
+      {isMobileView && (
+        <MobileDrawer
+          open={openDrawer}
+          drawerContent={<SecondarySidebar additionalData={useData} />}
+        />
+      )}
+      <ReactMarkdown components={components}>{description ?? ""}</ReactMarkdown>
+      <Tabs
+        activeTabIndex={currentTabIndex}
+        onActiveChange={updateRouteWhenTabChanges}
+      >
+        {tabs.map(({ id, label }) => (
+          <TabPanel key={id} label={label} className={styles.tabPanel}>
+            {children}
+          </TabPanel>
+        ))}
+      </Tabs>
+    </DetailBase>
   );
 };

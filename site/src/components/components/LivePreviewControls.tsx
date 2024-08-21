@@ -15,16 +15,13 @@ import {
 } from "@salt-ds/core";
 import { DarkIcon, LightIcon } from "@salt-ds/icons";
 import {
-  type ChangeEvent,
   type FC,
   type ReactElement,
   type SyntheticEvent,
   createContext,
   useState,
 } from "react";
-import { useAllExamplesView } from "../../utils/useAllExamplesView";
 import useIsMobileView from "../../utils/useIsMobileView";
-import ExamplesListView from "./ExamplesListView";
 
 import styles from "./LivePreviewControls.module.css";
 
@@ -45,8 +42,6 @@ export type LivePreviewContextType = Pick<
   "accent" | "mode" | "density" | "corner"
 > & {
   themeNext?: boolean;
-  showCode?: boolean;
-  onShowCodeToggle?: (showCode: boolean) => void;
 };
 
 export const LivePreviewContext = createContext<LivePreviewContextType>({});
@@ -60,10 +55,6 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   const [accent, setAccent] = useState<Accent>("blue");
   const [corner, setCorner] = useState<Corner>("sharp");
 
-  const [showCode, setShowCode] = useState<boolean>(false);
-
-  const { allExamplesView, setAllExamplesView } = useAllExamplesView();
-
   const isMobileView = useIsMobileView();
 
   const handleDensityChange = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -74,33 +65,11 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(event.currentTarget.value as Mode);
   };
 
-  const handleAllExamplesChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAllExamplesView(event.target.checked);
-  };
-
-  // Only set this handler function when we are displaying the combined list
-  // view, so that showing/hiding code persists when switching between
-  // examples. For the "All examples" view, we leave it undefined, which causes
-  // each LivePreview to show/hide its code individually.
-  const handleShowCodeToggle = !allExamplesView
-    ? (showCode: boolean) => {
-        setShowCode(showCode);
-      }
-    : undefined;
-
   return (
     <>
       <SaltProvider density="medium">
         <StackLayout align="stretch" className={styles.controls} gap={1}>
           <FlexItem className={styles.controlsRow}>
-            {!isMobileView && (
-              <Switch
-                label="All examples"
-                checked={allExamplesView}
-                onChange={handleAllExamplesChange}
-              />
-            )}
-
             <div className={styles.toggleButtonGroups}>
               <StackLayout
                 gap={0.75}
@@ -160,81 +129,82 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
                 </ToggleButtonGroup>
               </StackLayout>
             </div>
-          </FlexItem>
-          <FlexItem align="end">
-            <FlowLayout align="center">
+            <FlexItem>
               <Switch
                 label="Theme next"
                 checked={themeNext}
                 onChange={() => setThemeNext((prev) => !prev)}
               />
-
-              <StackLayout
-                gap={0.75}
-                align="baseline"
-                direction={{
-                  xs: "column",
-                  sm: "column",
-                  md: "row",
-                  lg: "row",
-                  xl: "row",
-                }}
-              >
-                <Text styleAs="label">Corner</Text>
-                <ToggleButtonGroup
-                  disabled={!themeNext}
-                  aria-label="Select corner"
-                  value={corner}
-                  onChange={() => {
-                    setCorner((prev) =>
-                      prev === "rounded" ? "sharp" : "rounded",
-                    );
-                  }}
-                >
-                  <ToggleButton value="sharp">Sharp</ToggleButton>
-                  <ToggleButton value="rounded">Rounded</ToggleButton>
-                </ToggleButtonGroup>
-              </StackLayout>
-
-              <StackLayout
-                gap={0.75}
-                align="baseline"
-                direction={{
-                  xs: "column",
-                  sm: "column",
-                  md: "row",
-                  lg: "row",
-                  xl: "row",
-                }}
-              >
-                <Text styleAs="label">Accent</Text>
-                <ToggleButtonGroup
-                  disabled={!themeNext}
-                  value={accent}
-                  onChange={() => {
-                    setAccent((prev) => (prev === "blue" ? "teal" : "blue"));
-                  }}
-                >
-                  <ToggleButton value="blue">Blue</ToggleButton>
-                  <ToggleButton value="teal">Teal</ToggleButton>
-                </ToggleButtonGroup>
-              </StackLayout>
-            </FlowLayout>
+            </FlexItem>
           </FlexItem>
+          {themeNext ? (
+            <FlexItem>
+              <FlowLayout align="center">
+                <StackLayout
+                  gap={0.75}
+                  align="baseline"
+                  direction={{
+                    xs: "column",
+                    sm: "column",
+                    md: "row",
+                    lg: "row",
+                    xl: "row",
+                  }}
+                >
+                  <Text styleAs="label">Corner</Text>
+                  <ToggleButtonGroup
+                    disabled={!themeNext}
+                    aria-label="Select corner"
+                    value={corner}
+                    onChange={() => {
+                      setCorner((prev) =>
+                        prev === "rounded" ? "sharp" : "rounded",
+                      );
+                    }}
+                  >
+                    <ToggleButton value="sharp">Sharp</ToggleButton>
+                    <ToggleButton value="rounded">Rounded</ToggleButton>
+                  </ToggleButtonGroup>
+                </StackLayout>
+
+                <StackLayout
+                  gap={0.75}
+                  align="baseline"
+                  direction={{
+                    xs: "column",
+                    sm: "column",
+                    md: "row",
+                    lg: "row",
+                    xl: "row",
+                  }}
+                >
+                  <Text styleAs="label">Accent</Text>
+                  <ToggleButtonGroup
+                    disabled={!themeNext}
+                    value={accent}
+                    onChange={() => {
+                      setAccent((prev) => (prev === "blue" ? "teal" : "blue"));
+                    }}
+                  >
+                    <ToggleButton value="blue">Blue</ToggleButton>
+                    <ToggleButton value="teal">Teal</ToggleButton>
+                  </ToggleButtonGroup>
+                </StackLayout>
+              </FlowLayout>
+            </FlexItem>
+          ) : null}
         </StackLayout>
       </SaltProvider>
       <LivePreviewContext.Provider
         value={{
           density,
           mode,
-          showCode,
-          onShowCodeToggle: handleShowCodeToggle,
           themeNext,
           accent,
           corner,
         }}
       >
-        {allExamplesView ? children : <ExamplesListView examples={children} />}
+        {children}
       </LivePreviewContext.Provider>
     </>
   );

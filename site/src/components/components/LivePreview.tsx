@@ -38,7 +38,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
   list,
   children,
 }) => {
-  const [ownShowCode, setOwnShowCode] = useState<boolean>(false);
+  const [showCode, setShowCode] = useState<boolean>(false);
 
   const isMobileView = useIsMobileView();
 
@@ -71,29 +71,12 @@ export const LivePreview: FC<LivePreviewProps> = ({
       .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
   }, [exampleName, componentName]);
 
-  const {
-    density,
-    mode,
-    showCode: contextShowCode,
-    onShowCodeToggle: contextOnShowCodeToggle,
-    accent,
-    corner,
-    themeNext,
-  } = useLivePreviewControls();
+  const { density, mode, accent, corner, themeNext } = useLivePreviewControls();
 
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
-    if (contextOnShowCodeToggle) {
-      // Context is controlling the show code state
-      contextOnShowCodeToggle(newShowCode);
-    } else {
-      setOwnShowCode(newShowCode);
-    }
+    setShowCode(newShowCode);
   };
-
-  // If no context is provided (e.g. <LivePreview> is being used standalone
-  // somewhere), then fallback to using own state
-  const showCode = contextOnShowCodeToggle ? contextShowCode : ownShowCode;
 
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
