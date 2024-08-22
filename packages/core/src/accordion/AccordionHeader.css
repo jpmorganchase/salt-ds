@@ -21,12 +21,6 @@
   outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }
 
-.saltAccordionHeader:disabled {
-  background: var(--salt-actionable-secondary-background);
-  color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-actionable-cursor-disabled);
-}
-
 .saltAccordionHeader-content {
   padding: var(--salt-spacing-75) 0;
   width: 100%;
@@ -64,4 +58,10 @@
 .saltAccordionHeader .saltAccordionHeader-statusIndicator {
   height: var(--salt-size-base);
   margin-left: auto;
+}
+
+.saltAccordionHeader:disabled {
+  background: var(--salt-actionable-secondary-background);
+  color: var(--salt-content-primary-foreground-disabled);
+  cursor: var(--salt-actionable-cursor-disabled);
 }

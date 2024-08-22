@@ -24,7 +24,7 @@ export default {
 const UI = () => (
   <AccordionGroup>
     <Accordion value="default">
-      <AccordionHeader>Accordion label</AccordionHeader>
+      <AccordionHeader>Default accordion</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.
@@ -44,27 +44,11 @@ const UI = () => (
       </AccordionPanel>
     </Accordion>
     <Accordion value="disabled" disabled>
-      <AccordionHeader>Accordion label</AccordionHeader>
-      <AccordionPanel>
-        <FlowLayout>
-          This is content inside of an Accordion.
-          <FormField labelPlacement="left">
-            <FormLabel>Disclosure ID</FormLabel>
-            <Input />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormLabel>Email</FormLabel>
-            <Input />
-          </FormField>
-          <FormField labelPlacement="left">
-            <FormLabel>Justification</FormLabel>
-            <Input />
-          </FormField>
-        </FlowLayout>
-      </AccordionPanel>
+      <AccordionHeader>Disabled accordion</AccordionHeader>
+      <AccordionPanel />
     </Accordion>
     <Accordion value="error" status="error">
-      <AccordionHeader>Accordion label</AccordionHeader>
+      <AccordionHeader>Error accordion</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.
@@ -84,7 +68,7 @@ const UI = () => (
       </AccordionPanel>
     </Accordion>
     <Accordion value="warning" status="warning">
-      <AccordionHeader>Accordion label</AccordionHeader>
+      <AccordionHeader>Warning accordion</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.
@@ -104,7 +88,7 @@ const UI = () => (
       </AccordionPanel>
     </Accordion>
     <Accordion value="success" status="success">
-      <AccordionHeader>Accordion label</AccordionHeader>
+      <AccordionHeader>Success accordion</AccordionHeader>
       <AccordionPanel>
         <FlowLayout>
           This is content inside of an Accordion.
@@ -123,17 +107,9 @@ const UI = () => (
         </FlowLayout>
       </AccordionPanel>
     </Accordion>
-    <Accordion value="default" indicatorSide="right">
-      <AccordionHeader>Right align indicator</AccordionHeader>
-      <AccordionPanel>
-        <FlowLayout>
-          This is content inside of an Accordion.
-          <FormField labelPlacement="left">
-            <FormLabel>Disclosure ID</FormLabel>
-            <Input />
-          </FormField>
-        </FlowLayout>
-      </AccordionPanel>
+    <Accordion value="success" status="success" disabled>
+      <AccordionHeader>Disabled success accordion</AccordionHeader>
+      <AccordionPanel />
     </Accordion>
     <Accordion value="default" expanded>
       <AccordionHeader>Left align indicator</AccordionHeader>
