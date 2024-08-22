@@ -1,12 +1,15 @@
-import { StackLayout, Text } from "@salt-ds/core";
+import { Label, StackLayout, Text } from "@salt-ds/core";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const ListItem = () => (
   <StaticListItem>
-    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
       <Text color="inherit">Item label</Text>
-      <Text variant="secondary">Secondary label</Text>
+      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
