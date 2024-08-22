@@ -4,6 +4,7 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
 import { Slider, type SliderProps, type SliderValue } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
@@ -49,16 +50,28 @@ WithNegativeBounds.args = {
 };
 
 export const CustomStep = () => (
-  <FlexLayout gap={5} direction="column" style={{ width: "300px" }}>
-    <Slider min={-1} max={1} marks="all" />
-    <Slider min={-1} max={1} step={0.5} marks="all" />
-    <Slider min={-1} max={1} step={0.2} marks="all" />
-    <Slider min={-1} max={1} step={0.25} marks="all" />
-  </FlexLayout>
+  <StackLayout gap={10} style={{ width: "400px" }}>
+    <FormField>
+      <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
+      <Slider min={-1} max={1} marks="all" />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Step: 0.2</FormFieldLabel>
+      <Slider min={-1} max={1} step={0.2} marks="all" />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Step: 0.25 (two decimal places)</FormFieldLabel>
+      <Slider min={-1} max={1} step={0.25} marks="all" />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Step: 0.3 (not multiple of total range)</FormFieldLabel>
+      <Slider min={0} max={1} step={0.3} marks="all" defaultValue={[0.9]} />
+    </FormField>
+  </StackLayout>
 );
 
-export const BottomLabel = Template.bind({});
-BottomLabel.args = {
+export const BottomMarks = Template.bind({});
+BottomMarks.args = {
   marks: "bottom",
   "aria-label": "CustomStep",
 };
@@ -205,3 +218,30 @@ export const RangeWithInput = () => {
     </FormField>
   );
 };
+
+export const WithFormField = () => (
+  <StackLayout style={{ width: "400px" }}>
+    <FormField>
+      <FormFieldLabel>Field Label</FormFieldLabel>
+      <Slider marks="bottom" min={0} max={50} step={10} />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Field Label</FormFieldLabel>
+      <Slider
+        defaultValue={[20, 80]}
+        marks="bottom"
+        min={0}
+        max={100}
+        step={10}
+      />
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Field Label</FormFieldLabel>
+      <Slider min={0} max={100} />
+    </FormField>
+    <FormField labelPlacement="left">
+      <FormFieldLabel>Field Label</FormFieldLabel>
+      <Slider defaultValue={[20, 80]} min={0} max={100} />
+    </FormField>
+  </StackLayout>
+);
