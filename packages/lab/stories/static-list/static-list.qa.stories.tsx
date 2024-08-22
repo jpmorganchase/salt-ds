@@ -1,4 +1,4 @@
-import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
+import { Button, Label, StackLayout, Text } from "@salt-ds/core";
 import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -12,9 +12,12 @@ export default {
 const ListItemWithIcons = () => (
   <StaticListItem>
     <NotificationIcon />
-    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
       <Text color="inherit">Item label</Text>
-      <Text variant="secondary">Secondary label</Text>
+      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
@@ -27,27 +30,36 @@ const ListItemWithIcons = () => (
 
 const ListItem = () => (
   <StaticListItem>
-    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
       <Text color="inherit">Item label</Text>
-      <Text variant="secondary">Secondary label</Text>
+      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
 
 const ListItemWithDivider = () => (
   <StaticListItem divider>
-    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
       <Text color="inherit">Item label</Text>
-      <Text variant="secondary">Secondary label</Text>
+      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
 
 const ListItemWithButtons = () => (
   <StaticListItem>
-    <StackLayout gap={0.5} style={{ padding: 'var(--salt-spacing-100) 0', width: '100%' }}>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
       <Text color="inherit">Item label</Text>
-      <Text variant="secondary">Secondary label</Text>
+      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
