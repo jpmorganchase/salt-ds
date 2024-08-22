@@ -12,7 +12,11 @@ export function OverviewList({ patterns = [] }: OverviewListProps) {
         .sort((a, b) => a.title.localeCompare(b.title))
         .map((pattern) => (
           <li key={pattern.route}>
-            <Link href={pattern.route} variant="document">
+            <Link
+              className={styles.link}
+              href={pattern.route}
+              variant="document"
+            >
               {pattern.title}
             </Link>
           </li>
