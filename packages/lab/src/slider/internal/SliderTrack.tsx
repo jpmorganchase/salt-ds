@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-import type { ActiveThumbIndex, ThumbIndex } from "../types";
+import type { ActiveThumbIndex, SliderValue, ThumbIndex } from "../types";
 import { useSliderContext } from "./SliderContext";
 import { SliderSelection } from "./SliderSelection";
 import { SliderThumb } from "./SliderThumb";
@@ -26,13 +26,21 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
 
   const trackRef = useRef<HTMLDivElement>(null);
 
-  const [activeThumb, setActiveThumb] = useState<ActiveThumbIndex>(undefined);
+  const valueRef = useRef<SliderValue>(value);
 
-  const [pointerDown, setPointerDown] = useState(false);
+  const [activeThumb, setActiveThumbState] =
+    useState<ActiveThumbIndex>(undefined);
+  const activeThumbRef = useRef<ActiveThumbIndex>(undefined);
+  const pointerDown = useRef(false);
+
+  const setActiveThumb = (index: ActiveThumbIndex) => {
+    setActiveThumbState(index);
+    activeThumbRef.current = index;
+  };
 
   const handlePointerUp = () => {
     setActiveThumb(undefined);
-    setPointerDown(false);
+    pointerDown.current = false;
   };
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -42,37 +50,47 @@ export const SliderTrack = ({ ...props }: SliderTrackProps) => {
     const nearestIndex = getNearestIndex(value, newValue);
     setValue(value, newValue, value.length > 1 ? nearestIndex : 0, onChange);
     setActiveThumb(nearestIndex);
-    setPointerDown(true);
+    pointerDown.current = true;
   };
 
-  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!pointerDown || typeof activeThumb === "undefined") return;
+  const handlePointerMove = (event: PointerEvent) => {
+    if (!pointerDown.current || typeof activeThumbRef.current === "undefined")
+      return;
+    const thumb = activeThumbRef.current;
     const { clientX } = event;
     const rawValue: number = getValue(trackRef, min, max, step, clientX);
-    const newValue = preventOverlappingValues(value, rawValue, activeThumb);
-
-    setValue(value, newValue, activeThumb, onChange);
+    const newValue = preventOverlappingValues(
+      valueRef.current,
+      rawValue,
+      thumb,
+    );
+    setValue(valueRef.current, newValue, thumb, onChange);
   };
 
   const handlePointerOut = () => {
-    if (!pointerDown) {
+    if (!pointerDown.current) {
       setActiveThumb(undefined);
     }
   };
 
   useEffect(() => {
     window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("pointermove", handlePointerMove);
     return () => {
       window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("pointermove", handlePointerMove);
     };
   }, []);
+
+  useEffect(() => {
+    valueRef.current = value;
+  }, [value]);
 
   return (
     <div
       className={withBaseName()}
       ref={trackRef}
       onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
       onPointerOut={handlePointerOut}
       {...props}
     >
