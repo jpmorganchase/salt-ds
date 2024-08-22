@@ -18,7 +18,7 @@ By default the minimum and maximum values are shown, and can be displayed either
 
 Alternately, incremental marks can be shown along the track by setting the `marks` prop to `"all"`. The incremental marks will match the `step` prop value (i.e. for a `step` value of `5`, the marks will display as "0", "5", "10", "15", etc.) Note that when all marks are shown, they are always displayed below the track.
 
-A tooltip is displayed when the thumb is dragged to ensure that incremental values remain visible when the number increments are not displayed along the track (i.e., with vertical label position).
+A tooltip displays the value of a slider "thumb" when the thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
 
 </LivePreview>
 
@@ -26,11 +26,7 @@ A tooltip is displayed when the thumb is dragged to ensure that incremental valu
 
 ## Range
 
-If two values are provided (either to the `value` or `defaultValue` props), then the slider will render as a range slider.
-
-### Best practices
-
-The default minimum range is set to 1 step, therefore thumbs cannot pass or overlap.
+If two values are provided (either to the `value` or `defaultValue` props), then the slider will render as a range slider. Thumbs cannot pass or overlap.
 
 </LivePreview>
 
@@ -38,11 +34,16 @@ The default minimum range is set to 1 step, therefore thumbs cannot pass or over
 
 ## Custom step
 
-By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop. We recommend using an increment most suitable to your use case by using a step relative to the granularity of the scale. This prevents slider selections from becoming tedious and difficult to manage.
+By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop.
 
 Custom step values can be set to any number, including decimal values up to two decimal places. If a decimal step value is provided, the marks (if shown) will also be displayed as decimal values.
 
 If a custom step value is provided that is not a multiple of the range, the slider will round the maximum selectable value to the largest multiple of the step that is less than the maximum value. **Note:** This will render the final portion of the slider track unusable (the portion between the rounded maximum value and the actual maximum value). Step calculations are made from `0`, so the same rounding logic applies to negative values, but in the opposite direction.
+
+### Best practices
+
+- Use a step value that is a multiple of the range to ensure the entire range is selectable.
+- Use a step value that is relative to the granularity of the scale to prevent tedious slider selections.
 
 </LivePreview>
 
@@ -68,11 +69,11 @@ You can display inputs with either a single or range slider. Inputs are used to 
 
 ### Best practices
 
-* For single slider, display one input to the left of the track.
-* When using inputs, ensure the slider is in "controlled" mode (by explicitly setting the `value` prop).
-* Use the slider's `onChange` callback to update the input values when the slider is interacted with.
-* Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
-* When using the slider alongside an input use the default `marks` setting (do not set `marks` to `"bottom"` or `"all"`).
+- For single slider, display one input to the left of the track.
+- When using inputs, ensure the slider is in "controlled" mode (by explicitly setting the `value` prop).
+- Use the slider's `onChange` callback to update the input values when the slider is interacted with.
+- Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
+- When using the slider alongside an input use the default `marks` setting (do not set `marks` to `"bottom"` or `"all"`).
 
 </LivePreview>
 
