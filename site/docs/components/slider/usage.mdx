@@ -18,12 +18,13 @@ data:
 
 ### When not to use
 
-- When it’s important to select an exact numeric value that falls within a significantly large range, for example, 1-1000. Instead, use Input.
-- When displaying progress through a series of separate steps, such as a wizard or multistep form. Use Stepped tracker instead.
+- When it’s important to select an exact numeric value that falls within a significantly large range, for example, 1-1000. Instead, use [Input](/salt/components/input).
+- When displaying progress through a series of separate steps, such as a wizard or multistep form. Use [SteppedTracker 
+](/salt/components/stepped-tracker) instead.
 
-### Content
+### Tooltip
 
-Display labels as numbers so they remain as short as possible and don't overlap with each other or with the Slider. If labels are overlapping, adjust the Slider width and/or number of visible increments.
+A tooltip displays the value of a handle when the handle is focused or hovered. The tooltip remains persistent on cursor drag or moving the handle along the track with keyboard interaction. By default, tooltip is configured to flip to switch placement sides if constrained by space, so that it remains visible.
 
 ## Import
 

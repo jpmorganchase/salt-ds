@@ -12,9 +12,11 @@ data:
 
 <LivePreview componentName="slider" exampleName="Single">
 
-## Single Slider
+## Single
 
-Selection of a single value from a horizontally oriented slider track. Values can be displayed either inline or below the track.
+By default the minimum and maximum values are shown, and can be displayed either inline or below the track (using the `marks` prop to `"bottom"`).
+
+Alternately, incremental marks can be shown along the track by setting the `marks` prop to `"all"`. The incremental marks will match the `step` prop value (i.e. for a `step` value of `5`, the marks will display as "0", "5", "10", "15", etc.) Note that when all marks are shown, they are always displayed below the track.
 
 A tooltip is displayed when the thumb is dragged to ensure that incremental values remain visible when the number increments are not displayed along the track (i.e., with vertical label position).
 
@@ -22,9 +24,9 @@ A tooltip is displayed when the thumb is dragged to ensure that incremental valu
 
 <LivePreview componentName="slider" exampleName="Range">
 
-## Range Slider
+## Range
 
-Selection of a range of values from a horizontally oriented slider track. This determines a minimum and maximum range. Values can be displayed either inline or below the track.
+If two values are provided (either to the `value` or `defaultValue` props), then the slider will render as a range slider.
 
 ### Best practices
 
@@ -34,9 +36,9 @@ The default minimum range is set to 1 step, therefore thumbs cannot pass or over
 
 <LivePreview componentName="slider" exampleName="CustomStep">
 
-## Custom Step
+## Custom step
 
-By default, the slider step increment is set to 1. This can be customised by configuring the ‘step’ prop. We recommend using an increment most suitable to your use case by using a step relative to the granularity of the scale. This prevents slider selections from becoming tedious and difficult to manage.
+By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop. We recommend using an increment most suitable to your use case by using a step relative to the granularity of the scale. This prevents slider selections from becoming tedious and difficult to manage.
 
 Custom step values can be set to any number, including decimal values up to two decimal places. If a decimal step value is provided, the marks (if shown) will also be displayed as decimal values.
 
@@ -44,27 +46,11 @@ If a custom step value is provided that is not a multiple of the range, the slid
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="SingleFormField">
+<LivePreview componentName="slider" exampleName="WithFormField">
 
-## Single Form Field
+## With form field
 
-Wrap single slider in a form field to display a left-aligned or top label.
-
-For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
-
-### Best practices
-
-We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
-
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="RangeFormField">
-
-## Range Form Field
-
-Wrap range slider in a form field to display a left-aligned or top label.
-
-For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+To display a label alongside a slider, use FormField and FormFieldLabel. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
 ### Best practices
 
@@ -74,15 +60,19 @@ We recommend using labels with slider to provide context and aid the user in und
 
 <LivePreview componentName="slider" exampleName="WithInput">
 
-## With Input
+## With input
 
 You can display inputs with either a single or range slider. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
-The thumb and input are in sync. An update to either causes the other to update. E.g., if you use cursor click or drag along the slider track, the input must display the change in value live.
+
+"Out of range" changes to the value (i.e. setting the input to a value above or below the slider's `min` and `max` values) will be rounded to the nearest valid value for the slider. When using a range slider, the upper and lower values cannot overlap (i.e. the lower value cannot be set to a value higher than the upper value). If the input value is set to a value that would cause an overlap, the range value will be set to the nearest valid value.
 
 ### Best practices
 
-For single slider, display one input to the left of the track.
-Only use the inline variant of slider alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+* For single slider, display one input to the left of the track.
+* When using inputs, ensure the slider is in "controlled" mode (by explicitly setting the `value` prop).
+* Use the slider's `onChange` callback to update the input values when the slider is interacted with.
+* Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
+* When using the slider alongside an input use the default `marks` setting (do not set `marks` to `"bottom"` or `"all"`).
 
 </LivePreview>
 
