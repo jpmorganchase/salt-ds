@@ -22,6 +22,7 @@ import {
   getCurrentLocale,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import type React from "react";
 import { useState } from "react";
 
 import "./calendar.stories.css";

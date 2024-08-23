@@ -1,7 +1,4 @@
-import {
-  type DateValue,
-  getLocalTimeZone,
-} from "@internationalized/date";
+import { type DateValue, getLocalTimeZone } from "@internationalized/date";
 import {
   type InputProps,
   StatusAdornment,
@@ -38,8 +35,9 @@ import {
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
 import {
+  type RangeTimeFields,
+  extractTimeFieldsFromDateRange,
   parseCalendarDate,
-  extractTimeFieldsFromDateRange, RangeTimeFields
 } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
@@ -229,13 +227,13 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         }
         setDateValue(newDateValue);
       },
-      [ formatDate, locale, onDateValueChange, timeZone],
+      [formatDate, locale, onDateValueChange, timeZone],
     );
 
     // Update date string value when selected date changes
     useEffect(() => {
       setDateValueFromDate(date);
-    }, [ date, date?.startDate, date?.endDate, setDateValueFromDate]);
+    }, [date, date?.startDate, date?.endDate, setDateValueFromDate]);
 
     const [focused, setFocused] = useState(false);
 
@@ -333,7 +331,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       if (hasStartDateChanged || hasEndDateChanged) {
         setDate(newDate);
         if (newDate?.startDate && preservedTime.current.startTime) {
-          newDate.startDate = newDate.startDate.set(preservedTime.current.startTime);
+          newDate.startDate = newDate.startDate.set(
+            preservedTime.current.startTime,
+          );
         }
         if (newDate?.endDate && preservedTime.current.endTime) {
           newDate.endDate = newDate.endDate.set(preservedTime.current.endTime);

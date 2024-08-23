@@ -15,9 +15,9 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
-  parseCalendarDate,
   formatDate,
   getCurrentLocale,
+  parseCalendarDate,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 

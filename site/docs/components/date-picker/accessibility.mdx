@@ -34,45 +34,57 @@ data:
 
 <KeyboardControls>
   <KeyboardControl keyOrCombos="Tab">
-    - If focus is above the input, Tab moves focus onto the input and highlights the text. If the input area is empty, Tab displays a text cursor in the input area.
-    - If the input is disabled, Tab skips the input.
-    - If the input has focus, Tab moves focus to the calendar button. If there is a valid date in a wrong format, it formats the date.
-    - If focus is on the calendar button and the panel is open, Tab moves focus to the selected day, current day, or first day of the month.
-    - If focus is within the panel, Tab moves focus to the next focusable navigation element in the calendar.
+    - If focus is above the input, Tab moves focus onto the input and highlights
+    the text. If the input area is empty, Tab displays a text cursor in the
+    input area. - If the input is disabled, Tab skips the input. - If the input
+    has focus, Tab moves focus to the calendar button. If there is a valid date
+    in a wrong format, it formats the date. - If focus is on the calendar button
+    and the panel is open, Tab moves focus to the selected day, current day, or
+    first day of the month. - If focus is within the panel, Tab moves focus to
+    the next focusable navigation element in the calendar.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Shift + Tab">
-    - If focus is on the input, Shift + Tab moves focus out of the component to the previous component in the tab order.
-    - If focus is on the calendar button, Shift + Tab moves focus into the input.
-    - If focus is within the panel, Shift + Tab moves focus to the last focusable navigation element in the calendar.
+    - If focus is on the input, Shift + Tab moves focus out of the component to
+    the previous component in the tab order. - If focus is on the calendar
+    button, Shift + Tab moves focus into the input. - If focus is within the
+    panel, Shift + Tab moves focus to the last focusable navigation element in
+    the calendar.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Enter">
-    - If focus is on the button, Enter toggles the calendar.
-    - If focus is on the input, Enter formats the input text as a date.
+    - If focus is on the button, Enter toggles the calendar. - If focus is on
+    the input, Enter formats the input text as a date.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Space">
-    - When the input area has focus, Space inserts a character at the position of the text cursor.
-    - If the calendar button has focus, Space toggles the calendar.
+    - When the input area has focus, Space inserts a character at the position
+    of the text cursor. - If the calendar button has focus, Space toggles the
+    calendar.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Right Arrow">
-    When the input area has focus:
-    - If text is highlighted, the highlight is removed and the text cursor is positioned at the right edge of the highlight.
-    - If the text cursor is displayed, it is positioned on the alternative side of the following character. If there is no following character, there is no effect.
+    When the input area has focus: - If text is highlighted, the highlight is
+    removed and the text cursor is positioned at the right edge of the
+    highlight. - If the text cursor is displayed, it is positioned on the
+    alternative side of the following character. If there is no following
+    character, there is no effect.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Left Arrow">
-    When the input area has focus:
-    - If text is in a highlighted state, Left Arrow removes the highlight and positions the text cursor at the left edge of the highlight.
-    - If the text cursor is visible, Left Arrow positions it on the alternative side of the preceding character. If there's no preceding character, there's no effect.
+    When the input area has focus: - If text is in a highlighted state, Left
+    Arrow removes the highlight and positions the text cursor at the left edge
+    of the highlight. - If the text cursor is visible, Left Arrow positions it
+    on the alternative side of the preceding character. If there's no preceding
+    character, there's no effect.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Shift + Left Arrow / Shift + Right Arrow">
-    When the input area has focus, drags selection over text characters, one at a time.
+    When the input area has focus, drags selection over text characters, one at
+    a time.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Backspace">
-    When the input area has focus and:
-    - Text is highlighted, this action removes all highlighted characters.
-    - The text cursor is positioned to the right of text, this action removes the preceding character.
+    When the input area has focus and: - Text is highlighted, this action
+    removes all highlighted characters. - The text cursor is positioned to the
+    right of text, this action removes the preceding character.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Alphanumeric/Special keys">
-    When the input area has focus, this action inserts the relevant character at the position of the text cursor.
+    When the input area has focus, this action inserts the relevant character at
+    the position of the text cursor.
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Control + A / Command + A">
     This action highlights all strings within the field.

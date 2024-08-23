@@ -3,8 +3,8 @@ import {
   DateFormatter,
   type DateValue,
   getLocalTimeZone,
-  today,
   now,
+  today,
 } from "@internationalized/date";
 import {
   Button,
@@ -30,14 +30,15 @@ import {
   type DatePickerState,
   type DateRangeSelection,
   type SingleDateSelection,
-  parseCalendarDate,
   formatDate,
   getCurrentLocale,
-  useDatePickerContext,
+  parseCalendarDate,
   parseZonedDateTime,
+  useDatePickerContext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { SyntheticEvent, useState } from "react";
+import type React from "react";
+import { SyntheticEvent, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -981,10 +982,12 @@ const DatePickerTimeInput: React.FC = () => {
       return null;
     }
 
-    const hour = parseInt(match[1], 10);
-    const minute = parseInt(match[2], 10);
-    const second = match[3] ? parseInt(match[3], 10) : 0; // Default to 0 if seconds are not provided
-    const millisecond = match[4] ? parseInt(match[4].padEnd(3, "0"), 10) : 0; // Default to 0 if milliseconds are not provided
+    const hour = Number.parseInt(match[1], 10);
+    const minute = Number.parseInt(match[2], 10);
+    const second = match[3] ? Number.parseInt(match[3], 10) : 0; // Default to 0 if seconds are not provided
+    const millisecond = match[4]
+      ? Number.parseInt(match[4].padEnd(3, "0"), 10)
+      : 0; // Default to 0 if milliseconds are not provided
 
     return { hour, minute, second, millisecond };
   }
@@ -1001,7 +1004,7 @@ const DatePickerTimeInput: React.FC = () => {
     let startDate = selectedDate?.startDate ?? now(getLocalTimeZone());
     startDate = startDate.set({ hour, minute, second, millisecond });
 
-    let newDateTime: DateRangeSelection = {
+    const newDateTime: DateRangeSelection = {
       ...selectedDate,
       startDate,
     };
@@ -1019,7 +1022,7 @@ const DatePickerTimeInput: React.FC = () => {
     let endDate = selectedDate?.endDate ?? now(getLocalTimeZone());
     endDate = endDate.set({ hour, minute, second, millisecond });
 
-    let newDateTime: DateRangeSelection = {
+    const newDateTime: DateRangeSelection = {
       ...selectedDate,
       endDate,
     };
@@ -1029,8 +1032,16 @@ const DatePickerTimeInput: React.FC = () => {
   return (
     <>
       <DatePickerRangeInput bordered />
-      <input type={"time"} onChange={handleStartTimeChange} />
-      <input type={"time"} onChange={handleEndTimeChange} />
+      <input
+        aria-label="start date time"
+        type={"time"}
+        onChange={handleStartTimeChange}
+      />
+      <input
+        aria-label="end date time"
+        type={"time"}
+        onChange={handleEndTimeChange}
+      />
     </>
   );
 };

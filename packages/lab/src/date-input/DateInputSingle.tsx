@@ -1,7 +1,7 @@
 import {
   type DateValue,
+  type TimeFields,
   getLocalTimeZone,
-  TimeFields
 } from "@internationalized/date";
 import {
   StatusAdornment,
@@ -35,10 +35,7 @@ import {
   getCurrentLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
-import {
-  parseCalendarDate,
-  extractTimeFieldsFromDate,
-} from "./utils";
+import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -177,7 +174,9 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       name: "DateInputSingle",
       state: "dateValue",
     });
-    const preservedTime = useRef<TimeFields | undefined>(extractTimeFieldsFromDate(date));
+    const preservedTime = useRef<TimeFields | undefined>(
+      extractTimeFieldsFromDate(date),
+    );
 
     // Update date string value when selected date changes
     useEffect(() => {

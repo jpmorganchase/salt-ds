@@ -1,10 +1,10 @@
 import {
   CalendarDate,
   type DateValue,
+  ZonedDateTime,
   getLocalTimeZone,
   parseDate,
   today,
-  ZonedDateTime,
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
@@ -17,14 +17,15 @@ import {
   SingleWithToday,
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
+import React from "react";
 import { formatDate, getCurrentLocale } from "../../../calendar";
+import { parseZonedDateTime } from "../../../date-input";
 import {
   DatePicker,
   DatePickerOverlay,
-  DatePickerSingleInput, DatePickerSinglePanel
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
 } from "../../../date-picker";
-import React from "react";
-import {parseZonedDateTime} from "../../../date-input";
 
 const composedStories = composeStories(datePickerStories);
 const { Single } = composedStories;
@@ -285,7 +286,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       }).realClick();
       // Verify that the calendar is closed and the new date is displayed
       cy.findByRole("application").should("not.exist");
-      cy.findByRole("textbox").should("have.focus");
+      cy.findByRole("button", { name: "Open Calendar" }).should("have.focus");
       cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);
     });
   });
@@ -329,7 +330,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       }).realClick();
       // Verify that the calendar is closed and the new date is displayed
       cy.findByRole("application").should("not.exist");
-      cy.findByRole("textbox").should("have.focus");
+      cy.findByRole("button", { name: "Open Calendar" }).should("have.focus");
       cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);
     });
 
@@ -352,11 +353,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectionVariant="single"
           onSelectedDateChange={selectedDateChangeSpy}
         >
-          <DatePickerSingleInput parse={parseZonedDateTime}/>
+          <DatePickerSingleInput parse={parseZonedDateTime} />
           <DatePickerOverlay>
             <DatePickerSinglePanel />
           </DatePickerOverlay>
-        </DatePicker>
+        </DatePicker>,
       );
       // Simulate entering a valid date
       cy.findByRole("textbox").click().clear().type(initialDateValue);

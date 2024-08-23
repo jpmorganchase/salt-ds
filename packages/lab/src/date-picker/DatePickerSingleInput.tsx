@@ -3,12 +3,12 @@ import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type FocusEventHandler,
+  type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
   useCallback,
   useEffect,
   useRef,
-  type KeyboardEvent,
 } from "react";
 import type { SingleDateSelection } from "../calendar";
 import { DateInputSingle, type DateInputSingleProps } from "../date-input";

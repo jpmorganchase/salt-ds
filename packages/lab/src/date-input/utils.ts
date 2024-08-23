@@ -2,13 +2,13 @@ import {
   CalendarDate,
   CalendarDateTime,
   type DateValue,
-  parseAbsoluteToLocal,
-  TimeFields,
+  type TimeFields,
   ZonedDateTime,
+  parseAbsoluteToLocal,
 } from "@internationalized/date";
-import { DateRangeSelection, SingleDateSelection } from "../calendar";
+import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 
-export type RangeTimeFields= {
+export type RangeTimeFields = {
   startTime?: TimeFields;
   endTime?: TimeFields;
 };

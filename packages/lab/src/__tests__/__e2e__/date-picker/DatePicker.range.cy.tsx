@@ -1,10 +1,10 @@
 import {
   CalendarDate,
   type DateValue,
+  ZonedDateTime,
   getLocalTimeZone,
   parseDate,
   today,
-  ZonedDateTime,
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
@@ -15,7 +15,9 @@ import {
   RangeWithMinMaxDate,
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
+import React from "react";
 import { formatDate, getCurrentLocale } from "../../../calendar";
+import { parseZonedDateTime } from "../../../date-input";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -24,8 +26,6 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
 } from "../../../date-picker";
-import { parseZonedDateTime } from "../../../date-input";
-import React from "react";
 
 const composedStories = composeStories(datePickerStories);
 const { Range } = composedStories;
@@ -311,7 +311,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       }).realClick();
       // Verify that the calendar is closed and the new date range is displayed
       cy.findByRole("application").should("not.exist");
-      cy.findByLabelText("End date").should("have.focus");
+      cy.findByRole("button", { name: "Open Calendar" }).should("have.focus");
       cy.findByLabelText("Start date").should(
         "have.value",
         formatDate(updatedRangeDate.startDate),
@@ -378,7 +378,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       }).realClick();
       // Verify that the calendar is closed and the new date range is displayed
       cy.findByRole("application").should("not.exist");
-      cy.findByLabelText("End date").should("have.focus");
+      cy.findByRole("button", { name: "Open Calendar" }).should("have.focus");
       cy.findByLabelText("Start date").should(
         "have.value",
         formatDate(updatedRangeDate.startDate),

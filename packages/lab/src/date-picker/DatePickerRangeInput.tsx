@@ -3,12 +3,13 @@ import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type FocusEventHandler,
+  type KeyboardEvent,
+  type KeyboardEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
   useEffect,
   useRef,
-  type KeyboardEvent, KeyboardEventHandler,
 } from "react";
 import type { DateRangeSelection } from "../calendar";
 import {
@@ -40,14 +41,7 @@ export const DatePickerRangeInput = forwardRef<
   } = props;
 
   const {
-    state: {
-      selectedDate,
-      disabled,
-      readOnly,
-      cancelled,
-      locale,
-      timeZone,
-    },
+    state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },
     helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "range" });
   const {
@@ -100,7 +94,7 @@ export const DatePickerRangeInput = forwardRef<
   }, [cancelled, setSelectedDate]);
 
   const startInputProps: {
-    onKeyDown: KeyboardEventHandler<HTMLInputElement>
+    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
   } = {
     onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "ArrowDown") {
@@ -111,7 +105,7 @@ export const DatePickerRangeInput = forwardRef<
     ...startInputPropsProp,
   };
   const endInputProps: {
-    onKeyDown: KeyboardEventHandler<HTMLInputElement>
+    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
   } = {
     onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "ArrowDown") {

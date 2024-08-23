@@ -8,7 +8,7 @@ import {
   startOfWeek,
   today,
 } from "@internationalized/date";
-import { formatDate, getCurrentLocale } from "@salt-ds/lab";
+import { formatDate } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
@@ -24,7 +24,8 @@ const {
 } = composeStories(calendarStories);
 
 describe("GIVEN a Calendar", () => {
-  checkAccessibility(calendarStories);
+  const { default: _ignored, ...allAxeStories } = calendarStories;
+  checkAccessibility(allAxeStories);
 
   const testDate = parseDate("2022-02-03");
   const localTimeZone = getLocalTimeZone();
