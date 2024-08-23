@@ -17,14 +17,8 @@ const ListItemWithIcons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
+      <Label color="secondary">Secondary label</Label>
     </StackLayout>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
   </StaticListItem>
 );
 
@@ -35,11 +29,21 @@ const ListItem = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
 
+const AdditionalLabelListItem = () => (
+  <StaticListItem>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
+      <Text color="inherit">Item label</Text>
+      <Label color="secondary">Secondary label</Label>
+    </StackLayout>
+  </StaticListItem>
+);
 const ListItemWithDivider = () => (
   <StaticListItem divider>
     <StackLayout
@@ -47,7 +51,7 @@ const ListItemWithDivider = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
+      <Label color="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
@@ -59,7 +63,7 @@ const ListItemWithButtons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
+      <Label color="secondary">Secondary label</Label>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
@@ -91,10 +95,16 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
       <ListItemWithButtons />
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
+      <AdditionalLabelListItem />
       <ListItemWithDivider />
       <ListItemWithDivider />
       <ListItemWithDivider />
+    </StaticList>
+    <StaticList style={{ width: "320px" }}>
+      <AdditionalLabelListItem />
+      <AdditionalLabelListItem />
+      <AdditionalLabelListItem />
+      <AdditionalLabelListItem />
     </StaticList>
   </QAContainer>
 );

@@ -9,7 +9,6 @@ const ListItem = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );

@@ -1,5 +1,4 @@
-import { Button, Label, StackLayout, Text } from "@salt-ds/core";
-import { NoteIcon } from "@salt-ds/icons";
+import { Label, StackLayout, Text } from "@salt-ds/core";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
@@ -12,16 +11,10 @@ const ListItem = () => (
       <Text color="inherit">Item label</Text>
       <Label color="secondary">Secondary label</Label>
     </StackLayout>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
   </StaticListItem>
 );
 
-export const WithButtons = (): ReactElement => (
+export const AdditionalLabel = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
       <ListItem />

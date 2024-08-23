@@ -22,14 +22,8 @@ const ListItemWithIcons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
+      <Label color="secondary">Secondary label</Label>
     </StackLayout>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
   </StaticListItem>
 );
 
@@ -40,11 +34,21 @@ const ListItem = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
 
+const AdditionalLabelListItem = () => (
+  <StaticListItem>
+    <StackLayout
+      gap={0.5}
+      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
+    >
+      <Text color="inherit">Item label</Text>
+      <Label color="secondary">Secondary label</Label>
+    </StackLayout>
+  </StaticListItem>
+);
 const ListItemWithDivider = () => (
   <StaticListItem divider>
     <StackLayout
@@ -52,7 +56,7 @@ const ListItemWithDivider = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
+      <Label color="secondary">Secondary label</Label>
     </StackLayout>
   </StaticListItem>
 );
@@ -64,7 +68,7 @@ const ListItemWithButtons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label variant="secondary">Secondary label</Label>
+      <Label color="secondary">Secondary label</Label>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
@@ -88,6 +92,18 @@ export const DefaultMultiple: StoryFn<StaticListProps> = () => {
       <ListItem />
       <ListItem />
       <ListItem />
+      <ListItem />
+    </StaticList>
+  );
+};
+
+export const AdditionalLabel: StoryFn<StaticListProps> = () => {
+  return (
+    <StaticList style={{ width: "320px" }}>
+      <AdditionalLabelListItem />
+      <AdditionalLabelListItem />
+      <AdditionalLabelListItem />
+      <AdditionalLabelListItem />
     </StaticList>
   );
 };
@@ -95,6 +111,7 @@ export const DefaultMultiple: StoryFn<StaticListProps> = () => {
 export const WithIcons: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
+      <ListItemWithIcons />
       <ListItemWithIcons />
       <ListItemWithIcons />
       <ListItemWithIcons />
@@ -108,6 +125,7 @@ export const WithButtons: StoryFn<StaticListProps> = () => {
       <ListItemWithButtons />
       <ListItemWithButtons />
       <ListItemWithButtons />
+      <ListItemWithButtons />
     </StaticList>
   );
 };
@@ -115,7 +133,8 @@ export const WithButtons: StoryFn<StaticListProps> = () => {
 export const WithDividers: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
+      <AdditionalLabelListItem />
+      <ListItemWithDivider />
       <ListItemWithDivider />
       <ListItemWithDivider />
     </StaticList>

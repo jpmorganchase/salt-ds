@@ -7,6 +7,45 @@ sidebar:
 data:
   $ref: ./#/data
 ---
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is above the Static List, Tab key moves focus into the first interactive element in the List
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- If focus is below the List, Tab key moves focus into the last interactive element in the static list; or the first interactive element in the Static List 
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space / Enter">
+
+- Enter or Space keys press, will trigger the action of the selected interactive element.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page up">
+
+- Moves the focus a number of positions down the list, based on the number specified in displayedItemCount.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page down">
+
+- When focus is within the dropdown, this action moves focus to the item after the last visible option.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+- Move the focus to the first interactive element in the static list.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+- Move the focus to the last interactive element in the static list.
+
+</KeyboardControl>
+</KeyboardControls>
 
 ## References
 
