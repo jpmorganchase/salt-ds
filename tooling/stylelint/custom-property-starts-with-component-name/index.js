@@ -3,6 +3,11 @@ const stylelint = require("stylelint");
 const path = require("node:path");
 const glob = require("fast-glob");
 
+// Define an allowlist of component names, that do not need to match the directory name
+// This can be used where the CSS is shared between multiple implementation of the component
+// e.g DateInput.css is used by DateInputSingle and DateInputRange
+const allowlist = ["DateInput"];
+
 const { report, ruleMessages } = stylelint.utils;
 
 // A few stylelint utils are not exported
@@ -48,7 +53,8 @@ const meta = {
   url: "https://saltdesignsystem-storybook.pages.dev/?path=/story/theme-characteristics-about-characteristics--docs",
 };
 
-const allowedNames = glob
+// Dynamically generate allowed names from the file system
+const globbedNames = glob
   // Matches all files in src folders that start with a capital letter which should be all components.
   .sync("./packages/*/src/**/[A-Z]*.tsx", {
     // Ignores tests and Use* files which are hooks.
@@ -58,6 +64,9 @@ const allowedNames = glob
     return path.basename(file, ".tsx");
   })
   .filter(Boolean);
+
+// Combine the whitelist with the dynamically generated allowed names
+const allowedNames = [...new Set([...globbedNames, ...allowlist])];
 
 const allowedNamesFormatted = allowedNames.map(
   (component) => `${component[0].toLowerCase()}${component.slice(1)}`,
@@ -79,7 +88,7 @@ const isComponentCustomProperty = (property) =>
  * Starts with `--saltComponentName-`
  */
 const isCssApi = (property) =>
-  allowedNames.some((component) => property.startsWith(`--salt${component}-`));
+  combinedAllowedNames.some((component) => property.startsWith(`--salt${component}-`));
 
 module.exports = stylelint.createPlugin(
   ruleName,
