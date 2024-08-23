@@ -1,6 +1,13 @@
 import { flip, useDismiss, useInteractions } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
-import { type ReactNode, useCallback, useContext, useMemo } from "react";
+import {
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 
 interface DatePickerOverlayState {
   open: boolean;
@@ -30,12 +37,35 @@ interface DatePickerOverlayProviderProps {
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
 > = ({ open: openProp, defaultOpen, children }) => {
-  const [open, setOpen] = useControlled({
+  const [open, setOpenState] = useControlled({
     controlled: openProp,
     default: Boolean(defaultOpen),
     name: "DatePicker",
     state: "openDatePickerOverlay",
   });
+  const triggeringElement = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!open) {
+      const trigger = triggeringElement.current as HTMLElement;
+      if (trigger) {
+        trigger.focus();
+      }
+      if (trigger instanceof HTMLInputElement) {
+        setTimeout(() => {
+          trigger.setSelectionRange(0, trigger.value.length);
+        }, 0);
+      }
+      triggeringElement.current = null;
+    }
+  }, [open]);
+
+  const setOpen = (newOpen: boolean) => {
+    if (newOpen) {
+      triggeringElement.current = document.activeElement as HTMLElement;
+    }
+    setOpenState(newOpen);
+  };
 
   const floatingUIResult = useFloatingUI({
     open,

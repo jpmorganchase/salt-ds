@@ -5,8 +5,10 @@ import {
   type FocusEventHandler,
   type SyntheticEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
+  type KeyboardEvent,
 } from "react";
 import type { SingleDateSelection } from "../calendar";
 import { DateInputSingle, type DateInputSingleProps } from "../date-input";
@@ -32,16 +34,8 @@ export const DatePickerSingleInput = forwardRef<
   } = props;
 
   const {
-    state: {
-      selectedDate,
-      focusedValue,
-      disabled,
-      readOnly,
-      cancelled,
-      locale,
-      timeZone,
-    },
-    helpers: { setSelectedDate, setFocusedValue },
+    state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },
+    helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "single" });
   const {
     state: { open, floatingUIResult },
@@ -60,39 +54,30 @@ export const DatePickerSingleInput = forwardRef<
     state: "value",
   });
 
-  const handleCalendarButton = () => {
+  const handleCalendarButton = useCallback(() => {
     setOpen(!open);
-  };
+  }, [open]);
 
-  const handleDateChange = (
-    _event: SyntheticEvent,
-    newDate: SingleDateSelection | null,
-  ) => {
-    setSelectedDate(newDate);
-  };
+  const handleDateChange = useCallback(
+    (_event: SyntheticEvent, newDate: SingleDateSelection | null) => {
+      setSelectedDate(newDate);
+    },
+    [],
+  );
 
-  const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
-    setFocusedValue("start");
-    onFocus?.(event);
-  };
-  const handleBlur: FocusEventHandler<HTMLInputElement> = (event) => {
-    setFocusedValue(null);
-    onBlur?.(event);
-  };
-
-  const handleDateValueChange = (
-    newDateValue: string,
-    isFormatted: boolean,
-  ) => {
-    setValue(newDateValue);
-    onDateValueChange?.(newDateValue, isFormatted);
-  };
+  const handleDateValueChange = useCallback(
+    (newDateValue: string, isFormatted: boolean) => {
+      setValue(newDateValue);
+      onDateValueChange?.(newDateValue, isFormatted);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (open) {
       prevState.current = { date: selectedDate, value };
     }
-  }, [open, selectedDate, value]);
+  }, [open]);
 
   useEffect(() => {
     if (cancelled) {
@@ -112,7 +97,6 @@ export const DatePickerSingleInput = forwardRef<
       readOnly={readOnly}
       onDateChange={handleDateChange}
       onDateValueChange={handleDateValueChange}
-      focusedInput={focusedValue === "start"}
       endAdornment={
         <Button
           variant="secondary"
@@ -124,9 +108,12 @@ export const DatePickerSingleInput = forwardRef<
         </Button>
       }
       {...getReferenceProps({
-        onBlur: handleBlur,
-        onFocus: handleFocus,
         ...rest,
+        onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
+          if (event.key === "ArrowDown") {
+            setOpen(true);
+          }
+        },
       })}
     />
   );

@@ -15,7 +15,7 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
-  createCalendarDate,
+  parseCalendarDate,
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
@@ -113,7 +113,7 @@ export const SingleWithCustomParser = (): ReactElement => {
                 offsetDate.day,
               );
             }
-            return createCalendarDate(parsedDate);
+            return parseCalendarDate(parsedDate);
           }}
           onDateValueChange={(newDateValue: string) => {
             const validationStatus =

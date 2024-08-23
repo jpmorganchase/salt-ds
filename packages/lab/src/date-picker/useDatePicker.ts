@@ -21,8 +21,6 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 interface UseDatePickerBaseProps<T> {
   disabled?: boolean;
   readOnly?: boolean;
-  focusedValue?: "start" | "end" | null;
-  defaultFocusedValue?: UseDatePickerBaseProps<T>["focusedValue"];
   open?: boolean;
   defaultOpen?: UseDatePickerBaseProps<T>["open"];
   selectedDate?: T | null;
@@ -62,8 +60,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     defaultSelectedDate = null,
     selectedDate: selectedDateProp,
     onSelectedDateChange,
-    defaultFocusedValue = null,
-    focusedValue: focusedValueProp,
     defaultOpen = false,
     open: openProp,
     minDate: minDateProp,
@@ -86,13 +82,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     helpers: { setOpen },
   } = useDatePickerOverlay();
 
-  const [focusedValue, setFocusedValue] = useControlled({
-    controlled: focusedValueProp,
-    default: defaultFocusedValue,
-    name: "DatePicker",
-    state: "focusedValue",
-  });
-
   const [selectedDate, setSelectedDate] = useControlled({
     controlled: selectedDateProp,
     default: defaultSelectedDate,
@@ -104,23 +93,10 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   const [cancelled, setCancelled] = useState<boolean>(false);
 
   useEffect(() => {
-    if (selectionVariant === "range") {
-      const rangeSelection = selectedDate as DateRangeSelection;
-      if (rangeSelection?.endDate) {
-        setFocusedValue("end");
-      } else {
-        setFocusedValue("start");
-      }
-    } else {
-      const singleSelection = selectedDate as SingleDateSelection;
-      if (singleSelection) {
-        setFocusedValue("start");
-      }
-    }
     if (open) {
       setCancelled(false);
     }
-  }, [open, selectedDate, selectionVariant]);
+  }, [open]);
 
   const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
     useFormFieldProps();
@@ -199,7 +175,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       selectionVariant,
       selectedDate,
       cancelled,
-      focusedValue,
       autoApplyDisabled,
       disabled: isDisabled,
       readOnly: isReadOnly,
@@ -213,7 +188,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     helpers: {
       apply,
       cancel,
-      setFocusedValue,
       setSelectedDate: setSelectedDateWrapper,
       setAutoApplyDisabled,
     },

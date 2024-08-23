@@ -94,8 +94,8 @@ function getFallbackVisibleMonths(selectedDate?: DateRangeSelection | null) {
     return createConsecutiveRange(startDate);
   }
 
-  const todayDate = today(getLocalTimeZone());
-  return [todayDate, todayDate.add({ months: 1 })];
+  const currentMonth = startOfMonth(today(getLocalTimeZone()));
+  return [currentMonth, currentMonth.add({ months: 1 })];
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");

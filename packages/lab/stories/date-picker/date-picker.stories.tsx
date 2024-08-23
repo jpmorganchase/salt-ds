@@ -4,6 +4,7 @@ import {
   type DateValue,
   getLocalTimeZone,
   today,
+  now,
 } from "@internationalized/date";
 import {
   Button,
@@ -29,13 +30,14 @@ import {
   type DatePickerState,
   type DateRangeSelection,
   type SingleDateSelection,
-  createCalendarDate,
+  parseCalendarDate,
   formatDate,
   getCurrentLocale,
   useDatePickerContext,
+  parseZonedDateTime,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -148,10 +150,15 @@ function isValidDateRange(date: DateRangeSelection | null) {
 function formatDateRange(
   dateRange: DateRangeSelection | null,
   locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
+  const formattedStartDate = startDate
+    ? formatDate(startDate, locale, options)
+    : "N/A";
+  const formattedEndDate = endDate
+    ? formatDate(endDate, locale, options)
+    : "N/A";
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
@@ -710,7 +717,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
                 offsetDate.day,
               );
             }
-            return createCalendarDate(parsedDate);
+            return parseCalendarDate(parsedDate);
           }}
           onDateValueChange={(newDateValue: string) => {
             const validationStatus =
@@ -937,6 +944,117 @@ export const RangeBordered: StoryFn<DatePickerRangeProps> = (args) => {
       }}
     >
       <DatePickerRangeInput bordered />
+      <DatePickerOverlay>
+        <DatePickerRangePanel
+          StartNavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+          EndNavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+        />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};
+
+const DatePickerTimeInput: React.FC = () => {
+  const {
+    helpers: { setSelectedDate },
+    state: { selectedDate },
+  } = useDatePickerContext({
+    selectionVariant: "range",
+  }) as DatePickerState<DateRangeSelection>;
+
+  function parseTime(timeValue: string): {
+    hour: number;
+    minute: number;
+    second: number;
+    millisecond: number;
+  } | null {
+    // Regular expression to match the time format HH:MM, HH:MM:SS, or HH:MM:SS.SSS
+    const timePattern = /^(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?$/;
+    const match = timeValue.match(timePattern);
+    if (!match) {
+      return null;
+    }
+
+    const hour = parseInt(match[1], 10);
+    const minute = parseInt(match[2], 10);
+    const second = match[3] ? parseInt(match[3], 10) : 0; // Default to 0 if seconds are not provided
+    const millisecond = match[4] ? parseInt(match[4].padEnd(3, "0"), 10) : 0; // Default to 0 if milliseconds are not provided
+
+    return { hour, minute, second, millisecond };
+  }
+
+  const handleStartTimeChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    console.log(event.target.value);
+    const parsedTime = parseTime(event.target.value);
+    if (!parsedTime) {
+      return;
+    }
+    const { hour, minute, second, millisecond } = parsedTime;
+    let startDate = selectedDate?.startDate ?? now(getLocalTimeZone());
+    startDate = startDate.set({ hour, minute, second, millisecond });
+
+    let newDateTime: DateRangeSelection = {
+      ...selectedDate,
+      startDate,
+    };
+    setSelectedDate(newDateTime);
+  };
+  const handleEndTimeChange: React.ChangeEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    console.log(event.target.value);
+    const parsedTime = parseTime(event.target.value);
+    if (!parsedTime) {
+      return;
+    }
+    const { hour, minute, second, millisecond } = parsedTime;
+    let endDate = selectedDate?.endDate ?? now(getLocalTimeZone());
+    endDate = endDate.set({ hour, minute, second, millisecond });
+
+    let newDateTime: DateRangeSelection = {
+      ...selectedDate,
+      endDate,
+    };
+    setSelectedDate(newDateTime);
+  };
+
+  return (
+    <>
+      <DatePickerRangeInput bordered />
+      <input type={"time"} onChange={handleStartTimeChange} />
+      <input type={"time"} onChange={handleEndTimeChange} />
+    </>
+  );
+};
+export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = (args) => {
+  return (
+    <DatePicker
+      {...args}
+      selectionVariant="range"
+      onSelectedDateChange={(newSelectedDate) => {
+        console.log(
+          `Selected date range: ${formatDateRange(
+            newSelectedDate,
+            getCurrentLocale(),
+            {
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            },
+          )}`,
+        );
+        args?.onSelectedDateChange?.(newSelectedDate);
+      }}
+    >
+      <DatePickerTimeInput />
       <DatePickerOverlay>
         <DatePickerRangePanel
           StartNavigationProps={{

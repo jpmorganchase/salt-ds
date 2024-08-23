@@ -5,8 +5,10 @@ import {
   type FocusEventHandler,
   type SyntheticEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
+  type KeyboardEvent, KeyboardEventHandler,
 } from "react";
 import type { DateRangeSelection } from "../calendar";
 import {
@@ -19,8 +21,7 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
-export interface DatePickerRangeInputProps
-  extends Omit<DateInputRangeProps, "focusedValue"> {}
+export interface DatePickerRangeInputProps extends DateInputRangeProps {}
 
 export const DatePickerRangeInput = forwardRef<
   HTMLDivElement,
@@ -41,14 +42,13 @@ export const DatePickerRangeInput = forwardRef<
   const {
     state: {
       selectedDate,
-      focusedValue,
       disabled,
       readOnly,
       cancelled,
       locale,
       timeZone,
     },
-    helpers: { setSelectedDate, setFocusedValue },
+    helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "range" });
   const {
     state: { open, floatingUIResult },
@@ -67,30 +67,30 @@ export const DatePickerRangeInput = forwardRef<
     state: "dateValue",
   });
 
-  const handleCalendarButton = () => {
+  const handleCalendarButton = useCallback(() => {
     setOpen(!open);
-  };
+  }, [open]);
 
-  const handleDateChange = (
-    _event: SyntheticEvent,
-    newDate: DateRangeSelection | null,
-  ) => {
-    setSelectedDate(newDate);
-  };
+  const handleDateChange = useCallback(
+    (_event: SyntheticEvent, newDate: DateRangeSelection | null) => {
+      setSelectedDate(newDate);
+    },
+    [],
+  );
 
-  const handleDateValueChange = (
-    newDateValue: DateInputRangeValue,
-    isFormatted: boolean,
-  ) => {
-    setValue(newDateValue);
-    onDateValueChange?.(newDateValue, isFormatted);
-  };
+  const handleDateValueChange = useCallback(
+    (newDateValue: DateInputRangeValue, isFormatted: boolean) => {
+      setValue(newDateValue);
+      onDateValueChange?.(newDateValue, isFormatted);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (open) {
       prevState.current = { date: selectedDate, value };
     }
-  }, [open, selectedDate, value]);
+  }, [open]);
 
   useEffect(() => {
     if (cancelled) {
@@ -100,30 +100,24 @@ export const DatePickerRangeInput = forwardRef<
   }, [cancelled, setSelectedDate]);
 
   const startInputProps: {
-    onBlur: FocusEventHandler<HTMLInputElement>;
-    onFocus: FocusEventHandler<HTMLInputElement>;
+    onKeyDown: KeyboardEventHandler<HTMLInputElement>
   } = {
-    onBlur: (event) => {
-      setFocusedValue(null);
-      startInputPropsProp?.onBlur?.(event);
-    },
-    onFocus: (event) => {
-      setFocusedValue("start");
-      startInputPropsProp?.onFocus?.(event);
+    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "ArrowDown") {
+        setOpen(true);
+      }
+      startInputPropsProp?.onKeyDown?.(event);
     },
     ...startInputPropsProp,
   };
   const endInputProps: {
-    onBlur: FocusEventHandler<HTMLInputElement>;
-    onFocus: FocusEventHandler<HTMLInputElement>;
+    onKeyDown: KeyboardEventHandler<HTMLInputElement>
   } = {
-    onBlur: (event) => {
-      setFocusedValue(null);
-      endInputPropsProp?.onBlur?.(event);
-    },
-    onFocus: (event) => {
-      setFocusedValue("end");
-      endInputPropsProp?.onFocus?.(event);
+    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "ArrowDown") {
+        setOpen(true);
+      }
+      endInputPropsProp?.onKeyDown?.(event);
     },
     ...endInputPropsProp,
   };
@@ -136,7 +130,6 @@ export const DatePickerRangeInput = forwardRef<
       className={clsx(withBaseName(), className)}
       ref={inputRef}
       date={selectedDate}
-      focusedInput={focusedValue}
       startInputProps={getReferenceProps(startInputProps)}
       endInputProps={getReferenceProps(endInputProps)}
       readOnly={readOnly}

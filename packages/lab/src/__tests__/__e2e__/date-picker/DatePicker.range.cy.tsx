@@ -4,6 +4,7 @@ import {
   getLocalTimeZone,
   parseDate,
   today,
+  ZonedDateTime,
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
@@ -15,6 +16,16 @@ import {
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import { formatDate, getCurrentLocale } from "../../../calendar";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerRangeInput,
+  DatePickerRangePanel,
+  DatePickerSingleInput,
+  DatePickerSinglePanel,
+} from "../../../date-picker";
+import { parseZonedDateTime } from "../../../date-input";
+import React from "react";
 
 const composedStories = composeStories(datePickerStories);
 const { Range } = composedStories;
@@ -376,6 +387,85 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         "have.value",
         formatDate(updatedRangeDate.endDate),
       );
+    });
+  });
+
+  it("SHOULD preserve original time during date selection", () => {
+    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const defaultStartDate = new ZonedDateTime(
+      2024,
+      12,
+      11,
+      getLocalTimeZone(),
+      0,
+      9,
+      30,
+      31,
+      32,
+    );
+
+    const defaultEndDate = new ZonedDateTime(
+      2025,
+      13,
+      12,
+      getLocalTimeZone(),
+      0,
+      10,
+      33,
+      34,
+      35,
+    );
+    cy.mount(
+      <DatePicker
+        defaultSelectedDate={{
+          startDate: defaultStartDate,
+          endDate: defaultEndDate,
+        }}
+        selectionVariant="range"
+        onSelectedDateChange={selectedDateChangeSpy}
+      >
+        <DatePickerRangeInput parse={parseZonedDateTime} />
+        <DatePickerOverlay>
+          <DatePickerRangePanel />
+        </DatePickerOverlay>
+      </DatePicker>,
+    );
+    // Simulate entering a valid start date
+    cy.findByLabelText("Start date")
+      .click()
+      .clear()
+      .type(initialRangeDateValue.startDate);
+    cy.realPress("Tab");
+    cy.findByLabelText("Start date").should(
+      "have.value",
+      initialRangeDateValue.startDate,
+    );
+    cy.findByLabelText("End date")
+      .click()
+      .clear()
+      .type(initialRangeDateValue.endDate);
+    cy.realPress("Tab");
+    cy.get("@selectedDateChangeSpy").should("have.been.calledWithMatch", {
+      startDate: {
+        year: initialRangeDate.startDate.year,
+        month: initialRangeDate.startDate.month,
+        day: initialRangeDate.startDate.day,
+        timeZone: defaultStartDate.timeZone,
+        hour: defaultStartDate.hour,
+        minute: defaultStartDate.minute,
+        second: defaultStartDate.second,
+        millisecond: defaultStartDate.millisecond,
+      },
+      endDate: {
+        year: initialRangeDate.endDate.year,
+        month: initialRangeDate.endDate.month,
+        day: initialRangeDate.endDate.day,
+        timeZone: defaultEndDate.timeZone,
+        hour: defaultEndDate.hour,
+        minute: defaultEndDate.minute,
+        second: defaultEndDate.second,
+        millisecond: defaultEndDate.millisecond,
+      },
     });
   });
 });

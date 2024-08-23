@@ -1,4 +1,7 @@
-import { type DateValue, getLocalTimeZone } from "@internationalized/date";
+import {
+  type DateValue,
+  getLocalTimeZone,
+} from "@internationalized/date";
 import {
   type InputProps,
   StatusAdornment,
@@ -34,7 +37,10 @@ import {
   getCurrentLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
-import { createCalendarDate } from "./utils";
+import {
+  parseCalendarDate,
+  extractTimeFieldsFromDateRange, RangeTimeFields
+} from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -128,10 +134,6 @@ export interface DateInputRangeProps<T = DateRangeSelection>
     isFormatted: boolean,
   ) => void;
   /**
-   * Name of input that should receive focus
-   */
-  focusedInput?: "start" | "end" | null;
-  /**
    * @param inputDate - parse date string to valid `DateValue` or undefined, if invalid
    */
   parse?: (inputDate: string | undefined) => DateValue | undefined;
@@ -156,13 +158,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       onDateValueChange,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      focusedInput = null,
       formatDate = defaultFormatDate,
       startInputProps = {},
       endInputProps = {},
       startInputRef: startInputRefProp,
       endInputRef: endInputRefProp,
-      parse = createCalendarDate,
+      parse = parseCalendarDate,
       placeholder = "dd mmm yyyy",
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
@@ -202,6 +203,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       state: "dateValue",
     });
 
+    const preservedTime = useRef<RangeTimeFields>({});
+    preservedTime.current = extractTimeFieldsFromDateRange(date);
+
     const setDateValueFromDate = useCallback(
       (newDate: DateInputRangeProps["date"]) => {
         let newDateValue = { ...dateValue };
@@ -225,25 +229,13 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         }
         setDateValue(newDateValue);
       },
-      [dateValue, formatDate, locale, onDateValueChange, timeZone],
+      [ formatDate, locale, onDateValueChange, timeZone],
     );
 
     // Update date string value when selected date changes
     useEffect(() => {
       setDateValueFromDate(date);
-    }, [date, date?.startDate, date?.endDate, setDateValueFromDate]);
-
-    useEffect(() => {
-      if (focusedInput === "start" && startInputRef.current) {
-        const input = startInputRef.current;
-        input.focus();
-        input.setSelectionRange(input.value.length, input.value.length);
-      } else if (focusedInput === "end" && endInputRef.current) {
-        const input = endInputRef.current;
-        input.focus();
-        input.setSelectionRange(input.value.length, input.value.length);
-      }
-    }, [focusedInput]);
+    }, [ date, date?.startDate, date?.endDate, setDateValueFromDate]);
 
     const [focused, setFocused] = useState(false);
 
@@ -340,6 +332,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
       if (hasStartDateChanged || hasEndDateChanged) {
         setDate(newDate);
+        if (newDate?.startDate && preservedTime.current.startTime) {
+          newDate.startDate = newDate.startDate.set(preservedTime.current.startTime);
+        }
+        if (newDate?.endDate && preservedTime.current.endTime) {
+          newDate.endDate = newDate.endDate.set(preservedTime.current.endTime);
+        }
         onDateChange?.(event, newDate);
       }
     };

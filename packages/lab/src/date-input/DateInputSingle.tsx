@@ -1,4 +1,8 @@
-import { type DateValue, getLocalTimeZone } from "@internationalized/date";
+import {
+  type DateValue,
+  getLocalTimeZone,
+  TimeFields
+} from "@internationalized/date";
 import {
   StatusAdornment,
   makePrefixer,
@@ -31,7 +35,10 @@ import {
   getCurrentLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
-import { createCalendarDate } from "./utils";
+import {
+  parseCalendarDate,
+  extractTimeFieldsFromDate,
+} from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -101,10 +108,6 @@ export interface DateInputSingleProps<T = SingleDateSelection>
    */
   onDateChange?: (event: SyntheticEvent, date: T | null) => void;
   /**
-   * If `true`, the component should receive focus.
-   */
-  focusedInput?: boolean;
-  /**
    * @param inputDate - parse date string to valid `DateValue` or undefined, if invalid
    */
   parse?: (inputDate: string | undefined) => DateValue | undefined;
@@ -132,11 +135,10 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       onClick,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      focusedInput = false,
       formatDate = defaultFormatDate,
       inputProps = {},
       inputRef: inputRefProp = null,
-      parse = createCalendarDate,
+      parse = parseCalendarDate,
       placeholder = "dd mmm yyyy",
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
@@ -175,6 +177,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       name: "DateInputSingle",
       state: "dateValue",
     });
+    const preservedTime = useRef<TimeFields | undefined>(extractTimeFieldsFromDate(date));
 
     // Update date string value when selected date changes
     useEffect(() => {
@@ -186,12 +189,6 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     }, [date, formatDate, locale, onDateValueChange, timeZone]);
 
     const [focused, setFocused] = useState(false);
-
-    useEffect(() => {
-      if (focusedInput) {
-        innerInputRef?.current?.focus();
-      }
-    }, [focusedInput]);
 
     const {
       a11yProps: {
@@ -225,7 +222,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const newDate = parse(dateValue) || null;
+      let newDate = parse(dateValue) || null;
       if (newDate) {
         const formattedDate = formatDate(newDate, locale, { timeZone });
         if (formattedDate) {
@@ -237,6 +234,9 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         newDate && date ? newDate.compare(date) !== 0 : newDate !== date;
       if (hasDateChanged) {
         setDate(newDate);
+        if (newDate && preservedTime.current) {
+          newDate = newDate.set(preservedTime.current);
+        }
         onDateChange?.(event, newDate);
       }
     };

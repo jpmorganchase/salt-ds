@@ -4,6 +4,7 @@ import {
   getLocalTimeZone,
   parseDate,
   today,
+  ZonedDateTime,
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
@@ -17,6 +18,13 @@ import {
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import { formatDate, getCurrentLocale } from "../../../calendar";
+import {
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerSingleInput, DatePickerSinglePanel
+} from "../../../date-picker";
+import React from "react";
+import {parseZonedDateTime} from "../../../date-input";
 
 const composedStories = composeStories(datePickerStories);
 const { Single } = composedStories;
@@ -323,6 +331,72 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("not.exist");
       cy.findByRole("textbox").should("have.focus");
       cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);
+    });
+
+    it("SHOULD preserve original time during date selection", () => {
+      const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const defaultSelectedDate = new ZonedDateTime(
+        2024,
+        12,
+        11,
+        getLocalTimeZone(),
+        0,
+        9,
+        30,
+        31,
+        32,
+      );
+      cy.mount(
+        <DatePicker
+          defaultSelectedDate={defaultSelectedDate}
+          selectionVariant="single"
+          onSelectedDateChange={selectedDateChangeSpy}
+        >
+          <DatePickerSingleInput parse={parseZonedDateTime}/>
+          <DatePickerOverlay>
+            <DatePickerSinglePanel />
+          </DatePickerOverlay>
+        </DatePicker>
+      );
+      // Simulate entering a valid date
+      cy.findByRole("textbox").click().clear().type(initialDateValue);
+      cy.realPress("Tab");
+      cy.findByRole("textbox").should("have.value", initialDateValue);
+      const expectedInitialDateWithOriginalTime = new ZonedDateTime(
+        initialDate.year,
+        initialDate.month,
+        initialDate.day,
+        defaultSelectedDate.timeZone,
+        0,
+        defaultSelectedDate.hour,
+        defaultSelectedDate.minute,
+        defaultSelectedDate.second,
+        defaultSelectedDate.millisecond,
+      );
+
+      console.log(
+        "defaultSelectedDate timeZone:",
+        defaultSelectedDate.timeZone,
+      );
+      console.log("defaultSelectedDate offset:", defaultSelectedDate.offset);
+      console.log(
+        "expectedInitialDateWithOriginalTime timeZone:",
+        expectedInitialDateWithOriginalTime.timeZone,
+      );
+      console.log(
+        "expectedInitialDateWithOriginalTime offset:",
+        expectedInitialDateWithOriginalTime.offset,
+      );
+      cy.get("@selectedDateChangeSpy").should("have.been.calledWithMatch", {
+        year: initialDate.year,
+        month: initialDate.month,
+        day: initialDate.day,
+        timeZone: defaultSelectedDate.timeZone,
+        hour: defaultSelectedDate.hour,
+        minute: defaultSelectedDate.minute,
+        second: defaultSelectedDate.second,
+        millisecond: defaultSelectedDate.millisecond,
+      });
     });
   });
 });

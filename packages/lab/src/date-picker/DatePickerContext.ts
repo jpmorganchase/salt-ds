@@ -8,8 +8,6 @@ interface DatePickerBaseState {
     disabled?: boolean;
     readOnly?: boolean;
     cancelled?: boolean;
-    focusedValue?: "start" | "end" | null;
-    defaultFocusedValue?: DatePickerBaseState["state"]["focusedValue"];
     autoApplyDisabled?: boolean;
     minDate?: DateValue;
     maxDate?: DateValue;
@@ -19,7 +17,6 @@ interface DatePickerBaseState {
   };
   helpers: {
     cancel: () => void;
-    setFocusedValue: (newFocusedValue: "start" | "end" | null) => void;
     setAutoApplyDisabled: (newAutoApplyDisabled: boolean) => void;
   };
 }
