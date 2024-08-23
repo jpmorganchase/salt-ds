@@ -8,11 +8,11 @@ const composedStories = composeStories(dateInputStories);
 const { Range } = composedStories;
 
 describe("GIVEN a DateInputRange", () => {
-  const initialDateValue = { startDate: "05 Jan 2025", endDate: "06 Feb 2026" };
   const initialDate = {
     startDate: new CalendarDate(2025, 1, 5),
     endDate: new CalendarDate(2026, 2, 6),
   };
+  const initialDateValue = { startDate: "05 Jan 2025", endDate: "06 Feb 2026" };
 
   const updatedDateValue = { startDate: "1 Nov 2027", endDate: "2 Dec 2028" };
   const updatedFormattedDateValue = {
@@ -45,6 +45,7 @@ describe("GIVEN a DateInputRange", () => {
           startDate: "start date value",
           endDate: "end date value",
         }}
+        locale={"en-GB"}
       />,
     );
     // Verify that the start and end date inputs have the specified values
@@ -63,7 +64,11 @@ describe("GIVEN a DateInputRange", () => {
     };
 
     cy.mount(
-      <Range defaultValue={{ startDate: "text value" }} parse={customParser} />,
+      <Range
+        defaultValue={{ startDate: "text value" }}
+        parse={customParser}
+        locale={"en-GB"}
+      />,
     );
     // Simulate user entering "new start date value" into the start date input
     cy.findByLabelText("Start date")
@@ -109,6 +114,7 @@ describe("GIVEN a DateInputRange", () => {
       <Range
         defaultValue={{ startDate: "text value" }}
         formatDate={customFormatter}
+        locale={"en-GB"}
       />,
     );
     // Simulate user entering initial start date value into the start date input
@@ -171,6 +177,7 @@ describe("GIVEN a DateInputRange", () => {
           endInputProps={{ onChange: endInputChangeSpy }}
           onDateValueChange={dateValueChangeSpy}
           onDateChange={dateChangeSpy}
+          locale={"en-GB"}
         />,
       );
       // Simulate user entering updated start date value into the start date input
@@ -279,6 +286,7 @@ describe("GIVEN a DateInputRange", () => {
             endInputProps={{ onChange: endInputChangeSpy }}
             onDateValueChange={dateValueChangeSpy}
             onDateChange={onDateChange}
+            locale={"en-GB"}
           />
         );
       }

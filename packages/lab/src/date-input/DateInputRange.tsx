@@ -204,6 +204,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const preservedTime = useRef<RangeTimeFields>({});
     preservedTime.current = extractTimeFieldsFromDateRange(date);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: do not memo when dateValue changes
     const setDateValueFromDate = useCallback(
       (newDate: DateInputRangeProps["date"]) => {
         let newDateValue = { ...dateValue };

@@ -47,7 +47,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   };
 
   it("SHOULD only be able to select a date between min/max", () => {
-    cy.mount(<SingleWithMinMaxDate selectionVariant={"single"} />);
+    cy.mount(
+      <SingleWithMinMaxDate selectionVariant={"single"} locale={"en-GB"} />,
+    );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
     // Verify that dates outside the min/max range are disabled
@@ -91,6 +93,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithFormField
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       />,
     );
     // Simulate entering a valid date
@@ -115,6 +118,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithCustomPanel
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       />,
     );
     // Simulate opening the calendar
@@ -143,6 +147,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithToday
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       />,
     );
     // Simulate opening the calendar
@@ -169,6 +174,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectionVariant={"single"}
           defaultSelectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          locale={"en-GB"}
         />,
       );
       // Verify that the initial selected date is displayed
@@ -201,6 +207,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectionVariant={"single"}
           defaultSelectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          locale={"en-GB"}
         />,
       );
       // Verify that the initial selected date is displayed
@@ -238,6 +245,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithCustomParser
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       />,
     );
     // Simulate entering a valid date
@@ -259,7 +267,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
 
   describe("uncontrolled component", () => {
     it("SHOULD render the default date", () => {
-      cy.mount(<Single defaultSelectedDate={initialDate} />);
+      cy.mount(<Single defaultSelectedDate={initialDate} locale={"en-GB"} />);
       // Verify that the default selected date is displayed
       cy.findByRole("textbox").should("have.value", initialDateValue);
       // Simulate opening the calendar
@@ -274,7 +282,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
 
     it("SHOULD be able to select a date", () => {
-      cy.mount(<Single defaultSelectedDate={initialDate} />);
+      cy.mount(<Single defaultSelectedDate={initialDate} locale={"en-GB"} />);
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Simulate selecting a new date
@@ -297,6 +305,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         <SingleControlled
           selectionVariant={"single"}
           selectedDate={initialDate}
+          locale={"en-GB"}
         />,
       );
       // Verify that the selected date is displayed
@@ -317,6 +326,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         <SingleControlled
           selectionVariant={"single"}
           selectedDate={initialDate}
+          locale={"en-GB"}
         />,
       );
       // Simulate opening the calendar
@@ -352,6 +362,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           defaultSelectedDate={defaultSelectedDate}
           selectionVariant="single"
           onSelectedDateChange={selectedDateChangeSpy}
+          locale={"en-GB"}
         >
           <DatePickerSingleInput parse={parseZonedDateTime} />
           <DatePickerOverlay>

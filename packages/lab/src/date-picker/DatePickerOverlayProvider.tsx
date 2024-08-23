@@ -60,12 +60,12 @@ export const DatePickerOverlayProvider: React.FC<
     }
   }, [open]);
 
-  const setOpen = (newOpen: boolean) => {
+  const setOpen = useCallback((newOpen: boolean) => {
     if (newOpen) {
       triggeringElement.current = document.activeElement as HTMLElement;
     }
     setOpenState(newOpen);
-  };
+  }, []);
 
   const floatingUIResult = useFloatingUI({
     open,
@@ -116,7 +116,7 @@ export const DatePickerOverlayProvider: React.FC<
       getReferenceProps,
       setOpen,
     }),
-    [getFloatingProps, getReferenceProps],
+    [getFloatingProps, getReferenceProps, setOpen],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 

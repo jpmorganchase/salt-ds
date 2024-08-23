@@ -61,7 +61,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   };
 
   it("SHOULD only be able to select a date between min/max", () => {
-    cy.mount(<RangeWithMinMaxDate selectionVariant={"range"} />);
+    cy.mount(
+      <RangeWithMinMaxDate selectionVariant={"range"} locale={"en-GB"} />,
+    );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
     // Verify that dates outside the min/max range are disabled
@@ -102,6 +104,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       <RangeWithFormField
         selectionVariant={"range"}
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       />,
     );
     // Simulate entering a valid start date
@@ -132,6 +135,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       <RangeWithCustomPanel
         selectionVariant={"range"}
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       />,
     );
     // Simulate opening the calendar
@@ -168,6 +172,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           selectionVariant={"range"}
           defaultSelectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          locale={"en-GB"}
         />,
       );
       // Verify that the initial selected dates are displayed
@@ -212,6 +217,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           selectionVariant={"range"}
           defaultSelectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          locale={"en-GB"}
         />,
       );
       // Verify that the initial selected dates are displayed
@@ -268,7 +274,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
   describe("uncontrolled component", () => {
     it("SHOULD render the default date", () => {
-      cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
+      cy.mount(
+        <Range defaultSelectedDate={initialRangeDate} locale={"en-GB"} />,
+      );
       // Verify that the default selected dates are displayed
       cy.findByLabelText("Start date").should(
         "have.value",
@@ -291,7 +299,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     });
 
     it("SHOULD be able to select a date", () => {
-      cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
+      cy.mount(
+        <Range defaultSelectedDate={initialRangeDate} locale={"en-GB"} />,
+      );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("application").should("have.length", 2);
@@ -329,6 +339,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         <RangeControlled
           selectionVariant={"range"}
           selectedDate={initialRangeDate}
+          locale={"en-GB"}
         />,
       );
       // Verify that the selected dates are displayed
@@ -357,6 +368,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         <RangeControlled
           selectionVariant={"range"}
           selectedDate={initialRangeDate}
+          locale={"en-GB"}
         />,
       );
       // Simulate opening the calendar
@@ -423,6 +435,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         }}
         selectionVariant="range"
         onSelectedDateChange={selectedDateChangeSpy}
+        locale={"en-GB"}
       >
         <DatePickerRangeInput parse={parseZonedDateTime} />
         <DatePickerOverlay>

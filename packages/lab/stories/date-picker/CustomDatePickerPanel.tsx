@@ -33,6 +33,7 @@ export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
   CustomDatePickerPanelProps
 >(function CustomDatePickerPanel({ selectionVariant, helperText }, ref) {
+  // biome-ignore lint/suspicious/noExplicitAny: state and helpers is coerced based on selectionVariant
   let stateAndHelpers: any;
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({

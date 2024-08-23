@@ -73,8 +73,8 @@ export const dateSupportsTime = (
 export function extractTimeFieldsFromDateRange(
   selectedDate: DateRangeSelection | null | undefined,
 ): RangeTimeFields {
-  let startTime;
-  let endTime;
+  let startTime: TimeFields | undefined;
+  let endTime: TimeFields | undefined;
   if (selectedDate) {
     if (selectedDate.startDate && dateSupportsTime(selectedDate.startDate)) {
       const { hour, minute, second, millisecond } = selectedDate.startDate;

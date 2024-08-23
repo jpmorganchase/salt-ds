@@ -41,7 +41,7 @@ describe("GIVEN a Calendar", () => {
 
   describe("Today's Date", () => {
     it("SHOULD set `aria-current=date` on today's date", () => {
-      cy.mount(<Single />);
+      cy.mount(<Single locale={"en-GB"} />);
       cy.findByRole("application").should("exist");
       cy.findByRole("application").should(
         "have.accessibleName",
@@ -61,7 +61,7 @@ describe("GIVEN a Calendar", () => {
   describe("Navigation", () => {
     describe("Buttons", () => {
       it("SHOULD navigate to the previous month when the previous month button is clicked", () => {
-        cy.mount(<Single defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
         // Simulate clicking the "Previous Month" button
         cy.findByRole("button", {
           name: "Previous Month",
@@ -73,7 +73,7 @@ describe("GIVEN a Calendar", () => {
       });
 
       it("SHOULD navigate to the next month when the next month button is clicked", () => {
-        cy.mount(<Single defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
         // Simulate clicking the "Next Month" button
         cy.findByRole("button", {
           name: "Next Month",
@@ -87,7 +87,7 @@ describe("GIVEN a Calendar", () => {
 
     describe("Dropdowns", () => {
       it("SHOULD navigate to the selected month when using the month dropdown", () => {
-        cy.mount(<Single defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
         // Verify the initial month in the dropdown
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
@@ -125,7 +125,7 @@ describe("GIVEN a Calendar", () => {
       });
 
       it("SHOULD navigate to the selected year when using the year dropdown", () => {
-        cy.mount(<Single defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
         // Verify the initial year in the dropdown
         cy.findByRole("combobox", { name: "Year Dropdown" }).should(
           "have.text",
@@ -165,7 +165,7 @@ describe("GIVEN a Calendar", () => {
 
     describe("Clicking", () => {
       it("SHOULD navigate to the next month when clicking out of range dates", () => {
-        cy.mount(<Single defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
         // Verify the initial month in the dropdown
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
@@ -193,7 +193,7 @@ describe("GIVEN a Calendar", () => {
 
     describe("Keyboard", () => {
       it("SHOULD move the focus when the arrow keys are pressed", () => {
-        cy.mount(<Single defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
 
         // Simulate focusing on the current date button
         cy.findByRole("button", {
@@ -230,7 +230,7 @@ describe("GIVEN a Calendar", () => {
 
       describe("SHOULD move the focus when the shortcut keys are pressed", () => {
         beforeEach(() => {
-          cy.mount(<Single defaultVisibleMonth={testDate} />);
+          cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
 
           // Simulate focusing on the current date button
           cy.findByRole("button", {
@@ -301,7 +301,9 @@ describe("GIVEN a Calendar", () => {
 
   describe("Render", () => {
     it("SHOULD hide year dropdown on navigation", () => {
-      cy.mount(<HideYearDropdown defaultVisibleMonth={testDate} />);
+      cy.mount(
+        <HideYearDropdown defaultVisibleMonth={testDate} locale={"en-GB"} />,
+      );
       // Verify that the year dropdown is not visible
       cy.findByRole("combobox", { name: "Year Dropdown" }).should("not.exist");
 
@@ -342,7 +344,9 @@ describe("GIVEN a Calendar", () => {
     });
 
     it("SHOULD render custom headers", () => {
-      cy.mount(<CustomHeader defaultVisibleMonth={testDate} />);
+      cy.mount(
+        <CustomHeader defaultVisibleMonth={testDate} locale={"en-GB"} />,
+      );
       // Simulate clicking the "Today" button
       cy.findByRole("button", { name: /Today/i }).click();
       // Verify that today's date button has `aria-current=date`
@@ -352,7 +356,9 @@ describe("GIVEN a Calendar", () => {
     });
 
     it("SHOULD render custom day", () => {
-      cy.mount(<CustomDayRender defaultVisibleMonth={testDate} />);
+      cy.mount(
+        <CustomDayRender defaultVisibleMonth={testDate} locale={"en-GB"} />,
+      );
       // Verify that a custom day button is rendered
       cy.contains("button", /01/).should("exist");
     });
@@ -364,6 +370,7 @@ describe("GIVEN a Calendar", () => {
         <TwinCalendars
           selectionVariant={"range"}
           defaultSelectedDate={{ startDate, endDate }}
+          locale={"en-GB"}
         />,
       );
       // Verify that the start and end date buttons are pressed
@@ -402,6 +409,7 @@ describe("GIVEN a Calendar", () => {
           defaultVisibleMonth={testDate}
           minDate={startOfMonth(testDate).add({ days: 1 })}
           maxDate={endOfMonth(testDate).subtract({ days: 1 })}
+          locale={"en-GB"}
         />,
       );
       // Verify the initial month in the dropdown

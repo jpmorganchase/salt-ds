@@ -63,13 +63,13 @@ export const DatePickerRangeInput = forwardRef<
 
   const handleCalendarButton = useCallback(() => {
     setOpen(!open);
-  }, [open]);
+  }, [open, setOpen]);
 
   const handleDateChange = useCallback(
     (_event: SyntheticEvent, newDate: DateRangeSelection | null) => {
       setSelectedDate(newDate);
     },
-    [],
+    [setSelectedDate],
   );
 
   const handleDateValueChange = useCallback(
@@ -77,9 +77,10 @@ export const DatePickerRangeInput = forwardRef<
       setValue(newDateValue);
       onDateValueChange?.(newDateValue, isFormatted);
     },
-    [],
+    [onDateValueChange],
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
     if (open) {
       prevState.current = { date: selectedDate, value };

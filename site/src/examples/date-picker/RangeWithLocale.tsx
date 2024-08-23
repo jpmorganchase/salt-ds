@@ -32,7 +32,10 @@ function formatDateRange(
 }
 
 function validateNumericDate(dateString: string, format: string): boolean {
-  let regex, day, month, year;
+  let regex: RegExp;
+  let day: number;
+  let month: number;
+  let year: number;
 
   if (format === "MM/DD/YYYY") {
     regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;

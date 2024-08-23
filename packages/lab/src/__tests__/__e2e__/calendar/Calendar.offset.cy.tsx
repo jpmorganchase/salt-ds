@@ -29,7 +29,7 @@ function getAllDatesInRange(startDate: DateValue, endDate: DateValue) {
 
 describe("GIVEN a Calendar with offset selection", () => {
   it("SHOULD allow a defined range to be selected", () => {
-    cy.mount(<Offset defaultVisibleMonth={testDate} />);
+    cy.mount(<Offset defaultVisibleMonth={testDate} locale={"en-GB"} />);
     const baseDate = testDate.add({ days: 3 });
     const datesInRange = getAllDatesInRange(
       // @ts-ignore

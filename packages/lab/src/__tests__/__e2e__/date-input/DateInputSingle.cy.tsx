@@ -26,7 +26,7 @@ describe("GIVEN a DateInputSingle", () => {
   };
 
   it("SHOULD render value, even when not a valid date", () => {
-    cy.mount(<Single value={"date value"} />);
+    cy.mount(<Single value={"date value"} locale={"en-GB"} />);
     cy.findByRole("textbox").should("have.value", "date value");
   });
 
@@ -39,7 +39,13 @@ describe("GIVEN a DateInputSingle", () => {
       parseSpy(inputDate);
       return parsedAsDate;
     };
-    cy.mount(<Single defaultValue={"text value"} parse={customParser} />);
+    cy.mount(
+      <Single
+        defaultValue={"text value"}
+        parse={customParser}
+        locale={"en-GB"}
+      />,
+    );
     // Simulate user entering "new value" into the input
     cy.findByRole("textbox").click().clear().type("new value");
     // Simulate pressing the Tab key to trigger blur event
@@ -58,7 +64,11 @@ describe("GIVEN a DateInputSingle", () => {
       return "formatted date";
     };
     cy.mount(
-      <Single defaultValue={"text value"} formatDate={customFormatter} />,
+      <Single
+        defaultValue={"text value"}
+        formatDate={customFormatter}
+        locale={"en-GB"}
+      />,
     );
     // Simulate user entering updated date value into the input
     cy.findByRole("textbox").click().clear().type(updatedDateValue);
@@ -92,6 +102,7 @@ describe("GIVEN a DateInputSingle", () => {
           onChange={inputChangeSpy}
           onDateValueChange={dateValueChangeSpy}
           onDateChange={dateChangeSpy}
+          locale={"en-GB"}
         />,
       );
       // Simulate user entering updated date value into the input
@@ -147,6 +158,7 @@ describe("GIVEN a DateInputSingle", () => {
             onChange={onChange}
             onDateValueChange={dateValueChangeSpy}
             onDateChange={onDateChange}
+            locale={"en-GB"}
           />
         );
       }

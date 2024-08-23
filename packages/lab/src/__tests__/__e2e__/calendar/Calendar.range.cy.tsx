@@ -34,6 +34,7 @@ describe("GIVEN a Calendar with range selection", () => {
           endDate: endOfMonth(todayTestDate),
         }}
         defaultVisibleMonth={todayTestDate}
+        locale={"en-GB"}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -57,6 +58,7 @@ describe("GIVEN a Calendar with range selection", () => {
           endDate: endOfMonth(todayTestDate),
         }}
         defaultVisibleMonth={todayTestDate}
+        locale={"en-GB"}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -82,6 +84,7 @@ describe("GIVEN a Calendar with range selection", () => {
           }),
         }}
         defaultVisibleMonth={todayTestDate}
+        locale={"en-GB"}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -102,6 +105,7 @@ describe("GIVEN a Calendar with range selection", () => {
       <Range
         defaultVisibleMonth={todayTestDate}
         defaultSelectedDate={undefined}
+        locale={"en-GB"}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -122,6 +126,7 @@ describe("GIVEN a Calendar with range selection", () => {
       <Range
         defaultVisibleMonth={todayTestDate}
         selectedDate={{ startDate: undefined, endDate: undefined }}
+        locale={"en-GB"}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -138,7 +143,12 @@ describe("GIVEN a Calendar with range selection", () => {
 
   it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
     const todayTestDate = today(localTimeZone);
-    cy.mount(<Range defaultVisibleMonth={todayTestDate.add({ months: 1 })} />);
+    cy.mount(
+      <Range
+        defaultVisibleMonth={todayTestDate.add({ months: 1 })}
+        locale={"en-GB"}
+      />,
+    );
     // Simulate focusing on the "Next Month" button
     cy.findByRole("button", {
       name: "Next Month",
@@ -163,6 +173,7 @@ describe("GIVEN a Calendar with range selection", () => {
           endDate: testDate.add({ months: 2 }),
         }}
         defaultVisibleMonth={testDate}
+        locale={"en-GB"}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -178,7 +189,7 @@ describe("GIVEN a Calendar with range selection", () => {
   });
 
   it("SHOULD allow a range to be selected", () => {
-    cy.mount(<Range defaultVisibleMonth={testDate} />);
+    cy.mount(<Range defaultVisibleMonth={testDate} locale={"en-GB"} />);
     // Simulate clicking on the start date button to select it
     cy.findByRole("button", { name: formatDay(testDate) }).realClick();
     // Verify that the start date button is selected
